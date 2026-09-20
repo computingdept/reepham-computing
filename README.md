@@ -4,7 +4,7 @@ GitHub Pages homepage for the Computing Department at **Reepham High School & Co
 
 ## Included
 
-- RHSC-style utility bar with Staff Area, school-site search, Facebook and Instagram.
+- RHSC-style utility bar with Staff Area, school-site search, Facebook and Instagram.(update)
 - Responsive Computing navigation.
 - **Choose your pathway** cards: six across on wide screens, three across on tablets, swipeable on phones.
 - KS3 Computing, GCSE OCR J277, ITJ836 and A Level OCR H446.
