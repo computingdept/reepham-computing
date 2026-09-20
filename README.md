@@ -22,7 +22,7 @@ Once Pages is enabled, commits to `main` will update the website automatically.
 - `index.html` — homepage
 - `assets/site.css` — responsive desktop/mobile styling
 - `assets/site.js` — mobile navigation and section highlighting
-- `assets/computing-logo.png` — Computing Department @ RHSC logo
+- The Computing Department logo is embedded in `index.html` for a self-contained deploy.
 
 ## Current lesson hubs
 
