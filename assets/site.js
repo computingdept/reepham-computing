@@ -20,7 +20,7 @@ navigation?.addEventListener('click', (event) => {
 });
 
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 760) setMenu(false);
+  if (window.innerWidth > 820) setMenu(false);
 });
 
 if ('IntersectionObserver' in window && navLinks.length) {
