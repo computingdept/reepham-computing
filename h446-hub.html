@@ -16,7 +16,7 @@ main{max-width:1240px;margin:0 auto;padding:30px 28px 60px}.back{display:inline-
 .tabs{display:flex;gap:4px;margin:22px 0 18px;border-bottom:1px solid var(--line);overflow-x:auto}.tab{appearance:none;border:0;background:transparent;padding:14px 22px 12px;font:inherit;font-weight:850;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent;margin-bottom:-1px;white-space:nowrap}.tab[aria-selected=true]{color:var(--green-dark);border-bottom-color:var(--purple);background:linear-gradient(#fff,var(--purple-pale))}
 .panel{display:none}.panel.active{display:block}.year-switch{display:flex;gap:8px;margin-bottom:18px}.year-btn{border:1px solid var(--line);background:#fff;color:var(--green-dark);padding:9px 14px;border-radius:6px;font:inherit;font-weight:850;cursor:pointer}.year-btn[aria-pressed=true]{background:var(--purple);border-color:var(--purple);color:#fff}
 .summary{display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin-bottom:12px}.summary h2{margin:0;font-size:20px}.count{color:var(--muted);font-size:14px}
-.term{margin:12px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}.term-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;background:var(--purple-pale);border-bottom:1px solid var(--line)}.term-head strong{color:var(--green-dark)}.term-head span{color:var(--muted);font-size:13px}.lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:12px}.lesson{display:grid;place-items:center;min-height:44px;border:1px solid var(--line);border-radius:5px;background:#fff;color:#3e2d7c;font-weight:850;text-decoration:none}.lesson.live{border-color:#b7addb;background:var(--purple-pale)}.lesson.planned{color:#6b7772;background:#fafbfa}.lesson:hover{border-color:var(--purple)}
+.term{margin:12px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}.term-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;background:var(--purple-pale);border-bottom:1px solid var(--line)}.term-head strong{color:var(--green-dark)}.term-head span{color:var(--muted);font-size:13px}.lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:12px}.lesson{display:grid;place-items:center;min-height:44px;border:1px solid var(--line);border-radius:5px;background:#fff;color:#3e2d7c;font-weight:850;text-decoration:none}.lesson.live{border-color:#b7addb;background:var(--purple-pale)}.welcome-link{display:inline-flex;align-items:center;gap:5px;margin:0 0 14px;padding:10px 14px;border:1px solid #b7addb;border-radius:7px;background:var(--purple-pale);color:var(--green-dark);font-weight:850;text-decoration:none}.live-tick{margin-left:4px;color:var(--purple);font-weight:950}.lesson.planned{color:#6b7772;background:#fafbfa}.lesson:hover{border-color:var(--purple)}
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{min-height:190px;padding:20px;border:1px solid var(--line);border-radius:8px;background:#fff;display:flex;flex-direction:column;box-shadow:0 8px 22px rgba(0,70,55,.05)}.kicker{margin:0 0 7px;color:var(--purple);font-size:12px;font-weight:900;letter-spacing:.12em}.card h3{margin:0 0 8px;color:var(--green-dark);font-size:21px}.card p{margin:0;color:var(--muted)}.card ul{margin:10px 0 0;padding-left:20px;color:var(--muted)}.action{margin-top:auto;display:inline-flex;align-self:flex-start;padding:9px 12px;border-radius:5px;background:var(--purple);color:#fff;text-decoration:none;font-weight:850}.note{margin-top:18px;padding:14px 16px;border-left:4px solid #b7addb;background:var(--purple-pale);color:var(--muted)}.exam-date{font-size:24px;font-weight:900;color:var(--green-dark);margin:5px 0 8px}.badge{display:inline-block;width:max-content;padding:5px 8px;border-radius:20px;background:var(--purple-pale);color:var(--purple);font-size:12px;font-weight:900;margin-bottom:10px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offset:3px}
 @media(max-width:900px){.lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.cards{grid-template-columns:1fr 1fr}}
@@ -38,7 +38,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
     <button class="tab" data-tab="revision" aria-selected="false">Revision</button>
   </div>
 
-  <section class="panel active" id="lessons">
+  <section class="panel active" id="lessons"><a class="welcome-link" href="lessons/h446/H446Welcome.html">Course welcome <span class="live-tick" aria-hidden="true">✓</span></a>
     <div class="year-switch">
       <button class="year-btn" data-year="12" aria-pressed="true">Year 12</button>
       <button class="year-btn" data-year="13" aria-pressed="false">Year 13</button>
@@ -114,8 +114,7 @@ function renderLessons(){
     const grid=sec.querySelector('.lesson-grid');
     for(let x=n;x<=end;x++){
       const href=liveMap[x],el=document.createElement(href?'a':'div');
-      el.className='lesson '+(href?'live':'planned');el.textContent=pad(x);
-      if(href){el.href=href;el.setAttribute('aria-label','Open lesson '+pad(x));}
+      el.className='lesson '+(href?'live':'planned');if(href){el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';el.href=href;el.setAttribute('aria-label','Open live lesson '+pad(x));}else{el.textContent=pad(x);}
       grid.append(el);
     }
     holder.append(sec);n=end+1;
