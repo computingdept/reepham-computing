@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#176b4a">
+<title>Year 7 Computing · Lesson 001 · Welcome to Computing</title>
+<style>
+:root{--green:#176b4a;--green-dark:#0f4e36;--green-soft:#edf7f2;--ink:#16251f;--muted:#52645c;--line:#d9e2dd;--paper:#fff;--wash:#f4f7f5;--blue:#24699d;--blue-soft:#eaf5fb;--gold:#f2bf3b;--orange:#9b430f;--orange-soft:#fff2e9;--nav:180px}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth}body{margin:0;background:var(--wash);color:var(--ink);font-family:Inter,Aptos,"Segoe UI",Arial,sans-serif;font-size:clamp(18px,1.35vw,26px);line-height:1.38}button,input{font:inherit}button{cursor:pointer}:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
+.teacher-nav{position:fixed;inset:0 auto 0 0;width:var(--nav);z-index:20;background:rgba(255,255,255,.99);border-right:1px solid var(--line);box-shadow:4px 0 14px rgba(10,40,26,.06);display:flex;flex-direction:column;overflow-y:auto}.teacher-nav .brand{padding:.85rem .72rem;border-bottom:1px solid var(--line)}.teacher-nav .brand strong{display:block;color:var(--green-dark);font-size:.72em;letter-spacing:.08em}.teacher-nav .brand span{display:block;color:var(--muted);font-size:.62em;margin-top:.15rem}.nav-buttons{padding:.55rem;display:grid;gap:.18rem}.nav-buttons button{border:0;border-left:5px solid transparent;background:transparent;color:#385048;padding:.56rem .55rem;font-size:.67em;font-weight:800;text-align:left;border-radius:.32rem}.nav-buttons button.active{color:var(--green-dark);border-left-color:var(--green);background:var(--green-soft)}.nav-tools{margin-top:auto;padding:.6rem;border-top:1px solid var(--line);display:grid;gap:.45rem}.control{border:2px solid var(--green);border-radius:.5rem;background:var(--green);color:#fff;padding:.48rem .45rem;font-size:.64em;font-weight:850}.control[aria-pressed="true"]{background:#fff;color:var(--green-dark)}
+.signal-wrap{position:sticky;top:0;z-index:15;margin-left:var(--nav);background:rgba(244,247,245,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}.signal-bar{max-width:1500px;margin:0 auto;padding:.45rem clamp(.7rem,2vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem}.signals{display:flex;flex-wrap:wrap;gap:.45rem}.signal{min-height:42px;display:inline-flex;align-items:center;padding:.25rem .72rem;border-radius:999px;font-size:.63em;font-weight:900;border:1px solid var(--line);background:#fff;color:var(--green-dark)}.lesson-date{font-size:.63em;color:var(--muted);font-weight:800;white-space:nowrap}
+main{margin-left:var(--nav);min-height:100vh}.page{display:none;min-height:calc(100vh - 58px);padding:clamp(1.2rem,3vw,2.8rem);max-width:1500px;margin:0 auto}.page.active{display:block}.page-head{margin-bottom:1.25rem}.eyebrow{margin:0 0 .32rem;color:var(--green);font-size:.7em;font-weight:900;letter-spacing:.11em;text-transform:uppercase}h1{margin:.05rem 0 .55rem;color:var(--green-dark);font-size:clamp(2rem,4vw,4.2rem);line-height:1.03;letter-spacing:-.045em}h2{margin:.15rem 0 .55rem;color:var(--green-dark);font-size:1.35em}h3{margin:.1rem 0 .4rem;color:var(--green-dark);font-size:1.05em}.lead{margin:0;max-width:70ch;color:#30453d}.title-kicker{color:var(--green);font-size:.45em;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.35rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:var(--paper);border:1px solid var(--line);border-radius:.8rem;padding:1.05rem;box-shadow:0 8px 24px rgba(18,45,33,.07)}.card p:first-child{margin-top:0}.card p:last-child{margin-bottom:0}.question{border-left:7px solid var(--green)}.question h3{font-size:1em}.answer{display:none;margin-top:.8rem;padding:.8rem;border-radius:.55rem;background:var(--green-soft);border:1px solid #b9d7c9;color:var(--green-dark)}body.show-answers .answer{display:block}.challenge{border-left-color:var(--orange);background:var(--orange-soft)}
+.objectives{display:grid;gap:.8rem;max-width:1000px}.objective{display:flex;gap:.8rem;align-items:flex-start}.tick{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;color:var(--green);font-weight:950}.expectation{border-top:7px solid var(--green)}.slant-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin-top:.8rem}.slant{background:#fff;border:1px solid var(--line);border-radius:.7rem;padding:.8rem;text-align:center}.slant b{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;margin:0 auto .45rem;background:var(--green);color:white;font-size:1.25em}.slant span{display:block;font-size:.7em;color:var(--muted)}
+.definition{border-left:7px solid var(--blue)}.definition .word{color:var(--blue);font-weight:950}.warning{border:2px solid #d8b06a;background:#fff9e8}.reference{margin-top:1rem}.reference details{background:#fff;border:1px solid var(--line);border-radius:.7rem;padding:.8rem}.reference summary{cursor:pointer;font-weight:900;color:var(--green-dark)}.reference ul{columns:2;column-gap:2rem}
+.model-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:1rem}.fake-password{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.35em;font-weight:900;letter-spacing:.04em;padding:.7rem .85rem;border-radius:.55rem;background:#132e25;color:#fff;display:inline-block}.model-step{opacity:.18;transform:translateY(4px);transition:.2s ease}.model-step.step-visible{opacity:1;transform:none}.model-step strong{color:var(--green-dark)}.safe-note{padding:.75rem;border-radius:.55rem;background:var(--blue-soft);border:1px solid #b7d8e9;color:#153f69;font-size:.83em}
+.choice-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.65rem}.choice{border:2px solid var(--line);border-radius:.6rem;background:#fff;padding:.7rem;text-align:left;font-weight:800;color:var(--ink)}.choice:hover{border-color:var(--green)}.choice.selected{border-color:var(--green);background:var(--green-soft)}.choice.feedback-good{border-color:#4d8b5e;background:#eef8ef}.choice.feedback-bad{border-color:#b96842;background:#fff0e8}.choice-feedback{min-height:1.6em;margin-top:.55rem;font-size:.78em;color:var(--muted)}
+.checklist{display:grid;gap:.7rem}.check-item{display:flex;gap:.75rem;align-items:flex-start;padding:.8rem;border:1px solid var(--line);border-radius:.65rem;background:#fff}.check-item input{width:26px;height:26px;margin-top:.12rem;accent-color:var(--green)}.check-item strong{display:block;color:var(--green-dark)}.check-item span{display:block;color:var(--muted);font-size:.78em}.work-standards{margin-top:1rem}
+.vocab{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}.vocab-card{min-height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:2px solid var(--line);border-radius:.75rem;background:#fff;padding:.8rem;cursor:pointer}.vocab-card dt{font-weight:950;color:var(--green-dark)}.vocab-card dd{margin:.5rem 0 0;color:var(--muted);font-size:.78em}.vocab-card.hide-definition dd,.vocab-card.hide-term dt{filter:blur(8px);user-select:none}.vocab-card.revealed dt,.vocab-card.revealed dd,body.show-answers .vocab-card dt,body.show-answers .vocab-card dd{filter:none}
+.exit-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1rem}.exit-choice{border:2px solid var(--line);border-radius:.8rem;background:#fff;padding:1rem;text-align:center;color:var(--ink)}.exit-choice[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft)}.exit-icon{display:block;font-size:2.2em}.exit-choice strong{display:block;color:var(--green-dark);font-size:1.08em}.exit-choice span:last-child{display:block;color:var(--muted);font-size:.72em;margin-top:.35rem}.exit-status{color:var(--green-dark);font-weight:850}.catchup-note{display:none;margin:.75rem 0 1rem;padding:.75rem .85rem;border-left:6px solid var(--blue);background:var(--blue-soft);color:#153f69;border-radius:.35rem;font-size:.78em}body.catchup-mode .catchup-note{display:block}.mini{font-size:.72em;color:var(--muted)}.footer-line{margin-top:1.2rem;padding-top:.8rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.68em}
+@media(max-width:900px){:root{--nav:150px}.grid,.grid.three,.model-layout,.exit-options{grid-template-columns:1fr}.slant-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vocab{grid-template-columns:repeat(2,minmax(0,1fr))}.reference ul{columns:1}}
+@media(max-width:650px){:root{--nav:0px}.teacher-nav{position:static;width:100%;height:auto;border-right:0;border-bottom:1px solid var(--line)}.teacher-nav .brand{display:none}.nav-buttons{display:flex;overflow-x:auto}.nav-buttons button{white-space:nowrap;border-left:0;border-bottom:4px solid transparent}.nav-buttons button.active{border-bottom-color:var(--green)}.nav-tools{display:flex;margin:0}.signal-wrap,main{margin-left:0}.signal-bar{align-items:flex-start;flex-direction:column}.page{min-height:auto}.vocab{grid-template-columns:1fr}.slant-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside class="teacher-nav" aria-label="Lesson navigation">
+<div class="brand"><strong>YEAR 7 · COMPUTING</strong><span>Lesson 001 · Welcome to Computing</span></div>
+<nav class="nav-buttons">
+<button data-page="do-now">Do Now</button><button data-page="objectives">Objectives</button><button data-page="new-learning">New Learning</button><button data-page="i-do">I Do</button><button data-page="we-do">We Do</button><button data-page="you-do">You Do</button><button data-page="vocabulary">Key Vocabulary</button><button data-page="exit-ticket">Exit Ticket</button>
+</nav>
+<div class="nav-tools"><button class="control" id="reveal" aria-pressed="false">Reveal answers</button><button class="control" id="catchup" aria-pressed="false">Catch-up mode</button></div>
+</aside>
+<header class="signal-wrap"><div class="signal-bar"><div class="signals"><span class="signal" id="phaseSignal">Do Now</span><span class="signal" id="behaviourSignal">Quiet Working</span><span class="signal" id="responseSignal">MWB</span></div><time class="lesson-date" id="lessonDate"></time></div></header>
+<main>
+<section id="do-now" class="page" data-phase="Do Now" data-behaviour="Quiet Working" data-response="MWB">
+<div class="page-head"><p class="eyebrow">DO NOW · 6 MINUTES — START FROM WHAT YOU KNOW</p><h1>Welcome to Computing</h1><p class="lead">Answer all four questions. Short answers are fine.</p></div>
+<div class="catchup-note"><strong>Catching up?</strong> Try each question before you reveal the answers. You do not need a school login for this part.</div>
+<div class="grid">
+<article class="card question"><h3>1. Give one rule that helps everyone learn in a computer room.</h3><div class="answer">Example: listen when someone is speaking, support others, or keep food and drink away from the desks.</div></article>
+<article class="card question"><h3>2. What should you do when someone else is speaking?</h3><div class="answer">Listen and let them finish before you talk.</div></article>
+<article class="card question"><h3>3. Why should food and drink be kept away from computer desks?</h3><div class="answer">It helps protect the equipment and keeps the room safe and tidy.</div></article>
+<article class="card question challenge"><h3>4. Challenge: Why might a school block some websites?</h3><div class="answer">To stop students opening websites the school thinks are not suitable.</div></article>
+</div></section>
+<section id="objectives" class="page" data-phase="Objectives" data-behaviour="Listening" data-response="">
+<div class="page-head"><p class="eyebrow">TODAY WE WILL</p><h1>Get ready to use Computing safely</h1></div>
+<div class="catchup-note"><strong>Catching up?</strong> These are the things you should understand or complete by the end of this lesson.</div>
+<div class="card objectives">
+<div class="objective"><span class="tick">1</span><div><strong>Know our Computing expectations.</strong><div class="mini">Respect other people, the room and your learning.</div></div></div>
+<div class="objective"><span class="tick">2</span><div><strong>Know what filtering and monitoring mean.</strong></div></div>
+<div class="objective"><span class="tick">3</span><div><strong>Set up your school account safely.</strong><div class="mini">Know your username and use a strong password.</div></div></div>
+<div class="objective"><span class="tick">4</span><div><strong>Know how your Computing work should be presented.</strong></div></div>
+</div></section>
+<section id="new-learning" class="page" data-phase="New Learning" data-behaviour="Listening" data-response="Choral Response">
+<div class="page-head"><p class="eyebrow">NEW LEARNING — KNOW THE ROUTINES</p><h1>Respect. Learn. Use technology well.</h1></div>
+<div class="catchup-note"><strong>Catching up?</strong> Read each card. The bold words are the ideas you need to remember.</div>
+<div class="grid three">
+<article class="card expectation"><h2>Respect for others</h2><p>Listen when others speak.</p><p>Support other people.</p><p>Do not interrupt.</p></article>
+<article class="card expectation"><h2>Respect the room</h2><p>Leave desks as you found them.</p><p>Keep food and drink away from the desks.</p><p>Follow the Acceptable Use Agreement.</p></article>
+<article class="card expectation"><h2>Respect learning</h2><p>Be ready to answer and work.</p><p>Present your work well.</p><p>Keep trying when work is hard.</p></article>
+</div>
+<div class="card" style="margin-top:1rem"><h2>SLANT when the teacher is speaking</h2><div class="slant-grid">
+<div class="slant"><b>S</b><strong>Sit up</strong><span>Face forward and get ready.</span></div><div class="slant"><b>L</b><strong>Listen</strong><span>Pay attention.</span></div><div class="slant"><b>A</b><strong>Ask &amp; answer</strong><span>Join in.</span></div><div class="slant"><b>N</b><strong>Never interrupt</strong><span>Let people finish.</span></div><div class="slant"><b>T</b><strong>Track the speaker</strong><span>Look towards the person speaking.</span></div>
+</div></div>
+<div class="grid" style="margin-top:1rem">
+<article class="card definition"><h2><span class="word">Filtering</span></h2><p>The school can block websites it thinks are not suitable.</p><p>If you think a website is blocked by mistake, tell a teacher.</p></article>
+<article class="card definition"><h2><span class="word">Monitoring</span></h2><p>Staff may see activity on school systems, such as your device screen, internet history, files and emails.</p><p>Use school systems for schoolwork.</p></article>
+</div>
+<article class="card warning" style="margin-top:1rem"><h2>Acceptable Use Agreement</h2><p>It explains how you should use school computers, accounts and the internet.</p><p><strong>Do not share your password or use somebody else's login.</strong></p><p class="mini">The source lesson says breaking the agreement can lead to a negative on Arbor, and two negatives can lead to a lunchtime detention.</p></article>
+<div class="reference"><details><summary>Work standards — open when you need them</summary><ul><li>Add the date to each Class Notebook row.</li><li>Write in black font.</li><li>Mark in purple font.</li><li>Make titles and headings bold or underlined.</li><li>Use bullet points for unordered lists.</li><li>Use numbers for ordered lists.</li><li>Crop screenshots and do not stretch them.</li><li>For paper work, add a title and date and keep diagrams neat.</li></ul></details></div>
+</section>
+<section id="i-do" class="page" data-phase="I Do" data-behaviour="Listening" data-response="MWB">
+<div class="page-head"><p class="eyebrow">I DO — WATCH THE CHECK</p><h1>What makes a safer school password?</h1><p class="lead">The lesson says your school password should be at least <strong>10 characters</strong>.</p></div>
+<div class="catchup-note"><strong>Catching up?</strong> Click on the right side of the screen to reveal each check. Never type your real school password into this page.</div>
+<div class="model-layout">
+<article class="card"><p class="mini">FAKE EXAMPLE ONLY</p><div class="fake-password">GreenTiger27</div><div style="margin-top:1rem;display:grid;gap:.75rem"><div class="model-step"><strong>Step 1 — Count it.</strong><br>It has more than 10 characters.</div><div class="model-step"><strong>Step 2 — Check it is not obvious.</strong><br>It is not just a first name or a simple number.</div><div class="model-step"><strong>Step 3 — Keep it private.</strong><br>Do not tell friends your password. Do not use someone else's login.</div></div></article>
+<aside class="card"><h2>Teacher model</h2><p>Ask:</p><ul><li>Is it long enough?</li><li>Would it be easy for someone else to guess?</li><li>Will I keep it private?</li></ul><div class="safe-note"><strong>Important:</strong> the webpage never asks students to enter a real password.</div></aside>
+</div></section>
+<section id="we-do" class="page" data-phase="We Do" data-behaviour="Quiet Working" data-response="MWB">
+<div class="page-head"><p class="eyebrow">WE DO — IMPROVE THE ANSWER TOGETHER</p><h1>Which choice is safer?</h1><p class="lead">Choose an answer. Then explain why.</p></div>
+<div class="catchup-note"><strong>Catching up?</strong> Make a choice first. Click your answer to check it.</div>
+<div class="grid">
+<article class="card scenario" data-correct="b"><h3>1. A friend asks for your school password.</h3><div class="choice-row"><button class="choice" data-choice="a">A · Tell them</button><button class="choice" data-choice="b">B · Keep it private</button></div><div class="choice-feedback" aria-live="polite"></div></article>
+<article class="card scenario" data-correct="b"><h3>2. A website you need for school is blocked.</h3><div class="choice-row"><button class="choice" data-choice="a">A · Try to get around the block</button><button class="choice" data-choice="b">B · Tell a teacher</button></div><div class="choice-feedback" aria-live="polite"></div></article>
+<article class="card scenario" data-correct="a"><h3>3. Someone else is answering a question.</h3><div class="choice-row"><button class="choice" data-choice="a">A · Listen and let them finish</button><button class="choice" data-choice="b">B · Talk over them</button></div><div class="choice-feedback" aria-live="polite"></div></article>
+<article class="card scenario" data-correct="a"><h3>4. You are using a school computer.</h3><div class="choice-row"><button class="choice" data-choice="a">A · Use it for schoolwork</button><button class="choice" data-choice="b">B · Use anything you like</button></div><div class="choice-feedback" aria-live="polite"></div></article>
+</div></section>
+<section id="you-do" class="page" data-phase="You Do" data-behaviour="Independent Working" data-response="Device">
+<div class="page-head"><h1><span class="title-kicker">INDEPENDENT PRACTICE · ABOUT 15 MINUTES</span>Set up your Computing account</h1><p class="lead">Complete the jobs in order. Ask for help if a school system does not work.</p></div>
+<div class="catchup-note"><strong>Catching up from home?</strong> Do not enter a real password anywhere on this page. Complete any school-only steps when you are back in school or when your teacher has given you access.</div>
+<div class="checklist">
+<label class="check-item"><input type="checkbox"><div><strong>1. Review the Acceptable Use Agreement.</strong><span>Know what you can and cannot do on school systems.</span></div></label>
+<label class="check-item"><input type="checkbox"><div><strong>2. Set a strong school password.</strong><span>It should have at least 10 characters. Keep it private.</span></div></label>
+<label class="check-item"><input type="checkbox"><div><strong>3. Record your username, school email and printer code in your planner.</strong><span>Use the details given by your teacher. Do not write your password in the webpage.</span></div></label>
+<label class="check-item"><input type="checkbox"><div><strong>4. Check that you can log in.</strong><span>If something does not work, tell your teacher.</span></div></label>
+<label class="check-item"><input type="checkbox"><div><strong>5. Add evidence to Class Notebook.</strong><span>Add a cropped screenshot of your work.</span></div></label>
+</div>
+<article class="card work-standards"><h2>Before you finish</h2><p>Check your Class Notebook: date added, black font, clear heading, neat screenshot.</p></article>
+</section>
+<section id="vocabulary" class="page" data-phase="Key Vocabulary" data-behaviour="Listening" data-response="Choral Response">
+<div class="page-head"><h1><span class="title-kicker">PRECISION MATTERS</span>Say it like a computer scientist</h1><p class="lead">Click one card at a time to reveal the hidden word or meaning.</p></div>
+<div class="catchup-note"><strong>Catching up?</strong> Say each word aloud, then explain it without looking.</div>
+<dl class="vocab">
+<div class="vocab-card hide-definition" tabindex="0" role="button"><dt>Acceptable Use Agreement</dt><dd>The rules for using school computers, accounts and the internet.</dd></div>
+<div class="vocab-card hide-term" tabindex="0" role="button"><dt>Filtering</dt><dd>Blocking websites the school thinks are not suitable.</dd></div>
+<div class="vocab-card hide-definition" tabindex="0" role="button"><dt>Monitoring</dt><dd>Checking activity on school systems.</dd></div>
+<div class="vocab-card hide-term" tabindex="0" role="button"><dt>Username</dt><dd>The name used to identify your school account.</dd></div>
+<div class="vocab-card hide-definition" tabindex="0" role="button"><dt>Password</dt><dd>A private set of characters used to protect an account.</dd></div>
+<div class="vocab-card hide-term" tabindex="0" role="button"><dt>Class Notebook</dt><dd>The place where you keep and show your Computing work.</dd></div>
+</dl></section>
+<section id="exit-ticket" class="page" data-phase="Exit Ticket" data-behaviour="Reflection" data-response="Show Your Hand">
+<div class="page-head"><p class="eyebrow">EXIT TICKET</p><h1>How ready are you?</h1><p class="lead">Think about filtering, monitoring, your login and the Computing expectations.</p></div>
+<div class="catchup-note"><strong>Catching up?</strong> Pick the option that best matches how you feel. If you need help, make a note of the part you are unsure about.</div>
+<div class="exit-options" role="group" aria-label="Lesson confidence">
+<button class="exit-choice" type="button" aria-pressed="false" data-choice="Confident"><span class="exit-icon">👍</span><strong>Confident</strong><span>I can explain the key ideas and I am ready to use the systems.</span></button>
+<button class="exit-choice" type="button" aria-pressed="false" data-choice="Nearly there"><span class="exit-icon">🫳</span><strong>Nearly there</strong><span>I understand most of it but need to check one thing.</span></button>
+<button class="exit-choice" type="button" aria-pressed="false" data-choice="Need help"><span class="exit-icon">👎</span><strong>Need help</strong><span>I need help with a rule, word or school system.</span></button>
+</div><p class="exit-status" id="exitStatus" aria-live="polite"></p><div class="footer-line"><strong>Year 7 · Lesson 001</strong><span>Welcome to Computing</span></div>
+</section>
+</main>
+<script>
+const order=['do-now','objectives','new-learning','i-do','we-do','you-do','vocabulary','exit-ticket'];
+const pages=[...document.querySelectorAll('.page')],nav=[...document.querySelectorAll('.nav-buttons button')],phaseSignal=document.getElementById('phaseSignal'),behaviourSignal=document.getElementById('behaviourSignal'),responseSignal=document.getElementById('responseSignal'),reveal=document.getElementById('reveal'),catchup=document.getElementById('catchup');
+const now=new Date(),lessonDate=document.getElementById('lessonDate');lessonDate.dateTime=now.toISOString().slice(0,10);lessonDate.textContent=new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).format(now);
+const modelSteps=[...document.querySelectorAll('.model-step')];let modelIndex=0;function resetModel(){modelIndex=0;modelSteps.forEach((s,i)=>s.classList.toggle('step-visible',i===0))}
+function showPage(id,updateHash=true){const page=document.getElementById(id)||document.getElementById('do-now');pages.forEach(p=>p.classList.toggle('active',p===page));nav.forEach(b=>b.classList.toggle('active',b.dataset.page===page.id));phaseSignal.textContent=page.dataset.phase||'';behaviourSignal.textContent=page.dataset.behaviour||'';const r=page.dataset.response||'';responseSignal.hidden=!r;responseSignal.textContent=r;document.body.classList.remove('show-answers');reveal.setAttribute('aria-pressed','false');reveal.textContent=page.id==='vocabulary'?'Reveal all':'Reveal answers';if(page.id==='i-do')resetModel();if(updateHash)history.replaceState(null,'','#'+page.id);window.scrollTo({top:0,behavior:'smooth'})}
+nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+const vocabCards=[...document.querySelectorAll('.vocab-card')];
+reveal.addEventListener('click',()=>{const showing=document.body.classList.toggle('show-answers');reveal.setAttribute('aria-pressed',String(showing));const vocab=document.querySelector('.page.active')?.id==='vocabulary';reveal.textContent=vocab?(showing?'Reset vocabulary':'Reveal all'):(showing?'Hide answers':'Reveal answers');if(!showing)vocabCards.forEach(c=>c.classList.remove('revealed'))});
+catchup.addEventListener('click',()=>{const on=document.body.classList.toggle('catchup-mode');catchup.setAttribute('aria-pressed',String(on));catchup.textContent=on?'Catch-up mode ✓':'Catch-up mode'});
+resetModel();
+document.querySelectorAll('.scenario').forEach(card=>{const correct=card.dataset.correct;card.querySelectorAll('.choice').forEach(button=>button.addEventListener('click',()=>{card.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected','feedback-good','feedback-bad'));button.classList.add('selected',button.dataset.choice===correct?'feedback-good':'feedback-bad');card.querySelector('.choice-feedback').textContent=button.dataset.choice===correct?'Good choice. Explain why.':'Try again. Which choice follows the lesson rules?'}))});
+vocabCards.forEach(card=>{const toggle=()=>card.classList.toggle('revealed');card.addEventListener('click',toggle);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}})});
+const exitChoices=[...document.querySelectorAll('.exit-choice')];exitChoices.forEach(choice=>choice.addEventListener('click',()=>{exitChoices.forEach(b=>b.setAttribute('aria-pressed',String(b===choice)));document.getElementById('exitStatus').textContent='Selected: '+choice.dataset.choice}));
+function advance(){const active=document.querySelector('.page.active');if(!active)return;if(active.id==='i-do'&&modelIndex<modelSteps.length-1){modelIndex++;modelSteps[modelIndex].classList.add('step-visible');return}if(active.id==='vocabulary'){const next=vocabCards.find(c=>!c.classList.contains('revealed'));if(next){next.classList.add('revealed');return}}const idx=order.indexOf(active.id);if(idx<order.length-1)showPage(order[idx+1])}
+window.addEventListener('click',e=>{if(e.target.closest('button,input,a,summary,details,.vocab-card,.teacher-nav'))return;if(e.clientX>=window.innerWidth*.58)advance()});
+document.addEventListener('keydown',e=>{if(e.target.matches('input,button'))return;const active=document.querySelector('.page.active'),idx=order.indexOf(active.id);if(e.key==='ArrowRight'&&idx<order.length-1)advance();if(e.key==='ArrowLeft'&&idx>0)showPage(order[idx-1])});
+showPage(location.hash.slice(1)||'do-now',false);
+</script>
+</body>
+</html>
