@@ -29,4 +29,16 @@ Once Pages is enabled, commits to `main` will update the website automatically.
 - GCSE OCR J277: https://computingdept.github.io/reepham-j277-lesson/
 - A Level OCR H446: https://computingdept.github.io/reepham-h446-lessons/
 
-KS3 Computing and ITJ836 are deliberately marked **Lessons coming soon** until their destinations are ready.
+Year 7 and Year 8 have separate hubs with 35 lesson placeholders each (L01–L35):
+
+- [Year 7 Hub](year-7-hub.html)
+- [Year 8 Hub](year-8-hub.html)
+
+Year 9 and ITJ836 remain **Lessons coming soon**.
+
+## Project requirement: mobile friendly
+
+All future pages and updates must work well on mobile, especially Apple iPhones and Safari. Keep layouts compact, use the shared RHSC stylesheet and branding, avoid horizontal page overflow, support browser zoom, and provide touch targets of at least 44px. Check phone-width layouts and keyboard focus when changing navigation or layout.
+
+Every lesson hub must include a visible **Back to Computing** link to `index.html#pathways`; do not rely on the browser Back button or the mobile menu. Keep lesson content separate for each year group even where lesson numbers match.
+
