@@ -8,6 +8,7 @@ body{background:#f5f8f7}.top{border-top:4px solid var(--green)}.seal{border-radi
 @media(max-width:900px){.years{grid-template-columns:repeat(3,minmax(0,1fr))}.subjects{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){main{padding-top:24px}.years{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.year{min-height:164px;padding:16px}.year strong{font-size:54px}.subjects{grid-template-columns:1fr;gap:8px}.subject{min-height:78px;padding:12px 14px}.subject-icon{width:42px;height:42px}.tabs a{flex-direction:column;gap:4px;min-height:66px;font-size:14px}.tabs svg{width:20px;height:20px}.section-title{flex-wrap:wrap;gap:4px 12px}.top-inner{padding-block:12px}}
 .year.ks4{background:#39816c;border-color:#39816c;color:#fff}.year.ks4 .year-bottom{color:#fff}.year.ks4 .year-arrow{background:#2a6857;color:#fff}.year.ks4:hover{background:#2d705d;border-color:#2d705d;color:#fff}
+.subject-icon.tone-dt{width:82px;background:#edf3ef;color:#24634d}.dt-symbols{display:flex;align-items:center;gap:4px}.subject .dt-symbols svg{width:21px;height:24px;flex-shrink:0}.tone-food{background:#fff0dc;color:#805719}
 </style></head><body><a class="skip" href="#main">Skip to learning</a><header class="top"><div class="top-inner"><a class="brand" href="#"><span class="seal" aria-hidden="true">R</span><span><small>REEPHAM HIGH SCHOOL &amp; COLLEGE</small><strong>Learning Hub</strong></span></a><nav class="top-links" aria-label="School websites"><a href="https://www.reephamhigh.org.uk/">High School ↗</a><a href="https://www.reephamcollege.org.uk/">College ↗</a></nav></div></header><main id="main"></main><footer class="footer"><div class="footer-inner"><span>Reepham High School &amp; College · 2026–27</span><div class="sources"><a href="computing.html">Computing department</a><a href="https://www.reephamhigh.org.uk/pupils/curriculum/">School curriculum ↗</a><a href="https://www.reephamcollege.org.uk/for-students-and-parents/subjects/">College courses ↗</a></div></div></footer><script>
 const ks3=['Art and Design','Computing','Design and Technology','English','Geography','History','Mathematics','Modern Foreign Languages','Music','Physical Education','PSHE','Religious Education','Science'];
 const core=['English','Mathematics','Science','Core Physical Education','Personal Development'];
@@ -16,7 +17,9 @@ const college=['Art, Craft & Design','Biology','Business Studies','Chemistry','C
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
 const escapeHtml=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
 
-function icon(name){const paths={
+function icon(name){if(name==='dt')return '<span class="dt-symbols">'+icon('art')+icon('thread')+icon('food')+'</span>';const paths={
+food:'<path d="M5 10h14v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4zM3 10h18M1 13h4m14 0h4M9 3v3m6-3v3"/>',
+thread:'<ellipse cx="12" cy="4" rx="7" ry="2"/><path d="M7 5v14m10-14v14M5 20c0-3 14-3 14 0s-14 3-14 0M7 8l10 3M7 12l10 3M7 16l10 3"/>',
 book:'<path d="M12 5v15M3 4h5a4 4 0 0 1 4 2 4 4 0 0 1 4-2h5v15h-5a5 5 0 0 0-4 2 5 5 0 0 0-4-2H3z"/>',
 code:'<path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18"/>',
 math:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 4h2m4 0h2"/>',
@@ -30,7 +33,7 @@ exam:'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M8 10h
 history:'<path d="m3 8 9-5 9 5H3zm2 3v7m7-7v7m7-7v7M3 21h18"/>',
 camera:'<path d="M3 7h4l2-3h6l2 3h4v14H3z"/><circle cx="12" cy="13" r="4"/>'
 };return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+(paths[name]||paths.book)+'</svg>'}
-function subjectIcon(s){if(/Comput|Technology/.test(s))return 'code';if(/Math|Business|Econom/.test(s))return 'math';if(/Science|Biology|Chemistry|Physics/.test(s))return 'science';if(/Geography|French|Spanish|Languages/.test(s))return 'globe';if(/Art|Design|Food/.test(s))return 'art';if(/Music/.test(s))return 'music';if(/Photo/.test(s))return 'camera';if(/History|Law|Politics|Religious/.test(s))return 'history';if(/Physical|Sport/.test(s))return 'target';if(/PSHE|Personal|Psychology|Sociology|Criminology/.test(s))return 'people';return 'book'}
+function subjectIcon(s){if(/Food/.test(s))return 'food';if(s==='Design and Technology'||s==='Design Technology'||s==='Product Design')return 'dt';if(/Comput|Technology/.test(s))return 'code';if(/Math|Business|Econom/.test(s))return 'math';if(/Science|Biology|Chemistry|Physics/.test(s))return 'science';if(/Geography|French|Spanish|Languages/.test(s))return 'globe';if(/Art|Design|Food/.test(s))return 'art';if(/Music/.test(s))return 'music';if(/Photo/.test(s))return 'camera';if(/History|Law|Politics|Religious/.test(s))return 'history';if(/Physical|Sport/.test(s))return 'target';if(/PSHE|Personal|Psychology|Sociology|Criminology/.test(s))return 'people';return 'book'}
 
 const main=document.getElementById('main');
 function href(y,s,tab='lessons'){return '#year/'+y+'/'+slug(s)+'/'+tab}
