@@ -1,45 +1,28 @@
-# RHSC Computing Hub
+# RHSC Learning Hub
 
-GitHub Pages homepage for the Computing Department at **Reepham High School & College (RHSC)**.
-
-## Included
-
-- RHSC-style utility bar with Staff Area, school-site search, Facebook and Instagram.(update)
-- Responsive Computing navigation.
-- **Choose your pathway** cards: six across on wide screens, three across on tablets, swipeable on phones.
-- KS3 Computing, GCSE OCR J277, ITJ836 and A Level OCR H446.
-- Direct links to the existing J277 and H446 lesson hubs.
-- Accessible keyboard focus, reduced-motion support and a mobile menu.
-
-## GitHub Pages
-
-Publish from **main** and **/ (root)** in Settings → Pages.
-
-Once Pages is enabled, commits to `main` will update the website automatically.
+Mobile-friendly learning navigation for Reepham High School & College, Years 7–13.
 
 ## Structure
 
-- `index.html` — homepage
-- `assets/site.css` — responsive desktop/mobile styling
-- `assets/site.js` — mobile navigation and section highlighting
-- The Computing Department logo is embedded in `index.html` for a self-contained deploy.
+- `index.html`: year groups → subjects → Lessons / Skills Practice / Exam Practice. Routes use URL fragments and work on GitHub Pages without server configuration.
+- `computing.html`: preserved Computing department homepage.
+- `year-7-hub.html`, `year-8-hub.html`, `year-9-hub.html`: separate Computing resources with 35 lesson spaces and two assessment points per year.
+- Existing J277 and H446 course hubs remain linked.
 
-## Current lesson hubs
+## Content sources and limits
 
-- GCSE OCR J277: https://computingdept.github.io/reepham-j277-lesson/
-- A Level OCR H446: https://computingdept.github.io/reepham-h446-lessons/
+Subject navigation checked against the official websites on 24 September 2026:
 
-Years 7, 8 and 9 have separate hubs with 35 lesson placeholders each (L01–L35):
+- https://www.reephamhigh.org.uk/pupils/curriculum/
+- https://www.reephamhigh.org.uk/seecmsfile/?id=6925 (2026 Year 10 options)
+- https://www.reephamcollege.org.uk/for-students-and-parents/subjects/
 
-- [Year 7 Hub](year-7-hub.html)
-- [Year 8 Hub](year-8-hub.html)
-- [Year 9 Hub](year-9-hub.html)
+KS3 year/group allocation, current Year 11 options and college cohort availability require school confirmation. The navigation includes published subject areas, not a personalised timetable. Other subjects' lesson counts, assessment dates, resources and marking materials remain unset. Do not invent them or apply Computing's 35 lessons/two assessments to every subject.
 
-ITJ836 remains **Lessons coming soon**.
+## Mobile requirement
 
-## Project requirement: mobile friendly
+All updates must remain usable on iPhones and Safari, at narrow screen widths and with enlarged text. Preserve RHSC green branding, keyboard focus, touch targets of at least 44px and clear back links. Avoid horizontal page overflow. Keep year-group content separate.
 
-All future pages and updates must work well on mobile, especially Apple iPhones and Safari. Keep layouts compact, use the shared RHSC stylesheet and branding, avoid horizontal page overflow, support browser zoom, and provide touch targets of at least 44px. Check phone-width layouts and keyboard focus when changing navigation or layout.
+## Hosting
 
-Every lesson hub must include a visible **Back to Computing** link to `index.html#pathways`; do not rely on the browser Back button or the mobile menu. Keep lesson content separate for each year group even where lesson numbers match.
-
+GitHub Pages uses main, root. Custom domain: rhsccs.org.
