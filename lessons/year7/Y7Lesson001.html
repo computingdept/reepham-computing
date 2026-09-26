@@ -55,6 +55,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #bd7d08;outline-offset:3p
 .supportbtn{min-height:46px;border:1px solid #cddbd5;background:#f5f8f7;color:var(--rhsc);border-radius:12px;padding:9px 14px;font-weight:780;cursor:pointer}
 .supportbtn:hover,.supportbtn[aria-pressed="true"],.supportbtn[aria-expanded="true"]{background:#e8f3ef;border-color:#93baaC}
 .supportnote{font-size:.82rem;color:var(--muted);margin-left:auto}
+.voice-device{margin-top:10px;padding:12px;background:#f7f9f8;border:1px solid #dde6e2;border-radius:12px}
+.voice-device label{display:block;font-weight:780;color:var(--rhsc);margin-bottom:6px}
+.voiceselect{width:100%;min-height:44px;padding:9px 11px;border:1px solid #cfddd7;border-radius:10px;background:#fff;color:var(--ink)}
+.voicestatus{margin-top:6px;font-size:.86rem;color:#53625c}
 .readpanel{display:none;margin:-7px 0 16px;padding:15px 16px;background:#fff;border:1px solid #dce6e1;border-radius:16px;box-shadow:var(--shadow-soft)}
 .readpanel.open{display:block}.readpanel h3{margin:0 0 10px;color:var(--rhsc);font-size:1.08rem}.readpanel p{margin:0 0 10px;color:#53625c}
 .settingrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}.settingrow strong{min-width:92px}
@@ -124,6 +128,13 @@ body.step-mode .supportbar{margin-bottom:10px}
   <div class="settingrow"><strong>Voice</strong>
     <button class="choicebtn" type="button" data-setting="voice" data-value="female">British female <span aria-hidden="true">★</span></button>
     <button class="choicebtn" type="button" data-setting="voice" data-value="male">British male</button>
+  </div>
+  <div class="voice-device">
+    <label for="deviceVoiceSelect">Voice on this device</label>
+    <select id="deviceVoiceSelect" class="voiceselect" aria-describedby="voiceStatus">
+      <option value="auto">Detecting British voices…</option>
+    </select>
+    <div class="voicestatus" id="voiceStatus" role="status" aria-live="polite">Checking which British voices this device provides…</div>
   </div>
 </div>
 <div class="stepnav" id="stepNav" aria-label="Lesson step navigation">
@@ -244,6 +255,7 @@ function resetLesson(){location.reload()}
     return clone.innerText.replace(/\s+/g,' ').trim();
   }
   let voicePreference='female';
+  let selectedVoiceURI='auto';
   const listenLabels=new Map();
 
   function britishVoices(){
@@ -276,7 +288,50 @@ function resetLesson(){location.reload()}
   function ukVoice(){
     const voices=britishVoices();
     if(!voices.length) return null;
+    if(selectedVoiceURI && selectedVoiceURI!=='auto'){
+      const chosen=voices.find(v=>v.voiceURI===selectedVoiceURI);
+      if(chosen) return chosen;
+    }
     return [...voices].sort((a,b)=>rankVoice(b,voicePreference)-rankVoice(a,voicePreference))[0] || voices[0];
+  }
+
+  function updateVoiceUI(){
+    const select=document.getElementById('deviceVoiceSelect');
+    const status=document.getElementById('voiceStatus');
+    if(!select||!status) return;
+
+    const voices=britishVoices();
+    const wantedLabel=voicePreference==='male'?'British male':'British female';
+
+    select.innerHTML='';
+    const auto=document.createElement('option');
+    auto.value='auto';
+    auto.textContent='Automatic — best '+wantedLabel.toLowerCase();
+    select.appendChild(auto);
+
+    voices
+      .slice()
+      .sort((a,b)=>(a.name||'').localeCompare(b.name||''))
+      .forEach(v=>{
+        const opt=document.createElement('option');
+        opt.value=v.voiceURI;
+        opt.textContent=(v.name||'British English voice')+' — '+(v.lang||'en-GB');
+        select.appendChild(opt);
+      });
+
+    if(selectedVoiceURI!=='auto' && voices.some(v=>v.voiceURI===selectedVoiceURI)){
+      select.value=selectedVoiceURI;
+    }else{
+      selectedVoiceURI='auto';
+      select.value='auto';
+    }
+
+    const chosen=ukVoice();
+    if(chosen){
+      status.textContent='Using: '+chosen.name+' ('+(chosen.lang||'en-GB')+').';
+    }else{
+      status.textContent='No British voice is exposed by this browser. It will fall back to the device default voice.';
+    }
   }
 
   function setListenState(button,on){
@@ -326,7 +381,11 @@ function resetLesson(){location.reload()}
     synth.speak(u);
   }
 
-  if(synth) synth.onvoiceschanged=()=>ukVoice();
+  if(synth){
+    synth.onvoiceschanged=updateVoiceUI;
+    setTimeout(updateVoiceUI,0);
+    setTimeout(updateVoiceUI,350);
+  }
 
   // One clear Listen button for each lesson phase.
   stages.forEach(section=>{
@@ -385,7 +444,7 @@ function resetLesson(){location.reload()}
   document.getElementById('readingHelpBtn').addEventListener('click',e=>{
     const open=readingPanel.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',open?'true':'false');
   });
-  const defaults={size:'normal',spacing:'normal',colour:'white',font:'standard',voice:'female'};
+  const defaults={size:'normal',spacing:'normal',colour:'white',font:'standard',voice:'female',voiceURI:'auto'};
   let prefs={...defaults,...JSON.parse(localStorage.getItem('y7reading')||'{}')};
   function applyPrefs(){
     document.body.classList.toggle('read-large',prefs.size==='large');
@@ -394,12 +453,25 @@ function resetLesson(){location.reload()}
     document.body.classList.toggle('read-cream',prefs.colour==='cream');
     document.body.classList.toggle('read-bluegrey',prefs.colour==='bluegrey');
     voicePreference=prefs.voice==='male'?'male':'female';
+    selectedVoiceURI=prefs.voiceURI||'auto';
     document.querySelectorAll('.choicebtn').forEach(b=>b.setAttribute('aria-pressed',prefs[b.dataset.setting]===b.dataset.value?'true':'false'));
+    updateVoiceUI();
   }
   document.querySelectorAll('.choicebtn').forEach(b=>b.addEventListener('click',()=>{
-    prefs[b.dataset.setting]=b.dataset.value;if(b.dataset.setting==='voice')stopSpeech();localStorage.setItem('y7reading',JSON.stringify(prefs));applyPrefs();
+    prefs[b.dataset.setting]=b.dataset.value;if(b.dataset.setting==='voice'){prefs.voiceURI='auto';selectedVoiceURI='auto';stopSpeech();}localStorage.setItem('y7reading',JSON.stringify(prefs));applyPrefs();
   }));
   applyPrefs();
+
+  const deviceVoiceSelect=document.getElementById('deviceVoiceSelect');
+  if(deviceVoiceSelect){
+    deviceVoiceSelect.addEventListener('change',()=>{
+      selectedVoiceURI=deviceVoiceSelect.value||'auto';
+      prefs.voiceURI=selectedVoiceURI;
+      stopSpeech();
+      localStorage.setItem('y7reading',JSON.stringify(prefs));
+      updateVoiceUI();
+    });
+  }
 
   // One-step mode follows the eight lesson phases, not arbitrary page blocks.
   function showStage(index){
