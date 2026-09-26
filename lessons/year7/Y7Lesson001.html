@@ -121,6 +121,10 @@ body.step-mode .supportbar{margin-bottom:10px}
     <button class="choicebtn" type="button" data-setting="font" data-value="standard">Standard</button>
     <button class="choicebtn" type="button" data-setting="font" data-value="clear">Clear</button>
   </div>
+  <div class="settingrow"><strong>Voice</strong>
+    <button class="choicebtn" type="button" data-setting="voice" data-value="female">British female <span aria-hidden="true">★</span></button>
+    <button class="choicebtn" type="button" data-setting="voice" data-value="male">British male</button>
+  </div>
 </div>
 <div class="stepnav" id="stepNav" aria-label="Lesson step navigation">
   <button type="button" id="stepPrev">← Previous</button>
@@ -239,31 +243,90 @@ function resetLesson(){location.reload()}
     clone.querySelectorAll('button,script,style,.feedback:not(.show),.move,.supportbar,.stepnav,.termhelp .qmark').forEach(n=>n.remove());
     return clone.innerText.replace(/\s+/g,' ').trim();
   }
-  function ukVoice(){
-    if(!synth) return null;
-    const voices=synth.getVoices();
-    return voices.find(v=>v.lang==='en-GB') || voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith('en-gb')) || null;
+  let voicePreference='female';
+  const listenLabels=new Map();
+
+  function britishVoices(){
+    if(!synth) return [];
+    return synth.getVoices().filter(v=>{
+      const lang=(v.lang||'').toLowerCase().replace('_','-');
+      return lang==='en-gb' || lang.startsWith('en-gb-');
+    });
   }
+
+  function rankVoice(v,preference){
+    const n=(v.name||'').toLowerCase();
+    let score=0;
+    // Prefer natural / enhanced voices when the platform exposes them.
+    if(/natural|neural|enhanced|premium/.test(n)) score+=70;
+    if(/google uk english/.test(n)) score+=45;
+    if(/microsoft/.test(n)) score+=20;
+    if(v.localService) score+=5;
+
+    const femaleNames=['sonia','libby','serena','kate','martha','susan','fiona','female'];
+    const maleNames=['ryan','daniel','george','thomas','oliver','male'];
+    const wanted=preference==='male'?maleNames:femaleNames;
+    const other=preference==='male'?femaleNames:maleNames;
+
+    wanted.forEach((name,i)=>{ if(n.includes(name)) score+=100-i; });
+    other.forEach(name=>{ if(n.includes(name)) score-=80; });
+    return score;
+  }
+
+  function ukVoice(){
+    const voices=britishVoices();
+    if(!voices.length) return null;
+    return [...voices].sort((a,b)=>rankVoice(b,voicePreference)-rankVoice(a,voicePreference))[0] || voices[0];
+  }
+
+  function setListenState(button,on){
+    if(!button) return;
+    if(!listenLabels.has(button)) listenLabels.set(button,button.textContent);
+    button.setAttribute('aria-pressed',on?'true':'false');
+    button.textContent=on?'■ Stop':listenLabels.get(button);
+  }
+
   function stopSpeech(){
     if(synth) synth.cancel();
     document.querySelectorAll('.speech-focus').forEach(x=>x.classList.remove('speech-focus'));
-    document.querySelectorAll('[aria-pressed="true"].listen-part,[aria-pressed="true"].listen-q,[aria-pressed="true"].listen-feedback,#listenBtn[aria-pressed="true"]').forEach(x=>x.setAttribute('aria-pressed','false'));
+    listenLabels.forEach((label,button)=>{button.setAttribute('aria-pressed','false');button.textContent=label;});
     speakingBox=null;
   }
+
   function speakText(text,box,button){
     if(!synth||!text) return;
     if(speakingBox===box){stopSpeech();return;}
     stopSpeech();
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang='en-GB';u.rate=.88;u.pitch=1;
-    const v=ukVoice();if(v)u.voice=v;
+
+    // Short, calm UK delivery. Punctuation creates small natural pauses.
+    const spoken=text
+      .replace(/\s*·\s*/g,'. ')
+      .replace(/\s*[|•]\s*/g,'. ')
+      .replace(/([.!?])\s+/g,'$1 ')
+      .replace(/\s+/g,' ')
+      .trim();
+
+    const u=new SpeechSynthesisUtterance(spoken);
+    u.lang='en-GB';
+    u.rate=.90;
+    u.pitch=1;
+    u.volume=.96;
+    const v=ukVoice();
+    if(v) u.voice=v;
+
     speakingBox=box;
-    if(box)box.classList.add('speech-focus');
-    if(button)button.setAttribute('aria-pressed','true');
-    u.onend=u.onerror=()=>{if(box)box.classList.remove('speech-focus');if(button)button.setAttribute('aria-pressed','false');speakingBox=null;};
+    if(box) box.classList.add('speech-focus');
+    setListenState(button,true);
+
+    u.onend=u.onerror=()=>{
+      if(box) box.classList.remove('speech-focus');
+      setListenState(button,false);
+      speakingBox=null;
+    };
     synth.speak(u);
   }
-  if(synth) synth.onvoiceschanged=ukVoice;
+
+  if(synth) synth.onvoiceschanged=()=>ukVoice();
 
   // One clear Listen button for each lesson phase.
   stages.forEach(section=>{
@@ -322,7 +385,7 @@ function resetLesson(){location.reload()}
   document.getElementById('readingHelpBtn').addEventListener('click',e=>{
     const open=readingPanel.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',open?'true':'false');
   });
-  const defaults={size:'normal',spacing:'normal',colour:'white',font:'standard'};
+  const defaults={size:'normal',spacing:'normal',colour:'white',font:'standard',voice:'female'};
   let prefs={...defaults,...JSON.parse(localStorage.getItem('y7reading')||'{}')};
   function applyPrefs(){
     document.body.classList.toggle('read-large',prefs.size==='large');
@@ -330,10 +393,11 @@ function resetLesson(){location.reload()}
     document.body.classList.toggle('read-clear',prefs.font==='clear');
     document.body.classList.toggle('read-cream',prefs.colour==='cream');
     document.body.classList.toggle('read-bluegrey',prefs.colour==='bluegrey');
+    voicePreference=prefs.voice==='male'?'male':'female';
     document.querySelectorAll('.choicebtn').forEach(b=>b.setAttribute('aria-pressed',prefs[b.dataset.setting]===b.dataset.value?'true':'false'));
   }
   document.querySelectorAll('.choicebtn').forEach(b=>b.addEventListener('click',()=>{
-    prefs[b.dataset.setting]=b.dataset.value;localStorage.setItem('y7reading',JSON.stringify(prefs));applyPrefs();
+    prefs[b.dataset.setting]=b.dataset.value;if(b.dataset.setting==='voice')stopSpeech();localStorage.setItem('y7reading',JSON.stringify(prefs));applyPrefs();
   }));
   applyPrefs();
 
