@@ -9,7 +9,7 @@
 :root{--green:#006347;--dark:#003f36;--ink:#18231f;--muted:#61706a;--line:#d5e0dc;--soft:#f2f6f4;--white:#fff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f7f6;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}a{color:var(--green)}button,select{font:inherit}.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.topin{max-width:1180px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:var(--green);color:#fff;font-weight:850;font-size:1.35rem}.brand{font-weight:850;color:var(--dark);line-height:1.15}.brand small{display:block;font-size:.72rem;letter-spacing:.08em}.toplinks{margin-left:auto;display:flex;gap:9px}.toplinks a{border:1px solid var(--line);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:700}
 main{max-width:1180px;margin:auto;padding:30px 18px 70px}.back{display:inline-flex;align-items:center;min-height:42px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;text-decoration:none;font-weight:750}.eyebrow{margin:22px 0 4px;font-size:.8rem;font-weight:850;letter-spacing:.12em;color:var(--green)}h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-height:1}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;background:#edf3f0;border:1px solid var(--line);border-radius:13px;margin-bottom:20px}.tabs button{min-height:54px;border:0;border-radius:9px;background:transparent;color:#53645d;font-weight:800;font-size:1rem}.tabs button.active{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;background:#edf3f0;border:1px solid var(--line);border-radius:13px;margin-bottom:20px}.tabs button,.tabs a{min-height:54px;border:0;border-radius:9px;background:transparent;color:#53645d;font-weight:800;font-size:1rem;text-decoration:none;display:flex;align-items:center;justify-content:center}.tabs button.active{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.06)}.tabs a:hover,.tabs a:focus-visible{background:#fff;color:var(--green)}
 .panel{display:none;background:#fff;border:1px solid var(--line);border-top:3px solid #76aa98;border-radius:14px;padding:22px}.panel.active{display:block}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.sectionhead h2{margin:0;font-size:1.35rem}.count{color:var(--muted);font-size:.9rem}
 .lesson-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.lesson-grid a,.lesson-grid span{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:9px;border:1px solid #d5dfdb;text-decoration:none}.lesson-live{background:#eef8f4;color:var(--dark);border-color:#78b8a4!important;font-weight:850}.lesson-pending{background:#f1f4f3;color:#6b7973}.note{margin-top:11px;color:var(--muted);font-size:.9rem}
 .booklet-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.booklet-head h2{margin:0;color:var(--dark)}.booklet-head p{margin:4px 0 0;color:var(--muted)}.access{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.access button,.access a{min-height:42px;border:1px solid #c8d8d1;background:#fff;color:var(--green);border-radius:9px;padding:8px 11px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center}.access .print{background:var(--green);color:#fff;border-color:var(--green)}.access button[aria-pressed="true"]{background:var(--green);color:#fff}
@@ -42,7 +42,7 @@ main{max-width:1180px;margin:auto;padding:30px 18px 70px}.back{display:inline-fl
 <nav class="tabs" aria-label="Year 8 Computing sections">
 <button type="button" data-tab="lessons">▭ &nbsp; Lessons</button>
 <button type="button" data-tab="booklet">▤ &nbsp; Revision Booklet</button>
-<button type="button" data-tab="revision">◎ &nbsp; Revision Hub</button>
+<a class="revision-direct" href="year8-revision-ap3.html?v=20260927-1955">◎ &nbsp; Revision Hub</a>
 </nav>
 
 <section class="panel" id="lessons">
@@ -99,7 +99,7 @@ main{max-width:1180px;margin:auto;padding:30px 18px 70px}.back{display:inline-fl
 (function(){
  const PDF_URL='assets/year8/Yr8%20Assessment%20Point%203%20-%20Booklet.pdf';
  const tabs=[...document.querySelectorAll('[data-tab]')],panels=[...document.querySelectorAll('.panel')];
- function show(name){if(!['lessons','booklet','revision'].includes(name))name='lessons';tabs.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));panels.forEach(p=>p.classList.toggle('active',p.id===name));if(location.hash!=='#'+name)history.replaceState(null,'','#'+name)}
+ function show(name){if(name==='revision'){location.replace('year8-revision-ap3.html?v=20260927-1955');return}if(!['lessons','booklet'].includes(name))name='lessons';tabs.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));panels.forEach(p=>p.classList.toggle('active',p.id===name));if(location.hash!=='#'+name)history.replaceState(null,'','#'+name)}
  tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));addEventListener('hashchange',()=>show(location.hash.slice(1)));show(location.hash.slice(1)||'lessons');
 
  let pdfDoc=null,pdfPage=1,pdfZoom=1,pdfFitMode=true,pdfRenderToken=0;
