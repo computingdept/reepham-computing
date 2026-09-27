@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#006347">
+<title>Year 8 Computing · RHSC</title>
+<style>
+:root{--green:#006347;--dark:#003f36;--ink:#18231f;--muted:#61706a;--line:#d5e0dc;--soft:#f2f6f4;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f7f6;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}a{color:var(--green)}button,select{font:inherit}.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.topin{max-width:1180px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:var(--green);color:#fff;font-weight:850;font-size:1.35rem}.brand{font-weight:850;color:var(--dark);line-height:1.15}.brand small{display:block;font-size:.72rem;letter-spacing:.08em}.toplinks{margin-left:auto;display:flex;gap:9px}.toplinks a{border:1px solid var(--line);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:700}
+main{max-width:1180px;margin:auto;padding:30px 18px 70px}.back{display:inline-flex;align-items:center;min-height:42px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;text-decoration:none;font-weight:750}.eyebrow{margin:22px 0 4px;font-size:.8rem;font-weight:850;letter-spacing:.12em;color:var(--green)}h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-height:1}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;background:#edf3f0;border:1px solid var(--line);border-radius:13px;margin-bottom:20px}.tabs button{min-height:54px;border:0;border-radius:9px;background:transparent;color:#53645d;font-weight:800;font-size:1rem}.tabs button.active{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.panel{display:none;background:#fff;border:1px solid var(--line);border-top:3px solid #76aa98;border-radius:14px;padding:22px}.panel.active{display:block}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.sectionhead h2{margin:0;font-size:1.35rem}.count{color:var(--muted);font-size:.9rem}
+.lesson-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.lesson-grid a,.lesson-grid span{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:9px;border:1px solid #d5dfdb;text-decoration:none}.lesson-live{background:#eef8f4;color:var(--dark);border-color:#78b8a4!important;font-weight:850}.lesson-pending{background:#f1f4f3;color:#6b7973}.note{margin-top:11px;color:var(--muted);font-size:.9rem}
+.booklet-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.booklet-head h2{margin:0;color:var(--dark)}.booklet-head p{margin:4px 0 0;color:var(--muted)}.access{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.access button,.access a{min-height:42px;border:1px solid #c8d8d1;background:#fff;color:var(--green);border-radius:9px;padding:8px 11px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center}.access .print{background:var(--green);color:#fff;border-color:var(--green)}.access button[aria-pressed="true"]{background:var(--green);color:#fff}
+.info{padding:11px 13px;border:1px solid #c9ddd5;border-radius:10px;background:#eef7f4;color:#38544a;margin-bottom:14px}.pdfwrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#e9efec}.pdfwrap iframe{display:block;width:100%;height:76vh;min-height:620px;border:0;background:#fff}.pdf-fallback{padding:10px;text-align:center;background:#fff}
+.reader{margin-top:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}.reader[hidden]{display:none}.readerbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;background:#f7faf8;border-bottom:1px solid var(--line)}.readerbar select{min-height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:5px 9px}.readertext{padding:20px;white-space:pre-wrap;line-height:1.7;min-height:280px}.readertext.sm{font-size:.9rem}.readertext.lg{font-size:1.18rem}.readertext.xl{font-size:1.38rem}.readertext.cream{background:#fff8e7}.readertext.blue{background:#edf3f5}
+.words{display:none;margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff}.words.open{display:block}.wordgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.word{border:1px solid #dce5e1;border-radius:9px;padding:10px;background:#fbfcfb}.word strong{display:block;color:var(--green)}.word em{display:block;font-style:normal;font-weight:800;color:#765c20;margin:2px 0}.word span{font-size:.9rem;color:var(--muted)}
+.practice-card{display:grid;grid-template-columns:1.35fr .65fr;gap:14px}.practice-copy,.practice-go{border:1px solid var(--line);border-radius:13px;padding:20px}.practice-copy h2{margin:0;color:var(--dark)}.practice-copy p{color:var(--muted)}.practice-go{background:var(--green);color:#fff;text-decoration:none;display:flex;flex-direction:column;justify-content:center}.practice-go strong{font-size:1.45rem}.practice-go span{color:#dcefe8;margin-top:4px}.practice-points{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.practice-point{padding:13px;border:1px solid var(--line);border-radius:10px;background:#f7faf8}.practice-point strong{display:block;color:var(--green)}.practice-point span{display:block;color:var(--muted);font-size:.9rem;margin-top:3px}
+@media(max-width:850px){.lesson-grid{grid-template-columns:repeat(5,1fr)}.wordgrid,.practice-points{grid-template-columns:repeat(2,1fr)}.practice-card{grid-template-columns:1fr}}
+@media(max-width:600px){main{padding:18px 10px 55px}.tabs{grid-template-columns:1fr}.lesson-grid{grid-template-columns:repeat(4,1fr)}.toplinks{display:none}.pdfwrap iframe{height:65vh;min-height:470px}.wordgrid,.practice-points{grid-template-columns:1fr}.booklet-head{flex-direction:column}}
+@media print{body.print-reader .top,body.print-reader .back,body.print-reader .eyebrow,body.print-reader h1,body.print-reader .tabs,body.print-reader .booklet-head,body.print-reader .access,body.print-reader .info,body.print-reader .pdfwrap,body.print-reader .words,body.print-reader .practice-link{display:none!important}body.print-reader main{max-width:none;padding:0}body.print-reader .panel{display:block!important;border:0;padding:0}body.print-reader #lessons,body.print-reader #revision{display:none!important}body.print-reader .reader{border:0}body.print-reader .readerbar{display:none}body.print-reader .readertext{font-size:12pt!important;background:#fff!important;padding:0;white-space:pre-wrap}}
+</style>
+<script src="assets/year8/y8-booklet-accessibility.js"></script>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="mark">R</div><div class="brand"><small>REEPHAM HIGH SCHOOL &amp; COLLEGE</small>Learning Hub</div><div class="toplinks"><a href="computing.html">Computing department</a><a href="index.html">All subjects</a></div></div></header>
+<main>
+<a class="back" href="index.html#year/8">← Year 8 subjects</a>
+<p class="eyebrow">YEAR 8</p><h1>Computing</h1>
+<nav class="tabs" aria-label="Year 8 Computing sections">
+<button type="button" data-tab="lessons">▭ &nbsp; Lessons</button>
+<button type="button" data-tab="booklet">▤ &nbsp; Revision Booklet</button>
+<button type="button" data-tab="revision">◎ &nbsp; Revision Hub</button>
+</nav>
+
+<section class="panel" id="lessons">
+<div class="sectionhead"><h2>Lessons</h2><span class="count">35 lessons</span></div>
+<nav class="lesson-grid" aria-label="Year 8 lessons">
+<a class="lesson-live" href="lessons/year8/Y8Lesson001.html">L01 ✓</a>
+<span class="lesson-pending">L02</span><span class="lesson-pending">L03</span><span class="lesson-pending">L04</span><span class="lesson-pending">L05</span><span class="lesson-pending">L06</span><span class="lesson-pending">L07</span><span class="lesson-pending">L08</span><span class="lesson-pending">L09</span><span class="lesson-pending">L10</span><span class="lesson-pending">L11</span><span class="lesson-pending">L12</span><span class="lesson-pending">L13</span><span class="lesson-pending">L14</span><span class="lesson-pending">L15</span><span class="lesson-pending">L16</span><span class="lesson-pending">L17</span><span class="lesson-pending">L18</span><span class="lesson-pending">L19</span><span class="lesson-pending">L20</span><span class="lesson-pending">L21</span><span class="lesson-pending">L22</span><span class="lesson-pending">L23</span><span class="lesson-pending">L24</span><span class="lesson-pending">L25</span><span class="lesson-pending">L26</span><span class="lesson-pending">L27</span><span class="lesson-pending">L28</span><span class="lesson-pending">L29</span><span class="lesson-pending">L30</span><span class="lesson-pending">L31</span><span class="lesson-pending">L32</span><span class="lesson-pending">L33</span><span class="lesson-pending">L34</span><span class="lesson-pending">L35</span>
+</nav>
+<p class="note">✓ Available now · Muted lessons are coming soon.</p>
+</section>
+
+<section class="panel" id="booklet">
+<div class="booklet-head"><div><h2>Revision Booklet</h2><p>The original teacher-created booklet is the main Year 8 revision resource.</p></div></div>
+<div class="access" aria-label="Accessibility tools">
+<button type="button" id="readBtn">🔊 Read aloud</button>
+<button type="button" id="smallerBtn" aria-label="Make reading text smaller">A−</button>
+<button type="button" id="biggerBtn" aria-label="Make reading text bigger">A+</button>
+<button type="button" id="helpBtn" aria-pressed="false">Aa Reading help</button>
+<button type="button" id="wordBtn" aria-pressed="false">abc Word / phonics help</button>
+<button type="button" id="colourBtn">◐ Page colour</button>
+<button type="button" id="printAccessibleBtn">🖨 Print accessible view</button>
+<a href="assets/year8/Yr8%20Assessment%20Point%203%20-%20Booklet.pdf" target="_blank" rel="noopener">⛶ Full screen</a>
+<a class="print" href="assets/year8/Yr8%20Assessment%20Point%203%20-%20Booklet.pdf" target="_blank" rel="noopener">🖨 Print booklet</a>
+</div>
+<div class="info"><strong>The booklet itself is unchanged.</strong> Read aloud, larger text, page colour and word support use a separate accessibility layer based on the booklet's wording.</div>
+<div class="pdfwrap"><iframe src="assets/year8/Yr8%20Assessment%20Point%203%20-%20Booklet.pdf#view=FitH" title="Year 8 Computing Revision Booklet"></iframe><div class="pdf-fallback">If the PDF does not appear, <a href="assets/year8/Yr8%20Assessment%20Point%203%20-%20Booklet.pdf" target="_blank" rel="noopener">open the original booklet</a>.</div></div>
+<section class="reader" id="reader" hidden aria-label="Accessible booklet reader"><div class="readerbar"><label for="pageSelect"><strong>Reading-help page</strong></label><select id="pageSelect"></select><span id="pageMeta">Page 1 of 25</span></div><div class="readertext" id="readerText" tabindex="0"></div></section>
+<section class="words" id="words"><h3>Word / phonics help</h3><div class="wordgrid" id="wordGrid"></div></section>
+<p class="practice-link"><a href="#revision">Ready to practise? Open the Revision Hub →</a></p>
+</section>
+
+<section class="panel" id="revision">
+<div class="practice-card"><div class="practice-copy"><p class="eyebrow" style="margin-top:0">PRACTICE</p><h2>Revision Hub</h2><p>Use this after the booklet. Start with the 10-question check, practise weaker topics, then finish with mixed questions.</p><div class="practice-points"><div class="practice-point"><strong>1 · Check</strong><span>10-question diagnostic</span></div><div class="practice-point"><strong>2 · Practise</strong><span>Targeted topic questions</span></div><div class="practice-point"><strong>3 · Recheck</strong><span>Mixed practice</span></div></div></div><a class="practice-go" href="year8-revision-ap3.html"><strong>Start Revision Hub →</strong><span>Diagnostic · targeted questions · mixed practice</span></a></div>
+<p class="note">Use the Revision Booklet for the teacher-created revision content. Use the Revision Hub to practise it.</p>
+</section>
+</main>
+<script>
+(function(){
+ const tabs=[...document.querySelectorAll('[data-tab]')],panels=[...document.querySelectorAll('.panel')];
+ function show(name){if(!['lessons','booklet','revision'].includes(name))name='lessons';tabs.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));panels.forEach(p=>p.classList.toggle('active',p.id===name));if(location.hash!=='#'+name)history.replaceState(null,'','#'+name)}
+ tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));addEventListener('hashchange',()=>show(location.hash.slice(1)));show(location.hash.slice(1)||'lessons');
+
+ const data=window.Y8_BOOKLET_ACCESS||{pages:[],glossary:[]};let page=1,font=1,colour=0;const reader=document.getElementById('reader'),readerText=document.getElementById('readerText'),sel=document.getElementById('pageSelect'),meta=document.getElementById('pageMeta'),readBtn=document.getElementById('readBtn');
+ data.pages.forEach(p=>{const o=document.createElement('option');o.value=p.page;o.textContent='Page '+p.page;sel.appendChild(o)});
+ const wordGrid=document.getElementById('wordGrid');(data.glossary||[]).forEach(w=>{const d=document.createElement('div');d.className='word';d.innerHTML='<strong>'+esc(w[0])+'</strong><em>'+esc(w[1])+'</em><span>'+esc(w[2])+'</span>';wordGrid.appendChild(d)});
+ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+ function setPage(n){page=Math.max(1,Math.min(25,Number(n)||1));const p=data.pages.find(x=>x.page===page);readerText.textContent=p&&p.text?p.text:'This page is image-based in the original booklet. Use the PDF above to view the page.';sel.value=page;meta.textContent='Page '+page+' of 25';speechSynthesis?.cancel();readBtn.textContent='🔊 Read aloud'}
+ setPage(1);sel.addEventListener('change',()=>setPage(sel.value));
+ document.getElementById('helpBtn').addEventListener('click',e=>{reader.hidden=!reader.hidden;e.currentTarget.setAttribute('aria-pressed',reader.hidden?'false':'true');if(!reader.hidden)reader.scrollIntoView({behavior:'smooth',block:'nearest'})});
+ document.getElementById('wordBtn').addEventListener('click',e=>{const w=document.getElementById('words');const on=w.classList.toggle('open');e.currentTarget.setAttribute('aria-pressed',on?'true':'false')});
+ function ensureReader(){if(reader.hidden){reader.hidden=false;document.getElementById('helpBtn').setAttribute('aria-pressed','true')}}
+ document.getElementById('smallerBtn').addEventListener('click',()=>{ensureReader();font=Math.max(0,font-1);applyFont()});document.getElementById('biggerBtn').addEventListener('click',()=>{ensureReader();font=Math.min(3,font+1);applyFont()});
+ function applyFont(){readerText.classList.remove('sm','lg','xl');if(font===0)readerText.classList.add('sm');if(font===2)readerText.classList.add('lg');if(font===3)readerText.classList.add('xl')}
+ document.getElementById('colourBtn').addEventListener('click',()=>{ensureReader();colour=(colour+1)%3;readerText.classList.remove('cream','blue');if(colour===1)readerText.classList.add('cream');if(colour===2)readerText.classList.add('blue')});
+ readBtn.addEventListener('click',()=>{ensureReader();if(!window.speechSynthesis)return;if(speechSynthesis.speaking){speechSynthesis.cancel();readBtn.textContent='🔊 Read aloud';return}const t=readerText.innerText.trim();if(!t)return;const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const vs=speechSynthesis.getVoices().filter(v=>(v.lang||'').toLowerCase().startsWith('en-gb'));if(vs.length)u.voice=vs.find(v=>/sonia|libby|serena|female|kate/i.test(v.name))||vs[0];readBtn.textContent='■ Stop';u.onend=u.onerror=()=>readBtn.textContent='🔊 Read aloud';speechSynthesis.speak(u)});
+ document.getElementById('printAccessibleBtn').addEventListener('click',()=>{ensureReader();document.body.classList.add('print-reader');window.print();setTimeout(()=>document.body.classList.remove('print-reader'),500)});
+})();
+</script>
+</body></html>
