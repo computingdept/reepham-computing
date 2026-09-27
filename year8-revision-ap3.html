@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#006347">
+<title>Year 8 Revision Hub · Assessment Point 3 · RHSC</title>
+<style>
+:root{--green:#006347;--dark:#003a31;--soft:#eef7f4;--mint:#d6ebdf;--ink:#17211e;--muted:#5b6864;--line:#d8e1de;--amber:#fff3d6;--amber-line:#dfbd64;--blue:#edf4fb;--blue-line:#a8c5de;--card:#fff;--shadow:0 14px 42px rgba(0,58,49,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f8f7;color:var(--ink);font:1rem/1.5 Arial,Helvetica,sans-serif}button,input{font:inherit}button{cursor:pointer}a{color:var(--green)}button:focus-visible,a:focus-visible{outline:3px solid #f2b544;outline-offset:3px}.skip{position:absolute;top:-100px}.skip:focus{top:8px;left:8px;z-index:99;background:#fff;padding:10px;border-radius:8px}
+.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-top:4px solid var(--green);border-bottom:1px solid var(--line)}.top-inner{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--dark);font-weight:800}.seal{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:var(--green);color:#fff}.top-actions{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}.tool{min-height:40px;border:1px solid var(--line);background:#fff;color:var(--green);border-radius:10px;padding:7px 11px;font-weight:750}.tool[aria-pressed="true"]{background:var(--green);color:#fff}
+main{max-width:1180px;margin:auto;padding:28px 20px 80px}.back{display:inline-flex;min-height:42px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:22px;background:#fff;text-decoration:none;font-weight:750;margin-bottom:16px}
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:16px;align-items:stretch}.hero-main,.date-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}.eyebrow{margin:0 0 8px;font-size:.8rem;font-weight:850;letter-spacing:.12em;color:var(--green)}h1{font-size:clamp(2.1rem,5vw,4rem);line-height:1.02;letter-spacing:-.045em;margin:0;color:var(--dark)}.lead{font-size:1.1rem;color:var(--muted);max-width:760px;margin:12px 0 18px}.hero-actions{display:flex;gap:9px;flex-wrap:wrap}.primary,.secondary{min-height:46px;border-radius:11px;padding:10px 15px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--green);border:1px solid var(--green);color:#fff}.secondary{background:#fff;border:1px solid #a7bcb3;color:var(--green)}.date-card{background:linear-gradient(150deg,var(--mint),#eef7f4)}.date-label{font-size:.75rem;font-weight:850;letter-spacing:.1em;color:var(--green)}.date-big{font-size:1.45rem;font-weight:850;color:var(--dark);margin:3px 0 11px}.date-card hr{border:0;border-top:1px solid #bdd3c8;margin:14px 0}
+.scope{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.scope h2,.section-title{color:var(--dark);margin:0 0 9px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--soft);color:var(--green);font-weight:750;font-size:.9rem}.scope-note{margin:12px 0 0;color:var(--muted);font-size:.92rem}
+.reading-panel{display:none;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.reading-panel.open{display:block}.setting-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid #edf1ef;padding:9px 0}.setting-row:first-of-type{border-top:0}.setting-row strong{min-width:90px}.choice{min-height:38px;padding:7px 10px;border:1px solid #c9d7d1;border-radius:9px;background:#fff;color:var(--green);font-weight:700}.choice[aria-pressed="true"]{background:var(--green);color:#fff}
+section.block{margin-top:24px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:11px}.section-head p{margin:0;color:var(--muted);max-width:700px}.diagnostic-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}.diag-intro{display:flex;justify-content:space-between;gap:14px;align-items:center}.diag-intro h2{margin:0;color:var(--dark)}.diag-intro p{margin:5px 0 0;color:var(--muted)}.diagnostic{display:none;margin-top:18px}.diagnostic.open{display:block}.diag-q{border-top:1px solid #e3eae7;padding:16px 0}.diag-q:first-child{border-top:0}.diag-q strong{display:block;margin-bottom:8px}.answers{display:grid;gap:7px}.answer{width:100%;text-align:left;min-height:44px;padding:9px 11px;border:1px solid #cfdbd6;border-radius:10px;background:#fff;color:var(--ink)}.answer:hover{background:var(--soft)}.answer.selected{border-color:var(--green);background:var(--soft);font-weight:750}.diag-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.diag-message{padding:10px 12px;background:var(--amber);border:1px solid var(--amber-line);border-radius:10px;margin-top:10px;display:none}.diag-message.show{display:block}
+.plan{display:none;margin-top:18px}.plan.show{display:block}.plan-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.plan h3{margin:0;color:var(--dark)}.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.plan-item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfcfb}.plan-item strong{display:block;color:var(--dark)}.status{font-size:.82rem;font-weight:800;margin-top:4px}.secure .status{color:#24704e}.practise .status{color:#9a5b00}.start .status{color:#5d6c65}
+.topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.topic{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;box-shadow:0 4px 18px rgba(0,58,49,.04);display:flex;flex-direction:column}.topic.focus{border-top:4px solid var(--green)}.topic-num{font-size:.76rem;font-weight:850;letter-spacing:.08em;color:var(--green)}.topic h3{margin:5px 0 6px;color:var(--dark);font-size:1.22rem}.topic p{color:var(--muted);margin:0 0 13px}.topic button{margin-top:auto;align-self:flex-start}
+.practice{display:none;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:19px}.practice.open{display:block}.practice-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.practice-head h3{margin:0;color:var(--dark)}.close-practice{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--green);padding:7px 10px;font-weight:750}.four-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:13px 0}.four-step{padding:10px;border-radius:11px;background:var(--soft);font-size:.9rem}.four-step strong{display:block;color:var(--green)}.practice-q{border-top:1px solid #e3eae7;padding:14px 0}.practice-q strong{display:block;margin-bottom:7px}.feedback{display:none;margin-top:8px;padding:9px 11px;border-radius:9px;font-weight:700}.feedback.show{display:block}.feedback.ok{background:#e9f7ef;color:#195f3a}.feedback.try{background:#fff1df;color:#80500c}.knowledge{display:none;margin:9px 0;padding:12px;border-left:4px solid var(--green);background:#f3f8f5;border-radius:0 10px 10px 0}.knowledge.show{display:block}.model{display:none;margin-top:8px;padding:11px;background:var(--blue);border:1px solid var(--blue-line);border-radius:10px}.model.show{display:block}
+.year7-grid,.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.mini-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.mini-card h3{margin:0 0 4px;font-size:1.02rem;color:var(--dark)}.mini-card p{margin:0;color:var(--muted);font-size:.9rem}.skills-grid{grid-template-columns:repeat(4,1fr)}.skill{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.skill strong{display:block;color:var(--green);font-size:1.05rem}.skill span{display:block;color:var(--muted);margin-top:4px;font-size:.9rem}
+.mixed{background:linear-gradient(145deg,#003a31,#006347);color:#fff;border-radius:20px;padding:21px}.mixed h2{margin:0}.mixed p{color:#d9eee7}.mixed .primary{background:#fff;color:var(--dark);border-color:#fff}.mixed-box{display:none;margin-top:14px;background:#fff;color:var(--ink);border-radius:14px;padding:15px}.mixed-box.show{display:block}
+.guide{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:16px}.guide h3{margin:0;color:var(--dark)}.guide p{margin:4px 0 0;color:var(--muted)}
+.read-large{font-size:118%}.read-spacing{line-height:1.8}.read-clear{font-family:Verdana,Arial,sans-serif}.read-cream{background:#fbf6e8}.read-bluegrey{background:#edf3f5}
+body.one-at-time .diagnostic .diag-q{display:none}body.one-at-time .diagnostic .diag-q.current{display:block}body.one-at-time .diag-controls{justify-content:space-between}.one-nav{display:none}body.one-at-time .one-nav{display:inline-flex}.progress-small{font-size:.85rem;color:var(--muted);font-weight:700}
+.footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.topic-grid{grid-template-columns:repeat(2,1fr)}.plan-grid{grid-template-columns:repeat(2,1fr)}.year7-grid,.skills-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.top-inner{padding:9px 10px;flex-wrap:wrap}.top-actions{width:100%;margin-left:0}.tool{flex:1}main{padding:16px 10px 60px}.hero-main,.date-card{padding:18px;border-radius:17px}.topic-grid,.plan-grid,.year7-grid,.skills-grid{grid-template-columns:1fr}.four-steps{grid-template-columns:repeat(2,1fr)}.diag-intro,.guide{align-items:flex-start;flex-direction:column}.section-head{align-items:flex-start;flex-direction:column}.primary,.secondary{width:100%}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to revision</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="index.html#year/8/computing/exam"><span class="seal">8</span><span>Year 8 Computing · Revision Hub</span></a>
+    <div class="top-actions">
+      <button class="tool" id="listenBtn" type="button">🔊 Listen</button>
+      <button class="tool" id="readingBtn" type="button" aria-expanded="false">Aa Reading help</button>
+      <button class="tool" id="oneBtn" type="button" aria-pressed="false">▣ One question at a time</button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <a class="back" href="index.html#year/8/computing/exam">← Year 8 Computing</a>
+
+  <div class="reading-panel" id="readingPanel">
+    <div class="setting-row"><strong>Text size</strong><button class="choice" data-setting="size" data-value="normal">Normal</button><button class="choice" data-setting="size" data-value="large">Large</button></div>
+    <div class="setting-row"><strong>Spacing</strong><button class="choice" data-setting="spacing" data-value="normal">Normal</button><button class="choice" data-setting="spacing" data-value="more">More</button></div>
+    <div class="setting-row"><strong>Page colour</strong><button class="choice" data-setting="colour" data-value="white">White</button><button class="choice" data-setting="colour" data-value="cream">Cream</button><button class="choice" data-setting="colour" data-value="bluegrey">Blue-grey</button></div>
+    <div class="setting-row"><strong>Font</strong><button class="choice" data-setting="font" data-value="standard">Standard</button><button class="choice" data-setting="font" data-value="clear">Clear</button></div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <p class="eyebrow">ASSESSMENT POINT 3 · YEAR 8</p>
+      <h1>Revise what you need.</h1>
+      <p class="lead">Start with a short check. The hub will suggest the topics to practise next, then you can revisit them as often as you need.</p>
+      <div class="hero-actions"><button class="primary" id="heroStart" type="button">Start the 10-question check →</button><a class="secondary" href="#topics">Choose a topic</a></div>
+    </div>
+    <aside class="date-card">
+      <div class="date-label">REVISION LESSON</div><div class="date-big">w/c 21 September 2026</div>
+      <hr>
+      <div class="date-label">ASSESSMENT</div><div class="date-big">w/c 28 September 2026</div>
+      <p style="margin:0;color:var(--muted)">In class · paper assessment</p>
+    </aside>
+  </section>
+
+  <section class="scope" aria-label="Assessment scope">
+    <h2>What is in AP3?</h2>
+    <div class="chips"><span class="chip">Computer Systems</span><span class="chip">Input &amp; Output</span><span class="chip">Computer Components</span><span class="chip">CPU</span><span class="chip">Memory &amp; Storage</span><span class="chip">Binary</span></div>
+    <p class="scope-note"><strong>Focus first:</strong> Computer Systems carries the most marks in the revision lesson. Sound sampling and the new binary-shift work begin after this assessment in 8.1.4.</p>
+  </section>
+
+  <section class="block" id="diagnosticBlock">
+    <div class="diagnostic-card">
+      <div class="diag-intro">
+        <div><p class="eyebrow">START HERE</p><h2>10-question revision check</h2><p>Use it to decide what to revise. It is not the assessment.</p></div>
+        <button class="primary" id="startDiag" type="button">Start check</button>
+      </div>
+      <div class="diagnostic" id="diagnostic">
+        <div class="progress-small" id="diagProgress">Question 1 of 10</div>
+        <div class="diag-q current" data-topic="systems" data-answer="c"><strong>1. Which list contains the four main things a computer system does?</strong><div class="answers"><button class="answer" data-value="a">Save, print, email, browse</button><button class="answer" data-value="b">RAM, ROM, CPU, PSU</button><button class="answer" data-value="c">Input, processing, output and storage</button></div></div>
+        <div class="diag-q" data-topic="io" data-answer="a"><strong>2. Which is an input device?</strong><div class="answers"><button class="answer" data-value="a">Microphone</button><button class="answer" data-value="b">Printer</button><button class="answer" data-value="c">Projector</button></div></div>
+        <div class="diag-q" data-topic="components" data-answer="b"><strong>3. What is the motherboard?</strong><div class="answers"><button class="answer" data-value="a">Long-term file storage</button><button class="answer" data-value="b">The main board that connects computer parts together</button><button class="answer" data-value="c">A type of output device</button></div></div>
+        <div class="diag-q" data-topic="cpu" data-answer="c"><strong>4. What does CPU stand for?</strong><div class="answers"><button class="answer" data-value="a">Computer Processing Utility</button><button class="answer" data-value="b">Central Power Unit</button><button class="answer" data-value="c">Central Processing Unit</button></div></div>
+        <div class="diag-q" data-topic="cpu" data-answer="a"><strong>5. Which part of the CPU carries out calculations and logic?</strong><div class="answers"><button class="answer" data-value="a">ALU</button><button class="answer" data-value="b">CU</button><button class="answer" data-value="c">PSU</button></div></div>
+        <div class="diag-q" data-topic="cpu" data-answer="b"><strong>6. Which change can improve CPU performance?</strong><div class="answers"><button class="answer" data-value="a">A smaller cache</button><button class="answer" data-value="b">A faster clock speed</button><button class="answer" data-value="c">Fewer cores</button></div></div>
+        <div class="diag-q" data-topic="memory" data-answer="a"><strong>7. Which memory is volatile and stores data/programs currently being used?</strong><div class="answers"><button class="answer" data-value="a">RAM</button><button class="answer" data-value="b">ROM</button><button class="answer" data-value="c">Hard drive</button></div></div>
+        <div class="diag-q" data-topic="memory" data-answer="c"><strong>8. Which statement about ROM matches the revision material?</strong><div class="answers"><button class="answer" data-value="a">It loses its data when power is removed</button><button class="answer" data-value="b">It stores your current open programs</button><button class="answer" data-value="c">It is read only, non-volatile and stores a start-up program</button></div></div>
+        <div class="diag-q" data-topic="binary" data-answer="b"><strong>9. How many bits are in one byte?</strong><div class="answers"><button class="answer" data-value="a">4</button><button class="answer" data-value="b">8</button><button class="answer" data-value="c">16</button></div></div>
+        <div class="diag-q" data-topic="binary" data-answer="c"><strong>10. What is 01001011 in denary?</strong><div class="answers"><button class="answer" data-value="a">68</button><button class="answer" data-value="b">71</button><button class="answer" data-value="c">75</button></div></div>
+        <div class="diag-message" id="diagMessage">Answer every question before checking your plan.</div>
+        <div class="diag-controls"><button class="secondary one-nav" id="diagPrev" type="button">← Previous</button><button class="primary" id="finishDiag" type="button">Show my revision plan</button><button class="secondary one-nav" id="diagNext" type="button">Next →</button></div>
+      </div>
+
+      <div class="plan" id="plan">
+        <div class="plan-head"><div><p class="eyebrow">YOUR REVISION PLAN</p><h3 id="planTitle">Start with these topics</h3></div><button class="secondary" id="redoDiag" type="button">Redo check</button></div>
+        <div class="plan-grid" id="planGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="topics">
+    <div class="section-head"><div><p class="eyebrow">FOCUS FIRST</p><h2 class="section-title">Computer Systems revision</h2></div><p>Every topic follows the same pattern: <strong>Recall → Check → Fix → Challenge</strong>.</p></div>
+    <div class="topic-grid">
+      <article class="topic focus" data-topic-card="systems"><span class="topic-num">01 · HIGH PRIORITY</span><h3>Computer Systems</h3><p>Input, processing, output and storage. What makes a complete computer system?</p><button class="primary practice-open" data-open="systems" type="button">Practise →</button></article>
+      <article class="topic focus" data-topic-card="io"><span class="topic-num">02 · HIGH PRIORITY</span><h3>Input &amp; Output</h3><p>Classify devices and identify inputs and outputs in larger systems.</p><button class="primary practice-open" data-open="io" type="button">Practise →</button></article>
+      <article class="topic focus" data-topic-card="components"><span class="topic-num">03 · HIGH PRIORITY</span><h3>Computer Components</h3><p>Motherboard, CPU, RAM, hard drive, PSU and what each component does.</p><button class="primary practice-open" data-open="components" type="button">Practise →</button></article>
+      <article class="topic focus" data-topic-card="cpu"><span class="topic-num">04 · HIGH PRIORITY</span><h3>CPU</h3><p>Fetch–decode–execute, CU, ALU, cache, cores and clock speed.</p><button class="primary practice-open" data-open="cpu" type="button">Practise →</button></article>
+      <article class="topic focus" data-topic-card="memory"><span class="topic-num">05 · HIGH PRIORITY</span><h3>RAM, ROM &amp; Storage</h3><p>Purpose, volatility, read/write and the difference between memory and storage.</p><button class="primary practice-open" data-open="memory" type="button">Practise →</button></article>
+      <article class="topic focus" data-topic-card="binary"><span class="topic-num">06 · HIGH PRIORITY</span><h3>Binary</h3><p>Bits, bytes and converting between 8-bit binary and denary.</p><button class="primary practice-open" data-open="binary" type="button">Practise →</button></article>
+    </div>
+
+    <div class="practice" id="practice-systems">
+      <div class="practice-head"><div><p class="eyebrow">COMPUTER SYSTEMS</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="four-steps"><div class="four-step"><strong>Recall</strong>Try from memory first.</div><div class="four-step"><strong>Check</strong>Choose the best answer.</div><div class="four-step"><strong>Fix</strong>Use the small knowledge card if needed.</div><div class="four-step"><strong>Challenge</strong>Explain it in your own words.</div></div>
+      <div class="practice-q" data-answer="b"><strong>Recall: Which process turns input data into useful output?</strong><div class="answers"><button class="answer" data-value="a">Storage</button><button class="answer" data-value="b">Processing</button><button class="answer" data-value="c">Printing</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> The revision material describes computer systems using input, processing, output and storage.</div></div>
+      <div class="practice-q" data-answer="c"><strong>Check: A self-checkout scans a barcode, looks up the item and shows the price. Which is the output?</strong><div class="answers"><button class="answer" data-value="a">Barcode scanner</button><button class="answer" data-value="b">Looking up the item</button><button class="answer" data-value="c">The price shown on screen</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> An output device presents data from the computer.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: Explain the difference between an input device and a computer system.</strong><button class="secondary show-model" type="button">Show a model answer</button><div class="model">An input device puts data into a computer system, whereas a computer system includes the parts needed to input, process, output and store data.</div></div>
+    </div>
+
+    <div class="practice" id="practice-io">
+      <div class="practice-head"><div><p class="eyebrow">INPUT &amp; OUTPUT</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="practice-q" data-answer="a"><strong>Recall: Which group contains only input devices from the revision guide?</strong><div class="answers"><button class="answer" data-value="a">Keyboard, mouse, microphone</button><button class="answer" data-value="b">Monitor, printer, projector</button><button class="answer" data-value="c">Speakers, headphones, printer</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> Input devices put data into a computer system. Examples include keyboard, mouse, scanner, camera and microphone.</div></div>
+      <div class="practice-q" data-answer="b"><strong>Check: Which device can be both input and output?</strong><div class="answers"><button class="answer" data-value="a">Printer</button><button class="answer" data-value="b">Touchscreen</button><button class="answer" data-value="c">Projector</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> The revision guide notes that touchscreens, headsets and some games controllers can be both input and output.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: Give one input and one output you might find in a supermarket self-checkout.</strong><button class="secondary show-model" type="button">Show example</button><div class="model">Example: barcode scanner = input; screen or receipt printer = output.</div></div>
+    </div>
+
+    <div class="practice" id="practice-components">
+      <div class="practice-head"><div><p class="eyebrow">COMPUTER COMPONENTS</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="practice-q" data-answer="c"><strong>Recall: Which component connects the other computer parts together?</strong><div class="answers"><button class="answer" data-value="a">Hard drive</button><button class="answer" data-value="b">PSU</button><button class="answer" data-value="c">Motherboard</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> The motherboard is the main circuit board that connects computer parts together.</div></div>
+      <div class="practice-q" data-answer="a"><strong>Check: Which component stores programs and files long term?</strong><div class="answers"><button class="answer" data-value="a">Hard drive</button><button class="answer" data-value="b">RAM</button><button class="answer" data-value="c">PSU</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> The revision booklet describes the hard drive as storage for programs and files.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: What is the job of the PSU?</strong><button class="secondary show-model" type="button">Show a model answer</button><div class="model">The power supply unit gives power to the computer.</div></div>
+    </div>
+
+    <div class="practice" id="practice-cpu">
+      <div class="practice-head"><div><p class="eyebrow">CPU</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="practice-q" data-answer="b"><strong>Recall: Put the CPU cycle in the correct order.</strong><div class="answers"><button class="answer" data-value="a">Decode → Execute → Fetch</button><button class="answer" data-value="b">Fetch → Decode → Execute</button><button class="answer" data-value="c">Execute → Fetch → Decode</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> The CPU fetches instructions from memory, decodes them and then executes them.</div></div>
+      <div class="practice-q" data-answer="a"><strong>Check: What does the Control Unit do?</strong><div class="answers"><button class="answer" data-value="a">Controls movement of data during the fetch-decode-execute cycle</button><button class="answer" data-value="b">Stores files permanently</button><button class="answer" data-value="c">Displays graphics</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> CU = Control Unit. ALU = calculations and logic. Cache = small fast memory close to the CPU.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: Explain one way a CPU can be made faster.</strong><button class="secondary show-model" type="button">Show a model answer</button><div class="model">Example: A faster clock speed allows the CPU to complete more fetch-decode-execute cycles every second.</div></div>
+    </div>
+
+    <div class="practice" id="practice-memory">
+      <div class="practice-head"><div><p class="eyebrow">RAM, ROM &amp; STORAGE</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="practice-q" data-answer="a"><strong>Recall: Which memory stores data and programs currently being used?</strong><div class="answers"><button class="answer" data-value="a">RAM</button><button class="answer" data-value="b">ROM</button><button class="answer" data-value="c">Hard drive</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> RAM stores current data/programs, is read/write and is volatile.</div></div>
+      <div class="practice-q" data-answer="b"><strong>Check: Which statement describes ROM in the lesson?</strong><div class="answers"><button class="answer" data-value="a">It is volatile</button><button class="answer" data-value="b">It is read only and non-volatile</button><button class="answer" data-value="c">It stores current running programs</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> ROM stores a start-up program and its data is not lost when power is removed.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: Compare RAM and ROM. Use “whereas” or “however”.</strong><button class="secondary show-model" type="button">Show a model answer</button><div class="model">RAM stores data and programs currently being used and is volatile, whereas ROM stores a start-up program and is non-volatile.</div></div>
+    </div>
+
+    <div class="practice" id="practice-binary">
+      <div class="practice-head"><div><p class="eyebrow">BINARY</p><h3>Recall → Check → Fix → Challenge</h3></div><button class="close-practice" type="button">Close</button></div>
+      <div class="practice-q" data-answer="b"><strong>Recall: What is a binary digit called?</strong><div class="answers"><button class="answer" data-value="a">Byte</button><button class="answer" data-value="b">Bit</button><button class="answer" data-value="c">Nibble</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> 0 or 1 = one bit. Four bits = one nibble. Eight bits = one byte.</div></div>
+      <div class="practice-q" data-answer="c"><strong>Check: What is 10000011 in denary?</strong><div class="answers"><button class="answer" data-value="a">129</button><button class="answer" data-value="b">130</button><button class="answer" data-value="c">131</button></div><div class="feedback"></div><div class="knowledge"><strong>Fix:</strong> Use the place values 128, 64, 32, 16, 8, 4, 2, 1. Here 128 + 2 + 1 = 131.</div></div>
+      <div class="practice-q challenge"><strong>Challenge: Convert denary 75 into 8-bit binary.</strong><button class="secondary show-model" type="button">Show answer</button><div class="model">75 = 64 + 8 + 2 + 1, so the 8-bit binary value is <strong>01001011</strong>.</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head"><div><p class="eyebrow">YEAR 7 RETRIEVAL</p><h2 class="section-title">Earlier knowledge can still appear</h2></div><p>The revision booklet includes Year 7 learning as well as the current Year 8 unit.</p></div>
+    <div class="year7-grid">
+      <article class="mini-card"><h3>Algorithms</h3><p>Sequence · selection · iteration · algorithms</p></article>
+      <article class="mini-card"><h3>Digital safety</h3><p>Malware · warning signs · ways to protect a device</p></article>
+      <article class="mini-card"><h3>Computer law</h3><p>Computer Misuse · Data Protection · Copyright</p></article>
+      <article class="mini-card"><h3>Digital skills</h3><p>Outlook email · presentation design</p></article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head"><div><p class="eyebrow">ASSESSMENT SKILLS</p><h2 class="section-title">Know what the question is asking</h2></div><p>The revision booklet gives recurring question types and command words.</p></div>
+    <div class="skills-grid">
+      <article class="skill"><strong>State / Name / Identify</strong><span>Give the short, correct fact or item.</span></article>
+      <article class="skill"><strong>Describe</strong><span>Say what something is like or what is happening.</span></article>
+      <article class="skill"><strong>Explain</strong><span>Give how or why. Use because, so or this means.</span></article>
+      <article class="skill"><strong>Compare</strong><span>Explain a difference. Use whereas or however.</span></article>
+    </div>
+  </section>
+
+  <section class="block mixed">
+    <p class="eyebrow" style="color:#bfe7d9">FINAL PRACTICE</p><h2>Mixed practice</h2><p>Six questions chosen from across the AP3 topics. Try them without notes first.</p>
+    <button class="primary" id="mixedBtn" type="button">Generate mixed practice</button>
+    <div class="mixed-box" id="mixedBox"></div>
+  </section>
+
+  <div class="guide">
+    <div><h3>Full revision guide</h3><p>The detailed revision booklet remains available on Arbor. Use it when you need the full notes, examples or printable reference.</p></div><span class="chip">REFERENCE</span>
+  </div>
+
+  <p class="footer">Your diagnostic and topic progress are saved only in this browser on this device. The online hub is for revision; the AP3 assessment remains a controlled paper assessment in class.</p>
+</main>
+<script>
+(function(){
+const storeKey='rhsc-y8-ap3-revision-v1';
+let state={diagnostic:null,topicDone:{}};try{state={...state,...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch(e){}
+const save=()=>localStorage.setItem(storeKey,JSON.stringify(state));
+
+const readingKey='rhsc-y8-revision-reading';let prefs={size:'normal',spacing:'normal',colour:'white',font:'standard'};try{prefs={...prefs,...JSON.parse(localStorage.getItem(readingKey)||'{}')}}catch(e){}
+function applyPrefs(){document.body.classList.toggle('read-large',prefs.size==='large');document.body.classList.toggle('read-spacing',prefs.spacing==='more');document.body.classList.toggle('read-clear',prefs.font==='clear');document.body.classList.toggle('read-cream',prefs.colour==='cream');document.body.classList.toggle('read-bluegrey',prefs.colour==='bluegrey');document.querySelectorAll('.choice').forEach(b=>b.setAttribute('aria-pressed',prefs[b.dataset.setting]===b.dataset.value?'true':'false'))}
+document.getElementById('readingBtn').addEventListener('click',()=>{const p=document.getElementById('readingPanel'),o=p.classList.toggle('open');document.getElementById('readingBtn').setAttribute('aria-expanded',o?'true':'false')});
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{prefs[b.dataset.setting]=b.dataset.value;localStorage.setItem(readingKey,JSON.stringify(prefs));applyPrefs()}));applyPrefs();
+
+let utter=null;document.getElementById('listenBtn').addEventListener('click',()=>{if(!window.speechSynthesis)return;if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.getElementById('listenBtn').textContent='🔊 Listen';return}const target=document.querySelector('.practice.open')||document.querySelector('.hero-main');utter=new SpeechSynthesisUtterance(target.innerText.replace(/\s+/g,' ').trim());utter.lang='en-GB';utter.rate=.9;const vs=speechSynthesis.getVoices().filter(v=>(v.lang||'').toLowerCase().startsWith('en-gb'));if(vs.length){const preferred=vs.find(v=>/sonia|libby|serena|female/i.test(v.name))||vs[0];utter.voice=preferred}document.getElementById('listenBtn').textContent='■ Stop';utter.onend=utter.onerror=()=>document.getElementById('listenBtn').textContent='🔊 Listen';speechSynthesis.speak(utter)});
+
+const diagnostic=document.getElementById('diagnostic'),diagQs=[...diagnostic.querySelectorAll('.diag-q')];let diagIndex=0;
+function openDiag(reset=false){diagnostic.classList.add('open');if(reset){diagQs.forEach(q=>{delete q.dataset.selected;q.querySelectorAll('.answer').forEach(a=>a.classList.remove('selected'))});diagIndex=0}showDiag();document.getElementById('diagnosticBlock').scrollIntoView({behavior:'smooth',block:'start'})}
+function showDiag(){if(document.body.classList.contains('one-at-time')){diagQs.forEach((q,i)=>q.classList.toggle('current',i===diagIndex));document.getElementById('diagProgress').textContent='Question '+(diagIndex+1)+' of '+diagQs.length;document.getElementById('diagPrev').disabled=diagIndex===0;document.getElementById('diagNext').disabled=diagIndex===diagQs.length-1}else{diagQs.forEach(q=>q.classList.add('current'));document.getElementById('diagProgress').textContent='10 questions · answer them all before checking your plan.'}}
+document.getElementById('oneBtn').addEventListener('click',()=>{const on=document.body.classList.toggle('one-at-time');document.getElementById('oneBtn').setAttribute('aria-pressed',on?'true':'false');showDiag()});
+document.getElementById('diagPrev').addEventListener('click',()=>{diagIndex=Math.max(0,diagIndex-1);showDiag()});document.getElementById('diagNext').addEventListener('click',()=>{diagIndex=Math.min(diagQs.length-1,diagIndex+1);showDiag()});
+document.getElementById('heroStart').addEventListener('click',()=>openDiag(false));document.getElementById('startDiag').addEventListener('click',()=>openDiag(false));document.getElementById('redoDiag').addEventListener('click',()=>{state.diagnostic=null;save();document.getElementById('plan').classList.remove('show');openDiag(true)});
+diagQs.forEach(q=>q.querySelectorAll('.answer').forEach(a=>a.addEventListener('click',()=>{q.querySelectorAll('.answer').forEach(x=>x.classList.remove('selected'));a.classList.add('selected');q.dataset.selected=a.dataset.value;if(document.body.classList.contains('one-at-time')&&diagIndex<diagQs.length-1){setTimeout(()=>{diagIndex++;showDiag()},180)}})));
+function finishDiag(){const missing=diagQs.filter(q=>!q.dataset.selected);const msg=document.getElementById('diagMessage');if(missing.length){msg.textContent='Answer all 10 questions first. You have '+missing.length+' left.';msg.classList.add('show');if(document.body.classList.contains('one-at-time')){diagIndex=diagQs.indexOf(missing[0]);showDiag()}return}msg.classList.remove('show');const scores={systems:[0,0],io:[0,0],components:[0,0],cpu:[0,0],memory:[0,0],binary:[0,0]};diagQs.forEach(q=>{scores[q.dataset.topic][1]++;if(q.dataset.selected===q.dataset.answer)scores[q.dataset.topic][0]++});state.diagnostic=scores;save();renderPlan();document.getElementById('plan').scrollIntoView({behavior:'smooth',block:'center'})}
+document.getElementById('finishDiag').addEventListener('click',finishDiag);
+const labels={systems:'Computer Systems',io:'Input & Output',components:'Computer Components',cpu:'CPU',memory:'RAM, ROM & Storage',binary:'Binary'};
+function renderPlan(){const plan=document.getElementById('plan'),grid=document.getElementById('planGrid');if(!state.diagnostic){plan.classList.remove('show');return}grid.innerHTML='';const rows=Object.entries(state.diagnostic).map(([k,v])=>({key:k,correct:v[0],total:v[1],ratio:v[0]/v[1]})).sort((a,b)=>a.ratio-b.ratio);rows.forEach(r=>{const status=r.ratio>=.75?'Looking secure':r.ratio>=.5?'Nearly there':'Practise next';const cls=r.ratio>=.75?'secure':'practise';const div=document.createElement('div');div.className='plan-item '+cls;div.innerHTML='<strong>'+labels[r.key]+'</strong><div class="status">'+status+'</div>';div.addEventListener('click',()=>openPractice(r.key));div.style.cursor='pointer';grid.appendChild(div)});const weak=rows.filter(r=>r.ratio<.75).slice(0,2).map(r=>labels[r.key]);document.getElementById('planTitle').textContent=weak.length?'Start with '+weak.join(' and '):'Good start — use mixed practice to stretch yourself';plan.classList.add('show');}
+renderPlan();
+
+function openPractice(key){document.querySelectorAll('.practice').forEach(p=>p.classList.remove('open'));const p=document.getElementById('practice-'+key);if(p){p.classList.add('open');p.scrollIntoView({behavior:'smooth',block:'start'})}}
+document.querySelectorAll('.practice-open').forEach(b=>b.addEventListener('click',()=>openPractice(b.dataset.open)));document.querySelectorAll('.close-practice').forEach(b=>b.addEventListener('click',()=>b.closest('.practice').classList.remove('open')));
+document.querySelectorAll('.practice-q[data-answer]').forEach(q=>q.querySelectorAll('.answer').forEach(a=>a.addEventListener('click',()=>{q.querySelectorAll('.answer').forEach(x=>x.classList.remove('selected'));a.classList.add('selected');const ok=a.dataset.value===q.dataset.answer,fb=q.querySelector('.feedback'),k=q.closest('.practice').id.replace('practice-','');fb.textContent=ok?'✓ Correct — move on to the challenge.':'Not yet. Use the Fix card, then try again.';fb.className='feedback show '+(ok?'ok':'try');q.querySelector('.knowledge')?.classList.toggle('show',!ok);if(ok){state.topicDone[k]=(state.topicDone[k]||0)+1;save()}})));
+document.querySelectorAll('.show-model').forEach(b=>b.addEventListener('click',()=>{const m=b.nextElementSibling;m.classList.toggle('show');b.textContent=m.classList.contains('show')?'Hide model answer':'Show a model answer'}));
+
+const mixedBank=[
+['Computer Systems','Name the four main things a computer system does.','Input, processing, output and storage.'],
+['Input & Output','Give one input device.','Examples include keyboard, mouse, scanner, camera or microphone.'],
+['Components','What does the motherboard do?','It connects the computer components together.'],
+['CPU','What is the correct CPU cycle order?','Fetch → Decode → Execute.'],
+['CPU','Give one way CPU performance can be increased.','More cores, a bigger cache or a faster clock speed.'],
+['Memory','What does RAM store?','Data and programs currently being used.'],
+['Memory','Give one difference between RAM and ROM.','RAM is volatile and read/write, whereas ROM is non-volatile and read only.'],
+['Binary','How many bits are in a byte?','8 bits.'],
+['Binary','Convert 10000011 to denary.','131.'],
+['Binary','Convert 75 to 8-bit binary.','01001011.'],
+['Year 7','What is selection?','Making a choice in a program, for example using an if statement.'],
+['Year 7','What is malware?','Harmful software designed to damage a device or steal data.']
+];
+document.getElementById('mixedBtn').addEventListener('click',()=>{const picks=[...mixedBank].sort(()=>Math.random()-.5).slice(0,6),box=document.getElementById('mixedBox');box.innerHTML='<ol>'+picks.map((x,i)=>'<li style="margin-bottom:12px"><strong>'+x[0]+':</strong> '+x[1]+'<br><button class="secondary mixed-answer" type="button" style="margin-top:6px">Show answer</button><div class="model">'+x[2]+'</div></li>').join('')+'</ol>';box.classList.add('show');box.querySelectorAll('.mixed-answer').forEach(b=>b.addEventListener('click',()=>{b.nextElementSibling.classList.toggle('show');b.textContent=b.nextElementSibling.classList.contains('show')?'Hide answer':'Show answer'}));box.scrollIntoView({behavior:'smooth',block:'nearest'})});
+})();
+</script>
+</body>
+</html>
