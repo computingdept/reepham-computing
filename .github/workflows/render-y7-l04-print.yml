@@ -1,0 +1,31 @@
+name: Render Year 7 Lesson 4 print PDF
+on:
+  push:
+    paths:
+      - 'lessons/year7/year7-lesson-upload/Y7-L04-print.html'
+      - '.github/workflows/render-y7-l04-print.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install WeasyPrint
+        run: python -m pip install --upgrade weasyprint
+      - name: Render PDF
+        run: weasyprint lessons/year7/year7-lesson-upload/Y7-L04-print.html lessons/year7/year7-lesson-upload/Y7-L04-print.pdf
+      - name: Commit PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lessons/year7/year7-lesson-upload/Y7-L04-print.pdf
+          if git diff --cached --quiet; then
+            echo "PDF is already up to date."
+            exit 0
+          fi
+          git commit -m "Render Year 7 Lesson 4 print PDF"
+          git pull --rebase origin main
+          git push
