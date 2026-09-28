@@ -267,7 +267,7 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
 @media(max-width:600px){.ks3-card-grid{grid-template-columns:1fr}}
 
 
-/* 2026-09-28: compact five-entry, mobile-first whole-school landing navigation. */
+/* 2026-09-28: compact 3-over-2, mobile-first whole-school landing navigation. */
 .learning-hub .landing-intro{margin-bottom:14px}
 .learning-hub .landing-intro .eyebrow{margin-bottom:4px}
 .learning-hub .landing-intro h1{font-size:clamp(2rem,8vw,3.2rem)}
@@ -275,13 +275,14 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
 
 .learning-hub .landing-choice-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(6,minmax(0,1fr));
   gap:8px;
   align-items:stretch;
 }
 
-/* Year 7–9: compact, equal, thumb-friendly tiles. */
+/* First row: three equal Year 7–9 tiles. */
 .learning-hub .landing-choice-grid .landing-year{
+  grid-column:span 2;
   min-width:0;
   min-height:86px;
   padding:10px 9px;
@@ -303,11 +304,12 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
   font-size:.72rem;line-height:1.1;font-weight:700
 }
 
-/* Years 10–11 and 12–13 span the phone width but stay short. */
+/* Second row: two equal wider course-entry tiles. */
 .learning-hub .landing-choice-grid .stage-card{
-  grid-column:1/-1;
-  min-height:66px;
-  padding:10px 13px;
+  grid-column:span 3;
+  min-width:0;
+  min-height:72px;
+  padding:10px 12px;
   border-radius:11px;
   background:#39816c;
   color:#fff;
@@ -315,17 +317,17 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:8px;
   border:1px solid #39816c;
 }
 .learning-hub .landing-choice-grid .stage-card-dark{background:#003a31;border-color:#003a31}
-.learning-hub .landing-choice-grid .stage-copy{display:grid;grid-template-columns:auto 1fr;column-gap:9px;align-items:baseline}
-.learning-hub .landing-choice-grid .stage-copy small{grid-column:1/-1;font-size:.61rem;letter-spacing:.12em;font-weight:800;opacity:.9}
-.learning-hub .landing-choice-grid .stage-copy strong{font-size:1.55rem;line-height:1;letter-spacing:-.04em}
-.learning-hub .landing-choice-grid .stage-copy span{font-size:.8rem;opacity:.92}
+.learning-hub .landing-choice-grid .stage-copy{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:1px}
+.learning-hub .landing-choice-grid .stage-copy small{font-size:.58rem;letter-spacing:.1em;font-weight:800;opacity:.9}
+.learning-hub .landing-choice-grid .stage-copy strong{font-size:1.35rem;line-height:1;letter-spacing:-.04em;white-space:nowrap}
+.learning-hub .landing-choice-grid .stage-copy span{font-size:.7rem;line-height:1.15;opacity:.92}
 .learning-hub .landing-choice-grid .stage-arrow{
-  flex:0 0 auto;display:grid;place-items:center;width:28px;height:28px;
-  border-radius:50%;background:rgba(255,255,255,.13);font-size:1.2rem
+  flex:0 0 auto;display:grid;place-items:center;width:27px;height:27px;
+  border-radius:50%;background:rgba(255,255,255,.13);font-size:1.15rem
 }
 .learning-hub .landing-choice-grid .stage-card:hover,
 .learning-hub .landing-choice-grid .stage-card:focus-visible{filter:brightness(.97)}
@@ -334,7 +336,7 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
 .learning-hub .simple-year-switch a{min-height:44px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;text-decoration:none;font-weight:800;color:var(--dark)}
 .learning-hub .simple-year-switch a[aria-current="page"]{background:var(--year-accent);border-color:var(--year-accent);color:#fff}
 
-/* Phone: bring the actual choices higher up the screen. */
+/* Phone: keep the complete 3-over-2 navigation high on the screen. */
 @media(max-width:699px){
   .learning-hub main{padding-top:16px}
   .learning-hub .landing-intro{margin-bottom:11px}
@@ -343,23 +345,19 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
   .learning-hub .landing-intro .intro{font-size:.9rem}
 }
 
-/* Larger screens: all five destinations in one compact row. */
+/* Larger screens keep the same hierarchy, with more breathing room. */
 @media(min-width:700px){
-  .learning-hub .landing-choice-grid{
-    grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:11px;
-  }
-  .learning-hub .landing-choice-grid .landing-year,
-  .learning-hub .landing-choice-grid .stage-card{
-    grid-column:auto;
-    min-height:132px;
-    padding:15px;
-    border-radius:13px;
+  .learning-hub .landing-choice-grid{gap:11px}
+  .learning-hub .landing-choice-grid .landing-year{
+    min-height:126px;padding:15px;border-radius:13px;
   }
   .learning-hub .landing-choice-grid .landing-year strong{font-size:2.8rem}
   .learning-hub .landing-choice-grid .landing-year .year-bottom{font-size:.82rem}
-  .learning-hub .landing-choice-grid .stage-card{align-items:flex-end}
-  .learning-hub .landing-choice-grid .stage-copy{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+  .learning-hub .landing-choice-grid .stage-card{
+    min-height:104px;padding:15px 18px;border-radius:13px;
+  }
+  .learning-hub .landing-choice-grid .stage-copy small{font-size:.68rem}
   .learning-hub .landing-choice-grid .stage-copy strong{font-size:2rem}
   .learning-hub .landing-choice-grid .stage-copy span{font-size:.82rem}
+  .learning-hub .landing-choice-grid .stage-arrow{width:32px;height:32px;font-size:1.3rem}
 }
