@@ -15,10 +15,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
 @media(max-width:900px){.lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.cards{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.topbar{padding:0 16px}.brand-copy strong{display:none}.home{display:none}main{padding:22px 16px}.heading{align-items:flex-start}.lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.cards{grid-template-columns:1fr}.term-head{align-items:flex-start;flex-direction:column}}
 </style></head><body>
-<header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="computing.html">Computing home</a></header>
-<main><a class="back" href="computing.html#pathways">← Back to Computing</a><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div><div class="sub">170 lesson positions</div></div>
+<header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
+<main><a class="back" id="yearBack" href="index.html#year/10">← Year 10 subjects</a><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div><div class="sub">170 lesson positions</div></div>
 <div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Booklet</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision Hub</button></div>
-<section class="panel active" id="lessons"><a class="welcome-link" href="lessons/j277/J277Welcome.html">Course welcome <span class="live-tick" aria-hidden="true">✓</span></a><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="summary"><h2 id="lessonTitle">Year 10 lessons</h2><span class="count" id="lessonCount"></span></div><div id="terms"></div><div class="note">Numbering runs across the full two-year course: Year 10 is 001–095 and Year 11 is 096–170. Some positions are kept for assessment, feedback, mocks and revision.</div></section>
+<section class="panel active" id="lessons"><a class="welcome-link" href="lessons/j277/J277Welcome.html">Course welcome <span class="live-tick" aria-hidden="true">✓</span></a><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="summary"><h2 id="lessonTitle">Year 10 lessons</h2><span class="count" id="lessonCount"></span></div><div id="terms"></div><div class="note">Numbering runs across the full two-year course: Year 10 is 001–095 and Year 11 is 096–170. Existing lessons will be linked here as they are moved into the Learning Hub.</div></section>
 <section class="panel" id="booklet">
   <div class="cards">
     <article class="card">
@@ -39,18 +39,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
 <script>const programmes={
 10:{start:1,terms:[{name:'Autumn 1',count:18},{name:'Autumn 2',count:18},{name:'Spring 1',count:14},{name:'Spring 2',count:12},{name:'Summer 1',count:17},{name:'Summer 2',count:16,note:'assessment, feedback and Year 11 bridge'}]},
 11:{start:96,terms:[{name:'Autumn 1',count:18},{name:'Autumn 2',count:18},{name:'Spring 1',count:14},{name:'Spring 2',count:12},{name:'Summer 1',count:13,note:'final revision and public exams'}]}
-};const liveMap={
-1:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson001.html',
-2:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson002.html',
-3:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson003.html',
-4:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson004.html',
-5:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson005.html',
-6:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson006.html',
-96:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson073.html',
-97:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson074.html',
-98:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson075.html',
-99:'https://computingdept.github.io/reepham-j277-lesson/lessons/J277Lesson076.html'
-};
+};const liveMap={};
 const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')],yearButtons=[...document.querySelectorAll('.year-btn')];
 const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=[10,11].includes(requestedYear)?requestedYear:10;
 const yearThemes={"10":{"accent":"#39816c","pale":"#edf5f2","border":"#88b4a4","ink":"#245e4c"},"11":{"accent":"#246b55","pale":"#e7f0ec","border":"#73a08f","ink":"#164d3d"},"12":{"accent":"#10513f","pale":"#e1ece7","border":"#5f8e7b","ink":"#0a4234"},"13":{"accent":"#003a31","pale":"#dce8e3","border":"#4f7c6c","ink":"#003a31"}};
@@ -62,10 +51,18 @@ function applyYearTheme(){
   root.setProperty('--year-border',t.border);
   root.setProperty('--year-ink',t.ink);
 }
+function updateYearNavigation(){
+  const back=document.getElementById('yearBack');
+  if(back){
+    back.href='index.html#year/'+year;
+    back.textContent='← Year '+year+' subjects';
+  }
+}
+
 const pad=n=>String(n).padStart(3,'0');
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 function renderLessons(){
  const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
  for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');
@@ -75,5 +72,5 @@ function renderLessons(){
  document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
  document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
-applyYearTheme();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script></body></html>
