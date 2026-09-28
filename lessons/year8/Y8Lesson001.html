@@ -3,262 +3,79 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#006347">
-<title>Year 8 Computing · Lesson 001 · Welcome Back</title>
+<meta name="theme-color" content="#0b5a45">
+<title>Year 8 Computing · L01 · Welcome Back</title>
 <style>
-:root{
-  --green:#006347;--dark:#003f36;--ink:#17231f;--muted:#5d6c66;--line:#d7e1dd;
-  --phase:#1565c0;--routine:#14834b;--response:#c96611;--soft:#f4f8f6;--white:#fff;
-  --cream:#fff8e8;--bluegrey:#edf3f5;--shadow:0 12px 36px rgba(0,63,54,.08)
-}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#f4f7f6}
-button,a,input{font:inherit}button{cursor:pointer}a{color:var(--green)}
-.skip{position:absolute;left:-9999px}.skip:focus{left:10px;top:10px;z-index:100;background:#fff;padding:10px;border-radius:8px}
-.teacher-nav{position:fixed;left:0;top:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--line);padding:18px 14px;z-index:30;display:flex;flex-direction:column;gap:16px}
-.brand strong{display:block;color:var(--dark);font-size:.95rem}.brand span{display:block;color:var(--muted);font-size:.83rem;margin-top:3px}
-.back{display:inline-flex;align-items:center;gap:6px;color:var(--green);text-decoration:none;font-weight:800;font-size:.88rem}
-.nav-buttons{display:grid;gap:7px}.nav-buttons button{min-height:42px;text-align:left;border:1px solid var(--line);background:#f8faf9;border-radius:9px;padding:8px 10px;color:#52615c;font-weight:750}.nav-buttons button.active{background:var(--green);border-color:var(--green);color:#fff}
-.nav-tools{margin-top:auto;display:grid;gap:7px}.nav-tools button{min-height:40px;border:1px solid var(--line);background:#fff;border-radius:9px;color:var(--green);font-weight:750}
-.topbar{position:fixed;left:230px;right:0;top:0;height:74px;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:25;display:flex;align-items:center;padding:10px 20px}
-.signals{display:flex;gap:8px;flex-wrap:wrap}.signal{display:inline-flex;align-items:center;gap:7px;min-height:38px;border-radius:9px;padding:7px 10px;color:#fff;font-size:.86rem;font-weight:850}.phase{background:var(--phase)}.routine{background:var(--routine)}.response{background:var(--response)}
-.supportbar{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}.supportbar button{min-height:38px;border:1px solid #c4d4ce;background:#fff;border-radius:9px;color:var(--green);font-weight:800;padding:7px 10px}.supportbar button[aria-pressed="true"]{background:var(--green);color:#fff}
-main{margin-left:230px;padding:94px 24px 70px;min-height:100vh}.page{display:none;max-width:1120px;margin:0 auto}.page.active{display:block}.page-head{margin-bottom:18px}.eyebrow{margin:0 0 7px;color:var(--green);font-size:.78rem;letter-spacing:.12em;font-weight:900}.page h1{margin:0;color:var(--dark);font-size:clamp(2rem,4vw,3.4rem);line-height:1.03;letter-spacing:-.035em}.lead{margin:10px 0 0;color:var(--muted);font-size:1.05rem;max-width:850px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 3px 16px rgba(0,63,54,.04)}.card h2,.card h3{color:var(--dark);margin:0 0 8px}.card p{margin:5px 0;color:#3d4d47}.question{min-height:150px}.qnum{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#e8f3ef;color:var(--green);font-weight:900;margin-bottom:8px}.answer{display:none;margin-top:10px;padding:10px;border-radius:9px;background:#e9f5ef;color:#164a34;font-weight:750}.reveal .answer{display:block}
-.objectives{display:grid;gap:10px}.objective{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}.tick{display:grid;place-items:center;min-width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:900}
-.slant-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.slant{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;text-align:center}.slant b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;margin:0 auto 7px;background:#eef6f3;color:var(--green);font-size:1.2rem}.slant span{display:block;color:var(--muted);font-size:.84rem;margin-top:3px}
-.notice{margin-top:12px;padding:12px 14px;border-left:4px solid var(--green);background:#eef7f4;border-radius:0 10px 10px 0}.notice.warn{border-left-color:#b46e00;background:#fff5df}.notice strong{color:var(--dark)}
-details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px}details+details{margin-top:8px}summary{cursor:pointer;font-weight:850;color:var(--dark)}details ul{margin:9px 0 0;padding-left:22px;color:#3f5049}
-.scenarios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.scenario{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}.scenario h3{margin:0 0 10px;color:var(--dark)}.choices{display:grid;gap:7px}.choice{min-height:44px;border:2px solid #aec3bb;background:#fff;color:#063f33;border-radius:9px;text-align:left;padding:8px 10px;font-weight:750}.choice:hover,.choice:focus-visible{border-color:var(--green);background:#eef7f3}.choice.correct{background:var(--green);color:#fff;border-color:var(--green)}.choice.wrong{background:#fff0e8;color:#6b2e0b;border-color:#d99c76}.feedback{min-height:24px;margin-top:8px;font-weight:800;color:#315146}
-.checklist{display:grid;gap:9px}.check-item{display:flex;align-items:flex-start;gap:11px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.check-item input{width:22px;height:22px;accent-color:var(--green);margin-top:1px}.check-item strong{color:var(--dark)}.check-item span{display:block;color:var(--muted);font-size:.9rem;margin-top:3px}
-.codebox{display:inline-flex;padding:8px 12px;border:2px solid var(--green);border-radius:10px;background:#fff;color:var(--dark);font-weight:900;font-size:1.2rem;letter-spacing:.05em}
-.exit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.exit{min-height:150px;border:2px solid #b8cbc3;background:#fff;border-radius:13px;color:#153f34;padding:15px;text-align:left}.exit[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}.exit strong{display:block;font-size:1.1rem}.exit span{display:block;margin-top:5px}
-.nav-bottom{max-width:1120px;margin:20px auto 0;display:flex;justify-content:space-between;gap:10px}.nav-bottom button{min-height:44px;border-radius:10px;padding:8px 13px;font-weight:850}.prev{border:1px solid #b8cbc3;background:#fff;color:var(--green)}.next{border:1px solid var(--green);background:var(--green);color:#fff}.stepcount{align-self:center;color:var(--muted);font-weight:750}
-.read-panel{display:none;max-width:1120px;margin:0 auto 15px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}.read-panel.open{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.read-panel button{border:1px solid #c4d4ce;background:#fff;color:var(--green);border-radius:8px;padding:7px 9px;font-weight:750}.read-panel button.on{background:var(--green);color:#fff}
-body.large main{font-size:118%}body.spaced main{line-height:1.75}body.cream{background:var(--cream)}body.bluegrey{background:var(--bluegrey)}
-@media(max-width:900px){.teacher-nav{position:static;width:auto;border-right:0;border-bottom:1px solid var(--line)}.nav-buttons{grid-template-columns:repeat(4,1fr)}.nav-tools{display:none}.topbar{position:sticky;left:auto;height:auto;top:0;padding:8px 10px}.topbar .supportbar{margin-left:0}.topbar{display:block}.signals{margin-bottom:7px}main{margin-left:0;padding:18px 10px 55px}.grid,.grid.three,.scenarios{grid-template-columns:1fr 1fr}.slant-grid{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:620px){.nav-buttons{grid-template-columns:repeat(2,1fr)}.grid,.grid.three,.scenarios,.exit-grid{grid-template-columns:1fr}.slant-grid{grid-template-columns:repeat(2,1fr)}.supportbar button{flex:1}.page h1{font-size:2rem}.nav-bottom{position:sticky;bottom:0;background:#f4f7f6;padding:8px 0}.stepcount{font-size:.84rem}}
+:root{--rhsc:#0b5a45;--rhsc2:#0a6a50;--ink:#17231f;--muted:#66736e;--bg:#f5f7f6;--card:#fff;--line:#e1e8e4;--soft:#f7f9f8;--ok:#eaf6ee;--bad:#fff2ef;--warn:#fff7df;--blue:#d5eefb;--blue-line:#5c9fc8;--shadow:0 12px 34px rgba(21,44,36,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#f8faf9,#f3f6f4);color:var(--ink);line-height:1.5}button,input,textarea{font:inherit}a,button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #bd7d08;outline-offset:3px}
+header{position:sticky;top:0;z-index:50;background:rgba(248,250,249,.88);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid rgba(219,227,223,.9)}.top{max-width:1040px;margin:auto;padding:12px 20px;display:flex;gap:18px;align-items:center;justify-content:space-between}.brand strong{display:block;color:var(--rhsc);font-size:1.02rem;font-weight:780}.brand span{font-size:.8rem;color:var(--muted)}.progress-wrap{min-width:220px;max-width:360px;flex:1}.progress{height:7px;background:#e7ece9;border-radius:999px;overflow:hidden}.bar{height:100%;width:12.5%;background:linear-gradient(90deg,var(--rhsc),var(--rhsc2));transition:width .25s ease}.score{font-size:.76rem;color:var(--muted);margin-top:4px;text-align:right}
+main{max-width:1040px;margin:auto;padding:26px 20px 78px}.links{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}.links a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:14px;font-weight:750;background:#f0f5f3;color:var(--rhsc);border:1px solid #d7e3de}
+.supportbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 16px;padding:11px;background:#fff;border:1px solid #dce6e1;border-radius:16px;box-shadow:0 3px 12px rgba(21,44,36,.04)}.supportbar::before{content:"Reading tools";font-weight:800;color:var(--rhsc);margin-right:3px}.supportbtn{min-height:46px;border:1px solid #cddbd5;background:#f5f8f7;color:var(--rhsc);border-radius:12px;padding:9px 14px;font-weight:780;cursor:pointer}.supportbtn:hover,.supportbtn[aria-pressed="true"],.supportbtn[aria-expanded="true"]{background:#e8f3ef;border-color:#93baac}.supportnote{font-size:.82rem;color:var(--muted);margin-left:auto}
+.readpanel{display:none;margin:-7px 0 16px;padding:15px 16px;background:#fff;border:1px solid #dce6e1;border-radius:16px}.readpanel.open{display:block}.readpanel h3{margin:0 0 8px;color:var(--rhsc)}.readpanel p{margin:0 0 10px;color:#53625c}.settingrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}.settingrow strong{min-width:90px}.choicebtn{min-height:42px;border:1px solid #cfddd7;background:#fff;color:var(--ink);border-radius:11px;padding:8px 12px;font-weight:700}.choicebtn[aria-pressed="true"]{background:#e8f3ef;color:var(--rhsc);border-color:#8fb8a8}
+.hero,.section{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}.hero{padding:28px;margin-bottom:20px;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:4px;background:linear-gradient(90deg,var(--rhsc),#79a898 55%,transparent)}h1{margin:0;color:var(--rhsc);font-size:clamp(2rem,5vw,3.5rem);line-height:1.04;letter-spacing:-.045em;font-weight:820}.lede{max-width:790px;font-size:1.03rem;color:#495751;margin:12px 0 0}.phase-row{display:flex;flex-wrap:wrap;gap:56px;margin-top:18px;padding:0 22px}.phase-tag{min-width:78px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;background:var(--blue);border:1px solid var(--blue-line);border-radius:4px;color:#164d6d;font-weight:800;box-shadow:0 2px 4px rgba(0,0,0,.12)}
+.section{padding:22px;margin:20px 0}.sectionhead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid #edf1ef}.sign{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 11px;border-radius:8px;color:#fff;font-size:.82rem;font-weight:850}.sign.phase{background:#1565c0}.sign.routine{background:#14834b}.sign.response{background:#c96611}.sectionhead h2{margin:0 0 0 auto;color:var(--rhsc);font-size:1.35rem}.card{background:var(--soft);border:1px solid #e7ece9;border-radius:18px;padding:16px;margin:10px 0}.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.info-card h3{margin:0 0 6px;color:var(--rhsc)}.q{border:1px solid #e2e8e5;border-radius:18px;padding:16px;margin:12px 0;background:#fff}.q strong{display:block;margin-bottom:9px}.options{display:grid;gap:9px}.option{display:flex;gap:10px;align-items:flex-start;min-height:48px;padding:12px 13px;border:1px solid #dce5e1;border-radius:14px;cursor:pointer;background:#fbfcfb}.option:has(input:checked){background:#edf6f2;border-color:#9fc5b7}input[type=radio]{accent-color:var(--rhsc);width:18px;height:18px;margin-top:3px}.check{min-height:44px;background:var(--rhsc);color:#fff;border:0;border-radius:13px;padding:10px 16px;font-weight:760;cursor:pointer;margin-top:10px}.feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:13px;font-size:.92rem}.feedback.show{display:block}.feedback.correct{background:var(--ok);color:#1d6530;border:1px solid #b9dfbf}.feedback.incorrect{background:var(--bad);color:#8a2f28;border:1px solid #efc5c0}.checklist{display:grid;gap:9px}.checkitem{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid #dfe7e3;border-radius:14px;background:#fff}.checkitem input{width:21px;height:21px;accent-color:var(--rhsc);margin-top:1px}.mini{font-size:.88rem;color:var(--muted);margin-top:3px}.notice{padding:13px 14px;border-left:4px solid var(--rhsc);background:#eef7f4;border-radius:0 12px 12px 0;margin:12px 0}.notice.warn{border-left-color:#b36a00;background:var(--warn)}details{background:#fff;border:1px solid #dfe7e3;border-radius:13px;padding:11px 13px;margin:8px 0}summary{cursor:pointer;font-weight:800;color:var(--rhsc)}details ul{margin-bottom:0}.code{display:inline-flex;padding:8px 12px;border:2px solid var(--rhsc);border-radius:10px;background:#fff;color:var(--rhsc);font-weight:900;letter-spacing:.05em}
+.exit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.exit-choice{min-height:130px;border:1px solid #d7e1dd;border-radius:16px;background:#fff;color:var(--ink);padding:15px;text-align:left}.exit-choice[aria-pressed="true"]{background:#e8f3ef;border-color:#86b7a5}.exit-choice strong{display:block;color:var(--rhsc);font-size:1.08rem}.exit-choice span{display:block;margin-top:5px}
+.stepnav{display:none;align-items:center;gap:9px;margin:0 0 16px;padding:11px 12px;background:#fff;border:1px solid #dce6e1;border-radius:16px}.stepnav .stepmeta{flex:1;min-width:180px}.stepcount{font-size:.82rem;color:var(--muted);font-weight:700}.steptitle{display:block;color:var(--rhsc);font-weight:820;margin-top:1px}.stepnav button{min-height:44px;border:1px solid #cfddd7;background:#fff;color:var(--rhsc);border-radius:11px;padding:8px 12px;font-weight:760}.stepnav button:disabled{opacity:.4}.stepnav .nextstep{background:var(--rhsc);color:#fff;border-color:var(--rhsc)}
+body.step-mode main>.hero,body.step-mode main>.section{display:none}body.step-mode main>.section.step-current{display:block!important;max-width:820px;margin:16px auto}body.step-mode .stepnav{display:flex}body.read-large{font-size:118%}body.read-spacing{line-height:1.78;letter-spacing:.018em;word-spacing:.06em}body.read-clear{font-family:Verdana,Tahoma,"Segoe UI",Arial,sans-serif}body.read-cream{background:#fff8e7}body.read-bluegrey{background:#eef4f5}
+@media(max-width:720px){.top{align-items:flex-start;flex-direction:column;padding:10px 16px;gap:8px}.progress-wrap{width:100%;max-width:none}.score{text-align:left}main{padding:18px 14px 64px}.links{display:grid;grid-template-columns:1fr}.links a{width:100%}.supportbar{display:grid;grid-template-columns:1fr 1fr}.supportbar::before,.supportnote{grid-column:1/-1;margin:0}.supportbtn{width:100%}.supportbtn:first-of-type{grid-column:1/-1}.hero,.section{border-radius:20px}.hero{padding:22px 18px}.phase-row{gap:10px;padding:0}.phase-tag{flex:1}.section{padding:18px 15px}.sectionhead h2{width:100%;margin:4px 0 0}.exit-grid{grid-template-columns:1fr}.settingrow{display:grid;grid-template-columns:1fr 1fr}.settingrow strong{grid-column:1/-1}.stepnav{position:sticky;bottom:10px;z-index:45;flex-wrap:wrap;background:rgba(248,250,249,.96);backdrop-filter:blur(14px)}.stepnav .stepmeta{order:-1;width:100%;flex-basis:100%}.stepnav button{flex:1}}
+@media print{header,.links,.supportbar,.readpanel,.stepnav,.check{display:none!important}body{background:#fff}main{padding:0}.hero,.section{box-shadow:none;break-inside:avoid;border-color:#ccd7d2}}
 </style>
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to lesson</a>
-<aside class="teacher-nav">
-  <a class="back" href="../../year8-computing.html#lessons">← Year 8 Computing</a>
-  <div class="brand"><strong>YEAR 8 · COMPUTING</strong><span>Lesson 001 · Welcome Back</span></div>
-  <nav class="nav-buttons" aria-label="Lesson stages">
-    <button data-stage="0">Do Now</button>
-    <button data-stage="1">Objectives</button>
-    <button data-stage="2">I Do · Expectations</button>
-    <button data-stage="3">You Do · Organisation</button>
-    <button data-stage="4">I Do · Safe Use</button>
-    <button data-stage="5">We Do · Check</button>
-    <button data-stage="6">You Do · Digital Setup</button>
-    <button data-stage="7">Exit</button>
-  </nav>
-  <div class="nav-tools">
-    <button id="revealBtn" type="button" aria-pressed="false">Reveal answers</button>
-    <button id="readingBtn" type="button" aria-expanded="false">Aa Reading support</button>
-  </div>
-</aside>
+<header><div class="top"><div class="brand"><strong>Year 8 Computing · L01</strong><span>Welcome Back</span></div><div class="progress-wrap"><div class="progress"><div class="bar" id="bar"></div></div><div class="score" id="scoreText">Lesson progress · Step 1 of 8</div></div></div></header>
+<main>
+<nav class="links" aria-label="Lesson navigation"><a href="../../year8-computing.html#lessons">← Computing lessons</a><a href="Y8Lesson001-slides.html">Preview slides</a><a href="year8-lesson-upload/Y8-L01-print.pdf">Print or download</a></nav>
+<div class="supportbar" role="region" aria-label="Reading tools"><button class="supportbtn" id="listenBtn" type="button">🔊 Listen</button><button class="supportbtn" id="readingHelpBtn" type="button" aria-expanded="false">Aa Reading help</button><button class="supportbtn" id="stepModeBtn" type="button" aria-pressed="false">▣ One step at a time</button><span class="supportnote">Use these whenever they help.</span></div>
+<div class="readpanel" id="readingPanel"><h3>Make the page easier to read</h3><p>Choose what helps you.</p><div class="settingrow"><strong>Text size</strong><button class="choicebtn" data-setting="size" data-value="normal">Normal</button><button class="choicebtn" data-setting="size" data-value="large">Large</button></div><div class="settingrow"><strong>Spacing</strong><button class="choicebtn" data-setting="spacing" data-value="normal">Normal</button><button class="choicebtn" data-setting="spacing" data-value="more">More</button></div><div class="settingrow"><strong>Page colour</strong><button class="choicebtn" data-setting="colour" data-value="white">White</button><button class="choicebtn" data-setting="colour" data-value="cream">Cream</button><button class="choicebtn" data-setting="colour" data-value="bluegrey">Blue-grey</button></div><div class="settingrow"><strong>Font</strong><button class="choicebtn" data-setting="font" data-value="standard">Standard</button><button class="choicebtn" data-setting="font" data-value="clear">Clear</button></div></div>
+<div class="stepnav" id="stepNav"><button id="stepPrev" type="button">← Previous</button><div class="stepmeta"><span class="stepcount" id="stepCount">Step 1 of 8</span><span class="steptitle" id="stepTitle">Do Now</span></div><button id="stepExit" type="button">Show whole lesson</button><button class="nextstep" id="stepNext" type="button">Next →</button></div>
 
-<header class="topbar">
-  <div class="signals">
-    <span class="signal phase" id="phaseSignal">Do Now</span>
-    <span class="signal routine" id="routineSignal">Quiet Working</span>
-    <span class="signal response" id="responseSignal">MWBs</span>
-  </div>
-  <div class="supportbar">
-    <button id="listenBtn" type="button">🔊 Read page</button>
-    <button id="readingTopBtn" type="button" aria-expanded="false">Aa Reading support</button>
-  </div>
-</header>
+<section class="hero"><h1>Welcome Back Year 8</h1><p class="lede">Review Computing expectations, safe use of school technology, organisation, school accounts, OneDrive and email. The web lesson is adapted from the original teacher PowerPoint.</p><div class="phase-row"><span class="phase-tag">Do Now</span><span class="phase-tag">I Do</span><span class="phase-tag">We Do</span><span class="phase-tag">You Do</span></div></section>
 
-<main id="lesson">
-  <div class="read-panel" id="readPanel">
-    <strong>Reading support:</strong>
-    <button id="largeBtn" type="button">Larger text</button>
-    <button id="spacingBtn" type="button">More spacing</button>
-    <button id="colourBtn" type="button">Page colour</button>
-  </div>
+<section class="section" data-title="Do Now"><div class="sectionhead"><span class="sign phase">Do Now</span><span class="sign routine">Quiet Working</span><span class="sign response">MWBs</span><h2>Start from memory · 5 minutes</h2></div>
+<div class="q" data-answer="listen carefully"><strong>1. What does the L in SLANT stand for?</strong><input type="text" aria-label="Question 1 answer"><button class="check" type="button" onclick="checkText(this,['listen carefully','listen'])">Check</button><div class="feedback"></div></div>
+<div class="q"><strong>2. Give one way we show respect for the classroom environment.</strong><textarea rows="2" aria-label="Question 2 answer"></textarea><button class="check" type="button" onclick="showModel(this,'Examples: leave desks as you found them; keep food and drink away from desks; follow the Acceptable Use Agreement.')">Show model</button><div class="feedback"></div></div>
+<div class="q" data-answer="back"><strong>3. Where should new pages go in your green Computing folder?</strong><div class="options"><label class="option"><input type="radio" name="q3" value="front"> At the front</label><label class="option"><input type="radio" name="q3" value="back"> At the back</label></div><button class="check" type="button" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+<div class="q" data-answer="teacher"><strong>4. A school website is blocked but you think it should be available. What should you do?</strong><div class="options"><label class="option"><input type="radio" name="q4" value="teacher"> Tell a teacher</label><label class="option"><input type="radio" name="q4" value="bypass"> Try to bypass the block</label></div><button class="check" type="button" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+</section>
 
-  <section class="page active" data-phase="Do Now" data-routine="Quiet Working" data-response="MWBs">
-    <div class="page-head"><p class="eyebrow">DO NOW · 5 MINUTES</p><h1>Welcome back, Year 8</h1><p class="lead">Use what you remember about good Computing routines. Try all four before checking.</p></div>
-    <div class="grid">
-      <article class="card question"><span class="qnum">1</span><h3>What does the <strong>L</strong> in SLANT stand for?</h3><div class="answer">Listen carefully.</div></article>
-      <article class="card question"><span class="qnum">2</span><h3>Name one way we show respect for the classroom environment.</h3><div class="answer">Examples: leave desks as you found them; keep food and drink away; follow the Acceptable Use Agreement.</div></article>
-      <article class="card question"><span class="qnum">3</span><h3>Where should new pages go in your green Computing folder?</h3><div class="answer">At the back, so work stays in chronological order.</div></article>
-      <article class="card question"><span class="qnum">4</span><h3>What should you do if a school website is blocked but you think it should be available?</h3><div class="answer">Tell a teacher.</div></article>
-    </div>
-  </section>
+<section class="section" data-title="Objectives"><div class="sectionhead"><span class="sign phase">Objectives</span><span class="sign routine">Listening</span><span class="sign response">Cold Calling</span><h2>Today we will</h2></div><div class="info-grid"><article class="card info-card"><h3>1 · Expectations</h3><p>Review Computing expectations and SLANT.</p></article><article class="card info-card"><h3>2 · Safe use</h3><p>Review acceptable use, filtering, monitoring and password expectations.</p></article><article class="card info-card"><h3>3 · Organisation</h3><p>Organise your folder, account information and OneDrive.</p></article><article class="card info-card"><h3>4 · Digital routines</h3><p>Know where homework appears, tidy email and save evidence.</p></article></div></section>
 
-  <section class="page" data-phase="Objectives" data-routine="Listening" data-response="Cold Calling">
-    <div class="page-head"><p class="eyebrow">TODAY WE WILL</p><h1>Get Year 8 Computing ready</h1></div>
-    <div class="objectives">
-      <div class="objective"><span class="tick">1</span><div><strong>Review our Computing expectations and SLANT.</strong></div></div>
-      <div class="objective"><span class="tick">2</span><div><strong>Review the Acceptable Use Agreement, filtering and monitoring.</strong></div></div>
-      <div class="objective"><span class="tick">3</span><div><strong>Organise your folder, account details, OneDrive and email.</strong></div></div>
-      <div class="objective"><span class="tick">4</span><div><strong>Know where homework appears and save evidence of your work.</strong></div></div>
-    </div>
-  </section>
+<section class="section" data-title="I Do · Expectations"><div class="sectionhead"><span class="sign phase">I Do</span><span class="sign routine">Listening</span><span class="sign response">Choral Response</span><h2>Three things matter</h2></div><div class="info-grid"><article class="card info-card"><h3>Respect for others</h3><p>SLANT when the teacher is speaking. Listen when others contribute. Support the learning of others.</p></article><article class="card info-card"><h3>Respect for the classroom</h3><p>Leave desks as you found them. Keep food and drink away from desks. Follow the Acceptable Use Agreement.</p></article><article class="card info-card"><h3>Respect for learning</h3><p>Be ready to answer questions and complete tasks. Computing work should usually be presented clearly and carefully. Work hard even when something is difficult.</p></article></div>
+<div class="card"><h3 style="color:var(--rhsc);margin-top:0">SLANT</h3><p><strong>S</strong> Sit up · <strong>L</strong> Listen carefully · <strong>A</strong> Ask and answer · <strong>N</strong> Never interrupt · <strong>T</strong> Track the speaker</p></div></section>
 
-  <section class="page" data-phase="I Do" data-routine="Listening" data-response="Choral Response">
-    <div class="page-head"><p class="eyebrow">I DO · EXPECTATIONS</p><h1>Three things matter</h1><p class="lead">Respect others. Respect the room. Respect learning.</p></div>
-    <div class="grid three">
-      <article class="card"><h2>Respect others</h2><p>SLANT when the teacher is speaking. Listen when others contribute. Support the learning of others.</p></article>
-      <article class="card"><h2>Respect the classroom</h2><p>Leave desks as you found them. Keep food and drink away from desks. Follow the Acceptable Use Agreement.</p></article>
-      <article class="card"><h2>Respect learning</h2><p>Be ready to answer questions and complete tasks. Computing work is usually presented clearly and carefully. Keep working when something is difficult.</p></article>
-    </div>
-    <div class="card" style="margin-top:13px">
-      <h2>SLANT</h2>
-      <div class="slant-grid">
-        <div class="slant"><b>S</b><strong>Sit up</strong><span>Sit straight, face forward, ready to learn.</span></div>
-        <div class="slant"><b>L</b><strong>Listen carefully</strong><span>Pay attention and follow instructions.</span></div>
-        <div class="slant"><b>A</b><strong>Ask and answer</strong><span>Ask questions and contribute answers.</span></div>
-        <div class="slant"><b>N</b><strong>Never interrupt</strong><span>Let others finish before you talk.</span></div>
-        <div class="slant"><b>T</b><strong>Track the speaker</strong><span>Keep your attention on the person speaking.</span></div>
-      </div>
-    </div>
-  </section>
+<section class="section" data-title="You Do · Organisation"><div class="sectionhead"><span class="sign phase">You Do</span><span class="sign routine">Quiet Working</span><span class="sign response">Independent</span><h2>Get your Computing folder ready</h2></div><div class="checklist"><label class="checkitem"><input type="checkbox"><div><strong>Complete the front page of your folder.</strong><div class="mini">Add your name, class and previous test scores.</div></div></label><label class="checkitem"><input type="checkbox"><div><strong>Review the Acceptable Use Agreement.</strong></div></label><label class="checkitem"><input type="checkbox"><div><strong>Add your school email, username and printer code to your planner.</strong><div class="mini">Do not put your real password into this webpage.</div></div></label></div>
+<details><summary>Green folder presentation</summary><ul><li>Complete the cover page at the front.</li><li>Keep pages in chronological order, with new work at the back.</li></ul></details><details><summary>Do Nows and assessments</summary><ul><li>Write in black or blue ink and mark in coloured pen.</li><li>Use your best handwriting and cross out mistakes with one line.</li><li>Keep pages neat and write in full sentences.</li></ul></details><details><summary>Paper work and Class Notebook</summary><ul><li>Paper: add title/date, underline headings with a ruler, label diagrams.</li><li>Class Notebook: add dates, use black font and purple marking, organise with headings/lists, crop screenshots neatly.</li></ul></details></section>
 
-  <section class="page" data-phase="You Do" data-routine="Quiet Working" data-response="Independent">
-    <div class="page-head"><p class="eyebrow">YOU DO · ORGANISATION</p><h1>Get your Computing folder ready</h1><p class="lead">Work through these in order.</p></div>
-    <div class="checklist">
-      <label class="check-item"><input type="checkbox"><div><strong>Complete the front page of your folder.</strong><span>Add your name, class and previous test scores.</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Review the Acceptable Use Agreement.</strong></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Add your school email, username and printer code to your planner.</strong><span>Do not write your password on this webpage.</span></div></label>
-    </div>
-    <div style="margin-top:14px">
-      <details><summary>Presentation of work · Green folder</summary><ul><li>Complete the cover page at the front.</li><li>Keep pages in chronological order, with new work at the back.</li></ul></details>
-      <details><summary>Presentation of work · Do Nows and assessments</summary><ul><li>Write in black or blue ink.</li><li>Mark in coloured pen.</li><li>Use your best handwriting.</li><li>Cross out mistakes with one line.</li><li>Keep pages neat and use full sentences.</li></ul></details>
-      <details><summary>Presentation of work · Paper and Class Notebook</summary><ul><li>Paper: add title and date; underline headings; label diagrams.</li><li>Class Notebook: add the date, use black font, mark in purple, organise with headings/lists, and crop screenshots so they are not distorted.</li></ul></details>
-    </div>
-  </section>
+<section class="section" data-title="I Do · Safe Use"><div class="sectionhead"><span class="sign phase">I Do</span><span class="sign routine">Listening</span><span class="sign response">Cold Calling</span><h2>Filtering and monitoring</h2></div><div class="info-grid"><article class="card info-card"><h3>Filtering</h3><p>If the school thinks a website is inappropriate, it may be blocked. If you think a site should or should not be blocked, tell a teacher.</p></article><article class="card info-card"><h3>Monitoring</h3><p>Staff can see activity on school systems, including screens, internet history, files and emails. School systems should be used for schoolwork.</p></article></div><div class="notice warn"><strong>Acceptable Use:</strong> the original lesson states that breaking the agreement can result in a negative on Arbor, and two negatives trigger a lunchtime detention.</div><div class="notice"><strong>Password reminder:</strong> the lesson states that passwords must have 10 characters and should not need changing all year.</div></section>
 
-  <section class="page" data-phase="I Do" data-routine="Listening" data-response="Cold Calling">
-    <div class="page-head"><p class="eyebrow">I DO · SAFE & RESPONSIBLE USE</p><h1>Filtering and monitoring</h1></div>
-    <div class="grid">
-      <article class="card"><h2>Filtering</h2><p>If the school thinks a website is inappropriate, it may be blocked.</p><p>If you think a website should or should not be blocked, tell a teacher.</p></article>
-      <article class="card"><h2>Monitoring</h2><p>Staff can see activity on school systems, including device screens, internet history, files and emails.</p><p>School systems should be used for schoolwork.</p></article>
-    </div>
-    <div class="notice warn"><strong>Acceptable Use Agreement:</strong> the source lesson states that breaking the agreement can result in a negative on Arbor, and two negatives trigger a lunchtime detention.</div>
-    <div class="notice"><strong>Password reminder:</strong> the lesson states that passwords must have 10 characters and should not need changing all year.</div>
-  </section>
+<section class="section" data-title="We Do · Quick Check"><div class="sectionhead"><span class="sign phase">We Do</span><span class="sign routine">Quiet Working</span><span class="sign response">MWBs</span><h2>What should you do?</h2></div>
+<div class="q" data-answer="teacher"><strong>1. A school website is blocked but should be available.</strong><div class="options"><label class="option"><input type="radio" name="w1" value="teacher"> Tell a teacher</label><label class="option"><input type="radio" name="w1" value="bypass"> Try to bypass the block</label></div><button class="check" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+<div class="q" data-answer="delete"><strong>2. An old email is no longer needed.</strong><div class="options"><label class="option"><input type="radio" name="w2" value="delete"> Delete it</label><label class="option"><input type="radio" name="w2" value="leave"> Leave it in the inbox</label></div><button class="check" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+<div class="q" data-answer="unsubscribe"><strong>3. A website you should not have joined keeps emailing you.</strong><div class="options"><label class="option"><input type="radio" name="w3" value="keep"> Keep receiving it</label><label class="option"><input type="radio" name="w3" value="unsubscribe"> Unsubscribe</label></div><button class="check" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+<div class="q" data-answer="folder"><strong>4. An email is useful and you want to keep it.</strong><div class="options"><label class="option"><input type="radio" name="w4" value="delete"> Delete it</label><label class="option"><input type="radio" name="w4" value="folder"> Put it in a folder</label></div><button class="check" onclick="checkMCQ(this)">Check</button><div class="feedback"></div></div>
+</section>
 
-  <section class="page" data-phase="We Do" data-routine="Quiet Working" data-response="MWBs">
-    <div class="page-head"><p class="eyebrow">WE DO · QUICK CHECK</p><h1>What should you do?</h1><p class="lead">Choose the best response. You get immediate feedback.</p></div>
-    <div class="scenarios">
-      <article class="scenario" data-answer="1"><h3>A school website is blocked but should be available.</h3><div class="choices"><button class="choice" data-value="1">Tell a teacher</button><button class="choice" data-value="0">Try to bypass the block</button></div><div class="feedback"></div></article>
-      <article class="scenario" data-answer="1"><h3>An old email is no longer needed.</h3><div class="choices"><button class="choice" data-value="1">Delete it</button><button class="choice" data-value="0">Leave everything in the inbox</button></div><div class="feedback"></div></article>
-      <article class="scenario" data-answer="1"><h3>A website you should not have joined keeps emailing you.</h3><div class="choices"><button class="choice" data-value="0">Keep receiving it</button><button class="choice" data-value="1">Unsubscribe</button></div><div class="feedback"></div></article>
-      <article class="scenario" data-answer="1"><h3>An email is useful and you want to keep it.</h3><div class="choices"><button class="choice" data-value="0">Delete it</button><button class="choice" data-value="1">Put it into a folder</button></div><div class="feedback"></div></article>
-    </div>
-  </section>
+<section class="section" data-title="You Do · Digital Setup"><div class="sectionhead"><span class="sign phase">You Do</span><span class="sign routine">Independent Working</span><span class="sign response">Device</span><h2>Finish your Year 8 setup</h2></div><div class="checklist"><label class="checkitem"><input type="checkbox"><div><strong>Log in.</strong></div></label><label class="checkitem"><input type="checkbox"><div><strong>Find “My Account Information”.</strong><div class="mini">Record your username, school email and printer code in your planner.</div></div></label><label class="checkitem"><input type="checkbox"><div><strong>Create Year 8 → Computing in OneDrive.</strong></div></label><label class="checkitem"><input type="checkbox"><div><strong>Tidy your school email.</strong><div class="mini">Delete what you do not need, unsubscribe where appropriate, and move useful emails into folders.</div></div></label><label class="checkitem"><input type="checkbox"><div><strong>Check homework.</strong><div class="mini">Homework is set twice a half term and appears on Arbor and Wayground.</div></div></label><label class="checkitem"><input type="checkbox"><div><strong>Complete the “8.0 Welcome Back” Wayground quiz.</strong><div class="mini">Class code: <span class="code">D331678</span></div></div></label><label class="checkitem"><input type="checkbox"><div><strong>Add evidence.</strong><div class="mini">Add a screenshot of your work to Class Notebook.</div></div></label></div></section>
 
-  <section class="page" data-phase="You Do" data-routine="Independent Working" data-response="Device">
-    <div class="page-head"><p class="eyebrow">YOU DO · DIGITAL SETUP</p><h1>Finish your Year 8 setup</h1><p class="lead">Complete what you can today. Tick each item as you finish it.</p></div>
-    <div class="checklist">
-      <label class="check-item"><input type="checkbox"><div><strong>Log in.</strong></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Find “My Account Information”.</strong><span>Record your username, school email and printer code in your planner.</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Create Year 8 → Computing in OneDrive.</strong><span>Aim to use OneDrive to save work from your subjects.</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Tidy your school email.</strong><span>Delete what you do not need, unsubscribe where appropriate, and move emails you want to keep into folders.</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Check homework.</strong><span>Homework is set twice a half term and appears on Arbor and Wayground.</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Open the “8.0 Welcome Back” Wayground quiz.</strong><span>Class code:</span> <span class="codebox">D331678</span></div></label>
-      <label class="check-item"><input type="checkbox"><div><strong>Add evidence.</strong><span>Add a screenshot of your work to your Class Notebook.</span></div></label>
-    </div>
-  </section>
-
-  <section class="page" data-phase="Exit Questioning" data-routine="Reflection" data-response="Show Your Hand">
-    <div class="page-head"><p class="eyebrow">EXIT QUESTIONING</p><h1>Ready for Year 8 Computing?</h1><p class="lead">Choose the statement that best matches where you are now.</p></div>
-    <div class="exit-grid">
-      <button class="exit" aria-pressed="false"><strong>👍 Ready</strong><span>My folder and digital setup are ready.</span></button>
-      <button class="exit" aria-pressed="false"><strong>🫳 Nearly there</strong><span>I still need to finish one task.</span></button>
-      <button class="exit" aria-pressed="false"><strong>👎 Need help</strong><span>I need help with an account, rule or setup task.</span></button>
-    </div>
-    <div class="notice" style="margin-top:14px"><strong>Evidence:</strong> make sure a screenshot of your work has been added to Class Notebook.</div>
-    <div style="margin-top:14px"><details><summary>End-of-lesson reminders from the original lesson</summary><ul><li>Toilets and Reception are closed between lessons.</li><li>Self-check your uniform.</li><li>If you arrive after the register has started, you are late.</li></ul></details></div>
-  </section>
-
-  <div class="nav-bottom">
-    <button class="prev" id="prevBtn" type="button">← Previous</button>
-    <span class="stepcount" id="stepCount">Step 1 of 8</span>
-    <button class="next" id="nextBtn" type="button">Next →</button>
-  </div>
+<section class="section" data-title="Exit Questioning"><div class="sectionhead"><span class="sign phase">Exit Questioning</span><span class="sign routine">Reflection</span><span class="sign response">Show Your Hand</span><h2>Ready for Year 8 Computing?</h2></div><div class="exit-grid"><button class="exit-choice" aria-pressed="false"><strong>👍 Ready</strong><span>My folder and digital setup are ready.</span></button><button class="exit-choice" aria-pressed="false"><strong>🫳 Nearly there</strong><span>I still need to finish one task.</span></button><button class="exit-choice" aria-pressed="false"><strong>👎 Need help</strong><span>I need help with an account, rule or setup task.</span></button></div><div class="notice"><strong>Evidence:</strong> make sure a screenshot of your work has been added to Class Notebook.</div><details><summary>End-of-lesson reminders from the original lesson</summary><ul><li>Toilets and Reception are closed between lessons.</li><li>Self-check your uniform.</li><li>If you arrive after the register has started, you are late.</li></ul></details></section>
 </main>
-
 <script>
+function checkMCQ(btn){const q=btn.closest('.q'),chosen=q.querySelector('input[type=radio]:checked'),fb=q.querySelector('.feedback');if(!chosen){fb.className='feedback show incorrect';fb.textContent='Choose an answer first.';return}const ok=chosen.value===q.dataset.answer;fb.className='feedback show '+(ok?'correct':'incorrect');fb.textContent=ok?'Correct ✓':'Not quite. Try again.'}
+function checkText(btn,answers){const q=btn.closest('.q'),v=q.querySelector('input').value.trim().toLowerCase(),fb=q.querySelector('.feedback');if(!v){fb.className='feedback show incorrect';fb.textContent='Type an answer first.';return}const ok=answers.includes(v);fb.className='feedback show '+(ok?'correct':'incorrect');fb.textContent=ok?'Correct ✓':'Not quite. Check SLANT and try again.'}
+function showModel(btn,text){const fb=btn.closest('.q').querySelector('.feedback');fb.className='feedback show correct';fb.textContent=text}
+document.querySelectorAll('.exit-choice').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.exit-choice').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true')}));
+
 (function(){
-  const pages=[...document.querySelectorAll('.page')],nav=[...document.querySelectorAll('[data-stage]')];
-  let stage=0,colour=0;
-  const phase=document.getElementById('phaseSignal'),routine=document.getElementById('routineSignal'),response=document.getElementById('responseSignal');
-  function show(i){
-    stage=Math.max(0,Math.min(pages.length-1,i));
-    pages.forEach((p,n)=>p.classList.toggle('active',n===stage));
-    nav.forEach((b,n)=>b.classList.toggle('active',n===stage));
-    const p=pages[stage];
-    phase.textContent=p.dataset.phase||'Lesson';
-    routine.textContent=p.dataset.routine||'';
-    response.textContent=p.dataset.response||'';
-    document.getElementById('stepCount').textContent='Step '+(stage+1)+' of '+pages.length;
-    document.getElementById('prevBtn').disabled=stage===0;
-    document.getElementById('nextBtn').disabled=stage===pages.length-1;
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    document.getElementById('listenBtn').textContent='🔊 Read page';
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  nav.forEach((b,i)=>b.addEventListener('click',()=>show(i)));
-  document.getElementById('prevBtn').addEventListener('click',()=>show(stage-1));
-  document.getElementById('nextBtn').addEventListener('click',()=>show(stage+1));
+const stages=[...document.querySelectorAll('main > .section')],hero=document.querySelector('main > .hero'),bar=document.getElementById('bar'),score=document.getElementById('scoreText'),stepModeBtn=document.getElementById('stepModeBtn'),stepPrev=document.getElementById('stepPrev'),stepNext=document.getElementById('stepNext'),stepExit=document.getElementById('stepExit'),stepCount=document.getElementById('stepCount'),stepTitle=document.getElementById('stepTitle');let current=0;
+function showStage(i){current=Math.max(0,Math.min(i,stages.length-1));stages.forEach((s,n)=>s.classList.toggle('step-current',n===current));stepCount.textContent='Step '+(current+1)+' of '+stages.length;stepTitle.textContent=stages[current].dataset.title;bar.style.width=((current+1)/stages.length*100)+'%';score.textContent='Lesson progress · Step '+(current+1)+' of '+stages.length;stepPrev.disabled=current===0;stepNext.disabled=current===stages.length-1;window.scrollTo({top:0,behavior:'smooth'});if(window.speechSynthesis)speechSynthesis.cancel();document.getElementById('listenBtn').textContent='🔊 Listen'}
+stepModeBtn.addEventListener('click',()=>{const on=document.body.classList.toggle('step-mode');stepModeBtn.setAttribute('aria-pressed',on?'true':'false');if(on)showStage(current);else{bar.style.width='12.5%';score.textContent='Lesson progress · Step 1 of 8'}});
+stepPrev.addEventListener('click',()=>showStage(current-1));stepNext.addEventListener('click',()=>showStage(current+1));stepExit.addEventListener('click',()=>{document.body.classList.remove('step-mode');stepModeBtn.setAttribute('aria-pressed','false');window.scrollTo({top:0,behavior:'smooth'})});showStage(0);
 
-  document.getElementById('revealBtn').addEventListener('click',e=>{
-    const on=document.body.classList.toggle('reveal');
-    e.currentTarget.setAttribute('aria-pressed',on?'true':'false');
-  });
+const panel=document.getElementById('readingPanel'),help=document.getElementById('readingHelpBtn');help.addEventListener('click',()=>{const open=panel.classList.toggle('open');help.setAttribute('aria-expanded',open?'true':'false')});
+const prefs={size:'normal',spacing:'normal',colour:'white',font:'standard'};document.querySelectorAll('.choicebtn').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.setting,v=b.dataset.value;prefs[k]=v;document.body.classList.toggle('read-large',prefs.size==='large');document.body.classList.toggle('read-spacing',prefs.spacing==='more');document.body.classList.toggle('read-clear',prefs.font==='clear');document.body.classList.toggle('read-cream',prefs.colour==='cream');document.body.classList.toggle('read-bluegrey',prefs.colour==='bluegrey');document.querySelectorAll('.choicebtn[data-setting="'+k+'"]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.value===v?'true':'false'))}));
+document.querySelectorAll('.choicebtn[data-value="normal"],.choicebtn[data-value="white"],.choicebtn[data-value="standard"]').forEach(b=>{if((b.dataset.setting==='size'&&b.dataset.value==='normal')||(b.dataset.setting==='spacing'&&b.dataset.value==='normal')||(b.dataset.setting==='colour'&&b.dataset.value==='white')||(b.dataset.setting==='font'&&b.dataset.value==='standard'))b.setAttribute('aria-pressed','true')});
 
-  document.querySelectorAll('.scenario').forEach(card=>{
-    card.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click',()=>{
-      card.querySelectorAll('.choice').forEach(x=>x.classList.remove('correct','wrong'));
-      const ok=btn.dataset.value===card.dataset.answer;
-      btn.classList.add(ok?'correct':'wrong');
-      card.querySelector('.feedback').textContent=ok?'✓ Correct':'Not yet — try the other option.';
-    }));
-  });
-
-  document.querySelectorAll('.exit').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('.exit').forEach(x=>x.setAttribute('aria-pressed','false'));
-    btn.setAttribute('aria-pressed','true');
-  }));
-
-  const panel=document.getElementById('readPanel');
-  function toggleReading(button){
-    const open=panel.classList.toggle('open');
-    document.getElementById('readingBtn').setAttribute('aria-expanded',open?'true':'false');
-    document.getElementById('readingTopBtn').setAttribute('aria-expanded',open?'true':'false');
-  }
-  document.getElementById('readingBtn').addEventListener('click',toggleReading);
-  document.getElementById('readingTopBtn').addEventListener('click',toggleReading);
-  document.getElementById('largeBtn').addEventListener('click',()=>document.body.classList.toggle('large'));
-  document.getElementById('spacingBtn').addEventListener('click',()=>document.body.classList.toggle('spaced'));
-  document.getElementById('colourBtn').addEventListener('click',()=>{
-    colour=(colour+1)%3;
-    document.body.classList.remove('cream','bluegrey');
-    if(colour===1)document.body.classList.add('cream');
-    if(colour===2)document.body.classList.add('bluegrey');
-  });
-
-  document.getElementById('listenBtn').addEventListener('click',e=>{
-    if(!window.speechSynthesis)return;
-    if(speechSynthesis.speaking){speechSynthesis.cancel();e.currentTarget.textContent='🔊 Read page';return}
-    const text=pages[stage].innerText.replace(/\s+/g,' ').trim();
-    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.9;
-    const voices=speechSynthesis.getVoices().filter(v=>(v.lang||'').toLowerCase().startsWith('en-gb'));
-    if(voices.length)u.voice=voices.find(v=>/sonia|libby|serena|female|kate/i.test(v.name))||voices[0];
-    e.currentTarget.textContent='■ Stop';
-    u.onend=u.onerror=()=>e.currentTarget.textContent='🔊 Read page';
-    speechSynthesis.speak(u);
-  });
-
-  show(0);
+const listen=document.getElementById('listenBtn');listen.addEventListener('click',()=>{if(!window.speechSynthesis)return;if(speechSynthesis.speaking){speechSynthesis.cancel();listen.textContent='🔊 Listen';return}const target=document.body.classList.contains('step-mode')?stages[current]:hero;const text=target.innerText.replace(/\s+/g,' ').trim();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.9;const vs=speechSynthesis.getVoices().filter(v=>(v.lang||'').toLowerCase().startsWith('en-gb'));if(vs.length)u.voice=vs.find(v=>/sonia|libby|serena|female|kate/i.test(v.name))||vs[0];listen.textContent='■ Stop';u.onend=u.onerror=()=>listen.textContent='🔊 Listen';speechSynthesis.speak(u)});
 })();
 </script>
-</body>
-</html>
+</body></html>
