@@ -26,10 +26,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
 <body>
 <header class="topbar">
   <a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">A</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a>
-  <a class="home" href="computing.html">Computing home</a>
+  <a class="home" href="/">Learning Hub</a>
 </header>
 <main>
-  <a class="back" href="computing.html#pathways">← Back to Computing</a>
+  <a class="back" id="yearBack" href="index.html#year/12">← Year 12 subjects</a>
   <div class="heading"><div><p class="eyebrow">OCR H446 · A LEVEL</p><h1>Computer Science</h1></div><div class="sub">320 lesson positions</div></div>
 
   <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Booklet</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision Hub</button></div>
@@ -109,7 +109,15 @@ function applyYearTheme(){
   root.setProperty('--year-pale',t.pale);
   root.setProperty('--year-border',t.border);
   root.setProperty('--year-ink',t.ink);
-}const pad=n=>String(n).padStart(3,'0');
+}
+function updateYearNavigation(){
+  const back=document.getElementById('yearBack');
+  if(back){
+    back.href='index.html#year/'+year;
+    back.textContent='← Year '+year+' subjects';
+  }
+}
+const pad=n=>String(n).padStart(3,'0');
 
 function openTab(name){
   const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];
@@ -117,7 +125,7 @@ function openTab(name){
   panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
 }
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
 function renderLessons(){
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
@@ -141,7 +149,7 @@ function renderLessons(){
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
   document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
-applyYearTheme();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script>
 </body>
 </html>
