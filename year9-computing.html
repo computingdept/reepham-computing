@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#006347">
+<meta name="description" content="RHSC Year 9 Computing hub. Lessons, revision booklet and revision practice.">
+<title>Year 9 Computing · RHSC Learning Hub</title>
+<link rel="stylesheet" href="assets/hub.css?v=20260928-1705">
+</head>
+<body class="ks3-course-hub" data-year="9">
+<header class="top"><div class="topin"><a class="hubhome" href="index.html" aria-label="Learning Hub home"><div class="mark">R</div><div class="brand"><small>REEPHAM HIGH SCHOOL &amp; COLLEGE</small>Learning Hub</div></a><div class="toplinks"><a href="index.html#year/9">All Year 9 subjects</a></div></div></header>
+<main>
+<a class="back" href="index.html#year/9">← Year 9 subjects</a>
+<p class="eyebrow">YEAR 9</p>
+<h1>Computing</h1>
+<nav class="tabs" aria-label="Year 9 Computing sections">
+<button type="button" data-tab="lessons" aria-selected="true">▭ &nbsp; Lessons</button>
+<button type="button" data-tab="booklet" aria-selected="false">▤ &nbsp; Revision Booklet</button>
+<button type="button" data-tab="revision" aria-selected="false">◎ &nbsp; Revision Hub</button>
+</nav>
+
+<section class="panel active" id="lessons">
+<div class="sectionhead"><h2>Lessons</h2><span class="count">35 lessons</span></div>
+<div id="terms"></div>
+<p class="note">✓ Available now · Muted lessons are coming soon.</p>
+</section>
+
+<section class="panel" id="booklet">
+<div class="ks3-card-grid"><article class="ks3-card"><p class="ks3-kicker">REVISION BOOKLET</p><h3>Year 9 Computing</h3><p>The teacher-created Year 9 Computing revision booklet will appear here when it is uploaded. It will stay in its original format.</p><span class="ks3-coming">COMING SOON</span></article></div>
+</section>
+
+<section class="panel" id="revision">
+<div class="sectionhead"><h2>Revision Hub</h2><span class="count">Practice · check · prepare</span></div>
+<div class="ks3-card-grid">
+<article class="ks3-card"><p class="ks3-kicker">NUMBER SYSTEMS</p><h3>Hex and binary</h3><p>Practise binary and hexadecimal, including how they are used with colour and computer data.</p><span class="ks3-coming">COMING SOON</span></article>
+<article class="ks3-card"><p class="ks3-kicker">CODING</p><h3>Coding practice</h3><p>Try short coding tasks using variables, input, output, selection and loops.</p><span class="ks3-coming">COMING SOON</span></article>
+<article class="ks3-card"><p class="ks3-kicker">YOUR NEXT TEST</p><h3>Computer systems</h3><div class="ks3-date">Date coming soon</div><ul class="ks3-list"><li>Embedded systems</li><li>Storage and memory</li><li>The CPU and logic</li><li>Hexadecimal and colour</li><li>Bitmap images</li></ul></article>
+</div>
+</section>
+</main>
+<script>
+const liveMap={"1":"lessons/year9/Y9Lesson001.html"};
+const terms=[['Autumn 1',1,7],['Autumn 2',8,14],['Spring 1',15,19],['Spring 2',20,23],['Summer 1',24,29],['Summer 2',30,35]];
+const pad=n=>String(n).padStart(3,'0');
+function renderLessons(){
+ const holder=document.getElementById('terms');
+ holder.innerHTML='';
+ for(const [name,start,end] of terms){
+   const sec=document.createElement('section');sec.className='term';
+   sec.innerHTML='<div class="term-head"><strong>'+name+'</strong><span>Lessons '+pad(start)+'–'+pad(end)+'</span></div><nav class="lesson-grid" aria-label="Year 9 '+name+' lessons"></nav>';
+   const grid=sec.querySelector('.lesson-grid');
+   for(let n=start;n<=end;n++){
+     const href=liveMap[n],el=document.createElement(href?'a':'span');
+     if(href){el.className='lesson-live';el.href=href;el.innerHTML=pad(n)+' <span class="live-tick" aria-hidden="true">✓</span>';el.setAttribute('aria-label','Open lesson '+pad(n));}
+     else{el.className='lesson-pending';el.textContent=pad(n);el.setAttribute('aria-label','Lesson '+pad(n)+', coming soon');}
+     grid.append(el);
+   }
+   holder.append(sec);
+ }
+}
+const tabs=[...document.querySelectorAll('[data-tab]')],panels=[...document.querySelectorAll('.panel')];
+function show(name){
+ if(!['lessons','booklet','revision'].includes(name))name='lessons';
+ tabs.forEach(b=>{const on=b.dataset.tab===name;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on))});
+ panels.forEach(p=>p.classList.toggle('active',p.id===name));
+ if(location.hash!=='#'+name)history.replaceState(null,'','#'+name);
+}
+tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+addEventListener('hashchange',()=>show(location.hash.slice(1)));
+renderLessons();show(location.hash.slice(1)||'lessons');
+</script>
+</body>
+</html>
