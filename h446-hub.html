@@ -100,7 +100,7 @@ const programmes={
 };
 const liveMap={"1":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson001.html","2":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson002.html","3":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson003.html","4":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson004.html","5":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson005.html","6":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson006.html","7":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson007.html","8":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson008.html","9":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson009.html","10":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson010.html"};
 const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')],yearButtons=[...document.querySelectorAll('.year-btn')];
-let year=12;const pad=n=>String(n).padStart(3,'0');
+const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=[12,13].includes(requestedYear)?requestedYear:12;const pad=n=>String(n).padStart(3,'0');
 
 function openTab(name){
   const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];
@@ -108,7 +108,7 @@ function openTab(name){
   panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
 }
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderLessons();}));
 
 function renderLessons(){
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
