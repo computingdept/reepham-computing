@@ -1,5 +1,5 @@
 /* RHSC Learning Hub — shared navigation and hub layout
-   Stage 1: adopted by Year 8 Computing first. Other hubs can migrate to this file without changing their content. */
+   Shared by the Learning Hub, KS3 Computing hubs and KS4/KS5 course hubs. */
 
 :root{
   --green:#006347;
@@ -231,3 +231,37 @@ h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-heigh
   .learning-hub .ks3-lessonhub .term-head{align-items:flex-start;flex-direction:column}
   .learning-hub .ks3-lessonhub .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+
+
+/* Consistent year-aware navigation across the main Learning Hub. */
+body.learning-hub[data-year] .back{
+  background:var(--year-pale);
+  border-color:var(--year-border);
+  color:var(--year-ink);
+}
+body.learning-hub[data-year] .eyebrow{color:var(--year-ink)}
+body.learning-hub[data-year] .resource{border-top-color:var(--year-border)}
+body.learning-hub[data-year] .tabs a[aria-current]{color:var(--year-ink)}
+body.learning-hub[data-year] .subject:hover,
+body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-border);background:var(--year-pale)}
+
+/* KS3 Computing hubs: same hierarchy and navigation for Years 7, 8 and 9. */
+.ks3-course-hub .back{
+  background:var(--year-pale);
+  border-color:var(--year-border);
+  color:var(--year-ink);
+}
+.ks3-course-hub .eyebrow{color:var(--year-ink)}
+.ks3-course-hub .panel{border-top-color:var(--year-border)}
+.ks3-course-hub .tabs button.active,
+.ks3-course-hub .tabs button[aria-selected="true"]{color:var(--year-ink)}
+.ks3-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ks3-card{min-height:180px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;flex-direction:column}
+.ks3-card h3{margin:5px 0 8px;color:var(--dark);font-size:1.2rem}
+.ks3-card p{margin:0;color:var(--muted)}
+.ks3-kicker{font-size:.75rem!important;font-weight:850;letter-spacing:.11em;color:var(--year-ink)!important}
+.ks3-date{font-size:1.25rem;font-weight:850;color:var(--dark);margin:5px 0 8px}
+.ks3-coming{display:inline-flex;align-self:flex-start;margin-top:auto;padding-top:18px;color:var(--year-ink);font-size:.78rem;font-weight:850;letter-spacing:.06em}
+.ks3-list{padding-left:20px;color:var(--muted);margin:10px 0 0}
+@media(max-width:800px){.ks3-card-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ks3-card-grid{grid-template-columns:1fr}}
