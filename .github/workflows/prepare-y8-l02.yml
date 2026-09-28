@@ -1,0 +1,79 @@
+name: Prepare Year 8 L02 source
+
+on:
+  push:
+    paths:
+      - 'lessons/year8/year8-lesson-upload/Y8-L02-slides.pptx'
+      - '.github/workflows/prepare-y8-l02.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice poppler-utils
+          pip install python-pptx
+      - name: Render slides and extract text
+        run: |
+          set -e
+          SRC="lessons/year8/year8-lesson-upload/Y8-L02-slides.pptx"
+          OUT="lessons/year8/year8-lesson-upload/Y8-L02-preview"
+          TMP="/tmp/y8l02"
+          rm -rf "$TMP"
+          mkdir -p "$TMP" "$OUT"
+          rm -f "$OUT"/slide-*.png
+          libreoffice --headless --convert-to pdf --outdir "$TMP" "$SRC"
+          PDF="$TMP/Y8-L02-slides.pdf"
+          pdftoppm -png -r 115 "$PDF" "$TMP/slide"
+          n=1
+          for f in "$TMP"/slide-*.png; do
+            printf -v num "%02d" "$n"
+            mv "$f" "$OUT/slide-$num.png"
+            n=$((n+1))
+          done
+          python - <<'PY'
+          from pptx import Presentation
+          from pathlib import Path
+          src=Path("lessons/year8/year8-lesson-upload/Y8-L02-slides.pptx")
+          out=Path("lessons/year8/year8-lesson-upload/Y8-L02-source.txt")
+          prs=Presentation(src)
+          lines=[]
+          for i,slide in enumerate(prs.slides,1):
+              lines.append(f"=== SLIDE {i} ===")
+              chunks=[]
+              for shape in slide.shapes:
+                  if hasattr(shape,"text"):
+                      t=shape.text.strip()
+                      if t:
+                          chunks.append(t)
+                  if getattr(shape,"has_table",False):
+                      for row in shape.table.rows:
+                          vals=[cell.text.strip() for cell in row.cells]
+                          if any(vals):
+                              chunks.append(" | ".join(vals))
+              lines.extend(chunks)
+              lines.append("")
+          out.write_text("\n".join(lines),encoding="utf-8")
+          print(f"{len(prs.slides)} slides")
+          PY
+      - name: Commit prepared source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lessons/year8/year8-lesson-upload/Y8-L02-preview/slide-*.png lessons/year8/year8-lesson-upload/Y8-L02-source.txt
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Prepare Year 8 L02 PowerPoint source [skip ci]"
+            git push
+          fi
