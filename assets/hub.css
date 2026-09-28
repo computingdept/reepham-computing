@@ -80,3 +80,68 @@ h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-heigh
   .toplinks{display:none}
   .term-head{align-items:flex-start;flex-direction:column}
 }
+
+
+/* Shared KS4 / KS5 course hub shell.
+   J277 migrates first; J836 and H446 can adopt the same shell next. */
+.course-hub{
+  --green-dark:#003a31;
+  --green-mid:#006b57;
+  --green-pale:#eef7f4;
+  --paper:#fff;
+  --wash:#f7f9f8;
+  --warm:#f2b544;
+  background:#fff;
+  color:var(--ink);
+}
+.course-hub a{color:inherit}
+.course-hub .topbar{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:#fff;position:sticky;top:0;z-index:10}
+.course-hub .topbar .brand{display:flex;gap:14px;align-items:center;text-decoration:none}
+.course-hub .topbar .mark{width:42px;height:42px;border-radius:8px;background:var(--green);display:grid;place-items:center;color:#fff;font-weight:900;font-family:monospace}
+.course-hub .brand-copy{display:grid;line-height:1.05}
+.course-hub .brand-copy strong{font-size:11px;letter-spacing:.14em;color:#005b4a}
+.course-hub .brand-copy span{font-size:18px;font-weight:850;margin-top:5px}
+.course-hub .home{padding:10px 14px;border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--green-dark);font-weight:800}
+
+.course-hub main{max-width:1240px;margin:0 auto;padding:30px 28px 60px}
+.course-hub .back{display:inline-flex;gap:8px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:5px;background:var(--green-pale);color:var(--green-mid);font-weight:800;text-decoration:none;margin-bottom:25px}
+.course-hub .heading{display:flex;justify-content:space-between;align-items:end;gap:20px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.course-hub .eyebrow{margin:0 0 8px;font-size:13px;font-weight:900;letter-spacing:.16em;color:var(--green-mid)}
+.course-hub h1{margin:0;color:var(--green-dark);font-size:clamp(34px,5vw,46px);line-height:1;letter-spacing:-.04em}
+.course-hub .sub{color:var(--muted);font-weight:800}
+
+.course-hub .tabs{margin:22px 0 20px;overflow-x:auto}
+.course-hub .tab{appearance:none;min-height:54px;border:0;border-radius:9px;background:transparent;padding:10px 14px;font:inherit;font-weight:850;color:var(--muted);cursor:pointer;white-space:nowrap}
+.course-hub .tab[aria-selected=true]{background:#fff;color:var(--green-dark);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.course-hub .panel{display:none;background:transparent;border:0;border-radius:0;padding:0}
+.course-hub .panel.active{display:block}
+
+.course-hub .year-switch{display:flex;gap:8px;margin-bottom:18px}
+.course-hub .year-btn{border:1px solid var(--line);background:#fff;color:var(--green-dark);padding:9px 14px;border-radius:6px;font:inherit;font-weight:850;cursor:pointer}
+.course-hub .year-btn[aria-pressed=true]{background:var(--year-accent);border-color:var(--year-accent);color:#fff}
+.course-hub .summary{display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin-bottom:12px}
+.course-hub .summary h2{margin:0;font-size:20px}
+.course-hub .count{color:var(--muted);font-size:14px}
+
+.course-hub .term{border-radius:8px}
+.course-hub .term-head strong{color:var(--green-dark)}
+.course-hub .term-head span{font-size:13px}
+.course-hub .lesson{display:grid;place-items:center;min-height:44px;border:1px solid var(--line);border-radius:5px;background:#fff;color:#005b4a;font-weight:850;text-decoration:none}
+.course-hub .lesson.live{border-color:var(--year-border);background:var(--year-pale);color:var(--year-ink)}
+.course-hub .lesson.planned{color:#6b7772;background:#fafbfa}
+.course-hub .lesson:hover{border-color:var(--year-accent)}
+.course-hub .welcome-link{display:inline-flex;align-items:center;gap:5px;margin:0 0 14px;padding:10px 14px;border:1px solid var(--year-border);border-radius:7px;background:var(--year-pale);color:var(--green-dark);font-weight:850;text-decoration:none}
+.course-hub .live-tick{margin-left:4px;color:var(--year-accent);font-weight:950}
+.course-hub a:focus-visible,.course-hub button:focus-visible{outline:3px solid var(--warm);outline-offset:3px}
+
+@media(max-width:900px){
+  .course-hub .cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .course-hub .topbar{padding:0 16px}
+  .course-hub .brand-copy strong{display:none}
+  .course-hub .home{display:none}
+  .course-hub main{padding:22px 16px}
+  .course-hub .heading{align-items:flex-start}
+  .course-hub .cards{grid-template-columns:1fr}
+}
