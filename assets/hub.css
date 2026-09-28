@@ -361,3 +361,73 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
   .learning-hub .landing-choice-grid .stage-copy span{font-size:.82rem}
   .learning-hub .landing-choice-grid .stage-arrow{width:32px;height:32px;font-size:1.3rem}
 }
+
+
+/* 2026-09-28: equal-depth centred landing cards. */
+.learning-hub .landing-choice-grid .landing-year,
+.learning-hub .landing-choice-grid .stage-card{
+  position:relative;
+  height:86px;
+  min-height:86px;
+  max-height:86px;
+}
+
+.learning-hub .landing-choice-grid .landing-year{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:2px;
+}
+.learning-hub .landing-choice-grid .landing-year .year-top{
+  display:block;
+  width:auto;
+}
+.learning-hub .landing-choice-grid .landing-year .year-arrow{
+  position:absolute;
+  top:9px;
+  right:9px;
+  margin:0;
+}
+.learning-hub .landing-choice-grid .landing-year .year-label{
+  display:block;
+}
+.learning-hub .landing-choice-grid .landing-year strong{
+  margin:0;
+}
+.learning-hub .landing-choice-grid .landing-year .year-bottom{
+  text-align:center;
+}
+
+.learning-hub .landing-choice-grid .stage-card{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px 34px 10px 12px;
+}
+.learning-hub .landing-choice-grid .stage-copy{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.learning-hub .landing-choice-grid .stage-arrow{
+  position:absolute;
+  top:9px;
+  right:9px;
+}
+
+@media(min-width:700px){
+  .learning-hub .landing-choice-grid .landing-year,
+  .learning-hub .landing-choice-grid .stage-card{
+    height:126px;
+    min-height:126px;
+    max-height:126px;
+  }
+  .learning-hub .landing-choice-grid .landing-year .year-arrow,
+  .learning-hub .landing-choice-grid .stage-arrow{
+    top:12px;
+    right:12px;
+  }
+  .learning-hub .landing-choice-grid .stage-card{
+    padding:15px 42px 15px 15px;
+  }
+}
