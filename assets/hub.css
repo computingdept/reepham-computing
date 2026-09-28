@@ -1,0 +1,82 @@
+/* RHSC Learning Hub — shared navigation and hub layout
+   Stage 1: adopted by Year 8 Computing first. Other hubs can migrate to this file without changing their content. */
+
+:root{
+  --green:#006347;
+  --dark:#003f36;
+  --ink:#18231f;
+  --muted:#61706a;
+  --line:#d5e0dc;
+  --soft:#f2f6f4;
+  --white:#fff;
+  --year-accent:#5f927d;
+  --year-pale:#e9f2ee;
+  --year-border:#8fb6a6;
+  --year-ink:#1d5745;
+}
+
+/* Year identity — colour is supportive only; labels and status symbols remain visible. */
+body[data-year="7"]{--year-accent:#7cab95;--year-pale:#eef6f2;--year-border:#a4c6b7;--year-ink:#285c49}
+body[data-year="8"]{--year-accent:#5f927d;--year-pale:#e9f2ee;--year-border:#8fb6a6;--year-ink:#1d5745}
+body[data-year="9"]{--year-accent:#47856d;--year-pale:#e5efeb;--year-border:#7faa98;--year-ink:#164d3c}
+body[data-year="10"]{--year-accent:#39816c;--year-pale:#edf5f2;--year-border:#88b4a4;--year-ink:#245e4c}
+body[data-year="11"]{--year-accent:#246b55;--year-pale:#e7f0ec;--year-border:#73a08f;--year-ink:#164d3d}
+body[data-year="12"]{--year-accent:#10513f;--year-pale:#e1ece7;--year-border:#5f8e7b;--year-ink:#0a4234}
+body[data-year="13"]{--year-accent:#003a31;--year-pale:#dce8e3;--year-border:#4f7c6c;--year-ink:#003a31}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#f4f7f6;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+a{color:var(--green)}
+button,select{font:inherit}
+
+/* Global Learning Hub header */
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topin{max-width:1180px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.hubhome{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;border-radius:10px}
+.hubhome:focus-visible{outline:3px solid #bd7d08;outline-offset:3px}
+.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:var(--green);color:#fff;font-weight:850;font-size:1.35rem}
+.brand{font-weight:850;color:var(--dark);line-height:1.15}
+.brand small{display:block;font-size:.72rem;letter-spacing:.08em}
+.toplinks{margin-left:auto;display:flex;gap:9px}
+.toplinks a{border:1px solid var(--line);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:700}
+
+/* Hub hierarchy */
+main{max-width:1180px;margin:auto;padding:30px 18px 70px}
+.back{display:inline-flex;align-items:center;min-height:42px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;text-decoration:none;font-weight:750}
+.eyebrow{margin:22px 0 4px;font-size:.8rem;font-weight:850;letter-spacing:.12em;color:var(--green)}
+h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-height:1}
+
+/* Shared subject tabs */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;background:#edf3f0;border:1px solid var(--line);border-radius:13px;margin-bottom:20px}
+.tabs button,.tabs a{min-height:54px;border:0;border-radius:9px;background:transparent;color:#53645d;font-weight:800;font-size:1rem;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.tabs button.active,.tabs [aria-selected="true"],.tabs a[aria-current="page"]{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tabs a:hover,.tabs a:focus-visible{background:#fff;color:var(--green)}
+
+/* Shared panels and lesson sequence */
+.panel{display:none;background:#fff;border:1px solid var(--line);border-top:3px solid var(--year-border);border-radius:14px;padding:22px}
+.panel.active{display:block}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.sectionhead h2{margin:0;font-size:1.35rem}
+.count{color:var(--muted);font-size:.9rem}
+
+.term{margin:12px 0;border:1px solid var(--year-border);border-radius:9px;overflow:hidden;background:#fff}
+.term-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;background:var(--year-pale);border-bottom:1px solid var(--line)}
+.term-head strong{color:var(--dark)}
+.term-head span{color:var(--muted);font-size:.82rem}
+.lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:12px}
+.lesson-grid a,.lesson-grid span{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:7px;border:1px solid #d5dfdb;text-decoration:none;font-weight:850}
+.lesson-live{background:var(--year-pale);color:var(--year-ink);border-color:var(--year-border)!important}
+.lesson-pending{background:#fafbfa;color:#6b7973}
+.note{margin-top:11px;color:var(--muted);font-size:.9rem}
+
+@media(max-width:850px){
+  .lesson-grid{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:600px){
+  main{padding:18px 10px 55px}
+  .tabs{grid-template-columns:1fr}
+  .lesson-grid{grid-template-columns:repeat(4,1fr)}
+  .toplinks{display:none}
+  .term-head{align-items:flex-start;flex-direction:column}
+}
