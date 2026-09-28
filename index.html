@@ -52,6 +52,22 @@ body{background:#f5f8f7}.top{border-top:4px solid var(--green)}.seal{border-radi
 .small-list{padding-left:20px;color:var(--muted)}
 @media(max-width:700px){.lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.card-grid,.revision-grid{grid-template-columns:1fr}}
 @media(max-width:360px){.lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* Shared Computing lesson sequence: same layout, year-specific green shade. */
+.ks3-lessonhub{--lesson-accent:#5f927d;--lesson-pale:#e9f2ee;--lesson-border:#8fb6a6;--lesson-ink:#1d5745}
+.ks3-lessonhub.y7{--lesson-accent:#7cab95;--lesson-pale:#eef6f2;--lesson-border:#a4c6b7;--lesson-ink:#285c49}
+.ks3-lessonhub.y8{--lesson-accent:#5f927d;--lesson-pale:#e9f2ee;--lesson-border:#8fb6a6;--lesson-ink:#1d5745}
+.ks3-lessonhub.y9{--lesson-accent:#47856d;--lesson-pale:#e5efeb;--lesson-border:#7faa98;--lesson-ink:#164d3c}
+.ks3-lessonhub .term{margin:12px 0;border:1px solid var(--lesson-border);border-radius:9px;overflow:hidden;background:#fff}
+.ks3-lessonhub .term-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;background:var(--lesson-pale);border-bottom:1px solid var(--line)}
+.ks3-lessonhub .term-head strong{color:var(--dark)}
+.ks3-lessonhub .term-head span{color:var(--muted);font-size:13px}
+.ks3-lessonhub .lesson-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:12px}
+.resource .ks3-lessonhub .lesson-grid a,.ks3-lessonhub .lesson-pending{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px 4px;border-radius:7px;font-weight:850}
+.resource .ks3-lessonhub .lesson-grid a{background:var(--lesson-pale);color:var(--lesson-ink);border:1px solid var(--lesson-border);gap:5px}
+.ks3-lessonhub .lesson-pending{background:#fafbfa;color:#6b7973;border:1px solid var(--line)}
+@media(max-width:900px){.ks3-lessonhub .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:520px){.ks3-lessonhub .term-head{align-items:flex-start;flex-direction:column}.ks3-lessonhub .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
 
 .y8-revision{display:grid;gap:16px}
 .y8-revision-hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:16px}
@@ -141,6 +157,28 @@ function subjectIcon(s){if(/Physical|Sport/.test(s))return 'runner';if(/Religiou
 const main=document.getElementById('main');
 function href(y,s,tab='lessons'){return '#year/'+y+'/'+slug(s)+'/'+tab}
 function subjects(y){return y<10?ks3:y<12?[...core,...options]:college}
+const ks3LessonLinks={
+  7:{1:'lessons/year7/Y7Lesson001.html',2:'lessons/year7/Y7Lesson002.html',3:'lessons/year7/Y7Lesson003.html',4:'lessons/year7/Y7Lesson004.html'},
+  9:{1:'lessons/year9/Y9Lesson001.html'}
+};
+const ks3LessonTerms=[
+  ['Autumn 1',1,6],['Autumn 2',7,12],['Spring 1',13,18],
+  ['Spring 2',19,24],['Summer 1',25,30],['Summer 2',31,35]
+];
+function renderKs3Lessons(y){
+  const links=ks3LessonLinks[y]||{};
+  let html='<div class="ks3-lessonhub y'+y+'"><div class="section-heading"><h2>Lessons</h2><span class="count">35 lessons</span></div>';
+  for(const [name,start,end] of ks3LessonTerms){
+    html+='<section class="term"><div class="term-head"><strong>'+name+'</strong><span>Lessons '+String(start).padStart(3,'0')+'–'+String(end).padStart(3,'0')+'</span></div><nav class="lesson-grid" aria-label="Year '+y+' '+name+' lessons">';
+    for(let n=start;n<=end;n++){
+      const p=String(n).padStart(3,'0'),url=links[n];
+      html+=url?'<a href="'+url+'" aria-label="Open lesson '+p+'">'+p+' <span class="live-tick" aria-hidden="true">✓</span></a>':'<span class="lesson-pending" aria-label="Lesson '+p+', coming soon">'+p+'</span>';
+    }
+    html+='</nav></section>';
+  }
+  return html+'<p class="note">✓ Available now · Muted lessons are coming soon.</p></div>';
+}
+
 function subjectOrder(list){const priority=['English','English Language','English Literature','Mathematics','Further Mathematics','Science','Biology','Chemistry','Physics'];return [...list].sort((a,b)=>{const ai=priority.indexOf(a),bi=priority.indexOf(b);return (ai<0?99:ai)-(bi<0?99:bi)||a.localeCompare(b,'en-GB')})}
 function tiles(y,list){return '<div class="subjects">'+subjectOrder(list).map(s=>'<a class="subject" href="'+href(y,s)+'"><span class="subject-icon tone-'+subjectIcon(s)+'">'+icon(subjectIcon(s))+'</span><span class="subject-name">'+(s==='Modern Foreign Languages'?'MFL':escapeHtml(s))+(s==='Modern Foreign Languages'?'<small>French · Spanish</small>':s==='Science'?(y<10?'<small>Biology · Chemistry · Physics</small>':'<small>Combined · Triple</small>'):s==='Combined Science'?'<small>Double award · 2 GCSEs</small>':s==='Triple Science'?'<small>Separate sciences · 3 GCSEs</small>':'')+'</span><span class="subject-arrow" aria-hidden="true">›</span></a>').join('')+'</div>'}
 function yearTile(y){return '<a class="year '+(y>11?'college':y>9?'ks4':'')+'" data-year="'+y+'" href="#year/'+y+'" aria-label="Year '+y+' subjects"><span class="year-top"><span class="year-label">YEAR</span><span class="year-arrow" aria-hidden="true">↗</span></span><strong>'+String(y).padStart(2,'0')+'</strong><span class="year-bottom">'+(y>11?'College':y>9?'Key Stage 4':'Key Stage 3')+'</span></a>'}
@@ -199,7 +237,7 @@ if(tab==='lessons'){
   content='<h2>Revision Hub</h2><p>Retrieval questions, targeted practice, self-marking activities and assessment preparation will appear here for Year '+y+' '+escapeHtml(s)+'.</p>';
 }
 if(s==='Computing'&&y<10){
-  if(tab==='lessons')content=computingResources[y].lessons;
+  if(tab==='lessons')content=renderKs3Lessons(y);
   else if(tab==='booklet')content='<h2>Revision Booklet</h2><p>The Year '+y+' Computing revision booklet will appear here when it is uploaded by the department.</p><p>The teacher-created booklet will remain unchanged.</p>';
   else content=(computingResources[y].skills||'')+(computingResources[y].exam||'');
 }
