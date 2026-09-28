@@ -34,7 +34,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
 
   <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Booklet</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision Hub</button></div>
 
-  <section class="panel active" id="lessons"><a class="welcome-link" href="lessons/h446/H446Welcome.html">Course welcome <span class="live-tick" aria-hidden="true">✓</span></a>
+  <section class="panel active" id="lessons">
     <div class="year-switch">
       <button class="year-btn" data-year="12" aria-pressed="true">Year 12</button>
       <button class="year-btn" data-year="13" aria-pressed="false">Year 13</button>
@@ -98,7 +98,7 @@ const programmes={
     {name:'Summer 2',count:0,note:'study leave and public examinations'}
   ]}
 };
-const liveMap={"1":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson001.html","2":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson002.html","3":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson003.html","4":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson004.html","5":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson005.html","6":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson006.html","7":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson007.html","8":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson008.html","9":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson009.html","10":"https://computingdept.github.io/reepham-h446-lessons/lessons/H446Lesson010.html"};
+const liveMap={"1":"lessons/h446/lesson-001/index.html"};
 const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')],yearButtons=[...document.querySelectorAll('.year-btn')];
 const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=[12,13].includes(requestedYear)?requestedYear:12;const pad=n=>String(n).padStart(3,'0');
 
