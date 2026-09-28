@@ -41,11 +41,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--warm);outline-offse
 11:{start:96,terms:[{name:'Autumn 1',count:18},{name:'Autumn 2',count:18},{name:'January',count:1,note:'terminal exam preparation'}]}
 };const liveMap={1:"lessons/j836/J836Lesson001.html"};
 const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')],yearButtons=[...document.querySelectorAll('.year-btn')];
-let year=10;
+const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=[10,11].includes(requestedYear)?requestedYear:10;
 const pad=n=>String(n).padStart(3,'0');
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderLessons();}));
 function renderLessons(){
  const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
  for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');
