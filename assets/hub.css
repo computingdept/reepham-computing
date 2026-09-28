@@ -145,3 +145,89 @@ h1{margin:0 0 22px;color:var(--dark);font-size:clamp(2.2rem,5vw,4rem);line-heigh
   .course-hub .heading{align-items:flex-start}
   .course-hub .cards{grid-template-columns:1fr}
 }
+
+
+/* Main Learning Hub shell — used by index.html and its dynamic year/subject views. */
+.learning-hub{background:#f5f8f7;color:var(--ink);font:1rem/1.5 Arial,Helvetica,sans-serif}
+.learning-hub a{color:var(--green)}
+.learning-hub a:focus-visible,.learning-hub button:focus-visible{outline:3px solid #f2b544;outline-offset:3px}
+.learning-hub .skip{position:absolute;top:-100px}
+.learning-hub .skip:focus{top:0;z-index:30;background:#fff;padding:1rem}
+
+.learning-hub .top{background:#fff;border-top:4px solid var(--green);border-bottom:1px solid var(--line)}
+.learning-hub .top-inner{max-width:1200px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.learning-hub .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--dark)}
+.learning-hub .seal{display:grid;place-items:center;width:44px;height:44px;flex-shrink:0;background:var(--green);color:#fff;border-radius:12px;font-size:25px;font-weight:bold}
+.learning-hub .brand small{display:block;font-size:12px;font-weight:700;letter-spacing:.08em}
+.learning-hub .brand strong{font-size:18px;letter-spacing:-.02em}
+.learning-hub .top-links{display:flex;flex-wrap:wrap;gap:12px}
+.learning-hub .top-links a{font-size:14px;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;padding:0 14px;border:1px solid var(--line);border-radius:24px;background:#fff}
+
+.learning-hub main{max-width:1200px;margin:auto;padding:32px 24px 40px}
+.learning-hub .back{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:24px;background:#fff;text-decoration:none;font-weight:700;margin-bottom:20px;font-size:14px}
+.learning-hub .eyebrow{font-size:14px;letter-spacing:.12em;font-weight:700;color:var(--green);margin:0 0 8px}
+.learning-hub h1{font-size:clamp(28px,5vw,44px);line-height:1.1;letter-spacing:-.035em;margin:0;color:var(--dark)}
+.learning-hub h1:focus{outline:none}
+
+.learning-hub .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:24px 0 20px;border:1px solid var(--line);background:#edf2ef;border-radius:12px;padding:5px}
+.learning-hub .tabs a{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 4px;text-decoration:none;font-weight:700;border:0;border-radius:8px;color:#53665d;gap:9px}
+.learning-hub .tabs a[aria-current]{background:#fff;color:var(--green);box-shadow:0 2px 6px rgba(0,58,49,.08)}
+.learning-hub .tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.learning-hub .resource{background:#fff;border:1px solid var(--line);border-top:3px solid #7aa793;border-radius:14px;padding:24px}
+.learning-hub .resource h2{font-size:21px;margin:0 0 10px}
+.learning-hub .resource p{color:var(--muted);margin:10px 0}
+
+.learning-hub .utility{background:var(--green);color:#fff}
+.learning-hub .utility-inner{max-width:1200px;margin:auto;padding:4px 24px;display:flex;align-items:center;gap:8px}
+.learning-hub .utility a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:8px;color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+.learning-hub .utility a:first-child{margin-right:auto}
+.learning-hub .utility a:hover{background:rgba(255,255,255,.14)}
+
+/* Shared year colour progression. */
+.learning-hub .year[data-year="7"]{--year-bg:#edf7f1;--year-ink:#003a31;--year-arrow:rgba(0,58,49,.08)}
+.learning-hub .year[data-year="8"]{--year-bg:#d6ebdf;--year-ink:#003a31;--year-arrow:rgba(0,58,49,.08)}
+.learning-hub .year[data-year="9"]{--year-bg:#b3d2be;--year-ink:#003a31;--year-arrow:rgba(0,58,49,.08)}
+.learning-hub .year[data-year="10"]{--year-bg:#39816c;--year-ink:#fff;--year-arrow:rgba(255,255,255,.12)}
+.learning-hub .year[data-year="11"]{--year-bg:#246b55;--year-ink:#fff;--year-arrow:rgba(255,255,255,.12)}
+.learning-hub .year[data-year="12"]{--year-bg:#10513f;--year-ink:#fff;--year-arrow:rgba(255,255,255,.12)}
+.learning-hub .year[data-year="13"]{--year-bg:#003a31;--year-ink:#fff;--year-arrow:rgba(255,255,255,.12)}
+.learning-hub .year[data-year]{background:var(--year-bg);border-color:var(--year-bg);color:var(--year-ink)}
+.learning-hub .year[data-year] .year-bottom{color:var(--year-ink)}
+.learning-hub .year[data-year] .year-arrow{background:var(--year-arrow);color:var(--year-ink)}
+.learning-hub .year[data-year]:hover{background:var(--year-bg);border-color:var(--year-ink);color:var(--year-ink)}
+
+/* Dynamic KS3 Computing lesson sequence. */
+.learning-hub .ks3-lessonhub{--lesson-accent:#5f927d;--lesson-pale:#e9f2ee;--lesson-border:#8fb6a6;--lesson-ink:#1d5745}
+.learning-hub .ks3-lessonhub.y7{--lesson-accent:#7cab95;--lesson-pale:#eef6f2;--lesson-border:#a4c6b7;--lesson-ink:#285c49}
+.learning-hub .ks3-lessonhub.y8{--lesson-accent:#5f927d;--lesson-pale:#e9f2ee;--lesson-border:#8fb6a6;--lesson-ink:#1d5745}
+.learning-hub .ks3-lessonhub.y9{--lesson-accent:#47856d;--lesson-pale:#e5efeb;--lesson-border:#7faa98;--lesson-ink:#164d3c}
+.learning-hub .ks3-lessonhub .term{margin:12px 0;border:1px solid var(--lesson-border);border-radius:9px;overflow:hidden;background:#fff}
+.learning-hub .ks3-lessonhub .term-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 14px;background:var(--lesson-pale);border-bottom:1px solid var(--line)}
+.learning-hub .ks3-lessonhub .term-head strong{color:var(--dark)}
+.learning-hub .ks3-lessonhub .term-head span{color:var(--muted);font-size:13px}
+.learning-hub .ks3-lessonhub .lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:12px}
+.learning-hub .resource .ks3-lessonhub .lesson-grid a,
+.learning-hub .ks3-lessonhub .lesson-pending{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px 4px;border-radius:7px;font-weight:850}
+.learning-hub .resource .ks3-lessonhub .lesson-grid a{background:var(--lesson-pale);color:var(--lesson-ink);border:1px solid var(--lesson-border);gap:5px}
+.learning-hub .ks3-lessonhub .lesson-pending{background:#fafbfa;color:#6b7973;border:1px solid var(--line)}
+
+@media(max-width:900px){
+  .learning-hub .ks3-lessonhub .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .learning-hub .top-inner{padding:12px 16px;flex-wrap:wrap;gap:10px}
+  .learning-hub .top-links{display:flex;width:100%;gap:8px}
+  .learning-hub .top-links a{flex:1;justify-content:center;min-height:44px}
+  .learning-hub main{padding:24px 16px 32px}
+  .learning-hub .tabs a{flex-direction:column;gap:4px;min-height:66px;font-size:14px}
+  .learning-hub .tabs svg{width:20px;height:20px}
+  .learning-hub .resource{padding:18px}
+  .learning-hub .utility-inner{padding:4px 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .learning-hub .utility a{padding:8px 4px;font-size:13px}
+  .learning-hub .utility a:first-child{margin-right:0}
+}
+@media(max-width:520px){
+  .learning-hub .ks3-lessonhub .term-head{align-items:flex-start;flex-direction:column}
+  .learning-hub .ks3-lessonhub .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
