@@ -185,11 +185,13 @@ if((s==='Science'&&y>=10&&y<12)||s==='Modern Foreign Languages'){document.title=
 const rawTab=parts[3]||'lessons';const tab=rawTab==='skills'||rawTab==='exam'?'revision':(['lessons','booklet','revision'].includes(rawTab)?rawTab:'lessons');const titles={lessons:'Lessons',booklet:'Revision Booklet',revision:'Revision Hub'};
 let external='';if(s==='Computer Science')external=y>11?'h446-hub.html':'j277-hub.html';
 if(s==='Information Technology')external='it-j836-hub.html';
-let content;
 if(external){
   const hubTab=tab==='revision'?'revisionhub':tab;
-  content='<h2>'+titles[tab]+'</h2><p>Continue to the '+(s==='Information Technology'?'OCR J836':y>11?'OCR H446 A Level':'OCR J277 GCSE')+' course resources.</p><a href="'+external+'#'+hubTab+'">Open '+s+' '+titles[tab]+' →</a>';
-}else if(tab==='lessons'){
+  location.replace(external+'?year='+y+'#'+hubTab);
+  return;
+}
+let content;
+if(tab==='lessons'){
   content='<h2>Lessons</h2><p>Year '+y+' '+escapeHtml(s)+' lesson materials have not been added yet.</p><p>The lesson sequence and number of lessons will be set by the subject team.</p>';
 }else if(tab==='booklet'){
   content='<h2>Revision Booklet</h2><p>The teacher-created revision booklet for Year '+y+' '+escapeHtml(s)+' will appear here when it is uploaded.</p><p>The booklet will stay in its original teacher format.</p>';
