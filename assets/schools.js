@@ -138,6 +138,10 @@ window.LEARNING_HUB_SCHOOLS = {
       curriculum: "https://www.stalhamhigh.org.uk/for-students/curriculum-subject-overview/",
       preferences: "https://www.stalhamhigh.org.uk/for-students/preferences/"
     },
+    notes: {
+      ks3: "Based on Stalham High School's published curriculum. Language allocation can vary by year and teaching group.",
+      ks4: "Courses are based on Stalham High School's 2026 preferences information. Availability can vary by cohort; follow your timetable."
+    },
     stageGroups: [
       {
         id: "10-11",
