@@ -10,6 +10,8 @@ const signalMap={
   exit:['Exit Questioning','Silence','Choral Response']
 };
 const youDoIndependentSignals=['You Do','Silence','Independent'];
+const youDoCodingDiscussSignals=['You Do','Quiet Working','Plan First'];
+const youDoCodingIndependentSignals=['You Do','Quiet Working','Independent Coding'];
 const pages=[...document.querySelectorAll('.page')];
 const nav=[...document.querySelectorAll('[data-page]')];
 const advance=document.getElementById('advance');
@@ -25,7 +27,8 @@ function showOnly(items,index){
 function setYouDoWindow(page,start){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
-  const size=Math.min(3,questions.length);
+  const requestedSize=Math.max(1,Number(page.dataset.windowSize||3));
+  const size=Math.min(requestedSize,questions.length);
   const maxStart=Math.max(0,questions.length-size);
   const safe=Math.max(0,Math.min(start,maxStart));
   page.dataset.windowStart=String(safe);
@@ -112,9 +115,14 @@ function resetPhaseState(id){
 }
 function updateSignals(id){
   const page=document.getElementById(id);
-  const values=id==='you-do'&&page?.dataset.workMode==='independent'
+  let values=id==='you-do'&&page?.dataset.workMode==='independent'
     ?youDoIndependentSignals
     :(signalMap[id]||['','','']);
+  if(id==='you-do'&&page?.dataset.youDoMode==='coding'){
+    values=page.dataset.workMode==='independent'
+      ?youDoCodingIndependentSignals
+      :youDoCodingDiscussSignals;
+  }
   const kinds=['phase','routine','response'];
 
   ['phase-logo','behaviour-logo','response-logo'].forEach((key,i)=>{
@@ -187,14 +195,19 @@ function updateControl(){
     }
   }else if(current==='you-do'){
     if(page.dataset.workMode!=='independent'){
-      label='Begin silent work →';
+      label=page.dataset.youDoMode==='coding'?'Begin independent coding →':'Begin silent work →';
     }else{
       const questions=[...page.querySelectorAll('.youdo-question')];
       if(questions.length){
-        const size=Math.min(3,questions.length);
+        const requestedSize=Math.max(1,Number(page.dataset.windowSize||3));
+        const size=Math.min(requestedSize,questions.length);
         const maxStart=Math.max(0,questions.length-size);
         const start=Number(page.dataset.windowStart||0);
-        label=start<maxStart?'Next questions →':'Open answers →';
+        if(page.dataset.youDoMode==='coding'){
+          label=start<maxStart?'Next challenges →':'Open solutions →';
+        }else{
+          label=start<maxStart?'Next questions →':'Open answers →';
+        }
       }else{
         const stages=[...page.querySelectorAll('.youdo-stage')];
         const i=visibleIndex(stages);
@@ -306,7 +319,8 @@ function next(){
     }
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
-      const size=Math.min(3,questions.length);
+      const requestedSize=Math.max(1,Number(page.dataset.windowSize||3));
+      const size=Math.min(requestedSize,questions.length);
       const maxStart=Math.max(0,questions.length-size);
       const start=Number(page.dataset.windowStart||0);
       if(start<maxStart){
