@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 014 · Coding solutions</title>
+<title>Lesson 014 · Noughts & Crosses Part 2 solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1815">
 <style>
@@ -26,300 +26,51 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 014 · CODING SOLUTIONS</span>
+  <span class="answer-title">LESSON 014 · NOUGHTS & CROSSES PART 2 · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap">
-
-<section class="answer-stage">
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 1</span>
-    <h2>Board + DrawBoard()</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · MAP</span><h2>Map a move</h2><pre class="solution-code">int row = (move - 1) / 3;
+int col = (move - 1) % 3;</pre><p><strong>Check:</strong> 1→[0,0], 5→[1,1], 9→[2,2].</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · MAKE MOVE</span><h2>Write MakeMove()</h2><pre class="solution-code">public static bool MakeMove(int move, string player)
 {
-    public static string[,] board =
-    {
-        { "1", "2", "3" },
-        { "4", "5", "6" },
-        { "7", "8", "9" }
-    };
+    if (move &lt; 1 || move &gt; 9)
+        return false;
 
-    public static void Main()
-    {
-        DrawBoard();
-    }
+    int row = (move - 1) / 3;
+    int col = (move - 1) % 3;
 
-    public static void DrawBoard()
-    {
-        for (int row = 0; row &lt; board.GetLength(0); row++)
-        {
-            for (int column = 0; column &lt; board.GetLength(1); column++)
-            {
-                Console.Write(board[row, column] + " ");
-            }
+    if (board[row,col] == "X" || board[row,col] == "O")
+        return false;
 
-            Console.WriteLine();
-        }
-    }
-}</pre>
-    <p><strong>Key idea:</strong> the outer loop controls rows and the inner loop visits every column in the current row.</p>
-    <div class="test-strip"><span>3 rows</span><span>3 columns</span><span>1–9 displayed</span></div>
-  </article>
-</section>
-
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 2</span>
-    <h2>MakeMove()</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+    board[row,col] = player;
+    return true;
+}</pre><p><strong>Check:</strong> Invalid moves leave the board unchanged.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · SWITCH</span><h2>Write SwitchPlayer()</h2><pre class="solution-code">public static string SwitchPlayer(string player)
 {
-    public static string[,] board =
-    {
-        { "1", "2", "3" },
-        { "4", "5", "6" },
-        { "7", "8", "9" }
-    };
+    if (player == "X")
+        return "O";
+    else
+        return "X";
+}</pre><p><strong>Check:</strong> The method alternates correctly.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHECKPOINT</span><h2>Make alternating turns work</h2><pre class="solution-code">string currentPlayer = "X";
+int movesMade = 0;
 
-    public static void Main()
-    {
-        Console.WriteLine(MakeMove(5, "X"));
-        Console.WriteLine(MakeMove(5, "O"));
-        DrawBoard();
-    }
-
-    public static bool MakeMove(int move, string player)
-    {
-        if (move &lt; 1 || move &gt; 9)
-        {
-            return false;
-        }
-
-        int row = (move - 1) / 3;
-        int column = (move - 1) % 3;
-
-        if (board[row, column] == "X" ||
-            board[row, column] == "O")
-        {
-            return false;
-        }
-
-        board[row, column] = player;
-        return true;
-    }
-
-    public static void DrawBoard()
-    {
-        for (int row = 0; row &lt; board.GetLength(0); row++)
-        {
-            for (int column = 0; column &lt; board.GetLength(1); column++)
-            {
-                Console.Write(board[row, column] + " ");
-            }
-            Console.WriteLine();
-        }
-    }
-}</pre>
-    <p><strong>Validation:</strong> reject moves outside 1–9 and reject squares already containing X or O.</p>
-    <div class="test-strip"><span>First move 5 → True</span><span>Second move 5 → False</span></div>
-  </article>
-</section>
-
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 3</span>
-    <h2>HasWon()</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+while (movesMade &lt; 9)
 {
-    public static string[,] board =
-    {
-        { "X", "X", "X" },
-        { "4", "O", "6" },
-        { "7", "8", "O" }
-    };
+    DrawBoard();
+    Console.Write("Player " + currentPlayer + ", choose 1-9: ");
+    int move = int.Parse(Console.ReadLine());
 
-    public static void Main()
+    if (MakeMove(move, currentPlayer))
     {
-        Console.WriteLine(HasWon("X"));
-        Console.WriteLine(HasWon("O"));
+        movesMade++;
+        currentPlayer = SwitchPlayer(currentPlayer);
     }
-
-    public static bool HasWon(string player)
+    else
     {
-        return
-            (board[0,0] == player &amp;&amp; board[0,1] == player &amp;&amp; board[0,2] == player) ||
-            (board[1,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[1,2] == player) ||
-            (board[2,0] == player &amp;&amp; board[2,1] == player &amp;&amp; board[2,2] == player) ||
-
-            (board[0,0] == player &amp;&amp; board[1,0] == player &amp;&amp; board[2,0] == player) ||
-            (board[0,1] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,1] == player) ||
-            (board[0,2] == player &amp;&amp; board[1,2] == player &amp;&amp; board[2,2] == player) ||
-
-            (board[0,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,2] == player) ||
-            (board[0,2] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,0] == player);
+        Console.WriteLine("Invalid move - try again.");
     }
-}</pre>
-    <p><strong>Why eight checks?</strong> there are three possible rows, three columns and two diagonals.</p>
-    <div class="test-strip"><span>X → True</span><span>O → False</span></div>
-  </article>
-</section>
+}
 
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 4</span>
-    <h2>Complete playable game</h2>
-    <pre class="solution-code">using System;
-
-public class Program
-{
-    public static string[,] board =
-    {
-        { "1", "2", "3" },
-        { "4", "5", "6" },
-        { "7", "8", "9" }
-    };
-
-    public static void Main()
-    {
-        string currentPlayer = "X";
-        bool gameOver = false;
-
-        while (gameOver == false)
-        {
-            DrawBoard();
-
-            Console.Write("Player " + currentPlayer + ", choose 1-9: ");
-            int move = int.Parse(Console.ReadLine());
-
-            if (MakeMove(move, currentPlayer))
-            {
-                if (HasWon(currentPlayer))
-                {
-                    DrawBoard();
-                    Console.WriteLine("Player " + currentPlayer + " wins!");
-                    gameOver = true;
-                }
-                else if (BoardFull())
-                {
-                    DrawBoard();
-                    Console.WriteLine("Draw!");
-                    gameOver = true;
-                }
-                else
-                {
-                    currentPlayer = SwitchPlayer(currentPlayer);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid move - try again.");
-            }
-        }
-    }
-
-    public static void DrawBoard()
-    {
-        Console.WriteLine();
-
-        for (int row = 0; row &lt; board.GetLength(0); row++)
-        {
-            for (int column = 0; column &lt; board.GetLength(1); column++)
-            {
-                Console.Write(board[row, column]);
-
-                if (column &lt; board.GetLength(1) - 1)
-                {
-                    Console.Write(" | ");
-                }
-            }
-
-            Console.WriteLine();
-
-            if (row &lt; board.GetLength(0) - 1)
-            {
-                Console.WriteLine("--+---+--");
-            }
-        }
-
-        Console.WriteLine();
-    }
-
-    public static bool MakeMove(int move, string player)
-    {
-        if (move &lt; 1 || move &gt; 9)
-        {
-            return false;
-        }
-
-        int row = (move - 1) / 3;
-        int column = (move - 1) % 3;
-
-        if (board[row, column] == "X" ||
-            board[row, column] == "O")
-        {
-            return false;
-        }
-
-        board[row, column] = player;
-        return true;
-    }
-
-    public static string SwitchPlayer(string player)
-    {
-        if (player == "X")
-        {
-            return "O";
-        }
-        else
-        {
-            return "X";
-        }
-    }
-
-    public static bool HasWon(string player)
-    {
-        return
-            (board[0,0] == player &amp;&amp; board[0,1] == player &amp;&amp; board[0,2] == player) ||
-            (board[1,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[1,2] == player) ||
-            (board[2,0] == player &amp;&amp; board[2,1] == player &amp;&amp; board[2,2] == player) ||
-
-            (board[0,0] == player &amp;&amp; board[1,0] == player &amp;&amp; board[2,0] == player) ||
-            (board[0,1] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,1] == player) ||
-            (board[0,2] == player &amp;&amp; board[1,2] == player &amp;&amp; board[2,2] == player) ||
-
-            (board[0,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,2] == player) ||
-            (board[0,2] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,0] == player);
-    }
-
-    public static bool BoardFull()
-    {
-        for (int row = 0; row &lt; board.GetLength(0); row++)
-        {
-            for (int column = 0; column &lt; board.GetLength(1); column++)
-            {
-                if (board[row, column] != "X" &amp;&amp;
-                    board[row, column] != "O")
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-}</pre>
-    <p><strong>Integration:</strong> the board stores state; the game loop controls turns; methods separate jobs; selection validates moves and detects game outcomes.</p>
-    <div class="test-strip"><span>Occupied square rejected</span><span>Win detected</span><span>Draw detected</span><span>Players alternate</span></div>
-  </article>
-</section>
-
-</main>
+DrawBoard();</pre><p><strong>Check:</strong> Checkpoint reached: X and O can take valid alternating turns. Win/draw detection comes next lesson.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
