@@ -244,7 +244,6 @@ int column = (move - 1) % 3;</pre>
 
 <section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
   <div class="wedo-focus-deck">
-
     <article class="wedo-example">
       <div class="wedo-reference">
         <span class="phase-tag">GUIDED PRACTICE 1</span>
@@ -255,17 +254,7 @@ column = (move - 1) % 3</pre>
         <span class="wedo-example-count">Example 1 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Calculate the indexes</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>row</strong><span>?</span></div><div class="practice-box"><strong>column</strong><span>?</span></div><div class="practice-box"><strong>position</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Move 8 → board[2,1]</h2>
-          <pre class="arithmetic">row = 7 / 3 = 2
-column = 7 % 3 = 1</pre>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Calculate the indexes</h2><div class="practice-grid"><div class="practice-box"><strong>row</strong><span>?</span></div><div class="practice-box"><strong>column</strong><span>?</span></div><div class="practice-box"><strong>position</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Calculate the indexes</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>row</strong><span><code>7 / 3 = 2</code></span></div><div class="practice-box"><strong>column</strong><span><code>7 % 3 = 1</code></span></div><div class="practice-box"><strong>position</strong><span><code>board[2,1]</code></span></div></div></div>
       </div>
     </article>
 
@@ -278,31 +267,7 @@ column = 7 % 3 = 1</pre>
         <span class="wedo-example-count">Example 2 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>What must be checked?</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>Range</strong><span>?</span></div><div class="practice-box"><strong>Square free?</strong><span>?</span></div><div class="practice-box"><strong>Return if valid</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>One clear pattern</h2>
-          <pre class="arithmetic">if (move &lt; 1 || move &gt; 9)
-{
-    return false;
-}
-
-int row = (move - 1) / 3;
-int column = (move - 1) % 3;
-
-if (board[row, column] == "X" ||
-    board[row, column] == "O")
-{
-    return false;
-}
-
-board[row, column] = player;
-return true;</pre>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>What must be checked?</h2><div class="practice-grid"><div class="practice-box"><strong>Range</strong><span>?</span></div><div class="practice-box"><strong>Square free?</strong><span>?</span></div><div class="practice-box"><strong>Return if valid</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>What must be checked?</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Range</strong><span><code>move &gt;= 1 &amp;&amp; move &lt;= 9</code></span></div><div class="practice-box"><strong>Square free?</strong><span>Square is not <code>"X"</code> or <code>"O"</code></span></div><div class="practice-box"><strong>Return if valid</strong><span>Place <code>player</code>, then <code>return true;</code></span></div></div><p class="fine">Invalid range or an occupied square returns <code>false</code>.</p></div>
       </div>
     </article>
 
@@ -315,18 +280,10 @@ return true;</pre>
         <span class="wedo-example-count">Example 3 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Use selection</h2>
-          <pre class="arithmetic">public static string SwitchPlayer(string player)
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Use selection</h2><pre class="arithmetic">public static string SwitchPlayer(string player)
 {
     ?
-}</pre>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Function</h2>
-          <pre class="arithmetic">public static string SwitchPlayer(string player)
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Use selection</h2><pre class="arithmetic">public static string SwitchPlayer(string player)
 {
     if (player == "X")
     {
@@ -336,8 +293,7 @@ return true;</pre>
     {
         return "X";
     }
-}</pre>
-        </div>
+}</pre></div>
       </div>
     </article>
 
@@ -350,25 +306,19 @@ return true;</pre>
         <span class="wedo-example-count">Example 4 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Write the Boolean condition</h2>
-          <p>Use <code>&amp;&amp;</code> and compare all three positions with <code>player</code>.</p>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Top-row win</h2>
-          <pre class="arithmetic">if (board[0,0] == player &amp;&amp;
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Write the Boolean condition</h2><pre class="arithmetic">if (board[0,0] == ? &amp;&amp;
+    board[0,1] == ? &amp;&amp;
+    board[0,2] == ?)
+{
+    return true;
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Write the Boolean condition</h2><pre class="arithmetic">if (board[0,0] == player &amp;&amp;
     board[0,1] == player &amp;&amp;
     board[0,2] == player)
 {
     return true;
-}</pre>
-          <div class="key-result">A full <code>HasWon()</code> function checks 3 rows, 3 columns and 2 diagonals.</div>
-        </div>
+}</pre><div class="key-result">A full <code>HasWon()</code> function checks 3 rows, 3 columns and 2 diagonals.</div></div>
       </div>
     </article>
-
   </div>
 </section>
 
