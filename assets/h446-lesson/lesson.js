@@ -232,35 +232,6 @@ function next(){
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
   }
-  if(current==='we-do'){
-    const examples=[...page.querySelectorAll('.wedo-example')];
-    if(examples.length){
-      const exampleIndex=visibleIndex(examples);
-      const example=examples[exampleIndex];
-      const steps=[...example.querySelectorAll('.wedo-step')];
-      const stepIndex=visibleIndex(steps);
-      if(stepIndex>0){
-        showOnly(steps,stepIndex-1);
-        updateControl();
-        return;
-      }
-      if(exampleIndex>0){
-        showOnly(examples,exampleIndex-1);
-        const previousSteps=[...examples[exampleIndex-1].querySelectorAll('.wedo-step')];
-        if(previousSteps.length)showOnly(previousSteps,previousSteps.length-1);
-        updateControl();
-        return;
-      }
-    }else{
-      const answer=page.querySelector('[data-reveal-answer]:not([hidden])');
-      if(answer){
-        answer.hidden=true;
-        page.querySelectorAll('[data-reveal-prompt]').forEach(el=>el.hidden=false);
-        updateControl();
-        return;
-      }
-    }
-  }
   if(current==='i-do'){
     const examples=[...page.querySelectorAll('.ido-example')];
     if(examples.length){
