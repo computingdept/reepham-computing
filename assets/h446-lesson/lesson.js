@@ -37,7 +37,8 @@ function setYouDoWindow(page,start){
   if(progress){
     const first=safe+1;
     const last=Math.min(safe+size,questions.length);
-    progress.textContent='Questions '+first+'–'+last+' of '+questions.length;
+    const noun=page.dataset.youDoMode==='coding'?'Challenges':'Questions';
+    progress.textContent=noun+' '+first+'–'+last+' of '+questions.length;
   }
 }
 function resetPhaseState(id){
