@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1118">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1118">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1118">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1138">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1138">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1138">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -230,6 +230,17 @@
       <li>decode positive and negative values with positive or negative exponents;</li>
       <li>recognise normalisation and explain precision versus range.</li>
     </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>mantissa</span>
+      <span>exponent</span>
+      <span>normalised</span>
+      <span>precision</span>
+      <span>range</span>
+      <span>two’s complement</span>
+    </div>
   </div>
   <p>Use an eight-bit mantissa and four-bit exponent unless a question states otherwise. Both fields are two’s complement; the mantissa’s point follows the sign bit.</p>
 </section>
@@ -570,18 +581,94 @@ d) 101010 110</pre>
   </div>
 </section>
 
-<section id="vocabulary" class="page">
-  <div class="section-top"><span class="eyebrow">KEY VOCABULARY</span><span class="time">During feedback</span></div>
-  <h2>Say it like a computer scientist</h2>
-  <p>Recall the missing keyword or definition. Reveal one answer at a time.</p>
-  <dl class="vocab-grid">
-    <div class="vocab-card"><dt>Signed fraction</dt><dd hidden>A fractional binary value whose sign bit has a negative weight.</dd><p class="vocab-blank">________</p></div>
-    <div class="vocab-card"><dt>Scale factor</dt><dd hidden>The multiplier supplied by 2 raised to the exponent.</dd><p class="vocab-blank">________</p></div>
-    <div class="vocab-card"><dt>Negative exponent</dt><dd hidden>An exponent that divides the mantissa by a power of two.</dd><p class="vocab-blank">________</p></div>
-    <div class="vocab-card"><dt>Normalised positive mantissa</dt><dd hidden>A nonzero mantissa beginning 01.</dd><p class="vocab-blank">________</p></div>
-    <div class="vocab-card"><dt>Normalised negative mantissa</dt><dd hidden>A mantissa beginning 10.</dd><p class="vocab-blank">________</p></div>
-    <div class="vocab-card"><dt>Field width</dt><dd hidden>The number of bits allocated to part of the representation.</dd><p class="vocab-blank">________</p></div>
-  </dl>
+<section id="vocabulary" class="page phase-vocab">
+  <div class="section-top"><span class="eyebrow">KEY VOCABULARY</span><span class="time">Retrieval check</span></div>
+
+  <div class="vocab-test-deck">
+    <article class="vocab-stage">
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 1 OF 6</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which part of a floating-point number stores the signed fractional value?</p>
+        <span class="vocab-stage-count">1 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Mantissa</div>
+        <p>The mantissa stores the signed significant part of the floating-point value.</p>
+      </div>
+    </article>
+
+    <article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 2 OF 6</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which part controls the scale of a floating-point value?</p>
+        <span class="vocab-stage-count">2 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Exponent</div>
+        <p>The exponent supplies the power of two used to scale the mantissa.</p>
+      </div>
+    </article>
+
+    <article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 3 OF 6</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">What word describes a non-zero mantissa arranged to begin <strong>01</strong> if positive or <strong>10</strong> if negative?</p>
+        <span class="vocab-stage-count">3 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Normalised</div>
+        <p>Normalisation uses the available mantissa bits efficiently without changing the represented value.</p>
+      </div>
+    </article>
+
+    <article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 4 OF 6</span>
+        <h2>Complete the statement</h2>
+        <p class="vocab-question">More mantissa bits improve the ________ of a floating-point representation.</p>
+        <span class="vocab-stage-count">4 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Precision</div>
+        <p>More mantissa bits allow values to be represented more precisely.</p>
+      </div>
+    </article>
+
+    <article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 5 OF 6</span>
+        <h2>Complete the statement</h2>
+        <p class="vocab-question">More exponent bits increase the ________ of values that can be represented.</p>
+        <span class="vocab-stage-count">5 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Range</div>
+        <p>A wider exponent allows much larger and much smaller magnitudes to be represented.</p>
+      </div>
+    </article>
+
+    <article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 6 OF 6</span>
+        <h2>Recall the representation</h2>
+        <p class="vocab-question">What signed binary representation gives the most significant bit a negative place value?</p>
+        <span class="vocab-stage-count">6 of 6</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Two’s complement</div>
+        <p>In this lesson, both the mantissa and exponent are interpreted using two’s complement.</p>
+      </div>
+    </article>
+  </div>
 </section>
 
 <section id="exit" class="page">
@@ -602,6 +689,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1118"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1138"></script>
 </body>
 </html>
