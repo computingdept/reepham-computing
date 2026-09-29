@@ -38,8 +38,17 @@ function resetPhaseState(id){
     if(stages.length)showOnly(stages,0);
   }
   if(id==='i-do'){
-    const stages=[...page.querySelectorAll('.model-stage')];
-    if(stages.length)showOnly(stages,0);
+    const examples=[...page.querySelectorAll('.ido-example')];
+    if(examples.length){
+      showOnly(examples,0);
+      examples.forEach(example=>{
+        const steps=[...example.querySelectorAll('.ido-step')];
+        if(steps.length)showOnly(steps,0);
+      });
+    }else{
+      const stages=[...page.querySelectorAll('.model-stage')];
+      if(stages.length)showOnly(stages,0);
+    }
   }
   if(id==='we-do'){
     page.querySelectorAll('[data-reveal-answer]').forEach(el=>el.hidden=true);
@@ -89,9 +98,20 @@ function updateControl(){
     else if(i<stages.length-1)label='Next answer →';
     else label='Continue → Objectives';
   }else if(current==='i-do'){
-    const stages=[...page.querySelectorAll('.model-stage')];
-    const i=visibleIndex(stages);
-    label=i<stages.length-1?'Next worked example →':'Continue →';
+    const examples=[...page.querySelectorAll('.ido-example')];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll('.ido-step')];
+      const stepIndex=visibleIndex(steps);
+      if(stepIndex<steps.length-1)label='Next step →';
+      else if(exampleIndex<examples.length-1)label='Next example →';
+      else label='Continue → We Do';
+    }else{
+      const stages=[...page.querySelectorAll('.model-stage')];
+      const i=visibleIndex(stages);
+      label=i<stages.length-1?'Next worked example →':'Continue →';
+    }
   }else if(current==='we-do'&&page.querySelector('[data-reveal-answer][hidden]')){
     label='Reveal model response';
   }else if(current==='you-do'){
@@ -132,9 +152,26 @@ function next(){
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
   }
   if(current==='i-do'){
-    const stages=[...page.querySelectorAll('.model-stage')];
-    const i=visibleIndex(stages);
-    if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
+    const examples=[...page.querySelectorAll('.ido-example')];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll('.ido-step')];
+      const stepIndex=visibleIndex(steps);
+      if(stepIndex<steps.length-1){
+        showOnly(steps,stepIndex+1);updateControl();return;
+      }
+      if(exampleIndex<examples.length-1){
+        showOnly(examples,exampleIndex+1);
+        const nextSteps=[...examples[exampleIndex+1].querySelectorAll('.ido-step')];
+        if(nextSteps.length)showOnly(nextSteps,0);
+        updateControl();return;
+      }
+    }else{
+      const stages=[...page.querySelectorAll('.model-stage')];
+      const i=visibleIndex(stages);
+      if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
+    }
   }
   if(current==='we-do'){
     const answer=page.querySelector('[data-reveal-answer][hidden]');
