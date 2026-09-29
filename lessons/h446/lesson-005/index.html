@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1445">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1445">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1445">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1845">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1845">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1845">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -150,79 +150,44 @@
 <main id="main">
 <section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
   <div class="donow-deck">
-
     <div class="donow-stage">
       <div class="donow-questions">
-        <article class="donow-question"><strong>1 · RECALL</strong><p>Where is the implied binary point in a two’s-complement floating-point mantissa?</p></article>
-        <article class="donow-question"><strong>2 · APPLY</strong><p>Write <strong>0.625</strong> as a binary fraction. Show the fractional place values.</p></article>
-        <article class="donow-question"><strong>3 · REPRESENT</strong><p>Encode <strong>6.5</strong> in normalised eight-bit mantissa / four-bit exponent format.</p></article>
-        <article class="donow-question"><strong>4 · REASON</strong><p>Normalise <code>00011010 0101</code> in 8+4 format. Explain why the exponent changes.</p></article>
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>Encode <strong>6.5</strong> in normalised 8-bit mantissa / 4-bit exponent format.</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Convert <code>6D₁₆</code> to eight-bit binary and denary.</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Decode <code>11110110</code> as an 8-bit two’s-complement integer.</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Apply <code>AND 00001111</code> to <code>10110110</code>. Give the result in binary and hexadecimal.</p></article>
       </div>
     </div>
 
     <div class="donow-stage" hidden>
       <div class="donow-review">
-        <article class="donow-review-question">
-          <span class="review-number">QUESTION 1 OF 4</span>
-          <h2>Recall</h2>
-          <p class="review-question">Where is the implied binary point in a two’s-complement floating-point mantissa?</p>
-        </article>
-        <article class="donow-review-answer">
-          <span class="review-label">ANSWER</span>
-          <p class="review-answer">Immediately after the sign bit.</p>
-          <p class="review-explain">The mantissa is treated as a signed binary fraction. The first bit carries the negative place value; the remaining bits represent fractional place values.</p>
-        </article>
+        <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">Encode <strong>6.5</strong> in normalised 8-bit mantissa / 4-bit exponent format.</p></article>
+        <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>01101000 0011</code></p><p class="review-explain"><code>6.5 = 110.1₂ = 0.1101₂ × 2³</code>. Mantissa <code>01101000</code>; exponent <code>0011</code>.</p></article>
       </div>
     </div>
 
     <div class="donow-stage" hidden>
       <div class="donow-review">
-        <article class="donow-review-question">
-          <span class="review-number">QUESTION 2 OF 4</span>
-          <h2>Apply</h2>
-          <p class="review-question">Write <strong>0.625</strong> as a binary fraction. Show the fractional place values.</p>
-        </article>
-        <article class="donow-review-answer">
-          <span class="review-label">ANSWER</span>
-          <p class="review-answer"><code>0.101₂</code></p>
-          <p class="review-explain"><code>½ + ⅛ = 0.5 + 0.125 = 0.625</code>. The ¼ place is 0, so the fractional bits are <code>101</code>.</p>
-        </article>
+        <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">Convert <code>6D₁₆</code> to eight-bit binary and denary.</p></article>
+        <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>01101101₂</code> and <strong>109</strong>.</p><p class="review-explain"><code>6 → 0110</code>, <code>D → 1101</code>. In denary: <code>(6 × 16) + 13 = 109</code>.</p></article>
       </div>
     </div>
 
     <div class="donow-stage" hidden>
       <div class="donow-review">
-        <article class="donow-review-question">
-          <span class="review-number">QUESTION 3 OF 4</span>
-          <h2>Represent</h2>
-          <p class="review-question">Encode <strong>6.5</strong> in normalised eight-bit mantissa / four-bit exponent format.</p>
-        </article>
-        <article class="donow-review-answer">
-          <span class="review-label">ANSWER</span>
-          <p class="review-answer"><code>01101000 0011</code></p>
-          <p class="review-explain"><code>6.5 = 110.1₂</code>. Normalise to <code>0.1101₂ × 2³</code>. The mantissa is therefore <code>01101000</code> and the exponent is <code>0011</code>.</p>
-        </article>
+        <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Decode <code>11110110</code> as an 8-bit two’s-complement integer.</p></article>
+        <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>−10</strong></p><p class="review-explain"><code>−128 + 64 + 32 + 16 + 4 + 2 = −10</code>.</p></article>
       </div>
     </div>
 
     <div class="donow-stage" hidden>
       <div class="donow-review">
-        <article class="donow-review-question">
-          <span class="review-number">QUESTION 4 OF 4</span>
-          <h2>Reason</h2>
-          <p class="review-question">Normalise <code>00011010 0101</code> in 8+4 format. Explain why the exponent changes.</p>
-        </article>
-        <article class="donow-review-answer">
-          <span class="review-label">ANSWER</span>
-          <p class="review-answer"><code>01101000 0011</code></p>
-          <p class="review-explain">Move the mantissa left twice so it begins <code>01</code>. Each left shift multiplies the mantissa by 2, so two shifts multiply it by 4. Reduce the exponent by 2 to keep the overall value unchanged: <code>0101 → 0011</code>.</p>
-        </article>
+        <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Apply <code>AND 00001111</code> to <code>10110110</code>. Give the result in binary and hexadecimal.</p></article>
+        <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>00000110₂ = 06₁₆</code></p><p class="review-explain">AND with <code>00001111</code> clears the upper nibble and preserves the lower nibble <code>0110</code>.</p></article>
       </div>
     </div>
-
   </div>
 </section>
-
 <section id="overview" class="page" data-phase-time="1 minute">
   <h1>Floating point → denary</h1>
   <div class="objectives"><strong>By the end, you can…</strong>
@@ -721,6 +686,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1445"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1845"></script>
 </body>
 </html>
