@@ -11,9 +11,11 @@
   --warm-line:#ead39b;
   --danger:#87350c;
   --nav-w:176px;
-  --signal-h:108px;
+  --phase-meta-h:30px;
+  --signal-h:88px;
+  --top-h:118px;
   --footer-h:38px;
-  --phase-bar-h:58px;
+  --phase-bar-h:0px;
   --radius:12px;
   --shadow:0 8px 24px rgba(18,45,33,.08);
 }
@@ -50,13 +52,13 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid #e0
 #page-count{margin:10px 0 0;text-align:center;color:var(--muted);font-size:13px}
 
 .signal-wrap{
-  position:fixed;left:var(--nav-w);right:0;top:0;z-index:30;height:var(--signal-h);
-  padding:10px 3vw;background:rgba(244,247,245,.97);border-bottom:1px solid var(--line);
+  position:fixed;left:var(--nav-w);right:0;top:var(--phase-meta-h);z-index:30;height:var(--signal-h);
+  padding:6px 3vw;background:rgba(244,247,245,.97);border-bottom:1px solid var(--line);
   display:flex;align-items:center;justify-content:space-between;gap:18px;
 }
 .signals{display:flex;align-items:center;gap:10px;min-width:0}
 .signals img,#exit-ticket-signal{
-  width:150px;height:82px;min-height:82px;max-width:none;flex:0 0 150px;object-fit:contain;
+  width:142px;height:68px;min-height:68px;max-width:none;flex:0 0 142px;object-fit:contain;
 }
 #exit-ticket-signal{
   display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;
@@ -67,12 +69,12 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid #e0
 
 main{
   margin-left:var(--nav-w);
-  padding:var(--signal-h) 3vw var(--footer-h);
+  padding:var(--top-h) 3vw var(--footer-h);
   height:100vh;
 }
 section.page{
   display:none;
-  height:calc(100vh - var(--signal-h) - var(--footer-h));
+  height:calc(100vh - var(--top-h) - var(--footer-h));
   overflow:auto;
   scrollbar-gutter:stable;
   padding:0 2px 10px;
@@ -80,13 +82,12 @@ section.page{
 section.page.active{display:block}
 
 .section-top{
-  position:sticky;top:0;z-index:14;
-  height:var(--phase-bar-h);min-height:var(--phase-bar-h);
+  position:fixed;left:var(--nav-w);right:0;top:0;z-index:31;
+  height:var(--phase-meta-h);min-height:var(--phase-meta-h);
   display:flex;align-items:center;gap:16px;
-  margin:0 -2px 12px;padding:0 10px;
+  margin:0;padding:0 3vw;
   background:var(--paper);
   border-bottom:1px solid var(--line);
-  box-shadow:0 5px 12px rgba(18,45,33,.045);
 }
 .eyebrow{font-size:13px;font-weight:900;letter-spacing:.11em;color:var(--green);text-transform:uppercase}
 .time{margin-left:auto;color:var(--muted);font-size:14px;font-weight:700}
@@ -146,7 +147,7 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
 .note{margin:18px 0;padding:14px 16px;border-left:4px solid var(--green);background:#edf5f1}
 
 @media(max-width:900px){
-  :root{--nav-w:0px;--signal-h:auto;--footer-h:36px}
+  :root{--nav-w:0px;--signal-h:auto;--top-h:0px;--phase-meta-h:0px;--footer-h:36px}
   .navwrap{position:relative;width:100%;height:auto;border-right:0;border-bottom:1px solid var(--line)}
   .phase-nav{flex-direction:row;flex-wrap:wrap;gap:2px;padding:6px}
   .phase-nav button{border-left:0;border-bottom:4px solid transparent;padding:8px 9px;font-size:13px}
@@ -154,11 +155,16 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
   .nav-tools{display:flex;align-items:center;gap:8px;padding:8px 10px}
   .control-btn,.back-btn{width:auto;margin:0;padding:8px 11px}
   #page-count{margin:0 0 0 auto}
-  .signal-wrap{position:relative;left:auto;height:auto;padding:8px 14px}
+  .signal-wrap{position:relative;left:auto;top:auto;height:auto;padding:8px 14px}
   .signals img,#exit-ticket-signal{width:130px;height:68px;min-height:68px;flex-basis:130px}
   .lesson-label{display:none}
   main{margin-left:0;height:auto;padding:18px 16px 58px}
   section.page{height:auto;min-height:0;overflow:visible}
+  .section-top{
+    position:relative;left:auto;right:auto;top:auto;z-index:auto;
+    height:44px;min-height:44px;margin:0 0 12px;padding:0 2px;
+    background:transparent;border-bottom:1px solid var(--line);
+  }
   .two-col,.vocab-grid{grid-template-columns:1fr}
   .lesson-footer{left:0}
 }
