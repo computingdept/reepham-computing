@@ -233,7 +233,6 @@ public static void ChangeByReference(ref int number)
 
 <section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
   <div class="wedo-focus-deck">
-
     <article class="wedo-example">
       <div class="wedo-reference">
         <span class="phase-tag">GUIDED PRACTICE 1</span>
@@ -249,16 +248,7 @@ public static void AddOne()
         <span class="wedo-example-count">Example 1 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Classify each variable</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>total</strong><span>?</span></div><div class="practice-box"><strong>amount</strong><span>?</span></div><div class="practice-box"><strong>Why?</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Scope</h2>
-          <p><code>total</code> is class-level/global for this program and can be accessed by multiple static methods. <code>amount</code> is local to <code>AddOne()</code>.</p>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Classify each variable</h2><div class="practice-grid"><div class="practice-box"><strong>total</strong><span>?</span></div><div class="practice-box"><strong>amount</strong><span>?</span></div><div class="practice-box"><strong>Why?</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Classify each variable</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>total</strong><span>Class-level / global</span></div><div class="practice-box"><strong>amount</strong><span>Local to <code>AddOne()</code></span></div><div class="practice-box"><strong>Why?</strong><span><code>total</code> can be accessed by multiple methods; <code>amount</code> exists only inside <code>AddOne()</code></span></div></div></div>
       </div>
     </article>
 
@@ -278,16 +268,7 @@ public static void DoubleValue(int number)
         <span class="wedo-example-count">Example 2 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Track the two variables</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>x before</strong><span>?</span></div><div class="practice-box"><strong>number inside</strong><span>?</span></div><div class="practice-box"><strong>x after</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Output = 5</h2>
-          <p><code>number</code> becomes 10, but it is a local copy. <code>x</code> remains 5.</p>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Track the two variables</h2><div class="practice-grid"><div class="practice-box"><strong>x before</strong><span>?</span></div><div class="practice-box"><strong>number inside</strong><span>?</span></div><div class="practice-box"><strong>x after</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Track the two variables</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>x before</strong><span>5</span></div><div class="practice-box"><strong>number inside</strong><span>10</span></div><div class="practice-box"><strong>x after</strong><span>5</span></div></div><p class="fine"><code>number</code> is a local copy, so changing it does not change <code>x</code>.</p></div>
       </div>
     </article>
 
@@ -300,22 +281,7 @@ public static void DoubleValue(int number)
         <span class="wedo-example-count">Example 3 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Where must ref appear?</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>Method parameter</strong><span>?</span></div><div class="practice-box"><strong>Method call</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Use ref in both places</h2>
-          <pre class="arithmetic">DoubleValue(ref x);
-
-public static void DoubleValue(ref int number)
-{
-    number = number * 2;
-}</pre>
-          <div class="key-result">Now the original variable <code>x</code> becomes 10.</div>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Where must ref appear?</h2><div class="practice-grid"><div class="practice-box"><strong>Method parameter</strong><span>?</span></div><div class="practice-box"><strong>Method call</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Where must ref appear?</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Method parameter</strong><span><code>ref int number</code></span></div><div class="practice-box"><strong>Method call</strong><span><code>DoubleValue(ref x);</code></span></div></div><p class="fine">Using <code>ref</code> in both places lets the method change the original variable.</p></div>
       </div>
     </article>
 
@@ -327,20 +293,9 @@ public static void DoubleValue(ref int number)
         <span class="wedo-example-count">Example 4 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step">
-          <span class="wedo-step-label">YOUR TURN</span>
-          <h2>Complete both explanations</h2>
-          <div class="practice-grid"><div class="practice-box"><strong>By value</strong><span>?</span></div><div class="practice-box"><strong>By reference</strong><span>?</span></div></div>
-        </div>
-        <div class="wedo-step" hidden>
-          <span class="wedo-step-label">CHECK</span>
-          <h2>Precise explanation</h2>
-          <p><strong>By value:</strong> the method receives a local copy; changing the parameter does not change the original variable.</p>
-          <p><strong>By reference:</strong> the method has access to the original variable; changes remain after the method ends.</p>
-        </div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete both explanations</h2><div class="practice-grid"><div class="practice-box"><strong>By value</strong><span>?</span></div><div class="practice-box"><strong>By reference</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete both explanations</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>By value</strong><span>Method receives a local copy; changing it does not change the original variable</span></div><div class="practice-box"><strong>By reference</strong><span>Method accesses the original variable; changes remain after the method ends</span></div></div></div>
       </div>
     </article>
-
   </div>
 </section>
 
