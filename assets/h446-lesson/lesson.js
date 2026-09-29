@@ -83,19 +83,28 @@ function resetPhaseState(id){
     }
   }
   if(id==='vocabulary'){
-    page.querySelectorAll('.vocab-card').forEach((card,i)=>{
-      const term=card.querySelector('dt');
-      const definition=card.querySelector('dd');
-      const blank=card.querySelector('.vocab-blank');
-      if(!term||!definition||!blank)return;
-      term.hidden=false;definition.hidden=false;
-      term.removeAttribute('data-answer');definition.removeAttribute('data-answer');
-      const missing=i%2===0?definition:term;
-      missing.hidden=true;missing.setAttribute('data-answer','');
-      blank.hidden=false;
-      blank.textContent=i%2===0?'Definition: __________':'Keyword: __________';
-      card.insertBefore(blank,missing);
-    });
+    const stages=[...page.querySelectorAll('.vocab-stage')];
+    if(stages.length){
+      showOnly(stages,0);
+      stages.forEach(stage=>{
+        const answer=stage.querySelector('[data-vocab-answer]');
+        if(answer)answer.hidden=true;
+      });
+    }else{
+      page.querySelectorAll('.vocab-card').forEach((card,i)=>{
+        const term=card.querySelector('dt');
+        const definition=card.querySelector('dd');
+        const blank=card.querySelector('.vocab-blank');
+        if(!term||!definition||!blank)return;
+        term.hidden=false;definition.hidden=false;
+        term.removeAttribute('data-answer');definition.removeAttribute('data-answer');
+        const missing=i%2===0?definition:term;
+        missing.hidden=true;missing.setAttribute('data-answer','');
+        blank.hidden=false;
+        blank.textContent=i%2===0?'Definition: __________':'Keyword: __________';
+        card.insertBefore(blank,missing);
+      });
+    }
   }
 }
 function updateSignals(id){
@@ -156,8 +165,17 @@ function updateControl(){
       const i=visibleIndex(stages);
       label=i<stages.length-1?'Next independent questions →':'Open answers →';
     }
-  }else if(current==='vocabulary'&&page.querySelector('.vocab-card [data-answer][hidden]')){
-    label='Reveal next answer';
+  }else if(current==='vocabulary'){
+    const stages=[...page.querySelectorAll('.vocab-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      const answer=stages[i].querySelector('[data-vocab-answer]');
+      if(answer&&answer.hidden)label='Reveal answer →';
+      else if(i<stages.length-1)label='Next question →';
+      else label='Continue → Exit Ticket';
+    }else if(page.querySelector('.vocab-card [data-answer][hidden]')){
+      label='Reveal next answer';
+    }
   }else if(page.querySelector('details.answers:not([open])')){
     label='Reveal answers';
   }else if(current==='exit'){
@@ -188,6 +206,25 @@ function next(){
     const stages=[...page.querySelectorAll('.donow-stage')];
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
+  }
+  if(current==='vocabulary'){
+    const stages=[...page.querySelectorAll('.vocab-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      const answer=stages[i].querySelector('[data-vocab-answer]');
+      if(answer&&!answer.hidden){
+        answer.hidden=true;
+        updateControl();
+        return;
+      }
+      if(i>0){
+        showOnly(stages,i-1);
+        const previousAnswer=stages[i-1].querySelector('[data-vocab-answer]');
+        if(previousAnswer)previousAnswer.hidden=false;
+        updateControl();
+        return;
+      }
+    }
   }
   if(current==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
@@ -240,12 +277,28 @@ function next(){
     location.href='answers.html';return;
   }
   if(current==='vocabulary'){
-    const answer=page.querySelector('.vocab-card [data-answer][hidden]');
-    if(answer){
-      answer.hidden=false;
-      const blank=answer.parentElement.querySelector('.vocab-blank');
-      if(blank)blank.hidden=true;
-      updateControl();return;
+    const stages=[...page.querySelectorAll('.vocab-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      const answer=stages[i].querySelector('[data-vocab-answer]');
+      if(answer&&answer.hidden){
+        answer.hidden=false;
+        updateControl();return;
+      }
+      if(i<stages.length-1){
+        showOnly(stages,i+1);
+        const nextAnswer=stages[i+1].querySelector('[data-vocab-answer]');
+        if(nextAnswer)nextAnswer.hidden=true;
+        updateControl();return;
+      }
+    }else{
+      const answer=page.querySelector('.vocab-card [data-answer][hidden]');
+      if(answer){
+        answer.hidden=false;
+        const blank=answer.parentElement.querySelector('.vocab-blank');
+        if(blank)blank.hidden=true;
+        updateControl();return;
+      }
     }
   }
   const answers=[...page.querySelectorAll('details.answers:not([open])')];
