@@ -6,9 +6,9 @@
 <title>Lesson 001 · Data types &amp; unsigned binary</title>
 <meta name="description" content="OCR H446 Lesson 001: primitive data types and unsigned binary representation.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E01%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1530">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1530">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1530">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1930">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1930">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1930">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -133,33 +133,54 @@
   </div>
 </section>
 
-<section id="new-learning" class="page" data-phase-time="7 minutes">
-  <div class="two-col">
-    <article class="task">
-      <span class="phase-tag">CHOOSING A DATA TYPE</span>
-      <h2>Store the value for its purpose</h2>
-      <p><strong>Integer</strong> — whole number, e.g. <code>28</code> students.</p>
-      <p><strong>Real / floating point</strong> — may contain a fractional part, e.g. <code>18.5</code>.</p>
-      <p><strong>Character</strong> — one character, e.g. <code>'A'</code>.</p>
-      <p><strong>String</strong> — a sequence of characters, e.g. <code>"0042"</code>.</p>
-      <p><strong>Boolean</strong> — <code>True</code> or <code>False</code>.</p>
-      <div class="note"><strong>Key idea:</strong> digits do not automatically mean integer. An identifier can be better stored as a string.</div>
+<section id="new-learning" class="page phase-focus" data-phase-time="7 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">QUICK REFERENCE</span>
+      <h2>Choose the type · read the bits</h2>
+      <p><strong>Integer</strong> whole number · <strong>Real</strong> fractional number</p>
+      <p><strong>Character</strong> one character · <strong>String</strong> sequence of characters</p>
+      <p><strong>Boolean</strong> True / False</p>
+      <pre class="arithmetic">8-bit unsigned weights:
+128 64 32 16 8 4 2 1</pre>
+      <div class="nl-reference-note"><strong>Unsigned 8-bit range:</strong> 0–255. There are 256 possible patterns because zero is included.</div>
     </article>
 
-    <article class="task">
-      <span class="phase-tag">UNSIGNED BINARY</span>
-      <h2>Each bit has a place value</h2>
-      <pre class="arithmetic">128  64  32  16   8   4   2   1
-  0   0   1   0   1   1   0   1
-             ↓
-       32 + 8 + 4 + 1 = 45</pre>
-      <p>An 8-bit unsigned value has <strong>256 possible patterns</strong>.</p>
-      <div class="note"><strong>Range:</strong> <code>0</code> to <code>2⁸ − 1 = 255</code>.</div>
-      <p>To convert denary to binary, choose place values that add to the target and write 1 in those positions.</p>
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Choose a type for the purpose</h2>
+        <p>The symbols in a value do not decide its data type on their own. Think about what the value represents and what operations make sense.</p>
+        <div class="nl-key"><code>"0042"</code> is usually a <strong>string</strong> when it is an identifier because its leading zeros matter.</div>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>Binary → denary</h2>
+        <p>Select only the place values whose bits are 1.</p>
+        <pre class="arithmetic">00101101₂
+= 32 + 8 + 4 + 1
+= 45</pre>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>Denary → binary</h2>
+        <p>Choose place values that add to the target. Write 1 in those columns and 0 in the others.</p>
+        <pre class="arithmetic">74 = 64 + 8 + 2
+74₁₀ = 01001010₂</pre>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2>Know the range</h2>
+        <p>Eight bits give <code>2⁸ = 256</code> different patterns. The range begins at 0, so the largest unsigned value is <code>2⁸ − 1</code>.</p>
+        <div class="nl-key"><strong>8-bit unsigned range = 0–255.</strong> The value 256 needs nine bits.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
     </article>
   </div>
 </section>
-
 <section id="i-do" class="page phase-ido" data-phase-time="5 minutes">
   <div class="ido-focus-deck">
     <article class="ido-example">
@@ -525,6 +546,6 @@ b) 11000010₂</pre>
 </main>
 
 <div class="lesson-footer">Lesson 001 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1530"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1930"></script>
 </body>
 </html>
