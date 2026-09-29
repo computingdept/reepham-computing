@@ -7,7 +7,7 @@ const signalMap={
   'we-do':['We Do','Quiet Working','MWBs'],
   'you-do':['You Do','Quiet Working','Turn & Talk'],
   vocabulary:['Questioning','Listening','Cold Calling'],
-  exit:['Exit Questioning','Silence','Choral Response']
+  exit:['Exit Questioning','Silence','Thumbs']
 };
 const youDoIndependentSignals=['You Do','Silence','Independent'];
 const pages=[...document.querySelectorAll('.page')];
@@ -86,6 +86,10 @@ function resetPhaseState(id){
       const stages=[...page.querySelectorAll('.youdo-stage')];
       if(stages.length)showOnly(stages,0);
     }
+  }
+  if(id==='exit'){
+    const stages=[...page.querySelectorAll('.exit-stage')];
+    if(stages.length)showOnly(stages,0);
   }
   if(id==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
@@ -223,7 +227,15 @@ function updateControl(){
   }else if(page.querySelector('details.answers:not([open])')){
     label='Reveal answers';
   }else if(current==='exit'){
-    label='Back to Do Now';
+    const stages=[...page.querySelectorAll('.exit-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      if(i===0)label='Reveal answers →';
+      else if(i===1)label='How did the lesson go? →';
+      else label='Back to Do Now';
+    }else{
+      label='Back to Do Now';
+    }
   }
   advance.textContent=label;
   previous.disabled=order.indexOf(current)===0;
@@ -328,6 +340,17 @@ function next(){
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
     location.href='answers.html';return;
   }
+  if(current==='exit'){
+    const stages=[...page.querySelectorAll('.exit-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      if(i<stages.length-1){
+        showOnly(stages,i+1);
+        updateControl();
+        return;
+      }
+    }
+  }
   if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
@@ -359,6 +382,17 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='exit'){
+    const stages=[...page.querySelectorAll('.exit-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      if(i>0){
+        showOnly(stages,i-1);
+        updateControl();
+        return;
+      }
+    }
+  }
   if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
