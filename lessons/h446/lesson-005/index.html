@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1019">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1019">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1019">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1028">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1028">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1028">
 </head>
 <body data-icon-path="assets/">
 <a class="skip" href="#main">Skip to lesson</a>
@@ -45,6 +45,7 @@
 <section id="do-now" class="page phase-donow">
   <div class="section-top"><span class="eyebrow">RETRIEVAL · PREVIOUS LESSONS</span><span class="time">5 minutes</span></div>
   <div class="donow-deck">
+
     <div class="donow-stage">
       <div class="donow-questions">
         <article class="donow-question"><strong>1 · RECALL</strong><p>Where is the implied binary point in a two’s-complement floating-point mantissa?</p></article>
@@ -55,28 +56,65 @@
     </div>
 
     <div class="donow-stage" hidden>
-      <div class="donow-answer-screen">
-        <div class="donow-answer-title"><h2>Check and correct</h2><span>Question + answer together</span></div>
-        <div class="donow-answer-list">
-          <article class="donow-answer-row">
-            <div class="q">1 · Where is the implied binary point?</div>
-            <div class="a">Immediately after the sign bit.</div>
-          </article>
-          <article class="donow-answer-row">
-            <div class="q">2 · Write 0.625 as a binary fraction.</div>
-            <div class="a"><code>0.101₂ = ½ + ⅛</code></div>
-          </article>
-          <article class="donow-answer-row">
-            <div class="q">3 · Encode 6.5 in normalised 8+4 format.</div>
-            <div class="a"><code>01101000 0011</code></div>
-          </article>
-          <article class="donow-answer-row">
-            <div class="q">4 · Normalise <code>00011010 0101</code>. Why does the exponent change?</div>
-            <div class="a"><code>01101000 0011</code> · two left shifts multiply the mantissa by 4, so the exponent decreases by 2.</div>
-          </article>
-        </div>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 1 OF 4</span>
+          <h2>Recall</h2>
+          <p class="review-question">Where is the implied binary point in a two’s-complement floating-point mantissa?</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer">Immediately after the sign bit.</p>
+          <p class="review-explain">The mantissa is treated as a signed binary fraction. The first bit carries the negative place value; the remaining bits represent fractional place values.</p>
+        </article>
       </div>
     </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 2 OF 4</span>
+          <h2>Apply</h2>
+          <p class="review-question">Write <strong>0.625</strong> as a binary fraction. Show the fractional place values.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><code>0.101₂</code></p>
+          <p class="review-explain"><code>½ + ⅛ = 0.5 + 0.125 = 0.625</code>. The ¼ place is 0, so the fractional bits are <code>101</code>.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 3 OF 4</span>
+          <h2>Represent</h2>
+          <p class="review-question">Encode <strong>6.5</strong> in normalised eight-bit mantissa / four-bit exponent format.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><code>01101000 0011</code></p>
+          <p class="review-explain"><code>6.5 = 110.1₂</code>. Normalise to <code>0.1101₂ × 2³</code>. The mantissa is therefore <code>01101000</code> and the exponent is <code>0011</code>.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 4 OF 4</span>
+          <h2>Reason</h2>
+          <p class="review-question">Normalise <code>00011010 0101</code> in 8+4 format. Explain why the exponent changes.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><code>01101000 0011</code></p>
+          <p class="review-explain">Move the mantissa left twice so it begins <code>01</code>. Each left shift multiplies the mantissa by 2, so two shifts multiply it by 4. Reduce the exponent by 2 to keep the overall value unchanged: <code>0101 → 0011</code>.</p>
+        </article>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -321,6 +359,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1019"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1028"></script>
 </body>
 </html>
