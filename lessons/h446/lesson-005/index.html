@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1147">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1147">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1147">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1204">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1204">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1204">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -315,18 +315,18 @@ Value = mantissa × 2ᴱ</pre>
 </section>
 
 <section id="i-do" class="page phase-ido">
-  <div class="section-top"><span class="eyebrow">I DO</span><span class="time">12 minutes</span></div>
+  <div class="section-top"><span class="eyebrow">I DO</span><span class="time">5 minutes</span></div>
 
   <div class="ido-focus-deck">
-
     <article class="ido-example">
       <div class="ido-reference">
-        <span class="phase-tag">EXAMPLE 1 · POSITIVE MANTISSA + POSITIVE EXPONENT</span>
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
         <h2>Decode this value</h2>
         <span class="focus-code">01011000 0011</span>
         <p>Give the denary value represented by this floating-point number.</p>
-        <span class="ido-example-count">Example 1 of 5</span>
+        <span class="ido-example-count">Worked example</span>
       </div>
+
       <div class="ido-method">
         <div class="ido-step">
           <span class="ido-step-label">STEP 1 · MANTISSA</span>
@@ -334,14 +334,16 @@ Value = mantissa × 2ᴱ</pre>
           <pre class="arithmetic">01011000
 = ½ + ⅛ + ¹⁄₁₆
 = 0.6875</pre>
-          <p>Use the fractional place values after the sign bit.</p>
+          <p>Read the mantissa as a signed binary fraction.</p>
         </div>
+
         <div class="ido-step" hidden>
           <span class="ido-step-label">STEP 2 · EXPONENT</span>
           <h2>Decode the exponent</h2>
           <pre class="arithmetic">0011 = 3</pre>
           <p>The exponent is a signed two’s-complement integer.</p>
         </div>
+
         <div class="ido-step" hidden>
           <span class="ido-step-label">STEP 3 · COMBINE</span>
           <h2>Apply the scale</h2>
@@ -352,32 +354,51 @@ Value = mantissa × 2ᴱ</pre>
         </div>
       </div>
     </article>
+  </div>
+</section>
 
-    <article class="ido-example" hidden>
-      <div class="ido-reference">
-        <span class="phase-tag">EXAMPLE 2 · NEGATIVE MANTISSA</span>
+<section id="we-do" class="page phase-wedo">
+  <div class="section-top"><span class="eyebrow">WE DO</span><span class="time">12 minutes</span></div>
+
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 1 · NEGATIVE MANTISSA</span>
         <h2>Decode this value</h2>
         <span class="focus-code">10110000 0010</span>
         <p>Give the denary value represented by this floating-point number.</p>
-        <span class="ido-example-count">Example 2 of 5</span>
+        <span class="wedo-example-count">Example 1 of 4</span>
       </div>
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · MANTISSA</span>
-          <h2>Evaluate the mantissa</h2>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the answer</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Mantissa</strong><span>?</span></div>
+            <div class="practice-box"><strong>Exponent</strong><span>?</span></div>
+            <div class="practice-box"><strong>Scale</strong><span>?</span></div>
+            <div class="practice-box"><strong>Final value</strong><span>?</span></div>
+          </div>
+          <span class="wedo-step-count">Make a complete attempt before checking.</span>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1 · MANTISSA</span>
+          <h2>Compare your mantissa</h2>
           <pre class="arithmetic">10110000
 = −1 + ¼ + ⅛
 = −0.625</pre>
-          <p>The first 1 has place value <strong>−1</strong>; it is not a separate minus sign.</p>
+          <span class="wedo-step-count">Check 1 of 3</span>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · EXPONENT</span>
-          <h2>Decode the exponent</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2 · EXPONENT</span>
+          <h2>Compare your exponent</h2>
           <pre class="arithmetic">0010 = 2</pre>
+          <span class="wedo-step-count">Check 2 of 3</span>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · COMBINE</span>
-          <h2>Apply the scale</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 3 · FINAL VALUE</span>
+          <h2>Compare your result</h2>
           <pre class="arithmetic">−0.625 × 2²
 = −0.625 × 4
 = −2.5</pre>
@@ -386,33 +407,44 @@ Value = mantissa × 2ᴱ</pre>
       </div>
     </article>
 
-    <article class="ido-example" hidden>
-      <div class="ido-reference">
-        <span class="phase-tag">EXAMPLE 3 · NEGATIVE EXPONENT</span>
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 2 · NEGATIVE EXPONENT</span>
         <h2>Decode this value</h2>
         <span class="focus-code">01100000 1110</span>
         <p>Give the denary value represented by this floating-point number.</p>
-        <span class="ido-example-count">Example 3 of 5</span>
+        <span class="wedo-example-count">Example 2 of 4</span>
       </div>
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · MANTISSA</span>
-          <h2>Evaluate the mantissa</h2>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the answer</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Mantissa</strong><span>?</span></div>
+            <div class="practice-box"><strong>Exponent</strong><span>?</span></div>
+            <div class="practice-box"><strong>Scale</strong><span>?</span></div>
+            <div class="practice-box"><strong>Final value</strong><span>?</span></div>
+          </div>
+          <span class="wedo-step-count">Make a complete attempt before checking.</span>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1 · MANTISSA</span>
+          <h2>Compare your mantissa</h2>
           <pre class="arithmetic">01100000
 = ½ + ¼
 = 0.75</pre>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · EXPONENT</span>
-          <h2>Decode the exponent</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2 · EXPONENT</span>
+          <h2>Compare your exponent</h2>
           <pre class="arithmetic">1110
 = −8 + 4 + 2
 = −2</pre>
-          <p>A negative exponent changes the scale; it does not make the mantissa negative.</p>
+          <p>A negative exponent changes the scale; it does not make the number negative.</p>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · COMBINE</span>
-          <h2>Apply the scale</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 3 · FINAL VALUE</span>
+          <h2>Compare your result</h2>
           <pre class="arithmetic">0.75 × 2⁻²
 = 0.75 ÷ 4
 = 0.1875</pre>
@@ -421,32 +453,43 @@ Value = mantissa × 2ᴱ</pre>
       </div>
     </article>
 
-    <article class="ido-example" hidden>
-      <div class="ido-reference">
-        <span class="phase-tag">EXAMPLE 4 · BOTH FIELDS NEGATIVE</span>
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 3 · BOTH FIELDS NEGATIVE</span>
         <h2>Decode this value</h2>
         <span class="focus-code">10100000 1111</span>
         <p>Give the denary value represented by this floating-point number.</p>
-        <span class="ido-example-count">Example 4 of 5</span>
+        <span class="wedo-example-count">Example 3 of 4</span>
       </div>
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · MANTISSA</span>
-          <h2>Evaluate the mantissa</h2>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the answer</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Mantissa</strong><span>?</span></div>
+            <div class="practice-box"><strong>Exponent</strong><span>?</span></div>
+            <div class="practice-box"><strong>Scale</strong><span>?</span></div>
+            <div class="practice-box"><strong>Final value</strong><span>?</span></div>
+          </div>
+          <span class="wedo-step-count">Make a complete attempt before checking.</span>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1 · MANTISSA</span>
+          <h2>Compare your mantissa</h2>
           <pre class="arithmetic">10100000
 = −1 + ¼
 = −0.75</pre>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · EXPONENT</span>
-          <h2>Decode the exponent</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2 · EXPONENT</span>
+          <h2>Compare your exponent</h2>
           <pre class="arithmetic">1111
 = −8 + 4 + 2 + 1
 = −1</pre>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · COMBINE</span>
-          <h2>Apply the scale</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 3 · FINAL VALUE</span>
+          <h2>Compare your result</h2>
           <pre class="arithmetic">−0.75 × 2⁻¹
 = −0.75 ÷ 2
 = −0.375</pre>
@@ -455,78 +498,45 @@ Value = mantissa × 2ᴱ</pre>
       </div>
     </article>
 
-    <article class="ido-example" hidden>
-      <div class="ido-reference">
-        <span class="phase-tag">EXAMPLE 5 · NORMALISATION</span>
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 4 · NORMALISATION</span>
         <h2>Decode and normalise</h2>
         <span class="focus-code">00011010 0101</span>
         <p>Find the denary value, then write the same value in normalised 8+4 form.</p>
-        <span class="ido-example-count">Example 5 of 5</span>
+        <span class="wedo-example-count">Example 4 of 4</span>
       </div>
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · MANTISSA</span>
-          <h2>Evaluate the mantissa</h2>
-          <pre class="arithmetic">00011010
-= ⅛ + ¹⁄₁₆ + ¹⁄₆₄
-= 0.203125</pre>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the answer</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Mantissa</strong><span>?</span></div>
+            <div class="practice-box"><strong>Exponent</strong><span>?</span></div>
+            <div class="practice-box"><strong>Denary value</strong><span>?</span></div>
+            <div class="practice-box"><strong>Normalised form</strong><span>?</span></div>
+          </div>
+          <span class="wedo-step-count">Make a complete attempt before checking.</span>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · EXPONENT</span>
-          <h2>Decode the exponent</h2>
-          <pre class="arithmetic">0101 = 5</pre>
-        </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · VALUE</span>
-          <h2>Apply the scale</h2>
-          <pre class="arithmetic">0.203125 × 2⁵
-= 0.203125 × 32
-= 6.5</pre>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1 · VALUE</span>
+          <h2>Compare the decoded value</h2>
+          <pre class="arithmetic">Mantissa = 0.203125
+Exponent = 5
+0.203125 × 2⁵ = 6.5</pre>
           <div class="key-result">Denary value = <strong>6.5</strong></div>
         </div>
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 4 · NORMALISE</span>
-          <h2>Keep the value unchanged</h2>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2 · NORMALISATION</span>
+          <h2>Compare the normalised form</h2>
           <pre class="arithmetic">00011010 0101
 → 01101000 0011</pre>
-          <p>Shift the mantissa left twice so it begins <strong>01</strong>. Because the mantissa was multiplied by 4, reduce the exponent by 2.</p>
+          <p>Shift the mantissa left twice, then reduce the exponent by 2 so the represented value stays unchanged.</p>
           <div class="key-result">Normalised form = <strong>01101000 0011</strong></div>
         </div>
       </div>
     </article>
 
-  </div>
-</section>
-
-<section id="we-do" class="page phase-wedo">
-  <div class="section-top"><span class="eyebrow">WE DO · IMPROVE THE ANSWER TOGETHER</span><span class="time">7 minutes</span></div>
-  <div class="wedo-grid">
-    <article class="wedo-question">
-      <span class="phase-tag">OCR JUNE 2024 · Q4(c) · [3]</span>
-      <h2>Exam question</h2>
-      <p class="question-text">Find the denary value represented by <code>10011101 0110</code>, using an eight-bit mantissa and four-bit exponent. Both fields use two’s complement. Show your working.</p>
-      <p class="source-note">Paraphrased OCR June 2024 Q4(c); original values and marks retained. <a href="https://www.ocr.org.uk/Images/726571-question-paper-computer-systems.pdf#page=14" target="_blank" rel="noopener">View source question</a>.</p>
-    </article>
-    <article class="wedo-response">
-      <div data-reveal-prompt>
-        <h2>Build the answer together</h2>
-        <ol>
-          <li>Label the mantissa and exponent.</li>
-          <li>Decode the signed mantissa.</li>
-          <li>Decode the exponent.</li>
-          <li>Apply the scale.</li>
-        </ol>
-        <div class="reveal-hint">MWBs first. Reveal the model response when the class is ready.</div>
-      </div>
-      <div class="wedo-answer" data-reveal-answer hidden>
-        <h2>Model response</h2>
-        <pre class="arithmetic">Mantissa 10011101 = −0.7734375
-Exponent 0110 = 6
-Value = −0.7734375 × 2⁶
-Value = −49.5</pre>
-        <p>The mantissa is <code>−1 + ⅛ + ¹⁄₁₆ + ¹⁄₃₂ + ¹⁄₁₂₈</code>. Then multiply by 64.</p>
-      </div>
-    </article>
   </div>
 </section>
 
@@ -689,6 +699,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1147"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1204"></script>
 </body>
 </html>
