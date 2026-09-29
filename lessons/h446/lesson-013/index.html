@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 013 · Recursion vs iteration in C#</title>
-<meta name="description" content="OCR H446 2.2.1(b): recursion, base cases, recursive calls, tracing and iterative equivalents in C#.">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1745">
+<title>Lesson 013 · 2D Arrays + Nested Iteration</title>
+<meta name="description" content="OCR H446 programming bridge lesson on 2D arrays, row/column indexing, GetLength and nested iteration before the Tic Tac Toe project.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1745">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -39,364 +39,102 @@
   </div>
   <div class="signal-meta">
     <span id="phase-time" class="signal-phase-time"></span>
-    <span class="lesson-label">OCR H446 · Lesson 013<br>Recursion vs iteration</span>
+    <span class="lesson-label">OCR H446 · Lesson 013<br>2D Arrays + Nested Iteration</span>
   </div>
 </div>
 
 <main id="main">
 
-<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
-  <div class="donow-deck">
-    <div class="donow-stage">
-      <div class="donow-questions">
-        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>What is the difference between passing an integer parameter by value and using <code>ref</code>?</p></article>
-        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>What is the difference between a function and a procedure-style method?</p></article>
-        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Which loop is normally used when the number of repetitions is known in advance?</p></article>
-        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>What will this output: <code>for (int i = 3; i &gt;= 1; i--) Console.WriteLine(i);</code>?</p></article>
-      </div>
-    </div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What is the difference between passing an integer parameter by value and using <code>ref</code>?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>By value:</strong> the method receives a copy. <strong>ref:</strong> the method can change the original variable.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">What is the difference between a function and a procedure-style method?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">A <strong>function returns a value</strong>. A procedure-style method uses <code>void</code> and does not return a value.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Which loop is normally used when the number of repetitions is known in advance?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">A <strong>for loop</strong>.</p><p class="review-explain">It is the usual choice for count-controlled iteration.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">What will this output: <code>for (int i = 3; i &gt;= 1; i--) Console.WriteLine(i);</code>?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>3 · 2 · 1</strong></p><p class="review-explain">The counter starts at 3 and decreases by 1 while it remains at least 1.</p></article>
-    </div></div>
-  </div>
-</section>
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What does <code>array[2]</code> access in a 1D array?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What does a <code>for</code> loop need to repeat through every item?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What does <code>GetLength(0)</code> mean for a 2D array?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>If a board has 3 rows and 3 columns, how many values does it contain?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>array[2]</code> access in a 1D array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The item at index 2 — the third item.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What does a <code>for</code> loop need to repeat through every item?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A counter, condition and update.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>GetLength(0)</code> mean for a 2D array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The number of rows.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">If a board has 3 rows and 3 columns, how many values does it contain?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>9.</strong></p></article></div></div></div></section>
 
 <section id="overview" class="page" data-phase-time="2 minutes">
-  <h1>Recursion vs iteration in C#</h1>
-  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
-  <div class="objectives">
-    <strong>By the end, you can…</strong>
-    <ul>
-      <li>identify the base case and recursive case in a recursive method;</li>
-      <li>trace recursive calls and the values returned as the calls unwind;</li>
-      <li>write recursive and iterative solutions to the same problem.</li>
-    </ul>
-  </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>recursion</span><span>base case</span><span>recursive case</span><span>recursive call</span>
-      <span>call stack</span><span>unwind</span><span>iteration</span><span>trace</span>
-    </div>
-  </div>
+<h1>2D Arrays + Nested Iteration</h1>
+<a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+<div class="objectives"><strong>By the end, you can…</strong><ul>
+<li>declare and access values in a two-dimensional C# array;</li>
+<li>use <code>GetLength(0)</code> and <code>GetLength(1)</code> correctly;</li>
+<li>traverse every row and column with nested loops.</li>
+</ul></div>
+<div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list">
+<span>2D array</span><span>row</span><span>column</span><span>index</span><span>dimension</span><span>nested loop</span><span>GetLength()</span><span>traverse</span>
+</div></div>
 </section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
-  <div class="nl-focus">
-    <article class="nl-reference">
-      <span class="phase-tag">C# QUICK REFERENCE</span>
-      <h2>A method can call itself</h2>
-      <pre class="arithmetic">public static int SumTo(int number)
+<div class="nl-focus">
+<article class="nl-reference">
+<span class="phase-tag">BRIDGE TO TIC TAC TOE</span>
+<h2>Think row, then column</h2>
+<pre class="arithmetic">string[,] board =
 {
-    if (number == 1)
+    { "1", "2", "3" },
+    { "4", "5", "6" },
+    { "7", "8", "9" }
+};
+
+board[1,2] = "6";</pre>
+<div class="nl-reference-note"><strong>Rule:</strong> first index = row, second index = column.</div>
+</article>
+<article class="nl-explanation">
+<div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Declare a 2D array</h2><pre class="arithmetic">string[,] board = new string[3,3];</pre><p><code>[,]</code> means two dimensions. This board has 3 rows and 3 columns.</p><span class="nl-stage-count">1 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Access one position</h2><pre class="arithmetic">board[0,0] = "X";
+board[2,1] = "O";</pre><p>Indexes start at 0. <code>[2,1]</code> means row 2, column 1.</p><span class="nl-stage-count">2 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Get each dimension</h2><pre class="arithmetic">board.GetLength(0)  // rows
+board.GetLength(1)  // columns</pre><p>Dimension 0 is rows; dimension 1 is columns.</p><span class="nl-stage-count">3 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Traverse with nested loops</h2><pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
+{
+    for (int col = 0; col &lt; board.GetLength(1); col++)
     {
-        return 1;
+        Console.WriteLine(board[row,col]);
     }
-
-    return number + SumTo(number - 1);
-}</pre>
-      <div class="nl-reference-note"><strong>Two essentials:</strong> a base case that stops the recursion, and a recursive call that moves closer to that base case.</div>
-    </article>
-
-    <article class="nl-explanation">
-      <div class="nl-stage">
-        <span class="nl-stage-label">STEP 1 OF 4</span>
-        <h2>Recursion = a method calls itself</h2>
-        <p>Each call gets its own parameter values and local variables. The calls build up until the method reaches a stopping condition.</p>
-        <div class="nl-key">Without a reachable stopping condition, the method keeps calling itself.</div>
-        <span class="nl-stage-count">1 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 2 OF 4</span>
-        <h2>The base case stops the calls</h2>
-        <pre class="arithmetic">if (number == 1)
-{
-    return 1;
-}</pre>
-        <p>The <strong>base case</strong> produces a result without making another recursive call.</p>
-        <div class="nl-key">Ask: “What is the smallest version of this problem that I already know how to solve?”</div>
-        <span class="nl-stage-count">2 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 3 OF 4</span>
-        <h2>The recursive case moves toward the base case</h2>
-        <pre class="arithmetic">return number + SumTo(number - 1);</pre>
-        <p>The method solves a smaller version of the same problem. Here, <code>number</code> decreases by 1 each time.</p>
-        <div class="nl-key">If the input does not move toward the base case, the recursion will not terminate correctly.</div>
-        <span class="nl-stage-count">3 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 4 OF 4</span>
-        <h2>Calls build up, then unwind</h2>
-        <pre class="arithmetic">SumTo(4)
-4 + SumTo(3)
-    3 + SumTo(2)
-        2 + SumTo(1)
-            1
-
-then return:
-2 + 1 = 3
-3 + 3 = 6
-4 + 6 = 10</pre>
-        <p>Recursive traces are clearest when you show the calls going <strong>down</strong> and the returned values coming <strong>back up</strong>.</p>
-        <span class="nl-stage-count">4 of 4</span>
-      </div>
-    </article>
-  </div>
+}</pre><p>The outer loop changes row. The inner loop moves across every column in that row.</p><span class="nl-stage-count">4 of 4</span></div>
+</article>
+</div>
 </section>
 
-<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
-  <div class="ido-focus-deck">
-    <article class="ido-example">
-      <div class="ido-reference">
-        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
-        <h2>Trace SumTo(4)</h2>
-        <pre class="arithmetic">public static int SumTo(int number)
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes">
+<div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Print a 3 × 3 board</h2><p>Use row and column indexes to output every value in board order.</p><pre class="arithmetic">1 2 3
+4 5 6
+7 8 9</pre><span class="ido-example-count">Worked example</span></div>
+<div class="ido-method">
+<div class="ido-step"><span class="ido-step-label">STEP 1 · OUTER LOOP</span><h2>Move through rows</h2><pre class="arithmetic">for (int row = 0;
+     row &lt; board.GetLength(0);
+     row++)</pre><p>row will be 0, 1, then 2.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 2 · INNER LOOP</span><h2>Move across columns</h2><pre class="arithmetic">for (int col = 0;
+     col &lt; board.GetLength(1);
+     col++)</pre><p>For each row, col will be 0, 1, then 2.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · ACCESS</span><h2>Use both indexes</h2><pre class="arithmetic">Console.Write(board[row,col] + " ");</pre><p>The current row and column identify exactly one cell.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 4 · NEW LINE</span><h2>Finish each row</h2><pre class="arithmetic">Console.WriteLine();</pre><p>Place this after the inner loop so each board row prints on a new line.</p></div>
+</div>
+</article></div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2024 H446/01 Q8(a)</span><h2>Declare a 2D array</h2><p>OCR uses a towns array with 8 rows and 3 columns.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same declaration</h2><pre class="arithmetic">string[,] towns = new string[?,?];</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same declaration</h2><pre class="arithmetic">string[,] towns = new string[8,3];</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Read a cell</h2><p>Which value is at row 1, column 2?</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same access</h2><pre class="arithmetic">board[1,2] = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same access</h2><pre class="arithmetic">board[1,2] = "6"</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Dimensions</h2><p>A 3 × 3 board is stored in board.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same checks</h2><pre class="arithmetic">board.GetLength(0) = ?
+board.GetLength(1) = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same checks</h2><pre class="arithmetic">board.GetLength(0) = 3
+board.GetLength(1) = 3</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Nested traversal</h2><p>Complete the inner loop condition.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
 {
-    if (number == 1)
+    for (int col = 0; col &lt; ?; col++)
     {
-        return 1;
+        Console.Write(board[row,col]);
     }
-
-    return number + SumTo(number - 1);
-}</pre>
-        <p>Find the value returned by <code>SumTo(4)</code>.</p>
-        <span class="ido-example-count">Worked example</span>
-      </div>
-
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · FIND THE BASE CASE</span>
-          <h2>Where does recursion stop?</h2>
-          <pre class="arithmetic">if (number == 1)
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
 {
-    return 1;
-}</pre>
-          <p>When <code>number</code> reaches 1, there is no further recursive call.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · WRITE EACH CALL</span>
-          <h2>Build the call trace</h2>
-          <pre class="arithmetic">SumTo(4)
-→ 4 + SumTo(3)
-→ 4 + 3 + SumTo(2)
-→ 4 + 3 + 2 + SumTo(1)</pre>
-          <p>Each call uses a smaller value and therefore moves toward the base case.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · HIT THE BASE CASE</span>
-          <h2>Now the calls can return</h2>
-          <pre class="arithmetic">SumTo(1) → 1</pre>
-          <p>The deepest call now has a value to return to the previous call.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 4 · UNWIND</span>
-          <h2>Work back outwards</h2>
-          <pre class="arithmetic">SumTo(2) → 2 + 1 = 3
-SumTo(3) → 3 + 3 = 6
-SumTo(4) → 4 + 6 = 10</pre>
-          <div class="key-result"><code>SumTo(4)</code> returns <strong>10</strong>.</div>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
-  <div class="wedo-focus-deck">
-    <article class="wedo-example">
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 1</span>
-        <h2>Find the two cases</h2>
-        <pre class="arithmetic">public static void Countdown(int number)
-{
-    if (number == 0)
+    for (int col = 0; col &lt; board.GetLength(1); col++)
     {
-        return;
+        Console.Write(board[row,col]);
     }
+}</pre></div></div></article></div></section>
 
-    Console.WriteLine(number);
-    Countdown(number - 1);
-}</pre>
-        <span class="wedo-example-count">Example 1 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Identify them</h2><div class="practice-grid"><div class="practice-box"><strong>Base case</strong><span>?</span></div><div class="practice-box"><strong>Recursive call</strong><span>?</span></div><div class="practice-box"><strong>Moves toward base by</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Identify them</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Base case</strong><span><code>number == 0</code></span></div><div class="practice-box"><strong>Recursive call</strong><span><code>Countdown(number - 1)</code></span></div><div class="practice-box"><strong>Moves toward base by</strong><span>Decreasing by 1 each call</span></div></div></div>
-      </div>
-    </article>
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · DECLARE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Create a 3 × 3 board</h3><div class="question-text"><p>Create a <code>string[,]</code> containing the values 1 to 9 arranged as a board.</p></div><div class="success-check">The board has three rows and three columns.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · ACCESS</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Place X and O</h3><div class="question-text"><p>Change position 1 to X and position 5 to O using row/column indexes.</p></div><div class="success-check">Only the correct two cells change.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Print the board</h3><div class="question-text"><p>Use nested loops and <code>GetLength()</code> to print every board value row by row.</p></div><div class="success-check">No hard-coded loop limits are used.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · PREP FOR TIC TAC TOE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Map move 1–9 to row/column</h3><div class="question-text"><p>For an integer <code>move</code> from 1 to 9, calculate the corresponding zero-based row and column.</p></div><div class="success-check">move 1 maps to [0,0], move 5 to [1,1], move 9 to [2,2].</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
 
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 2</span>
-        <h2>Trace SumTo(3)</h2>
-        <pre class="arithmetic">return number + SumTo(number - 1);</pre>
-        <p>Use the same base case: <code>number == 1 → return 1</code>.</p>
-        <span class="wedo-example-count">Example 2 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Show calls and returns</h2><div class="practice-grid"><div class="practice-box"><strong>Calls</strong><span>?</span></div><div class="practice-box"><strong>Base result</strong><span>?</span></div><div class="practice-box"><strong>Final result</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Show calls and returns</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Calls</strong><span><code>SumTo(3) → 3 + SumTo(2) → 3 + 2 + SumTo(1)</code></span></div><div class="practice-box"><strong>Base result</strong><span><code>SumTo(1) = 1</code></span></div><div class="practice-box"><strong>Final result</strong><span><strong>6</strong></span></div></div></div>
-      </div>
-    </article>
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">An array with two indexes.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">2D array</div><p>Often thought of as rows and columns.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A horizontal line of values.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">row</div><p>Dimension 0 in our examples.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A vertical line of values.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">column</div><p>Dimension 1 in our examples.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A zero-based position.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">index</div><p>Each 2D cell needs two indexes.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One direction of an array.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">dimension</div><p>2D arrays have dimensions 0 and 1.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A loop inside another loop.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">nested loop</div><p>Useful for traversing rows and columns.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Returns the size of one array dimension.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">GetLength()</div><p>Parameter 0 or 1 selects the dimension.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Visit every item in a structure.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">traverse</div><p>Nested loops traverse a whole 2D array.</p></div></article></div></section>
 
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 3</span>
-        <h2>Same problem using iteration</h2>
-        <p>Rewrite <code>SumTo(number)</code> using a <code>for</code> loop instead of recursion.</p>
-        <span class="focus-code">Input 4 → return 10</span>
-        <span class="wedo-example-count">Example 3 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Plan the loop</h2><div class="practice-grid"><div class="practice-box"><strong>Accumulator</strong><span>?</span></div><div class="practice-box"><strong>Counter range</strong><span>?</span></div><div class="practice-box"><strong>Return</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Plan the loop</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Accumulator</strong><span><code>int total = 0;</code></span></div><div class="practice-box"><strong>Counter range</strong><span><code>i = 1</code> to <code>number</code></span></div><div class="practice-box"><strong>Return</strong><span><code>return total;</code></span></div></div><p class="fine">Each pass adds <code>i</code> to <code>total</code>.</p></div>
-      </div>
-    </article>
-
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">OCR EXAM LINK</span>
-        <h2>Trace a recursive function</h2>
-        <pre class="arithmetic">function generate(num1:byval)
-    if num1 &gt; 10 then
-        return 10
-    else
-        return num1 + (generate(num1 + 1) DIV 2)
-    endif
-endfunction</pre>
-        <p>Trace <code>generate(7)</code>. Show the calls and then the returned values.</p>
-        <span class="wedo-example-count">Example 4 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Set up the trace</h2><div class="practice-grid"><div class="practice-box"><strong>Calls</strong><span>?</span></div><div class="practice-box"><strong>Base result</strong><span>?</span></div><div class="practice-box"><strong>Final value</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Set up the trace</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Calls</strong><span><code>generate(7) → generate(8) → generate(9) → generate(10) → generate(11)</code></span></div><div class="practice-box"><strong>Base result</strong><span><code>generate(11) = 10</code></span></div><div class="practice-box"><strong>Final value</strong><span><strong>15</strong></span></div></div><p class="fine">Return values unwind as 15, 16, 16, 15 for inputs 10, 9, 8, 7.</p></div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section id="you-do" class="page phase-youdo" data-phase-time="23 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
-  <div class="youdo-deck">
-    <div class="youdo-rolling">
-
-      <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 1 · CORE</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Recursive countdown</h3>
-        <div class="question-text">
-          <p>Create <code>Countdown(int number)</code>.</p>
-          <p>It should output the numbers from <code>number</code> down to 1 using recursion.</p>
-          <p>Use <code>number == 0</code> as the base case.</p>
-          <div class="coding-brief">This is a procedure-style method, so use <code>void</code>.</div>
-        </div>
-        <div class="success-check">Test: Countdown(5) → 5 4 3 2 1</div>
-      </article>
-
-      <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 2 · DEVELOP</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Recursive SumTo</h3>
-        <div class="question-text">
-          <p>Create <code>SumTo(int number)</code> that returns the total from 1 to <code>number</code>.</p>
-          <p>Base case: when <code>number == 1</code>, return 1.</p>
-          <div class="coding-brief">Recursive case: return the current number plus the result for one smaller number.</div>
-        </div>
-        <div class="success-check">Test: SumTo(4) → 10</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 3 · APPLY</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Write the iterative equivalent</h3>
-        <div class="question-text">
-          <p>Create <code>SumToLoop(int number)</code> using a <code>for</code> loop instead of recursion.</p>
-          <p>Call both <code>SumTo(6)</code> and <code>SumToLoop(6)</code> from <code>Main()</code>.</p>
-          <div class="coding-brief">Both methods should return the same result.</div>
-        </div>
-        <div class="success-check">Both versions: input 6 → 21</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 4 · CHALLENGE</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Power of two</h3>
-        <div class="question-text">
-          <p>Create <code>PowerOfTwo(int exponent)</code>.</p>
-          <p>Base case: exponent 0 returns 1.</p>
-          <p>Otherwise return <code>2 * PowerOfTwo(exponent - 1)</code>.</p>
-          <div class="coding-brief">Trace your program for exponent 3 before running it.</div>
-        </div>
-        <div class="success-check">Test: PowerOfTwo(5) → 32</div>
-      </article>
-
-    </div>
-    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
-  </div>
-</section>
-
-<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
-  <div class="vocab-test-deck">
-    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A technique where a method calls itself.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Recursion</div><p>The method solves a smaller version of the same problem.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The condition that stops further recursive calls.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Base case</div><p>It returns or finishes without calling the method again.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The part of a recursive method that calls the method again.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Recursive case</div><p>It must move the input toward the base case.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">An individual self-call made by a recursive method.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Recursive call</div><p>For example <code>SumTo(number - 1)</code>.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The structure used to keep track of active method calls.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Call stack</div><p>Each active recursive call has its own call information.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The process of returning from the deepest recursive call back through earlier calls.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Unwind</div><p>Returned values work back through the waiting calls.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Repeating instructions using a loop.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Iteration</div><p>A loop can often solve the same problem as recursion.</p></div></article>
-
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Following an algorithm step by step to record calls, values or outputs.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Trace</div><p>For recursion, show both the calls and the returning values.</p></div></article>
-  </div>
-</section>
-
-<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
-  <div class="exit-compact">
-    <div class="exit-check-card">
-      <div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div>
-      <p class="exit-check-question">A recursive method needs a reachable base case to stop making further recursive calls.</p>
-      <div class="exit-check-response">
-        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
-        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
-      </div>
-    </div>
-
-    <div class="exit-reflection-strip">
-      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div>
-    </div>
-  </div>
-</section>
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question"><code>board.GetLength(1)</code> returns the number of columns in a two-dimensional array.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
 
 </main>
 
-<div class="lesson-footer">Lesson 013 · OCR H446 2.2.1(b) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1745"></script>
+<div class="lesson-footer">Lesson 013 · Programming bridge to Tic Tac Toe <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-gap13"></script>
 </body>
 </html>
