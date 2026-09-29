@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1032">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1032">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1032">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1042">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1042">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1042">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -300,92 +300,186 @@ Value = mantissa × 2ᴱ</pre>
 </section>
 
 <section id="i-do" class="page phase-ido">
-  <div class="section-top"><span class="eyebrow">I DO · WATCH THE METHOD</span><span class="time">12 minutes</span></div>
-  <div class="model-deck">
-    <article class="model-stage">
-      <div class="classroom-panel prompt-panel">
+  <div class="section-top"><span class="eyebrow">I DO</span><span class="time">12 minutes</span></div>
+
+  <div class="ido-focus-deck">
+
+    <article class="ido-example">
+      <div class="ido-reference">
         <span class="phase-tag">EXAMPLE 1 · POSITIVE MANTISSA + POSITIVE EXPONENT</span>
         <h2>Decode this value</h2>
         <span class="focus-code">01011000 0011</span>
-        <p>Keep the question visible. Watch how each field is decoded before the scale is applied.</p>
-        <span class="stage-count">Worked example 1 of 5</span>
+        <p>Give the denary value represented by this floating-point number.</p>
+        <span class="ido-example-count">Example 1 of 5</span>
       </div>
-      <div class="classroom-panel method-panel">
-        <h2>Worked method</h2>
-        <pre class="arithmetic">Mantissa 01011000 = 0.6875
-Exponent 0011 = 3
-Value = 0.6875 × 2³ = 5.5</pre>
-        <p>½ + ⅛ + ¹⁄₁₆ = 0.6875. The exponent is 3, so multiply by 8.</p>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · MANTISSA</span>
+          <h2>Evaluate the mantissa</h2>
+          <pre class="arithmetic">01011000
+= ½ + ⅛ + ¹⁄₁₆
+= 0.6875</pre>
+          <p>Use the fractional place values after the sign bit.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · EXPONENT</span>
+          <h2>Decode the exponent</h2>
+          <pre class="arithmetic">0011 = 3</pre>
+          <p>The exponent is a signed two’s-complement integer.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · COMBINE</span>
+          <h2>Apply the scale</h2>
+          <pre class="arithmetic">0.6875 × 2³
+= 0.6875 × 8
+= 5.5</pre>
+          <div class="key-result">Denary value = <strong>5.5</strong></div>
+        </div>
       </div>
     </article>
 
-    <article class="model-stage" hidden>
-      <div class="classroom-panel prompt-panel">
+    <article class="ido-example" hidden>
+      <div class="ido-reference">
         <span class="phase-tag">EXAMPLE 2 · NEGATIVE MANTISSA</span>
         <h2>Decode this value</h2>
         <span class="focus-code">10110000 0010</span>
-        <p>The leading 1 in the mantissa has a negative place value.</p>
-        <span class="stage-count">Worked example 2 of 5</span>
+        <p>Give the denary value represented by this floating-point number.</p>
+        <span class="ido-example-count">Example 2 of 5</span>
       </div>
-      <div class="classroom-panel method-panel">
-        <h2>Worked method</h2>
-        <pre class="arithmetic">Mantissa 10110000 = −0.625
-Exponent 0010 = 2
-Value = −0.625 × 2² = −2.5</pre>
-        <p>−1 + ¼ + ⅛ = −0.625. The leading 1 is not a separate minus sign.</p>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · MANTISSA</span>
+          <h2>Evaluate the mantissa</h2>
+          <pre class="arithmetic">10110000
+= −1 + ¼ + ⅛
+= −0.625</pre>
+          <p>The first 1 has place value <strong>−1</strong>; it is not a separate minus sign.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · EXPONENT</span>
+          <h2>Decode the exponent</h2>
+          <pre class="arithmetic">0010 = 2</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · COMBINE</span>
+          <h2>Apply the scale</h2>
+          <pre class="arithmetic">−0.625 × 2²
+= −0.625 × 4
+= −2.5</pre>
+          <div class="key-result">Denary value = <strong>−2.5</strong></div>
+        </div>
       </div>
     </article>
 
-    <article class="model-stage" hidden>
-      <div class="classroom-panel prompt-panel">
+    <article class="ido-example" hidden>
+      <div class="ido-reference">
         <span class="phase-tag">EXAMPLE 3 · NEGATIVE EXPONENT</span>
         <h2>Decode this value</h2>
         <span class="focus-code">01100000 1110</span>
-        <p>A negative exponent changes the scale. It does not decide the sign of the number.</p>
-        <span class="stage-count">Worked example 3 of 5</span>
+        <p>Give the denary value represented by this floating-point number.</p>
+        <span class="ido-example-count">Example 3 of 5</span>
       </div>
-      <div class="classroom-panel method-panel">
-        <h2>Worked method</h2>
-        <pre class="arithmetic">Mantissa 01100000 = 0.75
-Exponent 1110 = −2
-Value = 0.75 × 2⁻² = 0.1875</pre>
-        <p><code>1110 = −8 + 4 + 2 = −2</code>. Divide 0.75 by 4.</p>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · MANTISSA</span>
+          <h2>Evaluate the mantissa</h2>
+          <pre class="arithmetic">01100000
+= ½ + ¼
+= 0.75</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · EXPONENT</span>
+          <h2>Decode the exponent</h2>
+          <pre class="arithmetic">1110
+= −8 + 4 + 2
+= −2</pre>
+          <p>A negative exponent changes the scale; it does not make the mantissa negative.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · COMBINE</span>
+          <h2>Apply the scale</h2>
+          <pre class="arithmetic">0.75 × 2⁻²
+= 0.75 ÷ 4
+= 0.1875</pre>
+          <div class="key-result">Denary value = <strong>0.1875</strong></div>
+        </div>
       </div>
     </article>
 
-    <article class="model-stage" hidden>
-      <div class="classroom-panel prompt-panel">
+    <article class="ido-example" hidden>
+      <div class="ido-reference">
         <span class="phase-tag">EXAMPLE 4 · BOTH FIELDS NEGATIVE</span>
         <h2>Decode this value</h2>
         <span class="focus-code">10100000 1111</span>
-        <p>Decode the mantissa and exponent separately before combining them.</p>
-        <span class="stage-count">Worked example 4 of 5</span>
+        <p>Give the denary value represented by this floating-point number.</p>
+        <span class="ido-example-count">Example 4 of 5</span>
       </div>
-      <div class="classroom-panel method-panel">
-        <h2>Worked method</h2>
-        <pre class="arithmetic">Mantissa 10100000 = −0.75
-Exponent 1111 = −1
-Value = −0.75 × 2⁻¹ = −0.375</pre>
-        <p>The exponent −1 means halve the mantissa.</p>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · MANTISSA</span>
+          <h2>Evaluate the mantissa</h2>
+          <pre class="arithmetic">10100000
+= −1 + ¼
+= −0.75</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · EXPONENT</span>
+          <h2>Decode the exponent</h2>
+          <pre class="arithmetic">1111
+= −8 + 4 + 2 + 1
+= −1</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · COMBINE</span>
+          <h2>Apply the scale</h2>
+          <pre class="arithmetic">−0.75 × 2⁻¹
+= −0.75 ÷ 2
+= −0.375</pre>
+          <div class="key-result">Denary value = <strong>−0.375</strong></div>
+        </div>
       </div>
     </article>
 
-    <article class="model-stage" hidden>
-      <div class="classroom-panel prompt-panel">
-        <span class="phase-tag">EXAMPLE 5 · CHECK NORMALISATION</span>
-        <h2>Decode this value</h2>
+    <article class="ido-example" hidden>
+      <div class="ido-reference">
+        <span class="phase-tag">EXAMPLE 5 · NORMALISATION</span>
+        <h2>Decode and normalise</h2>
         <span class="focus-code">00011010 0101</span>
-        <p>Decode first. Then decide whether the mantissa is normalised.</p>
-        <span class="stage-count">Worked example 5 of 5</span>
+        <p>Find the denary value, then write the same value in normalised 8+4 form.</p>
+        <span class="ido-example-count">Example 5 of 5</span>
       </div>
-      <div class="classroom-panel method-panel">
-        <h2>Worked method</h2>
-        <pre class="arithmetic">Mantissa 00011010 = 0.203125
-Exponent 0101 = 5
-Value = 0.203125 × 2⁵ = 6.5</pre>
-        <p>The mantissa begins 00, so it is not normalised. <code>01101000 0011</code> represents the same value in normalised form.</p>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · MANTISSA</span>
+          <h2>Evaluate the mantissa</h2>
+          <pre class="arithmetic">00011010
+= ⅛ + ¹⁄₁₆ + ¹⁄₆₄
+= 0.203125</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · EXPONENT</span>
+          <h2>Decode the exponent</h2>
+          <pre class="arithmetic">0101 = 5</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · VALUE</span>
+          <h2>Apply the scale</h2>
+          <pre class="arithmetic">0.203125 × 2⁵
+= 0.203125 × 32
+= 6.5</pre>
+          <div class="key-result">Denary value = <strong>6.5</strong></div>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · NORMALISE</span>
+          <h2>Keep the value unchanged</h2>
+          <pre class="arithmetic">00011010 0101
+→ 01101000 0011</pre>
+          <p>Shift the mantissa left twice so it begins <strong>01</strong>. Because the mantissa was multiplied by 4, reduce the exponent by 2.</p>
+          <div class="key-result">Normalised form = <strong>01101000 0011</strong></div>
+        </div>
       </div>
     </article>
+
   </div>
 </section>
 
@@ -508,6 +602,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1032"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1042"></script>
 </body>
 </html>
