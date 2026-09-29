@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 011 · Modularity, functions & procedures in C#</title>
+<meta name="description" content="OCR H446 2.2.1(d): modularity, functions and procedures in C# using .NET Fiddle.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2340">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-2340">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-2340">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 011<br>Modularity, functions &amp; procedures</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>Which loop is most suitable when the number of repetitions is known in advance?</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>In C#, what does <code>&amp;&amp;</code> mean, and when is the whole expression true?</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>What is the largest unsigned 8-bit denary value?</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>A program reads a mark, repeats through five scores and uses <code>if</code> to count passes. Name the three programming constructs present.</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">Which loop is most suitable when the number of repetitions is known in advance?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">A <strong>for loop</strong>.</p><p class="review-explain">It is commonly used for count-controlled iteration.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">In C#, what does <code>&amp;&amp;</code> mean, and when is the whole expression true?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>&amp;&amp;</code> means <strong>AND</strong>.</p><p class="review-explain">The whole expression is true only when both Boolean expressions are true.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">What is the largest unsigned 8-bit denary value?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>255</strong></p><p class="review-explain">Eight bits give 256 patterns, representing values 0–255.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">A program reads a mark, repeats through five scores and uses <code>if</code> to count passes. Name the three programming constructs present.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Sequence · iteration · branching/selection</strong></p><p class="review-explain">Instructions happen in order, a loop repeats code, and <code>if</code> chooses whether the pass counter changes.</p></article>
+    </div></div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Modularity, functions &amp; procedures</h1>
+  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+  <div class="objectives">
+    <strong>By the end, you can…</strong>
+    <ul>
+      <li>explain why programs are split into smaller modules;</li>
+      <li>write and call a C# procedure using <code>void</code>;</li>
+      <li>write and call a C# function that returns a value.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>modularity</span><span>subroutine</span><span>method</span><span>function</span>
+      <span>procedure</span><span>return value</span><span>parameter</span><span>argument</span>
+    </div>
+  </div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">C# QUICK REFERENCE</span>
+      <h2>Methods sit outside Main</h2>
+      <pre class="arithmetic">public class Program
+{
+    public static void Main()
+    {
+        Greeting("Aisha");
+        int answer = Triple(7);
+    }
+
+    public static void Greeting(string name)
+    {
+        Console.WriteLine("Hello " + name);
+    }
+
+    public static int Triple(int number)
+    {
+        return number * 3;
+    }
+}</pre>
+      <div class="nl-reference-note"><strong>OCR language:</strong> a function returns a value. A procedure does not. In C#, both are methods.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Modularity breaks a problem into parts</h2>
+        <p>A large program is easier to understand when separate jobs are placed in separate subroutines.</p>
+        <div class="nl-key">Benefits include <strong>reuse</strong>, easier <strong>testing</strong>, easier <strong>maintenance</strong> and clearer code.</div>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>A procedure performs a job</h2>
+        <p>A C# procedure-style method uses <code>void</code> because it does not return a value to the caller.</p>
+        <pre class="arithmetic">public static void Greeting(string name)
+{
+    Console.WriteLine("Hello " + name);
+}</pre>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>A function returns a value</h2>
+        <p>The return type replaces <code>void</code>. A <code>return</code> statement sends the result back to the calling code.</p>
+        <pre class="arithmetic">public static int Triple(int number)
+{
+    return number * 3;
+}</pre>
+        <div class="nl-key">The returned value can be stored: <code>int answer = Triple(7);</code></div>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2>Parameters receive data</h2>
+        <p>A <strong>parameter</strong> is the named input in the method definition. An <strong>argument</strong> is the actual value supplied when the method is called.</p>
+        <pre class="arithmetic">public static int Triple(int number)
+                         ↑ parameter
+
+Triple(7)
+       ↑ argument</pre>
+        <div class="nl-key">Today: pass values into methods. Next lesson: scope and what changes with pass-by-value versus <code>ref</code>.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Build an IsEven function</h2>
+        <p>Create a function that accepts a whole number and returns <code>true</code> when it is even.</p>
+        <span class="focus-code">IsEven(12) → true<br>IsEven(7) → false</span>
+        <p>The result is data, so this should be a <strong>function</strong>.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · DEFINE THE JOB</span>
+          <h2>Choose the return type</h2>
+          <pre class="arithmetic">public static bool IsEven(int number)
+{
+}</pre>
+          <p>The result is true/false, so the return type is <code>bool</code>.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · RETURN THE RESULT</span>
+          <h2>Use the remainder test</h2>
+          <pre class="arithmetic">public static bool IsEven(int number)
+{
+    return number % 2 == 0;
+}</pre>
+          <p>The Boolean expression itself already produces <code>true</code> or <code>false</code>.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · CALL THE FUNCTION</span>
+          <h2>Use it from Main</h2>
+          <pre class="arithmetic">public static void Main()
+{
+    bool result = IsEven(12);
+    Console.WriteLine(result);
+}</pre>
+          <p>The argument <code>12</code> is received by the parameter <code>number</code>.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · TEST</span>
+          <h2>Use contrasting values</h2>
+          <pre class="arithmetic">IsEven(12) → True
+IsEven(7)  → False
+IsEven(0)  → True</pre>
+          <div class="key-result">A function <strong>returns a value</strong>; the caller can store or use that value.</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 1</span>
+        <h2>Greeting procedure</h2>
+        <p>Create a method called <code>Greeting</code> that receives a name and displays <code>Hello name</code>.</p>
+        <span class="focus-code">Greeting("Hamish");</span>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Function or procedure?</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Return type</strong><span>?</span></div><div class="practice-box"><strong>Parameter type</strong><span>?</span></div><div class="practice-box"><strong>Call</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Procedure-style method</h2>
+          <pre class="arithmetic">public static void Greeting(string name)
+{
+    Console.WriteLine("Hello " + name);
+}
+
+// inside Main
+Greeting("Hamish");</pre>
+          <p>It performs an action but does not return a value, so it uses <code>void</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 2</span>
+        <h2>Square function</h2>
+        <p>Create a method that receives an integer and returns its square.</p>
+        <span class="focus-code">Square(6) → 36</span>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Complete the method</h2>
+          <pre class="arithmetic">public static ? Square(int number)
+{
+    ?
+}</pre>
+          <div class="practice-grid"><div class="practice-box"><strong>Return type</strong><span>?</span></div><div class="practice-box"><strong>Return expression</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Function</h2>
+          <pre class="arithmetic">public static int Square(int number)
+{
+    return number * number;
+}</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 3</span>
+        <h2>Refactor repeated code</h2>
+        <p>A program prints the same separator in several places:</p>
+        <span class="focus-code">--------------------</span>
+        <p>Move that repeated job into one method.</p>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Design the module</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Name</strong><span>?</span></div><div class="practice-box"><strong>Return type</strong><span>?</span></div><div class="practice-box"><strong>Why useful?</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>One solution</h2>
+          <pre class="arithmetic">public static void ShowLine()
+{
+    Console.WriteLine("--------------------");
+}
+
+// call whenever needed
+ShowLine();</pre>
+          <div class="key-result">One change to <code>ShowLine()</code> updates every place that calls it.</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">OCR EXAM LINK</span>
+        <h2>Function or procedure?</h2>
+        <p>OCR asks students to distinguish the two. State the difference precisely.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Complete both statements</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Function</strong><span>?</span></div><div class="practice-box"><strong>Procedure</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Precise distinction</h2>
+          <p>A <strong>function returns a value</strong> to the calling code. A <strong>procedure does not return a value</strong>.</p>
+          <div class="key-result">In C#, both are methods; a procedure-style method uses <code>void</code>.</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="23 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 1 · CORE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>DisplayTitle procedure</h3>
+        <div class="question-text">
+          <p>Create a procedure-style method called <code>DisplayTitle()</code>.</p>
+          <p>It should output <strong>OCR H446 Computer Science</strong>.</p>
+          <p>Call it from <code>Main()</code> twice.</p>
+          <div class="coding-brief">It does not return a value, so use <code>void</code>.</div>
+        </div>
+        <div class="success-check">Success: one method definition · two calls · same output twice</div>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 2 · DEVELOP</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>DoubleIt function</h3>
+        <div class="question-text">
+          <p>Create <code>DoubleIt(int number)</code> that returns twice the value supplied.</p>
+          <p>Call the function with <strong>12</strong>, store the returned value, then output it.</p>
+          <div class="coding-brief">Return type: <code>int</code>. Use <code>return</code>.</div>
+        </div>
+        <div class="success-check">Test: DoubleIt(12) → 24</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 3 · APPLY</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>IsPass function</h3>
+        <div class="question-text">
+          <p>Create <code>IsPass(int mark)</code>.</p>
+          <p>Return <code>true</code> when the mark is at least 50; otherwise return <code>false</code>.</p>
+          <p>Call it from <code>Main()</code> with at least two different marks.</p>
+          <div class="coding-brief">The return type should match the type of result.</div>
+        </div>
+        <div class="success-check">Test: 65 → True · 49 → False</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 4 · CHALLENGE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Refactor a program into modules</h3>
+        <div class="question-text">
+          <p>Write a program that asks for two integers and then:</p>
+          <p>1. calls <code>Add(int first, int second)</code> and outputs the returned total;</p>
+          <p>2. calls <code>ShowLine()</code> before and after the result.</p>
+          <div class="coding-brief">Your final program should have <code>Main()</code> plus one function and one procedure-style method.</div>
+        </div>
+        <div class="success-check">Check: each method has one clear job and Main is shorter</div>
+      </article>
+
+    </div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+  <div class="vocab-test-deck">
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Breaking a program into smaller, separate components.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Modularity</div><p>Dividing a larger problem into manageable program modules.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A named block of code that can be called to perform a task.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Subroutine</div><p>Functions and procedures are forms of subroutine.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The C# term used for the functions and procedures in this lesson.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Method</div><p>C# represents both OCR functions and procedures as methods.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A subroutine that returns a value.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Function</div><p>Its C# method has a return type such as <code>int</code> or <code>bool</code>.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A subroutine that does not return a value.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Procedure</div><p>A procedure-style C# method uses <code>void</code>.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The data sent back from a function to its caller.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Return value</div><p>Created using a <code>return</code> statement.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The named input in a method definition.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Parameter</div><p>For example <code>number</code> in <code>Triple(int number)</code>.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The actual value supplied when a method is called.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Argument</div><p>For example <code>7</code> in <code>Triple(7)</code>.</p></div></article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement"><span class="exit-number">1</span><p>A function returns a value to its caller.</p></article>
+      <article class="exit-statement"><span class="exit-number">2</span><p>A C# method using <code>void</code> must return an integer.</p></article>
+      <article class="exit-statement"><span class="exit-number">3</span><p>Modularity can make a program easier to test and maintain.</p></article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can write and call my own methods.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I understand the pattern but still need prompts.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help with functions and procedures.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 011 · OCR H446 2.2.1(d) <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-2340"></script>
+</body>
+</html>
