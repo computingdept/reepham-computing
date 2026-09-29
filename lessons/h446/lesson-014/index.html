@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 014 · Tic Tac Toe in C#</title>
-<meta name="description" content="OCR H446 integrated C# project using 2D arrays, iteration, selection, methods and parameters.">
+<title>Lesson 014 · Noughts & Crosses in C# · Part 2</title>
+<meta name="description" content="Noughts and Crosses Part 2: map moves 1 to 9 into a 2D array, validate moves and alternate X/O players in C#.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
@@ -39,345 +39,91 @@
   </div>
   <div class="signal-meta">
     <span id="phase-time" class="signal-phase-time"></span>
-    <span class="lesson-label">OCR H446 · Lesson 014<br>Tic Tac Toe in C#</span>
+    <span class="lesson-label">OCR H446 · Lesson 014<br>Noughts & Crosses · Part 2</span>
   </div>
 </div>
 
 <main id="main">
 
-<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
-  <div class="donow-deck">
-    <div class="donow-stage">
-      <div class="donow-questions">
-        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>What two parts must a recursive method have so that it can terminate correctly?</p></article>
-        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Why might a class-level variable be useful when several methods need the same data?</p></article>
-        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>For <code>string[,] board = new string[3,3];</code>, what do <code>GetLength(0)</code> and <code>GetLength(1)</code> return?</p></article>
-        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Which is the better fit for repeatedly taking turns until a game ends: iteration or recursion? Explain briefly.</p></article>
-      </div>
-    </div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What two parts must a recursive method have so that it can terminate correctly?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A base case and a recursive case.</strong></p><p class="review-explain">The recursive case must move toward the base case.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">Why might a class-level variable be useful when several methods need the same data?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">It has a wider scope, so several methods can access the same shared value or structure.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">For <code>string[,] board = new string[3,3];</code>, what do <code>GetLength(0)</code> and <code>GetLength(1)</code> return?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>3 and 3.</strong></p><p class="review-explain"><code>GetLength(0)</code> gives rows; <code>GetLength(1)</code> gives columns.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Which is the better fit for repeatedly taking turns until a game ends: iteration or recursion?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Iteration.</strong></p><p class="review-explain">A game loop naturally repeats while a condition remains true. Recursion would add unnecessary method calls.</p></article>
-    </div></div>
-  </div>
-</section>
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>Which method from Part 1 displays the board?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What does <code>board[1,2]</code> mean?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What do nested loops let us do with the board?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>Move 5 is the centre square. What zero-based row and column should it map to?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">Which method from Part 1 displays the board?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>DrawBoard().</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>board[1,2]</code> mean?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Row 1, column 2.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What do nested loops let us do with the board?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Traverse every row and column.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Move 5 is the centre square. What zero-based row and column should it map to?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>[1,1].</strong></p></article></div></div></div></section>
 
 <section id="overview" class="page" data-phase-time="2 minutes">
-  <h1>Tic Tac Toe in C#</h1>
-  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
-  <div class="objectives">
-    <strong>By the end, you can…</strong>
-    <ul>
-      <li>represent a 3 × 3 board using a two-dimensional array;</li>
-      <li>use methods, selection and iteration to manage moves and turns;</li>
-      <li>combine earlier programming techniques into a playable text-based game.</li>
-    </ul>
-  </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>2D array</span><span>row</span><span>column</span><span>nested loop</span>
-      <span>validation</span><span>game loop</span><span>method</span><span>state</span>
-    </div>
-  </div>
+<h1>Noughts & Crosses · Part 2 — Make moves</h1>
+<a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+<div class="objectives"><strong>By the end, you can…</strong><ul>
+<li>map a move from 1–9 to a row and column;</li>
+<li>write <code>MakeMove()</code> so occupied squares are rejected;</li>
+<li>alternate correctly between X and O after valid moves.</li>
+</ul></div>
+<div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list">
+<span>mapping</span><span>integer division</span><span>MOD</span><span>validation</span><span>Boolean</span><span>parameter</span><span>return value</span><span>state</span>
+</div></div>
 </section>
 
-<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
-  <div class="nl-focus">
-    <article class="nl-reference">
-      <span class="phase-tag">PROJECT STRUCTURE</span>
-      <h2>One board · several methods</h2>
-      <pre class="arithmetic">public static string[,] board =
+<section id="new-learning" class="page phase-focus" data-phase-time="9 minutes">
+<div class="nl-focus">
+<article class="nl-reference"><span class="phase-tag">NOUGHTS & CROSSES · PART 2</span><h2>Today: make the board interactive</h2><pre class="arithmetic">move 1 → [0,0]
+move 5 → [1,1]
+move 9 → [2,2]
+
+valid move → place X/O
+invalid move → reject
+then switch player</pre><div class="nl-reference-note">Checkpoint: by the end, two players can make valid alternating moves on the Part 1 board.</div></article>
+<article class="nl-explanation">
+<div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Map 1–9 into row/column</h2><pre class="arithmetic">int row = (move - 1) / 3;
+int col = (move - 1) % 3;</pre><p>Integer division finds the row; MOD finds the column.</p><span class="nl-stage-count">1 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Validate the square</h2><pre class="arithmetic">if (board[row,col] == "X" ||
+    board[row,col] == "O")
 {
-    { "1", "2", "3" },
-    { "4", "5", "6" },
-    { "7", "8", "9" }
-};
-
-DrawBoard();
-MakeMove(move, player);
-HasWon(player);
-SwitchPlayer(player);</pre>
-      <div class="nl-reference-note"><strong>Design choice:</strong> the board is shared by the game methods. Other data stays local or is passed as a parameter.</div>
-    </article>
-
-    <article class="nl-explanation">
-      <div class="nl-stage">
-        <span class="nl-stage-label">STEP 1 OF 4</span>
-        <h2>The board is a 3 × 3 array</h2>
-        <pre class="arithmetic">string[,] board =
-{
-    { "1", "2", "3" },
-    { "4", "5", "6" },
-    { "7", "8", "9" }
-};</pre>
-        <p>Rows and columns use zero-based indexes. The centre square is <code>board[1,1]</code>.</p>
-        <span class="nl-stage-count">1 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 2 OF 4</span>
-        <h2>Draw the board with nested loops</h2>
-        <pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
-{
-    for (int column = 0; column &lt; board.GetLength(1); column++)
-    {
-        Console.Write(board[row, column] + " ");
-    }
-
-    Console.WriteLine();
-}</pre>
-        <p>The outer loop changes row; the inner loop visits each column in that row.</p>
-        <span class="nl-stage-count">2 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 3 OF 4</span>
-        <h2>Turn 1–9 into row and column</h2>
-        <pre class="arithmetic">int row = (move - 1) / 3;
-int column = (move - 1) % 3;</pre>
-        <p>Integer division finds the row. Remainder finds the column.</p>
-        <div class="nl-key">Move 8 → <code>row 2</code>, <code>column 1</code> → <code>board[2,1]</code>.</div>
-        <span class="nl-stage-count">3 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 4 OF 4</span>
-        <h2>Main runs the game loop</h2>
-        <pre class="arithmetic">while (gameOver == false)
-{
-    DrawBoard();
-
-    if (MakeMove(move, currentPlayer))
-    {
-        // check win / draw
-        // switch player
-    }
-}</pre>
-        <p><code>Main()</code> coordinates the sequence. Each method has one clear job.</p>
-        <div class="nl-key">Iteration fits the game loop naturally: repeat turns while the game is not over.</div>
-        <span class="nl-stage-count">4 of 4</span>
-      </div>
-    </article>
-  </div>
+    return false;
+}</pre><p>An occupied square must not be overwritten.</p><span class="nl-stage-count">2 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Make the move</h2><pre class="arithmetic">board[row,col] = player;
+return true;</pre><p>A Boolean return value tells Main whether the move succeeded.</p><span class="nl-stage-count">3 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Switch player only after success</h2><pre class="arithmetic">if (currentPlayer == "X")
+    currentPlayer = "O";
+else
+    currentPlayer = "X";</pre><p>An invalid move should leave the same player to try again.</p><span class="nl-stage-count">4 of 4</span></div>
+</article></div>
 </section>
 
-<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
-  <div class="ido-focus-deck">
-    <article class="ido-example">
-      <div class="ido-reference">
-        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
-        <h2>Build DrawBoard()</h2>
-        <p>Create one procedure-style method that displays every position in the 3 × 3 board.</p>
-        <pre class="arithmetic">1 2 3
-4 5 6
-7 8 9</pre>
-        <span class="ido-example-count">Worked example</span>
-      </div>
-
-      <div class="ido-method">
-        <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · SHARED DATA</span>
-          <h2>Declare the board</h2>
-          <pre class="arithmetic">public static string[,] board =
-{
-    { "1", "2", "3" },
-    { "4", "5", "6" },
-    { "7", "8", "9" }
-};</pre>
-          <p>The board sits inside <code>Program</code> but outside <code>Main()</code>, so the game methods can access it.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · METHOD</span>
-          <h2>Create DrawBoard()</h2>
-          <pre class="arithmetic">public static void DrawBoard()
-{
-}</pre>
-          <p>It displays the board but returns no value, so its return type is <code>void</code>.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · NESTED ITERATION</span>
-          <h2>Visit every square</h2>
-          <pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
-{
-    for (int column = 0; column &lt; board.GetLength(1); column++)
-    {
-        Console.Write(board[row, column] + " ");
-    }
-
-    Console.WriteLine();
-}</pre>
-          <p>The inner loop finishes one row before the outer loop moves to the next.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 4 · CALL IT</span>
-          <h2>Main coordinates the program</h2>
-          <pre class="arithmetic">public static void Main()
-{
-    DrawBoard();
-}</pre>
-          <div class="key-result">One method, one job: <strong>display the current game state</strong>.</div>
-        </div>
-      </div>
-    </article>
-  </div>
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes">
+<div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Turn move 8 into a board position</h2><p>Convert the player's 1–9 choice into zero-based indexes.</p><pre class="arithmetic">move = 8</pre><span class="ido-example-count">Worked example</span></div>
+<div class="ido-method">
+<div class="ido-step"><span class="ido-step-label">STEP 1 · ZERO-BASE</span><h2>Subtract 1</h2><pre class="arithmetic">move - 1 = 7</pre><p>Board indexes begin at 0.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 2 · ROW</span><h2>Integer divide by 3</h2><pre class="arithmetic">7 / 3 = 2
+row = 2</pre><p>Integer division discards the remainder.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · COLUMN</span><h2>Use MOD 3</h2><pre class="arithmetic">7 % 3 = 1
+col = 1</pre><p>The remainder identifies the column.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 4 · USE</span><h2>Place the player</h2><pre class="arithmetic">board[2,1] = player;</pre><p>Move 8 maps to row 2, column 1.</p></div>
+</div></article></div>
 </section>
 
-<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
-  <div class="wedo-focus-deck">
-    <article class="wedo-example">
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 1</span>
-        <h2>Map a move to the board</h2>
-        <p>The player enters <strong>8</strong>.</p>
-        <pre class="arithmetic">row = (move - 1) / 3
-column = (move - 1) % 3</pre>
-        <span class="wedo-example-count">Example 1 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Calculate the indexes</h2><div class="practice-grid"><div class="practice-box"><strong>row</strong><span>?</span></div><div class="practice-box"><strong>column</strong><span>?</span></div><div class="practice-box"><strong>position</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Calculate the indexes</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>row</strong><span><code>7 / 3 = 2</code></span></div><div class="practice-box"><strong>column</strong><span><code>7 % 3 = 1</code></span></div><div class="practice-box"><strong>position</strong><span><code>board[2,1]</code></span></div></div></div>
-      </div>
-    </article>
-
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 2</span>
-        <h2>Validate MakeMove()</h2>
-        <p>A move is valid only if it is from 1–9 and the chosen square is free.</p>
-        <span class="focus-code">MakeMove(move, player) → bool</span>
-        <span class="wedo-example-count">Example 2 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>What must be checked?</h2><div class="practice-grid"><div class="practice-box"><strong>Range</strong><span>?</span></div><div class="practice-box"><strong>Square free?</strong><span>?</span></div><div class="practice-box"><strong>Return if valid</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>What must be checked?</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Range</strong><span><code>move &gt;= 1 &amp;&amp; move &lt;= 9</code></span></div><div class="practice-box"><strong>Square free?</strong><span>Square is not <code>"X"</code> or <code>"O"</code></span></div><div class="practice-box"><strong>Return if valid</strong><span>Place <code>player</code>, then <code>return true;</code></span></div></div><p class="fine">Invalid range or an occupied square returns <code>false</code>.</p></div>
-      </div>
-    </article>
-
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 3</span>
-        <h2>Switch player</h2>
-        <p>Create <code>SwitchPlayer(string player)</code> that returns the other player.</p>
-        <span class="focus-code">X → O<br>O → X</span>
-        <span class="wedo-example-count">Example 3 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Use selection</h2><pre class="arithmetic">public static string SwitchPlayer(string player)
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Map a move</h2><p>Move 6 is chosen.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same calculation</h2><pre class="arithmetic">row = (6 - 1) / 3 = ?
+col = (6 - 1) % 3 = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same calculation</h2><pre class="arithmetic">row = (6 - 1) / 3 = 1
+col = (6 - 1) % 3 = 2</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Validate range</h2><p>Reject choices outside 1–9.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same condition</h2><pre class="arithmetic">if (move &lt; ? || move &gt; ?)
 {
-    ?
-}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Use selection</h2><pre class="arithmetic">public static string SwitchPlayer(string player)
+    return false;
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same condition</h2><pre class="arithmetic">if (move &lt; 1 || move &gt; 9)
 {
-    if (player == "X")
-    {
-        return "O";
-    }
-    else
-    {
-        return "X";
-    }
-}</pre></div>
-      </div>
-    </article>
-
-    <article class="wedo-example" hidden>
-      <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 4</span>
-        <h2>Detect a winning row</h2>
-        <p>Player X wins across the top row if all three positions contain <code>"X"</code>.</p>
-        <span class="focus-code">board[0,0] · board[0,1] · board[0,2]</span>
-        <span class="wedo-example-count">Example 4 of 4</span>
-      </div>
-      <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Write the Boolean condition</h2><pre class="arithmetic">if (board[0,0] == ? &amp;&amp;
-    board[0,1] == ? &amp;&amp;
-    board[0,2] == ?)
+    return false;
+}</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Reject occupied square</h2><p>The target may already contain X or O.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same condition</h2><pre class="arithmetic">if (board[row,col] == ? ||
+    board[row,col] == ?)
 {
-    return true;
-}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Write the Boolean condition</h2><pre class="arithmetic">if (board[0,0] == player &amp;&amp;
-    board[0,1] == player &amp;&amp;
-    board[0,2] == player)
+    return false;
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same condition</h2><pre class="arithmetic">if (board[row,col] == "X" ||
+    board[row,col] == "O")
 {
-    return true;
-}</pre><div class="key-result">A full <code>HasWon()</code> function checks 3 rows, 3 columns and 2 diagonals.</div></div>
-      </div>
-    </article>
-  </div>
-</section>
+    return false;
+}</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>Switch player</h2><p>Return the other symbol.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">if (player == "X")
+    return ?;
+else
+    return ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">if (player == "X")
+    return "O";
+else
+    return "X";</pre></div></div></article></div></section>
 
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
-  <div class="youdo-deck">
-    <div class="youdo-rolling">
-
-      <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 1 · BUILD</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Board + DrawBoard()</h3>
-        <div class="question-text">
-          <p>Create the 3 × 3 <code>string[,]</code> board numbered 1–9.</p>
-          <p>Create <code>DrawBoard()</code> using nested loops and <code>GetLength()</code>.</p>
-          <div class="coding-brief">Call the method from <code>Main()</code>.</div>
-        </div>
-        <div class="success-check">Output should show three rows containing 1–9</div>
-      </article>
-
-      <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 2 · ADD MOVES</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>MakeMove()</h3>
-        <div class="question-text">
-          <p>Create <code>MakeMove(int move, string player)</code>.</p>
-          <p>Reject values outside 1–9 and reject a square already containing X or O.</p>
-          <p>If valid, place the player's symbol and return <code>true</code>.</p>
-        </div>
-        <div class="success-check">Test: X chooses 5 → centre becomes X · choosing 5 again is rejected</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 3 · CHECK THE GAME</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>HasWon()</h3>
-        <div class="question-text">
-          <p>Create <code>HasWon(string player)</code>.</p>
-          <p>Return <code>true</code> for any complete row, column or diagonal owned by that player.</p>
-          <div class="coding-brief">There are 8 possible winning lines.</div>
-        </div>
-        <div class="success-check">Test a row win, a column win and a diagonal win</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 4 · COMPLETE GAME</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Put the game together</h3>
-        <div class="question-text">
-          <p>Build the game loop in <code>Main()</code>.</p>
-          <p>Draw the board, ask the current player for a move, make the move, check for a win or draw, then switch player.</p>
-          <div class="coding-brief">Use methods to keep <code>Main()</code> readable. Do not use recursion for the turn loop.</div>
-        </div>
-        <div class="success-check">Playable X/O game · invalid occupied square rejected · win and draw both detected</div>
-      </article>
-
-    </div>
-    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
-  </div>
-</section>
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · MAP</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Map a move</h3><div class="question-text"><p>Write code that converts an integer move from 1–9 into zero-based row and column values.</p></div><div class="success-check">1→[0,0], 5→[1,1], 9→[2,2].</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · MAKE MOVE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Write MakeMove()</h3><div class="question-text"><p>Create <code>MakeMove(int move, string player)</code>. Reject out-of-range and occupied squares; otherwise place the symbol and return true.</p></div><div class="success-check">Invalid moves leave the board unchanged.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · SWITCH</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Write SwitchPlayer()</h3><div class="question-text"><p>Return O when given X, otherwise return X.</p></div><div class="success-check">The method alternates correctly.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · CHECKPOINT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Make alternating turns work</h3><div class="question-text"><p>Use your Part 1 <code>DrawBoard()</code>, prompt for a move, call <code>MakeMove()</code>, and switch player only after a valid move.</p></div><div class="success-check">Checkpoint reached: X and O can take valid alternating turns. Win/draw detection comes next lesson.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
 
 <section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
   <div class="vocab-test-deck">
@@ -392,28 +138,11 @@ column = (move - 1) % 3</pre>
   </div>
 </section>
 
-<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
-  <div class="exit-compact">
-    <div class="exit-check-card">
-      <div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div>
-      <p class="exit-check-question">For a 3 × 3 C# array, <code>board.GetLength(0)</code> gives the number of rows.</p>
-      <div class="exit-check-response">
-        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
-        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
-      </div>
-    </div>
-    <div class="exit-reflection-strip">
-      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div>
-    </div>
-  </div>
-</section>
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">If a player chooses an occupied square, the program should switch to the other player anyway.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>My players can take valid turns.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>Nearly there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with mapping or validation.</span></div></div></div></div></section>
 
 </main>
 
-<div class="lesson-footer">Lesson 014 · OCR H446 integrated programming <span>Use the menu or ← → keys</span></div>
+<div class="lesson-footer">Lesson 014 · Noughts & Crosses Part 2 <span>Make valid moves</span></div>
 <script src="../../../assets/h446-lesson/lesson.js?v=20260929-1815"></script>
 </body>
 </html>
