@@ -30,33 +30,18 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · STACK</span><h2>Browser history stack</h2><pre class="solution-code">using System;
-using System.Collections.Generic;
-
-public class Program
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Create an undirected graph</h2><pre class="solution-code">int[,] graph = new int[4,4];
+graph[0,1] = graph[1,0] = 1;
+graph[0,2] = graph[2,0] = 1;
+graph[2,3] = graph[3,2] = 1;</pre><p><strong>Check:</strong> The matching reverse entries are also set to 1.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>List neighbours</h2><pre class="solution-code">for (int v = 0; v &lt; graph.GetLength(1); v++)
 {
-    public static void Main()
-    {
-        Stack&lt;string&gt; history = new Stack&lt;string&gt;();
-        history.Push("Home");
-        history.Push("Courses");
-        history.Push("Computing");
-        Console.WriteLine("Back from: " + history.Pop());
-        Console.WriteLine("Now at: " + history.Peek());
-    }
-}</pre><p><strong>Check:</strong> Pop removes the most recent page and Peek shows the previous page.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><h2>Print queue</h2><pre class="solution-code">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
-jobs.Enqueue("Job A");
-jobs.Enqueue("Job B");
-jobs.Enqueue("Job C");
-Console.WriteLine("Printing: " + jobs.Dequeue());
-Console.WriteLine("Next: " + jobs.Peek());</pre><p><strong>Check:</strong> The earliest print job is removed first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><h2>Inspect without removing</h2><pre class="solution-code">foreach (string job in jobs)
-{
-    Console.WriteLine(job);
-}</pre><p><strong>Check:</strong> The queue contents are displayed without calling Dequeue.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHOOSE</span><h2>Choose stack or queue</h2><pre class="solution-code">// Undo uses a stack because the most recent action is undone first.
-Stack&lt;string&gt; undo = new Stack&lt;string&gt;();
-undo.Push("Type A");
-undo.Push("Delete B");
-Console.WriteLine(undo.Pop());</pre><p><strong>Check:</strong> Your code behaviour matches LIFO for undo or FIFO for waiting customers.</p></article></section></main>
+    if (graph[0,v] == 1)
+        Console.WriteLine(v);
+}</pre><p><strong>Check:</strong> Only vertices directly connected to 0 are displayed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD + REMOVE</span><h2>Change the graph</h2><pre class="solution-code">graph[1,3] = graph[3,1] = 1;
+graph[0,2] = graph[2,0] = 0;</pre><p><strong>Check:</strong> The matrix remains symmetrical after both changes.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · DIRECTED</span><h2>Convert the idea</h2><pre class="solution-code">int[,] directed = new int[2,2];
+directed[0,1] = 1;
+Console.WriteLine(directed[0,1]); // 1
+Console.WriteLine(directed[1,0]); // 0</pre><p><strong>Check:</strong> The two directions are treated independently.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
