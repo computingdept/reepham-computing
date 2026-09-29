@@ -37,6 +37,10 @@ function resetPhaseState(id){
     const stages=[...page.querySelectorAll('.donow-stage')];
     if(stages.length)showOnly(stages,0);
   }
+  if(id==='new-learning'){
+    const stages=[...page.querySelectorAll('.nl-stage')];
+    if(stages.length)showOnly(stages,0);
+  }
   if(id==='i-do'){
     const examples=[...page.querySelectorAll('.ido-example')];
     if(examples.length){
@@ -97,6 +101,12 @@ function updateControl(){
     if(i===0 && stages.length>1)label='Reveal answer 1 →';
     else if(i<stages.length-1)label='Next answer →';
     else label='Continue → Objectives';
+  }else if(current==='new-learning'){
+    const stages=[...page.querySelectorAll('.nl-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      label=i<stages.length-1?'Next step →':'Continue → I Do';
+    }
   }else if(current==='i-do'){
     const examples=[...page.querySelectorAll('.ido-example')];
     if(examples.length){
@@ -151,6 +161,11 @@ function next(){
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
   }
+  if(current==='new-learning'){
+    const stages=[...page.querySelectorAll('.nl-stage')];
+    const i=visibleIndex(stages);
+    if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
+  }
   if(current==='i-do'){
     const examples=[...page.querySelectorAll('.ido-example')];
     if(examples.length){
@@ -201,6 +216,15 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='new-learning'){
+    const stages=[...page.querySelectorAll('.nl-stage')];
+    const i=visibleIndex(stages);
+    if(i>0){
+      showOnly(stages,i-1);
+      updateControl();
+      return;
+    }
+  }
   if(current==='i-do'){
     const examples=[...page.querySelectorAll('.ido-example')];
     if(examples.length){
