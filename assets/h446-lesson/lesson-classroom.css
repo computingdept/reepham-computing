@@ -387,3 +387,113 @@
     margin-top:10px;
   }
 }
+
+
+/* WE DO GUIDED PRACTICE: several examples; question fixed left, checks progress on the right. */
+.wedo-focus-deck{height:100%}
+.wedo-example{
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);
+  gap:16px;
+}
+.wedo-example[hidden]{display:none!important}
+.wedo-reference,.wedo-practice{
+  min-width:0;height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:22px;box-shadow:var(--shadow);
+}
+.wedo-reference{
+  border-top:7px solid var(--green);
+  display:flex;flex-direction:column;
+  overflow:auto;
+}
+.wedo-practice{
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.wedo-reference h2,.wedo-practice h2{
+  margin:0 0 14px;
+  font-size:clamp(27px,2.35vw,38px);
+}
+.wedo-reference .focus-code{
+  display:block;
+  margin:12px 0;
+  padding:18px;
+  border-radius:10px;
+  background:#f3f6f5;
+  font:700 clamp(26px,2.45vw,40px)/1.25 Consolas,"Courier New",monospace;
+  text-align:center;
+}
+.wedo-example-count{
+  margin-top:auto;
+  padding-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+.wedo-step{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+.wedo-step[hidden]{display:none!important}
+.wedo-step-label{
+  display:inline-block;width:max-content;margin-bottom:12px;
+  color:var(--green);font-size:13px;font-weight:900;letter-spacing:.1em;
+}
+.wedo-step .practice-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.wedo-step .practice-box{
+  padding:14px 15px;
+  background:#f7f9f8;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.wedo-step .practice-box strong{
+  display:block;margin-bottom:6px;color:var(--green-dark);
+}
+.wedo-step .practice-box span{
+  font-size:clamp(22px,1.8vw,29px);
+  font-weight:900;
+}
+.wedo-step .arithmetic{font-size:clamp(20px,1.6vw,25px)}
+.wedo-step p,.wedo-step li{
+  font-size:clamp(18px,1.38vw,22px);
+  line-height:1.38;
+}
+.wedo-step .key-result{
+  margin-top:16px;
+  padding:14px 16px;
+  border-left:5px solid var(--green);
+  background:var(--green-soft);
+  border-radius:0 10px 10px 0;
+  color:var(--green-dark);
+  font-size:clamp(20px,1.55vw,25px);
+  font-weight:850;
+}
+.wedo-step-count{
+  margin-top:auto;
+  padding-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+@media(max-height:760px) and (min-width:901px){
+  .wedo-reference,.wedo-practice{padding:16px}
+  .wedo-reference h2,.wedo-practice h2{font-size:26px}
+  .wedo-reference .focus-code{font-size:24px;padding:12px}
+  .wedo-step .practice-box{padding:10px 11px}
+  .wedo-step .practice-box span{font-size:21px}
+  .wedo-step .arithmetic{font-size:18px}
+  .wedo-step p,.wedo-step li{font-size:17px}
+}
+@media(max-width:900px){
+  .wedo-focus-deck,.wedo-example{height:auto}
+  .wedo-example{grid-template-columns:1fr}
+  .wedo-reference,.wedo-practice{height:auto;overflow:visible}
+  .wedo-step .practice-grid{grid-template-columns:1fr}
+}
