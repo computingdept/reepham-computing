@@ -30,9 +30,12 @@
 </div>
 
 <div class="signal-wrap">
-  <!-- Shared rule: always three equal tiles: blue phase · green routine · orange response. -->
+  <!-- Shared rule: always three equal tiles: blue phase · green routine · orange response. Phase timing sits beneath the blue tile; do not add a separate phase header bar. -->
   <div class="signals" aria-label="Classroom routine">
-    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span class="signal-phase-group">
+      <span id="phase-logo" class="signal-tile signal-phase"></span>
+      <span id="phase-time" class="signal-phase-time"></span>
+    </span>
     <span id="behaviour-logo" class="signal-tile signal-routine"></span>
     <span id="response-logo" class="signal-tile signal-response"></span>
   </div>
@@ -40,8 +43,7 @@
 </div>
 
 <main id="main">
-  <section id="do-now" class="page phase-donow">
-    <div class="section-top"><span class="eyebrow">RETRIEVAL · 5 MINUTES</span><span class="time">Start from memory</span></div>
+  <section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
     <div class="donow-deck">
       <div class="donow-stage">
         <div class="donow-questions">
@@ -72,8 +74,7 @@
     </div>
   </section>
 
-  <section id="overview" class="page">
-    <div class="section-top"><span class="eyebrow">LESSON XXX · OCR H446</span><span class="time">1 minute</span></div>
+  <section id="overview" class="page" data-phase-time="1 minute">
     <h1>Lesson title</h1>
     <div class="objectives">
       <strong>By the end, you can…</strong>
@@ -95,13 +96,11 @@
     <!-- Introduce the words here. Teach them naturally through New Learning / I Do / We Do. -->
   </section>
 
-  <section id="new-learning" class="page">
-    <div class="section-top"><span class="eyebrow">NEW LEARNING</span><span class="time">Teacher explanation</span></div>
+  <section id="new-learning" class="page" data-phase-time="TIME">
     <!-- Flexible teaching content. -->
   </section>
 
-  <section id="i-do" class="page phase-ido">
-    <div class="section-top"><span class="eyebrow">I DO</span><span class="time">Short model</span></div>
+  <section id="i-do" class="page phase-ido" data-phase-time="TIME">
     <div class="ido-focus-deck">
 
       <!-- Standard rule: I Do is normally ONE detailed worked example.
@@ -140,8 +139,7 @@
     </div>
   </section>
 
-  <section id="we-do" class="page phase-wedo">
-    <div class="section-top"><span class="eyebrow">WE DO</span><span class="time">Guided practice</span></div>
+  <section id="we-do" class="page phase-wedo" data-phase-time="TIME">
     <div class="wedo-focus-deck">
 
       <!-- Standard rule: We Do carries most guided practice.
@@ -196,8 +194,7 @@
     </div>
   </section>
 
-  <section id="you-do" class="page phase-youdo">
-    <div class="section-top"><span class="eyebrow">YOU DO · INDEPENDENT PRACTICE</span><span class="time">TIME</span></div>
+  <section id="you-do" class="page phase-youdo" data-phase-time="TIME · on paper">
     <div class="youdo-deck">
       <div class="youdo-rolling">
 
@@ -242,8 +239,7 @@
     </div>
   </section>
 
-  <section id="vocabulary" class="page phase-vocab">
-    <div class="section-top"><span class="eyebrow">KEY VOCABULARY</span><span class="time">Retrieval check</span></div>
+  <section id="vocabulary" class="page phase-vocab" data-phase-time="TIME">
     <div class="vocab-test-deck">
 
       <article class="vocab-stage">
@@ -279,9 +275,7 @@
     </div>
   </section>
 
-  <section id="exit" class="page phase-exit">
-    <div class="section-top"><span class="eyebrow">EXIT TICKET</span><span class="time">2 minutes</span></div>
-
+  <section id="exit" class="page phase-exit" data-phase-time="2 minutes">
     <!-- Standard rule: one static no-equipment screen. No reveal buttons.
          Use 3 True/False retrieval statements with thumb up/down responses,
          then one overall confidence check using up / sideways / down. -->
