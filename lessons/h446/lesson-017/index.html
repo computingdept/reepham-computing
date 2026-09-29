@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 017 · Records, lists and tuples</title>
+<meta name="description" content="OCR H446 1.4.2(a): records, lists and tuples in practical C# contexts.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 017<br>Records, lists and tuples</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What does <code>names[2]</code> access in a 1D array?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What does <code>GetLength(1)</code> return for a 2D array?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>Which structure from last lesson has a fixed size once created?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>A student has a name, candidate number and score. Why might one value alone be unsuitable?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>names[2]</code> access in a 1D array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The third element.</strong></p><p class="review-explain">Array indexes start at 0.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>GetLength(1)</code> return for a 2D array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The size of dimension 1 — the number of columns.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">Which structure from last lesson has a fixed size once created?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>An array.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">A student has a name, candidate number and score. Why might one value alone be unsuitable?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The data item has several related fields that belong together.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Records, lists and tuples</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul><li>describe records, lists and tuples and recognise suitable uses;</li><li>create and access C# lists and tuples;</li><li>choose between an array, record-like item, list and tuple for a problem;</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>record</span><span>field</span><span>list</span><span>tuple</span><span>index</span><span>Add()</span><span>Remove()</span><span>Count</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.2(a) · CHOOSE THE STRUCTURE</span><h2>Different shapes of data</h2><pre class="arithmetic">Array  → fixed ordered values
+Record → named fields for one item
+List   → ordered values that can grow/shrink
+Tuple  → small fixed group of values</pre><div class="nl-reference-note">Know what each structure is, when it is useful, and how to use it in a program.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Records group fields</h2><pre class="arithmetic">Student
+Name = "Amelia"
+CandidateNo = 1037
+Score = 72</pre><p>A record represents one entity using several related fields. The OCR concept is more important here than a particular language keyword.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Lists can change size</h2><pre class="arithmetic">List&lt;string&gt; names = new List&lt;string&gt;();
+names.Add("Amelia");
+names.Add("Ben");
+names.Remove("Ben");</pre><p>A list is ordered like an array, but its size can change while the program runs.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Tuples group a few values</h2><pre class="arithmetic">var result = (Name: "Amelia", Score: 72);
+Console.WriteLine(result.Name);
+Console.WriteLine(result.Score);</pre><p>A tuple is useful when a small fixed set of values should travel together.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Choose by behaviour</h2><pre class="arithmetic">fixed size?       → array
+one item / fields? → record
+grow or shrink?    → list
+small grouped set? → tuple</pre><p>The exam may ask why one structure suits a context better than another.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Build a changing class list</h2><p>We need names that can be added and removed during registration.</p><pre class="arithmetic">Amelia
+Ben
+Charlie</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · DECLARE</span><h2>Create the list</h2><pre class="arithmetic">List&lt;string&gt; names = new List&lt;string&gt;();</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · ADD</span><h2>Append values</h2><pre class="arithmetic">names.Add("Amelia");
+names.Add("Ben");
+names.Add("Charlie");</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · ACCESS</span><h2>Read by index</h2><pre class="arithmetic">Console.WriteLine(names[1]);  // Ben</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · REMOVE</span><h2>Remove a value</h2><pre class="arithmetic">names.Remove("Ben");
+Console.WriteLine(names.Count); // 2</pre></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>List operations</h2><p>Complete code that adds Daisy then removes Ben.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">names.?("Daisy");
+names.?("Ben");</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">names.Add("Daisy");
+names.Remove("Ben");</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Tuple access</h2><p>A tuple stores a student's name and score.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">var result = (Name: "Amelia", Score: 72);
+Console.WriteLine(result.?);
+Console.WriteLine(result.?);</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">var result = (Name: "Amelia", Score: 72);
+Console.WriteLine(result.Name);
+Console.WriteLine(result.Score);</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Choose a structure</h2><p>A playlist must grow and shrink while the program is running.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the decision</h2><pre class="arithmetic">Need ordered items
+Need add/remove
+Size changes
+Best structure = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the decision</h2><pre class="arithmetic">Need ordered items
+Need add/remove
+Size changes
+Best structure = List</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>Record concept</h2><p>One book needs title, author and ISBN kept together.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the fields</h2><pre class="arithmetic">Book record
+Title = ?
+Author = ?
+ISBN = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the fields</h2><pre class="arithmetic">Book record
+Title = "Dune"
+Author = "Frank Herbert"
+ISBN = "978..."</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · LIST</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Create and edit a list</h3><div class="question-text"><p>Create a <code>List&lt;string&gt;</code> of four names. Add a fifth, remove one name, then output every remaining item.</p></div><div class="success-check">The list changes size and every remaining item is displayed.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · TUPLE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Group a result</h3><div class="question-text"><p>Create a tuple containing a student name and integer score. Output both named values.</p></div><div class="success-check">Both tuple fields are accessed by name.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · LIST + SEARCH</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Find an item</h3><div class="question-text"><p>Create a list of five course names. Ask for a course and report whether the list contains it.</p></div><div class="success-check">A present and absent course both produce sensible output.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · CHOICE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Explain the structure</h3><div class="question-text"><p>Write short comments explaining when you would choose an array, list, record-like structure and tuple.</p></div><div class="success-check">Each choice refers to the behaviour of the structure, not just its name.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A collection of related fields describing one item.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">record</div><p>Example: one student with name, ID and score.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One named piece of data inside a record.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">field</div><p>Name and score are separate fields.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A variable-size ordered collection.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">list</div><p>Items can be added and removed.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A small fixed grouping of values.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">tuple</div><p>Useful for grouping a few related values.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The position of an item in an ordered structure.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">index</div><p>C# list indexes start at 0.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A list operation that appends an item.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Add()</div><p>It increases the list size.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A list operation that removes a matching item.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Remove()</div><p>The list can shrink.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The number of items currently in a list.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Count</div><p>Unlike an array's fixed Length.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">A C# <code>List&lt;T&gt;</code> can grow and shrink while the program is running.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 017 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-ds017"></script>
+</body>
+</html>
