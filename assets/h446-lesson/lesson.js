@@ -181,7 +181,8 @@ function updateControl(){
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.wedo-step')];
       const stepIndex=visibleIndex(steps);
-      if(stepIndex<steps.length-1)label='Next check →';
+      if(stepIndex===0 && steps.length>1)label='Reveal answer →';
+      else if(stepIndex<steps.length-1)label='Next check →';
       else if(exampleIndex<examples.length-1)label='Next example →';
       else label='Continue → You Do';
     }else if(page.querySelector('[data-reveal-answer][hidden]')){
@@ -415,6 +416,29 @@ function previousAction(){
       showOnly(stages,i-1);
       updateControl();
       return;
+    }
+  }
+  if(current==='we-do'){
+    const examples=[...page.querySelectorAll('.wedo-example')];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll('.wedo-step')];
+      const stepIndex=visibleIndex(steps);
+
+      if(stepIndex>0){
+        showOnly(steps,stepIndex-1);
+        updateControl();
+        return;
+      }
+
+      if(exampleIndex>0){
+        showOnly(examples,exampleIndex-1);
+        const previousSteps=[...examples[exampleIndex-1].querySelectorAll('.wedo-step')];
+        if(previousSteps.length)showOnly(previousSteps,previousSteps.length-1);
+        updateControl();
+        return;
+      }
     }
   }
   if(current==='i-do'){
