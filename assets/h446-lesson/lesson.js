@@ -33,6 +33,10 @@ function resetPhaseState(id){
   const page=document.getElementById(id);
   if(!page)return;
   document.querySelectorAll('details.answers').forEach(d=>d.open=false);
+  if(id==='do-now'){
+    const stages=[...page.querySelectorAll('.donow-stage')];
+    if(stages.length)showOnly(stages,0);
+  }
   if(id==='i-do'){
     const stages=[...page.querySelectorAll('.model-stage')];
     if(stages.length)showOnly(stages,0);
@@ -78,7 +82,11 @@ function updateSignals(id){
 function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
-  if(current==='i-do'){
+  if(current==='do-now'){
+    const stages=[...page.querySelectorAll('.donow-stage')];
+    const i=visibleIndex(stages);
+    label=i<stages.length-1?'Reveal answers →':'Continue → Objectives';
+  }else if(current==='i-do'){
     const stages=[...page.querySelectorAll('.model-stage')];
     const i=visibleIndex(stages);
     label=i<stages.length-1?'Next worked example →':'Continue →';
@@ -116,6 +124,11 @@ function showPage(id){
 }
 function next(){
   const page=document.getElementById(current);
+  if(current==='do-now'){
+    const stages=[...page.querySelectorAll('.donow-stage')];
+    const i=visibleIndex(stages);
+    if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
+  }
   if(current==='i-do'){
     const stages=[...page.querySelectorAll('.model-stage')];
     const i=visibleIndex(stages);
