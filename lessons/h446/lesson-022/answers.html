@@ -30,33 +30,47 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · STACK</span><h2>Browser history stack</h2><pre class="solution-code">using System;
-using System.Collections.Generic;
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Build a small BST</h2><pre class="solution-code">TreeNode root = new TreeNode(40);
+root.Left = new TreeNode(20);
+root.Right = new TreeNode(60);
+root.Left.Left = new TreeNode(10);
+root.Left.Right = new TreeNode(30);
+root.Right.Left = new TreeNode(50);
+root.Right.Right = new TreeNode(70);</pre><p><strong>Check:</strong> The final shape obeys the BST ordering rule.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>Write in-order traversal</h2><pre class="solution-code">public static void InOrder(TreeNode node)
+{
+    if (node == null) return;
+    InOrder(node.Left);
+    Console.WriteLine(node.Data);
+    InOrder(node.Right);
+}</pre><p><strong>Check:</strong> The method visits left subtree, node, then right subtree.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD</span><h2>Insert iteratively</h2><pre class="solution-code">public static void Insert(TreeNode root, int value)
+{
+    TreeNode current = root;
 
-public class Program
-{
-    public static void Main()
+    while (true)
     {
-        Stack&lt;string&gt; history = new Stack&lt;string&gt;();
-        history.Push("Home");
-        history.Push("Courses");
-        history.Push("Computing");
-        Console.WriteLine("Back from: " + history.Pop());
-        Console.WriteLine("Now at: " + history.Peek());
+        if (value &lt; current.Data)
+        {
+            if (current.Left == null)
+            {
+                current.Left = new TreeNode(value);
+                return;
+            }
+
+            current = current.Left;
+        }
+        else
+        {
+            if (current.Right == null)
+            {
+                current.Right = new TreeNode(value);
+                return;
+            }
+
+            current = current.Right;
+        }
     }
-}</pre><p><strong>Check:</strong> Pop removes the most recent page and Peek shows the previous page.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><h2>Print queue</h2><pre class="solution-code">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
-jobs.Enqueue("Job A");
-jobs.Enqueue("Job B");
-jobs.Enqueue("Job C");
-Console.WriteLine("Printing: " + jobs.Dequeue());
-Console.WriteLine("Next: " + jobs.Peek());</pre><p><strong>Check:</strong> The earliest print job is removed first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><h2>Inspect without removing</h2><pre class="solution-code">foreach (string job in jobs)
-{
-    Console.WriteLine(job);
-}</pre><p><strong>Check:</strong> The queue contents are displayed without calling Dequeue.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHOOSE</span><h2>Choose stack or queue</h2><pre class="solution-code">// Undo uses a stack because the most recent action is undone first.
-Stack&lt;string&gt; undo = new Stack&lt;string&gt;();
-undo.Push("Type A");
-undo.Push("Delete B");
-Console.WriteLine(undo.Pop());</pre><p><strong>Check:</strong> Your code behaviour matches LIFO for undo or FIFO for waiting customers.</p></article></section></main>
+}</pre><p><strong>Check:</strong> The inserted value appears in the correct BST position.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove a simple case</h2><pre class="solution-code">root.Left.Left = null;
+InOrder(root);</pre><p><strong>Check:</strong> 10 disappears and the remaining values stay sorted.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
