@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 009 · Coding solutions</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2045">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-2045">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
+.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
+.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-title{font-weight:900;color:var(--green-dark)}.answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
+main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
+.answer-stage{height:100%;display:flex;justify-content:center}.answer-stage[hidden]{display:none!important}
+.solution-card{width:min(1150px,100%);height:100%;overflow:auto;background:#fff;border:1px solid var(--line);border-top:7px solid var(--green);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}
+.solution-card h2{margin:4px 0 8px;font-size:clamp(24px,1.9vw,31px)}.solution-card p,.solution-card li{font-size:clamp(16px,1.1vw,20px);line-height:1.3}
+.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(14px,1.05vw,18px)/1.28 Consolas,"Courier New",monospace}
+.test-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.test-strip span{padding:6px 9px;border-radius:999px;background:var(--green-soft);color:var(--green-dark);font-size:13px;font-weight:850}
+.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
+.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+#next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}
+@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.solution-card{padding:12px 16px}.solution-card h2{font-size:22px}.solution-card p{font-size:15px}.solution-code{font-size:13px;padding:8px 10px}}
+@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.solution-card{height:auto;overflow:visible}}
+</style>
+</head>
+<body class="answer-page">
+<header class="answer-toolbar">
+  <a href="index.html#you-do">← Return to You Do</a>
+  <span class="answer-title">LESSON 009 · CODING SOLUTIONS</span>
+  <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
+</header>
+
+<main class="answer-stage-wrap">
+
+<section class="answer-stage">
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 1</span>
+    <h2>Positive, negative or zero</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Enter an integer: ");
+        int number = int.Parse(Console.ReadLine());
+
+        if (number &gt; 0)
+        {
+            Console.WriteLine("Positive");
+        }
+        else if (number &lt; 0)
+        {
+            Console.WriteLine("Negative");
+        }
+        else
+        {
+            Console.WriteLine("Zero");
+        }
+    }
+}</pre>
+    <p><strong>Why it works:</strong> the first two conditions remove positive and negative values; the only remaining possibility is zero.</p>
+    <div class="test-strip"><span>8 → Positive</span><span>−3 → Negative</span><span>0 → Zero</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 2</span>
+    <h2>Ticket category</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Enter age: ");
+        int age = int.Parse(Console.ReadLine());
+
+        if (age &lt;= 11)
+        {
+            Console.WriteLine("Child");
+        }
+        else if (age &lt;= 17)
+        {
+            Console.WriteLine("Teen");
+        }
+        else
+        {
+            Console.WriteLine("Adult");
+        }
+    }
+}</pre>
+    <p><strong>Why the order works:</strong> once ages 11 and below have been removed, <code>age &lt;= 17</code> means 12–17.</p>
+    <div class="test-strip"><span>11 → Child</span><span>12 → Teen</span><span>17 → Teen</span><span>18 → Adult</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 3</span>
+    <h2>Delivery charge</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Order total: ");
+        double total = double.Parse(Console.ReadLine());
+
+        Console.Write("Member? yes/no: ");
+        string member = Console.ReadLine();
+
+        if (total &gt;= 30 &amp;&amp; member == "yes")
+        {
+            Console.WriteLine("Free delivery");
+        }
+        else
+        {
+            Console.WriteLine("Delivery charge applies");
+        }
+    }
+}</pre>
+    <p><strong>Key idea:</strong> <code>&amp;&amp;</code> means both Boolean expressions must be true.</p>
+    <div class="test-strip"><span>35 + yes → Free</span><span>25 + yes → Charge</span><span>35 + no → Charge</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 4</span>
+    <h2>Simple login</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("PIN: ");
+        int pin = int.Parse(Console.ReadLine());
+
+        if (username == "admin" &amp;&amp; pin == 2468)
+        {
+            Console.WriteLine("Access granted");
+        }
+        else
+        {
+            Console.WriteLine("Access denied");
+        }
+    }
+}</pre>
+    <p><strong>Key idea:</strong> equality uses <code>==</code>. The login succeeds only when both comparisons are true.</p>
+    <div class="test-strip"><span>admin + 2468 → Granted</span><span>wrong + 2468 → Denied</span><span>admin + 1111 → Denied</span></div>
+  </article>
+</section>
+
+</main>
+
+<div class="answer-controls">
+  <button type="button" id="previous-answer" disabled>← Previous solution</button>
+  <a href="index.html#you-do">Return to You Do</a>
+  <button type="button" id="next-answer">Next solution →</button>
+</div>
+
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')];
+const previous=document.getElementById('previous-answer');
+const next=document.getElementById('next-answer');
+const counter=document.getElementById('answer-counter');
+let current=0;
+
+function showAnswer(index){
+  current=Math.max(0,Math.min(index,stages.length-1));
+  stages.forEach((stage,i)=>stage.hidden=i!==current);
+  previous.disabled=current===0;
+  next.textContent=current===stages.length-1?'Return to You Do →':'Next solution →';
+  counter.textContent='Solution '+(current+1)+' of '+stages.length;
+}
+function goNext(){
+  if(current<stages.length-1)showAnswer(current+1);
+  else location.href='index.html#you-do';
+}
+function goPrevious(){
+  if(current>0)showAnswer(current-1);
+}
+next.addEventListener('click',goNext);
+previous.addEventListener('click',goPrevious);
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='ArrowRight'){e.preventDefault();goNext();}
+  if(e.key==='ArrowLeft'){e.preventDefault();goPrevious();}
+});
+showAnswer(0);
+</script>
+</body>
+</html>
