@@ -306,3 +306,84 @@
   .ido-example{grid-template-columns:1fr}
   .ido-reference,.ido-method{height:auto;overflow:visible}
 }
+
+
+/* YOU DO ROLLING WINDOW: show three questions; move forward or back one question at a time. */
+.youdo-rolling{
+  height:100%;
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+}
+.youdo-question{
+  flex:1 1 0;
+  min-width:0;
+}
+.youdo-question[hidden]{display:none!important}
+.youdo-question.wide{flex:1.6 1 0}
+.youdo-question.extra-wide{flex:2 1 0}
+.youdo-window-progress{
+  position:absolute;
+  right:3vw;
+  bottom:calc(var(--footer-h) + 8px);
+  z-index:8;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+  pointer-events:none;
+}
+.youdo-rolling .exam-card{
+  height:100%;
+  padding:18px;
+  overflow:hidden;
+}
+.youdo-rolling .exam-card .phase-tag{
+  font-size:11px;
+  margin-bottom:9px;
+}
+.youdo-rolling .exam-card h3{
+  margin:4px 0 10px;
+  font-size:clamp(20px,1.45vw,25px);
+}
+.youdo-rolling .exam-card .question-text{
+  font-size:clamp(17px,1.18vw,20px);
+  line-height:1.34;
+}
+.youdo-rolling .exam-card .arithmetic{
+  font-size:clamp(16px,1.05vw,19px);
+  padding:10px 12px;
+}
+.youdo-rolling .exam-card .source-note{
+  margin-top:auto;
+  padding-top:9px;
+  font-size:12px;
+  line-height:1.25;
+}
+.youdo-rolling .exam-card .task{
+  margin-top:10px;
+  padding:11px;
+}
+.youdo-rolling .answer-cta{display:none}
+
+@media(max-height:760px) and (min-width:901px){
+  .youdo-rolling{gap:9px}
+  .youdo-rolling .exam-card{padding:13px}
+  .youdo-rolling .exam-card h3{font-size:19px}
+  .youdo-rolling .exam-card .question-text{font-size:16px}
+  .youdo-rolling .exam-card .arithmetic{font-size:15px;padding:7px 9px}
+  .youdo-rolling .exam-card .source-note{font-size:11px;padding-top:6px}
+}
+@media(max-width:900px){
+  .youdo-rolling{
+    height:auto;
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .youdo-question,.youdo-question.wide,.youdo-question.extra-wide{width:100%}
+  .youdo-window-progress{
+    position:relative;
+    right:auto;
+    bottom:auto;
+    margin-top:10px;
+  }
+}
