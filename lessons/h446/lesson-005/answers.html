@@ -3,45 +3,233 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 005 · Answers</title>
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-0935">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-0935">
+<title>Lesson 005 · You Do Answers</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1132">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1132">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
+.answer-toolbar{
+  height:56px;position:fixed;left:0;right:0;top:0;z-index:30;
+  padding:0 3vw;display:flex;align-items:center;gap:18px;
+  background:#fff;border-bottom:1px solid var(--line);
+}
+.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}
+.answer-toolbar .answer-title{font-weight:900;color:var(--green-dark)}
+.answer-toolbar .answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
+
+main.answer-stage-wrap{
+  height:100vh;margin:0;max-width:none;
+  padding:72px 3vw 76px;
+}
+.answer-stage{
+  height:100%;
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+}
+.answer-stage[hidden]{display:none!important}
+.answer-card{
+  flex:1 1 0;
+  min-width:0;height:100%;
+  overflow:hidden;
+}
+.answer-card.current-answer{
+  flex:1.12 1 0;
+  border-top:7px solid var(--green);
+}
+.answer-card .phase-tag{font-size:11px;margin-bottom:9px}
+.answer-card h3{margin:4px 0 10px;font-size:clamp(20px,1.45vw,25px)}
+.answer-card .question-text{font-size:clamp(17px,1.18vw,20px);line-height:1.34}
+.answer-card .arithmetic{font-size:clamp(16px,1.06vw,19px);padding:10px 12px}
+.answer-card .source-note{font-size:11px;line-height:1.25;margin-top:auto;padding-top:8px}
+.answer-card .answer-heading{
+  margin:8px 0 10px;
+  color:var(--green);
+  font-size:13px;font-weight:950;letter-spacing:.11em;
+}
+.answer-card .answer-value{
+  margin:8px 0 12px;
+  color:var(--green-dark);
+  font-size:clamp(20px,1.55vw,25px);
+  font-weight:900;
+}
+.answer-card .mark-points{
+  margin:10px 0 0;
+  padding:11px 13px;
+  background:var(--green-soft);
+  border-radius:10px;
+}
+.answer-card .mark-points strong{color:var(--green-dark)}
+.answer-card .mark-points ul{margin:7px 0 0;padding-left:21px}
+.answer-card .mark-points li{font-size:clamp(15px,1vw,18px);line-height:1.3;margin:3px 0}
+.answer-card .classroom-marks{
+  display:inline-block;
+  margin:0 0 9px;
+  padding:6px 9px;border-radius:999px;
+  background:#f1f4f2;color:var(--green-dark);
+  font-size:12px;font-weight:900;
+}
+.answer-stage.two .answer-card{flex:1 1 0}
+.answer-stage.single{justify-content:center}
+.answer-stage.single .answer-card{flex:0 1 900px;max-width:900px}
+
+.answer-controls{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  height:60px;padding:8px 3vw;
+  display:flex;align-items:center;gap:10px;
+  background:#fff;border-top:1px solid var(--line);
+}
+.answer-controls button,.answer-controls a{
+  border:1px solid var(--line);border-radius:9px;padding:10px 16px;
+  background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer;
+}
+.answer-controls #next-answer{
+  margin-left:auto;background:var(--green);border-color:var(--green);color:#fff;
+}
+.answer-controls button:disabled{opacity:.35;cursor:default}
+
+@media(max-height:760px) and (min-width:901px){
+  .answer-toolbar{height:48px}
+  main.answer-stage-wrap{padding:60px 2.5vw 66px}
+  .answer-controls{height:54px;padding:6px 2.5vw}
+  .answer-card{padding:13px}
+  .answer-card h3{font-size:19px}
+  .answer-card .question-text{font-size:16px}
+  .answer-card .arithmetic{font-size:15px;padding:7px 9px}
+  .answer-card .mark-points li{font-size:14px}
+}
+@media(max-width:900px){
+  body.answer-page{height:auto;overflow:auto}
+  .answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}
+  .answer-toolbar .answer-counter{margin-left:0}
+  main.answer-stage-wrap{height:auto;padding:16px 14px 84px}
+  .answer-stage,.answer-stage.two,.answer-stage.single{
+    height:auto;display:grid;grid-template-columns:1fr;
+  }
+  .answer-stage[hidden]{display:none!important}
+  .answer-card,.answer-stage.single .answer-card{height:auto;max-width:none;overflow:visible}
+}
+</style>
 </head>
+
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span>Lesson 005 · Answers and marking guidance</span>
+  <span class="answer-title">YOU DO · ANSWERS</span>
+  <span class="answer-counter" id="answer-counter">Answer 1 of 5</span>
 </header>
-<main class="answer-content">
-  <div class="eyebrow">YOU DO · ANSWERS</div>
-  <h1>Questions and marking guidance</h1>
-  <p>OCR source marks are retained only where the source question has them. Original classroom extensions are left unscored.</p>
 
-  <h3>Question 1 · OCR June 2023 Q3(d) · [3]</h3>
-  <p><strong>Question:</strong> Decode <code>0100 1110</code> using a four-bit mantissa and four-bit exponent.</p>
-  <pre class="arithmetic">Mantissa 0100 = 0.5
+<main class="answer-stage-wrap">
+
+  <section class="answer-stage">
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span>
+      <h3>Decode <code>0100 1110</code></h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">Mantissa 0100 = 0.5
 Exponent 1110 = −2
-Value = 0.5 × 2⁻² = 0.125</pre>
-  <p>Check for the correct mantissa, exponent/scale and final denary value.</p>
+0.5 × 2⁻² = 0.125</pre>
+      <div class="answer-value">Final answer: <strong>0.125</strong></div>
+      <div class="mark-points"><strong>Check for:</strong>
+        <ul>
+          <li>correct mantissa value;</li>
+          <li>correct signed exponent / scale;</li>
+          <li>correct final denary value.</li>
+        </ul>
+      </div>
+    </article>
 
-  <h3>Question 2 · OCR June 2022 Q3(b) · [4]</h3>
-  <p><strong>Question:</strong> Decode <code>1010 1110</code> using a four-bit mantissa and four-bit exponent.</p>
-  <pre class="arithmetic">Mantissa 1010 = −0.75
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
+      <h3>Decode <code>1010 1110</code></h3>
+      <p class="question-text">Use a <strong>four-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
+      <h3>Which are normalised?</h3>
+      <pre class="arithmetic">a) 010101 100
+b) 110101 111
+c) 011010 010
+d) 101010 110</pre>
+    </article>
+  </section>
+
+  <section class="answer-stage" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
+      <h3>Decode <code>1010 1110</code></h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">Mantissa 1010 = −0.75
 Exponent 1110 = −2
-Value = −0.75 × 2⁻² = −0.1875</pre>
-  <p>Check the signed mantissa, signed exponent, scaling operation and final value.</p>
+−0.75 × 2⁻² = −0.1875</pre>
+      <div class="answer-value">Final answer: <strong>−0.1875</strong></div>
+      <div class="mark-points"><strong>Check for:</strong>
+        <ul>
+          <li>correct signed mantissa;</li>
+          <li>correct signed exponent;</li>
+          <li>correct scaling operation;</li>
+          <li>correct final denary value.</li>
+        </ul>
+      </div>
+    </article>
 
-  <h3>Question 3 · OCR June 2022 Q3(c) · [4]</h3>
-  <p><strong>Question:</strong> State whether each representation is normalised.</p>
-  <pre class="arithmetic">a) 010101 100 → normalised
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
+      <h3>Which are normalised?</h3>
+      <pre class="arithmetic">a) 010101 100
+b) 110101 111
+c) 011010 010
+d) 101010 110</pre>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 6</span>
+      <h3>Decode both values</h3>
+      <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
+    </article>
+  </section>
+
+  <section class="answer-stage" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
+      <h3>Which are normalised?</h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">a) 010101 100 → normalised
 b) 110101 111 → not normalised
 c) 011010 010 → normalised
 d) 101010 110 → normalised</pre>
-  <p>Use the leading mantissa bits: normalised nonzero values begin 01 or 10.</p>
+      <div class="mark-points"><strong>Rule:</strong>
+        <ul>
+          <li>positive normalised mantissas begin <strong>01</strong>;</li>
+          <li>negative normalised mantissas begin <strong>10</strong>.</li>
+        </ul>
+      </div>
+    </article>
 
-  <h3>Question 4 · Original exam-style extension</h3>
-  <p><strong>Question:</strong> Decode <code>01110000 0010</code> and <code>10010000 1111</code> in 8+4 format.</p>
-  <pre class="arithmetic">01110000 0010
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 6</span>
+      <h3>Decode both values</h3>
+      <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
+    </article>
+
+    <article class="exam-card answer-card support-card">
+      <span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 3</span>
+      <h3>Precision and range</h3>
+      <p class="question-text">What improves with more mantissa bits and more exponent bits? Explain the trade-off if the total number of bits is fixed.</p>
+    </article>
+  </section>
+
+  <section class="answer-stage two" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 6</span>
+      <h3>Decode both values</h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">01110000 0010
 Mantissa = 0.875
 Exponent = 2
 Value = 3.5
@@ -50,15 +238,78 @@ Value = 3.5
 Mantissa = −0.875
 Exponent = −1
 Value = −0.4375</pre>
-  <p>No invented mark allocation is attached to this original classroom question.</p>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul>
+          <li>1 mark for each correct mantissa;</li>
+          <li>1 mark for each correct exponent / scale;</li>
+          <li>1 mark for each correct final value.</li>
+        </ul>
+      </div>
+    </article>
 
-  <h3>Question 5 · OCR idea + classroom extension</h3>
-  <p><strong>Question:</strong> What improves with more mantissa bits and more exponent bits? Explain the trade-off at a fixed total width.</p>
-  <p><strong>Mantissa:</strong> greater precision. <strong>Exponent:</strong> greater range. With a fixed total width, allocating more bits to one field leaves fewer for the other.</p>
-  <p>The trade-off explanation is an original classroom extension, so it is not given an invented OCR-style mark allocation.</p>
+    <article class="exam-card answer-card support-card">
+      <span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 3</span>
+      <h3>Precision and range</h3>
+      <p class="question-text">What improves with more mantissa bits and more exponent bits? Explain the trade-off if the total number of bits is fixed.</p>
+    </article>
+  </section>
 
-  <div class="note">Before correcting an answer, check the sign, binary point, exponent and normalisation.</div>
-  <a class="answer-return" href="index.html#you-do">← Return to You Do</a>
+  <section class="answer-stage single" hidden>
+    <article class="exam-card answer-card current-answer support-card">
+      <span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
+      <span class="classroom-marks">Suggested classroom marks: 3</span>
+      <h3>Precision and range</h3>
+      <div class="answer-heading">ANSWER</div>
+      <div class="answer-value">Mantissa → <strong>precision</strong><br>Exponent → <strong>range</strong></div>
+      <p class="question-text">If the total number of bits is fixed, giving more bits to one field leaves fewer bits for the other. Increasing precision therefore reduces the available exponent range, and increasing range reduces the available mantissa precision.</p>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul>
+          <li>1 mark: more mantissa bits improve precision;</li>
+          <li>1 mark: more exponent bits increase range;</li>
+          <li>1 mark: explains the fixed-width trade-off.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
 </main>
+
+<div class="answer-controls">
+  <button type="button" id="previous-answer" disabled>← Previous answer</button>
+  <a href="index.html#you-do">Return to You Do</a>
+  <button type="button" id="next-answer">Next answer →</button>
+</div>
+
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')];
+const previous=document.getElementById('previous-answer');
+const next=document.getElementById('next-answer');
+const counter=document.getElementById('answer-counter');
+let current=0;
+
+function showAnswer(index){
+  current=Math.max(0,Math.min(index,stages.length-1));
+  stages.forEach((stage,i)=>stage.hidden=i!==current);
+  previous.disabled=current===0;
+  next.textContent=current===stages.length-1?'Return to You Do →':'Next answer →';
+  counter.textContent='Answer '+(current+1)+' of '+stages.length;
+}
+function goNext(){
+  if(current<stages.length-1)showAnswer(current+1);
+  else location.href='index.html#you-do';
+}
+function goPrevious(){
+  if(current>0)showAnswer(current-1);
+}
+next.addEventListener('click',goNext);
+previous.addEventListener('click',goPrevious);
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='ArrowRight'){e.preventDefault();goNext();}
+  if(e.key==='ArrowLeft'){e.preventDefault();goPrevious();}
+});
+showAnswer(0);
+</script>
 </body>
 </html>
