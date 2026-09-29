@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1106">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1106">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1106">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1118">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1118">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1118">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -521,26 +521,25 @@ Value = −49.5</pre>
 
 <section id="you-do" class="page phase-youdo">
   <div class="section-top"><span class="eyebrow">YOU DO · INDEPENDENT EXAM PRACTICE</span><span class="time">25 minutes</span></div>
+
   <div class="youdo-deck">
-    <div class="youdo-stage">
-      <article class="exam-card">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span>
         <h3>Decode <code>0100 1110</code></h3>
         <p class="question-text">The mantissa is <strong>four bits</strong> and the exponent is four bits. Both use two’s complement. Show your working.</p>
         <p class="source-note">Paraphrased OCR June 2023 Q3(d); original values and marks retained. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
-        <span class="youdo-progress">Independent questions 1–2</span>
       </article>
-      <article class="exam-card">
+
+      <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
         <h3>Decode <code>1010 1110</code></h3>
         <p class="question-text">Use a <strong>four-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p>
         <p class="source-note">Paraphrased OCR June 2022 Q3(b); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
-        <span class="youdo-progress">Independent questions 1–2</span>
       </article>
-    </div>
 
-    <div class="youdo-stage" hidden>
-      <article class="exam-card">
+      <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
         <h3>Which are normalised?</h3>
         <p class="question-text">Judge the mantissa’s leading bits.</p>
@@ -549,27 +548,24 @@ b) 110101 111
 c) 011010 010
 d) 101010 110</pre>
         <p class="source-note">Paraphrased OCR June 2022 Q3(c); original marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
-        <span class="youdo-progress">Independent questions 3–4</span>
       </article>
-      <article class="exam-card">
+
+      <article class="exam-card youdo-question" hidden>
         <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
         <h3>Decode both values</h3>
         <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
         <p class="question-text">Use 8+4 format. Show the mantissa, exponent and denary result.</p>
-        <span class="youdo-progress">Independent questions 3–4</span>
       </article>
-    </div>
 
-    <div class="youdo-stage single" hidden>
-      <article class="exam-card support-card">
+      <article class="exam-card youdo-question support-card" hidden>
         <span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
         <h3>Precision and range</h3>
-        <p class="question-text">What improves if more bits are allocated to (a) the mantissa and (b) the exponent? Then explain the trade-off if the total width is fixed.</p>
-        <div class="task"><strong>Need a starting point?</strong><p>Four-bit mantissa weights: −1, ½, ¼, ⅛. Four-bit exponent weights: −8, 4, 2, 1. Evaluate each field before multiplying.</p></div>
+        <p class="question-text">What improves if more bits are allocated to (a) the mantissa and (b) the exponent?</p>
+        <p class="question-text">Then explain the trade-off if the total number of bits is fixed.</p>
+        <div class="task"><strong>Starting point</strong><p>Think about what mantissa bits control and what exponent bits control.</p></div>
         <p class="source-note">The first two prompts paraphrase OCR June 2023 Q3(e). The trade-off prompt is an original classroom extension. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
-        <a class="answer-cta" href="answers.html">Open answers &amp; marking guide →</a>
-        <span class="youdo-progress">Final independent question</span>
       </article>
+
     </div>
   </div>
 </section>
@@ -606,6 +602,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1106"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1118"></script>
 </body>
 </html>
