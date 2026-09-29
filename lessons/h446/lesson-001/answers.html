@@ -1,1 +1,221 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>You Do answers · Data types and binary</title><link rel="stylesheet" href="style.css"></head><body class="answer-page"><header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span>Lesson 1 · Marking guide</span></header><main class="answer-content"><div class="eyebrow">YOU DO · 24 MARKS</div><h1>Answers &amp; marking guide</h1><p>Scroll through the answers. Award the marks shown, then correct and explain any mistakes.</p><h3>Question 1 · [10]</h3><ol type="a"><li>Integer (1): a whole-number count (1).</li><li>Real / floating point (1): temperatures can have fractional parts (1).</li><li>Character (1): the category is one character (1). Accept a one-character string with a language-specific justification.</li><li>String (1): preserves the leading zeros in an identifier (1).</li><li>Boolean (1): working or not working, represented by True or False (1).</li></ol><h3>Question 2 · [6]</h3><ol type="a"><li>32 + 4 + 1 (1); <code>00100101</code> (1).</li><li>64 + 16 + 8 + 4 (1); <code>01011100</code> (1).</li><li>128 + 64 + 8 (1); <code>11001000</code> (1).</li></ol><h3>Question 3 · [4]</h3><ol type="a"><li>64 + 32 + 8 + 1 (1); <strong>105</strong> (1).</li><li>128 + 64 + 2 (1); <strong>194</strong> (1).</li></ol><h3>Question 4 · [4]</h3><ol type="a"><li><strong>255</strong> (1).</li><li>300 exceeds the maximum of 255, so not all required readings fit (1).</li><li><strong>9 bits</strong> (1); its range is <strong>0–511</strong>, which covers 0–300 (1).</li></ol><p><strong>Improve:</strong> Record your score out of 24. Correct one error and explain the rule or method you should have used. If all answers are correct, explain why 256 patterns do not mean a maximum value of 256.</p><p class="fine">Indicative classroom marking guide, not an official OCR mark scheme.</p><a class="answer-return" href="index.html#you-do">← Return to You Do</a></main></body></html>
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 001 · You Do Answers</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1515">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1515">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
+.answer-toolbar{
+  height:56px;position:fixed;left:0;right:0;top:0;z-index:30;
+  padding:0 3vw;display:flex;align-items:center;gap:18px;
+  background:#fff;border-bottom:1px solid var(--line);
+}
+.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}
+.answer-toolbar .answer-title{font-weight:900;color:var(--green-dark)}
+.answer-toolbar .answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
+main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
+.answer-stage{height:100%;display:flex;gap:12px;align-items:stretch}
+.answer-stage[hidden]{display:none!important}
+.answer-card{flex:1 1 0;min-width:0;height:100%;overflow:hidden}
+.answer-card.current-answer{flex:1.18 1 0;border-top:7px solid var(--green)}
+.answer-card .phase-tag{font-size:11px;margin-bottom:8px}
+.answer-card h3{margin:4px 0 10px;font-size:clamp(23px,1.75vw,29px)}
+.answer-card .question-text{font-size:clamp(19px,1.35vw,23px);line-height:1.3}
+.answer-card .arithmetic{font-size:clamp(18px,1.18vw,21px);padding:9px 11px}
+.answer-heading{margin:7px 0 8px;color:var(--green);font-size:13px;font-weight:950;letter-spacing:.11em}
+.answer-value{margin:7px 0 10px;color:var(--green-dark);font-size:clamp(20px,1.5vw,25px);font-weight:900}
+.mark-points{margin:8px 0 0;padding:10px 12px;background:var(--green-soft);border-radius:10px}
+.mark-points strong{color:var(--green-dark)}
+.mark-points ul{margin:6px 0 0;padding-left:20px}
+.mark-points li{font-size:clamp(15px,1vw,18px);line-height:1.28;margin:2px 0}
+.answer-stage.two .answer-card{flex:1 1 0}
+.answer-stage.single{justify-content:center}
+.answer-stage.single .answer-card{flex:0 1 960px;max-width:960px}
+.answer-controls{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;
+  display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line);
+}
+.answer-controls button,.answer-controls a{
+  border:1px solid var(--line);border-radius:9px;padding:10px 16px;
+  background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer;
+}
+.answer-controls #next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}
+.answer-controls button:disabled{opacity:.35;cursor:default}
+@media(max-height:760px) and (min-width:901px){
+  .answer-toolbar{height:48px}
+  main.answer-stage-wrap{padding:60px 2.5vw 66px}
+  .answer-controls{height:54px;padding:6px 2.5vw}
+  .answer-card{padding:13px}
+  .answer-card h3{font-size:21px}
+  .answer-card .question-text{font-size:18px}
+  .answer-card .arithmetic{font-size:17px;padding:6px 8px}
+  .mark-points li{font-size:14px}
+}
+@media(max-width:900px){
+  body.answer-page{height:auto;overflow:auto}
+  .answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}
+  .answer-toolbar .answer-counter{margin-left:0}
+  main.answer-stage-wrap{height:auto;padding:16px 14px 84px}
+  .answer-stage,.answer-stage.two,.answer-stage.single{height:auto;display:grid;grid-template-columns:1fr}
+  .answer-stage[hidden]{display:none!important}
+  .answer-card,.answer-stage.single .answer-card{height:auto;max-width:none;overflow:visible}
+}
+</style>
+</head>
+<body class="answer-page">
+<header class="answer-toolbar">
+  <a href="index.html#you-do">← Return to You Do</a>
+  <span class="answer-title">YOU DO · ANSWERS</span>
+  <span class="answer-counter" id="answer-counter">Answer 1 of 4</span>
+</header>
+
+<main class="answer-stage-wrap">
+  <section class="answer-stage">
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 1 · DATA TYPES</span>
+      <span class="classroom-marks">Suggested classroom marks: 10</span>
+      <h3>A weather-monitoring system</h3>
+      <div class="answer-heading">ANSWER</div>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul>
+          <li><strong>Integer</strong> — whole-number count.</li>
+          <li><strong>Real / floating point</strong> — temperature may contain a fractional part.</li>
+          <li><strong>Character</strong> — one letter.</li>
+          <li><strong>String</strong> — preserves the leading zeros in an identifier.</li>
+          <li><strong>Boolean</strong> — sensor working / not working can be True or False.</li>
+        </ul>
+      </div>
+      <p class="question-text">Award one mark for each suitable type and one for each valid justification.</p>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
+      <h3>Encode 37, 92 and 200</h3>
+      <p class="question-text">Convert each to unsigned 8-bit binary and show the place values.</p>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
+      <h3>Decode two values</h3>
+      <pre class="arithmetic">01101001₂
+11000010₂</pre>
+    </article>
+  </section>
+
+  <section class="answer-stage" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
+      <span class="classroom-marks">Suggested classroom marks: 6</span>
+      <h3>Encode the readings</h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">37  = 32 + 4 + 1
+    = 00100101
+
+92  = 64 + 16 + 8 + 4
+    = 01011100
+
+200 = 128 + 64 + 8
+    = 11001000</pre>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul><li>1 mark per correct decomposition;</li><li>1 mark per correct 8-bit answer.</li></ul>
+      </div>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
+      <h3>Decode two values</h3>
+      <pre class="arithmetic">01101001₂
+11000010₂</pre>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
+      <h3>Store values from 0 to 300</h3>
+      <p class="question-text">Find the maximum for 8 bits and the minimum width that will store 300.</p>
+    </article>
+  </section>
+
+  <section class="answer-stage two" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
+      <span class="classroom-marks">Suggested classroom marks: 4</span>
+      <h3>Decode the stored values</h3>
+      <div class="answer-heading">ANSWER</div>
+      <pre class="arithmetic">01101001
+= 64 + 32 + 8 + 1
+= 105
+
+11000010
+= 128 + 64 + 2
+= 194</pre>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul><li>1 mark per correct place-value working;</li><li>1 mark per correct denary value.</li></ul>
+      </div>
+    </article>
+
+    <article class="exam-card answer-card">
+      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
+      <h3>Store values from 0 to 300</h3>
+      <p class="question-text">Find the maximum for 8 bits and the minimum width that will store 300.</p>
+    </article>
+  </section>
+
+  <section class="answer-stage single" hidden>
+    <article class="exam-card answer-card current-answer">
+      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
+      <span class="classroom-marks">Suggested classroom marks: 4</span>
+      <h3>Choose a storage width</h3>
+      <div class="answer-heading">ANSWER</div>
+      <div class="answer-value">8 bits: <strong>0–255</strong><br>Minimum for 300: <strong>9 bits</strong></div>
+      <pre class="arithmetic">2⁸ − 1 = 255
+300 > 255
+
+2⁹ − 1 = 511
+9-bit range = 0–511</pre>
+      <div class="mark-points"><strong>Suggested marking:</strong>
+        <ul>
+          <li>1 mark: 255;</li>
+          <li>1 mark: explains 300 exceeds 255;</li>
+          <li>1 mark: 9 bits;</li>
+          <li>1 mark: justifies with range 0–511.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+</main>
+
+<div class="answer-controls">
+  <button type="button" id="previous-answer" disabled>← Previous answer</button>
+  <a href="index.html#you-do">Return to You Do</a>
+  <button type="button" id="next-answer">Next answer →</button>
+</div>
+
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')];
+const previous=document.getElementById('previous-answer');
+const next=document.getElementById('next-answer');
+const counter=document.getElementById('answer-counter');
+let current=0;
+function showAnswer(index){
+  current=Math.max(0,Math.min(index,stages.length-1));
+  stages.forEach((stage,i)=>stage.hidden=i!==current);
+  previous.disabled=current===0;
+  next.textContent=current===stages.length-1?'Return to You Do →':'Next answer →';
+  counter.textContent='Answer '+(current+1)+' of '+stages.length;
+}
+function goNext(){if(current<stages.length-1)showAnswer(current+1);else location.href='index.html#you-do'}
+function goPrevious(){if(current>0)showAnswer(current-1)}
+next.addEventListener('click',goNext);
+previous.addEventListener('click',goPrevious);
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='ArrowRight'){e.preventDefault();goNext()}
+  if(e.key==='ArrowLeft'){e.preventDefault();goPrevious()}
+});
+showAnswer(0);
+</script>
+</body>
+</html>
