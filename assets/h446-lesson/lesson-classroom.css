@@ -211,3 +211,98 @@
   .donow-review{height:auto;grid-template-columns:1fr}
   .donow-review-question,.donow-review-answer{height:auto;overflow:visible}
 }
+
+
+/* I DO FOCUS: keep the question/reference visible while modelling steps change on the right. */
+.ido-focus-deck{height:100%}
+.ido-example{
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);
+  gap:16px;
+}
+.ido-example[hidden]{display:none!important}
+.ido-reference,.ido-method{
+  min-width:0;height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:22px;box-shadow:var(--shadow);
+}
+.ido-reference{
+  border-top:7px solid var(--green);
+  display:flex;flex-direction:column;
+  overflow:auto;
+}
+.ido-method{
+  overflow:auto;
+  display:flex;flex-direction:column;
+}
+.ido-reference .phase-tag{
+  margin-bottom:12px;
+}
+.ido-reference h2,.ido-method h2{
+  margin:0 0 14px;
+  font-size:clamp(27px,2.35vw,38px);
+}
+.ido-reference .focus-code{
+  display:block;
+  margin:12px 0;
+  padding:18px;
+  border-radius:10px;
+  background:#f3f6f5;
+  font:700 clamp(26px,2.45vw,40px)/1.25 Consolas,"Courier New",monospace;
+  text-align:center;
+}
+.ido-example-count{
+  margin-top:auto;
+  padding-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+.ido-step{height:100%}
+.ido-step[hidden]{display:none!important}
+.ido-step-label{
+  display:inline-block;
+  width:max-content;
+  margin-bottom:12px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+.ido-step .arithmetic{
+  font-size:clamp(20px,1.6vw,25px);
+}
+.ido-step p,.ido-step li{
+  font-size:clamp(18px,1.4vw,23px);
+  line-height:1.38;
+}
+.ido-step .key-result{
+  margin-top:16px;
+  padding:14px 16px;
+  border-left:5px solid var(--green);
+  background:var(--green-soft);
+  border-radius:0 10px 10px 0;
+  color:var(--green-dark);
+  font-size:clamp(20px,1.55vw,25px);
+  font-weight:850;
+}
+.ido-reference .reference-media{
+  flex:1;min-height:0;display:grid;place-items:center;margin-top:10px;
+}
+.ido-reference .reference-media img{
+  display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+}
+@media(max-height:760px) and (min-width:901px){
+  .ido-reference,.ido-method{padding:16px}
+  .ido-reference h2,.ido-method h2{font-size:26px}
+  .ido-reference .focus-code{font-size:24px;padding:12px}
+  .ido-step .arithmetic{font-size:18px}
+  .ido-step p,.ido-step li{font-size:17px}
+  .ido-step .key-result{font-size:18px;padding:10px 12px}
+}
+@media(max-width:900px){
+  .ido-focus-deck,.ido-example{height:auto}
+  .ido-example{grid-template-columns:1fr}
+  .ido-reference,.ido-method{height:auto;overflow:visible}
+}
