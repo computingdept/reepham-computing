@@ -1,20 +1,530 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lesson 1 · Data types & binary</title><meta name="description" content="A 60-minute A Level Computer Science lesson: primitive data types and unsigned binary, with modelling, guided practice and independent tasks."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E01%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"></head>
-<body><a class="skip" href="#main">Skip to lesson</a>
-<div class="navwrap"><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button id="advance" class="control-btn">Reveal answers</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div><div class="signal-wrap"><div class="signals"><img id="phase-logo" alt=""><img id="behaviour-logo" alt=""><img id="response-logo" alt=""><span id="exit-ticket-signal" hidden>Exit Ticket</span></div><span class="lesson-label">OCR H446 · Lesson 1<br>Data types &amp; binary</span></div><main id="main"><section id="overview" class="page"><div class="eyebrow">LESSON 01 <span>60 MINUTES</span> <span>OCR A LEVEL</span></div><h1>Data types &amp; binary</h1><p class="lead">Choose the right data type. Understand how positive whole numbers become binary.</p><div class="objectives"><strong>By the end, you can…</strong><ul><li>choose and justify a suitable primitive data type;</li><li>convert between denary and unsigned 8-bit binary;</li><li>explain place values and the range of an unsigned byte.</li></ul></div><details class="sequence"><summary>The five-lesson journey <span>View sequence +</span></summary><ol><li><strong>Data types & binary</strong> — primitive types, positive integers and conversions (a, b, part of f).</li><li><strong>Signed integers & arithmetic</strong> — sign magnitude, two’s complement, addition, subtraction and overflow (c, d).</li><li><strong>Hexadecimal & bit manipulation</strong> — base conversions, logical shifts, AND, OR and XOR masks (e, f, i).</li><li><strong>Floating point & normalisation</strong> — mantissa, exponent, range and precision (g).</li><li><strong>Floating-point arithmetic & text</strong> — addition, subtraction, ASCII and Unicode; cumulative review (h, j).</li></ol><p>Proposed five-lesson revision sequence. Lessons 2–5 are planned, not yet built. If teaching this content for the first time, the floating-point work may need extra practice time.</p></details></section>
-<section id="do-now" class="page"><div class="section-top"><span class="step">01</span><span class="eyebrow">RETRIEVAL · SETTLE &amp; THINK</span><span class="time">5 minutes</span></div><h2>Do Now</h2><p>Work silently on your mini whiteboard (MWB). Start at challenge 1 and work through all four. Show your working and be ready to explain.</p><div class="two-col">
-<div class="task"><span class="task-label">CHALLENGE 1 · RECALL</span><h3>Which data type?</h3><p>Name the most suitable data type for each value:</p><ol><li>A count of <strong>27 students</strong>.</li><li>A temperature of <strong>18.5 °C</strong>.</li></ol></div>
-<div class="task"><span class="task-label">CHALLENGE 2 · APPLY</span><h3>Digits or a number?</h3><p>A student ID is <code>"0042"</code>. Choose a suitable data type and explain why an integer would be unsuitable.</p></div>
-<div class="task"><span class="task-label">CHALLENGE 3 · CONVERT</span><h3>Read the bits</h3><p>Convert <code>00101101₂</code> into denary. Show the place values you add together.</p></div>
-<div class="task"><span class="task-label">CHALLENGE 4 · REASON</span><h3>Find and fix the mistake</h3><p>A pupil says: “The largest unsigned value in 8 bits is 256 because 2⁸ = 256.”</p><p>Explain the mistake. State the correct maximum and the minimum number of bits needed to store 256.</p></div></div>
-<details class="answers"><summary>Reveal Do Now answers</summary><ol><li><strong>Integer</strong> for the student count: whole numbers. <strong>Real / floating point</strong> for temperature: it can have a fractional part.</li><li><strong>String</strong>: the ID is an identifier and its leading zeros matter. An integer stores the numerical value 42 without preserving those zeros.</li><li>32 + 8 + 4 + 1 = <strong>45</strong>.</li><li>2⁸ counts the <strong>256 different patterns</strong>, including zero. The unsigned range is <strong>0–255</strong>, so the maximum is <strong>255</strong>. Storing 256 needs <strong>9 bits</strong>: <code>100000000₂</code>.</li></ol></details></section>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 001 · Data types &amp; unsigned binary</title>
+<meta name="description" content="OCR H446 Lesson 001: primitive data types and unsigned binary representation.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E01%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1515">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1515">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1515">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
 
-<section id="new-learning" class="page"><div class="section-top"><span class="eyebrow">NEW LEARNING · 5 MINUTES</span></div><h2>Choose the right data type</h2><h3>1. Choose the type for the purpose</h3><p>A data type describes the kind of value being stored and the operations that make sense for it. All these values are ultimately represented using bits.</p><div class="table-wrap"><table><thead><tr><th>Data type</th><th>What it stores</th><th>Example & reason</th></tr></thead><tbody><tr><td>Integer</td><td>A whole number, including zero or a negative value</td><td><code>28</code> students — a count</td></tr><tr><td>Real / floating point</td><td>A numerical value that can have a fractional part</td><td><code>18.5</code> °C — a measurement</td></tr><tr><td>Character</td><td>One character</td><td><code>'A'</code> — a single grade letter</td></tr><tr><td>String</td><td>A sequence of characters</td><td><code>"0042"</code> — an ID whose zeros matter</td></tr><tr><td>Boolean</td><td>True or False</td><td><code>True</code> — permission granted</td></tr></tbody></table></div><div class="note"><strong>Think aloud:</strong> “A phone number contains digits, but I do not add phone numbers together. I choose a string to preserve its leading zero and any + sign.”</div><p class="fine">Language conventions vary: some languages use a one-character string rather than a separate character type. Floating point has limited precision; it cannot store every real number exactly.</p></section><section id="i-do" class="page"><div class="section-top"><span class="step">03</span><span class="eyebrow">WATCH & LISTEN</span><span class="time">10 minutes</span></div><div class="model-stage"><h3>1. Binary → denary</h3><p>Denary is base 10. Binary is base 2: each place is worth twice the place to its right. For <strong>unsigned</strong> binary, every place value is positive.</p><div class="binary-board"><div class="board-label">WORKED EXAMPLE <span>00101101₂ → ?₁₀</span></div><div class="bit-grid weights"><span>128</span><span>64</span><span>32</span><span>16</span><span>8</span><span>4</span><span>2</span><span>1</span></div><div class="bit-grid digits"><span>0</span><span>0</span><span class="on">1</span><span>0</span><span class="on">1</span><span class="on">1</span><span>0</span><span class="on">1</span></div><div class="board-label"><span>Most significant bit ←</span><span>→ Least significant bit</span></div><p class="equation">32 + 8 + 4 + 1 = <strong>45</strong></p></div><p><strong>Model:</strong> Write the place values. Select only the columns containing a 1. Add those values. A 0 contributes nothing.</p></div><div class="model-stage"><h3>2. Denary → binary</h3><p>Convert <strong>74</strong> into an 8-bit unsigned value. Move left to right: if a place value fits into the remainder, write 1 and subtract it; otherwise write 0.</p><div class="table-wrap"><table class="compact"><thead><tr><th>Place value</th><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead><tbody><tr><th>Write</th><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><th>Remainder</th><td>74</td><td>10</td><td>10</td><td>10</td><td>2</td><td>2</td><td>0</td><td>0</td></tr></tbody></table></div><p><strong>Result:</strong> 74₁₀ = <code>01001010₂</code>. Check: 64 + 8 + 2 = 74. Leading zeros keep the answer at eight bits without changing its unsigned value.</p><div class="note"><strong>Boundary check:</strong> Eight bits give 2⁸ = 256 different patterns, representing unsigned integers from <strong>0 to 255</strong>. The largest value is 2⁸ − 1 because zero uses one pattern.</div></div></section>
-<section id="we-do" class="page"><div class="section-top"><span class="eyebrow">GUIDED EXAM PRACTICE</span><span class="time">8 minutes</span></div><div class="task"><span class="task-label">OCR H446/01 · JUNE 2017 · Q6(a)(i) · [1 MARK]</span><h3>Represent an unsigned integer</h3><p>Convert the denary number 188 to an unsigned 8-bit binary number.</p><p class="fine"><a href="https://www.ocr.org.uk/Images/471506-h446-01-computer-systems.pdf#page=12" target="_blank" rel="noopener">Source: OCR June 2017 question paper, page 12</a>. Original exam question; the prompts below are added classroom scaffolding.</p></div><div class="task"><h3>Build the answer together</h3><ol><li>Identify the command word and the required number of bits.</li><li>Write the eight unsigned place values on your MWB.</li><li>Choose the places that total 188. Check each choice with a partner.</li><li>Write the final eight-bit answer and check it in denary.</li></ol><div class="bit-grid weights" aria-hidden="true"><span>128</span><span>64</span><span>32</span><span>16</span><span>8</span><span>4</span><span>2</span><span>1</span></div><div class="bit-grid switches" id="bits"></div><div class="live-result" aria-live="polite"><code id="binary">00000000₂</code><span>=</span><strong id="total">0</strong><span>denary</span></div><button class="secondary" id="reset">Reset bits</button><details class="answers"><summary>Reveal model answer</summary><p>188 = 128 + 32 + 16 + 8 + 4.</p><p><strong>Answer: <code>10111100</code> [1 mark].</strong></p><p>The 64, 2 and 1 columns contain zero. The leading 1 contributes 128 because the question specifies <strong>unsigned</strong> binary.</p><p class="fine">The answer is calculated for this lesson; this explanation is not a reproduced OCR mark scheme.</p></details></div><div class="task"><span class="task-label">CHECK UNDERSTANDING · CLASSROOM FOLLOW-UP</span><p>A pupil writes <code>00111100</code>. Explain which place value is missing and why this answer represents 60 rather than 188.</p><details class="answers"><summary>Reveal explanation</summary><p>The 128 column is zero instead of one. The remaining selected places total 32 + 16 + 8 + 4 = 60. Setting the 128 bit gives 188.</p></details></div></section>
-<section id="you-do" class="page"><div class="section-top"><span class="eyebrow">INDEPENDENT EXAM PRACTICE · 24 MARKS</span><span class="time">25 minutes</span></div><p>Answer on your <strong>MWB</strong>. Work silently, show your working and keep each answer visible until it has been checked. Allow about 20 minutes to answer and 5 minutes to mark and improve.</p><p class="fine">Conversion items adapt the unsigned-binary task in OCR H446/01 June 2017 Q6(a)(i), with different values and additional method marks. The contextual data-type and reasoning questions are original exam-style practice for 1.4.1. All marks below are classroom allocations.</p>
-<div class="task"><span class="task-label">QUESTION 1 · DATA TYPES · [10 MARKS]</span><h3>A weather-monitoring system</h3><p>The system stores the following fields. For each field, <strong>state</strong> the most suitable data type and <strong>justify</strong> your choice. [2 marks each]</p><ol type="a"><li>Number of readings collected.</li><li>Air temperature, such as 18.5 °C.</li><li>A one-letter category, such as A.</li><li>A station identifier, such as <code>"0042"</code>.</li><li>Whether the sensor is working.</li></ol></div>
-<div class="two-col"><div class="task"><span class="task-label">QUESTION 2 · DENARY → BINARY · [6 MARKS]</span><h3>Encode the readings</h3><p><strong>Convert</strong> each denary value into unsigned 8-bit binary. Show a place-value decomposition. [2 marks each]</p><ol type="a"><li>37</li><li>92</li><li>200</li></ol><p class="fine">Adapted from OCR June 2017 Q6(a)(i): values changed; one classroom method mark added per item.</p></div><div class="task"><span class="task-label">QUESTION 3 · BINARY → DENARY · [4 MARKS]</span><h3>Decode the stored values</h3><p><strong>Calculate</strong> the denary value of each unsigned bit pattern. Show the place values you add. [2 marks each]</p><ol type="a"><li><code>01101001₂</code></li><li><code>11000010₂</code></li></ol><p class="fine">Reverse-conversion extension to the same exam skill.</p></div></div>
-<div class="task"><span class="task-label">QUESTION 4 · RANGE &amp; JUSTIFICATION · [4 MARKS]</span><h3>Choose a suitable storage width</h3><p>The system must store whole-number readings from 0 to 300 inclusive.</p><ol type="a"><li><strong>State</strong> the largest unsigned integer representable using 8 bits. [1]</li><li><strong>Explain</strong> why 8 bits are insufficient for these readings. [1]</li><li><strong>Determine</strong> the minimum number of bits needed and <strong>justify</strong> your answer using its unsigned range. [2]</li></ol></div>
-<details class="support"><summary>Need a starting point?</summary><p>Use <code>128, 64, 32, 16, 8, 4, 2, 1</code>. For a justification, connect the data type to what the field stores. For n unsigned bits, the range is 0 to 2ⁿ − 1.</p></details>
-<a class="answer-link" href="answers.html">Open answers &amp; marking guide →</a></section>
-<section id="vocabulary" class="page"><div class="eyebrow">KEY VOCABULARY · QUICK RECAP</div><h2>Say it like a computer scientist</h2><p>Recall the missing keyword or definition. Be ready to answer when called on. Reveal one answer at a time.</p><dl class="vocab-grid"><div class="vocab-card"><dt>Integer</dt><dd hidden>A whole number, including zero and negative values.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Real</dt><dd hidden>A numerical value that can have a fractional part.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Character</dt><dd hidden>One character, such as a letter or symbol.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>String</dt><dd hidden>A sequence of characters, used for text and identifiers.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Boolean</dt><dd hidden>A value that is either True or False.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Bit</dt><dd hidden>One binary digit: 0 or 1.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Byte</dt><dd hidden>A group of eight bits.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Unsigned binary</dt><dd hidden>A binary representation for non-negative integers.</dd><p class="vocab-blank">________________</p></div><div class="vocab-card"><dt>Denary</dt><dd hidden>Base 10, using the digits 0 to 9.</dd><p class="vocab-blank">________________</p></div></dl></section><section id="exit" class="page"><div class="section-top"><span class="step">06</span><span class="eyebrow">CHECK YOUR UNDERSTANDING</span><span class="time">5 minutes</span></div><h2>Exit ticket</h2><p>Complete without notes. Hand in your answers before leaving.</p><ol class="questions"><li>Choose a type for a single grade letter, such as A. Justify it.</li><li>Convert <code>00110100₂</code> to denary.</li><li>Write 67 as an 8-bit unsigned binary number.</li><li>Explain why 256 cannot be represented as an unsigned 8-bit integer.</li></ol><details class="answers"><summary>Reveal exit answers & next steps</summary><ol><li>Character: it is one character. Accept a one-character string if justified for a language without a character type.</li><li>32 + 16 + 4 = <strong>52</strong>.</li><li><code>01000011₂</code> = 64 + 2 + 1.</li><li>The maximum is 255. 256 requires a ninth bit: <code>100000000₂</code>.</li></ol><p><strong>Next steps:</strong> If Q1 is insecure, revisit the data-type examples. If Q2 or Q3 is insecure, practise both conversion methods. If Q4 is insecure, revisit 2ⁿ patterns versus a maximum of 2ⁿ − 1.</p></details><div class="next"><span>NEXT LESSON</span><h3>How do we represent a negative number?</h3><p>Sign magnitude, two’s complement and binary arithmetic.</p></div></section><footer class="source-notes"><strong>1.4.1 · Data types</strong><p>Lesson content adapted in original wording from the supplied PMT “OCR Computer Science A Level: 1.4.1 Data Types — Advanced Notes”, pp. 2–6. Activities and worked examples created for this lesson, except the attributed OCR June 2017 Q6(a)(i) question. Specification labels follow the supplied notes.</p><p>Answer reveals support classroom review; they are available to anyone viewing this page. Write responses on your MWB. No pupil data is collected.</p></footer></main><div class="lesson-footer">Lesson 1 of 5 · 1.4.1 Data Types <span>Use the menu or ← → keys</span></div><script src="script.js"></script></body></html>
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 001<br>Data types &amp; unsigned binary</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · RECALL</strong><p>Choose the most suitable data type for <strong>27 students</strong> and for a temperature of <strong>18.5 °C</strong>.</p></article>
+        <article class="donow-question"><strong>2 · APPLY</strong><p>A student ID is <code>"0042"</code>. Which data type would you use, and why would an integer be unsuitable?</p></article>
+        <article class="donow-question"><strong>3 · CONVERT</strong><p>Convert <code>00101101₂</code> into denary. Show the place values you add.</p></article>
+        <article class="donow-question"><strong>4 · REASON</strong><p>A student says: “The largest unsigned 8-bit value is 256 because 2⁸ = 256.” Explain the mistake.</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 1 OF 4</span><h2>Recall</h2>
+          <p class="review-question">Choose the most suitable data type for <strong>27 students</strong> and for a temperature of <strong>18.5 °C</strong>.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><strong>Integer</strong> for 27; <strong>real / floating point</strong> for 18.5.</p>
+          <p class="review-explain">A count uses whole numbers. A temperature may contain a fractional part.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 2 OF 4</span><h2>Apply</h2>
+          <p class="review-question">A student ID is <code>"0042"</code>. Which data type would you use, and why would an integer be unsuitable?</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><strong>String</strong>.</p>
+          <p class="review-explain">The value is an identifier rather than a number for calculation. A string preserves the leading zeros; an integer would store the numerical value 42.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 3 OF 4</span><h2>Convert</h2>
+          <p class="review-question">Convert <code>00101101₂</code> into denary. Show the place values you add.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer"><strong>45</strong></p>
+          <pre class="arithmetic">32 + 8 + 4 + 1 = 45</pre>
+        </article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden>
+      <div class="donow-review">
+        <article class="donow-review-question">
+          <span class="review-number">QUESTION 4 OF 4</span><h2>Reason</h2>
+          <p class="review-question">A student says: “The largest unsigned 8-bit value is 256 because 2⁸ = 256.” Explain the mistake.</p>
+        </article>
+        <article class="donow-review-answer">
+          <span class="review-label">ANSWER</span>
+          <p class="review-answer">There are <strong>256 different bit patterns</strong>, but the unsigned range starts at 0.</p>
+          <p class="review-explain">Eight bits represent <strong>0–255</strong>. The value 256 needs 9 bits: <code>100000000₂</code>.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Data types &amp; unsigned binary</h1>
+  <div class="objectives"><strong>By the end, you can…</strong>
+    <ul>
+      <li>choose and justify a suitable primitive data type;</li>
+      <li>convert between denary and unsigned 8-bit binary;</li>
+      <li>explain place values and the range of an unsigned byte.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>integer</span><span>real</span><span>character</span><span>string</span><span>Boolean</span>
+      <span>bit</span><span>byte</span><span>unsigned</span><span>denary</span>
+    </div>
+  </div>
+</section>
+
+<section id="new-learning" class="page" data-phase-time="7 minutes">
+  <div class="two-col">
+    <article class="task">
+      <span class="phase-tag">CHOOSING A DATA TYPE</span>
+      <h2>Store the value for its purpose</h2>
+      <p><strong>Integer</strong> — whole number, e.g. <code>28</code> students.</p>
+      <p><strong>Real / floating point</strong> — may contain a fractional part, e.g. <code>18.5</code>.</p>
+      <p><strong>Character</strong> — one character, e.g. <code>'A'</code>.</p>
+      <p><strong>String</strong> — a sequence of characters, e.g. <code>"0042"</code>.</p>
+      <p><strong>Boolean</strong> — <code>True</code> or <code>False</code>.</p>
+      <div class="note"><strong>Key idea:</strong> digits do not automatically mean integer. An identifier can be better stored as a string.</div>
+    </article>
+
+    <article class="task">
+      <span class="phase-tag">UNSIGNED BINARY</span>
+      <h2>Each bit has a place value</h2>
+      <pre class="arithmetic">128  64  32  16   8   4   2   1
+  0   0   1   0   1   1   0   1
+             ↓
+       32 + 8 + 4 + 1 = 45</pre>
+      <p>An 8-bit unsigned value has <strong>256 possible patterns</strong>.</p>
+      <div class="note"><strong>Range:</strong> <code>0</code> to <code>2⁸ − 1 = 255</code>.</div>
+      <p>To convert denary to binary, choose place values that add to the target and write 1 in those positions.</p>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="5 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Binary → denary</h2>
+        <span class="focus-code">00101101₂</span>
+        <p>Convert this unsigned 8-bit binary value to denary.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · PLACE VALUES</span>
+          <h2>Write the columns</h2>
+          <pre class="arithmetic">128 64 32 16 8 4 2 1
+ 0   0  1  0 1 1 0 1</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · SELECT</span>
+          <h2>Use only the columns containing 1</h2>
+          <pre class="arithmetic">32 + 8 + 4 + 1</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · ADD</span>
+          <h2>Calculate the denary value</h2>
+          <pre class="arithmetic">32 + 8 + 4 + 1 = 45</pre>
+          <div class="key-result">Denary value = <strong>45</strong></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="10 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 1 · DATA TYPE</span>
+        <h2>Choose the best type</h2>
+        <span class="focus-code">"0042"</span>
+        <p>A school stores this as a student identifier. Which data type is most suitable, and why?</p>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the justification</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Data type</strong><span>?</span></div>
+            <div class="practice-box"><strong>Purpose</strong><span>?</span></div>
+            <div class="practice-box"><strong>Why not integer?</strong><span>?</span></div>
+          </div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Compare your answer</h2>
+          <div class="key-result"><strong>String</strong></div>
+          <p>It is an identifier, not a value for arithmetic. A string also preserves the leading zeros.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 2 · DENARY → BINARY</span>
+        <h2>Encode 74</h2>
+        <span class="focus-code">74₁₀ → ?₂</span>
+        <p>Write 74 as an unsigned 8-bit binary value.</p>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Choose the place values</h2>
+          <pre class="arithmetic">128 64 32 16 8 4 2 1</pre>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Largest place</strong><span>?</span></div>
+            <div class="practice-box"><strong>Remainder</strong><span>?</span></div>
+            <div class="practice-box"><strong>8-bit result</strong><span>?</span></div>
+          </div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1</span>
+          <h2>Decompose the value</h2>
+          <pre class="arithmetic">74 = 64 + 8 + 2</pre>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2</span>
+          <h2>Write all eight bits</h2>
+          <pre class="arithmetic">74₁₀ = 01001010₂</pre>
+          <div class="key-result">Check: <strong>64 + 8 + 2 = 74</strong></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 3 · OCR JUNE 2017 Q6(a)(i) · [1]</span>
+        <h2>Represent an unsigned integer</h2>
+        <span class="focus-code">188₁₀ → ?₂</span>
+        <p>Convert the denary number 188 to an unsigned 8-bit binary number.</p>
+        <p class="source-note"><a href="https://www.ocr.org.uk/Images/471506-h446-01-computer-systems.pdf#page=12" target="_blank" rel="noopener">OCR June 2017 question paper</a>.</p>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the answer</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Place values</strong><span>?</span></div>
+            <div class="practice-box"><strong>8-bit answer</strong><span>?</span></div>
+          </div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 1</span>
+          <h2>Find the selected places</h2>
+          <pre class="arithmetic">188 = 128 + 32 + 16 + 8 + 4</pre>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK 2</span>
+          <h2>Compare the final answer</h2>
+          <pre class="arithmetic">10111100</pre>
+          <div class="key-result">Official question value = <strong>188</strong></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">EXAMPLE 4 · RANGE</span>
+        <h2>Why is the maximum 255?</h2>
+        <span class="focus-code">11111111₂</span>
+        <p>Explain the maximum unsigned value in 8 bits and what happens when we need to store 256.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Complete the rule</h2>
+          <div class="practice-grid">
+            <div class="practice-box"><strong>Patterns</strong><span>2⁸ = ?</span></div>
+            <div class="practice-box"><strong>Range</strong><span>0 to ?</span></div>
+            <div class="practice-box"><strong>Bits for 256</strong><span>?</span></div>
+          </div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Compare your reasoning</h2>
+          <pre class="arithmetic">2⁸ = 256 patterns
+unsigned range = 0–255
+256 = 100000000₂</pre>
+          <div class="key-result">256 requires <strong>9 bits</strong>.</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · on paper">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question wide">
+        <span class="phase-tag">QUESTION 1 · DATA TYPES</span>
+        <span class="classroom-marks">Suggested classroom marks: 10</span>
+        <h3>A weather-monitoring system</h3>
+        <p class="question-text">For each field, state a suitable data type and justify it:</p>
+        <ol>
+          <li>number of readings collected;</li>
+          <li>air temperature, e.g. 18.5 °C;</li>
+          <li>a one-letter category, e.g. A;</li>
+          <li>station identifier <code>"0042"</code>;</li>
+          <li>whether the sensor is working.</li>
+        </ol>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
+        <span class="classroom-marks">Suggested classroom marks: 6</span>
+        <h3>Encode the readings</h3>
+        <p class="question-text">Convert each value into unsigned 8-bit binary. Show a place-value decomposition.</p>
+        <pre class="arithmetic">a) 37
+b) 92
+c) 200</pre>
+        <p class="source-note">Classroom adaptation of the conversion skill used in OCR June 2017 Q6(a)(i).</p>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
+        <span class="classroom-marks">Suggested classroom marks: 4</span>
+        <h3>Decode the stored values</h3>
+        <p class="question-text">Calculate the denary value of each unsigned bit pattern. Show the place values you add.</p>
+        <pre class="arithmetic">a) 01101001₂
+b) 11000010₂</pre>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
+        <span class="classroom-marks">Suggested classroom marks: 4</span>
+        <h3>Choose a storage width</h3>
+        <p class="question-text">A system must store whole-number readings from 0 to 300 inclusive.</p>
+        <ol>
+          <li>State the largest unsigned 8-bit value.</li>
+          <li>Explain why 8 bits are insufficient.</li>
+          <li>Determine the minimum number of bits required and justify it using the unsigned range.</li>
+        </ol>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes">
+  <div class="vocab-test-deck">
+    <article class="vocab-stage">
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 1 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which data type stores whole numbers, including zero and negative values?</p>
+        <span class="vocab-stage-count">1 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Integer</div>
+        <p>An integer stores whole-number values.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 2 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which data type is suitable for numerical values that may contain a fractional part?</p>
+        <span class="vocab-stage-count">2 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Real / floating point</div>
+        <p>A real / floating-point value can represent a fractional measurement.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 3 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which data type stores one character such as a letter or symbol?</p>
+        <span class="vocab-stage-count">3 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Character</div>
+        <p>A character represents one character.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 4 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which data type stores a sequence of characters such as an identifier?</p>
+        <span class="vocab-stage-count">4 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">String</div>
+        <p>A string can preserve characters such as leading zeros.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 5 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">Which data type stores one of two logical values: True or False?</p>
+        <span class="vocab-stage-count">5 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Boolean</div>
+        <p>A Boolean represents a two-state logical value.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 6 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">What is one binary digit called?</p>
+        <span class="vocab-stage-count">6 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Bit</div>
+        <p>A bit is one binary digit: 0 or 1.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 7 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">What is a group of eight bits called?</p>
+        <span class="vocab-stage-count">7 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Byte</div>
+        <p>A byte contains eight bits.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 8 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">What representation uses all bit positions for non-negative place values?</p>
+        <span class="vocab-stage-count">8 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Unsigned binary</div>
+        <p>Unsigned binary represents non-negative integers.</p>
+      </div>
+    </article>
+<article class="vocab-stage" hidden>
+      <div class="vocab-prompt">
+        <span class="vocab-test-label">QUESTION 9 OF 9</span>
+        <h2>Recall the term</h2>
+        <p class="vocab-question">What name is given to the base-10 number system?</p>
+        <span class="vocab-stage-count">9 of 9</span>
+      </div>
+      <div class="vocab-answer" data-vocab-answer hidden>
+        <span class="vocab-test-label">ANSWER</span>
+        <div class="vocab-answer-value">Denary</div>
+        <p>Denary is base 10.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement"><span class="exit-number">1</span><p>An identifier such as <code>"0042"</code> is usually better stored as a string than as an integer.</p></article>
+      <article class="exit-statement"><span class="exit-number">2</span><p>The largest unsigned value that can be represented using 8 bits is 256.</p></article>
+      <article class="exit-statement"><span class="exit-number">3</span><p><code>01000011₂</code> represents 67 in denary.</p></article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 001 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1515"></script>
+</body>
+</html>
