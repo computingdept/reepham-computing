@@ -177,3 +177,96 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
   .answer-toolbar{align-items:flex-start;flex-direction:column;gap:4px}
   main.answer-content{padding:26px 18px 50px}
 }
+
+
+/* Vocabulary: introduce in Objectives, retrieve near the end. */
+.vocab-intro{
+  margin-top:16px;
+  padding:14px 16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.vocab-intro strong{
+  display:block;
+  margin-bottom:9px;
+  color:var(--green-dark);
+  font-size:15px;
+}
+.vocab-intro-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.vocab-intro-list span{
+  padding:7px 10px;
+  border-radius:999px;
+  background:var(--green-soft);
+  color:var(--green-dark);
+  font-size:14px;
+  font-weight:850;
+}
+.vocab-test-deck{
+  height:100%;
+}
+.vocab-stage{
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  gap:16px;
+}
+.vocab-stage[hidden]{display:none!important}
+.vocab-prompt,.vocab-answer{
+  min-width:0;height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:22px;box-shadow:var(--shadow);
+}
+.vocab-prompt{
+  border-top:7px solid var(--green);
+  display:flex;flex-direction:column;
+}
+.vocab-answer{
+  display:flex;flex-direction:column;
+}
+.vocab-test-label{
+  display:inline-block;width:max-content;margin-bottom:12px;
+  color:var(--green);font-size:13px;font-weight:900;letter-spacing:.1em;
+}
+.vocab-prompt h2,.vocab-answer h2{
+  margin:0 0 14px;
+  font-size:clamp(27px,2.4vw,39px);
+}
+.vocab-question{
+  font-size:clamp(24px,2vw,32px);
+  line-height:1.32;
+  margin:0;
+}
+.vocab-answer-value{
+  margin:0 0 14px;
+  color:var(--green-dark);
+  font-size:clamp(30px,2.8vw,44px);
+  line-height:1.1;
+  font-weight:950;
+}
+.vocab-answer p{
+  font-size:clamp(18px,1.35vw,22px);
+  line-height:1.4;
+}
+.vocab-stage-count{
+  margin-top:auto;
+  padding-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+@media(max-height:760px) and (min-width:901px){
+  .vocab-prompt,.vocab-answer{padding:16px}
+  .vocab-prompt h2,.vocab-answer h2{font-size:26px}
+  .vocab-question{font-size:22px}
+  .vocab-answer-value{font-size:30px}
+  .vocab-answer p{font-size:17px}
+}
+@media(max-width:900px){
+  .vocab-stage{height:auto;grid-template-columns:1fr}
+  .vocab-prompt,.vocab-answer{height:auto}
+}
