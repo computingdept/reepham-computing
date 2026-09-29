@@ -497,3 +497,42 @@
   .wedo-reference,.wedo-practice{height:auto;overflow:visible}
   .wedo-step .practice-grid{grid-template-columns:1fr}
 }
+
+
+/* NEW LEARNING: one concise teaching chunk per screen. */
+#new-learning{overflow:hidden!important}
+.nl-deck,.nl-stage{height:100%}
+.nl-stage[hidden]{display:none!important}
+.nl-card{
+  height:100%;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:7px solid var(--green);
+  border-radius:14px;
+  padding:22px 26px;
+  box-shadow:var(--shadow);
+}
+.nl-card h2,.nl-card h3{
+  margin:0 0 14px;
+  font-size:clamp(28px,2.4vw,40px);
+}
+.nl-card p,.nl-card li{
+  font-size:clamp(20px,1.55vw,25px);
+  line-height:1.32;
+}
+.nl-card pre.arithmetic{
+  font-size:clamp(19px,1.45vw,24px);
+}
+.nl-card .phase-tag{margin-bottom:12px}
+@media(max-height:760px) and (min-width:901px){
+  .nl-card{padding:15px 20px}
+  .nl-card h2,.nl-card h3{font-size:26px;margin-bottom:10px}
+  .nl-card p,.nl-card li{font-size:18px;line-height:1.26}
+  .nl-card pre.arithmetic{font-size:17px;padding:8px 10px}
+}
+@media(max-width:900px){
+  #new-learning{overflow:visible!important}
+  .nl-deck,.nl-stage{height:auto}
+  .nl-card{height:auto;overflow:visible}
+}
