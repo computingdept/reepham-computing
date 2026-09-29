@@ -1,25 +1,307 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lesson 5 · Floating point → denary</title><meta name="description" content="Lesson 005: floating point to denary, normalisation, precision and range."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"></head>
-<body><a class="skip" href="#main">Skip to lesson</a>
-<div class="navwrap"><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button id="advance" class="control-btn">Reveal answers</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div><div class="signal-wrap"><div class="signals"><img id="phase-logo" alt=""><img id="behaviour-logo" alt=""><img id="response-logo" alt=""><span id="exit-ticket-signal" hidden>Exit Ticket</span></div><span class="lesson-label">OCR H446 · Lesson 5<br>Floating point → denary</span></div><main id="main"><section id="do-now" class="page"><div class="section-top"><span class="eyebrow">RETRIEVAL · PREVIOUS LESSONS</span><span class="time">5 minutes</span></div><p>Work silently on your MWB. Complete four increasingly demanding challenges.</p><div class="two-col"><div class="task"><h3>1 · RECALL</h3><p>Where is the implied binary point in a two’s-complement floating-point mantissa?</p></div><div class="task"><h3>2 · APPLY</h3><p>Write 0.625 as a binary fraction. Show the fractional place values.</p></div><div class="task"><h3>3 · REPRESENT</h3><p>Encode 6.5 in normalised eight-bit mantissa / four-bit exponent format.</p></div><div class="task"><h3>4 · REASON</h3><p>Normalise 00011010 0101 in 8+4 format. Explain why the exponent changes.</p></div></div><details class="answers"><summary>Reveal answers and guidance</summary><ol><li>Immediately after the sign bit.</li><li>0.101₂ = ½ + ⅛.</li><li>110.1₂ = 0.1101₂ × 2³ → <code>01101000 0011</code>.</li><li><code>01101000 0011</code>. Two left shifts multiply the mantissa by 4, so reduce the exponent by 2 to divide the scale by 4.</li></ol></details></section><section id="overview" class="page"><div class="section-top"><span class="eyebrow">LESSON 005 · OCR H446 1.4.1(g)</span><span class="time">1 minute</span></div><h1>Floating point → denary</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>evaluate the signed mantissa and exponent separately;</li><li>decode positive and negative values with positive or negative exponents;</li><li>recognise normalisation and explain precision versus range.</li></ul></div><p>Use an eight-bit mantissa and four-bit exponent unless a question states otherwise. Both fields are two’s complement; the mantissa’s point follows the sign bit.</p></section><section id="new-learning" class="page"><div class="section-top"><span class="eyebrow">NEW LEARNING</span><span class="time">6 minutes</span></div><div class="task"><h3>Split → evaluate → scale</h3><pre class="arithmetic">8-bit mantissa: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 005 · Floating point → denary</title>
+<meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-0935">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-0935">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-0935">
+</head>
+<body data-icon-path="assets/">
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals">
+    <img id="phase-logo" alt="">
+    <img id="behaviour-logo" alt="">
+    <img id="response-logo" alt="">
+    <span id="exit-ticket-signal" hidden>Exit Ticket</span>
+  </div>
+  <span class="lesson-label">OCR H446 · Lesson 005<br>Floating point → denary</span>
+</div>
+
+<main id="main">
+<section id="do-now" class="page">
+  <div class="section-top"><span class="eyebrow">RETRIEVAL · PREVIOUS LESSONS</span><span class="time">5 minutes</span></div>
+  <p>Work silently on your MWB. Complete four increasingly demanding challenges.</p>
+  <div class="two-col">
+    <div class="task"><h3>1 · RECALL</h3><p>Where is the implied binary point in a two’s-complement floating-point mantissa?</p></div>
+    <div class="task"><h3>2 · APPLY</h3><p>Write 0.625 as a binary fraction. Show the fractional place values.</p></div>
+    <div class="task"><h3>3 · REPRESENT</h3><p>Encode 6.5 in normalised eight-bit mantissa / four-bit exponent format.</p></div>
+    <div class="task"><h3>4 · REASON</h3><p>Normalise <code>00011010 0101</code> in 8+4 format. Explain why the exponent changes.</p></div>
+  </div>
+  <details class="answers"><summary>Reveal answers and guidance</summary>
+    <ol>
+      <li>Immediately after the sign bit.</li>
+      <li><code>0.101₂</code> = ½ + ⅛.</li>
+      <li><code>110.1₂ = 0.1101₂ × 2³ → 01101000 0011</code>.</li>
+      <li><code>01101000 0011</code>. Two left shifts multiply the mantissa by 4, so reduce the exponent by 2.</li>
+    </ol>
+  </details>
+</section>
+
+<section id="overview" class="page">
+  <div class="section-top"><span class="eyebrow">LESSON 005 · OCR H446 1.4.1(g)</span><span class="time">1 minute</span></div>
+  <h1>Floating point → denary</h1>
+  <div class="objectives"><strong>By the end, you can…</strong>
+    <ul>
+      <li>evaluate the signed mantissa and exponent separately;</li>
+      <li>decode positive and negative values with positive or negative exponents;</li>
+      <li>recognise normalisation and explain precision versus range.</li>
+    </ul>
+  </div>
+  <p>Use an eight-bit mantissa and four-bit exponent unless a question states otherwise. Both fields are two’s complement; the mantissa’s point follows the sign bit.</p>
+</section>
+
+<section id="new-learning" class="page">
+  <div class="section-top"><span class="eyebrow">NEW LEARNING</span><span class="time">6 minutes</span></div>
+  <div class="task"><h3>Split → evaluate → scale</h3>
+    <pre class="arithmetic">8-bit mantissa: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈
 4-bit exponent: −8   4   2   1
-Value = mantissa × 2ᴱ</pre><ol><li>Split the pattern at the stated field boundary.</li><li>Add the mantissa weights whose bits are 1. Include −1 if the sign bit is 1.</li><li>Decode the exponent as a signed integer.</li><li>Multiply by 2ᴱ. For a negative exponent, divide by the corresponding power of two.</li></ol></div><div class="task"><h3>Two signs with different jobs</h3><p>The mantissa determines the sign of the number. The exponent determines its scale. A negative exponent does <strong>not</strong> make the value negative: 2⁻² = ¼.</p><p>This is a signed fractional mantissa, not sign magnitude. There is no biased exponent in these questions.</p></div><div class="task"><h3>Normalisation, precision and range</h3><p>Nonzero normalised mantissas begin 01 (positive) or 10 (negative). Patterns beginning 00 or 11 can still be decoded; normalisation preserves their value. Zero is a special case.</p><p>More mantissa bits allow more significant detail: greater precision. More exponent bits allow a wider range of scales. At a fixed total width, allocating extra bits to one field leaves fewer for the other.</p></div></section><section id="i-do" class="page"><div class="section-top"><span class="eyebrow">WATCH THE METHOD · REVEAL EACH EXAMPLE</span><span class="time">12 minutes</span></div><div class="model-stage"><h3>1. Positive mantissa and exponent</h3><pre class="arithmetic">Mantissa 01011000 = 0.6875
+Value = mantissa × 2ᴱ</pre>
+    <ol>
+      <li>Split the pattern at the stated field boundary.</li>
+      <li>Add the mantissa weights whose bits are 1. Include −1 if the sign bit is 1.</li>
+      <li>Decode the exponent as a signed integer.</li>
+      <li>Multiply by 2ᴱ. For a negative exponent, divide by the corresponding power of two.</li>
+    </ol>
+  </div>
+  <div class="two-col">
+    <div class="task"><h3>Two signs with different jobs</h3><p>The mantissa determines the sign of the number. The exponent determines its scale. A negative exponent does <strong>not</strong> make the value negative: 2⁻² = ¼.</p></div>
+    <div class="task"><h3>Normalisation, precision and range</h3><p>Nonzero normalised mantissas begin <strong>01</strong> (positive) or <strong>10</strong> (negative). More mantissa bits improve precision; more exponent bits increase range.</p></div>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido">
+  <div class="section-top"><span class="eyebrow">I DO · WATCH THE METHOD</span><span class="time">12 minutes</span></div>
+  <div class="model-deck">
+    <article class="model-stage">
+      <div class="classroom-panel prompt-panel">
+        <span class="phase-tag">EXAMPLE 1 · POSITIVE MANTISSA + POSITIVE EXPONENT</span>
+        <h2>Decode this value</h2>
+        <span class="focus-code">01011000 0011</span>
+        <p>Keep the question visible. Watch how each field is decoded before the scale is applied.</p>
+        <span class="stage-count">Worked example 1 of 5</span>
+      </div>
+      <div class="classroom-panel method-panel">
+        <h2>Worked method</h2>
+        <pre class="arithmetic">Mantissa 01011000 = 0.6875
 Exponent 0011 = 3
-Value = 0.6875 × 2^(3) = 5.5</pre><p>½ + ⅛ + ¹⁄₁₆ = 0.6875. The exponent is 3, so multiply by 8.</p></div><div class="model-stage"><h3>2. A negative mantissa</h3><pre class="arithmetic">Mantissa 10110000 = -0.625
+Value = 0.6875 × 2³ = 5.5</pre>
+        <p>½ + ⅛ + ¹⁄₁₆ = 0.6875. The exponent is 3, so multiply by 8.</p>
+      </div>
+    </article>
+
+    <article class="model-stage" hidden>
+      <div class="classroom-panel prompt-panel">
+        <span class="phase-tag">EXAMPLE 2 · NEGATIVE MANTISSA</span>
+        <h2>Decode this value</h2>
+        <span class="focus-code">10110000 0010</span>
+        <p>The leading 1 in the mantissa has a negative place value.</p>
+        <span class="stage-count">Worked example 2 of 5</span>
+      </div>
+      <div class="classroom-panel method-panel">
+        <h2>Worked method</h2>
+        <pre class="arithmetic">Mantissa 10110000 = −0.625
 Exponent 0010 = 2
-Value = -0.625 × 2^(2) = -2.5</pre><p>−1 + ¼ + ⅛ = −0.625. The leading 1 has weight −1; it is not a separate minus sign in front of the remaining bits.</p></div><div class="model-stage"><h3>3. A negative exponent</h3><pre class="arithmetic">Mantissa 01100000 = 0.75
-Exponent 1110 = -2
-Value = 0.75 × 2^(-2) = 0.1875</pre><p>1110 = −8 + 4 + 2 = −2. Divide 0.75 by 4. The answer remains positive.</p></div><div class="model-stage"><h3>4. Both fields are negative</h3><pre class="arithmetic">Mantissa 10100000 = -0.75
-Exponent 1111 = -1
-Value = -0.75 × 2^(-1) = -0.375</pre><p>The mantissa is −1 + ¼ = −0.75; the exponent −1 means halve it.</p></div><div class="model-stage"><h3>5. Decode first, then check normalisation</h3><pre class="arithmetic">Mantissa 00011010 = 0.203125
+Value = −0.625 × 2² = −2.5</pre>
+        <p>−1 + ¼ + ⅛ = −0.625. The leading 1 is not a separate minus sign.</p>
+      </div>
+    </article>
+
+    <article class="model-stage" hidden>
+      <div class="classroom-panel prompt-panel">
+        <span class="phase-tag">EXAMPLE 3 · NEGATIVE EXPONENT</span>
+        <h2>Decode this value</h2>
+        <span class="focus-code">01100000 1110</span>
+        <p>A negative exponent changes the scale. It does not decide the sign of the number.</p>
+        <span class="stage-count">Worked example 3 of 5</span>
+      </div>
+      <div class="classroom-panel method-panel">
+        <h2>Worked method</h2>
+        <pre class="arithmetic">Mantissa 01100000 = 0.75
+Exponent 1110 = −2
+Value = 0.75 × 2⁻² = 0.1875</pre>
+        <p><code>1110 = −8 + 4 + 2 = −2</code>. Divide 0.75 by 4.</p>
+      </div>
+    </article>
+
+    <article class="model-stage" hidden>
+      <div class="classroom-panel prompt-panel">
+        <span class="phase-tag">EXAMPLE 4 · BOTH FIELDS NEGATIVE</span>
+        <h2>Decode this value</h2>
+        <span class="focus-code">10100000 1111</span>
+        <p>Decode the mantissa and exponent separately before combining them.</p>
+        <span class="stage-count">Worked example 4 of 5</span>
+      </div>
+      <div class="classroom-panel method-panel">
+        <h2>Worked method</h2>
+        <pre class="arithmetic">Mantissa 10100000 = −0.75
+Exponent 1111 = −1
+Value = −0.75 × 2⁻¹ = −0.375</pre>
+        <p>The exponent −1 means halve the mantissa.</p>
+      </div>
+    </article>
+
+    <article class="model-stage" hidden>
+      <div class="classroom-panel prompt-panel">
+        <span class="phase-tag">EXAMPLE 5 · CHECK NORMALISATION</span>
+        <h2>Decode this value</h2>
+        <span class="focus-code">00011010 0101</span>
+        <p>Decode first. Then decide whether the mantissa is normalised.</p>
+        <span class="stage-count">Worked example 5 of 5</span>
+      </div>
+      <div class="classroom-panel method-panel">
+        <h2>Worked method</h2>
+        <pre class="arithmetic">Mantissa 00011010 = 0.203125
 Exponent 0101 = 5
-Value = 0.203125 × 2^(5) = 6.5</pre><p>The mantissa begins 00, so it is not normalised. Two left shifts give <code>01101000 0011</code>; this also represents 6.5. Do not reject a pattern merely because it is not normalised.</p></div></section><section id="we-do" class="page"><div class="section-top"><span class="eyebrow">GUIDED OCR EXAM QUESTION</span><span class="time">7 minutes</span></div><div class="task"><h3>OCR JUNE 2024 · Q4(c) · [3]</h3><p>Find the denary value represented by <code>10011101 0110</code>, using an eight-bit mantissa and four-bit exponent. Both fields use two’s complement. Show your working.</p><p>Paraphrased OCR June 2024 Q4(c); original values and marks retained. <a href="https://www.ocr.org.uk/Images/726571-question-paper-computer-systems.pdf#page=14" target="_blank" rel="noopener">View source question</a>.</p></div><p>On MWBs: label the fields, circle the selected fractional weights, decode the exponent, then calculate together.</p><details class="answers"><summary>Reveal answers and guidance</summary><pre class="arithmetic">Mantissa 10011101 = -0.773438
+Value = 0.203125 × 2⁵ = 6.5</pre>
+        <p>The mantissa begins 00, so it is not normalised. <code>01101000 0011</code> represents the same value in normalised form.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo">
+  <div class="section-top"><span class="eyebrow">WE DO · IMPROVE THE ANSWER TOGETHER</span><span class="time">7 minutes</span></div>
+  <div class="wedo-grid">
+    <article class="wedo-question">
+      <span class="phase-tag">OCR JUNE 2024 · Q4(c) · [3]</span>
+      <h2>Exam question</h2>
+      <p class="question-text">Find the denary value represented by <code>10011101 0110</code>, using an eight-bit mantissa and four-bit exponent. Both fields use two’s complement. Show your working.</p>
+      <p class="source-note">Paraphrased OCR June 2024 Q4(c); original values and marks retained. <a href="https://www.ocr.org.uk/Images/726571-question-paper-computer-systems.pdf#page=14" target="_blank" rel="noopener">View source question</a>.</p>
+    </article>
+    <article class="wedo-response">
+      <div data-reveal-prompt>
+        <h2>Build the answer together</h2>
+        <ol>
+          <li>Label the mantissa and exponent.</li>
+          <li>Decode the signed mantissa.</li>
+          <li>Decode the exponent.</li>
+          <li>Apply the scale.</li>
+        </ol>
+        <div class="reveal-hint">MWBs first. Reveal the model response when the class is ready.</div>
+      </div>
+      <div class="wedo-answer" data-reveal-answer hidden>
+        <h2>Model response</h2>
+        <pre class="arithmetic">Mantissa 10011101 = −0.7734375
 Exponent 0110 = 6
-Value = -0.773438 × 2^(6) = -49.5</pre><p>Mantissa = −1 + ⅛ + ¹⁄₁₆ + ¹⁄₃₂ + ¹⁄₁₂₈ = −0.7734375. Multiply by 64 to get <strong>−49.5</strong>. Classroom guide: mantissa (1), scale (1), answer (1).</p></details></section><section id="you-do" class="page"><div class="section-top"><span class="eyebrow">INDEPENDENT EXAM PRACTICE · 20 MARKS</span><span class="time">25 minutes</span></div><p>Work silently on your MWB. Allow <strong>20 minutes answering and 5 minutes marking and correcting</strong>. Check the field widths in each question; they deliberately vary.</p><div class="task"><h3>Question 1 · OCR JUNE 2023 Q3(d) · [3]</h3><p>Decode <code>0100 1110</code>. Here the mantissa is <strong>FOUR bits</strong> and the exponent is four bits. Both use two’s complement. Show working.</p><p>Paraphrased OCR June 2023 Q3(d); original values and marks retained. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">View source question</a>.</p></div><div class="task"><h3>Question 2 · OCR JUNE 2022 Q3(b) · [4]</h3><p>Decode <code>1010 1110</code> using a <strong>FOUR-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p><p>Paraphrased OCR June 2022 Q3(b); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">View source question</a>.</p></div><div class="task"><h3>Question 3 · OCR JUNE 2022 Q3(c) · [4]</h3><p>State whether each 6+3 representation is normalised. Judge the mantissa’s leading bits. [1 each]</p><pre class="arithmetic">a) 010101 100
+Value = −0.7734375 × 2⁶
+Value = −49.5</pre>
+        <p>The mantissa is <code>−1 + ⅛ + ¹⁄₁₆ + ¹⁄₃₂ + ¹⁄₁₂₈</code>. Then multiply by 64.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo">
+  <div class="section-top"><span class="eyebrow">YOU DO · INDEPENDENT EXAM PRACTICE</span><span class="time">25 minutes</span></div>
+  <div class="youdo-deck">
+    <div class="youdo-stage">
+      <article class="exam-card">
+        <span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span>
+        <h3>Decode <code>0100 1110</code></h3>
+        <p class="question-text">The mantissa is <strong>four bits</strong> and the exponent is four bits. Both use two’s complement. Show your working.</p>
+        <p class="source-note">Paraphrased OCR June 2023 Q3(d); original values and marks retained. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
+        <span class="youdo-progress">Independent questions 1–2</span>
+      </article>
+      <article class="exam-card">
+        <span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
+        <h3>Decode <code>1010 1110</code></h3>
+        <p class="question-text">Use a <strong>four-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p>
+        <p class="source-note">Paraphrased OCR June 2022 Q3(b); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
+        <span class="youdo-progress">Independent questions 1–2</span>
+      </article>
+    </div>
+
+    <div class="youdo-stage" hidden>
+      <article class="exam-card">
+        <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
+        <h3>Which are normalised?</h3>
+        <p class="question-text">Judge the mantissa’s leading bits.</p>
+        <pre class="arithmetic">a) 010101 100
 b) 110101 111
 c) 011010 010
-d) 101010 110</pre><p>Paraphrased OCR June 2022 Q3(c); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">View source question</a>.</p></div><div class="task"><h3>Question 4 · ORIGINAL EXAM-STYLE EXTENSION · [6]</h3><p>Decode (a) <code>01110000 0010</code> and (b) <code>10010000 1111</code> in <strong>8+4 format</strong>. Show mantissa, exponent and denary result. [3 each]</p></div><div class="task"><h3>Question 5 · OCR QUESTION WITH EXTENSION · [3]</h3><p>What improves if more bits are allocated to (a) the mantissa and (b) the exponent? [1 each] Explain the trade-off if the total width is fixed. [1]</p><p>First two parts paraphrase OCR June 2023 Q3(e), page 13; the final part is an original classroom extension. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p></div><details class="support"><summary>Need a starting point?</summary><p>Four-bit mantissa weights: −1, ½, ¼, ⅛. Four-bit exponent weights: −8, 4, 2, 1. Evaluate each field before multiplying. Normalisation depends on the first two mantissa bits, not the exponent.</p></details><a class="answer-link" href="answers.html">Open answers &amp; marking guide →</a></section><section id="vocabulary" class="page"><div class="section-top"><span class="eyebrow">KEY VOCABULARY</span><span class="time">During feedback</span></div><h2>Say it like a computer scientist</h2><p>Recall the missing keyword or definition. Be ready for Cold Calling; reveal one answer at a time.</p><dl class="vocab-grid"><div class="vocab-card"><dt>Signed fraction</dt><dd hidden>A fractional binary value whose sign bit has a negative weight.</dd><p class="vocab-blank">________</p></div><div class="vocab-card"><dt>Scale factor</dt><dd hidden>The multiplier supplied by 2 raised to the exponent.</dd><p class="vocab-blank">________</p></div><div class="vocab-card"><dt>Negative exponent</dt><dd hidden>An exponent that divides the mantissa by a power of two.</dd><p class="vocab-blank">________</p></div><div class="vocab-card"><dt>Normalised positive mantissa</dt><dd hidden>A nonzero mantissa beginning 01.</dd><p class="vocab-blank">________</p></div><div class="vocab-card"><dt>Normalised negative mantissa</dt><dd hidden>A mantissa beginning 10.</dd><p class="vocab-blank">________</p></div><div class="vocab-card"><dt>Field width</dt><dd hidden>The number of bits allocated to a part of the representation.</dd><p class="vocab-blank">________</p></div></dl></section><section id="exit" class="page"><div class="section-top"><span class="eyebrow">EXIT TICKET</span><span class="time">4 minutes</span></div><p>Complete independently and hand in your exit ticket.</p><ol class="questions"><li>Decode 01010000 0010 in 8+4 format.</li><li>Decode 11000000 0001 and state whether it is normalised.</li><li>Does exponent 1111 imply a negative number? Explain.</li></ol><details class="answers"><summary>Reveal answers and guidance</summary><pre class="arithmetic">Mantissa 01010000 = 0.625
-Exponent 0010 = 2
-Value = 0.625 × 2^(2) = 2.5</pre><pre class="arithmetic">Mantissa 11000000 = -0.5
-Exponent 0001 = 1
-Value = -0.5 × 2^(1) = -1</pre><p>The second pattern is not normalised: its mantissa begins 11. Exponent 1111 means multiply by ½; the mantissa determines the sign.</p></details><div class="next"><span>NEXT LESSON</span><h3>Floating-point addition</h3><p>Align exponents, add mantissas and normalise the result.</p></div></section></main><div class="lesson-footer">Lesson 5 of 8 · 1.4.1 Data Types <span>Use the menu or ← → keys</span></div><script src="script.js"></script></body></html>
+d) 101010 110</pre>
+        <p class="source-note">Paraphrased OCR June 2022 Q3(c); original marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
+        <span class="youdo-progress">Independent questions 3–4</span>
+      </article>
+      <article class="exam-card">
+        <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
+        <h3>Decode both values</h3>
+        <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
+        <p class="question-text">Use 8+4 format. Show the mantissa, exponent and denary result.</p>
+        <span class="youdo-progress">Independent questions 3–4</span>
+      </article>
+    </div>
+
+    <div class="youdo-stage single" hidden>
+      <article class="exam-card support-card">
+        <span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
+        <h3>Precision and range</h3>
+        <p class="question-text">What improves if more bits are allocated to (a) the mantissa and (b) the exponent? Then explain the trade-off if the total width is fixed.</p>
+        <div class="task"><strong>Need a starting point?</strong><p>Four-bit mantissa weights: −1, ½, ¼, ⅛. Four-bit exponent weights: −8, 4, 2, 1. Evaluate each field before multiplying.</p></div>
+        <p class="source-note">The first two prompts paraphrase OCR June 2023 Q3(e). The trade-off prompt is an original classroom extension. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
+        <a class="answer-cta" href="answers.html">Open answers &amp; marking guide →</a>
+        <span class="youdo-progress">Final independent question</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page">
+  <div class="section-top"><span class="eyebrow">KEY VOCABULARY</span><span class="time">During feedback</span></div>
+  <h2>Say it like a computer scientist</h2>
+  <p>Recall the missing keyword or definition. Reveal one answer at a time.</p>
+  <dl class="vocab-grid">
+    <div class="vocab-card"><dt>Signed fraction</dt><dd hidden>A fractional binary value whose sign bit has a negative weight.</dd><p class="vocab-blank">________</p></div>
+    <div class="vocab-card"><dt>Scale factor</dt><dd hidden>The multiplier supplied by 2 raised to the exponent.</dd><p class="vocab-blank">________</p></div>
+    <div class="vocab-card"><dt>Negative exponent</dt><dd hidden>An exponent that divides the mantissa by a power of two.</dd><p class="vocab-blank">________</p></div>
+    <div class="vocab-card"><dt>Normalised positive mantissa</dt><dd hidden>A nonzero mantissa beginning 01.</dd><p class="vocab-blank">________</p></div>
+    <div class="vocab-card"><dt>Normalised negative mantissa</dt><dd hidden>A mantissa beginning 10.</dd><p class="vocab-blank">________</p></div>
+    <div class="vocab-card"><dt>Field width</dt><dd hidden>The number of bits allocated to part of the representation.</dd><p class="vocab-blank">________</p></div>
+  </dl>
+</section>
+
+<section id="exit" class="page">
+  <div class="section-top"><span class="eyebrow">EXIT TICKET</span><span class="time">4 minutes</span></div>
+  <p>Complete independently.</p>
+  <ol class="questions">
+    <li>Decode <code>01010000 0010</code> in 8+4 format.</li>
+    <li>Decode <code>11000000 0001</code> and state whether it is normalised.</li>
+    <li>Does exponent <code>1111</code> imply a negative number? Explain.</li>
+  </ol>
+  <details class="answers"><summary>Reveal answers and guidance</summary>
+    <pre class="arithmetic">01010000 0010 → 0.625 × 2² = 2.5
+11000000 0001 → −0.5 × 2¹ = −1</pre>
+    <p>The second mantissa begins 11, so it is not normalised. Exponent <code>1111</code> means scale by 2⁻¹; the mantissa determines the sign.</p>
+  </details>
+  <div class="next"><span>NEXT LESSON</span><h3>Floating-point addition</h3><p>Align exponents, add mantissas and normalise the result.</p></div>
+</section>
+</main>
+
+<div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-0935"></script>
+</body>
+</html>
