@@ -207,25 +207,6 @@ function next(){
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
   }
-  if(current==='vocabulary'){
-    const stages=[...page.querySelectorAll('.vocab-stage')];
-    if(stages.length){
-      const i=visibleIndex(stages);
-      const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(answer&&!answer.hidden){
-        answer.hidden=true;
-        updateControl();
-        return;
-      }
-      if(i>0){
-        showOnly(stages,i-1);
-        const previousAnswer=stages[i-1].querySelector('[data-vocab-answer]');
-        if(previousAnswer)previousAnswer.hidden=false;
-        updateControl();
-        return;
-      }
-    }
-  }
   if(current==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
     const i=visibleIndex(stages);
@@ -307,6 +288,25 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='vocabulary'){
+    const stages=[...page.querySelectorAll('.vocab-stage')];
+    if(stages.length){
+      const i=visibleIndex(stages);
+      const answer=stages[i].querySelector('[data-vocab-answer]');
+      if(answer&&!answer.hidden){
+        answer.hidden=true;
+        updateControl();
+        return;
+      }
+      if(i>0){
+        showOnly(stages,i-1);
+        const previousAnswer=stages[i-1].querySelector('[data-vocab-answer]');
+        if(previousAnswer)previousAnswer.hidden=false;
+        updateControl();
+        return;
+      }
+    }
+  }
   if(current==='you-do'){
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
