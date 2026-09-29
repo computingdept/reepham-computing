@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2.2.1 Programming techniques · Revision booklet</title><link rel="stylesheet" href="style.css?v=1"></head><body class="guide-page"><a class="skip-link" href="#main">Skip to content</a><header><div class="nav-inner"><a class="brand" href="/h446-hub.html?year=12#booklet"><span class="brand-icon">02</span><span>Computing<span class="brand-sub">A LEVEL · YEAR 12</span></span></a><nav aria-label="Revision navigation"><a href="index.html" aria-current="page">Revision booklet</a><a href="practice.html">Self-test</a></nav></div></header><section class="hero"><p class="eyebrow">OCR H446 / 2.2.1</p><h1>Programming techniques.<br><span>Your revision booklet.</span></h1><p class="hero-description">Read the ideas. Follow the examples. Build your understanding with C# and OCR pseudocode.</p><div class="hero-meta"><span>Points (a), (c), (d), (e)</span><span>6 sections</span></div></section><main id="main"><div class="booklet-links"><a href="/h446-hub.html?year=12#booklet">← All revision booklets</a><a class="primary-link" href="practice.html">Test yourself on this booklet ↗</a></div><div class="card topic-directory"><p class="eyebrow">2.2.1 · BOOKLET CONTENTS</p><h2>Inside this booklet.</h2><p>Sequence, branching and iteration; variable scope; modularity and parameters; developing and debugging programs. Recursion (b) and object-oriented techniques (f) are not included in this booklet.</p><button class="secondary noprint" onclick="window.print()">Print / save booklet as PDF</button><nav aria-label="Booklet sections"><a href="#topic-1"><span class="topic-number">01</span><span>Sequence and branching</span><span class="topic-arrow">↗</span></a><a href="#topic-2"><span class="topic-number">02</span><span>Iteration and tracing</span><span class="topic-arrow">↗</span></a><a href="#topic-3"><span class="topic-number">03</span><span>Global and local variables</span><span class="topic-arrow">↗</span></a><a href="#topic-4"><span class="topic-number">04</span><span>Modularity, functions and procedures</span><span class="topic-arrow">↗</span></a><a href="#topic-5"><span class="topic-number">05</span><span>Passing by value and by reference</span><span class="topic-arrow">↗</span></a><a href="#topic-6"><span class="topic-number">06</span><span>Developing and debugging with an IDE</span><span class="topic-arrow">↗</span></a></nav></div><article class="topic-content" id="topic-1"><p class="tag">SECTION 01 · 2.2.1 (a)</p><h2>Sequence and branching</h2><p><strong>Sequence</strong> executes instructions in order. Each instruction can use the state produced by the previous one. Reordering assignments can change the result.</p><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>int price = 7;
+int quantity = 3;
+int total = price * quantity;
+Console.WriteLine(total);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>price = 7
+quantity = 3
+total = price * quantity
+print(total)</pre></div></div><p>The output is <strong>21</strong>. The multiplication uses the current values of price and quantity.</p><h3>Branching chooses a path</h3><p>A Boolean condition decides which instructions run. An <code>if / else if / else</code> chain takes the first matching branch, then skips the rest. Several separate <code>if</code> statements can all run.</p><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>int mark = 72;
+string grade;
+if (mark &gt;= 80)
+    grade = &quot;A&quot;;
+else if (mark &gt;= 60)
+    grade = &quot;B&quot;;
+else
+    grade = &quot;C&quot;;
+Console.WriteLine(grade);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>mark = 72
+if mark &gt;= 80 then
+    grade = &quot;A&quot;
+elseif mark &gt;= 60 then
+    grade = &quot;B&quot;
+else
+    grade = &quot;C&quot;
+endif
+print(grade)</pre></div></div><p>72 fails the first condition and satisfies the second: the output is <strong>B</strong>. Test the highest threshold first; testing 60 first would also catch 85.</p><div class="note"><strong>Boundary check:</strong> 59 → C, 60 → B, 79 → B, 80 → A. The algorithm assumes marks are valid; input validation is a separate concern.</div><h3>Conditions and alternatives</h3><p>Use <code>==</code> for equality and <code>!=</code> for inequality. In C#, <code>&amp;&amp;</code>, <code>||</code> and <code>!</code> mean AND, OR and NOT. OCR uses <code>AND</code>, <code>OR</code> and <code>NOT</code>. Assignment <code>=</code> changes a value; it does not compare values.</p><p>For a small set of exact choices, C# <code>switch</code> and OCR <code>switch / case / default / endswitch</code> express multiway branching. For ranges such as marks, an if-chain is usually clearer.</p><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>switch (choice)
+{
+    case &quot;R&quot;:
+        Console.WriteLine(&quot;Read&quot;);
+        break;
+    default:
+        Console.WriteLine(&quot;Unknown&quot;);
+        break;
+}</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>switch choice:
+    case &quot;R&quot;:
+        print(&quot;Read&quot;)
+    default:
+        print(&quot;Unknown&quot;)
+endswitch</pre></div></div></article><article class="topic-content" id="topic-2"><p class="tag">SECTION 02 · 2.2.1 (a)</p><h2>Iteration and tracing</h2><p><strong>Iteration</strong> repeats instructions. Choose a count-controlled loop when the number of repetitions is known; use a condition-controlled loop when continuation depends on state.</p><h3>Count-controlled: accumulate a total</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>int total = 0;
+for (int i = 1; i &lt;= 4; i++)
+{
+    total = total + i;
+}
+Console.WriteLine(total);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>total = 0
+for i = 1 to 4
+    total = total + i
+next i
+print(total)</pre></div></div><div class="table-wrap"><table><tr><th>After iteration</th><th>i used</th><th>total</th></tr><tr><td>Initial state</td><td>—</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>2</td><td>3</td></tr><tr><td>3</td><td>3</td><td>6</td></tr><tr><td>4</td><td>4</td><td>10</td></tr></table></div><p>The output is <strong>10</strong>. OCR's upper limit is inclusive. The equivalent C# comparison is <code>i &lt;= 4</code>, not <code>i &lt; 4</code>.</p><h3>Precondition: zero or more repetitions</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>int remaining = 3;
+while (remaining &gt; 0)
+{
+    Console.WriteLine(remaining);
+    remaining--;
+}</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>remaining = 3
+while remaining &gt; 0
+    print(remaining)
+    remaining = remaining - 1
+endwhile</pre></div></div><p>Output: <strong>3, 2, 1</strong>. If remaining starts at zero, the body never runs. Without the decrement, this example would repeat forever.</p><h3>Postcondition: at least one repetition</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>string answer;
+do
+{
+    Console.WriteLine(&quot;Type yes&quot;);
+    answer = Console.ReadLine() ?? &quot;&quot;;
+} while (answer != &quot;yes&quot;);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>do
+    answer = input(&quot;Type yes&quot;)
+until answer == &quot;yes&quot;</pre></div></div><div class="note"><strong>Opposite conditions:</strong> C# repeats while the answer is not yes. OCR stops when it is yes. Both read at least once. In the C# example, <code>?? ""</code> substitutes an empty string if no input is available.</div><h3>Nested loops</h3><p>If an outer loop runs 3 times and its inner loop runs 4 times per outer iteration, the inner body runs 12 times. Trace the inner loop afresh for each outer iteration. Check initial values, comparison operators and updates when diagnosing off-by-one errors.</p></article><article class="topic-content" id="topic-3"><p class="tag">SECTION 03 · 2.2.1 (c)</p><h2>Global and local variables</h2><p><strong>Scope</strong> is the region where a name is accessible. A local variable belongs to a subroutine or block. Each call normally has its own local values. A global variable can be accessed across subroutines, making it shared state.</p><p>Prefer parameters and return values for ordinary data flow: the dependencies are visible. Shared mutable state can make the result depend on which subroutine ran earlier, complicating testing and debugging.</p><h3>A shared counter and a local increment</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>using System;
+class Program
+{
+    static int visits = 0;
+    static void RecordVisit()
+    {
+        int increment = 1;
+        visits += increment;
+    }
+    static void Main()
+    {
+        RecordVisit();
+        RecordVisit();
+        Console.WriteLine(visits);
+    }
+}</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>global visits = 0
+procedure recordVisit()
+    increment = 1
+    visits = visits + increment
+endprocedure
+recordVisit()
+recordVisit()
+print(visits)</pre></div></div><p>The output is <strong>2</strong>. Each call creates its own local increment; both calls update the same visits variable.</p><div class="note"><strong>C# distinction:</strong> C# has no ordinary global-variable declaration. Here a static class field models shared state for methods in that class. Its accessibility is controlled by the class and access modifiers; it is not automatically accessible everywhere. A variable declared inside Main is local to Main.</div><h3>Scope is not lifetime</h3><p>A name can be out of scope even while an associated object still exists. For these simple examples, focus on which method or block may use each name. A local variable declared inside a loop body cannot be used outside that block.</p><p>Two separate methods can each have a local variable named total without sharing its value. Avoid confusing names that hide a field: use clear names or explicitly qualify the field when necessary.</p></article><article class="topic-content" id="topic-4"><p class="tag">SECTION 04 · 2.2.1 (d)</p><h2>Modularity, functions and procedures</h2><p><strong>Modularity</strong> divides a program into smaller parts with clear responsibilities. For a booking program, reading a request, calculating a charge and displaying a receipt can be separate subroutines.</p><p>A cohesive module performs one related task. Clear inputs and outputs reduce coupling between modules. Benefits include reuse, smaller units to test, easier maintenance and division of work. These benefits depend on sensible interfaces: many hidden global dependencies undermine them.</p><h3>A function returns a result</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>static int CalculateCost(int tickets, int price)
+{
+    return tickets * price;
+}
+// In Main:
+int cost = CalculateCost(3, 8);
+Console.WriteLine(cost);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>function calculateCost(tickets, price)
+    return tickets * price
+endfunction
+cost = calculateCost(3, 8)
+print(cost)</pre></div></div><p>The parameters tickets and price receive the arguments 3 and 8. The returned result 24 becomes the caller's cost value. A return hands a value back to the caller; printing only displays it.</p><h3>A procedure performs an action</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>static void ShowReceipt(int cost)
+{
+    Console.WriteLine(&quot;Cost: &quot; + cost);
+}
+// In Main:
+ShowReceipt(24);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>procedure showReceipt(cost)
+    print(&quot;Cost: &quot; + str(cost))
+endprocedure
+showReceipt(24)</pre></div></div><p>C# calls both kinds <strong>methods</strong>. A method with a result type such as int corresponds to a function; a void method corresponds to a procedure. A procedure can still accept parameters and change state.</p><div class="note"><strong>Where C# snippets belong:</strong> Unless a complete class is shown, put method definitions inside a Program class and the lines marked “In Main” inside <code>static void Main()</code>. Add <code>using System;</code> for Console. The construct-only snippets also belong in Main.</div><h3>Follow the call</h3><ol><li>The caller evaluates the argument expressions.</li><li>The subroutine receives its parameters and executes its body.</li><li>A function returns its result, or a procedure finishes its action.</li><li>Execution continues after the call.</li></ol><p>For <code>CalculateCost(2 + 1, 8)</code>, the first argument evaluates to 3 before the method uses it.</p></article><article class="topic-content" id="topic-5"><p class="tag">SECTION 05 · 2.2.1 (d)</p><h2>Passing by value and by reference</h2><p>A parameter is a name in a subroutine definition; an argument is the value or variable supplied at the call. The passing mechanism determines whether assigning to the parameter can change the caller's variable.</p><h3>By value: change a copy</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>static void Increase(int value)
+{
+    value = value + 1;
+}
+// In Main:
+int score = 10;
+Increase(score);
+Console.WriteLine(score);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>procedure increase(value:byVal)
+    value = value + 1
+endprocedure
+score = 10
+increase(score)
+print(score)</pre></div></div><p>The output is <strong>10</strong>. Inside the call, value becomes 11; score remains 10.</p><h3>By reference: update the caller's variable</h3><div class="two-col"><div class="model-stage"><h3>C#</h3><pre>static void Increase(ref int value)
+{
+    value = value + 1;
+}
+// In Main:
+int score = 10;
+Increase(ref score);
+Console.WriteLine(score);</pre></div><div class="model-stage"><h3>OCR pseudocode</h3><pre>procedure increase(value:byRef)
+    value = value + 1
+endprocedure
+score = 10
+increase(score)
+print(score)</pre></div></div><p>The output is <strong>11</strong>. Both names refer to the same variable storage during the call. C# requires ref at both declaration and call; the variable must already be assigned. In OCR notation, the parameter annotation specifies the mechanism.</p><h3>Reference types are a separate idea</h3><p>C# normally passes arguments by value. For an array, that copies the reference to the array, not the array contents. Both references reach the same array, so modifying an element is visible to the caller without ref. Reassigning the copied parameter to a new array does not replace the caller's variable.</p><pre>static void Change(int[] values)
+{
+    values[0] = 9;          // Changes the shared array
+    values = new int[] {7}; // Reassigns only the local parameter
+}
+// In Main:
+int[] numbers = {1};
+Change(numbers);
+Console.WriteLine(numbers[0]); // 9</pre><p>Use a return value when a routine's purpose is to calculate a result. Use reference parameters deliberately when updating the caller's variable is part of the interface. Avoid surprising side effects.</p></article><article class="topic-content" id="topic-6"><p class="tag">SECTION 06 · 2.2.1 (e)</p><h2>Developing and debugging with an IDE</h2><p>An <strong>integrated development environment</strong> brings editing, building, running and debugging into one workspace. For C#, Visual Studio is one example.</p><div class="table-wrap"><table><tr><th>Feature</th><th>How it helps</th></tr><tr><td>Syntax highlighting and indentation</td><td>Expose structure and make code easier to read.</td></tr><tr><td>Completion and parameter hints</td><td>Suggest identifiers and show expected arguments.</td></tr><tr><td>Compiler diagnostics</td><td>Point to code that cannot be built, such as missing punctuation or incompatible types.</td></tr><tr><td>Breakpoint</td><td>Pause execution at a chosen statement to inspect state.</td></tr><tr><td>Step into / over / out</td><td>Follow execution into a call, run the call without entering it, or finish the current call.</td></tr><tr><td>Locals and watches</td><td>Inspect variables and selected expressions as execution progresses.</td></tr><tr><td>Call stack</td><td>Show the active chain of calls that led to the current location.</td></tr></table></div><h3>Recognise the kind of fault</h3><p>A <strong>syntax error</strong> breaks language grammar, such as a missing semicolon. A <strong>runtime error</strong> occurs during execution, such as indexing beyond an array. A <strong>logic error</strong> lets the program run but produces an incorrect result. A clean build does not prove the algorithm is correct.</p><h3>Worked debugging example: a missing final term</h3><pre>int total = 0;
+for (int i = 1; i &lt; 4; i++)
+{
+    total += i;
+}
+Console.WriteLine(total);</pre><p>The intention is to total 1 through 4, giving 10. The actual output is 6.</p><ol><li>Reproduce the error and record expected 10 versus actual 6.</li><li>Set a breakpoint on <code>total += i;</code> and watch i and total.</li><li>Step through: totals become 1, 3 and 6. When i becomes 4, the condition is false; the body is skipped.</li><li>Change <code>i &lt; 4</code> to <code>i &lt;= 4</code>.</li><li>Run again and compare with 10. Check a one-iteration case too, rather than relying only on this example.</li></ol><div class="note"><strong>Explain the evidence:</strong> “The watch showed i reached 4, but the loop condition rejected it” is more useful than “I used the debugger.” Tools reveal state; you still need an expected result and a reasoned diagnosis.</div><p>Testing demonstrates a difference between expected and actual behaviour. Debugging locates and repairs its cause. Rerun relevant tests after a fix to check that it has not broken other behaviour.</p></article><p class="muted">Notation reference: <a href="https://www.ocr.org.uk/images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf#page=39">OCR H446 specification, Appendix 5e</a>. Examples in this booklet are original. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters">C# parameter reference</a> · <a href="https://learn.microsoft.com/en-us/visualstudio/debugger/debugger-feature-tour">Visual Studio debugger reference</a>.</p></main></body></html>
