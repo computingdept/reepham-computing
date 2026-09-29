@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 025 · Recursion at the end: recursive vs iterative solutions</title>
+<title>Lesson 025 · Boolean algebra rules answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,41 +26,23 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 025 · RECURSION VS ITERATION · SOLUTIONS</span>
+  <span class="answer-title">LESSON 025 · BOOLEAN ALGEBRA RULES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · RECURSIVE</span><h2>Write Sum(n)</h2><pre class="solution-code">public static int Sum(int n)
-{
-    if (n == 0)
-        return 0;
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(b)</span><h2>Three simplifications</h2><pre class="solution-code">1. ¬A ∨ ¬B = ¬(A ∧ B)
+2. ¬(¬B) = B
+3. (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)</pre><p><strong>Check:</strong> Show the rule used beside each answer.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR AUTUMN 2021 · Q5(b)</span><h2>Simplify with named rules</h2><pre class="solution-code">Example route:
+¬(¬A ∧ ¬B)
+= ¬¬A ∨ ¬¬B       De Morgan
+= A ∨ B            double negation</pre><p><strong>Check:</strong> Your working explicitly identifies De Morgan and/or double negation.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DE MORGAN</span><h2>Apply both forms</h2><pre class="solution-code">¬(P ∨ Q) = ¬P ∧ ¬Q
+¬(P ∧ Q) = ¬P ∨ ¬Q</pre><p><strong>Check:</strong> Each final expression negates both variables and swaps the operator.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · VERIFY</span><h2>Check equivalence</h2><pre class="solution-code">For ¬(P ∨ Q) and ¬P ∧ ¬Q:
 
-    return n + Sum(n - 1);
-}</pre><p><strong>Check:</strong> Sum(4) returns 10 and Sum(0) returns 0.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · ITERATIVE</span><h2>Write the equivalent loop</h2><pre class="solution-code">public static int SumIterative(int n)
-{
-    int total = 0;
-
-    for (int i = 1; i &lt;= n; i++)
-    {
-        total += i;
-    }
-
-    return total;
-}</pre><p><strong>Check:</strong> The recursive and iterative versions return the same results.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TREE</span><h2>Recursive BST traversal</h2><pre class="solution-code">public static void InOrder(TreeNode node)
-{
-    if (node == null)
-        return;
-
-    InOrder(node.Left);
-    Console.WriteLine(node.Data);
-    InOrder(node.Right);
-}</pre><p><strong>Check:</strong> The values are output in ascending order for a correct BST.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><h2>Recursion vs iteration</h2><pre class="solution-code">// Recursion creates a new stack frame for each active call,
-// so it can use more memory and can overflow the call stack.
-//
-// Iteration normally reuses the same loop variables and stack frame.
-//
-// Recursion can be clearer for naturally recursive problems such as
-// processing trees, while a loop can be simpler for straightforward repetition.</pre><p><strong>Check:</strong> Your comparison recognises call-stack memory and that recursion can be clearer for naturally recursive structures.</p></article></section></main>
+P Q | left | right
+0 0 |  1   |  1
+0 1 |  0   |  0
+1 0 |  0   |  0
+1 1 |  0   |  0</pre><p><strong>Check:</strong> Both columns must match on every row.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
