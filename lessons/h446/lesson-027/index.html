@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 027 · Karnaugh maps 2: simplify to gates</title>
+<meta name="description" content="OCR H446 1.4.3(b)(d): efficient K-map grouping, simplified Boolean expressions and equivalent gate plans.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 027<br>Karnaugh maps 2: simplify to gates</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What is the four-column Gray-code order?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>Which group is better when both are valid: 2 cells or 4 cells?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>Can groups overlap?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>What happens to a variable that changes inside a group?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What is the four-column Gray-code order?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>00, 01, 11, 10.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">Which group is better when both are valid: 2 cells or 4 cells?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>4 cells.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">Can groups overlap?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Yes.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">What happens to a variable that changes inside a group?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>It disappears from that term.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Karnaugh maps 2: simplify to gates</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>choose efficient K-map groups including wraparound and overlap</li><li>derive a simplified expression from each group</li><li>translate the simplified expression into an equivalent gate plan</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>efficient group</span><span>overlap</span><span>wraparound</span><span>literal</span><span>product term</span><span>simplified expression</span><span>equivalent</span><span>gate plan</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="9 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.3(b)(d) · K-MAP → GATES</span><h2>The point of the K-map is a simpler circuit</h2><pre class="arithmetic">K-map groups
+   ↓
+product terms
+   ↓
+OR the terms
+   ↓
+equivalent simpler circuit</pre><div class="nl-reference-note">Use the largest useful groups; then convert each surviving literal directly into gate logic.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Prefer larger groups</h2><pre class="arithmetic">8 &gt; 4 &gt; 2 &gt; 1</pre><p>Larger groups remove more changing variables.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Wrap and overlap</h2><pre class="arithmetic">left ↔ right
+top ↔ bottom
+overlap allowed</pre><p>A K-map is not an ordinary grid; edge adjacency matters.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Build a product term</h2><pre class="arithmetic">A=1 throughout
+D=0 throughout
+B,C change
+
+term = A ∧ ¬D</pre><p>Keep only variables that remain constant.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Convert to gates</h2><pre class="arithmetic">(¬A ∧ ¬C) ∨ (A ∧ ¬D)
+
+NOT A, NOT C → AND
+A, NOT D → AND
+two AND outputs → OR</pre><p>A good simplification removes unnecessary gates and inputs.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Convert a simplified expression to gates</h2><p>Use the verified 2023 K-map result.</p><pre class="arithmetic">P = (¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · TERM 1</span><h2>Create ¬A ∧ ¬C</h2><pre class="arithmetic">NOT A
+NOT C
+AND</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · TERM 2</span><h2>Create A ∧ ¬D</h2><pre class="arithmetic">A
+NOT D
+AND</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · OUTPUT</span><h2>Join terms</h2><pre class="arithmetic">OR(term1, term2) → P</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · CHECK</span><h2>Notice what vanished</h2><pre class="arithmetic">B no longer appears in the circuit.</pre><p>The K-map proved B does not affect the simplified output.</p></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q6(b)</span><h2>First group</h2><p>One verified group produces ¬A ∧ ¬C.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same term</h2><pre class="arithmetic">A stays 0
+C stays 0
+term = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same term</h2><pre class="arithmetic">A stays 0
+C stays 0
+term = ¬A ∧ ¬C</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q6(b)</span><h2>Second group</h2><p>The other verified group produces A ∧ ¬D.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same term</h2><pre class="arithmetic">A stays 1
+D stays 0
+term = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same term</h2><pre class="arithmetic">A stays 1
+D stays 0
+term = A ∧ ¬D</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q6(b)</span><h2>Combine groups</h2><p>Join both product terms.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same expression</h2><pre class="arithmetic">P = (¬A ∧ ¬C) ? (A ∧ ¬D)</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same expression</h2><pre class="arithmetic">P = (¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Gate plan</h2><p>Turn the simplified expression into gates.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same plan</h2><pre class="arithmetic">term1: NOT A, NOT C, ?
+term2: A, NOT D, ?
+final: ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same plan</h2><pre class="arithmetic">term1: NOT A, NOT C, AND
+term2: A, NOT D, AND
+final: OR</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR exam practice" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">OCR JUNE 2023 · Q6(b)</span><h3>Solve the verified K-map</h3><div class="question-text"><p>Recreate the two groups and write the simplified expression.</p></div><div class="success-check">Your expression is logically equivalent to the OCR mark-scheme form.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT · GATE PLAN</span><h3>Build the simplified circuit</h3><div class="question-text"><p>Write the gate-by-gate plan for the OCR expression before drawing it.</p></div><div class="success-check">The plan uses NOT gates only where needed, two AND stages and one final OR.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · WRAPAROUND</span><h3>Explain a corner group</h3><div class="question-text"><p>Four corner 1s appear in a K-map. Explain why they may form one group.</p></div><div class="success-check">You explicitly mention both horizontal and vertical wraparound.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · VERIFY</span><h3>Check equivalence</h3><div class="question-text"><p>Use a truth table on a smaller two-variable simplification to show the original and simplified expressions match.</p></div><div class="success-check">Every output row matches.</div></article></div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A largest useful power-of-two group.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">efficient group</div><p>It removes more literals.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A 1 used by more than one group.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">overlap</div><p>Allowed when helpful.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Opposite edges are adjacent.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">wraparound</div><p>Edge groups are valid.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A variable or its negation.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">literal</div><p>Groups reduce literals.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Variables joined by AND.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">product term</div><p>Each group gives one product term.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Equivalent logic with fewer terms/literals.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">simplified expression</div><p>It usually needs fewer gates.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Different form with identical outputs.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">equivalent</div><p>Truth tables can verify it.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A text sequence describing the circuit.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">gate plan</div><p>It can be drawn afterwards.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">A K-map simplification is valid only if the simplified expression gives the same output for every possible input combination.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 027 · OCR H446 1.4.3 Boolean Algebra <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-bool027"></script>
+</body>
+</html>
