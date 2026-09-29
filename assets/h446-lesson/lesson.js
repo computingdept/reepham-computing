@@ -3,7 +3,7 @@ const signalMap={
   'do-now':['Do Now','Silent Working','MWBs'],
   overview:['Objectives','Listening','Hands Up'],
   'new-learning':['New Learning','Listening','Cold Calling'],
-  'i-do':['I Do','Listening','Choral Response'],
+  'i-do':['I Do','Listening','MWBs'],
   'we-do':['We Do','Quiet Working','MWBs'],
   'you-do':['You Do','Quiet Working','Turn & Talk'],
   vocabulary:['Questioning','Listening','Cold Calling'],
