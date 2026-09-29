@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 019 · Linked lists</title>
+<meta name="description" content="OCR H446 1.4.2 linked lists: create, traverse, add and remove nodes using a simple C# Node class.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 019<br>Linked lists</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What does <code>null</code> mean for a Node reference?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What does <code>first.Next</code> contain?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What is the first linked-list reference usually called?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why can a linked list grow without a larger contiguous array?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>null</code> mean for a Node reference?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>It refers to no object.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>first.Next</code> contain?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A reference to another Node, or null.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What is the first linked-list reference usually called?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Head.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Why can a linked list grow without a larger contiguous array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Nodes are created individually and connected by references.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Linked lists</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul><li>describe the structure of a singly linked list;</li><li>traverse nodes from Head to null;</li><li>add and remove nodes by changing references;</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>linked list</span><span>node</span><span>Head</span><span>Next</span><span>traverse</span><span>insert</span><span>remove</span><span>null</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.2(b)(c) · LINKED LIST</span><h2>Data + link</h2><pre class="arithmetic">Head
+ ↓
+[10|•] → [20|•] → [30|null]</pre><div class="nl-reference-note">You need both the behaviour of the structure and the algorithms used to create, traverse, add and remove data.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Head starts the list</h2><pre class="arithmetic">Node head = new Node(10);</pre><p>The program needs a reference to the first node.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Add links nodes</h2><pre class="arithmetic">head.Next = new Node(20);
+head.Next.Next = new Node(30);</pre><p>Each Next reference extends the chain.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Traverse with a temporary reference</h2><pre class="arithmetic">Node current = head;
+while (current != null)
+{
+    Console.WriteLine(current.Data);
+    current = current.Next;
+}</pre><p>Move current along the list without changing Head.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Remove by bypassing</h2><pre class="arithmetic">head.Next = head.Next.Next;</pre><p>For 10 → 20 → 30, this changes the logical list to 10 → 30.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Traverse 10 → 20 → 30</h2><p>Follow each Next reference until null.</p><pre class="arithmetic">Head → 10 → 20 → 30 → null</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · START</span><h2>Copy Head</h2><pre class="arithmetic">Node current = head;</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · VISIT</span><h2>Use current node</h2><pre class="arithmetic">Console.WriteLine(current.Data);</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · MOVE</span><h2>Follow Next</h2><pre class="arithmetic">current = current.Next;</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · REPEAT</span><h2>Stop at null</h2><pre class="arithmetic">while (current != null)
+{
+    Console.WriteLine(current.Data);
+    current = current.Next;
+}</pre></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Add at front</h2><p>Insert 5 before the current Head.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">Node newNode = new Node(5);
+newNode.Next = ?;
+head = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">Node newNode = new Node(5);
+newNode.Next = head;
+head = newNode;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Traverse</h2><p>Move current to the next node.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">while (current != null)
+{
+    Console.WriteLine(current.Data);
+    current = ?;
+}</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">while (current != null)
+{
+    Console.WriteLine(current.Data);
+    current = current.Next;
+}</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Remove after Head</h2><p>Bypass the node immediately after Head.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">head.Next = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">head.Next = head.Next.Next;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>Empty list</h2><p>Represent a linked list with no nodes.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">Node head = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">Node head = null;</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Create a linked list</h3><div class="question-text"><p>Create nodes 10, 20 and 30 and link them from <code>head</code>.</p></div><div class="success-check">Following Next from Head reaches 10, 20, 30, then null.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Traverse the list</h3><div class="question-text"><p>Use a temporary <code>current</code> reference to output every node without changing Head.</p></div><div class="success-check">All nodes are printed and Head still points to the first node.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · ADD</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Insert at the front</h3><div class="question-text"><p>Create a node containing 5 and make it the new Head.</p></div><div class="success-check">The list becomes 5 → 10 → 20 → 30.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove the second node</h3><div class="question-text"><p>Remove the node after Head by changing references, then traverse to prove the result.</p></div><div class="success-check">The removed node is skipped and the remaining chain is intact.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A sequence of nodes connected by references.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">linked list</div><p>Nodes need not be adjacent.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One element containing data and a link.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">node</div><p>The link points to another node.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The reference to the first node.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Head</div><p>Traversal starts at Head.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The reference to the next node.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Next</div><p>The final Next is null.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Visit nodes in sequence.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">traverse</div><p>Follow Next until null.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Add a new node by changing links.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">insert</div><p>Links must preserve the rest of the list.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Delete a node from the logical sequence.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">remove</div><p>Usually achieved by bypassing it.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The marker for no next node.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">null</div><p>It identifies the end.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">To traverse a singly linked list without losing the start, use a temporary reference such as <code>current</code>.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 019 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-ds019"></script>
+</body>
+</html>
