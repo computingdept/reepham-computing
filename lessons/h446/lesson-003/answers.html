@@ -1,9 +1,46 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>You Do answers · Hexadecimal, shifts and masks</title><link rel="stylesheet" href="style.css"></head><body class="answer-page"><header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span>Lesson 3 · Marking guide</span></header><main class="answer-content"><div class="eyebrow">YOU DO · 23 MARKS</div><h1>Answers &amp; marking guide</h1><p>Scroll through the answers. Award the marks shown, then correct and explain any mistakes.</p><h3>Question 1 · [1]</h3><p>B = 1011; 7 = 0111; E = 1110. Answer: <strong><code>1011 0111 1110</code></strong> (1). Retain four bits per hexadecimal digit.</p>
-<h3>Question 2 · [1]</h3><p>188 ÷ 16 = 11 remainder 12 → <strong>BC</strong> (1). Check: 11 × 16 + 12 = 188.</p>
-<h3>Question 3 · [6]</h3><ol type="a"><li>1110 = E and 0101 = 5 (1); <strong>E5</strong> (1).</li><li>(3 × 256) + (10 × 16) + 7 (1) = <strong>935</strong> (1).</li><li>214 ÷ 16 = 13 remainder 6 (1); <strong>D6</strong> (1).</li></ol>
-<h3>Question 4 · [6]</h3><ol type="a"><li><code>00001101</code> (1), <strong>13</strong> (1).</li><li><code>01000010</code> (1). The leftmost 1 is shifted out and discarded (1); 161 × 2 = 322 exceeds 255, while the stored value is 66 (1).</li><li><code>00000111</code> (1). The stored value is 7, not 7.5.</li></ol>
-<h3>Question 5 · [3]</h3><pre class="arithmetic">     10100101       10100101       10100101
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 003 · You Do Answers</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1600">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1600">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
+.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
+.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-title{font-weight:900;color:var(--green-dark)}.answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
+main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
+.answer-stage{height:100%;display:flex;gap:12px;align-items:stretch;justify-content:center}.answer-stage[hidden]{display:none!important}
+.answer-card{flex:0 1 1050px;max-width:1050px;min-width:0;height:100%;overflow:auto;border-top:7px solid var(--green)}
+.answer-card .phase-tag{font-size:11px;margin-bottom:8px}.answer-card h3{margin:4px 0 10px;font-size:clamp(24px,1.9vw,31px)}
+.answer-card p,.answer-card li{font-size:clamp(18px,1.25vw,22px);line-height:1.32}.answer-card .arithmetic{font-size:clamp(18px,1.18vw,22px)}
+.answer-heading{margin:6px 0 10px;color:var(--green);font-size:13px;font-weight:950;letter-spacing:.11em}
+.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
+.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+#next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}
+@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.answer-card{padding:14px}.answer-card h3{font-size:22px}.answer-card p,.answer-card li{font-size:17px}.answer-card .arithmetic{font-size:17px}}
+@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.answer-card{height:auto;max-width:none;overflow:visible}}
+</style>
+</head>
+<body class="answer-page">
+<header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span class="answer-title">HEXADECIMAL, SHIFTS & MASKS · ANSWERS</span><span class="answer-counter" id="answer-counter">Answer 1 of 6</span></header>
+<main class="answer-stage-wrap">
+<section class="answer-stage"><article class="exam-card answer-card"><span class="phase-tag">Question 1 · [1]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><p>B = 1011; 7 = 0111; E = 1110. Answer: <strong><code>1011 0111 1110</code></strong> (1). Retain four bits per hexadecimal digit.</p></article></section>
+<section class="answer-stage" hidden><article class="exam-card answer-card"><span class="phase-tag">Question 2 · [1]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><p>188 ÷ 16 = 11 remainder 12 → <strong>BC</strong> (1). Check: 11 × 16 + 12 = 188.</p></article></section>
+<section class="answer-stage" hidden><article class="exam-card answer-card"><span class="phase-tag">Question 3 · [6]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><ol type="a"><li>1110 = E and 0101 = 5 (1); <strong>E5</strong> (1).</li><li>(3 × 256) + (10 × 16) + 7 (1) = <strong>935</strong> (1).</li><li>214 ÷ 16 = 13 remainder 6 (1); <strong>D6</strong> (1).</li></ol></article></section>
+<section class="answer-stage" hidden><article class="exam-card answer-card"><span class="phase-tag">Question 4 · [6]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><ol type="a"><li><code>00001101</code> (1), <strong>13</strong> (1).</li><li><code>01000010</code> (1). The leftmost 1 is shifted out and discarded (1); 161 × 2 = 322 exceeds 255, while the stored value is 66 (1).</li><li><code>00000111</code> (1). The stored value is 7, not 7.5.</li></ol></article></section>
+<section class="answer-stage" hidden><article class="exam-card answer-card"><span class="phase-tag">Question 5 · [3]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><pre class="arithmetic">     10100101       10100101       10100101
 AND  00001111   OR  01000010  XOR  11110000
 -------------  ------------  ------------
-     00000101       11100111       01010101</pre><p>One mark per correct result. Each operation starts from the original byte.</p>
-<h3>Question 6 · [6]</h3><ol type="a"><li><strong>AND</strong> (1) with <code>00111111</code> (1). Zeros clear bits 7 and 6; ones preserve the rest.</li><li><strong>OR</strong> (1) with <code>00001001</code> (1). Ones set bits 3 and 0.</li><li><strong>XOR</strong> (1) with <code>00100100</code> (1). Ones toggle bits 5 and 2.</li></ol><div class="note"><strong>Mark and improve:</strong> Record your score out of 23. Correct an error and explain whether it involved a nibble, a discarded bit, an operation or a mask.</div><p class="fine">Q1–Q2 retain the original exam mark allocations. Q3–Q6 use classroom allocations. Answers are calculated teaching guidance, not a reproduced official OCR mark scheme.</p><a class="answer-return" href="index.html#you-do">← Return to You Do</a></main></body></html>
+     00000101       11100111       01010101</pre><p>One mark per correct result. Each operation starts from the original byte.</p></article></section>
+<section class="answer-stage" hidden><article class="exam-card answer-card"><span class="phase-tag">Question 6 · [6]</span><div class="answer-heading">ANSWER &amp; MARKING GUIDE</div><ol type="a"><li><strong>AND</strong> (1) with <code>00111111</code> (1). Zeros clear bits 7 and 6; ones preserve the rest.</li><li><strong>OR</strong> (1) with <code>00001001</code> (1). Ones set bits 3 and 0.</li><li><strong>XOR</strong> (1) with <code>00100100</code> (1). Ones toggle bits 5 and 2.</li></ol><div class="note"><strong>Mark and improve:</strong> Record your score out of 23. Correct an error and explain whether it involved a nibble, a discarded bit, an operation or a mask.</div><p class="fine">Q1–Q2 retain the original exam mark allocations. Q3–Q6 use classroom allocations. Answers are calculated teaching guidance, not a reproduced official OCR mark scheme.</p></article></section>
+</main>
+<div class="answer-controls"><button type="button" id="previous-answer" disabled>← Previous answer</button><a href="index.html#you-do">Return to You Do</a><button type="button" id="next-answer">Next answer →</button></div>
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;
+function showAnswer(index){current=Math.max(0,Math.min(index,stages.length-1));stages.forEach((stage,i)=>stage.hidden=i!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to You Do →':'Next answer →';counter.textContent='Answer '+(current+1)+' of '+stages.length}
+function goNext(){if(current<stages.length-1)showAnswer(current+1);else location.href='index.html#you-do'}function goPrevious(){if(current>0)showAnswer(current-1)}
+next.addEventListener('click',goNext);previous.addEventListener('click',goPrevious);document.addEventListener('keydown',e=>{if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrevious()}});showAnswer(0);
+</script>
+</body></html>
