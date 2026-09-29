@@ -12,8 +12,8 @@
   --danger:#87350c;
   --nav-w:176px;
   --phase-meta-h:0px;
-  --signal-h:80px;
-  --top-h:80px;
+  --signal-h:66px;
+  --top-h:66px;
   --footer-h:38px;
   --phase-bar-h:0px;
   --radius:12px;
@@ -53,7 +53,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid #e0
 
 .signal-wrap{
   position:fixed;left:var(--nav-w);right:0;top:var(--phase-meta-h);z-index:30;height:var(--signal-h);
-  padding:3px 3vw;background:rgba(244,247,245,.97);border-bottom:1px solid var(--line);
+  padding:4px 3vw;background:rgba(244,247,245,.97);border-bottom:1px solid var(--line);
   display:flex;align-items:center;justify-content:space-between;gap:18px;
 }
 .signals{display:flex;align-items:center;gap:10px;min-width:0}
@@ -498,49 +498,48 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
 
 
 /* PHASE HEADER STANDARD
-   The three signal tiles are the header. No duplicate phase bar.
-   Phase timing sits directly beneath the blue tile. */
+   The three equal signal tiles are the header. No duplicate phase bar.
+   Phase timing sits at the far top-right of the signal bar. */
 .section-top{display:none!important}
 .signal-wrap{top:0}
-.signals{align-items:flex-start}
-.signal-phase-group{
-  width:124px;
-  flex:0 0 124px;
+.signals{align-items:center}
+.signal-meta{
+  margin-left:auto;
+  align-self:stretch;
+  min-width:190px;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  gap:1px;
-}
-.signal-phase-group .signal-tile{
-  width:124px;
-  flex:0 0 56px;
+  align-items:flex-end;
+  justify-content:flex-start;
 }
 .signal-phase-time{
-  min-height:16px;
   color:var(--muted);
-  font-size:12px;
-  font-weight:750;
+  font-size:13px;
+  font-weight:800;
   line-height:1.15;
-  text-align:center;
+  text-align:right;
   white-space:nowrap;
 }
+.signal-meta .lesson-label{
+  margin-top:auto;
+}
+
 @media(max-height:760px) and (min-width:901px){
-  .signal-phase-group{width:124px;flex-basis:124px}
-  .signal-phase-group .signal-tile{width:124px;flex-basis:50px}
-  .signal-phase-time{min-height:13px;font-size:11px;line-height:1.05}
+  .signal-phase-time{font-size:12px}
+  .signal-meta{min-width:175px}
 }
 @media(max-width:900px){
-  .signal-phase-group{width:120px;flex-basis:120px}
-  .signal-phase-group .signal-tile{width:120px;flex-basis:56px}
+  .signal-meta{min-width:100px}
 }
 @media(max-width:520px){
-  .signal-phase-group{
-    width:calc((100vw - 42px)/3);
-    flex-basis:calc((100vw - 42px)/3);
-  }
-  .signal-phase-group .signal-tile{
-    width:calc((100vw - 42px)/3);
-    flex-basis:56px;
+  .signal-wrap{flex-wrap:wrap}
+  .signal-meta{
+    width:100%;
+    min-width:0;
+    height:auto;
+    margin-top:2px;
+    flex-direction:row;
+    justify-content:flex-end;
   }
   .signal-phase-time{font-size:10px}
 }
