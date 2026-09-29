@@ -6,9 +6,9 @@
 <title>Lesson 004 · Denary → floating point</title>
 <meta name="description" content="OCR H446 1.4.1(g): Denary → floating point.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E04%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1600">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1600">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1600">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -29,9 +29,44 @@
 <section id="new-learning" class="page" data-phase-time="7 minutes"><div class="migration-content"><div class="task"><span class="phase-tag">BINARY FRACTIONS</span><h3>Place values continue after the point</h3><pre class="arithmetic">Integer places      Fractional places
     4  2  1    .     ½  ¼  ⅛  ¹⁄₁₆  …</pre><p>6.5 = 4 + 2 + ½ = 110.1₂. For 0.375, select ¼ + ⅛: 0.011₂. Another method: repeatedly multiply the fraction by 2, recording each integer part in order. Stop when the remaining fraction is zero.</p></div><div class="task"><span class="phase-tag">TWO FIELDS</span><h3>Value = mantissa × 2ᵉˣᵖᵒⁿᵉⁿᵗ</h3><pre class="arithmetic">Mantissa weights: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈
 Exponent weights: −8   4   2   1</pre><p>The mantissa’s binary point is immediately after its sign bit; it is implied, not stored. The exponent is a signed integer from −8 to +7. There is no separate sign bit outside these fields and no exponent bias in this format.</p></div><div class="task"><span class="phase-tag">NORMALISATION</span><h3>The first two mantissa bits must differ</h3><p>A normalised positive mantissa starts <strong>01</strong>; a negative mantissa starts <strong>10</strong>. Leading 00 or 11 means redundant sign bits remain. Shift the mantissa left and <strong>decrease the exponent</strong> by the same number of places, preserving the value.</p><p>Normalisation makes full use of the significant bits available. Extra mantissa bits improve precision; extra exponent bits increase range. Zero is a special case: use all-zero fields.</p></div></section></div></section>
-<section id="i-do" class="page phase-ido" data-phase-time="5 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>1. Positive value: 6.5</h2><p>Follow the method from start to finish.</p><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">WORKED METHOD</span><pre class="arithmetic">6.5 = 110.1₂ = 0.1101₂ × 2³
-Mantissa: 01101000    Exponent: 0011
-Stored:   01101000 0011</pre><p>Move the binary point three places left to make the mantissa 0.1101. Pad on the right to fill eight bits including the sign. Check: 0.8125 × 8 = 6.5.</p></div></div></article></div></section>
+<section id="i-do" class="page phase-ido" data-phase-time="5 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Encode +6.5 in 8+4 floating point</h2>
+        <span class="focus-code">6.5₁₀ → ?</span>
+        <p>Use an eight-bit mantissa and four-bit exponent.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · DENARY → BINARY</span>
+          <h2>Write 6.5 in binary</h2>
+          <pre class="arithmetic">6.5 = 110.1₂</pre>
+          <p>The whole-number part is <code>110</code>; the 0.5 fractional part is <code>.1</code>.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · NORMALISE</span>
+          <h2>Move the binary point</h2>
+          <pre class="arithmetic">110.1₂
+= 0.1101₂ × 2³</pre>
+          <p>The binary point moves three places left, so the exponent is <strong>3</strong>.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · ENCODE &amp; CHECK</span>
+          <h2>Write the two fields</h2>
+          <pre class="arithmetic">Mantissa: 01101000
+Exponent: 0011
+
+Stored: 01101000 0011</pre>
+          <p>Check: <code>0.8125 × 8 = 6.5</code>.</p>
+          <div class="key-result">Final representation = <strong>01101000 0011</strong></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 <section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>2. A small fraction: 0.15625</h2><p>Use the method from I Do to build the answer.</p><span class="wedo-example-count">Example 1 of 5</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the answer</h2><div class="practice-grid"><div class="practice-box"><strong>Method</strong><span>?</span></div><div class="practice-box"><strong>Working</strong><span>?</span></div><div class="practice-box"><strong>Final answer</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Compare your method</h2><pre class="arithmetic">0.15625 = ⅛ + ¹⁄₃₂ = 0.00101₂
         = 0.101₂ × 2⁻²
 Mantissa: 01010000    Exponent: 1110
@@ -50,6 +85,6 @@ Final answer:     10000010 0100</pre><p>Check: mantissa −0.984375 × 16 = −1
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-ticket-panel"><div class="exit-response-key"><strong>TRUE OR FALSE?</strong><div class="exit-key-options"><span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span><span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span></div></div><div class="exit-statements"><article class="exit-statement"><span class="exit-number">1</span><p>A positive normalised mantissa begins with 01.</p></article><article class="exit-statement"><span class="exit-number">2</span><p>If a mantissa is shifted left to normalise it, the exponent should increase by the same amount.</p></article><article class="exit-statement"><span class="exit-number">3</span><p>More mantissa bits improve precision.</p></article></div><div class="exit-confidence"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
 </main>
 <div class="lesson-footer">Lesson 004 · 1.4.1(g) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1600"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1815"></script>
 </body>
 </html>
