@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OCR H446 C# Programming Guide · RHSC</title>
+<meta name="description" content="OCR H446 C# programming guide for .NET Fiddle.">
+<style>
+:root{
+  --ink:#17302d;--muted:#60716d;--green:#10513f;--green-dark:#0a4234;
+  --green-soft:#e5f0eb;--paper:#f4f7f5;--line:#d6e0dc;--code:#f2f5f3;
+  --shadow:0 10px 28px rgba(13,55,44,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{
+  position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);
+  padding:12px clamp(16px,4vw,48px);display:flex;gap:16px;align-items:center;flex-wrap:wrap
+}
+header a{color:var(--green-dark);font-weight:900;text-decoration:none}
+header .title{font-weight:950}
+header .spacer{margin-left:auto}
+header .fiddle{padding:8px 11px;border-radius:8px;background:var(--green);color:#fff}
+main{width:min(1120px,94vw);margin:24px auto 60px}
+.hero{background:#fff;border:1px solid var(--line);border-top:8px solid var(--green);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.hero h1{margin:0 0 8px;font-size:clamp(30px,4vw,48px)}
+.hero p{font-size:18px;line-height:1.45}
+.quick-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.quick-links a{padding:8px 10px;border-radius:999px;background:var(--green-soft);color:var(--green-dark);text-decoration:none;font-size:14px;font-weight:850}
+section{scroll-margin-top:82px;margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+section h2{margin:0 0 12px;color:var(--green-dark);font-size:clamp(24px,3vw,34px)}
+section h3{margin:20px 0 8px;font-size:20px}
+p,li{font-size:17px;line-height:1.45}
+pre{overflow:auto;margin:12px 0;padding:14px;border-radius:10px;background:var(--code);font:700 15px/1.35 Consolas,"Courier New",monospace;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px}
+th,td{padding:9px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--green-soft);color:var(--green-dark)}
+.note{margin-top:12px;padding:12px 14px;border-left:5px solid var(--green);background:var(--green-soft);border-radius:0 10px 10px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+code{font-family:Consolas,"Courier New",monospace}
+footer{text-align:center;color:var(--muted);padding:20px}
+@media(max-width:760px){header{position:relative}.spacer{display:none}.two{grid-template-columns:1fr}main{width:min(96vw,1120px)}section,.hero{padding:16px}table{font-size:14px}pre{font-size:13px}}
+@media print{header,.quick-links,.fiddle{display:none!important}body{background:#fff}.hero,section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <a href="../h446-hub.html">← Year 12 lessons</a>
+  <span class="title">OCR H446 · C# Programming Guide</span>
+  <span class="spacer"></span>
+  <a class="fiddle" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>C# Programming Guide</h1>
+    <p><strong>OCR pseudocode → .NET Fiddle.</strong> Use this guide when you are absent, catching up, or need a syntax reminder while coding.</p>
+    <div class="note"><strong>Using .NET Fiddle:</strong> copy the whole runnable program into a new C# Fiddle. Replace the code already in the editor rather than pasting a second <code>Program</code> class underneath it.</div>
+    <div class="quick-links">
+      <a href="#structure">Program structure</a><a href="#variables">Variables & input</a><a href="#selection">Operators & if</a>
+      <a href="#switch-for">switch & for</a><a href="#while">while & validation</a><a href="#dowhile">do...while & strings</a>
+      <a href="#arrays">1D arrays</a><a href="#algorithms">Array algorithms</a><a href="#two-d">2D arrays</a>
+      <a href="#methods">Methods</a><a href="#parameters">By value / reference</a><a href="#files">Files</a><a href="#quick">Quick reference</a>
+    </div>
+  </div>
+
+  <section id="structure">
+    <h2>Using this guide with .NET Fiddle</h2>
+    <h3>The standard structure</h3>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        // Main program instructions go here.
+        Console.WriteLine("Hello");
+    }
+}</pre>
+    <table>
+      <tr><th>Code</th><th>Place it</th></tr>
+      <tr><td><code>using</code> statements</td><td>At the top, before <code>Program</code></td></tr>
+      <tr><td>Variables and instructions</td><td>Inside <code>Main</code></td></tr>
+      <tr><td>Functions and procedures</td><td>Inside <code>Program</code>, but outside <code>Main</code></td></tr>
+    </table>
+    <div class="note">This class-and-<code>Main</code> format avoids top-level-statement differences between C# versions and is the standard structure used in these lessons.</div>
+  </section>
+
+  <section id="variables">
+    <h2>1. Variables, input, output and casting</h2>
+    <p>C# declares the data type before the variable name. <code>Console.ReadLine()</code> returns a string; use <code>Parse</code> when a numeric value is required.</p>
+    <table>
+      <tr><th>OCR idea</th><th>C#</th></tr>
+      <tr><td><code>x = 3</code></td><td><code>int x = 3;</code></td></tr>
+      <tr><td><code>name = "Bob"</code></td><td><code>string name = "Bob";</code></td></tr>
+      <tr><td><code>print(name)</code></td><td><code>Console.WriteLine(name);</code></td></tr>
+      <tr><td>text input</td><td><code>string name = Console.ReadLine();</code></td></tr>
+      <tr><td>integer input</td><td><code>int age = int.Parse(Console.ReadLine());</code></td></tr>
+      <tr><td>real input</td><td><code>double height = double.Parse(Console.ReadLine());</code></td></tr>
+    </table>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Enter your name: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Enter your age: ");
+        int age = int.Parse(Console.ReadLine());
+
+        Console.WriteLine($"Hello {name}. You are {age} years old.");
+    }
+}</pre>
+    <div class="note">Strings use double quotation marks. Characters use single quotation marks. C# is case-sensitive, and statements normally end with a semicolon.</div>
+  </section>
+
+  <section id="selection">
+    <h2>2. Operators and selection with if</h2>
+    <table>
+      <tr><th>Meaning</th><th>OCR</th><th>C#</th></tr>
+      <tr><td>remainder</td><td>MOD</td><td><code>%</code></td></tr>
+      <tr><td>integer quotient</td><td>DIV</td><td><code>/</code> with <code>int</code> values</td></tr>
+      <tr><td>power</td><td>^</td><td><code>Math.Pow(a, b)</code></td></tr>
+      <tr><td>AND</td><td>AND</td><td><code>&amp;&amp;</code></td></tr>
+      <tr><td>OR</td><td>OR</td><td><code>||</code></td></tr>
+      <tr><td>NOT</td><td>NOT</td><td><code>!</code></td></tr>
+      <tr><td>equal</td><td>==</td><td><code>==</code></td></tr>
+      <tr><td>not equal</td><td>!=</td><td><code>!=</code></td></tr>
+    </table>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Enter a mark: ");
+        int mark = int.Parse(Console.ReadLine());
+
+        if (mark >= 80)
+        {
+            Console.WriteLine("Distinction");
+        }
+        else if (mark >= 50)
+        {
+            Console.WriteLine("Pass");
+        }
+        else
+        {
+            Console.WriteLine("Fail");
+        }
+    }
+}</pre>
+    <div class="note"><strong>Order matters:</strong> test 80 before 50. Also remember: <code>=</code> assigns a value; <code>==</code> compares two values.</div>
+  </section>
+
+  <section id="switch-for">
+    <h2>3. switch selection and for loops</h2>
+    <div class="two">
+      <div>
+        <h3>switch / case</h3>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Enter A, B or C: ");
+        string entry = Console.ReadLine();
+
+        switch (entry)
+        {
+            case "A":
+                Console.WriteLine("You selected A");
+                break;
+            case "B":
+                Console.WriteLine("You selected B");
+                break;
+            case "C":
+                Console.WriteLine("You selected C");
+                break;
+            default:
+                Console.WriteLine("Unrecognised selection");
+                break;
+        }
+    }
+}</pre>
+      </div>
+      <div>
+        <h3>Count-controlled iteration</h3>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        for (int i = 0; i <= 7; i++)
+        {
+            Console.WriteLine($"Repetition {i}");
+        }
+    }
+}</pre>
+        <p>This loop runs eight times: 0 to 7 inclusive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="while">
+    <h2>4. while loops and the valid Boolean pattern</h2>
+    <p>A <code>while</code> loop tests before it repeats. It is useful when the number of attempts is unknown.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        bool valid = false;
+        int number = 0;
+
+        while (valid == false)
+        {
+            Console.Write("Enter a number from 1 to 5: ");
+            number = int.Parse(Console.ReadLine());
+
+            if (number >= 1 && number <= 5)
+            {
+                valid = true;
+            }
+            else
+            {
+                Console.WriteLine("Invalid - try again.");
+            }
+        }
+
+        Console.WriteLine($"Accepted: {number}");
+    }
+}</pre>
+    <div class="note"><strong>Valid Boolean pattern:</strong> start <code>false</code>. Keep asking while it is false. Set it to <code>true</code> only when the accepted condition is met.</div>
+  </section>
+
+  <section id="dowhile">
+    <h2>5. do...while loops and strings</h2>
+    <p>OCR's <code>do...until</code> stops when its condition becomes true. C# <code>do...while</code> continues while its condition is true, so the test is reversed.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        string answer;
+
+        do
+        {
+            Console.Write("Enter the password: ");
+            answer = Console.ReadLine();
+        }
+        while (answer != "computer");
+
+        Console.Write("Enter a word: ");
+        string word = Console.ReadLine();
+
+        Console.WriteLine($"Length: {word.Length}");
+        Console.WriteLine($"First: {word[0]}");
+        Console.WriteLine($"Last: {word[word.Length - 1]}");
+
+        string text = "Programming";
+        Console.WriteLine(text.Substring(3, 4)); // gram
+    }
+}</pre>
+    <div class="note">Strings are zero indexed. The first character is at index 0; the last is at <code>word.Length - 1</code>.</div>
+  </section>
+
+  <section id="arrays">
+    <h2>6. One-dimensional arrays</h2>
+    <p>An array stores a fixed number of values of the same type. OCR and C# arrays are zero indexed.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        string[] names =
+        {
+            "Ahmad", "Ben", "Catherine", "Dana", "Elijah"
+        };
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            Console.WriteLine($"Index {i}: {names[i]}");
+        }
+    }
+}</pre>
+    <div class="note"><strong>Boundary warning:</strong> use <code>i &lt; names.Length</code>, not <code>i &lt;= names.Length</code>.</div>
+  </section>
+
+  <section id="algorithms">
+    <h2>7. Array algorithms and linear search</h2>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int[] scores = { 67, 42, 81, 55, 39 };
+        int total = 0;
+        int passes = 0;
+        int highest = scores[0];
+
+        for (int i = 0; i < scores.Length; i++)
+        {
+            total += scores[i];
+
+            if (scores[i] >= 50)
+            {
+                passes++;
+            }
+
+            if (scores[i] > highest)
+            {
+                highest = scores[i];
+            }
+        }
+
+        double average = (double)total / scores.Length;
+
+        Console.WriteLine($"Total: {total}");
+        Console.WriteLine($"Average: {average}");
+        Console.WriteLine($"Passes: {passes}");
+        Console.WriteLine($"Highest: {highest}");
+    }
+}</pre>
+    <h3>Linear search pattern</h3>
+<pre>bool found = false;
+
+for (int i = 0; i < scores.Length; i++)
+{
+    if (scores[i] == 81)
+    {
+        found = true;
+    }
+}
+
+Console.WriteLine(found ? "Found" : "Not found");</pre>
+  </section>
+
+  <section id="two-d">
+    <h2>8. Two-dimensional arrays</h2>
+    <p>A two-dimensional array stores values in rows and columns. Use nested loops to visit every position.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int[,] grid =
+        {
+            { 1, 2, 3 },
+            { 4, 5, 6 }
+        };
+
+        int total = 0;
+
+        for (int row = 0; row < grid.GetLength(0); row++)
+        {
+            for (int column = 0; column < grid.GetLength(1); column++)
+            {
+                Console.WriteLine(grid[row, column]);
+                total += grid[row, column];
+            }
+        }
+
+        Console.WriteLine($"Total: {total}");
+    }
+}</pre>
+    <table>
+      <tr><th>Expression</th><th>Meaning</th></tr>
+      <tr><td><code>grid.GetLength(0)</code></td><td>number of rows</td></tr>
+      <tr><td><code>grid.GetLength(1)</code></td><td>number of columns</td></tr>
+      <tr><td><code>grid[row, column]</code></td><td>value at one position</td></tr>
+    </table>
+  </section>
+
+  <section id="methods">
+    <h2>9. Subroutines: functions and procedures</h2>
+    <p>In C#, both OCR functions and procedures are methods. A function returns a value; a procedure uses <code>void</code> and does not return a value.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int answer = Triple(7);
+        Console.WriteLine(answer);
+
+        Greeting("Hamish");
+        Console.WriteLine(IsEven(12));
+    }
+
+    public static int Triple(int number)
+    {
+        return number * 3;
+    }
+
+    public static void Greeting(string name)
+    {
+        Console.WriteLine("Hello " + name);
+    }
+
+    public static bool IsEven(int number)
+    {
+        return number % 2 == 0;
+    }
+}</pre>
+    <div class="note">Methods are inside the <code>Program</code> class but outside <code>Main</code>. Calls to those methods normally appear inside <code>Main</code>.</div>
+  </section>
+
+  <section id="parameters">
+    <h2>10. Passing parameters by value and reference</h2>
+    <p>OCR assumes parameters are passed by value unless it explicitly states <code>byRef</code>.</p>
+<pre>using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int first = 10;
+        ChangeByValue(first);
+        Console.WriteLine($"After value: {first}"); // 10
+
+        int second = 10;
+        ChangeByReference(ref second);
+        Console.WriteLine($"After ref: {second}"); // 100
+    }
+
+    public static void ChangeByValue(int number)
+    {
+        number = 100;
+    }
+
+    public static void ChangeByReference(ref int number)
+    {
+        number = 100;
+    }
+}</pre>
+    <table>
+      <tr><th>Passing method</th><th>Method receives</th><th>Original changes?</th></tr>
+      <tr><td>by value</td><td>a copy</td><td>No</td></tr>
+      <tr><td>by reference / <code>ref</code></td><td>access to the original</td><td>Yes</td></tr>
+    </table>
+    <div class="note">Write <code>ref</code> in both places: in the method parameter and in the method call.</div>
+  </section>
+
+  <section id="files">
+    <h2>11. Files and comments</h2>
+<pre>using System;
+using System.IO;
+
+public class Program
+{
+    public static void Main()
+    {
+        string fileName = "sample.txt";
+
+        using (StreamWriter writer = new StreamWriter(fileName))
+        {
+            writer.WriteLine("Hello World");
+            writer.WriteLine("OCR H446");
+        }
+
+        using (StreamReader reader = new StreamReader(fileName))
+        {
+            while (!reader.EndOfStream)
+            {
+                Console.WriteLine(reader.ReadLine());
+            }
+        }
+    }
+}</pre>
+    <div class="note">OCR and C# both use <code>//</code> for a single-line comment. Explain purpose rather than simply repeating the instruction.</div>
+  </section>
+
+  <section id="quick">
+    <h2>12. Quick reference and testing</h2>
+    <table>
+      <tr><th>OCR pseudocode</th><th>C#</th></tr>
+      <tr><td><code>print(value)</code></td><td><code>Console.WriteLine(value);</code></td></tr>
+      <tr><td><code>input(prompt)</code></td><td><code>Console.ReadLine()</code></td></tr>
+      <tr><td><code>int(text)</code></td><td><code>int.Parse(text)</code></td></tr>
+      <tr><td><code>float(text)</code></td><td><code>double.Parse(text)</code></td></tr>
+      <tr><td><code>str(value)</code></td><td><code>value.ToString()</code></td></tr>
+      <tr><td><code>.length</code></td><td><code>.Length</code></td></tr>
+      <tr><td><code>.subString(a,b)</code></td><td><code>.Substring(a,b)</code></td></tr>
+      <tr><td>AND / OR / NOT</td><td><code>&amp;&amp; / || / !</code></td></tr>
+      <tr><td>MOD / DIV</td><td><code>% /</code> integer division with <code>/</code></td></tr>
+      <tr><td><code>^</code></td><td><code>Math.Pow(a,b)</code></td></tr>
+      <tr><td><code>array x[5]</code></td><td><code>int[] x = new int[5];</code></td></tr>
+      <tr><td><code>array board[8,8]</code></td><td><code>int[,] board = new int[8,8];</code></td></tr>
+      <tr><td>function</td><td>method returning a value</td></tr>
+      <tr><td>procedure</td><td><code>void</code> method</td></tr>
+      <tr><td>byRef</td><td><code>ref</code></td></tr>
+    </table>
+
+    <h3>Test deliberately</h3>
+    <table>
+      <tr><th>Test type</th><th>Purpose</th><th>For accepted range 1–10</th></tr>
+      <tr><td>normal</td><td>typical accepted input</td><td>5</td></tr>
+      <tr><td>boundary</td><td>exact lower or upper limit</td><td>1 and 10</td></tr>
+      <tr><td>invalid</td><td>must be rejected</td><td>0 and 11</td></tr>
+    </table>
+
+    <h3>Three questions when coding</h3>
+    <ul>
+      <li>What data do I need — variables, types or arrays?</li>
+      <li>What decision or repetition do I need — <code>if</code>, <code>switch</code>, <code>for</code> or <code>while</code>?</li>
+      <li>What condition makes the task complete?</li>
+    </ul>
+    <div class="note"><strong>Validation/search reminder:</strong> the Boolean starts false. It becomes true only when the required condition has been met.</div>
+  </section>
+</main>
+
+<footer>RHSC Computer Science · OCR H446 · C# Programming Guide</footer>
+</body>
+</html>
