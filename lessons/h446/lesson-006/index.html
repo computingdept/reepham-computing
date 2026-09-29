@@ -6,9 +6,9 @@
 <title>Lesson 006 · Floating-point addition</title>
 <meta name="description" content="OCR H446 1.4.1(h): Floating-point addition.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E06%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1600">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1600">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1600">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -28,11 +28,49 @@
 <section id="overview" class="page" data-phase-time="2 minutes"><h1>Floating-point addition</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>align exponents while preserving operand values;</li><li>add signed mantissas using sufficient working width;</li><li>normalise a sum and explain possible precision loss.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span>Exponent alignment</span><span>Arithmetic right shift</span><span>Sign extension</span><span>Guard bits</span><span>Renormalisation</span><span>Rounding error</span></div></div><p>Worked examples use a SIX-bit two’s-complement mantissa and FOUR-bit exponent. The mantissa’s implied point follows the sign bit. Read every question: one guided example uses a four-bit mantissa.</p></section>
 <section id="new-learning" class="page" data-phase-time="7 minutes"><div class="migration-content"><div class="task"><h3>Align → add → normalise</h3><pre class="arithmetic">Six-bit mantissa weights: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂
 Four-bit exponent weights: −8   4   2   1</pre><ol><li>Choose the larger exponent.</li><li>For every increase of 1 in the smaller exponent, shift that mantissa right once. Repeat the sign bit on the left.</li><li>Add the aligned mantissas. Use a temporary extra sign bit so the working sum cannot wrap into the wrong sign.</li><li>Normalise the result and write the requested mantissa and exponent widths.</li></ol></div><div class="task"><h3>Sign-preserving shifts</h3><p>An <strong>arithmetic right shift</strong> repeats the sign bit: 0 for positive values, 1 for negative values. Lesson 003’s logical shift always inserted 0, so it is not suitable for aligning negative mantissas.</p><p>Keep extra low-order working bits if a shift would discard a nonzero bit. These guard bits protect precision during calculation; they are not extra bits in the final stored format.</p></div><div class="task"><h3>Keep value and scale in balance</h3><p>If the sum is outside the mantissa range −1 to less than +1, halve the mantissa and increase the exponent. If it has redundant leading sign bits, shift left and decrease the exponent. Nonzero normalised mantissas begin 01 or 10.</p><p>For a six-bit mantissa, a temporary seven-bit sum keeps FIVE fractional positions: its weights are −2, 1, ½, ¼, ⅛, ¹⁄₁₆, ¹⁄₃₂. This wider working sum is not a seven-bit stored mantissa.</p><p>Check the exponent fits −8…7. Exponent overflow means the value is too large for this format; insufficient mantissa precision is a different problem.</p></div></section></div></section>
-<section id="i-do" class="page phase-ido" data-phase-time="5 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>1. Different exponents: 5 + 1.5</h2><p>Follow the method from start to finish.</p><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">WORKED METHOD</span><p>Use common exponent 3 (0011). Shift the smaller-scale mantissa right, repeating its sign bit.</p><pre class="arithmetic">Aligned mantissas: 010100 and 000110
-Temporary extra sign bit, same fractional places:
-   0010100
+<section id="i-do" class="page phase-ido" data-phase-time="5 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Add 5 + 1.5</h2>
+        <span class="focus-code">5 + 1.5</span>
+        <p>Use a six-bit mantissa and four-bit exponent.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · ALIGN EXPONENTS</span>
+          <h2>Use the common exponent 3</h2>
+          <p>Raise the second exponent from 1 to 3, so shift its mantissa right twice using sign extension.</p>
+          <pre class="arithmetic">010100 0011
+011000 0001 → 000110 0011</pre>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · ADD MANTISSAS</span>
+          <h2>Use a temporary extra sign bit</h2>
+          <pre class="arithmetic">   0010100
  + 0000110
- = 0011010</pre><p>The unnormalised sum is 26/32 × 2<sup>3</sup>. Normalise and return to the requested field widths.</p><pre class="arithmetic">Final: 011010 0011</pre><p>Denary check: 5 + (1.5) = 6.5.</p><p>The second exponent rises from 1 to 3: two right shifts turn 011000 into 000110. The sum already begins 01.</p></div></div></article></div></section>
+ = 0011010</pre>
+          <p>The working sum is <code>26/32 × 2³</code>.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · NORMALISE</span>
+          <h2>Return to the requested width</h2>
+          <pre class="arithmetic">0011010
+→ 011010 0011</pre>
+          <p>The mantissa already begins <code>01</code>, so the exponent stays at 3.</p>
+        </div>
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · CHECK</span>
+          <h2>Verify in denary</h2>
+          <pre class="arithmetic">5 + 1.5 = 6.5</pre>
+          <div class="key-result">Final representation = <strong>011010 0011</strong></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 <section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>2. Rescale the sum: 6 + 5</h2><p>Use the method from I Do to build the answer.</p><span class="wedo-example-count">Example 1 of 5</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the answer</h2><div class="practice-grid"><div class="practice-box"><strong>Method</strong><span>?</span></div><div class="practice-box"><strong>Working</strong><span>?</span></div><div class="practice-box"><strong>Final answer</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Compare your method</h2><p>Use common exponent 3 (0011). Shift the smaller-scale mantissa right, repeating its sign bit.</p><pre class="arithmetic">Aligned mantissas: 011000 and 010100
 Temporary extra sign bit, same fractional places:
    0011000
@@ -55,6 +93,6 @@ Temporary extra sign bit, same fractional places:
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-ticket-panel"><div class="exit-response-key"><strong>TRUE OR FALSE?</strong><div class="exit-key-options"><span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span><span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span></div></div><div class="exit-statements"><article class="exit-statement"><span class="exit-number">1</span><p>Floating-point mantissas must be aligned to the same exponent before they are added directly.</p></article><article class="exit-statement"><span class="exit-number">2</span><p>An arithmetic right shift of a negative mantissa repeats 0 on the left.</p></article><article class="exit-statement"><span class="exit-number">3</span><p>Normalisation can restore non-zero bits that were already lost during alignment.</p></article></div><div class="exit-confidence"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
 </main>
 <div class="lesson-footer">Lesson 006 · 1.4.1(h) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1600"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1815"></script>
 </body>
 </html>
