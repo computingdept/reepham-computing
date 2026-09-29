@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 018 · OO bridge: classes, objects and references solutions</title>
+<title>Lesson 018 · Linked lists with arrays and pointers solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,43 +26,27 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 018 · OO BRIDGE: CLASSES, OBJECTS AND REFERENCES · SOLUTIONS</span>
+  <span class="answer-title">LESSON 018 · LINKED LISTS WITH ARRAYS AND POINTERS · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CLASS</span><h2>Build the Node class</h2><pre class="solution-code">using System;
-
-public class Node
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Build a linked list in arrays</h2><pre class="solution-code">string[] data = { "Ben", "Daisy", "Alex" };
+int[] next = { 1, -1, 0 };
+int start = 2;</pre><p><strong>Check:</strong> Following pointers outputs the intended order, not array order.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>Output every linked item</h2><pre class="solution-code">int current = start;
+while (current != -1)
 {
-    public int Data;
-    public Node Next;
+    Console.WriteLine(data[current]);
+    current = next[current];
+}</pre><p><strong>Check:</strong> Every logical item is output once.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD</span><h2>Insert a new first item</h2><pre class="solution-code">data[3] = "Finn";
+next[3] = start;
+start = 3;</pre><p><strong>Check:</strong> The previous first item is still reachable.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove the second logical item</h2><pre class="solution-code">next[start] = next[next[start]];
 
-    public Node(int data)
-    {
-        Data = data;
-        Next = null;
-    }
-}
-
-public class Program
+int current = start;
+while (current != -1)
 {
-    public static void Main()
-    {
-        Node n = new Node(10);
-        Console.WriteLine(n.Data);
-    }
-}</pre><p><strong>Check:</strong> A new Node stores the supplied data and starts with Next = null.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · OBJECTS</span><h2>Create and connect three nodes</h2><pre class="solution-code">Node first = new Node(10);
-Node second = new Node(20);
-Node third = new Node(30);
-first.Next = second;
-second.Next = third;
-Console.WriteLine(first.Data);
-Console.WriteLine(first.Next.Data);
-Console.WriteLine(first.Next.Next.Data);</pre><p><strong>Check:</strong> The output is 10, 20, 30 using references.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRACE</span><h2>Trace a reference change</h2><pre class="solution-code">first.Next = third;
-Console.WriteLine(first.Data);
-Console.WriteLine(first.Next.Data);
-// The node containing 20 still exists as 'second'.</pre><p><strong>Check:</strong> You can explain that 20 still exists but is no longer reached from first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · EXPLAIN</span><h2>Explain the bridge</h2><pre class="solution-code">// A reference lets one Node point to another.
-// Linked lists and trees are built by connecting nodes through references.</pre><p><strong>Check:</strong> Your explanation says nodes can connect without adjacent array positions.</p></article></section></main>
+    Console.WriteLine(data[current]);
+    current = next[current];
+}</pre><p><strong>Check:</strong> The list remains connected and the removed item is not visited.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
