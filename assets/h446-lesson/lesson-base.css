@@ -57,7 +57,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid #e0
   display:flex;align-items:center;justify-content:space-between;gap:18px;
 }
 .signals{display:flex;align-items:center;gap:10px;min-width:0}
-.signals img,#exit-ticket-signal{
+.signals img,.signal-tile,#exit-ticket-signal{
   width:142px;height:68px;min-height:68px;max-width:none;flex:0 0 142px;object-fit:contain;
 }
 #exit-ticket-signal{
@@ -156,7 +156,7 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
   .control-btn,.back-btn{width:auto;margin:0;padding:8px 11px}
   #page-count{margin:0 0 0 auto}
   .signal-wrap{position:relative;left:auto;top:auto;height:auto;padding:8px 14px}
-  .signals img,#exit-ticket-signal{width:130px;height:68px;min-height:68px;flex-basis:130px}
+  .signals img,.signal-tile,#exit-ticket-signal{width:130px;height:68px;min-height:68px;flex-basis:130px}
   .lesson-label{display:none}
   main{margin-left:0;height:auto;padding:18px 16px 58px}
   section.page{height:auto;min-height:0;overflow:visible}
@@ -171,7 +171,7 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
 @media(max-width:520px){
   body{font-size:17px}
   .signals{gap:5px}
-  .signals img,#exit-ticket-signal{width:calc((100vw - 42px)/3);height:56px;min-height:56px;flex-basis:calc((100vw - 42px)/3)}
+  .signals img,.signal-tile,#exit-ticket-signal{width:calc((100vw - 42px)/3);height:56px;min-height:56px;flex-basis:calc((100vw - 42px)/3)}
   #exit-ticket-signal{font-size:15px}
   .lesson-footer span{display:none}
   .answer-toolbar{align-items:flex-start;flex-direction:column;gap:4px}
@@ -424,4 +424,74 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
   .exit-key-options{flex-wrap:wrap}
   .exit-statements{grid-template-rows:auto}
   .exit-confidence{grid-template-columns:1fr}
+}
+
+
+/* THREE-TILE CLASSROOM SIGNAL SYSTEM
+   Blue = phase · Green = working routine · Orange = response.
+   Colours are matched to the supplied RHSC coding-icon sheet.
+   Every slot is deliberately identical in size. */
+.signal-tile{
+  width:142px;
+  height:68px;
+  min-height:68px;
+  max-width:none;
+  flex:0 0 142px;
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 10px;
+  border:2px solid;
+  border-radius:5px;
+  text-align:center;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.12;
+  letter-spacing:.005em;
+  white-space:normal;
+}
+.signal-phase{
+  background:#c1e5f5;
+  border-color:#7aabce;
+  color:#0a3258;
+}
+.signal-routine{
+  background:#d9f2d0;
+  border-color:#629264;
+  color:#0b4314;
+}
+.signal-response{
+  background:#fbe3d6;
+  border-color:#c5967d;
+  color:#702c07;
+}
+#exit-ticket-signal{display:none!important}
+
+@media(max-height:760px) and (min-width:901px){
+  .signal-tile{
+    height:58px;
+    min-height:58px;
+    font-size:14px;
+    padding:5px 8px;
+  }
+}
+@media(max-width:900px){
+  .signal-tile{
+    width:130px;
+    height:68px;
+    min-height:68px;
+    flex-basis:130px;
+  }
+}
+@media(max-width:520px){
+  .signal-tile{
+    width:calc((100vw - 42px)/3);
+    height:56px;
+    min-height:56px;
+    flex-basis:calc((100vw - 42px)/3);
+    padding:4px 5px;
+    font-size:12px;
+  }
 }
