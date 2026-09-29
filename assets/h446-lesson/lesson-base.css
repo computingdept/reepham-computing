@@ -66,20 +66,26 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid #e0
 
 main{
   margin-left:var(--nav-w);
-  padding:calc(var(--signal-h) + 18px) 3vw calc(var(--footer-h) + 18px);
+  padding:var(--signal-h) 3vw var(--footer-h);
   height:100vh;
 }
 section.page{
   display:none;
-  height:calc(100vh - var(--signal-h) - var(--footer-h) - 36px);
+  height:calc(100vh - var(--signal-h) - var(--footer-h));
   overflow:auto;
+  scrollbar-gutter:stable;
   padding:0 2px 10px;
 }
 section.page.active{display:block}
 
 .section-top{
-  min-height:42px;display:flex;align-items:center;gap:16px;
-  margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px;
+  position:sticky;top:0;z-index:14;
+  height:58px;min-height:58px;
+  display:flex;align-items:center;gap:16px;
+  margin:0 -2px 12px;padding:0 10px;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 5px 12px rgba(18,45,33,.045);
 }
 .eyebrow{font-size:13px;font-weight:900;letter-spacing:.11em;color:var(--green);text-transform:uppercase}
 .time{margin-left:auto;color:var(--muted);font-size:14px;font-weight:700}
