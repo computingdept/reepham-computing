@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 023 · Hash tables solutions</title>
+<title>Lesson 023 · Data structures: OCR exam practice solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,37 +26,38 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 023 · HASH TABLES · SOLUTIONS</span>
+  <span class="answer-title">LESSON 023 · DATA STRUCTURES: OCR EXAM PRACTICE · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Create a chained hash table</h2><pre class="solution-code">List&lt;int&gt;[] table = new List&lt;int&gt;[5];
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q2(c)</span><h2>Compare structures</h2><pre class="solution-code">Stack vs queue:
+A stack is LIFO; a queue is FIFO.
 
-for (int i = 0; i &lt; table.Length; i++)
-{
-    table[i] = new List&lt;int&gt;();
-}</pre><p><strong>Check:</strong> Every array position contains an empty List<int>.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · ADD + COLLISION</span><h2>Add several keys</h2><pre class="solution-code">int[] keys = { 12, 7, 22, 9 };
+Array vs list:
+An array has a fixed size once created; a list can grow/shrink.
 
-foreach (int key in keys)
-{
-    int index = key % table.Length;
-    table[index].Add(key);
-}</pre><p><strong>Check:</strong> 12, 7 and 22 share bucket 2; 9 is stored in bucket 4.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · SEARCH + REMOVE</span><h2>Find then remove</h2><pre class="solution-code">int key = 22;
-int index = key % table.Length;
+Tuple vs list:
+A tuple is fixed/immutable in structure whereas a list can be changed.
 
-Console.WriteLine(table[index].Contains(key));
-table[index].Remove(key);
-Console.WriteLine(table[index].Contains(key));</pre><p><strong>Check:</strong> 22 is found before removal and absent afterwards.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · TRAVERSE</span><h2>Display the table</h2><pre class="solution-code">for (int b = 0; b &lt; table.Length; b++)
-{
-    Console.Write("Bucket " + b + ": ");
+Linked-list second item:
+Use the start pointer to locate the first item. Read that item's next pointer and use its value as the index/address of the second item.</pre><p><strong>Check:</strong> Use precise structure vocabulary and relational wording.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q8</span><h2>BST array representation</h2><pre class="solution-code">0: 1 | Sligo     | 3
+1: 2 | Dublin    | 4
+2: null | Cork   | null
+3: 6 | Waterford | null
+4: 7 | Galway    | 5
+5: null | Limerick | null
+6: null | Tralee | null
+7: null | Dundalk | null</pre><p><strong>Check:</strong> Use pointer indexes in Left/Right and null for leaf pointers.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · H446/02 Q7</span><h2>Record + BST</h2><pre class="solution-code">Record:
+It groups several related fields about one task into a single structured item, while allowing the fields to have different data types.
 
-    foreach (int item in table[b])
-    {
-        Console.Write(item + " ");
-    }
-
-    Console.WriteLine();
-}</pre><p><strong>Check:</strong> All stored entries are visible with their bucket.</p></article></section></main>
+BST characteristics:
+Each node has at most two children.
+Values/keys smaller than a node are placed to the left and larger values/keys to the right.</pre><p><strong>Check:</strong> Link each answer directly to the context.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">MIXED 1.4.2</span><h2>Create / traverse / add / remove</h2><pre class="solution-code">Linked list add: update pointers so the new item's next points to the following item.
+Stack add/remove: push/pop at the top.
+Queue add/remove: enqueue at rear, dequeue at front.
+Graph add/remove: set/clear adjacency-matrix entry or entries.
+BST add: follow comparisons until a null child pointer and attach the new index.
+Hash table add: hash the key, then place it in the bucket using the collision strategy.</pre><p><strong>Check:</strong> Your responses describe the structural change, not just name the structure.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
