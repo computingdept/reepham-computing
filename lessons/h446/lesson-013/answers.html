@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 013 · Coding solutions</title>
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1745">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1745">
+<title>Lesson 013 · 2D Arrays + Nested Iteration solutions</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1815">
 <style>
 body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
 .answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
@@ -14,151 +14,41 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 .answer-stage{height:100%;display:flex;justify-content:center}.answer-stage[hidden]{display:none!important}
 .solution-card{width:min(1150px,100%);height:100%;overflow:auto;background:#fff;border:1px solid var(--line);border-top:7px solid var(--green);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}
 .solution-card h2{margin:4px 0 8px;font-size:clamp(24px,1.9vw,31px)}.solution-card p{font-size:clamp(16px,1.1vw,20px);line-height:1.3}
-.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(14px,1.05vw,18px)/1.28 Consolas,"Courier New",monospace}
+.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(13px,.95vw,17px)/1.24 Consolas,"Courier New",monospace}
 .test-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.test-strip span{padding:6px 9px;border-radius:999px;background:var(--green-soft);color:var(--green-dark);font-size:13px;font-weight:850}
 .answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
 .answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
 #next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}
-@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.solution-card{padding:12px 16px}.solution-card h2{font-size:22px}.solution-card p{font-size:15px}.solution-code{font-size:13px;padding:8px 10px}}
+@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.solution-card{padding:12px 16px}.solution-card h2{font-size:22px}.solution-card p{font-size:15px}.solution-code{font-size:12px;padding:8px 10px}}
 @media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.solution-card{height:auto;overflow:visible}}
 </style>
 </head>
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 013 · CODING SOLUTIONS</span>
+  <span class="answer-title">LESSON 013 · 2D ARRAYS + NESTED ITERATION · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap">
-
-<section class="answer-stage">
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 1</span>
-    <h2>Recursive countdown</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · DECLARE</span><h2>Create a 3 × 3 board</h2><pre class="solution-code">string[,] board =
 {
-    public static void Main()
-    {
-        Countdown(5);
-    }
-
-    public static void Countdown(int number)
-    {
-        if (number == 0)
-        {
-            return;
-        }
-
-        Console.WriteLine(number);
-        Countdown(number - 1);
-    }
-}</pre>
-    <p><strong>Why it works:</strong> each recursive call reduces <code>number</code> by 1. When it reaches 0, the base case stops further calls.</p>
-    <div class="test-strip"><span>Countdown(5) → 5 4 3 2 1</span></div>
-  </article>
-</section>
-
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 2</span>
-    <h2>Recursive SumTo</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+    { "1", "2", "3" },
+    { "4", "5", "6" },
+    { "7", "8", "9" }
+};</pre><p><strong>Check:</strong> The board has three rows and three columns.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · ACCESS</span><h2>Place X and O</h2><pre class="solution-code">board[0,0] = "X";
+board[1,1] = "O";</pre><p><strong>Check:</strong> Only the correct two cells change.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><h2>Print the board</h2><pre class="solution-code">for (int row = 0; row &lt; board.GetLength(0); row++)
 {
-    public static void Main()
+    for (int col = 0; col &lt; board.GetLength(1); col++)
     {
-        Console.WriteLine(SumTo(4));
+        Console.Write(board[row,col] + " ");
     }
 
-    public static int SumTo(int number)
-    {
-        if (number == 1)
-        {
-            return 1;
-        }
+    Console.WriteLine();
+}</pre><p><strong>Check:</strong> No hard-coded loop limits are used.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · PREP FOR TIC TAC TOE</span><h2>Map move 1–9 to row/column</h2><pre class="solution-code">int row = (move - 1) / 3;
+int col = (move - 1) % 3;
 
-        return number + SumTo(number - 1);
-    }
-}</pre>
-    <p><strong>Why it works:</strong> the method keeps solving a smaller problem until <code>number == 1</code>, then the returned values unwind back through the calls.</p>
-    <div class="test-strip"><span>SumTo(4) → 10</span><span>SumTo(6) → 21</span></div>
-  </article>
-</section>
-
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 3</span>
-    <h2>Recursive and iterative versions</h2>
-    <pre class="solution-code">using System;
-
-public class Program
-{
-    public static void Main()
-    {
-        Console.WriteLine(SumTo(6));
-        Console.WriteLine(SumToLoop(6));
-    }
-
-    public static int SumTo(int number)
-    {
-        if (number == 1)
-        {
-            return 1;
-        }
-
-        return number + SumTo(number - 1);
-    }
-
-    public static int SumToLoop(int number)
-    {
-        int total = 0;
-
-        for (int i = 1; i &lt;= number; i++)
-        {
-            total = total + i;
-        }
-
-        return total;
-    }
-}</pre>
-    <p><strong>Comparison:</strong> both methods solve the same problem. The recursive version uses repeated method calls; the iterative version uses a loop and accumulator.</p>
-    <div class="test-strip"><span>SumTo(6) → 21</span><span>SumToLoop(6) → 21</span></div>
-  </article>
-</section>
-
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 4</span>
-    <h2>Power of two</h2>
-    <pre class="solution-code">using System;
-
-public class Program
-{
-    public static void Main()
-    {
-        Console.WriteLine(PowerOfTwo(5));
-    }
-
-    public static int PowerOfTwo(int exponent)
-    {
-        if (exponent == 0)
-        {
-            return 1;
-        }
-
-        return 2 * PowerOfTwo(exponent - 1);
-    }
-}</pre>
-    <p><strong>Trace for exponent 3:</strong> <code>2 × PowerOfTwo(2)</code> → <code>2 × 2 × PowerOfTwo(1)</code> → <code>2 × 2 × 2 × PowerOfTwo(0)</code> → 8.</p>
-    <div class="test-strip"><span>PowerOfTwo(0) → 1</span><span>PowerOfTwo(3) → 8</span><span>PowerOfTwo(5) → 32</span></div>
-  </article>
-</section>
-
-</main>
+Console.WriteLine("row = " + row);
+Console.WriteLine("col = " + col);</pre><p><strong>Check:</strong> move 1 maps to [0,0], move 5 to [1,1], move 9 to [2,2].</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
