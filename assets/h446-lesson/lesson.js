@@ -10,8 +10,6 @@ const signalMap={
   exit:['Exit Questioning','Silence','Choral Response']
 };
 const youDoIndependentSignals=['You Do','Silence','Independent'];
-const youDoCodingDiscussSignals=['You Do','Quiet Working','Plan First'];
-const youDoCodingIndependentSignals=['You Do','Quiet Working','Independent Coding'];
 const pages=[...document.querySelectorAll('.page')];
 const nav=[...document.querySelectorAll('[data-page]')];
 const advance=document.getElementById('advance');
@@ -119,11 +117,6 @@ function updateSignals(id){
   let values=id==='you-do'&&page?.dataset.workMode==='independent'
     ?youDoIndependentSignals
     :(signalMap[id]||['','','']);
-  if(id==='you-do'&&page?.dataset.youDoMode==='coding'){
-    values=page.dataset.workMode==='independent'
-      ?youDoCodingIndependentSignals
-      :youDoCodingDiscussSignals;
-  }
   const kinds=['phase','routine','response'];
 
   ['phase-logo','behaviour-logo','response-logo'].forEach((key,i)=>{
@@ -196,7 +189,7 @@ function updateControl(){
     }
   }else if(current==='you-do'){
     if(page.dataset.workMode!=='independent'){
-      label=page.dataset.youDoMode==='coding'?'Begin independent coding →':'Begin silent work →';
+      label='Begin silent work →';
     }else{
       const questions=[...page.querySelectorAll('.youdo-question')];
       if(questions.length){
