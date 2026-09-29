@@ -30,33 +30,34 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · STACK</span><h2>Browser history stack</h2><pre class="solution-code">using System;
-using System.Collections.Generic;
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CHOICE</span><h2>Structure selection</h2><pre class="solution-code">// Undo history -&gt; Stack: most recent action must be removed first.
+// Printer jobs -&gt; Queue: earliest job should be processed first.
+// Road network -&gt; Graph: places are vertices and roads are edges.
+// Ordered search data -&gt; BST: comparisons choose left or right branches.</pre><p><strong>Check:</strong> Each justification refers to the behaviour of the structure.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · IMPLEMENT</span><h2>Implement one linear structure</h2><pre class="solution-code">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
 
-public class Program
-{
-    public static void Main()
-    {
-        Stack&lt;string&gt; history = new Stack&lt;string&gt;();
-        history.Push("Home");
-        history.Push("Courses");
-        history.Push("Computing");
-        Console.WriteLine("Back from: " + history.Pop());
-        Console.WriteLine("Now at: " + history.Peek());
-    }
-}</pre><p><strong>Check:</strong> Pop removes the most recent page and Peek shows the previous page.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><h2>Print queue</h2><pre class="solution-code">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
-jobs.Enqueue("Job A");
-jobs.Enqueue("Job B");
-jobs.Enqueue("Job C");
-Console.WriteLine("Printing: " + jobs.Dequeue());
-Console.WriteLine("Next: " + jobs.Peek());</pre><p><strong>Check:</strong> The earliest print job is removed first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><h2>Inspect without removing</h2><pre class="solution-code">foreach (string job in jobs)
+jobs.Enqueue("A");
+jobs.Enqueue("B");
+
+foreach (string job in jobs)
 {
     Console.WriteLine(job);
-}</pre><p><strong>Check:</strong> The queue contents are displayed without calling Dequeue.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHOOSE</span><h2>Choose stack or queue</h2><pre class="solution-code">// Undo uses a stack because the most recent action is undone first.
-Stack&lt;string&gt; undo = new Stack&lt;string&gt;();
-undo.Push("Type A");
-undo.Push("Delete B");
-Console.WriteLine(undo.Pop());</pre><p><strong>Check:</strong> Your code behaviour matches LIFO for undo or FIFO for waiting customers.</p></article></section></main>
+}
+
+jobs.Enqueue("C");
+Console.WriteLine("Removed: " + jobs.Dequeue());</pre><p><strong>Check:</strong> Create, traverse, add and remove are all demonstrated.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · IMPLEMENT</span><h2>Implement one non-linear structure</h2><pre class="solution-code">int[,] graph = new int[3,3];
+
+graph[0,1] = graph[1,0] = 1;
+graph[1,2] = graph[2,1] = 1;
+
+for (int v = 0; v &lt; 3; v++)
+{
+    if (graph[1,v] == 1)
+        Console.WriteLine(v);
+}
+
+graph[0,1] = graph[1,0] = 0;</pre><p><strong>Check:</strong> The graph is created, traversed, changed and kept symmetrical.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><h2>Explain two structures</h2><pre class="solution-code">// Stack: Push adds to the top; Pop removes from the top.
+// Queue: Enqueue adds to the rear; Dequeue removes from the front.
+// The difference preserves LIFO versus FIFO behaviour.</pre><p><strong>Check:</strong> The explanation uses correct operations and ordering rules.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
