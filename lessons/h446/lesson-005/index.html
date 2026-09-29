@@ -9,6 +9,126 @@
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1032">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1032">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1032">
+
+<style>
+/* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
+#new-learning.phase-focus{overflow:hidden!important}
+#new-learning .nl-focus{
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:16px;
+}
+#new-learning .nl-reference,
+#new-learning .nl-explanation{
+  min-width:0;
+  height:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:20px;
+}
+#new-learning .nl-reference{
+  border-top:7px solid var(--green);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#new-learning .nl-explanation{
+  overflow:auto;
+}
+#new-learning .nl-kicker{
+  display:block;
+  margin-bottom:10px;
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+#new-learning .nl-reference h2,
+#new-learning .nl-explanation h2{
+  margin:0 0 14px;
+  font-size:clamp(27px,2.35vw,37px);
+}
+#new-learning .nl-reference .arithmetic{
+  margin:4px 0 14px;
+  font-size:clamp(18px,1.45vw,23px);
+  line-height:1.5;
+}
+#new-learning .nl-reference-note{
+  margin-top:auto;
+  padding:12px 14px;
+  background:var(--green-soft);
+  border-radius:10px;
+  font-size:clamp(16px,1.2vw,20px);
+  line-height:1.35;
+}
+#new-learning .nl-steps{
+  display:grid;
+  gap:10px;
+}
+#new-learning .nl-step{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:11px 12px;
+  background:#f8faf9;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+#new-learning .nl-step-num{
+  width:36px;height:36px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  font-size:18px;
+}
+#new-learning .nl-step strong{
+  display:block;
+  margin-bottom:3px;
+  color:var(--green-dark);
+  font-size:clamp(17px,1.25vw,21px);
+}
+#new-learning .nl-step p{
+  margin:0;
+  font-size:clamp(16px,1.15vw,20px);
+  line-height:1.32;
+}
+#new-learning .nl-reminders{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+#new-learning .nl-reminder{
+  padding:11px 12px;
+  border-left:4px solid var(--green);
+  background:#fff;
+  border-radius:8px;
+  font-size:clamp(15px,1.05vw,18px);
+  line-height:1.3;
+}
+@media(max-height:760px) and (min-width:901px){
+  #new-learning .nl-reference,#new-learning .nl-explanation{padding:15px}
+  #new-learning .nl-reference h2,#new-learning .nl-explanation h2{font-size:26px}
+  #new-learning .nl-reference .arithmetic{font-size:17px;padding:10px 12px}
+  #new-learning .nl-step{padding:8px 10px;gap:10px}
+  #new-learning .nl-step-num{width:30px;height:30px;font-size:16px}
+  #new-learning .nl-step strong{font-size:17px}
+  #new-learning .nl-step p{font-size:15px}
+  #new-learning .nl-reminder{font-size:14px;padding:8px 10px}
+}
+@media(max-width:900px){
+  #new-learning.phase-focus{overflow:visible!important}
+  #new-learning .nl-focus{height:auto;grid-template-columns:1fr}
+  #new-learning .nl-reference,#new-learning .nl-explanation{height:auto;overflow:visible}
+  #new-learning .nl-reminders{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body data-icon-path="assets/">
 <a class="skip" href="#main">Skip to lesson</a>
@@ -131,22 +251,51 @@
   <p>Use an eight-bit mantissa and four-bit exponent unless a question states otherwise. Both fields are two’s complement; the mantissa’s point follows the sign bit.</p>
 </section>
 
-<section id="new-learning" class="page">
+<section id="new-learning" class="page phase-focus">
   <div class="section-top"><span class="eyebrow">NEW LEARNING</span><span class="time">6 minutes</span></div>
-  <div class="task"><h3>Split → evaluate → scale</h3>
-    <pre class="arithmetic">8-bit mantissa: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈
+
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="nl-kicker">KEEP THIS IN VIEW</span>
+      <h2>Split → evaluate → scale</h2>
+      <pre class="arithmetic">8-bit mantissa: −1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈
 4-bit exponent: −8   4   2   1
+
 Value = mantissa × 2ᴱ</pre>
-    <ol>
-      <li>Split the pattern at the stated field boundary.</li>
-      <li>Add the mantissa weights whose bits are 1. Include −1 if the sign bit is 1.</li>
-      <li>Decode the exponent as a signed integer.</li>
-      <li>Multiply by 2ᴱ. For a negative exponent, divide by the corresponding power of two.</li>
-    </ol>
-  </div>
-  <div class="two-col">
-    <div class="task"><h3>Two signs with different jobs</h3><p>The mantissa determines the sign of the number. The exponent determines its scale. A negative exponent does <strong>not</strong> make the value negative: 2⁻² = ¼.</p></div>
-    <div class="task"><h3>Normalisation, precision and range</h3><p>Nonzero normalised mantissas begin <strong>01</strong> (positive) or <strong>10</strong> (negative). More mantissa bits improve precision; more exponent bits increase range.</p></div>
+      <div class="nl-reference-note">
+        <strong>Two signs, two jobs:</strong><br>
+        the mantissa controls the <strong>sign of the value</strong>; the exponent controls its <strong>scale</strong>.
+      </div>
+    </article>
+
+    <article class="nl-explanation">
+      <span class="nl-kicker">BREAK IT DOWN</span>
+      <h2>Decode in four steps</h2>
+
+      <div class="nl-steps">
+        <div class="nl-step">
+          <span class="nl-step-num">1</span>
+          <div><strong>Split the fields</strong><p>Separate the mantissa from the exponent at the stated boundary.</p></div>
+        </div>
+        <div class="nl-step">
+          <span class="nl-step-num">2</span>
+          <div><strong>Evaluate the mantissa</strong><p>Add the place values for the 1 bits. Include <strong>−1</strong> when the sign bit is 1.</p></div>
+        </div>
+        <div class="nl-step">
+          <span class="nl-step-num">3</span>
+          <div><strong>Decode the exponent</strong><p>Read the exponent as a signed two’s-complement integer.</p></div>
+        </div>
+        <div class="nl-step">
+          <span class="nl-step-num">4</span>
+          <div><strong>Apply the scale</strong><p>Multiply the mantissa by <strong>2ᴱ</strong>. A negative exponent means divide by a power of two.</p></div>
+        </div>
+      </div>
+
+      <div class="nl-reminders">
+        <div class="nl-reminder"><strong>Normalised?</strong><br>Non-zero mantissas begin <strong>01</strong> if positive or <strong>10</strong> if negative.</div>
+        <div class="nl-reminder"><strong>Bits matter.</strong><br>More mantissa bits improve <strong>precision</strong>; more exponent bits increase <strong>range</strong>.</div>
+      </div>
+    </article>
   </div>
 </section>
 
