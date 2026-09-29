@@ -8,7 +8,9 @@ window.LEARNING_HUB_SCHOOLS = {
     academicYear: "2026–27",
     years: [7, 8, 9, 10, 11, 12, 13],
     brand: {
-      primary: "#006347"
+      primary: "#006347",
+      iconSoft: "#e8f3ed",
+      hoverBorder: "#95b7aa"
     },
     links: {
       website: "https://www.reephamhigh.org.uk/",
@@ -120,6 +122,8 @@ window.LEARNING_HUB_SCHOOLS = {
       accent: "#f4d21f",
       soft: "#f2f5f9",
       line: "#d4ddea",
+      iconSoft: "#eef3f8",
+      hoverBorder: "#8297b7",
       yearCards: {
         "7": { bg: "#eef3f8", ink: "#23365f", arrow: "rgba(35,54,95,.08)" },
         "8": { bg: "#dbe5f0", ink: "#23365f", arrow: "rgba(35,54,95,.08)" },
