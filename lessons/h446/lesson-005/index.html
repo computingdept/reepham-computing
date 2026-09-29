@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1211">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1211">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1211">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1240">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1240">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1240">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -677,24 +677,61 @@ d) 101010 110</pre>
   </div>
 </section>
 
-<section id="exit" class="page">
-  <div class="section-top"><span class="eyebrow">EXIT TICKET</span><span class="time">4 minutes</span></div>
-  <p>Complete independently.</p>
-  <ol class="questions">
-    <li>Decode <code>01010000 0010</code> in 8+4 format.</li>
-    <li>Decode <code>11000000 0001</code> and state whether it is normalised.</li>
-    <li>Does exponent <code>1111</code> imply a negative number? Explain.</li>
-  </ol>
-  <details class="answers"><summary>Reveal answers and guidance</summary>
-    <pre class="arithmetic">01010000 0010 → 0.625 × 2² = 2.5
-11000000 0001 → −0.5 × 2¹ = −1</pre>
-    <p>The second mantissa begins 11, so it is not normalised. Exponent <code>1111</code> means scale by 2⁻¹; the mantissa determines the sign.</p>
-  </details>
-  <div class="next"><span>NEXT LESSON</span><h3>Floating-point addition</h3><p>Align exponents, add mantissas and normalise the result.</p></div>
+<section id="exit" class="page phase-exit">
+  <div class="section-top"><span class="eyebrow">EXIT TICKET</span><span class="time">2 minutes</span></div>
+
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement">
+        <span class="exit-number">1</span>
+        <p>More mantissa bits increase precision.</p>
+      </article>
+
+      <article class="exit-statement">
+        <span class="exit-number">2</span>
+        <p>A negative exponent means the floating-point value must be negative.</p>
+      </article>
+
+      <article class="exit-statement">
+        <span class="exit-number">3</span>
+        <p>A positive normalised mantissa begins with <code>01</code>.</p>
+      </article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title">
+        <strong>How did the lesson go?</strong>
+        <span>Show one response.</span>
+      </div>
+
+      <div class="exit-confidence-choice">
+        <svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg>
+        <div><strong>Thumb up</strong><span>I can do this independently.</span></div>
+      </div>
+
+      <div class="exit-confidence-choice">
+        <svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg>
+        <div><strong>Thumb sideways</strong><span>I’m getting there.</span></div>
+      </div>
+
+      <div class="exit-confidence-choice">
+        <svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg>
+        <div><strong>Thumb down</strong><span>I need more help.</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1225"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1240"></script>
 </body>
 </html>
