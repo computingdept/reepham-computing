@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 022 · Trees and binary search trees</title>
+<meta name="description" content="OCR H446 1.4.2 trees and binary search trees: terminology, traversal, insertion, search and removal.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 022<br>Trees and binary search trees</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What is a vertex in a graph?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What is an undirected edge?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What is a Node reference?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>What ordering rule makes a binary search tree useful for searching?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What is a vertex in a graph?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A node/point representing an entity.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What is an undirected edge?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A connection that works both ways.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What is a Node reference?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A reference to another object.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">What ordering rule makes a binary search tree useful for searching?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Smaller values go left; larger values go right.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Trees and binary search trees</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul><li>describe tree and binary search tree terminology;</li><li>traverse and search a BST using its ordering rule;</li><li>add and remove BST nodes while preserving the ordering rule;</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>tree</span><span>root</span><span>parent</span><span>child</span><span>leaf</span><span>binary tree</span><span>binary search tree</span><span>in-order</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="9 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.2(b)(c) · TREE + BST</span><h2>Hierarchy plus ordering</h2><pre class="arithmetic">        40
+       /       20    60
+    /     /    10 30  50 70</pre><div class="nl-reference-note">A tree is hierarchical. A binary search tree adds an ordering rule that supports efficient searching when the tree is reasonably balanced.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Node needs two links</h2><pre class="arithmetic">class TreeNode
+{
+    public int Data;
+    public TreeNode Left;
+    public TreeNode Right;
+}</pre><p>A binary tree node can refer to a left child and a right child.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Search uses comparisons</h2><pre class="arithmetic">if (value &lt; current.Data)
+    current = current.Left;
+else
+    current = current.Right;</pre><p>Each comparison chooses one branch.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Insert at null</h2><pre class="arithmetic">if (current.Left == null)
+    current.Left = new TreeNode(value);</pre><p>A new node is attached where the required child reference is null.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Remove by case</h2><pre class="arithmetic">leaf        → disconnect
+one child   → bypass node
+two children→ replace using ordered successor/predecessor</pre><p>Removal must preserve the BST ordering rule.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Search for 50</h2><p>Use comparisons rather than checking every node.</p><pre class="arithmetic">40 → right to 60 → left to 50</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · ROOT</span><h2>Start at 40</h2><pre class="arithmetic">50 &gt; 40
+Go right</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · COMPARE</span><h2>At 60</h2><pre class="arithmetic">50 &lt; 60
+Go left</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · FOUND</span><h2>At 50</h2><pre class="arithmetic">50 == 50
+Found</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · WHY</span><h2>Use the ordering</h2><pre class="arithmetic">We did not inspect 10, 20, 30 or 70.</pre></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Insert 25</h2><p>Use the BST rule from root 40.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the path</h2><pre class="arithmetic">25 &lt; 40 → ?
+25 &gt; 20 → ?
+25 &lt; 30 → ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the path</h2><pre class="arithmetic">25 &lt; 40 → left
+25 &gt; 20 → right
+25 &lt; 30 → left</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>In-order traversal</h2><p>Complete the traversal order.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same sequence</h2><pre class="arithmetic">? → node → ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same sequence</h2><pre class="arithmetic">left → node → right</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Leaf removal</h2><p>Node 10 is a leaf.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the link change</h2><pre class="arithmetic">20.Left = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the link change</h2><pre class="arithmetic">20.Left = null;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>One-child removal</h2><p>20 has only right child 30.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the bypass</h2><pre class="arithmetic">parent.Left = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the bypass</h2><pre class="arithmetic">parent.Left = node.Right;</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Build a small BST</h3><div class="question-text"><p>Create nodes 40, 20, 60, 10, 30, 50 and 70 using TreeNode references.</p></div><div class="success-check">The final shape obeys the BST ordering rule.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Write in-order traversal</h3><div class="question-text"><p>Write a method that outputs a BST in ascending order.</p></div><div class="success-check">The method visits left subtree, node, then right subtree.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · ADD</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Insert iteratively</h3><div class="question-text"><p>Write code or a method that inserts a new value by following left/right references until a null child is found.</p></div><div class="success-check">The inserted value appears in the correct BST position.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove a simple case</h3><div class="question-text"><p>Remove leaf node 10, then run in-order traversal to prove the structure still works.</p></div><div class="success-check">10 disappears and the remaining values stay sorted.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A hierarchical structure of connected nodes.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">tree</div><p>It has a root and parent/child relationships.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The top node of a tree.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">root</div><p>It has no parent.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A node with one or more children.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">parent</div><p>It sits above its child nodes.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A node directly below another node.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">child</div><p>It has a parent.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A node with no children.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">leaf</div><p>It is an endpoint.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A tree where each node has at most two children.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">binary tree</div><p>Children are often called left and right.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A binary tree with an ordering rule.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">binary search tree</div><p>Smaller left, larger right.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Left subtree, node, right subtree.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">in-order</div><p>On a BST this outputs values in sorted order.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">An in-order traversal of a correctly constructed binary search tree outputs the values in sorted order.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 022 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-ds022"></script>
+</body>
+</html>
