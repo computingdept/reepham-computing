@@ -11,9 +11,9 @@
   --warm-line:#ead39b;
   --danger:#87350c;
   --nav-w:176px;
-  --phase-meta-h:30px;
+  --phase-meta-h:0px;
   --signal-h:88px;
-  --top-h:118px;
+  --top-h:88px;
   --footer-h:38px;
   --phase-bar-h:0px;
   --radius:12px;
@@ -494,4 +494,53 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
     padding:4px 5px;
     font-size:12px;
   }
+}
+
+
+/* PHASE HEADER STANDARD
+   The three signal tiles are the header. No duplicate phase bar.
+   Phase timing sits directly beneath the blue tile. */
+.section-top{display:none!important}
+.signal-wrap{top:0}
+.signals{align-items:flex-start}
+.signal-phase-group{
+  width:142px;
+  flex:0 0 142px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1px;
+}
+.signal-phase-group .signal-tile{
+  width:142px;
+  flex:0 0 68px;
+}
+.signal-phase-time{
+  min-height:16px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:750;
+  line-height:1.15;
+  text-align:center;
+  white-space:nowrap;
+}
+@media(max-height:760px) and (min-width:901px){
+  .signal-phase-group{width:142px;flex-basis:142px}
+  .signal-phase-group .signal-tile{width:142px;flex-basis:58px}
+  .signal-phase-time{min-height:13px;font-size:11px;line-height:1.05}
+}
+@media(max-width:900px){
+  .signal-phase-group{width:130px;flex-basis:130px}
+  .signal-phase-group .signal-tile{width:130px;flex-basis:68px}
+}
+@media(max-width:520px){
+  .signal-phase-group{
+    width:calc((100vw - 42px)/3);
+    flex-basis:calc((100vw - 42px)/3);
+  }
+  .signal-phase-group .signal-tile{
+    width:calc((100vw - 42px)/3);
+    flex-basis:56px;
+  }
+  .signal-phase-time{font-size:10px}
 }
