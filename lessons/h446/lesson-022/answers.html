@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 022 · Trees and binary search trees solutions</title>
+<title>Lesson 022 · Hash tables with arrays solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,51 +26,42 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 022 · TREES AND BINARY SEARCH TREES · SOLUTIONS</span>
+  <span class="answer-title">LESSON 022 · HASH TABLES WITH ARRAYS · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Build a small BST</h2><pre class="solution-code">TreeNode root = new TreeNode(40);
-root.Left = new TreeNode(20);
-root.Right = new TreeNode(60);
-root.Left.Left = new TreeNode(10);
-root.Left.Right = new TreeNode(30);
-root.Right.Left = new TreeNode(50);
-root.Right.Right = new TreeNode(70);</pre><p><strong>Check:</strong> The final shape obeys the BST ordering rule.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>Write in-order traversal</h2><pre class="solution-code">public static void InOrder(TreeNode node)
-{
-    if (node == null) return;
-    InOrder(node.Left);
-    Console.WriteLine(node.Data);
-    InOrder(node.Right);
-}</pre><p><strong>Check:</strong> The method visits left subtree, node, then right subtree.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD</span><h2>Insert iteratively</h2><pre class="solution-code">public static void Insert(TreeNode root, int value)
-{
-    TreeNode current = root;
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Create buckets</h2><pre class="solution-code">int[,] table = new int[5,3];
+int[] count = new int[5];</pre><p><strong>Check:</strong> Five empty buckets are available.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · ADD</span><h2>Add keys with collisions</h2><pre class="solution-code">int[] keys = { 12, 17, 22, 9 };
 
-    while (true)
+foreach (int key in keys)
+{
+    int bucket = key % 5;
+    table[bucket, count[bucket]] = key;
+    count[bucket]++;
+}</pre><p><strong>Check:</strong> 12,17,22 share bucket 2; 9 is in bucket 4.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · SEARCH</span><h2>Search only the correct bucket</h2><pre class="solution-code">int key = 17;
+int bucket = key % 5;
+bool found = false;
+
+for (int c = 0; c &lt; count[bucket]; c++)
+{
+    if (table[bucket,c] == key)
+        found = true;
+}
+
+Console.WriteLine(found);</pre><p><strong>Check:</strong> The program finds 17 without scanning other rows.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove 17</h2><pre class="solution-code">int key = 17;
+int bucket = key % 5;
+
+for (int c = 0; c &lt; count[bucket]; c++)
+{
+    if (table[bucket,c] == key)
     {
-        if (value &lt; current.Data)
-        {
-            if (current.Left == null)
-            {
-                current.Left = new TreeNode(value);
-                return;
-            }
+        for (int j = c; j &lt; count[bucket] - 1; j++)
+            table[bucket,j] = table[bucket,j + 1];
 
-            current = current.Left;
-        }
-        else
-        {
-            if (current.Right == null)
-            {
-                current.Right = new TreeNode(value);
-                return;
-            }
-
-            current = current.Right;
-        }
+        count[bucket]--;
+        break;
     }
-}</pre><p><strong>Check:</strong> The inserted value appears in the correct BST position.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove a simple case</h2><pre class="solution-code">root.Left.Left = null;
-InOrder(root);</pre><p><strong>Check:</strong> 10 disappears and the remaining values stay sorted.</p></article></section></main>
+}</pre><p><strong>Check:</strong> 22 remains reachable after 17 is removed.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
