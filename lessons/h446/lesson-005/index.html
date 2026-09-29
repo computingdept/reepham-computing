@@ -6,9 +6,9 @@
 <title>Lesson 005 · Floating point → denary</title>
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1058">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1058">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1058">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1106">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1106">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1106">
 
 <style>
 /* Lesson 005 prototype: New Learning focus layout. Scoped so no other lesson changes. */
@@ -36,15 +36,9 @@
   flex-direction:column;
 }
 #new-learning .nl-explanation{
-  overflow:auto;
-}
-#new-learning .nl-kicker{
-  display:block;
-  margin-bottom:10px;
-  color:var(--green);
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.1em;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 #new-learning .nl-reference h2,
 #new-learning .nl-explanation h2{
@@ -64,69 +58,58 @@
   font-size:clamp(16px,1.2vw,20px);
   line-height:1.35;
 }
-#new-learning .nl-steps{
-  display:grid;
-  gap:10px;
+#new-learning .nl-stage{
+  height:100%;
+  display:flex;
+  flex-direction:column;
 }
-#new-learning .nl-step{
-  display:grid;
-  grid-template-columns:40px minmax(0,1fr);
-  gap:12px;
-  align-items:start;
-  padding:11px 12px;
-  background:#f8faf9;
-  border:1px solid var(--line);
-  border-radius:10px;
-}
-#new-learning .nl-step-num{
-  width:36px;height:36px;
-  display:grid;place-items:center;
-  border-radius:50%;
-  background:var(--green);
-  color:#fff;
+#new-learning .nl-stage[hidden]{display:none!important}
+#new-learning .nl-stage-label{
+  display:inline-block;
+  width:max-content;
+  margin-bottom:12px;
+  color:var(--green);
+  font-size:13px;
   font-weight:900;
-  font-size:18px;
+  letter-spacing:.1em;
 }
-#new-learning .nl-step strong{
-  display:block;
-  margin-bottom:3px;
-  color:var(--green-dark);
-  font-size:clamp(17px,1.25vw,21px);
+#new-learning .nl-stage p,
+#new-learning .nl-stage li{
+  font-size:clamp(20px,1.55vw,25px);
+  line-height:1.4;
 }
-#new-learning .nl-step p{
-  margin:0;
-  font-size:clamp(16px,1.15vw,20px);
-  line-height:1.32;
+#new-learning .nl-stage .arithmetic{
+  font-size:clamp(20px,1.55vw,25px);
 }
-#new-learning .nl-reminders{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
+#new-learning .nl-key{
+  margin-top:18px;
+  padding:14px 16px;
+  border-left:5px solid var(--green);
+  background:var(--green-soft);
+  border-radius:0 10px 10px 0;
+  font-size:clamp(19px,1.45vw,23px);
+  line-height:1.35;
 }
-#new-learning .nl-reminder{
-  padding:11px 12px;
-  border-left:4px solid var(--green);
-  background:#fff;
-  border-radius:8px;
-  font-size:clamp(15px,1.05vw,18px);
-  line-height:1.3;
+#new-learning .nl-stage-count{
+  margin-top:auto;
+  padding-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
 }
 @media(max-height:760px) and (min-width:901px){
   #new-learning .nl-reference,#new-learning .nl-explanation{padding:15px}
   #new-learning .nl-reference h2,#new-learning .nl-explanation h2{font-size:26px}
   #new-learning .nl-reference .arithmetic{font-size:17px;padding:10px 12px}
-  #new-learning .nl-step{padding:8px 10px;gap:10px}
-  #new-learning .nl-step-num{width:30px;height:30px;font-size:16px}
-  #new-learning .nl-step strong{font-size:17px}
-  #new-learning .nl-step p{font-size:15px}
-  #new-learning .nl-reminder{font-size:14px;padding:8px 10px}
+  #new-learning .nl-stage p,#new-learning .nl-stage li{font-size:18px}
+  #new-learning .nl-stage .arithmetic{font-size:18px}
+  #new-learning .nl-key{font-size:17px;padding:10px 12px}
 }
 @media(max-width:900px){
   #new-learning.phase-focus{overflow:visible!important}
   #new-learning .nl-focus{height:auto;grid-template-columns:1fr}
   #new-learning .nl-reference,#new-learning .nl-explanation{height:auto;overflow:visible}
-  #new-learning .nl-reminders{grid-template-columns:1fr}
+  #new-learning .nl-stage{height:auto}
 }
 </style>
 </head>
@@ -268,30 +251,53 @@ Value = mantissa × 2ᴱ</pre>
     </article>
 
     <article class="nl-explanation">
-      <h2>Decode in four steps</h2>
-
-      <div class="nl-steps">
-        <div class="nl-step">
-          <span class="nl-step-num">1</span>
-          <div><strong>Split the fields</strong><p>Separate the mantissa from the exponent at the stated boundary.</p></div>
-        </div>
-        <div class="nl-step">
-          <span class="nl-step-num">2</span>
-          <div><strong>Evaluate the mantissa</strong><p>Add the place values for the 1 bits. Include <strong>−1</strong> when the sign bit is 1.</p></div>
-        </div>
-        <div class="nl-step">
-          <span class="nl-step-num">3</span>
-          <div><strong>Decode the exponent</strong><p>Read the exponent as a signed two’s-complement integer.</p></div>
-        </div>
-        <div class="nl-step">
-          <span class="nl-step-num">4</span>
-          <div><strong>Apply the scale</strong><p>Multiply the mantissa by <strong>2ᴱ</strong>. A negative exponent means divide by a power of two.</p></div>
-        </div>
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 5</span>
+        <h2>Split the fields</h2>
+        <p>Separate the bit pattern into the <strong>mantissa</strong> and the <strong>exponent</strong> at the stated field boundary.</p>
+        <div class="nl-key">Treat the two fields separately before doing any calculation.</div>
+        <span class="nl-stage-count">1 of 5</span>
       </div>
 
-      <div class="nl-reminders">
-        <div class="nl-reminder"><strong>Normalised?</strong><br>Non-zero mantissas begin <strong>01</strong> if positive or <strong>10</strong> if negative.</div>
-        <div class="nl-reminder"><strong>Bits matter.</strong><br>More mantissa bits improve <strong>precision</strong>; more exponent bits increase <strong>range</strong>.</div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 5</span>
+        <h2>Evaluate the mantissa</h2>
+        <p>Add the place values for the bits that are 1.</p>
+        <pre class="arithmetic">Mantissa places:
+−1 | ½  ¼  ⅛  ¹⁄₁₆  ¹⁄₃₂  ¹⁄₆₄  ¹⁄₁₂₈</pre>
+        <div class="nl-key">If the sign bit is 1, include the <strong>−1</strong> place value.</div>
+        <span class="nl-stage-count">2 of 5</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 5</span>
+        <h2>Decode the exponent</h2>
+        <p>Read the exponent as a signed <strong>two’s-complement integer</strong>.</p>
+        <pre class="arithmetic">4-bit exponent places:
+−8   4   2   1</pre>
+        <div class="nl-key">A negative exponent changes the <strong>scale</strong>. It does not make the value negative.</div>
+        <span class="nl-stage-count">3 of 5</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 5</span>
+        <h2>Apply the scale</h2>
+        <pre class="arithmetic">Value = mantissa × 2ᴱ</pre>
+        <p>A positive exponent multiplies by a power of two. A negative exponent divides by a power of two.</p>
+        <div class="nl-key"><strong>Example:</strong> 2⁻² = ¼.</div>
+        <span class="nl-stage-count">4 of 5</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 5 OF 5</span>
+        <h2>Check the representation</h2>
+        <p>For a non-zero normalised mantissa:</p>
+        <ul>
+          <li><strong>01</strong> starts a positive normalised mantissa.</li>
+          <li><strong>10</strong> starts a negative normalised mantissa.</li>
+        </ul>
+        <div class="nl-key">More mantissa bits improve <strong>precision</strong>. More exponent bits increase <strong>range</strong>.</div>
+        <span class="nl-stage-count">5 of 5</span>
       </div>
     </article>
   </div>
@@ -600,6 +606,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1058"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1106"></script>
 </body>
 </html>
