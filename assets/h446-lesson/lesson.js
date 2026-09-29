@@ -29,6 +29,21 @@ function visibleIndex(items){
 function showOnly(items,index){
   items.forEach((item,i)=>item.hidden=i!==index);
 }
+function setYouDoWindow(page,start){
+  const questions=[...page.querySelectorAll('.youdo-question')];
+  if(!questions.length)return;
+  const size=Math.min(3,questions.length);
+  const maxStart=Math.max(0,questions.length-size);
+  const safe=Math.max(0,Math.min(start,maxStart));
+  page.dataset.windowStart=String(safe);
+  questions.forEach((q,i)=>q.hidden=!(i>=safe&&i<safe+size));
+  const progress=page.querySelector('.youdo-window-progress');
+  if(progress){
+    const first=safe+1;
+    const last=Math.min(safe+size,questions.length);
+    progress.textContent='Questions '+first+'–'+last+' of '+questions.length;
+  }
+}
 function resetPhaseState(id){
   const page=document.getElementById(id);
   if(!page)return;
@@ -59,8 +74,13 @@ function resetPhaseState(id){
     page.querySelectorAll('[data-reveal-prompt]').forEach(el=>el.hidden=false);
   }
   if(id==='you-do'){
-    const stages=[...page.querySelectorAll('.youdo-stage')];
-    if(stages.length)showOnly(stages,0);
+    const questions=[...page.querySelectorAll('.youdo-question')];
+    if(questions.length){
+      setYouDoWindow(page,0);
+    }else{
+      const stages=[...page.querySelectorAll('.youdo-stage')];
+      if(stages.length)showOnly(stages,0);
+    }
   }
   if(id==='vocabulary'){
     page.querySelectorAll('.vocab-card').forEach((card,i)=>{
@@ -125,9 +145,17 @@ function updateControl(){
   }else if(current==='we-do'&&page.querySelector('[data-reveal-answer][hidden]')){
     label='Reveal model response';
   }else if(current==='you-do'){
-    const stages=[...page.querySelectorAll('.youdo-stage')];
-    const i=visibleIndex(stages);
-    label=i<stages.length-1?'Next independent questions →':'Open answers →';
+    const questions=[...page.querySelectorAll('.youdo-question')];
+    if(questions.length){
+      const size=Math.min(3,questions.length);
+      const maxStart=Math.max(0,questions.length-size);
+      const start=Number(page.dataset.windowStart||0);
+      label=start<maxStart?'Next questions →':'Open answers →';
+    }else{
+      const stages=[...page.querySelectorAll('.youdo-stage')];
+      const i=visibleIndex(stages);
+      label=i<stages.length-1?'Next independent questions →':'Open answers →';
+    }
   }else if(current==='vocabulary'&&page.querySelector('.vocab-card [data-answer][hidden]')){
     label='Reveal next answer';
   }else if(page.querySelector('details.answers:not([open])')){
@@ -196,6 +224,16 @@ function next(){
     }
   }
   if(current==='you-do'){
+    const questions=[...page.querySelectorAll('.youdo-question')];
+    if(questions.length){
+      const size=Math.min(3,questions.length);
+      const maxStart=Math.max(0,questions.length-size);
+      const start=Number(page.dataset.windowStart||0);
+      if(start<maxStart){
+        setYouDoWindow(page,start+1);updateControl();return;
+      }
+      location.href='answers.html';return;
+    }
     const stages=[...page.querySelectorAll('.youdo-stage')];
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
@@ -216,6 +254,25 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='you-do'){
+    const questions=[...page.querySelectorAll('.youdo-question')];
+    if(questions.length){
+      const start=Number(page.dataset.windowStart||0);
+      if(start>0){
+        setYouDoWindow(page,start-1);
+        updateControl();
+        return;
+      }
+    }else{
+      const stages=[...page.querySelectorAll('.youdo-stage')];
+      const i=visibleIndex(stages);
+      if(i>0){
+        showOnly(stages,i-1);
+        updateControl();
+        return;
+      }
+    }
+  }
   if(current==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
     const i=visibleIndex(stages);
