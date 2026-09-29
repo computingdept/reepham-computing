@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lesson 011 · Modularity, functions & procedures in C#</title>
 <meta name="description" content="OCR H446 2.2.1(d): modularity, functions and procedures in C# using .NET Fiddle.">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1715">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1715">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1715">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1835">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1835">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1835">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -247,15 +247,8 @@ IsEven(0)  → True</pre>
         </div>
         <div class="wedo-step" hidden>
           <span class="wedo-step-label">CHECK</span>
-          <h2>Procedure-style method</h2>
-          <pre class="arithmetic">public static void Greeting(string name)
-{
-    Console.WriteLine("Hello " + name);
-}
-
-// inside Main
-Greeting("Hamish");</pre>
-          <p>It performs an action but does not return a value, so it uses <code>void</code>.</p>
+          <h2>Function or procedure?</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Return type</strong><span><code>void</code></span></div><div class="practice-box"><strong>Parameter type</strong><span><code>string</code></span></div><div class="practice-box"><strong>Call</strong><span><code>Greeting("Hamish");</code></span></div></div>
         </div>
       </div>
     </article>
@@ -280,11 +273,12 @@ Greeting("Hamish");</pre>
         </div>
         <div class="wedo-step" hidden>
           <span class="wedo-step-label">CHECK</span>
-          <h2>Function</h2>
+          <h2>Complete the method</h2>
           <pre class="arithmetic">public static int Square(int number)
 {
     return number * number;
 }</pre>
+          <div class="practice-grid"><div class="practice-box"><strong>Return type</strong><span><code>int</code></span></div><div class="practice-box"><strong>Return expression</strong><span><code>return number * number;</code></span></div></div>
         </div>
       </div>
     </article>
@@ -306,15 +300,8 @@ Greeting("Hamish");</pre>
         </div>
         <div class="wedo-step" hidden>
           <span class="wedo-step-label">CHECK</span>
-          <h2>One solution</h2>
-          <pre class="arithmetic">public static void ShowLine()
-{
-    Console.WriteLine("--------------------");
-}
-
-// call whenever needed
-ShowLine();</pre>
-          <div class="key-result">One change to <code>ShowLine()</code> updates every place that calls it.</div>
+          <h2>Design the module</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Name</strong><span><code>ShowLine</code></span></div><div class="practice-box"><strong>Return type</strong><span><code>void</code></span></div><div class="practice-box"><strong>Why useful?</strong><span>Reuse one method wherever the separator is needed.</span></div></div>
         </div>
       </div>
     </article>
@@ -334,9 +321,8 @@ ShowLine();</pre>
         </div>
         <div class="wedo-step" hidden>
           <span class="wedo-step-label">CHECK</span>
-          <h2>Precise distinction</h2>
-          <p>A <strong>function returns a value</strong> to the calling code. A <strong>procedure does not return a value</strong>.</p>
-          <div class="key-result">In C#, both are methods; a procedure-style method uses <code>void</code>.</div>
+          <h2>Complete both statements</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Function</strong><span>Returns a value.</span></div><div class="practice-box"><strong>Procedure</strong><span>Does not return a value.</span></div></div>
         </div>
       </div>
     </article>
@@ -446,6 +432,6 @@ ShowLine();</pre>
 </main>
 
 <div class="lesson-footer">Lesson 011 · OCR H446 2.2.1(d) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1715"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1835"></script>
 </body>
 </html>
