@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 021 · Graphs: directed and undirected solutions</title>
+<title>Lesson 021 · Trees and binary search trees with arrays solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,22 +26,40 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 021 · GRAPHS: DIRECTED AND UNDIRECTED · SOLUTIONS</span>
+  <span class="answer-title">LESSON 021 · TREES AND BINARY SEARCH TREES WITH ARRAYS · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Create an undirected graph</h2><pre class="solution-code">int[,] graph = new int[4,4];
-graph[0,1] = graph[1,0] = 1;
-graph[0,2] = graph[2,0] = 1;
-graph[2,3] = graph[3,2] = 1;</pre><p><strong>Check:</strong> The matching reverse entries are also set to 1.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>List neighbours</h2><pre class="solution-code">for (int v = 0; v &lt; graph.GetLength(1); v++)
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Build a BST with parallel arrays</h2><pre class="solution-code">int[] data  = { 40, 20, 60, 10, 30 };
+int[] left  = { 1, 3, -1, -1, -1 };
+int[] right = { 2, 4, -1, -1, -1 };
+int root = 0;</pre><p><strong>Check:</strong> The pointer arrays match the BST shape.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · SEARCH</span><h2>Search procedurally</h2><pre class="solution-code">int target = 30;
+int current = root;
+
+while (current != -1 &amp;&amp; data[current] != target)
 {
-    if (graph[0,v] == 1)
-        Console.WriteLine(v);
-}</pre><p><strong>Check:</strong> Only vertices directly connected to 0 are displayed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD + REMOVE</span><h2>Change the graph</h2><pre class="solution-code">graph[1,3] = graph[3,1] = 1;
-graph[0,2] = graph[2,0] = 0;</pre><p><strong>Check:</strong> The matrix remains symmetrical after both changes.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · DIRECTED</span><h2>Convert the idea</h2><pre class="solution-code">int[,] directed = new int[2,2];
-directed[0,1] = 1;
-Console.WriteLine(directed[0,1]); // 1
-Console.WriteLine(directed[1,0]); // 0</pre><p><strong>Check:</strong> The two directions are treated independently.</p></article></section></main>
+    if (target &lt; data[current])
+        current = left[current];
+    else
+        current = right[current];
+}
+
+Console.WriteLine(current != -1 ? "Found" : "Not found");</pre><p><strong>Check:</strong> The loop follows 40 → 20 → 30.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · OCR</span><h2>June 2024 H446/01 Q8 representation</h2><pre class="solution-code">0: left 1, data Sligo,     right 3
+1: left 2, data Dublin,    right 4
+2: left null, data Cork,   right null
+3: left 6, data Waterford, right null
+4: left 7, data Galway,    right 5
+5: left null, data Limerick, right null
+6: left null, data Tralee, right null
+7: left null, data Dundalk, right null</pre><p><strong>Check:</strong> Pointer values, not town names, appear in the left/right columns.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove a leaf using a pointer change</h2><pre class="solution-code">left[1] = -1;
+
+int target = 10;
+int current = root;
+while (current != -1 &amp;&amp; data[current] != target)
+{
+    current = target &lt; data[current] ? left[current] : right[current];
+}
+Console.WriteLine(current == -1 ? "Not found" : "Found");</pre><p><strong>Check:</strong> The parent no longer points to index 3 and search fails.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
