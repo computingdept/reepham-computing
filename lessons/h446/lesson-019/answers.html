@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 019 · Linked lists solutions</title>
+<title>Lesson 019 · Stacks and queues with arrays solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,26 +26,35 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 019 · LINKED LISTS · SOLUTIONS</span>
+  <span class="answer-title">LESSON 019 · STACKS AND QUEUES WITH ARRAYS · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Create a linked list</h2><pre class="solution-code">Node head = new Node(10);
-head.Next = new Node(20);
-head.Next.Next = new Node(30);</pre><p><strong>Check:</strong> Following Next from Head reaches 10, 20, 30, then null.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>Traverse the list</h2><pre class="solution-code">Node current = head;
-while (current != null)
-{
-    Console.WriteLine(current.Data);
-    current = current.Next;
-}</pre><p><strong>Check:</strong> All nodes are printed and Head still points to the first node.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD</span><h2>Insert at the front</h2><pre class="solution-code">Node newNode = new Node(5);
-newNode.Next = head;
-head = newNode;</pre><p><strong>Check:</strong> The list becomes 5 → 10 → 20 → 30.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove the second node</h2><pre class="solution-code">head.Next = head.Next.Next;
-Node current = head;
-while (current != null)
-{
-    Console.WriteLine(current.Data);
-    current = current.Next;
-}</pre><p><strong>Check:</strong> The removed node is skipped and the remaining chain is intact.</p></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · STACK</span><h2>Implement push/pop</h2><pre class="solution-code">int[] stack = new int[10];
+int top = -1;
+
+top++; stack[top] = 5;
+top++; stack[top] = 8;
+top++; stack[top] = 3;
+
+int value = stack[top];
+top--;
+Console.WriteLine(value);</pre><p><strong>Check:</strong> 3 is printed first and top points to 8 afterwards.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><h2>Implement enqueue/dequeue</h2><pre class="solution-code">int[] queue = new int[10];
+int front = 0;
+int rear = -1;
+
+rear++; queue[rear] = 10;
+rear++; queue[rear] = 20;
+rear++; queue[rear] = 30;
+
+int value = queue[front];
+front++;
+Console.WriteLine(value);</pre><p><strong>Check:</strong> 10 is printed first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · TRACE</span><h2>Compare order</h2><pre class="solution-code">// Stack first removed value = 6
+// Queue first removed value = 2
+Console.WriteLine("Stack: 6");
+Console.WriteLine("Queue: 2");</pre><p><strong>Check:</strong> Stack removes 6; queue removes 2.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · OCR</span><h2>Explain an error</h2><pre class="solution-code">// If an operation needs two values but fewer than two are stored,
+// a pop will be attempted when the stack is empty.
+// This is stack underflow and the algorithm cannot continue correctly.</pre><p><strong>Check:</strong> Your explanation identifies stack underflow / an attempted pop from an empty stack.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
