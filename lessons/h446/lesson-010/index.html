@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 010 · Iteration in C#</title>
+<meta name="description" content="OCR H446 2.2.1(a): iteration in C# using for, while and do...while in .NET Fiddle.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2250">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-2250">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-2250">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 010<br>Iteration in C#</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>What is the difference between <code>=</code> and <code>==</code> in C#?</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Give one reason Unicode may be chosen instead of standard ASCII.</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Decode <code>01011000 0011</code> in 8+4 two’s-complement floating-point format.</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>For <code>mark = 85</code>, what does an <code>if (mark &gt;= 80) ... else if (mark &gt;= 50)</code> structure output, and why?</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What is the difference between <code>=</code> and <code>==</code> in C#?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>=</code> assigns a value. <code>==</code> compares two values for equality.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">Give one reason Unicode may be chosen instead of standard ASCII.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Unicode supports a much larger range of characters and writing systems.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Decode <code>01011000 0011</code> in 8+4 two’s-complement floating-point format.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>5.5</strong></p><p class="review-explain">Mantissa <code>01011000 = 0.6875</code>; exponent <code>0011 = 3</code>; <code>0.6875 × 2³ = 5.5</code>.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">For <code>mark = 85</code>, what does an <code>if (mark &gt;= 80) ... else if (mark &gt;= 50)</code> structure output, and why?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Distinction</strong></p><p class="review-explain">Conditions are tested top to bottom. The first true branch runs, so the later branch is skipped.</p></article>
+    </div></div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Iteration in C#</h1>
+  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+  <div class="objectives">
+    <strong>By the end, you can…</strong>
+    <ul>
+      <li>explain iteration and distinguish count-controlled from condition-controlled repetition;</li>
+      <li>write and trace <code>for</code>, <code>while</code> and <code>do...while</code> loops;</li>
+      <li>choose a suitable loop and test it in .NET Fiddle.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>iteration</span><span>count-controlled</span><span>condition-controlled</span><span>counter</span>
+      <span>condition</span><span>for loop</span><span>while loop</span><span>do...while</span>
+    </div>
+  </div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">C# QUICK REFERENCE</span>
+      <h2>Three loop patterns</h2>
+      <pre class="arithmetic">for (int i = 0; i &lt; 5; i++)
+{
+    // repeat
+}
+
+while (condition)
+{
+    // repeat
+}
+
+do
+{
+    // repeat
+}
+while (condition);</pre>
+      <div class="nl-reference-note"><strong>Choose by purpose:</strong> known number of repetitions → <code>for</code>. Unknown number, test first → <code>while</code>. Must run at least once → <code>do...while</code>.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Iteration repeats instructions</h2>
+        <p><strong>Iteration</strong> means executing a block of instructions repeatedly. The loop needs a rule that determines whether another repetition happens.</p>
+        <div class="nl-key"><strong>Count-controlled:</strong> repeat a known number of times. <strong>Condition-controlled:</strong> repeat while a condition remains true.</div>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2><code>for</code> = count-controlled</h2>
+        <pre class="arithmetic">for (int i = 0; i &lt; 5; i++)
+{
+    Console.WriteLine(i);
+}</pre>
+        <p>The header sets the counter, tests whether the loop continues, then changes the counter after each repetition.</p>
+        <div class="nl-key">This outputs <strong>0, 1, 2, 3, 4</strong> — five repetitions.</div>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2><code>while</code> = test before repeating</h2>
+        <p>A <code>while</code> loop is useful when you do not know how many attempts will be needed.</p>
+        <pre class="arithmetic">while (valid == false)
+{
+    // ask again
+}</pre>
+        <p>If the condition is false before the first test, the loop can execute <strong>zero times</strong>.</p>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2><code>do...while</code> = run first, test after</h2>
+        <pre class="arithmetic">do
+{
+    Console.Write("Password: ");
+    answer = Console.ReadLine();
+}
+while (answer != "computer");</pre>
+        <p>The body executes before the condition is checked, so it always runs at least once.</p>
+        <div class="nl-key">OCR <code>do...until answer == "computer"</code> becomes C# <code>do...while (answer != "computer")</code>: the condition is reversed.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Build a times-table program</h2>
+        <p>Ask for a whole number and output its first five multiples.</p>
+        <span class="focus-code">7 → 7, 14, 21, 28, 35</span>
+        <p>The number of repetitions is known, so use a <code>for</code> loop.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · INPUT</span>
+          <h2>Read the number</h2>
+          <pre class="arithmetic">Console.Write("Number: ");
+int number =
+    int.Parse(Console.ReadLine());</pre>
+          <p>This happens once before the repetition begins.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · CONTROL THE LOOP</span>
+          <h2>Count from 1 to 5</h2>
+          <pre class="arithmetic">for (int i = 1; i &lt;= 5; i++)
+{
+    // repeated instruction
+}</pre>
+          <p><code>i = 1</code> starts the counter; <code>i &lt;= 5</code> keeps the loop running; <code>i++</code> adds 1 after each repetition.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · USE THE COUNTER</span>
+          <h2>Calculate each multiple</h2>
+          <pre class="arithmetic">for (int i = 1; i &lt;= 5; i++)
+{
+    int answer = number * i;
+    Console.WriteLine(answer);
+}</pre>
+          <p>The same two instructions run five times, but <code>i</code> changes each time.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · TEST</span>
+          <h2>Trace a known input</h2>
+          <pre class="arithmetic">number = 7
+
+i = 1 → 7
+i = 2 → 14
+i = 3 → 21
+i = 4 → 28
+i = 5 → 35</pre>
+          <div class="key-result">Known number of repetitions → a <strong>for loop</strong> is the natural choice.</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 1</span>
+        <h2>Output the squares 1² to 5²</h2>
+        <p>Use one <code>for</code> loop. Each repetition should output the square of the current counter.</p>
+        <span class="focus-code">1 · 4 · 9 · 16 · 25</span>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Complete the pattern</h2>
+          <pre class="arithmetic">for (int i = ?; i &lt;= ?; i++)
+{
+    Console.WriteLine(?);
+}</pre>
+          <div class="practice-grid"><div class="practice-box"><strong>Start</strong><span>?</span></div><div class="practice-box"><strong>Stop</strong><span>?</span></div><div class="practice-box"><strong>Square</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>One solution</h2>
+          <pre class="arithmetic">for (int i = 1; i &lt;= 5; i++)
+{
+    Console.WriteLine(i * i);
+}</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 2</span>
+        <h2>Validate 1 to 5</h2>
+        <p>Keep asking until the user enters a number from 1 to 5 inclusive.</p>
+        <span class="focus-code">valid = false → true</span>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>What controls the loop?</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Starting value</strong><span>?</span></div><div class="practice-box"><strong>while condition</strong><span>?</span></div><div class="practice-box"><strong>When true?</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Use the guide’s Boolean pattern</h2>
+          <pre class="arithmetic">bool valid = false;
+int number = 0;
+
+while (valid == false)
+{
+    Console.Write("Enter 1 to 5: ");
+    number = int.Parse(Console.ReadLine());
+
+    if (number &gt;= 1 &amp;&amp; number &lt;= 5)
+    {
+        valid = true;
+    }
+}</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 3</span>
+        <h2>Password with do...while</h2>
+        <p>Ask at least once, then continue until the answer is <code>"computer"</code>.</p>
+        <span class="focus-code">do first · test after</span>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Reverse the OCR stopping condition</h2>
+          <p>OCR idea: <code>until answer == "computer"</code></p>
+          <div class="practice-grid"><div class="practice-box"><strong>C# continues while</strong><span>?</span></div><div class="practice-box"><strong>Runs at least</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>C# pattern</h2>
+          <pre class="arithmetic">string answer;
+
+do
+{
+    Console.Write("Password: ");
+    answer = Console.ReadLine();
+}
+while (answer != "computer");</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">OCR EXAM LINK</span>
+        <h2>Describe iteration precisely</h2>
+        <p>An OCR question asks how iteration is used in a function. A strong answer refers to the <strong>specific loop</strong>, the repeated lines and the condition that keeps it running.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Describe this loop</h2>
+          <pre class="arithmetic">while (number &gt; 0)
+{
+    number = number / 2;
+}</pre>
+          <p>Do not just write “it loops”. Explain <strong>when</strong> and <strong>what</strong> repeats.</p>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Precise wording</h2>
+          <p>The <code>while</code> loop repeatedly divides <code>number</code> by 2 while <code>number &gt; 0</code>. The repeated statement executes again only if that condition remains true.</p>
+          <div class="key-result">Name the construct, identify the repeated code and state the continuation condition.</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="23 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 1 · CORE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Countdown</h3>
+        <div class="question-text">
+          <p>Use a <code>for</code> loop to output:</p>
+          <p><strong>10, 9, 8, ... 1</strong></p>
+          <div class="coding-brief">Choose the start value, continuation condition and counter change.</div>
+        </div>
+        <div class="success-check">Test: first output 10 · final output 1 · exactly 10 repetitions</div>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 2 · DEVELOP</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Times-table generator</h3>
+        <div class="question-text">
+          <p>Ask for a whole number and output its first <strong>10</strong> multiples.</p>
+          <div class="coding-brief">Use <code>int.Parse(Console.ReadLine())</code> and a count-controlled <code>for</code> loop.</div>
+        </div>
+        <div class="success-check">For 7: final output should be 70</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 3 · APPLY</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Validated age</h3>
+        <div class="question-text">
+          <p>Keep asking for an age until the user enters a value from <strong>0 to 120</strong> inclusive.</p>
+          <p>When valid, output <strong>Accepted</strong>.</p>
+          <div class="coding-brief">Use <code>bool valid = false;</code>, a <code>while</code> loop and <code>&amp;&amp;</code>.</div>
+        </div>
+        <div class="success-check">Test invalid: −1 and 121 · boundaries: 0 and 120</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 4 · CHALLENGE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Password attempts</h3>
+        <div class="question-text">
+          <p>Use <code>do...while</code> to keep asking until the password is <code>"computer"</code>.</p>
+          <p>Count how many attempts were made and output the total after the correct password.</p>
+          <div class="coding-brief">You need a <code>string</code> for the answer and an <code>int</code> counter that increases every attempt.</div>
+        </div>
+        <div class="success-check">Correct on first try → attempts = 1</div>
+      </article>
+
+    </div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+  <div class="vocab-test-deck">
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Repeating a block of instructions.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Iteration</div><p>Executing instructions repeatedly according to a loop rule.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Repetition where the number of repeats is known or controlled by a counter.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Count-controlled iteration</div><p>Often implemented with a <code>for</code> loop.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Repetition that continues according to a Boolean test.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Condition-controlled iteration</div><p>Commonly implemented using <code>while</code> or <code>do...while</code>.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A variable used to track the number of repetitions.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Counter</div><p>For example <code>i</code> in a <code>for</code> loop.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A C# loop normally used when the number of repetitions is known.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">for loop</div><p>Initialise, test and update the counter in the loop header.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A loop that tests its condition before each repetition.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">while loop</div><p>It may execute zero times.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A loop that executes its body before testing its condition.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">do...while</div><p>It always executes at least once.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The true/false test that decides whether another repetition happens.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Condition</div><p>The continuation rule for a condition-controlled loop.</p></div></article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement"><span class="exit-number">1</span><p>A <code>for</code> loop is commonly used when the number of repetitions is known.</p></article>
+      <article class="exit-statement"><span class="exit-number">2</span><p>A <code>while</code> loop always executes at least once.</p></article>
+      <article class="exit-statement"><span class="exit-number">3</span><p>C# <code>do...while</code> tests its condition after the loop body has executed.</p></article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can choose and write a suitable loop.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I can follow the patterns but still need prompts.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help choosing or controlling loops.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 010 · OCR H446 2.2.1(a) <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-2250"></script>
+</body>
+</html>
