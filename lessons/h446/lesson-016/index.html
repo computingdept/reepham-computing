@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 016 · Arrays in C#</title>
+<meta name="description" content="OCR H446 1.4.2(a): one-, two- and three-dimensional arrays in C#, including indexing, GetLength and traversal.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 016<br>Arrays in C#</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>For a 3 × 3 array called <code>board</code>, what do <code>GetLength(0)</code> and <code>GetLength(1)</code> return?</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>What is the difference between a function and a procedure?</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Convert hexadecimal <code>2F</code> to denary.</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why must every value in a C# <code>string[,]</code> array be stored as a string?</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What do <code>board.GetLength(0)</code> and <code>board.GetLength(1)</code> return for a 3 × 3 array?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>3 and 3.</strong></p><p class="review-explain">Dimension 0 is rows; dimension 1 is columns.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">What is the difference between a function and a procedure?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A function returns a value; a procedure does not.</strong></p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Convert hexadecimal <code>2F</code> to denary.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>47.</strong></p><p class="review-explain"><code>2 × 16 + 15 = 47</code>.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Why must every value in a C# <code>string[,]</code> array be stored as a string?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">An array has one declared element type, so every element must be compatible with that type.</p></article>
+    </div></div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Arrays in C#</h1>
+  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+  <div class="objectives">
+    <strong>By the end, you can…</strong>
+    <ul>
+      <li>declare and access one-, two- and three-dimensional arrays;</li>
+      <li>use zero-based indexes and <code>GetLength()</code> correctly;</li>
+      <li>traverse arrays using loops and choose suitable dimensions for stored data.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>array</span><span>element</span><span>index</span><span>dimension</span>
+      <span>1D</span><span>2D</span><span>3D</span><span>GetLength</span>
+    </div>
+  </div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">OCR H446 · 1.4.2(a)</span>
+      <h2>Arrays up to 3 dimensions</h2>
+      <pre class="arithmetic">string[] names;
+string[,] results;
+int[,,] readings;</pre>
+      <div class="nl-reference-note"><strong>Core rule:</strong> one array has one element type. More dimensions mean more indexes are needed to locate one element.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>1D · one index</h2>
+        <pre class="arithmetic">string[] students =
+{
+    "Amelia", "Ben", "Charlie", "Daisy"
+};
+
+Console.WriteLine(students[2]);</pre>
+        <p>Indexes start at 0, so <code>students[2]</code> is <strong>Charlie</strong>.</p>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>2D · row and column</h2>
+        <pre class="arithmetic">string[,] studentResults =
+{
+    { "Amelia", "72" },
+    { "Ben", "65" },
+    { "Charlie", "81" }
+};
+
+Console.WriteLine(studentResults[0,0]);</pre>
+        <p><code>[0,0]</code> means row 0, column 0. It outputs <strong>Amelia</strong>.</p>
+        <div class="nl-key">The scores are strings here because every element in this array must have the same type.</div>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>GetLength() names the dimension</h2>
+        <pre class="arithmetic">studentResults.GetLength(0)  // rows
+studentResults.GetLength(1)  // columns</pre>
+        <p>For the array above, the answers are <strong>3</strong> and <strong>2</strong>.</p>
+        <div class="nl-key">Use nested loops when you need to visit every row and every column.</div>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2>3D · three indexes</h2>
+        <pre class="arithmetic">int[,,] readings = new int[2,3,4];
+
+readings[1,2,3] = 21;</pre>
+        <p>A 3D array needs three indexes. This structure contains <strong>2 × 3 × 4 = 24</strong> elements.</p>
+        <div class="nl-key">OCR expects arrays of up to three dimensions.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Build studentResults</h2>
+        <p>Store each student's name and score in a 2D array, then display every row.</p>
+        <pre class="arithmetic">Amelia 72
+Ben 65
+Charlie 81</pre>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · PLAN</span>
+          <h2>Rows are students · columns are fields</h2>
+          <pre class="arithmetic">row 0 → Amelia | 72
+row 1 → Ben    | 65
+row 2 → Charlie| 81</pre>
+          <p>We need 3 rows and 2 columns.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · DECLARE</span>
+          <h2>Create the 2D array</h2>
+          <pre class="arithmetic">string[,] studentResults =
+{
+    { "Amelia", "72" },
+    { "Ben", "65" },
+    { "Charlie", "81" }
+};</pre>
+          <p>Both columns use strings in this teaching example.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · ACCESS</span>
+          <h2>Use row, then column</h2>
+          <pre class="arithmetic">Console.WriteLine(studentResults[0,0]);
+Console.WriteLine(studentResults[0,1]);</pre>
+          <p>The outputs are <strong>Amelia</strong> and <strong>72</strong>.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · TRAVERSE</span>
+          <h2>Visit every row</h2>
+          <pre class="arithmetic">for (int row = 0;
+     row &lt; studentResults.GetLength(0);
+     row++)
+{
+    Console.WriteLine(
+        studentResults[row,0] + " " +
+        studentResults[row,1]);
+}</pre>
+          <div class="key-result">Use <code>GetLength(0)</code> so the loop follows the number of rows.</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 1 · 1D</span>
+        <h2>Read an indexed value</h2>
+        <pre class="arithmetic">string[] names =
+{ "Amelia", "Ben", "Charlie", "Daisy" };</pre>
+        <p>What is stored at index 2, and how many elements are in the array?</p>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Read the array</h2><div class="practice-grid"><div class="practice-box"><strong>Index</strong><span>?</span></div><div class="practice-box"><strong>Value</strong><span>?</span></div><div class="practice-box"><strong>Length</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Read the array</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Index</strong><span><code>2</code></span></div><div class="practice-box"><strong>Value</strong><span><strong>Charlie</strong></span></div><div class="practice-box"><strong>Length</strong><span><strong>4</strong></span></div></div></div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 2 · 2D</span>
+        <h2>Read row and column</h2>
+        <pre class="arithmetic">string[,] studentResults =
+{
+    { "Amelia", "72" },
+    { "Ben", "65" },
+    { "Charlie", "81" }
+};</pre>
+        <p>Find <code>studentResults[2,1]</code> and the two dimension lengths.</p>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Locate the element</h2><div class="practice-grid"><div class="practice-box"><strong>[2,1]</strong><span>?</span></div><div class="practice-box"><strong>GetLength(0)</strong><span>?</span></div><div class="practice-box"><strong>GetLength(1)</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Locate the element</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>[2,1]</strong><span><strong>81</strong></span></div><div class="practice-box"><strong>GetLength(0)</strong><span><strong>3</strong></span></div><div class="practice-box"><strong>GetLength(1)</strong><span><strong>2</strong></span></div></div></div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 3 · 3D</span>
+        <h2>Interpret the dimensions</h2>
+        <pre class="arithmetic">int[,,] readings =
+    new int[2,3,4];</pre>
+        <p>How many dimensions and elements does this array contain?</p>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Read the declaration</h2><div class="practice-grid"><div class="practice-box"><strong>Dimensions</strong><span>?</span></div><div class="practice-box"><strong>Lengths</strong><span>?</span></div><div class="practice-box"><strong>Total elements</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Read the declaration</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Dimensions</strong><span><strong>3</strong></span></div><div class="practice-box"><strong>Lengths</strong><span><code>2, 3, 4</code></span></div><div class="practice-box"><strong>Total elements</strong><span><strong>24</strong></span></div></div></div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">OCR JUNE 2024 · H446/01 Q8(a)</span>
+        <h2>Declare towns</h2>
+        <p>OCR describes a 2D array called <code>towns</code> with 8 rows and 3 columns. Write a suitable declaration.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the declaration</h2><div class="practice-grid"><div class="practice-box"><strong>Element type</strong><span>?</span></div><div class="practice-box"><strong>Variable</strong><span>?</span></div><div class="practice-box"><strong>Dimensions</strong><span>?</span></div><div class="practice-box"><strong>C# declaration</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Build the declaration</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Element type</strong><span><code>string</code></span></div><div class="practice-box"><strong>Variable</strong><span><code>towns</code></span></div><div class="practice-box"><strong>Dimensions</strong><span><strong>8 × 3</strong></span></div><div class="practice-box"><strong>C# declaration</strong><span><code>string[,] towns = new string[8,3];</code></span></div></div><p class="fine">OCR's mark scheme awards the declaration for identifying an array/string named <code>towns</code> and setting the two dimensions to 8 and 3.</p></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 1 · 1D</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Student names</h3>
+        <div class="question-text">
+          <p>Create a <code>string[]</code> containing five student names.</p>
+          <p>Output the first and last element, then use a loop to output every name.</p>
+        </div>
+        <div class="success-check">Uses zero-based indexes · loop visits all five names</div>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 2 · 2D</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>studentResults</h3>
+        <div class="question-text">
+          <p>Create a <code>string[,]</code> called <code>studentResults</code> with five rows.</p>
+          <p>Column 0 stores a name; column 1 stores a score.</p>
+          <p>Output <code>studentResults[0,0]</code> and <code>studentResults[0,1]</code>.</p>
+        </div>
+        <div class="success-check">5 rows · 2 columns · correct first name and score</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 3 · TRAVERSE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Print every result</h3>
+        <div class="question-text">
+          <p>Use <code>GetLength(0)</code> to loop through every row of <code>studentResults</code>.</p>
+          <p>Output each student's name and score on one line.</p>
+        </div>
+        <div class="success-check">No hard-coded row count · all rows displayed</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 4 · 3D</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Room readings</h3>
+        <div class="question-text">
+          <p>Create <code>int[,,] readings = new int[2,3,4];</code>.</p>
+          <p>Store <code>21</code> at <code>[1,2,3]</code>, output it, then output all three dimension lengths.</p>
+        </div>
+        <div class="success-check">Outputs 21 · dimensions output as 2, 3, 4</div>
+      </article>
+
+    </div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes">
+  <div class="vocab-deck">
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A fixed collection of elements accessed using indexes.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Array</div><p>All elements are compatible with the array's declared type.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One stored value inside an array.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Element</div><p>For example, <code>names[2]</code> identifies one element.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The position number used to access an array element.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Index</div><p>C# array indexes start at zero.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One direction or level used to locate an element.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Dimension</div><p>A 2D array needs two indexes; a 3D array needs three.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with one dimension.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[]</code></div><p>Example: <code>string[] names</code>.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with two dimensions.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[,]</code></div><p>Example: <code>string[,] results</code>.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with three dimensions.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[,,]</code></div><p>Example: <code>int[,,] readings</code>.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the method</h2><p class="vocab-question">The C# method used to find the length of one chosen array dimension.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">GetLength()</div><p><code>GetLength(0)</code> reads the first dimension.</p></div></article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-compact">
+    <div class="exit-check-card">
+      <div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div>
+      <p class="exit-check-question"><code>int[,,] data = new int[2,3,4];</code> declares a three-dimensional array.</p>
+      <div class="exit-check-response">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+    <div class="exit-reflection-strip">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 0 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 016 · OCR H446 1.4.2(a) Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1915"></script>
+</body>
+</html>
