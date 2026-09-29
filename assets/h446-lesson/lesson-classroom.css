@@ -1,0 +1,96 @@
+/* Fixed classroom-TV layouts for the three teaching phases. */
+.phase-ido,.phase-wedo,.phase-youdo{overflow:hidden!important}
+
+/* I DO: one worked example at a time. The example and method stay side-by-side. */
+.model-deck{height:calc(100% - 58px)}
+.model-stage{
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.35fr);
+  gap:18px;
+}
+.model-stage[hidden]{display:none!important}
+.classroom-panel{
+  min-width:0;height:100%;overflow:hidden;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;
+  box-shadow:var(--shadow);
+}
+.prompt-panel{
+  display:flex;flex-direction:column;justify-content:center;
+  border-top:7px solid var(--green);
+}
+.method-panel{display:flex;flex-direction:column;justify-content:center}
+.phase-tag{
+  display:inline-block;width:max-content;margin-bottom:14px;padding:6px 9px;border-radius:999px;
+  background:var(--green-soft);color:var(--green-dark);font-size:12px;font-weight:900;letter-spacing:.08em;
+}
+.prompt-panel .focus-code{
+  display:block;margin:14px 0;padding:18px;border-radius:10px;background:#f3f6f5;
+  font:700 clamp(24px,2.4vw,39px)/1.25 Consolas,"Courier New",monospace;
+  text-align:center;
+}
+.prompt-panel p,.method-panel p{font-size:clamp(18px,1.45vw,23px)}
+.method-panel .arithmetic{font-size:clamp(19px,1.55vw,24px)}
+.stage-count{margin-top:auto;color:var(--muted);font-size:13px;font-weight:700}
+
+/* WE DO: question stays visible; reveal replaces the response panel. */
+.wedo-grid{
+  height:calc(100% - 58px);
+  display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:18px;
+}
+.wedo-question,.wedo-response{
+  min-width:0;height:100%;overflow:hidden;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:22px;box-shadow:var(--shadow)
+}
+.wedo-question{border-top:7px solid var(--green)}
+.wedo-question .question-text{font-size:clamp(23px,2vw,32px);line-height:1.3;margin:14px 0}
+.wedo-question code{font-size:1.08em}
+.source-note{margin-top:auto;padding-top:12px;color:var(--muted);font-size:14px}
+.wedo-question{display:flex;flex-direction:column}
+.wedo-response{display:flex;flex-direction:column;justify-content:center;background:#f9fbfa}
+.wedo-response h2{font-size:clamp(27px,2.6vw,40px)}
+.wedo-response ol{font-size:clamp(18px,1.45vw,23px)}
+.wedo-answer{display:flex;flex-direction:column;justify-content:center;height:100%}
+.wedo-answer .arithmetic{font-size:clamp(19px,1.5vw,24px)}
+.reveal-hint{margin-top:18px;padding:12px 14px;background:var(--green-soft);border-radius:9px;font-weight:800;color:var(--green-dark)}
+
+/* YOU DO: questions are paged inside the phase instead of shrinking or scrolling. */
+.youdo-deck{height:calc(100% - 58px)}
+.youdo-stage{
+  height:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;
+}
+.youdo-stage[hidden]{display:none!important}
+.exam-card{
+  min-width:0;height:100%;overflow:hidden;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;
+}
+.exam-card h3{font-size:clamp(20px,1.6vw,26px)}
+.exam-card .question-text{font-size:clamp(18px,1.35vw,22px);line-height:1.35}
+.exam-card .arithmetic{font-size:clamp(17px,1.2vw,21px)}
+.exam-card .source-note{margin-top:auto}
+.exam-card.support-card{background:#f8fbf9}
+.youdo-progress{margin-top:auto;color:var(--muted);font-size:13px;font-weight:800}
+.youdo-stage.single{grid-template-columns:minmax(0,1fr)}
+.youdo-stage.single .exam-card{max-width:900px;margin:0 auto;width:100%}
+.answer-cta{
+  margin-top:14px;padding:13px 18px;border-radius:9px;background:var(--green);color:#fff;
+  text-decoration:none;font-weight:900;align-self:flex-start;
+}
+
+/* When browser height is restricted, keep the TV phases readable rather than scaling text tiny. */
+@media(max-height:760px) and (min-width:901px){
+  :root{--signal-h:92px;--footer-h:32px}
+  .signals img,#exit-ticket-signal{height:68px;min-height:68px}
+  .section-top{min-height:34px;margin-bottom:8px;padding-bottom:7px}
+  .classroom-panel,.wedo-question,.wedo-response,.exam-card{padding:16px}
+  .prompt-panel p,.method-panel p,.wedo-response ol,.exam-card .question-text{font-size:18px}
+  .prompt-panel .focus-code{font-size:24px;padding:12px}
+  .arithmetic,.method-panel .arithmetic,.wedo-answer .arithmetic{font-size:18px;padding:10px 12px}
+}
+@media(max-width:900px){
+  .phase-ido,.phase-wedo,.phase-youdo{overflow:visible!important}
+  .model-deck,.wedo-grid,.youdo-deck{height:auto}
+  .model-stage,.wedo-grid,.youdo-stage{height:auto;grid-template-columns:1fr}
+  .classroom-panel,.wedo-question,.wedo-response,.exam-card{height:auto;min-height:0;overflow:visible}
+  .youdo-stage{gap:12px}
+}
