@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 015 · Coding solutions</title>
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<title>Lesson 015 · Tic Tac Toe Part 2 solutions</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2015">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
 body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
@@ -26,7 +26,7 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 015 · CODING SOLUTIONS</span>
+  <span class="answer-title">LESSON 015 · TIC TAC TOE PART 2 · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
@@ -34,117 +34,244 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 
 <section class="answer-stage">
   <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 1</span>
-    <h2>Student names</h2>
-    <pre class="solution-code">using System;
-
-public class Program
+    <span class="phase-tag">COMPLETE YOUR GAME 1</span>
+    <h2>HasWon()</h2>
+    <pre class="solution-code">public static bool HasWon(string player)
 {
-    public static void Main()
+    return
+        (board[0,0] == player &amp;&amp; board[0,1] == player &amp;&amp; board[0,2] == player) ||
+        (board[1,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[1,2] == player) ||
+        (board[2,0] == player &amp;&amp; board[2,1] == player &amp;&amp; board[2,2] == player) ||
+
+        (board[0,0] == player &amp;&amp; board[1,0] == player &amp;&amp; board[2,0] == player) ||
+        (board[0,1] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,1] == player) ||
+        (board[0,2] == player &amp;&amp; board[1,2] == player &amp;&amp; board[2,2] == player) ||
+
+        (board[0,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,2] == player) ||
+        (board[0,2] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,0] == player);
+}</pre>
+    <p><strong>Check:</strong> 3 rows + 3 columns + 2 diagonals = 8 possible winning lines.</p>
+    <div class="test-strip"><span>row win</span><span>column win</span><span>diagonal win</span><span>non-win</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">COMPLETE YOUR GAME 2</span>
+    <h2>BoardFull()</h2>
+    <pre class="solution-code">public static bool BoardFull()
+{
+    for (int row = 0; row &lt; board.GetLength(0); row++)
     {
-        string[] studentNames =
+        for (int column = 0; column &lt; board.GetLength(1); column++)
         {
-            "Amelia", "Ben", "Charlie", "Daisy", "Ethan"
-        };
+            if (board[row, column] != "X" &amp;&amp;
+                board[row, column] != "O")
+            {
+                return false;
+            }
+        }
+    }
 
-        Console.WriteLine(studentNames[0]);
-        Console.WriteLine(studentNames[studentNames.Length - 1]);
+    return true;
+}</pre>
+    <p><strong>Logic:</strong> one free square is enough to return <code>false</code>. Only return <code>true</code> after every square has been checked.</p>
+    <div class="test-strip"><span>one free square → false</span><span>full board → true</span></div>
+  </article>
+</section>
 
-        for (int i = 0; i &lt; studentNames.Length; i++)
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">COMPLETE YOUR GAME 3</span>
+    <h2>Main() game loop</h2>
+    <pre class="solution-code">public static void Main()
+{
+    string currentPlayer = "X";
+    bool gameOver = false;
+
+    while (gameOver == false)
+    {
+        DrawBoard();
+
+        Console.Write("Player " + currentPlayer + ", choose 1-9: ");
+        int move = int.Parse(Console.ReadLine());
+
+        if (MakeMove(move, currentPlayer))
         {
-            Console.WriteLine(studentNames[i]);
+            if (HasWon(currentPlayer))
+            {
+                DrawBoard();
+                Console.WriteLine("Player " + currentPlayer + " wins!");
+                gameOver = true;
+            }
+            else if (BoardFull())
+            {
+                DrawBoard();
+                Console.WriteLine("Draw!");
+                gameOver = true;
+            }
+            else
+            {
+                currentPlayer = SwitchPlayer(currentPlayer);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid move - try again.");
         }
     }
 }</pre>
-    <p><strong>Key idea:</strong> a one-dimensional array needs one index. The final valid index is one less than its length.</p>
-    <div class="test-strip"><span>First = Amelia</span><span>Last = Ethan</span><span>5 names displayed</span></div>
+    <p><strong>Order matters:</strong> check win first, then draw, then switch player.</p>
+    <div class="test-strip"><span>invalid move keeps same player</span><span>win stops loop</span><span>draw stops loop</span></div>
   </article>
 </section>
 
 <section class="answer-stage" hidden>
   <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 2</span>
-    <h2>studentResults</h2>
+    <span class="phase-tag">COMPLETE YOUR GAME 4</span>
+    <h2>Complete playable version</h2>
     <pre class="solution-code">using System;
 
 public class Program
 {
+    public static string[,] board =
+    {
+        { "1", "2", "3" },
+        { "4", "5", "6" },
+        { "7", "8", "9" }
+    };
+
     public static void Main()
     {
-        string[,] studentResults =
+        string currentPlayer = "X";
+        bool gameOver = false;
+
+        while (gameOver == false)
         {
-            { "Amelia", "72" },
-            { "Ben", "65" },
-            { "Charlie", "81" },
-            { "Daisy", "59" },
-            { "Ethan", "90" }
-        };
+            DrawBoard();
 
-        Console.WriteLine(studentResults[0,0]);
-        Console.WriteLine(studentResults[0,1]);
-    }
-}</pre>
-    <p><strong>Why strings?</strong> one rectangular array has one element type. In this teaching example, both the name and the score are stored as strings.</p>
-    <div class="test-strip"><span>5 rows</span><span>2 columns</span><span>Amelia</span><span>72</span></div>
-  </article>
-</section>
+            Console.Write("Player " + currentPlayer + ", choose 1-9: ");
+            int move = int.Parse(Console.ReadLine());
 
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 3</span>
-    <h2>Traverse every result</h2>
-    <pre class="solution-code">using System;
-
-public class Program
-{
-    public static void Main()
-    {
-        string[,] studentResults =
-        {
-            { "Amelia", "72" },
-            { "Ben", "65" },
-            { "Charlie", "81" },
-            { "Daisy", "59" },
-            { "Ethan", "90" }
-        };
-
-        for (int row = 0;
-             row &lt; studentResults.GetLength(0);
-             row++)
-        {
-            Console.WriteLine(
-                studentResults[row,0] + " " +
-                studentResults[row,1]);
+            if (MakeMove(move, currentPlayer))
+            {
+                if (HasWon(currentPlayer))
+                {
+                    DrawBoard();
+                    Console.WriteLine("Player " + currentPlayer + " wins!");
+                    gameOver = true;
+                }
+                else if (BoardFull())
+                {
+                    DrawBoard();
+                    Console.WriteLine("Draw!");
+                    gameOver = true;
+                }
+                else
+                {
+                    currentPlayer = SwitchPlayer(currentPlayer);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid move - try again.");
+            }
         }
     }
-}</pre>
-    <p><strong>Why <code>GetLength(0)</code>?</strong> dimension 0 is the row count, so the loop automatically follows however many students are stored.</p>
-    <div class="test-strip"><span>No hard-coded 5 in loop condition</span><span>All rows displayed</span></div>
-  </article>
-</section>
 
-<section class="answer-stage" hidden>
-  <article class="solution-card">
-    <span class="phase-tag">CODING CHALLENGE 4</span>
-    <h2>Room readings</h2>
-    <pre class="solution-code">using System;
-
-public class Program
-{
-    public static void Main()
+    public static void DrawBoard()
     {
-        int[,,] readings = new int[2,3,4];
+        Console.WriteLine();
 
-        readings[1,2,3] = 21;
+        for (int row = 0; row &lt; board.GetLength(0); row++)
+        {
+            for (int column = 0; column &lt; board.GetLength(1); column++)
+            {
+                Console.Write(board[row, column]);
 
-        Console.WriteLine(readings[1,2,3]);
-        Console.WriteLine(readings.GetLength(0));
-        Console.WriteLine(readings.GetLength(1));
-        Console.WriteLine(readings.GetLength(2));
+                if (column &lt; board.GetLength(1) - 1)
+                {
+                    Console.Write(" | ");
+                }
+            }
+
+            Console.WriteLine();
+
+            if (row &lt; board.GetLength(0) - 1)
+            {
+                Console.WriteLine("--+---+--");
+            }
+        }
+
+        Console.WriteLine();
+    }
+
+    public static bool MakeMove(int move, string player)
+    {
+        if (move &lt; 1 || move &gt; 9)
+        {
+            return false;
+        }
+
+        int row = (move - 1) / 3;
+        int column = (move - 1) % 3;
+
+        if (board[row, column] == "X" ||
+            board[row, column] == "O")
+        {
+            return false;
+        }
+
+        board[row, column] = player;
+        return true;
+    }
+
+    public static string SwitchPlayer(string player)
+    {
+        if (player == "X")
+        {
+            return "O";
+        }
+        else
+        {
+            return "X";
+        }
+    }
+
+    public static bool HasWon(string player)
+    {
+        return
+            (board[0,0] == player &amp;&amp; board[0,1] == player &amp;&amp; board[0,2] == player) ||
+            (board[1,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[1,2] == player) ||
+            (board[2,0] == player &amp;&amp; board[2,1] == player &amp;&amp; board[2,2] == player) ||
+
+            (board[0,0] == player &amp;&amp; board[1,0] == player &amp;&amp; board[2,0] == player) ||
+            (board[0,1] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,1] == player) ||
+            (board[0,2] == player &amp;&amp; board[1,2] == player &amp;&amp; board[2,2] == player) ||
+
+            (board[0,0] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,2] == player) ||
+            (board[0,2] == player &amp;&amp; board[1,1] == player &amp;&amp; board[2,0] == player);
+    }
+
+    public static bool BoardFull()
+    {
+        for (int row = 0; row &lt; board.GetLength(0); row++)
+        {
+            for (int column = 0; column &lt; board.GetLength(1); column++)
+            {
+                if (board[row, column] != "X" &amp;&amp;
+                    board[row, column] != "O")
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }</pre>
-    <p><strong>Three dimensions:</strong> the array needs three indexes, and each dimension can be queried separately with <code>GetLength()</code>.</p>
-    <div class="test-strip"><span>Value = 21</span><span>Lengths = 2, 3, 4</span><span>24 elements in total</span></div>
+    <p><strong>Final test:</strong> play more than once and deliberately test invalid moves, each type of win and a draw.</p>
+    <div class="test-strip"><span>occupied square rejected</span><span>row win</span><span>column win</span><span>diagonal win</span><span>draw</span></div>
   </article>
 </section>
 
