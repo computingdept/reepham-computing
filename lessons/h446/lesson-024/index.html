@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 024 · Data structures practical: create, traverse, add, remove</title>
+<meta name="description" content="OCR H446 1.4.2(c) practical consolidation across lists, linked lists, stacks, queues, graphs, trees and hash tables.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 024<br>Data structures practical: create, traverse, add, remove</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What operation removes the top of a stack?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What operation removes the front of a queue?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What does a hash function produce?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>Which four actions does OCR explicitly expect across the 1.4.2 structures?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What operation removes the top of a stack?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Pop.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What operation removes the front of a queue?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Dequeue.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What does a hash function produce?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A storage index/bucket from a key.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Which four actions does OCR explicitly expect across the 1.4.2 structures?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Create, traverse, add data and remove data.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Data structures practical: create, traverse, add, remove</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul><li>select an appropriate data structure from a problem context;</li><li>apply create, traverse, add and remove operations accurately;</li><li>explain how the same four actions differ between structures;</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>create</span><span>traverse</span><span>add</span><span>remove</span><span>structure</span><span>constraint</span><span>operation</span><span>appropriate</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="9 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.2(c) · CONSOLIDATION</span><h2>Same four verbs — different algorithms</h2><pre class="arithmetic">CREATE
+TRAVERSE
+ADD
+REMOVE
+
+List · Linked list · Stack · Queue
+Graph · Tree/BST · Hash table</pre><div class="nl-reference-note">The practical goal is not memorising method names. It is understanding what each operation means for each structure.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Lists and linear structures</h2><pre class="arithmetic">List: Add / Remove / foreach
+Stack: Push / Pop
+Queue: Enqueue / Dequeue</pre><p>Operations reflect each structure's ordering rule.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Linked structures</h2><pre class="arithmetic">Linked list: change Next
+BST: change Left / Right</pre><p>References must be updated without breaking access to the remaining nodes.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Network structure</h2><pre class="arithmetic">Graph: add/remove edge
+Traverse: inspect connected vertices</pre><p>Directed and undirected graphs differ in whether one or two matrix entries change.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Hashed structure</h2><pre class="arithmetic">index = Hash(key)
+add/search/remove inside bucket</pre><p>Hashing chooses where to work before the bucket operation happens.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Choose by required behaviour</h2><p>A print server must process jobs in arrival order.</p><pre class="arithmetic">first job in → first job out</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · REQUIREMENT</span><h2>Identify order</h2><pre class="arithmetic">Earliest arrival must leave first.</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · MATCH</span><h2>Choose structure</h2><pre class="arithmetic">FIFO → Queue</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · ADD</span><h2>Correct operation</h2><pre class="arithmetic">jobs.Enqueue(newJob);</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · REMOVE</span><h2>Correct operation</h2><pre class="arithmetic">nextJob = jobs.Dequeue();</pre></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Undo system</h2><p>Most recent action must be removed first.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the choice</h2><pre class="arithmetic">Behaviour = ?
+Structure = ?
+Remove = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the choice</h2><pre class="arithmetic">Behaviour = LIFO
+Structure = Stack
+Remove = Pop</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Waiting customers</h2><p>First arrival must leave first.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the choice</h2><pre class="arithmetic">Behaviour = ?
+Structure = ?
+Remove = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the choice</h2><pre class="arithmetic">Behaviour = FIFO
+Structure = Queue
+Remove = Dequeue</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Dynamic chain</h2><p>Items must be inserted by changing references.</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the choice</h2><pre class="arithmetic">Nodes connected by ?
+Structure = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the choice</h2><pre class="arithmetic">Nodes connected by references
+Structure = Linked list</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>Fast key lookup</h2><p>A key is converted to a bucket index.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the choice</h2><pre class="arithmetic">Key → ? → bucket
+Structure = ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the choice</h2><pre class="arithmetic">Key → hash function → bucket
+Structure = Hash table</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · CHOICE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Structure selection</h3><div class="question-text"><p>For each context choose a structure and write one-sentence justification: undo history, printer jobs, road network, ordered search data.</p></div><div class="success-check">Each justification refers to LIFO/FIFO/connections/BST ordering rather than just naming the structure.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · IMPLEMENT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement one linear structure</h3><div class="question-text"><p>Choose stack, queue or linked list. Create it, add data, traverse/inspect it and remove data.</p></div><div class="success-check">All four required actions are demonstrated.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · IMPLEMENT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement one non-linear structure</h3><div class="question-text"><p>Choose graph, BST or hash table. Demonstrate create, add, traverse/search and remove.</p></div><div class="success-check">Your code preserves the rules of the chosen structure.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Explain two structures</h3><div class="question-text"><p>Choose any two structures and explain how adding and removing data differs between them.</p></div><div class="success-check">Your explanation uses the correct operations or reference changes.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Set up an empty or initial structure.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">create</div><p>The representation depends on the structure.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Visit data in a structure systematically.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">traverse</div><p>The method depends on links/order.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Insert new data while preserving structure rules.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">add</div><p>Examples include Push, Enqueue and link changes.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Delete data while preserving structure rules.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">remove</div><p>Examples include Pop, Dequeue and reference changes.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The organisation of stored data.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">structure</div><p>Different structures support different operations.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A rule the structure must preserve.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">constraint</div><p>BST ordering is one example.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">An action performed on a structure.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">operation</div><p>Create/traverse/add/remove are core operations.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Suitable for the problem requirements.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">appropriate</div><p>Choice should be justified by behaviour.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">OCR 1.4.2 requires understanding how to create, traverse, add data to and remove data from the specified structures.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 024 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-ds024"></script>
+</body>
+</html>
