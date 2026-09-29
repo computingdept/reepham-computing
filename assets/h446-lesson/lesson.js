@@ -199,13 +199,50 @@ function next(){
   if(answers.length){answers.forEach(d=>d.open=true);updateControl();return;}
   showPage(order[(order.indexOf(current)+1)%order.length]);
 }
+function previousAction(){
+  const page=document.getElementById(current);
+  if(current==='i-do'){
+    const examples=[...page.querySelectorAll('.ido-example')];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll('.ido-step')];
+      const stepIndex=visibleIndex(steps);
+
+      if(stepIndex>0){
+        showOnly(steps,stepIndex-1);
+        updateControl();
+        return;
+      }
+
+      if(exampleIndex>0){
+        showOnly(examples,exampleIndex-1);
+        const previousSteps=[...examples[exampleIndex-1].querySelectorAll('.ido-step')];
+        if(previousSteps.length)showOnly(previousSteps,previousSteps.length-1);
+        updateControl();
+        return;
+      }
+    }else{
+      const stages=[...page.querySelectorAll('.model-stage')];
+      const i=visibleIndex(stages);
+      if(i>0){
+        showOnly(stages,i-1);
+        updateControl();
+        return;
+      }
+    }
+  }
+
+  showPage(order[Math.max(0,order.indexOf(current)-1)]);
+}
+
 nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 advance.addEventListener('click',next);
-previous.addEventListener('click',()=>showPage(order[Math.max(0,order.indexOf(current)-1)]));
+previous.addEventListener('click',previousAction);
 document.querySelectorAll('details.answers').forEach(d=>d.addEventListener('toggle',updateControl));
 document.addEventListener('keydown',e=>{
   if(e.target.closest('button,a,input,textarea,select,summary')||e.altKey||e.ctrlKey||e.metaKey)return;
   if(e.key==='ArrowRight'){e.preventDefault();next();}
-  if(e.key==='ArrowLeft'){e.preventDefault();showPage(order[Math.max(0,order.indexOf(current)-1)]);}
+  if(e.key==='ArrowLeft'){e.preventDefault();previousAction();}
 });
 showPage(location.hash.slice(1)||'do-now');
