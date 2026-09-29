@@ -134,6 +134,11 @@ function updateSignals(id){
     slot.setAttribute('aria-label',values[i]||'');
   });
 
+  const phaseTime=document.getElementById('phase-time');
+  if(phaseTime){
+    phaseTime.textContent=page?.dataset.phaseTime||'';
+  }
+
   const exitSignal=document.getElementById('exit-ticket-signal');
   if(exitSignal)exitSignal.hidden=true;
 }
