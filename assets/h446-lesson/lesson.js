@@ -1,26 +1,19 @@
 const order=['do-now','overview','new-learning','i-do','we-do','you-do','vocabulary','exit'];
 const signalMap={
-  'do-now':['DoNow','SilentWorking','MWBs'],
-  overview:['','Listening',''],
-  'new-learning':['','Listening','ColdCalling'],
-  'i-do':['IDo','Listening',''],
-  'we-do':['WeDo','QuietWorking','Think-Pair-Share'],
-  'you-do':['YouDo','SilentWorking','MWBs'],
-  vocabulary:['Questionning','Listening','ColdCalling'],
-  exit:['QuestionningEx','SilentWorking','']
+  'do-now':['Do Now','Silent Working','MWBs'],
+  overview:['Objectives','Listening','Hands Up'],
+  'new-learning':['New Learning','Listening','Cold Calling'],
+  'i-do':['I Do','Listening','Choral Response'],
+  'we-do':['We Do','Quiet Working','MWBs'],
+  'you-do':['You Do','Quiet Working','Turn & Talk'],
+  vocabulary:['Questioning','Listening','Cold Calling'],
+  exit:['Exit Questioning','Silence','Choral Response']
 };
-const labels={
-  DoNow:'Do Now',SilentWorking:'Silent Working',ExerciseBook:'Exercise Book',
-  Questionning:'Questioning',MWBs:'Mini whiteboards',Listening:'Listening',
-  ColdCalling:'Cold Calling',IDo:'I Do',WeDo:'We Do',QuietWorking:'Quiet Working',
-  'Think-Pair-Share':'Think-Pair-Share',YouDo:'You Do',ChoralResponse:'Choral Response',
-  QuestionningEx:'Exit Questioning'
-};
+const youDoIndependentSignals=['You Do','Silence','Independent'];
 const pages=[...document.querySelectorAll('.page')];
 const nav=[...document.querySelectorAll('[data-page]')];
 const advance=document.getElementById('advance');
 const previous=document.getElementById('previous');
-const iconPath=document.body.dataset.iconPath||'assets/';
 let current='do-now';
 
 function visibleIndex(items){
@@ -83,6 +76,7 @@ function resetPhaseState(id){
     }
   }
   if(id==='you-do'){
+    page.dataset.workMode='discuss';
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       setYouDoWindow(page,0);
@@ -117,18 +111,31 @@ function resetPhaseState(id){
   }
 }
 function updateSignals(id){
+  const page=document.getElementById(id);
+  const values=id==='you-do'&&page?.dataset.workMode==='independent'
+    ?youDoIndependentSignals
+    :(signalMap[id]||['','','']);
+  const kinds=['phase','routine','response'];
+
   ['phase-logo','behaviour-logo','response-logo'].forEach((key,i)=>{
-    const img=document.getElementById(key);
-    if(!img)return;
-    const name=(signalMap[id]||[])[i];
-    img.hidden=!name;
-    if(name){
-      img.src=iconPath+name+'_CodingIcon.png';
-      img.alt=labels[name]||name;
+    let slot=document.getElementById(key);
+    if(!slot)return;
+
+    if(slot.tagName==='IMG'){
+      const replacement=document.createElement('span');
+      replacement.id=key;
+      slot.replaceWith(replacement);
+      slot=replacement;
     }
+
+    slot.hidden=false;
+    slot.className='signal-tile signal-'+kinds[i];
+    slot.textContent=values[i]||'—';
+    slot.setAttribute('aria-label',values[i]||'');
   });
+
   const exitSignal=document.getElementById('exit-ticket-signal');
-  if(exitSignal)exitSignal.hidden=id!=='exit';
+  if(exitSignal)exitSignal.hidden=true;
 }
 function updateControl(){
   const page=document.getElementById(current);
@@ -174,16 +181,20 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    const questions=[...page.querySelectorAll('.youdo-question')];
-    if(questions.length){
-      const size=Math.min(3,questions.length);
-      const maxStart=Math.max(0,questions.length-size);
-      const start=Number(page.dataset.windowStart||0);
-      label=start<maxStart?'Next questions →':'Open answers →';
+    if(page.dataset.workMode!=='independent'){
+      label='Begin silent work →';
     }else{
-      const stages=[...page.querySelectorAll('.youdo-stage')];
-      const i=visibleIndex(stages);
-      label=i<stages.length-1?'Next independent questions →':'Open answers →';
+      const questions=[...page.querySelectorAll('.youdo-question')];
+      if(questions.length){
+        const size=Math.min(3,questions.length);
+        const maxStart=Math.max(0,questions.length-size);
+        const start=Number(page.dataset.windowStart||0);
+        label=start<maxStart?'Next questions →':'Open answers →';
+      }else{
+        const stages=[...page.querySelectorAll('.youdo-stage')];
+        const i=visibleIndex(stages);
+        label=i<stages.length-1?'Next independent questions →':'Open answers →';
+      }
     }
   }else if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
@@ -282,6 +293,12 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.workMode!=='independent'){
+      page.dataset.workMode='independent';
+      updateSignals('you-do');
+      updateControl();
+      return;
+    }
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       const size=Math.min(3,questions.length);
@@ -356,11 +373,23 @@ function previousAction(){
         updateControl();
         return;
       }
+      if(page.dataset.workMode==='independent'){
+        page.dataset.workMode='discuss';
+        updateSignals('you-do');
+        updateControl();
+        return;
+      }
     }else{
       const stages=[...page.querySelectorAll('.youdo-stage')];
       const i=visibleIndex(stages);
       if(i>0){
         showOnly(stages,i-1);
+        updateControl();
+        return;
+      }
+      if(page.dataset.workMode==='independent'){
+        page.dataset.workMode='discuss';
+        updateSignals('you-do');
         updateControl();
         return;
       }
