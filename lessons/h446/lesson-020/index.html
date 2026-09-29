@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 020 · Stacks and queues</title>
+<meta name="description" content="OCR H446 1.4.2 stacks and queues: LIFO/FIFO, operations and practical C# use.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 020<br>Stacks and queues</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What does Head refer to in a linked list?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>How do you move to the next linked-list node?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What does LIFO stand for?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>If A, B, C enter a queue in that order, which leaves first?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What does Head refer to in a linked list?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The first node.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">How do you move to the next linked-list node?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Follow the Next reference.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What does LIFO stand for?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Last In, First Out.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">If A, B, C enter a queue in that order, which leaves first?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A.</strong></p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="2 minutes"><h1>Stacks and queues</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul><li>distinguish stack LIFO from queue FIFO behaviour;</li><li>use push/pop/peek and enqueue/dequeue/peek operations;</li><li>create, traverse, add and remove data from stacks and queues;</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span>stack</span><span>LIFO</span><span>push</span><span>pop</span><span>queue</span><span>FIFO</span><span>enqueue</span><span>dequeue</span></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.2(b)(c) · STACK + QUEUE</span><h2>Same items, different removal order</h2><pre class="arithmetic">Add A, then B, then C
+
+STACK pop:       C, B, A
+QUEUE dequeue:   A, B, C</pre><div class="nl-reference-note">The defining feature is the order in which data can be added and removed.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Stack = LIFO</h2><pre class="arithmetic">Stack&lt;string&gt; history = new Stack&lt;string&gt;();
+history.Push("A");
+history.Push("B");
+history.Push("C");</pre><p>C is now on top because it was pushed last.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Pop removes the top</h2><pre class="arithmetic">Console.WriteLine(history.Pop()); // C</pre><p>Peek inspects the top without removing it.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Queue = FIFO</h2><pre class="arithmetic">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
+jobs.Enqueue("A");
+jobs.Enqueue("B");
+jobs.Enqueue("C");</pre><p>A is at the front because it arrived first.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Dequeue removes the front</h2><pre class="arithmetic">Console.WriteLine(jobs.Dequeue()); // A</pre><p>Traversal can inspect the remaining items without changing their logical order.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Predict two removals</h2><p>Add A, B, C to both structures.</p><pre class="arithmetic">A → B → C</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · STACK</span><h2>Push in order</h2><pre class="arithmetic">stack.Push("A");
+stack.Push("B");
+stack.Push("C");</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · POP</span><h2>Remove twice</h2><pre class="arithmetic">stack.Pop(); // C
+stack.Pop(); // B</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · QUEUE</span><h2>Enqueue in order</h2><pre class="arithmetic">queue.Enqueue("A");
+queue.Enqueue("B");
+queue.Enqueue("C");</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · DEQUEUE</span><h2>Remove twice</h2><pre class="arithmetic">queue.Dequeue(); // A
+queue.Dequeue(); // B</pre></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Stack operation</h2><p>Add X to a stack.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">stack.?("X");</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">stack.Push("X");</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Queue operation</h2><p>Remove the front item.</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">string item = queue.?();</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">string item = queue.Dequeue();</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Predict stack</h2><p>Push 4, then 7, then 9. What does Pop return?</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the trace</h2><pre class="arithmetic">Top → ?
+Then ?
+Then ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the trace</h2><pre class="arithmetic">Top → 9
+Then 7
+Then 4</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 4</span><h2>Predict queue</h2><p>Enqueue 4, then 7, then 9. What does Dequeue return?</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the trace</h2><pre class="arithmetic">Front → ?
+Then ?
+Then ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the trace</h2><pre class="arithmetic">Front → 4
+Then 7
+Then 9</pre></div></div></article></div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · STACK</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Browser history stack</h3><div class="question-text"><p>Push three page names, pop one page, then display the new top with <code>Peek()</code>.</p></div><div class="success-check">Pop removes the most recent page and Peek shows the previous page.</div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Print queue</h3><div class="question-text"><p>Enqueue three print jobs, dequeue one, then display the new front with <code>Peek()</code>.</p></div><div class="success-check">The earliest print job is removed first.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Inspect without removing</h3><div class="question-text"><p>Use <code>foreach</code> to display every item currently in a queue.</p></div><div class="success-check">The queue contents are displayed without calling Dequeue.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · CHOOSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Choose stack or queue</h3><div class="question-text"><p>Code one example where order matters: undo actions or customers waiting. Use the appropriate structure and comment why.</p></div><div class="success-check">Your code behaviour matches LIFO for undo or FIFO for waiting customers.</div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A LIFO data structure.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">stack</div><p>The most recently added item is removed first.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Last In, First Out.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">LIFO</div><p>Describes stack behaviour.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Add an item to the top of a stack.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">push</div><p>The new item becomes the top.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Remove and return the top stack item.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">pop</div><p>It changes the stack.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A FIFO data structure.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">queue</div><p>The earliest added item is removed first.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">First In, First Out.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">FIFO</div><p>Describes queue behaviour.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Add an item to the rear of a queue.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">enqueue</div><p>It joins the back.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Remove and return the front queue item.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">dequeue</div><p>It changes the queue.</p></div></article></div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">A queue removes the item that has been stored for the longest time before newer items.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+
+</main>
+
+<div class="lesson-footer">Lesson 020 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-ds020"></script>
+</body>
+</html>
