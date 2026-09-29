@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 009 · Sequence & branching in C#</title>
+<meta name="description" content="OCR H446 2.2.1(a): sequence and branching in C# using .NET Fiddle.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2045">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-2045">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-2045">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 009<br>Sequence &amp; branching in C#</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>Why would Unicode be chosen instead of standard ASCII for a multilingual application?</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Decode <code>01011000 0011</code> in 8+4 two’s-complement floating-point format.</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Convert <code>6D₁₆</code> to eight-bit binary.</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Decode <code>11110110</code> as an 8-bit two’s-complement integer. Show the signed place values.</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">Why would Unicode be chosen instead of standard ASCII for a multilingual application?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Unicode supports a much larger repertoire of characters from many writing systems.</p><p class="review-explain">Standard ASCII has 128 codes and is centred on a limited character set. Unicode provides code points for many languages and symbols.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">Decode <code>01011000 0011</code> in 8+4 two’s-complement floating-point format.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>5.5</strong></p><p class="review-explain">Mantissa <code>01011000 = 0.6875</code>; exponent <code>0011 = 3</code>; <code>0.6875 × 2³ = 5.5</code>.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Convert <code>6D₁₆</code> to eight-bit binary.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>01101101₂</code></p><p class="review-explain"><code>6 → 0110</code> and <code>D → 1101</code>.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Decode <code>11110110</code> as an 8-bit two’s-complement integer. Show the signed place values.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>−10</strong></p><p class="review-explain"><code>−128 + 64 + 32 + 16 + 4 + 2 = −10</code>.</p></article>
+    </div></div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Sequence &amp; branching in C#</h1>
+  <div class="objectives">
+    <strong>By the end, you can…</strong>
+    <ul>
+      <li>identify sequence and branching as programming constructs;</li>
+      <li>write input, output and simple casts using the C# syntax in your .NET Fiddle guide;</li>
+      <li>write and test <code>if / else if / else</code> decisions using suitable conditions.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>sequence</span><span>branching</span><span>selection</span><span>condition</span>
+      <span>Boolean expression</span><span>relational operator</span><span>logical operator</span><span>parse</span>
+    </div>
+  </div>
+  <p><strong>OCR 2.2.1(a):</strong> programming constructs are sequence, iteration and branching. Today focuses on <strong>sequence + branching</strong>; iteration follows next lesson.</p>
+  <p><strong>Student guide:</strong> use pages 3–4 for variables/input/casting and operators/selection.</p>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">C# QUICK REFERENCE</span>
+      <h2>Use the guide syntax</h2>
+      <pre class="arithmetic">Console.Write("Prompt: ");
+string text = Console.ReadLine();
+
+int number =
+    int.Parse(Console.ReadLine());
+
+if (condition)
+{
+    // instructions
+}
+else if (condition)
+{
+    // instructions
+}
+else
+{
+    // instructions
+}</pre>
+      <div class="nl-reference-note"><strong>OCR constructs:</strong> sequence · branching/selection · iteration. A past OCR question expects the construct name <em>and</em> a working example.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Sequence = instructions in order</h2>
+        <p>Sequence is the normal top-to-bottom execution of statements. Each statement happens after the previous one unless another construct changes the flow.</p>
+        <pre class="arithmetic">Console.Write("Name: ");
+string name = Console.ReadLine();
+Console.WriteLine("Hello " + name);</pre>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>Input arrives as text</h2>
+        <p><code>Console.ReadLine()</code> returns a string. If the program needs a whole number, parse the input into an <code>int</code>.</p>
+        <pre class="arithmetic">Console.Write("Age: ");
+int age = int.Parse(Console.ReadLine());</pre>
+        <div class="nl-key">Declare the type before the variable name: <code>int age</code>, <code>string name</code>, <code>bool valid</code>.</div>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>Branching chooses a route</h2>
+        <p>An <code>if</code> condition must evaluate to <strong>true or false</strong>. Only the matching branch is executed.</p>
+        <pre class="arithmetic">if (age &gt;= 18)
+{
+    Console.WriteLine("Adult");
+}
+else
+{
+    Console.WriteLine("Under 18");
+}</pre>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2>Conditions and order matter</h2>
+        <p>Use <code>==</code> to compare equality, not <code>=</code>. Use <code>&amp;&amp;</code>, <code>||</code> and <code>!</code> for AND, OR and NOT.</p>
+        <p>With <code>else if</code>, conditions are tested from top to bottom. Put the most demanding threshold first.</p>
+        <div class="nl-key">Test your code with <strong>normal</strong>, <strong>boundary</strong> and <strong>invalid/unexpected</strong> values.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Build a result checker</h2>
+        <p>Ask the user for a score and output:</p>
+        <span class="focus-code">70+ → Distinction<br>50–69 → Pass<br>below 50 → Not yet</span>
+        <p>Use the same class-and-<code>Main</code> structure as the student C# guide.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · START THE PROGRAM</span>
+          <h2>Use the standard .NET Fiddle structure</h2>
+          <pre class="arithmetic">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        // code goes here
+    }
+}</pre>
+          <p>Main program instructions belong inside <code>Main()</code>.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · INPUT &amp; PARSE</span>
+          <h2>Read the score as an integer</h2>
+          <pre class="arithmetic">Console.Write("Enter score: ");
+int score =
+    int.Parse(Console.ReadLine());</pre>
+          <p><code>Console.ReadLine()</code> gives us text; <code>int.Parse(...)</code> converts it to a whole number.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · BRANCH</span>
+          <h2>Test the highest threshold first</h2>
+          <pre class="arithmetic">if (score &gt;= 70)
+{
+    Console.WriteLine("Distinction");
+}
+else if (score &gt;= 50)
+{
+    Console.WriteLine("Pass");
+}
+else
+{
+    Console.WriteLine("Not yet");
+}</pre>
+          <p>A score of 85 satisfies both <code>&gt;= 70</code> and <code>&gt;= 50</code>, so the higher threshold must be tested first.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · TEST</span>
+          <h2>Use values that expose mistakes</h2>
+          <pre class="arithmetic">85 → Distinction
+70 → Distinction
+50 → Pass
+49 → Not yet</pre>
+          <div class="key-result">Sequence gets the input ready. Branching chooses exactly one output route.</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 1</span>
+        <h2>Even or odd</h2>
+        <p>Ask for a whole number. Output <strong>Even</strong> when the remainder after division by 2 is zero; otherwise output <strong>Odd</strong>.</p>
+        <span class="focus-code">number % 2 == 0</span>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Build the missing decision</h2>
+          <pre class="arithmetic">Console.Write("Number: ");
+int number = int.Parse(Console.ReadLine());
+
+// What goes here?</pre>
+          <div class="practice-grid"><div class="practice-box"><strong>Condition</strong><span>?</span></div><div class="practice-box"><strong>Two outputs</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Compare</h2>
+          <pre class="arithmetic">if (number % 2 == 0)
+{
+    Console.WriteLine("Even");
+}
+else
+{
+    Console.WriteLine("Odd");
+}</pre>
+          <p>The guide maps OCR <code>MOD</code> to C# <code>%</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 2</span>
+        <h2>Three temperature bands</h2>
+        <p>Output <strong>Hot</strong> for 25+, <strong>Mild</strong> for 15–24, otherwise <strong>Cold</strong>.</p>
+        <span class="focus-code">25+ · 15–24 · below 15</span>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Which condition comes first?</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>First test</strong><span>?</span></div><div class="practice-box"><strong>Second test</strong><span>?</span></div><div class="practice-box"><strong>Else</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Highest threshold first</h2>
+          <pre class="arithmetic">if (temperature &gt;= 25)
+{
+    Console.WriteLine("Hot");
+}
+else if (temperature &gt;= 15)
+{
+    Console.WriteLine("Mild");
+}
+else
+{
+    Console.WriteLine("Cold");
+}</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 3</span>
+        <h2>Age range using AND</h2>
+        <p>Output <strong>Teen ticket</strong> only when the age is from 12 to 17 inclusive.</p>
+        <span class="focus-code">12 ≤ age ≤ 17</span>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Write one Boolean condition</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Lower bound</strong><span>?</span></div><div class="practice-box"><strong>Upper bound</strong><span>?</span></div><div class="practice-box"><strong>Join with</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Both conditions must be true</h2>
+          <pre class="arithmetic">if (age &gt;= 12 &amp;&amp; age &lt;= 17)
+{
+    Console.WriteLine("Teen ticket");
+}
+else
+{
+    Console.WriteLine("Standard ticket");
+}</pre>
+          <p>C# uses <code>&amp;&amp;</code> for OCR <strong>AND</strong>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">OCR EXAM LINK</span>
+        <h2>Name it and show it</h2>
+        <p>A past OCR programming-techniques question expects the three constructs to be named and supported with a <strong>working example</strong>.</p>
+        <p>Today: give a C# example of <strong>sequence</strong> and a C# example of <strong>branching</strong>. Iteration comes next lesson.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Produce two tiny working examples</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Sequence</strong><span>?</span></div><div class="practice-box"><strong>Branching</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Working examples</h2>
+          <pre class="arithmetic">// Sequence
+int total = 7 + 5;
+Console.WriteLine(total);
+
+// Branching
+if (total &gt; 10)
+{
+    Console.WriteLine("Large");
+}
+else
+{
+    Console.WriteLine("Small");
+}</pre>
+          <div class="key-result">Use the technical vocabulary: <strong>sequence</strong>, <strong>branching/selection</strong>, <strong>iteration</strong>.</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="23 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 1 · CORE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Positive, negative or zero</h3>
+        <div class="question-text">
+          <p>Ask the user for an integer. Output exactly one of:</p>
+          <p><strong>Positive</strong> · <strong>Negative</strong> · <strong>Zero</strong></p>
+          <div class="coding-brief">Use <code>int.Parse(Console.ReadLine())</code> and <code>if / else if / else</code>.</div>
+        </div>
+        <div class="success-check">Test: 8 → Positive · −3 → Negative · 0 → Zero</div>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 2 · DEVELOP</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Ticket category</h3>
+        <div class="question-text">
+          <p>Ask for an age and output:</p>
+          <p><strong>Child</strong> for 0–11 · <strong>Teen</strong> for 12–17 · <strong>Adult</strong> for 18+</p>
+          <div class="coding-brief">Decide the order of the conditions before you type.</div>
+        </div>
+        <div class="success-check">Test boundaries: 11 · 12 · 17 · 18</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 3 · APPLY</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Delivery charge</h3>
+        <div class="question-text">
+          <p>Ask for an order total and whether the customer is a member.</p>
+          <p>Output <strong>Free delivery</strong> only when the total is at least 30 <strong>AND</strong> the member answer is <code>"yes"</code>. Otherwise output <strong>Delivery charge applies</strong>.</p>
+          <div class="coding-brief">Use a <code>double</code>, a <code>string</code> and <code>&amp;&amp;</code>.</div>
+        </div>
+        <div class="success-check">Test both parts of the AND condition separately.</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 4 · CHALLENGE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Simple login</h3>
+        <div class="question-text">
+          <p>Ask for a username and a PIN.</p>
+          <p>Output <strong>Access granted</strong> only when the username is <code>"admin"</code> and the PIN is <code>2468</code>.</p>
+          <p>Otherwise output <strong>Access denied</strong>.</p>
+          <div class="coding-brief">Use one string comparison, one integer comparison and <code>&amp;&amp;</code>.</div>
+        </div>
+        <div class="success-check">Test: both correct · wrong username · wrong PIN</div>
+      </article>
+
+    </div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+  <div class="vocab-test-deck">
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Instructions executed in their stated order.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Sequence</div><p>Instructions executed in their stated order.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Choosing a route through a program according to a condition.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Branching / selection</div><p>A decision changes which instructions execute.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">An expression that evaluates to true or false.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Boolean expression</div><p>Used as the test in a decision or loop.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The test inside an <code>if</code> statement.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Condition</div><p>It determines which branch is taken.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question"><code>&gt;=</code>, <code>&lt;</code>, <code>==</code> and <code>!=</code> are examples of what?</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Relational operators</div><p>They compare values.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question"><code>&amp;&amp;</code>, <code>||</code> and <code>!</code> are examples of what?</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Logical operators</div><p>They represent AND, OR and NOT.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Converting text input into a numeric value with <code>int.Parse(...)</code>.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Parsing</div><p>The guide uses Parse when numeric input is required.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A value such as 11, 12, 17 or 18 chosen because it sits exactly on a limit.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Boundary test data</div><p>Boundary tests help expose incorrect comparison operators.</p></div></article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement"><span class="exit-number">1</span><p>Sequence means instructions normally execute in order.</p></article>
+      <article class="exit-statement"><span class="exit-number">2</span><p>In C#, <code>=</code> is used to test whether two values are equal.</p></article>
+      <article class="exit-statement"><span class="exit-number">3</span><p>In an <code>if / else if / else</code> structure, the order of the conditions can change the result.</p></article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can build a branching program independently.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I can follow the pattern but still need prompts.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help with C# conditions.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 009 · OCR H446 2.2.1(a) <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-2045"></script>
+</body>
+</html>
