@@ -6,9 +6,9 @@
 <title>Lesson 003 · Hexadecimal, shifts & masks</title>
 <meta name="description" content="OCR H446 1.4.1(e, f, i): Hexadecimal, shifts & masks.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E03%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1930">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-1930">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1930">
 </head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -26,7 +26,59 @@
 <main id="main">
 <section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RECALL</strong><p>Choose a type</p><p>Which data type stores whether a sensor is active? State its two possible values.</p></article><article class="donow-question"><strong>2 · APPLY</strong><p>Read an unsigned byte</p><p>Convert <code>01011010₂</code> to denary. Show the selected place values.</p></article><article class="donow-question"><strong>3 · CONVERT</strong><p>Encode a negative number</p><p>Write −18 in eight-bit sign magnitude and eight-bit two’s complement.</p></article><article class="donow-question"><strong>4 · REASON</strong><p>Add and check the range</p><p>Add <code>01110000</code> and <code>00100000</code> as eight-bit two’s-complement values. State the stored result and explain whether signed overflow occurs.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Choose a type</h2><div class="review-question"><p>Which data type stores whether a sensor is active? State its two possible values.</p></div></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><div class="review-answer">Boolean: True or False.</div></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Read an unsigned byte</h2><div class="review-question"><p>Convert <code>01011010₂</code> to denary. Show the selected place values.</p></div></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><div class="review-answer">64 + 16 + 8 + 2 = <strong>90</strong>.</div></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Encode a negative number</h2><div class="review-question"><p>Write −18 in eight-bit sign magnitude and eight-bit two’s complement.</p></div></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><div class="review-answer">+18 = <code>00010010</code>. Sign magnitude: <code>10010010</code>. Two’s complement: invert → <code>11101101</code>, add 1 → <code>11101110</code>.</div></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Add and check the range</h2><div class="review-question"><p>Add <code>01110000</code> and <code>00100000</code> as eight-bit two’s-complement values. State the stored result and explain whether signed overflow occurs.</p></div></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><div class="review-answer"><code>10010000</code>. 112 + 32 = 144, outside −128…127. Signed overflow occurs; the stored pattern would decode to −112.</div></article></div></div></div></section>
 <section id="overview" class="page" data-phase-time="2 minutes"><h1>Hexadecimal, shifts &amp; masks</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>convert positive integers between hexadecimal, binary and denary;</li><li>apply fixed-width logical shifts and explain their limits;</li><li>use AND, OR and XOR masks to inspect, clear, set and toggle bits.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span>Hexadecimal</span><span>Nibble</span><span>Logical shift</span><span>Mask</span><span>AND</span><span>OR</span><span>XOR</span><span>Toggle</span></div></div><p><strong>Convention:</strong> all shift and mask examples use unsigned eight-bit values. Bits shifted beyond the byte are discarded; empty positions are filled with zeros.</p><p>Next: denary to floating-point binary and normalisation.</p></section>
-<section id="new-learning" class="page" data-phase-time="7 minutes"><div class="migration-content"><div class="task"><span class="phase-tag">BASE 16</span><h3>One hex digit = four bits</h3><p>Hexadecimal uses 0–9 and A–F. A = 10, B = 11, C = 12, D = 13, E = 14 and F = 15.</p><p>Place values from right to left are <strong>1, 16, 256, 4096…</strong>. Four bits form a nibble; their 16 patterns match the 16 hexadecimal digits.</p><p>Hex is a shorter way to write a bit pattern for people. It does not change the value or make the computer store fewer bits.</p></div><div class="table-wrap"><table><tr><th>Denary</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr><tr><th>Hex</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr><tr><th>Binary</th><td><code>0000</code></td><td><code>0001</code></td><td><code>0010</code></td><td><code>0011</code></td><td><code>0100</code></td><td><code>0101</code></td><td><code>0110</code></td><td><code>0111</code></td><td><code>1000</code></td><td><code>1001</code></td><td><code>1010</code></td><td><code>1011</code></td><td><code>1100</code></td><td><code>1101</code></td><td><code>1110</code></td><td><code>1111</code></td></tr></table></div><div class="two-col"><div class="task"><span class="phase-tag">LOGICAL SHIFTS</span><h3>Move bits; insert zeros</h3><p>Left by k positions multiplies an unsigned value by 2ᵏ <strong>only if no significant bits are lost</strong>. A fixed byte cannot grow.</p><p>Right by k positions divides by 2ᵏ, discarding any remainder. Logical shifts do not preserve the sign of a negative two’s-complement value.</p></div><div class="task"><span class="phase-tag">BIT MASKS</span><h3>Apply a rule to each column</h3><p><strong>AND:</strong> 1 only when both inputs are 1. Mask 0 clears; mask 1 preserves.</p><p><strong>OR:</strong> 1 when either input is 1. Mask 1 sets; mask 0 preserves.</p><p><strong>XOR:</strong> 1 when inputs differ. Mask 1 toggles; mask 0 preserves.</p></div></div><p><strong>Bit numbering:</strong> bit 0 is the rightmost (value 1); bit 7 is the leftmost (value 128).</p></section></div></section>
+<section id="new-learning" class="page phase-focus" data-phase-time="7 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">HEX · SHIFT · MASK</span>
+      <h2>Quick reference</h2>
+      <pre class="arithmetic">Hex: A B C D E F
+     10 11 12 13 14 15
+
+1 hex digit = 4 bits
+bit 7 ........ bit 0
+128              1</pre>
+      <p><strong>AND</strong> preserve/clear · <strong>OR</strong> set · <strong>XOR</strong> toggle</p>
+      <div class="nl-reference-note">Hex is a shorter human-readable way to write the same bit pattern. It does not reduce the number of stored bits.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Hexadecimal links directly to binary</h2>
+        <p>Each hexadecimal digit maps to exactly four bits because four bits have 16 possible patterns.</p>
+        <pre class="arithmetic">6D₁₆
+6 → 0110
+D → 1101
+= 01101101₂</pre>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>Logical shifts move bits</h2>
+        <p>A logical shift inserts zeros into the empty positions. Bits leaving the fixed width are lost.</p>
+        <div class="nl-key">Left by <em>k</em> can multiply an unsigned value by <code>2ᵏ</code> only if significant bits are not lost. Right by <em>k</em> divides and discards any remainder.</div>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>AND and OR masks</h2>
+        <p><strong>AND:</strong> mask 1 preserves a bit; mask 0 clears it.</p>
+        <p><strong>OR:</strong> mask 1 sets a bit; mask 0 preserves it.</p>
+        <pre class="arithmetic">10100101
+AND 00001111
+=   00000101</pre>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2>XOR toggles selected bits</h2>
+        <p>XOR produces 1 when the two input bits differ. A mask bit of 1 flips the corresponding data bit; 0 leaves it unchanged.</p>
+        <div class="nl-key">Bit 0 is the rightmost bit. Bit 7 is the leftmost bit in an 8-bit value.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
 <section id="i-do" class="page phase-ido" data-phase-time="5 minutes">
   <div class="ido-focus-deck">
     <article class="ido-example">
@@ -87,6 +139,6 @@ OR   00001001        XOR  00001111
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-ticket-panel"><div class="exit-response-key"><strong>TRUE OR FALSE?</strong><div class="exit-key-options"><span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span><span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span></div></div><div class="exit-statements"><article class="exit-statement"><span class="exit-number">1</span><p>One hexadecimal digit represents four binary bits.</p></article><article class="exit-statement"><span class="exit-number">2</span><p>A logical right shift inserts 1 at the left of a negative bit pattern.</p></article><article class="exit-statement"><span class="exit-number">3</span><p>XOR can be used with a mask to toggle selected bits.</p></article></div><div class="exit-confidence"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
 </main>
 <div class="lesson-footer">Lesson 003 · 1.4.1(e, f, i) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1815"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-1930"></script>
 </body>
 </html>
