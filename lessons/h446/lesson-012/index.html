@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 012 · Scope & parameter passing in C#</title>
+<meta name="description" content="OCR H446 2.2.1(c-d): local/global variables, parameters and passing by value/reference in C#.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2415">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-2415">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-2415">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html">← Year 12 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR H446 · Lesson 012<br>Scope &amp; parameter passing</span>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
+  <div class="donow-deck">
+    <div class="donow-stage">
+      <div class="donow-questions">
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>What is the difference between a C# function and a procedure-style method?</p></article>
+        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Which C# loop always executes its body at least once?</p></article>
+        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>What does <code>==</code> do in a C# condition?</p></article>
+        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>In <code>Triple(7)</code>, identify the argument. In <code>Triple(int number)</code>, identify the parameter.</p></article>
+      </div>
+    </div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What is the difference between a C# function and a procedure-style method?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">A <strong>function returns a value</strong>. A procedure-style method uses <code>void</code> and does not return a value.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">Which C# loop always executes its body at least once?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong><code>do...while</code></strong></p><p class="review-explain">Its condition is checked after the body has run.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">What does <code>==</code> do in a C# condition?</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">It <strong>compares two values for equality</strong>.</p><p class="review-explain"><code>=</code> assigns; <code>==</code> compares.</p></article>
+    </div></div>
+
+    <div class="donow-stage" hidden><div class="donow-review">
+      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">In <code>Triple(7)</code>, identify the argument. In <code>Triple(int number)</code>, identify the parameter.</p></article>
+      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Argument = 7</strong> · <strong>parameter = number</strong></p><p class="review-explain">The argument is the actual value supplied; the parameter is the named input in the method definition.</p></article>
+    </div></div>
+  </div>
+</section>
+
+<section id="overview" class="page" data-phase-time="2 minutes">
+  <h1>Scope &amp; parameter passing in C#</h1>
+  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
+  <div class="objectives">
+    <strong>By the end, you can…</strong>
+    <ul>
+      <li>explain the scope of local and global/class-level variables;</li>
+      <li>explain what happens when a parameter is passed by value;</li>
+      <li>use C# <code>ref</code> to pass a variable by reference.</li>
+    </ul>
+  </div>
+  <div class="vocab-intro">
+    <strong>Key vocabulary for today</strong>
+    <div class="vocab-intro-list" aria-label="Key vocabulary">
+      <span>scope</span><span>local variable</span><span>global variable</span><span>parameter</span>
+      <span>argument</span><span>pass by value</span><span>pass by reference</span><span>ref</span>
+    </div>
+  </div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
+  <div class="nl-focus">
+    <article class="nl-reference">
+      <span class="phase-tag">C# QUICK REFERENCE</span>
+      <h2>Scope &amp; parameter passing</h2>
+      <pre class="arithmetic">public class Program
+{
+    public static int score = 0;
+
+    public static void Main()
+    {
+        int attempts = 3;
+    }
+
+    public static void Change(ref int number)
+    {
+        number = 100;
+    }
+}</pre>
+      <div class="nl-reference-note"><strong>OCR idea:</strong> global variables can be accessed across the program; local variables exist only within the subroutine/block in which they are declared.</div>
+    </article>
+
+    <article class="nl-explanation">
+      <div class="nl-stage">
+        <span class="nl-stage-label">STEP 1 OF 4</span>
+        <h2>Scope controls where a variable can be used</h2>
+        <p>A <strong>local variable</strong> is declared inside a method or block and can only be used within that scope.</p>
+        <p>For this course, we use a class-level <code>static</code> field to demonstrate the OCR idea of a <strong>global variable</strong> that can be accessed by multiple methods.</p>
+        <div class="nl-key">Prefer local variables where possible: their purpose and lifetime are easier to control.</div>
+        <span class="nl-stage-count">1 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 2 OF 4</span>
+        <h2>Parameters are local to the method</h2>
+        <p>A parameter receives data when a method is called and behaves as a local variable inside that method.</p>
+        <pre class="arithmetic">public static int Triple(int number)
+{
+    return number * 3;
+}</pre>
+        <p><code>number</code> exists within <code>Triple</code>. The value supplied in the call is the argument.</p>
+        <span class="nl-stage-count">2 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 3 OF 4</span>
+        <h2>By value = the method receives a copy</h2>
+        <pre class="arithmetic">public static void Change(int number)
+{
+    number = 100;
+}</pre>
+        <p>Changing <code>number</code> changes only the method's local copy. The original variable in <code>Main()</code> is unchanged.</p>
+        <div class="nl-key">C# parameters are passed by value unless you explicitly use a reference-passing keyword such as <code>ref</code>.</div>
+        <span class="nl-stage-count">3 of 4</span>
+      </div>
+
+      <div class="nl-stage" hidden>
+        <span class="nl-stage-label">STEP 4 OF 4</span>
+        <h2><code>ref</code> gives access to the original variable</h2>
+        <pre class="arithmetic">public static void Change(ref int number)
+{
+    number = 100;
+}
+
+// call
+Change(ref value);</pre>
+        <p>Write <code>ref</code> in both places: in the method parameter and in the method call.</p>
+        <div class="nl-key">Changes made through the <code>ref</code> parameter remain after the method finishes.</div>
+        <span class="nl-stage-count">4 of 4</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
+  <div class="ido-focus-deck">
+    <article class="ido-example">
+      <div class="ido-reference">
+        <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
+        <h2>Why doesn't the original value change?</h2>
+        <span class="focus-code">int score = 10;<br>ChangeByValue(score);</span>
+        <p>Predict the value of <code>score</code> after the method call.</p>
+        <span class="ido-example-count">Worked example</span>
+      </div>
+
+      <div class="ido-method">
+        <div class="ido-step">
+          <span class="ido-step-label">STEP 1 · ORIGINAL VARIABLE</span>
+          <h2>Start in Main</h2>
+          <pre class="arithmetic">int score = 10;</pre>
+          <p>The variable <code>score</code> belongs to <code>Main()</code> and currently stores 10.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · PASS BY VALUE</span>
+          <h2>The method receives a copy</h2>
+          <pre class="arithmetic">public static void ChangeByValue(int number)
+{
+    number = 100;
+}</pre>
+          <p>The parameter <code>number</code> is a separate local variable initialised with the value 10.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · CHANGE THE COPY</span>
+          <h2>Only number becomes 100</h2>
+          <pre class="arithmetic">ChangeByValue(score);
+
+inside method:
+number = 100
+
+back in Main:
+score = 10</pre>
+          <p>When the method ends, its local parameter is no longer needed.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · COMPARE WITH REF</span>
+          <h2>Reference passing changes the original</h2>
+          <pre class="arithmetic">ChangeByReference(ref score);
+
+// method
+public static void ChangeByReference(ref int number)
+{
+    number = 100;
+}</pre>
+          <div class="key-result">By value → original stays <strong>10</strong>. With <code>ref</code> → original becomes <strong>100</strong>.</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="13 minutes">
+  <div class="wedo-focus-deck">
+
+    <article class="wedo-example">
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 1</span>
+        <h2>Identify the scope</h2>
+        <pre class="arithmetic">public static int total = 0;
+
+public static void AddOne()
+{
+    int amount = 1;
+    total = total + amount;
+}</pre>
+        <p>Which variable can be accessed by multiple methods? Which is local to <code>AddOne()</code>?</p>
+        <span class="wedo-example-count">Example 1 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Classify each variable</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>total</strong><span>?</span></div><div class="practice-box"><strong>amount</strong><span>?</span></div><div class="practice-box"><strong>Why?</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Scope</h2>
+          <p><code>total</code> is class-level/global for this program and can be accessed by multiple static methods. <code>amount</code> is local to <code>AddOne()</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 2</span>
+        <h2>Predict pass-by-value</h2>
+        <pre class="arithmetic">int x = 5;
+DoubleValue(x);
+Console.WriteLine(x);
+
+public static void DoubleValue(int number)
+{
+    number = number * 2;
+}</pre>
+        <p>What is output?</p>
+        <span class="wedo-example-count">Example 2 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Track the two variables</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>x before</strong><span>?</span></div><div class="practice-box"><strong>number inside</strong><span>?</span></div><div class="practice-box"><strong>x after</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Output = 5</h2>
+          <p><code>number</code> becomes 10, but it is a local copy. <code>x</code> remains 5.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">GUIDED PRACTICE 3</span>
+        <h2>Make the change persist</h2>
+        <p>Modify the previous example so <code>x</code> becomes 10 after the call.</p>
+        <span class="focus-code">Use C# ref</span>
+        <span class="wedo-example-count">Example 3 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Where must ref appear?</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>Method parameter</strong><span>?</span></div><div class="practice-box"><strong>Method call</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Use ref in both places</h2>
+          <pre class="arithmetic">DoubleValue(ref x);
+
+public static void DoubleValue(ref int number)
+{
+    number = number * 2;
+}</pre>
+          <div class="key-result">Now the original variable <code>x</code> becomes 10.</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="wedo-example" hidden>
+      <div class="wedo-reference">
+        <span class="phase-tag">OCR EXAM LINK</span>
+        <h2>Explain by value vs by reference</h2>
+        <p>OCR expects more than the words “copy” and “address”. Explain what happens to the <strong>original data</strong>.</p>
+        <span class="wedo-example-count">Example 4 of 4</span>
+      </div>
+      <div class="wedo-practice">
+        <div class="wedo-step">
+          <span class="wedo-step-label">YOUR TURN</span>
+          <h2>Complete both explanations</h2>
+          <div class="practice-grid"><div class="practice-box"><strong>By value</strong><span>?</span></div><div class="practice-box"><strong>By reference</strong><span>?</span></div></div>
+        </div>
+        <div class="wedo-step" hidden>
+          <span class="wedo-step-label">CHECK</span>
+          <h2>Precise explanation</h2>
+          <p><strong>By value:</strong> the method receives a local copy; changing the parameter does not change the original variable.</p>
+          <p><strong>By reference:</strong> the method has access to the original variable; changes remain after the method ends.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="23 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
+  <div class="youdo-deck">
+    <div class="youdo-rolling">
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 1 · CORE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Local variables in two methods</h3>
+        <div class="question-text">
+          <p>Create two procedure-style methods: <code>First()</code> and <code>Second()</code>.</p>
+          <p>Inside each method declare a local variable called <code>result</code>, but give it a different value. Output each value.</p>
+          <div class="coding-brief">The same identifier can be reused because each local variable has a different scope.</div>
+        </div>
+        <div class="success-check">Success: two separate local result variables with no conflict</div>
+      </article>
+
+      <article class="exam-card youdo-question">
+        <span class="phase-tag">CODING CHALLENGE 2 · DEVELOP</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Prove pass-by-value</h3>
+        <div class="question-text">
+          <p>Set <code>int score = 20;</code> in <code>Main()</code>.</p>
+          <p>Create <code>SetToZero(int number)</code> that changes <code>number</code> to 0.</p>
+          <p>Call the method, then output <code>score</code>.</p>
+          <div class="coding-brief">Before running it, predict whether the output will be 20 or 0.</div>
+        </div>
+        <div class="success-check">Expected output after the call: 20</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 3 · APPLY</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Change the original with ref</h3>
+        <div class="question-text">
+          <p>Adapt Challenge 2 so the original <code>score</code> becomes 0.</p>
+          <p>Rename the method <code>SetToZeroByReference</code> and use <code>ref</code> correctly in both required places.</p>
+          <div class="coding-brief">Output <code>score</code> before and after the call.</div>
+        </div>
+        <div class="success-check">Expected: before 20 · after 0</div>
+      </article>
+
+      <article class="exam-card youdo-question" hidden>
+        <span class="phase-tag">CODING CHALLENGE 4 · CHALLENGE</span>
+        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
+        <h3>Swap two values</h3>
+        <div class="question-text">
+          <p>Create <code>Swap(ref int first, ref int second)</code>.</p>
+          <p>Use one local temporary variable so that the two original values exchange places.</p>
+          <p>In <code>Main()</code>, start with <code>a = 10</code> and <code>b = 25</code>, call the method and output both values.</p>
+          <div class="coding-brief">The method needs access to both original variables, so both parameters use <code>ref</code>.</div>
+        </div>
+        <div class="success-check">After Swap: a = 25 · b = 10</div>
+      </article>
+
+    </div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
+  </div>
+</section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+  <div class="vocab-test-deck">
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The part of a program in which a variable can be accessed.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Scope</div><p>Scope determines where an identifier is visible and usable.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A variable visible only within the method or block where it is declared.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Local variable</div><p>Its scope is limited to that part of the program.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A variable that can be accessed from multiple parts of a program.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Global variable</div><p>In these C# examples, a class-level static field demonstrates this wider scope.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The named input in a method definition.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Parameter</div><p>It receives data when the method is called.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The actual value or variable supplied in a method call.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Argument</div><p>It is matched to a parameter.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Passing a copy so changes inside the method do not change the original variable.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Pass by value</div><p>The method receives a separate local value.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Passing access to the original variable so changes can persist after the method returns.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Pass by reference</div><p>In these C# examples this is implemented using <code>ref</code>.</p></div></article>
+
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The C# keyword written in both the method call and parameter to pass by reference.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">ref</div><p>For example <code>Change(ref x)</code> and <code>Change(ref int number)</code>.</p></div></article>
+  </div>
+</section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
+  <div class="exit-ticket-panel">
+    <div class="exit-response-key">
+      <strong>TRUE OR FALSE?</strong>
+      <div class="exit-key-options">
+        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
+        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
+      </div>
+    </div>
+
+    <div class="exit-statements">
+      <article class="exit-statement"><span class="exit-number">1</span><p>A local variable can normally be used from every method in the program.</p></article>
+      <article class="exit-statement"><span class="exit-number">2</span><p>Passing an integer parameter by value means changing the parameter does not change the original integer variable.</p></article>
+      <article class="exit-statement"><span class="exit-number">3</span><p>When using C# <code>ref</code>, the keyword appears in both the method definition and the method call.</p></article>
+    </div>
+
+    <div class="exit-confidence">
+      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can explain scope and use value/ref parameters.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I understand the examples but still need prompts.</span></div></div>
+      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help with scope or ref.</span></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lesson-footer">Lesson 012 · OCR H446 2.2.1(c–d) <span>Use the menu or ← → keys</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260929-2415"></script>
+</body>
+</html>
