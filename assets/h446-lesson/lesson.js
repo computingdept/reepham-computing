@@ -85,7 +85,9 @@ function updateControl(){
   if(current==='do-now'){
     const stages=[...page.querySelectorAll('.donow-stage')];
     const i=visibleIndex(stages);
-    label=i<stages.length-1?'Reveal answers →':'Continue → Objectives';
+    if(i===0 && stages.length>1)label='Reveal answer 1 →';
+    else if(i<stages.length-1)label='Next answer →';
+    else label='Continue → Objectives';
   }else if(current==='i-do'){
     const stages=[...page.querySelectorAll('.model-stage')];
     const i=visibleIndex(stages);
