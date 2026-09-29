@@ -2,7 +2,7 @@
 .phase-ido,.phase-wedo,.phase-youdo{overflow:hidden!important}
 
 /* I DO: one worked example at a time. The example and method stay side-by-side. */
-.model-deck{height:calc(100% - 58px)}
+.model-deck{height:calc(100% - var(--phase-bar-h))}
 .model-stage{
   height:100%;
   display:grid;
@@ -35,7 +35,7 @@
 
 /* WE DO: question stays visible; reveal replaces the response panel. */
 .wedo-grid{
-  height:calc(100% - 58px);
+  height:calc(100% - var(--phase-bar-h));
   display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:18px;
 }
 .wedo-question,.wedo-response{
@@ -55,7 +55,7 @@
 .reveal-hint{margin-top:18px;padding:12px 14px;background:var(--green-soft);border-radius:9px;font-weight:800;color:var(--green-dark)}
 
 /* YOU DO: questions are paged inside the phase instead of shrinking or scrolling. */
-.youdo-deck{height:calc(100% - 58px)}
+.youdo-deck{height:calc(100% - var(--phase-bar-h))}
 .youdo-stage{
   height:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;
 }
@@ -79,9 +79,9 @@
 
 /* When browser height is restricted, keep the TV phases readable rather than scaling text tiny. */
 @media(max-height:760px) and (min-width:901px){
-  :root{--signal-h:92px;--footer-h:32px}
+  :root{--signal-h:92px;--footer-h:32px;--phase-bar-h:48px}
   .signals img,#exit-ticket-signal{height:68px;min-height:68px}
-  .section-top{min-height:34px;margin-bottom:8px;padding-bottom:7px}
+  .section-top{height:var(--phase-bar-h);min-height:var(--phase-bar-h);margin-bottom:8px;padding:0 8px}
   .classroom-panel,.wedo-question,.wedo-response,.exam-card{padding:16px}
   .prompt-panel p,.method-panel p,.wedo-response ol,.exam-card .question-text{font-size:18px}
   .prompt-panel .focus-code{font-size:24px;padding:12px}
@@ -98,7 +98,7 @@
 
 /* DO NOW: questions first; answers replace the question screen without changing phase navigation. */
 .phase-donow{overflow:hidden!important}
-.donow-deck{height:calc(100% - 58px)}
+.donow-deck{height:calc(100% - var(--phase-bar-h))}
 .donow-stage{height:100%}
 .donow-stage[hidden]{display:none!important}
 .donow-questions{
