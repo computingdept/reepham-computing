@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 024 · Data structures practical: create, traverse, add, remove solutions</title>
+<title>Lesson 024 · Boolean logic, gates and truth tables answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,38 +26,42 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 024 · DATA STRUCTURES PRACTICAL: CREATE, TRAVERSE, ADD, REMOVE · SOLUTIONS</span>
+  <span class="answer-title">LESSON 024 · BOOLEAN LOGIC, GATES AND TRUTH TABLES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CHOICE</span><h2>Structure selection</h2><pre class="solution-code">// Undo history -&gt; Stack: most recent action must be removed first.
-// Printer jobs -&gt; Queue: earliest job should be processed first.
-// Road network -&gt; Graph: places are vertices and roads are edges.
-// Ordered search data -&gt; BST: comparisons choose left or right branches.</pre><p><strong>Check:</strong> Each justification refers to the behaviour of the structure.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · IMPLEMENT</span><h2>Implement one linear structure</h2><pre class="solution-code">Queue&lt;string&gt; jobs = new Queue&lt;string&gt;();
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(a)</span><h2>Burglar alarm circuit</h2><pre class="solution-code">Expression:
+Q = (A ∨ B) ∧ C ∧ ¬D
 
-jobs.Enqueue("A");
-jobs.Enqueue("B");
+Gate plan:
+1. OR A and B.
+2. NOT D.
+3. AND the OR output with C and NOT D.</pre><p><strong>Check:</strong> Your expression requires a sensor, set=true and test=false.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q6(a)</span><h2>Expression and truth table</h2><pre class="solution-code">A B C | P
+0 0 0 | 1
+0 0 1 | 0
+0 1 0 | 0
+0 1 1 | 1
+1 0 0 | 0
+1 0 1 | 1
+1 1 0 | 0
+1 1 1 | 1</pre><p><strong>Check:</strong> Use an intermediate A∨B column if needed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><pre class="solution-code">Let T = temperature high, L = load high, M = maintenance.
 
-foreach (string job in jobs)
-{
-    Console.WriteLine(job);
-}
+F = (T ∨ L) ∧ ¬M
 
-jobs.Enqueue("C");
-Console.WriteLine("Removed: " + jobs.Dequeue());</pre><p><strong>Check:</strong> Create, traverse, add and remove are all demonstrated.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · IMPLEMENT</span><h2>Implement one non-linear structure</h2><pre class="solution-code">int[,] graph = new int[3,3];
+Build 8-row truth table for T,L,M and evaluate F.</pre><p><strong>Check:</strong> The expression uses OR, AND and NOT correctly.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Gate plan:
+1. XOR A and B.
+2. NOT C.
+3. AND the two outputs.
 
-graph[0,1] = graph[1,0] = 1;
-graph[1,2] = graph[2,1] = 1;
-
-for (int v = 0; v &lt; 3; v++)
-{
-    if (graph[1,v] == 1)
-        Console.WriteLine(v);
-}
-
-graph[0,1] = graph[1,0] = 0;</pre><p><strong>Check:</strong> The graph is created, traversed, changed and kept symmetrical.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><h2>Explain two structures</h2><pre class="solution-code">// Stack: Push adds to the top; Pop removes from the top.
-// Queue: Enqueue adds to the rear; Dequeue removes from the front.
-// The difference preserves LIFO versus FIFO behaviour.</pre><p><strong>Check:</strong> The explanation uses correct operations and ordering rules.</p></article></section></main>
+A B C | Q
+0 0 0 | 0
+0 0 1 | 0
+0 1 0 | 1
+0 1 1 | 0
+1 0 0 | 1
+1 0 1 | 0
+1 1 0 | 0
+1 1 1 | 0</pre><p><strong>Check:</strong> Both representation and outputs agree.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
