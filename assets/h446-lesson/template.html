@@ -45,17 +45,30 @@
     <div class="donow-deck">
       <div class="donow-stage">
         <div class="donow-questions">
-          <!-- Maximum four retrieval questions. Use one .donow-question per question. -->
+          <!-- Show up to four retrieval questions together first. -->
         </div>
       </div>
+
+      <!-- Feedback rule: one question per stage. Keep the question/image fixed left and explanation right. -->
       <div class="donow-stage" hidden>
-        <div class="donow-answer-screen">
-          <div class="donow-answer-title"><h2>Check and correct</h2><span>Question + answer together</span></div>
-          <div class="donow-answer-list">
-            <!-- Repeat .donow-answer-row for each question. Answers replace the question screen. -->
-          </div>
+        <div class="donow-review">
+          <article class="donow-review-question">
+            <span class="review-number">QUESTION 1 OF 4</span>
+            <h2>Question label</h2>
+            <p class="review-question">Repeat the full question here.</p>
+            <!-- For a diagram/screenshot, use:
+            <div class="reference-media"><img src="assets/example.png" alt="..."></div>
+            -->
+          </article>
+          <article class="donow-review-answer">
+            <span class="review-label">ANSWER</span>
+            <p class="review-answer">Clear answer.</p>
+            <p class="review-explain">Detailed explanation or misconception correction.</p>
+          </article>
         </div>
       </div>
+
+      <!-- Add one .donow-stage per remaining question. Do not combine long answers to save space. -->
     </div>
   </section>
 
