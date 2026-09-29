@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#006347">
+<meta name="description" content="Choose your school to open the Synergy Learning Hub.">
+<title>Choose your school · Learning Hub</title>
+<link rel="stylesheet" href="assets/hub.css?v=20260929-0922">
+<style>
+.school-chooser{min-height:100vh;display:flex;flex-direction:column;background:#f4f7f6}
+.school-chooser .chooser-head{background:#fff;border-bottom:1px solid var(--line)}
+.school-chooser .chooser-head-inner{max-width:900px;margin:auto;padding:18px}
+.school-chooser .chooser-head strong{display:block;color:var(--dark);font-size:20px}
+.school-chooser .chooser-head span{display:block;margin-top:2px;color:var(--muted);font-size:13px}
+.school-chooser main{width:100%;max-width:900px;margin:auto;padding:54px 18px 64px}
+.school-chooser .eyebrow{margin:0 0 6px}
+.school-chooser h1{font-size:clamp(2.3rem,7vw,4.2rem);margin-bottom:10px}
+.school-chooser .chooser-intro{margin:0 0 28px;color:var(--muted);font-size:1rem}
+.school-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.school-card{--school:#006347;position:relative;min-height:180px;padding:22px;border:1px solid var(--line);border-top:6px solid var(--school);border-radius:14px;background:#fff;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 12px rgba(0,0,0,.035)}
+.school-card:hover,.school-card:focus-visible{border-color:var(--school);box-shadow:0 8px 22px rgba(0,0,0,.07)}
+.school-card small{font-size:.72rem;font-weight:850;letter-spacing:.11em;color:var(--school)}
+.school-card strong{display:block;margin-top:10px;color:var(--dark);font-size:1.45rem;line-height:1.18}
+.school-card .school-years{margin-top:8px;color:var(--muted);font-size:.9rem}
+.school-card .school-open{display:flex;align-items:center;justify-content:space-between;margin-top:28px;color:var(--school);font-weight:850}
+.school-card .school-arrow{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--school) 10%,white);font-size:20px}
+.current-badge{position:absolute;top:14px;right:14px;padding:4px 8px;border-radius:999px;background:#f1f4f3;color:var(--muted);font-size:.7rem;font-weight:800}
+.chooser-trust{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:9px;color:var(--muted);font-size:12px}
+.chooser-trust img{display:block;width:112px;height:auto;max-height:45px;object-fit:contain}
+@media(max-width:620px){
+  .school-chooser main{padding-top:32px}
+  .school-grid{grid-template-columns:1fr}
+  .school-card{min-height:150px}
+}
+</style>
+</head>
+<body class="school-chooser">
+<header class="chooser-head">
+  <div class="chooser-head-inner">
+    <strong>Learning Hub</strong>
+    <span>Synergy Multi-Academy Trust</span>
+  </div>
+</header>
+<main>
+  <p class="eyebrow">YOUR LEARNING, IN ONE PLACE</p>
+  <h1>Choose your school</h1>
+  <p class="chooser-intro">Choose your school to open the right years, subjects and courses.</p>
+  <div class="school-grid" id="schoolGrid" aria-label="Choose your school"></div>
+  <div class="chooser-trust">
+    <span>Part of</span>
+    <img src="https://www.synergymat.org.uk/images/uploads/4/488/Synergy%20MASTER%20Logo%20RGB%20no%20bground.png" alt="Synergy Multi-Academy Trust" width="150" height="68">
+  </div>
+</main>
+<script src="assets/schools.js?v=20260929-0922"></script>
+<script>
+(function(){
+  const schools=window.LEARNING_HUB_SCHOOLS||{};
+  let current='';
+  try{current=localStorage.getItem('learningHubSchool')||''}catch(e){}
+  const grid=document.getElementById('schoolGrid');
+  Object.values(schools).forEach(school=>{
+    const card=document.createElement('a');
+    card.className='school-card';
+    card.href='index.html?school='+encodeURIComponent(school.id);
+    card.style.setProperty('--school',(school.brand&&school.brand.primary)||'#006347');
+    const years=school.years||[];
+    const yearText=years.length?'Years '+Math.min(...years)+'–'+Math.max(...years):'';
+    card.innerHTML=(current===school.id?'<span class="current-badge">CURRENT</span>':'')+
+      '<span><small>SCHOOL</small><strong>'+escapeHtml(school.name)+'</strong><span class="school-years">'+yearText+'</span></span>'+
+      '<span class="school-open">Open Learning Hub <span class="school-arrow" aria-hidden="true">›</span></span>';
+    card.addEventListener('click',()=>{try{localStorage.setItem('learningHubSchool',school.id)}catch(e){}});
+    grid.append(card);
+  });
+  function escapeHtml(value){
+    return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+  }
+})();
+</script>
+</body>
+</html>
