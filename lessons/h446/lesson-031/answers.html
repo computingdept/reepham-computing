@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 031 · feedback and targeted fix answers</title>
+<title>Lesson 031 · Synoptic Test mark scheme</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260929-inplace1">
 <style>
@@ -26,27 +26,93 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 031 · FEEDBACK + TARGETED FIX · ANSWERS</span>
+  <span class="answer-title">LESSON 031 · SYNOPTIC TEST · MARK SCHEME</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">TARGETED FIX · DATA STRUCTURES</span><h2>Choose your weakest structure</h2><pre class="solution-code">Example BST repair:
-Create: arrays for data,left,right plus root index.
-Traverse/search: follow left/right pointers from root.
-Add: follow comparisons until a null child pointer, then attach new index.
-Remove leaf: set the parent's child pointer to null/-1.</pre><p><strong>Check:</strong> Your response uses the correct representation and operations.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">TARGETED FIX · BOOLEAN</span><h2>Choose your weakest Boolean area</h2><pre class="solution-code">Example K-map rules:
-1. Use Gray-code order.
-2. Group rectangular powers of two.
-3. Keep only variables constant throughout a group.
+<main class="answer-stage-wrap">
+<section class="answer-stage"><article class="solution-card"><span class="phase-tag">SECTION A · 15 MARKS</span><h2>1.4.1 Data Types</h2><pre class="solution-code">A1(a) 10001000 [1]
+A1(b) 11111000 [1]
 
-Example:
-A=1 and D=0 constant → A ∧ ¬D.</pre><p><strong>Check:</strong> The worked example follows the rules you wrote.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">RETRY · OCR DATA</span><h2>Retry one OCR data-structure question</h2><pre class="solution-code">Model precision:
-A stack is LIFO whereas a queue is FIFO.
-A BST child field stores a pointer/index to the child row, or null if no child exists.</pre><p><strong>Check:</strong> Your second response is more precise than your first.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">RETRY · OCR BOOLEAN</span><h2>Retry one OCR Boolean question</h2><pre class="solution-code">Model anchors:
-¬(A∨B)=¬A∧¬B
-S=A XOR B
-C=A AND B
-D-type: Q samples D at a clock trigger.</pre><p><strong>Check:</strong> Your response uses correct symbols, grouping and terminology.</p></article></section></main>
+A2(a) 00000000 [1]
+A2(b) 11111111 [1]
+
+A3 [5]
+• align exponents / show equivalent working
+• first number exponent becomes 4
+• first mantissa represented as 0100.1100
+• second number aligned appropriately
+• subtract correctly
+• normalised final answer: 01001110 0010
+Award according to the OCR marking points / correct final method.
+
+A4(a) 11110111 [1]
+A4(b) 10001001 [1]
+
+A5(a) Not normalised [1]
+A5(b) Mantissa starts 00; a normalised positive mantissa starts 01
+(or negative starts 10). [1]
+
+A6 Shift right by two places. [2]
+• right shift [1]
+• two places [1]</pre></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">SECTION B · 15 MARKS</span><h2>1.4.2 Data Structures</h2><pre class="solution-code">B1 Graph [1]
+Accept 2D array where appropriate to the original OCR context.
+
+B2 Any valid paired difference, for example [2]:
+• linked list dynamic vs array static/fixed size
+• array supports direct/random access vs linked list must be traversed
+• array contiguous in memory vs linked-list items need not be contiguous
+
+B3 Linked list [3]:
+• dynamic data structure [1]
+• each item/node stores data and a pointer [1]
+• pointer identifies the location of the next item [1]
+
+B4 [4]:
+• change Oxford's pointer so it bypasses Birmingham and points to Manchester [1]
+• create/store a new York item/node in free space [1]
+• change Manchester's pointer so it points to York [1]
+• York points to null / terminator [1]
+
+B5 [4]:
+• linked list may require checking/traversing nodes until the record is found [1]
+• search time grows as more records/nodes are added [1]
+• hash table uses hashing to access the record location directly [1]
+• lookup remains effectively constant / does not grow in the same linear way as the list [1]
+Accept suitable O(n) vs O(1) language.
+
+B6 A binary search tree can be searched faster than an unsorted array. [1]
+Accept suitable O(log n) vs O(n) comparison.</pre></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">SECTION C · 15 MARKS</span><h2>1.4.3 Boolean Algebra</h2><pre class="solution-code">C1 Q = (A ∧ B) ∨ (C ∧ D) [3]
+• A ∧ B [1]
+• C ∧ D [1]
+• OR joins the two conditions [1]
+
+C2 To store the state of one bit. [1]
+
+C3:
+(a) A [1]
+(b) ¬(A ∨ B) [1]
+(c) A ∨ B [1]
+
+C4 Half-adder circuit [3]:
+• XOR gate for Sum [1]
+• AND gate for Carry [1]
+• A and B correctly feed both gates / no unnecessary gates [1]
+
+C5 S = A XOR B XOR Cin [1]
+Accept equivalent valid XOR notation.
+
+C6 Karnaugh map [4]:
+• correct grouping for ¬A ∧ ¬C [1]
+• correct grouping for A ∧ ¬D [1]
+• correct term ¬A ∧ ¬C [1]
+• correct term A ∧ ¬D and OR combination [1]
+
+Final:
+(¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre></article></section>
+</main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
