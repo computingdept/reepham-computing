@@ -6,7 +6,7 @@
 <title>Lesson 016 · Arrays in C#</title>
 <meta name="description" content="OCR H446 1.4.2(a): one-, two- and three-dimensional arrays in C#, including indexing, GetLength and traversal.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab5">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
 </head>
 <body>
@@ -78,25 +78,14 @@
   </div>
 </section>
 
-<section id="overview" class="page" data-phase-time="2 minutes">
-  <h1>Arrays in C#</h1>
-  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
-  <div class="objectives">
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Arrays in C#</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives">
     <strong>By the end, you can…</strong>
     <ul>
       <li>declare and access one-, two- and three-dimensional arrays;</li>
       <li>use zero-based indexes and <code>GetLength()</code> correctly;</li>
       <li>traverse arrays using loops and choose suitable dimensions for stored data.</li>
     </ul>
-  </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>array</span><span>element</span><span>index</span><span>dimension</span>
-      <span>1D</span><span>2D</span><span>3D</span><span>GetLength</span>
-    </div>
-  </div>
-</section>
+  </div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="A fixed collection of elements accessed using indexes." aria-label="Array: A fixed collection of elements accessed using indexes.">Array</span><span class="vocab-tip" tabindex="0" data-definition="One stored value inside an array." aria-label="Element: One stored value inside an array.">Element</span><span class="vocab-tip" tabindex="0" data-definition="The position number used to access an array element." aria-label="Index: The position number used to access an array element.">Index</span><span class="vocab-tip" tabindex="0" data-definition="One direction or level used to locate an element." aria-label="Dimension: One direction or level used to locate an element.">Dimension</span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with one dimension." aria-label="[]: C# syntax for an array with one dimension."><code>[]</code></span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with two dimensions." aria-label="[,]: C# syntax for an array with two dimensions."><code>[,]</code></span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with three dimensions." aria-label="[,,]: C# syntax for an array with three dimensions."><code>[,,]</code></span><span class="vocab-tip" tabindex="0" data-definition="The C# method used to find the length of one chosen array dimension." aria-label="GetLength(): The C# method used to find the length of one chosen array dimension.">GetLength()</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage"><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Array</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A fixed collection of elements accessed using indexes.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 2 OF 8</span><h2>Element</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One stored value inside an array.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 3 OF 8</span><h2>Index</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The position number used to access an array element.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 4 OF 8</span><h2>Dimension</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One direction or level used to locate an element.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 5 OF 8</span><h2><code>[]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with one dimension.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 6 OF 8</span><h2><code>[,]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with two dimensions.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 7 OF 8</span><h2><code>[,,]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with three dimensions.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 8 OF 8</span><h2>GetLength()</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The C# method used to find the length of one chosen array dimension.</p></div></article></div></div></section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
   <div class="nl-focus">
@@ -346,7 +335,7 @@ Console.WriteLine(studentResults[0,1]);</pre>
   </div>
 </section>
 
-<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes">
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval">
   <div class="vocab-deck">
     <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A fixed collection of elements accessed using indexes.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Array</div><p>All elements are compatible with the array's declared type.</p></div></article>
     <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One stored value inside an array.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Element</div><p>For example, <code>names[2]</code> identifies one element.</p></div></article>
@@ -381,6 +370,6 @@ Console.WriteLine(studentResults[0,1]);</pre>
 </main>
 
 <div class="lesson-footer">Lesson 016 · OCR H446 1.4.2(a) Data Structures <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-vocab1"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav3"></script>
 </body>
 </html>
