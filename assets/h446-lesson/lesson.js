@@ -39,6 +39,62 @@ function setYouDoWindow(page,start){
     progress.textContent=noun+' '+first+'–'+last+' of '+questions.length;
   }
 }
+
+function prepareVocabulary(){
+  const page=document.getElementById('vocabulary');
+  if(!page||page.dataset.vocabPrepared==='true')return;
+  const stages=[...page.querySelectorAll('.vocab-stage')];
+  if(!stages.length)return;
+
+  const entries=[];
+  stages.forEach((stage,i)=>{
+    const prompt=stage.querySelector('.vocab-prompt');
+    const answer=stage.querySelector('[data-vocab-answer]');
+    const promptLabel=prompt?.querySelector('.vocab-test-label');
+    const heading=prompt?.querySelector('h2');
+    const question=prompt?.querySelector('.vocab-question');
+    const answerLabel=answer?.querySelector('.vocab-test-label');
+    const answerValue=answer?.querySelector('.vocab-answer-value');
+    const note=answer?.querySelector('p');
+
+    const term=(answerValue?.textContent||heading?.textContent||('Term '+(i+1))).trim();
+    const definition=(question?.textContent||note?.textContent||'').trim();
+    const noteText=(note?.textContent||'').trim();
+
+    stage.dataset.vocabTerm=term;
+    stage.dataset.vocabDefinition=definition;
+    if(prompt)prompt.classList.add('vocab-term-mode');
+    if(promptLabel)promptLabel.textContent='TERM '+(i+1)+' OF '+stages.length;
+    if(heading){
+      heading.textContent=term;
+      heading.classList.add('vocab-term-heading');
+    }
+    if(question)question.hidden=true;
+    if(answerLabel)answerLabel.textContent='DEFINITION';
+    if(answerValue){
+      answerValue.textContent=definition;
+      answerValue.classList.add('vocab-definition-value');
+    }
+    if(note){
+      if(!noteText||noteText.toLowerCase()===definition.toLowerCase())note.hidden=true;
+      else note.classList.add('vocab-definition-note');
+    }
+    entries.push({term,definition});
+  });
+
+  const byTerm=new Map(entries.map(entry=>[entry.term.toLowerCase(),entry]));
+  const chips=[...document.querySelectorAll('.vocab-intro-list span')];
+  chips.forEach((chip,i)=>{
+    const entry=byTerm.get(chip.textContent.trim().toLowerCase())||entries[i];
+    if(!entry?.definition)return;
+    chip.classList.add('vocab-tip');
+    chip.tabIndex=0;
+    chip.dataset.definition=entry.definition;
+    chip.setAttribute('aria-label',entry.term+': '+entry.definition);
+  });
+
+  page.dataset.vocabPrepared='true';
+}
 function resetPhaseState(id){
   const page=document.getElementById(id);
   if(!page)return;
@@ -220,8 +276,8 @@ function updateControl(){
     if(stages.length){
       const i=visibleIndex(stages);
       const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(answer&&answer.hidden)label='Reveal answer →';
-      else if(i<stages.length-1)label='Next question →';
+      if(answer&&answer.hidden)label='Reveal definition →';
+      else if(i<stages.length-1)label='Next term →';
       else label='Continue → Exit Ticket';
     }else if(page.querySelector('.vocab-card [data-answer][hidden]')){
       label='Reveal next answer';
@@ -531,4 +587,5 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'){e.preventDefault();next();}
   if(e.key==='ArrowLeft'){e.preventDefault();previousAction();}
 });
+prepareVocabulary();
 showPage(location.hash.slice(1)||'do-now');
