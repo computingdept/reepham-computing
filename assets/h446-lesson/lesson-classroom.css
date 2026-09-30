@@ -756,3 +756,67 @@
   .phase-youdo[data-you-do-mode="coding"] .coding-brief{font-size:15px;padding:7px 9px}
   .phase-youdo[data-you-do-mode="coding"] .starter-code{font-size:13px;padding:7px 9px}
 }
+
+
+/* H446 VOCABULARY: objective-chip definitions + term-first retrieval. */
+.vocab-intro-list .vocab-tip{
+  position:relative;
+  cursor:help;
+  outline:none;
+}
+.vocab-intro-list .vocab-tip:focus-visible{
+  box-shadow:0 0 0 3px rgba(16,81,63,.22);
+}
+.vocab-intro-list .vocab-tip:hover::after,
+.vocab-intro-list .vocab-tip:focus::after{
+  content:attr(data-definition);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 9px);
+  transform:translateX(-50%);
+  width:max-content;
+  max-width:min(340px,72vw);
+  padding:10px 12px;
+  border-radius:9px;
+  background:#173d35;
+  color:#fff;
+  font-size:16px;
+  line-height:1.3;
+  font-weight:650;
+  letter-spacing:normal;
+  white-space:normal;
+  text-align:left;
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+  z-index:80;
+  pointer-events:none;
+}
+#vocabulary .vocab-prompt.vocab-term-mode{
+  justify-content:flex-start;
+}
+#vocabulary .vocab-prompt.vocab-term-mode .vocab-term-heading{
+  margin:auto 0;
+  color:var(--green-dark);
+  font-size:clamp(42px,4.4vw,72px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+}
+#vocabulary .vocab-prompt.vocab-term-mode .vocab-stage-count{
+  margin-top:auto;
+}
+#vocabulary .vocab-definition-value{
+  margin:auto 0 12px;
+  color:var(--ink);
+  font-size:clamp(25px,2.15vw,35px);
+  line-height:1.25;
+  font-weight:850;
+}
+#vocabulary .vocab-definition-note{
+  margin:0 0 auto;
+  color:var(--muted);
+}
+@media(max-height:760px) and (min-width:901px){
+  #vocabulary .vocab-prompt.vocab-term-mode .vocab-term-heading{font-size:40px}
+  #vocabulary .vocab-definition-value{font-size:25px}
+  .vocab-intro-list .vocab-tip:hover::after,
+  .vocab-intro-list .vocab-tip:focus::after{font-size:14px;max-width:300px}
+}
