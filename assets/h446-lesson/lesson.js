@@ -224,7 +224,9 @@ function updateSignals(id){
 function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
-  if(current==='do-now'){
+  if(current==='overview'){
+    label='Next step →';
+  }else if(current==='do-now'){
     const stages=[...page.querySelectorAll('.donow-stage')];
     const i=visibleIndex(stages);
     if(i===0 && stages.length>1)label='Reveal answer 1 →';
