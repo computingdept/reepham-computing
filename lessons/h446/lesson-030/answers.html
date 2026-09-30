@@ -30,19 +30,32 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">CORE ANSWERS</span><h2>Circuit anchors</h2><pre class="solution-code">D-type:
-Q samples D at the clock trigger and holds otherwise.
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1</span><h2>D-type trace</h2><pre class="solution-code">D at clock triggers: 1, 0, 1, 1
+Q after each trigger: 1, 0, 1, 1
 
-Half adder:
-S = A XOR B
-C = A AND B
+Q changes only at the triggering clock edge and holds between triggers.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2</span><h2>Half-adder truth table</h2><pre class="solution-code">A B | Sum Carry
+0 0 |  0    0
+0 1 |  1    0
+1 0 |  1    0
+1 1 |  0    1
 
-Full adder:
-inputs A, B, Cin
-outputs S, Cout
+Sum = A XOR B
+Carry = A AND B</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3</span><h2>Full-adder truth table</h2><pre class="solution-code">A B Cin | S Cout
+0 0  0  | 0  0
+0 0  1  | 1  0
+0 1  0  | 1  0
+0 1  1  | 0  1
+1 0  0  | 1  0
+1 0  1  | 0  1
+1 1  0  | 0  1
+1 1  1  | 1  1</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4</span><h2>Explain multi-bit addition</h2><pre class="solution-code">Use one full adder for each bit position.
 
-Multi-bit:
-Cout from one bit position feeds Cin of the next.</pre></article></section></main>
+Each full adder adds:
+A + B + CarryIn
+
+Its CarryOut is connected to the CarryIn of the next more significant bit.
+
+This allows carries to propagate through a multi-bit binary addition.</pre></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
