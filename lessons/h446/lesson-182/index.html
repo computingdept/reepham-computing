@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 182 · Tracing Recursive Functions</title>
+<meta name="description" content="OCR H446 Year 13 recursion tracing: recursive calls, base cases, call-stack unwinding, DIV and pass-by-value.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-objectives7">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html?year=13">← Year 13 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div>
+</div>
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div>
+  <div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR H446 · Lesson 182<br>Tracing Recursive Functions</span></div>
+</div>
+<main id="main">
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck">
+<div class="donow-stage"><div class="donow-questions">
+<article class="donow-question"><strong>1 · YEAR 12 RETRIEVAL</strong><p>What is the difference between a <strong>parameter</strong> and an <strong>argument</strong>?</p></article>
+<article class="donow-question"><strong>2 · YEAR 12 RETRIEVAL</strong><p>Calculate <code>17 DIV 4</code> and <code>17 MOD 4</code>.</p></article>
+<article class="donow-question"><strong>3 · YEAR 12 RETRIEVAL</strong><p>State one difference between a <strong>local</strong> variable and a <strong>global</strong> variable.</p></article>
+<article class="donow-question"><strong>4 · RECURSION RETRIEVAL</strong><p>In <code>return n + (generate(n + 1) DIV 2)</code>, identify the recursive call.</p></article>
+</div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Parameter vs argument</h2><p class="review-question">What is the difference?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A parameter is the named input in a subroutine definition; an argument is the value supplied when it is called.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>DIV and MOD</h2><p class="review-question">Calculate <code>17 DIV 4</code> and <code>17 MOD 4</code>.</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong><code>17 DIV 4 = 4</code> and <code>17 MOD 4 = 1</code>.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Scope</h2><p class="review-question">Local vs global?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A local variable is accessible only within its subroutine/block; a global variable can be accessed from multiple parts of the program.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Recursive call</h2><p class="review-question">Which part calls the function again?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong><code>generate(n + 1)</code>.</strong></p></article></div></div>
+</div></section>
+
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true">
+<div class="objectives-vocab-layout">
+  <article class="objectives-vocab-left">
+    <h1>Tracing Recursive Functions</h1>
+    <div class="objectives"><strong>By the end, you can…</strong><ul>
+      <li>trace recursive calls down to the base case;</li>
+      <li>unwind the calls and calculate returned values in the correct order;</li>
+      <li>explain why pass-by-value can matter in recursive functions.</li>
+    </ul></div>
+    <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list">
+      <span class="vocab-tip" tabindex="0" data-definition="A statement where a function invokes itself.">recursive call</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The condition that stops further recursive calls.">base case</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The structure that keeps track of active function calls.">call stack</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The stored information belonging to one active function call.">stack frame</span>
+      <span class="vocab-tip" tabindex="0" data-definition="Returning from the deepest recursive call through earlier calls.">unwind</span>
+      <span class="vocab-tip" tabindex="0" data-definition="Passing a copy of a value into a subroutine.">pass by value</span>
+      <span class="vocab-tip" tabindex="0" data-definition="Integer division that discards the remainder.">DIV</span>
+      <span class="vocab-tip" tabindex="0" data-definition="A value sent back from a function to its caller.">return value</span>
+    </div></div>
+  </article>
+  <div class="objectives-vocab-right" aria-live="polite">
+    <article class="objective-vocab-stage" data-support="Think: this creates the next active call."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>recursive call</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A statement where a function invokes itself.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: this is where we stop going down." hidden><span class="objective-vocab-count">TERM 2 OF 8</span><h2>base case</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The condition that stops further recursive calls.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: unfinished calls wait here for an answer." hidden><span class="objective-vocab-count">TERM 3 OF 8</span><h2>call stack</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The structure that keeps track of active function calls.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Example: each call has its own current parameter values." hidden><span class="objective-vocab-count">TERM 4 OF 8</span><h2>stack frame</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The stored information belonging to one active function call.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: deepest return first, then work back up." hidden><span class="objective-vocab-count">TERM 5 OF 8</span><h2>unwind</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Returning from the deepest recursive call through earlier calls.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: each call receives its own copy." hidden><span class="objective-vocab-count">TERM 6 OF 8</span><h2>pass by value</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Passing a copy of a value into a subroutine.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Example: 15 DIV 2 = 7." hidden><span class="objective-vocab-count">TERM 7 OF 8</span><h2>DIV</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Integer division that discards the remainder.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: the caller cannot finish until it receives this value." hidden><span class="objective-vocab-count">TERM 8 OF 8</span><h2>return value</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A value sent back from a function to its caller.</p></div></article>
+  </div>
+</div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus">
+<article class="nl-reference"><span class="phase-tag">RECURSION TRACE · CORE METHOD</span><h2>Call down → Base case → Unwind up</h2><pre class="arithmetic">1. Write each new call
+2. Stop at the base case
+3. Record its return value
+4. Work backwards
+5. Calculate each waiting return</pre><div class="nl-reference-note"><strong>Key idea:</strong> never calculate an outer return before the inner recursive call has returned a value.</div></article>
+<article class="nl-explanation">
+<div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Call down</h2><pre class="arithmetic">build(2)
+→ build(3)
+→ build(4)
+→ build(5)</pre><p>Each recursive call creates a new active call with its own parameter value.</p><span class="nl-stage-count">1 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Hit the base case</h2><pre class="arithmetic">build(5) returns 8</pre><p>This is the first value we can actually use. Everything above it has been waiting.</p><span class="nl-stage-count">2 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Unwind one level at a time</h2><pre class="arithmetic">build(4)
+= 4 + (8 DIV 2)
+= 8</pre><p>Use the deepest returned value first, then move back to the previous call.</p><span class="nl-stage-count">3 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Keep working backwards</h2><pre class="arithmetic">build(3) = 3 + (8 DIV 2) = 7
+build(2) = 2 + (7 DIV 2) = 5</pre><p><code>DIV</code> is applied at each level using the value returned by the deeper call.</p><span class="nl-stage-count">4 of 4</span></div>
+</article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Trace <code>build(2)</code></h2><pre class="arithmetic">function build(n)
+    if n &gt; 4 then
+        return 8
+    else
+        return n + (build(n + 1) DIV 2)
+    endif
+endfunction</pre><span class="ido-example-count">Model the layout, not just the answer</span></div>
+<div class="ido-method">
+<div class="ido-step"><span class="ido-step-label">STEP 1 · CALL DOWN</span><h2>Record every new call</h2><pre class="arithmetic">build(2)
+= 2 + (build(3) DIV 2)
+
+build(3)
+= 3 + (build(4) DIV 2)
+
+build(4)
+= 4 + (build(5) DIV 2)</pre><p>Do not try to finish any of these yet.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 2 · BASE CASE</span><h2>Find the first definite return</h2><pre class="arithmetic">build(5)
+→ 5 &gt; 4
+→ return 8</pre><p>Now the unwinding can begin.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · UNWIND</span><h2>Work from deepest to shallowest</h2><pre class="arithmetic">build(4) = 4 + (8 DIV 2) = 8
+build(3) = 3 + (8 DIV 2) = 7</pre><p>Each completed return gives the previous call the value it was waiting for.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 4 · FINAL RETURN</span><h2>Finish the original call</h2><pre class="arithmetic">build(2)
+= 2 + (7 DIV 2)
+= 2 + 3
+= 5</pre><p>Final return value: <strong>5</strong>.</p></div>
+</div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck">
+<article class="wedo-example">
+<div class="wedo-reference"><span class="phase-tag">OCR EXAMBUILDER · Q4(b) · [6]</span><h2>Trace <code>IsOdious(2)</code></h2><pre class="arithmetic">FUNCTION IsOdious(n : INTEGER)
+    IF n = 0 THEN
+        RETURN FALSE
+    ELSE
+        IF n MOD 2 = 0 THEN
+            RETURN IsOdious(n DIV 2)
+        ELSE
+            RETURN NOT(IsOdious(n DIV 2))
+        END IF
+    END IF
+END FUNCTION</pre><span class="wedo-example-count">Show calls and returned values</span></div>
+<div class="wedo-practice">
+<div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Start the trace</h2><pre class="arithmetic">IsOdious(2)
+
+n = ?
+n MOD 2 = ?
+Next call = ?</pre><p>Write the next recursive call explicitly.</p></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK 1</span><h2>First call</h2><pre class="arithmetic">IsOdious(2)
+2 MOD 2 = 0
+→ IsOdious(1)</pre><p>The first call is now waiting for the result of <code>IsOdious(1)</code>.</p></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK 2</span><h2>Second call</h2><pre class="arithmetic">IsOdious(1)
+1 MOD 2 = 1
+→ NOT(IsOdious(0))</pre><p>This call is waiting for a value that will then be negated.</p></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK 3</span><h2>Base case and unwind</h2><pre class="arithmetic">IsOdious(0) → FALSE
+IsOdious(1) → NOT(FALSE) = TRUE
+IsOdious(2) → TRUE</pre><p>Final returned value: <strong>TRUE</strong>.</p></div>
+</div></article>
+</div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR exam practice" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling">
+<article class="exam-card youdo-question"><span class="phase-tag">QUESTION 1 · OCR EXAMBUILDER Q1(a) · [5]</span><h3>Trace a recursive binary search</h3><div class="question-text">Given:
+<pre class="arithmetic">Index: 0  1  2  3  4  5  6  7
+Data:  5 10 15 20 25 30 35 40
+
+function thisFunction(theArray, num1, num2, num3)
+    result = num1 + ((num2 - num1) DIV 2)
+    if num2 &lt; num1 then
+        return -1
+    else
+        if theArray[result] &lt; num3 then
+            return thisFunction(theArray, result + 1, num2, num3)
+        elseif theArray[result] &gt; num3 then
+            return thisFunction(theArray, num1, result - 1, num3)
+        else
+            return result
+        endif
+    endif
+endfunction</pre>
+Trace <code>thisFunction(theArray, 0, 7, 35)</code> and give the final return value.</div></article>
+<article class="exam-card youdo-question"><span class="phase-tag">QUESTION 2 · OCR EXAMBUILDER Q1(b) · [1]</span><h3>Name the standard algorithm</h3><div class="question-text">State the name of the standard algorithm performed by <code>thisFunction()</code>.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 3 · OCR 2019 Q16(a) · [6]</span><h3>Trace <code>generate(7)</code></h3><div class="question-text"><pre class="arithmetic">function generate(num1:byval)
+    if num1 &gt; 10 then
+        return 10
+    else
+        return num1 + (generate(num1 + 1) DIV 2)
+    endif
+endfunction</pre>
+Trace the algorithm to show the value returned when <code>generate(7)</code> is called. Show each step of your working.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · OCR 2019 Q16(b) · [2]</span><h3>Why pass by value?</h3><div class="question-text">The parameter <code>num1</code> is passed by value. Explain why it was passed by value instead of by reference.</div></article>
+</div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">
+<article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 1 OF 8</span><h2>What is the term?</h2><p class="vocab-question">A statement where a function invokes itself.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">recursive call</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 2 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The condition that stops further recursive calls.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">base case</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 3 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The structure that keeps track of active function calls.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">call stack</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 4 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The stored information belonging to one active function call.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">stack frame</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 5 OF 8</span><h2>What is the term?</h2><p class="vocab-question">Returning from the deepest recursive call through earlier calls.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">unwind</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 6 OF 8</span><h2>What is the term?</h2><p class="vocab-question">Passing a copy of a value into a subroutine.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">pass by value</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 7 OF 8</span><h2>What is the term?</h2><p class="vocab-question">Integer division that discards the remainder.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">DIV</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 8 OF 8</span><h2>What is the term?</h2><p class="vocab-question">A value sent back from a function to its caller.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">return value</div></div></article>
+</div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact">
+<div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">When tracing recursion, returned values are resolved from the deepest completed call back toward the original call.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div>
+<div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can trace calls down and returns back up.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I can follow the calls but need more practice unwinding.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I still need help knowing which return to calculate first.</span></div></div></div>
+</div></section>
+</main>
+<div class="lesson-footer">Lesson 182 · Tracing Recursive Functions <span>Year 13 · OCR H446</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-objectives5"></script>
+</body>
+</html>
