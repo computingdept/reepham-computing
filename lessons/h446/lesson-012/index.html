@@ -6,7 +6,7 @@
 <title>Lesson 012 · Scope & parameter passing in C#</title>
 <meta name="description" content="OCR H446 2.2.1(c-d): local/global variables, parameters and passing by value/reference in C#.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1715">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab5">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1715">
 </head>
 <body>
@@ -78,25 +78,14 @@
   </div>
 </section>
 
-<section id="overview" class="page" data-phase-time="2 minutes">
-  <h1>Scope &amp; parameter passing in C#</h1>
-  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
-  <div class="objectives">
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Scope &amp; parameter passing in C#</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives">
     <strong>By the end, you can…</strong>
     <ul>
       <li>explain the scope of local and global/class-level variables;</li>
       <li>explain what happens when a parameter is passed by value;</li>
       <li>use C# <code>ref</code> to pass a variable by reference.</li>
     </ul>
-  </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>scope</span><span>local variable</span><span>global variable</span><span>parameter</span>
-      <span>argument</span><span>pass by value</span><span>pass by reference</span><span>ref</span>
-    </div>
-  </div>
-</section>
+  </div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="The part of a program in which a variable can be accessed." aria-label="Scope: The part of a program in which a variable can be accessed.">Scope</span><span class="vocab-tip" tabindex="0" data-definition="A variable visible only within the method or block where it is declared." aria-label="Local variable: A variable visible only within the method or block where it is declared.">Local variable</span><span class="vocab-tip" tabindex="0" data-definition="A variable that can be accessed from multiple parts of a program." aria-label="Global variable: A variable that can be accessed from multiple parts of a program.">Global variable</span><span class="vocab-tip" tabindex="0" data-definition="The named input in a method definition." aria-label="Parameter: The named input in a method definition.">Parameter</span><span class="vocab-tip" tabindex="0" data-definition="The actual value or variable supplied in a method call." aria-label="Argument: The actual value or variable supplied in a method call.">Argument</span><span class="vocab-tip" tabindex="0" data-definition="Passing a copy so changes inside the method do not change the original variable." aria-label="Pass by value: Passing a copy so changes inside the method do not change the original variable.">Pass by value</span><span class="vocab-tip" tabindex="0" data-definition="Passing access to the original variable so changes can persist after the method returns." aria-label="Pass by reference: Passing access to the original variable so changes can persist after the method returns.">Pass by reference</span><span class="vocab-tip" tabindex="0" data-definition="The C# keyword written in both the method call and parameter to pass by reference." aria-label="ref: The C# keyword written in both the method call and parameter to pass by reference.">ref</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage"><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Scope</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The part of a program in which a variable can be accessed.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 2 OF 8</span><h2>Local variable</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A variable visible only within the method or block where it is declared.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 3 OF 8</span><h2>Global variable</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A variable that can be accessed from multiple parts of a program.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 4 OF 8</span><h2>Parameter</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The named input in a method definition.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 5 OF 8</span><h2>Argument</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The actual value or variable supplied in a method call.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 6 OF 8</span><h2>Pass by value</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Passing a copy so changes inside the method do not change the original variable.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 7 OF 8</span><h2>Pass by reference</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Passing access to the original variable so changes can persist after the method returns.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 8 OF 8</span><h2>ref</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The C# keyword written in both the method call and parameter to pass by reference.</p></div></article></div></div></section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
   <div class="nl-focus">
@@ -358,7 +347,7 @@ public static void DoubleValue(int number)
   </div>
 </section>
 
-<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes" data-vocab-flow="retrieval">
   <div class="vocab-test-deck">
     <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The part of a program in which a variable can be accessed.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Scope</div><p>Scope determines where an identifier is visible and usable.</p></div></article>
 
@@ -400,6 +389,6 @@ public static void DoubleValue(int number)
 </main>
 
 <div class="lesson-footer">Lesson 012 · OCR H446 2.2.1(c–d) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-vocab1"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav3"></script>
 </body>
 </html>
