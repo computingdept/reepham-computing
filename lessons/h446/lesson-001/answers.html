@@ -72,120 +72,43 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Answer 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap">
-  <section class="answer-stage">
-    <article class="exam-card answer-card current-answer">
-      <span class="phase-tag">QUESTION 1 · DATA TYPES</span>
-      <span class="classroom-marks">Suggested classroom marks: 10</span>
-      <h3>A weather-monitoring system</h3>
-      <div class="answer-heading">ANSWER</div>
-      <div class="mark-points"><strong>Suggested marking:</strong>
-        <ul>
-          <li><strong>Integer</strong> — whole-number count.</li>
-          <li><strong>Real / floating point</strong> — temperature may contain a fractional part.</li>
-          <li><strong>Character</strong> — one letter.</li>
-          <li><strong>String</strong> — preserves the leading zeros in an identifier.</li>
-          <li><strong>Boolean</strong> — sensor working / not working can be True or False.</li>
-        </ul>
-      </div>
-      <p class="question-text">Award one mark for each suitable type and one for each valid justification.</p>
-    </article>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">QUESTION 1 · DATA TYPES</span><h2>A weather-monitoring system</h2><pre class="solution-code">number of readings → Integer
+Reason: a whole-number count.
 
-    <article class="exam-card answer-card">
-      <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
-      <h3>Encode 37, 92 and 200</h3>
-      <p class="question-text">Convert each to unsigned 8-bit binary and show the place values.</p>
-    </article>
+air temperature, e.g. 18.5 → Real / floating point
+Reason: may contain a fractional part.
 
-    <article class="exam-card answer-card">
-      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
-      <h3>Decode two values</h3>
-      <pre class="arithmetic">01101001₂
-11000010₂</pre>
-    </article>
-  </section>
+one-letter category → Character
+Reason: one character is stored.
 
-  <section class="answer-stage" hidden>
-    <article class="exam-card answer-card current-answer">
-      <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
-      <span class="classroom-marks">Suggested classroom marks: 6</span>
-      <h3>Encode the readings</h3>
-      <div class="answer-heading">ANSWER</div>
-      <pre class="arithmetic">37  = 32 + 4 + 1
-    = 00100101
+station identifier "0042" → String
+Reason: it is an identifier and the leading zeros must be preserved.
 
-92  = 64 + 16 + 8 + 4
-    = 01011100
+sensor working → Boolean
+Reason: only two states are required: true/false.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · DENARY → BINARY</span><h2>Encode the readings</h2><pre class="solution-code">37 = 32 + 4 + 1
+37 = 00100101
+
+92 = 64 + 16 + 8 + 4
+92 = 01011100
 
 200 = 128 + 64 + 8
-    = 11001000</pre>
-      <div class="mark-points"><strong>Suggested marking:</strong>
-        <ul><li>1 mark per correct decomposition;</li><li>1 mark per correct 8-bit answer.</li></ul>
-      </div>
-    </article>
-
-    <article class="exam-card answer-card">
-      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
-      <h3>Decode two values</h3>
-      <pre class="arithmetic">01101001₂
-11000010₂</pre>
-    </article>
-
-    <article class="exam-card answer-card">
-      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
-      <h3>Store values from 0 to 300</h3>
-      <p class="question-text">Find the maximum for 8 bits and the minimum width that will store 300.</p>
-    </article>
-  </section>
-
-  <section class="answer-stage two" hidden>
-    <article class="exam-card answer-card current-answer">
-      <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
-      <span class="classroom-marks">Suggested classroom marks: 4</span>
-      <h3>Decode the stored values</h3>
-      <div class="answer-heading">ANSWER</div>
-      <pre class="arithmetic">01101001
+200 = 11001000</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · BINARY → DENARY</span><h2>Decode the stored values</h2><pre class="solution-code">01101001
 = 64 + 32 + 8 + 1
 = 105
 
 11000010
 = 128 + 64 + 2
-= 194</pre>
-      <div class="mark-points"><strong>Suggested marking:</strong>
-        <ul><li>1 mark per correct place-value working;</li><li>1 mark per correct denary value.</li></ul>
-      </div>
-    </article>
+= 194</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · RANGE & JUSTIFICATION</span><h2>Choose a storage width</h2><pre class="solution-code">Largest unsigned 8-bit value:
+2^8 - 1 = 255
 
-    <article class="exam-card answer-card">
-      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
-      <h3>Store values from 0 to 300</h3>
-      <p class="question-text">Find the maximum for 8 bits and the minimum width that will store 300.</p>
-    </article>
-  </section>
+8 bits are insufficient because:
+300 &gt; 255
 
-  <section class="answer-stage single" hidden>
-    <article class="exam-card answer-card current-answer">
-      <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
-      <span class="classroom-marks">Suggested classroom marks: 4</span>
-      <h3>Choose a storage width</h3>
-      <div class="answer-heading">ANSWER</div>
-      <div class="answer-value">8 bits: <strong>0–255</strong><br>Minimum for 300: <strong>9 bits</strong></div>
-      <pre class="arithmetic">2⁸ − 1 = 255
-300 > 255
+9 bits give:
+0 to 2^9 - 1
+= 0 to 511
 
-2⁹ − 1 = 511
-9-bit range = 0–511</pre>
-      <div class="mark-points"><strong>Suggested marking:</strong>
-        <ul>
-          <li>1 mark: 255;</li>
-          <li>1 mark: explains 300 exceeds 255;</li>
-          <li>1 mark: 9 bits;</li>
-          <li>1 mark: justifies with range 0–511.</li>
-        </ul>
-      </div>
-    </article>
-  </section>
-</main>
+Minimum required width = 9 bits</pre></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous answer</button>
