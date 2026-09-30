@@ -41,15 +41,22 @@ function setYouDoWindow(page,start){
 }
 
 function prepareObjectiveVocabularySupport(){
-  document.querySelectorAll('.objective-vocab-stage[data-support]').forEach(stage=>{
+  document.querySelectorAll('.objective-vocab-stage').forEach(stage=>{
     const definition=stage.querySelector('[data-objective-vocab-definition]');
-    if(!definition||definition.querySelector('.objective-vocab-support'))return;
-    const support=(stage.dataset.support||'').trim();
-    if(!support)return;
-    const p=document.createElement('p');
+    if(!definition)return;
+
+    const existing=definition.querySelector('.objective-vocab-support');
+    const support=(stage.dataset.support||existing?.textContent||'').trim();
+
+    if(!support){
+      if(existing)existing.remove();
+      return;
+    }
+
+    const p=existing||document.createElement('p');
     p.className='objective-vocab-support';
     p.textContent=support;
-    definition.appendChild(p);
+    if(!existing)definition.appendChild(p);
   });
 }
 
@@ -259,7 +266,7 @@ function updateControl(){
       const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
       if(definition&&definition.hidden)label='Reveal definition →';
       else if(i<stages.length-1)label='Next term →';
-      else label='Continue → New Learning';
+      else label='Continue →';
     }else{
       label='Next step →';
     }
