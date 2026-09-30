@@ -40,6 +40,19 @@ function setYouDoWindow(page,start){
   }
 }
 
+function prepareObjectiveVocabularySupport(){
+  document.querySelectorAll('.objective-vocab-stage[data-support]').forEach(stage=>{
+    const definition=stage.querySelector('[data-objective-vocab-definition]');
+    if(!definition||definition.querySelector('.objective-vocab-support'))return;
+    const support=(stage.dataset.support||'').trim();
+    if(!support)return;
+    const p=document.createElement('p');
+    p.className='objective-vocab-support';
+    p.textContent=support;
+    definition.appendChild(p);
+  });
+}
+
 function prepareVocabulary(){
   const page=document.getElementById('vocabulary');
   if(!page||page.dataset.vocabPrepared==='true')return;
@@ -668,5 +681,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'){e.preventDefault();next();}
   if(e.key==='ArrowLeft'){e.preventDefault();previousAction();}
 });
+prepareObjectiveVocabularySupport();
 prepareVocabulary();
 showPage(location.hash.slice(1)||'do-now');
