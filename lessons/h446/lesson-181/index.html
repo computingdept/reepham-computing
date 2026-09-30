@@ -6,7 +6,7 @@
 <title>Lesson 181 · Understanding Recursion</title>
 <meta name="description" content="OCR H446 Year 13 introduction to recursion: self-calls, base cases, recursive cases, call stacks and tracing returns.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab4">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab5">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 </head>
 <body>
@@ -28,14 +28,77 @@
 <div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Data structures</h2><p class="review-question">What does <strong>FIFO</strong> mean, and which data structure uses it?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>First In, First Out — a queue.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Boolean algebra</h2><p class="review-question">Use De Morgan’s law to simplify <code>¬(A ∨ B)</code>.</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong><code>¬A ∧ ¬B</code>.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Two’s complement</h2><p class="review-question">Convert <code>11010110</code> from 8-bit two’s complement to denary.</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>−42.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Arrays</h2><p class="review-question">In a 2D array, what does <code>scores[2,1]</code> refer to?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The value at row/index 2 and column/index 1.</strong></p></article></div></div>
 </div></section>
 
-<section id="overview" class="page" data-phase-time="2 minutes">
-<h1>Understanding Recursion</h1>
-<div class="objectives"><strong>By the end, you can…</strong><ul>
-<li>describe recursion precisely;</li>
-<li>identify the base case and recursive case in pseudocode;</li>
-<li>trace recursive calls down and returned values back up.</li>
-</ul></div>
-<div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A function calling itself from within the function." aria-label="recursion: A function calling itself from within the function.">recursion</span><span class="vocab-tip" tabindex="0" data-definition="The statement that calls the same function again." aria-label="recursive call: The statement that calls the same function again.">recursive call</span><span class="vocab-tip" tabindex="0" data-definition="The condition that stops further recursive calls." aria-label="base case: The condition that stops further recursive calls.">base case</span><span class="vocab-tip" tabindex="0" data-definition="The part that makes another recursive call." aria-label="recursive case: The part that makes another recursive call.">recursive case</span><span class="vocab-tip" tabindex="0" data-definition="The structure that keeps track of active function calls." aria-label="call stack: The structure that keeps track of active function calls.">call stack</span><span class="vocab-tip" tabindex="0" data-definition="The stored information for one active function call." aria-label="stack frame: The stored information for one active function call.">stack frame</span><span class="vocab-tip" tabindex="0" data-definition="A value supplied to a function call." aria-label="parameter: A value supplied to a function call.">parameter</span><span class="vocab-tip" tabindex="0" data-definition="Returning from the deepest call back through earlier calls." aria-label="unwind: Returning from the deepest call back through earlier calls.">unwind</span></div></div>
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true">
+<div class="objectives-vocab-layout">
+  <article class="objectives-vocab-left">
+    <h1>Understanding Recursion</h1>
+    <div class="objectives"><strong>By the end, you can…</strong><ul>
+      <li>describe recursion precisely;</li>
+      <li>identify the base case and recursive case in pseudocode;</li>
+      <li>trace recursive calls down and returned values back up.</li>
+    </ul></div>
+    <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A function calling itself from within the function." aria-label="recursion: A function calling itself from within the function.">recursion</span><span class="vocab-tip" tabindex="0" data-definition="The statement that calls the same function again." aria-label="recursive call: The statement that calls the same function again.">recursive call</span><span class="vocab-tip" tabindex="0" data-definition="The condition that stops further recursive calls." aria-label="base case: The condition that stops further recursive calls.">base case</span><span class="vocab-tip" tabindex="0" data-definition="The part that makes another recursive call." aria-label="recursive case: The part that makes another recursive call.">recursive case</span><span class="vocab-tip" tabindex="0" data-definition="The structure that keeps track of active function calls." aria-label="call stack: The structure that keeps track of active function calls.">call stack</span><span class="vocab-tip" tabindex="0" data-definition="The stored information for one active function call." aria-label="stack frame: The stored information for one active function call.">stack frame</span><span class="vocab-tip" tabindex="0" data-definition="A value supplied to a function call." aria-label="parameter: A value supplied to a function call.">parameter</span><span class="vocab-tip" tabindex="0" data-definition="Returning from the deepest call back through earlier calls." aria-label="unwind: Returning from the deepest call back through earlier calls.">unwind</span></div></div>
+  </article>
+  <div class="objectives-vocab-right" aria-live="polite">
+    <article class="objective-vocab-stage">
+      <span class="objective-vocab-count">TERM 1 OF 8</span>
+      <h2>recursion</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>A function calling itself from within the function.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 2 OF 8</span>
+      <h2>recursive call</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>The statement that calls the same function again.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 3 OF 8</span>
+      <h2>base case</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>The condition that stops further recursive calls.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 4 OF 8</span>
+      <h2>recursive case</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>The part that makes another recursive call.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 5 OF 8</span>
+      <h2>call stack</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>The structure that keeps track of active function calls.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 6 OF 8</span>
+      <h2>stack frame</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>The stored information for one active function call.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 7 OF 8</span>
+      <h2>parameter</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>A value supplied to a function call.</p>
+      </div>
+    </article><article class="objective-vocab-stage" hidden>
+      <span class="objective-vocab-count">TERM 8 OF 8</span>
+      <h2>unwind</h2>
+      <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+        <span>DEFINITION</span>
+        <p>Returning from the deepest call back through earlier calls.</p>
+      </div>
+    </article>
+  </div>
+</div>
 </section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus">
@@ -124,86 +187,94 @@ endif</pre></div></article><article class="exam-card youdo-question" hidden><spa
 09 endfunction</pre></div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · OCR EXAMBUILDER Q3(b) · [5]</span><h3>Trace calculate(4,10)</h3><div class="question-text">Trace the algorithm, showing the steps and result when this line is run:<pre class="arithmetic">print(calculate(4,10))</pre></div></article>
 </div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
 
-<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="term-definition"><div class="vocab-deck">
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">
 <article class="vocab-stage">
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 1 OF 8</span>
-    <h2 class="vocab-term-heading">recursion</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 1 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">A function calling itself from within the function.</p>
     <span class="vocab-stage-count">1 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">A function calling itself from within the function.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">recursion</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 2 OF 8</span>
-    <h2 class="vocab-term-heading">recursive call</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 2 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">The statement that calls the same function again.</p>
     <span class="vocab-stage-count">2 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">The statement that calls the same function again.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">recursive call</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 3 OF 8</span>
-    <h2 class="vocab-term-heading">base case</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 3 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">The condition that stops further recursive calls.</p>
     <span class="vocab-stage-count">3 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">The condition that stops further recursive calls.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">base case</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 4 OF 8</span>
-    <h2 class="vocab-term-heading">recursive case</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 4 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">The part that makes another recursive call.</p>
     <span class="vocab-stage-count">4 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">The part that makes another recursive call.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">recursive case</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 5 OF 8</span>
-    <h2 class="vocab-term-heading">call stack</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 5 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">The structure that keeps track of active function calls.</p>
     <span class="vocab-stage-count">5 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">The structure that keeps track of active function calls.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">call stack</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 6 OF 8</span>
-    <h2 class="vocab-term-heading">stack frame</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 6 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">The stored information for one active function call.</p>
     <span class="vocab-stage-count">6 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">The stored information for one active function call.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">stack frame</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 7 OF 8</span>
-    <h2 class="vocab-term-heading">parameter</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 7 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">A value supplied to a function call.</p>
     <span class="vocab-stage-count">7 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">A value supplied to a function call.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">parameter</div>
   </div>
 </article><article class="vocab-stage" hidden>
-  <div class="vocab-prompt vocab-term-mode">
-    <span class="vocab-test-label">TERM 8 OF 8</span>
-    <h2 class="vocab-term-heading">unwind</h2>
+  <div class="vocab-prompt">
+    <span class="vocab-test-label">DEFINITION 8 OF 8</span>
+    <h2>What is the term?</h2>
+    <p class="vocab-question">Returning from the deepest call back through earlier calls.</p>
     <span class="vocab-stage-count">8 of 8</span>
   </div>
   <div class="vocab-answer" data-vocab-answer hidden>
-    <span class="vocab-test-label">DEFINITION</span>
-    <div class="vocab-answer-value vocab-definition-value">Returning from the deepest call back through earlier calls.</div>
+    <span class="vocab-test-label">TERM</span>
+    <div class="vocab-answer-value">unwind</div>
   </div>
 </article>
 </div></section>
@@ -214,6 +285,6 @@ endif</pre></div></article><article class="exam-card youdo-question" hidden><spa
 </div></section>
 </main>
 <div class="lesson-footer">Lesson 181 · Understanding Recursion <span>Year 13 · OCR H446</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav2"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav3"></script>
 </body>
 </html>
