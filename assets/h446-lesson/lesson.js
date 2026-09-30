@@ -78,7 +78,7 @@ function resetPhaseState(id){
     }
   }
   if(id==='you-do'){
-    page.dataset.workMode='discuss';
+    page.dataset.workMode=page.dataset.assessmentMode==='true'?'independent':'discuss';
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       setYouDoWindow(page,0);
@@ -118,7 +118,7 @@ function resetPhaseState(id){
 }
 function updateSignals(id){
   const page=document.getElementById(id);
-  let values=id==='you-do'&&page?.dataset.workMode==='independent'
+  let values=id==='you-do'&&(page?.dataset.workMode==='independent'||page?.dataset.assessmentMode==='true')
     ?youDoIndependentSignals
     :(signalMap[id]||['','','']);
   const kinds=['phase','routine','response'];
@@ -193,7 +193,9 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(page.dataset.workMode!=='independent'){
+    if(page.dataset.assessmentMode==='true'){
+      label='Test in progress';
+    }else if(page.dataset.workMode!=='independent'){
       label='Begin silent work →';
     }else{
       const questions=[...page.querySelectorAll('.youdo-question')];
@@ -238,7 +240,7 @@ function updateControl(){
     }
   }
   advance.textContent=label;
-  previous.disabled=order.indexOf(current)===0;
+  previous.disabled=order.indexOf(current)===0||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
 }
 function showPage(id){
@@ -318,6 +320,11 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.assessmentMode==='true'){
+      updateSignals('you-do');
+      updateControl();
+      return;
+    }
     if(page.dataset.workMode!=='independent'){
       page.dataset.workMode='independent';
       updateSignals('you-do');
@@ -413,6 +420,11 @@ function previousAction(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.assessmentMode==='true'){
+      updateSignals('you-do');
+      updateControl();
+      return;
+    }
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       const start=Number(page.dataset.windowStart||0);
