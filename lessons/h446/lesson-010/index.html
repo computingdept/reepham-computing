@@ -6,7 +6,7 @@
 <title>Lesson 010 · Iteration in C#</title>
 <meta name="description" content="OCR H446 2.2.1(a): iteration in C# using for, while and do...while in .NET Fiddle.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1715">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab5">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1715">
 </head>
 <body>
@@ -78,25 +78,14 @@
   </div>
 </section>
 
-<section id="overview" class="page" data-phase-time="2 minutes">
-  <h1>Iteration in C#</h1>
-  <a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a>
-  <div class="objectives">
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Iteration in C#</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives">
     <strong>By the end, you can…</strong>
     <ul>
       <li>explain iteration and distinguish count-controlled from condition-controlled repetition;</li>
       <li>write and trace <code>for</code>, <code>while</code> and <code>do...while</code> loops;</li>
       <li>choose a suitable loop and test it in .NET Fiddle.</li>
     </ul>
-  </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>iteration</span><span>count-controlled</span><span>condition-controlled</span><span>counter</span>
-      <span>condition</span><span>for loop</span><span>while loop</span><span>do...while</span>
-    </div>
-  </div>
-</section>
+  </div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="Repeating a block of instructions." aria-label="Iteration: Repeating a block of instructions.">Iteration</span><span class="vocab-tip" tabindex="0" data-definition="Repetition where the number of repeats is known or controlled by a counter." aria-label="Count-controlled iteration: Repetition where the number of repeats is known or controlled by a counter.">Count-controlled iteration</span><span class="vocab-tip" tabindex="0" data-definition="Repetition that continues according to a Boolean test." aria-label="Condition-controlled iteration: Repetition that continues according to a Boolean test.">Condition-controlled iteration</span><span class="vocab-tip" tabindex="0" data-definition="A variable used to track the number of repetitions." aria-label="Counter: A variable used to track the number of repetitions.">Counter</span><span class="vocab-tip" tabindex="0" data-definition="A C# loop normally used when the number of repetitions is known." aria-label="for loop: A C# loop normally used when the number of repetitions is known.">for loop</span><span class="vocab-tip" tabindex="0" data-definition="A loop that tests its condition before each repetition." aria-label="while loop: A loop that tests its condition before each repetition.">while loop</span><span class="vocab-tip" tabindex="0" data-definition="A loop that executes its body before testing its condition." aria-label="do...while: A loop that executes its body before testing its condition.">do...while</span><span class="vocab-tip" tabindex="0" data-definition="The true/false test that decides whether another repetition happens." aria-label="Condition: The true/false test that decides whether another repetition happens.">Condition</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage"><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Iteration</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Repeating a block of instructions.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 2 OF 8</span><h2>Count-controlled iteration</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Repetition where the number of repeats is known or controlled by a counter.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 3 OF 8</span><h2>Condition-controlled iteration</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Repetition that continues according to a Boolean test.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 4 OF 8</span><h2>Counter</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A variable used to track the number of repetitions.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 5 OF 8</span><h2>for loop</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A C# loop normally used when the number of repetitions is known.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 6 OF 8</span><h2>while loop</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A loop that tests its condition before each repetition.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 7 OF 8</span><h2>do...while</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A loop that executes its body before testing its condition.</p></div></article><article class="objective-vocab-stage" hidden><span class="objective-vocab-count">TERM 8 OF 8</span><h2>Condition</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The true/false test that decides whether another repetition happens.</p></div></article></div></div></section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
   <div class="nl-focus">
@@ -354,7 +343,7 @@ i = 5 → 35</pre>
   </div>
 </section>
 
-<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes">
+<section id="vocabulary" class="page phase-vocab" data-phase-time="3 minutes" data-vocab-flow="retrieval">
   <div class="vocab-test-deck">
     <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Repeating a block of instructions.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Iteration</div><p>Executing instructions repeatedly according to a loop rule.</p></div></article>
 
@@ -396,6 +385,6 @@ i = 5 → 35</pre>
 </main>
 
 <div class="lesson-footer">Lesson 010 · OCR H446 2.2.1(a) <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav1"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav3"></script>
 </body>
 </html>
