@@ -46,6 +46,11 @@ function prepareVocabulary(){
   const stages=[...page.querySelectorAll('.vocab-stage')];
   if(!stages.length)return;
 
+  if(page.dataset.vocabFlow==='retrieval'){
+    page.dataset.vocabPrepared='true';
+    return;
+  }
+
   if(page.dataset.vocabFlow==='term-definition'){
     const entries=stages.map((stage,i)=>({
       term:(stage.querySelector('.vocab-term-heading')?.textContent||('Term '+(i+1))).trim(),
@@ -116,6 +121,16 @@ function resetPhaseState(id){
   const page=document.getElementById(id);
   if(!page)return;
   document.querySelectorAll('details.answers').forEach(d=>d.open=false);
+  if(id==='overview'&&page.dataset.objectivesVocab==='true'){
+    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
+    if(stages.length){
+      showOnly(stages,0);
+      stages.forEach(stage=>{
+        const definition=stage.querySelector('[data-objective-vocab-definition]');
+        if(definition)definition.hidden=true;
+      });
+    }
+  }
   if(id==='do-now'){
     const stages=[...page.querySelectorAll('.donow-stage')];
     if(stages.length)showOnly(stages,0);
@@ -225,7 +240,16 @@ function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
   if(current==='overview'){
-    label='Next step →';
+    if(page.dataset.objectivesVocab==='true'){
+      const stages=[...page.querySelectorAll('.objective-vocab-stage')];
+      const i=visibleIndex(stages);
+      const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
+      if(definition&&definition.hidden)label='Reveal definition →';
+      else if(i<stages.length-1)label='Next term →';
+      else label='Continue → New Learning';
+    }else{
+      label='Next step →';
+    }
   }else if(current==='do-now'){
     const stages=[...page.querySelectorAll('.donow-stage')];
     const i=visibleIndex(stages);
@@ -295,7 +319,11 @@ function updateControl(){
     if(stages.length){
       const i=visibleIndex(stages);
       const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(answer&&answer.hidden)label='Reveal definition →';
+      if(page.dataset.vocabFlow==='retrieval'){
+        if(answer&&answer.hidden)label='Reveal term →';
+        else if(i<stages.length-1)label='Next definition →';
+        else label='Continue → Exit Ticket';
+      }else if(answer&&answer.hidden)label='Reveal definition →';
       else if(i<stages.length-1)label='Next term →';
       else label='Continue → Exit Ticket';
     }else if(page.querySelector('.vocab-card [data-answer][hidden]')){
@@ -335,6 +363,23 @@ function showPage(id){
 }
 function next(){
   const page=document.getElementById(current);
+  if(current==='overview'&&page.dataset.objectivesVocab==='true'){
+    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
+    const i=visibleIndex(stages);
+    const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
+    if(definition&&definition.hidden){
+      definition.hidden=false;
+      updateControl();
+      return;
+    }
+    if(i<stages.length-1){
+      showOnly(stages,i+1);
+      const nextDefinition=stages[i+1].querySelector('[data-objective-vocab-definition]');
+      if(nextDefinition)nextDefinition.hidden=true;
+      updateControl();
+      return;
+    }
+  }
   if(current==='do-now'){
     const stages=[...page.querySelectorAll('.donow-stage')];
     const i=visibleIndex(stages);
@@ -464,6 +509,23 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='overview'&&page.dataset.objectivesVocab==='true'){
+    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
+    const i=visibleIndex(stages);
+    const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
+    if(definition&&!definition.hidden){
+      definition.hidden=true;
+      updateControl();
+      return;
+    }
+    if(i>0){
+      showOnly(stages,i-1);
+      const previousDefinition=stages[i-1].querySelector('[data-objective-vocab-definition]');
+      if(previousDefinition)previousDefinition.hidden=false;
+      updateControl();
+      return;
+    }
+  }
   if(current==='exit'){
     const stages=[...page.querySelectorAll('.exit-stage')];
     if(stages.length){
