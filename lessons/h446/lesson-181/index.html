@@ -6,7 +6,7 @@
 <title>Lesson 181 · Understanding Recursion</title>
 <meta name="description" content="OCR H446 Year 13 introduction to recursion: self-calls, base cases, recursive cases, call stacks and tracing returns.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab6">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-objectives7">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 </head>
 <body>
@@ -40,69 +40,69 @@
     <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A function calling itself from within the function." aria-label="recursion: A function calling itself from within the function.">recursion</span><span class="vocab-tip" tabindex="0" data-definition="The statement that calls the same function again." aria-label="recursive call: The statement that calls the same function again.">recursive call</span><span class="vocab-tip" tabindex="0" data-definition="The condition that stops further recursive calls." aria-label="base case: The condition that stops further recursive calls.">base case</span><span class="vocab-tip" tabindex="0" data-definition="The part that makes another recursive call." aria-label="recursive case: The part that makes another recursive call.">recursive case</span><span class="vocab-tip" tabindex="0" data-definition="The structure that keeps track of active function calls." aria-label="call stack: The structure that keeps track of active function calls.">call stack</span><span class="vocab-tip" tabindex="0" data-definition="The stored information for one active function call." aria-label="stack frame: The stored information for one active function call.">stack frame</span><span class="vocab-tip" tabindex="0" data-definition="A value supplied to a function call." aria-label="parameter: A value supplied to a function call.">parameter</span><span class="vocab-tip" tabindex="0" data-definition="Returning from the deepest call back through earlier calls." aria-label="unwind: Returning from the deepest call back through earlier calls.">unwind</span></div></div>
   </article>
   <div class="objectives-vocab-right" aria-live="polite">
-    <article class="objective-vocab-stage">
+    <article class="objective-vocab-stage" data-support="Like Russian dolls: each call contains a smaller version.">
       <span class="objective-vocab-count">TERM 1 OF 8</span>
       <h2>recursion</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>A function calling itself from within the function.</p>
-        <p class="objective-vocab-support">Like Russian dolls: each call contains a smaller version.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like opening the next doll in the set." hidden>
       <span class="objective-vocab-count">TERM 2 OF 8</span>
       <h2>recursive call</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>The statement that calls the same function again.</p>
-        <p class="objective-vocab-support">Like opening the next doll in the set.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like the smallest doll: there is nowhere further to go." hidden>
       <span class="objective-vocab-count">TERM 3 OF 8</span>
       <h2>base case</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>The condition that stops further recursive calls.</p>
-        <p class="objective-vocab-support">Like the smallest doll: there is nowhere further to go.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like opening another smaller doll and continuing." hidden>
       <span class="objective-vocab-count">TERM 4 OF 8</span>
       <h2>recursive case</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>The part that makes another recursive call.</p>
-        <p class="objective-vocab-support">Like opening another smaller doll and continuing.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like a stack of plates: the newest call sits on top." hidden>
       <span class="objective-vocab-count">TERM 5 OF 8</span>
       <h2>call stack</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>The structure that keeps track of active function calls.</p>
-        <p class="objective-vocab-support">Like a stack of plates: the newest call sits on top.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like one labelled plate holding that call’s own data." hidden>
       <span class="objective-vocab-count">TERM 6 OF 8</span>
       <h2>stack frame</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>The stored information for one active function call.</p>
-        <p class="objective-vocab-support">Like one labelled plate holding that call’s own data.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like information handed to a function when it starts." hidden>
       <span class="objective-vocab-count">TERM 7 OF 8</span>
       <h2>parameter</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>A value supplied to a function call.</p>
-        <p class="objective-vocab-support">Like information handed to a function when it starts.</p>
+        
       </div>
-    </article><article class="objective-vocab-stage" hidden>
+    </article><article class="objective-vocab-stage" data-support="Like taking plates off the stack from the top." hidden>
       <span class="objective-vocab-count">TERM 8 OF 8</span>
       <h2>unwind</h2>
       <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
         <span>DEFINITION</span>
         <p>Returning from the deepest call back through earlier calls.</p>
-        <p class="objective-vocab-support">Like taking plates off the stack from the top.</p>
+        
       </div>
     </article>
   </div>
@@ -293,6 +293,6 @@ endif</pre></div></article><article class="exam-card youdo-question" hidden><spa
 </div></section>
 </main>
 <div class="lesson-footer">Lesson 181 · Understanding Recursion <span>Year 13 · OCR H446</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav4"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-objectives5"></script>
 </body>
 </html>
