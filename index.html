@@ -332,5 +332,6 @@ const yearSwitch=y<10?'':'<nav class="simple-year-switch" aria-label="Choose yea
 main.innerHTML='<a class="back" href="'+(scienceCourse?href(y,'Science'):groupBack)+'">'+(scienceCourse?'← Year '+y+' Science':groupBackText)+'</a><p class="eyebrow">YEAR '+y+'</p><h1>'+escapeHtml(s)+'</h1>'+(scienceIntro?'<p class="intro">'+scienceIntro+'</p>':'')+yearSwitch+'<nav class="tabs" aria-label="Learning sections">'+Object.keys(titles).map(t=>'<a href="'+href(y,s,t)+'"'+(t===tab?' aria-current="page"':'')+'>'+icon(t==='lessons'||t==='booklet'?'book':'target')+'<span>'+titles[t]+'</span></a>').join('')+'</nav><section class="resource" aria-label="'+titles[tab]+'">'+content+'</section>';
 }
 addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});render();
-</script><!-- pages-rebuild: 2026-09-30-tv2 -->
+</script>
+<!-- pages-rebuild: 2026-09-30-h446-vocab181 -->
 </body></html>
