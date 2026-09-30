@@ -216,16 +216,18 @@
 /* I DO FOCUS: keep the question/reference visible while modelling steps change on the right. */
 .ido-focus-deck{height:100%}
 .ido-example{
-  height:100%;
+  height:auto;
+  min-height:0;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);
-  gap:16px;
+  gap:14px;
+  align-items:start;
 }
 .ido-example[hidden]{display:none!important}
 .ido-reference,.ido-method{
-  min-width:0;height:100%;
+  min-width:0;height:auto;min-height:0;
   background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:22px;box-shadow:var(--shadow);
+  padding:16px 18px;box-shadow:var(--shadow);
 }
 .ido-reference{
   border-top:7px solid var(--green);
@@ -237,49 +239,51 @@
   display:flex;flex-direction:column;
 }
 .ido-reference .phase-tag{
-  margin-bottom:12px;
+  margin-bottom:8px;
 }
 .ido-reference h2,.ido-method h2{
-  margin:0 0 14px;
-  font-size:clamp(27px,2.35vw,38px);
+  margin:0 0 9px;
+  font-size:clamp(28px,2.4vw,39px);
 }
 .ido-reference .focus-code{
   display:block;
-  margin:12px 0;
-  padding:18px;
+  margin:8px 0 10px;
+  padding:12px 14px;
   border-radius:10px;
   background:#f3f6f5;
-  font:700 clamp(26px,2.45vw,40px)/1.25 Consolas,"Courier New",monospace;
+  font:700 clamp(28px,2.55vw,42px)/1.22 Consolas,"Courier New",monospace;
   text-align:center;
 }
 .ido-example-count{
-  margin-top:auto;
-  padding-top:12px;
+  margin-top:8px;
+  padding-top:4px;
   color:var(--muted);
   font-size:13px;
   font-weight:800;
 }
-.ido-step{height:100%}
+.ido-step{height:auto;min-height:0}
 .ido-step[hidden]{display:none!important}
 .ido-step-label{
   display:inline-block;
   width:max-content;
-  margin-bottom:12px;
+  margin-bottom:8px;
   color:var(--green);
   font-size:13px;
   font-weight:900;
   letter-spacing:.1em;
 }
 .ido-step .arithmetic{
-  font-size:clamp(20px,1.6vw,25px);
+  margin:7px 0;
+  padding:10px 12px;
+  font-size:clamp(21px,1.65vw,27px);
 }
 .ido-step p,.ido-step li{
-  font-size:clamp(18px,1.4vw,23px);
-  line-height:1.38;
+  font-size:clamp(19px,1.45vw,24px);
+  line-height:1.32;
 }
 .ido-step .key-result{
-  margin-top:16px;
-  padding:14px 16px;
+  margin-top:10px;
+  padding:10px 13px;
   border-left:5px solid var(--green);
   background:var(--green-soft);
   border-radius:0 10px 10px 0;
@@ -294,12 +298,13 @@
   display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
 }
 @media(max-height:760px) and (min-width:901px){
-  .ido-reference,.ido-method{padding:16px}
-  .ido-reference h2,.ido-method h2{font-size:26px}
-  .ido-reference .focus-code{font-size:24px;padding:12px}
-  .ido-step .arithmetic{font-size:18px}
-  .ido-step p,.ido-step li{font-size:17px}
-  .ido-step .key-result{font-size:18px;padding:10px 12px}
+  .ido-reference,.ido-method{padding:11px 13px}
+  .ido-reference h2,.ido-method h2{font-size:27px;margin-bottom:7px}
+  .ido-reference .focus-code{font-size:27px;padding:8px 10px;margin:6px 0 8px}
+  .ido-step-label{margin-bottom:6px}
+  .ido-step .arithmetic{font-size:20px;padding:7px 9px;margin:5px 0}
+  .ido-step p,.ido-step li{font-size:18px;line-height:1.25}
+  .ido-step .key-result{font-size:19px;padding:8px 10px;margin-top:7px}
 }
 @media(max-width:900px){
   .ido-focus-deck,.ido-example{height:auto}
@@ -392,16 +397,18 @@
 /* WE DO GUIDED PRACTICE: several examples; question fixed left, checks progress on the right. */
 .wedo-focus-deck{height:100%}
 .wedo-example{
-  height:100%;
+  height:auto;
+  min-height:0;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);
-  gap:16px;
+  gap:14px;
+  align-items:start;
 }
 .wedo-example[hidden]{display:none!important}
 .wedo-reference,.wedo-practice{
-  min-width:0;height:100%;
+  min-width:0;height:auto;min-height:0;
   background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:22px;box-shadow:var(--shadow);
+  padding:16px 18px;box-shadow:var(--shadow);
 }
 .wedo-reference{
   border-top:7px solid var(--green);
@@ -413,72 +420,79 @@
   display:flex;flex-direction:column;
 }
 .wedo-reference h2,.wedo-practice h2{
-  margin:0 0 14px;
-  font-size:clamp(27px,2.35vw,38px);
+  margin:0 0 9px;
+  font-size:clamp(28px,2.4vw,39px);
 }
 .wedo-reference .focus-code{
   display:block;
-  margin:12px 0;
-  padding:18px;
+  margin:8px 0 10px;
+  padding:12px 14px;
   border-radius:10px;
   background:#f3f6f5;
-  font:700 clamp(26px,2.45vw,40px)/1.25 Consolas,"Courier New",monospace;
+  font:700 clamp(28px,2.55vw,42px)/1.22 Consolas,"Courier New",monospace;
   text-align:center;
 }
 .wedo-example-count{
-  margin-top:auto;
-  padding-top:12px;
+  margin-top:8px;
+  padding-top:4px;
   color:var(--muted);
   font-size:13px;
   font-weight:800;
 }
 .wedo-step{
-  height:100%;
+  height:auto;
+  min-height:0;
   display:flex;
   flex-direction:column;
 }
 .wedo-step[hidden]{display:none!important}
 .wedo-step-label{
-  display:inline-block;width:max-content;margin-bottom:12px;
+  display:inline-block;width:max-content;margin-bottom:8px;
   color:var(--green);font-size:13px;font-weight:900;letter-spacing:.1em;
 }
 .wedo-step .practice-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:8px;
 }
 .wedo-step .practice-box{
-  padding:14px 15px;
+  padding:9px 12px;
+  min-height:0;
   background:#f7f9f8;
   border:1px solid var(--line);
   border-radius:10px;
 }
 .wedo-step .practice-box strong{
-  display:block;margin-bottom:6px;color:var(--green-dark);
+  display:block;margin-bottom:3px;color:var(--green-dark);
 }
 .wedo-step .practice-box span{
-  font-size:clamp(22px,1.8vw,29px);
+  font-size:clamp(23px,1.85vw,30px);
+  line-height:1.2;
   font-weight:900;
 }
 .wedo-step .answer-grid .practice-box span{
   display:block;
-  font-size:clamp(16px,1.18vw,20px);
-  line-height:1.28;
-  font-weight:800;
+  font-size:clamp(21px,1.65vw,27px);
+  line-height:1.22;
+  font-weight:850;
   overflow-wrap:anywhere;
 }
 .wedo-step .answer-grid .practice-box code{
   font-size:inherit;
   white-space:normal;
 }
-.wedo-step .arithmetic{font-size:clamp(20px,1.6vw,25px)}
+.wedo-step .arithmetic{
+  margin:7px 0;
+  padding:10px 12px;
+  font-size:clamp(21px,1.65vw,27px)
+}
 .wedo-step p,.wedo-step li{
-  font-size:clamp(18px,1.38vw,22px);
-  line-height:1.38;
+  font-size:clamp(19px,1.45vw,24px);
+  line-height:1.32;
 }
 .wedo-step .key-result{
-  margin-top:16px;
-  padding:14px 16px;
+  margin-top:10px;
+  padding:10px 13px;
   border-left:5px solid var(--green);
   background:var(--green-soft);
   border-radius:0 10px 10px 0;
@@ -487,21 +501,24 @@
   font-weight:850;
 }
 .wedo-step-count{
-  margin-top:auto;
-  padding-top:12px;
+  margin-top:8px;
+  padding-top:4px;
   color:var(--muted);
   font-size:13px;
   font-weight:800;
 }
 @media(max-height:760px) and (min-width:901px){
-  .wedo-reference,.wedo-practice{padding:16px}
-  .wedo-reference h2,.wedo-practice h2{font-size:26px}
-  .wedo-reference .focus-code{font-size:24px;padding:12px}
-  .wedo-step .practice-box{padding:10px 11px}
-  .wedo-step .practice-box span{font-size:21px}
-  .wedo-step .answer-grid .practice-box span{font-size:15px}
-  .wedo-step .arithmetic{font-size:18px}
-  .wedo-step p,.wedo-step li{font-size:17px}
+  .wedo-reference,.wedo-practice{padding:11px 13px}
+  .wedo-reference h2,.wedo-practice h2{font-size:27px;margin-bottom:7px}
+  .wedo-reference .focus-code{font-size:27px;padding:8px 10px;margin:6px 0 8px}
+  .wedo-step-label{margin-bottom:6px}
+  .wedo-step .practice-grid{gap:6px}
+  .wedo-step .practice-box{padding:7px 9px}
+  .wedo-step .practice-box strong{margin-bottom:2px}
+  .wedo-step .practice-box span{font-size:22px}
+  .wedo-step .answer-grid .practice-box span{font-size:20px}
+  .wedo-step .arithmetic{font-size:20px;padding:7px 9px;margin:5px 0}
+  .wedo-step p,.wedo-step li{font-size:18px;line-height:1.25}
 }
 @media(max-width:900px){
   .wedo-focus-deck,.wedo-example{height:auto}
