@@ -152,7 +152,7 @@
   <div class="donow-deck">
     <div class="donow-stage">
       <div class="donow-questions">
-        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>Encode <strong>6.5</strong> in normalised 8-bit mantissa / 4-bit exponent format.</p></article>
+        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>Represent <strong>6.5</strong> in normalised floating-point form using an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p></article>
         <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>Convert <code>6D₁₆</code> to eight-bit binary and denary.</p></article>
         <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Decode <code>11110110</code> as an 8-bit two’s-complement integer.</p></article>
         <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Apply <code>AND 00001111</code> to <code>10110110</code>. Give the result in binary and hexadecimal.</p></article>
@@ -161,7 +161,7 @@
 
     <div class="donow-stage" hidden>
       <div class="donow-review">
-        <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">Encode <strong>6.5</strong> in normalised 8-bit mantissa / 4-bit exponent format.</p></article>
+        <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">Represent <strong>6.5</strong> in normalised floating-point form using an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p></article>
         <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><code>01101000 0011</code></p><p class="review-explain"><code>6.5 = 110.1₂ = 0.1101₂ × 2³</code>. Mantissa <code>01101000</code>; exponent <code>0011</code>.</p></article>
       </div>
     </div>
@@ -193,7 +193,7 @@
   <div class="objectives"><strong>By the end, you can…</strong>
     <ul>
       <li>evaluate the signed mantissa and exponent separately;</li>
-      <li>decode positive and negative values with positive or negative exponents;</li>
+      <li>convert floating-point representations with positive or negative values and exponents to denary;</li>
       <li>recognise normalisation and explain precision versus range.</li>
     </ul>
   </div>
@@ -246,7 +246,7 @@ Value = mantissa × 2ᴱ</pre>
 
       <div class="nl-stage" hidden>
         <span class="nl-stage-label">STEP 3 OF 5</span>
-        <h2>Decode the exponent</h2>
+        <h2>Convert the exponent to denary</h2>
         <p>Read the exponent as a signed <strong>two’s-complement integer</strong>.</p>
         <pre class="arithmetic">4-bit exponent places:
 −8   4   2   1</pre>
@@ -283,9 +283,9 @@ Value = mantissa × 2ᴱ</pre>
     <article class="ido-example">
       <div class="ido-reference">
         <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
-        <h2>Decode this value</h2>
+        <h2>Convert this floating-point representation to denary</h2>
         <span class="focus-code">01011000 0011</span>
-        <p>Give the denary value represented by this floating-point number.</p>
+        <p>Convert this floating-point representation to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p>
         <span class="ido-example-count">Worked example</span>
       </div>
 
@@ -301,7 +301,7 @@ Value = mantissa × 2ᴱ</pre>
 
         <div class="ido-step" hidden>
           <span class="ido-step-label">STEP 2 · EXPONENT</span>
-          <h2>Decode the exponent</h2>
+          <h2>Convert the exponent to denary</h2>
           <pre class="arithmetic">0011 = 3</pre>
           <p>The exponent is a signed two’s-complement integer.</p>
         </div>
@@ -324,9 +324,9 @@ Value = mantissa × 2ᴱ</pre>
     <article class="wedo-example">
       <div class="wedo-reference">
         <span class="phase-tag">EXAMPLE 1 · NEGATIVE MANTISSA</span>
-        <h2>Decode this value</h2>
+        <h2>Convert this floating-point representation to denary</h2>
         <span class="focus-code">10110000 0010</span>
-        <p>Give the denary value represented by this floating-point number.</p>
+        <p>Convert this floating-point representation to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p>
         <span class="wedo-example-count">Example 1 of 4</span>
       </div>
       <div class="wedo-practice">
@@ -337,9 +337,9 @@ Value = mantissa × 2ᴱ</pre>
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
         <span class="phase-tag">EXAMPLE 2 · NEGATIVE EXPONENT</span>
-        <h2>Decode this value</h2>
+        <h2>Convert this floating-point representation to denary</h2>
         <span class="focus-code">01100000 1110</span>
-        <p>Give the denary value represented by this floating-point number.</p>
+        <p>Convert this floating-point representation to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p>
         <span class="wedo-example-count">Example 2 of 4</span>
       </div>
       <div class="wedo-practice">
@@ -350,9 +350,9 @@ Value = mantissa × 2ᴱ</pre>
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
         <span class="phase-tag">EXAMPLE 3 · BOTH FIELDS NEGATIVE</span>
-        <h2>Decode this value</h2>
+        <h2>Convert this floating-point representation to denary</h2>
         <span class="focus-code">10100000 1111</span>
-        <p>Give the denary value represented by this floating-point number.</p>
+        <p>Convert this floating-point representation to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p>
         <span class="wedo-example-count">Example 3 of 4</span>
       </div>
       <div class="wedo-practice">
@@ -363,9 +363,9 @@ Value = mantissa × 2ᴱ</pre>
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
         <span class="phase-tag">EXAMPLE 4 · NORMALISATION</span>
-        <h2>Decode and normalise</h2>
+        <h2>Convert to denary, then write in normalised floating-point form</h2>
         <span class="focus-code">00011010 0101</span>
-        <p>Find the denary value, then write the same value in normalised 8+4 form.</p>
+        <p>Convert the value to denary, then write the same value in normalised floating-point form using an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.</p>
         <span class="wedo-example-count">Example 4 of 4</span>
       </div>
       <div class="wedo-practice">
@@ -381,22 +381,22 @@ Value = mantissa × 2ᴱ</pre>
 
       <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span>
-        <h3>Decode <code>0100 1110</code></h3>
+        <h3>Convert <code>0100 1110</code> to denary</h3>
         <p class="question-text">The mantissa is <strong>four bits</strong> and the exponent is four bits. Both use two’s complement. Show your working.</p>
         <p class="source-note">Paraphrased OCR June 2023 Q3(d); original values and marks retained. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
       </article>
 
       <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
-        <h3>Decode <code>1010 1110</code></h3>
+        <h3>Convert <code>1010 1110</code> to denary</h3>
         <p class="question-text">Use a <strong>four-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p>
         <p class="source-note">Paraphrased OCR June 2022 Q3(b); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
       </article>
 
       <article class="exam-card youdo-question">
         <span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
-        <h3>Which are normalised?</h3>
-        <p class="question-text">Judge the mantissa’s leading bits.</p>
+        <h3>Which representations are normalised?</h3>
+        <p class="question-text">Each representation uses a six-bit two’s-complement mantissa followed by a three-bit two’s-complement exponent. State which representations are normalised by checking the mantissa’s leading bits.</p>
         <pre class="arithmetic">a) 010101 100
 b) 110101 111
 c) 011010 010
@@ -406,9 +406,9 @@ d) 101010 110</pre>
 
       <article class="exam-card youdo-question" hidden>
         <span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
-        <h3>Decode both values</h3>
+        <h3>Convert both floating-point representations to denary</h3>
         <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
-        <p class="question-text">Use 8+4 format. Show the mantissa, exponent and denary result.</p>
+        <p class="question-text">Each representation uses an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Convert both to denary and show the mantissa value, exponent value and final denary result.</p>
       </article>
 
       <article class="exam-card youdo-question support-card" hidden>
