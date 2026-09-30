@@ -46,6 +46,23 @@ function prepareVocabulary(){
   const stages=[...page.querySelectorAll('.vocab-stage')];
   if(!stages.length)return;
 
+  if(page.dataset.vocabFlow==='term-definition'){
+    const entries=stages.map((stage,i)=>({
+      term:(stage.querySelector('.vocab-term-heading')?.textContent||('Term '+(i+1))).trim(),
+      definition:(stage.querySelector('.vocab-definition-value')?.textContent||'').trim()
+    }));
+    const byTerm=new Map(entries.map(entry=>[entry.term.toLowerCase(),entry]));
+    document.querySelectorAll('.vocab-intro-list .vocab-tip').forEach((chip,i)=>{
+      const entry=byTerm.get(chip.textContent.trim().toLowerCase())||entries[i];
+      if(!entry?.definition)return;
+      if(!chip.dataset.definition)chip.dataset.definition=entry.definition;
+      chip.tabIndex=0;
+      chip.setAttribute('aria-label',entry.term+': '+entry.definition);
+    });
+    page.dataset.vocabPrepared='true';
+    return;
+  }
+
   const entries=[];
   stages.forEach((stage,i)=>{
     const prompt=stage.querySelector('.vocab-prompt');
