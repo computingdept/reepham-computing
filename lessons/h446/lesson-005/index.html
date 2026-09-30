@@ -7,7 +7,7 @@
 <meta name="description" content="OCR H446 Lesson 005: floating point to denary, normalisation, precision and range.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231c3434'/%3E%3Ctext x='6' y='28' font-size='24' fill='%23eabf79'%3E05%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1715">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab1">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-vocab5">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1715">
 
 <style>
@@ -188,27 +188,64 @@
     </div>
   </div>
 </section>
-<section id="overview" class="page" data-phase-time="1 minute">
-  <h1>Floating point → denary</h1>
-  <div class="objectives"><strong>By the end, you can…</strong>
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true">
+<div class="objectives-vocab-layout">
+  <article class="objectives-vocab-left">
+    <h1>Floating point → denary</h1>
+    
+    <div class="objectives"><strong>By the end, you can…</strong>
     <ul>
       <li>evaluate the signed mantissa and exponent separately;</li>
       <li>convert floating-point representations with positive or negative values and exponents to denary;</li>
       <li>recognise normalisation and explain precision versus range.</li>
     </ul>
   </div>
-  <div class="vocab-intro">
-    <strong>Key vocabulary for today</strong>
-    <div class="vocab-intro-list" aria-label="Key vocabulary">
-      <span>mantissa</span>
-      <span>exponent</span>
-      <span>normalised</span>
-      <span>precision</span>
-      <span>range</span>
-      <span>two’s complement</span>
+    <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="The mantissa stores the signed significant part of the floating-point value." aria-label="Mantissa: The mantissa stores the signed significant part of the floating-point value.">Mantissa</span><span class="vocab-tip" tabindex="0" data-definition="The exponent supplies the power of two used to scale the mantissa." aria-label="Exponent: The exponent supplies the power of two used to scale the mantissa.">Exponent</span><span class="vocab-tip" tabindex="0" data-definition="Normalisation uses the available mantissa bits efficiently without changing the represented value." aria-label="Normalised: Normalisation uses the available mantissa bits efficiently without changing the represented value.">Normalised</span><span class="vocab-tip" tabindex="0" data-definition="More mantissa bits improve the ________ of a floating-point representation." aria-label="Precision: More mantissa bits improve the ________ of a floating-point representation.">Precision</span><span class="vocab-tip" tabindex="0" data-definition="More exponent bits increase the ________ of values that can be represented." aria-label="Range: More exponent bits increase the ________ of values that can be represented.">Range</span><span class="vocab-tip" tabindex="0" data-definition="In this lesson, both the mantissa and exponent are interpreted using two’s complement." aria-label="Two’s complement: In this lesson, both the mantissa and exponent are interpreted using two’s complement.">Two’s complement</span></div></div>
+  </article>
+  <div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage">
+    <span class="objective-vocab-count">TERM 1 OF 6</span>
+    <h2>Mantissa</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>The mantissa stores the signed significant part of the floating-point value.</p>
     </div>
-  </div>
-  <p>Use an eight-bit mantissa and four-bit exponent unless a question states otherwise. Both fields are two’s complement; the mantissa’s point follows the sign bit.</p>
+  </article><article class="objective-vocab-stage" hidden>
+    <span class="objective-vocab-count">TERM 2 OF 6</span>
+    <h2>Exponent</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>The exponent supplies the power of two used to scale the mantissa.</p>
+    </div>
+  </article><article class="objective-vocab-stage" hidden>
+    <span class="objective-vocab-count">TERM 3 OF 6</span>
+    <h2>Normalised</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>Normalisation uses the available mantissa bits efficiently without changing the represented value.</p>
+    </div>
+  </article><article class="objective-vocab-stage" hidden>
+    <span class="objective-vocab-count">TERM 4 OF 6</span>
+    <h2>Precision</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>More mantissa bits improve the ________ of a floating-point representation.</p>
+    </div>
+  </article><article class="objective-vocab-stage" hidden>
+    <span class="objective-vocab-count">TERM 5 OF 6</span>
+    <h2>Range</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>More exponent bits increase the ________ of values that can be represented.</p>
+    </div>
+  </article><article class="objective-vocab-stage" hidden>
+    <span class="objective-vocab-count">TERM 6 OF 6</span>
+    <h2>Two’s complement</h2>
+    <div class="objective-vocab-definition" data-objective-vocab-definition hidden>
+      <span>DEFINITION</span>
+      <p>In this lesson, both the mantissa and exponent are interpreted using two’s complement.</p>
+    </div>
+  </article></div>
+</div>
 </section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="6 minutes">
@@ -424,7 +461,7 @@ d) 101010 110</pre>
   </div>
 </section>
 
-<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes">
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval">
   <div class="vocab-test-deck">
     <article class="vocab-stage">
       <div class="vocab-prompt">
@@ -533,6 +570,6 @@ d) 101010 110</pre>
 </main>
 
 <div class="lesson-footer">Lesson 005 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav1"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-nav3"></script>
 </body>
 </html>
