@@ -256,6 +256,21 @@ function updateSignals(id){
   const exitSignal=document.getElementById('exit-ticket-signal');
   if(exitSignal)exitSignal.hidden=true;
 }
+
+function updateMobileLessonStatus(){
+  const status=document.getElementById('mobile-lesson-status');
+  if(!status)return;
+
+  const title=status.querySelector('.mobile-lesson-title');
+  const phase=status.querySelector('.mobile-phase-status');
+  const activeNav=nav.find(button=>button.dataset.page===current);
+  const phaseName=(activeNav?.textContent||current).trim();
+  const phaseIndex=Math.max(0,order.indexOf(current))+1;
+
+  if(title)title.textContent=document.title.replace(/^OCR H446 · /,'');
+  if(phase)phase.textContent=phaseName+' · '+phaseIndex+' / '+order.length;
+}
+
 function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
@@ -365,6 +380,7 @@ function updateControl(){
   advance.textContent=label;
   previous.disabled=order.indexOf(current)===0||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
+  updateMobileLessonStatus();
 }
 function showPage(id){
   if(!order.includes(id))id='do-now';
@@ -681,7 +697,20 @@ function previousAction(){
 
 
 function prepareMobileSwipeNavigation(){
-  if(!window.matchMedia('(max-width: 900px)').matches)return;
+  if(!window.matchMedia('(max-width: 700px)').matches)return;
+
+  const navwrap=document.querySelector('.navwrap');
+  const courseBack=navwrap?.querySelector('.course-back');
+  if(navwrap&&!document.getElementById('mobile-lesson-status')){
+    const status=document.createElement('div');
+    status.id='mobile-lesson-status';
+    status.className='mobile-lesson-status';
+    status.setAttribute('aria-live','polite');
+    status.innerHTML='<span class="mobile-lesson-title"></span><span class="mobile-phase-status"></span>';
+    if(courseBack)courseBack.insertAdjacentElement('afterend',status);
+    else navwrap.prepend(status);
+  }
+  updateMobileLessonStatus();
 
   let startX=0;
   let startY=0;
@@ -714,7 +743,7 @@ function prepareMobileSwipeNavigation(){
     }catch(e){}
     const hint=document.createElement('div');
     hint.className='mobile-swipe-hint';
-    hint.textContent='Swipe left for next · right for back';
+    hint.textContent='Swipe left: next · right: back · scroll to read';
     hint.setAttribute('role','status');
     hint.setAttribute('aria-live','polite');
     document.body.appendChild(hint);
@@ -746,6 +775,7 @@ function prepareMobileSwipeNavigation(){
     hideHint();
     if(dx<0)next();
     else previousAction();
+    window.requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
   },{passive:true});
 
   document.addEventListener('touchcancel',()=>{tracking=false;},{passive:true});
