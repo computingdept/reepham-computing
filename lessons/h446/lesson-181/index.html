@@ -132,7 +132,13 @@ sumTo(4) returns 10</pre><p>The deepest call returns first. Earlier calls then f
 </article></div></section>
 
 <section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example">
-<div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Trace <code>sumTo(4)</code></h2><p>Follow the calls down to the base case, then follow the returned values back up.</p><pre class="arithmetic">sumTo(4)</pre><span class="ido-example-count">Worked example</span></div>
+<div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Trace <code>sumTo(4)</code></h2><p>Follow the calls down to the base case, then follow the returned values back up.</p><pre class="arithmetic">function sumTo(n)
+    if n == 1 then
+        return 1
+    else
+        return n + sumTo(n - 1)
+    endif
+endfunction</pre><div class="nl-reference-note"><strong>Trace:</strong> <code>sumTo(4)</code></div><span class="ido-example-count">Worked example</span></div>
 <div class="ido-method">
 <div class="ido-step"><span class="ido-step-label">STEP 1 · CALL DOWN</span><h2>First call</h2><pre class="arithmetic">sumTo(4)
 = 4 + sumTo(3)</pre><p>The base case is not met, so another call is made.</p></div>
