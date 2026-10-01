@@ -87,11 +87,17 @@
 </section>
 
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus">
-<article class="nl-reference"><span class="phase-tag">RECURSION TRACE · CORE METHOD</span><h2>Call down → Base case → Unwind up</h2><pre class="arithmetic">1. Write each new call
+<article class="nl-reference"><span class="phase-tag">RECURSION TRACE · CORE METHOD</span><h2>Trace the algorithm</h2><pre class="arithmetic">function build(n)
+    if n &gt; 4 then
+        return 8
+    else
+        return n + (build(n + 1) DIV 2)
+    endif
+endfunction</pre><h3>Call down → Base case → Unwind up</h3><pre class="arithmetic">1. Write each new call
 2. Stop at the base case
 3. Record its return value
 4. Work backwards
-5. Calculate each waiting return</pre><div class="nl-reference-note"><strong>Key idea:</strong> never calculate an outer return before the inner recursive call has returned a value.</div></article>
+5. Calculate each waiting return</pre><div class="nl-reference-note"><strong>Key idea:</strong> keep the algorithm visible while the trace develops on the right.</div></article>
 <article class="nl-explanation">
 <div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Call down</h2><pre class="arithmetic">build(2)
 → build(3)
