@@ -1,0 +1,80 @@
+:root{
+  --bg:#f5f7fb;--panel:#ffffff;--text:#172033;--muted:#667085;
+  --blue:#2563eb;--green:#17803d;--orange:#d97706;--nav:#0f172a;
+  --line:#d8dee9;--shadow:0 10px 28px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+body{overflow:hidden}
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:190px;background:var(--nav);color:#fff;
+  padding:18px 14px;z-index:10;display:flex;flex-direction:column;gap:10px
+}
+.course{font-weight:700;font-size:1.05rem;letter-spacing:.08em}
+.lesson-no{font-size:2.2rem;font-weight:800;margin-bottom:6px}
+#nav{display:flex;flex-direction:column;gap:7px;overflow:auto;padding-right:4px}
+#nav button{
+  border:0;border-radius:12px;padding:10px 12px;text-align:left;background:rgba(255,255,255,.08);
+  color:#dbe4f3;font-weight:700;cursor:pointer;font-size:.88rem
+}
+#nav button.active{background:#fff;color:#111827}
+main{margin-left:190px;height:100vh}
+.screen{display:none;height:100vh;padding:34px 42px 34px 42px;overflow:auto}
+.screen.active{display:block}
+header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.phase,.routine,.response,.timer{
+  display:inline-flex;align-items:center;border-radius:999px;padding:8px 14px;font-size:.88rem;
+  font-weight:800;letter-spacing:.03em
+}
+.blue{background:#dbeafe;color:#1d4ed8}
+.green{background:#dcfce7;color:#166534}
+.orange{background:#ffedd5;color:#9a3412}
+.timer{margin-left:auto;background:#eef2f7;color:#475467}
+h1{font-size:4.4rem;line-height:1;margin:0 0 14px}
+h2{font-size:2.55rem;line-height:1.08;margin:0 0 22px}
+.subtitle{font-size:1.55rem;color:var(--muted);max-width:850px}
+.eyebrow{font-weight:800;color:var(--blue);font-size:1.05rem;margin-bottom:18px}
+.title-screen{display:none;align-items:flex-start;justify-content:center;flex-direction:column}
+.title-screen.active{display:flex}
+.hint{position:absolute;right:34px;bottom:24px;color:var(--muted);font-size:.95rem}
+.question-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1150px}
+.question-grid article,.prompt-card,.worked,.answer-list,.card,.exam-card,.vocab-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)
+}
+.question-grid article{padding:22px;min-height:150px;display:flex;gap:14px;align-items:flex-start}
+.question-grid p{font-size:1.35rem;line-height:1.35;margin:0}
+.qnum{min-width:38px;height:38px;border-radius:50%;display:inline-grid;place-items:center;background:#eaf1ff;color:#1d4ed8;font-weight:800}
+.challenge{border-left:6px solid var(--orange)!important}
+.answer-list{padding:10px 24px;max-width:900px}
+.answer-list div{display:flex;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid #e7ebf1;font-size:1.35rem}
+.answer-list div:last-child{border-bottom:0}
+.answer-list span{font-weight:800;color:var(--blue);min-width:30px}
+.split{display:grid;grid-template-columns:40% 60%;gap:26px;min-height:60vh}
+.lhs,.rhs{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+.lhs,.rhs{display:flex;flex-direction:column;justify-content:center}
+.term-counter{color:var(--muted);font-weight:700;margin-bottom:10px}
+.definition{font-size:1.8rem;line-height:1.3;margin:0 0 16px}
+.micro-example{font-size:1.15rem;line-height:1.4;color:var(--muted);margin:0 0 28px}
+.reveal-btn{align-self:flex-start;border:0;border-radius:12px;background:#111827;color:#fff;font-weight:800;padding:12px 16px;cursor:pointer;font-size:1rem}
+.place-table{max-width:1100px}.place-row{display:grid;grid-template-columns:repeat(8,1fr)}
+.place-row span{padding:15px 8px;text-align:center;border:1px solid var(--line);font-size:1.35rem;font-weight:800;background:#fff}
+.place-row.labels span{background:#eef4ff;color:#1d4ed8}.place-row.bits span{font-size:1.65rem}.equation{font-size:1.7rem;margin:24px 0}
+.callouts{display:flex;gap:16px;flex-wrap:wrap}.callouts div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;min-width:190px}
+.callouts strong{display:block;font-size:1.2rem;margin-bottom:4px}.callouts span{color:var(--muted)}
+.split-work{display:grid;grid-template-columns:42% 58%;gap:20px;padding:24px;max-width:1150px}
+.problem{border-right:1px solid var(--line);padding-right:24px}.problem p{font-size:1.3rem;line-height:1.35}
+.small-label{font-size:.78rem;letter-spacing:.08em;color:var(--blue);font-weight:800}.working{padding-left:8px}
+.step{display:none;font-size:1.35rem;line-height:1.5;margin-bottom:18px}.step.shown{display:block}
+.prompt-card{padding:28px;max-width:1000px}.prompt-card p{font-size:1.7rem;line-height:1.35;margin:0}
+.youdo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.youdo-grid article{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;min-height:190px}
+.youdo-grid p{font-size:1.25rem;line-height:1.4}.exam-card{padding:26px;max-width:1050px}.exam-card p{font-size:1.4rem;line-height:1.5}
+.vocab-stack{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:1100px}.vocab-card{padding:20px;cursor:pointer}
+.vocab-card .term{display:none;font-weight:800;font-size:1.5rem;color:var(--blue);margin-top:10px}.vocab-card.revealed .term{display:block}
+.exit-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;max-width:1100px}.card{padding:26px}.card p{font-size:1.45rem;line-height:1.4}
+.feelings{display:flex;gap:10px;flex-wrap:wrap}.feelings button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 16px;font-weight:700}
+@media (max-width:900px){
+  body{overflow:auto}.sidebar{position:sticky;top:0;width:100%;height:auto;flex-direction:row;align-items:center}
+  #nav{flex-direction:row;overflow:auto}.lesson-no{font-size:1.2rem;margin:0}main{margin-left:0}.screen{height:auto;min-height:calc(100vh - 70px);padding:24px}
+  h1{font-size:3rem}h2{font-size:2rem}.split,.split-work,.exit-grid{grid-template-columns:1fr}.problem{border-right:0;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:18px}
+  .question-grid,.youdo-grid,.vocab-stack{grid-template-columns:1fr}
+}
