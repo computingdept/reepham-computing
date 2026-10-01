@@ -945,7 +945,7 @@
 
 /* MOBILE H446 SWIPE NAVIGATION: one-time discoverability hint. */
 .mobile-swipe-hint{display:none}
-@media(max-width:900px){
+@media(max-width:700px){
   .mobile-swipe-hint{
     display:block;
     position:fixed;
@@ -968,4 +968,77 @@
     transition:opacity .7s ease;
   }
   .mobile-swipe-hint.is-fading{opacity:0}
+}
+
+
+/* H446 PHONE GESTURE MODE
+   Phone only: back to year hub + compact lesson/phase status.
+   Horizontal swipe advances/reverses; vertical movement remains reading scroll. */
+.mobile-lesson-status{display:none}
+@media(max-width:700px){
+  .navwrap{
+    position:sticky;
+    top:0;
+    z-index:60;
+    width:100%;
+    height:auto;
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr);
+    align-items:stretch;
+    background:#fff;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  .course-back{
+    display:flex;
+    align-items:center;
+    padding:9px 10px;
+    border-bottom:0;
+    border-right:1px solid var(--line);
+    font-size:11px;
+    white-space:nowrap;
+  }
+  .phase-nav,
+  .nav-tools,
+  .signal-wrap,
+  .lesson-footer{
+    display:none!important;
+  }
+  .mobile-lesson-status{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:7px 10px;
+    line-height:1.15;
+  }
+  .mobile-lesson-title{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color:var(--ink);
+    font-size:12px;
+    font-weight:900;
+  }
+  .mobile-phase-status{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:800;
+  }
+  main{
+    margin-left:0;
+    height:auto;
+    padding:12px 14px 28px;
+  }
+  section.page{
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    scrollbar-gutter:auto;
+    padding-bottom:16px;
+  }
+  .mobile-swipe-hint{
+    bottom:14px;
+  }
 }
