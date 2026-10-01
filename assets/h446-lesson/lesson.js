@@ -679,6 +679,79 @@ function previousAction(){
   showPage(order[Math.max(0,order.indexOf(current)-1)]);
 }
 
+
+function prepareMobileSwipeNavigation(){
+  if(!window.matchMedia('(max-width: 900px)').matches)return;
+
+  let startX=0;
+  let startY=0;
+  let tracking=false;
+
+  const interactiveSelector='button,a,input,textarea,select,summary,[contenteditable="true"]';
+
+  function startsInHorizontalScroller(target){
+    let el=target instanceof Element?target:null;
+    while(el&&el!==document.body){
+      const style=getComputedStyle(el);
+      const overflowX=style.overflowX;
+      if((overflowX==='auto'||overflowX==='scroll')&&el.scrollWidth>el.clientWidth+4){
+        return true;
+      }
+      el=el.parentElement;
+    }
+    return false;
+  }
+
+  function hideHint(){
+    const hint=document.querySelector('.mobile-swipe-hint');
+    if(hint)hint.remove();
+  }
+
+  function showHint(){
+    try{
+      if(sessionStorage.getItem('h446-swipe-hint-seen')==='1')return;
+      sessionStorage.setItem('h446-swipe-hint-seen','1');
+    }catch(e){}
+    const hint=document.createElement('div');
+    hint.className='mobile-swipe-hint';
+    hint.textContent='Swipe left for next · right for back';
+    hint.setAttribute('role','status');
+    hint.setAttribute('aria-live','polite');
+    document.body.appendChild(hint);
+    window.setTimeout(()=>hint.classList.add('is-fading'),4200);
+    window.setTimeout(()=>hint.remove(),5000);
+  }
+
+  document.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1)return;
+    const target=e.target instanceof Element?e.target:null;
+    if(target?.closest(interactiveSelector)||startsInHorizontalScroller(target)){
+      tracking=false;
+      return;
+    }
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    tracking=true;
+  },{passive:true});
+
+  document.addEventListener('touchend',e=>{
+    if(!tracking||e.changedTouches.length!==1)return;
+    tracking=false;
+
+    const dx=e.changedTouches[0].clientX-startX;
+    const dy=e.changedTouches[0].clientY-startY;
+    const horizontal=Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.25;
+    if(!horizontal)return;
+
+    hideHint();
+    if(dx<0)next();
+    else previousAction();
+  },{passive:true});
+
+  document.addEventListener('touchcancel',()=>{tracking=false;},{passive:true});
+  showHint();
+}
+
 nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 advance.addEventListener('click',next);
 previous.addEventListener('click',previousAction);
@@ -690,4 +763,5 @@ document.addEventListener('keydown',e=>{
 });
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
+prepareMobileSwipeNavigation();
 showPage(location.hash.slice(1)||'do-now');
