@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 183 · Recursion vs Iteration</title>
+<meta name="description" content="OCR H446 Year 13 recursion and iteration: comparing approaches and rewriting recursive algorithms iteratively.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-objectives7">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+<div class="navwrap">
+  <a class="course-back" href="../../../h446-hub.html?year=13">← Year 13 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div>
+</div>
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div>
+  <div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR H446 · Lesson 183<br>Recursion vs Iteration</span></div>
+</div>
+<main id="main">
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck">
+<div class="donow-stage"><div class="donow-questions">
+<article class="donow-question"><strong>1 · RECURSION RETRIEVAL</strong><p>What does a <strong>base case</strong> do in a recursive function?</p></article>
+<article class="donow-question"><strong>2 · YEAR 12 RETRIEVAL</strong><p>State one difference between a <strong>while</strong> loop and a <strong>for</strong> loop.</p></article>
+<article class="donow-question"><strong>3 · YEAR 12 RETRIEVAL</strong><p>What does <code>17 MOD 5</code> return?</p></article>
+<article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why can recursion use more memory than iteration?</p></article>
+</div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Base case</h2><p class="review-question">What does it do?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>It stops further recursive calls and allows the function to begin returning values.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Iteration</h2><p class="review-question">while vs for?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A for loop is normally count-controlled; a while loop is condition-controlled.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>MOD</h2><p class="review-question"><code>17 MOD 5</code>?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>2.</strong></p></article></div></div>
+<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Memory</h2><p class="review-question">Why can recursion use more memory?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Each active recursive call needs its own stack frame and stored values.</strong></p></article></div></div>
+</div></section>
+
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true">
+<div class="objectives-vocab-layout">
+  <article class="objectives-vocab-left">
+    <h1>Recursion vs Iteration</h1>
+    <div class="objectives"><strong>By the end, you can…</strong><ul>
+      <li>compare recursive and iterative approaches precisely;</li>
+      <li>identify how a recursive solution can be rewritten using a loop;</li>
+      <li>rewrite a recursive algorithm as an iterative solution.</li>
+    </ul></div>
+    <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list">
+      <span class="vocab-tip" tabindex="0" data-definition="Solving a problem by a function calling itself.">recursion</span>
+      <span class="vocab-tip" tabindex="0" data-definition="Repeating instructions using a loop.">iteration</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The structure that stores active function calls.">call stack</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The stored data belonging to one active call.">stack frame</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The condition that stops recursion.">base case</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The Boolean test that controls whether a loop continues.">loop condition</span>
+      <span class="vocab-tip" tabindex="0" data-definition="A version of an algorithm expressed using loops rather than recursive calls.">iterative version</span>
+      <span class="vocab-tip" tabindex="0" data-definition="The amount of memory required while an algorithm runs.">memory usage</span>
+    </div></div>
+  </article>
+  <div class="objectives-vocab-right" aria-live="polite">
+    <article class="objective-vocab-stage" data-support="Think: the function solves the problem by calling itself."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>recursion</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Solving a problem by a function calling itself.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: repeat with a loop instead of another function call." hidden><span class="objective-vocab-count">TERM 2 OF 8</span><h2>iteration</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Repeating instructions using a loop.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Recursion adds active calls here; iteration normally does not." hidden><span class="objective-vocab-count">TERM 3 OF 8</span><h2>call stack</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The structure that stores active function calls.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: each recursive call gets its own stored values." hidden><span class="objective-vocab-count">TERM 4 OF 8</span><h2>stack frame</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The stored data belonging to one active call.</p></div></article>
+    <article class="objective-vocab-stage" data-support="When rewriting iteratively, this often becomes part of the loop condition." hidden><span class="objective-vocab-count">TERM 5 OF 8</span><h2>base case</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The condition that stops recursion.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Example: while num2 != 0."><span class="objective-vocab-count">TERM 6 OF 8</span><h2>loop condition</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The Boolean test that controls whether a loop continues.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Think: same task, but state changes inside a loop." hidden><span class="objective-vocab-count">TERM 7 OF 8</span><h2>iterative version</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A version of an algorithm expressed using loops rather than recursive calls.</p></div></article>
+    <article class="objective-vocab-stage" data-support="Recursion usually uses more because active calls remain on the stack." hidden><span class="objective-vocab-count">TERM 8 OF 8</span><h2>memory usage</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The amount of memory required while an algorithm runs.</p></div></article>
+  </div>
+</div>
+</section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus">
+<article class="nl-reference"><span class="phase-tag">SAME PROBLEM · DIFFERENT CONTROL</span><h2>Recursion vs iteration</h2><pre class="arithmetic">RECURSION
+function calls itself
+base case stops calls
+active calls use stack frames
+
+ITERATION
+loop repeats instructions
+condition stops loop
+variables are reused</pre><div class="nl-reference-note"><strong>Key idea:</strong> when rewriting recursion iteratively, keep the same changing state but replace the recursive call with variable updates inside a loop.</div></article>
+<article class="nl-explanation">
+<div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Find what changes</h2><pre class="arithmetic">return countDown(n - 1)</pre><p>The next recursive call changes <code>n</code>. An iterative version must make the same state change itself.</p><span class="nl-stage-count">1 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Turn the base case into stopping logic</h2><pre class="arithmetic">if n == 0 then return 0</pre><p>The iterative version needs a loop that stops when the same condition is reached.</p><span class="nl-stage-count">2 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Replace the recursive call</h2><pre class="arithmetic">while n != 0
+    n = n - 1
+endwhile</pre><p>The loop changes the state directly instead of creating another function call.</p><span class="nl-stage-count">3 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Compare the trade-off</h2><pre class="arithmetic">Recursion: often concise / natural
+Iteration: often lower memory / easier to trace</pre><p>OCR comparison questions require a paired difference, not two unrelated statements.</p><span class="nl-stage-count">4 of 4</span></div>
+</article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Rewrite recursively → iteratively</h2><pre class="arithmetic">function countDown(n)
+    if n == 0 then
+        return 0
+    else
+        output(n)
+        return countDown(n - 1)
+    endif
+endfunction</pre><span class="ido-example-count">Preserve the behaviour</span></div>
+<div class="ido-method">
+<div class="ido-step"><span class="ido-step-label">STEP 1 · IDENTIFY STATE</span><h2>What changes?</h2><pre class="arithmetic">n → n - 1</pre><p>The recursive call reduces <code>n</code> by one each time.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 2 · IDENTIFY STOP</span><h2>What ends recursion?</h2><pre class="arithmetic">n == 0</pre><p>This becomes the stopping condition for the loop.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · BUILD LOOP</span><h2>Move the changing state into iteration</h2><pre class="arithmetic">while n != 0
+    output(n)
+    n = n - 1
+endwhile</pre><p>The loop now performs the repeated work without making another function call.</p></div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 4 · KEEP RETURN BEHAVIOUR</span><h2>Finish the function</h2><pre class="arithmetic">function countDown(n)
+    while n != 0
+        output(n)
+        n = n - 1
+    endwhile
+    return 0
+endfunction</pre><p>Same task; different control mechanism.</p></div>
+</div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck">
+<article class="wedo-example">
+<div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Spot the replacement</h2><pre class="arithmetic">function reduce(n)
+    if n == 0 then
+        return 0
+    else
+        return reduce(n - 2)
+    endif
+endfunction</pre><span class="wedo-example-count">Recursive → iterative</span></div>
+<div class="wedo-practice">
+<div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the two ideas</h2><pre class="arithmetic">Loop condition = ?
+State update = ?</pre></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Match the recursive behaviour</h2><pre class="arithmetic">Loop condition: n != 0
+State update: n = n - 2</pre></div>
+</div></article>
+<article class="wedo-example" hidden>
+<div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Compare the approaches</h2><pre class="arithmetic">Recursive version:
+creates a new call each repeat
+
+Iterative version:
+reuses loop variables</pre><span class="wedo-example-count">Exam comparison</span></div>
+<div class="wedo-practice">
+<div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete one paired comparison</h2><pre class="arithmetic">Recursion uses ______ memory because ______.
+Iteration uses ______ memory because ______.</pre></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Make the contrast explicit</h2><pre class="arithmetic">Recursion usually uses more memory
+because each active call needs a stack frame.
+
+Iteration usually uses less memory
+because the same loop variables are reused.</pre></div>
+</div></article>
+<article class="wedo-example" hidden>
+<div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Turn a base case into a loop stop</h2><pre class="arithmetic">if num2 == 0 then
+    return num1
+else
+    return GCD(num2, num1 MOD num2)
+endif</pre><span class="wedo-example-count">Prepare for OCR GCD</span></div>
+<div class="wedo-practice">
+<div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>What should the loop test?</h2><pre class="arithmetic">while (num2 != ?)</pre></div>
+<div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Use the opposite of the base case</h2><pre class="arithmetic">while (num2 != 0)</pre><p>When <code>num2</code> reaches 0, the loop stops just as the recursion would.</p></div>
+</div></article>
+</div></section>
+
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR exam practice" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling">
+<article class="exam-card youdo-question"><span class="phase-tag">QUESTION 1 · OCR EXAMBUILDER Q1(c) · [4]</span><h3>Compare recursion and iteration</h3><div class="question-text">A recursive binary-search function could have been written using iteration instead of recursion. Compare two differences between recursion and iteration.</div></article>
+<article class="exam-card youdo-question"><span class="phase-tag">QUESTION 2 · OCR EXAMBUILDER Q1(d) · [6]</span><h3>Rewrite the recursive binary search</h3><div class="question-text">Rewrite this function so that it uses iteration instead of recursion:
+<pre class="arithmetic">function thisFunction(theArray, num1, num2, num3)
+    result = num1 + ((num2 - num1) DIV 2)
+    if num2 &lt; num1 then
+        return -1
+    else
+        if theArray[result] &lt; num3 then
+            return thisFunction(theArray, result + 1, num2, num3)
+        elseif theArray[result] &gt; num3 then
+            return thisFunction(theArray, num1, result - 1, num3)
+        else
+            return result
+        endif
+    endif
+endfunction</pre>
+Use pseudocode or program code.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 3 · OCR EXAMBUILDER Q2(i) · [2]</span><h3>Benefit and drawback of iteration</h3><div class="question-text">A recursive <code>GCD</code> function has been rewritten using iteration. State one benefit and one drawback of using iteration instead of recursion.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · OCR EXAMBUILDER Q2(ii) · [4]</span><h3>Complete the iterative GCD</h3><div class="question-text">Complete the missing statements:
+<pre class="arithmetic">function newGCD(num1, num2)
+    temp = 0
+    while (num2 != ______)
+        ______ = num2
+        num2 = num1 MOD ______
+        num1 = temp
+    endwhile
+    return ______
+endfunction</pre></div></article>
+</div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
+
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">
+<article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 1 OF 8</span><h2>What is the term?</h2><p class="vocab-question">Solving a problem by a function calling itself.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">recursion</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 2 OF 8</span><h2>What is the term?</h2><p class="vocab-question">Repeating instructions using a loop.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">iteration</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 3 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The structure that stores active function calls.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">call stack</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 4 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The stored data belonging to one active call.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">stack frame</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 5 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The condition that stops recursion.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">base case</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 6 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The Boolean test that controls whether a loop continues.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">loop condition</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 7 OF 8</span><h2>What is the term?</h2><p class="vocab-question">A version of an algorithm expressed using loops rather than recursive calls.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">iterative version</div></div></article>
+<article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 8 OF 8</span><h2>What is the term?</h2><p class="vocab-question">The amount of memory required while an algorithm runs.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">memory usage</div></div></article>
+</div></section>
+
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact">
+<div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">An iterative rewrite must preserve the same changing state and stopping logic as the recursive version.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div>
+<div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can compare and rewrite recursion as iteration.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I can compare them but rewriting still needs practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help identifying what the loop must replace.</span></div></div></div>
+</div></section>
+</main>
+<div class="lesson-footer">Lesson 183 · Recursion vs Iteration <span>Year 13 · OCR H446</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20260930-objectives5"></script>
+</body>
+</html>
