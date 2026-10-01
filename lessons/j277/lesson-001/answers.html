@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 001 · You Do Answers</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20260930-objectives7">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
+.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
+.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-toolbar .answer-title{font-weight:900;color:var(--green-dark)}.answer-toolbar .answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
+main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}.answer-stage{height:100%;display:flex;gap:12px;align-items:stretch}.answer-stage[hidden]{display:none!important}
+.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
+.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}.answer-controls #next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35}
+@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-toolbar .answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:grid;grid-template-columns:1fr}}
+</style>
+</head>
+<body class="answer-page">
+<header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span class="answer-title">YOU DO · ANSWERS</span><span class="answer-counter" id="answer-counter">Answer 1 of 4</span></header>
+<main class="answer-stage-wrap">
+<section class="answer-stage"><article class="solution-card"><span class="phase-tag">QUESTION 1 · BINARY → DENARY</span><h2>01101001</h2><pre class="solution-code">64 + 32 + 8 + 1 = 105</pre></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · DENARY → BINARY</span><h2>154</h2><pre class="solution-code">154 = 128 + 16 + 8 + 2
+154 = 10011010</pre></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · DENARY → BINARY</span><h2>191</h2><pre class="solution-code">191 = 128 + 32 + 16 + 8 + 4 + 2 + 1
+191 = 10111111</pre></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · RANGE</span><h2>Why 255?</h2><pre class="solution-code">8 bits give 2^8 = 256 different patterns.
+The range starts at 0, so the values are 0–255.
+256 requires 9 bits: 100000000.</pre></article></section>
+</main>
+<div class="answer-controls"><button type="button" id="previous-answer" disabled>← Previous answer</button><a href="index.html#you-do">Return to You Do</a><button type="button" id="next-answer">Next answer →</button></div>
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;
+function showAnswer(index){current=Math.max(0,Math.min(index,stages.length-1));stages.forEach((stage,i)=>stage.hidden=i!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to You Do →':'Next answer →';counter.textContent='Answer '+(current+1)+' of '+stages.length}
+function goNext(){if(current<stages.length-1)showAnswer(current+1);else location.href='index.html#you-do'}function goPrevious(){if(current>0)showAnswer(current-1)}
+next.addEventListener('click',goNext);previous.addEventListener('click',goPrevious);document.addEventListener('keydown',e=>{if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrevious()}});showAnswer(0);
+</script>
+</body></html>
