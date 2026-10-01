@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J277 Lesson 002 — Binary Addition</title>
+<link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+<aside class="sidebar"><div class="course">J277</div><div class="lesson-no">002</div><nav id="nav"></nav></aside>
+<main id="deck">
+<section class="screen title-screen active" data-label="Start">
+  <div class="eyebrow">OCR GCSE Computer Science · 1.2.4aii</div>
+  <h1>Binary Addition</h1><p class="subtitle">Add 8-bit binary values and identify overflow.</p>
+  <p class="hint">Click anywhere or press → to begin</p>
+</section>
+
+<section class="screen" data-label="Do Now">
+<header><span class="phase blue">DO NOW</span><span class="routine green">SILENT WORKING</span><span class="timer">5 mins</span></header>
+<h2>What do you already know?</h2><div class="question-grid"><article class=""><span class="qnum">1</span><p>What is 1 + 0 in binary?</p></article><article class=""><span class="qnum">2</span><p>What is 1 + 1 in binary?</p></article><article class=""><span class="qnum">3</span><p>What does a carry mean in addition?</p></article><article class="challenge"><span class="qnum">4</span><p>Challenge: Why can an 8-bit result overflow?</p></article></div>
+</section>
+
+<section class="screen" data-label="Do Now answers">
+<header><span class="phase blue">DO NOW</span><span class="response orange">COLD CALLING</span></header>
+<h2>Check your answers</h2><div class="answer-list"><div><span>1</span><strong>1</strong></div><div><span>2</span><strong>10</strong></div><div><span>3</span><strong>A value carried into the next column</strong></div><div><span>4</span><strong>The result needs more than 8 bits</strong></div></div><p class="teacher-note">Fix any mistakes before moving on.</p>
+</section>
+
+<section class="screen objectives" data-label="Objectives">
+<header><span class="phase blue">OBJECTIVES</span><span class="routine green">LISTENING</span></header>
+<div class="split"><div class="lhs"><div class="term-counter" id="objectiveCounter"></div><h2 id="objectiveTerm"></h2></div>
+<div class="rhs"><p class="definition" id="objectiveDefinition"></p><p class="micro-example" id="objectiveExample"></p><button class="reveal-btn" id="objectiveNext">Next step →</button></div></div>
+</section>
+
+<section class="screen" data-label="New Learning">
+<header><span class="phase blue">NEW LEARNING</span><span class="routine green">LISTENING</span></header>
+<h2>Binary addition uses four core rules</h2><div class="callouts"><div><strong>0 + 0 = 0</strong><span>No carry</span></div><div><strong>0 + 1 = 1</strong><span>No carry</span></div><div><strong>1 + 1 = 10</strong><span>Write 0, carry 1</span></div><div><strong>1 + 1 + 1 = 11</strong><span>Write 1, carry 1</span></div></div>
+</section>
+
+<section class="screen" data-label="I Do">
+<header><span class="phase blue">I DO</span><span class="routine green">LISTENING</span></header>
+<h2>Teacher model</h2><div class="worked split-work"><div class="problem"><div class="small-label">MODEL</div><p>Add <strong>00110101 + 00010110</strong>.</p></div>
+<div class="working" data-reveal-group="ido"><div class="step shown">Work from right to left.</div><div class="step ">Apply the binary addition rules and record each carry.</div><div class="step ">Result: <strong>01001011</strong>.</div><button class="reveal-btn reveal-group-btn">Reveal next →</button></div></div>
+</section>
+
+<section class="screen" data-label="We Do">
+<header><span class="phase blue">WE DO</span><span class="response orange">MWBs</span></header>
+<h2>Guided practice</h2><div class="worked split-work"><div class="problem"><div class="small-label">GUIDED PRACTICE</div><p>Add <strong>01011101 + 00100101</strong>.</p></div>
+<div class="working" data-reveal-group="wedo"><div class="step shown">Start at the right-most bit.</div><div class="step ">Show every carry clearly.</div><div class="step ">Result: <strong>10000010</strong>.</div><button class="reveal-btn reveal-group-btn">Reveal next →</button></div></div>
+</section>
+
+<section class="screen" data-label="Turn & Talk">
+<header><span class="response orange">TURN &amp; TALK</span><span class="routine green">QUIET WORKING</span></header>
+<h2>Explain your thinking</h2><div class="prompt-card"><p>What is the difference between a carry and an overflow?</p></div>
+</section>
+
+<section class="screen youdo" data-label="You Do">
+<header><span class="phase blue">YOU DO</span><span class="routine green">SILENCE</span></header>
+<h2>Independent practice</h2><div class="youdo-grid"><article><span class="qnum">1</span><p>Add <strong>00011101 + 00110110</strong>.</p></article><article><span class="qnum">2</span><p>Add <strong>01101010 + 10010110</strong>.</p></article><article><span class="qnum">3</span><p>Explain what has happened if the answer needs a ninth bit.</p></article></div>
+</section>
+
+<section class="screen" data-label="Exam">
+<header><span class="phase blue">EXAM QUESTION</span><span class="routine green">SILENCE</span></header>
+<h2>OCR-style practice</h2><div class="exam-card"><div class="source">SELECTED FROM / ADAPTED TO MATCH THE UPLOADED OCR EXAMBUILDER TOPIC PACK</div><p>Add the two 8-bit numbers <strong>01101010</strong> and <strong>10010110</strong>, then identify the problem created.</p>
+<div class="working" data-reveal-group="exam"><div class="step shown">Complete the question first.</div><div class="step"><strong>Answer:</strong> 00000000 with overflow.</div><button class="reveal-btn reveal-group-btn">Reveal answer →</button></div></div>
+</section>
+
+<section class="screen" data-label="Key Vocabulary">
+<header><span class="phase blue">KEY VOCABULARY</span><span class="response orange">COLD CALLING</span></header>
+<h2>Definition → reveal the term</h2><div class="vocab-stack"><div class="vocab-card"><div>A value moved to the next binary column.</div><div class="term">Carry</div></div><div class="vocab-card"><div>A result too large for the available bits.</div><div class="term">Overflow</div></div><div class="vocab-card"><div>8 bits.</div><div class="term">Byte</div></div><div class="vocab-card"><div>Addition using base-2 rules.</div><div class="term">Binary addition</div></div></div><p class="teacher-note">Click each card to reveal the term.</p>
+</section>
+
+<section class="screen" data-label="Exit Ticket">
+<header><span class="phase blue">EXIT QUESTIONING</span></header>
+<h2>Final check</h2><div class="exit-grid"><div class="card"><p>True or False: overflow occurs when an 8-bit result needs more than 8 bits.</p>
+<div class="working" data-reveal-group="exit"><div class="step shown">Decide before revealing.</div><div class="step"><strong>True.</strong></div><button class="reveal-btn reveal-group-btn">Reveal →</button></div></div>
+<div class="card"><p><strong>How did the lesson go?</strong></p><div class="feelings"><button>Secure</button><button>Nearly there</button><button>Need help</button></div></div></div>
+</section>
+</main>
+<script>window.LESSON_OBJECTIVES=[{"term": "Binary addition", "definition": "Adding binary values using base-2 rules.", "example": "1 + 1 = 10."}, {"term": "Carry", "definition": "A value moved into the next column during addition.", "example": "1 + 1 creates a 0 and carries 1."}, {"term": "Overflow", "definition": "When a result is too large for the available number of bits.", "example": "An 8-bit unsigned result above 255 overflows."}];</script>
+<script src="lesson.js"></script>
+</body></html>
