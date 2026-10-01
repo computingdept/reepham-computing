@@ -1,0 +1,8 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J277 AP1 Lesson</title></head><body><script>
+const n=(new URLSearchParams(location.search).get('n')||'001').padStart(3,'0');
+let x=parseInt(n,10); if(!Number.isFinite(x)||x<1||x>18)x=1;
+const s=x%2===1?x:x-1; const e=Math.min(s+1,18);
+const tag=document.createElement('script'); tag.src=`ap1-${String(s).padStart(3,'0')}-${String(e).padStart(3,'0')}.js`;
+tag.onload=()=>{const h=window.J277_CHUNK?.[String(x).padStart(3,'0')]; if(h){document.open();document.write(h);document.close()}else document.body.textContent='Lesson not found.'};
+tag.onerror=()=>document.body.textContent='Lesson data failed to load.'; document.head.appendChild(tag);
+</script></body></html>
