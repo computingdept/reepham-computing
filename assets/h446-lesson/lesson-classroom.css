@@ -941,3 +941,31 @@
     font-size:16px;
   }
 }
+
+
+/* MOBILE H446 SWIPE NAVIGATION: one-time discoverability hint. */
+.mobile-swipe-hint{display:none}
+@media(max-width:900px){
+  .mobile-swipe-hint{
+    display:block;
+    position:fixed;
+    left:50%;
+    bottom:calc(var(--footer-h) + 14px);
+    transform:translateX(-50%);
+    z-index:1000;
+    max-width:calc(100vw - 32px);
+    padding:9px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.96);
+    box-shadow:var(--shadow);
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.2;
+    font-weight:800;
+    text-align:center;
+    pointer-events:none;
+    transition:opacity .7s ease;
+  }
+  .mobile-swipe-hint.is-fading{opacity:0}
+}
