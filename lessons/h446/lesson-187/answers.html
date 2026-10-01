@@ -11,7 +11,26 @@ body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}.answer-to
 
 Left / smaller: 4 3 1 5 2
 Pivot: 6
-Right / larger: 9 7 8</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · EXAM-STYLE</span><h2>One valid continuation</h2><pre class="solution-code">The source example continues by choosing new pivots within the two partitions until every item is an old pivot or belongs to a sublist of length 1.
+Right / larger: 9 7 8</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · EXAM-STYLE</span><h2>One valid continuation</h2><pre class="solution-code">One valid continuation using the source's central-pivot method:
+
+Start:
+9 4 7 8 6 3 1 5 2
+pivot 6
+→ [4 3 1 5 2] 6 [9 7 8]
+
+Left partition pivot 1:
+→ 1 [4 3 5 2]
+
+Right partition pivot 7:
+→ 7 [9 8]
+
+Next pivots:
+[4 3 5 2] uses pivot 5
+[9 8] uses pivot 9
+→ 1 [4 3 2] 5 6 7 [8] 9
+
+Final remaining pivot 3:
+→ 1 [2] 3 [4] 5 6 7 8 9
 
 Final ascending order:
 1 2 3 4 5 6 7 8 9</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · EXAM-STYLE</span><h2>Stopping condition</h2><pre class="solution-code">Stop partitioning a sublist when it contains only one item, or when all of its items have been fixed as pivots in their final positions.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · EXAM-STYLE</span><h2>Recursion</h2><pre class="solution-code">After choosing a pivot and partitioning the data, quick sort calls the same sorting process again on the smaller left and right partitions. Each call works on a smaller problem until a base case is reached.</pre></article></section></main>
