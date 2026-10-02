@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#003f36">
+<title>Synergy Learning Hub · Vision</title>
+<meta name="description" content="Synergy Learning Hub vision: teacher-owned curriculum, accessible numbered learning, available on any device.">
+<style>
+:root{
+  --trust:#006347;
+  --trust-dark:#003f36;
+  --ink:#17231f;
+  --muted:#5f6f69;
+  --line:#d9e4e0;
+  --wash:#f4f8f6;
+  --pale:#eaf3ef;
+  --warm:#f2b544;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--wash);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
+body{min-height:100dvh}
+a{color:inherit}
+.screen{
+  min-height:100dvh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  background:
+    radial-gradient(circle at 88% 12%,rgba(0,99,71,.10),transparent 32rem),
+    linear-gradient(180deg,#fff 0%,#f5f8f7 100%);
+}
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:22px clamp(20px,4vw,60px);
+  border-bottom:1px solid rgba(217,228,224,.85);
+}
+.brand{display:flex;align-items:center;gap:13px;min-width:0}
+.mark{
+  width:42px;height:42px;border-radius:12px;
+  display:grid;place-items:center;
+  background:var(--trust-dark);color:#fff;
+  font-size:20px;font-weight:900;letter-spacing:-.04em;
+}
+.brand-copy{min-width:0}
+.brand-copy small{
+  display:block;color:var(--muted);
+  font-size:11px;font-weight:850;letter-spacing:.14em;
+}
+.brand-copy strong{
+  display:block;margin-top:2px;color:var(--trust-dark);
+  font-size:18px;font-weight:900;letter-spacing:-.02em;
+}
+.tag{
+  flex:0 0 auto;
+  padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+  background:#fff;color:var(--trust-dark);
+  font-size:12px;font-weight:850;letter-spacing:.05em;
+}
+main{
+  width:min(1280px,100%);
+  margin:0 auto;
+  padding:clamp(26px,4.5vh,54px) clamp(20px,4vw,60px) clamp(28px,5vh,58px);
+  display:grid;
+  align-content:center;
+  gap:clamp(24px,4vh,42px);
+}
+.hero{max-width:1060px}
+.eyebrow{
+  margin:0 0 12px;color:var(--trust);
+  font-size:12px;font-weight:900;letter-spacing:.17em;
+}
+h1{
+  margin:0;
+  max-width:1050px;
+  color:var(--trust-dark);
+  font-size:clamp(40px,6.2vw,82px);
+  line-height:.98;
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.lede{
+  margin:18px 0 0;
+  max-width:920px;
+  color:#42534c;
+  font-size:clamp(18px,2vw,27px);
+  line-height:1.35;
+  font-weight:520;
+  text-wrap:balance;
+}
+.lede strong{color:var(--trust-dark)}
+
+.flow{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) auto minmax(0,1fr);
+  gap:14px;
+  align-items:stretch;
+}
+.block{
+  min-width:0;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(255,255,255,.93);
+  box-shadow:0 12px 34px rgba(18,55,44,.055);
+}
+.block small{
+  display:block;margin-bottom:10px;
+  color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.12em;
+}
+.block h2{
+  margin:0;color:var(--trust-dark);
+  font-size:clamp(21px,2vw,30px);
+  line-height:1.1;letter-spacing:-.035em;
+}
+.block p{
+  margin:9px 0 0;color:var(--muted);
+  font-size:15px;line-height:1.45;
+}
+.block.middle{
+  border-color:#a8c8bb;
+  background:linear-gradient(180deg,#f8fcfa,#edf6f2);
+}
+.arrow{
+  display:grid;place-items:center;
+  color:var(--trust);
+  font-size:34px;font-weight:700;
+}
+.routes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:15px;
+}
+.route{
+  min-height:68px;
+  padding:11px 8px;
+  border:1px solid #cfe0d9;
+  border-radius:15px;
+  display:grid;
+  align-content:center;
+  text-align:center;
+  background:#fff;
+}
+.route strong{
+  display:block;color:var(--trust-dark);
+  font-size:17px;letter-spacing:-.02em;
+}
+.route span{
+  display:block;margin-top:2px;color:var(--muted);
+  font-size:11px;font-weight:700;
+}
+.principles{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+.principle{
+  padding:12px 13px;
+  border-top:3px solid var(--trust);
+  background:#fff;
+}
+.principle strong{
+  display:block;color:var(--trust-dark);
+  font-size:14px;
+}
+.principle span{
+  display:block;margin-top:3px;color:var(--muted);
+  font-size:12px;line-height:1.35;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  padding:14px clamp(20px,4vw,60px) calc(14px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.9);
+  color:var(--muted);
+  font-size:12px;
+}
+.footer strong{color:var(--trust-dark)}
+
+@media(max-width:860px){
+  .screen{display:block}
+  .top{padding:14px 16px}
+  .brand-copy small{font-size:9px}
+  .brand-copy strong{font-size:16px}
+  .tag{display:none}
+  main{padding:24px 16px 30px;display:block}
+  .hero{margin-bottom:24px}
+  h1{font-size:clamp(38px,12vw,58px)}
+  .lede{font-size:18px}
+  .flow{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .arrow{
+    height:30px;
+    transform:rotate(90deg);
+    font-size:27px;
+  }
+  .block{padding:18px;border-radius:18px}
+  .routes{grid-template-columns:repeat(3,1fr)}
+  .principles{
+    grid-template-columns:1fr 1fr;
+    margin-top:20px;
+  }
+  .principle:last-child{grid-column:1/-1}
+  .footer{
+    margin-top:6px;
+    padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+    flex-direction:column;
+    gap:3px;
+  }
+}
+@media(max-width:430px){
+  .routes{grid-template-columns:1fr}
+  .route{min-height:54px}
+  .principles{grid-template-columns:1fr}
+  .principle:last-child{grid-column:auto}
+}
+@media(prefers-reduced-motion:no-preference){
+  .hero,.flow,.principles{animation:rise .55s ease both}
+  .flow{animation-delay:.08s}
+  .principles{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div class="screen">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">S</div>
+      <div class="brand-copy">
+        <small>SYNERGY MULTI ACADEMY TRUST</small>
+        <strong>Learning Hub</strong>
+      </div>
+    </div>
+    <div class="tag">VISION · PROOF OF CONCEPT</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">ONE TRUSTED ROUTE TO LEARNING</p>
+      <h1>The right learning.<br>In the right format.<br>On any device.</h1>
+      <p class="lede"><strong>Teacher-owned curriculum</strong>, made easier to find, access and practise through a consistent digital learning layer.</p>
+    </section>
+
+    <section class="flow" aria-label="Learning Hub model">
+      <article class="block">
+        <small>1 · SOURCE</small>
+        <h2>Teacher-created learning</h2>
+        <p>Existing PowerPoints, booklets and department-agreed curriculum remain the source.</p>
+      </article>
+
+      <div class="arrow" aria-hidden="true">→</div>
+
+      <article class="block middle">
+        <small>2 · LEARNING HUB</small>
+        <h2>Numbered, accessible learning</h2>
+        <p>AI can assist adaptation and accessibility. Teachers and departments check what is published.</p>
+        <div class="routes" aria-label="Learning routes">
+          <div class="route"><strong>Learn</strong><span>numbered lessons</span></div>
+          <div class="route"><strong>Practise</strong><span>retrieval &amp; feedback</span></div>
+          <div class="route"><strong>Revise</strong><span>agreed knowledge</span></div>
+        </div>
+      </article>
+
+      <div class="arrow" aria-hidden="true">→</div>
+
+      <article class="block">
+        <small>3 · ACCESS</small>
+        <h2>Learning beyond the normal lesson</h2>
+        <p>Cover · SEND · absence · pastoral provision · catch-up · independent revision.</p>
+      </article>
+    </section>
+
+    <section class="principles" aria-label="Design principles">
+      <div class="principle"><strong>Teacher-owned</strong><span>AI does not decide what is taught.</span></div>
+      <div class="principle"><strong>Accessible by design</strong><span>Read aloud, adaptable text and one-step views.</span></div>
+      <div class="principle"><strong>Device independent</strong><span>PC, Chromebook, tablet or phone.</span></div>
+      <div class="principle"><strong>One current link</strong><span>A clear route to the numbered lesson or resource.</span></div>
+      <div class="principle"><strong>Common architecture</strong><span>Consistent access without forcing identical teaching.</span></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span><strong>Proof of concept:</strong> Computing first · SEND and pedagogy input · evaluate before wider implementation</span>
+    <span>Synergy Learning Hub · October 2026</span>
+  </footer>
+</div>
+</body>
+</html>
