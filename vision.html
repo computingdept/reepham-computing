@@ -4,294 +4,449 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#003f36">
-<title>Synergy Learning Hub · Vision</title>
-<meta name="description" content="Synergy Learning Hub vision: teacher-owned curriculum, accessible numbered learning, available on any device.">
+<title>Learning Hub · The Missing Learning Layer</title>
+<meta name="description" content="A proof-of-concept presentation for a school-owned, accessible Learning Hub built from teacher-created curriculum resources.">
 <style>
 :root{
-  --trust:#006347;
-  --trust-dark:#003f36;
-  --ink:#17231f;
-  --muted:#5f6f69;
-  --line:#d9e4e0;
-  --wash:#f4f8f6;
-  --pale:#eaf3ef;
-  --warm:#f2b544;
-  --white:#fff;
+  --green:#006347;--dark:#003f36;--ink:#14201c;--muted:#607069;--line:#d7e2de;
+  --wash:#f4f8f6;--pale:#e8f2ee;--paper:#fff;--warm:#f2b544;--blue:#eaf1f8;
+  --shadow:0 22px 70px rgba(14,54,42,.10);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--wash);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
-body{min-height:100dvh}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+body{margin:0;color:var(--ink);background:#edf3f0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
 a{color:inherit}
-.screen{
+button{font:inherit}
+.deck-nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  display:flex;align-items:center;gap:16px;
+  padding:10px clamp(14px,3vw,34px);
+  background:rgba(255,255,255,.84);
+  border-bottom:1px solid rgba(215,226,222,.85);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{width:34px;height:34px;border-radius:10px;background:var(--dark);color:#fff;display:grid;place-items:center;font-weight:950}
+.brand-copy{display:grid;line-height:1.05}
+.brand-copy small{font-size:9px;font-weight:900;letter-spacing:.13em;color:var(--muted)}
+.brand-copy strong{margin-top:3px;font-size:14px;color:var(--dark)}
+.deck-status{margin-left:auto;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;font-weight:800}
+.deck-status strong{color:var(--dark)}
+.progress{width:min(24vw,220px);height:4px;border-radius:99px;background:#dfe8e4;overflow:hidden}
+.progress span{display:block;height:100%;width:14.285%;background:var(--green);transition:width .25s ease}
+.dots{position:fixed;right:18px;top:50%;z-index:90;transform:translateY(-50%);display:grid;gap:8px}
+.dots button{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#c3d2cc;cursor:pointer}
+.dots button[aria-current="true"]{background:var(--green);box-shadow:0 0 0 4px rgba(0,99,71,.12)}
+
+.chapter{
   min-height:100dvh;
+  scroll-snap-align:start;
   display:grid;
-  grid-template-rows:auto 1fr auto;
-  background:
-    radial-gradient(circle at 88% 12%,rgba(0,99,71,.10),transparent 32rem),
-    linear-gradient(180deg,#fff 0%,#f5f8f7 100%);
-}
-.top{
-  display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  padding:22px clamp(20px,4vw,60px);
-  border-bottom:1px solid rgba(217,228,224,.85);
+  padding:82px clamp(22px,6vw,90px) 42px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 90% 8%,rgba(0,99,71,.09),transparent 30rem),
+    linear-gradient(180deg,#fff 0%,#f6f9f7 100%);
 }
-.brand{display:flex;align-items:center;gap:13px;min-width:0}
-.mark{
-  width:42px;height:42px;border-radius:12px;
-  display:grid;place-items:center;
-  background:var(--trust-dark);color:#fff;
-  font-size:20px;font-weight:900;letter-spacing:-.04em;
-}
-.brand-copy{min-width:0}
-.brand-copy small{
-  display:block;color:var(--muted);
-  font-size:11px;font-weight:850;letter-spacing:.14em;
-}
-.brand-copy strong{
-  display:block;margin-top:2px;color:var(--trust-dark);
-  font-size:18px;font-weight:900;letter-spacing:-.02em;
-}
-.tag{
-  flex:0 0 auto;
-  padding:8px 12px;border:1px solid var(--line);border-radius:999px;
-  background:#fff;color:var(--trust-dark);
-  font-size:12px;font-weight:850;letter-spacing:.05em;
-}
-main{
-  width:min(1280px,100%);
-  margin:0 auto;
-  padding:clamp(26px,4.5vh,54px) clamp(20px,4vw,60px) clamp(28px,5vh,58px);
-  display:grid;
-  align-content:center;
-  gap:clamp(24px,4vh,42px);
-}
-.hero{max-width:1060px}
-.eyebrow{
-  margin:0 0 12px;color:var(--trust);
-  font-size:12px;font-weight:900;letter-spacing:.17em;
-}
-h1{
-  margin:0;
-  max-width:1050px;
-  color:var(--trust-dark);
-  font-size:clamp(40px,6.2vw,82px);
-  line-height:.98;
-  letter-spacing:-.055em;
-  text-wrap:balance;
-}
-.lede{
-  margin:18px 0 0;
-  max-width:920px;
-  color:#42534c;
-  font-size:clamp(18px,2vw,27px);
-  line-height:1.35;
-  font-weight:520;
-  text-wrap:balance;
-}
-.lede strong{color:var(--trust-dark)}
+.chapter:nth-of-type(even){background:linear-gradient(180deg,#f5f8f7 0%,#eef4f1 100%)}
+.inner{width:min(1280px,100%);margin:auto}
+.kicker{margin:0 0 13px;color:var(--green);font-size:12px;font-weight:950;letter-spacing:.16em;text-transform:uppercase}
+h1,h2{margin:0;color:var(--dark);letter-spacing:-.05em;line-height:.98;text-wrap:balance}
+h1{font-size:clamp(46px,7.3vw,96px);max-width:1100px}
+h2{font-size:clamp(38px,5.4vw,72px);max-width:1100px}
+.lede{max-width:900px;margin:20px 0 0;color:#42534c;font-size:clamp(19px,2.1vw,28px);line-height:1.35;text-wrap:balance}
+.lede strong{color:var(--dark)}
+.small-note{margin-top:20px;color:var(--muted);font-size:13px}
+.source-link{display:inline-flex;margin-top:12px;color:var(--green);font-size:13px;font-weight:850;text-decoration:none;border-bottom:1px solid #93b5a8}
 
-.flow{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) auto minmax(0,1fr);
-  gap:14px;
-  align-items:stretch;
+.stat-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:stretch;margin-top:32px}
+.big-stat,.evidence{
+  border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.95);box-shadow:var(--shadow)
 }
-.block{
-  min-width:0;
-  padding:22px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:rgba(255,255,255,.93);
-  box-shadow:0 12px 34px rgba(18,55,44,.055);
-}
-.block small{
-  display:block;margin-bottom:10px;
-  color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.12em;
-}
-.block h2{
-  margin:0;color:var(--trust-dark);
-  font-size:clamp(21px,2vw,30px);
-  line-height:1.1;letter-spacing:-.035em;
-}
-.block p{
-  margin:9px 0 0;color:var(--muted);
-  font-size:15px;line-height:1.45;
-}
-.block.middle{
-  border-color:#a8c8bb;
-  background:linear-gradient(180deg,#f8fcfa,#edf6f2);
-}
-.arrow{
-  display:grid;place-items:center;
-  color:var(--trust);
-  font-size:34px;font-weight:700;
-}
-.routes{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  margin-top:15px;
-}
-.route{
-  min-height:68px;
-  padding:11px 8px;
-  border:1px solid #cfe0d9;
-  border-radius:15px;
-  display:grid;
-  align-content:center;
-  text-align:center;
-  background:#fff;
-}
-.route strong{
-  display:block;color:var(--trust-dark);
-  font-size:17px;letter-spacing:-.02em;
-}
-.route span{
-  display:block;margin-top:2px;color:var(--muted);
-  font-size:11px;font-weight:700;
-}
-.principles{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-}
-.principle{
-  padding:12px 13px;
-  border-top:3px solid var(--trust);
-  background:#fff;
-}
-.principle strong{
-  display:block;color:var(--trust-dark);
-  font-size:14px;
-}
-.principle span{
-  display:block;margin-top:3px;color:var(--muted);
-  font-size:12px;line-height:1.35;
-}
-.footer{
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  padding:14px clamp(20px,4vw,60px) calc(14px + env(safe-area-inset-bottom));
-  border-top:1px solid var(--line);
-  background:rgba(255,255,255,.9);
-  color:var(--muted);
-  font-size:12px;
-}
-.footer strong{color:var(--trust-dark)}
+.big-stat{padding:clamp(28px,5vw,54px)}
+.big-number{display:block;color:var(--green);font-size:clamp(66px,10vw,130px);font-weight:950;letter-spacing:-.07em;line-height:.9}
+.big-stat p{margin:17px 0 0;color:#43534d;font-size:clamp(18px,2vw,25px);line-height:1.35}
+.evidence{padding:30px;display:grid;align-content:center;gap:16px}
+.evidence article{padding:18px 0;border-bottom:1px solid var(--line)}
+.evidence article:last-child{border-bottom:0}
+.evidence strong{display:block;color:var(--dark);font-size:20px}
+.evidence span{display:block;margin-top:5px;color:var(--muted);line-height:1.45}
 
-@media(max-width:860px){
-  .screen{display:block}
-  .top{padding:14px 16px}
-  .brand-copy small{font-size:9px}
-  .brand-copy strong{font-size:16px}
-  .tag{display:none}
-  main{padding:24px 16px 30px;display:block}
-  .hero{margin-bottom:24px}
-  h1{font-size:clamp(38px,12vw,58px)}
+.question{
+  margin-top:38px;padding:clamp(26px,4vw,46px);border-radius:28px;background:var(--dark);color:#fff;box-shadow:0 24px 80px rgba(0,63,54,.22)
+}
+.question small{display:block;color:#b9d5cb;font-weight:900;letter-spacing:.14em}
+.question blockquote{margin:12px 0 0;font-size:clamp(28px,4vw,54px);font-weight:850;line-height:1.1;letter-spacing:-.04em;text-wrap:balance}
+
+.building{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.floor{min-height:230px;padding:26px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 14px 40px rgba(14,54,42,.06)}
+.floor .num{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:var(--pale);color:var(--green);font-weight:950}
+.floor h3{margin:28px 0 8px;color:var(--dark);font-size:25px;letter-spacing:-.035em}
+.floor p{margin:0;color:var(--muted);line-height:1.48}
+.floor.missing{border:2px solid var(--green);background:linear-gradient(180deg,#fff,#eef7f3)}
+.floor.missing .num{background:var(--green);color:#fff}
+.floor.missing h3{font-size:29px}
+
+.transform{
+  margin-top:34px;
+  display:grid;grid-template-columns:1fr auto 1.35fr auto 1.1fr;gap:14px;align-items:stretch
+}
+.card{border:1px solid var(--line);border-radius:22px;background:#fff;padding:24px;box-shadow:0 12px 34px rgba(14,54,42,.055)}
+.card small{display:block;margin-bottom:10px;color:var(--muted);font-size:11px;font-weight:950;letter-spacing:.13em}
+.card h3{margin:0;color:var(--dark);font-size:clamp(21px,2vw,30px);letter-spacing:-.035em;line-height:1.05}
+.card p{margin:9px 0 0;color:var(--muted);line-height:1.45}
+.ppt{
+  margin-top:20px;padding:18px;border-radius:15px;background:#fff2e9;border:1px solid #edc6ac;
+  display:flex;align-items:center;gap:14px
+}
+.ppt-icon{width:54px;height:54px;border-radius:12px;background:#c84d22;color:#fff;display:grid;place-items:center;font-size:28px;font-weight:950}
+.ppt strong{color:#7c2f15}
+.machine{background:linear-gradient(180deg,#f9fcfb,#e9f4ef);border-color:#afd0c3}
+.machine ul{margin:17px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.machine li{padding:10px 12px;border:1px solid #d4e6df;border-radius:12px;background:#fff;color:#40524b;font-weight:700}
+.machine li::before{content:"✓";margin-right:8px;color:var(--green);font-weight:950}
+.outputs{display:grid;gap:8px;margin-top:18px}
+.output{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fafcfb}
+.output strong{color:var(--dark)}
+.arrow{display:grid;place-items:center;color:var(--green);font-size:35px;font-weight:900}
+
+.rule{
+  margin-top:28px;display:flex;align-items:center;gap:12px;padding:17px 20px;border-left:4px solid var(--green);background:#fff;border-radius:0 15px 15px 0;color:#40524b;font-size:18px
+}
+.rule strong{color:var(--dark)}
+
+.pupil-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;margin-top:32px}
+.profile,.access-panel{border:1px solid var(--line);border-radius:26px;background:#fff;box-shadow:var(--shadow)}
+.profile{padding:30px}
+.avatar{width:70px;height:70px;border-radius:22px;background:var(--dark);color:#fff;display:grid;place-items:center;font-size:28px;font-weight:950}
+.profile h3{margin:20px 0 6px;color:var(--dark);font-size:29px}
+.profile p{margin:0;color:var(--muted);line-height:1.5}
+.need{margin-top:18px;padding:14px;border-radius:14px;background:#f5f8f7;color:#40524b}
+.access-panel{padding:24px;background:linear-gradient(180deg,#fff,#f5f9f7)}
+.lesson-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.lesson-head strong{color:var(--dark);font-size:20px}
+.lesson-head span{color:var(--muted);font-size:13px}
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:15px 0}
+.tool{padding:10px 7px;border:1px solid #cee0d9;border-radius:11px;background:#fff;text-align:center;color:var(--green);font-size:12px;font-weight:850}
+.lesson-card{padding:20px;border-radius:17px;background:#fff;border:1px solid var(--line)}
+.lesson-card small{color:var(--green);font-weight:950}
+.lesson-card h4{margin:7px 0;color:var(--dark);font-size:25px}
+.lesson-card p{margin:0;color:#475750;line-height:1.5}
+.support-route{margin-top:13px;display:flex;gap:8px;flex-wrap:wrap}
+.support-route span{padding:8px 10px;border-radius:999px;background:var(--pale);color:var(--dark);font-size:12px;font-weight:800}
+
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.proof-card{
+  position:relative;overflow:hidden;min-height:330px;padding:30px;
+  border-radius:26px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)
+}
+.proof-card::after{content:"";position:absolute;right:-80px;bottom:-100px;width:240px;height:240px;border-radius:50%;background:var(--pale)}
+.proof-card>*{position:relative;z-index:1}
+.proof-card .label{color:var(--green);font-size:11px;font-weight:950;letter-spacing:.14em}
+.proof-card h3{margin:13px 0 10px;color:var(--dark);font-size:34px;letter-spacing:-.045em}
+.proof-card p{max-width:530px;color:var(--muted);font-size:17px;line-height:1.48}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.action{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 15px;border-radius:12px;background:var(--dark);color:#fff;text-decoration:none;font-weight:850}
+.action.secondary{background:var(--pale);color:var(--dark);border:1px solid #c6ddd4}
+.live-note{margin-top:12px;color:var(--muted);font-size:12px}
+
+.trust-flow{margin-top:35px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.trust-step{position:relative;padding:22px;border:1px solid var(--line);border-radius:20px;background:#fff}
+.trust-step b{display:block;color:var(--green);font-size:12px;letter-spacing:.1em}
+.trust-step strong{display:block;margin-top:9px;color:var(--dark);font-size:22px}
+.trust-step p{margin:7px 0 0;color:var(--muted);font-size:14px;line-height:1.4}
+.trust-step:not(:last-child)::after{content:"→";position:absolute;right:-20px;top:50%;z-index:2;color:var(--green);font-size:27px;font-weight:950}
+
+.decision{
+  margin-top:36px;padding:clamp(28px,5vw,54px);border-radius:30px;background:var(--dark);color:#fff;box-shadow:0 28px 90px rgba(0,63,54,.25)
+}
+.decision small{color:#b9d5cb;font-weight:950;letter-spacing:.14em}
+.decision h3{margin:13px 0 0;color:#fff;font-size:clamp(30px,4vw,55px);line-height:1.08;letter-spacing:-.045em;max-width:1050px}
+.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px}
+.decision-grid div{padding:14px 15px;border:1px solid rgba(255,255,255,.17);border-radius:14px;background:rgba(255,255,255,.06)}
+.decision-grid strong{display:block}
+.decision-grid span{display:block;margin-top:4px;color:#c9ddd5;font-size:13px;line-height:1.4}
+
+.hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);color:#6e7d77;font-size:11px;font-weight:800;letter-spacing:.06em}
+.chapter{position:relative}
+
+@media(max-width:900px){
+  .dots{display:none}
+  .chapter{padding:78px 18px 30px;align-items:start}
+  .stat-grid,.pupil-grid,.proof-grid{grid-template-columns:1fr}
+  .building{grid-template-columns:1fr}
+  .floor{min-height:0}
+  .transform{grid-template-columns:1fr}
+  .arrow{height:30px;transform:rotate(90deg)}
+  .trust-flow{grid-template-columns:1fr 1fr}
+  .trust-step:not(:last-child)::after{display:none}
+  .decision-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  html{scroll-snap-type:none}
+  .deck-nav{padding:8px 12px}
+  .brand-copy small{display:none}
+  .progress{width:80px}
+  .deck-status span{display:none}
+  .chapter{min-height:auto;padding-top:76px;padding-bottom:44px}
+  h1{font-size:46px}
+  h2{font-size:38px}
   .lede{font-size:18px}
-  .flow{
-    grid-template-columns:1fr;
-    gap:10px;
-  }
-  .arrow{
-    height:30px;
-    transform:rotate(90deg);
-    font-size:27px;
-  }
-  .block{padding:18px;border-radius:18px}
-  .routes{grid-template-columns:repeat(3,1fr)}
-  .principles{
-    grid-template-columns:1fr 1fr;
-    margin-top:20px;
-  }
-  .principle:last-child{grid-column:1/-1}
-  .footer{
-    margin-top:6px;
-    padding:14px 16px calc(14px + env(safe-area-inset-bottom));
-    flex-direction:column;
-    gap:3px;
-  }
+  .big-stat,.evidence,.profile,.access-panel,.proof-card{border-radius:20px}
+  .tools{grid-template-columns:1fr 1fr}
+  .trust-flow{grid-template-columns:1fr}
+  .hint{display:none}
 }
-@media(max-width:430px){
-  .routes{grid-template-columns:1fr}
-  .route{min-height:54px}
-  .principles{grid-template-columns:1fr}
-  .principle:last-child{grid-column:auto}
-}
-@media(prefers-reduced-motion:no-preference){
-  .hero,.flow,.principles{animation:rise .55s ease both}
-  .flow{animation-delay:.08s}
-  .principles{animation-delay:.16s}
-  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .progress span{transition:none}
 }
 </style>
 </head>
 <body>
-<div class="screen">
-  <header class="top">
-    <div class="brand">
-      <div class="mark">S</div>
-      <div class="brand-copy">
-        <small>SYNERGY MULTI ACADEMY TRUST</small>
-        <strong>Learning Hub</strong>
+<header class="deck-nav">
+  <div class="brand"><div class="brand-mark">R</div><div class="brand-copy"><small>REEPHAM HIGH SCHOOL &amp; COLLEGE</small><strong>Learning Hub · Proof of Concept</strong></div></div>
+  <div class="deck-status"><span id="chapterName">The challenge</span><strong id="chapterCount">1 / 7</strong><div class="progress"><span id="progressBar"></span></div></div>
+</header>
+
+<nav class="dots" aria-label="Presentation sections" id="dots"></nav>
+
+<main>
+<section class="chapter" data-title="The challenge">
+  <div class="inner">
+    <p class="kicker">1 · The national challenge</p>
+    <h1>Inclusion needs more than a room.</h1>
+    <p class="lede">Schools are being asked to become more inclusive. The practical challenge is making sure the <strong>right learning is actually available</strong> when a pupil is not accessing the ordinary classroom route.</p>
+    <div class="stat-grid">
+      <article class="big-stat">
+        <span class="big-number">1.8m+</span>
+        <p>pupils in England had identified special educational needs in 2025/26.</p>
+        <a class="source-link" href="https://explore-education-statistics.service.gov.uk/find-statistics/special-educational-needs-in-england/2025-26" target="_blank" rel="noopener">DfE · Special educational needs in England 2025/26 ↗</a>
+      </article>
+      <div class="evidence">
+        <article><strong>Inclusion bases</strong><span>DfE guidance published in June 2026 supports mainstream schools and local authorities to develop high-quality inclusion-base provision.</span></article>
+        <article><strong>Inclusive teaching</strong><span>New DfE training for mainstream schools focuses on universal approaches, adaptations and additional support.</span></article>
+        <a class="source-link" href="https://www.gov.uk/government/publications/inclusion-bases-in-schools" target="_blank" rel="noopener">DfE · Inclusion bases in schools ↗</a>
+        <a class="source-link" href="https://www.gov.uk/government/collections/send-and-inclusion-training-for-mainstream-schools" target="_blank" rel="noopener">DfE · SEND &amp; inclusion training ↗</a>
       </div>
     </div>
-    <div class="tag">VISION · PROOF OF CONCEPT</div>
-  </header>
+    <div class="hint">SCROLL · SWIPE · ↓</div>
+  </div>
+</section>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">ONE TRUSTED ROUTE TO LEARNING</p>
-      <h1>The right learning.<br>In the right format.<br>On any device.</h1>
-      <p class="lede"><strong>Teacher-owned curriculum</strong>, made easier to find, access and practise through a consistent digital learning layer.</p>
-    </section>
+<section class="chapter" data-title="The missing layer">
+  <div class="inner">
+    <p class="kicker">2 · The operational problem</p>
+    <h2>We can build the provision.<br>But what learning sits inside it?</h2>
+    <div class="building">
+      <article class="floor"><div class="num">1</div><h3>Place</h3><p>A calm, appropriate space in which a pupil can learn.</p></article>
+      <article class="floor"><div class="num">2</div><h3>People</h3><p>Teachers, SEND staff, pastoral colleagues and specialist expertise.</p></article>
+      <article class="floor missing"><div class="num">3</div><h3>Deployable learning</h3><p>Current school curriculum that can be found quickly, presented accessibly and used meaningfully by the pupil in front of us.</p></article>
+    </div>
+    <div class="question"><small>THE QUESTION</small><blockquote>At 10:05 on Tuesday morning, where does today's appropriate learning come from?</blockquote></div>
+  </div>
+</section>
 
-    <section class="flow" aria-label="Learning Hub model">
-      <article class="block">
-        <small>1 · SOURCE</small>
-        <h2>Teacher-created learning</h2>
-        <p>Existing PowerPoints, booklets and department-agreed curriculum remain the source.</p>
+<section class="chapter" data-title="Teacher expertise">
+  <div class="inner">
+    <p class="kicker">3 · Start with what schools already have</p>
+    <h2>The expertise is already in the school.</h2>
+    <p class="lede">Teachers already create the curriculum: PowerPoints, worksheets, explanations, models, booklets and assessments. <strong>The proposal is not to replace that expertise.</strong> It is to make it easier to deploy.</p>
+
+    <div class="transform">
+      <article class="card">
+        <small>TEACHER SOURCE</small>
+        <h3>Department-owned curriculum</h3>
+        <div class="ppt"><div class="ppt-icon">P</div><div><strong>Lesson 14.pptx</strong><br><span>Teacher-created and unchanged</span></div></div>
+        <p>PowerPoint can remain the normal classroom resource.</p>
       </article>
 
       <div class="arrow" aria-hidden="true">→</div>
 
-      <article class="block middle">
-        <small>2 · LEARNING HUB</small>
-        <h2>Numbered, accessible learning</h2>
-        <p>AI can assist adaptation and accessibility. Teachers and departments check what is published.</p>
-        <div class="routes" aria-label="Learning routes">
-          <div class="route"><strong>Learn</strong><span>numbered lessons</span></div>
-          <div class="route"><strong>Practise</strong><span>retrieval &amp; feedback</span></div>
-          <div class="route"><strong>Revise</strong><span>agreed knowledge</span></div>
+      <article class="card machine">
+        <small>AI-ASSISTED PREPARATION</small>
+        <h3>Reformat. Don't reinvent.</h3>
+        <ul>
+          <li>Structure existing content</li>
+          <li>Create an accessible web view</li>
+          <li>Add reading / display support</li>
+          <li>Generate practice from agreed content</li>
+          <li>Prepare print-friendly alternatives</li>
+        </ul>
+        <p><strong>Teacher / department check before publication.</strong></p>
+      </article>
+
+      <div class="arrow" aria-hidden="true">→</div>
+
+      <article class="card">
+        <small>DEPLOYABLE OUTPUTS</small>
+        <h3>One source. More ways in.</h3>
+        <div class="outputs">
+          <div class="output"><strong>Web lesson</strong><br><span>browser-based, responsive</span></div>
+          <div class="output"><strong>Practice</strong><br><span>retrieval and feedback</span></div>
+          <div class="output"><strong>Print / original</strong><br><span>PowerPoint and PDF retained</span></div>
         </div>
       </article>
+    </div>
+    <div class="rule"><strong>Principle:</strong> AI supports accessibility, formatting and practice. The teacher remains responsible for what is taught.</div>
+  </div>
+</section>
 
-      <div class="arrow" aria-hidden="true">→</div>
+<section class="chapter" data-title="Accessible learning">
+  <div class="inner">
+    <p class="kicker">4 · Same curriculum, different access</p>
+    <h2>Accessibility should travel with the learning.</h2>
+    <p class="lede">A pupil may need foundational reading support and still need to remain connected to their age-appropriate curriculum. The Hub can provide <strong>different ways into the same learning</strong>, with additional support routed alongside it where appropriate.</p>
 
-      <article class="block">
-        <small>3 · ACCESS</small>
-        <h2>Learning beyond the normal lesson</h2>
-        <p>Cover · SEND · absence · pastoral provision · catch-up · independent revision.</p>
+    <div class="pupil-grid">
+      <article class="profile">
+        <div class="avatar">Y8</div>
+        <h3>A Year 8 pupil</h3>
+        <p>Working outside the normal classroom today and experiencing significant difficulty accessing written text.</p>
+        <div class="need"><strong>The goal is not:</strong> “find easier work.”<br><br><strong>The goal is:</strong> preserve curriculum entitlement while removing unnecessary access barriers and providing appropriate foundational support.</div>
       </article>
-    </section>
+      <article class="access-panel">
+        <div class="lesson-head"><strong>Year 8 · Science · Lesson 014</strong><span>current curriculum</span></div>
+        <div class="tools">
+          <div class="tool">Listen</div><div class="tool">Larger text</div><div class="tool">One step</div><div class="tool">Word help</div>
+        </div>
+        <div class="lesson-card">
+          <small>NEW LEARNING</small>
+          <h4>Cells and specialised structures</h4>
+          <p>Core Year 8 learning remains visible. The presentation can be adjusted so the pupil can hear, process and revisit it more successfully.</p>
+          <div class="support-route"><span>Vocabulary support</span><span>Decoding / phonics route where assessed</span><span>Retrieval</span><span>Print option</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <section class="principles" aria-label="Design principles">
-      <div class="principle"><strong>Teacher-owned</strong><span>AI does not decide what is taught.</span></div>
-      <div class="principle"><strong>Accessible by design</strong><span>Read aloud, adaptable text and one-step views.</span></div>
-      <div class="principle"><strong>Device independent</strong><span>PC, Chromebook, tablet or phone.</span></div>
-      <div class="principle"><strong>One current link</strong><span>A clear route to the numbered lesson or resource.</span></div>
-      <div class="principle"><strong>Common architecture</strong><span>Consistent access without forcing identical teaching.</span></div>
-    </section>
-  </main>
+<section class="chapter" data-title="Open web">
+  <div class="inner">
+    <p class="kicker">5 · Why the web?</p>
+    <h2>No specialist pupil app.<br>No second planning system.</h2>
+    <p class="lede">The open web gives us a low-friction delivery layer: a current link can work on a <strong>school PC, Chromebook, tablet or phone</strong>. The student does not need PowerPoint installed simply to access the adapted lesson.</p>
 
-  <footer class="footer">
-    <span><strong>Proof of concept:</strong> Computing first · SEND and pedagogy input · evaluate before wider implementation</span>
-    <span>Synergy Learning Hub · October 2026</span>
-  </footer>
-</div>
+    <div class="proof-grid">
+      <article class="proof-card">
+        <span class="label">THE ACCESS MODEL</span>
+        <h3>One link. Multiple devices.</h3>
+        <p>Responsive web pages can include read-aloud controls, larger text, alternative backgrounds, one-step views, self-marking practice and downloadable originals.</p>
+        <div class="actions"><a class="action secondary" href="/" target="_blank">Open Learning Hub ↗</a></div>
+      </article>
+      <article class="proof-card">
+        <span class="label">WHAT STAYS TRUE</span>
+        <h3>The source belongs to the school.</h3>
+        <p>The teacher-created PowerPoint, booklet or worksheet remains the source. The web is an additional access and practice layer — not a replacement for normal teaching.</p>
+        <div class="actions"><a class="action secondary" href="/year8-computing.html" target="_blank">See Year 8 Computing ↗</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-title="Live proof">
+  <div class="inner">
+    <p class="kicker">6 · The playground</p>
+    <h2>We can test the mechanics now.</h2>
+    <p class="lede">Computing is the playground: not a finished school service, but a place to test whether numbered learning, accessibility, revision and mobile delivery actually work in practice.</p>
+
+    <div class="proof-grid">
+      <article class="proof-card">
+        <span class="label">YEAR 8 · WHOLE MODEL</span>
+        <h3>Lesson → Booklet → Revision Hub</h3>
+        <p>Use this to test the relationship between teacher-created classroom resources, an agreed revision source and additional practice.</p>
+        <div class="actions">
+          <a class="action" href="/year8-computing.html" target="_blank">Try Year 8 Computing →</a>
+        </div>
+        <div class="live-note">Best demonstration for the meeting.</div>
+      </article>
+      <article class="proof-card">
+        <span class="label">YEAR 12 · REAL USE</span>
+        <h3>Structured lessons on any device</h3>
+        <p>The H446 area tests a more presentation-led model with numbered lessons and phone navigation. It also provides a limited real-world test of access when normal attendance is disrupted.</p>
+        <div class="actions">
+          <a class="action" href="/h446-hub.html" target="_blank">Open H446 →</a>
+          <a class="action secondary" href="/lessons/h446/lesson-016/index.html" target="_blank">Try a lesson →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-title="The trust opportunity">
+  <div class="inner">
+    <p class="kicker">7 · From school proof to trust infrastructure</p>
+    <h2>Build the building.<br>Let expertise fill it.</h2>
+    <p class="lede">The scalable opportunity is not for one person to create thousands of resources. It is to establish a <strong>common architecture, workflow and quality standard</strong> so school expertise can accumulate and, where useful, be shared across Synergy.</p>
+
+    <div class="trust-flow">
+      <article class="trust-step"><b>1 · CREATE</b><strong>Teacher expertise</strong><p>Existing school curriculum and department resources.</p></article>
+      <article class="trust-step"><b>2 · ADAPT</b><strong>AI-assisted</strong><p>Reformat, accessibility, practice and alternative views.</p></article>
+      <article class="trust-step"><b>3 · ASSURE</b><strong>Professional QA</strong><p>Teacher, SEND and curriculum checks before deployment.</p></article>
+      <article class="trust-step"><b>4 · DEPLOY</b><strong>One learning layer</strong><p>School use first; trust sharing where it adds genuine value.</p></article>
+    </div>
+
+    <div class="decision">
+      <small>DECISION FOR THURSDAY</small>
+      <h3>Do we have enough here to continue a structured school-based proof of concept — with SEND and pedagogy input — before making any recommendation about wider implementation?</h3>
+      <div class="decision-grid">
+        <div><strong>Keep building</strong><span>Computing remains the controlled playground.</span></div>
+        <div><strong>Test properly</strong><span>Accessibility, pedagogy, workload and real use cases.</span></div>
+        <div><strong>Bring evidence back</strong><span>Only then consider school / trust scale and Arbor routes.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+const chapters=[...document.querySelectorAll('.chapter')];
+const dots=document.getElementById('dots');
+const count=document.getElementById('chapterCount');
+const name=document.getElementById('chapterName');
+const bar=document.getElementById('progressBar');
+
+chapters.forEach((c,i)=>{
+  const b=document.createElement('button');
+  b.type='button';
+  b.setAttribute('aria-label','Go to section '+(i+1)+': '+c.dataset.title);
+  b.addEventListener('click',()=>c.scrollIntoView({behavior:'smooth'}));
+  dots.append(b);
+});
+const dotButtons=[...dots.querySelectorAll('button')];
+
+function setActive(i){
+  dotButtons.forEach((b,n)=>b.setAttribute('aria-current',n===i?'true':'false'));
+  count.textContent=(i+1)+' / '+chapters.length;
+  name.textContent=chapters[i].dataset.title;
+  bar.style.width=((i+1)/chapters.length*100)+'%';
+}
+const observer=new IntersectionObserver(entries=>{
+  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(visible)setActive(chapters.indexOf(visible.target));
+},{threshold:[.45,.6,.75]});
+chapters.forEach(c=>observer.observe(c));
+setActive(0);
+
+function currentIndex(){
+  let best=0,dist=Infinity;
+  chapters.forEach((c,i)=>{
+    const d=Math.abs(c.getBoundingClientRect().top-70);
+    if(d<dist){dist=d;best=i}
+  });
+  return best;
+}
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('a,button,input,textarea,select'))return;
+  if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){
+    e.preventDefault();chapters[Math.min(chapters.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'});
+  }
+  if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){
+    e.preventDefault();chapters[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'});
+  }
+});
+</script>
 </body>
 </html>
