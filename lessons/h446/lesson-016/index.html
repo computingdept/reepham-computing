@@ -140,12 +140,22 @@ studentResults.GetLength(1)  // columns</pre>
 
       <div class="nl-stage" hidden>
         <span class="nl-stage-label">STEP 4 OF 4</span>
-        <h2>3D · three indexes</h2>
-        <pre class="arithmetic">int[,,] readings = new int[2,3,4];
-
-readings[1,2,3] = 21;</pre>
-        <p>A 3D array needs three indexes. This structure contains <strong>2 × 3 × 4 = 24</strong> elements.</p>
-        <div class="nl-key">OCR expects arrays of up to three dimensions.</div>
+        <h2>3D · layer, row, column</h2>
+        <pre class="arithmetic">int[,,] scores =
+{
+    {
+        {12, 15, 18, 20},
+        {21, 24, 27, 30},
+        {32, 35, 38, 40}
+    },
+    {
+        {42, 45, 48, 50},
+        {51, 54, 57, 60},
+        {62, 65, 68, 70}
+    }
+};</pre>
+        <p>Read the indexes as <strong>layer → row → column</strong>. A 3D array is easiest to visualise as several 2D tables stacked together.</p>
+        <div class="nl-key"><code>scores[1,2,1]</code> means layer 1, row 2, column 1.</div>
         <span class="nl-stage-count">4 of 4</span>
       </div>
     </article>
@@ -208,6 +218,47 @@ Console.WriteLine(studentResults[0,1]);</pre>
 }</pre>
           <div class="key-result">Use <code>GetLength(0)</code> so the loop follows the number of rows.</div>
         </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 5 · VISUALISE 3D</span>
+          <h2>Think in layers</h2>
+          <pre class="arithmetic">LAYER 0
+          col 0  col 1  col 2  col 3
+row 0       12     15     18     20
+row 1       21     24     27     30
+row 2       32     35     38     40
+
+LAYER 1
+          col 0  col 1  col 2  col 3
+row 0       42     45     48     50
+row 1       51     54     57     60
+row 2       62     65     68     70</pre>
+          <p><strong>Worked example:</strong> find <code>scores[1,2,1]</code>.</p>
+          <div class="key-result">Layer 1 → Row 2 → Column 1 → <strong>65</strong></div>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 6 · TRAVERSE 3D</span>
+          <h2>Three dimensions need three loops</h2>
+          <pre class="arithmetic">for (int layer = 0;
+     layer &lt; scores.GetLength(0);
+     layer++)
+{
+    for (int row = 0;
+         row &lt; scores.GetLength(1);
+         row++)
+    {
+        for (int column = 0;
+             column &lt; scores.GetLength(2);
+             column++)
+        {
+            Console.WriteLine(
+                scores[layer,row,column]);
+        }
+    }
+}</pre>
+          <div class="key-result">Dimension 0 = layers · Dimension 1 = rows · Dimension 2 = columns</div>
+        </div>
       </div>
     </article>
   </div>
@@ -253,15 +304,18 @@ Console.WriteLine(studentResults[0,1]);</pre>
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
         <span class="phase-tag">GUIDED PRACTICE 3 · 3D</span>
-        <h2>Interpret the dimensions</h2>
-        <pre class="arithmetic">int[,,] readings =
-    new int[2,3,4];</pre>
-        <p>How many dimensions and elements does this array contain?</p>
+        <h2>Find the address</h2>
+        <pre class="arithmetic">LAYER 1
+          col 0  col 1  col 2  col 3
+row 0       42     45     48     50
+row 1       51     54     57     60
+row 2       62     65     68     70</pre>
+        <p>The value <strong>57</strong> is in layer 1. What complete array reference accesses it?</p>
         <span class="wedo-example-count">Example 3 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Read the declaration</h2><div class="practice-grid"><div class="practice-box"><strong>Dimensions</strong><span>?</span></div><div class="practice-box"><strong>Lengths</strong><span>?</span></div><div class="practice-box"><strong>Total elements</strong><span>?</span></div></div></div>
-        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Read the declaration</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Dimensions</strong><span><strong>3</strong></span></div><div class="practice-box"><strong>Lengths</strong><span><code>2, 3, 4</code></span></div><div class="practice-box"><strong>Total elements</strong><span><strong>24</strong></span></div></div></div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Say it before you write it</h2><div class="practice-grid"><div class="practice-box"><strong>Layer</strong><span>?</span></div><div class="practice-box"><strong>Row</strong><span>?</span></div><div class="practice-box"><strong>Column</strong><span>?</span></div><div class="practice-box"><strong>Array reference</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Locate 57</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Layer</strong><span><strong>1</strong></span></div><div class="practice-box"><strong>Row</strong><span><strong>1</strong></span></div><div class="practice-box"><strong>Column</strong><span><strong>2</strong></span></div><div class="practice-box"><strong>Array reference</strong><span><code>scores[1,1,2]</code></span></div></div></div>
       </div>
     </article>
 
@@ -322,12 +376,15 @@ Console.WriteLine(studentResults[0,1]);</pre>
       <article class="exam-card youdo-question" hidden>
         <span class="phase-tag">CODING CHALLENGE 4 · 3D</span>
         <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Room readings</h3>
+        <h3>Access a 3D array</h3>
         <div class="question-text">
-          <p>Create <code>int[,,] readings = new int[2,3,4];</code>.</p>
-          <p>Store <code>21</code> at <code>[1,2,3]</code>, output it, then output all three dimension lengths.</p>
+          <p>Use the <code>scores</code> array from the worked example.</p>
+          <p>1. Output <code>scores[0,1,3]</code>.</p>
+          <p>2. Output <code>scores[1,0,2]</code>.</p>
+          <p>3. Write the array reference needed to access <strong>68</strong>.</p>
+          <p>4. Use three nested loops and <code>GetLength()</code> to output every value.</p>
         </div>
-        <div class="success-check">Outputs 21 · dimensions output as 2, 3, 4</div>
+        <div class="success-check">Expected values: 30 · 48 · <code>scores[1,2,2]</code> · all values traversed</div>
       </article>
 
     </div>
