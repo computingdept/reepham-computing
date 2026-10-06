@@ -93,19 +93,25 @@ function bubble(){
 }
 function insertion(){
  const a=shuffled(6), work=[...a], stages=[];
- for(let i=1;i<work.length;i++){let key=work[i],j=i-1;while(j>=0&&work[j]>key){work[j+1]=work[j];j--}work[j+1]=key;stages.push([...work])}
- q.innerHTML='<span class="badge">INSERTION SORT</span><h2>Sort into ascending order</h2>'+arrayHTML(a)+'<p>Enter the array after each insertion.</p>';
- tableArea.innerHTML='<table><thead><tr><th>Insertion</th>'+a.map((_,i)=>'<th>Index '+i+'</th>').join('')+'</tr></thead><tbody>'+stages.map((p,i)=>'<tr><td>'+(i+1)+'</td>'+p.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+ for(let i=1;i<work.length;i++){
+   const key=work[i];let j=i-1;
+   while(j>=0&&work[j]>key){work[j+1]=work[j];j--}
+   work[j+1]=key;
+   stages.push({key:key,from:i,state:[...work]});
+ }
+ q.innerHTML='<span class="badge">INSERTION SORT</span><h2>Sort into ascending order</h2>'+arrayHTML(a)+'<p>Enter the complete array after each insertion. If the key is already in the correct place, the row may be unchanged.</p>';
+ tableArea.innerHTML='<table><thead><tr><th>Step</th><th>Key</th>'+a.map((_,i)=>'<th>Index '+i+'</th>').join('')+'</tr></thead><tbody>'+stages.map((p,i)=>'<tr><td>Insert '+(i+1)+'</td><td><strong>'+p.key+'</strong></td>'+p.state.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
 }
 function merge(){
  const a=shuffled(8), level1=[], level2=[], final=[...a].sort((x,y)=>x-y);
  for(let i=0;i<a.length;i+=2)level1.push([a[i],a[i+1]].sort((x,y)=>x-y));
  for(let i=0;i<level1.length;i+=2)level2.push([...level1[i],...level1[i+1]].sort((x,y)=>x-y));
- q.innerHTML='<span class="badge">MERGE SORT</span><h2>Merge back into ascending order</h2>'+arrayHTML(a)+'<p>The list has been split to single values. Complete the merge stages.</p>';
- let body='<tr><td>Merge pairs</td>'+level1.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
- body+='<tr><td>Merge groups of 4</td>'+level2.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
- body+='<tr><td>Final merge</td>'+final.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
- tableArea.innerHTML='<table><thead><tr><th>Stage</th>'+a.map((_,i)=>'<th>'+i+'</th>').join('')+'</tr></thead><tbody>'+body+'</tbody></table>';
+ const singles=a.map(v=>'['+v+']').join(' ');
+ q.innerHTML='<span class="badge">MERGE SORT</span><h2>Merge back into ascending order</h2>'+arrayHTML(a)+'<p><strong>Split to singles:</strong> <code>'+singles+'</code></p><p>Now merge neighbouring groups back together in ascending order. Keep the original left/right grouping at each stage.</p>';
+ let body='<tr><td>Merge pairs<br><span class="mini">4 groups × 2</span></td>'+level1.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ body+='<tr><td>Merge groups of 4<br><span class="mini">2 groups × 4</span></td>'+level2.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ body+='<tr><td>Final merge<br><span class="mini">1 group × 8</span></td>'+final.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ tableArea.innerHTML='<table><thead><tr><th>Stage</th>'+a.map((_,i)=>'<th>Position '+(i+1)+'</th>').join('')+'</tr></thead><tbody>'+body+'</tbody></table>';
 }
 function newQuestion(){questionChecked=false;feedback.className='feedback';({linear,binary,bubble,insertion,merge}[mode])()}
 function norm(s){return String(s).trim().replace(/\s+/g,' ').toUpperCase()}
