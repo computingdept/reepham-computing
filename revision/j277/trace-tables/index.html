@@ -42,7 +42,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.mini{font-s
     <button class="btn primary" id="newBtn">New question</button>
     <button class="btn secondary" id="checkBtn">Check answers</button>
     <button class="btn secondary" id="revealBtn">Reveal answers</button>
-    <span class="score" id="score">Score: 0 / 0</span>
+    <span class="score" id="score" aria-live="polite">Last check: — · Perfect questions: 0 / 0</span>
   </div>
 </section>
 
@@ -65,7 +65,7 @@ mid = (low + high) DIV 2</pre><p class="mini">The data must be sorted.</p></deta
 </section>
 </main>
 <script>
-let mode='linear', expected=[], attempts=0, earned=0;
+let mode='linear', expected=[], attempts=0, earned=0, questionChecked=false;
 const q=document.getElementById('question'), tableArea=document.getElementById('tableArea'), feedback=document.getElementById('feedback'), score=document.getElementById('score');
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function uniqueSorted(n){const s=new Set();while(s.size<n)s.add(rand(3,70));return [...s].sort((a,b)=>a-b)}
@@ -107,13 +107,13 @@ function merge(){
  body+='<tr><td>Final merge</td>'+final.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
  tableArea.innerHTML='<table><thead><tr><th>Stage</th>'+a.map((_,i)=>'<th>'+i+'</th>').join('')+'</tr></thead><tbody>'+body+'</tbody></table>';
 }
-function newQuestion(){feedback.className='feedback';({linear,binary,bubble,insertion,merge}[mode])()}
+function newQuestion(){questionChecked=false;feedback.className='feedback';({linear,binary,bubble,insertion,merge}[mode])()}
 function norm(s){return String(s).trim().replace(/\s+/g,' ').toUpperCase()}
 function check(reveal=false){
  const ins=[...document.querySelectorAll('input.trace')];let right=0;
  ins.forEach(el=>{const ok=norm(el.value)===norm(el.dataset.answer);if(reveal)el.value=el.dataset.answer;el.classList.remove('correct','wrong');el.classList.add((reveal||ok)?'correct':'wrong');if(ok)right++});
  if(reveal){setFeedback('<strong>Answers revealed.</strong> Generate a new question and try again without help.',true);return}
- attempts++;const pct=Math.round(right/ins.length*100);if(pct===100)earned++;score.textContent='Score: '+earned+' / '+attempts;
+ const pct=Math.round(right/ins.length*100);if(!questionChecked){attempts++;if(pct===100)earned++;questionChecked=true}else if(pct===100&&earned<attempts){earned++}score.textContent='Last check: '+pct+'% · Perfect questions: '+earned+' / '+attempts;
  setFeedback('<strong>'+right+' / '+ins.length+' correct ('+pct+'%).</strong> '+(pct===100?'Excellent — generate another question.':'Correct the highlighted cells, then check again.'),pct===100);
 }
 document.getElementById('modes').addEventListener('click',e=>{const b=e.target.closest('.mode');if(!b)return;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;newQuestion()});
