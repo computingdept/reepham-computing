@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 104 · Merge Sort</title>
+<meta name="description" content="OCR J277 Year 11: merge sort with OCR ERL, worked traces and ten practice questions.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+<style>
+/* Content-specific layout within the shared H446 classroom template. */
+.trace{width:100%;border-collapse:collapse;font-size:clamp(16px,1.3vw,22px)}
+.trace th,.trace td{border:1px solid var(--line);padding:.5em;text-align:left}
+.ido-reference,.wedo-reference{overflow-y:auto}
+.ido-reference .arithmetic,.wedo-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.25;white-space:pre-wrap}
+.binary-practice{height:100%;display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:16px}
+.binary-reference{min-height:0;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.binary-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.3;white-space:pre-wrap}
+.binary-reference h2{font-size:24px}
+.binary-practice .youdo-deck{min-height:0}
+.binary-practice .youdo-rolling{height:calc(100% - 32px);display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(0,1fr));gap:10px}
+.binary-practice .youdo-rolling .exam-card{overflow:auto;padding:12px 16px}
+.binary-practice .exam-card h3{font-size:clamp(19px,1.5vw,25px)}
+.binary-practice .question-text{font-size:clamp(16px,1.2vw,21px);line-height:1.35}
+@media(max-width:900px){.binary-practice{display:block;height:auto}.binary-reference{max-height:48vh;overflow:auto;margin-bottom:16px}.binary-practice .youdo-rolling{height:auto}.binary-practice .question-text{font-size:18px}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../j277-hub.html?year=11">← Year 11 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR J277 · Lesson 104<br>Merge Sort</span>
+  </div>
+</div>
+
+<main id="main">
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RECALL</strong><p>What does ascending order mean?</p></article><article class="donow-question"><strong>2 · RECALL</strong><p>Is a list of one item already sorted? Explain.</p></article><article class="donow-question"><strong>3 · APPLY</strong><p>Merge [2, 7] and [3, 5] into one sorted list.</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why must both input lists be sorted when you merge by checking only their next values?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>RECALL</h2><p class="review-question">What does ascending order mean?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Smallest to largest.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>RECALL</h2><p class="review-question">Is a list of one item already sorted? Explain.</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Yes. There are no other values to be out of order with it.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>APPLY</h2><p class="review-question">Merge [2, 7] and [3, 5] into one sorted list.</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">[2, 3, 5, 7].</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>CHALLENGE</h2><p class="review-question">Why must both input lists be sorted when you merge by checking only their next values?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Their next values must be the smallest remaining on each side; otherwise a smaller item could be hidden later.</p></article></div></div></div></section>
+<section id="overview" class="page" data-phase-time="4 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Merge Sort</h1><p>Year 11 · OCR J277 · 2.1.3 Sorting algorithms</p><div class="objectives"><strong>By the end, you can…</strong><ul><li>explain the stages of merge sort;</li><li>apply the sort to a set of data;</li><li>trace its OCR ERL implementation;</li><li>identify mistakes and justify corrections.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A sort that splits data into smaller parts, then merges sorted parts back together.">merge sort</span><span class="vocab-tip" tabindex="0" data-definition="Solve a problem by dividing it into smaller problems and combining their solutions.">divide and conquer</span><span class="vocab-tip" tabindex="0" data-definition="A smaller section of a list.">sublist</span><span class="vocab-tip" tabindex="0" data-definition="Combine two sorted lists into one sorted list.">merge</span><span class="vocab-tip" tabindex="0" data-definition="A subprogram calling itself.">recursion</span><span class="vocab-tip" tabindex="0" data-definition="A condition that stops further recursive calls.">base case</span><span class="vocab-tip" tabindex="0" data-definition="Additional storage used while building a merged result.">temporary array</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Split until single items remain."><span class="objective-vocab-count">TERM 1 OF 7</span><h2>merge sort</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A sort that splits data into smaller parts, then merges sorted parts back together.</p></div></article><article class="objective-vocab-stage" hidden data-support="Split, sort each half, merge."><span class="objective-vocab-count">TERM 2 OF 7</span><h2>divide and conquer</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Solve a problem by dividing it into smaller problems and combining their solutions.</p></div></article><article class="objective-vocab-stage" hidden data-support="Here low and high identify a section of the array."><span class="objective-vocab-count">TERM 3 OF 7</span><h2>sublist</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A smaller section of a list.</p></div></article><article class="objective-vocab-stage" hidden data-support="Compare the next available value from each side."><span class="objective-vocab-count">TERM 4 OF 7</span><h2>merge</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Combine two sorted lists into one sorted list.</p></div></article><article class="objective-vocab-stage" hidden data-support="mergeSort calls mergeSort on smaller ranges."><span class="objective-vocab-count">TERM 5 OF 7</span><h2>recursion</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A subprogram calling itself.</p></div></article><article class="objective-vocab-stage" hidden data-support="A section of zero or one item needs no sorting."><span class="objective-vocab-count">TERM 6 OF 7</span><h2>base case</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A condition that stops further recursive calls.</p></div></article><article class="objective-vocab-stage" hidden data-support="Copy temp back into values afterwards."><span class="objective-vocab-count">TERM 7 OF 7</span><h2>temporary array</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Additional storage used while building a merged result.</p></div></article></div></div></section>
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">OCR EXAM REFERENCE LANGUAGE</span><h2>Merge Sort · starter code</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><div class="nl-reference-note"><strong>Trace and explain the stages.</strong> The final two tasks extend this by adapting the code. <a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 6</span><h2>Split the range</h2><p>Find mid using DIV. Sort low..mid and mid + 1..high. The two ranges do not overlap.</p><span class="nl-stage-count">1 of 6</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 6</span><h2>Stop splitting</h2><p>A single item is already sorted. The condition low < high prevents another split for a section of one item.</p><span class="nl-stage-count">2 of 6</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 6</span><h2>Merge two sorted halves</h2><p>Set left = low and right = mid + 1. Compare the next available value from each half.</p><span class="nl-stage-count">3 of 6</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 6</span><h2>Copy the smaller value</h2><p>Put the smaller value into temp[out]. Advance that side's pointer and the output pointer.</p><span class="nl-stage-count">4 of 6</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 5 OF 6</span><h2>Copy leftovers</h2><p>When one half is exhausted, copy every remaining value from the other half. It is already sorted.</p><span class="nl-stage-count">5 of 6</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 6 OF 6</span><h2>Copy the merged range back</h2><p>Copy temp[low..high] to values[low..high]. The two sorted sections become one sorted section.</p><span class="nl-stage-count">6 of 6</span></div></article></div></section>
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Merge Sort · full trace</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><span class="ido-example-count">Algorithm beside every step</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 OF 6</span><h2>Split into halves</h2><pre class="arithmetic">[7, 3, 5, 2, 8, 1, 6, 4]
+[7, 3, 5, 2]     [8, 1, 6, 4]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 OF 6</span><h2>Split to single items</h2><pre class="arithmetic">[7, 3] [5, 2]   [8, 1] [6, 4]
+[7] [3] [5] [2] [8] [1] [6] [4]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 OF 6</span><h2>Merge pairs</h2><pre class="arithmetic">[3, 7] [2, 5]   [1, 8] [4, 6]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 OF 6</span><h2>Merge the left half</h2><pre class="arithmetic">Compare 3 and 2: take 2.
+Compare 3 and 5: take 3.
+Compare 7 and 5: take 5.
+Copy leftover 7.
+Result: [2, 3, 5, 7]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 5 OF 6</span><h2>Merge the right half</h2><pre class="arithmetic">Merge [1, 8] with [4, 6].
+Take 1, then 4, then 6.
+Copy leftover 8.
+Result: [1, 4, 6, 8]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 6 OF 6</span><h2>Final merge</h2><pre class="arithmetic">Compare the heads of [2, 3, 5, 7] and [1, 4, 6, 8].
+Take: 1, 2, 3, 4, 5, 6, 7.
+Copy leftover 8.
+Result: [1, 2, 3, 4, 5, 6, 7, 8]</pre></div></div></article></div></section>
+<section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Trace the splits</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 1 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Trace the splits</h2><p>Split [6, 2, 7, 1] down to single items. Then show the pair merges.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">[6, 2] [7, 1]
+[6] [2] [7] [1]
+[2, 6] [1, 7]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>The splits preserve the original order. Sorting happens during the merges.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Trace the comparisons</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 2 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Trace the comparisons</h2><p>Merge [2, 6] and [1, 7]. State each comparison and where leftovers appear.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">2 vs 1: take 1.
+2 vs 7: take 2.
+6 vs 7: take 6.
+Left exhausted: copy 7.
+Result: [1, 2, 6, 7]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>Three head comparisons, then one leftover copy.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Explain the stopping rules</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 3 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Explain the stopping rules</h2><p>Turn and talk: distinguish the recursive base case from the merge loop stopping.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">mergeSort stops splitting when low &gt;= high.
+The main merge loop stops when either half is exhausted.
+Leftover loops copy the remaining values.</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>A completed merge is copied back before the next larger merge begins.</p></div></div></article></div></section>
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes · Turn &amp; Talk, then Silence" data-window-size="3"><div class="binary-practice"><article class="binary-reference"><span class="phase-tag">USE THIS ALGORITHM</span><h2>Merge Sort · OCR ERL</h2><pre class="arithmetic">array values[8]
+array temp[8]
+values = [7, 3, 5, 2, 8, 1, 6, 4]
+
+procedure merge(low, mid, high)
+    left = low
+    right = mid + 1
+    out = low
+
+    while left &lt;= mid AND right &lt;= high
+        if values[left] &lt;= values[right] then
+            temp[out] = values[left]
+            left = left + 1
+        else
+            temp[out] = values[right]
+            right = right + 1
+        endif
+        out = out + 1
+    endwhile
+
+    while left &lt;= mid
+        temp[out] = values[left]
+        left = left + 1
+        out = out + 1
+    endwhile
+
+    while right &lt;= high
+        temp[out] = values[right]
+        right = right + 1
+        out = out + 1
+    endwhile
+
+    for i = low to high
+        values[i] = temp[i]
+    next i
+endprocedure
+
+procedure mergeSort(low, high)
+    if low &lt; high then
+        mid = (low + high) DIV 2
+        mergeSort(low, mid)
+        mergeSort(mid + 1, high)
+        merge(low, mid, high)
+    endif
+endprocedure
+
+mergeSort(0, 7)
+for i = 0 to 7
+    print(values[i])
+next i</pre><p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></p></article><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 1 · TEACHER PRACTICE</span><h3>Explain the strategy</h3><div class="question-text">Describe the two main stages of merge sort.</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 2 · TEACHER PRACTICE</span><h3>Base case</h3><div class="question-text">Why does a sublist of one item need no further sorting?</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 3 · TEACHER PRACTICE</span><h3>Show the first split</h3><div class="question-text">For <code>[7, 3, 5, 2, 8, 1, 6, 4]</code>, calculate the first midpoint index and show the two halves.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · TEACHER PRACTICE</span><h3>Trace a small sort</h3><div class="question-text">Show all splits and merges for <code>[8, 3, 6, 1]</code>.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 5 · TEACHER PRACTICE</span><h3>Merge two sorted lists</h3><div class="question-text">Merge <code>[2, 5, 9]</code> and <code>[1, 4, 8]</code>. Record each head comparison and identify the leftovers.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 6 · TEACHER PRACTICE</span><h3>Unsorted inputs</h3><div class="question-text">Explain why the merge procedure assumes each half is already sorted. Use an example.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 7 · TEACHER PRACTICE</span><h3>Read the pointers</h3><div class="question-text">Explain the roles of <code>left</code>, <code>right</code> and <code>out</code> in the merge procedure.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 8 · TEACHER PRACTICE</span><h3>Find the error</h3><div class="question-text">A student removes both leftover loops. Explain what could go wrong.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 9 · EXTENSION</span><h3>Duplicates · extension</h3><div class="question-text">Trace the merge of <code>[2, 4, 4]</code> and <code>[1, 4, 6]</code>. What does <code>&lt;=</code> do when two next values are equal?</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 10 · EXTENSION</span><h3>Descending order · extension</h3><div class="question-text">Adapt the merge comparison for descending order. Explain which stages stay the same and predict the starter array's final output.</div></article></div><div class="youdo-window-progress">Questions 1–3 of 10</div></div></div></section>
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 1 OF 7</span><h2>What is the term?</h2><p class="vocab-question">A sort that splits data into smaller parts, then merges sorted parts back together.</p><span class="vocab-stage-count">1 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">merge sort</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 2 OF 7</span><h2>What is the term?</h2><p class="vocab-question">Solve a problem by dividing it into smaller problems and combining their solutions.</p><span class="vocab-stage-count">2 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">divide and conquer</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 3 OF 7</span><h2>What is the term?</h2><p class="vocab-question">A smaller section of a list.</p><span class="vocab-stage-count">3 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">sublist</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 4 OF 7</span><h2>What is the term?</h2><p class="vocab-question">Combine two sorted lists into one sorted list.</p><span class="vocab-stage-count">4 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">merge</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 5 OF 7</span><h2>What is the term?</h2><p class="vocab-question">A subprogram calling itself.</p><span class="vocab-stage-count">5 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">recursion</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 6 OF 7</span><h2>What is the term?</h2><p class="vocab-question">A condition that stops further recursive calls.</p><span class="vocab-stage-count">6 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">base case</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 7 OF 7</span><h2>What is the term?</h2><p class="vocab-question">Additional storage used while building a merged result.</p><span class="vocab-stage-count">7 of 7</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">temporary array</div></div></article></div></section>
+<section id="exit" class="page phase-exit" data-phase-time="3 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">Merge sort sorts the data during splitting, so the merge stage can simply join the halves.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div><details class="answers"><summary>Reveal answer</summary><p>False. Splitting creates smaller parts. The merge stage compares and combines sorted parts into sorted larger parts.</p></details></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can trace and explain merge sort.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I need more practice with the steps.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need another worked example.</span></div></div></div></div></section>
+</main>
+<div class="lesson-footer">Lesson 104 · Merge Sort <span>Year 11 · OCR J277</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20261001-mobile2"></script>
+</body>
+</html>

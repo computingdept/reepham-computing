@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 102 · Bubble Sort</title>
+<meta name="description" content="OCR J277 Year 11: bubble sort with OCR ERL, worked traces and ten practice questions.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+<style>
+/* Content-specific layout within the shared H446 classroom template. */
+.trace{width:100%;border-collapse:collapse;font-size:clamp(16px,1.3vw,22px)}
+.trace th,.trace td{border:1px solid var(--line);padding:.5em;text-align:left}
+.ido-reference,.wedo-reference{overflow-y:auto}
+.ido-reference .arithmetic,.wedo-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.25;white-space:pre-wrap}
+.binary-practice{height:100%;display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:16px}
+.binary-reference{min-height:0;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.binary-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.3;white-space:pre-wrap}
+.binary-reference h2{font-size:24px}
+.binary-practice .youdo-deck{min-height:0}
+.binary-practice .youdo-rolling{height:calc(100% - 32px);display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(0,1fr));gap:10px}
+.binary-practice .youdo-rolling .exam-card{overflow:auto;padding:12px 16px}
+.binary-practice .exam-card h3{font-size:clamp(19px,1.5vw,25px)}
+.binary-practice .question-text{font-size:clamp(16px,1.2vw,21px);line-height:1.35}
+@media(max-width:900px){.binary-practice{display:block;height:auto}.binary-reference{max-height:48vh;overflow:auto;margin-bottom:16px}.binary-practice .youdo-rolling{height:auto}.binary-practice .question-text{font-size:18px}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../j277-hub.html?year=11">← Year 11 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR J277 · Lesson 102<br>Bubble Sort</span>
+  </div>
+</div>
+
+<main id="main">
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RECALL</strong><p>What is ascending order?</p></article><article class="donow-question"><strong>2 · RECALL</strong><p>What is the index of the first item in an array?</p></article><article class="donow-question"><strong>3 · APPLY</strong><p>What are the adjacent pairs in [7, 3, 5]?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why could values[i] = values[i + 1] lose a value during a swap?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>RECALL</h2><p class="review-question">What is ascending order?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Smallest to largest.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>RECALL</h2><p class="review-question">What is the index of the first item in an array?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">0.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>APPLY</h2><p class="review-question">What are the adjacent pairs in [7, 3, 5]?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">7 and 3; then 3 and 5.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>CHALLENGE</h2><p class="review-question">Why could values[i] = values[i + 1] lose a value during a swap?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">It overwrites the original value. Save it in a temporary variable first.</p></article></div></div></div></section>
+<section id="overview" class="page" data-phase-time="4 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Bubble Sort</h1><p>Year 11 · OCR J277 · 2.1.3 Sorting algorithms</p><div class="objectives"><strong>By the end, you can…</strong><ul><li>explain the stages of bubble sort;</li><li>apply the sort to a set of data;</li><li>trace its OCR ERL implementation;</li><li>identify mistakes and justify corrections.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A sort that repeatedly compares adjacent items and swaps items in the wrong order.">bubble sort</span><span class="vocab-tip" tabindex="0" data-definition="Next to each other in the array.">adjacent</span><span class="vocab-tip" tabindex="0" data-definition="One sweep through the part of the array still being sorted.">pass</span><span class="vocab-tip" tabindex="0" data-definition="Exchange the positions of two values.">swap</span><span class="vocab-tip" tabindex="0" data-definition="A Boolean variable recording whether an event has happened.">flag</span><span class="vocab-tip" tabindex="0" data-definition="Arranged from smallest to largest.">ascending order</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Compare neighbours."><span class="objective-vocab-count">TERM 1 OF 6</span><h2>bubble sort</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A sort that repeatedly compares adjacent items and swaps items in the wrong order.</p></div></article><article class="objective-vocab-stage" hidden data-support="values[i] and values[i + 1]"><span class="objective-vocab-count">TERM 2 OF 6</span><h2>adjacent</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Next to each other in the array.</p></div></article><article class="objective-vocab-stage" hidden data-support="Several comparisons happen in one pass."><span class="objective-vocab-count">TERM 3 OF 6</span><h2>pass</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One sweep through the part of the array still being sorted.</p></div></article><article class="objective-vocab-stage" hidden data-support="Use a temporary variable."><span class="objective-vocab-count">TERM 4 OF 6</span><h2>swap</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Exchange the positions of two values.</p></div></article><article class="objective-vocab-stage" hidden data-support="swapped records whether a swap occurred."><span class="objective-vocab-count">TERM 5 OF 6</span><h2>flag</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A Boolean variable recording whether an event has happened.</p></div></article><article class="objective-vocab-stage" hidden data-support="2, 3, 4, 5, 7"><span class="objective-vocab-count">TERM 6 OF 6</span><h2>ascending order</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Arranged from smallest to largest.</p></div></article></div></div></section>
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">OCR EXAM REFERENCE LANGUAGE</span><h2>Bubble Sort · starter code</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><div class="nl-reference-note"><strong>Trace and explain the stages.</strong> The final two tasks extend this by adapting the code. <a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 5</span><h2>Compare neighbours</h2><p>Compare <code>values[i]</code> with <code>values[i + 1]</code>. If the left value is larger, they are in the wrong order.</p><span class="nl-stage-count">1 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 5</span><h2>Swap without losing data</h2><p>Save the left value in temp; copy the right value left; copy temp right.</p><span class="nl-stage-count">2 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 5</span><h2>One pass settles the largest remaining value</h2><p>The largest value in the active range moves to its right-hand end. A pass contains several comparisons.</p><span class="nl-stage-count">3 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 5</span><h2>Reduce the active range</h2><p>Decrease last after each pass. The values beyond last are already in their final positions.</p><span class="nl-stage-count">4 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 5 OF 5</span><h2>Stop early</h2><p>Reset swapped to false before a pass. If no swaps happen in that complete pass, the array is sorted.</p><span class="nl-stage-count">5 of 5</span></div></article></div></section>
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Bubble Sort · full trace</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="ido-example-count">Algorithm beside every step</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 OF 6</span><h2>Start the first pass</h2><pre class="arithmetic">Start: 7 3 5 2 4
+last = 4; swapped = false</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 OF 6</span><h2>Compare indexes 0 and 1</h2><pre class="arithmetic">7 &gt; 3: swap
+3 7 5 2 4
+swapped = true</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 OF 6</span><h2>Compare indexes 1 and 2</h2><pre class="arithmetic">7 &gt; 5: swap
+3 5 7 2 4</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 OF 6</span><h2>Compare indexes 2 and 3</h2><pre class="arithmetic">7 &gt; 2: swap
+3 5 2 7 4</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 5 OF 6</span><h2>Compare indexes 3 and 4</h2><pre class="arithmetic">7 &gt; 4: swap
+3 5 2 4 7
+7 is now in its final position.</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 6 OF 6</span><h2>Finish the remaining passes</h2><pre class="arithmetic">Pass 2: 3 2 4 5 7
+Pass 3: 2 3 4 5 7
+Pass 4: 2 3 4 5 7 — no swaps, stop.</pre></div></div></article></div></section>
+<section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Trace a complete pass</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 1 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Trace a complete pass</h2><p>Trace the first pass on [9, 1, 6, 3, 2]. Show the array after each swap.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">1 9 6 3 2
+1 6 9 3 2
+1 6 3 9 2
+1 6 3 2 9</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>9 settles at the end. last becomes 3.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Explain the flag</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 2 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Explain the flag</h2><p>Why is swapped reset before every pass? What happens with [1, 2, 3, 4, 5]?</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">swapped = false
+No swaps happen in the first pass.
+The while loop then stops.</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>The flag describes the current pass, rather than remembering an earlier swap.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Change the direction</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 3 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Change the direction</h2><p>Turn and talk: which comparison makes the algorithm sort descending?</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">if values[i] &lt; values[i + 1] then</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>Swap when the left-hand value is smaller. The smallest remaining value moves right.</p></div></div></article></div></section>
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes · Turn &amp; Talk, then Silence" data-window-size="3"><div class="binary-practice"><article class="binary-reference"><span class="phase-tag">USE THIS ALGORITHM</span><h2>Bubble Sort · OCR ERL</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure bubbleSort()
+    last = 4
+    swapped = true
+
+    while swapped == true AND last &gt; 0
+        swapped = false
+        for i = 0 to last - 1
+            if values[i] &gt; values[i + 1] then
+                temp = values[i]
+                values[i] = values[i + 1]
+                values[i + 1] = temp
+                swapped = true
+            endif
+        next i
+        last = last - 1
+    endwhile
+endprocedure
+
+bubbleSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></p></article><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 1 · TEACHER PRACTICE</span><h3>Recognise the order</h3><div class="question-text">What does sorting in ascending order mean?</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 2 · TEACHER PRACTICE</span><h3>Adjacent comparisons</h3><div class="question-text">Which two array items are compared when <code>i = 2</code>?</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 3 · TEACHER PRACTICE</span><h3>Trace a swap</h3><div class="question-text">For <code>[7, 3, 5, 2, 4]</code>, show the three assignments used for the first swap and the resulting array.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · TEACHER PRACTICE</span><h3>Trace the first pass</h3><div class="question-text">Trace one complete pass on <code>[8, 2, 6, 1, 5]</code>. Show the array after every comparison.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 5 · TEACHER PRACTICE</span><h3>Trace the whole sort</h3><div class="question-text">Trace all passes on <code>[5, 1, 4, 2, 3]</code>. State the array at the end of each pass.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 6 · TEACHER PRACTICE</span><h3>Explain early stopping</h3><div class="question-text">Explain the purpose of <code>swapped</code> and why it is reset to false before each pass.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 7 · TEACHER PRACTICE</span><h3>Explain the bound</h3><div class="question-text">Why does the inner loop finish at <code>last - 1</code>, and why is <code>last</code> reduced after each pass?</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 8 · TEACHER PRACTICE</span><h3>Find the error</h3><div class="question-text">A student removes <code>temp = values[i]</code> and tries to swap using two assignments. Explain the error with an example.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 9 · EXTENSION</span><h3>Descending order · extension</h3><div class="question-text">Adapt the comparison to sort largest to smallest. Predict the output for <code>[7, 3, 5, 2, 4]</code>.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 10 · EXTENSION</span><h3>Compare cases · extension</h3><div class="question-text">For this algorithm, count adjacent-pair comparisons for <code>[1, 2, 3, 4, 5]</code> and <code>[5, 4, 3, 2, 1]</code>. Explain the difference.</div></article></div><div class="youdo-window-progress">Questions 1–3 of 10</div></div></div></section>
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 1 OF 6</span><h2>What is the term?</h2><p class="vocab-question">A sort that repeatedly compares adjacent items and swaps items in the wrong order.</p><span class="vocab-stage-count">1 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">bubble sort</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 2 OF 6</span><h2>What is the term?</h2><p class="vocab-question">Next to each other in the array.</p><span class="vocab-stage-count">2 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">adjacent</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 3 OF 6</span><h2>What is the term?</h2><p class="vocab-question">One sweep through the part of the array still being sorted.</p><span class="vocab-stage-count">3 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">pass</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 4 OF 6</span><h2>What is the term?</h2><p class="vocab-question">Exchange the positions of two values.</p><span class="vocab-stage-count">4 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">swap</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 5 OF 6</span><h2>What is the term?</h2><p class="vocab-question">A Boolean variable recording whether an event has happened.</p><span class="vocab-stage-count">5 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">flag</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 6 OF 6</span><h2>What is the term?</h2><p class="vocab-question">Arranged from smallest to largest.</p><span class="vocab-stage-count">6 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">ascending order</div></div></article></div></section>
+<section id="exit" class="page phase-exit" data-phase-time="3 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">A complete pass containing no swaps means the array is sorted.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div><details class="answers"><summary>Reveal answer</summary><p>True. Every adjacent pair in the active range is ordered; the excluded suffix is already settled.</p></details></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can trace and explain bubble sort.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I need more practice with the steps.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need another worked example.</span></div></div></div></div></section>
+</main>
+<div class="lesson-footer">Lesson 102 · Bubble Sort <span>Year 11 · OCR J277</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20261001-mobile2"></script>
+</body>
+</html>

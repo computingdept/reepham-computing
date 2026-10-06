@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 101 · Binary Search · Solutions</title>
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
+<style>
+body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-title{font-weight:900;color:var(--green-dark)}.answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}.answer-stage{height:100%;display:flex;justify-content:center}.answer-stage[hidden]{display:none!important}.solution-card{width:min(1150px,100%);height:100%;overflow:auto;background:#fff;border:1px solid var(--line);border-top:7px solid var(--green);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}.solution-card h2{margin:4px 0 8px;font-size:clamp(24px,1.9vw,31px)}.solution-card p{font-size:clamp(16px,1.1vw,20px);line-height:1.3}.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(14px,1vw,18px)/1.28 Consolas,"Courier New",monospace}.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}#next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.solution-card{height:auto;overflow:visible}}
+@media(max-width:700px){.answer-controls{display:none}main.answer-stage-wrap{padding-bottom:18px}} .solution-card .arithmetic{white-space:pre-wrap;font-size:clamp(16px,1.1vw,20px);line-height:1.35}</style></head><body class="answer-page">
+<header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span class="answer-title">LESSON 101 · BINARY SEARCH · SOLUTIONS</span><span class="answer-counter" id="answer-counter">Solution 1 of 10</span></header>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">QUESTION 1 · TEACHER MODEL ANSWER</span><h2>Identify the inputs</h2><p><code>dataArray</code>: the sorted array being searched. <code>target</code>: the value to find. <code>size</code>: the number of items in the array.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · TEACHER MODEL ANSWER</span><h2>Starting bounds</h2><p>Indexes start at 0. An array with <code>size</code> items has a final index of <code>size - 1</code>. These bounds include every item without going beyond the array.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · TEACHER MODEL ANSWER</span><h2>Calculate the midpoint</h2><pre class="arithmetic">mid = (0 + 7) DIV 2 = 3
+numbers[3] = 18</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · TEACHER MODEL ANSWER</span><h2>First comparison</h2><pre class="arithmetic">numbers[3] = 18
+18 &lt; 24
+low = mid + 1 = 4</pre><p>The target is larger than 18, so sorted order rules out indexes 0–3.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 5 · TEACHER MODEL ANSWER</span><h2>Successful trace</h2><pre class="arithmetic">low high mid value action
+ 0    7   3    18  low = 4
+ 4    7   5    31  low = 6
+ 6    7   6    45  return 6</pre><p>45 is at index 6, the seventh item.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 6 · TEACHER MODEL ANSWER</span><h2>Unsuccessful trace</h2><pre class="arithmetic">low high mid value action
+ 0    7   3    18  low = 4
+ 4    7   5    31  high = 4
+ 4    4   4    24  high = 3
+
+low = 4; high = 3
+The loop condition is false.
+return -1</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 7 · TEACHER MODEL ANSWER</span><h2>Sorted data</h2><p>Ordering lets the algorithm decide which half cannot contain the target. Example: <code>[3, 24, 12, 18, 7, 31, 45, 60]</code>, target 24. The first midpoint is index 3, value 18. It sets low = 4 and discards indexes 0–3, including the target at index 1. The search then returns -1 even though 24 is present.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 8 · TEACHER MODEL ANSWER</span><h2>Find the error</h2><pre class="arithmetic">Array: [3, 7]    target = 7
+low = 0; high = 1
+mid = (0 + 1) DIV 2 = 0
+value = 3
+
+Incorrect: low = mid = 0
+The bounds never change. The loop repeats.
+Correct: low = mid + 1 = 1</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 9 · TEACHER MODEL ANSWER</span><h2>Position versus index</h2><pre class="arithmetic">if position == -1 then
+    print(&quot;Value not found&quot;)
+else
+    print(&quot;Found at position &quot; + str(position + 1))
+endif</pre><p>For target 24, index 4 becomes position 5. Keep the not-found check before adding 1.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 10 · TEACHER MODEL ANSWER</span><h2>Descending order · stretch</h2><pre class="arithmetic">function binarySearchDescending(dataArray, target, size)
+    low = 0
+    high = size - 1
+
+    while low &lt;= high
+        mid = (low + high) DIV 2
+
+        if dataArray[mid] == target then
+            return mid
+        elseif dataArray[mid] &gt; target then
+            low = mid + 1
+        else
+            high = mid - 1
+        endif
+    endwhile
+
+    return -1
+endfunction</pre><pre class="arithmetic">array numbers[8]
+numbers = [60, 45, 31, 24, 18, 12, 7, 3]
+print(binarySearchDescending(numbers, 24, 8))
+print(binarySearchDescending(numbers, 20, 8))</pre><p>Expected results: <strong>3</strong> and <strong>-1</strong>. When the middle value is greater than the target, keep the right-hand half. When it is smaller, keep the left-hand half.</p></article></section></main>
+<div class="answer-controls"><button type="button" id="previous-answer" disabled>← Previous solution</button><a href="index.html#you-do">Return to You Do</a><button type="button" id="next-answer">Next solution →</button></div>
+<script>
+const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;
+function showAnswer(index){current=Math.max(0,Math.min(index,stages.length-1));stages.forEach((s,i)=>s.hidden=i!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to You Do →':'Next solution →';counter.textContent='Solution '+(current+1)+' of '+stages.length}
+function goNext(){if(current<stages.length-1)showAnswer(current+1);else location.href='index.html#you-do'}function goPrevious(){if(current>0)showAnswer(current-1)}
+next.addEventListener('click',goNext);previous.addEventListener('click',goPrevious);document.addEventListener('keydown',e=>{if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrevious()}});showAnswer(0);
+</script><script src="../../../assets/h446-lesson/answer-swipe.js?v=20261001-mobile3"></script></body></html>

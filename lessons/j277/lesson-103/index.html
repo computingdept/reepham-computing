@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 103 · Insertion Sort</title>
+<meta name="description" content="OCR J277 Year 11: insertion sort with OCR ERL, worked traces and ten practice questions.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+<style>
+/* Content-specific layout within the shared H446 classroom template. */
+.trace{width:100%;border-collapse:collapse;font-size:clamp(16px,1.3vw,22px)}
+.trace th,.trace td{border:1px solid var(--line);padding:.5em;text-align:left}
+.ido-reference,.wedo-reference{overflow-y:auto}
+.ido-reference .arithmetic,.wedo-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.25;white-space:pre-wrap}
+.binary-practice{height:100%;display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:16px}
+.binary-reference{min-height:0;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.binary-reference .arithmetic{font-size:clamp(14px,1.05vw,18px);line-height:1.3;white-space:pre-wrap}
+.binary-reference h2{font-size:24px}
+.binary-practice .youdo-deck{min-height:0}
+.binary-practice .youdo-rolling{height:calc(100% - 32px);display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(0,1fr));gap:10px}
+.binary-practice .youdo-rolling .exam-card{overflow:auto;padding:12px 16px}
+.binary-practice .exam-card h3{font-size:clamp(19px,1.5vw,25px)}
+.binary-practice .question-text{font-size:clamp(16px,1.2vw,21px);line-height:1.35}
+@media(max-width:900px){.binary-practice{display:block;height:auto}.binary-reference{max-height:48vh;overflow:auto;margin-bottom:16px}.binary-practice .youdo-rolling{height:auto}.binary-practice .question-text{font-size:18px}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+
+<div class="navwrap">
+  <a class="course-back" href="../../../j277-hub.html?year=11">← Year 11 lessons</a>
+  <nav class="phase-nav" aria-label="Lesson phases">
+    <button type="button" data-page="do-now">Do Now</button>
+    <button type="button" data-page="overview">Objectives</button>
+    <button type="button" data-page="new-learning">New Learning</button>
+    <button type="button" data-page="i-do">I Do</button>
+    <button type="button" data-page="we-do">We Do</button>
+    <button type="button" data-page="you-do">You Do</button>
+    <button type="button" data-page="vocabulary">Key Vocabulary</button>
+    <button type="button" data-page="exit">Exit Ticket</button>
+  </nav>
+  <div class="nav-tools">
+    <button id="advance" class="control-btn">Continue →</button>
+    <button id="previous" class="back-btn">← Previous</button>
+    <p id="page-count"></p>
+  </div>
+</div>
+
+<div class="signal-wrap">
+  <div class="signals" aria-label="Classroom routine">
+    <span id="phase-logo" class="signal-tile signal-phase"></span>
+    <span id="behaviour-logo" class="signal-tile signal-routine"></span>
+    <span id="response-logo" class="signal-tile signal-response"></span>
+  </div>
+  <div class="signal-meta">
+    <span id="phase-time" class="signal-phase-time"></span>
+    <span class="lesson-label">OCR J277 · Lesson 103<br>Insertion Sort</span>
+  </div>
+</div>
+
+<main id="main">
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RECALL</strong><p>What does ascending order mean?</p></article><article class="donow-question"><strong>2 · RECALL</strong><p>How many values are in an array indexed 0–4?</p></article><article class="donow-question"><strong>3 · APPLY</strong><p>Where should 4 be inserted into [2, 3, 7]?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>How can you make room for 4 in [2, 3, 7, 4] without losing it?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>RECALL</h2><p class="review-question">What does ascending order mean?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Smallest to largest.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>RECALL</h2><p class="review-question">How many values are in an array indexed 0–4?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Five.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>APPLY</h2><p class="review-question">Where should 4 be inserted into [2, 3, 7]?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Between 3 and 7.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>CHALLENGE</h2><p class="review-question">How can you make room for 4 in [2, 3, 7, 4] without losing it?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Save 4 as the key; shift 7 right; insert 4 into the gap.</p></article></div></div></div></section>
+<section id="overview" class="page" data-phase-time="4 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Insertion Sort</h1><p>Year 11 · OCR J277 · 2.1.3 Sorting algorithms</p><div class="objectives"><strong>By the end, you can…</strong><ul><li>explain the stages of insertion sort;</li><li>apply the sort to a set of data;</li><li>trace its OCR ERL implementation;</li><li>identify mistakes and justify corrections.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list"><span class="vocab-tip" tabindex="0" data-definition="A sort that inserts each new item into the correct place in a growing sorted section.">insertion sort</span><span class="vocab-tip" tabindex="0" data-definition="The value currently being inserted into the sorted section.">key</span><span class="vocab-tip" tabindex="0" data-definition="Move a value one position to make room.">shift</span><span class="vocab-tip" tabindex="0" data-definition="The part of the array already in the correct relative order.">sorted section</span><span class="vocab-tip" tabindex="0" data-definition="The numbered position of an item in an array.">index</span><span class="vocab-tip" tabindex="0" data-definition="One repetition of the loop's instructions.">iteration</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Start with a sorted section of one item."><span class="objective-vocab-count">TERM 1 OF 6</span><h2>insertion sort</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A sort that inserts each new item into the correct place in a growing sorted section.</p></div></article><article class="objective-vocab-stage" hidden data-support="Save values[i] before shifting."><span class="objective-vocab-count">TERM 2 OF 6</span><h2>key</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The value currently being inserted into the sorted section.</p></div></article><article class="objective-vocab-stage" hidden data-support="Larger values move one position right."><span class="objective-vocab-count">TERM 3 OF 6</span><h2>shift</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Move a value one position to make room.</p></div></article><article class="objective-vocab-stage" hidden data-support="It grows by one item per iteration."><span class="objective-vocab-count">TERM 4 OF 6</span><h2>sorted section</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The part of the array already in the correct relative order.</p></div></article><article class="objective-vocab-stage" hidden data-support="The first index is 0."><span class="objective-vocab-count">TERM 5 OF 6</span><h2>index</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The numbered position of an item in an array.</p></div></article><article class="objective-vocab-stage" hidden data-support="Each outer iteration inserts one key."><span class="objective-vocab-count">TERM 6 OF 6</span><h2>iteration</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One repetition of the loop's instructions.</p></div></article></div></div></section>
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">OCR EXAM REFERENCE LANGUAGE</span><h2>Insertion Sort · starter code</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><div class="nl-reference-note"><strong>Trace and explain the stages.</strong> The final two tasks extend this by adapting the code. <a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 5</span><h2>Begin with one sorted item</h2><p>The value at index 0 forms a sorted section of one. The outer loop therefore starts at index 1.</p><span class="nl-stage-count">1 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 5</span><h2>Save the key</h2><p>Store values[i] in key before moving other values. Set j to the index immediately to its left.</p><span class="nl-stage-count">2 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 5</span><h2>Shift larger values right</h2><p>While j is valid and values[j] is greater than key, copy that value to j + 1, then move j left.</p><span class="nl-stage-count">3 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 5</span><h2>Insert into the gap</h2><p>The correct gap is j + 1. This also works when j has become -1: insert at index 0.</p><span class="nl-stage-count">4 of 5</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 5 OF 5</span><h2>Grow the sorted section</h2><p>Repeat for the next key. Unlike bubble sort, the stored key is placed after shifting larger values.</p><span class="nl-stage-count">5 of 5</span></div></article></div></section>
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>Insertion Sort · full trace</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="ido-example-count">Algorithm beside every step</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 OF 6</span><h2>Initial sorted section</h2><pre class="arithmetic">[7] | 3 5 2 4
+Index 0 is treated as sorted.</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 OF 6</span><h2>Insert key 3</h2><pre class="arithmetic">i = 1; key = 3; j = 0
+Shift 7 right: 7 7 5 2 4
+j = -1; insert at j + 1 = 0
+[3 7] | 5 2 4</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 OF 6</span><h2>Insert key 5</h2><pre class="arithmetic">i = 2; key = 5; j = 1
+Shift 7 right: 3 7 7 2 4
+Stop at 3; insert at index 1
+[3 5 7] | 2 4</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 OF 6</span><h2>Insert key 2</h2><pre class="arithmetic">i = 3; key = 2
+Shift 7, then 5, then 3 right.
+Insert at index 0.
+[2 3 5 7] | 4</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 5 OF 6</span><h2>Insert key 4</h2><pre class="arithmetic">i = 4; key = 4
+Shift 7, then 5 right.
+Stop at 3; insert at index 2.
+[2 3 4 5 7]</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 6 OF 6</span><h2>Check the invariant</h2><pre class="arithmetic">After each outer iteration, indexes 0 through i are in sorted order.
+Temporary duplicates during shifting are expected: key preserves the displaced value.</pre></div></div></article></div></section>
+<section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 1</span><h2>Insert one key</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 1 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Insert one key</h2><p>The sorted section is [2, 6, 9] and key = 5. Which items shift? Where is 5 inserted?</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">Shift 9 from index 2 to 3.
+Shift 6 from index 1 to 2.
+Stop at 2 (index 0).
+Insert 5 at index 1.
+Result: [2, 5, 6, 9]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>The final j is 0, so insert at j + 1.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 2</span><h2>Trace two iterations</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 2 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Trace two iterations</h2><p>Trace the first two outer iterations on [6, 4, 5, 1, 2].</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">i = 1, key = 4: [4, 6, 5, 1, 2]
+i = 2, key = 5: [4, 5, 6, 1, 2]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>The sorted section grows from one item to three.</p></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE 3</span><h2>Change the direction</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><span class="wedo-example-count">Example 3 of 3</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Change the direction</h2><p>Turn and talk: which comparison creates descending order?</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK THE METHOD</span><h2>Worked response</h2><pre class="arithmetic">while j &gt;= 0 AND values[j] &lt; key</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">EXPLAIN WHY</span><h2>Reasoning</h2><p>Shift smaller values right so larger keys can be inserted on the left.</p></div></div></article></div></section>
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes · Turn &amp; Talk, then Silence" data-window-size="3"><div class="binary-practice"><article class="binary-reference"><span class="phase-tag">USE THIS ALGORITHM</span><h2>Insertion Sort · OCR ERL</h2><pre class="arithmetic">array values[5]
+values = [7, 3, 5, 2, 4]
+
+procedure insertionSort()
+    for i = 1 to 4
+        key = values[i]
+        j = i - 1
+
+        while j &gt;= 0 AND values[j] &gt; key
+            values[j + 1] = values[j]
+            j = j - 1
+        endwhile
+
+        values[j + 1] = key
+    next i
+endprocedure
+
+insertionSort()
+for i = 0 to 4
+    print(values[i])
+next i</pre><p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open OCR ERL interpreter</a></p></article><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 1 · TEACHER PRACTICE</span><h3>Sorted section</h3><div class="question-text">Why does the outer loop begin at index <code>1</code>?</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 2 · TEACHER PRACTICE</span><h3>Identify the key</h3><div class="question-text">For the starter array, state <code>key</code> and <code>j</code> at the start of the first outer iteration.</div></article><article class="exam-card youdo-question"><span class="phase-tag">QUESTION 3 · TEACHER PRACTICE</span><h3>First insertion</h3><div class="question-text">Show every change made while inserting the first key in <code>[7, 3, 5, 2, 4]</code>.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 4 · TEACHER PRACTICE</span><h3>One insertion</h3><div class="question-text">Insert <strong>4</strong> into the sorted section <code>[1, 3, 6, 8]</code>. List the shifts and the insertion index.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 5 · TEACHER PRACTICE</span><h3>Full trace</h3><div class="question-text">Trace insertion sort on <code>[5, 2, 4, 1, 3]</code>. Show the array after each outer iteration.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 6 · TEACHER PRACTICE</span><h3>Explain the saved key</h3><div class="question-text">Why must <code>key</code> be stored before the shifting begins?</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 7 · TEACHER PRACTICE</span><h3>Explain the bounds</h3><div class="question-text">Explain both parts of <code>j >= 0 AND values[j] > key</code>.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 8 · TEACHER PRACTICE</span><h3>Find the error</h3><div class="question-text">A student uses <code>values[j] = key</code> after the while loop. Explain why the correct position is <code>j + 1</code>.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 9 · EXTENSION</span><h3>Descending order · extension</h3><div class="question-text">Adapt the algorithm to descending order. Predict the output for the starter array.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION 10 · EXTENSION</span><h3>Count shifts · extension</h3><div class="question-text">Count rightward shifts for <code>[1, 2, 3, 4, 5]</code> and <code>[5, 4, 3, 2, 1]</code>. Explain the difference.</div></article></div><div class="youdo-window-progress">Questions 1–3 of 10</div></div></div></section>
+<section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 1 OF 6</span><h2>What is the term?</h2><p class="vocab-question">A sort that inserts each new item into the correct place in a growing sorted section.</p><span class="vocab-stage-count">1 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">insertion sort</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 2 OF 6</span><h2>What is the term?</h2><p class="vocab-question">The value currently being inserted into the sorted section.</p><span class="vocab-stage-count">2 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">key</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 3 OF 6</span><h2>What is the term?</h2><p class="vocab-question">Move a value one position to make room.</p><span class="vocab-stage-count">3 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">shift</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 4 OF 6</span><h2>What is the term?</h2><p class="vocab-question">The part of the array already in the correct relative order.</p><span class="vocab-stage-count">4 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">sorted section</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 5 OF 6</span><h2>What is the term?</h2><p class="vocab-question">The numbered position of an item in an array.</p><span class="vocab-stage-count">5 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">index</div></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION 6 OF 6</span><h2>What is the term?</h2><p class="vocab-question">One repetition of the loop's instructions.</p><span class="vocab-stage-count">6 of 6</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">iteration</div></div></article></div></section>
+<section id="exit" class="page phase-exit" data-phase-time="3 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">Insertion sort shifts larger values right before inserting a saved key.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div><details class="answers"><summary>Reveal answer</summary><p>True for ascending order. The saved key is then placed in the gap at j + 1.</p></details></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can trace and explain insertion sort.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I need more practice with the steps.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need another worked example.</span></div></div></div></div></section>
+</main>
+<div class="lesson-footer">Lesson 103 · Insertion Sort <span>Year 11 · OCR J277</span></div>
+<script src="../../../assets/h446-lesson/lesson.js?v=20261001-mobile2"></script>
+</body>
+</html>
