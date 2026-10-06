@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#006347">
+<title>Trace Tables · OCR J277 Revision</title>
+<style>
+:root{--green:#006347;--dark:#003a31;--mid:#246b55;--pale:#e8f2ee;--wash:#f5f9f7;--line:#cdded7;--ink:#17312a;--muted:#587068;--good:#e7f6ec;--bad:#fdeaea}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f3f7f5;color:var(--ink)}
+header{background:linear-gradient(135deg,var(--dark),var(--green));color:white;padding:20px}
+header .wrap,main{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:16px;align-items:center}.back{color:white;text-decoration:none;font-weight:800}
+h1{margin:12px 0 6px;font-size:clamp(30px,5vw,54px)}.sub{margin:0;opacity:.9;max-width:760px}
+main{padding:20px}.panel{background:white;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 28px rgba(0,60,45,.07);padding:18px;margin-bottom:18px}
+.mode-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.mode{border:1px solid var(--line);background:var(--wash);border-radius:10px;padding:12px;cursor:pointer;text-align:left}.mode strong{display:block;color:var(--dark);font-size:17px}.mode span{font-size:13px;color:var(--muted)}.mode.active{outline:3px solid #84b8a7;background:var(--pale)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:850;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:var(--pale);color:var(--dark);border:1px solid var(--line)}.score{margin-left:auto;font-weight:900;color:var(--dark)}
+.problem{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:18px}.data-box,.help{background:var(--wash);border:1px solid var(--line);border-radius:10px;padding:14px}
+.array{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.cell{min-width:48px;text-align:center}.idx{font-size:11px;color:var(--muted)}.val{padding:9px 7px;background:white;border:1px solid var(--line);border-radius:6px;font-weight:850}
+table{border-collapse:collapse;width:100%;margin-top:12px}th,td{border:1px solid var(--line);padding:7px;text-align:center}th{background:var(--pale);color:var(--dark);font-size:13px}input.trace{width:100%;min-width:62px;border:1px solid #9fbab0;border-radius:5px;padding:7px;text-align:center;font:inherit;background:white}input.correct{background:var(--good);border-color:#62a675}input.wrong{background:var(--bad);border-color:#c46969}
+.feedback{margin-top:12px;padding:12px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.good{background:var(--good)}.feedback.bad{background:var(--bad)}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.mini{font-size:13px;color:var(--muted)}details{margin-top:10px}summary{cursor:pointer;font-weight:800}
+.badge{display:inline-block;background:var(--pale);color:var(--dark);padding:5px 9px;border-radius:999px;font-size:12px;font-weight:900}
+@media(max-width:900px){.mode-grid{grid-template-columns:1fr 1fr}.problem{grid-template-columns:1fr}.score{margin-left:0;width:100%}table{font-size:13px}th,td{padding:5px}input.trace{min-width:50px;padding:6px}}
+@media(max-width:520px){.mode-grid{grid-template-columns:1fr}.panel{padding:12px}main{padding:10px}.table-wrap{overflow-x:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="top"><a class="back" href="../../../j277-hub.html?year=11#revisionhub">← Year 11 Revision Hub</a><span class="badge">OCR J277 · ALGORITHMS</span></div><h1>Self-marking trace tables</h1><p class="sub">Practise searching and sorting algorithms. Complete the trace, check your answer instantly, then generate another problem.</p></div></header>
+<main>
+<section class="panel">
+  <div class="mode-grid" id="modes">
+    <button class="mode active" data-mode="linear"><strong>Linear search</strong><span>index · value · found?</span></button>
+    <button class="mode" data-mode="binary"><strong>Binary search</strong><span>low · high · mid</span></button>
+    <button class="mode" data-mode="bubble"><strong>Bubble sort</strong><span>trace each pass</span></button>
+    <button class="mode" data-mode="insertion"><strong>Insertion sort</strong><span>trace each insertion</span></button>
+    <button class="mode" data-mode="merge"><strong>Merge sort</strong><span>split and merge stages</span></button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="controls">
+    <button class="btn primary" id="newBtn">New question</button>
+    <button class="btn secondary" id="checkBtn">Check answers</button>
+    <button class="btn secondary" id="revealBtn">Reveal answers</button>
+    <span class="score" id="score">Score: 0 / 0</span>
+  </div>
+</section>
+
+<section class="panel problem">
+  <div>
+    <div id="question"></div>
+    <div class="table-wrap" id="tableArea"></div>
+    <div id="feedback" class="feedback"></div>
+  </div>
+  <aside class="help">
+    <h2 style="margin-top:0">How to use it</h2>
+    <p>Enter the values that the algorithm would produce at each stage. Use <strong>Check answers</strong> for instant marking.</p>
+    <details><summary>Binary search reminder</summary><pre>low = 0
+high = size - 1
+mid = (low + high) DIV 2</pre><p class="mini">The data must be sorted.</p></details>
+    <details><summary>Bubble sort reminder</summary><p class="mini">Compare adjacent values and swap them when they are in the wrong order. After each pass, the largest remaining value has bubbled right.</p></details>
+    <details><summary>Insertion sort reminder</summary><p class="mini">Treat the left side as sorted. Take the next value and insert it into the correct position in that sorted section.</p></details>
+    <details><summary>Merge sort reminder</summary><p class="mini">Repeatedly split the list into smaller lists, then merge the lists back together in order.</p></details>
+  </aside>
+</section>
+</main>
+<script>
+let mode='linear', expected=[], attempts=0, earned=0;
+const q=document.getElementById('question'), tableArea=document.getElementById('tableArea'), feedback=document.getElementById('feedback'), score=document.getElementById('score');
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+function uniqueSorted(n){const s=new Set();while(s.size<n)s.add(rand(3,70));return [...s].sort((a,b)=>a-b)}
+function shuffled(n){const a=uniqueSorted(n);for(let i=a.length-1;i>0;i--){const j=rand(0,i);[a[i],a[j]]=[a[j],a[i]]}return a}
+function arrayHTML(a){return '<div class="array">'+a.map((v,i)=>'<div class="cell"><div class="idx">index '+i+'</div><div class="val">'+v+'</div></div>').join('')+'</div>'}
+function inp(ans){return '<input class="trace" autocomplete="off" data-answer="'+String(ans).replace(/"/g,'&quot;')+'">'}
+function setFeedback(msg,good){feedback.className='feedback show '+(good?'good':'bad');feedback.innerHTML=msg}
+function linear(){
+ const a=shuffled(7), target=Math.random()<.75?a[rand(0,a.length-1)]:rand(71,90), rows=[]; let found=false;
+ for(let i=0;i<a.length;i++){const hit=a[i]===target;rows.push([i,a[i],hit?'YES':'NO']);if(hit){found=true;break}}
+ q.innerHTML='<span class="badge">LINEAR SEARCH</span><h2>Find '+target+'</h2>'+arrayHTML(a)+'<p>Trace each item checked. Write <strong>YES</strong> or <strong>NO</strong> in the final column.</p>';
+ tableArea.innerHTML='<table><thead><tr><th>Step</th><th>Index checked</th><th>Value checked</th><th>Found?</th></tr></thead><tbody>'+rows.map((r,i)=>'<tr><td>'+(i+1)+'</td><td>'+inp(r[0])+'</td><td>'+inp(r[1])+'</td><td>'+inp(r[2])+'</td></tr>').join('')+'</tbody></table>';
+}
+function binary(){
+ const a=uniqueSorted(8), target=Math.random()<.75?a[rand(0,a.length-1)]:rand(71,90), rows=[];let low=0,high=a.length-1;
+ while(low<=high){const mid=Math.floor((low+high)/2),v=a[mid];let action;if(v===target){action='FOUND';rows.push([low,high,mid,v,action]);break}else if(v<target){action='low = '+(mid+1);rows.push([low,high,mid,v,action]);low=mid+1}else{action='high = '+(mid-1);rows.push([low,high,mid,v,action]);high=mid-1}}
+ q.innerHTML='<span class="badge">BINARY SEARCH</span><h2>Find '+target+'</h2>'+arrayHTML(a)+'<p>Complete each iteration. For the action, enter exactly <code>FOUND</code>, <code>low = n</code> or <code>high = n</code>.</p>';
+ tableArea.innerHTML='<table><thead><tr><th>Iteration</th><th>low</th><th>high</th><th>mid</th><th>Value</th><th>Action</th></tr></thead><tbody>'+rows.map((r,i)=>'<tr><td>'+(i+1)+'</td>'+r.map(inp).map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function bubble(){
+ const a=shuffled(6), work=[...a], passes=[];let swapped=true, end=work.length-1;
+ while(swapped&&end>0){swapped=false;for(let i=0;i<end;i++){if(work[i]>work[i+1]){[work[i],work[i+1]]=[work[i+1],work[i]];swapped=true}}passes.push([...work]);end--}
+ q.innerHTML='<span class="badge">BUBBLE SORT</span><h2>Sort into ascending order</h2>'+arrayHTML(a)+'<p>Enter the complete array after each pass.</p>';
+ tableArea.innerHTML='<table><thead><tr><th>Pass</th>'+a.map((_,i)=>'<th>Index '+i+'</th>').join('')+'</tr></thead><tbody>'+passes.map((p,i)=>'<tr><td>'+(i+1)+'</td>'+p.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function insertion(){
+ const a=shuffled(6), work=[...a], stages=[];
+ for(let i=1;i<work.length;i++){let key=work[i],j=i-1;while(j>=0&&work[j]>key){work[j+1]=work[j];j--}work[j+1]=key;stages.push([...work])}
+ q.innerHTML='<span class="badge">INSERTION SORT</span><h2>Sort into ascending order</h2>'+arrayHTML(a)+'<p>Enter the array after each insertion.</p>';
+ tableArea.innerHTML='<table><thead><tr><th>Insertion</th>'+a.map((_,i)=>'<th>Index '+i+'</th>').join('')+'</tr></thead><tbody>'+stages.map((p,i)=>'<tr><td>'+(i+1)+'</td>'+p.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function merge(){
+ const a=shuffled(8), level1=[], level2=[], final=[...a].sort((x,y)=>x-y);
+ for(let i=0;i<a.length;i+=2)level1.push([a[i],a[i+1]].sort((x,y)=>x-y));
+ for(let i=0;i<level1.length;i+=2)level2.push([...level1[i],...level1[i+1]].sort((x,y)=>x-y));
+ q.innerHTML='<span class="badge">MERGE SORT</span><h2>Merge back into ascending order</h2>'+arrayHTML(a)+'<p>The list has been split to single values. Complete the merge stages.</p>';
+ let body='<tr><td>Merge pairs</td>'+level1.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ body+='<tr><td>Merge groups of 4</td>'+level2.flat().map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ body+='<tr><td>Final merge</td>'+final.map(v=>'<td>'+inp(v)+'</td>').join('')+'</tr>';
+ tableArea.innerHTML='<table><thead><tr><th>Stage</th>'+a.map((_,i)=>'<th>'+i+'</th>').join('')+'</tr></thead><tbody>'+body+'</tbody></table>';
+}
+function newQuestion(){feedback.className='feedback';({linear,binary,bubble,insertion,merge}[mode])()}
+function norm(s){return String(s).trim().replace(/\s+/g,' ').toUpperCase()}
+function check(reveal=false){
+ const ins=[...document.querySelectorAll('input.trace')];let right=0;
+ ins.forEach(el=>{const ok=norm(el.value)===norm(el.dataset.answer);if(reveal)el.value=el.dataset.answer;el.classList.remove('correct','wrong');el.classList.add((reveal||ok)?'correct':'wrong');if(ok)right++});
+ if(reveal){setFeedback('<strong>Answers revealed.</strong> Generate a new question and try again without help.',true);return}
+ attempts++;const pct=Math.round(right/ins.length*100);if(pct===100)earned++;score.textContent='Score: '+earned+' / '+attempts;
+ setFeedback('<strong>'+right+' / '+ins.length+' correct ('+pct+'%).</strong> '+(pct===100?'Excellent — generate another question.':'Correct the highlighted cells, then check again.'),pct===100);
+}
+document.getElementById('modes').addEventListener('click',e=>{const b=e.target.closest('.mode');if(!b)return;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;newQuestion()});
+document.getElementById('newBtn').addEventListener('click',newQuestion);
+document.getElementById('checkBtn').addEventListener('click',()=>check(false));
+document.getElementById('revealBtn').addEventListener('click',()=>check(true));
+newQuestion();
+</script>
+</body>
+</html>
