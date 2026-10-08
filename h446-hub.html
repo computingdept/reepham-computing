@@ -33,6 +33,25 @@
 .spec-group .lesson:focus-visible{outline:2px solid var(--year-accent);outline-offset:2px}
 .spec-group-planned{border-color:#d3d8d7;background:rgba(110,120,120,.025)}
 @media(max-width:700px){.spec-group{padding:9px;margin:10px 0}.spec-group-title{font-size:12px}}
+
+/* Lesson finder: direct lesson links plus separate accessible info controls */
+.lesson-entry{position:relative;min-width:0}
+.lesson-entry>.lesson{display:flex;align-items:center;justify-content:center;width:100%;height:100%;box-sizing:border-box;padding-right:26px}
+.lesson-entry>.lesson.planned{cursor:default}
+.lesson-info{position:absolute;top:50%;right:7px;transform:translateY(-50%);border:1px solid #9eb3a9;background:white;color:#285646;border-radius:50%;width:21px;height:21px;padding:0;font:700 12px system-ui;cursor:pointer;z-index:2}
+.lesson-info:focus-visible{outline:2px solid #145d4b;outline-offset:2px}
+.lesson-popup{display:none;position:absolute;z-index:20;top:calc(100% + 6px);left:0;width:min(295px,80vw);background:#fff;border:1px solid #aabeb6;box-shadow:0 12px 26px rgba(20,55,43,.16);border-radius:8px;padding:12px;font:400 13px/1.4 system-ui;color:#143f32;text-align:left}
+.lesson-popup strong{display:block;margin-bottom:5px}
+.lesson-popup ul{padding-left:18px;margin:6px 0}
+.lesson-popup small{display:block;color:#60776e;margin-top:6px}
+@media(hover:hover) and (pointer:fine){.lesson-entry:hover>.lesson-popup,.lesson-entry:focus-within>.lesson-popup{display:block}}
+.lesson-detail{display:none;margin:10px 0 3px;padding:14px;border:1px solid #b2c7bd;border-radius:8px;background:#f5f9f7;color:#164536;font:400 14px/1.5 system-ui}
+.lesson-detail[aria-hidden="false"]{display:block}
+.lesson-detail strong{display:block;margin-bottom:6px}
+.lesson-detail ul{margin:6px 0;padding-left:20px}
+.lesson-detail small{display:block;color:#5b7167;margin-top:8px}
+@media(hover:hover) and (pointer:fine){.lesson-detail{display:none!important}}
+@media(hover:none), (pointer:coarse){.lesson-popup{display:none!important}.lesson-info{width:27px;height:27px;right:5px}}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -167,6 +186,40 @@ function lessonSpecification(number){
   if(number>=36&&number<=180){const match=plannedYear12.find(([start,end])=>number>=start&&number<=end);return match?match[2]:null;}
   return null; // Do not guess the topic for unplanned lesson slots.
 }
+
+const lessonMetaCache=new Map();
+function plannedLessonInfo(n,specKey){
+  const spec=specificationThemes[specKey];
+  let topic=spec?spec.label:'Topic to be confirmed';
+  if(n>=36&&n<=41)topic='OOP foundations: C# classes and objects';
+  else if(n>=42&&n<=56)topic='Data structures revisited using object-oriented C#';
+  return {title:topic,objectives:[],note:(specKey==='nea'?'Protected NEA project time':specKey==='mixed'?'Multiple OCR points':specKey||'Specification point to be confirmed')+' · Planned; detailed objectives not yet written'};
+}
+async function getLessonInfo(n,href,specKey){
+  if(!href)return plannedLessonInfo(n,specKey);
+  if(lessonMetaCache.has(n))return lessonMetaCache.get(n);
+  const pending=(async()=>{
+    try{
+      const response=await fetch(href,{cache:'force-cache'});
+      if(!response.ok)throw Error('Lesson not found');
+      const doc=new DOMParser().parseFromString(await response.text(),'text/html');
+      const title=(doc.querySelector('#overview h1')?.textContent||doc.querySelector('title')?.textContent||('Lesson '+pad(n))).split(' · ')[0].trim();
+      const objectives=[...doc.querySelectorAll('#overview .objectives li')].map(li=>li.textContent.trim()).filter(Boolean).slice(0,5);
+      return {title,objectives,note:(specKey||'OCR H446')+' · Published lesson'};
+    }catch(e){return {title:'Lesson '+pad(n),objectives:[],note:'Objectives temporarily unavailable · Open the lesson to view them'};}
+  })();
+  lessonMetaCache.set(n,pending);return pending;
+}
+function fillLessonDetails(container,info){
+  container.replaceChildren();
+  const title=document.createElement('strong');title.textContent=info.title;container.append(title);
+  if(info.objectives.length){
+    const ul=document.createElement('ul');
+    info.objectives.forEach(o=>{const li=document.createElement('li');li.textContent=o;ul.append(li);});
+    container.append(ul);
+  }
+  const note=document.createElement('small');note.textContent=info.note;container.append(note);
+}
 function renderLessons(){
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
   for(const term of p.terms){
@@ -178,7 +231,7 @@ function renderLessons(){
     }
     const end=n+term.count-1;
     sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+(term.note?' · '+term.note:'')+'</span></div>';
-    let group=null,groupKey=null,grid=null;
+    let group=null,groupKey=null,grid=null,detail=null;
     for(let x=n;x<=end;x++){
       const href=liveMap[x];
       const specKey=lessonSpecification(x);
@@ -201,7 +254,7 @@ function renderLessons(){
           head.textContent='Future lessons · specification point to be confirmed';
         }
         grid=document.createElement('div');grid.className='lesson-grid';
-        group.append(head,grid);sec.append(group);groupKey=key;
+        detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid,detail);sec.append(group);groupKey=key;
       }
       const el=document.createElement(href?'a':'div');
       el.className='lesson '+(href?'live':'planned');
@@ -210,7 +263,32 @@ function renderLessons(){
         el.href=href;
         el.setAttribute('aria-label','Open live lesson '+pad(x));
       }else{el.textContent=pad(x);}
-      grid.append(el);
+
+      const entry=document.createElement('div');entry.className='lesson-entry';
+      const infoButton=document.createElement('button');infoButton.type='button';infoButton.className='lesson-info';
+      infoButton.textContent='i';infoButton.setAttribute('aria-label','View topic and objectives for lesson '+pad(x));
+      infoButton.setAttribute('aria-expanded','false');
+      const popup=document.createElement('div');popup.className='lesson-popup';
+      popup.textContent='Loading objectives…';
+      let opened=false;
+      async function populate(target){
+        const info=await getLessonInfo(x,href,specKey);
+        if(target.isConnected)fillLessonDetails(target,info);
+      }
+      entry.addEventListener('mouseenter',()=>{populate(popup);},{once:true});
+      entry.addEventListener('focusin',()=>populate(popup));
+      infoButton.addEventListener('click',(event)=>{
+        event.stopPropagation();
+        const open=detail.getAttribute('aria-hidden')!=='false'||!opened;
+        holder.querySelectorAll('.lesson-detail').forEach(e=>e.setAttribute('aria-hidden','true'));
+        holder.querySelectorAll('.lesson-info').forEach(e=>e.setAttribute('aria-expanded','false'));
+        opened=open;
+        if(open){
+          detail.setAttribute('aria-hidden','false');infoButton.setAttribute('aria-expanded','true');
+          detail.textContent='Loading objectives…';populate(detail);
+        }else{detail.setAttribute('aria-hidden','true');}
+      });
+      entry.append(el,infoButton,popup);grid.append(entry);
     }
     holder.append(sec);n=end+1;
   }
