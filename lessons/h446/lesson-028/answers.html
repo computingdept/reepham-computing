@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 028 · D-type flip-flops answers</title>
+<title>Lesson 028 · Karnaugh maps 2: simplify to gates answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,15 +26,23 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 028 · D-TYPE FLIP-FLOPS · ANSWERS</span>
+  <span class="answer-title">LESSON 028 · KARNAUGH MAPS 2: SIMPLIFY TO GATES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · TRACE</span><h2>Clocked state</h2><pre class="solution-code">Q after triggers:
-1, 1, 0, 1</pre><p><strong>Check:</strong> You change Q only at the listed triggers.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · EXPLAIN</span><h2>Purpose and inputs</h2><pre class="solution-code">A D-type flip-flop stores one bit.
-D is the data value to be stored.
-CLK controls when D is sampled.
-Q is the stored output and holds its value between triggers.</pre><p><strong>Check:</strong> Your answer separates the data input from the timing input.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · REGISTER</span><h2>Scale the idea</h2><pre class="solution-code">Each D-type flip-flop stores one bit. Eight flip-flops used together can therefore hold eight bits, which is one byte. A common clock can update the stored byte together.</pre><p><strong>Check:</strong> You connect one flip-flop to each bit position.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><h2>Combinational vs stateful</h2><pre class="solution-code">An AND gate's output depends only on its current inputs. A D-type flip-flop remembers a previous sampled input, so its output represents stored state until a later clock trigger.</pre><p><strong>Check:</strong> You identify memory/state as the key difference.</p></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q6(b)</span><h2>Solve the verified K-map</h2><pre class="solution-code">P = (¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre><p><strong>Check:</strong> Your expression is logically equivalent to the OCR mark-scheme form.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · GATE PLAN</span><h2>Build the simplified circuit</h2><pre class="solution-code">1. NOT A.
+2. NOT C.
+3. AND those outputs.
+4. NOT D.
+5. AND A with NOT D.
+6. OR the two AND outputs.</pre><p><strong>Check:</strong> The plan uses NOT gates only where needed, two AND stages and one final OR.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · WRAPAROUND</span><h2>Explain a corner group</h2><pre class="solution-code">Opposite edges are adjacent in a Karnaugh map. Therefore the left/right edges and top/bottom edges meet, so the four corners can form one 2×2 wraparound group.</pre><p><strong>Check:</strong> You explicitly mention both horizontal and vertical wraparound.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · VERIFY</span><h2>Check equivalence</h2><pre class="solution-code">Example:
+¬(A ∨ B) = ¬A ∧ ¬B
+
+A B | left | right
+0 0 |  1   |  1
+0 1 |  0   |  0
+1 0 |  0   |  0
+1 1 |  0   |  0</pre><p><strong>Check:</strong> Every output row matches.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

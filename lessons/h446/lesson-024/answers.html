@@ -1,102 +1,45 @@
-<!doctype html>
-<html lang="en-GB">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 024 · Boolean logic, gates and truth tables answers</title>
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
-<style>
-body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
-.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
-.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-title{font-weight:900;color:var(--green-dark)}.answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
-main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
-.answer-stage{height:100%;display:flex;justify-content:center}.answer-stage[hidden]{display:none!important}
-.solution-card{width:min(1150px,100%);height:100%;overflow:auto;background:#fff;border:1px solid var(--line);border-top:7px solid var(--green);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}
-.solution-card h2{margin:4px 0 8px;font-size:clamp(24px,1.9vw,31px)}.solution-card p{font-size:clamp(16px,1.1vw,20px);line-height:1.3}
-.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(13px,.95vw,17px)/1.24 Consolas,"Courier New",monospace}
-.test-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.test-strip span{padding:6px 9px;border-radius:999px;background:var(--green-soft);color:var(--green-dark);font-size:13px;font-weight:850}
-.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
-.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
-#next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}
-@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.solution-card{padding:12px 16px}.solution-card h2{font-size:22px}.solution-card p{font-size:15px}.solution-code{font-size:12px;padding:8px 10px}}
-@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.solution-card{height:auto;overflow:visible}}
-</style>
-</head>
-<body class="answer-page">
-<header class="answer-toolbar">
-  <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 024 · BOOLEAN LOGIC, GATES AND TRUTH TABLES · ANSWERS</span>
-  <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
-</header>
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson 024 · Binary Search · Teacher Notes and Solutions</title><link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915"><style>body{overflow:auto;height:auto;background:#f5f8f6;color:#154536;font:16px/1.5 system-ui}main{margin:0 auto!important;height:auto!important;max-width:1100px!important;padding:26px!important}a{color:#005c42}h1{line-height:1.15}h2{border-bottom:1px solid #bdd0c3;padding-bottom:6px}.lead{background:#e8f2eb;padding:14px;border-left:4px solid #3f8c69;border-radius:5px}.code{padding:16px;background:#152a22;color:#e4fff1;border-radius:8px;overflow:auto;font:13px/1.45 Consolas,monospace;white-space:pre}table{border-collapse:collapse;width:100%;background:#fff}td,th{padding:9px;text-align:left;border-bottom:1px solid #ceded3}th{background:#e1efe6}.tag{display:inline-block;border-radius:5px;background:#fff0cc;padding:3px 8px}.note{color:#536b60}ul{padding-left:22px}@media(max-width:600px){main{padding:13px!important}.code{font-size:11px}}</style></head><body><main><a href="index.html#overview">← Back to Lesson 024</a><h1>Binary Search — Teacher Guide and Solutions</h1><p class="lead"><strong>Observation lesson · OCR H446 2.3.1(f) linked to 1.4.2.</strong> Follow the 8 existing Classroom TV phases. Green in the RHSC coaching form is an <em>observer judgement</em>, not a claim made by this guide.</p><h2>60-minute delivery and adaptive checkpoints</h2><table><thead><tr><th>Phase</th><th>Minutes</th><th>Observer-visible action</th></tr></thead><tbody><tr><td>Do Now</td><td>0–5</td><td>Silent entry, retrieval, separate answers</td></tr><tr><td>Objectives</td><td>5–7</td><td>Success criteria and yellow vocabulary</td></tr><tr><td>New Learning</td><td>7–14</td><td>Four steps, sorted-array dual coding</td></tr><tr><td>I Do</td><td>14–26</td><td>Think-aloud live coding with four reveals</td></tr><tr><td>We Do</td><td>26–38</td><td>MWBs, cold calling, hinge and adaptive reteaching</td></tr><tr><td>You Do</td><td>38–53</td><td>15 min independent coding; 10+ min silent</td></tr><tr><td>Key Vocabulary</td><td>53–56</td><td>Term-by-term retrieval and accurate language</td></tr><tr><td>Exit Ticket</td><td>56–60</td><td>True/false, confidence, homework on Arbor</td></tr></tbody></table><h2>Complete C# solution</h2><p>Teacher live-codes the four chunks in I Do. Use .NET Fiddle or your usual IDE. Expected outputs: 5, 0, 7, -1.</p><pre class="code">using System;
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(a)</span><h2>Burglar alarm circuit</h2><pre class="solution-code">Expression:
-Q = (A ∨ B) ∧ C ∧ ¬D
+public class Program
+{
+    static int BinarySearch(int[] data, int target)
+    {
+        int low = 0;
+        int high = data.Length - 1;
 
-Gate plan:
-1. OR A and B.
-2. NOT D.
-3. AND the OR output with C and NOT D.</pre><p><strong>Check:</strong> Your expression requires a sensor, set=true and test=false.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q6(a)</span><h2>Expression and truth table</h2><pre class="solution-code">A B C | P
-0 0 0 | 1
-0 0 1 | 0
-0 1 0 | 0
-0 1 1 | 1
-1 0 0 | 0
-1 0 1 | 1
-1 1 0 | 0
-1 1 1 | 1</pre><p><strong>Check:</strong> Use an intermediate A∨B column if needed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><pre class="solution-code">Let T = temperature high, L = load high, M = maintenance.
+        while (low &lt;= high)
+        {
+            int mid = low + (high - low) / 2;
 
-F = (T ∨ L) ∧ ¬M
+            if (data[mid] == target)
+                return mid;
+            else if (data[mid] &lt; target)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
 
-Build 8-row truth table for T,L,M and evaluate F.</pre><p><strong>Check:</strong> The expression uses OR, AND and NOT correctly.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Gate plan:
-1. XOR A and B.
-2. NOT C.
-3. AND the two outputs.
+        return -1;
+    }
 
-A B C | Q
-0 0 0 | 0
-0 0 1 | 0
-0 1 0 | 1
-0 1 1 | 0
-1 0 0 | 1
-1 0 1 | 0
-1 1 0 | 0
-1 1 1 | 0</pre><p><strong>Check:</strong> Both representation and outputs agree.</p></article></section></main>
-
-<div class="answer-controls">
-  <button type="button" id="previous-answer" disabled>← Previous solution</button>
-  <a href="index.html#you-do">Return to You Do</a>
-  <button type="button" id="next-answer">Next solution →</button>
-</div>
-
-<script>
-const stages=[...document.querySelectorAll('.answer-stage')];
-const previous=document.getElementById('previous-answer');
-const next=document.getElementById('next-answer');
-const counter=document.getElementById('answer-counter');
-let current=0;
-
-function showAnswer(index){
-  current=Math.max(0,Math.min(index,stages.length-1));
-  stages.forEach((stage,i)=>stage.hidden=i!==current);
-  previous.disabled=current===0;
-  next.textContent=current===stages.length-1?'Return to You Do →':'Next solution →';
-  counter.textContent='Solution '+(current+1)+' of '+stages.length;
-}
-function goNext(){
-  if(current<stages.length-1)showAnswer(current+1);
-  else location.href='index.html#you-do';
-}
-function goPrevious(){if(current>0)showAnswer(current-1)}
-
-next.addEventListener('click',goNext);
-previous.addEventListener('click',goPrevious);
-document.addEventListener('keydown',e=>{
-  if(e.target.closest('a,button,input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;
-  if(e.key==='ArrowRight'){e.preventDefault();goNext();}
-  if(e.key==='ArrowLeft'){e.preventDefault();goPrevious();}
-});
-showAnswer(0);
-</script>
-<script src="../../../assets/h446-lesson/answer-swipe.js?v=20261001-mobile3"></script></body>
-</html>
+    public static void Main()
+    {
+        int[] data = { 4, 9, 13, 19, 26, 35, 42, 57 };
+        Console.WriteLine(BinarySearch(data, 35)); // 5
+        Console.WriteLine(BinarySearch(data, 4));  // 0
+        Console.WriteLine(BinarySearch(data, 57)); // 7
+        Console.WriteLine(BinarySearch(data, 20)); // -1
+    }
+}</pre><h2>Checks for understanding — expected answers</h2><ul><li>Do Now: index 0; linear = sequential, binary = halves sorted range; numbers[3] = 18; unsorted values invalidate discarding a half.</li><li>Trace 13: (low 0, high 7, mid 3, value 18) → (0,2,1,7) → (2,2,2,12); low becomes 3 so return -1.</li><li>Bug: midpoint less than target means increase <code>low</code>, not decrease <code>high</code>.</li><li><strong>Hinge answer B</strong>: low = 4, high = 6. Re-model if a meaningful proportion of MWBs is wrong.</li><li>Exit question: False. Input must be sorted; <code>low &lt;= high</code> ensures the one remaining candidate is tested.</li></ul><h2>RHSC coaching checklist — plan for observable evidence</h2><table><thead><tr><th>Criterion</th><th>Where it is enacted</th></tr></thead><tbody><tr><td><strong>Silence + retrieval</strong></td><td>Do Now 0–5 mins; pupils start on entry, answers are on separate screens; SLANT in 3, 2, 1.</td></tr><tr><td><strong>Recap previous knowledge</strong></td><td>Arrays, indexing, linear vs binary searching recalled before new learning.</td></tr><tr><td><strong>Small steps + I Do</strong></td><td>New Learning uses four sequential reveals; live code method constructed in four steps with think aloud.</td></tr><tr><td><strong>Dual coding</strong></td><td>Highlighted sorted-array diagram, bound labels and row-by-row trace table.</td></tr><tr><td><strong>We Do + checking</strong></td><td>Four guided stages; cold calling/mini-whiteboards; final hinge determines whether to re-model.</td></tr><tr><td><strong>High participation</strong></td><td>Think time and simultaneous MWB response before cold calling; everyone answers.</td></tr><tr><td><strong>Independent work</strong></td><td>15-minute You Do: at least 10 minutes uninterrupted silent programming.</td></tr><tr><td><strong>SEND + scaffolds</strong></td><td>Partial scaffold, completed trace and boundary-check checklist; challenge for secure coders.</td></tr><tr><td><strong>Literacy + yellow box</strong></td><td>Seven explicit Tier 2/3 terms; correct imprecise terms, e.g. index vs value; SPAG feedback.</td></tr><tr><td><strong>Homework</strong></td><td>Teacher sets the trace/debug activity on Arbor; pupils record it in planners.</td></tr><tr><td><strong>Learning environment</strong></td><td>Use planned seating, desks facing front and individual SEND advice; reinforce SLANT.</td></tr><tr><td><strong>Responsive reteaching</strong></td><td>If hinge is insecure, replay sorted-array diagram and update bounds before You Do.</td></tr></tbody></table><p class="note">The headteacher/observer must see the lesson enacted: seating layout, SEND advice, cold calling, pupil thinking time, circulation, homework recording and adaptive response cannot be guaranteed by the website.</p><h2>Scaffold for learners requiring support</h2><pre class="code">static int BinarySearch(int[] data, int target)
+{
+    int low = 0;
+    int high = data.Length - 1;
+    while (low &lt;= high)
+    {
+        int mid = low + (high-low)/2;
+        // if found, return index
+        // if too small, move low right
+        // otherwise, move high left
+    }
+    return -1;
+}</pre><h2>Homework to set on Arbor</h2><p>Trace binary search for targets 4, 20 and 57 in <code>{4,9,13,19,26,35,42,57}</code>. Correct the misdirected comparison branch from We Do. Explain why sorted input is required. Record submission details on Arbor and ask pupils to write them in planners.</p><a href="index.html#you-do">Return to You Do →</a></main></body></html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 031 · Boolean Algebra OCR Practice answers</title>
+<title>Lesson 031 · Boolean Circuits Consolidation</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,43 +26,36 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 031 · BOOLEAN ALGEBRA OCR PRACTICE · ANSWERS</span>
+  <span class="answer-title">LESSON 031 · BOOLEAN CIRCUITS CONSOLIDATION</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1</span><h2>Truth table — mark and retry</h2><pre class="solution-code">Use the expression supplied in Teams.
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1</span><h2>D-type trace</h2><pre class="solution-code">D at clock triggers: 1, 0, 1, 1
+Q after each trigger: 1, 0, 1, 1
 
-Check:
-• all input combinations are present
-• intermediate columns are correct
-• final output column follows the expression
-• Boolean operations are applied in the correct order
+Q changes only at the triggering clock edge and holds between triggers.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2</span><h2>Half-adder truth table</h2><pre class="solution-code">A B | Sum Carry
+0 0 |  0    0
+0 1 |  1    0
+1 0 |  1    0
+1 1 |  0    1
 
-Mark against the Teams OCR mark scheme, identify any incorrect row, then retry that row without looking.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2</span><h2>Boolean laws — mark and retry</h2><pre class="solution-code">Use the specific expressions supplied in Teams.
+Sum = A XOR B
+Carry = A AND B</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3</span><h2>Full-adder truth table</h2><pre class="solution-code">A B Cin | S Cout
+0 0  0  | 0  0
+0 0  1  | 1  0
+0 1  0  | 1  0
+0 1  1  | 0  1
+1 0  0  | 1  0
+1 0  1  | 0  1
+1 1  0  | 0  1
+1 1  1  | 1  1</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4</span><h2>Explain multi-bit addition</h2><pre class="solution-code">Use one full adder for each bit position.
 
-Check each line:
-• name/use the correct law
-• change only what that law permits
-• preserve brackets correctly
-• keep the expression logically equivalent
+Each full adder adds:
+A + B + CarryIn
 
-Mark against the Teams OCR mark scheme, then redo any incorrect simplification from the original expression.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3</span><h2>Karnaugh map — mark and retry</h2><pre class="solution-code">Use the K-map supplied in Teams.
+Its CarryOut is connected to the CarryIn of the next more significant bit.
 
-Check:
-• Gray-code order
-• groups contain 1, 2, 4, 8... cells
-• groups are rectangular
-• wraparound/overlap used where useful
-• only variables that remain constant appear in each term
-
-Compare with the Teams mark scheme, then redraw the grouping from memory.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4</span><h2>Circuit logic — mark and retry</h2><pre class="solution-code">Use the D-type / adder question supplied in Teams.
-
-Check:
-D-type → stores one bit; Q samples D at the clock trigger.
-Half adder → Sum = XOR, Carry = AND.
-Full adder → inputs A, B, Cin; outputs S, Cout.
-
-Mark against the Teams OCR mark scheme and retry the question without looking.</pre></article></section></main>
+This allows carries to propagate through a multi-bit binary addition.</pre></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 025 · Boolean algebra rules answers</title>
+<title>Lesson 025 · Boolean logic, gates and truth tables answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,23 +26,42 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 025 · BOOLEAN ALGEBRA RULES · ANSWERS</span>
+  <span class="answer-title">LESSON 025 · BOOLEAN LOGIC, GATES AND TRUTH TABLES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(b)</span><h2>Three simplifications</h2><pre class="solution-code">1. ¬A ∨ ¬B = ¬(A ∧ B)
-2. ¬(¬B) = B
-3. (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)</pre><p><strong>Check:</strong> Show the rule used beside each answer.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR AUTUMN 2021 · Q5(b)</span><h2>Simplify with named rules</h2><pre class="solution-code">Example route:
-¬(¬A ∧ ¬B)
-= ¬¬A ∨ ¬¬B       De Morgan
-= A ∨ B            double negation</pre><p><strong>Check:</strong> Your working explicitly identifies De Morgan and/or double negation.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DE MORGAN</span><h2>Apply both forms</h2><pre class="solution-code">¬(P ∨ Q) = ¬P ∧ ¬Q
-¬(P ∧ Q) = ¬P ∨ ¬Q</pre><p><strong>Check:</strong> Each final expression negates both variables and swaps the operator.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · VERIFY</span><h2>Check equivalence</h2><pre class="solution-code">For ¬(P ∨ Q) and ¬P ∧ ¬Q:
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(a)</span><h2>Burglar alarm circuit</h2><pre class="solution-code">Expression:
+Q = (A ∨ B) ∧ C ∧ ¬D
 
-P Q | left | right
-0 0 |  1   |  1
-0 1 |  0   |  0
-1 0 |  0   |  0
-1 1 |  0   |  0</pre><p><strong>Check:</strong> Both columns must match on every row.</p></article></section></main>
+Gate plan:
+1. OR A and B.
+2. NOT D.
+3. AND the OR output with C and NOT D.</pre><p><strong>Check:</strong> Your expression requires a sensor, set=true and test=false.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q6(a)</span><h2>Expression and truth table</h2><pre class="solution-code">A B C | P
+0 0 0 | 1
+0 0 1 | 0
+0 1 0 | 0
+0 1 1 | 1
+1 0 0 | 0
+1 0 1 | 1
+1 1 0 | 0
+1 1 1 | 1</pre><p><strong>Check:</strong> Use an intermediate A∨B column if needed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><pre class="solution-code">Let T = temperature high, L = load high, M = maintenance.
+
+F = (T ∨ L) ∧ ¬M
+
+Build 8-row truth table for T,L,M and evaluate F.</pre><p><strong>Check:</strong> The expression uses OR, AND and NOT correctly.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Gate plan:
+1. XOR A and B.
+2. NOT C.
+3. AND the two outputs.
+
+A B C | Q
+0 0 0 | 0
+0 0 1 | 0
+0 1 0 | 1
+0 1 1 | 0
+1 0 0 | 1
+1 0 1 | 0
+1 1 0 | 0
+1 1 1 | 0</pre><p><strong>Check:</strong> Both representation and outputs agree.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

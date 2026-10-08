@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 029 · Half adders and full adders answers</title>
+<title>Lesson 029 · D-type flip-flops answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,33 +26,15 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 029 · HALF ADDERS AND FULL ADDERS · ANSWERS</span>
+  <span class="answer-title">LESSON 029 · D-TYPE FLIP-FLOPS · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR AUTUMN 2021 · Q5(c)</span><h2>Half-adder question</h2><pre class="solution-code">S = A XOR B
-C = A AND B
-
-A B | S C
-0 0 | 0 0
-0 1 | 1 0
-1 0 | 1 0
-1 1 | 0 1
-
-Two half adders can be joined, with an OR gate combining carry outputs, to form a full adder.</pre><p><strong>Check:</strong> Use XOR for Sum, AND for Carry and mention the OR connection.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · FULL ADDER</span><h2>Complete eight cases</h2><pre class="solution-code">A B Cin | S Cout
-0 0 0   | 0 0
-0 0 1   | 1 0
-0 1 0   | 1 0
-0 1 1   | 0 1
-1 0 0   | 1 0
-1 0 1   | 0 1
-1 1 0   | 0 1
-1 1 1   | 1 1</pre><p><strong>Check:</strong> The outputs match ordinary binary addition of three bits.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · MULTI-BIT</span><h2>Explain four-bit addition</h2><pre class="solution-code">Use one full adder for each bit position. The carry-out from a lower-order full adder is connected to the carry-in of the next higher-order full adder. This propagates carries across the four-bit addition.</pre><p><strong>Check:</strong> Your answer connects carry-out from one bit to carry-in of the next.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · TRACE</span><h2>Add 0111 + 0001</h2><pre class="solution-code">  0111
-+ 0001
-------
-  1000
-
-A carry is generated at the least-significant column and propagates through the next two columns.</pre><p><strong>Check:</strong> The final result is 1000.</p></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · TRACE</span><h2>Clocked state</h2><pre class="solution-code">Q after triggers:
+1, 1, 0, 1</pre><p><strong>Check:</strong> You change Q only at the listed triggers.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · EXPLAIN</span><h2>Purpose and inputs</h2><pre class="solution-code">A D-type flip-flop stores one bit.
+D is the data value to be stored.
+CLK controls when D is sampled.
+Q is the stored output and holds its value between triggers.</pre><p><strong>Check:</strong> Your answer separates the data input from the timing input.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · REGISTER</span><h2>Scale the idea</h2><pre class="solution-code">Each D-type flip-flop stores one bit. Eight flip-flops used together can therefore hold eight bits, which is one byte. A common clock can update the stored byte together.</pre><p><strong>Check:</strong> You connect one flip-flop to each bit position.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · COMPARE</span><h2>Combinational vs stateful</h2><pre class="solution-code">An AND gate's output depends only on its current inputs. A D-type flip-flop remembers a previous sampled input, so its output represents stored state until a later clock trigger.</pre><p><strong>Check:</strong> You identify memory/state as the key difference.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

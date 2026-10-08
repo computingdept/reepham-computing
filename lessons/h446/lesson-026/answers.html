@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 026 · Karnaugh maps 1: grouping and simplifying answers</title>
+<title>Lesson 026 · Boolean algebra rules answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,18 +26,23 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 026 · KARNAUGH MAPS 1: GROUPING AND SIMPLIFYING · ANSWERS</span>
+  <span class="answer-title">LESSON 026 · BOOLEAN ALGEBRA RULES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2023 · Q6(b)</span><h2>Simplify the published K-map</h2><pre class="solution-code">Groups give:
-¬A ∧ ¬C
-A ∧ ¬D
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR JUNE 2024 · Q5(b)</span><h2>Three simplifications</h2><pre class="solution-code">1. ¬A ∨ ¬B = ¬(A ∧ B)
+2. ¬(¬B) = B
+3. (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)</pre><p><strong>Check:</strong> Show the rule used beside each answer.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR AUTUMN 2021 · Q5(b)</span><h2>Simplify with named rules</h2><pre class="solution-code">Example route:
+¬(¬A ∧ ¬B)
+= ¬¬A ∨ ¬¬B       De Morgan
+= A ∨ B            double negation</pre><p><strong>Check:</strong> Your working explicitly identifies De Morgan and/or double negation.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DE MORGAN</span><h2>Apply both forms</h2><pre class="solution-code">¬(P ∨ Q) = ¬P ∧ ¬Q
+¬(P ∧ Q) = ¬P ∨ ¬Q</pre><p><strong>Check:</strong> Each final expression negates both variables and swaps the operator.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · VERIFY</span><h2>Check equivalence</h2><pre class="solution-code">For ¬(P ∨ Q) and ¬P ∧ ¬Q:
 
-Simplified:
-(¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre><p><strong>Check:</strong> Final expression should contain two two-literal terms.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · GROUPS</span><h2>Identify valid groups</h2><pre class="solution-code">Valid sizes: 1,2,4,8,16.
-Diagonal cells are not adjacent.
-Left/right edges and top/bottom edges are adjacent.</pre><p><strong>Check:</strong> Groups are rectangular powers of two and use adjacency, including edge wraparound.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · TERMS</span><h2>Derive a group term</h2><pre class="solution-code">A ∧ ¬D</pre><p><strong>Check:</strong> Only constant variables remain.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · WRAP</span><h2>Use edge adjacency</h2><pre class="solution-code">The left and right edges are adjacent and the top and bottom edges are adjacent, so the four corner cells form one 2×2 wraparound group.</pre><p><strong>Check:</strong> You recognise both horizontal and vertical wraparound.</p></article></section></main>
+P Q | left | right
+0 0 |  1   |  1
+0 1 |  0   |  0
+1 0 |  0   |  0
+1 1 |  0   |  0</pre><p><strong>Check:</strong> Both columns must match on every row.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
