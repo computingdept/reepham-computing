@@ -53,7 +53,7 @@
     </div>
     <div class="summary"><h2 id="lessonTitle">Year 12 lessons</h2><span class="count" id="lessonCount"></span></div>
     <div id="terms"></div>
-    <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
+    <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320. Year 12 examined content is planned through Summer 1 (001–160); Summer 2 (161–180) is protected for NEA. Existing published lessons retain their numbers and URLs. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
   </section>
 
   <section class="panel" id="booklet"><div class="summary"><h2>Revision booklets</h2><span class="count">Choose an H446 specification point</span></div><div class="cards"><article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types revision booklet</h3><p>One booklet for specification point 1.4.1, bringing together lessons 001–008. Read the explanations and worked examples, or print the whole booklet.</p><a class="action" href="revision/h446/data-types/index.html">Open revision booklet →</a></article><article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming techniques revision booklet</h3><p>Constructs, scope, modularity, parameters and IDE debugging. Points (a), (c), (d), (e), with C# and OCR pseudocode.</p><a class="action" href="revision/h446/programming-techniques/index.html">Open revision booklet →</a></article></div><div class="note">Each booklet brings together the lessons for an H446 specification point. Its matching self-test is in the Revision Hub. Further booklets will be added as they are taught; earlier booklets remain available.</div></section>
@@ -74,7 +74,7 @@ const programmes={
     {name:'Spring 1',count:30},
     {name:'Spring 2',count:25},
     {name:'Summer 1',count:35},
-    {name:'Summer 2',count:20,note:'teaching to 6 July; work experience 7–20 July'}
+    {name:'Summer 2',count:20,note:'NEA protected · no new examined specification content'}
   ]},
   13:{start:181,terms:[
     {name:'Autumn 1',count:35},
@@ -115,7 +115,37 @@ tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.r
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
 
+/* Provisional FIRST-COVERAGE route for Year 12. Existing published lessons 001–035 are unchanged.
+   Group labels on unlinked lesson positions are a plan, not a claim of completed coverage.
+   Audit subpoints as future lessons are written. Summer 2 161–180 is protected NEA. */
+const plannedYear12=[
+  [36,41,'2.1.1'],[42,46,'2.1.2'],[47,50,'2.1.3'],[51,53,'2.1.4'],[54,56,'2.1.5'],
+  [57,64,'2.2.2'],[65,82,'2.3.1'],
+  [83,92,'1.1.1'],[93,97,'1.1.2'],[98,100,'1.1.3'],
+  [101,107,'1.2.1'],[108,113,'1.2.2'],[114,120,'1.2.3'],[121,125,'1.2.4'],
+  [126,132,'1.3.1'],[133,140,'1.3.2'],[141,148,'1.3.3'],[149,155,'1.3.4'],
+  [156,160,'1.5.1'],[161,180,'nea']
+];
 const specificationThemes={
+  '2.1.1':{label:'Thinking abstractly',color:'#8a91b9'},
+  '2.1.2':{label:'Thinking ahead',color:'#8a91b9'},
+  '2.1.3':{label:'Thinking procedurally',color:'#8a91b9'},
+  '2.1.4':{label:'Thinking logically',color:'#8a91b9'},
+  '2.1.5':{label:'Thinking concurrently',color:'#8a91b9'},
+  '2.2.2':{label:'Software development',color:'#6e8eaf'},
+  '1.1.1':{label:'Structure and function of the processor',color:'#798fac'},
+  '1.1.2':{label:'Types of processor',color:'#798fac'},
+  '1.1.3':{label:'Input, output and storage',color:'#798fac'},
+  '1.2.1':{label:'Systems software',color:'#6f9b8e'},
+  '1.2.2':{label:'Applications generation',color:'#6f9b8e'},
+  '1.2.3':{label:'Software development',color:'#6f9b8e'},
+  '1.2.4':{label:'Types of programming language',color:'#6f9b8e'},
+  '1.3.1':{label:'Compression, encryption and hashing',color:'#bd9873'},
+  '1.3.2':{label:'Databases',color:'#bd9873'},
+  '1.3.3':{label:'Networks',color:'#bd9873'},
+  '1.3.4':{label:'Web technologies',color:'#bd9873'},
+  '1.5.1':{label:'Computing-related legislation and issues',color:'#a58c67'},
+  'nea':{label:'NEA · protected project time',color:'#7d9581'},
   '1.4.1':{label:'Data Types',color:'#5c948c'},
   '1.4.2':{label:'Data Structures',color:'#8c84ba'},
   '1.4.3':{label:'Boolean Algebra',color:'#c09b59'},
@@ -130,6 +160,7 @@ function lessonSpecification(number){
   if(number>=24&&number<=31)return '1.4.3';
   if(number>=32&&number<=35)return 'mixed';
   if(number>=181&&number<=191)return '2.3.1';
+  if(number>=36&&number<=180){const match=plannedYear12.find(([start,end])=>number>=start&&number<=end);return match?match[2]:null;}
   return null; // Do not guess the topic for unplanned lesson slots.
 }
 function renderLessons(){
@@ -146,18 +177,18 @@ function renderLessons(){
     let group=null,groupKey=null,grid=null;
     for(let x=n;x<=end;x++){
       const href=liveMap[x];
-      const specKey=href?lessonSpecification(x):null;
+      const specKey=lessonSpecification(x);
       const key=specKey||'planned';
       if(key!==groupKey){
         group=document.createElement('div');
-        group.className='spec-group'+(key==='planned'?' spec-group-planned':'');
+        group.className='spec-group'+(!href&&year===12?' spec-group-planned':'');
         const spec=specificationThemes[specKey];
         if(spec)group.style.setProperty('--spec-color',spec.color);
         const head=document.createElement('div');
         head.className='spec-group-title';
         if(spec){
-          const code=document.createElement('span');code.className='spec-group-code';code.textContent=specKey==='mixed'?'Synoptic':specKey;
-          const label=document.createElement('span');label.textContent=spec.label;
+          const code=document.createElement('span');code.className='spec-group-code';code.textContent=specKey==='mixed'?'Synoptic':specKey==='nea'?'NEA':specKey;
+          const label=document.createElement('span');label.textContent=spec.label+(year===12&&!href?' · planned':'');
           head.append(code,label);
         }else{
           head.textContent='Future lessons · specification point to be confirmed';
@@ -177,7 +208,7 @@ function renderLessons(){
     holder.append(sec);n=end+1;
   }
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
-  document.getElementById('lessonCount').textContent=total+' planned lesson positions';
+  document.getElementById('lessonCount').textContent=total+' positions'+(year===12?' · examined teaching to 160 · NEA 161–180':'');
 }
 
 applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
