@@ -24,14 +24,15 @@
 .badge{display:inline-block;width:max-content;padding:5px 8px;border-radius:20px;background:#dce8e3;color:#003a31;font-size:12px;font-weight:900;margin-bottom:10px}
 @media(max-width:700px){.cards{grid-template-columns:1fr}}
 
-/* Subtle specification markers on lesson positions */
-.spec-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 15px;padding:8px 3px 13px;font-size:12px;color:var(--muted)}
-.spec-legend-label{font-weight:800;color:var(--year-ink)}
-.spec-key{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.spec-dot{width:9px;height:9px;border:2px solid var(--spec-color);border-radius:3px;display:inline-block;flex:none}
-.lesson[data-spec]{border:2px solid var(--spec-color);box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
-.lesson[data-spec]:hover,.lesson[data-spec]:focus-visible{outline:2px solid var(--spec-color);outline-offset:2px}
-@media(max-width:700px){.spec-legend{gap:6px 10px;font-size:11px}}
+/* Specification groups: understated outlines rather than borders on every tile */
+.spec-group{--spec-color:#99a1a7;border:1.5px solid var(--spec-color);border-radius:12px;padding:11px 12px 12px;margin:12px 0;background:#fff}
+.spec-group-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;color:var(--year-ink);font-size:13px;font-weight:800}
+.spec-group-code{border:1px solid var(--spec-color);color:var(--year-ink);border-radius:5px;padding:2px 7px;font-size:12px;white-space:nowrap}
+.spec-group .lesson-grid{margin:0}
+.spec-group .lesson{border-color:var(--line);box-shadow:none}
+.spec-group .lesson:focus-visible{outline:2px solid var(--year-accent);outline-offset:2px}
+.spec-group-planned{border-color:#d3d8d7;background:rgba(110,120,120,.025)}
+@media(max-width:700px){.spec-group{padding:9px;margin:10px 0}.spec-group-title{font-size:12px}}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -51,7 +52,7 @@
       <button class="year-btn" data-year="13" aria-pressed="false">Year 13</button>
     </div>
     <div class="summary"><h2 id="lessonTitle">Year 12 lessons</h2><span class="count" id="lessonCount"></span></div>
-    <div id="specLegend" class="spec-legend" aria-label="OCR H446 specification colour key"></div><div id="terms"></div>
+    <div id="terms"></div>
     <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
   </section>
 
@@ -131,22 +132,7 @@ function lessonSpecification(number){
   if(number>=181&&number<=191)return '2.3.1';
   return null; // Do not guess the topic for unplanned lesson slots.
 }
-function renderSpecLegend(){
-  const legend=document.getElementById('specLegend');
-  legend.innerHTML='<span class="spec-legend-label">OCR spec:</span>';
-  const keys=year===12?['1.4.1','2.2.1','1.4.2','1.4.3','mixed']:['2.3.1'];
-  for(const key of keys){
-    const spec=specificationThemes[key];
-    const item=document.createElement('span');
-    item.className='spec-key';
-    item.style.setProperty('--spec-color',spec.color);
-    item.innerHTML='<span class="spec-dot" aria-hidden="true"></span><span>'+key+(key==='mixed'?'': ' · ')+ (key==='mixed'?spec.label:spec.label)+'</span>';
-    legend.append(item);
-  }
-}
-
 function renderLessons(){
-  renderSpecLegend();
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
   for(const term of p.terms){
     total+=term.count;
@@ -156,11 +142,36 @@ function renderLessons(){
       holder.append(sec);continue;
     }
     const end=n+term.count-1;
-    sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';
-    const grid=sec.querySelector('.lesson-grid');
+    sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+(term.note?' · '+term.note:'')+'</span></div>';
+    let group=null,groupKey=null,grid=null;
     for(let x=n;x<=end;x++){
-      const href=liveMap[x],el=document.createElement(href?'a':'div');
-      el.className='lesson '+(href?'live':'planned');const specKey=href?lessonSpecification(x):null;if(specKey){const spec=specificationThemes[specKey];el.dataset.spec=specKey;el.style.setProperty('--spec-color',spec.color);el.title=(specKey==='mixed'?'Synoptic · multiple H446 points':specKey+' · '+spec.label);}if(href){el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';el.href=href;el.setAttribute('aria-label','Open live lesson '+pad(x));}else{el.textContent=pad(x);}
+      const href=liveMap[x];
+      const specKey=href?lessonSpecification(x):null;
+      const key=specKey||'planned';
+      if(key!==groupKey){
+        group=document.createElement('div');
+        group.className='spec-group'+(key==='planned'?' spec-group-planned':'');
+        const spec=specificationThemes[specKey];
+        if(spec)group.style.setProperty('--spec-color',spec.color);
+        const head=document.createElement('div');
+        head.className='spec-group-title';
+        if(spec){
+          const code=document.createElement('span');code.className='spec-group-code';code.textContent=specKey==='mixed'?'Synoptic':specKey;
+          const label=document.createElement('span');label.textContent=spec.label;
+          head.append(code,label);
+        }else{
+          head.textContent='Future lessons · specification point to be confirmed';
+        }
+        grid=document.createElement('div');grid.className='lesson-grid';
+        group.append(head,grid);sec.append(group);groupKey=key;
+      }
+      const el=document.createElement(href?'a':'div');
+      el.className='lesson '+(href?'live':'planned');
+      if(href){
+        el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';
+        el.href=href;
+        el.setAttribute('aria-label','Open live lesson '+pad(x));
+      }else{el.textContent=pad(x);}
       grid.append(el);
     }
     holder.append(sec);n=end+1;
@@ -168,6 +179,7 @@ function renderLessons(){
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
   document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
+
 applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script>
 </body>
