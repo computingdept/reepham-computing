@@ -79,6 +79,15 @@
       });
     });
   }
+  // Place expanded previews directly after their selected lesson row on all screens.
+  function placeDetailAfterRow(grid,entry,detail){
+    const entries=[...grid.querySelectorAll('.lesson-entry')];
+    const index=entries.indexOf(entry);
+    if(index<0)return;
+    const columns=getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length||4;
+    const nextRowIndex=Math.min(entries.length,Math.ceil((index+1)/columns)*columns);
+    grid.insertBefore(detail,entries[nextRowIndex]||null);
+  }
   grids.forEach((grid,index)=>{
     const detail=document.createElement('div');
     detail.className='lesson-detail';
@@ -107,13 +116,22 @@
         closeAll();if(open)return;
         const heading=document.createElement('strong');heading.textContent=number+' · '+info[0];
         const summary=document.createElement('span');summary.textContent=info[1];
-        detail.replaceChildren(heading,summary);
+        const dismiss=document.createElement('button');
+        dismiss.type='button';dismiss.className='lesson-detail-close';
+        dismiss.textContent='Close ×';
+        dismiss.setAttribute('aria-label','Close preview for lesson '+number);
+        dismiss.addEventListener('click',()=>{closeAll();button.focus({preventScroll:true});});
+        detail.replaceChildren(heading,summary,dismiss);
+        placeDetailAfterRow(grid,entry,detail);
         detail.dataset.lesson=number;detail.hidden=false;
         button.setAttribute('aria-expanded','true');
+        if(matchMedia('(max-width: 600px)').matches){
+          requestAnimationFrame(()=>detail.scrollIntoView({block:'nearest',behavior:'smooth'}));
+        }
       });
       entry.append(tile,button,pop);grid.append(entry);
     });
-    grid.after(detail);
+    grid.append(detail);
   });
   alignTips();
   addEventListener('resize',alignTips);
