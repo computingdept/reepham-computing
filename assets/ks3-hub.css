@@ -1,0 +1,75 @@
+/* Shared KS3 Computing hub layout: Years 7, 8 and 9.
+   Kept separate from hub.css so KS4/KS5 are unaffected. */
+body[data-year="7"] #lessons,
+body[data-year="8"] #lessons,
+body[data-year="9"] #lessons{--preview-ink:var(--year-ink,#245e4c)}
+
+#lessons .preview-help{margin:-3px 0 12px;color:var(--muted);font-size:.81rem}
+#lessons .preview-mobile{display:none}
+#lessons .term{overflow:visible}
+#lessons .lesson-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+#lessons .lesson-entry{position:relative;min-width:0}
+#lessons .lesson-entry>a,#lessons .lesson-entry>span{
+  box-sizing:border-box;min-height:54px;width:100%;
+  justify-content:flex-start;padding:5px 35px 5px 12px;
+  font-size:.94rem;white-space:nowrap;overflow:hidden
+}
+#lessons .lesson-info{
+  position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  width:33px;height:38px;border:1px solid #a7c1b5;border-radius:8px;
+  background:#fff;color:var(--preview-ink);font:800 15px system-ui;cursor:pointer;
+}
+#lessons .lesson-info:hover,#lessons .lesson-info[aria-expanded="true"]{background:var(--year-pale)}
+#lessons .lesson-info:focus-visible{outline:3px solid #bd7d08;outline-offset:2px}
+#lessons .lesson-popup{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:30;
+  width:205px;max-width:calc(100vw - 28px);
+  padding:10px 12px;border:1px solid #acbeb6;border-radius:9px;
+  background:#fff;box-shadow:0 10px 26px rgba(19,60,45,.18);
+  font-size:.84rem;line-height:1.4;text-align:left;color:#254a3c;pointer-events:none
+}
+#lessons .lesson-popup strong{display:block;color:#003f36;margin-bottom:3px}
+#lessons .lesson-popup span{display:block;color:#526b5f}
+#lessons .lesson-entry.tip-right .lesson-popup{left:auto;right:0}
+@media(hover:hover) and (pointer:fine){
+  #lessons .lesson-entry:hover>.lesson-popup,
+  #lessons .lesson-entry:focus-within>.lesson-popup{display:block}
+  #lessons .lesson-entry:has(.lesson-info[aria-expanded="true"])>.lesson-popup{display:none}
+}
+#lessons .lesson-detail{
+  margin:0 12px 12px;padding:11px 13px;
+  border:1px solid #b6cec1;border-radius:9px;background:#f0f7f3;
+  color:#214838;font-size:.92rem;line-height:1.4
+}
+#lessons .lesson-detail[hidden]{display:none!important}
+#lessons .lesson-detail strong{display:block;margin-bottom:3px}
+#lessons .lesson-detail span{display:block;color:#506b5d}
+@media(max-width:850px){
+  #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .topin{padding:8px 11px}
+  .top .mark{width:34px;height:34px;font-size:1.05rem}
+  .top .brand{font-size:.91rem}
+  .top .brand small{display:none}
+  main{padding:12px 9px 44px}
+  .back{min-height:38px;padding:6px 10px;font-size:.84rem}
+  .eyebrow{margin-top:13px}
+  h1{font-size:2rem;margin-bottom:14px}
+  .tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;margin-bottom:12px}
+  .tabs button,.tabs a{min-width:0;min-height:46px;font-size:.86rem;padding:4px;text-align:center}
+  .panel{padding:12px 9px;border-radius:11px}
+  .sectionhead{margin-bottom:8px}
+  #lessons .preview-desktop{display:none}
+  #lessons .preview-mobile{display:inline}
+  #lessons .term{margin:9px 0}
+  #lessons .term-head{flex-direction:row;align-items:center;gap:7px;padding:9px 10px}
+  #lessons .term-head span{font-size:.76rem}
+  #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px}
+  #lessons .lesson-entry>a,#lessons .lesson-entry>span{
+    min-height:51px;padding:5px 30px 5px 7px;font-size:.88rem
+  }
+  #lessons .lesson-info{width:30px;height:40px;right:2px}
+  #lessons .lesson-popup{display:none!important}
+  #lessons .lesson-detail{margin:0 8px 9px}
+}
