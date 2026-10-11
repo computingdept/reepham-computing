@@ -31,6 +31,17 @@ body[data-year="9"] #lessons{--preview-ink:var(--year-ink,#245e4c)}
 #lessons .lesson-popup strong{display:block;color:#003f36;margin-bottom:3px}
 #lessons .lesson-popup span{display:block;color:#526b5f}
 #lessons .lesson-entry.tip-right .lesson-popup{left:auto;right:0}
+
+/* Shared hub.css targets every span inside a lesson grid; reset nested labels. */
+#lessons .lesson-grid .lesson-entry .live-tick{
+  display:inline;min-height:0;width:auto;margin-left:3px;padding:0;border:0;
+  background:transparent;color:var(--year-ink);font-size:.85em;font-weight:850
+}
+#lessons .lesson-grid .lesson-entry .lesson-popup span{
+  display:block;min-height:0;width:auto;margin:0;padding:0;border:0;
+  background:transparent;color:#526b5f;font-size:.84rem;font-weight:400
+}
+
 @media(hover:hover) and (pointer:fine){
   #lessons .lesson-entry:hover>.lesson-popup,
   #lessons .lesson-entry:focus-within>.lesson-popup{display:block}
