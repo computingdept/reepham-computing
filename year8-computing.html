@@ -27,6 +27,77 @@
 @media(max-width:850px){.wordgrid,.practice-points{grid-template-columns:repeat(2,1fr)}.practice-card{grid-template-columns:1fr}}
 @media(max-width:600px){.wordgrid,.practice-points{grid-template-columns:1fr}.booklet-head{flex-direction:column}.pdfcontrols{grid-template-columns:1fr}.pdfcontrols-left,.pdfcontrols-center,.pdfcontrols-right{justify-content:center}.pdfstage{padding:8px;min-height:360px}}
 @media print{body.print-reader .top,body.print-reader .back,body.print-reader .eyebrow,body.print-reader h1,body.print-reader .tabs,body.print-reader .booklet-head,body.print-reader .access,body.print-reader .info,body.print-reader .pdfviewer,body.print-reader .words,body.print-reader .practice-link{display:none!important}body.print-reader main{max-width:none;padding:0}body.print-reader .panel{display:block!important;border:0;padding:0}body.print-reader #lessons,body.print-reader #revision{display:none!important}body.print-reader .reader{border:0}body.print-reader .readerbar{display:none}body.print-reader .readertext{font-size:12pt!important;background:#fff!important;padding:0;white-space:pre-wrap}}
+
+/* Year 8 compact lesson previews: matching the H446 finder */
+#lessons .preview-help{margin:-3px 0 12px;color:var(--muted);font-size:.81rem}
+#lessons .preview-mobile{display:none}
+#lessons .term{overflow:visible}
+#lessons .lesson-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+#lessons .lesson-entry{position:relative;min-width:0}
+#lessons .lesson-entry>a,#lessons .lesson-entry>span{
+  box-sizing:border-box;min-height:54px;width:100%;
+  justify-content:flex-start;padding:5px 35px 5px 12px;
+  font-size:.94rem;white-space:nowrap
+}
+#lessons .lesson-info{
+  position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  width:33px;height:38px;border:1px solid #a7c1b5;border-radius:8px;
+  background:#fff;color:#245e4c;font:800 15px system-ui;cursor:pointer
+}
+#lessons .lesson-info:hover,#lessons .lesson-info[aria-expanded="true"]{background:#e0eee7}
+#lessons .lesson-info:focus-visible{outline:3px solid #bd7d08;outline-offset:2px}
+#lessons .lesson-popup{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:30;
+  width:205px;max-width:calc(100vw - 28px);
+  padding:10px 12px;border:1px solid #acbeb6;border-radius:9px;
+  background:#fff;box-shadow:0 10px 26px rgba(19,60,45,.18);
+  font-size:.84rem;line-height:1.4;text-align:left;color:#254a3c;
+  pointer-events:none
+}
+#lessons .lesson-popup strong{display:block;color:#003f36;margin-bottom:3px}
+#lessons .lesson-popup span{display:block;color:#526b5f}
+#lessons .lesson-entry.tip-right .lesson-popup{left:auto;right:0}
+@media(hover:hover) and (pointer:fine){
+  #lessons .lesson-entry:hover>.lesson-popup,
+  #lessons .lesson-entry:focus-within>.lesson-popup{display:block}
+  #lessons .lesson-entry:has(.lesson-info[aria-expanded="true"])>.lesson-popup{display:none}
+}
+#lessons .lesson-detail{
+  margin:0 12px 12px;padding:11px 13px;
+  border:1px solid #b6cec1;border-radius:9px;background:#f0f7f3;
+  color:#214838;font-size:.92rem;line-height:1.4
+}
+#lessons .lesson-detail[hidden]{display:none!important}
+#lessons .lesson-detail strong{display:block;margin-bottom:3px}
+#lessons .lesson-detail span{color:#506b5d}
+#lessons .lesson-detail .detail-hint{font-size:.78rem;margin-top:5px}
+@media(max-width:850px){
+  #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .topin{padding:8px 11px}.top .mark{width:34px;height:34px;font-size:1.05rem}
+  .top .brand{font-size:.91rem}.top .brand small{display:none}
+  main{padding:12px 9px 44px}
+  .back{min-height:38px;padding:6px 10px;font-size:.84rem}
+  .eyebrow{margin-top:13px}h1{font-size:2rem;margin-bottom:14px}
+  .tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;margin-bottom:12px}
+  .tabs button,.tabs a{min-width:0;min-height:46px;font-size:.86rem;padding:4px}
+  .panel{padding:12px 9px;border-radius:11px}
+  .sectionhead{margin-bottom:8px}
+  #lessons .preview-desktop{display:none}
+  #lessons .preview-mobile{display:inline}
+  #lessons .term{margin:9px 0}
+  #lessons .term-head{flex-direction:row;align-items:center;gap:7px;padding:9px 10px}
+  #lessons .term-head span{font-size:.76rem}
+  #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px}
+  #lessons .lesson-entry>a,#lessons .lesson-entry>span{
+    min-height:51px;padding:5px 30px 5px 7px;font-size:.88rem
+  }
+  #lessons .lesson-info{width:30px;height:40px;right:2px}
+  #lessons .lesson-popup{display:none!important}
+  #lessons .lesson-detail{margin:0 8px 9px}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/year8/y8-booklet-accessibility.js"></script>
@@ -34,17 +105,17 @@
 <body data-year="8">
 <header class="top"><div class="topin"><a class="hubhome" href="/" aria-label="Learning Hub home"><div class="mark">R</div><div class="brand"><small>REEPHAM HIGH SCHOOL &amp; COLLEGE</small>Learning Hub</div></a><div class="toplinks"><a href="index.html">All subjects</a></div></div></header>
 <main>
-<a class="back" href="index.html#year/8">← Year 8 subjects</a>
+<a class="back" href="index.html#year/8" aria-label="Back to Year 8 subjects">← Year 8</a>
 <p class="eyebrow">YEAR 8</p><h1>Computing</h1>
 <nav class="tabs" aria-label="Year 8 Computing sections">
-<button type="button" data-tab="lessons">▭ &nbsp; Lessons</button>
-<button type="button" data-tab="booklet">▤ &nbsp; Revision Booklet</button>
-<a class="revision-direct" href="year8-revision-ap3.html?v=20260928-1325">◎ &nbsp; Revision Hub</a>
+<button type="button" data-tab="lessons">Lessons</button>
+<button type="button" data-tab="booklet" aria-label="Revision Booklet">Booklet</button>
+<a class="revision-direct" href="year8-revision-ap3.html?v=20260928-1325" aria-label="Revision Hub">Revision</a>
 </nav>
 
 <section class="panel" id="lessons">
-<div class="sectionhead"><h2>Lessons</h2><span class="count">35 lessons</span></div>
-<section class="term"><div class="term-head"><strong>Autumn 1</strong><span>Lessons 001–007</span></div><nav class="lesson-grid" aria-label="Year 8 Autumn 1 lessons"><a class="lesson-live" href="lessons/year8/Y8Lesson001.html" aria-label="Open lesson 001">001 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson002.html?v=20260928-1045" aria-label="Open lesson 002">002 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson003.html?v=20260928-1110" aria-label="Open lesson 003">003 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson004.html?v=20260928-1135" aria-label="Open lesson 004">004 <span aria-hidden="true">&nbsp;✓</span></a><span class="lesson-pending" aria-label="Lesson 005, coming soon">005</span><span class="lesson-pending" aria-label="Lesson 006, coming soon">006</span><span class="lesson-pending" aria-label="Lesson 007, coming soon">007</span></nav></section><section class="term"><div class="term-head"><strong>Autumn 2</strong><span>Lessons 008–014</span></div><nav class="lesson-grid" aria-label="Year 8 Autumn 2 lessons"><span class="lesson-pending" aria-label="Lesson 008, coming soon">008</span><span class="lesson-pending" aria-label="Lesson 009, coming soon">009</span><span class="lesson-pending" aria-label="Lesson 010, coming soon">010</span><span class="lesson-pending" aria-label="Lesson 011, coming soon">011</span><span class="lesson-pending" aria-label="Lesson 012, coming soon">012</span><span class="lesson-pending" aria-label="Lesson 013, coming soon">013</span><span class="lesson-pending" aria-label="Lesson 014, coming soon">014</span></nav></section><section class="term"><div class="term-head"><strong>Spring 1</strong><span>Lessons 015–019</span></div><nav class="lesson-grid" aria-label="Year 8 Spring 1 lessons"><span class="lesson-pending" aria-label="Lesson 015, coming soon">015</span><span class="lesson-pending" aria-label="Lesson 016, coming soon">016</span><span class="lesson-pending" aria-label="Lesson 017, coming soon">017</span><span class="lesson-pending" aria-label="Lesson 018, coming soon">018</span><span class="lesson-pending" aria-label="Lesson 019, coming soon">019</span></nav></section><section class="term"><div class="term-head"><strong>Spring 2</strong><span>Lessons 020–023</span></div><nav class="lesson-grid" aria-label="Year 8 Spring 2 lessons"><span class="lesson-pending" aria-label="Lesson 020, coming soon">020</span><span class="lesson-pending" aria-label="Lesson 021, coming soon">021</span><span class="lesson-pending" aria-label="Lesson 022, coming soon">022</span><span class="lesson-pending" aria-label="Lesson 023, coming soon">023</span></nav></section><section class="term"><div class="term-head"><strong>Summer 1</strong><span>Lessons 024–029</span></div><nav class="lesson-grid" aria-label="Year 8 Summer 1 lessons"><span class="lesson-pending" aria-label="Lesson 024, coming soon">024</span><span class="lesson-pending" aria-label="Lesson 025, coming soon">025</span><span class="lesson-pending" aria-label="Lesson 026, coming soon">026</span><span class="lesson-pending" aria-label="Lesson 027, coming soon">027</span><span class="lesson-pending" aria-label="Lesson 028, coming soon">028</span><span class="lesson-pending" aria-label="Lesson 029, coming soon">029</span></nav></section><section class="term"><div class="term-head"><strong>Summer 2</strong><span>Lessons 030–035</span></div><nav class="lesson-grid" aria-label="Year 8 Summer 2 lessons"><span class="lesson-pending" aria-label="Lesson 030, coming soon">030</span><span class="lesson-pending" aria-label="Lesson 031, coming soon">031</span><span class="lesson-pending" aria-label="Lesson 032, coming soon">032</span><span class="lesson-pending" aria-label="Lesson 033, coming soon">033</span><span class="lesson-pending" aria-label="Lesson 034, coming soon">034</span><span class="lesson-pending" aria-label="Lesson 035, coming soon">035</span></nav></section><p class="note">✓ Available now · Muted lessons are coming soon.</p>
+<div class="sectionhead"><h2>Lessons</h2><span class="count">35 lessons</span></div><p class="preview-help"><span class="preview-desktop">Hover for preview</span><span class="preview-mobile">Tap i for preview</span></p>
+<section class="term"><div class="term-head"><strong>Autumn 1</strong><span>001–007</span></div><nav class="lesson-grid" aria-label="Year 8 Autumn 1 lessons"><a class="lesson-live" href="lessons/year8/Y8Lesson001.html" aria-label="Open lesson 001">001 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson002.html?v=20260928-1045" aria-label="Open lesson 002">002 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson003.html?v=20260928-1110" aria-label="Open lesson 003">003 <span aria-hidden="true">&nbsp;✓</span></a><a class="lesson-live" href="lessons/year8/Y8Lesson004.html?v=20260928-1135" aria-label="Open lesson 004">004 <span aria-hidden="true">&nbsp;✓</span></a><span class="lesson-pending" aria-label="Lesson 005, coming soon">005</span><span class="lesson-pending" aria-label="Lesson 006, coming soon">006</span><span class="lesson-pending" aria-label="Lesson 007, coming soon">007</span></nav></section><section class="term"><div class="term-head"><strong>Autumn 2</strong><span>008–014</span></div><nav class="lesson-grid" aria-label="Year 8 Autumn 2 lessons"><span class="lesson-pending" aria-label="Lesson 008, coming soon">008</span><span class="lesson-pending" aria-label="Lesson 009, coming soon">009</span><span class="lesson-pending" aria-label="Lesson 010, coming soon">010</span><span class="lesson-pending" aria-label="Lesson 011, coming soon">011</span><span class="lesson-pending" aria-label="Lesson 012, coming soon">012</span><span class="lesson-pending" aria-label="Lesson 013, coming soon">013</span><span class="lesson-pending" aria-label="Lesson 014, coming soon">014</span></nav></section><section class="term"><div class="term-head"><strong>Spring 1</strong><span>015–019</span></div><nav class="lesson-grid" aria-label="Year 8 Spring 1 lessons"><span class="lesson-pending" aria-label="Lesson 015, coming soon">015</span><span class="lesson-pending" aria-label="Lesson 016, coming soon">016</span><span class="lesson-pending" aria-label="Lesson 017, coming soon">017</span><span class="lesson-pending" aria-label="Lesson 018, coming soon">018</span><span class="lesson-pending" aria-label="Lesson 019, coming soon">019</span></nav></section><section class="term"><div class="term-head"><strong>Spring 2</strong><span>020–023</span></div><nav class="lesson-grid" aria-label="Year 8 Spring 2 lessons"><span class="lesson-pending" aria-label="Lesson 020, coming soon">020</span><span class="lesson-pending" aria-label="Lesson 021, coming soon">021</span><span class="lesson-pending" aria-label="Lesson 022, coming soon">022</span><span class="lesson-pending" aria-label="Lesson 023, coming soon">023</span></nav></section><section class="term"><div class="term-head"><strong>Summer 1</strong><span>024–029</span></div><nav class="lesson-grid" aria-label="Year 8 Summer 1 lessons"><span class="lesson-pending" aria-label="Lesson 024, coming soon">024</span><span class="lesson-pending" aria-label="Lesson 025, coming soon">025</span><span class="lesson-pending" aria-label="Lesson 026, coming soon">026</span><span class="lesson-pending" aria-label="Lesson 027, coming soon">027</span><span class="lesson-pending" aria-label="Lesson 028, coming soon">028</span><span class="lesson-pending" aria-label="Lesson 029, coming soon">029</span></nav></section><section class="term"><div class="term-head"><strong>Summer 2</strong><span>030–035</span></div><nav class="lesson-grid" aria-label="Year 8 Summer 2 lessons"><span class="lesson-pending" aria-label="Lesson 030, coming soon">030</span><span class="lesson-pending" aria-label="Lesson 031, coming soon">031</span><span class="lesson-pending" aria-label="Lesson 032, coming soon">032</span><span class="lesson-pending" aria-label="Lesson 033, coming soon">033</span><span class="lesson-pending" aria-label="Lesson 034, coming soon">034</span><span class="lesson-pending" aria-label="Lesson 035, coming soon">035</span></nav></section><p class="note">✓ Live · Grey = soon</p>
 </section>
 
 <section class="panel" id="booklet">
@@ -161,6 +232,82 @@
  document.getElementById('colourBtn').addEventListener('click',()=>{ensureReader();colour=(colour+1)%3;readerText.classList.remove('cream','blue');if(colour===1)readerText.classList.add('cream');if(colour===2)readerText.classList.add('blue')});
  readBtn.addEventListener('click',()=>{ensureReader();if(!window.speechSynthesis)return;if(speechSynthesis.speaking){speechSynthesis.cancel();readBtn.textContent='🔊 Read aloud';return}const t=readerText.innerText.trim();if(!t)return;const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const vs=speechSynthesis.getVoices().filter(v=>(v.lang||'').toLowerCase().startsWith('en-gb'));if(vs.length)u.voice=vs.find(v=>/sonia|libby|serena|female|kate/i.test(v.name))||vs[0];readBtn.textContent='■ Stop';u.onend=u.onerror=()=>readBtn.textContent='🔊 Read aloud';speechSynthesis.speak(u)});
  document.getElementById('printAccessibleBtn').addEventListener('click',()=>{ensureReader();document.body.classList.add('print-reader');window.print();setTimeout(()=>document.body.classList.remove('print-reader'),500)});
+})();
+</script>
+
+<script>
+/* Short preview labels are based on the four currently published lessons.
+   Pending lessons stay untitled until their content is confirmed. */
+(function(){
+  const topics={
+    '001':['Welcome back','Safety · routines'],
+    '002':['Computer systems','Input · output'],
+    '003':['RAM & ROM','Memory types'],
+    '004':['The CPU','ALU · CU · cache']
+  };
+  const grids=[...document.querySelectorAll('#lessons .lesson-grid')];
+  const panels=[];
+  function closeAll(){
+    for(const p of panels){p.hidden=true;delete p.dataset.lesson;}
+    document.querySelectorAll('#lessons .lesson-info[aria-expanded="true"]')
+      .forEach(b=>b.setAttribute('aria-expanded','false'));
+  }
+  function setEdges(){
+    const columns=innerWidth<=600?4:innerWidth<=850?5:7;
+    grids.forEach(grid=>{
+      [...grid.querySelectorAll('.lesson-entry')].forEach((entry,index)=>{
+        entry.classList.toggle('tip-right',index%columns>=columns-2);
+      });
+    });
+  }
+  grids.forEach((grid,groupIndex)=>{
+    const detail=document.createElement('div');
+    detail.className='lesson-detail';
+    detail.id='y8-preview-'+groupIndex;
+    detail.setAttribute('role','status');
+    detail.hidden=true;
+    panels.push(detail);
+    const oldTiles=[...grid.children];
+    oldTiles.forEach(tile=>{
+      const number=tile.textContent.match(/\b\d{3}\b/)?.[0];
+      if(!number)return;
+      const live=tile.tagName==='A', info=topics[number]||['Coming soon','Not published'];
+      const entry=document.createElement('div');
+      entry.className='lesson-entry';
+      tile.setAttribute('aria-label',live?'Open lesson '+number+': '+info[0]:'Lesson '+number+': coming soon');
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='lesson-info';
+      button.textContent='i';
+      button.setAttribute('aria-label','Preview lesson '+number);
+      button.setAttribute('aria-controls',detail.id);
+      button.setAttribute('aria-expanded','false');
+      const popup=document.createElement('div');
+      popup.className='lesson-popup';
+      popup.setAttribute('aria-hidden','true');
+      const popTitle=document.createElement('strong');popTitle.textContent=info[0];
+      const popDesc=document.createElement('span');popDesc.textContent=info[1];
+      popup.append(popTitle,popDesc);
+      button.addEventListener('click',event=>{
+        event.preventDefault();event.stopPropagation();
+        const already=detail.dataset.lesson===number&&!detail.hidden;
+        closeAll();
+        if(already)return;
+        detail.replaceChildren();
+        const heading=document.createElement('strong');heading.textContent=number+' · '+info[0];
+        const summary=document.createElement('span');summary.textContent=info[1];
+        detail.append(heading,summary);
+        detail.dataset.lesson=number;detail.hidden=false;
+        button.setAttribute('aria-expanded','true');
+      });
+      entry.append(tile,button,popup);
+      grid.append(entry);
+    });
+    grid.after(detail);
+  });
+  setEdges();
+  addEventListener('resize',setEdges);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 })();
 </script>
 </body></html>
