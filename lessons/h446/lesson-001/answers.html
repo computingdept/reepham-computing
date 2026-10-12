@@ -6,64 +6,7 @@
 <title>Lesson 001 · You Do Answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1530">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
-<style>
-body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
-.answer-toolbar{
-  height:56px;position:fixed;left:0;right:0;top:0;z-index:30;
-  padding:0 3vw;display:flex;align-items:center;gap:18px;
-  background:#fff;border-bottom:1px solid var(--line);
-}
-.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}
-.answer-toolbar .answer-title{font-weight:900;color:var(--green-dark)}
-.answer-toolbar .answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
-main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
-.answer-stage{height:100%;display:flex;gap:12px;align-items:stretch}
-.answer-stage[hidden]{display:none!important}
-.answer-card{flex:1 1 0;min-width:0;height:100%;overflow:hidden}
-.answer-card.current-answer{flex:1.18 1 0;border-top:7px solid var(--green)}
-.answer-card .phase-tag{font-size:11px;margin-bottom:8px}
-.answer-card h3{margin:4px 0 10px;font-size:clamp(23px,1.75vw,29px)}
-.answer-card .question-text{font-size:clamp(19px,1.35vw,23px);line-height:1.3}
-.answer-card .arithmetic{font-size:clamp(18px,1.18vw,21px);padding:9px 11px}
-.answer-heading{margin:7px 0 8px;color:var(--green);font-size:13px;font-weight:950;letter-spacing:.11em}
-.answer-value{margin:7px 0 10px;color:var(--green-dark);font-size:clamp(20px,1.5vw,25px);font-weight:900}
-.mark-points{margin:8px 0 0;padding:10px 12px;background:var(--green-soft);border-radius:10px}
-.mark-points strong{color:var(--green-dark)}
-.mark-points ul{margin:6px 0 0;padding-left:20px}
-.mark-points li{font-size:clamp(15px,1vw,18px);line-height:1.28;margin:2px 0}
-.answer-stage.two .answer-card{flex:1 1 0}
-.answer-stage.single{justify-content:center}
-.answer-stage.single .answer-card{flex:0 1 960px;max-width:960px}
-.answer-controls{
-  position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;
-  display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line);
-}
-.answer-controls button,.answer-controls a{
-  border:1px solid var(--line);border-radius:9px;padding:10px 16px;
-  background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer;
-}
-.answer-controls #next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}
-.answer-controls button:disabled{opacity:.35;cursor:default}
-@media(max-height:760px) and (min-width:901px){
-  .answer-toolbar{height:48px}
-  main.answer-stage-wrap{padding:60px 2.5vw 66px}
-  .answer-controls{height:54px;padding:6px 2.5vw}
-  .answer-card{padding:13px}
-  .answer-card h3{font-size:21px}
-  .answer-card .question-text{font-size:18px}
-  .answer-card .arithmetic{font-size:17px;padding:6px 8px}
-  .mark-points li{font-size:14px}
-}
-@media(max-width:900px){
-  body.answer-page{height:auto;overflow:auto}
-  .answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}
-  .answer-toolbar .answer-counter{margin-left:0}
-  main.answer-stage-wrap{height:auto;padding:16px 14px 84px}
-  .answer-stage,.answer-stage.two,.answer-stage.single{height:auto;display:grid;grid-template-columns:1fr}
-  .answer-stage[hidden]{display:none!important}
-  .answer-card,.answer-stage.single .answer-card{height:auto;max-width:none;overflow:visible}
-}
-</style>
+<link rel="stylesheet" href="../../../assets/h446-lesson/answer-layout.css?v=20261012-answers1">
 </head>
 <body class="answer-page">
 <header class="answer-toolbar">
@@ -72,7 +15,28 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Answer 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">QUESTION 1 · DATA TYPES</span><h2>A weather-monitoring system</h2><pre class="solution-code">number of readings → Integer
+<main class="answer-stage-wrap">
+<section class="answer-stage">
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 1">
+<span class="answer-panel-label">Original question · 1 of 4</span>
+<span class="phase-tag">QUESTION 1 · DATA TYPES</span>
+        <span class="classroom-marks">Suggested classroom marks: 10</span>
+        <h2>A weather-monitoring system</h2>
+        <p class="question-text">For each field, state a suitable data type and justify it:</p>
+        <ol>
+          <li>number of readings collected;</li>
+          <li>air temperature, e.g. 18.5 °C;</li>
+          <li>a one-letter category, e.g. A;</li>
+          <li>station identifier <code>"0042"</code>;</li>
+          <li>whether the sensor is working.</li>
+        </ol>
+</article>
+<article class="answer-solution" aria-label="Worked answer 1">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>Integer · Real · Character · String · Boolean</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">number of readings → Integer
 Reason: a whole-number count.
 
 air temperature, e.g. 18.5 → Real / floating point
@@ -85,20 +49,82 @@ station identifier "0042" → String
 Reason: it is an identifier and the leading zeros must be preserved.
 
 sensor working → Boolean
-Reason: only two states are required: true/false.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · DENARY → BINARY</span><h2>Encode the readings</h2><pre class="solution-code">37 = 32 + 4 + 1
+Reason: only two states are required: true/false.</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 2">
+<span class="answer-panel-label">Original question · 2 of 4</span>
+<span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
+        <span class="classroom-marks">Suggested classroom marks: 6</span>
+        <h2>Encode the readings</h2>
+        <p class="question-text">Convert each value into unsigned 8-bit binary. Show a place-value decomposition.</p>
+        <pre class="arithmetic">a) 37
+b) 92
+c) 200</pre>
+        <p class="source-note">Classroom adaptation of the conversion skill used in OCR June 2017 Q6(a)(i).</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 2">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><code>37 → 00100101</code> · <code>92 → 01011100</code> · <code>200 → 11001000</code></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">37 = 32 + 4 + 1
 37 = 00100101
 
 92 = 64 + 16 + 8 + 4
 92 = 01011100
 
 200 = 128 + 64 + 8
-200 = 11001000</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · BINARY → DENARY</span><h2>Decode the stored values</h2><pre class="solution-code">01101001
+200 = 11001000</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 3">
+<span class="answer-panel-label">Original question · 3 of 4</span>
+<span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
+        <span class="classroom-marks">Suggested classroom marks: 4</span>
+        <h2>Decode the stored values</h2>
+        <p class="question-text">Calculate the denary value of each unsigned bit pattern. Show the place values you add.</p>
+        <pre class="arithmetic">a) 01101001₂
+b) 11000010₂</pre>
+</article>
+<article class="answer-solution" aria-label="Worked answer 3">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><code>01101001 → 105</code> · <code>11000010 → 194</code></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">01101001
 = 64 + 32 + 8 + 1
 = 105
 
 11000010
 = 128 + 64 + 2
-= 194</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · RANGE & JUSTIFICATION</span><h2>Choose a storage width</h2><pre class="solution-code">Largest unsigned 8-bit value:
+= 194</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 4">
+<span class="answer-panel-label">Original question · 4 of 4</span>
+<span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
+        <span class="classroom-marks">Suggested classroom marks: 4</span>
+        <h2>Choose a storage width</h2>
+        <p class="question-text">A system must store whole-number readings from 0 to 300 inclusive.</p>
+        <ol>
+          <li>State the largest unsigned 8-bit value.</li>
+          <li>Explain why 8 bits are insufficient.</li>
+          <li>Determine the minimum number of bits required and justify it using the unsigned range.</li>
+        </ol>
+</article>
+<article class="answer-solution" aria-label="Worked answer 4">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>Minimum unsigned width: 9 bits</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">Largest unsigned 8-bit value:
 2^8 - 1 = 255
 
 8 bits are insufficient because:
@@ -108,7 +134,11 @@ Reason: only two states are required: true/false.</pre></article></section><sect
 0 to 2^9 - 1
 = 0 to 511
 
-Minimum required width = 9 bits</pre></article></section></main>
+Minimum required width = 9 bits</pre></div>
+</article>
+</div>
+</section>
+</main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous answer</button>
