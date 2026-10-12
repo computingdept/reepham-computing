@@ -592,6 +592,27 @@ function previousAction(){
       }
     }
   }
+  // When returning from the first vocabulary term, restore the final You Do task,
+  // rather than restarting pupils at the first question.
+  if(current==='vocabulary'){
+    showPage('you-do');
+    const youPage=document.getElementById('you-do');
+    if(youPage?.dataset.assessmentMode!=='true'){
+      youPage.dataset.workMode='independent';
+      const questions=[...youPage.querySelectorAll('.youdo-question')];
+      if(questions.length){
+        const requestedSize=Math.max(1,Number(youPage.dataset.windowSize||3));
+        const size=Math.min(requestedSize,questions.length);
+        setYouDoWindow(youPage,questions.length-size);
+      }else{
+        const stages=[...youPage.querySelectorAll('.youdo-stage')];
+        if(stages.length)showOnly(stages,stages.length-1);
+      }
+      updateSignals('you-do');
+      updateControl();
+    }
+    return;
+  }
   if(current==='you-do'){
     if(page.dataset.assessmentMode==='true'){
       updateSignals('you-do');
