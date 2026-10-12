@@ -43,6 +43,17 @@ Other phase rules:
 
 This is the standard for **new and edited lessons**. Review existing lessons with complex visual content individually; **do not bulk-convert all existing You Do sections to one question per page**.
 
+## Visual teaching standard (H446 and J277)
+
+Diagrams are **selective teaching tools**, not decorative requirements. Use a visual only when it makes a mechanism, relationship, state change or abstract model clearer than well-presented text or code.
+
+- **Visual essential:** linked pointers, array indexing in more than one dimension, tree/graph relationships, K-map groups and gate pathways, flip-flop timing, hashing collisions and other processes pupils must mentally trace.
+- **Visual helpful:** place-value and floating-point transformations, searches and sorts, only where individual steps or changes benefit from highlighting.
+- **No visual required:** straightforward coding syntax, short retrieval questions, exam technique, independent revision routines and tasks where an image merely repeats the words.
+- Prefer technically accurate, labelled SVG or clear structured tables over decorative imagery. Keep the diagram's source data and examples identical to the lesson. Do not expose answers in independent practice before pupils attempt the question.
+- Use the shared `.lesson-concept-diagram` styles for SVGs; keep visuals readable on classroom TVs and phones, with complete SVG viewBoxes. Aim for a compact diagram in the existing I Do/New Learning reference space, not an oversized picture that pushes away code or prompts.
+- Preserve the Do Now, I Do, We Do and You Do pedagogical sequence and the **3 short / 2 medium / 1 complex** screen rule. Check fitting and alignment before publishing.
+
 ## Classroom TV answer pages (H446 and J277)
 
 The shared answer presentation is in `assets/h446-lesson/answer-layout.css`. Lessons H446 001–005 and 027 are the first converted examples.
