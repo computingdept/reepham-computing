@@ -43,6 +43,18 @@ Other phase rules:
 
 This is the standard for **new and edited lessons**. Review existing lessons with complex visual content individually; **do not bulk-convert all existing You Do sections to one question per page**.
 
+## Classroom TV answer pages (H446 and J277)
+
+The shared answer presentation is in `assets/h446-lesson/answer-layout.css`. Lessons H446 001–005 and 027 are the first converted examples.
+
+- **One original question per screen.** Repeat the question and any code/diagram/marks on the left, with the full worked solution on the right. On phones the panels stack.
+- **Clear hierarchy:** original task, prominent final answer, then working and marking guidance. Keep the original exam attribution and distinguish classroom allocations from official OCR marking.
+- **Do not shorten or invent answer content when restyling.** Retain all existing worked steps and source notes, including original OCR question references where provided.
+- Include the shared stylesheet **after** the lesson base and classroom styles in each `answers.html`, and use the `answer-stage`, `answer-split`, `answer-prompt`, `answer-solution`, `answer-result` and `answer-working` classes.
+- Keep Next/Previous/Return to You Do navigation, keyboard arrows and touch swipe. For visual tasks ensure SVG viewBoxes contain all K-map cells, labels and groups.
+- Avoid duplicating the old inline answer CSS. Check one short solution, one multi-step algorithm or calculation and one large diagram on desktop and phone before extending the design further.
+- Reuse this design for future J277 answers; existing J277 answer pages are not automatically converted by adding CSS alone because their HTML also needs the two-panel structure.
+
 ## Mobile requirement
 
 All updates must remain usable on iPhones and Safari, at narrow screen widths and with enlarged text. Preserve RHSC green branding, keyboard focus, touch targets of at least 44px and clear back links. Avoid horizontal page overflow. Keep year-group content separate.
