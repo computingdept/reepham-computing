@@ -54,7 +54,15 @@ D may change
 Q holds
 
 At trigger:
-Q ← D</pre><div class="nl-reference-note">Focus on purpose and clocked behaviour: a D-type flip-flop stores one bit of state.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Purpose</h2><pre class="arithmetic">stores 1 bit</pre><p>The flip-flop gives a digital circuit memory.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Inputs</h2><pre class="arithmetic">D = data
+Q ← D</pre><svg class="lesson-concept-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 206" role="img" aria-label="Timing diagram showing a D flip-flop: D is one at the first trigger, zero at the second, one at the third; output Q only changes at those clock triggers and holds between them"><title>D-type flip-flop samples D at clock triggers</title>
+<text x="8" y="25" fill="#1d5239" font-size="18" font-weight="800">D (data)</text>
+<text x="8" y="111" fill="#1d5239" font-size="18" font-weight="800">Q (stored)</text>
+<path d="M 83 72 H 130 V 43 H 273 V 72 H 412 V 43 H 594" stroke="#2e8060" stroke-width="5" fill="none" stroke-linejoin="round"/>
+<path d="M 83 156 H 165 V 127 H 304 V 156 H 443 V 127 H 594" stroke="#c47e20" stroke-width="5" fill="none" stroke-linejoin="round"/>
+<g stroke="#738981" stroke-width="2" stroke-dasharray="5 6"><path d="M 165 29 V 170"/><path d="M 304 29 V 170"/><path d="M 443 29 V 170"/></g>
+<g fill="#254e3a" text-anchor="middle" font-size="17" font-weight="800"><text x="165" y="191">trigger 1</text><text x="304" y="191">trigger 2</text><text x="443" y="191">trigger 3</text></g>
+<g font-size="14" fill="#416452"><text x="605" y="48">1</text><text x="605" y="76">0</text><text x="605" y="132">1</text><text x="605" y="161">0</text></g>
+</svg><div class="nl-reference-note">Focus on purpose and clocked behaviour: a D-type flip-flop stores one bit of state.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>Purpose</h2><pre class="arithmetic">stores 1 bit</pre><p>The flip-flop gives a digital circuit memory.</p><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Inputs</h2><pre class="arithmetic">D = data
 CLK = clock</pre><p>D supplies the next state; CLK says when to accept it.</p><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Output</h2><pre class="arithmetic">Q = stored state</pre><p>Q remains unchanged between triggering events.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Registers</h2><pre class="arithmetic">8 flip-flops → 8 stored bits</pre><p>Multiple flip-flops can form registers and other stateful circuits.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
 
 <section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Trace three clock triggers</h2><p>Q starts at 0. Only read D when a trigger occurs.</p><pre class="arithmetic">trigger:   1   2   3
