@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 013 · Noughts & Crosses Part 1 solutions</title>
+<title>Lesson 013 · Noughts &amp; Crosses · Part 1 solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,46 +26,25 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 013 · NOUGHTS & CROSSES PART 1 · SOLUTIONS</span>
+  <span class="answer-title">LESSON 013 · NOUGHTS &amp; CROSSES · PART 1 · SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · BOARD</span><h2>Create the board</h2><pre class="solution-code">string[,] board =
-{
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><h2>1. Display the board with sequence</h2><p>Each <code>Console.WriteLine()</code> runs in order. You can produce the whole board without a loop.</p><pre class="solution-code">Console.WriteLine("1 | 2 | 3");
+Console.WriteLine("--+---+--");
+Console.WriteLine("4 | 5 | 6");
+Console.WriteLine("--+---+--");
+Console.WriteLine("7 | 8 | 9");</pre><div class="test-strip"><span>Run it</span><span>Compare the output</span><span>Move on when it works</span></div></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><h2>2. Change the middle value</h2><p>Change the third <code>WriteLine</code> statement to show X rather than 5.</p><pre class="solution-code">Console.WriteLine("4 | X | 6");</pre><p>Works, but makes moves difficult to maintain because the board is stored as printed text.</p><div class="test-strip"><span>Run it</span><span>Compare the output</span><span>Move on when it works</span></div></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><h2>3. Store the nine values in a two-dimensional array</h2><p>Declare the board as <code>string[,]</code> and change its middle cell using row 1 and column 1.</p><pre class="solution-code">string[,] board = {
     { "1", "2", "3" },
     { "4", "5", "6" },
     { "7", "8", "9" }
-};</pre><p><strong>Check:</strong> The array contains all nine positions.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · METHOD</span><h2>Create DrawBoard()</h2><pre class="solution-code">public static void DrawBoard()
-{
-    for (int row = 0; row &lt; board.GetLength(0); row++)
-    {
-        for (int col = 0; col &lt; board.GetLength(1); col++)
-        {
-            Console.Write(board[row,col]);
-
-            if (col &lt; board.GetLength(1) - 1)
-                Console.Write(" | ");
-        }
-
-        Console.WriteLine();
-    }
-}</pre><p><strong>Check:</strong> The method uses <code>GetLength()</code>, not hard-coded loop limits.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · PRESENTATION</span><h2>Add board separators</h2><pre class="solution-code">if (col &lt; board.GetLength(1) - 1)
-    Console.Write(" | ");
-
-Console.WriteLine();
-
-if (row &lt; board.GetLength(0) - 1)
-    Console.WriteLine("--+---+--");</pre><p><strong>Check:</strong> The output is easy to read as a 3 × 3 board.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHECKPOINT</span><h2>Run the finished Part 1</h2><pre class="solution-code">public static void Main()
-{
-    DrawBoard();
-}
-
-// Expected:
-1 | 2 | 3
---+---+--
-4 | 5 | 6
---+---+--
-7 | 8 | 9</pre><p><strong>Check:</strong> Checkpoint reached: the board displays correctly and is ready for moves next lesson.</p></article></section></main>
+};
+board[1,1] = "X";</pre><p>Indexes start at zero.</p><div class="test-strip"><span>Run it</span><span>Compare the output</span><span>Move on when it works</span></div></article></section>
+<section class="answer-stage" hidden><article class="solution-card"><h2>4. Output data from the array without loops</h2><p>The three statements still follow sequence, but they now display the array values. They work after a move changes an array element.</p><pre class="solution-code">Console.WriteLine(board[0,0] + " | " + board[0,1] + " | " + board[0,2]);
+Console.WriteLine(board[1,0] + " | " + board[1,1] + " | " + board[1,2]);
+Console.WriteLine(board[2,0] + " | " + board[2,1] + " | " + board[2,2]);</pre><p><strong>Notice:</strong> the only changing part of these statements is the row index. This is why iteration is useful next lesson.</p><div class="test-strip"><span>Run it</span><span>Compare the output</span><span>Explain the improvement</span></div></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

@@ -3,12 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 016 · Arrays in C#</title>
-<meta name="description" content="OCR H446 1.4.2(a): one-, two- and three-dimensional arrays in C#, including indexing, GetLength and traversal.">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261012-visuals1">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
-</head>
+<title>Lesson 016 · Noughts & Crosses in C# · Part 4</title>
+<meta name="description" content="Noughts and Crosses Part 4: complete win detection, draw detection, the game loop, testing and debugging in C#.">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-2015">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile2">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-2015">
+<style>
+/* Lesson 016 — eight visible win lines, meaningful tests and playable-game check. */
+.nac-wins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:8px auto;max-width:560px}
+.nac-wins figure{margin:0;border:1px solid #cbded2;background:#f8fbf9;border-radius:8px;padding:4px 4px 3px;text-align:center}
+.nac-wins svg{display:block;width:100%;height:auto;max-height:96px}
+.nac-wins figcaption{font-size:clamp(11px,.84vw,14px);font-weight:800;line-height:1.15;color:#315940}
+.nac-wins .nac-stroke{stroke:#b67518;stroke-width:5;stroke-linecap:round}
+.nac-wins .nac-x{font:bold 21px Arial,sans-serif;fill:#145037}
+.nac-checklist{display:grid;gap:6px;margin:7px 0}
+.nac-checklist>div{border:1px solid #d2e0d7;background:#fafdfa;border-radius:7px;padding:7px 10px;font-size:clamp(14px,1.03vw,18px)}
+.nac-full-figure{margin:5px auto 0;max-width:340px;text-align:center;border:1px solid #cbded2;background:#f8fbf9;border-radius:9px;padding:5px}
+.nac-full-figure svg{display:block;margin:auto;width:100%;max-height:193px;height:auto}
+.nac-full-figure figcaption{font-weight:750;font-size:clamp(12px,.85vw,15px);color:#315940;line-height:1.25}
+.nac-testing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:7px 0}
+.nac-testing-grid>div{border:1px solid #bfd5c6;border-radius:7px;background:#f9fcfa;padding:7px 10px;font-size:clamp(14px,1.08vw,18px)}
+@media(max-width:900px){.nac-wins{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}.nac-wins svg{max-height:123px}}
+@media(max-height:750px) and (min-width:901px){.nac-wins{gap:3px}.nac-wins svg{max-height:72px}.nac-wins figure{padding:2px}.nac-full-figure svg{max-height:140px}}
+@media(max-width:490px){.nac-testing-grid{grid-template-columns:1fr}}
+</style></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -39,127 +57,50 @@
   </div>
   <div class="signal-meta">
     <span id="phase-time" class="signal-phase-time"></span>
-    <span class="lesson-label">OCR H446 · Lesson 016<br>Arrays in C#</span>
+    <span class="lesson-label">OCR H446 · Lesson 016<br>Noughts & Crosses · Part 4</span>
   </div>
 </div>
 
 <main id="main">
 
-<section id="do-now" class="page phase-donow" data-phase-time="5 minutes">
-  <div class="donow-deck">
-    <div class="donow-stage">
-      <div class="donow-questions">
-        <article class="donow-question"><strong>1 · LAST LESSON</strong><p>For a 3 × 3 array called <code>board</code>, what do <code>GetLength(0)</code> and <code>GetLength(1)</code> return?</p></article>
-        <article class="donow-question"><strong>2 · 2–3 LESSONS BACK</strong><p>What is the difference between a function and a procedure?</p></article>
-        <article class="donow-question"><strong>3 · EARLIER RETRIEVAL</strong><p>Convert hexadecimal <code>2F</code> to denary.</p></article>
-        <article class="donow-question"><strong>4 · CHALLENGE</strong><p>Why must every value in a C# <code>string[,]</code> array be stored as a string?</p></article>
-      </div>
-    </div>
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What does <code>MakeMove()</code> return after a successful move?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>Why must an invalid move not switch player?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>What row and column does move 8 map to?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>How many winning lines exist on a 3 × 3 Noughts & Crosses board?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What does <code>MakeMove()</code> return after a successful move?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>true.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">Why must an invalid move not switch player?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>The same player needs another attempt.</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">What row and column does move 8 map to?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>[2,1].</strong></p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">How many winning lines exist on a 3 × 3 Noughts & Crosses board?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>8: 3 rows, 3 columns and 2 diagonals.</strong></p></article></div></div></div></section>
 
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Last lesson</h2><p class="review-question">What do <code>board.GetLength(0)</code> and <code>board.GetLength(1)</code> return for a 3 × 3 array?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>3 and 3.</strong></p><p class="review-explain">Dimension 0 is rows; dimension 1 is columns.</p></article>
-    </div></div>
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Noughts & Crosses · Part 4 — Complete and test</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives"><strong>By the end, you can…</strong><ul>
+<li>complete <code>HasWon()</code> for rows, columns and diagonals;</li>
+<li>detect a draw using <code>BoardFull()</code>;</li>
+<li>finish, test and debug a complete playable game.</li>
+</ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="A data type with only two possible values: true or false." aria-label="Boolean: A data type with only two possible values: true or false.">Boolean</span><span class="vocab-tip" tabindex="0" data-definition="An expression that evaluates to true or false." aria-label="Condition: An expression that evaluates to true or false.">Condition</span><span class="vocab-tip" tabindex="0" data-definition="The current data describing what is happening in the program." aria-label="State: The current data describing what is happening in the program.">State</span><span class="vocab-tip" tabindex="0" data-definition="The repeated structure that controls turns until the game ends." aria-label="Game loop: The repeated structure that controls turns until the game ends.">Game loop</span><span class="vocab-tip" tabindex="0" data-definition="A chosen input and expected outcome used to check a program." aria-label="Test case: A chosen input and expected outcome used to check a program.">Test case</span><span class="vocab-tip" tabindex="0" data-definition="Following variables and control flow step by step." aria-label="Trace: Following variables and control flow step by step.">Trace</span><span class="vocab-tip" tabindex="0" data-definition="Finding and correcting errors in a program." aria-label="Debug: Finding and correcting errors in a program.">Debug</span><span class="vocab-tip" tabindex="0" data-definition="The outcome when the board is full and neither player has won." aria-label="Draw: The outcome when the board is full and neither player has won.">Draw</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Example: winnerFound can hold true or false."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Boolean</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A data type with only two possible values: true or false.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: if (boardFull &amp;&amp; !winnerFound) tests for a draw."><span class="objective-vocab-count">TERM 2 OF 8</span><h2>Condition</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>An expression that evaluates to true or false.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: board contents and current player form the current state."><span class="objective-vocab-count">TERM 3 OF 8</span><h2>State</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The current data describing what is happening in the program.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: keep taking turns until the game ends."><span class="objective-vocab-count">TERM 4 OF 8</span><h2>Game loop</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The repeated structure that controls turns until the game ends.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: a known winning row should produce a win."><span class="objective-vocab-count">TERM 5 OF 8</span><h2>Test case</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A chosen input and expected outcome used to check a program.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: follow variables and decisions one step at a time."><span class="objective-vocab-count">TERM 6 OF 8</span><h2>Trace</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Following variables and control flow step by step.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: find why a diagonal win is missed, then correct it."><span class="objective-vocab-count">TERM 7 OF 8</span><h2>Debug</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Finding and correcting errors in a program.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: all squares filled with no winning line."><span class="objective-vocab-count">TERM 8 OF 8</span><h2>Draw</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The outcome when the board is full and neither player has won.</p></div></article></div></div></section>
 
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>2–3 lessons back</h2><p class="review-question">What is the difference between a function and a procedure?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>A function returns a value; a procedure does not.</strong></p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Earlier retrieval</h2><p class="review-question">Convert hexadecimal <code>2F</code> to denary.</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>47.</strong></p><p class="review-explain"><code>2 × 16 + 15 = 47</code>.</p></article>
-    </div></div>
-
-    <div class="donow-stage" hidden><div class="donow-review">
-      <article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">Why must every value in a C# <code>string[,]</code> array be stored as a string?</p></article>
-      <article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">An array has one declared element type, so every element must be compatible with that type.</p></article>
-    </div></div>
-  </div>
-</section>
-
-<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Arrays in C#</h1><a class="answer-cta" href="../../../resources/h446-csharp-guide.html" target="_blank" rel="noopener">C# Guide →</a><div class="objectives">
-    <strong>By the end, you can…</strong>
-    <ul>
-      <li>declare and access one-, two- and three-dimensional arrays;</li>
-      <li>use zero-based indexes and <code>GetLength()</code> correctly;</li>
-      <li>traverse arrays using loops and choose suitable dimensions for stored data.</li>
-    </ul>
-  </div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="A fixed collection of elements accessed using indexes." aria-label="Array: A fixed collection of elements accessed using indexes.">Array</span><span class="vocab-tip" tabindex="0" data-definition="One stored value inside an array." aria-label="Element: One stored value inside an array.">Element</span><span class="vocab-tip" tabindex="0" data-definition="The position number used to access an array element." aria-label="Index: The position number used to access an array element.">Index</span><span class="vocab-tip" tabindex="0" data-definition="One direction or level used to locate an element." aria-label="Dimension: One direction or level used to locate an element.">Dimension</span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with one dimension." aria-label="[]: C# syntax for an array with one dimension."><code>[]</code></span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with two dimensions." aria-label="[,]: C# syntax for an array with two dimensions."><code>[,]</code></span><span class="vocab-tip" tabindex="0" data-definition="C# syntax for an array with three dimensions." aria-label="[,,]: C# syntax for an array with three dimensions."><code>[,,]</code></span><span class="vocab-tip" tabindex="0" data-definition="The C# method used to find the length of one chosen array dimension." aria-label="GetLength(): The C# method used to find the length of one chosen array dimension.">GetLength()</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Example: names stores several values under one variable name."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Array</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A fixed collection of elements accessed using indexes.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: names[2] is one element."><span class="objective-vocab-count">TERM 2 OF 8</span><h2>Element</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One stored value inside an array.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: index 0 accesses the first element."><span class="objective-vocab-count">TERM 3 OF 8</span><h2>Index</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The position number used to access an array element.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: a 2D array needs two indexes to locate one value."><span class="objective-vocab-count">TERM 4 OF 8</span><h2>Dimension</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>One direction or level used to locate an element.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: names[3] accesses one item in a 1D array."><span class="objective-vocab-count">TERM 5 OF 8</span><h2><code>[]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with one dimension.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: grid[1,2] accesses one item in a 2D array."><span class="objective-vocab-count">TERM 6 OF 8</span><h2><code>[,]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with two dimensions.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: cube[1,2,3] uses three indexes."><span class="objective-vocab-count">TERM 7 OF 8</span><h2><code>[,,]</code></h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>C# syntax for an array with three dimensions.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: grid.GetLength(0) returns the size of dimension 0."><span class="objective-vocab-count">TERM 8 OF 8</span><h2>GetLength()</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>The C# method used to find the length of one chosen array dimension.</p></div></article></div></div></section>
-
-<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes">
-  <div class="nl-focus">
-    <article class="nl-reference">
-      <span class="phase-tag">OCR H446 · 1.4.2(a)</span>
-      <h2>Arrays up to 3 dimensions</h2>
-      <pre class="arithmetic">string[] names;
-string[,] results;
-int[,,] readings;</pre>
-      <svg class="lesson-concept-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 215" role="img" aria-label="A three-dimensional array as two layers of three rows and four columns; scores at layer one, row two, column one is 65"><title>3D indexing: layer 1, row 2, column 1 gives 65</title><text x="151" y="23" text-anchor="middle" fill="#215840" font-size="19" font-weight="800">LAYER 0</text><text x="98" y="46" text-anchor="middle" fill="#527261" font-size="14">c0</text><text x="139" y="46" text-anchor="middle" fill="#527261" font-size="14">c1</text><text x="180" y="46" text-anchor="middle" fill="#527261" font-size="14">c2</text><text x="221" y="46" text-anchor="middle" fill="#527261" font-size="14">c3</text><text x="59" y="73" fill="#527261" font-size="14">r0</text><rect x="77" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="96.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">12</text><rect x="118" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="137.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">15</text><rect x="159" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="178.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">18</text><rect x="200" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="219.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">20</text><text x="59" y="109" fill="#527261" font-size="14">r1</text><rect x="77" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="96.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">21</text><rect x="118" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="137.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">24</text><rect x="159" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="178.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">27</text><rect x="200" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="219.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">30</text><text x="59" y="145" fill="#527261" font-size="14">r2</text><rect x="77" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="96.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">32</text><rect x="118" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="137.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">35</text><rect x="159" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="178.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">38</text><rect x="200" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="219.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">40</text><text x="451" y="23" text-anchor="middle" fill="#215840" font-size="19" font-weight="800">LAYER 1</text><text x="398" y="46" text-anchor="middle" fill="#527261" font-size="14">c0</text><text x="439" y="46" text-anchor="middle" fill="#527261" font-size="14">c1</text><text x="480" y="46" text-anchor="middle" fill="#527261" font-size="14">c2</text><text x="521" y="46" text-anchor="middle" fill="#527261" font-size="14">c3</text><text x="359" y="73" fill="#527261" font-size="14">r0</text><rect x="377" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="396.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">42</text><rect x="418" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="437.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">45</text><rect x="459" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="478.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">48</text><rect x="500" y="52" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="519.5" y="75" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">50</text><text x="359" y="109" fill="#527261" font-size="14">r1</text><rect x="377" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="396.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">51</text><rect x="418" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="437.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">54</text><rect x="459" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="478.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">57</text><rect x="500" y="88" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="519.5" y="111" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">60</text><text x="359" y="145" fill="#527261" font-size="14">r2</text><rect x="377" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="396.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">62</text><rect x="418" y="124" width="39" height="34" rx="4" fill="#f9dfab" stroke="#b77918" stroke-width="3"/><text x="437.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="900">65</text><rect x="459" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="478.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">68</text><rect x="500" y="124" width="39" height="34" rx="4" fill="#e7f2ec" stroke="#91b8a1" stroke-width="1.2"/><text x="519.5" y="147" text-anchor="middle" fill="#143e2f" font-size="18" font-weight="650">70</text><text x="330" y="207" text-anchor="middle" fill="#1e5a3f" font-size="19" font-weight="850">scores[1,2,1] = 65</text></svg><div class="nl-reference-note"><strong>Core rule:</strong> one array has one element type. More dimensions mean more indexes are needed to locate one element.</div>
-    </article>
-
-    <article class="nl-explanation">
-      <div class="nl-stage">
-        <span class="nl-stage-label">STEP 1 OF 4</span>
-        <h2>1D · one index</h2>
-        <pre class="arithmetic">string[] students =
+<section id="new-learning" class="page phase-focus" data-phase-time="7 minutes">
+<div class="nl-focus">
+<article class="nl-reference">
+<span class="phase-tag">NOUGHTS & CROSSES · PART 3</span>
+<h2>Eight ways to win</h2>
+<div class="nac-wins" role="group" aria-label="Eight possible Noughts and Crosses winning lines: three rows, three columns and two diagonals"><figure><svg viewBox="0 0 81 81" role="img" aria-label="Row 1: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Row 1 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><line x1="13.5" y1="13.5" x2="79.5" y2="13.5" class="nac-stroke"/></svg><figcaption>Row 1</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Row 2: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Row 2 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><line x1="13.5" y1="40.5" x2="79.5" y2="40.5" class="nac-stroke"/></svg><figcaption>Row 2</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Row 3: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Row 3 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="74.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="74.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="74.5" text-anchor="middle" class="nac-x">X</text><line x1="13.5" y1="67.5" x2="79.5" y2="67.5" class="nac-stroke"/></svg><figcaption>Row 3</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Column 1: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Column 1 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="74.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><line x1="13.5" y1="13.5" x2="13.5" y2="79.5" class="nac-stroke"/></svg><figcaption>Column 1</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Column 2: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Column 2 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="74.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><line x1="40.5" y1="13.5" x2="40.5" y2="79.5" class="nac-stroke"/></svg><figcaption>Column 2</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Column 3: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Column 3 winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="74.5" text-anchor="middle" class="nac-x">X</text><line x1="67.5" y1="13.5" x2="67.5" y2="79.5" class="nac-stroke"/></svg><figcaption>Column 3</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Diagonal ↘: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Diagonal ↘ winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="74.5" text-anchor="middle" class="nac-x">X</text><line x1="13.5" y1="13.5" x2="67.5" y2="67.5" class="nac-stroke"/></svg><figcaption>Diagonal ↘</figcaption></figure><figure><svg viewBox="0 0 81 81" role="img" aria-label="Diagonal ↙: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Diagonal ↙ winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="74.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><line x1="67.5" y1="13.5" x2="13.5" y2="67.5" class="nac-stroke"/></svg><figcaption>Diagonal ↙</figcaption></figure></div>
+<div class="nl-reference-note"><strong>3 rows + 3 columns + 2 diagonals = 8 win lines.</strong> To finish the game, add <code>HasWon(player)</code>, <code>BoardFull()</code> and the game loop. Test every line, not just the top row.</div>
+</article>
+<article class="nl-explanation">
+<div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>HasWon() checks 8 lines</h2><pre class="arithmetic">3 rows
+3 columns
+2 diagonals
+──────────
+8 winning lines</pre><p>Each winning line needs three comparisons joined with <code>&amp;&amp;</code>. The possible lines are joined with <code>||</code>.</p><span class="nl-stage-count">1 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>BoardFull() looks for any free square</h2><pre class="arithmetic">if (board[row, col] != "X" &amp;&amp;
+    board[row, col] != "O")
 {
-    "Amelia", "Ben", "Charlie", "Daisy"
-};
+    return false;
+}
 
-Console.WriteLine(students[2]);</pre>
-        <p>Indexes start at 0, so <code>students[2]</code> is <strong>Charlie</strong>.</p>
-        <span class="nl-stage-count">1 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 2 OF 4</span>
-        <h2>2D · row and column</h2>
-        <pre class="arithmetic">string[,] studentResults =
-{
-    { "Amelia", "72" },
-    { "Ben", "65" },
-    { "Charlie", "81" }
-};
-
-Console.WriteLine(studentResults[0,0]);</pre>
-        <p><code>[0,0]</code> means row 0, column 0. It outputs <strong>Amelia</strong>.</p>
-        <div class="nl-key">The scores are strings here because every element in this array must have the same type.</div>
-        <span class="nl-stage-count">2 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 3 OF 4</span>
-        <h2>GetLength() names the dimension</h2>
-        <pre class="arithmetic">studentResults.GetLength(0)  // rows
-studentResults.GetLength(1)  // columns</pre>
-        <p>For the array above, the answers are <strong>3</strong> and <strong>2</strong>.</p>
-        <div class="nl-key">Use nested loops when you need to visit every row and every column.</div>
-        <span class="nl-stage-count">3 of 4</span>
-      </div>
-
-      <div class="nl-stage" hidden>
-        <span class="nl-stage-label">STEP 4 OF 4</span>
-        <h2>3D · layer, row, column</h2>
-        <pre class="arithmetic">int[,,] scores =
-{
-    {
-        {12, 15, 18, 20},
-        {21, 24, 27, 30},
-        {32, 35, 38, 40}
-    },
-    {
-        {42, 45, 48, 50},
-        {51, 54, 57, 60},
-        {62, 65, 68, 70}
-    }
-};</pre>
-        <p>Read the indexes as <strong>layer → row → column</strong>. A 3D array is easiest to visualise as several 2D tables stacked together.</p>
-        <div class="nl-key"><code>scores[1,2,1]</code> means layer 1, row 2, column 1.</div>
-        <span class="nl-stage-count">4 of 4</span>
-      </div>
-    </article>
-  </div>
+return true;</pre><p>If even one square is free, the board is not full.</p><span class="nl-stage-count">2 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Finish Main()</h2><pre class="arithmetic">valid move
+→ check win
+→ check draw
+→ otherwise switch player</pre><p>Part 3 already handled valid moves and switching. Today we add the stopping conditions.</p><span class="nl-stage-count">3 of 4</span></div>
+<div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Can two pupils actually play it?</h2>
+<div class="nac-checklist"><div><strong>Take turns:</strong> X and O choose positions 1–9.</div><div><strong>Reject invalid moves:</strong> occupied squares and numbers outside 1–9; do not change player.</div><div><strong>Finish correctly:</strong> stop on any of 8 wins or a full-board draw.</div></div>
+<p>After completing the code, play against a partner and compare expected with actual results. Use planned board positions to test all eight winning lines.</p><span class="nl-stage-count">4 of 4</span></div>
+</article>
+</div>
 </section>
 
 <section id="i-do" class="page phase-ido" data-phase-time="7 minutes">
@@ -167,97 +108,54 @@ studentResults.GetLength(1)  // columns</pre>
     <article class="ido-example">
       <div class="ido-reference">
         <span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span>
-        <h2>Build studentResults</h2>
-        <p>Store each student's name and score in a 2D array, then display every row.</p>
-        <pre class="arithmetic">Amelia 72
-Ben 65
-Charlie 81</pre>
+        <h2>Build BoardFull()</h2>
+        <p>Return <code>true</code> only when every square contains X or O.</p>
+        <figure class="nac-full-figure"><svg viewBox="0 0 244 223" role="img" aria-label="Full Noughts and Crosses board, with X winning on the top-left to bottom-right diagonal" xmlns="http://www.w3.org/2000/svg"><title>A full board with a diagonal X win</title><rect x="40" y="10" width="63" height="63" fill="#e5f3e9" stroke="#94b7a5" stroke-width="1.5"/><text x="71.5" y="52" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">X</text><rect x="103" y="10" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="134.5" y="52" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">O</text><rect x="166" y="10" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="197.5" y="52" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">X</text><rect x="40" y="73" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="71.5" y="115" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">O</text><rect x="103" y="73" width="63" height="63" fill="#e5f3e9" stroke="#94b7a5" stroke-width="1.5"/><text x="134.5" y="115" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">X</text><rect x="166" y="73" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="197.5" y="115" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">O</text><rect x="40" y="136" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="71.5" y="178" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">O</text><rect x="103" y="136" width="63" height="63" fill="#fff" stroke="#94b7a5" stroke-width="1.5"/><text x="134.5" y="178" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">X</text><rect x="166" y="136" width="63" height="63" fill="#e5f3e9" stroke="#94b7a5" stroke-width="1.5"/><text x="197.5" y="178" text-anchor="middle" fill="#164b37" font-family="Arial,sans-serif" font-size="31" font-weight="800">X</text><line x1="71" y1="41" x2="197" y2="167" stroke="#c18b2c" stroke-width="5" stroke-linecap="round"/><text x="135" y="219" font-family="Arial,sans-serif" text-anchor="middle" font-size="15" font-weight="750" fill="#315941">Full board AND X has won</text></svg><figcaption>Important: check for a win before declaring a draw.</figcaption></figure>
         <span class="ido-example-count">Worked example</span>
       </div>
 
       <div class="ido-method">
         <div class="ido-step">
-          <span class="ido-step-label">STEP 1 · PLAN</span>
-          <h2>Rows are students · columns are fields</h2>
-          <pre class="arithmetic">row 0 → Amelia | 72
-row 1 → Ben    | 65
-row 2 → Charlie| 81</pre>
-          <p>We need 3 rows and 2 columns.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 2 · DECLARE</span>
-          <h2>Create the 2D array</h2>
-          <pre class="arithmetic">string[,] studentResults =
+          <span class="ido-step-label">STEP 1 · VISIT EVERY SQUARE</span>
+          <h2>Use nested loops</h2>
+          <pre class="arithmetic">for (int row = 0; row &lt; board.GetLength(0); row++)
 {
-    { "Amelia", "72" },
-    { "Ben", "65" },
-    { "Charlie", "81" }
-};</pre>
-          <p>Both columns use strings in this teaching example.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 3 · ACCESS</span>
-          <h2>Use row, then column</h2>
-          <pre class="arithmetic">Console.WriteLine(studentResults[0,0]);
-Console.WriteLine(studentResults[0,1]);</pre>
-          <p>The outputs are <strong>Amelia</strong> and <strong>72</strong>.</p>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 4 · TRAVERSE</span>
-          <h2>Visit every row</h2>
-          <pre class="arithmetic">for (int row = 0;
-     row &lt; studentResults.GetLength(0);
-     row++)
-{
-    Console.WriteLine(
-        studentResults[row,0] + " " +
-        studentResults[row,1]);
-}</pre>
-          <div class="key-result">Use <code>GetLength(0)</code> so the loop follows the number of rows.</div>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 5 · VISUALISE 3D</span>
-          <h2>Think in layers</h2>
-          <pre class="arithmetic">LAYER 0
-          col 0  col 1  col 2  col 3
-row 0       12     15     18     20
-row 1       21     24     27     30
-row 2       32     35     38     40
-
-LAYER 1
-          col 0  col 1  col 2  col 3
-row 0       42     45     48     50
-row 1       51     54     57     60
-row 2       62     65     68     70</pre>
-          <p><strong>Worked example:</strong> find <code>scores[1,2,1]</code>.</p>
-          <div class="key-result">Layer 1 → Row 2 → Column 1 → <strong>65</strong></div>
-        </div>
-
-        <div class="ido-step" hidden>
-          <span class="ido-step-label">STEP 6 · TRAVERSE 3D</span>
-          <h2>Three dimensions need three loops</h2>
-          <pre class="arithmetic">for (int layer = 0;
-     layer &lt; scores.GetLength(0);
-     layer++)
-{
-    for (int row = 0;
-         row &lt; scores.GetLength(1);
-         row++)
+    for (int column = 0; column &lt; board.GetLength(1); column++)
     {
-        for (int column = 0;
-             column &lt; scores.GetLength(2);
-             column++)
-        {
-            Console.WriteLine(
-                scores[layer,row,column]);
-        }
     }
 }</pre>
-          <div class="key-result">Dimension 0 = layers · Dimension 1 = rows · Dimension 2 = columns</div>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 2 · LOOK FOR A FREE SQUARE</span>
+          <h2>One free square means not full</h2>
+          <pre class="arithmetic">if (board[row, column] != "X" &amp;&amp;
+    board[row, column] != "O")
+{
+    return false;
+}</pre>
+          <p>The function can stop immediately when it finds a free square.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 3 · FINISH THE FUNCTION</span>
+          <h2>No free square was found</h2>
+          <pre class="arithmetic">return true;</pre>
+          <p>This line is reached only after every position has been checked.</p>
+        </div>
+
+        <div class="ido-step" hidden>
+          <span class="ido-step-label">STEP 4 · USE IT IN MAIN</span>
+          <h2>Check draw after checking win</h2>
+          <pre class="arithmetic">if (HasWon(currentPlayer))
+{
+    // win
+}
+else if (BoardFull())
+{
+    // draw
+}</pre>
+          <div class="key-result">A final move can fill the board and also win — so check <strong>win before draw</strong>.</div>
         </div>
       </div>
     </article>
@@ -269,196 +167,146 @@ row 2       62     65     68     70</pre>
 
     <article class="wedo-example">
       <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 1 · 1D</span>
-        <h2>Read an indexed value</h2>
-        <pre class="arithmetic">string[] names =
-{ "Amelia", "Ben", "Charlie", "Daisy" };</pre>
-        <p>What is stored at index 2, and how many elements are in the array?</p>
+        <span class="phase-tag">GUIDED PRACTICE 1 · WIN CHECK</span>
+        <h2>Complete one diagonal</h2>
+        <p>Player X wins on the main diagonal when all three diagonal positions contain X.</p>
+        <span class="focus-code">[0,0] · [1,1] · [2,2]</span><div class="nac-wins nac-single-win" role="group" aria-label="Main diagonal winning line"><figure><svg viewBox="0 0 81 81" role="img" aria-label="Diagonal ↘: three X marks in one winning line" xmlns="http://www.w3.org/2000/svg"><title>Diagonal ↘ winning line</title><rect x="0.5" y="0.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="14" y="20.5" text-anchor="middle" class="nac-x">X</text><rect x="27.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="0.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="27.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="41" y="47.5" text-anchor="middle" class="nac-x">X</text><rect x="54.5" y="27.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="0.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="27.5" y="54.5" width="27" height="27" fill="#fff" stroke="#a1bca9" stroke-width="1"/><rect x="54.5" y="54.5" width="27" height="27" fill="#e1f2e5" stroke="#a1bca9" stroke-width="1"/><text x="68" y="74.5" text-anchor="middle" class="nac-x">X</text><line x1="13.5" y1="13.5" x2="67.5" y2="67.5" class="nac-stroke"/></svg><figcaption>Diagonal ↘</figcaption></figure></div>
         <span class="wedo-example-count">Example 1 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Read the array</h2><div class="practice-grid"><div class="practice-box"><strong>Index</strong><span>?</span></div><div class="practice-box"><strong>Value</strong><span>?</span></div><div class="practice-box"><strong>Length</strong><span>?</span></div></div></div>
-        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Read the array</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Index</strong><span><code>2</code></span></div><div class="practice-box"><strong>Value</strong><span><strong>Charlie</strong></span></div><div class="practice-box"><strong>Length</strong><span><strong>4</strong></span></div></div></div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the condition</h2><pre class="arithmetic">if (board[0,0] == ? &amp;&amp;
+    board[1,1] == ? &amp;&amp;
+    board[2,2] == ?)
+{
+    return true;
+}</pre></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the condition</h2><pre class="arithmetic">if (board[0,0] == player &amp;&amp;
+    board[1,1] == player &amp;&amp;
+    board[2,2] == player)
+{
+    return true;
+}</pre></div>
       </div>
     </article>
 
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 2 · 2D</span>
-        <h2>Read row and column</h2>
-        <pre class="arithmetic">string[,] studentResults =
-{
-    { "Amelia", "72" },
-    { "Ben", "65" },
-    { "Charlie", "81" }
-};</pre>
-        <p>Find <code>studentResults[2,1]</code> and the two dimension lengths.</p>
+        <span class="phase-tag">GUIDED PRACTICE 2 · DRAW CHECK</span>
+        <h2>Spot a free square</h2>
+        <p>A square is free when it contains neither X nor O.</p>
         <span class="wedo-example-count">Example 2 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Locate the element</h2><div class="practice-grid"><div class="practice-box"><strong>[2,1]</strong><span>?</span></div><div class="practice-box"><strong>GetLength(0)</strong><span>?</span></div><div class="practice-box"><strong>GetLength(1)</strong><span>?</span></div></div></div>
-        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Locate the element</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>[2,1]</strong><span><strong>81</strong></span></div><div class="practice-box"><strong>GetLength(0)</strong><span><strong>3</strong></span></div><div class="practice-box"><strong>GetLength(1)</strong><span><strong>2</strong></span></div></div></div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the Boolean test</h2><div class="practice-grid"><div class="practice-box"><strong>Not X</strong><span>?</span></div><div class="practice-box"><strong>Not O</strong><span>?</span></div><div class="practice-box"><strong>Join with</strong><span>?</span></div><div class="practice-box"><strong>Return</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Build the Boolean test</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Not X</strong><span><code>!= "X"</code></span></div><div class="practice-box"><strong>Not O</strong><span><code>!= "O"</code></span></div><div class="practice-box"><strong>Join with</strong><span><code>&amp;&amp;</code></span></div><div class="practice-box"><strong>Return</strong><span><code>false</code></span></div></div></div>
       </div>
     </article>
 
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
-        <span class="phase-tag">GUIDED PRACTICE 3 · 3D</span>
-        <h2>Find the address</h2>
-        <pre class="arithmetic">LAYER 1
-          col 0  col 1  col 2  col 3
-row 0       42     45     48     50
-row 1       51     54     57     60
-row 2       62     65     68     70</pre>
-        <p>The value <strong>57</strong> is in layer 1. What complete array reference accesses it?</p>
+        <span class="phase-tag">GUIDED PRACTICE 3 · GAME LOOP</span>
+        <h2>Put the actions in order</h2>
+        <p>A valid move has just been made. What should happen next?</p>
         <span class="wedo-example-count">Example 3 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Say it before you write it</h2><div class="practice-grid"><div class="practice-box"><strong>Layer</strong><span>?</span></div><div class="practice-box"><strong>Row</strong><span>?</span></div><div class="practice-box"><strong>Column</strong><span>?</span></div><div class="practice-box"><strong>Array reference</strong><span>?</span></div></div></div>
-        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Locate 57</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Layer</strong><span><strong>1</strong></span></div><div class="practice-box"><strong>Row</strong><span><strong>1</strong></span></div><div class="practice-box"><strong>Column</strong><span><strong>2</strong></span></div><div class="practice-box"><strong>Array reference</strong><span><code>scores[1,1,2]</code></span></div></div></div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the sequence</h2><div class="practice-grid"><div class="practice-box"><strong>1</strong><span>?</span></div><div class="practice-box"><strong>2</strong><span>?</span></div><div class="practice-box"><strong>3</strong><span>?</span></div><div class="practice-box"><strong>4</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the sequence</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>1</strong><span>Check <code>HasWon()</code></span></div><div class="practice-box"><strong>2</strong><span>Check <code>BoardFull()</code></span></div><div class="practice-box"><strong>3</strong><span>Switch player</span></div><div class="practice-box"><strong>4</strong><span>Repeat loop</span></div></div></div>
       </div>
     </article>
 
     <article class="wedo-example" hidden>
       <div class="wedo-reference">
-        <span class="phase-tag">OCR JUNE 2024 · H446/01 Q8(a)</span>
-        <h2>Declare towns</h2>
-        <p>OCR describes a 2D array called <code>towns</code> with 8 rows and 3 columns. Write a suitable declaration.</p>
+        <span class="phase-tag">GUIDED PRACTICE 4 · TESTING</span>
+        <h2>Choose the test</h2>
+        <pre class="arithmetic">X O X
+X O O
+O X X</pre>
+        <p>No winning line exists and every square is occupied.</p>
         <span class="wedo-example-count">Example 4 of 4</span>
       </div>
       <div class="wedo-practice">
-        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the declaration</h2><div class="practice-grid"><div class="practice-box"><strong>Element type</strong><span>?</span></div><div class="practice-box"><strong>Variable</strong><span>?</span></div><div class="practice-box"><strong>Dimensions</strong><span>?</span></div><div class="practice-box"><strong>C# declaration</strong><span>?</span></div></div></div>
-        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Build the declaration</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Element type</strong><span><code>string</code></span></div><div class="practice-box"><strong>Variable</strong><span><code>towns</code></span></div><div class="practice-box"><strong>Dimensions</strong><span><strong>8 × 3</strong></span></div><div class="practice-box"><strong>C# declaration</strong><span><code>string[,] towns = new string[8,3];</code></span></div></div><p class="fine">OCR's mark scheme awards the declaration for identifying an array/string named <code>towns</code> and setting the two dimensions to 8 and 3.</p></div>
+        <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Predict the functions</h2><div class="practice-grid"><div class="practice-box"><strong>HasWon("X")</strong><span>?</span></div><div class="practice-box"><strong>HasWon("O")</strong><span>?</span></div><div class="practice-box"><strong>BoardFull()</strong><span>?</span></div><div class="practice-box"><strong>Outcome</strong><span>?</span></div></div></div>
+        <div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Predict the functions</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>HasWon("X")</strong><span><code>false</code></span></div><div class="practice-box"><strong>HasWon("O")</strong><span><code>false</code></span></div><div class="practice-box"><strong>BoardFull()</strong><span><code>true</code></span></div><div class="practice-box"><strong>Outcome</strong><span><strong>Draw</strong></span></div></div></div>
       </div>
     </article>
 
   </div>
 </section>
 
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="3">
+<section id="you-do" class="page phase-youdo" data-phase-time="28 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2">
   <div class="youdo-deck">
     <div class="youdo-rolling">
 
       <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 1 · ACCESS</span>
+        <span class="phase-tag">COMPLETE YOUR GAME 1 · HASWON()</span>
         <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Find 24</h3>
-        <div class="question-text"><p>Using the supplied <code>scores</code> array, change the <code>Console.WriteLine</code> statement so the program outputs <strong>24</strong>.</p></div>
-        <div class="success-check">Change the indexes only · do not change the array</div>
+        <h3>Finish all 8 winning lines</h3>
+        <div class="question-text">
+          <p>Continue your Lesson 015 program.</p>
+          <p>Complete <code>HasWon(string player)</code> so it detects all 3 rows, all 3 columns and both diagonals.</p>
+        </div>
+        <div class="success-check">Test at least one row, one column and one diagonal</div>
       </article>
 
       <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 2 · ACCESS</span>
+        <span class="phase-tag">COMPLETE YOUR GAME 2 · BOARDFULL()</span>
         <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Find 38</h3>
-        <div class="question-text"><p>Write a <code>Console.WriteLine</code> statement that outputs the value <strong>38</strong>.</p></div>
-        <div class="success-check">Use the correct layer, row and column</div>
-      </article>
-
-      <article class="exam-card youdo-question">
-        <span class="phase-tag">CODING CHALLENGE 3 · ACCESS</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Find the last value</h3>
-        <div class="question-text"><p>Output the <strong>last value</strong> in the array without changing the array.</p></div>
-        <div class="success-check">Think carefully about zero-based indexes</div>
+        <h3>Detect a draw</h3>
+        <div class="question-text">
+          <p>Create <code>BoardFull()</code>.</p>
+          <p>Return <code>false</code> as soon as a square contains neither X nor O. Return <code>true</code> only if every square is occupied.</p>
+        </div>
+        <div class="success-check">One free square → false · full board → true</div>
       </article>
 
       <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 4 · MODIFY</span>
+        <span class="phase-tag">COMPLETE YOUR GAME 3 · MAIN()</span>
         <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Change a value</h3>
-        <div class="question-text"><p>Change the value <strong>35</strong> to <strong>99</strong>, then output it to prove that the value has changed.</p></div>
-        <div class="success-check">Locate · assign · output</div>
+        <h3>Complete the game loop</h3>
+        <div class="question-text">
+          <p>Draw the board, ask the current player for a move, call <code>MakeMove()</code>, then check for a win or draw.</p>
+          <p>Switch player only after a valid move that did not end the game.</p>
+        </div>
+        <div class="success-check">X/O alternate · invalid move does not switch player · game stops on win or draw</div>
       </article>
 
       <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 5 · DIMENSIONS</span>
+        <span class="phase-tag">COMPLETE YOUR GAME 4 · TEST + DEBUG</span>
         <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Measure the array</h3>
-        <div class="question-text"><p>Output the size of all three dimensions using <code>scores.GetLength(0)</code>, <code>scores.GetLength(1)</code> and <code>scores.GetLength(2)</code>.</p></div>
-        <div class="success-check">Identify layers · rows · columns</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 6 · ONE LOOP</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Output one row</h3>
-        <div class="question-text"><p>Use a <code>for</code> loop to output <strong>12, 15, 18</strong> without writing three separate <code>Console.WriteLine</code> statements.</p></div>
-        <div class="success-check">One loop · one changing index</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 7 · TWO LOOPS</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Output the first layer</h3>
-        <div class="question-text"><p>Use <strong>two nested loops</strong> to output all six values in the first layer: <code>scores[0, ... , ...]</code>.</p></div>
-        <div class="success-check">Keep layer fixed at 0 · loop through rows and columns</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 8 · THREE LOOPS</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Traverse the whole array</h3>
-        <div class="question-text"><p>Use <strong>three nested loops</strong> and <code>GetLength()</code> to output every value in the 3D array.</p></div>
-        <div class="success-check">Loop through layer · row · column</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 9 · PROCESS</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Calculate the total</h3>
-        <div class="question-text"><p>Adapt your three nested loops to calculate and display the <strong>total of every value</strong> in <code>scores</code>.</p></div>
-        <div class="success-check">Create a total · add each element · output after the loops</div>
-      </article>
-
-      <article class="exam-card youdo-question" hidden>
-        <span class="phase-tag">CODING CHALLENGE 10 · CHALLENGE</span>
-        <a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a>
-        <h3>Find the largest value</h3>
-        <div class="question-text"><p>Use three nested loops to find and display the <strong>largest value</strong> in the entire 3D array.</p><p>Do not assume <code>48</code> is the largest. Your algorithm must still work if the values in the array are changed.</p></div>
-        <div class="success-check">Traverse every element · compare values · keep track of the largest</div>
+        <h3>Partner challenge: play and test</h3>
+        <div class="question-text">
+          <p><strong>Pair up:</strong> one pupil plays X and the other O. Run your own C# program, make moves 1–9 and swap who goes first for a second complete game.</p>
+          <div class="nac-testing-grid"><div><strong>All 8 wins:</strong> 3 rows, 3 columns, 2 diagonals.</div><div><strong>Draw:</strong> full board with no winning line.</div><div><strong>Invalid:</strong> occupied square or move outside 1–9 is rejected.</div><div><strong>Turns:</strong> only valid moves switch player; a finished game stops.</div></div>
+          <p><strong>Evidence:</strong> for each targeted test, record the input or board state, expected result, actual result and pass/fail. Fix and retest any failure. Test all eight winning lines using prepared moves or board states; ordinary matches alone may not cover them.</p>
+          <p>If your online C# runner does not support repeated keyboard input, run the program in a local C# console or use planned input sequences for testing.</p>
+        </div>
+        <div class="success-check">Checkpoint: another pupil can play your game without editing its code between turns; all 8 wins, draw and invalid moves have been tested.</div>
       </article>
 
     </div>
-    <div class="youdo-window-progress">Challenges 1–3 of 10</div>
+    <div class="youdo-window-progress">Challenges 1–2 of 4</div>
   </div>
 </section>
 
 <section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval">
   <div class="vocab-deck">
-    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A fixed collection of elements accessed using indexes.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Array</div><p>All elements are compatible with the array's declared type.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One stored value inside an array.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Element</div><p>For example, <code>names[2]</code> identifies one element.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The position number used to access an array element.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Index</div><p>C# array indexes start at zero.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">One direction or level used to locate an element.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Dimension</div><p>A 2D array needs two indexes; a 3D array needs three.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with one dimension.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[]</code></div><p>Example: <code>string[] names</code>.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with two dimensions.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[,]</code></div><p>Example: <code>string[,] results</code>.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the syntax</h2><p class="vocab-question">C# syntax for an array with three dimensions.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value"><code>[,,]</code></div><p>Example: <code>int[,,] readings</code>.</p></div></article>
-    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the method</h2><p class="vocab-question">The C# method used to find the length of one chosen array dimension.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">GetLength()</div><p><code>GetLength(0)</code> reads the first dimension.</p></div></article>
+    <article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A data type with only two possible values: true or false.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Boolean</div><p>Used by <code>MakeMove()</code>, <code>HasWon()</code> and <code>BoardFull()</code>.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">An expression that evaluates to true or false.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Condition</div><p>For example, checking whether three squares equal <code>player</code>.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The current data describing what is happening in the program.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">State</div><p>The board contents and current player are part of the game state.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The repeated structure that controls turns until the game ends.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Game loop</div><p>A condition-controlled loop is a natural fit.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A chosen input and expected outcome used to check a program.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Test case</div><p>For example, a board set up to produce a diagonal win.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Following variables and control flow step by step.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Trace</div><p>Useful when finding why a program behaves unexpectedly.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Finding and correcting errors in a program.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Debug</div><p>Testing helps expose the bugs that need fixing.</p></div></article>
+    <article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">The outcome when the board is full and neither player has won.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Draw</div><p>Check win before checking for a draw.</p></div></article>
   </div>
 </section>
 
-<section id="exit" class="page phase-exit" data-phase-time="2 minutes">
-  <div class="exit-compact">
-    <div class="exit-check-card">
-      <div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div>
-      <p class="exit-check-question"><code>int[,,] data = new int[2,3,4];</code> declares a three-dimensional array.</p>
-      <div class="exit-check-response">
-        <span class="exit-key-item"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb up = True</span></span>
-        <span class="exit-key-item"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><span>Thumb down = False</span></span>
-      </div>
-    </div>
-    <div class="exit-reflection-strip">
-      <div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb up</strong><span>I can do this independently.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-sideways" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"></path></svg><div><strong>Thumb sideways</strong><span>I’m getting there.</span></div></div>
-      <div class="exit-confidence-choice"><svg class="thumb-icon thumb-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 0 3 3.9Z"></path></svg><div><strong>Thumb down</strong><span>I need more help.</span></div></div>
-    </div>
-  </div>
-</section>
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">After a valid move, the program should check <code>HasWon()</code> before <code>BoardFull()</code>.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>My complete game works.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I have one part left to fix.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help completing the game.</span></div></div></div></div></section>
 
 </main>
 
-<div class="lesson-footer">Lesson 016 · OCR H446 1.4.2(a) Data Structures <span>Use the menu or ← → keys</span></div>
+<div class="lesson-footer">Lesson 016 · Noughts & Crosses Part 4 <span>Complete and test</span></div>
 <script src="../../../assets/h446-lesson/lesson.js?v=20261001-mobile2"></script>
 </body>
 </html>

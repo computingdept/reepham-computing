@@ -3,68 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 026 · Boolean algebra rules</title>
-<meta name="description" content="OCR H446 1.4.3(c): De Morgan's Laws, distribution, association, commutation and double negation.">
+<title>Lesson 026 · Boolean logic, gates and truth tables</title>
+<meta name="description" content="OCR H446 1.4.3(a)(d): define problems using Boolean logic, convert between expressions, gates and truth tables.">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile2">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
 <style>
-/* Lesson 026: lesson-025 gate symbols, accessible visual retrieval. */
-#do-now .donow-question{padding:12px 15px;gap:4px}
-#do-now .donow-question>strong{margin:0;font-size:12px}
-#do-now .donow-question p{font-size:clamp(18px,1.35vw,23px);line-height:1.24}
-#do-now .recall-figure{margin:4px 0 0;min-height:96px;width:100%;display:flex;align-items:center;justify-content:center;background:#f7fbf8;border:1px solid #d4e3d9;border-radius:9px;padding:4px 10px}
-#do-now .recall-svg{width:100%;max-width:420px;height:auto;max-height:105px;display:block}
-.gate-wire{stroke:#214b3a;stroke-width:3.5;stroke-linecap:round;fill:none}
-.gate-outline{fill:#fff;stroke:#214b3a;stroke-width:3.5;stroke-linejoin:round}
-.gate-letter{fill:#173c31;font:700 21px Arial,sans-serif}
-.scenario-box rect{fill:#fff;stroke:#c7dacd;stroke-width:2}
-.scenario-icons{stroke:#1b6045}
-.scenario-text{fill:#173c31;font:700 17px Arial,sans-serif}
-#do-now .recall-truth{width:min(100%,300px);border-collapse:collapse;table-layout:fixed;text-align:center;font:700 16px/1.15 Consolas,monospace}
-#do-now .recall-truth th,#do-now .recall-truth td{border:1px solid #bacfc2;padding:2px 6px}
-#do-now .recall-truth th{background:#deeee4}
-#do-now .recall-truth tbody tr:last-child{background:#fff3d7}
-#do-now .recall-truth tbody tr:last-child strong{color:#a05200;font-size:19px}
-#do-now .donow-review .recall-figure{margin-top:20px;min-height:0}
-#do-now .donow-review .recall-svg{max-height:190px}
-#do-now .donow-review .recall-truth{font-size:20px}
-#new-learning .algebra-picture{margin:10px 0 2px;padding:6px;border:1px solid #cfdfd5;border-radius:10px;background:#f8fcf9;text-align:center}
-#new-learning .algebra-picture svg{display:block;width:100%;height:auto;max-height:140px}
-#new-learning .algebra-picture figcaption{font-size:clamp(12px,.95vw,15px);color:#416553;font-weight:650}
-.algebra-circuit{fill:none;stroke:#214b3a;stroke-width:3;stroke-linejoin:round}
-.algebra-circuit .gate-shape{fill:#fff}
-.algebra-circuit-label{fill:#173c31;font:700 16px Arial,sans-serif}
-#new-learning .algebra-short{max-width:420px}
-#new-learning .algebra-short svg{max-height:90px}
-#i-do .model-gate-picture{display:block;width:min(100%,400px);max-height:135px;height:auto;margin:14px auto 8px;padding:8px;background:#f8fcf9;border:1px solid #cfdfd5;border-radius:10px}
+/* Lesson 026: teach gate shapes before symbolic and compound Boolean expressions. */
+.logic-anchor {display:grid;gap:10px}
+.logic-anchor p{margin:0}
+.logic-anchor .logic-key {background:#eef4f0;border-left:4px solid #346c55;padding:12px 14px;border-radius:7px;line-height:1.5}
+.logic-key strong{display:inline-block;min-width:1.3em}
+.logic-example {display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:10px 0 8px}
+.logic-figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:3px;border:1px solid #cbdad3;border-radius:10px;background:#f7fbf8;padding:5px 10px;max-width:100%}
+.logic-figure figcaption{font-size:clamp(12px,1vw,15px);font-weight:600;text-align:center;color:#365b4c}
+.logic-svg{display:block;width:min(100%,280px);height:auto;max-height:140px}
+.logic-svg .gate-body{fill:white;stroke:#183d31;stroke-width:3;stroke-linejoin:round}
+.logic-svg .wire{fill:none;stroke:#183d31;stroke-width:3;stroke-linecap:round}
+.logic-svg .gate-text{fill:#183d31;font:700 16px system-ui, sans-serif}
+.logic-svg .gate-mini{fill:#365b4c;font:600 12px system-ui, sans-serif}
+.logic-combined{width:min(100%,500px);max-height:200px}
+.logic-equation{font:700 clamp(17px,1.55vw,26px)/1.4 Consolas,monospace;background:#f0f6f2;border:1px solid #c7d9cf;border-radius:8px;padding:10px 13px;margin:8px 0}
+.logic-steps{margin:9px 0;padding-left:22px;line-height:1.45}
+.logic-steps li{margin:5px 0}
+.logic-tt{font:700 clamp(14px,1.23vw,19px)/1.36 Consolas,monospace;margin:9px 0;padding:12px;border:1px solid #ccd8d2;border-radius:7px;background:#f7faf8;white-space:pre;overflow-x:auto}
+.logic-quick{font-size:clamp(15px,1.2vw,20px);line-height:1.5}
+#new-learning .nl-stage h2{margin-bottom:9px}
+#i-do .logic-combined{width:min(100%,500px);max-height:188px}
+#we-do .logic-figure{max-width:100%;padding:4px}
+#we-do .logic-svg{width:min(100%,230px)}
+#we-do .logic-combined{width:min(100%,440px);max-height:180px}
+@media(max-width:700px){
+  .logic-example{gap:7px}
+  .logic-svg{width:min(100%,230px)}
+  .logic-tt{font-size:13px}
+  .logic-figure{padding:4px}
+  .logic-equation{font-size:16px}
+}
+/* Lesson 026: fixed, readable words-to-gates scaffold above rolling You Do questions. */
+#you-do .youdo-deck{display:flex;flex-direction:column;gap:10px;min-height:0}
+#you-do .youdo-rolling{flex:1 1 auto;min-height:0;height:auto}
+.logic-translation-guide{
+  flex:0 0 auto;background:#f1f7f3;border:1px solid #c8dcd0;border-left:5px solid #346c55;
+  border-radius:10px;padding:9px 13px;color:#203f32;line-height:1.3
+}
+.logic-translation-heading{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 14px;font-size:clamp(13px,.98vw,16px)}
+.logic-translation-heading>strong{white-space:nowrap;letter-spacing:.04em;color:#205541}
+.logic-translation-heading>span{font-weight:700}
+.logic-translation-cues{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0}
+.logic-translation-cues span{background:#fff;border:1px solid #d6e3da;border-radius:6px;padding:6px 9px;font-size:clamp(12px,.93vw,15px)}
+.logic-translation-cues strong{color:#1b6045}
+.logic-translation-guide p{margin:0;font-size:clamp(12px,.9vw,15px)}
 @media(max-height:760px) and (min-width:901px){
-#do-now .donow-question{padding:9px 12px}
-#do-now .donow-question p{font-size:17px}
-#do-now .recall-figure{min-height:75px;padding:3px 8px}
-#do-now .recall-svg{max-height:76px}
-#do-now .recall-truth{font-size:13px}
-#do-now .recall-truth th,#do-now .recall-truth td{padding:1px 4px}
-#new-learning .algebra-picture svg{max-height:105px}
+  #you-do .youdo-deck{gap:6px}
+  .logic-translation-guide{padding:6px 10px}
+  .logic-translation-cues{margin:5px 0;gap:5px}
+  .logic-translation-cues span{padding:4px 6px;font-size:12px}
 }
 @media(max-width:900px){
-#do-now .donow-question p{font-size:21px}
-#do-now .recall-figure{min-height:90px}
-#do-now .recall-svg{max-height:115px}
-#do-now .donow-review .recall-svg{max-height:140px}
+  #you-do .youdo-deck{height:auto}
+  #you-do .youdo-rolling{height:auto;flex:auto}
+  .logic-translation-cues{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logic-translation-heading{font-size:14px}
+  .logic-translation-guide p{font-size:13px}
 }
+@media(max-width:460px){.logic-translation-cues{grid-template-columns:1fr}}
 
-/* Lesson 026 retrieval visuals: compact for TV, readable on mobiles. */
-#do-now .recall-number,#do-now .recall-array{max-width:480px}
-#do-now .recall-chip{fill:#fff;stroke:#b7d1c2;stroke-width:2}
-#do-now .recall-caption{font:800 15px Arial,sans-serif;fill:#38654e}
-#do-now .recall-value{font:800 23px Consolas,monospace;fill:#173c31}
-#do-now .recall-cell{font:800 23px Consolas,monospace;fill:#173c31}
-#do-now .recall-index{font:700 15px Consolas,monospace;fill:#38654e}
-#do-now .recall-arrow{fill:none;stroke:#176b4a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
-#do-now .donow-question .recall-figure{min-height:75px}
-#do-now .donow-question .recall-svg{max-height:94px}
-@media(max-height:760px) and (min-width:901px){#do-now .donow-question .recall-svg{max-height:68px}#do-now .donow-question .recall-figure{min-height:60px}}
+/* Lesson 026: shared Words → Gates model/guided-practice prompts. */
+#i-do .logic-method-cue,#we-do .logic-method-cue{
+  margin:12px 0 0;padding:10px 12px;background:#f1f7f3;border-left:4px solid #346c55;
+  border-radius:5px;color:#244d38;font-size:clamp(15px,1.13vw,19px);line-height:1.35
+}
+#i-do .ido-reference .arithmetic,#we-do .wedo-reference .arithmetic{
+  white-space:pre-wrap;font-size:clamp(17px,1.32vw,21px);line-height:1.4
+}
+#we-do .wedo-step .logic-figure{align-self:flex-start;margin:6px 0 3px}
+#we-do .wedo-step .logic-svg{max-height:104px;width:min(100%,310px)}
+#we-do .wedo-step .logic-tt{font-size:clamp(13px,1.05vw,16px);margin:6px 0;padding:8px}
+#we-do .wedo-step .arithmetic{white-space:pre-wrap}
+#i-do .ido-step .logic-figure{margin:8px 0 0}
+#i-do .ido-step .logic-combined{max-height:177px}
+@media(max-height:760px) and (min-width:901px){
+  #i-do .logic-method-cue,#we-do .logic-method-cue{font-size:14px;padding:6px 8px}
+  #we-do .wedo-step .logic-svg{max-height:82px}
+  #we-do .wedo-step .logic-tt{font-size:12px;line-height:1.25;padding:5px}
+  #i-do .ido-step .logic-combined{max-height:134px}
+}
+@media(max-width:900px){
+  #i-do .logic-method-cue,#we-do .logic-method-cue{font-size:15px}
+  #we-do .wedo-step .logic-tt{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -97,57 +125,259 @@
   </div>
   <div class="signal-meta">
     <span id="phase-time" class="signal-phase-time"></span>
-    <span class="lesson-label">OCR H446 · Lesson 026<br>Boolean algebra rules</span>
+    <span class="lesson-label">OCR H446 · Lesson 026<br>Boolean logic, gates and truth tables</span>
   </div>
 </div>
 
 <main id="main">
 
-<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">
-<article class="donow-question"><strong>1 · NORMALISED NUMBERS</strong><p>Normalise <code>0.0110 × 2⁴</code> using a two’s-complement mantissa. Give the new mantissa and exponent.</p><figure class="recall-figure"><svg class="recall-svg recall-number" viewBox="0 0 480 106" role="img" aria-label="Unnormalised binary mantissa 0.0110 multiplied by two to the power four, pointing to missing normalised mantissa and exponent"><rect x="5" y="7" width="205" height="86" rx="10" class="recall-chip"/><rect x="269" y="7" width="205" height="86" rx="10" class="recall-chip"/><text x="107" y="32" text-anchor="middle" class="recall-caption">BEFORE</text><text x="107" y="64" text-anchor="middle" class="recall-value">0.0110 × 2⁴</text><path class="recall-arrow" d="M219 50H258 M246 40L258 50L246 60"/><text x="371" y="32" text-anchor="middle" class="recall-caption">NORMALISED</text><text x="371" y="64" text-anchor="middle" class="recall-value">? × 2?</text></svg></figure></article>
-<article class="donow-question"><strong>2 · BINARY SEARCH</strong><p>A sorted array is <code>[3, 8, 12, 19, 27, 35, 42]</code>. When searching for <strong>27</strong>, which indexes are checked, in order?</p><figure class="recall-figure"><svg class="recall-svg recall-array" viewBox="0 0 480 115" role="img" aria-label="Sorted array with values 3, 8, 12, 19, 27, 35, 42 at indices zero to six"><text x="8" y="23" class="recall-caption">INDEX</text><text x="8" y="85" class="recall-caption">VALUE</text><text x="124" y="23" text-anchor="middle" class="recall-index">0</text><rect x="102" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="124" y="73" text-anchor="middle" class="recall-cell">3</text><text x="173" y="23" text-anchor="middle" class="recall-index">1</text><rect x="151" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="173" y="73" text-anchor="middle" class="recall-cell">8</text><text x="222" y="23" text-anchor="middle" class="recall-index">2</text><rect x="200" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="222" y="73" text-anchor="middle" class="recall-cell">12</text><text x="271" y="23" text-anchor="middle" class="recall-index">3</text><rect x="249" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="271" y="73" text-anchor="middle" class="recall-cell">19</text><text x="320" y="23" text-anchor="middle" class="recall-index">4</text><rect x="298" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="320" y="73" text-anchor="middle" class="recall-cell">27</text><text x="369" y="23" text-anchor="middle" class="recall-index">5</text><rect x="347" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="369" y="73" text-anchor="middle" class="recall-cell">35</text><text x="418" y="23" text-anchor="middle" class="recall-index">6</text><rect x="396" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="418" y="73" text-anchor="middle" class="recall-cell">42</text></svg></figure></article>
-<article class="donow-question"><strong>3 · BUBBLE SORT</strong><p>Show the array after <strong>one full left-to-right pass</strong> of ascending bubble sort on <code>[7, 3, 5, 2]</code>.</p><figure class="recall-figure"><svg class="recall-svg recall-array" viewBox="0 0 400 110" role="img" aria-label="Unsorted array containing 7, 3, 5, 2, with the direction of the bubble sort pass left to right"><text x="13" y="18" class="recall-caption">START — ONE PASS</text><rect x="63" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="93" y="63" text-anchor="middle" class="recall-cell">7</text><rect x="135" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="165" y="63" text-anchor="middle" class="recall-cell">3</text><rect x="207" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="237" y="63" text-anchor="middle" class="recall-cell">5</text><rect x="279" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="309" y="63" text-anchor="middle" class="recall-cell">2</text><path class="recall-arrow" d="M75 96H335 M323 87L335 96L323 105"/></svg></figure></article>
-<article class="donow-question"><strong>4 · CHALLENGE · APPLY</strong><p>An alarm sounds if the door is open AND the system is armed, OR if panic is pressed. Write Q using A, B and C.</p><figure class="recall-figure"><svg class="recall-svg recall-scenario" viewBox="0 0 450 104" role="img" aria-label="Input A door open, B system armed, C panic pressed"><g class="scenario-box"><rect x="3" y="3" width="141" height="97" rx="10"/><rect x="154" y="3" width="141" height="97" rx="10"/><rect x="305" y="3" width="141" height="97" rx="10"/></g><g class="scenario-icons" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="53" y="13" width="37" height="43" rx="2"/><circle cx="81" cy="36" r="2"/><rect x="205" y="33" width="38" height="26" rx="4"/><path d="M213 33V27a11 11 0 0 1 22 0v6"/><circle cx="224" cy="44" r="3"/><path d="M224 47v5"/><circle cx="376" cy="35" r="21"/><path d="M376 22v16 M376 46v2"/></g><g class="scenario-text"><text x="74" y="80" text-anchor="middle">A · door</text><text x="224" y="80" text-anchor="middle">B · armed</text><text x="375" y="80" text-anchor="middle">C · panic</text></g></svg></figure></article>
-</div></div>
-<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>NORMALISED NUMBERS</h2><p class="review-question">Normalise <code>0.0110 × 2⁴</code> using a two’s-complement mantissa. Give the new mantissa and exponent.</p><figure class="recall-figure"><svg class="recall-svg recall-number" viewBox="0 0 480 106" role="img" aria-label="Unnormalised binary mantissa 0.0110 multiplied by two to the power four, pointing to missing normalised mantissa and exponent"><rect x="5" y="7" width="205" height="86" rx="10" class="recall-chip"/><rect x="269" y="7" width="205" height="86" rx="10" class="recall-chip"/><text x="107" y="32" text-anchor="middle" class="recall-caption">BEFORE</text><text x="107" y="64" text-anchor="middle" class="recall-value">0.0110 × 2⁴</text><path class="recall-arrow" d="M219 50H258 M246 40L258 50L246 60"/><text x="371" y="32" text-anchor="middle" class="recall-caption">NORMALISED</text><text x="371" y="64" text-anchor="middle" class="recall-value">? × 2?</text></svg></figure></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>0.1100 × 2³</strong>.</p><p class="review-explain">Shift the mantissa one place left and decrease the exponent by one to preserve the value. A normalised positive two’s-complement mantissa begins <strong>01</strong>; a negative one begins <strong>10</strong>.</p></article></div></div>
-<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>BINARY SEARCH</h2><p class="review-question">A sorted array is <code>[3, 8, 12, 19, 27, 35, 42]</code>. When searching for <strong>27</strong>, which indexes are checked, in order?</p><figure class="recall-figure"><svg class="recall-svg recall-array" viewBox="0 0 480 115" role="img" aria-label="Sorted array with values 3, 8, 12, 19, 27, 35, 42 at indices zero to six"><text x="8" y="23" class="recall-caption">INDEX</text><text x="8" y="85" class="recall-caption">VALUE</text><text x="124" y="23" text-anchor="middle" class="recall-index">0</text><rect x="102" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="124" y="73" text-anchor="middle" class="recall-cell">3</text><text x="173" y="23" text-anchor="middle" class="recall-index">1</text><rect x="151" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="173" y="73" text-anchor="middle" class="recall-cell">8</text><text x="222" y="23" text-anchor="middle" class="recall-index">2</text><rect x="200" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="222" y="73" text-anchor="middle" class="recall-cell">12</text><text x="271" y="23" text-anchor="middle" class="recall-index">3</text><rect x="249" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="271" y="73" text-anchor="middle" class="recall-cell">19</text><text x="320" y="23" text-anchor="middle" class="recall-index">4</text><rect x="298" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="320" y="73" text-anchor="middle" class="recall-cell">27</text><text x="369" y="23" text-anchor="middle" class="recall-index">5</text><rect x="347" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="369" y="73" text-anchor="middle" class="recall-cell">35</text><text x="418" y="23" text-anchor="middle" class="recall-index">6</text><rect x="396" y="38" width="44" height="56" rx="7" class="recall-chip"/><text x="418" y="73" text-anchor="middle" class="recall-cell">42</text></svg></figure></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Indexes <strong>3 → 5 → 4</strong> (values 19 → 35 → 27).</p><p class="review-explain">Binary search tests the middle index of the remaining sorted range, using zero-based indexing.</p></article></div></div>
-<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>BUBBLE SORT</h2><p class="review-question">Show the array after <strong>one full left-to-right pass</strong> of ascending bubble sort on <code>[7, 3, 5, 2]</code>.</p><figure class="recall-figure"><svg class="recall-svg recall-array" viewBox="0 0 400 110" role="img" aria-label="Unsorted array containing 7, 3, 5, 2, with the direction of the bubble sort pass left to right"><text x="13" y="18" class="recall-caption">START — ONE PASS</text><rect x="63" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="93" y="63" text-anchor="middle" class="recall-cell">7</text><rect x="135" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="165" y="63" text-anchor="middle" class="recall-cell">3</text><rect x="207" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="237" y="63" text-anchor="middle" class="recall-cell">5</text><rect x="279" y="27" width="60" height="54" rx="8" class="recall-chip"/><text x="309" y="63" text-anchor="middle" class="recall-cell">2</text><path class="recall-arrow" d="M75 96H335 M323 87L335 96L323 105"/></svg></figure></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>[3, 5, 2, 7]</strong>.</p><p class="review-explain">Compare adjacent values and swap when the left value is larger. The largest value, 7, moves to the end.</p></article></div></div>
-<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>CHALLENGE · APPLY</h2><p class="review-question">An alarm sounds if the door is open AND the system is armed, OR if panic is pressed. Write Q using A, B and C.</p><figure class="recall-figure"><svg class="recall-svg recall-scenario" viewBox="0 0 450 104" role="img" aria-label="Input A door open, B system armed, C panic pressed"><g class="scenario-box"><rect x="3" y="3" width="141" height="97" rx="10"/><rect x="154" y="3" width="141" height="97" rx="10"/><rect x="305" y="3" width="141" height="97" rx="10"/></g><g class="scenario-icons" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="53" y="13" width="37" height="43" rx="2"/><circle cx="81" cy="36" r="2"/><rect x="205" y="33" width="38" height="26" rx="4"/><path d="M213 33V27a11 11 0 0 1 22 0v6"/><circle cx="224" cy="44" r="3"/><path d="M224 47v5"/><circle cx="376" cy="35" r="21"/><path d="M376 22v16 M376 46v2"/></g><g class="scenario-text"><text x="74" y="80" text-anchor="middle">A · door</text><text x="224" y="80" text-anchor="middle">B · armed</text><text x="375" y="80" text-anchor="middle">C · panic</text></g></svg></figure></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>Q = (A ∧ B) ∨ C</strong>.</p><p class="review-explain">A = door open, B = armed, C = panic pressed. Group door AND armed first; panic is an alternative trigger.</p></article></div></div>
+<section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions"><article class="donow-question"><strong>1 · RETRIEVAL</strong><p>What is the difference between a stack and a queue when removing items?</p></article><article class="donow-question"><strong>2 · RETRIEVAL</strong><p>What must be true about an array before you use binary search?</p></article><article class="donow-question"><strong>3 · RETRIEVAL</strong><p>For <code>int[] numbers = {5, 9, 14, 18, 23};</code>, what value is stored at zero-based index 3?</p></article><article class="donow-question"><strong>4 · CHALLENGE</strong><p>A binary search looks for 23 in the sorted array <code>[2, 7, 11, 16, 23, 31, 44]</code>. Which zero-based indexes are checked, in order?</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 1 OF 4</span><h2>Retrieval</h2><p class="review-question">What is the difference between a stack and a queue when removing items?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO).</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 2 OF 4</span><h2>Retrieval</h2><p class="review-question">What must be true about an array before you use binary search?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">The values must be sorted in the order expected by the search.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 3 OF 4</span><h2>Retrieval</h2><p class="review-question">For <code>int[] numbers = {5, 9, 14, 18, 23};</code>, what value is stored at zero-based index 3?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">18. C# arrays start at index 0.</p></article></div></div><div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION 4 OF 4</span><h2>Challenge</h2><p class="review-question">A binary search looks for 23 in the sorted array <code>[2, 7, 11, 16, 23, 31, 44]</code>. Which zero-based indexes are checked, in order?</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer">Indexes <strong>3 → 5 → 4</strong> (values 16 → 31 → 23). The search narrows the sorted range each time.</p></article></div></div></div></section>
+
+<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Boolean logic, gates and truth tables</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>translate a problem into AND, OR, NOT and XOR logic</li><li>convert between Boolean expressions and gate diagrams</li><li>complete truth tables systematically</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="A value with two states." aria-label="Boolean: A value with two states.">Boolean</span><span class="vocab-tip" tabindex="0" data-definition="True only if all required inputs are true." aria-label="AND: True only if all required inputs are true.">AND</span><span class="vocab-tip" tabindex="0" data-definition="True if at least one input is true." aria-label="OR: True if at least one input is true.">OR</span><span class="vocab-tip" tabindex="0" data-definition="Reverses a Boolean value." aria-label="NOT: Reverses a Boolean value.">NOT</span><span class="vocab-tip" tabindex="0" data-definition="XOR (⊻): true when inputs differ." aria-label="XOR (⊻): True when inputs differ.">XOR (⊻)</span><span class="vocab-tip" tabindex="0" data-definition="A circuit implementing a Boolean operation." aria-label="logic gate: A circuit implementing a Boolean operation.">logic gate</span><span class="vocab-tip" tabindex="0" data-definition="All input combinations and resulting outputs." aria-label="truth table: All input combinations and resulting outputs.">truth table</span><span class="vocab-tip" tabindex="0" data-definition="A symbolic Boolean statement." aria-label="expression: A symbolic Boolean statement.">expression</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Think: only two logical states—true or false."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>Boolean</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A value with two states.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: 1 AND 1 = 1."><span class="objective-vocab-count">TERM 2 OF 8</span><h2>AND</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>True only if all required inputs are true.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: 0 OR 1 = 1."><span class="objective-vocab-count">TERM 3 OF 8</span><h2>OR</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>True if at least one input is true.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: NOT 1 = 0."><span class="objective-vocab-count">TERM 4 OF 8</span><h2>NOT</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Reverses a Boolean value.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: 1 XOR 0 = 1, but 1 XOR 1 = 0."><span class="objective-vocab-count">TERM 5 OF 8</span><h2>XOR (⊻)</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>True when inputs differ.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: a circuit that physically performs a Boolean operation."><span class="objective-vocab-count">TERM 6 OF 8</span><h2>logic gate</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A circuit implementing a Boolean operation.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: two inputs produce four possible input combinations."><span class="objective-vocab-count">TERM 7 OF 8</span><h2>truth table</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>All input combinations and resulting outputs.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: A AND NOT B is a Boolean expression."><span class="objective-vocab-count">TERM 8 OF 8</span><h2>expression</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>A symbolic Boolean statement.</p></div></article></div></div></section>
+
+<section id="new-learning" class="page phase-focus" data-phase-time="12 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.3(a)(d) · BOOLEAN LOGIC</span><h2>From switches to logic gates</h2><div class="logic-anchor"><p>Imagine two switches, <strong>A</strong> and <strong>B</strong>, controlling a light, <strong>Q</strong>.</p><div class="logic-key"><div><strong>1</strong> = ON / TRUE</div><div><strong>0</strong> = OFF / FALSE</div><div><strong>A, B</strong> = inputs</div><div><strong>Q</strong> = output</div></div><p>Learn what each gate <strong>does</strong> and <strong>looks like</strong>. Only then write expressions and combine gates.</p></div><div class="nl-reference-note">Read the diagram from left (inputs) to right (output). A gate applies one rule.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 7</span><h2>AND — both inputs must be 1</h2><p class="logic-quick">A gate takes an input (or inputs) and produces one output, <strong>Q</strong>. For AND, <strong>both</strong> inputs must be 1.</p><div class="logic-example"><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="AND gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M101 23 H135 A38 38 0 0 1 135 99 H101 Z"/><path class="wire" d="M173 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>AND gate: two inputs, one output</figcaption></figure></div><p><strong>Example:</strong> 1 AND 0 = 0; 1 AND 1 = 1.</p><span class="nl-stage-count">1 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 7</span><h2>OR — at least one input is 1</h2><p class="logic-quick">Either input can turn Q on. Both can be on too.</p><div class="logic-example"><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="OR gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M90 23 Q139 23 179 61 Q139 99 90 99 Q117 61 90 23 Z"/><path class="wire" d="M179 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>OR gate</figcaption></figure></div><p><strong>Example:</strong> 1 OR 0 = 1; 1 OR 1 = 1.</p><span class="nl-stage-count">2 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 7</span><h2>NOT — reverse one input</h2><p class="logic-quick">NOT has just <strong>one input</strong>. The small circle on the output is the inversion symbol.</p><div class="logic-example"><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="NOT gate with input A and output Q"><path class="wire" d="M27 61 H95"/> <text class="gate-text" x="15" y="53">A</text><path class="gate-body" d="M95 23 L95 99 L165 61 Z"/><circle class="gate-body" cx="173" cy="61" r="8"/><path class="wire" d="M181 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>NOT gate: notice the small circle</figcaption></figure></div><p><strong>Example:</strong> NOT 1 = 0; NOT 0 = 1.</p><span class="nl-stage-count">3 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 7</span><h2>XOR (⊻) — exactly one input is 1</h2><p class="logic-quick">XOR is different from OR: when <strong>both</strong> inputs are 1, XOR gives 0. Notice the extra curved line at the input.</p><div class="logic-example"><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="XOR gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M96 23 Q145 23 185 61 Q145 99 96 99 Q123 61 96 23 Z"/><path class="wire" d="M82 23 Q109 61 82 99"/><path class="wire" d="M185 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>XOR gate: extra curved input line</figcaption></figure></div><p><strong>Symbol:</strong> Q = A ⊻ B. <strong>Compare:</strong> 1 ∨ 1 = 1, but 1 ⊻ 1 = 0.</p><span class="nl-stage-count">4 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 5 OF 7</span><h2>Words first, then Boolean symbols</h2><p>These symbols are shorthand for the rules you have just seen:</p><div class="logic-equation">AND = ∧ &nbsp; OR = ∨ &nbsp; NOT = ¬ &nbsp; XOR = ⊻</div><ol class="logic-steps"><li>Say: <strong>A OR B</strong>.</li><li>Write: <strong>A ∨ B</strong>.</li><li>Put the result in Q: <strong>Q = A ∨ B</strong>.</li></ol><p>Write XOR using <strong>⊻</strong>: <strong>Q = A ⊻ B</strong> (1 only when A and B differ). Unlike OR (∨), XOR excludes the case where both inputs are 1. A, B and Q name inputs and output, not gates.</p><span class="nl-stage-count">5 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 6 OF 7</span><h2>Connect two gates in order</h2><p>Say the logic aloud: <strong>A OR B, then AND C.</strong></p><div class="logic-example"><figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 560 180" role="img" aria-label="An OR gate combines A and B; its output and C enter an AND gate, producing Q">
+<text class="gate-text" x="12" y="39">A</text><text class="gate-text" x="12" y="90">B</text><text class="gate-text" x="244" y="159">C</text><text class="gate-text" x="514" y="93">Q</text>
+<path class="wire" d="M35 46 H110 M35 98 H110 M205 74 H350 V78 M265 146 H349 V118 M429 98 H506"/>
+<path class="gate-body" d="M104 30 Q159 30 205 74 Q159 118 104 118 Q132 74 104 30 Z"/>
+<path class="gate-body" d="M349 58 H389 A40 40 0 0 1 389 138 H349 Z"/>
+<text class="gate-mini" x="142" y="80">OR</text><text class="gate-mini" x="369" y="105">AND</text>
+</svg><figcaption>First OR (A, B); then AND its output with C</figcaption></figure></div><div class="logic-equation">Q = (A ∨ B) ∧ C</div><p>Brackets mean the OR gate is worked out <strong>before</strong> its output goes into AND.</p><span class="nl-stage-count">6 of 7</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 7 OF 7</span><h2>Check the circuit with a truth table</h2><p>For three inputs there are <strong>8 combinations</strong>. Work out the OR column first, then use that result with C.</p><pre class="logic-tt">A B C | A∨B | Q
+0 0 0 |  0  | 0
+0 0 1 |  0  | 0
+0 1 0 |  1  | 0
+0 1 1 |  1  | 1
+1 0 0 |  1  | 0
+1 0 1 |  1  | 1
+1 1 0 |  1  | 0
+1 1 1 |  1  | 1</pre><p><strong>Q = (A ∨ B) ∧ C.</strong> Only set Q to 1 when C is 1 <em>and</em> A∨B is 1.</p><span class="nl-stage-count">7 of 7</span></div></article></div></section>
+
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes">
+<div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference">
+  <span class="phase-tag">I DO · WORDS → GATES</span>
+  <h2>Secure door access</h2>
+  <p>A secure door unlocks when a <strong>valid card OR a correct PIN</strong> is used, but <strong>only when</strong> the building is open <strong>and</strong> lockdown is <strong>not</strong> active.</p>
+  <pre class="arithmetic">A = valid card
+B = correct PIN
+C = building open
+D = lockdown</pre>
+  <p class="logic-method-cue"><strong>Method:</strong> output → options → requirements → exceptions → expression, then circuit.</p>
+  <span class="ido-example-count">Worked example · problem stays on the left</span>
+</div>
+<div class="ido-method">
+  <div class="ido-step">
+    <span class="ido-step-label">STEP 1 OF 6 · NAME THE OUTPUT</span>
+    <h2>What switches ON?</h2>
+    <pre class="arithmetic">Q = door unlocks</pre>
+    <p>Start with the result the question is asking us to control.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 2 OF 6 · FIND THE OPTIONS</span>
+    <h2>What are the alternatives?</h2>
+    <pre class="arithmetic">A ∨ B</pre>
+    <p>A <strong>card OR PIN</strong> works. OR (∨) means at least one; both can also be true. <strong>Do not write ⊻ here:</strong> XOR would wrongly stop access when both card and PIN are valid.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 3 OF 6 · ADD REQUIREMENTS</span>
+    <h2>What must also be true?</h2>
+    <pre class="arithmetic">(A ∨ B) ∧ C</pre>
+    <p>The building <strong>must be open</strong>, so join the options with AND.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 4 OF 6 · INVERT EXCEPTIONS</span>
+    <h2>What must be OFF?</h2>
+    <pre class="arithmetic">¬D</pre>
+    <p>Lockdown must <strong>not</strong> be active. NOT reverses D.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 5 OF 6 · EXPRESS, THEN DRAW</span>
+    <h2>Join the chunks</h2>
+    <pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre>
+    <p><strong>Work backwards:</strong> the final AND checks all requirements. Draw OR, AND and NOT first, then connect them to the final AND.</p>
+    <figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 585 235" role="img" aria-label="Secure door circuit: valid card A and correct PIN B feed OR; that output and building open C feed AND; lockdown D feeds NOT; both results enter the final AND to produce Q.">
+<text class="gate-text" x="9" y="43">A</text><text class="gate-text" x="9" y="91">B</text><text class="gate-text" x="9" y="125">C</text><text class="gate-text" x="9" y="183">D</text><text class="gate-text" x="551" y="128">Q</text>
+<path class="wire" d="M30 51 H91 M30 99 H91 M182 74 H244 V61 H269 M30 132 H234 V102 H269 M347 82 H420 V114 H446 M30 180 H253 M327 180 H418 V156 H446 M523 135 H544"/>
+<path class="gate-body" d="M85 31 Q139 31 182 74 Q139 117 85 117 Q114 74 85 31 Z"/>
+<path class="gate-body" d="M269 43 H307 A39 39 0 0 1 307 121 H269 Z"/>
+<path class="gate-body" d="M253 146 L253 214 L313 180 Z"/><circle class="gate-body" cx="320" cy="180" r="7"/>
+<path class="gate-body" d="M446 96 H484 A39 39 0 0 1 484 174 H446 Z"/>
+<text class="gate-mini" x="122" y="80">OR</text><text class="gate-mini" x="285" y="88">AND</text><text class="gate-mini" x="261" y="227">NOT</text><text class="gate-mini" x="459" y="142">AND</text>
+</svg><figcaption>Gate plan: OR(A, B) → AND with C; NOT D → final AND → Q</figcaption></figure>
+  </div>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 6 OF 6 · TRUTH TABLE</span><h2>Use intermediate columns</h2><p>For Q = (A ∨ B) ∧ ¬C, three inputs give 2³ = 8 combinations. Write every input row, calculate A∨B, then ¬C, then combine those two columns with AND.</p><pre class="arithmetic">A B C | A∨B | ¬C | Q
+0 0 0 |  0  |  1 | 0
+0 0 1 |  0  |  0 | 0
+0 1 0 |  1  |  1 | 1
+0 1 1 |  1  |  0 | 0
+1 0 0 |  1  |  1 | 1
+1 0 1 |  1  |  0 | 0
+1 1 0 |  1  |  1 | 1
+1 1 1 |  1  |  0 | 0</pre><p>Example row 010: A∨B = 1 and ¬C = 1; therefore Q = 1. Always complete the intermediate columns before Q.</p></div></div></article></div></section>
+
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes">
+<div class="wedo-focus-deck">
+  <article class="wedo-example">
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 1 · REQUIREMENTS</span>
+      <h2>Successful login</h2>
+      <p>A login succeeds only when the <strong>user ID is valid AND the password is correct</strong>.</p>
+      <pre class="arithmetic">A = valid user ID
+B = correct password
+Q = login succeeds</pre>
+      <p class="logic-method-cue">Find the output, options, requirements and exceptions. Then write the expression and draw the gate.</p>
+      <span class="wedo-example-count">Example 1 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Which gate?</h2>
+        <p>Are there any alternative routes? What <strong>must</strong> be true? Write Q, draw the gate and predict the truth-table outputs.</p>
+        <pre class="logic-tt">A B | Q
+0 0 | ?
+0 1 | ?
+1 0 | ?
+1 1 | ?</pre>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · SAME 5 STEPS</span>
+        <h2>AND: both required</h2>
+        <pre class="arithmetic">Q = A ∧ B</pre>
+        <p>Output: login. No OR options or NOT exception. AND joins two requirements.</p>
+        <figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="AND gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M101 23 H135 A38 38 0 0 1 135 99 H101 Z"/><path class="wire" d="M173 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>What is Q for each input pair?</figcaption></figure>
+        <pre class="logic-tt">A B | Q
+0 0 | 0
+0 1 | 0
+1 0 | 0
+1 1 | 1</pre>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 2 · EXACTLY ONE</span>
+      <h2>Two test switches</h2>
+      <p>A test lamp lights when <strong>exactly one</strong> of switches A and B is ON, <strong>but not both</strong>.</p>
+      <pre class="arithmetic">A = switch 1 on
+B = switch 2 on
+Q = lamp lights</pre>
+      <p class="logic-method-cue">Compare this with a different instruction: “at least one switch is on”.</p>
+      <span class="wedo-example-count">Example 2 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>OR or XOR?</h2>
+        <p>Choose the gate and write <strong>Q = A ⊻ B</strong> for <strong>exactly one</strong>. How would the symbol and truth table change for <strong>at least one</strong>?</p>
+        <pre class="logic-tt">A B | EXACTLY ONE | AT LEAST ONE
+0 0 |      ?      |      ?
+0 1 |      ?      |      ?
+1 0 |      ?      |      ?
+1 1 |      ?      |      ?</pre>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · WORD CLUES</span>
+        <h2>XOR (⊻) versus OR (∨)</h2>
+        <p><strong>Exactly one</strong> → XOR: <strong>Q = A ⊻ B</strong>. <strong>At least one</strong> → OR: <strong>Q = A ∨ B</strong> (both allowed).</p>
+        <figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="XOR gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M96 23 Q145 23 185 61 Q145 99 96 99 Q123 61 96 23 Z"/><path class="wire" d="M82 23 Q109 61 82 99"/><path class="wire" d="M185 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>XOR is 1 only when inputs differ</figcaption></figure>
+        <pre class="logic-tt">A B | XOR | OR
+0 0 |  0  | 0
+0 1 |  1  | 1
+1 0 |  1  | 1
+1 1 |  0  | 1</pre>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 3 · ADD AN EXCEPTION</span>
+      <h2>Library printer</h2>
+      <p>The printer runs if a <strong>staff job OR a pupil job</strong> is waiting, but <strong>only if there is NOT a paper jam</strong>.</p>
+      <pre class="arithmetic">A = staff job waiting
+B = pupil job waiting
+C = paper jam
+Q = printer runs</pre>
+      <p class="logic-method-cue">Find the OR group, then the condition that prevents the output.</p>
+      <span class="wedo-example-count">Example 3 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Build two chunks</h2>
+        <p>Write the <strong>options</strong> in brackets. Apply NOT to the <strong>exception</strong>. What final gate must join them?</p>
+        <pre class="arithmetic">Q = (A ? B) ? ?C</pre>
+        <p>Sketch the circuit before revealing the answer.</p>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · EXPRESSION → CIRCUIT</span>
+        <h2>OR, NOT, then AND</h2>
+        <pre class="arithmetic">Q = (A ∨ B) ∧ ¬C</pre>
+        <p>Two options → OR. Jam absent → NOT C. Both conditions → final AND.</p>
+        <figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 570 220" role="img" aria-label="Printer circuit. A and B feed an OR gate. C feeds a NOT gate. The OR and NOT outputs feed a final AND gate to make Q.">
+  <text class="gate-text" x="8" y="42">A</text><text class="gate-text" x="8" y="99">B</text><text class="gate-text" x="8" y="180">C</text><text class="gate-text" x="546" y="144">Q</text>
+  <path class="wire" d="M30 49 H90 M30 105 H90 M200 75 H350 V120 H395 M30 172 H262 M322 172 H350 V158 H395 M505 138 H542"/>
+  <path class="gate-body" d="M85 25 Q142 25 200 75 Q142 125 85 125 Q116 75 85 25 Z"/>
+  <path class="gate-body" d="M262 145 L262 199 L308 172 Z"/><circle class="gate-body" cx="315" cy="172" r="7"/>
+  <path class="gate-body" d="M395 100 H427 A38 38 0 0 1 427 176 H395 Z"/>
+  <text class="gate-mini" x="126" y="81">OR</text><text class="gate-mini" x="268" y="212">NOT</text><text class="gate-mini" x="413" y="145">AND</text>
+</svg><figcaption>Options OR → final AND; jam NOT → final AND</figcaption></figure>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 4 · FULL FIVE-STEP METHOD</span>
+      <h2>Delivery bay light</h2>
+      <p>A bay light comes on when <strong>movement is detected OR the door is open</strong>, but <strong>only when</strong> power is enabled and the maintenance lock is <strong>NOT</strong> active.</p>
+      <pre class="arithmetic">A = movement detected
+B = door open
+C = power enabled
+D = maintenance lock
+Q = bay light on</pre>
+      <p class="logic-method-cue">Use all five steps. Decide which gate must feed Q last.</p>
+      <span class="wedo-example-count">Example 4 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Words → gates</h2>
+        <ol class="logic-steps">
+          <li>Name the output Q.</li>
+          <li>Bracket the alternative triggers.</li>
+          <li>Join the power requirement.</li>
+          <li>Invert maintenance lock.</li>
+          <li>Write the full expression, then draw.</li>
+        </ol>
+        <p>Can you identify the <strong>final gate</strong> by working backwards?</p>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · FULL METHOD</span>
+        <h2>Compare each chunk</h2>
+        <pre class="arithmetic">Options     (A ∨ B)
+Requirement C
+Exception   ¬D</pre>
+        <pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre>
+        <p>Draw OR(A,B), AND with C, NOT D, then a <strong>final AND</strong>. Only reveal once pupils have sketched the circuit.</p>
+      </div>
+    </div>
+  </article>
 </div></section>
 
-<section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>Boolean algebra rules</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>apply De Morgan's Laws and double negation</li><li>use distribution, association and commutation to rearrange expressions</li><li>show each algebra step clearly in OCR-style simplification</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="Rules for negating AND/OR groups." aria-label="De Morgan: Rules for negating AND/OR groups.">De Morgan</span><span class="vocab-tip" tabindex="0" data-definition="Expanding/factoring Boolean expressions." aria-label="distribution: Expanding/factoring Boolean expressions.">distribution</span><span class="vocab-tip" tabindex="0" data-definition="Regrouping repeated same operations." aria-label="association: Regrouping repeated same operations.">association</span><span class="vocab-tip" tabindex="0" data-definition="Changing order." aria-label="commutation: Changing order.">commutation</span><span class="vocab-tip" tabindex="0" data-definition="Two NOT operations cancel." aria-label="double negation: Two NOT operations cancel.">double negation</span><span class="vocab-tip" tabindex="0" data-definition="Produce an equivalent expression with less complexity." aria-label="simplify: Produce an equivalent expression with less complexity.">simplify</span><span class="vocab-tip" tabindex="0" data-definition="Different form, same truth values." aria-label="equivalent: Different form, same truth values.">equivalent</span><span class="vocab-tip" tabindex="0" data-definition="Define grouping/precedence." aria-label="brackets: Define grouping/precedence.">brackets</span></div></div></article><div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Example: NOT(A AND B) = NOT A OR NOT B."><span class="objective-vocab-count">TERM 1 OF 8</span><h2>De Morgan</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Rules for negating AND/OR groups.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: A AND (B OR C) = (A AND B) OR (A AND C)."><span class="objective-vocab-count">TERM 2 OF 8</span><h2>distribution</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Expanding/factoring Boolean expressions.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: (A OR B) OR C = A OR (B OR C)."><span class="objective-vocab-count">TERM 3 OF 8</span><h2>association</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Regrouping repeated same operations.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: A AND B = B AND A."><span class="objective-vocab-count">TERM 4 OF 8</span><h2>commutation</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Changing order.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: NOT NOT A = A."><span class="objective-vocab-count">TERM 5 OF 8</span><h2>double negation</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Two NOT operations cancel.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: fewer operators, but exactly the same outputs."><span class="objective-vocab-count">TERM 6 OF 8</span><h2>simplify</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Produce an equivalent expression with less complexity.</p></div></article><article class="objective-vocab-stage" hidden data-support="Think: the truth tables match for every input combination."><span class="objective-vocab-count">TERM 7 OF 8</span><h2>equivalent</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Different form, same truth values.</p></div></article><article class="objective-vocab-stage" hidden data-support="Example: NOT(A OR B) negates the whole grouped expression."><span class="objective-vocab-count">TERM 8 OF 8</span><h2>brackets</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>Define grouping/precedence.</p></div></article></div></div></section>
+<section id="you-do" class="page phase-youdo" data-phase-time="20 minutes · OCR-style practice" data-window-size="2"><div class="youdo-deck">
+<aside class="logic-translation-guide" aria-label="Strategy for turning word problems into logic gates">
+  <div class="logic-translation-heading"><strong>WORDS → GATES</strong><span>1. Name the output → 2. Group options → 3. Add requirements → 4. Invert exceptions → 5. Write expression, then draw</span></div>
+  <div class="logic-translation-cues">
+    <span><strong>OR (∨)</strong> either / at least one</span>
+    <span><strong>AND (∧)</strong> both / only when</span>
+    <span><strong>NOT (¬)</strong> not / off / disabled</span>
+    <span><strong>XOR (⊻)</strong> exactly one, not both</span>
+  </div>
+  <p><strong>Top tip:</strong> Work backwards from the output to choose the final gate. Use brackets for grouped conditions. <strong>Watch out:</strong> “either” alone does not mean XOR.</p>
+</aside>
+<div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h3>Burglar alarm circuit</h3><div class="question-text"><p>A burglar alarm has four inputs. Each input is <strong>1 when the condition is true</strong> and 0 otherwise:</p><ul><li><strong>A:</strong> door sensor detects movement</li><li><strong>B:</strong> motion sensor detects movement</li><li><strong>C:</strong> alarm is armed</li><li><strong>D:</strong> test mode is enabled</li></ul><p>The alarm sounds (<strong>Q = 1</strong>) only when <strong>at least one sensor detects movement</strong>, the alarm is <strong>armed</strong>, and test mode is <strong>off</strong>.</p><p><strong>Your tasks:</strong> (1) Write the Boolean expression for Q. (2) Draw the logic-gate circuit using AND, OR and NOT gates. (3) Label A, B, C, D and Q.</p></div><div class="success-check">Check your circuit: either sensor can trigger it, but only when armed and not in test mode.</div></article><article class="exam-card youdo-question"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h3>Expression and truth table</h3><div class="question-text"><p>For P = ¬(A ∨ B) ⊻ C, complete all eight output values.</p></div><div class="success-check">Use an intermediate A∨B column if needed.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · DEFINE</span><h3>Create logic from words</h3><div class="question-text"><p>A cooling fan runs when temperature is high OR load is high, but only when maintenance mode is NOT enabled. Write the expression and truth table.</p></div><div class="success-check">The expression uses OR, AND and NOT correctly.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · REPRESENT</span><h3>Expression to gate plan</h3><div class="question-text"><p>Convert Q = (A ⊻ B) ∧ ¬C into a gate-by-gate plan and complete its truth table.</p></div><div class="success-check">Both representation and outputs agree.</div></article></div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
 
-<section id="new-learning" class="page phase-focus" data-phase-time="9 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">1.4.3(c) · BOOLEAN ALGEBRA</span><h2>Change form without changing truth</h2><pre class="arithmetic">De Morgan:
-¬(A ∧ B) = ¬A ∨ ¬B
-¬(A ∨ B) = ¬A ∧ ¬B
+<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A value with two states.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Boolean</div><p>True/false or 1/0.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True only if all required inputs are true.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">AND</div><p>Symbol ∧.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True if at least one input is true.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">OR</div><p>Symbol ∨.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Reverses a Boolean value.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">NOT</div><p>¬A means NOT A.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True when inputs differ.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">XOR</div><p>Symbol ⊻; exactly one input is true.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A circuit implementing a Boolean operation.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">logic gate</div><p>Examples: AND, OR, NOT, XOR.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">All input combinations and resulting outputs.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">truth table</div><p>n inputs produce 2^n rows.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A symbolic Boolean statement.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">expression</div><p>It can be represented as gates.</p></div></article></div></section>
 
-Double negation:
-¬¬A = A</pre><div class="nl-reference-note">Name the rule, apply one change at a time, and keep the expression logically equivalent.</div></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">STEP 1 OF 4</span><h2>De Morgan</h2><pre class="arithmetic">¬(A ∧ B) → ¬A ∨ ¬B
-¬(A ∨ B) → ¬A ∧ ¬B</pre><p>The operator inside the brackets swaps as each term is negated.</p><figure class="algebra-picture"><svg viewBox="0 0 620 164" role="img" aria-label="Two equivalent circuits: AND then NOT; and NOT A, NOT B, then OR"><g class="algebra-circuit"><path d="M22 46H79 M22 94H79 M153 70H185 M241 70H275 M352 46H382 M352 104H382 M416 46H467 M416 104H467 M546 75H588"/><path class="gate-shape" d="M79 28H111 A42 42 0 0 1 111 112H79Z M185 45V95L229 70Z M382 31V61L406 46Z M382 89V119L406 104Z M463 27 Q508 27 546 75 Q508 123 463 123 Q490 75 463 27Z"/><circle class="gate-shape" cx="235" cy="70" r="6"/><circle class="gate-shape" cx="411" cy="46" r="5"/><circle class="gate-shape" cx="411" cy="104" r="5"/></g><g class="algebra-circuit-label"><text x="9" y="40">A</text><text x="9" y="109">B</text><text x="277" y="76">Q</text><text x="337" y="40">A</text><text x="337" y="119">B</text><text x="590" y="82">Q</text><text x="304" y="82" font-size="27">≡</text><text x="146" y="151" text-anchor="middle">¬(A ∧ B)</text><text x="485" y="151" text-anchor="middle">¬A ∨ ¬B</text></g></svg><figcaption>Two different circuits produce the same output for every input combination.</figcaption></figure><span class="nl-stage-count">1 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 2 OF 4</span><h2>Double negation</h2><pre class="arithmetic">¬(¬B) → B</pre><p>Two consecutive NOT operations cancel.</p><figure class="algebra-picture algebra-short"><svg viewBox="0 0 390 100" role="img" aria-label="Input A passes through two NOT gates and returns to A"><g class="algebra-circuit"><path d="M25 48H90 M140 48H205 M255 48H353"/><path class="gate-shape" d="M90 25V71L131 48Z M205 25V71L246 48Z"/><circle class="gate-shape" cx="135" cy="48" r="5"/><circle class="gate-shape" cx="250" cy="48" r="5"/></g><g class="algebra-circuit-label"><text x="7" y="55">A</text><text x="355" y="55">A</text><text x="107" y="88">NOT</text><text x="224" y="88">NOT</text></g></svg><figcaption>Two NOT operations cancel: ¬¬A = A.</figcaption></figure><span class="nl-stage-count">2 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 3 OF 4</span><h2>Distribution</h2><pre class="arithmetic">(A ∨ B) ∧ (A ∨ C)
-→ A ∨ (B ∧ C)</pre><p>OCR explicitly tests this form.</p><span class="nl-stage-count">3 of 4</span></div><div class="nl-stage" hidden><span class="nl-stage-label">STEP 4 OF 4</span><h2>Association + commutation</h2><pre class="arithmetic">A ∨ (B ∨ C)
-= (A ∨ B) ∨ C
-
-A ∧ B
-= B ∧ A</pre><p>These allow regrouping and reordering before other simplification.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
-
-<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Simplify ¬(A ∧ B)</h2><p>Apply one named rule.</p><pre class="arithmetic">¬(A ∧ B)</pre><svg class="model-gate-picture" viewBox="0 0 420 134" role="img" aria-label="A and B enter an AND gate, which then connects to a NOT gate and output Q"><path class="gate-wire" d="M40 43H116 M40 91H116 M197 67H253 M331 67H380"/><path class="gate-outline" d="M116 20H150 A47 47 0 0 1 150 114 H116Z M253 33V101L315 67Z"/><circle class="gate-outline" cx="323" cy="67" r="8"/><text class="gate-letter" x="14" y="37">A</text><text class="gate-letter" x="14" y="100">B</text><text class="gate-letter" x="390" y="74">Q</text></svg><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · IDENTIFY</span><h2>Outer NOT over AND</h2><pre class="arithmetic">Use De Morgan's Law.</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · NEGATE</span><h2>Negate each term</h2><pre class="arithmetic">A → ¬A
-B → ¬B</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · SWAP</span><h2>AND becomes OR</h2><pre class="arithmetic">¬A ∨ ¬B</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · CHECK</span><h2>Equivalent behaviour</h2><pre class="arithmetic">Both are false only when A=1 and B=1.</pre></div></div></article></div></section>
-
-<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2024 H446/01 Q5(b)(i)</span><h2>De Morgan</h2><p>Simplify ¬A ∨ ¬B using the relevant De Morgan form.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same expression</h2><pre class="arithmetic">¬A ∨ ¬B
-= ¬(? ? ?)</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same expression</h2><pre class="arithmetic">¬A ∨ ¬B
-= ¬(A ∧ B)</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2024 H446/01 Q5(b)(ii)</span><h2>Double negation</h2><p>Simplify ¬(¬B).</p><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same expression</h2><pre class="arithmetic">¬(¬B)
-= ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same expression</h2><pre class="arithmetic">¬(¬B)
-= B</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2024 H446/01 Q5(b)(iii)</span><h2>Distribution</h2><p>Simplify (A ∨ B) ∧ (A ∨ C).</p><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same expression</h2><pre class="arithmetic">(A ∨ B) ∧ (A ∨ C)
-= A ∨ (? ? ?)</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same expression</h2><pre class="arithmetic">(A ∨ B) ∧ (A ∨ C)
-= A ∨ (B ∧ C)</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Commutation + association</h2><p>Rewrite C ∨ (A ∨ B) into (A ∨ B) ∨ C.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same expression</h2><pre class="arithmetic">C ∨ (A ∨ B)
-= ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same expression</h2><pre class="arithmetic">C ∨ (A ∨ B)
-= (A ∨ B) ∨ C</pre></div></div></article></div></section>
-
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR exam practice" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">OCR 2019 · Q5(i–iii) · 3 MARKS</span><h3>Simplify Boolean expressions</h3><div class="question-text"><p>State the simplified form of each expression:</p><p><strong>(i)</strong> ¬¬A &nbsp; <strong>(ii)</strong> ¬A ∧ ¬B &nbsp; <strong>(iii)</strong> ¬(¬A ∧ ¬B)</p></div><div class="success-check">Apply double negation and De Morgan’s laws. Show each step.</div></article><article class="exam-card youdo-question"><span class="phase-tag">OCR 2019 · Q2(b)(ii) · 2 MARKS</span><h3>Simplify the popcorn expression</h3><div class="question-text"><p>A cinema gives free popcorn when a voucher is shown and either a soft drink or a bottle of water is purchased.</p><p><strong>E</strong> = voucher shown; <strong>F</strong> = soft drink bought; <strong>G</strong> = water bought.</p><p>Simplify <strong>(E ∧ F) ∨ (E ∧ G)</strong>.</p></div><div class="success-check">Look for a common factor. Keep the meaning unchanged.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">OCR 2019 · Q2(a) · 3 MARKS</span><h3>Cinema discount: Boolean expression</h3><div class="question-text"><p>A discounted cinema ticket is issued if the customer is <strong>under 18 AND has a student card</strong>, OR is <strong>over 60 AND has proof of age</strong>.</p><p>A = under 18; B = student card; C = over 60; D = ID. Write the Boolean expression for the output Q (discount ticket).</p></div><div class="success-check">Group each pair of conditions before joining the alternatives.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">OCR 2019 · Q3(ii) · 2 MARKS</span><h3>From a gate circuit to an expression</h3><div class="question-text"><p>Two OR gates take inputs <strong>A, B</strong> and <strong>C, D</strong> respectively. Their outputs feed a third OR gate. Write the complete Boolean expression for the circuit output.</p></div><div class="success-check">Represent each first-stage gate in brackets, then combine the results.</div></article></div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
-
-<section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Rules for negating AND/OR groups.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">De Morgan</div><p>Negate each term and swap AND↔OR.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Expanding/factoring Boolean expressions.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">distribution</div><p>Similar idea to algebraic distribution.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Regrouping repeated same operations.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">association</div><p>(A∨B)∨C = A∨(B∨C).</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Changing order.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">commutation</div><p>A∨B = B∨A.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Two NOT operations cancel.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">double negation</div><p>¬¬A = A.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Produce an equivalent expression with less complexity.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">simplify</div><p>Logic behaviour must remain identical.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Different form, same truth values.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">equivalent</div><p>Can be verified with truth tables.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Define grouping/precedence.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">brackets</div><p>Essential when applying rules.</p></div></article></div></section>
-
-<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">De Morgan's Laws swap AND and OR while negating each term.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">A three-input Boolean problem has eight possible input combinations in its truth table.</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can do this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I’m getting there.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need more help.</span></div></div></div></div></section>
 
 </main>
 

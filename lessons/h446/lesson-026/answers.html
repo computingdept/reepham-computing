@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 026 · Boolean algebra rules answers</title>
+<title>Lesson 026 · Boolean logic, gates and truth tables answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,14 +26,51 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 026 · BOOLEAN ALGEBRA RULES · ANSWERS</span>
+  <span class="answer-title">LESSON 026 · BOOLEAN LOGIC, GATES AND TRUTH TABLES · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR 2019 · Q5(i–iii)</span><h2>Simplify Boolean expressions</h2><pre class="solution-code">(i) ¬¬A = A
-(ii) ¬A ∧ ¬B = ¬(A ∨ B)
-(iii) ¬(¬A ∧ ¬B) = A ∨ B</pre><p><strong>Mark scheme:</strong> (ii) and (iii) use De Morgan’s laws; (iii) also uses double negation.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR 2019 · Q2(b)(ii)</span><h2>Simplify the popcorn expression</h2><pre class="solution-code">(E ∧ F) ∨ (E ∧ G)
-= E ∧ (F ∨ G)</pre><p><strong>Mark scheme:</strong> Factor out E: 1 mark for (F ∨ G) and 1 mark for combining with E.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR 2019 · Q2(a)</span><h2>Cinema discount: Boolean expression</h2><pre class="solution-code">Q = (A ∧ B) ∨ (C ∧ D)</pre><p><strong>Mark scheme:</strong> 1 mark for each AND pair and 1 for joining the pairs using OR.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR 2019 · Q3(ii)</span><h2>From a gate circuit to an expression</h2><pre class="solution-code">Output = (A ∨ B) ∨ (C ∨ D)</pre><p><strong>Mark scheme:</strong> 1 mark for (A ∨ B) and 1 for adding ∨ (C ∨ D).</p></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h2>Burglar alarm circuit</h2><pre class="solution-code">A = door sensor; B = motion sensor
+C = alarm armed; D = test mode
+
+Q = (A ∨ B) ∧ C ∧ ¬D
+
+1. OR A and B.
+2. NOT D.
+3. AND (A∨B) with C.
+4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h2>Expression and truth table</h2><p>P = ¬(A ∨ B) ⊻ C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
+0 0 0 |  0  |    1    | 1
+0 0 1 |  0  |    1    | 0
+0 1 0 |  1  |    0    | 0
+0 1 1 |  1  |    0    | 1
+1 0 0 |  1  |    0    | 0
+1 0 1 |  1  |    0    | 1
+1 1 0 |  1  |    0    | 0
+1 1 1 |  1  |    0    | 1</pre><p><strong>Check:</strong> For 000, NOT(0 OR 0)=1 and 1 XOR 0 = 1.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><p>T = temperature high; L = load high; M = maintenance mode on.</p><pre class="solution-code">F = (T ∨ L) ∧ ¬M
+
+T L M | T∨L | ¬M | F
+0 0 0 |  0  |  1 | 0
+0 0 1 |  0  |  0 | 0
+0 1 0 |  1  |  1 | 1
+0 1 1 |  1  |  0 | 0
+1 0 0 |  1  |  1 | 1
+1 0 1 |  1  |  0 | 0
+1 1 0 |  1  |  1 | 1
+1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Q = (A ⊻ B) ∧ ¬C
+
+1. XOR A and B.
+2. NOT C.
+3. AND those outputs.
+
+A B C | A ⊻ B | ¬C | Q
+0 0 0 |    0    |  1 | 0
+0 0 1 |    0    |  0 | 0
+0 1 0 |    1    |  1 | 1
+0 1 1 |    1    |  0 | 0
+1 0 0 |    1    |  1 | 1
+1 0 1 |    1    |  0 | 0
+1 1 0 |    0    |  1 | 0
+1 1 1 |    0    |  0 | 0</pre><p><strong>Check:</strong> Q=1 only when A and B differ and C=0.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>

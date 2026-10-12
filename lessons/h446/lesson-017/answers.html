@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 017 · Records, lists and tuples solutions</title>
+<title>Lesson 017 · Coding solutions</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
 <style>
@@ -26,95 +26,129 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 017 · RECORDS, LISTS AND TUPLES · SOLUTIONS</span>
+  <span class="answer-title">LESSON 017 · CODING SOLUTIONS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · LIST</span><h2>Create and edit a list</h2><pre class="solution-code">using System;
-using System.Collections.Generic;
+<main class="answer-stage-wrap">
+
+<section class="answer-stage">
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 1</span>
+    <h2>Student names</h2>
+    <pre class="solution-code">using System;
 
 public class Program
 {
     public static void Main()
     {
-        List&lt;string&gt; names = new List&lt;string&gt; { "Amelia", "Ben", "Charlie", "Daisy" };
-        names.Add("Ethan");
-        names.Remove("Ben");
-
-        foreach (string name in names)
+        string[] studentNames =
         {
-            Console.WriteLine(name);
+            "Amelia", "Ben", "Charlie", "Daisy", "Ethan"
+        };
+
+        Console.WriteLine(studentNames[0]);
+        Console.WriteLine(studentNames[studentNames.Length - 1]);
+
+        for (int i = 0; i &lt; studentNames.Length; i++)
+        {
+            Console.WriteLine(studentNames[i]);
         }
     }
-}</pre><p><strong>Check:</strong> The list changes size and every remaining item is displayed.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TUPLE</span><h2>Group a result</h2><pre class="solution-code">using System;
+}</pre>
+    <p><strong>Key idea:</strong> a one-dimensional array needs one index. The final valid index is one less than its length.</p>
+    <div class="test-strip"><span>First = Amelia</span><span>Last = Ethan</span><span>5 names displayed</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 2</span>
+    <h2>studentResults</h2>
+    <pre class="solution-code">using System;
 
 public class Program
 {
     public static void Main()
     {
-        var result = (Name: "Amelia", Score: 72);
-        Console.WriteLine(result.Name);
-        Console.WriteLine(result.Score);
-    }
-}</pre><p><strong>Check:</strong> Both tuple fields are accessed by name.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · LIST + SEARCH</span><h2>Find an item</h2><pre class="solution-code">using System;
-using System.Collections.Generic;
-
-public class Program
-{
-    public static void Main()
-    {
-        List&lt;string&gt; courses = new List&lt;string&gt; { "Maths", "Physics", "Computer Science", "History", "Art" };
-        Console.Write("Course: ");
-        string wanted = Console.ReadLine();
-
-        if (courses.Contains(wanted))
-            Console.WriteLine("Found");
-        else
-            Console.WriteLine("Not found");
-    }
-}</pre><p><strong>Check:</strong> A present and absent course both produce sensible output.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">C# RECORD · RUNNABLE EXAMPLE</span><h2>Create and use a Student record</h2><pre class="solution-code">using System;
-
-public record Student(string Name, int CandidateNumber, int Score);
-
-public class Program
-{
-    public static void Main()
-    {
-        Student pupil = new Student("Amelia", 1037, 72);
-        Console.WriteLine(pupil.Name);
-        Console.WriteLine(pupil.Score);
-
-        // Create a copy with an updated score.
-        Student updated = pupil with { Score = 80 };
-        Console.WriteLine(updated.Score);
-    }
-}</pre><p><strong>Check:</strong> The code prints Amelia, 72 and 80. The <code>with</code> expression makes an updated copy.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">C# TUPLE · RETURN TWO VALUES</span><h2>Return a minimum and maximum</h2><pre class="solution-code">using System;
-
-public class Program
-{
-    static (int Minimum, int Maximum) FindRange(int[] numbers)
-    {
-        int minimum = numbers[0];
-        int maximum = numbers[0];
-        foreach (int number in numbers)
+        string[,] studentResults =
         {
-            if (number &lt; minimum) minimum = number;
-            if (number &gt; maximum) maximum = number;
-        }
-        return (minimum, maximum);
-    }
+            { "Amelia", "72" },
+            { "Ben", "65" },
+            { "Charlie", "81" },
+            { "Daisy", "59" },
+            { "Ethan", "90" }
+        };
 
+        Console.WriteLine(studentResults[0,0]);
+        Console.WriteLine(studentResults[0,1]);
+    }
+}</pre>
+    <p><strong>Why strings?</strong> one rectangular array has one element type. In this teaching example, both the name and the score are stored as strings.</p>
+    <div class="test-strip"><span>5 rows</span><span>2 columns</span><span>Amelia</span><span>72</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 3</span>
+    <h2>Traverse every result</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
     public static void Main()
     {
-        int[] marks = { 42, 75, 61, 88 };
-        var range = FindRange(marks);
-        Console.WriteLine(range.Minimum);
-        Console.WriteLine(range.Maximum);
+        string[,] studentResults =
+        {
+            { "Amelia", "72" },
+            { "Ben", "65" },
+            { "Charlie", "81" },
+            { "Daisy", "59" },
+            { "Ethan", "90" }
+        };
+
+        for (int row = 0;
+             row &lt; studentResults.GetLength(0);
+             row++)
+        {
+            Console.WriteLine(
+                studentResults[row,0] + " " +
+                studentResults[row,1]);
+        }
     }
-}</pre><p><strong>Check:</strong> The result is 42 and 88. The method returns both values as one tuple.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · CHOICE</span><h2>Explain the structure</h2><pre class="solution-code">// Array: fixed-size ordered collection.
-// List: ordered collection that can grow or shrink.
-// Record: a reusable named type with related properties.
-// Tuple: a small fixed group of related values.</pre><p><strong>Check:</strong> Each choice refers to the behaviour of the structure, not just its name.</p></article></section></main>
+}</pre>
+    <p><strong>Why <code>GetLength(0)</code>?</strong> dimension 0 is the row count, so the loop automatically follows however many students are stored.</p>
+    <div class="test-strip"><span>No hard-coded 5 in loop condition</span><span>All rows displayed</span></div>
+  </article>
+</section>
+
+<section class="answer-stage" hidden>
+  <article class="solution-card">
+    <span class="phase-tag">CODING CHALLENGE 4</span>
+    <h2>Room readings</h2>
+    <pre class="solution-code">using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        int[,,] readings = new int[2,3,4];
+
+        readings[1,2,3] = 21;
+
+        Console.WriteLine(readings[1,2,3]);
+        Console.WriteLine(readings.GetLength(0));
+        Console.WriteLine(readings.GetLength(1));
+        Console.WriteLine(readings.GetLength(2));
+    }
+}</pre>
+    <p><strong>Three dimensions:</strong> the array needs three indexes, and each dimension can be queried separately with <code>GetLength()</code>.</p>
+    <div class="test-strip"><span>Value = 21</span><span>Lengths = 2, 3, 4</span><span>24 elements in total</span></div>
+  </article>
+</section>
+
+</main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
