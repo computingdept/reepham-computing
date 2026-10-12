@@ -67,19 +67,18 @@ NOT A, NOT C → AND
 A, NOT D → AND
 two AND outputs → OR</pre><p>A good simplification removes unnecessary gates and inputs.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
 
-<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Convert a simplified expression to gates</h2><p>Use the verified 2023 K-map result.</p><pre class="arithmetic">P = (¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre><svg class="lesson-concept-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 205" role="img" aria-label="Two product terms: NOT A AND NOT C, and A AND NOT D, feed into a final OR gate to produce P"><title>K-map expression to a two-level gate circuit plan</title>
-<defs><marker id="h446-arrow28" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#256a4d"/></marker></defs>
-<text x="12" y="21" fill="#315b47" font-size="18" font-weight="800">Build the two product terms, then OR them</text>
-<rect x="12" y="42" width="115" height="42" rx="7" fill="#e6f2ea" stroke="#89b49e"/><text x="70" y="69" font-size="19" text-anchor="middle" fill="#184732" font-weight="800">NOT A</text>
-<rect x="141" y="42" width="115" height="42" rx="7" fill="#e6f2ea" stroke="#89b49e"/><text x="198" y="69" font-size="19" text-anchor="middle" fill="#184732" font-weight="800">NOT C</text>
-<rect x="12" y="128" width="115" height="42" rx="7" fill="#e6f2ea" stroke="#89b49e"/><text x="70" y="155" font-size="19" text-anchor="middle" fill="#184732" font-weight="800">A</text>
-<rect x="141" y="128" width="115" height="42" rx="7" fill="#e6f2ea" stroke="#89b49e"/><text x="198" y="155" font-size="19" text-anchor="middle" fill="#184732" font-weight="800">NOT D</text>
-<path d="M 257 62 H 287 M 257 148 H 287" stroke="#256a4d" stroke-width="3" marker-end="url(#h446-arrow28)"/>
-<rect x="290" y="42" width="80" height="42" rx="9" fill="#d7eadf" stroke="#358864" stroke-width="2"/><text x="330" y="69" text-anchor="middle" font-size="20" font-weight="900" fill="#155139">AND</text>
-<rect x="290" y="128" width="80" height="42" rx="9" fill="#d7eadf" stroke="#358864" stroke-width="2"/><text x="330" y="155" text-anchor="middle" font-size="20" font-weight="900" fill="#155139">AND</text>
-<path d="M 371 62 L 454 94 M 371 148 L 454 116" stroke="#256a4d" stroke-width="3" fill="none" marker-end="url(#h446-arrow28)"/>
-<rect x="460" y="85" width="76" height="47" rx="10" fill="#ffedc8" stroke="#c39538" stroke-width="2"/><text x="498" y="115" text-anchor="middle" font-size="21" font-weight="900" fill="#754d0b">OR</text>
-<path d="M 537 108 H 593" stroke="#256a4d" stroke-width="3" marker-end="url(#h446-arrow28)"/><text x="606" y="114" font-size="22" fill="#1c5d41" font-weight="900">P</text>
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Convert a simplified expression to gates</h2><p>Use the verified 2023 K-map result.</p><pre class="arithmetic">P = (¬A ∧ ¬C) ∨ (A ∧ ¬D)</pre><svg class="lesson-concept-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 190" role="img" aria-label="Gate plan: NOT A and NOT C feed the first AND; A and NOT D feed the second AND; both results feed the final OR gate, producing P"><title>Two AND products feed a final OR gate</title>
+<rect x="14" y="30" width="210" height="55" rx="9" fill="#e7f1eb" stroke="#9cbdab" stroke-width="2"/>
+<text x="119" y="53" text-anchor="middle" fill="#285b43" font-size="17" font-weight="800">INPUTS</text><text x="119" y="74" text-anchor="middle" fill="#164830" font-size="21" font-weight="850">¬A , ¬C</text>
+<rect x="14" y="106" width="210" height="55" rx="9" fill="#e7f1eb" stroke="#9cbdab" stroke-width="2"/>
+<text x="119" y="129" text-anchor="middle" fill="#285b43" font-size="17" font-weight="800">INPUTS</text><text x="119" y="150" text-anchor="middle" fill="#164830" font-size="21" font-weight="850">A , ¬D</text>
+<path d="M225 58 H254 M225 133 H254" stroke="#286e4f" stroke-width="3"/>
+<rect x="257" y="33" width="95" height="50" rx="9" fill="#d8ebdf" stroke="#3b8963" stroke-width="2"/><text x="304" y="65" text-anchor="middle" fill="#164830" font-size="23" font-weight="900">AND</text>
+<rect x="257" y="108" width="95" height="50" rx="9" fill="#d8ebdf" stroke="#3b8963" stroke-width="2"/><text x="304" y="140" text-anchor="middle" fill="#164830" font-size="23" font-weight="900">AND</text>
+<path d="M353 57 L424 86 M353 133 L424 111" fill="none" stroke="#286e4f" stroke-width="3"/>
+<rect x="427" y="73" width="87" height="53" rx="10" fill="#ffe8bc" stroke="#c29034" stroke-width="2"/><text x="470" y="106" text-anchor="middle" fill="#754f18" font-size="23" font-weight="900">OR</text>
+<path d="M515 99 H579" fill="none" stroke="#286e4f" stroke-width="3"/><path d="M569 91 L581 99 L569 107" fill="none" stroke="#286e4f" stroke-width="3"/><text x="598" y="106" fill="#164830" font-size="27" font-weight="900">P</text>
+<text x="325" y="182" text-anchor="middle" fill="#315f47" font-size="17" font-weight="750">B is absent: the simplified output does not depend on B</text>
 </svg><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · TERM 1</span><h2>Create ¬A ∧ ¬C</h2><pre class="arithmetic">NOT A
 NOT C
 AND</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · TERM 2</span><h2>Create A ∧ ¬D</h2><pre class="arithmetic">A
