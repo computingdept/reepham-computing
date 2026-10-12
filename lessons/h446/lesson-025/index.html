@@ -68,6 +68,31 @@
   .logic-translation-guide p{font-size:13px}
 }
 @media(max-width:460px){.logic-translation-cues{grid-template-columns:1fr}}
+
+/* Lesson 025: shared Words → Gates model/guided-practice prompts. */
+#i-do .logic-method-cue,#we-do .logic-method-cue{
+  margin:12px 0 0;padding:10px 12px;background:#f1f7f3;border-left:4px solid #346c55;
+  border-radius:5px;color:#244d38;font-size:clamp(15px,1.13vw,19px);line-height:1.35
+}
+#i-do .ido-reference .arithmetic,#we-do .wedo-reference .arithmetic{
+  white-space:pre-wrap;font-size:clamp(17px,1.32vw,21px);line-height:1.4
+}
+#we-do .wedo-step .logic-figure{align-self:flex-start;margin:6px 0 3px}
+#we-do .wedo-step .logic-svg{max-height:104px;width:min(100%,310px)}
+#we-do .wedo-step .logic-tt{font-size:clamp(13px,1.05vw,16px);margin:6px 0;padding:8px}
+#we-do .wedo-step .arithmetic{white-space:pre-wrap}
+#i-do .ido-step .logic-figure{margin:8px 0 0}
+#i-do .ido-step .logic-combined{max-height:177px}
+@media(max-height:760px) and (min-width:901px){
+  #i-do .logic-method-cue,#we-do .logic-method-cue{font-size:14px;padding:6px 8px}
+  #we-do .wedo-step .logic-svg{max-height:82px}
+  #we-do .wedo-step .logic-tt{font-size:12px;line-height:1.25;padding:5px}
+  #i-do .ido-step .logic-combined{max-height:134px}
+}
+@media(max-width:900px){
+  #i-do .logic-method-cue,#we-do .logic-method-cue{font-size:15px}
+  #we-do .wedo-step .logic-tt{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -126,10 +151,50 @@
 1 1 0 |  1  | 0
 1 1 1 |  1  | 1</pre><p><strong>Q = (A ∨ B) ∧ C.</strong> Only set Q to 1 when C is 1 <em>and</em> A∨B is 1.</p><span class="nl-stage-count">7 of 7</span></div></article></div></section>
 
-<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Define an alarm system</h2><p>Door or motion must detect movement, the alarm must be set, and test mode must be off.</p><pre class="arithmetic">A door
-B motion
-C set
-D test</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · SENSORS</span><h2>Combine movement sensors</h2><pre class="arithmetic">A ∨ B</pre><p>Either sensor is enough.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · SET</span><h2>Require alarm set</h2><pre class="arithmetic">(A ∨ B) ∧ C</pre><p>C must also be true.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · TEST</span><h2>Disable during testing</h2><pre class="arithmetic">¬D</pre><p>Test mode must be false.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · FINAL</span><h2>Combine requirements</h2><pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre><p>Draw each gate in the order shown. The output of one gate becomes an input to the next.</p><figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 585 235" role="img" aria-label="Alarm circuit. A and B enter OR. That output and C enter AND. D goes through NOT. The two results then enter a final AND gate to produce Q.">
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes">
+<div class="ido-focus-deck"><article class="ido-example">
+<div class="ido-reference">
+  <span class="phase-tag">I DO · WORDS → GATES</span>
+  <h2>Secure door access</h2>
+  <p>A secure door unlocks when a <strong>valid card OR a correct PIN</strong> is used, but <strong>only when</strong> the building is open <strong>and</strong> lockdown is <strong>not</strong> active.</p>
+  <pre class="arithmetic">A = valid card
+B = correct PIN
+C = building open
+D = lockdown</pre>
+  <p class="logic-method-cue"><strong>Method:</strong> output → options → requirements → exceptions → expression, then circuit.</p>
+  <span class="ido-example-count">Worked example · problem stays on the left</span>
+</div>
+<div class="ido-method">
+  <div class="ido-step">
+    <span class="ido-step-label">STEP 1 OF 5 · NAME THE OUTPUT</span>
+    <h2>What switches ON?</h2>
+    <pre class="arithmetic">Q = door unlocks</pre>
+    <p>Start with the result the question is asking us to control.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 2 OF 5 · FIND THE OPTIONS</span>
+    <h2>What are the alternatives?</h2>
+    <pre class="arithmetic">A ∨ B</pre>
+    <p>A <strong>card OR PIN</strong> works. OR means at least one; both can also be true.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 3 OF 5 · ADD REQUIREMENTS</span>
+    <h2>What must also be true?</h2>
+    <pre class="arithmetic">(A ∨ B) ∧ C</pre>
+    <p>The building <strong>must be open</strong>, so join the options with AND.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 4 OF 5 · INVERT EXCEPTIONS</span>
+    <h2>What must be OFF?</h2>
+    <pre class="arithmetic">¬D</pre>
+    <p>Lockdown must <strong>not</strong> be active. NOT reverses D.</p>
+  </div>
+  <div class="ido-step" hidden>
+    <span class="ido-step-label">STEP 5 OF 5 · EXPRESS, THEN DRAW</span>
+    <h2>Join the chunks</h2>
+    <pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre>
+    <p><strong>Work backwards:</strong> the final AND checks all requirements. Draw OR, AND and NOT first, then connect them to the final AND.</p>
+    <figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 585 235" role="img" aria-label="Secure door circuit: valid card A and correct PIN B feed OR; that output and building open C feed AND; lockdown D feeds NOT; both results enter the final AND to produce Q.">
 <text class="gate-text" x="9" y="43">A</text><text class="gate-text" x="9" y="91">B</text><text class="gate-text" x="9" y="125">C</text><text class="gate-text" x="9" y="183">D</text><text class="gate-text" x="551" y="128">Q</text>
 <path class="wire" d="M30 51 H91 M30 99 H91 M182 74 H244 V61 H269 M30 132 H234 V102 H269 M347 82 H420 V114 H446 M30 180 H253 M327 180 H418 V156 H446 M523 135 H544"/>
 <path class="gate-body" d="M85 31 Q139 31 182 74 Q139 117 85 117 Q114 74 85 31 Z"/>
@@ -137,34 +202,157 @@ D test</pre><span class="ido-example-count">Worked example</span></div><div clas
 <path class="gate-body" d="M253 146 L253 214 L313 180 Z"/><circle class="gate-body" cx="320" cy="180" r="7"/>
 <path class="gate-body" d="M446 96 H484 A39 39 0 0 1 484 174 H446 Z"/>
 <text class="gate-mini" x="122" y="80">OR</text><text class="gate-mini" x="285" y="88">AND</text><text class="gate-mini" x="261" y="227">NOT</text><text class="gate-mini" x="459" y="142">AND</text>
-</svg><figcaption>Follow the wires: OR (A, B) → AND with C; NOT D → final AND → Q</figcaption></figure></div></div></article></div></section>
+</svg><figcaption>Gate plan: OR(A, B) → AND with C; NOT D → final AND → Q</figcaption></figure>
+  </div>
+</div></article></div></section>
 
-<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example" ><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · SINGLE GATE</span><h2>Read an AND gate</h2><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="AND gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M101 23 H135 A38 38 0 0 1 135 99 H101 Z"/><path class="wire" d="M173 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>What is Q for each input pair?</figcaption></figure><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the four outputs</h2><pre class="logic-tt">A B | Q
+<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes">
+<div class="wedo-focus-deck">
+  <article class="wedo-example">
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 1 · REQUIREMENTS</span>
+      <h2>Successful login</h2>
+      <p>A login succeeds only when the <strong>user ID is valid AND the password is correct</strong>.</p>
+      <pre class="arithmetic">A = valid user ID
+B = correct password
+Q = login succeeds</pre>
+      <p class="logic-method-cue">Find the output, options, requirements and exceptions. Then write the expression and draw the gate.</p>
+      <span class="wedo-example-count">Example 1 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Which gate?</h2>
+        <p>Are there any alternative routes? What <strong>must</strong> be true? Write Q, draw the gate and predict the truth-table outputs.</p>
+        <pre class="logic-tt">A B | Q
 0 0 | ?
 0 1 | ?
 1 0 | ?
-1 1 | ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>AND: both must be 1</h2><pre class="logic-tt">A B | Q
+1 1 | ?</pre>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · SAME 5 STEPS</span>
+        <h2>AND: both required</h2>
+        <pre class="arithmetic">Q = A ∧ B</pre>
+        <p>Output: login. No OR options or NOT exception. AND joins two requirements.</p>
+        <figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="AND gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M101 23 H135 A38 38 0 0 1 135 99 H101 Z"/><path class="wire" d="M173 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>What is Q for each input pair?</figcaption></figure>
+        <pre class="logic-tt">A B | Q
 0 0 | 0
 0 1 | 0
 1 0 | 0
-1 1 | 1</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · SINGLE GATE</span><h2>OR and XOR are different</h2><figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="XOR gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M96 23 Q145 23 185 61 Q145 99 96 99 Q123 61 96 23 Z"/><path class="wire" d="M82 23 Q109 61 82 99"/><path class="wire" d="M185 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>XOR is 1 only when inputs differ</figcaption></figure><span class="wedo-example-count">Example 2 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete XOR and compare with OR</h2><pre class="logic-tt">A B | XOR | OR
-0 0 |  ?  | ?
-0 1 |  ?  | ?
-1 0 |  ?  | ?
-1 1 |  ?  | ?</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Both inputs 1 is the key difference</h2><pre class="logic-tt">A B | XOR | OR
+1 1 | 1</pre>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 2 · EXACTLY ONE</span>
+      <h2>Two test switches</h2>
+      <p>A test lamp lights when <strong>exactly one</strong> of switches A and B is ON, <strong>but not both</strong>.</p>
+      <pre class="arithmetic">A = switch 1 on
+B = switch 2 on
+Q = lamp lights</pre>
+      <p class="logic-method-cue">Compare this with a different instruction: “at least one switch is on”.</p>
+      <span class="wedo-example-count">Example 2 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>OR or XOR?</h2>
+        <p>Choose the gate for <strong>exactly one</strong>. How would it change for <strong>at least one</strong>?</p>
+        <pre class="logic-tt">A B | EXACTLY ONE | AT LEAST ONE
+0 0 |      ?      |      ?
+0 1 |      ?      |      ?
+1 0 |      ?      |      ?
+1 1 |      ?      |      ?</pre>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · WORD CLUES</span>
+        <h2>XOR versus OR</h2>
+        <p><strong>Exactly one</strong> → XOR. <strong>At least one</strong> → OR (both allowed).</p>
+        <figure class="logic-figure"><svg class="logic-svg" viewBox="0 0 300 125" role="img" aria-label="XOR gate with inputs A and B and output Q"><path class="wire" d="M27 43 H111 M27 83 H111"/> <text class="gate-text" x="12" y="34">A</text><text class="gate-text" x="12" y="76">B</text><path class="gate-body" d="M96 23 Q145 23 185 61 Q145 99 96 99 Q123 61 96 23 Z"/><path class="wire" d="M82 23 Q109 61 82 99"/><path class="wire" d="M185 61 H265"/><text class="gate-text" x="273" y="53">Q</text></svg><figcaption>XOR is 1 only when inputs differ</figcaption></figure>
+        <pre class="logic-tt">A B | XOR | OR
 0 0 |  0  | 0
 0 1 |  1  | 1
 1 0 |  1  | 1
-1 1 |  0  | 1</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · MULTI-GATE CIRCUIT</span><h2>Read the circuit left to right</h2><figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 580 200" role="img" aria-label="A and B feed an OR gate. That output feeds a NOT gate. The result and C feed an XOR gate, producing P">
-<text class="gate-text" x="8" y="42">A</text><text class="gate-text" x="8" y="90">B</text><text class="gate-text" x="340" y="181">C</text><text class="gate-text" x="553" y="109">P</text>
-<path class="wire" d="M29 50 H97 M29 98 H97 M191 74 H254 M328 74 H425 V91 M360 168 H425 V130 M532 110 H550"/>
-<path class="gate-body" d="M91 30 Q144 30 191 74 Q144 118 91 118 Q118 74 91 30 Z"/>
-<path class="gate-body" d="M254 36 L254 112 L314 74 Z"/>
-<circle class="gate-body" cx="321" cy="74" r="7"/>
-<path class="gate-body" d="M422 74 Q480 74 532 110 Q480 146 422 146 Q451 110 422 74 Z"/>
-<path class="wire" d="M411 74 Q440 110 411 146"/>
-<text class="gate-mini" x="126" y="80">OR</text><text class="gate-mini" x="468" y="116">XOR</text>
-</svg><figcaption>Read left to right: OR → NOT → XOR</figcaption></figure><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Name each gate; finish the expression</h2><p>Work from A and B towards P, identifying each output.</p><pre class="arithmetic">P = ?(A ? B) XOR C</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>OR, then NOT, then XOR</h2><ol class="logic-steps"><li>OR: A ∨ B</li><li>NOT: ¬(A ∨ B)</li><li>XOR with C: <strong>P = ¬(A ∨ B) XOR C</strong></li></ol></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · APPLY THE RULES</span><h2>Alarm system</h2><p><strong>A</strong> = door detects movement; <strong>B</strong> = motion sensor; <strong>C</strong> = alarm set; <strong>D</strong> = test mode. The alarm sounds only if a sensor is active, it is set, and test mode is off.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the expression one condition at a time</h2><pre class="arithmetic">Q = (A ? B) ? C ? ?D</pre><p>Which gates would you draw, in what order?</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Check each requirement</h2><pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre><p>Use OR for the sensors, AND for the alarm being set, NOT for D, then AND the results together.</p></div></div></article></div></section>
+1 1 |  0  | 1</pre>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 3 · ADD AN EXCEPTION</span>
+      <h2>Library printer</h2>
+      <p>The printer runs if a <strong>staff job OR a pupil job</strong> is waiting, but <strong>only if there is NOT a paper jam</strong>.</p>
+      <pre class="arithmetic">A = staff job waiting
+B = pupil job waiting
+C = paper jam
+Q = printer runs</pre>
+      <p class="logic-method-cue">Find the OR group, then the condition that prevents the output.</p>
+      <span class="wedo-example-count">Example 3 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Build two chunks</h2>
+        <p>Write the <strong>options</strong> in brackets. Apply NOT to the <strong>exception</strong>. What final gate must join them?</p>
+        <pre class="arithmetic">Q = (A ? B) ? ?C</pre>
+        <p>Sketch the circuit before revealing the answer.</p>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · EXPRESSION → CIRCUIT</span>
+        <h2>OR, NOT, then AND</h2>
+        <pre class="arithmetic">Q = (A ∨ B) ∧ ¬C</pre>
+        <p>Two options → OR. Jam absent → NOT C. Both conditions → final AND.</p>
+        <figure class="logic-figure"><svg class="logic-svg logic-combined" viewBox="0 0 570 220" role="img" aria-label="Printer circuit. A and B feed an OR gate. C feeds a NOT gate. The OR and NOT outputs feed a final AND gate to make Q.">
+  <text class="gate-text" x="8" y="42">A</text><text class="gate-text" x="8" y="99">B</text><text class="gate-text" x="8" y="180">C</text><text class="gate-text" x="546" y="144">Q</text>
+  <path class="wire" d="M30 49 H90 M30 105 H90 M200 75 H350 V120 H395 M30 172 H262 M322 172 H350 V158 H395 M505 138 H542"/>
+  <path class="gate-body" d="M85 25 Q142 25 200 75 Q142 125 85 125 Q116 75 85 25 Z"/>
+  <path class="gate-body" d="M262 145 L262 199 L308 172 Z"/><circle class="gate-body" cx="315" cy="172" r="7"/>
+  <path class="gate-body" d="M395 100 H427 A38 38 0 0 1 427 176 H395 Z"/>
+  <text class="gate-mini" x="126" y="81">OR</text><text class="gate-mini" x="268" y="212">NOT</text><text class="gate-mini" x="413" y="145">AND</text>
+</svg><figcaption>Options OR → final AND; jam NOT → final AND</figcaption></figure>
+      </div>
+    </div>
+  </article>
+  <article class="wedo-example" hidden>
+    <div class="wedo-reference">
+      <span class="phase-tag">WE DO · 4 · FULL FIVE-STEP METHOD</span>
+      <h2>Delivery bay light</h2>
+      <p>A bay light comes on when <strong>movement is detected OR the door is open</strong>, but <strong>only when</strong> power is enabled and the maintenance lock is <strong>NOT</strong> active.</p>
+      <pre class="arithmetic">A = movement detected
+B = door open
+C = power enabled
+D = maintenance lock
+Q = bay light on</pre>
+      <p class="logic-method-cue">Use all five steps. Decide which gate must feed Q last.</p>
+      <span class="wedo-example-count">Example 4 of 4</span>
+    </div>
+    <div class="wedo-practice">
+      <div class="wedo-step">
+        <span class="wedo-step-label">YOUR TURN · WHITEBOARDS</span>
+        <h2>Words → gates</h2>
+        <ol class="logic-steps">
+          <li>Name the output Q.</li>
+          <li>Bracket the alternative triggers.</li>
+          <li>Join the power requirement.</li>
+          <li>Invert maintenance lock.</li>
+          <li>Write the full expression, then draw.</li>
+        </ol>
+        <p>Can you identify the <strong>final gate</strong> by working backwards?</p>
+      </div>
+      <div class="wedo-step" hidden>
+        <span class="wedo-step-label">CHECK · FULL METHOD</span>
+        <h2>Compare each chunk</h2>
+        <pre class="arithmetic">Options     (A ∨ B)
+Requirement C
+Exception   ¬D</pre>
+        <pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre>
+        <p>Draw OR(A,B), AND with C, NOT D, then a <strong>final AND</strong>. Only reveal once pupils have sketched the circuit.</p>
+      </div>
+    </div>
+  </article>
+</div></section>
 
 <section id="you-do" class="page phase-youdo" data-phase-time="20 minutes · OCR-style practice" data-window-size="2"><div class="youdo-deck">
 <aside class="logic-translation-guide" aria-label="Strategy for turning word problems into logic gates">
