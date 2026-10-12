@@ -43,6 +43,17 @@ Other phase rules:
 
 This is the standard for **new and edited lessons**. Review existing lessons with complex visual content individually; **do not bulk-convert all existing You Do sections to one question per page**.
 
+### Do Now precision rule (new and revised H446/J277 lessons)
+
+Every question must make the **task**, **representation/context** and **expected response** clear. Be concise for simple recall, but do not use vague verbs or leave a conversion direction unspecified.
+
+- **Conversion:** name the input format, output format, bit width and signed representation when relevant. Instead of “Decode 11110110”, write “Convert 11110110 from 8-bit two’s-complement binary to denary. Show the signed place values.”
+- **Floating point:** state mantissa/exponent widths and two’s-complement interpretation, and ask explicitly for the denary value or a normalised representation.
+- **Arrays/pointers:** state whether indexes are zero-based and whether the answer requires an *index*, *element value*, *traversal order* or *pointer destination*. If a trace has a sentinel (e.g. -1), name the stopping condition.
+- **Boolean logic/K-maps/circuits:** name the operation or output required (simplified product term, truth-table row, gate output, stored Q at a clock edge), rather than “What happens?” without context.
+- **Code:** say whether pupils should *predict the output*, *state the return value*, *identify syntax*, *trace a loop* or *write an expression*.
+- **Quality control:** the displayed Do Now prompt and separate answer-review prompt must match word for word; the answer must fulfil the exact request. Keep no more than four short mixed retrieval questions, including a suitably challenging fourth question. Do not add an image unless it materially clarifies the task.
+
 ## Visual teaching standard (H446 and J277)
 
 Diagrams are **selective teaching tools**, not decorative requirements. Use a visual only when it makes a mechanism, relationship, state change or abstract model clearer than well-presented text or code.
