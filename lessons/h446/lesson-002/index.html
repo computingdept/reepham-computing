@@ -30,7 +30,7 @@
   <article class="objectives-vocab-left">
     <h1>Signed integers &amp; binary arithmetic</h1>
     
-    <div class="objectives"><strong>By the end, you can…</strong><ul><li>encode and decode sign magnitude and two’s complement;</li><li>add binary integers and subtract using two’s complement;</li><li>identify signed overflow and justify the range of a fixed-width representation.</li></ul></div>
+    <div class="objectives"><strong>By the end, you can…</strong><ul><li>represent signed integers in sign-and-magnitude and two’s-complement binary, and convert both representations back to denary;</li><li>add binary integers and subtract using two’s complement;</li><li>identify signed overflow and justify the range of a fixed-width representation.</li></ul></div>
     <div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list" aria-label="Key vocabulary"><span class="vocab-tip" tabindex="0" data-definition="A signed representation with a sign bit followed by magnitude bits." aria-label="Sign magnitude: A signed representation with a sign bit followed by magnitude bits.">Sign magnitude</span><span class="vocab-tip" tabindex="0" data-definition="A signed binary representation whose most significant bit has a negative place value." aria-label="Two’s complement: A signed binary representation whose most significant bit has a negative place value.">Two’s complement</span><span class="vocab-tip" tabindex="0" data-definition="The size of a value without its sign." aria-label="Magnitude: The size of a value without its sign.">Magnitude</span><span class="vocab-tip" tabindex="0" data-definition="The leftmost bit in a binary representation." aria-label="Most significant bit: The leftmost bit in a binary representation.">Most significant bit</span><span class="vocab-tip" tabindex="0" data-definition="When an arithmetic result is outside the range of the signed representation." aria-label="Signed overflow: When an arithmetic result is outside the range of the signed representation.">Signed overflow</span><span class="vocab-tip" tabindex="0" data-definition="A value passed to the next column when a column total exceeds 1." aria-label="Carry: A value passed to the next column when a column total exceeds 1.">Carry</span><span class="vocab-tip" tabindex="0" data-definition="The smallest through to the largest representable values." aria-label="Range: The smallest through to the largest representable values.">Range</span><span class="vocab-tip" tabindex="0" data-definition="Changing a value to its additive inverse, such as +13 to −13." aria-label="Negation: Changing a value to its additive inverse, such as +13 to −13.">Negation</span></div></div>
   </article>
   <div class="objectives-vocab-right" aria-live="polite"><article class="objective-vocab-stage" data-support="Think: first bit says sign; remaining bits say size.">
@@ -184,7 +184,7 @@ add 1  → 11110011</pre>
         </div>
         <div class="ido-step" hidden>
           <span class="ido-step-label">STEP 4 · CHECK</span>
-          <h2>Decode the result</h2>
+          <h2>Convert the two’s-complement result to denary</h2>
           <pre class="arithmetic">−128 + 64 + 32 + 16 + 2 + 1 = −13</pre>
           <div class="key-result">Two’s complement −13 = <strong>11110011</strong></div>
           <p>Invert-and-add-one negates a value in a fixed width.</p>
@@ -196,7 +196,7 @@ add 1  → 11110011</pre>
 <section id="we-do" class="page phase-wedo" data-phase-time="12 minutes">
   <div class="wedo-focus-deck">
     <article class="wedo-example">
-      <div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>2. Decode a two’s-complement value</h2><span class="focus-code">11100110</span><p>Use the method from I Do to build the answer.</p><span class="wedo-example-count">Example 1 of 5</span></div>
+      <div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>2. Convert an 8-bit two’s-complement number to denary</h2><span class="focus-code">11100110</span><p>Interpret the sign bit and show signed place values to find the denary integer.</p><span class="wedo-example-count">Example 1 of 5</span></div>
       <div class="wedo-practice">
         <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the answer</h2><div class="practice-grid"><div class="practice-box"><strong>Method</strong><span>?</span></div><div class="practice-box"><strong>Working</strong><span>?</span></div><div class="practice-box"><strong>Final answer</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Build the answer</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Method</strong><span>Use signed place values</span></div><div class="practice-box"><strong>Working</strong><span>−128 + 64 + 32 + 4 + 2</span></div><div class="practice-box"><strong>Final answer</strong><span><strong>−26</strong></span></div></div><p class="fine">Check: invert <code>11100110</code> → <code>00011001</code>; add 1 → <code>00011010</code> = 26.</p></div>
       </div>
@@ -217,7 +217,7 @@ add 1  → 11110011</pre>
     </article>
 
     <article class="wedo-example" hidden>
-      <div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>5. Spot signed overflow</h2><span class="focus-code">01100100 (+100) + 00101000 (+40) ---------- 10001100 (−116 if decoded)</span><p>Use the method from I Do to build the answer.</p><span class="wedo-example-count">Example 4 of 5</span></div>
+      <div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>5. Spot signed overflow</h2><span class="focus-code">01100100 (+100) + 00101000 (+40) ---------- 10001100 (−116 if interpreted as 8-bit two’s complement)</span><p>Use the method from I Do to build the answer.</p><span class="wedo-example-count">Example 4 of 5</span></div>
       <div class="wedo-practice">
         <div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Build the answer</h2><div class="practice-grid"><div class="practice-box"><strong>Method</strong><span>?</span></div><div class="practice-box"><strong>Working</strong><span>?</span></div><div class="practice-box"><strong>Final answer</strong><span>?</span></div></div></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Build the answer</h2><div class="practice-grid answer-grid"><div class="practice-box"><strong>Method</strong><span>Add as 8-bit signed values</span></div><div class="practice-box"><strong>Working</strong><span><code>01100100 + 00101000 = 10001100</code></span></div><div class="practice-box"><strong>Final answer</strong><span><strong>Signed overflow</strong> · 140 is above +127</span></div></div><p class="fine">Two positive inputs produced a negative stored result.</p></div>
       </div>
