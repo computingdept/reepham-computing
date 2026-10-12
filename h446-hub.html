@@ -35,12 +35,15 @@
 @media(max-width:700px){.spec-group{padding:9px;margin:10px 0}.spec-group-title{font-size:12px}}
 
 /* Lesson finder: direct lesson links plus separate accessible info controls */
+/* Term cards must not crop lesson objective tooltips. */
+.course-hub .term{overflow:visible}
 .lesson-entry{position:relative;min-width:0}
+.lesson-entry:hover,.lesson-entry:focus-within{z-index:30}
 .lesson-entry>.lesson{display:flex;align-items:center;justify-content:center;width:100%;height:100%;box-sizing:border-box;padding-right:26px}
 .lesson-entry>.lesson.planned{cursor:default}
 .lesson-info{position:absolute;top:50%;right:7px;transform:translateY(-50%);border:1px solid #9eb3a9;background:white;color:#285646;border-radius:50%;width:21px;height:21px;padding:0;font:700 12px system-ui;cursor:pointer;z-index:2}
 .lesson-info:focus-visible{outline:2px solid #145d4b;outline-offset:2px}
-.lesson-popup{display:none;position:absolute;z-index:20;top:calc(100% + 6px);left:0;width:min(295px,80vw);background:#fff;border:1px solid #aabeb6;box-shadow:0 12px 26px rgba(20,55,43,.16);border-radius:8px;padding:12px;font:400 13px/1.4 system-ui;color:#143f32;text-align:left}
+.lesson-popup{display:none;position:absolute;z-index:20;top:calc(100% + 6px);left:0;box-sizing:border-box;width:min(295px,calc(100vw - 24px));max-height:min(420px,calc(100vh - 24px));overflow-y:auto;overflow-wrap:anywhere;background:#fff;border:1px solid #aabeb6;box-shadow:0 12px 26px rgba(20,55,43,.16);border-radius:8px;padding:12px;font:400 13px/1.4 system-ui;color:#143f32;text-align:left}
 .lesson-popup strong{display:block;margin-bottom:5px}
 .lesson-popup ul{padding-left:18px;margin:6px 0}
 .lesson-popup small{display:block;color:#60776e;margin-top:6px}
@@ -230,6 +233,30 @@ function fillLessonDetails(container,info){
   }
   const note=document.createElement('small');note.textContent=info.note;container.append(note);
 }
+/* Keep each hover/focus tooltip inside the visible viewport. */
+function positionLessonPopup(entry,popup){
+  if(!entry.matches(':hover')&&!entry.matches(':focus-within'))return;
+  popup.style.left='0px';
+  popup.style.top='calc(100% + 6px)';
+  const entryBox=entry.getBoundingClientRect();
+  const popupBox=popup.getBoundingClientRect();
+  if(!popupBox.width||!popupBox.height)return;
+  const margin=12;
+  const x=Math.max(margin,Math.min(entryBox.left,window.innerWidth-margin-popupBox.width));
+  popup.style.left=Math.round(x-entryBox.left)+'px';
+  const spaceBelow=window.innerHeight-entryBox.bottom;
+  const spaceAbove=entryBox.top;
+  if(spaceBelow<popupBox.height+margin&&spaceAbove>spaceBelow){
+    popup.style.top=-Math.round(popupBox.height+6)+'px';
+  }
+}
+function repositionVisibleLessonPopups(){
+  document.querySelectorAll('.lesson-entry:hover,.lesson-entry:focus-within').forEach(entry=>{
+    const popup=entry.querySelector('.lesson-popup');
+    if(popup)positionLessonPopup(entry,popup);
+  });
+}
+window.addEventListener('resize',repositionVisibleLessonPopups);
 function renderLessons(){
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
   for(const term of p.terms){
@@ -283,10 +310,14 @@ function renderLessons(){
       let opened=false;
       async function populate(target){
         const info=await getLessonInfo(x,href,specKey);
-        if(target.isConnected)fillLessonDetails(target,info);
+        if(target.isConnected){
+          fillLessonDetails(target,info);
+          if(target===popup)positionLessonPopup(entry,popup);
+        }
       }
+      entry.addEventListener('mouseenter',()=>positionLessonPopup(entry,popup));
       entry.addEventListener('mouseenter',()=>{populate(popup);},{once:true});
-      entry.addEventListener('focusin',()=>populate(popup));
+      entry.addEventListener('focusin',()=>{positionLessonPopup(entry,popup);populate(popup);});
       infoButton.addEventListener('click',(event)=>{
         event.stopPropagation();
         const open=detail.getAttribute('aria-hidden')!=='false'||!opened;
