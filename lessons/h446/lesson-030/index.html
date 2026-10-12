@@ -64,7 +64,22 @@ Sum, CarryOut</pre><p>A full adder handles the carry from the previous bit posit
 → CarryIn of bit 1
 → CarryIn of bit 2 ...</pre><p>Chaining full adders allows multi-bit binary addition.</p><span class="nl-stage-count">4 of 4</span></div></article></div></section>
 
-<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Derive 1 + 1</h2><p>Use binary arithmetic to infer half-adder outputs.</p><pre class="arithmetic">1 + 1 = 10</pre><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · SUM</span><h2>Rightmost result bit</h2><pre class="arithmetic">Sum = 0</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · CARRY</span><h2>Next column</h2><pre class="arithmetic">Carry = 1</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · GATES</span><h2>Match logic</h2><pre class="arithmetic">1 XOR 1 = 0
+<section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">WORKED EXAMPLE</span><h2>Derive 1 + 1</h2><p>Use binary arithmetic to infer half-adder outputs.</p><pre class="arithmetic">1 + 1 = 10</pre><svg class="lesson-concept-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 204" role="img" aria-label="Half adder with inputs A and B both one; XOR produces sum zero and AND produces carry one"><title>Half adder: sum uses XOR and carry uses AND</title>
+<rect x="14" y="60" width="143" height="95" rx="10" fill="#e8f3eb" stroke="#84b198" stroke-width="2"/>
+<text x="86" y="91" font-size="19" text-anchor="middle" fill="#1b533b" font-weight="900">A = 1</text>
+<text x="86" y="124" font-size="19" text-anchor="middle" fill="#1b533b" font-weight="900">B = 1</text>
+<path d="M 157 105 H 198 V 58 H 236 M 198 105 V 155 H 236" fill="none" stroke="#286c4e" stroke-width="3"/>
+<rect x="236" y="34" width="115" height="49" rx="9" fill="#dcefe3" stroke="#39875e" stroke-width="2"/>
+<text x="293" y="65" font-size="23" text-anchor="middle" fill="#184f36" font-weight="900">XOR</text>
+<rect x="236" y="131" width="115" height="49" rx="9" fill="#dcefe3" stroke="#39875e" stroke-width="2"/>
+<text x="293" y="162" font-size="23" text-anchor="middle" fill="#184f36" font-weight="900">AND</text>
+<path d="M 351 58 H 390 M 351 155 H 390" stroke="#286c4e" stroke-width="3" fill="none"/>
+<rect x="390" y="34" width="227" height="49" rx="8" fill="#fff0d1" stroke="#c69135" stroke-width="2"/>
+<text x="503" y="64" font-size="21" text-anchor="middle" fill="#754d0c" font-weight="800">SUM = 0</text>
+<rect x="390" y="131" width="227" height="49" rx="8" fill="#fff0d1" stroke="#c69135" stroke-width="2"/>
+<text x="503" y="162" font-size="21" text-anchor="middle" fill="#754d0c" font-weight="800">CARRY = 1</text>
+<text x="325" y="202" text-anchor="middle" fill="#245f42" font-size="16" font-weight="800">1 + 1 = 10₂ → sum bit 0, carry bit 1</text>
+</svg><span class="ido-example-count">Worked example</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1 · SUM</span><h2>Rightmost result bit</h2><pre class="arithmetic">Sum = 0</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2 · CARRY</span><h2>Next column</h2><pre class="arithmetic">Carry = 1</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3 · GATES</span><h2>Match logic</h2><pre class="arithmetic">1 XOR 1 = 0
 1 AND 1 = 1</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · FORMULAE</span><h2>Generalise</h2><pre class="arithmetic">S = A XOR B
 C = A AND B</pre></div></div></article></div></section>
 
