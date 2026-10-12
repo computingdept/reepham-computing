@@ -6,110 +6,7 @@
 <title>Lesson 005 · You Do Answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1132">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261001-mobile3">
-<style>
-body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
-.answer-toolbar{
-  height:56px;position:fixed;left:0;right:0;top:0;z-index:30;
-  padding:0 3vw;display:flex;align-items:center;gap:18px;
-  background:#fff;border-bottom:1px solid var(--line);
-}
-.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}
-.answer-toolbar .answer-title{font-weight:900;color:var(--green-dark)}
-.answer-toolbar .answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
-
-main.answer-stage-wrap{
-  height:100vh;margin:0;max-width:none;
-  padding:72px 3vw 76px;
-}
-.answer-stage{
-  height:100%;
-  display:flex;
-  gap:12px;
-  align-items:stretch;
-}
-.answer-stage[hidden]{display:none!important}
-.answer-card{
-  flex:1 1 0;
-  min-width:0;height:100%;
-  overflow:hidden;
-}
-.answer-card.current-answer{
-  flex:1.12 1 0;
-  border-top:7px solid var(--green);
-}
-.answer-card .phase-tag{font-size:11px;margin-bottom:9px}
-.answer-card h3{margin:4px 0 10px;font-size:clamp(20px,1.45vw,25px)}
-.answer-card .question-text{font-size:clamp(17px,1.18vw,20px);line-height:1.34}
-.answer-card .arithmetic{font-size:clamp(16px,1.06vw,19px);padding:10px 12px}
-.answer-card .source-note{font-size:11px;line-height:1.25;margin-top:auto;padding-top:8px}
-.answer-card .answer-heading{
-  margin:8px 0 10px;
-  color:var(--green);
-  font-size:13px;font-weight:950;letter-spacing:.11em;
-}
-.answer-card .answer-value{
-  margin:8px 0 12px;
-  color:var(--green-dark);
-  font-size:clamp(20px,1.55vw,25px);
-  font-weight:900;
-}
-.answer-card .mark-points{
-  margin:10px 0 0;
-  padding:11px 13px;
-  background:var(--green-soft);
-  border-radius:10px;
-}
-.answer-card .mark-points strong{color:var(--green-dark)}
-.answer-card .mark-points ul{margin:7px 0 0;padding-left:21px}
-.answer-card .mark-points li{font-size:clamp(15px,1vw,18px);line-height:1.3;margin:3px 0}
-.answer-card .classroom-marks{
-  display:inline-block;
-  margin:0 0 9px;
-  padding:6px 9px;border-radius:999px;
-  background:#f1f4f2;color:var(--green-dark);
-  font-size:12px;font-weight:900;
-}
-.answer-stage.two .answer-card{flex:1 1 0}
-.answer-stage.single{justify-content:center}
-.answer-stage.single .answer-card{flex:0 1 900px;max-width:900px}
-
-.answer-controls{
-  position:fixed;left:0;right:0;bottom:0;z-index:30;
-  height:60px;padding:8px 3vw;
-  display:flex;align-items:center;gap:10px;
-  background:#fff;border-top:1px solid var(--line);
-}
-.answer-controls button,.answer-controls a{
-  border:1px solid var(--line);border-radius:9px;padding:10px 16px;
-  background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer;
-}
-.answer-controls #next-answer{
-  margin-left:auto;background:var(--green);border-color:var(--green);color:#fff;
-}
-.answer-controls button:disabled{opacity:.35;cursor:default}
-
-@media(max-height:760px) and (min-width:901px){
-  .answer-toolbar{height:48px}
-  main.answer-stage-wrap{padding:60px 2.5vw 66px}
-  .answer-controls{height:54px;padding:6px 2.5vw}
-  .answer-card{padding:13px}
-  .answer-card h3{font-size:19px}
-  .answer-card .question-text{font-size:16px}
-  .answer-card .arithmetic{font-size:15px;padding:7px 9px}
-  .answer-card .mark-points li{font-size:14px}
-}
-@media(max-width:900px){
-  body.answer-page{height:auto;overflow:auto}
-  .answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}
-  .answer-toolbar .answer-counter{margin-left:0}
-  main.answer-stage-wrap{height:auto;padding:16px 14px 84px}
-  .answer-stage,.answer-stage.two,.answer-stage.single{
-    height:auto;display:grid;grid-template-columns:1fr;
-  }
-  .answer-stage[hidden]{display:none!important}
-  .answer-card,.answer-stage.single .answer-card{height:auto;max-width:none;overflow:visible}
-}
-</style>
+<link rel="stylesheet" href="../../../assets/h446-lesson/answer-layout.css?v=20261012-answers1">
 </head>
 
 <body class="answer-page">
@@ -119,24 +16,93 @@ main.answer-stage-wrap{
   <span class="answer-counter" id="answer-counter">Answer 1 of 5</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span><h2>Convert 0100 1110 to denary</h2><pre class="solution-code">Mantissa 0100 = 0.5
+<main class="answer-stage-wrap">
+<section class="answer-stage">
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 1">
+<span class="answer-panel-label">Original question · 1 of 5</span>
+<span class="phase-tag">QUESTION 1 · OCR JUNE 2023 Q3(d) · [3]</span>
+        <h2>Convert <code>0100 1110</code> to denary</h2>
+        <p class="question-text">The mantissa is <strong>four bits</strong> and the exponent is four bits. Both use two’s complement. Show your working.</p>
+        <p class="source-note">Paraphrased OCR June 2023 Q3(d); original values and marks retained. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 1">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>0.125</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">Mantissa 0100 = 0.5
 Exponent 1110 = -2
 
 0.5 × 2^-2 = 0.125
 
-Answer = 0.125</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span><h2>Convert 1010 1110 to denary</h2><pre class="solution-code">Mantissa 1010 = -0.75
+Answer = 0.125</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 2">
+<span class="answer-panel-label">Original question · 2 of 5</span>
+<span class="phase-tag">QUESTION 2 · OCR JUNE 2022 Q3(b) · [4]</span>
+        <h2>Convert <code>1010 1110</code> to denary</h2>
+        <p class="question-text">Use a <strong>four-bit mantissa</strong> and four-bit exponent. Show each field value, the scaling operation and the answer.</p>
+        <p class="source-note">Paraphrased OCR June 2022 Q3(b); original values and marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 2">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>−0.1875</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">Mantissa 1010 = -0.75
 Exponent 1110 = -2
 
 -0.75 × 2^-2 = -0.1875
 
-Answer = -0.1875</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span><h2>Which are normalised?</h2><pre class="solution-code">a) 010101 100 → normalised
+Answer = -0.1875</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 3">
+<span class="answer-panel-label">Original question · 3 of 5</span>
+<span class="phase-tag">QUESTION 3 · OCR JUNE 2022 Q3(c) · [4]</span>
+        <h2>Which representations are normalised?</h2>
+        <p class="question-text">Each representation uses a six-bit two’s-complement mantissa followed by a three-bit two’s-complement exponent. State which representations are normalised by checking the mantissa’s leading bits.</p>
+        <pre class="arithmetic">a) 010101 100
+b) 110101 111
+c) 011010 010
+d) 101010 110</pre>
+        <p class="source-note">Paraphrased OCR June 2022 Q3(c); original marks retained. <a href="https://www.ocr.org.uk/Images/676742-question-paper-computer-systems.pdf#page=18" target="_blank" rel="noopener">Source</a>.</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 3">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>a, c and d</strong> are normalised; <strong>b</strong> is not</div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">a) 010101 100 → normalised
 b) 110101 111 → not normalised
 c) 011010 010 → normalised
 d) 101010 110 → normalised
 
 Rule:
 positive normalised mantissa begins 01
-negative normalised mantissa begins 10</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span><h2>Convert both floating-point representations to denary</h2><pre class="solution-code">(a) 01110000 0010
+negative normalised mantissa begins 10</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 4">
+<span class="answer-panel-label">Original question · 4 of 5</span>
+<span class="phase-tag">QUESTION 4 · ORIGINAL EXAM-STYLE EXTENSION</span>
+        <h2>Convert both floating-point representations to denary</h2>
+        <p class="question-text">(a) <code>01110000 0010</code><br>(b) <code>10010000 1111</code></p>
+        <p class="question-text">Each representation uses an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Convert both to denary and show the mantissa value, exponent value and final denary result.</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 4">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>(a) 3.5 · (b) −0.4375</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">(a) 01110000 0010
 
 mantissa = 0.1110000₂ = 0.875
 exponent = 2
@@ -148,7 +114,26 @@ exponent = 2
 mantissa = -1 + 1/8 = -0.875
 exponent = -1
 
--0.875 × 2^-1 = -0.4375</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span><h2>Precision and range</h2><pre class="solution-code">More mantissa bits:
+-0.875 × 2^-1 = -0.4375</pre></div>
+</article>
+</div>
+</section>
+<section class="answer-stage" hidden>
+<div class="answer-split">
+<article class="answer-prompt" aria-label="Original question 5">
+<span class="answer-panel-label">Original question · 5 of 5</span>
+<span class="phase-tag">QUESTION 5 · OCR IDEA + CLASSROOM EXTENSION</span>
+        <h2>Precision and range</h2>
+        <p class="question-text">What improves if more bits are allocated to (a) the mantissa and (b) the exponent?</p>
+        <p class="question-text">Then explain the trade-off if the total number of bits is fixed.</p>
+        <div class="task"><strong>Starting point</strong><p>Think about what mantissa bits control and what exponent bits control.</p></div>
+        <p class="source-note">The first two prompts paraphrase OCR June 2023 Q3(e). The trade-off prompt is an original classroom extension. <a href="https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf#page=13" target="_blank" rel="noopener">Source</a>.</p>
+</article>
+<article class="answer-solution" aria-label="Worked answer 5">
+<span class="answer-panel-label">Completed answer</span>
+<div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value"><strong>Mantissa → precision · exponent → range</strong></div></div>
+<span class="answer-panel-label">Working and marking guidance</span>
+<div class="answer-working"><pre class="solution-code">More mantissa bits:
 → greater precision / more significant binary digits.
 
 More exponent bits:
@@ -156,7 +141,11 @@ More exponent bits:
 
 If the total number of bits is fixed:
 allocating more bits to the mantissa improves precision but leaves fewer bits for the exponent and reduces range;
-allocating more bits to the exponent increases range but leaves fewer bits for the mantissa and reduces precision.</pre></article></section></main>
+allocating more bits to the exponent increases range but leaves fewer bits for the mantissa and reduces precision.</pre></div>
+</article>
+</div>
+</section>
+</main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous answer</button>
