@@ -166,31 +166,31 @@ D = lockdown</pre>
 </div>
 <div class="ido-method">
   <div class="ido-step">
-    <span class="ido-step-label">STEP 1 OF 5 · NAME THE OUTPUT</span>
+    <span class="ido-step-label">STEP 1 OF 6 · NAME THE OUTPUT</span>
     <h2>What switches ON?</h2>
     <pre class="arithmetic">Q = door unlocks</pre>
     <p>Start with the result the question is asking us to control.</p>
   </div>
   <div class="ido-step" hidden>
-    <span class="ido-step-label">STEP 2 OF 5 · FIND THE OPTIONS</span>
+    <span class="ido-step-label">STEP 2 OF 6 · FIND THE OPTIONS</span>
     <h2>What are the alternatives?</h2>
     <pre class="arithmetic">A ∨ B</pre>
     <p>A <strong>card OR PIN</strong> works. OR means at least one; both can also be true.</p>
   </div>
   <div class="ido-step" hidden>
-    <span class="ido-step-label">STEP 3 OF 5 · ADD REQUIREMENTS</span>
+    <span class="ido-step-label">STEP 3 OF 6 · ADD REQUIREMENTS</span>
     <h2>What must also be true?</h2>
     <pre class="arithmetic">(A ∨ B) ∧ C</pre>
     <p>The building <strong>must be open</strong>, so join the options with AND.</p>
   </div>
   <div class="ido-step" hidden>
-    <span class="ido-step-label">STEP 4 OF 5 · INVERT EXCEPTIONS</span>
+    <span class="ido-step-label">STEP 4 OF 6 · INVERT EXCEPTIONS</span>
     <h2>What must be OFF?</h2>
     <pre class="arithmetic">¬D</pre>
     <p>Lockdown must <strong>not</strong> be active. NOT reverses D.</p>
   </div>
   <div class="ido-step" hidden>
-    <span class="ido-step-label">STEP 5 OF 5 · EXPRESS, THEN DRAW</span>
+    <span class="ido-step-label">STEP 5 OF 6 · EXPRESS, THEN DRAW</span>
     <h2>Join the chunks</h2>
     <pre class="arithmetic">Q = (A ∨ B) ∧ C ∧ ¬D</pre>
     <p><strong>Work backwards:</strong> the final AND checks all requirements. Draw OR, AND and NOT first, then connect them to the final AND.</p>
@@ -204,7 +204,15 @@ D = lockdown</pre>
 <text class="gate-mini" x="122" y="80">OR</text><text class="gate-mini" x="285" y="88">AND</text><text class="gate-mini" x="261" y="227">NOT</text><text class="gate-mini" x="459" y="142">AND</text>
 </svg><figcaption>Gate plan: OR(A, B) → AND with C; NOT D → final AND → Q</figcaption></figure>
   </div>
-</div></article></div></section>
+<div class="ido-step" hidden><span class="ido-step-label">STEP 6 OF 6 · TRUTH TABLE</span><h2>Use intermediate columns</h2><p>For Q = (A ∨ B) ∧ ¬C, three inputs give 2³ = 8 combinations. Write every input row, calculate A∨B, then ¬C, then combine those two columns with AND.</p><pre class="arithmetic">A B C | A∨B | ¬C | Q
+0 0 0 |  0  |  1 | 0
+0 0 1 |  0  |  0 | 0
+0 1 0 |  1  |  1 | 1
+0 1 1 |  1  |  0 | 0
+1 0 0 |  1  |  1 | 1
+1 0 1 |  1  |  0 | 0
+1 1 0 |  1  |  1 | 1
+1 1 1 |  1  |  0 | 0</pre><p>Example row 010: A∨B = 1 and ¬C = 1; therefore Q = 1. Always complete the intermediate columns before Q.</p></div></div></article></div></section>
 
 <section id="we-do" class="page phase-wedo" data-phase-time="12 minutes">
 <div class="wedo-focus-deck">
