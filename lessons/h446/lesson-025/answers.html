@@ -38,7 +38,7 @@ Q = (A ∨ B) ∧ C ∧ ¬D
 1. OR A and B.
 2. NOT D.
 3. AND (A∨B) with C.
-4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h2>Expression and truth table</h2><p>P = ¬(A ∨ B) XOR C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
+4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h2>Expression and truth table</h2><p>P = ¬(A ∨ B) ⊻ C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
 0 0 0 |  0  |    1    | 1
 0 0 1 |  0  |    1    | 0
 0 1 0 |  1  |    0    | 0
@@ -56,13 +56,13 @@ T L M | T∨L | ¬M | F
 1 0 0 |  1  |  1 | 1
 1 0 1 |  1  |  0 | 0
 1 1 0 |  1  |  1 | 1
-1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Q = (A XOR B) ∧ ¬C
+1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Q = (A ⊻ B) ∧ ¬C
 
 1. XOR A and B.
 2. NOT C.
 3. AND those outputs.
 
-A B C | A XOR B | ¬C | Q
+A B C | A ⊻ B | ¬C | Q
 0 0 0 |    0    |  1 | 0
 0 0 1 |    0    |  0 | 0
 0 1 0 |    1    |  1 | 1
