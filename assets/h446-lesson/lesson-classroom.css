@@ -1076,3 +1076,20 @@
 @media(max-width:900px){
   .lesson-concept-diagram{max-height:none;width:100%}
 }
+
+
+/* Phone reading: leave room for browser chrome and allow every panel to grow. */
+@media(max-width:700px){
+  html{scroll-behavior:auto;scroll-padding-top:76px}
+  main{padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
+  section.page{overflow:visible!important;max-height:none}
+  .page pre{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+  .page .phase-tag,.page [class$="-label"]{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+  .page .classroom-panel,.page .exam-card,
+  .page .nl-reference,.page .nl-explanation,
+  .page .ido-reference,.page .ido-method,
+  .page .wedo-reference,.page .wedo-practice,
+  .page .vocab-prompt,.page .vocab-answer{
+    height:auto;min-height:0;max-height:none;overflow:visible;
+  }
+}

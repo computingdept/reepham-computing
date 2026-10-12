@@ -735,7 +735,7 @@ function prepareYouDoSolutionsLink(){
 }
 
 function prepareMobileSwipeNavigation(){
-  if(!window.matchMedia('(max-width: 700px)').matches)return;
+  const phone=window.matchMedia('(max-width: 700px)');
 
   const navwrap=document.querySelector('.navwrap');
   const courseBack=navwrap?.querySelector('.course-back');
@@ -753,6 +753,7 @@ function prepareMobileSwipeNavigation(){
   let startX=0;
   let startY=0;
   let tracking=false;
+  let direction=null;
 
   const interactiveSelector='button,a,input,textarea,select,summary,[contenteditable="true"]';
 
@@ -789,35 +790,68 @@ function prepareMobileSwipeNavigation(){
     window.setTimeout(()=>hint.remove(),5000);
   }
 
+  // On phones the reference sits above the changing panel. Bring the newly
+  // revealed answer/step into view instead of returning to the unchanged title.
+  const changeSelector='.donow-stage,.objective-vocab-stage,[data-objective-vocab-definition],.nl-stage,.ido-example,.ido-step,.model-stage,.wedo-example,.wedo-step,[data-reveal-answer],.youdo-question,.youdo-stage,.vocab-stage,[data-vocab-answer],.vocab-card [data-answer],.exit-stage,details.answers';
+  function isVisible(element){
+    return !element.closest('[hidden]')&&(!element.closest('.page')||element.closest('.page').classList.contains('active'));
+  }
+  function navigate(action){
+    const oldPage=current;
+    const elements=[...document.querySelectorAll(changeSelector)];
+    const before=new Map(elements.map(element=>[element,isVisible(element)&&(element.tagName!=='DETAILS'||element.open)]));
+    action();
+    const revealed=elements.find(element=>isVisible(element)&&!before.get(element)&&(element.tagName!=='DETAILS'||element.open));
+    window.requestAnimationFrame(()=>{
+      if(oldPage!==current){
+        window.scrollTo({top:0,behavior:'instant'});
+      }else if(revealed){
+        const header=document.querySelector('.navwrap');
+        const inset=(header?.getBoundingClientRect().height||0)+12;
+        const top=window.scrollY+revealed.getBoundingClientRect().top-inset;
+        window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+      }
+    });
+  }
+
   document.addEventListener('touchstart',e=>{
-    if(e.touches.length!==1)return;
+    tracking=false;
+    direction=null;
+    if(!phone.matches||e.touches.length!==1)return;
     const target=e.target instanceof Element?e.target:null;
-    if(target?.closest(interactiveSelector)||startsInHorizontalScroller(target)){
-      tracking=false;
-      return;
-    }
+    if(target?.closest(interactiveSelector)||startsInHorizontalScroller(target))return;
     startX=e.touches[0].clientX;
     startY=e.touches[0].clientY;
+    // Let the browser own edge gestures such as back/forward.
+    if(startX<24||startX>window.innerWidth-24)return;
     tracking=true;
   },{passive:true});
 
-  document.addEventListener('touchend',e=>{
-    if(!tracking||e.changedTouches.length!==1)return;
-    tracking=false;
+  document.addEventListener('touchmove',e=>{
+    if(!tracking)return;
+    if(e.touches.length!==1){tracking=false;return;}
+    const dx=Math.abs(e.touches[0].clientX-startX);
+    const dy=Math.abs(e.touches[0].clientY-startY);
+    if(!direction&&Math.max(dx,dy)>=12){
+      if(dy>=dx){tracking=false;return;}
+      if(dx>dy*1.25)direction='horizontal';
+    }
+    // Prevent the browser from cancelling a recognised lesson swipe.
+    if(direction==='horizontal'&&e.cancelable)e.preventDefault();
+  },{passive:false});
 
+  document.addEventListener('touchend',e=>{
+    if(!tracking||!phone.matches||e.changedTouches.length!==1)return;
+    tracking=false;
     const dx=e.changedTouches[0].clientX-startX;
     const dy=e.changedTouches[0].clientY-startY;
-    const horizontal=Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.25;
-    if(!horizontal)return;
-
+    if(Math.abs(dx)<48||Math.abs(dx)<=Math.abs(dy)*1.25)return;
     hideHint();
-    if(dx<0)next();
-    else previousAction();
-    window.requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
+    navigate(dx<0?next:previousAction);
   },{passive:true});
 
-  document.addEventListener('touchcancel',()=>{tracking=false;},{passive:true});
-  showHint();
+  document.addEventListener('touchcancel',()=>{tracking=false;direction=null;},{passive:true});
+  if(phone.matches)showHint();
 }
 
 nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
