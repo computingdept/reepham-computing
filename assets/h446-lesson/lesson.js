@@ -339,14 +339,14 @@ function updateControl(){
         const maxStart=Math.max(0,questions.length-size);
         const start=Number(page.dataset.windowStart||0);
         if(page.dataset.youDoMode==='coding'){
-          label=start<maxStart?'Next challenges →':'Open solutions →';
+          label=start<maxStart?'Next challenges →':'Continue → Key Vocabulary';
         }else{
-          label=start<maxStart?'Next questions →':'Open answers →';
+          label=start<maxStart?'Next questions →':'Continue → Key Vocabulary';
         }
       }else{
         const stages=[...page.querySelectorAll('.youdo-stage')];
         const i=visibleIndex(stages);
-        label=i<stages.length-1?'Next independent questions →':'Open answers →';
+        label=i<stages.length-1?'Next independent questions →':'Continue → Key Vocabulary';
       }
     }
   }else if(current==='vocabulary'){
@@ -496,12 +496,12 @@ function next(){
       if(start<maxStart){
         setYouDoWindow(page,start+1);updateControl();return;
       }
-      location.href='answers.html';return;
+      showPage('vocabulary');return;
     }
     const stages=[...page.querySelectorAll('.youdo-stage')];
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
-    location.href='answers.html';return;
+    showPage('vocabulary');return;
   }
   if(current==='exit'){
     const stages=[...page.querySelectorAll('.exit-stage')];
@@ -696,6 +696,23 @@ function previousAction(){
 }
 
 
+
+// Keep the normal phase order: You Do → Key Vocabulary → Exit.
+// Solutions remain a separate, optional self-marking action after the exit check.
+function prepareYouDoSolutionsLink(){
+  const exitPage=document.getElementById('exit');
+  const card=exitPage?.querySelector('.exit-check-card');
+  if(!card||card.querySelector('.youdo-solutions-link'))return;
+  const anchor=document.createElement('a');
+  anchor.className='answer-cta youdo-solutions-link';
+  anchor.href='answers.html';
+  anchor.target='_blank';
+  anchor.rel='noopener';
+  anchor.textContent='Self-mark You Do solutions →';
+  anchor.setAttribute('aria-label','Open the You Do solutions in a separate tab');
+  card.append(anchor);
+}
+
 function prepareMobileSwipeNavigation(){
   if(!window.matchMedia('(max-width: 700px)').matches)return;
 
@@ -794,4 +811,5 @@ document.addEventListener('keydown',e=>{
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
 prepareMobileSwipeNavigation();
+prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
