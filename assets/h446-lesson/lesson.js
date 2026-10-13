@@ -26,6 +26,13 @@ function showYouDoAnswer(page,index){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
   page.dataset.answerIndex=String(index);
+  questions.forEach(q=>{
+    if(q.querySelector('.youdo-question-prompt'))return;
+    const prompt=document.createElement('div');
+    prompt.className='youdo-question-prompt';
+    [...q.children].filter(el=>!el.classList.contains('youdo-solution')).forEach(el=>prompt.appendChild(el));
+    q.insertBefore(prompt,q.firstChild);
+  });
   questions.forEach((q,i)=>{
     q.hidden=i!==index;
     const solution=q.querySelector('.youdo-solution');
