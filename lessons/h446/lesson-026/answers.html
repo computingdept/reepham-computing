@@ -6,21 +6,12 @@
 <title>Lesson 026 · Boolean logic, gates and truth tables answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261012-mobile-reveal">
-<style>
-body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
-.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
-.answer-toolbar a{font-weight:900;text-decoration:none;white-space:nowrap}.answer-title{font-weight:900;color:var(--green-dark)}.answer-counter{margin-left:auto;color:var(--muted);font-size:14px;font-weight:800}
-main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}
-.answer-stage{height:100%;display:flex;justify-content:center}.answer-stage[hidden]{display:none!important}
-.solution-card{width:min(1150px,100%);height:100%;overflow:auto;background:#fff;border:1px solid var(--line);border-top:7px solid var(--green);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}
-.solution-card h2{margin:4px 0 8px;font-size:clamp(24px,1.9vw,31px)}.solution-card p{font-size:clamp(16px,1.1vw,20px);line-height:1.3}
-.solution-code{margin:8px 0;padding:12px 14px;border-radius:10px;background:#f4f6f5;white-space:pre-wrap;font:700 clamp(13px,.95vw,17px)/1.24 Consolas,"Courier New",monospace}
-.test-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.test-strip span{padding:6px 9px;border-radius:999px;background:var(--green-soft);color:var(--green-dark);font-size:13px;font-weight:850}
-.answer-controls{position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;padding:8px 3vw;display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid var(--line)}
-.answer-controls button,.answer-controls a{border:1px solid var(--line);border-radius:9px;padding:10px 16px;background:#fff;color:var(--ink);font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
-#next-answer{margin-left:auto;background:var(--green);border-color:var(--green);color:#fff}.answer-controls button:disabled{opacity:.35;cursor:default}
-@media(max-height:760px) and (min-width:901px){.answer-toolbar{height:48px}main.answer-stage-wrap{padding:60px 2.5vw 66px}.answer-controls{height:54px;padding:6px 2.5vw}.solution-card{padding:12px 16px}.solution-card h2{font-size:22px}.solution-card p{font-size:15px}.solution-code{font-size:12px;padding:8px 10px}}
-@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}.answer-counter{margin-left:0}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:block}.solution-card{height:auto;overflow:visible}}
+<link rel="stylesheet" href="../../../assets/h446-lesson/answer-layout.css?v=20261013-split2"><style>
+.answer-logic-figure{margin:14px 0 8px;border:1px solid #d0dfd4;border-radius:10px;padding:8px;background:#f8fcf9}
+.answer-logic-figure svg{display:block;width:100%;height:auto;max-height:230px}
+.answer-logic-figure figcaption{font:700 14px/1.3 Arial,sans-serif;color:#315c47;text-align:center}
+.answer-working{min-width:0;overflow-wrap:anywhere}
+.answer-result-value{overflow-wrap:anywhere}
 </style>
 </head>
 <body class="answer-page">
@@ -30,7 +21,7 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h2>Burglar alarm circuit</h2><pre class="solution-code">A = door sensor; B = motion sensor
+<main class="answer-stage-wrap"><section class="answer-stage"><div class="answer-split"><article class="answer-prompt"><span class="answer-panel-label">Original question · 1 of 4</span><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h2>Burglar alarm circuit</h2><div class="question-text"><p>A burglar alarm has four inputs. Each input is <strong>1 when the condition is true</strong> and 0 otherwise:</p><ul><li><strong>A:</strong> door sensor detects movement</li><li><strong>B:</strong> motion sensor detects movement</li><li><strong>C:</strong> alarm is armed</li><li><strong>D:</strong> test mode is enabled</li></ul><p>The alarm sounds (<strong>Q = 1</strong>) only when <strong>at least one sensor detects movement</strong>, the alarm is <strong>armed</strong>, and test mode is <strong>off</strong>.</p><p><strong>Your tasks:</strong> (1) Write the Boolean expression for Q. (2) Draw the logic-gate circuit using AND, OR and NOT gates. (3) Label A, B, C, D and Q.</p></div></article><article class="answer-solution"><span class="answer-panel-label">Worked solution · 1 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Q = (A ∨ B) ∧ C ∧ ¬D</div></div><div class="answer-working"><pre class="solution-code">A = door sensor; B = motion sensor
 C = alarm armed; D = test mode
 
 Q = (A ∨ B) ∧ C ∧ ¬D
@@ -38,7 +29,27 @@ Q = (A ∨ B) ∧ C ∧ ¬D
 1. OR A and B.
 2. NOT D.
 3. AND (A∨B) with C.
-4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h2>Expression and truth table</h2><p>P = ¬(A ∨ B) ⊻ C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
+4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p>
+<figure class="answer-logic-figure">
+<svg viewBox="0 0 760 290" role="img" aria-label="Alarm logic-gate diagram. A and B enter OR, its output and armed C enter an AND gate; D passes through NOT and joins the final AND gate producing Q" xmlns="http://www.w3.org/2000/svg">
+<title>Q = (A OR B) AND C AND NOT D</title>
+<g stroke="#174c36" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M 55 57 H 132 M 55 115 H 132 M 224 88 H 279 M 55 182 H 279 M 368 134 H 457 M 55 248 H 150 M 224 248 H 457 M 545 183 H 675"/>
+<path d="M 140 38 Q 178 86 140 137 Q 191 133 227 87 Q 196 46 140 38 Z" fill="#e9f4ed"/>
+<path d="M 278 91 H 313 A 44 44 0 0 1 313 178 H 278 Z" fill="#e9f4ed"/>
+<path d="M 155 217 L 155 279 L 210 248 Z" fill="#e9f4ed"/>
+<circle cx="221" cy="248" r="9" fill="#fff"/>
+<path d="M 455 142 H 490 A 42 42 0 0 1 490 225 H 455 Z" fill="#e9f4ed"/>
+<path d="M 55 57 H 142 M 55 115 H 142 M 226 87 H 278 M 55 157 H 278 M 367 134 H 455 M 55 248 H 155 M 230 248 H 455 M 574 183 H 675"/>
+</g>
+<g fill="#173d31" font-family="Arial,sans-serif" font-size="22" font-weight="750">
+<text x="18" y="64">A</text><text x="18" y="122">B</text><text x="18" y="165">C</text><text x="18" y="255">D</text><text x="690" y="190">Q</text>
+<text x="163" y="95" font-size="18">OR</text><text x="295" y="143" font-size="18">AND</text><text x="467" y="192" font-size="18">AND</text><text x="164" y="205" font-size="15">NOT</text>
+</g>
+</svg>
+<figcaption>OR the sensors, combine with armed C, then AND with NOT D.</figcaption>
+</figure></div></article></div></section>
+<section class="answer-stage" hidden><div class="answer-split"><article class="answer-prompt"><span class="answer-panel-label">Original question · 2 of 4</span><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h2>Expression and truth table</h2><div class="question-text"><p>For P = ¬(A ∨ B) ⊻ C, complete all eight output values.</p></div></article><article class="answer-solution"><span class="answer-panel-label">Worked solution · 2 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">P: 1, 0, 0, 1, 0, 1, 0, 1</div></div><div class="answer-working"><p>P = ¬(A ∨ B) ⊻ C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
 0 0 0 |  0  |    1    | 1
 0 0 1 |  0  |    1    | 0
 0 1 0 |  1  |    0    | 0
@@ -46,7 +57,8 @@ Q = (A ∨ B) ∧ C ∧ ¬D
 1 0 0 |  1  |    0    | 0
 1 0 1 |  1  |    0    | 1
 1 1 0 |  1  |    0    | 0
-1 1 1 |  1  |    0    | 1</pre><p><strong>Check:</strong> For 000, NOT(0 OR 0)=1 and 1 XOR 0 = 1.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><p>T = temperature high; L = load high; M = maintenance mode on.</p><pre class="solution-code">F = (T ∨ L) ∧ ¬M
+1 1 1 |  1  |    0    | 1</pre><p><strong>Check:</strong> For 000, NOT(0 OR 0)=1 and 1 XOR 0 = 1.</p></div></article></div></section>
+<section class="answer-stage" hidden><div class="answer-split"><article class="answer-prompt"><span class="answer-panel-label">Original question · 3 of 4</span><span class="phase-tag">INDEPENDENT · DEFINE</span><h2>Create logic from words</h2><div class="question-text"><p>A cooling fan runs when temperature is high OR load is high, but only when maintenance mode is NOT enabled. Write the expression and truth table.</p></div></article><article class="answer-solution"><span class="answer-panel-label">Worked solution · 3 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">F = (T ∨ L) ∧ ¬M</div></div><div class="answer-working"><p>T = temperature high; L = load high; M = maintenance mode on.</p><pre class="solution-code">F = (T ∨ L) ∧ ¬M
 
 T L M | T∨L | ¬M | F
 0 0 0 |  0  |  1 | 0
@@ -56,7 +68,8 @@ T L M | T∨L | ¬M | F
 1 0 0 |  1  |  1 | 1
 1 0 1 |  1  |  0 | 0
 1 1 0 |  1  |  1 | 1
-1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><pre class="solution-code">Q = (A ⊻ B) ∧ ¬C
+1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></div></article></div></section>
+<section class="answer-stage" hidden><div class="answer-split"><article class="answer-prompt"><span class="answer-panel-label">Original question · 4 of 4</span><span class="phase-tag">INDEPENDENT · REPRESENT</span><h2>Expression to gate plan</h2><div class="question-text"><p>Convert Q = (A ⊻ B) ∧ ¬C into a gate-by-gate plan and complete its truth table.</p></div></article><article class="answer-solution"><span class="answer-panel-label">Worked solution · 4 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Q = (A ⊻ B) ∧ ¬C</div></div><div class="answer-working"><pre class="solution-code">Q = (A ⊻ B) ∧ ¬C
 
 1. XOR A and B.
 2. NOT C.
@@ -70,7 +83,7 @@ A B C | A ⊻ B | ¬C | Q
 1 0 0 |    1    |  1 | 1
 1 0 1 |    1    |  0 | 0
 1 1 0 |    0    |  1 | 0
-1 1 1 |    0    |  0 | 0</pre><p><strong>Check:</strong> Q=1 only when A and B differ and C=0.</p></article></section></main>
+1 1 1 |    0    |  0 | 0</pre><p><strong>Check:</strong> Q=1 only when A and B differ and C=0.</p></div></article></div></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
