@@ -721,17 +721,26 @@ function previousAction(){
 // Keep the normal phase order: You Do → Key Vocabulary → Exit.
 // Solutions remain a separate, optional self-marking action after the exit check.
 function prepareYouDoSolutionsLink(){
-  const exitPage=document.getElementById('exit');
-  const card=exitPage?.querySelector('.exit-check-card');
-  if(!card||card.querySelector('.youdo-solutions-link'))return;
-  const anchor=document.createElement('a');
-  anchor.className='answer-cta youdo-solutions-link';
-  anchor.href='answers.html';
-  anchor.target='_blank';
-  anchor.rel='noopener';
-  anchor.textContent='Self-mark You Do solutions →';
-  anchor.setAttribute('aria-label','Open the You Do solutions in a separate tab');
-  card.append(anchor);
+  const createLink=()=>{
+    const anchor=document.createElement('a');
+    anchor.className='answer-cta youdo-solutions-link';
+    anchor.href='answers.html';
+    anchor.target='_blank';
+    anchor.rel='noopener';
+    anchor.textContent='Self-mark You Do answers →';
+    anchor.setAttribute('aria-label','Open the You Do answers in a separate tab');
+    return anchor;
+  };
+  const youDo=document.getElementById('you-do');
+  const progress=youDo?.querySelector('.youdo-window-progress');
+  const target=progress||youDo?.querySelector('.youdo-deck')||youDo;
+  if(target&&!youDo.querySelector('.youdo-solutions-link')){
+    const link=createLink();
+    link.style.cssText='display:inline-block;margin:12px 0;padding:10px 16px;border:2px solid currentColor;border-radius:10px;font-weight:700;text-decoration:none;';
+    target.insertAdjacentElement('afterend',link);
+  }
+  const card=document.getElementById('exit')?.querySelector('.exit-check-card');
+  if(card&&!card.querySelector('.youdo-solutions-link'))card.append(createLink());
 }
 
 function prepareMobileSwipeNavigation(){
