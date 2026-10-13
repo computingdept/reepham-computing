@@ -19,7 +19,7 @@
 
   const answerMap = {
     "002":["01001110 = 78 denary = 4E hexadecimal.","38 = 00100110 binary = 26 hexadecimal.","D7 = (13 × 16) + 7 = 215."],
-    "003":["A pixel is the smallest individual element of a bitmap image.","240 colours need 8 bits because 2^7 = 128 but 2^8 = 256.","640 × 480 × 8 = 2,457,600 bits = 307,200 bytes."],
+    "003":["10110000₂ = 1011 0000₂ = B0₁₆.","A3₁₆ = (10 × 16) + 3 = 163₁₀.","98₁₀ = 6 × 16 + 2 = 62₁₆."],
     "004":["Sampling is measuring the amplitude of an analogue sound wave at regular intervals.","44 kHz means 44,000 samples are taken each second.","Increasing bit depth increases the number of possible amplitude values and increases file size."],
     "005":["Optical storage uses a laser to read or write data on a disc.","Solid-state is fast, portable and durable because it has no moving parts.","Solid-state is suitable for moving files because it is portable, fast and more resistant to physical damage than optical media."],
     "006":["The CPU processes instructions and data to run programs.","The ALU performs arithmetic operations and logical operations.","Cache stores frequently used data and instructions close to the CPU for fast access."],
@@ -281,6 +281,20 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     const idoHtml=idoSteps.map((s,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1}</span><h2>${s}</h2></div>`).join("");
     const wdHtml=wdSteps.map((s,i)=>`<div class="wedo-step"${i?' hidden':''}><span class="wedo-step-label">${i===0?'YOUR TURN':'CHECK'}</span><h2>${s}</h2></div>`).join("");
 
+    // 003: one meaningful, small illustration of the four-bit-to-one-hex-digit relationship.
+    const hexSvg = n==="003" ? `<figure style="margin:8px auto;max-width:500px">
+    <svg viewBox="0 0 520 154" width="100%" role="img" aria-label="Eight-bit binary 10100011 splits into 1010 and 0011, giving hexadecimal A3">
+    <rect x="4" y="4" width="512" height="146" rx="12" fill="#f5faf7" stroke="#b2cfbb" stroke-width="2"/>
+    <text x="28" y="30" font-family="Arial" fill="#235540" font-size="16" font-weight="800">8 BITS = 2 HEX DIGITS</text>
+    <rect x="24" y="45" width="214" height="49" rx="8" fill="#deefe4" stroke="#7caf90"/>
+    <rect x="282" y="45" width="214" height="49" rx="8" fill="#f8eacd" stroke="#c6a063"/>
+    <text x="131" y="77" text-anchor="middle" font-size="28" font-family="Consolas,monospace" font-weight="800" fill="#174c34">1010</text>
+    <text x="389" y="77" text-anchor="middle" font-size="28" font-family="Consolas,monospace" font-weight="800" fill="#174c34">0011</text>
+    <text x="131" y="116" text-anchor="middle" font-size="18" font-family="Arial" font-weight="800" fill="#174c34">10 = A</text>
+    <text x="389" y="116" text-anchor="middle" font-size="18" font-family="Arial" font-weight="800" fill="#174c34">3 = 3</text>
+    <text x="260" y="138" text-anchor="middle" font-size="17" font-family="Arial" font-weight="850" fill="#17543a">10100011₂ = A3₁₆</text>
+    </svg></figure>` : "";
+
     const qs=[...youDo,examQ];
     const codeCard=`<article class="exam-card youdo-question j277-code-first"><h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${esc(codeFirst.topic)}</p><div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks"><p class="j277-code-start">${n==="003"?"Start on your mini-whiteboard.":n==="004"?"Write on your mini-whiteboard first, then check in the OCR ERL editor.":"Start on your mini-whiteboard. Predict before checking in ERL."}</p><p><strong>1 · Predict:</strong> ${esc(codeFirst.predict)}</p><pre class="arithmetic">${esc(codeFirst.code)}</pre><p><strong>2 · Change:</strong> ${esc(codeFirst.change)}</p><p><strong>3 · Extend:</strong> ${esc(codeFirst.build)}</p>${n==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open the OCR ERL editor →</a></p>':""}</div><aside class="j277-code-reference"><strong>Today's topic</strong><p>${esc(title)}</p><span>Use what you have just learned. You can explain the steps before writing the answer.</span></aside></div></div></article>`;
     const qCards=codeCard+qs.map((q,i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
@@ -303,8 +317,8 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <main id="main">
 <section id="do-now" class="page phase-donow" data-phase-time="5 minutes"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${doQuestions}</div></div>${doReviews}</div></section>
 <section id="overview" class="page" data-phase-time="6 minutes" data-objectives-vocab="true"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><h1>${esc(title)}</h1><div class="objectives"><strong>By the end, you can…</strong><ul><li>${esc(subtitle)}</li><li>apply the key knowledge to OCR-style questions;</li><li>use precise J277 terminology in your answers.</li></ul></div><div class="vocab-intro"><strong>Key vocabulary for today</strong><div class="vocab-intro-list">${objIntro}</div></div></article><div class="objectives-vocab-right" aria-live="polite">${objStages}</div></div></section>
-<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">QUICK REFERENCE · ${esc(spec)}</span><h2>${esc(nlTitle)}</h2><pre class="arithmetic">${esc(refLines)}</pre><div class="nl-reference-note"><strong>Keep this idea:</strong> use the exact terminology when explaining your answer.</div></article><article class="nl-explanation">${nlStages}</article></div></section>
-<section id="i-do" class="page phase-ido" data-phase-time="7 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>${esc(title)}</h2><p>${idoQ}</p><span class="ido-example-count">Worked example</span></div><div class="ido-method">${idoHtml}</div></article></div></section>
+<section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">QUICK REFERENCE · ${esc(spec)}</span><h2>${esc(nlTitle)}</h2>${hexSvg}<pre class="arithmetic">${esc(refLines)}</pre><div class="nl-reference-note"><strong>Keep this idea:</strong> use the exact terminology when explaining your answer.</div></article><article class="nl-explanation">${nlStages}</article></div></section>
+<section id="i-do" class="page phase-ido" data-phase-time="7 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>${esc(title)}</h2><p>${idoQ}</p>${hexSvg}<span class="ido-example-count">Worked example</span></div><div class="ido-method">${idoHtml}</div></article></div></section>
 <section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>${esc(title)}</h2><p>${wdQ}</p><div class="nl-reference-note"><strong>Turn &amp; Talk:</strong> ${turnTalk}</div><span class="wedo-example-count">Guided example</span></div><div class="wedo-practice">${wdHtml}</div></article></div></section>
 <section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="2" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${qCards}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>
 <section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">${vocabStages}</div></section>
