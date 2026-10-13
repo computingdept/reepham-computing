@@ -1093,3 +1093,12 @@
     height:auto;min-height:0;max-height:none;overflow:visible;
   }
 }
+
+/* H446 You Do answer review: applies to all lessons sharing this stylesheet. */
+.youdo-solution[hidden]{display:none!important}
+.youdo-solution{margin-top:12px;padding:12px 14px;border:2px solid #15803d;border-radius:10px;background:#f0fdf4;color:#123722;max-height:100%;overflow-y:auto;min-height:0}
+.youdo-solution>strong{display:block;margin-bottom:8px;font-size:clamp(15px,1.3vw,19px)}
+.youdo-solution p{font-size:clamp(15px,1.2vw,19px);line-height:1.4;margin:8px 0}
+.youdo-solution .arithmetic{font-size:clamp(13px,1vw,17px);line-height:1.35;overflow-x:auto;white-space:pre;padding:10px;background:#fff;border-radius:7px}
+.youdo-question:has(.youdo-solution:not([hidden])){overflow-y:auto;min-height:0;height:100%}
+@media(max-width:900px){.youdo-solution{overflow:visible;max-height:none}.youdo-question:has(.youdo-solution:not([hidden])){height:auto;overflow:visible}}
