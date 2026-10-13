@@ -34,13 +34,17 @@ Q = (A ∨ B) ∧ C ∧ ¬D
 <svg viewBox="0 0 760 290" role="img" aria-label="Alarm logic-gate diagram. A and B enter OR, its output and armed C enter an AND gate; D passes through NOT and joins the final AND gate producing Q" xmlns="http://www.w3.org/2000/svg">
 <title>Q = (A OR B) AND C AND NOT D</title>
 <g stroke="#174c36" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path d="M 55 57 H 132 M 55 115 H 132 M 224 88 H 279 M 55 182 H 279 M 368 134 H 457 M 55 248 H 150 M 224 248 H 457 M 545 183 H 675"/>
-<path d="M 140 38 Q 178 86 140 137 Q 191 133 227 87 Q 196 46 140 38 Z" fill="#e9f4ed"/>
-<path d="M 278 91 H 313 A 44 44 0 0 1 313 178 H 278 Z" fill="#e9f4ed"/>
-<path d="M 155 217 L 155 279 L 210 248 Z" fill="#e9f4ed"/>
+<!-- Wires enter the actual gate shapes, with three successive operations. -->
+<path d="M55 57 H150 M55 115 H150 M227 87 H253 V112 H278 M55 157 H278 M357 134 H416 V163 H455 M55 248 H155 M230 248 H425 V205 H455 M545 183 H675"/>
+<!-- OR: A or B -->
+<path d="M140 38 Q178 86 140 137 Q191 133 227 87 Q196 46 140 38 Z" fill="#e9f4ed"/>
+<!-- AND: sensor OR result with armed C -->
+<path d="M278 91 H313 A44 44 0 0 1 313 178 H278 Z" fill="#e9f4ed"/>
+<!-- NOT: test mode D, including output bubble -->
+<path d="M155 217 L155 279 L210 248 Z" fill="#e9f4ed"/>
 <circle cx="221" cy="248" r="9" fill="#fff"/>
-<path d="M 455 142 H 490 A 42 42 0 0 1 490 225 H 455 Z" fill="#e9f4ed"/>
-<path d="M 55 57 H 142 M 55 115 H 142 M 226 87 H 278 M 55 157 H 278 M 367 134 H 455 M 55 248 H 155 M 230 248 H 455 M 574 183 H 675"/>
+<!-- Final AND: sensor-and-armed result and NOT D -->
+<path d="M455 142 H490 A42 42 0 0 1 490 225 H455 Z" fill="#e9f4ed"/>
 </g>
 <g fill="#173d31" font-family="Arial,sans-serif" font-size="22" font-weight="750">
 <text x="18" y="64">A</text><text x="18" y="122">B</text><text x="18" y="165">C</text><text x="18" y="255">D</text><text x="690" y="190">Q</text>
