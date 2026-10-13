@@ -94,13 +94,20 @@ function setYouDoWindow(page,start){
   const maxStart=Math.max(0,questions.length-size);
   const safe=Math.max(0,Math.min(start,maxStart));
   page.dataset.windowStart=String(safe);
-  questions.forEach((q,i)=>q.hidden=!(i>=safe&&i<safe+size));
+  // Opt-in: begin with one full-width coding challenge, then return to
+  // the normal three-question window for exam practice. Other lessons unchanged.
+  const codingFirst=page.dataset.codingFirst==='true';
+  questions.forEach((q,i)=>q.hidden=codingFirst&&safe===0 ? i!==0 : !(i>=safe&&i<safe+size));
   const progress=page.querySelector('.youdo-window-progress');
   if(progress){
-    const first=safe+1;
-    const last=Math.min(safe+size,questions.length);
-    const noun=page.dataset.youDoMode==='coding'?'Challenges':'Questions';
-    progress.textContent=noun+' '+first+'–'+last+' of '+questions.length;
+    if(codingFirst&&safe===0){
+      progress.textContent='CODING FIRST · 10 MINUTES';
+    }else{
+      const first=safe+1;
+      const last=Math.min(safe+size,questions.length);
+      const noun=page.dataset.youDoMode==='coding'?'Challenges':'Questions';
+      progress.textContent=noun+' '+first+'–'+last+' of '+questions.length;
+    }
   }
 }
 
@@ -409,7 +416,9 @@ function updateControl(){
         const size=Math.min(requestedSize,questions.length);
         const maxStart=Math.max(0,questions.length-size);
         const start=Number(page.dataset.windowStart||0);
-        if(page.dataset.youDoMode==='coding'){
+        if(page.dataset.codingFirst==='true'&&start===0){
+          label='Continue → Exam questions';
+        }else if(page.dataset.youDoMode==='coding'){
           label=start<maxStart?'Next challenges →':'Continue → Key Vocabulary';
         }else{
           label=start<maxStart?'Next questions →':'Continue → Key Vocabulary';
