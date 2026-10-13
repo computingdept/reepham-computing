@@ -37,21 +37,54 @@ function showYouDoAnswer(page,index){
     q.hidden=i!==index;
     const solution=q.querySelector('.youdo-solution');
     if(solution)solution.hidden=i!==index;
+    if(i===index){
+      const prompt=q.querySelector('.youdo-question-prompt');
+      if(prompt)prompt.scrollTop=0;
+      if(solution)solution.scrollTop=0;
+    }
   });
   const progress=page.querySelector('.youdo-window-progress');
   if(progress)progress.textContent='ANSWER '+(index+1)+' OF '+questions.length;
 }
 function prepareYouDoAnswers(page){
   const questions=[...page.querySelectorAll('.youdo-question')];
-  if(!questions.length||questions.some(q=>q.querySelector('.youdo-solution')))return;
-  questions.forEach((q,i)=>{
-    const solution=document.createElement('div');
-    solution.className='youdo-solution';
-    solution.hidden=true;
-    const check=q.querySelector('.success-check');
-    solution.innerHTML='<strong>ANSWER '+(i+1)+' OF '+questions.length+'</strong><p>'+ (check?.textContent?.trim()||'Review your approach with the teacher and compare with the modelled method.')+'</p>';
-    q.appendChild(solution);
+  if(!questions.length)return;
+  const missing=questions.map((q,i)=>({q,i})).filter(({q})=>!q.querySelector('.youdo-solution'));
+  if(!missing.length||page.dataset.modelAnswersLoading==='true')return;
+
+  // Never label a success-check hint as a complete model answer.
+  // Reuse the authored worked solutions from the lesson's answers.html.
+  missing.forEach(({q,i})=>{
+    const panel=document.createElement('div');
+    panel.className='youdo-solution';
+    panel.hidden=true;
+    panel.innerHTML='<strong>WORKED ANSWER '+(i+1)+' OF '+questions.length+'</strong><p>Loading the model answer…</p>';
+    q.appendChild(panel);
   });
+
+  page.dataset.modelAnswersLoading='true';
+  fetch('answers.html',{cache:'no-cache'}).then(response=>{
+    if(!response.ok)throw Error('Model answers unavailable');
+    return response.text();
+  }).then(html=>{
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const stages=[...doc.querySelectorAll('.answer-stage')];
+    if(stages.length!==questions.length)throw Error('Answer count differs from question count');
+    missing.forEach(({q,i})=>{
+      const source=stages[i].querySelector('.answer-solution,.solution-card');
+      if(!source)throw Error('Worked answer '+(i+1)+' is missing');
+      const panel=q.querySelector('.youdo-solution');
+      if(!panel)return;
+      panel.innerHTML='<strong>WORKED ANSWER '+(i+1)+' OF '+questions.length+'</strong>'+source.innerHTML;
+    });
+  }).catch(()=>{
+    // A genuine missing answer must be reported, not invented from an answer hint.
+    missing.forEach(({q,i})=>{
+      const panel=q.querySelector('.youdo-solution');
+      if(!panel)return;
+      panel.innerHTML='<strong>WORKED ANSWER '+(i+1)+' OF '+questions.length+'</strong><p>The worked answer could not be loaded on this screen.</p><p><a href="answers.html" target="_blank" rel="noopener">Open the full answer booklet →</a></p>';
+    });
+  }).finally(()=>{page.dataset.modelAnswersLoading='false';});
 }
 function setYouDoWindow(page,start){
   const questions=[...page.querySelectorAll('.youdo-question')];
@@ -785,14 +818,6 @@ function prepareYouDoSolutionsLink(){
     anchor.setAttribute('aria-label','Open the You Do answers in a separate tab');
     return anchor;
   };
-  const youDo=document.getElementById('you-do');
-  const progress=youDo?.querySelector('.youdo-window-progress');
-  const target=progress||youDo?.querySelector('.youdo-deck')||youDo;
-  if(target&&!youDo.querySelector('.youdo-solutions-link')){
-    const link=createLink();
-    link.style.cssText='display:inline-block;margin:12px 0;padding:10px 16px;border:2px solid currentColor;border-radius:10px;font-weight:700;text-decoration:none;';
-    target.insertAdjacentElement('afterend',link);
-  }
   const card=document.getElementById('exit')?.querySelector('.exit-check-card');
   if(card&&!card.querySelector('.youdo-solutions-link'))card.append(createLink());
 }
