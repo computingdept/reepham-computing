@@ -101,7 +101,7 @@ function setYouDoWindow(page,start){
   const progress=page.querySelector('.youdo-window-progress');
   if(progress){
     if(codingFirst&&safe===0){
-      progress.textContent='CODING FIRST · 10 MINUTES';
+      progress.textContent='CODE FIRST · THEN EXAM PRACTICE';
     }else{
       const first=safe+1;
       const last=Math.min(safe+size,questions.length);
