@@ -22,6 +22,30 @@ function visibleIndex(items){
 function showOnly(items,index){
   items.forEach((item,i)=>item.hidden=i!==index);
 }
+function showYouDoAnswer(page,index){
+  const questions=[...page.querySelectorAll('.youdo-question')];
+  if(!questions.length)return;
+  page.dataset.answerIndex=String(index);
+  questions.forEach((q,i)=>{
+    q.hidden=i!==index;
+    const solution=q.querySelector('.youdo-solution');
+    if(solution)solution.hidden=i!==index;
+  });
+  const progress=page.querySelector('.youdo-window-progress');
+  if(progress)progress.textContent='ANSWER '+(index+1)+' OF '+questions.length;
+}
+function prepareYouDoAnswers(page){
+  const questions=[...page.querySelectorAll('.youdo-question')];
+  if(!questions.length||questions.some(q=>q.querySelector('.youdo-solution')))return;
+  questions.forEach((q,i)=>{
+    const solution=document.createElement('div');
+    solution.className='youdo-solution';
+    solution.hidden=true;
+    const check=q.querySelector('.success-check');
+    solution.innerHTML='<strong>ANSWER '+(i+1)+' OF '+questions.length+'</strong><p>'+ (check?.textContent?.trim()||'Review your approach with the teacher and compare with the modelled method.')+'</p>';
+    q.appendChild(solution);
+  });
+}
 function setYouDoWindow(page,start){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -186,6 +210,9 @@ function resetPhaseState(id){
     }
   }
   if(id==='you-do'){
+    page.dataset.answerMode='false';
+    page.dataset.answerIndex='0';
+    prepareYouDoAnswers(page);
     page.dataset.workMode=page.dataset.assessmentMode==='true'?'independent':'discuss';
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
@@ -327,7 +354,11 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(page.dataset.assessmentMode==='true'){
+    if(page.dataset.answerMode==='true'){
+      const count=page.querySelectorAll('.youdo-question').length;
+      const index=Number(page.dataset.answerIndex||0);
+      label=index<count-1?'Next answer →':'Continue → Key Vocabulary';
+    }else if(page.dataset.assessmentMode==='true'){
       label='Test in progress';
     }else if(page.dataset.workMode!=='independent'){
       label='Begin silent work →';
@@ -476,6 +507,12 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.answerMode==='true'){
+      const count=page.querySelectorAll('.youdo-question').length;
+      const index=Number(page.dataset.answerIndex||0);
+      if(index<count-1){showYouDoAnswer(page,index+1);updateControl();return;}
+      showPage('vocabulary');return;
+    }
     if(page.dataset.assessmentMode==='true'){
       updateSignals('you-do');
       updateControl();
@@ -496,7 +533,8 @@ function next(){
       if(start<maxStart){
         setYouDoWindow(page,start+1);updateControl();return;
       }
-      showPage('vocabulary');return;
+      page.dataset.answerMode='true';
+      showYouDoAnswer(page,0);updateControl();return;
     }
     const stages=[...page.querySelectorAll('.youdo-stage')];
     const i=visibleIndex(stages);
@@ -618,6 +656,15 @@ function previousAction(){
       updateSignals('you-do');
       updateControl();
       return;
+    }
+    if(page.dataset.answerMode==='true'){
+      const index=Number(page.dataset.answerIndex||0);
+      if(index>0){showYouDoAnswer(page,index-1);updateControl();return;}
+      page.dataset.answerMode='false';
+      const questions=[...page.querySelectorAll('.youdo-question')];
+      setYouDoWindow(page,Math.max(0,questions.length-Math.max(1,Number(page.dataset.windowSize||3))));
+      questions.forEach(q=>{const a=q.querySelector('.youdo-solution');if(a)a.hidden=true;});
+      updateControl();return;
     }
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
