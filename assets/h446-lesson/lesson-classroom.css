@@ -1102,3 +1102,33 @@
 .youdo-solution .arithmetic{font-size:clamp(13px,1vw,17px);line-height:1.35;overflow-x:auto;white-space:pre;padding:10px;background:#fff;border-radius:7px}
 .youdo-question:has(.youdo-solution:not([hidden])){overflow-y:auto;min-height:0;height:100%}
 @media(max-width:900px){.youdo-solution{overflow:visible;max-height:none}.youdo-question:has(.youdo-solution:not([hidden])){height:auto;overflow:visible}}
+
+/* Side-by-side You Do review: question fixed left, model answer right. */
+.youdo-question-prompt{display:contents}
+#you-do[data-answer-mode="true"] .youdo-rolling{display:block;height:100%}
+#you-do[data-answer-mode="true"] .youdo-question.exam-card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:16px;
+  align-items:stretch;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+#you-do[data-answer-mode="true"] .youdo-question-prompt{
+  display:flex;flex-direction:column;min-width:0;min-height:0;
+  overflow-y:auto;padding:16px;border-radius:10px;background:#f8fafc;
+}
+#you-do[data-answer-mode="true"] .youdo-solution{
+  margin:0;min-width:0;min-height:0;overflow:auto;padding:16px;
+}
+#you-do[data-answer-mode="true"] .success-check{display:none!important}
+@media(max-width:900px){
+  #you-do[data-answer-mode="true"] .youdo-question.exam-card{
+    display:flex!important;flex-direction:column;overflow-y:auto;height:100%;
+  }
+  #you-do[data-answer-mode="true"] .youdo-question-prompt,
+  #you-do[data-answer-mode="true"] .youdo-solution{
+    flex:0 0 auto;overflow:visible;
+  }
+}
