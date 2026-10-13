@@ -5,6 +5,18 @@
   const n = m ? m[1] : "002";
   const sourceUrl = "../lesson-" + n + ".html";
 
+  // Autumn 1 rebuild: use the audited, lesson-specific SVG and worked-answer
+  // renderer for the real 004–018 sequence. 001–003 keep their existing pages.
+  if (Number(n) >= 4 && Number(n) <= 18) {
+    const loader = document.createElement("script");
+    loader.src = "../autumn1-rebuilt.js?v=20261013-dualcoding1";
+    loader.onload = () => window.J277Autumn1.render(n,mode);
+    loader.onerror = () => { document.body.textContent = "Year 10 lesson resources could not be loaded."; };
+    document.head.appendChild(loader);
+    return;
+  }
+
+
   const answerMap = {
     "002":["01001110 = 78 denary = 4E hexadecimal.","38 = 00100110 binary = 26 hexadecimal.","D7 = (13 × 16) + 7 = 215."],
     "003":["A pixel is the smallest individual element of a bitmap image.","240 colours need 8 bits because 2^7 = 128 but 2^8 = 256.","640 × 480 × 8 = 2,457,600 bits = 307,200 bytes."],
