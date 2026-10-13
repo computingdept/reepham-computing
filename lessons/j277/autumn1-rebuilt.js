@@ -30,7 +30,17 @@
    return svgScene("Sound sampling: measured amplitude at equally spaced points along an analogue waveform",note(24,29,"Analogue sound wave",19)+`<path d="${points}" stroke="#287d6d" stroke-width="3.5" fill="none"/>`+[0,1,2,3,4,5,6,7,8,9].map(i=>{let j=i*15,x=20+j*3.35,y=120-55*Math.sin(j*.15)-8*Math.sin(j*.44);return `<line x1="${x}" x2="${x}" y1="42" y2="195" stroke="#cf9650" stroke-dasharray="4 5" stroke-width="1.7"/><circle cx="${x}" cy="${y}" r="5.5" fill="#c57422" stroke="white" stroke-width="2"/>`;}).join("")+note(215,219,"Samples taken at regular intervals",16));
   }
   if(kind==="compression"){
-   return svgScene("Compression reduces file size: original 10 blocks, compressed six blocks",note(30,35,"Original file",18)+Array.from({length:10},(_,i)=>pill(27+i*50,49,45,45,"1","#e3f1e7",18)).join("")+note(30,137,"Compressed file",18)+Array.from({length:6},(_,i)=>pill(27+i*50,148,45,45,"1","#f9e9ce",18)).join("")+note(355,175,"smaller",19));
+   return svgScene("Lossless compression can restore an original text file exactly, whereas lossy compression reduces size by permanently discarding some image detail.",
+    pill(22,23,155,49,"TEXT FILE","#e3f1e9",20)+
+    pill(202,23,155,49,"LOSSLESS","#e3f1e9",20)+
+    pill(382,23,155,49,"RESTORED","#e3f1e9",20)+
+    line(177,47,201,47)+line(357,47,381,47)+
+    note(37,94,"Original text",15)+note(219,94,"Smaller file",15)+note(386,94,"Exact copy",15)+
+    pill(22,123,155,49,"PHOTO","#faecce",20)+
+    pill(202,123,155,49,"LOSSY","#faecce",20)+
+    pill(382,123,155,49,"RESULT","#faecce",20)+
+    line(177,147,201,147)+line(357,147,381,147)+
+    note(31,195,"Original detail",15)+note(209,195,"Smaller file",15)+note(383,195,"Some detail lost",15));
   }
   if(kind==="memory"){
    return svgScene("The CPU accesses cache and RAM for working data. ROM holds non-volatile firmware; SSD stores saved files long-term.",
@@ -53,7 +63,12 @@
    return svgScene("Data unit ladder: bit to nibble to byte to KB to MB to GB",["1 bit","4 bits = nibble","8 bits = byte","1,000 bytes = KB","1,000 KB = MB","1,000 MB = GB"].map((t,i)=>pill(30+(i%3)*178,44+Math.floor(i/3)*86,161,56,t,i<3?"#e4f2e8":"#f6edda",i>=3?15:18)).join(""));
   }
   if(kind==="cpu"){
-   return svgScene("CPU block diagram containing Control Unit, Arithmetic Logic Unit and cache",pill(90,28,380,168,"CPU","#e1f0e6",27)+pill(121,93,153,73,"CONTROL UNIT","#fff",17)+pill(294,93,145,73,"ALU","#fff",23)+note(174,196,"Cache: fast data/instructions",17));
+   return svgScene("Inside the CPU, the control unit coordinates operations, the ALU performs calculations, and the cache provides fast access to frequently used data.",
+    `<rect x="39" y="25" width="482" height="187" rx="18" fill="#e5f2e8" stroke="#669e79" stroke-width="3"/>`+
+    note(64,57,"CENTRAL PROCESSING UNIT",20)+
+    pill(65,79,201,69,"CONTROL UNIT","#ffffff",20)+
+    pill(290,79,204,69,"ALU","#ffffff",24)+
+    pill(165,164,230,35,"FAST CACHE","#f7e9c5",17));
   }
   if(kind==="fde"){
    return svgScene("Fetch decode execute cycle with three arrows",pill(27,75,151,82,"FETCH","#e5f3e7",21)+pill(207,75,151,82,"DECODE","#e1eff9",21)+pill(386,75,150,82,"EXECUTE","#fbebcd",20)+`<path d="M178 116 H204 M198 109 L205 116 L198 123 M358 116 H383 M377 109 L384 116 L377 123 M462 166 Q291 220 102 165" fill="none" stroke="#337959" stroke-width="3.5"/>`+note(224,216,"repeat",17));
