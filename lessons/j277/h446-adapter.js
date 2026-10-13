@@ -25,6 +25,155 @@
     "018":["Linear search stops when a match is found or the end of the list is reached.","Insertion sort uses sorted and unsorted sections; bubble sort compares adjacent pairs and swaps if wrong.","Validation uses comparisons joined with AND; test it with normal, boundary and erroneous data."]
   };
 
+  // First You Do task: a small, topic-specific OCR ERL coding activity.
+  // The existing exam questions remain after this activity.
+  const codeFirstTasks = {
+  "003": {
+    "topic": "Hexadecimal values",
+    "medium": "Mini-whiteboards",
+    "code": "value = 10 + 5\nprint(value)",
+    "predict": "What denary value would be displayed, and what is it in hexadecimal?",
+    "change": "Change the arithmetic to display 12.",
+    "build": "Write the hexadecimal digit for 12.",
+    "answer": "15 is F in hexadecimal. Change to value = 10 + 2; print(value) gives 12, which is C in hexadecimal."
+  },
+  "004": {
+    "topic": "Binary shifts in OCR ERL",
+    "medium": "OCR ERL editor",
+    "code": "value = 8\nprint(value * 2)",
+    "predict": "Predict the output before running the program.",
+    "change": "Change value from 8 to 6; run it again.",
+    "build": "Change the calculation to divide by 2, then explain how this relates to a right shift.",
+    "answer": "First program displays 16. Changing value to 6 displays 12. Changing * 2 to / 2 on 8 displays 4. This models the numerical effect of a one-place logical shift."
+  },
+  "005": {
+    "topic": "Characters and output",
+    "medium": "OCR ERL editor",
+    "code": "letter = \"A\"\nprint(letter)",
+    "predict": "What would the program display?",
+    "change": "Change the letter to B and predict the result.",
+    "build": "Change letter to a word and display it.",
+    "answer": "The original displays A; changing the string to \"B\" displays B. Strings in quotation marks contain characters."
+  },
+  "006": {
+    "topic": "Counting image pixels",
+    "medium": "OCR ERL editor",
+    "code": "width = 4\nheight = 3\nprint(width * height)",
+    "predict": "How many pixels would be displayed?",
+    "change": "Change the width to 6 and predict the result.",
+    "build": "Add a colour depth of 8 and print the total number of bits.",
+    "answer": "4 × 3 = 12 pixels. A width of 6 gives 18 pixels. With 8 bits per pixel, print(width * height * 8) gives 144 bits."
+  },
+  "007": {
+    "topic": "Calculating sound samples",
+    "medium": "OCR ERL editor",
+    "code": "rate = 4\nseconds = 3\nprint(rate * seconds)",
+    "predict": "How many samples would be displayed?",
+    "change": "Change rate to 8 and predict the number of samples.",
+    "build": "Explain what each variable represents in the calculation.",
+    "answer": "4 × 3 = 12 samples; after changing rate to 8, there are 24 samples. rate is samples per second; seconds is duration."
+  },
+  "008": {
+    "topic": "Compression savings",
+    "medium": "OCR ERL editor",
+    "code": "original = 20\ncompressed = 12\nprint(original - compressed)",
+    "predict": "How many storage units are saved?",
+    "change": "Change compressed to 15 and predict the new result.",
+    "build": "Explain why lossy and lossless methods may produce different file sizes.",
+    "answer": "20 − 12 = 8 saved. When compressed = 15, 20 − 15 = 5 saved. Lossy discards information; lossless retains all original information."
+  },
+  "009": {
+    "topic": "Bits and bytes",
+    "medium": "OCR ERL editor",
+    "code": "bits = 24\nprint(bits DIV 8)",
+    "predict": "How many bytes would be displayed?",
+    "change": "Change bits to 40; predict the new output.",
+    "build": "Write down the number of bits in three bytes.",
+    "answer": "24 DIV 8 gives 3 bytes. 40 DIV 8 gives 5 bytes. Three bytes contain 24 bits."
+  },
+  "010": {
+    "topic": "Input and output",
+    "medium": "OCR ERL editor",
+    "code": "name = input(\"Enter your name\")\nprint(name)",
+    "predict": "Predict what the second line displays after you type your name.",
+    "change": "Change the input prompt to ask for a favourite subject.",
+    "build": "Add a print line displaying a greeting before the entered value.",
+    "answer": "The program displays exactly the entered value. Changing the prompt changes the question. print(\"Hello\") followed by print(name) shows a greeting then the entered name."
+  },
+  "011": {
+    "topic": "Selection with IF",
+    "medium": "OCR ERL editor",
+    "code": "score = 7\nif score >= 5 then\n    print(\"pass\")\nendif",
+    "predict": "Predict whether anything will print.",
+    "change": "Change score to 4 and predict the result.",
+    "build": "Add an else branch that prints \"try again\" when the score is below 5.",
+    "answer": "7 displays pass. With score 4 nothing prints until an else branch is added; then it displays try again."
+  },
+  "012": {
+    "topic": "Array elements",
+    "medium": "OCR ERL editor",
+    "code": "array scores[3]\nscores[0] = 4\nprint(scores[0])",
+    "predict": "Which array position is displayed?",
+    "change": "Assign 8 to scores[0] and predict the result.",
+    "build": "Add a new value at scores[1] and display it.",
+    "answer": "Index 0 is the first element. Originally 4 is displayed; changing the assignment to 8 displays 8. scores[1] accesses the second element."
+  },
+  "013": {
+    "topic": "Finding a match",
+    "medium": "OCR ERL editor",
+    "code": "value = 7\ntarget = 7\nif value == target then\n    print(\"found\")\nendif",
+    "predict": "Will the program display found?",
+    "change": "Change target to 8 and predict what happens.",
+    "build": "Explain how this comparison could be repeated for every element of an array.",
+    "answer": "The two values are equal so found is displayed. With target 8 there is no output. Linear search repeats this comparison for successive elements."
+  },
+  "014": {
+    "topic": "Swapping two values",
+    "medium": "OCR ERL editor",
+    "code": "a = 9\nb = 3\nif a > b then\n    temp = a\n    a = b\n    b = temp\nendif\nprint(a)",
+    "predict": "Predict the final value of a.",
+    "change": "Change a to 2; does the swap happen?",
+    "build": "Explain why the temporary variable is needed.",
+    "answer": "The first run swaps 9 and 3, so a becomes 3. With a=2 and b=3 no swap occurs. temp prevents the original a from being lost."
+  },
+  "015": {
+    "topic": "Validating an input",
+    "medium": "OCR ERL editor",
+    "code": "age = 7\nif age <= 5 then\n    print(\"valid\")\nelse\n    print(\"invalid\")\nendif",
+    "predict": "Predict the output.",
+    "change": "Change age to 5 and predict again.",
+    "build": "Explain why boundary values are important when testing validation.",
+    "answer": "7 displays invalid. The boundary value 5 displays valid. Boundary testing checks values exactly at and immediately around an accepted limit."
+  },
+  "016": {
+    "topic": "Boundary testing",
+    "medium": "OCR ERL editor",
+    "code": "score = 50\nif score >= 50 then\n    print(\"pass\")\nelse\n    print(\"fail\")\nendif",
+    "predict": "Predict the output for score 50.",
+    "change": "Test 49 and 51; record both results in a table.",
+    "build": "Identify which of 49, 50 and 51 is the boundary value.",
+    "answer": "50 and 51 display pass; 49 displays fail. 50 is the boundary value for the pass condition."
+  },
+  "017": {
+    "topic": "Image file-size calculation",
+    "medium": "OCR ERL editor",
+    "code": "width = 4\nheight = 3\ndepth = 8\nprint(width * height * depth)",
+    "predict": "Predict the number of bits displayed.",
+    "change": "Change depth to 16 and predict the output.",
+    "build": "Convert the original result into bytes.",
+    "answer": "4 × 3 × 8 = 96 bits. At depth 16, the result is 192 bits. The original 96 bits is 12 bytes."
+  },
+  "018": {
+    "topic": "Paper 2 code tracing",
+    "medium": "Mini-whiteboards or OCR ERL",
+    "code": "target = 7\ncurrent = 7\nif current == target then\n    print(\"found\")\nendif",
+    "predict": "Predict the program output without running it.",
+    "change": "Change current to 5 and explain what changes.",
+    "build": "State how a linear search would use this comparison in a loop.",
+    "answer": "It prints found when current is 7 and target is 7. With current 5 there is no output. A linear search compares one element at a time until found or the end is reached."
+  }
+};
+
   const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   const text = el => el ? [...el.childNodes].map(x => x.textContent).join("").trim() : "";
   const html = el => el ? el.innerHTML : "";
@@ -68,6 +217,8 @@
     const turnTalk=html(d.querySelector('[data-label="Turn & Talk"] .prompt-card p'));
 
     const youDo=[...d.querySelectorAll('[data-label="You Do"] .youdo-grid article p')].map(x=>x.innerHTML);
+    const codeFirst=codeFirstTasks[n];
+    if(!codeFirst) throw new Error('Coding activity not prepared for lesson '+n);
     const exam=d.querySelector('[data-label="Exam"]');
     const examQ=html(exam?.querySelector(".exam-card > p"));
     let examA=text(exam?.querySelector(".working .step:nth-of-type(2)")).replace(/^Answer guidance:\s*/,"");
@@ -80,13 +231,13 @@
     const exitQ=html(exit?.querySelector(".card p"));
 
     if(mode==="answers"){
-      const qs=[...youDo,examQ];
-      const ans=[...(answerMap[n]||[]),examA];
+      const qs=[codeFirst.predict,...youDo,examQ];
+      const ans=[codeFirst.answer,...(answerMap[n]||[]),examA];
       document.open();
       document.write(`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lesson ${n} · You Do Answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-answer-align2">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-j277-codefirst3">
 <style>
 body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
 .answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}
@@ -97,7 +248,7 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 @media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:52px;flex-wrap:wrap;padding:10px 14px}main.answer-stage-wrap{height:auto;padding:16px 14px 84px}.answer-stage{height:auto;display:grid;grid-template-columns:1fr}}
 </style></head><body class="answer-page">
 <header class="answer-toolbar"><a href="index.html#you-do">← Return to You Do</a><span class="answer-title">YOU DO · ANSWERS</span><span class="answer-counter" id="answer-counter">Answer 1 of ${qs.length}</span></header>
-<main class="answer-stage-wrap">${qs.map((q,i)=>`<section class="answer-stage"${i?' hidden':''}><article class="solution-card"><span class="phase-tag">QUESTION ${i+1}</span><h2>${esc(title)}</h2><div class="question-text">${q}</div><div class="answer-heading">ANSWER</div><pre class="solution-code">${esc(ans[i]||"Review the worked method and mark scheme.")}</pre></article></section>`).join("")}</main>
+<main class="answer-stage-wrap">${qs.map((q,i)=>`<section class="answer-stage"${i?' hidden':''}><article class="solution-card"><span class="phase-tag">${i===0?"CODE FIRST · WORKED ANSWER":"QUESTION "+(i+1)}</span><h2>${i===0?"CODE FIRST":esc(title)}</h2><div class="question-text">${i===0?esc(codeFirst.topic):q}</div>${i===0?`<pre class="solution-code">${esc(codeFirst.code)}</pre>`:""}<div class="answer-heading">ANSWER</div><pre class="solution-code">${esc(ans[i]||"Review the worked method and mark scheme.")}</pre></article></section>`).join("")}</main>
 <div class="answer-controls"><button type="button" id="previous-answer" disabled>← Previous answer</button><a href="index.html#you-do">Return to You Do</a><button type="button" id="next-answer">Next answer →</button></div>
 <script>
 const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;
@@ -119,7 +270,8 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     const wdHtml=wdSteps.map((s,i)=>`<div class="wedo-step"${i?' hidden':''}><span class="wedo-step-label">${i===0?'YOUR TURN':'CHECK'}</span><h2>${s}</h2></div>`).join("");
 
     const qs=[...youDo,examQ];
-    const qCards=qs.map((q,i)=>`<article class="exam-card youdo-question"${i>=2?' hidden':''}><span class="phase-tag">QUESTION ${i+1} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
+    const codeCard=`<article class="exam-card youdo-question j277-code-first"><span class="phase-tag">START HERE · ${esc(codeFirst.medium.toUpperCase())}</span><h3>CODE FIRST</h3><p class="j277-code-topic">${esc(codeFirst.topic)}</p><div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks"><p class="j277-code-start">${n==="003"?"Write on your mini-whiteboard.":n==="004"?"Your first visit to the OCR ERL editor.":"Predict first, then change the code."}</p><p><strong>1 · Predict:</strong> ${esc(codeFirst.predict)}</p><pre class="arithmetic">${esc(codeFirst.code)}</pre><p><strong>2 · Change:</strong> ${esc(codeFirst.change)}</p><p><strong>3 · Extend:</strong> ${esc(codeFirst.build)}</p>${n==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open the OCR ERL editor →</a></p>':""}</div><aside class="j277-code-reference"><strong>Today's topic</strong><p>${esc(title)}</p><span>Use what you have just learned. You can explain the steps before writing the answer.</span></aside></div></div></article>`;
+    const qCards=codeCard+qs.map((q,i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
 
     const vocabStages=vocab.map((v,i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${vocab.length}</span><h2>What is the term?</h2><p class="vocab-question">${esc(v.definition)}</p><span class="vocab-stage-count">${i+1} of ${vocab.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${esc(v.term)}</div></div></article>`).join("");
 
@@ -130,7 +282,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     document.write(`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lesson ${n} · ${esc(title)}</title><meta name="description" content="OCR J277 Lesson ${n}: ${esc(subtitle)}">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-answer-align2">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-j277-codefirst3">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815"></head><body>
 <a class="skip" href="#main">Skip to lesson</a>
 <div class="navwrap"><a class="course-back" href="../../../j277-hub.html?year=10">← Year 10 lessons</a><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
@@ -141,11 +293,11 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <section id="new-learning" class="page phase-focus" data-phase-time="8 minutes"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">QUICK REFERENCE · ${esc(spec)}</span><h2>${esc(nlTitle)}</h2><pre class="arithmetic">${esc(refLines)}</pre><div class="nl-reference-note"><strong>Keep this idea:</strong> use the exact terminology when explaining your answer.</div></article><article class="nl-explanation">${nlStages}</article></div></section>
 <section id="i-do" class="page phase-ido" data-phase-time="7 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">ONE COMPLETE WORKED EXAMPLE</span><h2>${esc(title)}</h2><p>${idoQ}</p><span class="ido-example-count">Worked example</span></div><div class="ido-method">${idoHtml}</div></article></div></section>
 <section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>${esc(title)}</h2><p>${wdQ}</p><div class="nl-reference-note"><strong>Turn &amp; Talk:</strong> ${turnTalk}</div><span class="wedo-example-count">Guided example</span></div><div class="wedo-practice">${wdHtml}</div></article></div></section>
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR exam practice" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling">${qCards}</div><div class="youdo-window-progress">Questions 1–2 of ${qs.length}</div></div></section>
+<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="2" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${qCards}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>
 <section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">${vocabStages}</div></section>
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">${exitQ}</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can apply this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I understand most of it but need more practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with this topic.</span></div></div></div></div></section>
 </main><div class="lesson-footer">Lesson ${n} · ${esc(title)} <span>Year 10 · OCR J277</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261013-answer-align2"><\/script></body></html>`);
+<script src="../../../assets/h446-lesson/lesson.js?v=20261013-j277-codefirst3"><\/script></body></html>`);
     document.close();
   }).catch(err => {
     document.body.innerHTML='<p style="font-family:sans-serif;padding:2rem">Lesson failed to load: '+esc(err.message)+'</p>';
