@@ -33,7 +33,15 @@
    return svgScene("Compression reduces file size: original 10 blocks, compressed six blocks",note(30,35,"Original file",18)+Array.from({length:10},(_,i)=>pill(27+i*50,49,45,45,"1","#e3f1e7",18)).join("")+note(30,137,"Compressed file",18)+Array.from({length:6},(_,i)=>pill(27+i*50,148,45,45,"1","#f9e9ce",18)).join("")+note(355,175,"smaller",19));
   }
   if(kind==="memory"){
-   return svgScene("Primary storage hierarchy: CPU, small fast cache, RAM, ROM and secondary storage",pill(195,19,169,41,"CPU","#e5f2e8",21)+pill(195,77,169,43,"CACHE","#faebcc",20)+pill(39,147,140,43,"RAM","#e2eff9",21)+pill(207,147,140,43,"ROM","#e2eff9",21)+pill(373,147,152,43,"SSD / HDD","#e8e8ee",19)+line(280,60,280,77)+line(280,120,112,147)+line(280,120,280,147)+line(280,120,450,147)+note(32,218,"working · firmware · saved files",16));
+   return svgScene("The CPU accesses cache and RAM for working data. ROM holds non-volatile firmware; SSD stores saved files long-term.",
+    pill(175,14,215,48,"CPU","#e5f2e8",22)+
+    pill(212,79,140,40,"CACHE","#faebcc",19)+
+    line(282,62,282,79)+
+    pill(42,160,145,43,"RAM","#e2eff9",21)+
+    pill(209,160,145,43,"ROM","#e2eff9",21)+
+    pill(375,160,145,43,"SSD / HDD","#e8e8ee",19)+
+    line(282,119,114,160)+
+    note(27,218,"RAM: working",15)+note(205,218,"ROM: firmware",15)+note(379,218,"SSD: saved files",15));
   }
   if(kind==="virtual"){
    return svgScene("Virtual memory sends less-used pages from limited RAM to slower secondary storage",pill(20,58,190,120,"RAM   4 GB","#e1eff8",22)+pill(360,58,176,120,"SSD / HDD","#f8edda",21)+`<path d="M216 89 C285 45 297 45 350 89 M342 83 L351 90 L348 73" fill="none" stroke="#be772e" stroke-width="4"/><path d="M350 145 C280 184 270 184 216 145 M222 137 L216 145 L229 150" fill="none" stroke="#28779a" stroke-width="4"/>`+note(241,55,"swap out",16)+note(238,192,"swap in",16));
@@ -50,9 +58,8 @@
   if(kind==="fde"){
    return svgScene("Fetch decode execute cycle with three arrows",pill(27,75,151,82,"FETCH","#e5f3e7",21)+pill(207,75,151,82,"DECODE","#e1eff9",21)+pill(386,75,150,82,"EXECUTE","#fbebcd",20)+`<path d="M178 116 H204 M198 109 L205 116 L198 123 M358 116 H383 M377 109 L384 116 L377 123 M462 166 Q291 220 102 165" fill="none" stroke="#337959" stroke-width="3.5"/>`+note(224,216,"repeat",17));
   }
-  if(kind==="review"){
-   return svgScene("Autumn 1 topic summary: data, memory and CPU",pill(20,49,168,120,"DATA","#e3f1ed",23)+pill(199,49,164,120,"MEMORY","#e1eef8",23)+pill(375,49,164,120,"CPU","#faedda",23)+note(34,197,"numbers · media · compression",15)+note(215,219,"Explain + calculate + justify",17));
-  }
+  if(kind==="review") return ""; // Synoptic lesson: omit decorative topic tiles.
+
   return svgScene("A diagram reinforcing the new learning",pill(60,70,180,78,"INPUT")+pill(317,70,180,78,"OUTPUT")+line(241,109,316,109));
  }
  const a=(n)=>(n<10?"00":"0")+n;
