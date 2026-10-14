@@ -58,22 +58,33 @@
 @media(hover:hover) and (pointer:fine){.lesson-detail{display:none!important}}
 @media(hover:none), (pointer:coarse){.lesson-popup{display:none!important}.lesson-info{width:27px;height:27px;right:5px}}
 
-/* Mobile lesson preview sheet */
+/* Mobile sheet: keep actions visible while objectives scroll. */
 .mobile-sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1000}
-.mobile-sheet{position:fixed;bottom:0;left:0;right:0;z-index:1001;background:#fff;color:#143f32;border-radius:20px 20px 0 0;padding:14px 20px max(22px,env(safe-area-inset-bottom));max-height:75dvh;overflow-y:auto;box-shadow:0 -12px 40px #0003}
-.mobile-sheet[hidden],.mobile-sheet-backdrop[hidden]{display:none!important}
-.mobile-sheet-handle{width:42px;height:5px;background:#c3cec9;border-radius:5px;margin:0 auto 14px;touch-action:none}
-.mobile-sheet-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mobile-sheet-close{width:44px;height:44px;border:0;background:#e6eeea;border-radius:50%;font-size:25px;cursor:pointer}
-.mobile-sheet-title{font-size:23px;margin:12px 0}
-.mobile-sheet-objectives{font-size:16px;line-height:1.5}
-.mobile-sheet-objectives ul{padding-left:22px}
-.mobile-sheet-open{display:block;margin-top:18px;text-align:center;background:#006347;color:#fff;padding:16px;border-radius:10px;font-size:18px;font-weight:800;text-decoration:none}
-/* Override the shared .course-hub a{color:inherit} rule for primary actions. */
-.course-hub a.mobile-sheet-open,.course-hub a.mobile-sheet-open:visited{color:#fff}
+.mobile-sheet{position:fixed;bottom:0;left:0;right:0;z-index:1001;display:flex;flex-direction:column;max-height:min(80dvh,700px);background:#fff;color:#143f32;border-radius:20px 20px 0 0;padding:12px 18px 0;overflow:hidden;box-shadow:0 -12px 40px #0003}
+.mobile-sheet[hidden],.mobile-sheet-backdrop[hidden],.mobile-sheet-actions[hidden]{display:none!important}
+.mobile-sheet-handle{width:42px;height:5px;flex:0 0 5px;background:#c3cec9;border-radius:5px;margin:0 auto 12px;touch-action:none}
+.mobile-sheet-header{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:12px}
+.mobile-sheet-id{display:flex;align-items:center;gap:10px;min-width:0}
+.mobile-sheet-number{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative;overflow:hidden;min-width:78px;min-height:40px;padding:5px 12px 5px 16px;border-radius:9px;background:#1d2421;color:#fff;font-size:21px;font-weight:900;line-height:1}
+.mobile-sheet-number::before{content:'';position:absolute;left:2px;top:7px;bottom:7px;width:6px;border-radius:3px;background:#64b58c}
+.mobile-sheet-context{color:#557067;font-size:12px;font-weight:800}
+.mobile-sheet-close{width:44px;height:44px;flex:0 0 44px;border:0;background:#e6eeea;color:#143f32;border-radius:50%;font-size:25px;cursor:pointer}
+.mobile-sheet-content{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 2px 14px}
+.mobile-sheet-title{font-size:clamp(22px,5vw,27px);line-height:1.17;margin:14px 0 12px;color:#143f32}
+.mobile-sheet-objectives{font-size:15px;line-height:1.45}
+.mobile-sheet-objectives strong{font-size:14px}
+.mobile-sheet-objectives ul{margin:7px 0;padding-left:22px}
+.mobile-sheet-objectives li{margin-bottom:6px}
+.mobile-sheet-objectives details{margin-top:8px;padding:9px 10px;background:#f4f8f6;border:1px solid #dce7e1;border-radius:8px}
+.mobile-sheet-objectives summary{font-size:14px;font-weight:800;color:#175b43;cursor:pointer}
+.mobile-sheet-objectives p{margin:8px 0 0;color:#51645c}
+.mobile-sheet-actions{flex:0 0 auto;display:flex;flex-direction:column;gap:8px;padding:12px 2px max(15px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #dce7e1}
+.course-hub a.mobile-sheet-open,.course-hub a.mobile-sheet-open:visited{display:flex;align-items:center;justify-content:center;min-height:52px;padding:11px 16px;border-radius:10px;background:#006347;color:#fff;text-align:center;font-size:17px;font-weight:850;text-decoration:none}
 .course-hub a.mobile-sheet-open:hover{background:#004e39;color:#fff}
 .course-hub a.mobile-sheet-open:focus-visible{outline:3px solid #eabf59;outline-offset:3px;color:#fff}
-.mobile-sheet-open[hidden]{display:none}
+.course-hub a.mobile-sheet-jump,.course-hub a.mobile-sheet-jump:visited{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid #9ab7a7;border-radius:9px;background:#fff;color:#15513e;font-size:14px;font-weight:800;text-decoration:none}
+.course-hub a.mobile-sheet-jump:hover{background:#eef7f2;color:#15513e}
+.course-hub a.mobile-sheet-jump:focus-visible{outline:3px solid #eabf59;outline-offset:3px}
 @media(max-width:700px),(pointer:coarse){
   .lesson-entry>.lesson-info{display:none!important}
   .lesson-entry>.lesson{padding-right:9px;min-height:46px;cursor:pointer}
@@ -289,7 +300,7 @@ const lessonSheet=document.createElement('section');
 lessonSheet.className='mobile-sheet';lessonSheet.hidden=true;
 lessonSheet.setAttribute('role','dialog');lessonSheet.setAttribute('aria-modal','true');
 lessonSheet.setAttribute('aria-label','Lesson preview');
-lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><strong class="mobile-sheet-number"></strong><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><h2 class="mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div><a class="mobile-sheet-open" href="#">Open Lesson →</a>';
+lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a></div>';
 document.body.append(sheetBackdrop,lessonSheet);
 let sheetTrigger=null, sheetRequest=0, sheetStartY=null;
 function closeLessonSheet(){
@@ -300,29 +311,61 @@ function closeLessonSheet(){
   if(sheetTrigger?.isConnected)sheetTrigger.focus({preventScroll:true});
 }
 async function openLessonSheet(n,href,specKey,trigger){
-  sheetTrigger=trigger;const request=++sheetRequest;
-  lessonSheet.querySelector('.mobile-sheet-number').textContent='Lesson '+pad(n)+' · Year '+year;
-  lessonSheet.querySelector('.mobile-sheet-title').textContent='Loading topic…';
-  lessonSheet.querySelector('.mobile-sheet-objectives').textContent='Loading objectives…';
-  const link=lessonSheet.querySelector('.mobile-sheet-open');
-  link.hidden=!href;
-  if(href)link.href=href;
-  sheetBackdrop.hidden=false;lessonSheet.hidden=false;
+  sheetTrigger=trigger;
+  const request=++sheetRequest;
+  const id=pad(n);
+  const sheetTitle=lessonSheet.querySelector('.mobile-sheet-title');
+  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
+  const content=lessonSheet.querySelector('.mobile-sheet-content');
+  const actions=lessonSheet.querySelector('.mobile-sheet-actions');
+  const start=lessonSheet.querySelector('.mobile-sheet-open');
+  const jump=lessonSheet.querySelector('.mobile-sheet-jump');
+  lessonSheet.querySelector('.mobile-sheet-number').textContent='L'+id;
+  lessonSheet.querySelector('.mobile-sheet-context').textContent='OCR H446 · Year '+year;
+  sheetTitle.textContent=year13Lessons[n]?.title || specificationThemes[specKey]?.label || 'Lesson '+id;
+  target.textContent='Loading lesson summary…';
+  content.scrollTop=0;
+  actions.hidden=!href;
+  if(href){
+    const cleanHref=href.split('#')[0];
+    start.href=cleanHref+'#do-now';
+    jump.href=cleanHref+'#you-do';
+  }
+  sheetBackdrop.hidden=false;
+  lessonSheet.hidden=false;
   document.body.style.overflow='hidden';
   lessonSheet.querySelector('.mobile-sheet-close').focus({preventScroll:true});
   const info=await getLessonInfo(n,href,specKey);
   if(request!==sheetRequest)return;
-  lessonSheet.querySelector('.mobile-sheet-title').textContent=info.title;
-  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
+  sheetTitle.textContent=info.title;
   target.replaceChildren();
   if(info.objectives.length){
-    const label=document.createElement('strong');label.textContent='By the end, you can…';target.append(label);
-    const ul=document.createElement('ul');
-    info.objectives.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.append(li);});
-    target.append(ul);
+    const label=document.createElement('strong');
+    label.textContent='In this lesson';
+    target.append(label);
+    const makeList=objectives=>{
+      const ul=document.createElement('ul');
+      objectives.forEach(itemText=>{
+        const item=document.createElement('li');
+        item.textContent=itemText;
+        ul.append(item);
+      });
+      return ul;
+    };
+    target.append(makeList(info.objectives.slice(0,2)));
+    if(info.objectives.length>2){
+      const details=document.createElement('details');
+      const summary=document.createElement('summary');
+      summary.textContent='More learning objectives ('+(info.objectives.length-2)+')';
+      details.append(summary,makeList(info.objectives.slice(2)));
+      target.append(details);
+    }
   }
-  if(info.note){const note=document.createElement('p');note.textContent=info.note;target.append(note);}
-  if(!href){const note=document.createElement('p');note.textContent='Lesson planned — not yet available.';target.append(note);}
+  if(!href || info.note?.includes('unavailable') || !info.objectives.length){
+    const note=document.createElement('p');
+    note.textContent=!href?'Lesson planned — not yet available.':info.note||'Objectives available in the lesson.';
+    target.append(note);
+  }
 }
 sheetBackdrop.addEventListener('click',closeLessonSheet);
 lessonSheet.querySelector('.mobile-sheet-close').addEventListener('click',closeLessonSheet);
@@ -330,7 +373,7 @@ document.addEventListener('keydown',e=>{
   if(lessonSheet.hidden)return;
   if(e.key==='Escape')closeLessonSheet();
   if(e.key==='Tab'){
-    const controls=[...lessonSheet.querySelectorAll('button,a')].filter(el=>!el.hidden);
+    const controls=[...lessonSheet.querySelectorAll('button,a,summary')].filter(el=>!el.hidden&&!el.closest('[hidden]'));
     const first=controls[0],last=controls[controls.length-1];
     if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
