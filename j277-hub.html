@@ -22,6 +22,39 @@
 .lesson-preview-objective p,.lesson-preview-coding p{margin:4px 0 0;line-height:1.45}
 .lesson-preview-coding{border-top:1px solid #d8e7dc;padding-top:9px;margin-top:9px}
 .lesson-detail{grid-column:1/-1}
+/* J277 phone lesson sheet: visible actions and scrollable previews. */
+.mobile-sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1000}
+.mobile-sheet{position:fixed;bottom:0;left:0;right:0;z-index:1001;display:flex;flex-direction:column;max-height:min(80dvh,700px);background:#fff;color:#143f32;border-radius:20px 20px 0 0;padding:12px 18px 0;overflow:hidden;box-shadow:0 -12px 40px #0003}
+.mobile-sheet[hidden],.mobile-sheet-backdrop[hidden],.mobile-sheet-actions[hidden]{display:none!important}
+.mobile-sheet-handle{width:42px;height:5px;flex:0 0 5px;background:#c3cec9;border-radius:5px;margin:0 auto 12px;touch-action:none}
+.mobile-sheet-header{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:12px}
+.mobile-sheet-id{display:flex;align-items:center;gap:10px;min-width:0}
+.mobile-sheet-number{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative;overflow:hidden;min-width:78px;min-height:40px;padding:5px 12px 5px 16px;border-radius:9px;background:#1d2421;color:#fff;font-size:21px;font-weight:900;line-height:1}
+.mobile-sheet-number::before{content:'';position:absolute;left:2px;top:7px;bottom:7px;width:6px;border-radius:3px;background:#64b58c}
+.mobile-sheet-context{color:#557067;font-size:12px;font-weight:800}
+.mobile-sheet-close{width:44px;height:44px;flex:0 0 44px;border:0;background:#e6eeea;color:#143f32;border-radius:50%;font-size:25px;cursor:pointer}
+.mobile-sheet-content{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 2px 14px}
+.mobile-sheet-title{font-size:clamp(22px,5vw,27px);line-height:1.17;margin:14px 0 12px;color:#143f32}
+.mobile-sheet-objectives{font-size:15px;line-height:1.45}
+.mobile-sheet-objectives strong{font-size:14px}
+.mobile-sheet-objectives ul{margin:7px 0;padding-left:22px}
+.mobile-sheet-objectives li{margin-bottom:6px}
+.mobile-sheet-objectives details{margin-top:8px;padding:9px 10px;background:#f4f8f6;border:1px solid #dce7e1;border-radius:8px}
+.mobile-sheet-objectives summary{font-size:14px;font-weight:800;color:#175b43;cursor:pointer}
+.mobile-sheet-objectives p{margin:8px 0 0;color:#51645c}
+.mobile-sheet-actions{flex:0 0 auto;display:flex;flex-direction:column;gap:8px;padding:12px 2px max(15px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #dce7e1}
+.course-hub a.mobile-sheet-open,.course-hub a.mobile-sheet-open:visited{display:flex;align-items:center;justify-content:center;min-height:52px;padding:11px 16px;border-radius:10px;background:#006347;color:#fff;text-align:center;font-size:17px;font-weight:850;text-decoration:none}
+.course-hub a.mobile-sheet-open:hover{background:#004e39;color:#fff}
+.course-hub a.mobile-sheet-open:focus-visible{outline:3px solid #eabf59;outline-offset:3px;color:#fff}
+.course-hub a.mobile-sheet-jump,.course-hub a.mobile-sheet-jump:visited{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid #9ab7a7;border-radius:9px;background:#fff;color:#15513e;font-size:14px;font-weight:800;text-decoration:none}
+.course-hub a.mobile-sheet-jump:hover{background:#eef7f2;color:#15513e}
+.course-hub a.mobile-sheet-jump:focus-visible{outline:3px solid #eabf59;outline-offset:3px}
+
+@media(max-width:700px),(pointer:coarse){
+  .lesson-entry>.lesson-info{display:none!important}
+  .lesson-entry>.lesson{padding-right:9px;min-height:46px;cursor:pointer}
+  .lesson-entry>.lesson:focus-visible{outline:3px solid #006347;outline-offset:2px}
+}
 </style></head><body class="course-hub" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><a class="back" id="yearBack" href="index.html#year/10">← Year 10 subjects</a><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div><div class="sub">164 lesson positions</div></div>
@@ -80,13 +113,123 @@ function showLessonInfo(target,n){
  if(task){const c=document.createElement('div');c.className='lesson-preview-coding';const ch=document.createElement('b');ch.textContent='Code first · OCR ERL';const ct=document.createElement('p');ct.textContent=task;c.append(ch,ct);target.append(c);}
 }
 const pad=n=>String(n).padStart(3,'0');
+
+/* Phone/touch lesson preview: consistent with H446, while preserving the
+   direct lesson links and hover previews for keyboard/mouse users. */
+const mobileLessonQuery=window.matchMedia('(max-width:700px), (pointer:coarse)');
+const sheetBackdrop=document.createElement('div');
+sheetBackdrop.className='mobile-sheet-backdrop';
+sheetBackdrop.hidden=true;
+const lessonSheet=document.createElement('section');
+lessonSheet.className='mobile-sheet';
+lessonSheet.hidden=true;
+lessonSheet.setAttribute('role','dialog');
+lessonSheet.setAttribute('aria-modal','true');
+lessonSheet.setAttribute('aria-labelledby','j277-mobile-sheet-title');
+lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="j277-mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a></div>';
+document.body.append(sheetBackdrop,lessonSheet);
+let sheetTrigger=null;
+let sheetStartY=null;
+function closeLessonSheet(){
+  if(lessonSheet.hidden)return;
+  lessonSheet.hidden=true;
+  sheetBackdrop.hidden=true;
+  document.body.style.overflow='';
+  if(sheetTrigger?.isConnected)sheetTrigger.focus({preventScroll:true});
+}
+function openLessonSheet(n,href,trigger){
+  sheetTrigger=trigger;
+  const [topic,spec,objective,task]=lessonInfo(n);
+  lessonSheet.querySelector('.mobile-sheet-number').textContent='L'+pad(n);
+  lessonSheet.querySelector('.mobile-sheet-context').textContent='OCR J277 · Year '+year;
+  lessonSheet.querySelector('.mobile-sheet-title').textContent=topic;
+  const content=lessonSheet.querySelector('.mobile-sheet-content');
+  content.scrollTop=0;
+  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
+  target.replaceChildren();
+  const specLabel=document.createElement('p');
+  specLabel.className='mobile-sheet-spec';
+  specLabel.textContent='Specification '+spec;
+  target.append(specLabel);
+  if(objective){
+    const label=document.createElement('strong');
+    label.textContent='In this lesson';
+    const summary=document.createElement('p');
+    summary.textContent=objective;
+    target.append(label,summary);
+  }
+  if(task){
+    const details=document.createElement('details');
+    const summary=document.createElement('summary');
+    summary.textContent='Code First activity';
+    const text=document.createElement('p');
+    text.textContent=task;
+    details.append(summary,text);
+    target.append(details);
+  }
+  if(!href){
+    const note=document.createElement('p');
+    note.textContent='Lesson planned — not yet available.';
+    target.append(note);
+  }
+  const actions=lessonSheet.querySelector('.mobile-sheet-actions');
+  actions.hidden=!href;
+  if(href){
+    const cleanHref=href.split('#')[0];
+    lessonSheet.querySelector('.mobile-sheet-open').href=cleanHref+'#do-now';
+    lessonSheet.querySelector('.mobile-sheet-jump').href=cleanHref+'#you-do';
+  }
+  sheetBackdrop.hidden=false;
+  lessonSheet.hidden=false;
+  document.body.style.overflow='hidden';
+  lessonSheet.querySelector('.mobile-sheet-close').focus({preventScroll:true});
+}
+sheetBackdrop.addEventListener('click',closeLessonSheet);
+lessonSheet.querySelector('.mobile-sheet-close').addEventListener('click',closeLessonSheet);
+document.addEventListener('keydown',e=>{
+  if(lessonSheet.hidden)return;
+  if(e.key==='Escape'){e.preventDefault();closeLessonSheet();return;}
+  if(e.key==='Tab'){
+    const controls=[...lessonSheet.querySelectorAll('button,a,summary')].filter(el=>!el.hidden&&!el.closest('[hidden]'));
+    if(!controls.length)return;
+    const first=controls[0],last=controls[controls.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchstart',e=>{
+  sheetStartY=e.touches[0].clientY;
+},{passive:true});
+lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchend',e=>{
+  if(sheetStartY!==null&&e.changedTouches[0].clientY-sheetStartY>65)closeLessonSheet();
+  sheetStartY=null;
+},{passive:true});
+
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 function renderLessons(){
+ closeLessonSheet();
  const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
  for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');
-   for(let x=n;x<=end;x++){const live=liveMap[x];const el=document.createElement(live?'a':'div');el.className='lesson '+(live?'live':'planned');if(live){el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';el.href=live;el.setAttribute('aria-label','Open live lesson '+pad(x)+(x===101?' · Binary search':''));}else{el.textContent=pad(x);}const entry=document.createElement('div');entry.className='lesson-entry';const info=document.createElement('button');info.className='lesson-info';info.type='button';info.textContent='i';info.setAttribute('aria-label','View lesson '+pad(x)+' objectives');info.setAttribute('aria-expanded','false');const popup=document.createElement('div');popup.className='lesson-popup';showLessonInfo(popup,x);const detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');info.addEventListener('click',()=>{const open=detail.getAttribute('aria-hidden')!=='false';holder.querySelectorAll('.lesson-detail').forEach(d=>{d.setAttribute('aria-hidden','true');d.style.display='none'});holder.querySelectorAll('.lesson-info').forEach(b=>b.setAttribute('aria-expanded','false'));if(open){showLessonInfo(detail,x);detail.setAttribute('aria-hidden','false');detail.style.display='block';info.setAttribute('aria-expanded','true');}});entry.append(el,info,popup);grid.append(entry,detail);}
+   for(let x=n;x<=end;x++){const live=liveMap[x];const el=document.createElement(live?'a':'div');el.className='lesson '+(live?'live':'planned');if(live){el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';el.href=live;el.setAttribute('aria-label','Open live lesson '+pad(x)+(x===101?' · Binary search':''));}else{el.textContent=pad(x);}const entry=document.createElement('div');entry.className='lesson-entry';
+   if(mobileLessonQuery.matches){
+     if(live){
+       el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,live,el);});
+     }else{
+       el.tabIndex=0;
+       el.setAttribute('role','button');
+       el.setAttribute('aria-label','Preview planned lesson '+pad(x));
+       el.addEventListener('click',()=>openLessonSheet(x,null,el));
+       el.addEventListener('keydown',event=>{
+         if(event.key==='Enter'||event.key===' '){
+           event.preventDefault();
+           openLessonSheet(x,null,el);
+         }
+       });
+     }
+   }
+   const info=document.createElement('button');info.className='lesson-info';info.type='button';info.textContent='i';info.setAttribute('aria-label','View lesson '+pad(x)+' objectives');info.setAttribute('aria-expanded','false');const popup=document.createElement('div');popup.className='lesson-popup';showLessonInfo(popup,x);const detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');info.addEventListener('click',()=>{if(mobileLessonQuery.matches){openLessonSheet(x,live||null,info);return;}const open=detail.getAttribute('aria-hidden')!=='false';holder.querySelectorAll('.lesson-detail').forEach(d=>{d.setAttribute('aria-hidden','true');d.style.display='none'});holder.querySelectorAll('.lesson-info').forEach(b=>b.setAttribute('aria-expanded','false'));if(open){showLessonInfo(detail,x);detail.setAttribute('aria-hidden','false');detail.style.display='block';info.setAttribute('aria-expanded','true');}});entry.append(el,info,popup);grid.append(entry,detail);}
    holder.append(sec);n=end+1;
  }
  document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
