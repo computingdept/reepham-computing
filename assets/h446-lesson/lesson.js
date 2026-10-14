@@ -1033,6 +1033,82 @@ function prepareJ277DoNowSourceLabels(){
   }
 }
 
+
+/* OCR H446 – progressive spaced retrieval from previously taught lessons.
+   Year 12 and Year 13 are mapped separately. Stage cards and answer views
+   both display identical prior-teaching references. Non-question Do Nows
+   (revision, assessment and feedback) remain unchanged. */
+function prepareH446DoNowSourceLabels(){
+  const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!match)return;
+  const n=Number(match[1]);
+  const origins={"1":["GCSE","GCSE","GCSE","GCSE"],"2":["L001","L001","L001","L001"],"3":["L001","L001","L002","L002"],"4":["L001","L003","L002","L003"],"5":["L004","L003","L002","L003"],"6":["L005","L004","L002","L003"],"7":["L006","L005","L003","L002"],"8":["L001","L003","L003","L007"],"9":["L008","L005","L003","L002"],"10":["L009","L008","L005","L009"],"11":["L010","L009","L001","L009 + L010"],"12":["L011","L010","L009","L011"],"13":["L012","L010","L011","L009 + L010"],"14":["L013","L010","L011","L013"],"15":["L014","L013","L014","L013 + L014"],"16":["L015","L015","L015","L013 + L015"],"17":["L014","L011","L003","L013"],"18":["L017","L017","L017","L017"],"19":["L018","L017","L018","L017 + L018"],"20":["L017","L018","L019","L019"],"21":["L020","L020","L019","L019"],"22":["L017","L019","L020","L021"],"23":["L022","L019","L021 + L022","L022"],"24":["L020","L020","L022","L019–L023"],"25":["L017","L019","L017","L017"],"26":["L020","L025","L017","L025"],"27":["L004","L025","GCSE","L026"],"28":["L002","L027","GCSE","L004"],"29":["L028","GCSE","L017","L006"],"30":["L026","L027","L028","L027"],"31":["L026","L026","L002","L002"],"32":["L030","L030","L031","L031"],"33":["L027","L031","L030","L026"],"35":["L003","L023","L027","L031"],"181":["L020","L027","L002","L013 + L017"],"182":["L012","GCSE","L012","L181"],"183":["L181","L010","GCSE","L181 + L182"],"184":["L017","L010","GCSE","GCSE"],"185":["L184","L184","L017","L184"],"186":["L181","L185","L017","L185"],"187":["L186","L181","L186","L181 + L186"],"188":["L187","L186","L025","L025"],"189":["L021","L021","L020","L021"],"190":["L189","L189","L189","L189"],"191":["L184","L187","L025 + L188","L190"]};
+  const updates={"13":{"0":["What is the difference between a parameter and an argument in C#?","A parameter is named in a method declaration; an argument is the value supplied when calling it."],"1":["Which type of C# loop is suitable when you know how many repetitions are required?","A for loop is appropriate for a known number of repetitions."],"2":["What is the difference between a function and a void method?","A function returns a value; a void method does not return a value."],"3":["A program repeatedly prints three lines. Which previously taught programming construct reduces repeated statements, and why?","A loop: it repeats the same instructions without writing them out each time."]},"14":{"0":["On the 3 × 3 board from L013, which square is board[1,2] (zero-based rows and columns)?","Square 6: row 1, column 2 in the board shown in L013."],"1":["Name the three parts of a C# for loop header.","Initialisation, condition and update."],"2":["What is the difference between a C# function and a void method?","A function returns a value; a void method does not."],"3":["Why is a 2D array more suitable for a 3 × 3 board than nine unrelated variables?","It keeps related squares together and lets code access each square by its row and column."]},"16":{"3":["A player selects square 8. Give its zero-based row and column, and explain why an occupied square must be rejected.","Square 8 is row 2, column 1. An occupied square must be rejected to avoid overwriting a previous move."]},"18":{"3":["A 3D C# array has dimensions [2,3,4]. How many values can it hold and what does GetLength(2) return?","It can store 2 × 3 × 4 = 24 values; GetLength(2) returns 4."]},"19":{"2":["Give one advantage of grouping a student's name, candidate number and score into a record.","The related values can be represented and handled together as one structured item."],"3":["A program must frequently add items to the beginning of a collection. Is a C# fixed-size array or a List<T> more suitable, and why?","List<T>, because its size can change and elements can be inserted without manually creating a new fixed-size array."]},"21":{"3":["In an array-based linked list, why can the logical next item be at a non-adjacent array index?","The next pointer stores the next item's index, so the logical order does not have to match the physical array order."]},"23":{"2":["State one difference between a tree and a general graph.","A tree has a hierarchy and no cycles; a general graph may contain cycles."],"3":["A binary search tree contains 15 at its root, with 9 on the left and 21 on the right. Where would 12 be inserted?","12 belongs to the right of 9, because 12 is less than 15 but greater than 9."]},"25":{"1":["How is moving to the next item in a linked list different from accessing the next item of an array?","A linked list follows the next pointer; an array normally uses the next numeric index."],"3":["For int[] numbers = {3, 7, 12, 18, 24}, give the first and last valid indexes. Explain why numbers[5] is invalid.","Valid indexes are 0 to 4. numbers[5] is outside the array's bounds."]},"30":{"1":["What does ¬¬A simplify to in Boolean algebra?","A — double negation cancels out."],"2":["In a Karnaugh-map group, what happens to an input that changes between 0 and 1?","The changing input is removed from the simplified term."],"3":["Use De Morgan's law to simplify ¬(A ∧ B), and explain why the expressions are equivalent.","¬A ∨ ¬B. Both expressions give the same output for every input combination."]},"186":{"3":["An insertion sort has a sorted section [4, 7, 9] and must insert 6. Where should 6 go, and which values move?","Insert 6 between 4 and 7; shift 7 and 9 one position right."]},"187":{"2":["When merging the sorted halves [2, 8] and [3, 7], what is the combined sorted order?","[2, 3, 7, 8]."],"3":["Why must a recursive sorting algorithm include a base case?","It stops recursion on a sufficiently small input and prevents calls from continuing indefinitely."]},"189":{"2":["Which previously studied structure removes items in first-in-first-out order, and how is it different from a stack?","A queue uses FIFO; a stack removes the most recently added item first (LIFO)."],"3":["For a directed edge A → B, can you assume B → A also exists? Explain.","No. A directed edge permits travel from A to B only unless a reverse edge is also specified."]},"190":{"3":["Why does Dijkstra's algorithm select the unvisited node with the smallest tentative distance next?","With non-negative edge weights, this is the nearest unsettled node; its shortest distance can then be finalised."]}};
+  const taught=origins[n];
+  if(!taught)return;
+  const section=document.querySelector('#do-now');
+  if(!section)return;
+  const questions=[...section.querySelectorAll('.donow-questions .donow-question')];
+  if(questions.length!==4)return;
+  const deck=section.querySelector('.donow-deck');
+  if(!deck)return;
+  let reviews=[...section.querySelectorAll('.donow-review-question')];
+  if(n===33&&reviews.length===0){
+    /* The pre-existing L033 Do Now had questions but no model answer screens. */
+    const answers=['A (double negation).','XOR.','It stores one bit of state, updated at a triggering clock edge.','2³ = 8 rows.'];
+    questions.forEach((q,i)=>{
+      const stage=document.createElement('div');stage.className='donow-stage';stage.hidden=true;
+      const layout=document.createElement('div');layout.className='donow-review';
+      const lhs=document.createElement('article');lhs.className='donow-review-question';
+      const num=document.createElement('span');num.className='review-number';num.textContent='QUESTION '+(i+1)+' OF 4';
+      const title=document.createElement('h2');title.textContent='Retrieve earlier learning';
+      const prompt=document.createElement('p');prompt.className='review-question';
+      prompt.textContent=q.querySelector('p')?.textContent||'';
+      lhs.append(num,title,prompt);
+      const rhs=document.createElement('article');rhs.className='donow-review-answer';
+      const label=document.createElement('span');label.className='review-label';label.textContent='MODEL ANSWER';
+      const answer=document.createElement('p');answer.className='review-answer';answer.textContent=answers[i];
+      rhs.append(label,answer);layout.append(lhs,rhs);stage.append(layout);deck.append(stage);
+    });
+    reviews=[...section.querySelectorAll('.donow-review-question')];
+  }
+  if(reviews.length!==4)return;
+  const edits=updates[n]||{};
+  for(let i=0;i<4;i++){
+    const card=questions[i],review=reviews[i],source=taught[i];
+    if(edits[i]){
+      const [questionText,answerText]=edits[i];
+      const paragraphs=[...card.querySelectorAll('p')];
+      if(paragraphs.length){
+        paragraphs[paragraphs.length-1].textContent=questionText;
+        paragraphs.slice(0,-1).forEach(p=>p.remove());
+      }else{
+        const p=document.createElement('p');p.textContent=questionText;card.append(p);
+      }
+      const answerPrompt=review.querySelector('.review-question');
+      if(answerPrompt)answerPrompt.textContent=questionText;
+      const rhs=review.parentElement?.querySelector('.review-answer');
+      if(rhs)rhs.textContent=answerText;
+      review.parentElement?.querySelectorAll('.review-explain').forEach(note=>note.remove());
+    }
+    const style=n===1?(i===3?'CHALLENGE':'PRIOR KNOWLEDGE'):(i===0?'LAST LESSON':i===3?'CHALLENGE':'RETRIEVAL');
+    const fromGCSE=source==='GCSE';
+    const reference=fromGCSE?'PRIOR · GCSE':'TAUGHT · '+source;
+    const headings=[card.querySelector(':scope > strong'),review.querySelector('.review-number')];
+    for(let k=0;k<headings.length;k++){
+      const heading=headings[k];
+      if(!heading)continue;
+      heading.classList.add('h446-origin-heading');
+      heading.textContent=(k===0?String(i+1):'QUESTION '+(i+1)+' OF 4')+' · '+style;
+      const tag=document.createElement('span');
+      tag.className='h446-retrieval-origin';
+      tag.textContent=reference;
+      tag.title=fromGCSE?'GCSE knowledge revisited; no H446 lesson source claimed':'Previously taught in '+source;
+      heading.append(tag);
+    }
+  }
+}
+
 nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 advance.addEventListener('click',next);
 previous.addEventListener('click',previousAction);
@@ -1046,6 +1122,7 @@ prepareObjectiveVocabularySupport();
 prepareVocabulary();
 prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
+prepareH446DoNowSourceLabels();
 prepareMobileSwipeNavigation();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
