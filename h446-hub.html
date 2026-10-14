@@ -57,6 +57,24 @@
 .lesson-detail small{display:block;color:#5b7167;margin-top:8px}
 @media(hover:hover) and (pointer:fine){.lesson-detail{display:none!important}}
 @media(hover:none), (pointer:coarse){.lesson-popup{display:none!important}.lesson-info{width:27px;height:27px;right:5px}}
+
+/* Mobile lesson preview sheet */
+.mobile-sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1000}
+.mobile-sheet{position:fixed;bottom:0;left:0;right:0;z-index:1001;background:#fff;color:#143f32;border-radius:20px 20px 0 0;padding:14px 20px max(22px,env(safe-area-inset-bottom));max-height:75dvh;overflow-y:auto;box-shadow:0 -12px 40px #0003}
+.mobile-sheet[hidden],.mobile-sheet-backdrop[hidden]{display:none!important}
+.mobile-sheet-handle{width:42px;height:5px;background:#c3cec9;border-radius:5px;margin:0 auto 14px;touch-action:none}
+.mobile-sheet-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mobile-sheet-close{width:44px;height:44px;border:0;background:#e6eeea;border-radius:50%;font-size:25px;cursor:pointer}
+.mobile-sheet-title{font-size:23px;margin:12px 0}
+.mobile-sheet-objectives{font-size:16px;line-height:1.5}
+.mobile-sheet-objectives ul{padding-left:22px}
+.mobile-sheet-open{display:block;margin-top:18px;text-align:center;background:#006347;color:white;padding:16px;border-radius:10px;font-size:18px;font-weight:800;text-decoration:none}
+.mobile-sheet-open[hidden]{display:none}
+@media(max-width:700px),(pointer:coarse){
+  .lesson-entry>.lesson-info{display:none!important}
+  .lesson-entry>.lesson{padding-right:9px;min-height:46px;cursor:pointer}
+  .lesson-entry>.lesson:focus-visible{outline:3px solid #006347}
+}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -259,7 +277,68 @@ function repositionVisibleLessonPopups(){
   });
 }
 window.addEventListener('resize',repositionVisibleLessonPopups);
+
+const mobileLessonQuery=window.matchMedia('(max-width:700px), (pointer:coarse)');
+const sheetBackdrop=document.createElement('div');
+sheetBackdrop.className='mobile-sheet-backdrop';sheetBackdrop.hidden=true;
+const lessonSheet=document.createElement('section');
+lessonSheet.className='mobile-sheet';lessonSheet.hidden=true;
+lessonSheet.setAttribute('role','dialog');lessonSheet.setAttribute('aria-modal','true');
+lessonSheet.setAttribute('aria-label','Lesson preview');
+lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><strong class="mobile-sheet-number"></strong><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><h2 class="mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div><a class="mobile-sheet-open" href="#">Open Lesson →</a>';
+document.body.append(sheetBackdrop,lessonSheet);
+let sheetTrigger=null, sheetRequest=0, sheetStartY=null;
+function closeLessonSheet(){
+  if(lessonSheet.hidden)return;
+  sheetRequest++;
+  lessonSheet.hidden=true;sheetBackdrop.hidden=true;
+  document.body.style.overflow='';
+  if(sheetTrigger?.isConnected)sheetTrigger.focus({preventScroll:true});
+}
+async function openLessonSheet(n,href,specKey,trigger){
+  sheetTrigger=trigger;const request=++sheetRequest;
+  lessonSheet.querySelector('.mobile-sheet-number').textContent='Lesson '+pad(n)+' · Year '+year;
+  lessonSheet.querySelector('.mobile-sheet-title').textContent='Loading topic…';
+  lessonSheet.querySelector('.mobile-sheet-objectives').textContent='Loading objectives…';
+  const link=lessonSheet.querySelector('.mobile-sheet-open');
+  link.hidden=!href;
+  if(href)link.href=href;
+  sheetBackdrop.hidden=false;lessonSheet.hidden=false;
+  document.body.style.overflow='hidden';
+  lessonSheet.querySelector('.mobile-sheet-close').focus({preventScroll:true});
+  const info=await getLessonInfo(n,href,specKey);
+  if(request!==sheetRequest)return;
+  lessonSheet.querySelector('.mobile-sheet-title').textContent=info.title;
+  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
+  target.replaceChildren();
+  if(info.objectives.length){
+    const label=document.createElement('strong');label.textContent='By the end, you can…';target.append(label);
+    const ul=document.createElement('ul');
+    info.objectives.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.append(li);});
+    target.append(ul);
+  }
+  if(info.note){const note=document.createElement('p');note.textContent=info.note;target.append(note);}
+  if(!href){const note=document.createElement('p');note.textContent='Lesson planned — not yet available.';target.append(note);}
+}
+sheetBackdrop.addEventListener('click',closeLessonSheet);
+lessonSheet.querySelector('.mobile-sheet-close').addEventListener('click',closeLessonSheet);
+document.addEventListener('keydown',e=>{
+  if(lessonSheet.hidden)return;
+  if(e.key==='Escape')closeLessonSheet();
+  if(e.key==='Tab'){
+    const controls=[...lessonSheet.querySelectorAll('button,a')].filter(el=>!el.hidden);
+    const first=controls[0],last=controls[controls.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchstart',e=>{sheetStartY=e.touches[0].clientY;},{passive:true});
+lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchend',e=>{
+  if(sheetStartY!==null&&e.changedTouches[0].clientY-sheetStartY>65)closeLessonSheet();
+  sheetStartY=null;
+},{passive:true});
 function renderLessons(){
+  closeLessonSheet();
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
   for(const term of p.terms){
     total+=term.count;
@@ -304,6 +383,11 @@ function renderLessons(){
       }else{el.textContent=pad(x);}
 
       const entry=document.createElement('div');entry.className='lesson-entry';
+      if(mobileLessonQuery.matches){
+        if(el.tagName==='A')el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,href,specKey,el);});
+        else{el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Preview planned lesson '+pad(x));el.addEventListener('click',()=>openLessonSheet(x,href,specKey,el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonSheet(x,href,specKey,el);}});}
+      }
+
       const infoButton=document.createElement('button');infoButton.type='button';infoButton.className='lesson-info';
       infoButton.textContent='i';infoButton.setAttribute('aria-label','View topic and objectives for lesson '+pad(x));
       infoButton.setAttribute('aria-expanded','false');
@@ -320,6 +404,7 @@ function renderLessons(){
       entry.addEventListener('mouseenter',()=>{populate(popup);},{once:true});
       entry.addEventListener('focusin',()=>{positionLessonPopup(entry,popup);populate(popup);});
       infoButton.addEventListener('click',(event)=>{
+        if(mobileLessonQuery.matches){event.preventDefault();openLessonSheet(x,href,specKey,infoButton);return;}
         event.stopPropagation();
         const open=infoButton.getAttribute('aria-expanded')!=='true';
         holder.querySelectorAll('.lesson-detail').forEach(e=>e.setAttribute('aria-hidden','true'));
