@@ -50,6 +50,8 @@
 @media(hover:hover) and (pointer:fine){.lesson-entry:hover>.lesson-popup,.lesson-entry:focus-within>.lesson-popup{display:block}}
 .lesson-detail{display:none;margin:10px 0 3px;padding:14px;border:1px solid #b2c7bd;border-radius:8px;background:#f5f9f7;color:#164536;font:400 14px/1.5 system-ui}
 .lesson-detail[aria-hidden="false"]{display:block}
+.lesson-grid>.lesson-detail{grid-column:1/-1;width:100%;box-sizing:border-box}
+.lesson-detail:focus{outline:2px solid #145d4b;outline-offset:2px}
 .lesson-detail strong{display:block;margin-bottom:6px}
 .lesson-detail ul{margin:6px 0;padding-left:20px}
 .lesson-detail small{display:block;color:#5b7167;margin-top:8px}
@@ -291,7 +293,7 @@ function renderLessons(){
           head.textContent='Future lessons · specification point to be confirmed';
         }
         grid=document.createElement('div');grid.className='lesson-grid';
-        detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid,detail);sec.append(group);groupKey=key;
+        detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid);grid.append(detail);sec.append(group);groupKey=key;
       }
       const el=document.createElement(href?'a':'div');
       el.className='lesson '+(href?'live':'planned');
@@ -307,7 +309,6 @@ function renderLessons(){
       infoButton.setAttribute('aria-expanded','false');
       const popup=document.createElement('div');popup.className='lesson-popup';
       popup.textContent='Loading objectives…';
-      let opened=false;
       async function populate(target){
         const info=await getLessonInfo(x,href,specKey);
         if(target.isConnected){
@@ -320,13 +321,15 @@ function renderLessons(){
       entry.addEventListener('focusin',()=>{positionLessonPopup(entry,popup);populate(popup);});
       infoButton.addEventListener('click',(event)=>{
         event.stopPropagation();
-        const open=detail.getAttribute('aria-hidden')!=='false'||!opened;
+        const open=infoButton.getAttribute('aria-expanded')!=='true';
         holder.querySelectorAll('.lesson-detail').forEach(e=>e.setAttribute('aria-hidden','true'));
         holder.querySelectorAll('.lesson-info').forEach(e=>e.setAttribute('aria-expanded','false'));
-        opened=open;
         if(open){
+          entry.after(detail);
           detail.setAttribute('aria-hidden','false');infoButton.setAttribute('aria-expanded','true');
-          detail.textContent='Loading objectives…';populate(detail);
+          detail.textContent='Loading objectives…';
+          detail.scrollIntoView({block:'nearest',behavior:'instant'});
+          populate(detail);
         }else{detail.setAttribute('aria-hidden','true');}
       });
       entry.append(el,infoButton,popup);grid.append(entry);
