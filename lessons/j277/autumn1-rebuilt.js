@@ -85,8 +85,8 @@
   return `<section id="overview" class="page" data-objectives-vocab="true" data-phase-time="Objectives and vocabulary"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><span class="phase-tag">OCR J277 · ${escape(lesson.s)}</span><h1>${escape(lesson.t)}</h1><div class="objectives"><strong>By the end, you can…</strong><ul>${arr(lesson.o,p=>`<li>${escape(p)}</li>`)}</ul></div><div class="vocab-intro"><strong>Key vocabulary</strong><div class="vocab-intro-list">${hovers}</div></div></article><div class="objectives-vocab-right">${terms}</div></div></section>`;
  }
  function doNow(lesson){
-  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${i===3?"CHALLENGE":"RETRIEVAL"}</strong><p>${escape(q)}</p></article>`);
-  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4</span><h2>Recall earlier learning</h2><p class="review-question">${escape(q)}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(answer)}</p></article></div></div>`);
+  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}</strong><p>${escape(q)}</p></article>`);
+  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}</span><h2>Recall earlier learning</h2><p class="review-question">${escape(q)}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(answer)}</p></article></div></div>`);
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
@@ -171,7 +171,7 @@
  }
  function load(number,mode){
   const n=Number(number),from=n<=8?"004-008":n<=13?"009-013":"014-018";
-  fetch("../autumn1-"+from+".json?v=20261013-rebuilt1",{cache:"no-cache"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(all=>{
+  fetch("../autumn1-"+from+".json?v=20261014-donow1",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(all=>{
    const data=all[String(number)];if(!data)throw Error("Missing lesson "+number);
    if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
    if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
