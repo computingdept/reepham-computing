@@ -16,6 +16,53 @@ const advance=document.getElementById('advance');
 const previous=document.getElementById('previous');
 let current='do-now';
 
+/* Shared H446/J277 lesson identity: badge is drawn once from the URL, so
+   a pupil sees the same lesson number on TV, laptop and the phone header. */
+function lessonIdFromUrl(){
+  const match=window.location.pathname.match(/\/lessons\/(?:h446|j277)\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  return match ? match[1] : null;
+}
+function createLessonIdBadge(){
+  const number=lessonIdFromUrl();
+  if(!number)return null;
+  const namespace='http://www.w3.org/2000/svg';
+  const badge=document.createElement('span');
+  badge.className='lesson-id-badge';
+  const svg=document.createElementNS(namespace,'svg');
+  svg.setAttribute('class','lesson-id-svg');
+  svg.setAttribute('viewBox','0 0 120 52');
+  svg.setAttribute('role','img');
+  svg.setAttribute('aria-label','Lesson '+number);
+  const rect=document.createElementNS(namespace,'rect');
+  rect.setAttribute('x','1');rect.setAttribute('y','1');
+  rect.setAttribute('width','118');rect.setAttribute('height','50');
+  rect.setAttribute('rx','9');rect.setAttribute('fill','#1d2421');
+  const accent=document.createElementNS(namespace,'rect');
+  accent.setAttribute('x','2');accent.setAttribute('y','9');
+  accent.setAttribute('width','6');accent.setAttribute('height','34');
+  accent.setAttribute('rx','3');accent.setAttribute('fill','#64b58c');
+  const text=document.createElementNS(namespace,'text');
+  text.setAttribute('x','62');text.setAttribute('y','34');
+  text.setAttribute('text-anchor','middle');text.setAttribute('font-family','Arial,Helvetica,sans-serif');
+  text.setAttribute('font-weight','800');text.setAttribute('font-size','26');text.setAttribute('fill','#fff');
+  text.textContent='L'+number;
+  svg.append(rect,accent,text);
+  badge.appendChild(svg);
+  return badge;
+}
+function prepareLessonIdBadge(){
+  const meta=document.querySelector('.signal-meta');
+  const label=meta?.querySelector('.lesson-label');
+  if(!meta||!label||meta.querySelector('.lesson-id-row'))return;
+  const badge=createLessonIdBadge();
+  if(!badge)return;
+  const row=document.createElement('div');
+  row.className='lesson-id-row';
+  label.before(row);
+  row.append(badge,label);
+}
+
+
 function visibleIndex(items){
   return Math.max(0,items.findIndex(x=>!x.hidden));
 }
@@ -341,7 +388,10 @@ function updateMobileLessonStatus(){
   const phaseName=(activeNav?.textContent||current).trim();
   const phaseIndex=Math.max(0,order.indexOf(current))+1;
 
-  if(title)title.textContent=document.title.replace(/^OCR H446 · /,'');
+  if(title){
+    const raw=document.title.replace(/^OCR (?:H446|J277) · /,'');
+    title.textContent=lessonIdFromUrl()?raw.replace(/^Lesson \d{3} · /,''):raw;
+  }
   if(phase)phase.textContent=phaseName+' · '+phaseIndex+' / '+order.length;
 }
 
@@ -841,7 +891,11 @@ function prepareMobileSwipeNavigation(){
     status.id='mobile-lesson-status';
     status.className='mobile-lesson-status';
     status.setAttribute('aria-live','polite');
-    status.innerHTML='<span class="mobile-lesson-title"></span><span class="mobile-phase-status"></span>';
+    const badge=createLessonIdBadge();
+    const copy=document.createElement('span');
+    copy.className='mobile-lesson-copy';
+    copy.innerHTML='<span class="mobile-lesson-title"></span><span class="mobile-phase-status"></span>';
+    if(badge)status.append(badge,copy);else status.append(copy);
     if(courseBack)courseBack.insertAdjacentElement('afterend',status);
     else navwrap.prepend(status);
   }
@@ -962,6 +1016,7 @@ document.addEventListener('keydown',e=>{
 });
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
+prepareLessonIdBadge();
 prepareMobileSwipeNavigation();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
