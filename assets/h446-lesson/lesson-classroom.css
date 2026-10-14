@@ -1368,3 +1368,69 @@
   #you-do .j277-code-tasks p{margin-bottom:8px;font-size:clamp(17px,1.15vw,19px)}
   #you-do .j277-code-tasks pre.arithmetic{margin:5px 0 9px}
 }
+
+
+/* Persistent lesson identity across H446 and J277, including phone gesture mode.
+   Same charcoal badge + left-hand green accent; no additional teaching-content space. */
+.signal-meta .lesson-id-row{
+  width:max-content;
+  max-width:100%;
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  min-width:0;
+}
+.signal-meta .lesson-id-row .lesson-label{
+  margin-top:0;
+  min-width:0;
+}
+.lesson-id-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  width:85px;
+  line-height:0;
+}
+.lesson-id-svg{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:120 / 52;
+}
+@media(max-width:900px){
+  .signal-meta .lesson-id-row{gap:7px}
+  .signal-meta .lesson-id-badge{width:69px}
+}
+@media(max-width:700px){
+  .mobile-lesson-status{
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-start;
+    gap:9px;
+  }
+  .mobile-lesson-status .lesson-id-badge{
+    width:58px;
+  }
+  .mobile-lesson-copy{
+    display:flex;
+    flex:1 1 auto;
+    flex-direction:column;
+    justify-content:center;
+    min-width:0;
+  }
+  .mobile-lesson-copy .mobile-lesson-title,
+  .mobile-lesson-copy .mobile-phase-status{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+}
+@media(max-width:360px){
+  .mobile-lesson-status{gap:6px;padding:6px}
+  .mobile-lesson-status .lesson-id-badge{width:53px}
+  .mobile-lesson-copy .mobile-lesson-title{font-size:11px}
+}
