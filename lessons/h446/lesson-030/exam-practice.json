@@ -1,0 +1,95 @@
+{
+  "lesson": "030",
+  "course": "OCR H446",
+  "topic": "Half adders and full adders",
+  "intro": "Complete You Do first. Show working for each question. Reveal the model answer, method and marking points before self-marking.",
+  "questions": [
+    {
+      "title": "Outputs from an adder",
+      "marks": 3,
+      "prompt": "A digital circuit adds binary digits. Name its two output signals and explain why a full adder needs a third input.",
+      "answer": "Sum (S) and Carry-out (Cout). A full adder also accepts Carry-in (Cin) from a previous column.",
+      "steps": [
+        "Identify the result bit produced in this column: Sum.",
+        "Identify the bit passed to the next column: Carry-out.",
+        "Explain that adding multi-bit values may require a carry from the preceding column."
+      ],
+      "marksBreak": [
+        "1 mark: Sum (S).",
+        "1 mark: Carry-out (Cout).",
+        "1 mark: a full adder accepts a carry-in/third input."
+      ]
+    },
+    {
+      "title": "Half-adder truth table",
+      "marks": 4,
+      "prompt": "For the four pairs A,B = 00, 01, 10 and 11, write the outputs Sum and Carry-out for a half adder. Show each row as AB → Sum,Carry.",
+      "answer": "00 → 0,0; 01 → 1,0; 10 → 1,0; 11 → 0,1.",
+      "steps": [
+        "Sum is A XOR B: it is 1 when exactly one input is 1.",
+        "Carry-out is A AND B: it is 1 only when both inputs are 1.",
+        "For 1+1, binary 10 means Sum=0 and Carry-out=1."
+      ],
+      "marksBreak": [
+        "1 mark: 00 → 0,0.",
+        "1 mark: 01 → 1,0.",
+        "1 mark: 10 → 1,0.",
+        "1 mark: 11 → 0,1."
+      ]
+    },
+    {
+      "title": "Draw a half adder",
+      "marks": 3,
+      "prompt": "Draw a logic circuit with inputs P and R and outputs S and C. It must add two one-bit values. Label both gates and draw the input connections to each.",
+      "answer": "P and R feed an XOR gate producing S; P and R also feed an AND gate producing C.",
+      "steps": [
+        "Branch each input so that P and R reach both gates.",
+        "Connect P and R to XOR; label its output S.",
+        "Connect P and R to AND; label its output C."
+      ],
+      "marksBreak": [
+        "1 mark: XOR gate for S.",
+        "1 mark: AND gate for C.",
+        "1 mark: correct connections from both inputs to both gates and outputs correctly labelled."
+      ]
+    },
+    {
+      "title": "Work out a full-adder result",
+      "marks": 4,
+      "prompt": "A full adder receives A=1, B=0 and Cin=1. Calculate the decimal total of the three inputs. Determine Sum and Cout. Then state the outputs if A=1, B=1 and Cin=1.",
+      "answer": "For 1+0+1=2 (binary 10): Sum=0, Cout=1. For 1+1+1=3 (binary 11): Sum=1, Cout=1.",
+      "steps": [
+        "Add the three inputs as individual binary digits.",
+        "The right-hand (least significant) bit is Sum.",
+        "The next bit is Carry-out.",
+        "Check both cases by writing 2 as 10₂ and 3 as 11₂."
+      ],
+      "marksBreak": [
+        "1 mark: first case total 2 (binary 10).",
+        "1 mark: first case Sum=0 and Cout=1.",
+        "1 mark: second case total 3 (binary 11).",
+        "1 mark: second case Sum=1 and Cout=1."
+      ]
+    },
+    {
+      "title": "Design a full-adder circuit",
+      "marks": 5,
+      "prompt": "Design a full adder using only two XOR gates, two AND gates and one OR gate. Inputs are A, B and Cin. Draw and label the intermediate signal X and the final Sum and Cout outputs.",
+      "answer": "X=A XOR B; Sum=X XOR Cin; Cout=(A AND B) OR (X AND Cin).",
+      "steps": [
+        "Use the first XOR to calculate X=A XOR B.",
+        "Use the second XOR to calculate Sum=X XOR Cin.",
+        "Use an AND gate on A and B.",
+        "Use another AND gate on X and Cin.",
+        "Use OR to combine the two AND outputs into Cout. The first AND output must not feed the second AND gate."
+      ],
+      "marksBreak": [
+        "1 mark: first XOR takes A and B.",
+        "1 mark: second XOR takes X and Cin and produces Sum.",
+        "1 mark: first AND takes A and B.",
+        "1 mark: second AND takes X and Cin.",
+        "1 mark: OR joins both AND outputs to produce Cout with correct wiring."
+      ]
+    }
+  ]
+}
