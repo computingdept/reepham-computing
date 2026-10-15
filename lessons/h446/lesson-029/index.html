@@ -51,6 +51,12 @@
 
 
 #you-do .k29-independent{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}#you-do .k29-independent>div{min-width:0}#you-do .k29-instructions{background:#f4f9f5;border:1px solid #c9ddcf;border-radius:10px;padding:12px}#you-do .k29-instructions h4{margin:0 0 8px;font-size:clamp(18px,1.2vw,23px)}#you-do .k29-instructions li{margin:0 0 12px;line-height:1.35;font-size:clamp(16px,1.1vw,21px)}#you-do .k29-model-answer{margin:12px 0;border:1px solid #a9ceb8;border-radius:10px;padding:12px}#you-do .k29-model-answer summary{cursor:pointer;font-weight:800;font-size:clamp(17px,1.1vw,21px)}#you-do .k29-model-answer p{font-size:clamp(16px,1.1vw,20px);line-height:1.4}@media(max-width:900px){#you-do .k29-independent{grid-template-columns:1fr}}
+
+/* Optional exam practice: follows You Do without changing the core lesson navigation. */
+.phase-nav .k29-extra-nav{border-left:5px solid #b78332;background:#fff9ed;color:#6b480f;padding:11px 10px;font-size:14px;text-align:left;font-weight:900;text-decoration:none}
+.phase-nav .k29-extra-nav:hover,.phase-nav .k29-extra-nav:focus-visible{background:#ffeaca}
+.k29-finish-link{display:inline-flex;margin-top:12px;padding:10px 12px;border-radius:8px;background:#e8f3ed;border:2px solid #9bbfac;font-weight:900;color:#145538;text-decoration:none;font-size:clamp(13px,1.1vw,17px)}
+.k29-finish-link:hover,.k29-finish-link:focus-visible{background:#d7eee1}
 </style></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
@@ -64,6 +70,7 @@
     <button type="button" data-page="i-do">I Do</button>
     <button type="button" data-page="we-do">We Do</button>
     <button type="button" data-page="you-do">You Do</button>
+    <a class="k29-extra-nav" href="exam-practice.html?view=tv">Exam Practice ↗</a>
     <button type="button" data-page="vocabulary">Key Vocabulary</button>
     <button type="button" data-page="exit">Exit Ticket</button>
   </nav>
@@ -143,6 +150,27 @@
 <div class="lesson-footer">Lesson 029 · OCR H446 1.4.3 Boolean Algebra <span>Use the menu or ← → keys</span></div>
 <script src="../../../assets/h446-lesson/lesson.js?v=20261014-h446retrieval1"></script>
 <script>
+// Optional challenge is linked from the final independent task and exit ticket.
+(() => {
+  const finalTask=[...document.querySelectorAll('#you-do .youdo-question')].at(-1);
+  const host=finalTask?.querySelector('.k29-instructions')||finalTask;
+  if(host){
+    const link=document.createElement('a');
+    link.className='k29-finish-link';
+    link.href='exam-practice.html?view=worksheet';
+    link.textContent='Finished and checked all four tasks? Try exam practice →';
+    host.append(link);
+  }
+  const exit=document.querySelector('#exit .exit-check-card');
+  if(exit&&!exit.querySelector('.k29-finish-link')){
+    const link=document.createElement('a');
+    link.className='k29-finish-link';
+    link.href='exam-practice.html?view=tv';
+    link.textContent='Optional exam practice · Questions, worksheet and answers →';
+    exit.append(link);
+  }
+})();
+
 // Keep the reference map matched to the example shown in New Learning.
 (() => {
   const section = document.getElementById('new-learning');
