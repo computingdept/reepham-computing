@@ -118,7 +118,7 @@ function prepareYouDoAnswers(page){
     const stages=[...doc.querySelectorAll('.answer-stage')];
     if(stages.length!==questions.length)throw Error('Answer count differs from question count');
     missing.forEach(({q,i})=>{
-      const source=stages[i].querySelector('.answer-solution,.solution-card');
+      const source=stages[i].querySelector('.answer-solution,.solution-card,.answer-card');
       if(!source)throw Error('Worked answer '+(i+1)+' is missing');
       const panel=q.querySelector('.youdo-solution');
       if(!panel)return;
