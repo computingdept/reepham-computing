@@ -1,0 +1,47 @@
+/* Shared OCR H446 optional teaching phases: Catch Up and Exam Practice. */
+.phase-optional{overflow:auto!important}
+.optional-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 12px}
+.optional-heading h1{font-size:clamp(26px,2.7vw,42px);margin:2px 0 7px}
+.optional-heading .phase-tag{margin-bottom:4px}
+.optional-print-link,.optional-resource-link{display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;min-height:43px;border:1px solid #8bb69b;border-radius:8px;background:#ecf5ee;color:#13583a;font-size:14px;text-decoration:none;font-weight:850;white-space:nowrap}
+.optional-columns{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(10px,1.5vw,20px);height:calc(100% - 155px);min-height:320px}
+.optional-question,.optional-answer{background:#fff;border:1px solid #cbdcd1;border-radius:12px;padding:clamp(15px,2vw,26px);min-width:0;min-height:0;overflow:auto;scrollbar-gutter:stable}
+.optional-question{border-top:6px solid #176b4a}
+.optional-answer{border-top:6px solid #bd8d36}
+.optional-index,.optional-answer-label{display:block;color:#245940;font-size:12px;font-weight:900;letter-spacing:.08em}
+.optional-question h2,.optional-answer h2{font-size:clamp(22px,2vw,31px);margin:11px 0}
+.optional-prompt{font-size:clamp(17px,1.35vw,22px);line-height:1.5;margin:12px 0}
+.optional-map{width:min(100%,460px);margin:7px auto}
+.optional-map svg,.optional-answer-content svg{display:block;width:100%;max-height:290px;height:auto}
+.optional-answer-content>svg{max-width:380px;margin:6px auto}
+.optional-answer-content p,.optional-answer-content li{font-size:clamp(15px,1.15vw,19px);line-height:1.5}
+.optional-answer-content ol,.optional-answer-content ul{padding-left:26px}
+.optional-answer-content li{margin:9px 0}
+.optional-answer-content h2{margin-top:18px}
+.optional-answer-blank{min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#51695c}
+.optional-answer-blank strong{font-size:clamp(22px,2vw,29px)}
+.optional-answer-blank p{max-width:350px}
+.optional-expression{padding:12px 15px;background:#e7f6ed;color:#135139;font-weight:900;font-size:clamp(20px,1.6vw,27px);border-left:5px solid #176b4a;border-radius:7px;overflow-wrap:anywhere}
+.optional-group{border-left:4px solid #bd7a27;padding:8px 13px;background:#fffaf0}
+.optional-group.blue{border-left-color:#2d78ad;background:#f2f8fd}
+.optional-intro{font-size:14px;color:#4b6756;margin-top:17px}
+.optional-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0 0}
+.optional-step-status{font-size:13px;font-weight:750;color:#486954}
+.optional-skip{border:1px solid #a4c7b1;background:#f0f7f2;border-radius:8px;color:#125035;padding:9px 13px;font-size:13px;font-weight:850}
+@media(max-width:900px){
+ .optional-columns{height:auto;grid-template-columns:1fr;min-height:0}
+ .optional-heading{flex-wrap:wrap}
+ .optional-question,.optional-answer{overflow:visible;scrollbar-gutter:auto}
+ .optional-answer-blank{min-height:130px}
+ .optional-answer-content svg{max-height:250px}
+}
+@media(max-width:700px){
+ .phase-optional{overflow:auto!important}
+ .optional-heading h1{font-size:27px}
+ .optional-heading{margin-bottom:11px}
+ .optional-print-link{width:100%}
+ .optional-question,.optional-answer{padding:15px}
+ .optional-foot{flex-direction:column;align-items:stretch}
+ .optional-skip{min-height:44px}
+ .optional-map svg{max-height:270px}
+}

@@ -1,0 +1,334 @@
+{
+  "lesson": "029",
+  "course": "OCR H446",
+  "topic": "Karnaugh maps: simplify to gates",
+  "duration": "Optional · choose a question or complete the set",
+  "intro": "Complete your normal You Do first. For each map, show the largest useful groups, write a minimal expression and check the corresponding gates.",
+  "questions": [
+    {
+      "id": 1,
+      "level": "PRACTICE",
+      "minutes": 3,
+      "marks": 3,
+      "title": "One pair, one term",
+      "colName": "BC",
+      "rowName": "A",
+      "cols": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "rows": [
+        "0",
+        "1"
+      ],
+      "values": [
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "prompt": "A three-input logic circuit has the Karnaugh map below. Identify the largest valid group of 1s, write a simplified expression for Q, and name the gates required.",
+      "groups": [
+        {
+          "label": "One pair",
+          "colour": "amber",
+          "boxes": [
+            [
+              0,
+              0,
+              1,
+              2
+            ]
+          ],
+          "explanation": "A stays 0 and C stays 1; B changes. Keep ¬A and C."
+        }
+      ],
+      "answer": "Q = ¬A ∧ C",
+      "steps": [
+        "Circle the two adjacent 1s in the top row.",
+        "A is always 0, so retain ¬A. C is always 1, so retain C. B changes, so remove B.",
+        "Gate plan: apply NOT to A, then AND with C."
+      ],
+      "marksBreak": [
+        "1 mark: the correct horizontal pair.",
+        "1 mark: Q = ¬A ∧ C.",
+        "1 mark: correct NOT and AND gate plan."
+      ]
+    },
+    {
+      "id": 2,
+      "level": "WRAPAROUND",
+      "minutes": 4,
+      "marks": 4,
+      "title": "Opposite edges are neighbours",
+      "colName": "BC",
+      "rowName": "A",
+      "cols": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "rows": [
+        "0",
+        "1"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "prompt": "The two outside columns contain 1s. Show the largest possible group, give a simplified expression for Q and explain the equivalent gate circuit. Why is this grouping allowed?",
+      "groups": [
+        {
+          "label": "One group across opposite edges",
+          "colour": "amber",
+          "boxes": [
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              3,
+              3
+            ]
+          ],
+          "explanation": "The left and right columns are adjacent through wraparound. A and B change; C stays 0."
+        }
+      ],
+      "answer": "Q = ¬C",
+      "steps": [
+        "All four outer 1s form ONE group of four. The outside columns are neighbours.",
+        "A varies between rows; B varies between columns. C remains 0, so ¬C is the only term.",
+        "Gate plan: a single NOT gate on C."
+      ],
+      "marksBreak": [
+        "1 mark: correct wraparound group of four.",
+        "1 mark: explain why the opposite edges are neighbours.",
+        "1 mark: Q = ¬C.",
+        "1 mark: NOT gate on C."
+      ]
+    },
+    {
+      "id": 3,
+      "level": "EXAM PRACTICE",
+      "minutes": 5,
+      "marks": 5,
+      "title": "Overlap is allowed",
+      "colName": "AB",
+      "rowName": "CD",
+      "cols": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "rows": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "values": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "prompt": "This four-variable K-map represents a logic circuit. Show the two largest useful groups, write a minimal sum-of-products expression for Q, and describe an equivalent gate circuit.",
+      "groups": [
+        {
+          "label": "Orange 2 × 2 group",
+          "colour": "amber",
+          "boxes": [
+            [
+              1,
+              2,
+              0,
+              1
+            ]
+          ],
+          "explanation": "A stays 0 across columns 00/01; D stays 1 across rows 01/11. Term: ¬A ∧ D."
+        },
+        {
+          "label": "Blue group of four",
+          "colour": "blue",
+          "boxes": [
+            [
+              2,
+              2,
+              0,
+              3
+            ]
+          ],
+          "explanation": "On row CD=11, C and D stay 1. Term: C ∧ D. Some cells belong to both groups."
+        }
+      ],
+      "answer": "Q = (¬A ∧ D) ∨ (C ∧ D)",
+      "steps": [
+        "Orange block: rows 01/11 and columns 00/01. Keep ¬A and D.",
+        "Blue row: all four columns of row 11. Keep C and D.",
+        "Gate plan: NOT A; two AND gates for (¬A,D) and (C,D); OR the outputs."
+      ],
+      "marksBreak": [
+        "1 mark: orange 2 × 2 grouping.",
+        "1 mark: blue four-cell grouping.",
+        "1 mark: ¬A ∧ D.",
+        "1 mark: C ∧ D.",
+        "1 mark: join the terms with OR (or equivalent correct gate plan)."
+      ]
+    },
+    {
+      "id": 4,
+      "level": "CHALLENGE",
+      "minutes": 6,
+      "marks": 6,
+      "title": "The four corners connect",
+      "colName": "AB",
+      "rowName": "CD",
+      "cols": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "rows": [
+        "00",
+        "01",
+        "11",
+        "10"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "prompt": "Show the two largest groups on this four-variable K-map, including wraparound in both directions. Find a minimal sum-of-products expression for Q and explain why A and C disappear.",
+      "groups": [
+        {
+          "label": "Orange wraparound corners",
+          "colour": "amber",
+          "boxes": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              3
+            ],
+            [
+              3,
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              3,
+              3,
+              3
+            ]
+          ],
+          "explanation": "Four corners form ONE group. B = 0 and D = 0 remain fixed: ¬B ∧ ¬D."
+        },
+        {
+          "label": "Blue central block",
+          "colour": "blue",
+          "boxes": [
+            [
+              1,
+              2,
+              1,
+              2
+            ]
+          ],
+          "explanation": "The central four 1s form one group. B = 1 and D = 1 remain fixed: B ∧ D."
+        }
+      ],
+      "answer": "Q = (¬B ∧ ¬D) ∨ (B ∧ D)",
+      "steps": [
+        "Group the four corners as one wraparound block across both pairs of opposing edges.",
+        "Group the central four 1s as a second block.",
+        "A and C change within both groups, so they disappear. B and D are the only constant inputs.",
+        "Gate plan: (NOT B AND NOT D) OR (B AND D)."
+      ],
+      "marksBreak": [
+        "1 mark: one valid four-corner group.",
+        "1 mark: central group of four.",
+        "1 mark: ¬B ∧ ¬D.",
+        "1 mark: B ∧ D.",
+        "1 mark: combine the two groups with OR.",
+        "1 mark: explain why A and C disappear."
+      ]
+    }
+  ]
+}

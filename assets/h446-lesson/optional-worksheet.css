@@ -1,0 +1,50 @@
+/* OCR H446 optional print worksheet. Shares lesson JSON; no duplicated questions. */
+:root{--ink:#183b2d;--green:#126846;--line:#b9cec0;--muted:#597064}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7f5;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.45}
+[hidden]{display:none!important}
+.toolbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:11px clamp(15px,3vw,45px);border-bottom:1px solid var(--line);background:#fff}
+.toolbar a{color:var(--green);font-weight:900;text-decoration:none}
+.toolbar span{margin-right:auto;font-weight:800;font-size:13px}
+button{font:inherit;font-weight:900;cursor:pointer;border-radius:8px;min-height:44px;padding:9px 14px;border:1px solid var(--green);background:var(--green);color:#fff}
+button:focus-visible,a:focus-visible{outline:3px solid #d49d30;outline-offset:3px}
+#root{max-width:1050px;margin:0 auto;padding:25px clamp(15px,3vw,35px)}
+h1{font-size:clamp(26px,3vw,36px);margin:6px 0 14px}
+h2{font-size:21px;margin:9px 0;color:#153e2d}
+p{line-height:1.5}
+.intro{border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:14px}
+.kicker{font-size:12px;font-weight:900;color:var(--green);letter-spacing:.075em}
+.paper-question{background:white;padding:21px;margin:16px 0;border:1px solid var(--line);border-radius:11px;break-inside:avoid}
+.paper-meta{display:flex;justify-content:space-between;gap:12px;color:#325941;font-size:13px;font-weight:900}
+.paper-cols{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px}
+.paper-cols svg{width:100%;max-height:300px;display:block}
+.paper-cols figcaption{text-align:center;font-size:12px;color:var(--muted)}
+.paper-cols figure{margin:8px}
+.working{height:190px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 29px,#cadacf 30px,transparent 31px)}
+.answer-area{background:#eaf5ed;padding:13px 18px;border-radius:8px}
+.answer-area li{margin:7px 0}
+.answer-area strong{font-weight:900}
+.answer-toggle{margin:25px 0;padding:17px;border:1px solid #bcd5c4;background:#e9f3ec;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.answer-toggle button{flex-shrink:0}
+.model-section{border-top:3px solid #80b296;padding-top:12px}
+.model-section h2{font-size:26px}
+.expr{font-size:20px;font-weight:900;padding:9px 12px;border-left:5px solid #1f8257;background:white;border-radius:5px}
+.model-section .paper-cols{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)}
+@media(max-width:720px){.paper-cols,.model-section .paper-cols{grid-template-columns:1fr}.paper-question{padding:15px}.toolbar span{display:none}#root{padding:16px 12px}.working{height:150px}}
+@page{size:A4;margin:12mm}
+@media print{
+ body{background:#fff;color:#000;font-size:11pt}
+ .toolbar,.answer-toggle{display:none!important}
+ #root{max-width:none;padding:0}
+ h1{font-size:19pt}h2{font-size:14pt}
+ .paper-question{border:0;border-bottom:1px solid #aaa;border-radius:0;margin:0;padding:5mm 0 8mm;break-inside:avoid}
+ .paper-cols{grid-template-columns:1fr 1fr}
+ .paper-cols svg{max-height:210px}
+ .working{height:40mm}
+ .model-section{display:none!important}
+ body.print-answers .intro,body.print-answers .questions{display:none!important}
+ body.print-answers .model-section{display:block!important;border:0}
+ body.print-answers .model-section .paper-cols{grid-template-columns:.8fr 1.2fr}
+ body.print-answers .paper-question{font-size:10pt}
+ body.print-answers .answer-area{padding:8px 12px}
+}

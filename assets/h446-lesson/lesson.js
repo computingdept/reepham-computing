@@ -6,6 +6,8 @@ const signalMap={
   'i-do':['I Do','Listening','MWBs'],
   'we-do':['We Do','Quiet Working','MWBs'],
   'you-do':['You Do','Quiet Working','Turn & Talk'],
+  'catch-up':['Catch Up','Quiet Working','Independent'],
+  'exam-practice':['Exam Practice','Quiet Working','Independent'],
   vocabulary:['Questioning','Listening','Cold Calling'],
   exit:['Exit Questioning','Silence','Thumbs']
 };
@@ -316,6 +318,7 @@ function resetPhaseState(id){
       if(stages.length)showOnly(stages,0);
     }
   }
+  if(id==='catch-up'||id==='exam-practice')window.H446Optional?.reset?.(id);
   if(id==='exit'){
     const stages=[...page.querySelectorAll('.exit-stage')];
     if(stages.length)showOnly(stages,0);
@@ -479,6 +482,8 @@ function updateControl(){
         label=i<stages.length-1?'Next independent questions →':'Continue → Key Vocabulary';
       }
     }
+  }else if(current==='catch-up'||current==='exam-practice'){
+    label=window.H446Optional?.nextLabel?.(current)||'Continue → Key Vocabulary';
   }else if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
@@ -610,7 +615,7 @@ function next(){
       const count=page.querySelectorAll('.youdo-question').length;
       const index=Number(page.dataset.answerIndex||0);
       if(index<count-1){showYouDoAnswer(page,index+1);updateControl();return;}
-      showPage('vocabulary');return;
+      showPage(order[order.indexOf('you-do')+1]||'vocabulary');return;
     }
     if(page.dataset.assessmentMode==='true'){
       updateSignals('you-do');
@@ -638,7 +643,11 @@ function next(){
     const stages=[...page.querySelectorAll('.youdo-stage')];
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
-    showPage('vocabulary');return;
+    showPage(order[order.indexOf('you-do')+1]||'vocabulary');return;
+  }
+  if(current==='catch-up'||current==='exam-practice'){
+    if(window.H446Optional?.step?.(current,1)){updateControl();return;}
+    showPage(order[order.indexOf(current)+1]||'vocabulary');return;
   }
   if(current==='exit'){
     const stages=[...page.querySelectorAll('.exit-stage')];
@@ -682,6 +691,24 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='catch-up'||current==='exam-practice'){
+    if(window.H446Optional?.step?.(current,-1)){updateControl();return;}
+    const prior=order[Math.max(0,order.indexOf(current)-1)];
+    showPage(prior);
+    if(prior==='you-do'){
+      const yp=document.getElementById('you-do');
+      if(yp?.dataset.assessmentMode!=='true'){
+        const qs=[...yp.querySelectorAll('.youdo-question')];
+        yp.dataset.workMode='independent';
+        if(qs.length){
+          yp.dataset.answerMode='true';
+          showYouDoAnswer(yp,qs.length-1);
+        }
+        updateSignals('you-do');updateControl();
+      }
+    }
+    return;
+  }
   if(current==='overview'&&page.dataset.objectivesVocab==='true'){
     const stages=[...page.querySelectorAll('.objective-vocab-stage')];
     const i=visibleIndex(stages);
@@ -728,6 +755,14 @@ function previousAction(){
         return;
       }
     }
+  }
+  // Optional phases belong between You Do and Key Vocabulary when populated.
+  if(current==='vocabulary'&&order[order.indexOf('vocabulary')-1]!=='you-do'){
+    const prior=order[order.indexOf('vocabulary')-1];
+    showPage(prior);
+    window.H446Optional?.showLast?.(prior);
+    updateControl();
+    return;
   }
   // When returning from the first vocabulary term, restore the final You Do task,
   // rather than restarting pupils at the first question.
@@ -1109,6 +1144,35 @@ function prepareH446DoNowSourceLabels(){
   }
 }
 
+
+/* Optional H446 phases: same L-number badge, routine tiles and lesson controls.
+   Resources are discovered from same-folder JSON; no empty phase is registered. */
+window.H446OptionalBridge={
+  register(type,section,button){
+    if(!['catch-up','exam-practice'].includes(type)||order.includes(type))return false;
+    const before=type==='catch-up'
+      ?(order.includes('exam-practice')?'exam-practice':'vocabulary')
+      :'vocabulary';
+    const pos=order.indexOf(before);
+    if(pos<0)return false;
+    order.splice(pos,0,type);
+    pages.splice(pos,0,section);
+    nav.splice(pos,0,button);
+    const nextButton=document.querySelector('[data-page="'+before+'"]');
+    nextButton?.before(button);
+    const nextSection=document.getElementById(before);
+    nextSection?.before(section);
+    button.addEventListener('click',()=>showPage(type));
+    const afterHash=window.location.hash.slice(1);
+    if(afterHash===type)showPage(type);
+    else updateControl();
+    return true;
+  },
+  go(id){showPage(id);},
+  state(){return current;},
+  refresh(){updateControl();}
+};
+
 nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 advance.addEventListener('click',next);
 previous.addEventListener('click',previousAction);
@@ -1126,3 +1190,10 @@ prepareH446DoNowSourceLabels();
 prepareMobileSwipeNavigation();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
+if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  const optionalModule=document.createElement('script');
+  optionalModule.src='../../../assets/h446-lesson/optional-resources.js?v=20261015-optionalh4461';
+  optionalModule.async=true;
+  document.body.appendChild(optionalModule);
+}
+
