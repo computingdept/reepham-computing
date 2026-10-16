@@ -132,12 +132,21 @@
   const visuals=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"].map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
   return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
+
  function iDo(lesson){
-  const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span><h2>${escape(step)}</h2></div>`);
-  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span><h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}<span class="ido-example-count">Same example throughout</span></div><div class="ido-method">${steps}</div></article></div></section>`;
+  const isCpu=lesson.vis==="cpu-performance";
+  const headings=["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
+  const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${escape(step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
+  const reference=isCpu
+    ?`<h2>Compare CPU specifications</h2>${diagram(lesson.vis)}<p class="j277-cpu-question">${escape(lesson.m.q)}</p>`
+    :`<h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}`;
+  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}<span class="ido-example-count">Same example throughout</span></div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
-  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>Work it out together</h2><p>${escape(q)}</p>${i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span><h2>${escape(answer)}</h2></div></div></article>`);
+  const isCpu=lesson.vis==="cpu-performance";
+  const topics=["Clock speed","Cache size","Number of cores"];
+  const views=["cpu-speed","cpu-cache","cpu-cores"];
+  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${escape(answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div></div></article>`);
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"><div class="wedo-focus-deck">${cases}</div></section>`;
  }
  function youDo(lesson,number){
@@ -219,6 +228,99 @@
   .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{max-height:none}
   .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
   .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
+ }
+
+ /* Consistent readable typography; the SVG leads, then the question/explanation. */
+ .j277-cpu-lesson{
+   --j277-cpu-title:clamp(24px,1.75vw,30px);
+   --j277-cpu-copy:clamp(19px,1.24vw,22px);
+ }
+ .j277-cpu-lesson #new-learning .nl-reference h2,
+ .j277-cpu-lesson #new-learning .nl-explanation h2,
+ .j277-cpu-lesson #i-do .ido-reference h2,
+ .j277-cpu-lesson #i-do .ido-method .ido-step h2,
+ .j277-cpu-lesson #we-do .wedo-reference h2,
+ .j277-cpu-lesson #we-do .wedo-practice .wedo-step h2{
+   font-size:var(--j277-cpu-title);
+   line-height:1.22;
+   margin:0 0 12px;
+ }
+ .j277-cpu-lesson #new-learning .nl-stage p,
+ .j277-cpu-lesson #i-do .ido-reference .j277-cpu-question,
+ .j277-cpu-lesson #i-do .ido-method .ido-step p,
+ .j277-cpu-lesson #we-do .wedo-reference .j277-cpu-question,
+ .j277-cpu-lesson #we-do .wedo-practice .wedo-step p{
+   font-size:var(--j277-cpu-copy);
+   line-height:1.42;
+   font-weight:500;
+   margin:8px 0 12px;
+   overflow-wrap:break-word;
+ }
+ .j277-cpu-lesson #i-do .ido-reference .j277-cpu-question,
+ .j277-cpu-lesson #we-do .wedo-reference .j277-cpu-question{
+   padding:12px 15px;
+   border-left:5px solid var(--green);
+   background:var(--green-soft);
+   border-radius:0 9px 9px 0;
+ }
+ .j277-cpu-lesson #new-learning .nl-reference,
+ .j277-cpu-lesson #new-learning .nl-explanation,
+ .j277-cpu-lesson #i-do .ido-reference,
+ .j277-cpu-lesson #i-do .ido-method,
+ .j277-cpu-lesson #we-do .wedo-reference,
+ .j277-cpu-lesson #we-do .wedo-practice{
+   min-width:0;
+ }
+ .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual{
+   flex:1;display:flex;align-items:center;justify-content:center;min-height:0;
+ }
+ .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
+   display:block;
+   width:100%;
+   max-width:none;
+   margin:0 auto;
+ }
+ .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{
+   display:block;
+   width:100%;
+   height:auto;
+   max-height:min(67vh,570px);
+ }
+ .j277-cpu-lesson #i-do .ido-reference .a1-scene,
+ .j277-cpu-lesson #we-do .wedo-reference .a1-scene{
+   width:100%;
+   max-width:none;
+   margin:5px 0 12px;
+ }
+ .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
+ .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{
+   display:block;
+   width:100%;
+   height:auto;
+   max-height:min(42vh,370px);
+ }
+ .j277-cpu-lesson #i-do .ido-example-count,
+ .j277-cpu-lesson #we-do .wedo-example-count{
+   font-size:12px;
+   margin-top:4px;
+ }
+ @media(min-width:901px){
+   .j277-cpu-lesson #new-learning .nl-focus{
+     grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
+     gap:16px;
+   }
+   .j277-cpu-lesson #i-do .ido-example,
+   .j277-cpu-lesson #we-do .wedo-example{
+     grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);
+     gap:16px;
+   }
+ }
+ @media(max-width:900px){
+   .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg,
+   .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
+   .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{
+     max-height:none;
+   }
  }
  </style>`;
  const sharedHead=(number,title)=>`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · ${escape(title)}</title><meta name="description" content="OCR J277 Year 10 lesson ${number}: ${escape(title)}.">
