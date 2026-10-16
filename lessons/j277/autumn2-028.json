@@ -39,55 +39,55 @@
     ],
     "visuals": [
       {
-        "title": "WEB PROTOCOLS",
-        "layout": "compare",
+        "title": "WEB COMMUNICATION",
+        "layout": "web-secure",
         "boxes": [
-          "HTTP: web page",
-          "HTTPS: encrypted"
+          "HTTP",
+          "HTTPS",
+          "Web server"
         ],
-        "foot": "HTTPS protects data in transit"
+        "foot": "HTTPS encrypts data in transit"
       },
       {
-        "title": "SEND FILES",
+        "title": "FILE TRANSFER",
         "layout": "flow",
         "boxes": [
-          "File client",
-          "FTP transfer",
-          "File server"
+          "FTP client",
+          "File transfer",
+          "Server"
         ],
-        "foot": "FTP is associated with file transfer"
+        "foot": "FTP moves files"
       },
       {
-        "title": "EMAIL PROTOCOLS",
-        "layout": "layers",
+        "title": "EMAIL SEND AND RETRIEVE",
+        "layout": "email",
         "boxes": [
-          "SMTP · send",
-          "POP · download",
-          "IMAP · sync",
-          "Email client / server"
+          "SMTP send",
+          "POP download",
+          "IMAP sync"
         ],
-        "foot": "Remember send versus receive"
+        "foot": "Separate sending from accessing"
       },
       {
-        "title": "TCP AND IP",
-        "layout": "flow",
+        "title": "TCP AND IP ROLES",
+        "layout": "transport",
         "boxes": [
-          "Application data",
-          "TCP delivery",
-          "IP routing"
+          "Application",
+          "TCP",
+          "IP"
         ],
-        "foot": "Reliable transport and network addressing"
+        "foot": "Reliable delivery and routing"
       }
     ],
     "idoVisual": {
-      "title": "SEND AND RECEIVE EMAIL",
-      "layout": "flow",
+      "title": "SEND AND RETRIEVE AN EMAIL",
+      "layout": "email",
       "boxes": [
-        "SMTP sending",
+        "Laptop SMTP",
         "Mail server",
-        "IMAP syncing"
+        "Phone IMAP"
       ],
-      "foot": "Different email functions"
+      "foot": "Sending differs from synchronised retrieval"
     },
     "m": {
       "title": "Email on two devices",
@@ -182,32 +182,34 @@
     ],
     "wVisuals": [
       {
-        "title": "SECURE WEBSITE",
-        "layout": "compare",
+        "title": "WEB LOGIN IN TRANSIT",
+        "layout": "web-secure",
         "boxes": [
-          "HTTP = plain web",
-          "HTTPS = encrypted"
+          "Login",
+          "HTTPS",
+          "Web server"
         ],
-        "foot": "Use HTTPS for sensitive data"
+        "foot": "Encryption helps protect credentials"
       },
       {
-        "title": "EMAIL RETRIEVAL",
-        "layout": "compare",
+        "title": "POP AND IMAP EMAIL",
+        "layout": "email",
         "boxes": [
-          "POP: downloads",
-          "IMAP: synchronises"
+          "POP download",
+          "Mail server",
+          "IMAP sync"
         ],
-        "foot": "IMAP keeps messages on server"
+        "foot": "Local download versus synchronisation"
       },
       {
-        "title": "TCP WITH IP",
-        "layout": "flow",
+        "title": "TCP AND IP TOGETHER",
+        "layout": "transport",
         "boxes": [
-          "Application data",
-          "TCP ordering",
-          "IP routing"
+          "App data",
+          "TCP",
+          "IP"
         ],
-        "foot": "Transport and addressing differ"
+        "foot": "Delivery and routing have different jobs"
       }
     ],
     "k": {
@@ -226,8 +228,8 @@
         "Sends email between clients/servers or mail servers [1]."
       ],
       [
-        "Explain one difference between HTTP and HTTPS and why it matters for online payments. [4 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
-        "HTTP transfers web content [1]; HTTPS encrypts the connection [1], so intercepted data is not readable without the correct key [1] and protects payment details in transit [1]."
+        "A charity accepts donations on a public website. Explain how HTTPS differs from HTTP and why that matters when supporters enter payment information. [4 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
+        "HTTP is used to transfer web resources [1]. HTTPS adds encryption to web communication [1], so an interceptor without the appropriate key cannot read captured payment data [1], protecting sensitive information in transit [1]."
       ],
       [
         "Describe the uses of FTP, SMTP, IMAP, TCP and IP. [6 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
@@ -299,6 +301,57 @@
       "L026 · earlier learning",
       "L025 · earlier learning",
       "L024 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Data leaves one network",
+        "layout": "router",
+        "boxes": [
+          "LAN device",
+          "Router",
+          "Other network"
+        ],
+        "foot": "Which address is used to route?"
+      },
+      null,
+      {
+        "title": "Several possible paths",
+        "layout": "mesh-failure",
+        "boxes": [
+          "Node A",
+          "Node B",
+          "Node C",
+          "Node D",
+          "Node E"
+        ],
+        "foot": "Why is this resilient?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Secure charity donation page",
+        "layout": "flow",
+        "boxes": [
+          "Public PC",
+          "Web connection",
+          "Donation site"
+        ],
+        "foot": "Think about data in transit"
+      },
+      {
+        "title": "Several protocol jobs",
+        "layout": "protocol-roles",
+        "boxes": [
+          "Web",
+          "Email",
+          "Files"
+        ],
+        "foot": "Which rules are needed for each?"
+      }
+    ],
+    "memoryCue": "HTTP/HTTPS = web; FTP = file transfer; SMTP = send email; POP/IMAP = retrieve email; TCP = reliable delivery; IP = routing."
   }
 }
