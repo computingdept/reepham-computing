@@ -15,37 +15,42 @@
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
  function diagram(kind){
   if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary"].includes(kind)){
-    // All diagrams stay within J277 1.1.2: clock speed, cache size and cores.
-    const speed=()=>svgScene("Two CPU clock speeds: 3 GHz completes more clock cycles each second than 2 GHz.",
-      note(24,28,"CLOCK SPEED: cycles per second",19)+
-      note(25,74,"2 GHz",19)+note(25,169,"3 GHz",19)+
-      '<path d="M115 105 V65 H205 V105 H295 V65 H385 V105 H475" stroke="#237a58" stroke-width="4" fill="none"/>'+
-      '<path d="M115 201 V161 H175 V201 H235 V161 H295 V201 H355 V161 H415 V201 H475" stroke="#2679a9" stroke-width="4" fill="none"/>'+
-      note(128,139,"Same time interval (not to scale)",14)+
-      note(115,222,"More cycles per second can improve speed.",15));
-    const cache=()=>svgScene("CPU uses a fast cache for frequently used instructions and data rather than making as many slower visits to RAM.",
-      note(20,31,"CACHE: frequently used instructions + data",18)+
-      pill(18,73,148,85,"CPU","#e1effd",21)+
-      pill(208,73,146,85,"CACHE","#ddf3e4",20)+
-      pill(398,73,145,85,"RAM","#fae9d4",21)+
-      '<path d="M167 113 H205 M197 106 L205 113 L197 120 M355 113 H395 M387 106 L395 113 L387 120" stroke="#317c5d" stroke-width="4" fill="none"/>'+
-      note(23,194,"Cache is small and fast; RAM is slower.",17)+
-      note(23,222,"Larger cache can reduce visits to RAM.",16));
-    const cores=()=>svgScene("Two-core processor and four-core processor: more cores can process more tasks at the same time.",
-      note(22,28,"NUMBER OF CORES: tasks at the same time",18)+
-      note(24,82,"2 CORES",16)+
-      pill(150,49,173,65,"Task A","#e1effd",17)+pill(339,49,172,65,"Task B","#e1effd",17)+
-      note(24,179,"4 CORES",16)+
-      [0,1,2,3].map(i=>pill(117+i*109,145,100,62,"Task "+String.fromCharCode(65+i),"#def3e6",16)).join("")+
-      note(25,224,"More cores can help with several open programs.",15));
-    const comparison=()=>svgScene("Processor comparison: CPU A 3.2 GHz two cores four MB cache; CPU B 2.8 GHz four cores eight MB cache.",
-      note(18,29,"COMPARE TWO PROCESSORS",20)+
-      pill(144,43,163,43,"CPU A","#e0edfc",19)+
-      pill(358,43,166,43,"CPU B","#e3f3e7",19)+
-      note(23,118,"CLOCK",16)+pill(149,96,153,34,"3.2 GHz","#e0edfc",17)+pill(363,96,156,34,"2.8 GHz","#e3f3e7",17)+
-      note(23,160,"CORES",16)+pill(149,138,153,34,"2 cores","#e0edfc",17)+pill(363,138,156,34,"4 cores","#e3f3e7",17)+
-      note(23,202,"CACHE",16)+pill(149,180,153,34,"4 MB","#e0edfc",17)+pill(363,180,156,34,"8 MB","#e3f3e7",17));
-    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():comparison();
+    // GCSE J277 1.1.2 only. Taller, classroom-size drawings (not miniature badges).
+    const frame=(label,contents)=>svgScene(label,contents)
+      .replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"')
+      .replace('width="554" height="226"','width="554" height="334"');
+    const speed=()=>frame("Comparing clock speeds: three GHz has more clock cycles each second than two GHz.",
+      note(21,39,"CLOCK SPEED · cycles each second",24)+
+      note(22,105,"2 GHz",25)+note(22,226,"3 GHz",25)+
+      '<path d="M155 150 V96 H245 V150 H335 V96 H425 V150 H517" fill="none" stroke="#277959" stroke-width="6" stroke-linejoin="round"/>'+
+      '<path d="M155 280 V225 H217 V280 H279 V225 H341 V280 H403 V225 H465 V280 H517" fill="none" stroke="#287caa" stroke-width="6" stroke-linejoin="round"/>'+
+      note(158,176,"Same time period (schematic)",17)+
+      note(22,319,"More cycles per second → faster processing",19));
+    const cache=()=>frame("A CPU can find frequently used data and instructions faster in cache than by accessing main memory RAM.",
+      note(22,38,"CACHE · fast access to stored data",24)+
+      pill(20,96,148,110,"CPU","#e1effd",28)+
+      pill(207,96,148,110,"CACHE","#ddf3e4",26)+
+      pill(394,96,148,110,"RAM","#fae9d4",27)+
+      '<path d="M170 150 H204 M197 143 L205 150 L197 157 M356 150 H391 M384 143 L392 150 L384 157" stroke="#317c5d" stroke-width="5" fill="none"/>'+
+      note(22,252,"Cache holds frequently used instructions",19)+
+      note(22,283,"and data close to the CPU.",19)+
+      note(22,324,"Larger cache → fewer slower RAM accesses",18));
+    const cores=()=>frame("A processor with four cores can work on more independent tasks at once than a processor with two cores.",
+      note(22,39,"NUMBER OF CORES · tasks at once",24)+
+      note(22,112,"2 CORES",21)+
+      pill(162,76,164,78,"Task A","#e2edff",22)+
+      pill(349,76,164,78,"Task B","#e2edff",22)+
+      note(22,230,"4 CORES",21)+
+      [0,1,2,3].map(i=>pill(98+i*114,194,103,78,"Task "+String.fromCharCode(65+i),"#def3e6",18)).join("")+
+      note(22,321,"More cores → improved multitasking",19));
+    const compare=()=>frame("CPU comparison. CPU A 3.2 GHz two cores and four MB cache; CPU B 2.8 GHz four cores and eight MB cache.",
+      note(23,39,"COMPARE TWO CPUs · use all three factors",23)+
+      pill(169,56,170,50,"CPU A","#e0edfc",23)+pill(364,56,170,50,"CPU B","#e3f3e7",23)+
+      note(21,145,"CLOCK",19)+pill(174,115,158,46,"3.2 GHz","#e0edfc",21)+pill(369,115,158,46,"2.8 GHz","#e3f3e7",21)+
+      note(21,215,"CORES",19)+pill(174,185,158,46,"2 cores","#e0edfc",21)+pill(369,185,158,46,"4 cores","#e3f3e7",21)+
+      note(21,285,"CACHE",19)+pill(174,255,158,46,"4 MB","#e0edfc",21)+pill(369,255,158,46,"8 MB","#e3f3e7",21)+
+      note(23,329,"Best CPU depends on the task.",19));
+    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():compare();
   }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
@@ -123,8 +128,9 @@
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
-  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p>${lesson.vis==="cpu-performance"&&i<3?diagram(["cpu-speed","cpu-cache","cpu-cores"][i]):""}<span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
-  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${diagram(lesson.vis)}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
+  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
+  const visuals=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"].map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
+  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
  function iDo(lesson){
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span><h2>${escape(step)}</h2></div>`);
@@ -179,6 +185,41 @@
  #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
  @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
  @media(max-width:900px){.a1-scene svg{max-height:none}#you-do .source-note{font-size:14px}}
+
+ /* Lesson 019: larger visuals, balanced two-panel classroom layout.
+    Scoped to J277 CPU; shared H446 classroom CSS stays untouched. */
+ @media(min-width:901px){
+  .j277-cpu-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
+  .j277-cpu-lesson #new-learning .nl-reference,
+  .j277-cpu-lesson #new-learning .nl-explanation{padding:clamp(12px,1.3vw,19px)}
+ }
+ .j277-cpu-lesson #new-learning .nl-reference h2{font-size:clamp(23px,1.6vw,30px);line-height:1.2;margin:0 0 9px}
+ .j277-cpu-lesson #new-learning .nl-explanation h2{font-size:clamp(22px,1.55vw,29px);line-height:1.23;margin:0 0 13px}
+ .j277-cpu-lesson #new-learning .nl-stage p{font-size:clamp(17px,1.12vw,21px);line-height:1.35}
+ .j277-cpu-lesson #new-learning .nl-reference-note{font-size:clamp(14px,1vw,17px);padding:9px 12px}
+ .j277-cpu-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+ .j277-cpu-lesson #new-learning .j277-cpu-visual[hidden]{display:none!important}
+ .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{width:100%;max-width:none;margin:0;display:block}
+ .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{
+   width:100%;height:auto;max-height:min(68vh,610px);display:block
+ }
+ .j277-cpu-lesson #i-do .ido-reference h2,
+ .j277-cpu-lesson #we-do .wedo-reference h2{font-size:clamp(21px,1.4vw,27px);line-height:1.24}
+ .j277-cpu-lesson #i-do .ido-method .ido-step h2,
+ .j277-cpu-lesson #we-do .wedo-practice .wedo-step h2{font-size:clamp(20px,1.32vw,25px);line-height:1.28}
+ .j277-cpu-lesson #i-do .ido-reference .a1-scene,
+ .j277-cpu-lesson #we-do .wedo-reference .a1-scene{max-width:none;width:100%}
+ .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
+ .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:min(45vh,460px);width:100%;height:auto}
+ .j277-cpu-lesson #i-do .ido-reference p,
+ .j277-cpu-lesson #we-do .wedo-reference p{font-size:clamp(17px,1.1vw,21px);line-height:1.35}
+ @media(max-width:900px){
+  .j277-cpu-lesson #new-learning .nl-focus{grid-template-columns:1fr}
+  .j277-cpu-lesson #new-learning .j277-cpu-visual{flex:none}
+  .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{max-height:none}
+  .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
+  .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
+ }
  </style>`;
  const sharedHead=(number,title)=>`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · ${escape(title)}</title><meta name="description" content="OCR J277 Year 10 lesson ${number}: ${escape(title)}.">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
@@ -189,13 +230,14 @@
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-  const html=sharedHead(number,lesson.t)+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+   const cpuSync=lesson.vis==="cpu-performance"?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
+ const html=sharedHead(number,lesson.t)+`<body class="${lesson.vis==="cpu-performance"?"j277-cpu-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=20261014-j277retrievalrefs1"></script></body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=20261014-j277retrievalrefs1"></script>${cpuSync}</body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
