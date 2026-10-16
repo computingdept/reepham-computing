@@ -1,0 +1,300 @@
+{
+  "025": {
+    "t": "Network Topologies",
+    "s": "1.3.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "star topology",
+      "mesh topology",
+      "central switch",
+      "fault tolerant",
+      "multiple routes"
+    ],
+    "o": [
+      "Recognise star and mesh network topologies.",
+      "Explain advantages and limitations of each.",
+      "Choose a suitable topology and justify why."
+    ],
+    "c": [
+      [
+        "Topology describes connections",
+        "A network topology shows how computers and connection devices link together."
+      ],
+      [
+        "Star topology",
+        "Each endpoint connects to a central device such as a switch. Easier to add/manage devices, but the central device is a point of failure."
+      ],
+      [
+        "Mesh topology",
+        "Devices can connect to multiple others. Alternative paths make the system resilient if one link fails, but more connections increase cost and complexity."
+      ],
+      [
+        "Compare in context",
+        "For a small school LAN, a star can be practical. A high-availability network may use mesh routes; explain what happens when a link or central device fails."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "WHAT IS A TOPOLOGY?",
+        "layout": "star",
+        "boxes": [
+          "Switch",
+          "PC A",
+          "PC B",
+          "PC C",
+          "Printer"
+        ],
+        "foot": "Topology shows the layout of connections"
+      },
+      {
+        "title": "STAR · CENTRAL CONNECTION",
+        "layout": "star",
+        "boxes": [
+          "Switch",
+          "Room 1",
+          "Room 2",
+          "Room 3",
+          "Room 4"
+        ],
+        "foot": "Central failure could affect endpoints"
+      },
+      {
+        "title": "MESH · MULTIPLE PATHS",
+        "layout": "mesh",
+        "boxes": [
+          "Router 1",
+          "Router 2",
+          "Router 3",
+          "Router 4",
+          "Router 5"
+        ],
+        "foot": "Alternative routes may remain"
+      },
+      {
+        "title": "CHOOSING TOPOLOGY",
+        "layout": "compare",
+        "boxes": [
+          "Star: simple",
+          "Mesh: resilient"
+        ],
+        "foot": "Weigh cost against resilience"
+      }
+    ],
+    "idoVisual": {
+      "title": "WHAT IS A TOPOLOGY?",
+      "layout": "star",
+      "boxes": [
+        "Switch",
+        "PC A",
+        "PC B",
+        "PC C",
+        "Printer"
+      ],
+      "foot": "Topology shows the layout of connections"
+    },
+    "m": {
+      "title": "School network failure",
+      "q": "A school LAN uses a star topology. Explain one advantage and one disadvantage if its central switch fails. [4 marks]",
+      "headings": [
+        "Recognise the star",
+        "Explain advantage",
+        "Explain central failure",
+        "Check balance"
+      ],
+      "st": [
+        "All classroom devices connect to one central switch.",
+        "New devices can be connected easily [1], making the network straightforward to manage [1].",
+        "The switch is a single point of failure [1], so its failure can interrupt communication for connected devices [1].",
+        "Give advantage plus linked benefit and disadvantage plus linked effect."
+      ]
+    },
+    "w": [
+      [
+        "A business needs reliable connections between several sites. Explain one advantage and one disadvantage of a mesh topology. [4 marks]",
+        "Multiple possible routes [1] mean traffic can use another path if a link fails [1]. More connections/hardware are needed [1], increasing cost or maintenance [1]."
+      ],
+      [
+        "A small primary school chooses a star topology. Explain two advantages of this decision. [4 marks]",
+        "Each device has its own link to the central device [1], making fault isolation easier [1]. Devices can be added or managed centrally [1], simplifying expansion [1]."
+      ],
+      [
+        "Describe how a mesh can continue operating after one connection fails. [4 marks]",
+        "Mesh provides multiple paths between devices [1]. When a link fails [1], traffic may be routed along another available path [1], keeping communication possible [1]."
+      ]
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Look for reliability requirement and its trade-off."
+        ],
+        [
+          "Step 1 · identify",
+          "Mesh has alternative paths [1], but also requires more links [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "Rerouting improves fault tolerance [1] while extra links cost more [1]."
+        ],
+        [
+          "Check the marks",
+          "Multiple possible routes [1] mean traffic can use another path if a link fails [1]. More connections/hardware are needed [1], increasing cost or maintenance [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Choose two practical management reasons."
+        ],
+        [
+          "Step 1 · identify",
+          "Dedicated links [1]; connections are managed from the central switch [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "A single endpoint fault can be isolated [1]; adding devices is straightforward [1]."
+        ],
+        [
+          "Check the marks",
+          "Each device has its own link to the central device [1], making fault isolation easier [1]. Devices can be added or managed centrally [1], simplifying expansion [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Follow the data from the failed link to another route."
+        ],
+        [
+          "Step 1 · identify",
+          "Mesh has redundant connections [1]; one link stops working [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "A different path may carry data [1], avoiding total loss of service [1]."
+        ],
+        [
+          "Check the marks",
+          "Mesh provides multiple paths between devices [1]. When a link fails [1], traffic may be routed along another available path [1], keeping communication possible [1]."
+        ]
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "Guided practice · 1",
+        "layout": "flow",
+        "boxes": [
+          "Switch",
+          "Room 1",
+          "Room 2",
+          "Room 3",
+          "Room 4"
+        ],
+        "foot": "Network Topologies"
+      },
+      {
+        "title": "Guided practice · 2",
+        "layout": "compare",
+        "boxes": [
+          "Router 1",
+          "Router 2",
+          "Router 3",
+          "Router 4",
+          "Router 5"
+        ],
+        "foot": "Network Topologies"
+      },
+      {
+        "title": "Guided practice · 3",
+        "layout": "grid",
+        "boxes": [
+          "Star: simple",
+          "Mesh: resilient"
+        ],
+        "foot": "Network Topologies"
+      }
+    ],
+    "k": {
+      "q": "Calculate how many direct links a fully connected mesh needs for a small number of devices. This extends the topology comparison.",
+      "code": "devices = 4\nlinks = devices * (devices - 1) / 2\nprint(links)",
+      "p": [
+        "Predict the number of links.",
+        "Change devices to 5.",
+        "Add print(\"Links counted\") after displaying the value."
+      ],
+      "a": "Four devices: 4 × 3 ÷ 2 = 6 links. Five devices: 5 × 4 ÷ 2 = 10 links.\n\nExtended OCR ERL:\ndevices = 5\nlinks = devices * (devices - 1) / 2\nprint(links)\nprint(\"Links counted\")\n\nOutputs: 10 and Links counted. Mathematical enrichment; OCR J277 focuses on comparing topologies."
+    },
+    "e": [
+      [
+        "State one advantage of a mesh topology. [1 mark]\n\nSource: Adapted from your Paper 1 revision booklet, 1.3.1.",
+        "Several routes provide fault tolerance if a link fails [1]."
+      ],
+      [
+        "A school star network's central switch stops working. Explain the effect and suggest one precaution. [4 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
+        "Central switch is the connection point [1], so connected devices may lose communication [1]. Use a spare/replacement switch or resilient design [1] to restore/reduce downtime [1]."
+      ],
+      [
+        "Compare star and mesh topologies for a large organisation. [6 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
+        "Star devices connect to a central switch [1], are easier/cheaper to manage [1], but depend on the central device [1]. Mesh provides more than one path [1], so it can withstand some link failures [1], but uses extra connections increasing cost/complexity [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Topology",
+        "Arrangement of network devices and links."
+      ],
+      [
+        "Star topology",
+        "Endpoints connect to a central switch or hub."
+      ],
+      [
+        "Mesh topology",
+        "Devices connect via multiple paths between nodes."
+      ],
+      [
+        "Fault tolerance",
+        "Ability to continue working after some faults."
+      ],
+      [
+        "Central switch",
+        "Network device that connects and forwards data to LAN devices."
+      ],
+      [
+        "Redundancy",
+        "Extra paths that can be used if a path fails."
+      ]
+    ],
+    "x": [
+      "Mesh topology generally provides alternative links that can improve fault tolerance.",
+      true
+    ],
+    "r": [
+      [
+        "State one purpose of DNS. [2 marks]",
+        "It looks up an IP address [1] associated with a requested domain name [1]."
+      ],
+      [
+        "State what a NIC allows a computer to do. [1 mark]",
+        "Connect to a network to send/receive data [1]."
+      ],
+      [
+        "State the role of a server. [1 mark]",
+        "Provides services/resources to clients [1]."
+      ],
+      [
+        "A college network is heavily used at lunchtime. Explain two factors affecting its performance. [4 marks]",
+        "Many users share capacity [1], which may slow individual transfers [1]. Limited bandwidth [1] limits the amount of data transferred per second [1]."
+      ]
+    ],
+    "refs": [
+      "L024 · last lesson",
+      "L023 · earlier learning",
+      "L022 · earlier learning",
+      "L021 · earlier learning"
+    ]
+  }
+}
