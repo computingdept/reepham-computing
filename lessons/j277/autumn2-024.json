@@ -1,0 +1,295 @@
+{
+  "024": {
+    "t": "The Internet, DNS and Cloud Storage",
+    "s": "1.3.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Internet",
+      "DNS",
+      "domain name",
+      "IP address",
+      "client",
+      "server",
+      "cloud storage",
+      "remote servers"
+    ],
+    "o": [
+      "Define the Internet as a worldwide network of networks.",
+      "Describe how DNS finds an IP address for a domain name.",
+      "Explain advantages and risks of cloud-based services."
+    ],
+    "c": [
+      [
+        "The Internet",
+        "The Internet is a worldwide set of interconnected computer networks where clients can request resources from servers."
+      ],
+      [
+        "DNS",
+        "The Domain Name System uses distributed servers to look up IP addresses associated with domain names."
+      ],
+      [
+        "Cloud storage and software",
+        "Cloud storage puts files on remote servers; cloud software and processing also provide services using remote computing resources."
+      ],
+      [
+        "Benefits and limitations",
+        "Cloud services support access from different devices, but depend on connectivity, service availability and secure access."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "NETWORK OF NETWORKS",
+        "layout": "flow",
+        "boxes": [
+          "School LAN",
+          "Internet routers",
+          "Web server"
+        ],
+        "foot": "Different networks are linked"
+      },
+      {
+        "title": "DNS LOOKUP",
+        "layout": "flow",
+        "boxes": [
+          "Domain name",
+          "DNS service",
+          "IP address"
+        ],
+        "foot": "A name is resolved to an address"
+      },
+      {
+        "title": "CLOUD STORAGE",
+        "layout": "flow",
+        "boxes": [
+          "Device",
+          "Internet",
+          "Remote files"
+        ],
+        "foot": "Data lives on remote servers"
+      },
+      {
+        "title": "CLOUD TRADE-OFFS",
+        "layout": "compare",
+        "boxes": [
+          "Access anywhere",
+          "Needs connection"
+        ],
+        "foot": "Consider availability and security"
+      }
+    ],
+    "idoVisual": {
+      "title": "NETWORK OF NETWORKS",
+      "layout": "flow",
+      "boxes": [
+        "School LAN",
+        "Internet routers",
+        "Web server"
+      ],
+      "foot": "Different networks are linked"
+    },
+    "m": {
+      "title": "Find the web server",
+      "q": "A pupil enters a website's domain name in a browser. Describe how DNS helps them reach its web server. [4 marks]",
+      "headings": [
+        "Start from the name",
+        "Request DNS lookup",
+        "Receive the address",
+        "Connect and check"
+      ],
+      "st": [
+        "The pupil begins with a readable domain name, not the server's numeric network address.",
+        "The device queries a DNS service to find the matching IP address [1].",
+        "DNS looks up the domain [1] and returns the IP address to the client [1].",
+        "The browser connects to the web server using that address [1]. Check the sequence."
+      ]
+    },
+    "w": [
+      [
+        "A visitor enters the name of a local museum website. Describe the DNS lookup and connection in four stages. [4 marks]",
+        "Client asks DNS for an address [1]; DNS finds an IP address linked to the name [1]; returns the IP address [1]; browser connects to the web server [1]."
+      ],
+      [
+        "A student stores revision notes on a remote service. Explain one advantage and one disadvantage. [4 marks]",
+        "Notes can be accessed from different connected devices [1], enabling work at home or school [1]. Internet/provider availability is needed [1], so outages can block access [1]."
+      ],
+      [
+        "Explain the difference between a client and a server when watching a web-hosted tutorial. [4 marks]",
+        "The student's device is a client [1] requesting the tutorial [1]; the remote server hosts/provides the content [1] and responds to the request [1]."
+      ]
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Begin with the user's typed domain name."
+        ],
+        [
+          "Step 1 · identify",
+          "Client makes a DNS request [1]; DNS finds the matching IP [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "DNS returns address [1]; browser uses it to reach server [1]."
+        ],
+        [
+          "Check the marks",
+          "Client asks DNS for an address [1]; DNS finds an IP address linked to the name [1]; returns the IP address [1]; browser connects to the web server [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Use one benefit and one drawback linked to remote storage."
+        ],
+        [
+          "Step 1 · identify",
+          "Access from multiple devices [1]; dependence on a connection [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "Convenient at multiple locations [1] but unavailable if the service is down [1]."
+        ],
+        [
+          "Check the marks",
+          "Notes can be accessed from different connected devices [1], enabling work at home or school [1]. Internet/provider availability is needed [1], so outages can block access [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Decide who requests and who supplies the video."
+        ],
+        [
+          "Step 1 · identify",
+          "Client: student device requesting service [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Server: provides remote content and response [2]."
+        ],
+        [
+          "Check the marks",
+          "The student's device is a client [1] requesting the tutorial [1]; the remote server hosts/provides the content [1] and responds to the request [1]."
+        ]
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "Apply hardware",
+        "layout": "flow",
+        "boxes": [
+          "Domain name",
+          "DNS service",
+          "IP address"
+        ],
+        "foot": "The Internet, DNS and Cloud Storage"
+      },
+      {
+        "title": "Analyse the connection",
+        "layout": "compare",
+        "boxes": [
+          "Device",
+          "Internet",
+          "Remote files"
+        ],
+        "foot": "The Internet, DNS and Cloud Storage"
+      },
+      {
+        "title": "Explain the choice",
+        "layout": "grid",
+        "boxes": [
+          "Access anywhere",
+          "Needs connection"
+        ],
+        "foot": "The Internet, DNS and Cloud Storage"
+      }
+    ],
+    "k": {
+      "q": "Model a DNS lookup using known demonstration values; no real network request is made.",
+      "code": "domain = \"library.example\"\nip = \"192.0.2.77\"\nprint(domain)\nprint(ip)",
+      "p": [
+        "Predict both lines.",
+        "Change domain to \"museum.example\".",
+        "Add print(\"Lookup complete\") at the end."
+      ],
+      "a": "Initially: library.example; 192.0.2.77.\n\nExtended OCR ERL:\ndomain = \"museum.example\"\nip = \"192.0.2.77\"\nprint(domain)\nprint(ip)\nprint(\"Lookup complete\")\n\nThe address uses a reserved documentation range. The script simulates an answer, not DNS."
+    },
+    "e": [
+      [
+        "State one purpose of DNS. [2 marks]\n\nSource: Adapted from your Paper 1 revision booklet, 1.3.1.",
+        "It looks up an IP address [1] associated with a requested domain name [1]."
+      ],
+      [
+        "A pupil cannot open a cloud document during an Internet outage. Explain a benefit and a limitation of cloud storage. [4 marks]\n\nSource: Original J277-style question; not a past-paper original.",
+        "Benefit: access remotely from different devices [1], allowing work at school/home [1]. Limitation: requires availability of connection/provider [1], so data may be temporarily inaccessible [1]."
+      ],
+      [
+        "Describe how DNS, a client and a web server interact when opening a web page. [6 marks]\n\nSource: Original J277-style question; not a past-paper original.",
+        "Client starts with name [1] and requests DNS lookup [1]; DNS locates address [1] and returns IP [1]; client contacts server [1], which returns requested content [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Internet",
+        "Worldwide system of connected networks."
+      ],
+      [
+        "DNS",
+        "Domain Name System; resolves names to IP addresses."
+      ],
+      [
+        "Domain name",
+        "Readable name used to identify an Internet service."
+      ],
+      [
+        "IP address",
+        "Address used for routing data on networks."
+      ],
+      [
+        "Cloud storage",
+        "Remote file storage accessed over a network."
+      ],
+      [
+        "Client",
+        "Device requesting a service."
+      ],
+      [
+        "Server",
+        "Computer providing a service."
+      ]
+    ],
+    "x": [
+      "DNS associates human-readable domain names with IP addresses.",
+      true
+    ],
+    "r": [
+      [
+        "State what a NIC allows a computer to do. [1 mark]",
+        "Connect to a network to send/receive data [1]."
+      ],
+      [
+        "Explain why large cache may improve performance.",
+        "More frequently used data/instructions fit in fast cache, reducing RAM access."
+      ],
+      [
+        "Why is a thermostat an embedded system?",
+        "Its controller is built into a larger device for one specific job."
+      ],
+      [
+        "A LAN printer works but a website cannot load. What might need checking, and why?",
+        "Check the router/Internet link because the LAN may still allow local printing while the WAN/Internet route fails."
+      ]
+    ],
+    "refs": [
+      "L023 · last lesson",
+      "L020 · embedded systems",
+      "L019 · CPU performance",
+      "L021 · networks"
+    ]
+  }
+}
