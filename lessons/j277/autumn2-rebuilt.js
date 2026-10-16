@@ -51,7 +51,99 @@
  const pill=(x,y,w,h,label,color="#e6f3eb",font=17)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${color}" stroke="#92b4a0"/><text x="${x+w/2}" y="${y+h/2+font/3}" fill="#1c573e" font-size="${font}" font-weight="800" text-anchor="middle" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+
+ // Topic-specific visual explanations, rather than decorative labelled boxes.
+ // Only opt-in J277 networking scenes use these illustrations.
+ function networkScene(spec){
+   const esc=escape;
+   const title=String(spec.title||"Network diagram");
+   const svg=(parts)=>'<figure class="a1-scene j277-network-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg">'+
+     '<rect x="3" y="3" width="554" height="334" rx="15" fill="#f7fbf8" stroke="#c0d8c9" stroke-width="2"/>'+
+     '<text x="280" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="850" fill="#173f31">'+esc(title.slice(0,38))+'</text>'+parts+'</svg></figure>';
+   const rounded=(x,y,w,h,fill="#e5f0fb")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="13" fill="'+fill+'" stroke="#7da795" stroke-width="2.5"/>';
+   const txt=(x,y,t,size=18,weight=800)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="'+size+'" font-weight="'+weight+'" fill="#1e523e">'+esc(t)+'</text>';
+   const connector=(x1,y1,x2,y2,dash=false)=>'<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#477c79" stroke-width="4" stroke-linecap="round" fill="none"'+(dash?' stroke-dasharray="9 7"':'')+'/>';
+   const arrow=(x1,y1,x2,y2)=>connector(x1,y1,x2,y2)+'<path d="M'+(x2-10)+' '+(y2-8)+' L'+x2+' '+y2+' L'+(x2-10)+' '+(y2+8)+'" fill="none" stroke="#477c79" stroke-width="3" stroke-linejoin="round"/>';
+   const node=(x,y,title)=>rounded(x-67,y-32,134,64,"#e1effa")+txt(x,y+7,title,16);
+   const foot=(t)=>txt(280,321,t,16,750);
+   const kind=String(spec.layout);
+   let a="";
+   if(kind==="lanwan"){
+     a+=rounded(19,61,239,232,"#e8f2fb")+rounded(302,61,239,232,"#e4f3e8");
+     a+=txt(138,88,"LAN · ONE SITE",20)+txt(421,88,"WAN · MANY SITES",19);
+     [[69,134],[198,134],[138,240]].forEach(p=>a+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="23" fill="#d3e9fa" stroke="#4881a6" stroke-width="3"/>');
+     a+=connector(69,156,138,216)+connector(198,156,138,216);
+     a+=txt(69,140,"PC",15)+txt(198,140,"PC",15)+txt(138,246,"SW",14);
+     a+=rounded(321,126,94,69,"#eaf8ef")+rounded(431,217,94,68,"#eaf8ef");
+     a+=txt(368,154,"SCHOOL",15)+txt(368,175,"A",18)+txt(478,244,"SCHOOL",15)+txt(478,265,"B",18);
+     a+=connector(402,191,445,228)+txt(437,209,"LONG LINK",12);
+     a+=txt(138,281,"Local connections",15)+txt(421,112,"Across towns",16);
+     return svg(a);
+   }
+   if(kind==="bandwidth"){
+     a+=txt(112,79,"CONNECTED USERS",18);
+     [120,174,229].forEach((y,i)=>{a+=rounded(36,y-20,107,42,i%2?"#e5f2fb":"#e4f2ec");a+=txt(89,y+8,"USER "+(i+1),14);a+=connector(143,y,227,174);});
+     a+=rounded(227,109,110,131,"#f4eccc")+txt(282,144,"SHARED",18)+txt(282,171,"LINK",21)+txt(282,206,"Mb/s",20);
+     a+=arrow(340,174,392,174)+rounded(393,117,130,115,"#e0f2e7")+txt(458,153,"NETWORK",19)+txt(458,181,"SERVICE",19);
+     a+=foot("More users may share the same capacity.");
+     return svg(a);
+   }
+   if(kind==="clientserver"){
+     a+=rounded(219,106,122,156,"#dff1e4")+txt(280,153,"SERVER",22);
+     [185,207,229].forEach(y=>a+=connector(243,y,317,y));
+     [[91,118],[94,255],[466,161]].forEach((p,i)=>{a+=node(p[0],p[1],"CLIENT "+(i+1));a+=connector(p[0]<200?158:399,p[1],p[0]<200?219:341,178);});
+     a+=txt(280,287,"Clients request · server provides",17);
+     return svg(a);
+   }
+   if(kind==="peer"){
+     const pts=[[280,95],[116,237],[446,237]];
+     [[0,1],[0,2],[1,2]].forEach(e=>{const p=pts[e[0]],q=pts[e[1]];a+=connector(p[0],p[1],q[0],q[1]);});
+     pts.forEach((p,i)=>a+=node(p[0],p[1],"PEER "+(i+1)));
+     a+=txt(280,304,"Each device can send and receive",17);
+     return svg(a);
+   }
+   if(kind==="switch"){
+     const pts=[[279,174],[94,111],[464,111],[94,260],[464,260]];
+     for(let i=1;i<5;i++)a+=connector(pts[0][0],pts[0][1],pts[i][0],pts[i][1]);
+     a+=rounded(202,131,154,86,"#def1e4")+txt(279,165,"LAN SWITCH",18)+txt(279,191,"MAC",19);
+     ["PC A","PC B","PRINTER","SERVER"].forEach((name,i)=>a+=node(pts[i+1][0],pts[i+1][1],name));
+     a+=txt(280,313,"Forwards traffic inside the LAN",16);
+     return svg(a);
+   }
+   if(kind==="router"){
+     a+=rounded(21,87,187,180,"#e8f3fc")+rounded(351,87,187,180,"#e4f2e9");
+     a+=txt(114,125,"SCHOOL LAN",18)+txt(445,125,"OTHER NETWORK",17);
+     a+=node(114,190,"PC")+node(445,190,"SERVER");
+     a+=rounded(231,148,98,85,"#f7eccf")+txt(280,182,"ROUTER",18)+txt(280,204,"IP",17);
+     a+=arrow(184,190,231,190)+arrow(329,190,376,190);
+     a+=txt(280,307,"IP helps route between networks",17);
+     return svg(a);
+   }
+   if(kind==="dns"){
+     a+=rounded(23,93,155,92,"#e4eef9")+rounded(204,93,154,92,"#e1f2e7")+rounded(384,93,154,92,"#f8ecd4");
+     a+=txt(100,130,"BROWSER",19)+txt(100,156,"Domain name",14);
+     a+=txt(281,130,"DNS",21)+txt(281,156,"Lookup service",14);
+     a+=txt(461,130,"WEB SERVER",18)+txt(461,156,"IP destination",14);
+     a+=arrow(178,113,202,113);
+     a+=connector(204,179,178,179)+txt(190,218,"IP back",14);
+     a+=connector(99,185,99,253)+arrow(101,254,460,254)+connector(460,254,460,185);
+     a+=txt(280,242,"BROWSER USES IP TO CONTACT SERVER",16);
+     a+=foot("Name → DNS lookup → IP → web request");
+     return svg(a);
+   }
+   if(kind==="cloud"){
+     a+=node(91,218,"LAPTOP")+node(471,218,"TABLET");
+     a+=connector(158,218,198,163)+connector(362,163,404,218);
+     a+=rounded(197,91,165,161,"#e2f3e9");
+     a+='<path d="M235 110 C231 86 277 72 291 100 C315 65 365 98 342 125" fill="none" stroke="#609f8a" stroke-width="5"/>';
+     a+=txt(280,169,"CLOUD",25)+txt(280,200,"REMOTE FILES",18);
+     a+=foot("Data is held on remote servers");
+     return svg(a);
+   }
+   return null;
+ }
  function topicVisual(spec){
+  const advanced=networkScene(spec);if(advanced)return advanced;
   const values=(Array.isArray(spec.boxes)?spec.boxes:[]).map(v=>String(v).slice(0,21));
   const title=String(spec.title||"OCR J277").slice(0,35),foot=String(spec.foot||"").slice(0,69);
   const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"').replace('width="554" height="226"','width="554" height="334"');
@@ -330,7 +422,7 @@
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
   const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
   const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
-  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance.")}</div></article><article class="nl-explanation">${stages}</article></div></section>`;
+  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.memoryCue||(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance."))}</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
 
  function iDo(lesson){
