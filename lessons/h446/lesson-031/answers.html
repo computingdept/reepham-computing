@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 031 · Half adders and full adders answers</title>
+<title>Lesson 031 · D-type flip-flops answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-answer-align2">
 <style>
@@ -26,33 +26,15 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 031 · HALF ADDERS AND FULL ADDERS · ANSWERS</span>
-  <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
+  <span class="answer-title">LESSON 031 · D-TYPE FLIP-FLOPS · ANSWERS</span>
+  <span class="answer-counter" id="answer-counter">Solution 1 of 6</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">OCR AUTUMN 2021 · Q5(c)</span><h2>Half-adder question</h2><pre class="solution-code">S = A XOR B
-C = A AND B
-
-A B | S C
-0 0 | 0 0
-0 1 | 1 0
-1 0 | 1 0
-1 1 | 0 1
-
-Two half adders can be joined, with an OR gate combining carry outputs, to form a full adder.</pre><p><strong>Check:</strong> Use XOR for Sum, AND for Carry and mention the OR connection.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · FULL ADDER</span><h2>Complete eight cases</h2><pre class="solution-code">A B Cin | S Cout
-0 0 0   | 0 0
-0 0 1   | 1 0
-0 1 0   | 1 0
-0 1 1   | 0 1
-1 0 0   | 1 0
-1 0 1   | 0 1
-1 1 0   | 0 1
-1 1 1   | 1 1</pre><p><strong>Check:</strong> The outputs match ordinary binary addition of three bits.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · MULTI-BIT</span><h2>Explain four-bit addition</h2><pre class="solution-code">Use one full adder for each bit position. The carry-out from a lower-order full adder is connected to the carry-in of the next higher-order full adder. This propagates carries across the four-bit addition.</pre><p><strong>Check:</strong> Your answer connects carry-out from one bit to carry-in of the next.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT · TRACE</span><h2>Add 0111 + 0001</h2><pre class="solution-code">  0111
-+ 0001
-------
-  1000
-
-A carry is generated at the least-significant column and propagates through the next two columns.</pre><p><strong>Check:</strong> The final result is 1000.</p></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · TRACE</span><h2>Clocked state</h2><pre class="solution-code">Q after triggers:
+1, 1, 0, 1</pre><p><strong>Check:</strong> You change Q only at the listed triggers.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · EXPLAIN</span><h2>Purpose and inputs</h2><pre class="solution-code">A D-type flip-flop stores one bit.
+D is the data value to be stored.
+CLK controls when D is sampled.
+Q is the stored output and holds its value between triggers.</pre><p><strong>Check:</strong> Your answer separates the data input from the timing input.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">EXAM-STYLE · QUESTION 3 OF 6</span><h2>APPLICATION · 3 MARKS</h2><pre class="solution-code">A register made from eight D-type flip-flops stores eight bits, one bit per flip-flop. Each D input supplies its next bit; a shared rising clock edge copies the eight input bits to Q together. The Q outputs hold the byte between edges.</pre><p><strong>Check:</strong> Award marks for technically accurate statements tied to the scenario.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">EXAM-STYLE · QUESTION 4 OF 6</span><h2>ANALYSE · 4 MARKS</h2><pre class="solution-code">Initially Q = 1. (1) D changes to 0 while CLK is low: Q stays 1. (2) CLK rises with D = 0: Q changes to 0. (3) D changes to 1 while CLK remains high: Q stays 0. Q updates only on the rising clock edge.</pre><p><strong>Check:</strong> Award marks for technically accurate statements tied to the scenario.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">EXAM-STYLE · QUESTION 5 OF 6</span><h2>COMPARE · 3 MARKS</h2><pre class="solution-code">An AND gate is combinational: its output depends immediately on its current inputs and it stores no state. A D-type flip-flop stores one bit and Q only updates to D on the active clock edge; Q holds its value between edges.</pre><p><strong>Check:</strong> Award marks for technically accurate statements tied to the scenario.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">EXAM-STYLE · QUESTION 6 OF 6</span><h2>CHALLENGE · 4 MARKS</h2><pre class="solution-code">Before the rising edge, the register continues to store 1010 even when D becomes 0111. At the next rising edge, all four flip-flops copy their D inputs and the register stores 0111. Any further D changes without another rising edge leave the stored value at 0111.</pre><p><strong>Check:</strong> Award marks for technically accurate statements tied to the scenario.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
