@@ -366,7 +366,7 @@
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=20261014-j277retrievalrefs1"></script>${cpuSync}</body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=${lesson.vis==="cpu-performance"?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
