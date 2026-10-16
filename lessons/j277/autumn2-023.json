@@ -37,46 +37,42 @@
     ],
     "visuals": [
       {
-        "title": "NETWORK INTERFACE",
-        "layout": "flow",
+        "title": "Network interface",
         "boxes": [
           "Laptop NIC",
-          "Network cable",
+          "LAN cable",
           "School switch"
         ],
-        "foot": "Interfaces send and receive data"
+        "layout": "flow"
       },
       {
-        "title": "SWITCH INSIDE A LAN",
-        "layout": "star",
+        "title": "Switch inside one LAN",
+        "layout": "switch",
         "boxes": [
+          "PC A",
           "Switch",
-          "Computer",
-          "Printer",
-          "Laptop",
-          "Server"
+          "Printer"
         ],
-        "foot": "Uses MAC addresses"
+        "foot": "Frames forwarded using MAC addresses"
       },
       {
-        "title": "ROUTING BETWEEN NETWORKS",
-        "layout": "flow",
+        "title": "Router connecting networks",
+        "layout": "router",
         "boxes": [
           "School LAN",
           "Router",
           "Internet"
         ],
-        "foot": "Uses IP addresses"
+        "foot": "IP addresses guide inter-network forwarding"
       },
       {
-        "title": "WI-FI ACCESS",
-        "layout": "flow",
+        "title": "Wireless access point",
         "boxes": [
           "Tablet",
-          "Wireless AP",
+          "WAP",
           "Wired LAN"
         ],
-        "foot": "A WAP is not a router"
+        "layout": "flow"
       }
     ],
     "idoVisual": {
@@ -288,6 +284,51 @@
       "L020 · embedded systems",
       "L019 · CPU performance",
       "L021 · networks"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Who requests and who provides?",
+        "boxes": [
+          "Student client",
+          "?",
+          "Shared files"
+        ],
+        "layout": "flow"
+      },
+      null,
+      {
+        "title": "Fast memory near the CPU",
+        "boxes": [
+          "CPU",
+          "Cache",
+          "RAM"
+        ],
+        "layout": "flow"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Connecting classroom tablets",
+        "boxes": [
+          "Tablets",
+          "Device A",
+          "LAN switch"
+        ],
+        "layout": "flow"
+      },
+      {
+        "title": "From laptop to outside network",
+        "boxes": [
+          "Laptop NIC",
+          "LAN switch",
+          "Router"
+        ],
+        "layout": "flow"
+      }
+    ],
+    "memoryCue": "NIC connects; switch uses MAC locally; router uses IP between networks; WAP joins Wi-Fi devices."
   }
 }
