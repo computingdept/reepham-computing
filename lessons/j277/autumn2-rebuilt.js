@@ -320,6 +320,9 @@
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"${isCpu&&lesson.wSteps?' data-guided-steps="true"':''}><div class="wedo-focus-deck">${cases}</div></section>`;
  }
  function youDo(lesson,number){
+  if(lesson.isAssessment){
+    return `<section id="you-do" class="page phase-youdo j277-assessment" data-assessment-mode="true" data-phase-time="Independent assessment"><article class="j277-assessment-panel"><span class="phase-tag">45 MINUTES · 45 MARKS · INDEPENDENT</span><h2>Autumn 2 Assessment</h2><p>Open the question paper. Answer every question independently, showing working and linking explanations to the marks available. Do not view model answers during the assessment.</p><a class="j277-assessment-open" href="assessment.html" target="_blank" rel="noopener">Open the 45-mark assessment paper →</a><p class="j277-assessment-note">Teacher: release the separate worked answers only after the assessment has finished.</p></article></section>`;
+  }
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
    <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
    <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
@@ -327,11 +330,11 @@
    <p><strong>1 · Predict:</strong> ${escape(lesson.k.q)}</p>
    <pre class="arithmetic">${escape(lesson.k.code)}</pre>
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
-   ${["004","019","020"].includes(String(number))?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
+   ${(Number(number)>=19||String(number)==="004")&&!lesson.isAssessment?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
   const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Original J277-style practice question. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
@@ -415,6 +418,22 @@
    min-height:230px;
    justify-content:flex-start;
  }
+ .j277-visual-lesson .j277-assessment-panel{
+   margin:0 auto;max-width:960px;height:100%;overflow:auto;
+   border:1px solid var(--line);border-top:7px solid var(--green);
+   background:white;border-radius:14px;padding:clamp(20px,3vw,42px);
+   display:flex;flex-direction:column;gap:18px;
+ }
+ .j277-visual-lesson .j277-assessment-panel h2{font-size:clamp(27px,2.2vw,42px);line-height:1.2;margin:0}
+ .j277-visual-lesson .j277-assessment-panel p{font-size:clamp(19px,1.5vw,25px);line-height:1.4;margin:0}
+ .j277-visual-lesson .j277-assessment-open{
+   padding:17px 23px;display:inline-block;align-self:flex-start;
+   text-decoration:none;background:#28694c;color:#fff;
+   font-size:clamp(18px,1.35vw,23px);font-weight:850;border-radius:10px;
+ }
+ .j277-visual-lesson .j277-assessment-note{font-size:clamp(15px,1.1vw,18px);color:#445448}
+ .j277-visual-lesson .j277-assessment .youdo-solutions-link,
+ .j277-visual-lesson .youdo-solutions-link{display:none!important}
  /* Selective yellow highlighter for OCR exam wording (keeps diagrams and code unmarked). */
  .j277-visual-lesson mark.j277-exam-word{
    color:#29230b;
