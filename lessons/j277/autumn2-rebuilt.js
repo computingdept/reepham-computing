@@ -11,6 +11,21 @@
  // Work on plain source text, escape all spans, and never mark code or SVG labels.
  function examWords(lesson,source,limit=4){
    const value=String(source??"");
+   if(Array.isArray(lesson.highlights)&&lesson.highlights.length){
+     const labels=[...lesson.highlights,"explain","describe","identify","state","compare","justify","calculate","evaluate","name"].map(String).filter(Boolean).sort((a,b)=>b.length-a.length);
+     const escaped=labels.map(v=>v.split("").map(ch=>".*+?^{}()|[]\\".includes(ch)?"\\"+ch:ch).join("")).join("|");
+     const rx=new RegExp("\\b("+escaped+")\\b","gi");
+     let html="",position=0,count=0;const seen=new Set();
+     for(const m of value.matchAll(rx)){
+       if(count>=limit)break;
+       const w=m[0],key=w.toLowerCase();
+       if(seen.has(key))continue;
+       seen.add(key);
+       html+=escape(value.slice(position,m.index))+'<mark class="j277-exam-word">'+escape(w)+'</mark>';
+       position=m.index+w.length;count++;
+     }
+     return html+escape(value.slice(position));
+   }
    const terms=lesson.vis==="embedded-systems"
      ? /\b(embedded systems?|dedicated (?:function|purpose)|specific (?:function|purpose)|real-time|low power|limited user interface|sensor|input|output|ROM|RAM|actuator|explain|describe|identify|state|compare|justify|calculate)\b/gi
      : lesson.vis==="cpu-performance"
@@ -36,7 +51,34 @@
  const pill=(x,y,w,h,label,color="#e6f3eb",font=17)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${color}" stroke="#92b4a0"/><text x="${x+w/2}" y="${y+h/2+font/3}" fill="#1c573e" font-size="${font}" font-weight="800" text-anchor="middle" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+ function topicVisual(spec){
+  const values=(Array.isArray(spec.boxes)?spec.boxes:[]).map(v=>String(v).slice(0,21));
+  const title=String(spec.title||"OCR J277").slice(0,35),foot=String(spec.foot||"").slice(0,69);
+  const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"').replace('width="554" height="226"','width="554" height="334"');
+  const arrow=(x1,y1,x2,y2)=>'<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" fill="none" stroke="#44876b" stroke-width="5"/>';
+  let content=note(24,38,title,22);
+  const mode=String(spec.layout||"flow");
+  if(mode==="flow"){
+    const n=Math.max(2,Math.min(4,values.length)),gap=16,w=(520-gap*(n-1))/n;
+    for(let i=0;i<n;i++){const x=20+i*(w+gap);content+=pill(x,115,w,120,values[i]||"STEP "+(i+1),["#e0eef9","#def3e6","#fae9d4","#e5eafb"][i],n>3?15:18);if(i<n-1)content+=arrow(x+w+2,173,x+w+gap-2,173);}
+  }else if(mode==="compare"){
+    content+=pill(20,93,252,171,values[0]||"OPTION A","#e0effb",20)+pill(290,93,250,171,values[1]||"OPTION B","#e0f2e7",20);
+    if(values[2])content+=note(32,294,values[2],17);
+  }else if(mode==="star"||mode==="mesh"){
+    const pts=[[280,100],[115,182],[445,182],[185,279],[378,279]];
+    const lines=mode==="star"?[[0,1],[0,2],[0,3],[0,4]]:[[0,1],[0,2],[0,3],[0,4],[1,3],[2,4],[3,4]];
+    for(const pair of lines){const a=pts[pair[0]],b=pts[pair[1]];content+=arrow(a[0],a[1],b[0],b[1]);}
+    pts.forEach((p,i)=>{content+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="34" fill="#e3f2eb" stroke="#62987b" stroke-width="3"/>';content+='<text x="'+p[0]+'" y="'+(p[1]+5)+'" text-anchor="middle" font-size="15" font-family="Arial,sans-serif" fill="#254a3a" font-weight="800">'+escape(values[i]||"NODE "+(i+1))+'</text>';});
+  }else if(mode==="layers"){
+    for(let i=0;i<Math.min(4,values.length);i++)content+=pill(41,71+i*55,477,48,values[i],["#e0edf8","#e0f0e6","#f8ebd9","#e9eefa"][i],20);
+  }else{
+    for(let i=0;i<Math.min(4,values.length);i++)content+=pill(23+(i%2)*264,81+Math.floor(i/2)*112,248,96,values[i],["#e0edf8","#e0f0e6","#f8ebd9","#e9eefa"][i],18);
+  }
+  if(foot)content+=note(22,327,foot,foot.length>55?14:17);
+  return frame(title+": "+values.join(", "),content);
+ }
  function diagram(kind){
+  if(kind&&typeof kind==="object")return topicVisual(kind);
   if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary","cpu-we-compare"].includes(kind)){
     // GCSE J277 1.1.2 only. Taller, classroom-size drawings (not miniature badges).
     const frame=(label,contents)=>svgScene(label,contents)
@@ -256,7 +298,7 @@
  }
 
  function iDo(lesson){
-  const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
+  const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${examWords(lesson,step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
   const reference=isCpu
@@ -265,7 +307,7 @@
   return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
-  const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
+  const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const topics=lesson.wTitles||["Compare the processors","Clock speed","Cache size"];
   const views=lesson.wVisuals||["cpu-we-compare","cpu-speed","cpu-cache"];
   const cases=arr(lesson.w,(entry,i)=>{
@@ -288,8 +330,8 @@
    ${["004","019","020"].includes(String(number))?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
-  const paper=(lesson.s.startsWith("1.1")?["qp11","ms11"]:["qp12","ms12"]);
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Original practice question based on the J277 specification. <a href="${PMT[paper[0]]}" target="_blank" rel="noopener">PMT past topic questions ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">mark scheme ↗</a></p>`:""}</div></article>`);
+  const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Original J277-style practice question. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
@@ -485,14 +527,14 @@
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-   const cpuSync=["cpu-performance","embedded-systems"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
- const html=sharedHead(number,lesson.t)+`<body class="${["cpu-performance","embedded-systems"].includes(lesson.vis)?"j277-visual-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+   const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
+ const html=sharedHead(number,lesson.t)+`<body class="${["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=${["cpu-performance","embedded-systems"].includes(lesson.vis)?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=${["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
