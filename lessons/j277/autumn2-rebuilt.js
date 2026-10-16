@@ -474,37 +474,102 @@
  // Compact, meaningful scenario prompts for Years 10 021-024.
  // Deliberately show relationships without supplying the exam answer.
  function visualPrompt(spec){
-   const boxes=Array.isArray(spec.boxes)?spec.boxes.slice(0,3).map(x=>String(x).slice(0,23)):[];
-   const title=String(spec.title||"Think about the diagram").slice(0,54);
-   const kind=String(spec.layout||"flow");
-   const W=560,H=165;
-   const ns=escape;
-   const rect=(x,y,w,h,color)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="15" fill="'+color+'" stroke="#669a80" stroke-width="2.5"/>';
-   const txt=(x,y,word,size)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="'+size+'" fill="#194f3b">'+ns(word)+'</text>';
-   const line=(x,y,x2)=>'<path d="M'+x+' '+y+' H'+x2+'" stroke="#367a5d" stroke-width="5" stroke-linecap="round"/>';
-   let inside='';
-   if(kind==="compare"){
-     for(let i=0;i<2;i++){
-       const x=16+i*278;
-       inside+=rect(x,21,250,118,i?"#e4f2e8":"#e4effc");
-       inside+=txt(x+125,90,boxes[i]||"?",24);
-     }
-     inside+=txt(280,159,"COMPARE",15);
-   }else if(kind==="network"){
-     const spots=[[95,65],[280,65],[465,65]];
-     const links=[[0,1],[1,2]];
-     links.forEach(p=>{const a=spots[p[0]],b=spots[p[1]];inside+=line(a[0]+65,a[1]+29,b[0]-65);});
-     spots.forEach((p,i)=>{inside+=rect(p[0]-75,p[1]-29,150,68,i===1?"#dfefd9":"#e2edf9");inside+=txt(p[0],p[1]+10,boxes[i]||"?",20);});
+   const boxes=Array.isArray(spec.boxes)?spec.boxes.slice(0,5).map(v=>String(v).slice(0,30)):[];
+   const title=String(spec.title||"Use the diagram").slice(0,85);
+   const kind=String(spec.layout||"flow"),esc=escape,green="#368463",red="#c35a56",blue="#477ca8";
+   const rect=(x,y,w,h,c="#e4f2e9")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+c+'" stroke="#83ad9b" stroke-width="2.5"/>';
+   const txt=(x,y,v,size=18,color="#194f3b")=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="'+size+'" fill="'+color+'">'+esc(String(v))+'</text>';
+   const wrapped=(x,y,v,width=13,size=17)=>{
+      const words=String(v||"?").split(/\s+/),out=[];let part="";
+      for(const word of words){if(part&&(part+" "+word).length>width){out.push(part);part=word;}else part+=(part?" ":"")+word;}
+      if(part)out.push(part);
+      const lines=out.slice(0,3),start=y-(lines.length-1)*10;
+      return lines.map((line,i)=>txt(x,start+i*21,line,size)).join("");
+   };
+   const segment=(x,y,x2,y2,c=green,w=4,dash=false)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+'" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="round"'+(dash?' stroke-dasharray="9 6"':'')+'/>';
+   const arrow=(x,y,x2,y2,c=green)=>segment(x,y,x2,y2,c)+segment(x2-9,y2-7,x2,y2,c,3)+segment(x2-9,y2+7,x2,y2,c,3);
+   const card=(x,y,w,h,v,c)=>rect(x,y,w,h,c)+wrapped(x+w/2,y+h/2+6,v,w>225?23:14,w>225?18:16);
+   const node=(x,y,v)=>'<circle cx="'+x+'" cy="'+y+'" r="26" fill="#e3effa" stroke="'+blue+'" stroke-width="3"/>'+wrapped(x,y+5,v,7,13);
+   let content="";
+   if(["star","star-failure","mesh-failure"].includes(kind)){
+     const pts=[[280,84],[111,51],[449,51],[111,132],[449,132]];
+     const edges=kind==="mesh-failure"?[[0,1],[0,2],[0,3],[0,4],[1,2],[1,3],[2,4],[3,4]]:[[0,1],[0,2],[0,3],[0,4]];
+     edges.forEach(e=>{const p=pts[e[0]],q=pts[e[1]],broken=kind==="mesh-failure"&&e[0]===1&&e[1]===3;content+=segment(p[0],p[1],q[0],q[1],broken?red:green,broken?5:3,broken);});
+     pts.forEach((p,i)=>{content+=node(p[0],p[1],boxes[i]||"N"+i);});
+   }else if(kind==="lanwan"){
+     content+=rect(16,19,246,122,"#e6f0fb")+rect(299,19,246,122,"#e3f2e9");
+     content+=txt(139,42,"ONE SITE",18)+txt(422,42,"SEPARATE SITES",18);
+     content+=node(90,95,"PC")+node(187,95,"PC")+segment(117,95,160,95);
+     content+=card(314,68,98,59,boxes[1]||"Site A","#e9f5ef")+card(437,68,98,59,boxes[2]||"Site B","#e9f5ef");
+     content+=segment(412,100,437,100,blue,4,true);
+   }else if(kind==="encryption"){
+     content+=card(17,34,155,102,boxes[0]||"Readable data","#e1eefb");
+     content+=card(211,36,136,98,"KEY","#e3f3e7");
+     content+=card(386,34,156,102,boxes[2]||"Ciphertext","#f8eedb");
+     content+='<path d="M253 65 v-11 a26 26 0 0 1 52 0 v11" stroke="'+green+'" stroke-width="5" fill="none"/>';
+     content+=arrow(175,84,208,84)+arrow(351,84,382,84);
+   }else if(["phishing","email-warning"].includes(kind)){
+     content+=rect(21,27,212,115,"#e5effb");
+     content+='<path d="M42 55 h62 v47 h-62z M42 55 l31 25 l31 -25" fill="none" stroke="'+red+'" stroke-width="4"/>';
+     content+=txt(165,57,"URGENT!",21,red)+txt(164,103,"FAKE LINK",18,red);
+     content+=arrow(237,84,304,84,red)+card(309,34,228,102,boxes[2]||"Password risk","#fbe9e5");
+   }else if(["brute","lockout","login"].includes(kind)){
+     const names=kind==="login"?["PASSWORD","SECOND FACTOR","ACCOUNT"]:["TRY 1","TRY 2","TRY 3"];
+     names.forEach((v,i)=>{const x=19+i*182;content+=card(x,39,145,93,v,i===2?"#e2f2e7":"#e4effb");if(i<2)content+=arrow(x+148,86,x+179,86,kind==="login"?green:red);});
+     content+=txt(481,151,kind==="login"?"CHECK":"LIMIT",16,kind==="login"?green:red);
+   }else if(kind==="dos"){
+     for(let i=0;i<4;i++){const y=36+i*33;content+='<circle cx="54" cy="'+y+'" r="13" fill="#e4effb" stroke="'+blue+'" stroke-width="2"/>'+segment(68,y,275,84+(y-85)*.14,red,3);}
+     content+=card(277,45,145,86,boxes[1]||"Service busy","#fbe6e3");
+     content+=card(448,52,96,72,"USERS","#e5f2e9");
+     content+=txt(440,34,"X",24,red);
+   }else if(kind==="intercept"){
+     content+=card(17,68,139,68,boxes[0]||"Sender","#e3effb");
+     content+=card(403,68,139,68,boxes[2]||"Receiver","#e3f1e9");
+     content+=arrow(158,102,400,102,blue);
+     content+='<circle cx="279" cy="32" r="27" fill="#f9ebe8" stroke="'+red+'" stroke-width="3"/>'+txt(279,40,"?",27,red)+segment(279,59,279,94,red,3,true);
+   }else if(kind==="firewall"){
+     content+=card(17,54,144,73,boxes[0]||"Traffic","#e3effb");
+     content+='<path d="M282 31 l55 21 v40 c0 39 -33 56 -55 68 c-22 -12 -55 -29 -55 -68 v-40z" fill="#e2f3e8" stroke="'+green+'" stroke-width="4"/>';
+     content+=txt(282,88,"RULES",20);
+     content+=arrow(164,85,222,85,green);
+     content+=arrow(343,85,401,85,green);
+     content+=card(403,54,141,73,boxes[2]||"LAN","#e4f2e8");
+     content+=txt(380,35,"ALLOW / BLOCK",15);
+   }else if(kind==="ransomware"){
+     content+=card(19,49,145,85,boxes[0]||"Files","#e4eef9");
+     content+=card(209,49,145,85,"LOCKED","#f9e6e4");
+     content+=card(398,49,145,85,boxes[2]||"Unavailable","#f6e9e3");
+     content+=arrow(167,91,204,91,red)+arrow(357,91,394,91,red);
+   }else if(kind==="wireless"){
+     content+=card(20,41,153,94,boxes[0]||"Tablet","#e2eefb");
+     content+=card(389,41,153,94,boxes[2]||"LAN","#e2f2e7");
+     for(let i=0;i<3;i++){const radius=23+i*19;content+='<path d="M'+(280-radius)+' '+(75+radius*.18)+' Q280 '+(28-i*13)+' '+(280+radius)+' '+(75+radius*.18)+'" stroke="'+blue+'" stroke-width="3" fill="none"/>';}
+     content+=segment(175,91,231,91,blue,4,true)+segment(331,91,386,91,blue,4,true);
+   }else if(kind==="standard"){
+     content+=card(17,43,160,92,boxes[0]||"Device A","#e3eefb");
+     content+=card(201,43,160,92,boxes[1]||"Common rules","#f7ead2");
+     content+=card(386,43,157,92,boxes[2]||"Device B","#e3f3e9");
+     content+=arrow(180,88,197,88)+arrow(364,88,382,88);
+   }else if(kind==="attack-patterns"){
+     const x=[17,201,385];for(let i=0;i<3;i++){content+=card(x[i],38,160,100,boxes[i]||"THREAT",i===1?"#f7eedc":i===2?"#f8e8e8":"#e7eefb");}
+   }else if(kind==="email"){
+     content+=card(17,39,160,97,boxes[0]||"Sender","#e3eefb");
+     content+=card(201,39,160,97,boxes[1]||"Mail server","#f4edda");
+     content+=card(385,39,160,97,boxes[2]||"Receiver","#e5f3e9");
+     content+=arrow(180,86,197,86)+arrow(363,86,382,86);
+     content+=txt(281,157,"SEND / ACCESS EMAIL",15);
+   }else if(kind==="compare"){
+     content+=card(16,21,250,118,boxes[0]||"First","#e4effc");
+     content+=card(294,21,250,118,boxes[1]||"Second","#e4f2e8");
    }else{
      const w=158,gap=37;
      for(let i=0;i<3;i++){
        const x=14+i*(w+gap);
-       inside+=rect(x,34,w,100,["#e4effc","#e0f2e8","#f7eacf"][i]);
-       inside+=txt(x+w/2,94,boxes[i]||"?",18);
-       if(i!==2){const x2=x+w+24;inside+=line(x+w+2,84,x2);inside+='<path d="M'+(x2-9)+' 76 L'+x2+' 84 L'+(x2-9)+' 92" fill="none" stroke="#367a5d" stroke-width="4"/>';}
+       content+=card(x,34,w,100,boxes[i]||"?",["#e4effc","#e0f2e8","#f7eacf"][i]);
+       if(i!==2)content+=arrow(x+w+2,84,x+w+gap-3,84);
      }
    }
-   return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+ns(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="558" height="163" rx="15" fill="#f6faf7" stroke="#b8d5c5" stroke-width="2"/>'+inside+'</svg></figure>';
+   return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 560 165" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="558" height="163" rx="15" fill="#f6faf7" stroke="#b8d5c5" stroke-width="2"/>'+content+'</svg></figure>';
  }
  function diagram(kind){
   if(kind&&typeof kind==="object")return topicVisual(kind);
