@@ -386,7 +386,7 @@
      return render(a);
    }
    if(kind==="database"){
-     a+=icon("document",88,169,blue)+a;
+     a+=icon("document",88,169,blue);
      a+=arrow(146,169,232,169,red)+icon("database",282,169,red)+arrow(339,169,422,169,red)+icon("document",466,169,red);
      a+=text(89,262,name(0,"INPUT"),16)+text(282,262,"DATABASE QUERY",17)+text(465,262,"RECORDS",17);
      a+=text(280,93,"UNTRUSTED INPUT MUST BE HANDLED SAFELY",16,850,red);
