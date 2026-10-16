@@ -36,55 +36,55 @@
     ],
     "visuals": [
       {
-        "title": "ACCOUNT GUESSING",
-        "layout": "flow",
+        "title": "MANY PASSWORD ATTEMPTS",
+        "layout": "brute",
         "boxes": [
-          "Many guesses",
-          "Login system",
-          "Possible access"
+          "Guess 1",
+          "Guess 2",
+          "Account"
         ],
-        "foot": "Failed attempts can be restricted"
+        "foot": "Repeated guesses seek access"
       },
       {
-        "title": "DENIAL OF SERVICE",
-        "layout": "flow",
+        "title": "OVERLOADING A SERVICE",
+        "layout": "dos",
         "boxes": [
-          "Excess requests",
-          "Server overloaded",
-          "Users blocked"
+          "Many requests",
+          "Server busy",
+          "Users waiting"
         ],
-        "foot": "Service availability is affected"
+        "foot": "Availability is interrupted"
       },
       {
-        "title": "INTERCEPTION",
-        "layout": "flow",
+        "title": "CAPTURING DATA IN TRANSIT",
+        "layout": "intercept",
         "boxes": [
           "Sender",
           "Network link",
           "Receiver"
         ],
-        "foot": "Protect transmitted information"
+        "foot": "Data may be read if unprotected"
       },
       {
-        "title": "UNSAFE INPUT HANDLING",
-        "layout": "flow",
+        "title": "UNSAFE INPUT AND DATABASE QUERIES",
+        "layout": "database",
         "boxes": [
-          "Web form",
-          "Database query",
-          "Data at risk"
+          "Web input",
+          "Unsafe query",
+          "Records"
         ],
-        "foot": "Applications must handle input safely"
+        "foot": "Unexpected query may access data"
       }
     ],
     "idoVisual": {
-      "title": "DENIAL OF SERVICE",
-      "layout": "flow",
+      "title": "ONLINE SCHOOL SERVICE OVERLOADED",
+      "layout": "dos",
       "boxes": [
-        "Excess requests",
-        "Server overloaded",
-        "Users blocked"
+        "Requests",
+        "School server",
+        "Pupils"
       ],
-      "foot": "Availability is attacked"
+      "foot": "Service availability may be lost"
     },
     "m": {
       "title": "Unavailable online resource",
@@ -179,34 +179,34 @@
     ],
     "wVisuals": [
       {
-        "title": "BRUTE-FORCE LOGINS",
-        "layout": "flow",
+        "title": "THOUSANDS OF ACCOUNT GUESSES",
+        "layout": "brute",
         "boxes": [
-          "Repeated guesses",
-          "Login interface",
-          "Unauthorised entry"
+          "Password attempts",
+          "Login form",
+          "Account"
         ],
-        "foot": "Attack attempts many passwords"
+        "foot": "Systematic guesses aim for entry"
       },
       {
-        "title": "DATA IN TRANSIT",
-        "layout": "flow",
+        "title": "CONFIDENTIAL MESSAGE INTERCEPTED",
+        "layout": "intercept",
         "boxes": [
           "Sender",
           "Unprotected link",
-          "Interception"
+          "Recipient"
         ],
-        "foot": "Confidentiality can be lost"
+        "foot": "Transmitted data at risk"
       },
       {
-        "title": "INSECURE DATABASE FORM",
-        "layout": "flow",
+        "title": "DANGEROUS DATABASE INPUT",
+        "layout": "database",
         "boxes": [
-          "Unsafe input",
-          "Database query",
-          "Records at risk"
+          "Web form",
+          "Query",
+          "Private data"
         ],
-        "foot": "Untrusted input must be handled"
+        "foot": "Input must be handled safely"
       }
     ],
     "k": {
@@ -225,8 +225,8 @@
         "Attempts many possible passwords [1] to discover the correct one/gain access [1]."
       ],
       [
-        "Explain two consequences of a denial-of-service attack on a school website. [4 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
-        "Service becomes overloaded/unavailable [1], preventing legitimate users from accessing learning materials [1]. Repeated disruption may waste staff time [1] and interrupt lessons or operations [1]."
+        "A museum's online ticket-booking service is deliberately overwhelmed with requests. Explain TWO consequences of the denial-of-service attack for the museum and its visitors. [4 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
+        "The booking website becomes overloaded or unavailable [1], so genuine visitors cannot buy or view tickets [1]. The museum may lose bookings/revenue or have increased support work [1], disrupting museum operations [1]."
       ],
       [
         "Describe DoS, interception and SQL injection, including an effect of each. [6 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
@@ -286,6 +286,55 @@
       "L029 · earlier learning",
       "L028 · earlier learning",
       "L027 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Suspicious password link",
+        "layout": "phishing",
+        "boxes": [
+          "Fake message",
+          "Link",
+          "Login details"
+        ],
+        "foot": "Name the social-engineering threat"
+      },
+      null,
+      {
+        "title": "Sending email",
+        "layout": "email",
+        "boxes": [
+          "Sender",
+          "Mail server",
+          "Recipient"
+        ],
+        "foot": "Which protocol sends messages?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Museum ticket booking unavailable",
+        "layout": "dos",
+        "boxes": [
+          "Many requests",
+          "Online bookings",
+          "Visitors"
+        ],
+        "foot": "What happens to genuine visitors?"
+      },
+      {
+        "title": "Three attack effects",
+        "layout": "attack-patterns",
+        "boxes": [
+          "Availability",
+          "Confidentiality",
+          "Integrity"
+        ],
+        "foot": "Connect the threat to its effect"
+      }
+    ],
+    "memoryCue": "Brute-force targets passwords; DoS targets availability; interception targets transmitted data; SQL injection targets unsafe database queries."
   }
 }
