@@ -36,55 +36,55 @@
     ],
     "visuals": [
       {
-        "title": "PROTECT A LOGIN",
-        "layout": "flow",
+        "title": "AUTHENTICATING A LOGIN",
+        "layout": "login",
         "boxes": [
-          "User login",
-          "Authentication",
-          "Allowed access"
+          "Account name",
+          "Password",
+          "Second factor"
         ],
-        "foot": "Do not share credentials"
+        "foot": "Separate forms of proof"
       },
       {
-        "title": "DEFEND AGAINST GUESSING",
-        "layout": "flow",
+        "title": "STOPPING MANY WRONG GUESSES",
+        "layout": "lockout",
         "boxes": [
-          "Failed attempts",
-          "Lockout policy",
-          "Account protected"
+          "Failed logins",
+          "Limit reached",
+          "Temporary lock"
         ],
-        "foot": "Restrict repeated attempts"
+        "foot": "Limits automated attempts"
       },
       {
-        "title": "ENCRYPT DATA IN TRANSIT",
-        "layout": "flow",
+        "title": "PLAINTEXT TO CIPHERTEXT",
+        "layout": "encryption",
         "boxes": [
           "Plaintext",
           "Encryption",
           "Ciphertext"
         ],
-        "foot": "Key needed to interpret encrypted content"
+        "foot": "Key required for recovery"
       },
       {
-        "title": "FIND WEAKNESSES SAFELY",
-        "layout": "flow",
+        "title": "AUTHORISATION BEFORE TESTING",
+        "layout": "pentest",
         "boxes": [
-          "Authorised test",
-          "Vulnerability found",
-          "Apply fixes"
+          "Permission",
+          "Check weaknesses",
+          "Report fixes"
         ],
-        "foot": "Testing requires permission"
+        "foot": "Agreed scope matters"
       }
     ],
     "idoVisual": {
-      "title": "DEFEND SCHOOL LOGIN",
-      "layout": "flow",
+      "title": "LIMIT PASSWORD GUESSING",
+      "layout": "lockout",
       "boxes": [
         "Long password",
-        "Lockout policy",
+        "Guess limit",
         "Account protected"
       ],
-      "foot": "Reduce brute-force opportunities"
+      "foot": "Two protections reduce risk"
     },
     "m": {
       "title": "Protect a school account",
@@ -179,34 +179,34 @@
     ],
     "wVisuals": [
       {
-        "title": "TWO-FACTOR AUTHENTICATION",
-        "layout": "flow",
+        "title": "SIGN IN WITH TWO FACTORS",
+        "layout": "login",
         "boxes": [
           "Password",
-          "Second factor",
-          "Access granted"
+          "Authenticator",
+          "Records"
         ],
-        "foot": "Stolen password alone is not enough"
+        "foot": "One stolen secret is not enough"
       },
       {
-        "title": "ENCRYPTED TRANSMISSION",
-        "layout": "flow",
+        "title": "DATA TRAVEL AS CIPHERTEXT",
+        "layout": "encryption",
         "boxes": [
           "Plaintext",
-          "Encryption / key",
+          "Encryption key",
           "Ciphertext"
         ],
-        "foot": "Interceptors cannot easily read data"
+        "foot": "Interception cannot reveal original easily"
       },
       {
-        "title": "AUTHORISE SECURITY TEST",
-        "layout": "flow",
+        "title": "AUTHORISE TESTERS FIRST",
+        "layout": "pentest",
         "boxes": [
-          "Permission",
-          "Test weaknesses",
-          "Fix vulnerabilities"
+          "Written permission",
+          "Controlled test",
+          "Report"
         ],
-        "foot": "A penetration test needs consent"
+        "foot": "Find vulnerabilities safely"
       }
     ],
     "k": {
@@ -225,8 +225,8 @@
         "Transforms readable plaintext [1] into unreadable ciphertext without the correct key [1]."
       ],
       [
-        "Explain how account lockout and two-factor authentication protect logins. [4 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
-        "Lockout prevents repeated failed attempts [1], limiting brute-force guesses [1]. Two-factor authentication requires separate proof [1], so a password alone may not permit entry [1]."
+        "An online sports club membership portal is targeted by repeated password guesses. Explain how account lockout and two-factor authentication can help protect member accounts. [4 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
+        "Account lockout limits further login attempts after repeated incorrect passwords [1], making brute-force guessing less effective [1]. Two-factor authentication asks for a second independent proof [1], so guessing a password alone is insufficient to enter the member's account [1]."
       ],
       [
         "Explain how strong passwords, encryption and penetration testing improve network security. [6 marks]\n\nSource: Original J277-style question; not an OCR past-paper original.",
@@ -290,6 +290,55 @@
       "L031 · earlier learning",
       "L030 · earlier learning",
       "L029 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Traffic checked before reaching LAN",
+        "layout": "firewall",
+        "boxes": [
+          "Incoming traffic",
+          "Rules",
+          "School LAN"
+        ],
+        "foot": "Name the protective technology"
+      },
+      null,
+      {
+        "title": "Recognise a fake account message",
+        "layout": "phishing",
+        "boxes": [
+          "Fake sender",
+          "Urgent link",
+          "Password"
+        ],
+        "foot": "Which threat exploits people?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Sports club account login",
+        "layout": "login",
+        "boxes": [
+          "Password",
+          "Extra check",
+          "Member account"
+        ],
+        "foot": "What happens after repeated guesses?"
+      },
+      {
+        "title": "Three protections",
+        "layout": "security-layers",
+        "boxes": [
+          "Long password",
+          "Encryption",
+          "Approved testing"
+        ],
+        "foot": "Different controls have different roles"
+      }
+    ],
+    "memoryCue": "Password + separate second factor = stronger authentication; lockout limits guesses; encryption protects data; tests require permission."
   }
 }
