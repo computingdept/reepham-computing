@@ -3,9 +3,9 @@
     "t": "CPU Performance",
     "s": "1.1.2",
     "o": [
-      "Explain the effects of clock speed, cache size and number of CPU cores on CPU performance.",
-      "Use exam command words to explain each factor accurately in context.",
-      "Calculate clock cycles using valid OCR Exam Reference Language."
+      "Identify clock speed, cache size and number of cores as the three CPU performance factors.",
+      "Explain how changing each factor can affect CPU performance.",
+      "Compare two CPUs using evidence from their specifications."
     ],
     "refs": [
       "L018 · last lesson",
@@ -34,97 +34,96 @@
     "c": [
       [
         "Clock speed",
-        "Clock speed is measured in hertz (Hz): clock cycles per second. 1 GHz is one billion cycles per second. A higher clock speed generally allows the CPU to progress through more work per second. A cycle is NOT necessarily one finished instruction."
+        "Clock speed is measured in hertz (Hz). A higher clock speed means the CPU carries out more clock cycles each second, so it can generally process instructions faster."
       ],
       [
         "Cache size",
-        "Cache is small, fast memory close to or within the CPU. It holds frequently used data and instructions. Increasing cache size can mean fewer slower main-memory (RAM) accesses, improving performance in workloads that benefit."
+        "Cache is small, fast memory used to store frequently used data and instructions. A larger cache can reduce the need to fetch them from slower main memory (RAM), improving performance."
       ],
       [
-        "Number of CPU cores",
-        "A CPU may have multiple cores. Different threads or tasks can execute in parallel on separate cores, improving multitasking. Additional cores do not guarantee a faster single-threaded task."
+        "Number of cores",
+        "A core processes instructions. A processor with more cores can process more tasks at the same time, which can improve performance when several programs are running."
       ],
       [
-        "Link cause to effect",
-        "Write: factor → mechanism → performance consequence. For example, larger cache → more frequently accessed instructions stay close to CPU → fewer slower RAM reads → faster execution in suitable tasks."
+        "Compare before you decide",
+        "Look at all three factors: clock speed, cache size and number of cores. For example, one CPU may have a higher clock speed while another has more cores and a larger cache. Explain which factors matter for the stated task."
       ]
     ],
     "m": {
-      "q": "A school PC runs multiple applications while pupils edit video. Explain how a larger cache and additional CPU cores may improve performance. [4 marks]",
+      "q": "Two school computers have different processors. CPU A: 3.2 GHz, 2 cores, 4 MB cache. CPU B: 2.8 GHz, 4 cores, 8 MB cache. Explain TWO reasons CPU B may be more suitable when several programs are open. [4 marks]",
       "st": [
-        "Identify the two factors in the question: cache size and core count. Plan two explained points, each worth up to two marks.",
-        "Larger cache stores more frequently used instructions and data near the CPU [1]. This can reduce slower main-memory accesses and improve processing speed [1].",
-        "Additional cores can process separate tasks or threads at the same time [1]. This may improve multitasking while pupils run several applications [1].",
-        "Review all four points against the command word 'explain'. Avoid claiming that twice as many cores automatically doubles speed."
+        "Read the table. CPU A has the higher clock speed; CPU B has more cores and a larger cache. The question is about running several programs.",
+        "First reason: CPU B has four cores rather than two [1]. More cores can process more tasks at the same time, improving multitasking [1].",
+        "Second reason: CPU B has 8 MB cache rather than 4 MB [1]. More frequently used data and instructions can be accessed quickly, reducing slower RAM access [1].",
+        "Check the command word 'explain': each reason must link a CPU characteristic to an improvement. CPU A's higher clock speed is a valid comparison, but we cannot guarantee which CPU is faster in every task."
       ]
     },
     "w": [
       [
-        "A processor runs at 3 GHz for 2 seconds. Calculate clock cycles and explain why the value is NOT necessarily the number of instructions executed.",
-        "3 billion cycles per second × 2 seconds = 6 billion clock cycles. One instruction can use more or fewer cycles; actual throughput depends on the CPU and workload."
+        "CPU clock speed",
+        "CPU A runs at 3.2 GHz and CPU B at 2.8 GHz. Which has the higher clock speed? Explain one possible performance advantage. [2 marks]",
+        "CPU A has the higher clock speed [1]. Its CPU performs more clock cycles each second, so it may process instructions faster [1]."
       ],
       [
-        "Explain in two linked points how larger cache size may improve CPU performance. [2 marks]",
-        "Cache holds more frequently used data/instructions close to the CPU [1]; this reduces the need to fetch these from slower RAM [1]."
+        "Cache size",
+        "A processor is upgraded from 4 MB of cache to 8 MB. Explain how this could improve performance. [2 marks]",
+        "A larger cache can hold more frequently used data and instructions [1], reducing slower accesses to RAM [1]."
       ],
       [
-        "Two pupils use the same computer. One runs a single-threaded program; the other runs several independent programs. Which is likely to benefit more from extra cores, and why?",
-        "Several independent programs may use different cores in parallel. A strictly single-threaded program may not use extra cores, so speedup is not guaranteed."
+        "Number of CPU cores",
+        "A school replaces a two-core CPU with a four-core CPU. How might this help when many programs are open? [2 marks]",
+        "More cores can process more tasks simultaneously [1], improving performance when the computer is running multiple programs [1]."
       ]
     ],
     "k": {
-      "q": "Predict, change and extend this complete OCR ERL program. Work on your whiteboard first; then check it in the OCR ERL editor.",
-      "code": "clockGHz = 2\nseconds = 3\ncyclesBillions = clockGHz * seconds\nprint(cyclesBillions)",
+      "q": "Code First · Predict what this short OCR Exam Reference Language program displays. Then compare the clock speeds of two CPUs.",
+      "code": "clockA = 3.2\nclockB = 2.8\nif clockA > clockB then\n    print(\"CPU A has a higher clock speed\")\nelse\n    print(\"CPU B has an equal or higher clock speed\")\nendif",
       "p": [
-        "Predict the output and state exactly what the number represents.",
-        "Change clockGHz to 3 and seconds to 4. Predict the output, then check.",
-        "Extend the program to print the total number of cycles (not billions): multiply cyclesBillions by 1000000000. Explain why this does not calculate completed instructions."
+        "Predict the exact line of output before running the program.",
+        "Change clockB to 3.6. What does the program display now?",
+        "Extend the program: add coresA = 2 and coresB = 4, then use another IF statement to display which CPU has more cores."
       ],
-      "a": "Original program: 2 × 3 = 6. The output 6 means six billion clock cycles.\n\nComplete modified OCR ERL program:\nclockGHz = 3\nseconds = 4\ncyclesBillions = clockGHz * seconds\ncycles = cyclesBillions * 1000000000\nprint(cyclesBillions)\nprint(cycles)\n\nExpected outputs:\n12\n12000000000\n\nReasoning: 3 GHz × 4 seconds = 12 billion clock cycles. More clock cycles do not necessarily mean the same number of complete instructions: instructions can require multiple cycles and actual performance depends on the processor and program."
+      "a": "Original output: CPU A has a higher clock speed\n\nWith clockB = 3.6, the output is: CPU B has an equal or higher clock speed\n\nComplete extended OCR ERL example:\nclockA = 3.2\nclockB = 3.6\ncoresA = 2\ncoresB = 4\nif clockA > clockB then\n    print(\"CPU A has a higher clock speed\")\nelse\n    print(\"CPU B has an equal or higher clock speed\")\nendif\nif coresA > coresB then\n    print(\"CPU A has more cores\")\nelse\n    print(\"CPU B has at least as many cores\")\nendif\n\nExpected output:\nCPU B has an equal or higher clock speed\nCPU B has at least as many cores\n\nThe program compares CPU specifications. It does not measure real-world performance."
     },
     "e": [
       [
-        "Explain how the number of CPU cores affects performance. [3 marks] (From your Paper 1 revision booklet, 1.1.2, exam-question practice.)",
-        "Multiple CPU cores allow separate tasks or threads to be processed at the same time (parallel processing) [1]. This can improve multitasking [1] and increase processing throughput where the software can use multiple cores [1]. Do not claim every program becomes proportionally faster."
+        "State the three characteristics of a CPU that affect performance. [3 marks]\n\nSource: Original J277-style question based on OCR J277 1.1.2.",
+        "Clock speed [1]; cache size [1]; number of CPU cores [1]."
       ],
       [
-        "A school is replacing a CPU with one having a larger cache. Explain two ways cache improves access to frequently used instructions. [4 marks] (Original J277-style application question.)",
-        "Cache is fast memory near the CPU [1]. It stores frequently accessed instructions/data [1]. Larger cache can retain more of these items [1], reducing slower main-memory access and helping performance [1]. A valid linked explanation earns the relevant marks."
+        "A school compares two processors.\nCPU A: 3.2 GHz, 2 cores, 4 MB cache.\nCPU B: 2.8 GHz, 4 cores, 8 MB cache.\nExplain why CPU B may be better for running several programs at the same time. [4 marks]\n\nSource: Original J277-style application question based on OCR J277 1.1.2.",
+        "CPU B has four cores compared with two in CPU A [1], so it can process more tasks at the same time [1]. CPU B has a larger cache (8 MB rather than 4 MB) [1], so more frequently used data/instructions can be accessed quickly, reducing slower main-memory access [1]. CPU A has a higher clock speed, so CPU B cannot be guaranteed to win every task. This is a model mark allocation for original practice, not an official OCR mark scheme."
       ],
       [
-        "Explain how clock speed, cache size and number of cores affect CPU performance. [6 marks] (From your Paper 1 revision booklet, 1.1.2, exam-question practice.)",
-        "Clock speed: number of cycles per second [1], higher speeds can allow processing to progress faster [1]. Cache: more frequently used data/instructions available quickly [1], reducing access to slower RAM [1]. Cores: more independent instructions/threads/tasks can run in parallel [1], improving throughput/multitasking for suitable workloads [1]."
+        "Explain how clock speed, cache size and the number of cores each affect CPU performance. [6 marks]\n\nSource: Adapted from your Paper 1 revision booklet, section 1.1.2.",
+        "Clock speed: a higher clock speed provides more clock cycles each second [1], allowing the CPU to process instructions faster [1]. Cache size: a larger cache can store more frequently used data/instructions [1], reducing access to slower main memory [1]. Number of cores: more cores can process more tasks at the same time [1], improving multitasking/performance for tasks that can run in parallel [1]. This point-by-point allocation is a teaching model; assess extended answers against the relevant question criteria."
       ]
     ],
     "v": [
       [
-        "clock speed",
-        "Number of clock cycles per second, measured in hertz (Hz)."
+        "Clock speed",
+        "The number of clock cycles the CPU carries out per second, measured in hertz."
       ],
       [
-        "hertz (Hz)",
-        "Unit of frequency; one cycle per second."
+        "Hertz (Hz)",
+        "Unit of clock speed: one clock cycle per second."
       ],
       [
-        "cache",
-        "Small, fast memory close to or in the CPU containing frequently used data and instructions."
+        "Cache",
+        "Small, fast memory that stores frequently used data and instructions for the CPU."
       ],
       [
         "CPU core",
-        "Processing unit capable of executing instructions, potentially independently of other cores."
+        "Part of a CPU that processes instructions."
       ],
       [
-        "parallel processing",
-        "Running separate tasks or threads at the same time on multiple processing units."
-      ],
-      [
-        "bottleneck",
-        "A limiting factor holding back overall performance."
+        "Parallel processing",
+        "Processing more than one task at the same time using multiple CPU cores."
       ]
     ],
     "x": [
-      "Doubling the number of CPU cores always makes every program twice as fast.",
-      false
+      "A processor with more cores can improve performance when several programs are running.",
+      true
     ],
     "vis": "cpu-performance"
   }
