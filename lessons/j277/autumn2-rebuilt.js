@@ -277,8 +277,173 @@
    }
    return null;
  }
+
+ function j277SecurityScene(spec){
+   const kind=String(spec.layout||"");
+   const names=["attack-flow","malware-types","phishing","email-warning","ransomware","attack-patterns","brute","dos","intercept","database","security-cycle","firewall","antimalware","access","security-layers","login","lockout","encryption","pentest","feedback","error-types","assessment","command-words","mark-explain"];
+   if(!names.includes(kind))return null;
+   const title=String(spec.title||"J277 Diagram"),labels=Array.isArray(spec.boxes)?spec.boxes.map(String):[];
+   const ink="#204c3d",green="#3b8c6b",blue="#367dab",red="#c55c5c",orange="#dfac47";
+   const esc=escape;
+   const text=(x,y,v,size=18,w=800,c=ink)=>'<text x="'+x+'" y="'+y+'" font-family="Arial,sans-serif" text-anchor="middle" font-size="'+size+'" font-weight="'+w+'" fill="'+c+'">'+esc(String(v))+'</text>';
+   const line=(x,y,x2,y2,color=green,width=4,dashed=false)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+'" stroke="'+color+'" stroke-width="'+width+'" stroke-linecap="round" fill="none"'+(dashed?' stroke-dasharray="9 6"':'')+'/>';
+   const arrow=(x,y,x2,y2,color=green)=>{const a=Math.atan2(y2-y,x2-x),q=Math.PI/6,l=11;return line(x,y,x2,y2,color,4)+line(x2-Math.cos(a-q)*l,y2-Math.sin(a-q)*l,x2,y2,color,3)+line(x2-Math.cos(a+q)*l,y2-Math.sin(a+q)*l,x2,y2,color,3);};
+   const rect=(x,y,w,h,colour="#e5f1eb",stroke="#8ab5a3")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="14" fill="'+colour+'" stroke="'+stroke+'" stroke-width="2.5"/>';
+   const split=(raw,max)=>{const words=String(raw||"?").split(/\s+/),out=[];let current="";for(const w of words){if(current && (current+" "+w).length>max){out.push(current);current=w;}else current+=(current?" ":"")+w;}if(current)out.push(current);return out.slice(0,3);};
+   const label=(x,y,raw,font=18,max=14)=>{const lines=split(raw,max);return lines.map((word,i)=>text(x,y-(lines.length-1)*13+i*26,word,font)).join("");};
+   const card=(x,y,w,h,name,colour="#e6f2ea")=>rect(x,y,w,h,colour)+label(x+w/2,y+h/2+7,name,w>=210?19:17,w>=210?20:14);
+   const icon=(type,cx,cy,col=green)=>{
+     if(type==="mail")return '<rect x="'+(cx-34)+'" y="'+(cy-22)+'" width="68" height="45" rx="5" fill="#f0f7fb" stroke="'+col+'" stroke-width="4"/>'+
+       '<path d="M'+(cx-34)+' '+(cy-20)+' L'+cx+' '+(cy+5)+' L'+(cx+34)+' '+(cy-20)+'" fill="none" stroke="'+col+'" stroke-width="3"/>';
+     if(type==="lock")return '<rect x="'+(cx-28)+'" y="'+(cy-3)+'" width="56" height="47" rx="8" fill="#e9f2e9" stroke="'+col+'" stroke-width="4"/>'+
+       '<path d="M'+(cx-19)+' '+(cy-3)+' v-12 a19 19 0 0 1 38 0 v12" fill="none" stroke="'+col+'" stroke-width="5"/>'+
+       '<circle cx="'+cx+'" cy="'+(cy+18)+'" r="4" fill="'+col+'"/>';
+     if(type==="shield")return '<path d="M'+cx+' '+(cy-43)+' l39 16 v29 c0 26 -23 40 -39 49 c-16 -9 -39 -23 -39 -49 v-29z" fill="#e0f2e7" stroke="'+col+'" stroke-width="4"/>';
+     if(type==="server")return '<rect x="'+(cx-39)+'" y="'+(cy-48)+'" width="78" height="93" rx="10" fill="#e5eef9" stroke="'+col+'" stroke-width="4"/>'+
+       [0,1,2].map(i=>'<path d="M'+(cx-28)+' '+(cy-31+i*27)+' h56" stroke="'+col+'" stroke-width="5"/><circle cx="'+(cx-20)+'" cy="'+(cy-23+i*27)+'" r="4" fill="'+col+'"/>').join("");
+     if(type==="document")return '<path d="M'+(cx-32)+' '+(cy-40)+' h46 l18 20 v62 h-64z" fill="#eff6f9" stroke="'+col+'" stroke-width="4"/>'+
+       '<path d="M'+(cx+14)+' '+(cy-40)+' v20 h18 M'+(cx-22)+' '+(cy-1)+' h43 M'+(cx-22)+' '+(cy+14)+' h38" fill="none" stroke="'+col+'" stroke-width="3"/>';
+     if(type==="person")return '<circle cx="'+cx+'" cy="'+(cy-18)+'" r="19" fill="#e4eef7" stroke="'+col+'" stroke-width="3"/>'+
+       '<path d="M'+(cx-35)+' '+(cy+40)+' q0 -40 35 -40 q35 0 35 40" fill="#e4eef7" stroke="'+col+'" stroke-width="3"/>';
+     if(type==="database")return '<ellipse cx="'+cx+'" cy="'+(cy-32)+'" rx="36" ry="14" fill="#e7f3ef" stroke="'+col+'" stroke-width="3"/>'+
+       '<path d="M'+(cx-36)+' '+(cy-32)+' v63 q36 26 72 0 v-63 M'+(cx-36)+' '+(cy+10)+' q36 22 72 0" fill="#e7f3ef" stroke="'+col+'" stroke-width="3"/>';
+     if(type==="magnify")return '<circle cx="'+(cx-10)+'" cy="'+(cy-13)+'" r="31" fill="#eff6fa" stroke="'+col+'" stroke-width="5"/>'+
+       '<path d="M'+(cx+12)+' '+(cy+10)+' l32 32" fill="none" stroke="'+col+'" stroke-width="7"/>';
+     return '<circle cx="'+cx+'" cy="'+cy+'" r="34" fill="#e8f3ef" stroke="'+col+'" stroke-width="4"/>';
+   };
+   const foot=String(spec.foot||"").slice(0,72);
+   const render=(body)=>'<figure class="a1-scene j277-security-scene"><svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+esc(title)+': '+esc(labels.join(", "))+'"><rect x="3" y="3" width="554" height="334" rx="15" fill="#f8fbf9" stroke="#bfd5c7" stroke-width="2"/>'+text(280,39,title.slice(0,43),title.length>33?18:22,850)+body+(foot?text(280,326,foot,foot.length>54?13:16,700):"")+'</svg></figure>';
+   const name=(i,fallback)=>labels[i]||fallback;
+   let a="";
+   if(["phishing","email-warning"].includes(kind)){
+     a+=rect(24,74,283,209,"#e8f1fb");
+     a+=text(160,106,"INBOX · UNEXPECTED MESSAGE",15,850);
+     a+=icon("mail",72,154,red);
+     a+=text(191,152,"SENDER: ?",20,850,red);
+     a+=line(122,171,272,171,red,3);
+     a+=text(174,201,"URGENT · CLICK LINK",16,850,red);
+     a+=card(122,218,171,49,name(0,"SUSPICIOUS LINK"),"#fbe9e5");
+     a+=arrow(309,173,362,173,red);
+     a+=icon("lock",443,156,red);
+     a+=text(441,239,"ACCOUNT RISK",19,850,red);
+     return render(a);
+   }
+   if(kind==="ransomware"){
+     a+=icon("document",90,161,blue)+icon("lock",280,149,red)+icon("document",467,161,red);
+     a+=arrow(145,158,224,158,red)+arrow(337,158,408,158,red);
+     a+=text(90,243,name(0,"FILES"),18)+text(280,243,name(1,"LOCKED"),18,850,red)+text(467,243,name(2,"UNAVAILABLE"),18,850,red);
+     a+=text(280,280,"ACCESS TO DATA IS DISRUPTED",18,800,red);
+     return render(a);
+   }
+   if(kind==="dos"){
+     a+=icon("server",320,166,red);
+     for(let i=0;i<6;i++){const y=88+i*30; a+='<circle cx="48" cy="'+y+'" r="12" fill="#e4effb" stroke="'+blue+'" stroke-width="2"/>';
+       a+=arrow(65,y,259,145+(y-160)*.23,red);}
+     a+=text(137,70,"EXCESSIVE REQUESTS",17,850,red);
+     a+=text(321,252,"OVERLOADED",19,850,red);
+     a+=icon("person",472,154,blue)+text(473,260,"WAITING USER",16);
+     a+=line(380,167,417,167,red,5)+text(405,149,"X",25,850,red);
+     return render(a);
+   }
+   if(kind==="intercept"){
+     a+=icon("person",86,191,blue)+icon("person",475,191,blue);
+     a+=arrow(146,194,423,194,blue);
+     a+=icon("magnify",279,108,red);
+     a+=line(279,143,279,184,red,4,true);
+     a+=text(280,68,"POSSIBLE EAVESDROPPER",16,850,red);
+     a+=text(88,269,name(0,"SENDER"),18)+text(473,269,name(2,"RECEIVER"),18);
+     a+=text(280,230,"TRANSMITTED DATA",16,800);
+     return render(a);
+   }
+   if(kind==="firewall"){
+     a+=icon("shield",280,164,green);
+     a+=text(280,180,"RULES",18,850);
+     a+=arrow(51,128,227,151,green)+arrow(332,147,492,128,green);
+     a+=arrow(51,225,218,183,red);
+     a+=text(123,101,"ALLOWED REQUEST",17)+text(122,258,"BLOCKED REQUEST",17,850,red);
+     a+=text(453,103,"SCHOOL LAN",17);
+     a+=text(346,237,"X",33,900,red);
+     return render(a);
+   }
+   if(kind==="encryption"){
+     a+=card(20,118,145,112,name(0,"PLAINTEXT"),"#e2eefb");
+     a+=icon("lock",281,151,green);
+     a+=arrow(168,174,241,174)+arrow(327,174,395,174);
+     a+=card(398,118,142,112,name(2,"CIPHERTEXT"),"#e1f2e6");
+     a+=text(91,260,"READABLE",17)+text(281,260,"KEY",17)+text(469,260,"SCRAMBLED",17);
+     return render(a);
+   }
+   if(kind==="lockout"||kind==="brute"||kind==="login"){
+     const top=kind==="login"?"SECOND FACTOR":"REPEATED GUESSES";
+     a+=text(124,83,top,17,850,kind==="login"?green:red);
+     for(let i=0;i<3;i++){
+       a+=card(23+i*83,113,70,62,kind==="login"?["ID","PASS","APP"][i]:"TRY "+(i+1),kind==="login"?"#e4effb":"#fbede7");
+     }
+     a+=arrow(286,144,354,144,kind==="login"?green:red);
+     a+=icon("lock",421,146,kind==="login"?green:red);
+     a+=text(421,246,kind==="login"?"SECOND CHECK":"LIMIT / LOCKOUT",18,850);
+     a+=text(280,283,kind==="brute"?"An attack tries many passwords":kind==="lockout"?"Blocking attempts reduces guesses":"Two independent checks reduce risk",17);
+     return render(a);
+   }
+   if(kind==="database"){
+     a+=icon("document",88,169,blue)+a;
+     a+=arrow(146,169,232,169,red)+icon("database",282,169,red)+arrow(339,169,422,169,red)+icon("document",466,169,red);
+     a+=text(89,262,name(0,"INPUT"),16)+text(282,262,"DATABASE QUERY",17)+text(465,262,"RECORDS",17);
+     a+=text(280,93,"UNTRUSTED INPUT MUST BE HANDLED SAFELY",16,850,red);
+     return render(a);
+   }
+   if(kind==="antimalware"||kind==="attack-flow"){
+     a+=icon("document",91,161,kind==="attack-flow"?red:blue);
+     a+=arrow(151,162,229,162,kind==="attack-flow"?red:green);
+     a+=icon("shield",281,164,kind==="attack-flow"?red:green);
+     a+=arrow(338,162,407,162,kind==="attack-flow"?red:green);
+     a+=icon("document",467,161,kind==="attack-flow"?red:green);
+     a+=text(91,264,name(0,"FILE"),17)+text(281,264,name(1,kind==="attack-flow"?"MALWARE":"SCAN"),17)+text(467,264,name(2,"RESULT"),17);
+     return render(a);
+   }
+   if(kind==="access"){
+     a+=icon("person",93,165,blue)+icon("lock",278,151,green)+icon("database",464,166,green);
+     a+=arrow(149,166,231,166,blue)+arrow(325,166,413,166,green);
+     a+=text(92,263,name(0,"USER"),17)+text(280,263,name(1,"PERMISSIONS"),17)+text(466,263,name(2,"PRIVATE FILES"),17);
+     return render(a);
+   }
+   if(kind==="security-layers"){
+     a+=rect(21,77,518,231,"#e2eef9");
+     a+=rect(73,119,415,158,"#e0f2e7");
+     a+=rect(149,156,262,89,"#faf0db");
+     a+=text(280,106,name(0,"FIREWALL"),19,850);
+     a+=text(280,145,name(1,"ANTI-MALWARE"),18,850);
+     a+=text(280,192,name(2,"PERMISSIONS"),19,850);
+     a+=text(280,221,"PROTECTED RESOURCES",15,850);
+     return render(a);
+   }
+   if(kind==="malware-types"||kind==="attack-patterns"||kind==="error-types"||kind==="command-words"){
+     const words=kind==="malware-types"?["TROJAN","WORM","RANSOMWARE"]:kind==="command-words"?["STATE","DESCRIBE","EXPLAIN","COMPARE"]:labels.slice(0,kind==="error-types"?3:3);
+     const n=words.length,wide=(512-14*(n-1))/n;
+     words.forEach((w,i)=>{const x=24+i*(wide+14);
+       a+=rect(x,91,wide,194,i%2?"#e7f4ec":"#e8effa");
+       const ico=kind==="malware-types"?(i===2?"lock":i===1?"document":"shield"):kind==="attack-patterns"?(i===0?"mail":i===1?"document":"server"):kind==="error-types"?"document":"magnify";
+       a+=icon(ico,x+wide/2,159,kind==="attack-patterns"||kind==="malware-types"?red:green);
+       a+=label(x+wide/2,253,w,n===4?16:18,n===4?10:12);
+     });
+     return render(a);
+   }
+   if(kind==="pentest"||kind==="security-cycle"||kind==="feedback"||kind==="assessment"||kind==="mark-explain"){
+     const types=kind==="pentest"?["document","magnify","document"]:kind==="feedback"?["document","magnify","document"]:kind==="assessment"?["document","magnify","document"]:kind==="mark-explain"?["document","magnify","shield"]:["magnify","document","shield"];
+     for(let i=0;i<3;i++){
+       const x=103+i*173;
+       a+=rect(x-75,96,150,164,i===1?"#eff5dc":"#e4f1ed");
+       a+=icon(types[i],x,152,green);
+       a+=label(x,230,name(i,["STEP 1","STEP 2","STEP 3"][i]),16,15);
+       if(i<2)a+=arrow(x+76,168,x+96,168);
+     }
+     return render(a);
+   }
+   return null;
+ }
  function topicVisual(spec){
   const richer=j277NetworkExpansion(spec);if(richer)return richer;
+  const security=j277SecurityScene(spec);if(security)return security;
   const advanced=networkScene(spec);if(advanced)return advanced;
   const values=(Array.isArray(spec.boxes)?spec.boxes:[]).map(v=>String(v).slice(0,21));
   const title=String(spec.title||"OCR J277").slice(0,35),foot=String(spec.foot||"").slice(0,69);
