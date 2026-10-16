@@ -158,6 +158,7 @@
  }
  const lessonStyles=`
  <style>
+ #you-do .question-text p{white-space:pre-line;line-height:1.5}
  #you-do .answer-card-pair{display:grid;grid-template-columns:1fr 1.1fr;gap:12px}
  #you-do .question-pane,#you-do .answer-pane{padding:14px;border:1px solid #c8dace;border-radius:12px}
  #you-do .question-pane{background:#eff8f3}
