@@ -268,7 +268,8 @@
   const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
   const topics=lesson.wTitles||["Compare the processors","Clock speed","Cache size"];
   const views=lesson.wVisuals||["cpu-we-compare","cpu-speed","cpu-cache"];
-  const cases=arr(lesson.w,([q,answer],i)=>{
+  const cases=arr(lesson.w,(entry,i)=>{
+    const [q,answer]=entry.length===3?[entry[1],entry[2]]:entry;
     const guided=isCpu&&Array.isArray(lesson.wSteps)&&Array.isArray(lesson.wSteps[i]);
     const stages=guided?arr(lesson.wSteps[i],([title,explanation],j)=>`<div class="wedo-step j277-cpu-guided-step"${j?' hidden':''}><span class="wedo-step-label">GUIDED PRACTICE · STEP ${j+1} OF ${lesson.wSteps[i].length}</span><h2>${escape(title)}</h2><p>${examWords(lesson,explanation)}</p></div>`):
       `<div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${examWords(lesson,answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div>`;
