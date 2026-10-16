@@ -54,6 +54,141 @@
 
  // Topic-specific visual explanations, rather than decorative labelled boxes.
  // Only opt-in J277 networking scenes use these illustrations.
+
+ function j277NetworkExpansion(spec){
+   const kind=String(spec.layout||"");
+   const supported=["star-failure","mesh-failure","copper","fibre","wireless","media-compare","address-format","address-route","web-secure","email","transport","protocol-roles","standard"];
+   if(!supported.includes(kind))return null;
+   const title=String(spec.title||"Computer Science Diagram");
+   const labels=Array.isArray(spec.boxes)?spec.boxes.map(String):[];
+   const ink="#214b3a",green="#39816a",blue="#4c83ad",red="#c04e4e";
+   const text=(x,y,value,size=18,weight=750,colour=ink)=>'<text x="'+x+'" y="'+y+'" font-family="Arial,sans-serif" text-anchor="middle" font-size="'+size+'" font-weight="'+weight+'" fill="'+colour+'">'+escape(String(value))+'</text>';
+   const line=(x,y,x2,y2,colour=green,w=4,dash=false)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+'" stroke="'+colour+'" stroke-width="'+w+'" fill="none" stroke-linecap="round"'+(dash?' stroke-dasharray="10 8"':'')+'/>';
+   const arrow=(x,y,x2,y2,colour=green)=>{const a=Math.atan2(y2-y,x2-x),p=Math.PI/6,l=12;return line(x,y,x2,y2,colour,4)+line(x2-Math.cos(a-p)*l,y2-Math.sin(a-p)*l,x2,y2,colour,3)+line(x2-Math.cos(a+p)*l,y2-Math.sin(a+p)*l,x2,y2,colour,3);};
+   const box=(x,y,w,h,fill="#e4f2e9")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="15" fill="'+fill+'" stroke="#81b19e" stroke-width="2.5"/>';
+   const wrapped=(x,y,name,max=14,size=18)=>{
+      const words=String(name||"?").split(/\s+/),lines=[];let current="";
+      for(const word of words){if(current&&(current+" "+word).length>max){lines.push(current);current=word;}else current+=(current?" ":"")+word;}
+      if(current)lines.push(current);
+      const limited=lines.slice(0,3),top=y-(limited.length-1)*12;
+      return limited.map((line,i)=>text(x,top+i*24,line,size)).join("");
+   };
+   const card=(x,y,w,h,label,colour="#e5f2e9",font=18)=>{
+      return box(x,y,w,h,colour)+wrapped(x+w/2,y+h/2+6,label,w>170?20:14,font);
+   };
+   const dot=(x,y,r=26,c="#e0eefb")=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'" stroke="'+blue+'" stroke-width="3"/>';
+   const foot=String(spec.foot||"").slice(0,72);
+   const render=(parts)=>'<figure class="a1-scene j277-rich-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+escape(title)+': '+escape(labels.join(", "))+'" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="554" height="334" rx="15" fill="#f8fbf9" stroke="#bfd5c7" stroke-width="2"/>'+text(280,36,title.slice(0,42),title.length>33?19:22,850)+parts+(foot?text(280,325,foot,foot.length>51?14:16,700):"")+'</svg></figure>';
+   let a="";
+   if(kind==="star-failure"||kind==="mesh-failure"){
+      const pts=[[280,164],[92,104],[468,104],[105,255],[455,255]];
+      const edges=kind==="star-failure"?[[0,1],[0,2],[0,3],[0,4]]:[[0,1],[0,2],[0,3],[0,4],[1,2],[1,3],[2,4],[3,4]];
+      const failure=kind==="star-failure" && /fail|stop/i.test(title+" "+foot);
+      for(const e of edges){
+        const p=pts[e[0]],q=pts[e[1]],failed=kind==="mesh-failure"&&e[0]===1&&e[1]===3;
+        a+=line(p[0],p[1],q[0],q[1],failed?red:green,failed?5:4,failed);
+        if(failed)a+=text(79,189,"X",22,900,red);
+      }
+      pts.forEach((p,i)=>{
+        let label=labels[i]||"NODE "+i;
+        a+=dot(p[0],p[1],i===0?47:37,i===0?"#daeee3":"#e2eefb");
+        if(kind==="star-failure"&&i===0)label=labels[0]||"SWITCH";
+        a+=wrapped(p[0],p[1]+6,label,10,i===0?16:15);
+      });
+      if(failure)a+='<circle cx="280" cy="164" r="47" fill="#fff1ee" fill-opacity=".8" stroke="'+red+'" stroke-width="5"/>'+text(280,175,"X",39,900,red)+text(280,227,"CENTRE FAILS",16,800,red);
+      if(kind==="mesh-failure")a+=text(280,292,"Alternative routes remain",17,780);
+      return render(a);
+   }
+   if(kind==="copper"||kind==="fibre"||kind==="wireless"){
+      a+=card(22,110,127,111,labels[0]||"DEVICE A","#e1effb",17);
+      a+=card(411,110,127,111,labels[2]||"DEVICE B","#e2f1e7",17);
+      if(kind==="copper"){
+        a+=line(149,167,411,167,"#9c6a33",14);
+        a+=line(149,167,411,167,"#f4cf73",5);
+        for(let x=187;x<=377;x+=47)a+='<path d="M'+(x-13)+' 167 l9 -14 l9 28 l9 -14" fill="none" stroke="#634c2b" stroke-width="3"/>';
+        a+=text(280,106,"ELECTRICAL SIGNAL",18,850);
+      }else if(kind==="fibre"){
+        a+=line(149,168,411,168,"#468aa6",17);
+        a+=line(149,168,411,168,"#d7ecfa",9);
+        for(let x=174;x<=398;x+=45)a+='<circle cx="'+x+'" cy="168" r="7" fill="#f9ce4c" stroke="#e9a932" stroke-width="2"/>';
+        a+=text(280,108,"LIGHT PULSES",19,850);
+      }else{
+        a+='<path d="M163 166 Q190 90 216 166 T269 166 T322 166 T373 166 T405 166" fill="none" stroke="#397eaf" stroke-width="6"/>';
+        for(let x=203;x<=356;x+=72)a+='<path d="M'+(x-21)+' 128 q21 -22 42 0 M'+(x-11)+' 136 q11 -11 22 0" fill="none" stroke="#4187b4" stroke-width="3"/>';
+        a+=text(280,92,"RADIO WAVES",19,850);
+      }
+      a+=text(280,264,kind==="copper"?"COPPER CABLE":kind==="fibre"?"OPTICAL FIBRE":"WIRELESS CONNECTION",18,850);
+      return render(a);
+   }
+   if(kind==="media-compare"){
+     const rows=[["COPPER","Electrical","copper"],["FIBRE","Light","fibre"],["WI-FI","Radio","wireless"]];
+     rows.forEach((r,i)=>{const y=86+i*75;
+       a+=card(23,y,122,53,r[0],i===0?"#f7ead7":i===1?"#e4f2fa":"#e5f3e9",18);
+       a+=line(162,y+26,369,y+26,i===0?"#b58445":i===1?"#5198b7":"#4eaf91",i===2?4:8,i===2);
+       a+=card(390,y,142,53,r[1],"#f1f6f2",19);
+     });
+     return render(a);
+   }
+   if(kind==="address-format"){
+      a+=card(26,87,508,87,labels[0]||"192.0.2.10","#e6f0f9",20);
+      a+=card(26,191,508,87,labels[1]||"AA:BB:CC:DD:EE:FF","#e1f3e7",19);
+      a+=text(280,181,"COMPARE THE TWO ADDRESS FORMATS",15,850);
+      return render(a);
+   }
+   if(kind==="address-route"){
+      const entries=[labels[0]||"PC / NIC","LAN SWITCH","ROUTER","REMOTE WEB"];
+      const xs=[18,159,300,441],w=101;
+      for(let i=0;i<4;i++){
+         a+=card(xs[i],126,w,91,entries[i],i%2?"#e1f2e6":"#e3eef9",15);
+         if(i<3)a+=arrow(xs[i]+w+2,172,xs[i+1]-4,172);
+      }
+      a+=text(142,101,"LOCAL MAC",18,850);
+      a+=text(422,101,"NETWORK IP",18,850);
+      a+=text(280,265,"SWITCH INSIDE LAN · ROUTER BETWEEN LANs",16,850);
+      return render(a);
+   }
+   if(kind==="web-secure"){
+      a+=card(27,91,226,122,"HTTP · WEB TRANSFER","#e3eff9",21);
+      a+=card(307,91,226,122,"HTTPS · ENCRYPTED","#e2f3e9",19);
+      a+='<rect x="391" y="222" width="61" height="50" rx="9" fill="#d4eadb" stroke="#3b8160" stroke-width="4"/>'+
+         '<path d="M405 221 v-12 a17 17 0 0 1 34 0 v12" fill="none" stroke="#3b8160" stroke-width="5"/>';
+      a+=text(280,287,"THE SECURE CONNECTION PROTECTS DATA IN TRANSIT",15,850);
+      return render(a);
+   }
+   if(kind==="email"){
+      a+=card(18,93,148,80,labels[0]||"SENDER","#e2eef9",17);
+      a+=card(209,93,143,80,labels[1]||"MAIL SERVER","#e3f2e8",18);
+      a+=card(395,93,146,80,labels[2]||"RECEIVER","#e7eef8",17);
+      a+=arrow(169,134,205,134);
+      a+=arrow(355,134,392,134);
+      a+=text(280,233,"SMTP → SEND MAIL",20,850);
+      a+=text(280,275,"IMAP / POP → ACCESS MAIL",18,850);
+      return render(a);
+   }
+   if(kind==="transport"){
+      const names=[labels[0]||"WEB REQUEST",labels[1]||"TCP",labels[2]||"IP"];
+      names.forEach((v,i)=>{const x=22+i*181;a+=card(x,104,155,112,v,i===0?"#e1eefc":i===1?"#def3e6":"#f6ead6",19);if(i<2)a+=arrow(x+158,160,x+178,160);});
+      a+=text(101,254,"APPLICATION",15,800)+text(280,254,"RELIABLE DELIVERY",15,800)+text(459,254,"ROUTING",15,800);
+      return render(a);
+   }
+   if(kind==="protocol-roles"){
+      const names=[["WEB","HTTP(S)"],["EMAIL","SMTP / IMAP"],["FILES","FTP"],["NETWORK","TCP / IP"]];
+      names.forEach((pair,i)=>{const x=i%2?293:25,y=i>=2?191:83;
+        a+=box(x,y,242,92,i===0?"#e0eefb":i===1?"#e0f3e8":i===2?"#f9ead5":"#e4eaf7");
+        a+=text(x+121,y+34,pair[0],19,850)+text(x+121,y+66,pair[1],19,850);
+      });
+      return render(a);
+   }
+   if(kind==="standard"){
+      a+=card(25,112,145,126,labels[0]||"MAKER A","#e2eefb",18);
+      a+=card(208,117,145,116,labels[1]||"SHARED RULES","#f7ecd4",18);
+      a+=card(390,112,145,126,labels[2]||"MAKER B","#e0f2e7",18);
+      a+=arrow(173,172,205,172)+arrow(356,172,388,172);
+      a+=text(280,276,"INTEROPERABILITY THROUGH AGREED RULES",16,850);
+      return render(a);
+   }
+   return null;
+ }
  function networkScene(spec){
    const esc=escape;
    const title=String(spec.title||"Network diagram");
@@ -143,6 +278,7 @@
    return null;
  }
  function topicVisual(spec){
+  const richer=j277NetworkExpansion(spec);if(richer)return richer;
   const advanced=networkScene(spec);if(advanced)return advanced;
   const values=(Array.isArray(spec.boxes)?spec.boxes:[]).map(v=>String(v).slice(0,21));
   const title=String(spec.title||"OCR J277").slice(0,35),foot=String(spec.foot||"").slice(0,69);
