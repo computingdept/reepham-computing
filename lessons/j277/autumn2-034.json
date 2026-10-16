@@ -38,53 +38,53 @@
     ],
     "visuals": [
       {
-        "title": "READ THE CASE",
+        "title": "READ THE CLUES IN THE SCENARIO",
+        "layout": "attack-patterns",
+        "boxes": [
+          "Suspicious email",
+          "Locked files",
+          "Traffic flood"
+        ],
+        "foot": "Look at evidence, not guesswork"
+      },
+      {
+        "title": "IDENTIFY THE THREAT",
         "layout": "flow",
         "boxes": [
-          "Threat symptom",
-          "Named attack",
-          "Likely impact"
+          "Evidence",
+          "Specific threat",
+          "Impact"
         ],
-        "foot": "Evidence → technical term"
+        "foot": "Use the correct OCR terminology"
       },
       {
-        "title": "MATCH THREAT AND DEFENCE",
-        "layout": "compare",
-        "boxes": [
-          "Attack method",
-          "Matching control"
-        ],
-        "foot": "Explain how the control helps"
-      },
-      {
-        "title": "LAYERED PROTECTION",
-        "layout": "grid",
+        "title": "MATCH DEFENCE TO RISK",
+        "layout": "security-layers",
         "boxes": [
           "Firewall",
           "Anti-malware",
-          "Permissions",
-          "Training"
+          "Permissions"
         ],
-        "foot": "No single defence stops everything"
+        "foot": "One control cannot stop everything"
       },
       {
-        "title": "WRITE FOR MARKS",
+        "title": "EXPLAIN HOW IT WORKS",
         "layout": "flow",
         "boxes": [
-          "Identify",
-          "Explain action",
-          "Link outcome"
+          "Name measure",
+          "Mechanism",
+          "Less risk"
         ],
-        "foot": "Avoid unsupported statements"
+        "foot": "Marks reward linked explanations"
       }
     ],
     "idoVisual": {
-      "title": "FAKE SCHOOL SIGN-IN",
-      "layout": "flow",
+      "title": "FAKE SCHOOL PORTAL MESSAGE",
+      "layout": "phishing",
       "boxes": [
-        "Phishing link",
-        "Pupil account",
-        "Stolen details"
+        "Fake school email",
+        "Login page",
+        "Credentials"
       ],
       "foot": "Training and 2FA reduce risk"
     },
@@ -181,34 +181,34 @@
     ],
     "wVisuals": [
       {
-        "title": "REPEATED LOGIN GUESSES",
-        "layout": "flow",
+        "title": "ACCOUNT UNDER PASSWORD ATTACK",
+        "layout": "lockout",
         "boxes": [
-          "Brute force",
-          "Account lockout",
-          "Fewer guesses"
+          "Repeated guesses",
+          "Limit reached",
+          "Second factor"
         ],
-        "foot": "Apply an authentication control"
+        "foot": "Control login attempts"
       },
       {
-        "title": "UNSAFE DOWNLOAD",
-        "layout": "flow",
+        "title": "MALWARE REACHES DEVICE",
+        "layout": "antimalware",
         "boxes": [
-          "Malware",
-          "Anti-malware",
-          "Blocked threat"
+          "Download",
+          "Scanner",
+          "Quarantine"
         ],
-        "foot": "Permissions limit damage"
+        "foot": "Detection plus restricted permissions"
       },
       {
-        "title": "SERVICE OVERLOADED",
-        "layout": "flow",
+        "title": "WEBSITE FLOODED WITH REQUESTS",
+        "layout": "dos",
         "boxes": [
-          "DoS traffic",
-          "Firewall filtering",
-          "Users served"
+          "Flood",
+          "Online service",
+          "Genuine users"
         ],
-        "foot": "Filtering and rate limiting help"
+        "foot": "Traffic filtering may reduce disruption"
       }
     ],
     "k": {
@@ -292,6 +292,55 @@
       "L032 · earlier learning",
       "L031 · earlier learning",
       "L030 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Readable message becomes encrypted",
+        "layout": "encryption",
+        "boxes": [
+          "Plaintext",
+          "Encrypt",
+          "Ciphertext"
+        ],
+        "foot": "What security technique is used?"
+      },
+      null,
+      {
+        "title": "Password attempts repeated",
+        "layout": "brute",
+        "boxes": [
+          "Guess",
+          "Guess",
+          "Account"
+        ],
+        "foot": "Which type of attack?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Public Wi-Fi in a busy café",
+        "layout": "intercept",
+        "boxes": [
+          "Employee laptop",
+          "Public Wi-Fi",
+          "Office server"
+        ],
+        "foot": "Think about confidentiality in transit"
+      },
+      {
+        "title": "Three different attack situations",
+        "layout": "attack-patterns",
+        "boxes": [
+          "Phishing",
+          "Malware",
+          "Brute force"
+        ],
+        "foot": "Choose a matching prevention for each"
+      }
+    ],
+    "memoryCue": "In scenario answers: evidence → named threat → matching control → explanation of its effect."
   }
 }
