@@ -7,6 +7,29 @@
   ms11:"https://pmt.physicsandmathstutor.com/download/Computer-Science/GCSE/Topic-Qs/OCR/1-Computer-systems/Set-A/1.1%20Systems%20Architecture%20MS.pdf"
  };
  const escape=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+ // OCR J277: selectively emphasise exam command words and specification terms.
+ // Work on plain source text, escape all spans, and never mark code or SVG labels.
+ function examWords(lesson,source,limit=4){
+   const value=String(source??"");
+   const terms=lesson.vis==="embedded-systems"
+     ? /\b(embedded systems?|dedicated (?:function|purpose)|specific (?:function|purpose)|real-time|low power|limited user interface|sensor|input|output|ROM|RAM|actuator|explain|describe|identify|state|compare|justify|calculate)\b/gi
+     : lesson.vis==="cpu-performance"
+     ? /\b(clock speed|cache size|number of cores|CPU cores|parallel processing|cache|cores|explain|describe|identify|state|compare|justify|calculate)\b/gi
+     : null;
+   if(!terms)return escape(value);
+   let html="",position=0,count=0;const seen=new Set();
+   for(const match of value.matchAll(terms)){
+     const word=match[0], key=word.toLowerCase();
+     if(seen.has(key))continue;
+     if(count>=limit)break;
+     seen.add(key);
+     html+=escape(value.slice(position,match.index));
+     html+='<mark class="j277-exam-word">'+escape(word)+'</mark>';
+     position=match.index+word.length;
+     count++;
+   }
+   return html+escape(value.slice(position));
+ }
  function svgScene(label,contents){
   return `<figure class="a1-scene"><svg viewBox="0 0 560 232" role="img" aria-label="${escape(label)}" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="554" height="226" rx="14" fill="#f7fbf8" stroke="#bfd5c7" stroke-width="2"/>${contents}</svg></figure>`;
  }
@@ -226,7 +249,7 @@
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
-  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
+  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
   const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
   const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
   return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance.")}</div></article><article class="nl-explanation">${stages}</article></div></section>`;
@@ -235,9 +258,9 @@
  function iDo(lesson){
   const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
-  const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${escape(step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
+  const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${examWords(lesson,step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
   const reference=isCpu
-    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${diagram(lesson.idoVisual||lesson.vis)}<p class="j277-cpu-question">${escape(lesson.m.q)}</p>`
+    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${diagram(lesson.idoVisual||lesson.vis)}<p class="j277-cpu-question">${examWords(lesson,lesson.m.q)}</p>`
     :`<h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}`;
   return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
@@ -247,9 +270,9 @@
   const views=lesson.wVisuals||["cpu-we-compare","cpu-speed","cpu-cache"];
   const cases=arr(lesson.w,([q,answer],i)=>{
     const guided=isCpu&&Array.isArray(lesson.wSteps)&&Array.isArray(lesson.wSteps[i]);
-    const stages=guided?arr(lesson.wSteps[i],([title,explanation],j)=>`<div class="wedo-step j277-cpu-guided-step"${j?' hidden':''}><span class="wedo-step-label">GUIDED PRACTICE · STEP ${j+1} OF ${lesson.wSteps[i].length}</span><h2>${escape(title)}</h2><p>${escape(explanation)}</p></div>`):
-      `<div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${escape(answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div>`;
-    return `<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}</div><div class="wedo-practice">${stages}</div></article>`;
+    const stages=guided?arr(lesson.wSteps[i],([title,explanation],j)=>`<div class="wedo-step j277-cpu-guided-step"${j?' hidden':''}><span class="wedo-step-label">GUIDED PRACTICE · STEP ${j+1} OF ${lesson.wSteps[i].length}</span><h2>${escape(title)}</h2><p>${examWords(lesson,explanation)}</p></div>`):
+      `<div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${examWords(lesson,answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div>`;
+    return `<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${examWords(lesson,q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}</div><div class="wedo-practice">${stages}</div></article>`;
   });
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"${isCpu&&lesson.wSteps?' data-guided-steps="true"':''}><div class="wedo-focus-deck">${cases}</div></section>`;
  }
@@ -265,7 +288,7 @@
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
   const paper=(lesson.s.startsWith("1.1")?["qp11","ms11"]:["qp12","ms12"]);
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original practice question based on the J277 specification. <a href="${PMT[paper[0]]}" target="_blank" rel="noopener">PMT past topic questions ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">mark scheme ↗</a></p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Original practice question based on the J277 specification. <a href="${PMT[paper[0]]}" target="_blank" rel="noopener">PMT past topic questions ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">mark scheme ↗</a></p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
@@ -348,6 +371,16 @@
  .j277-visual-lesson #we-do .j277-cpu-guided-step{
    min-height:230px;
    justify-content:flex-start;
+ }
+ /* Selective yellow highlighter for OCR exam wording (keeps diagrams and code unmarked). */
+ .j277-visual-lesson mark.j277-exam-word{
+   color:#29230b;
+   background:#ffe477;
+   font-weight:800;
+   padding:0 .12em;
+   border-radius:3px;
+   box-decoration-break:clone;
+   -webkit-box-decoration-break:clone;
  }
  /* Consistent readable typography; the SVG leads, then the question/explanation. */
  .j277-visual-lesson{
