@@ -1,0 +1,291 @@
+{
+  "031": {
+    "t": "Network Attacks",
+    "s": "1.4.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "brute-force",
+      "denial of service",
+      "DDoS",
+      "data interception",
+      "SQL injection",
+      "unauthorised access"
+    ],
+    "o": [
+      "Recognise brute-force, DoS/DDoS, interception and SQL injection.",
+      "Explain the effect of each attack on a system.",
+      "Distinguish disruption, theft and unauthorised access."
+    ],
+    "c": [
+      [
+        "Brute-force guessing",
+        "An attacker systematically tries many possible passwords in an attempt to gain access to an account."
+      ],
+      [
+        "Denial of Service",
+        "A DoS attack overwhelms a service with traffic or requests so legitimate users cannot access it. A DDoS attack originates from multiple systems."
+      ],
+      [
+        "Data interception",
+        "Data may be captured during transmission, potentially exposing confidential information if not protected."
+      ],
+      [
+        "SQL injection",
+        "A malicious input may be interpreted as part of a database query, causing unauthorised viewing or alteration of data if the application handles input insecurely."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "ACCOUNT GUESSING",
+        "layout": "flow",
+        "boxes": [
+          "Many guesses",
+          "Login system",
+          "Possible access"
+        ],
+        "foot": "Failed attempts can be restricted"
+      },
+      {
+        "title": "DENIAL OF SERVICE",
+        "layout": "flow",
+        "boxes": [
+          "Excess requests",
+          "Server overloaded",
+          "Users blocked"
+        ],
+        "foot": "Service availability is affected"
+      },
+      {
+        "title": "INTERCEPTION",
+        "layout": "flow",
+        "boxes": [
+          "Sender",
+          "Network link",
+          "Receiver"
+        ],
+        "foot": "Protect transmitted information"
+      },
+      {
+        "title": "UNSAFE INPUT HANDLING",
+        "layout": "flow",
+        "boxes": [
+          "Web form",
+          "Database query",
+          "Data at risk"
+        ],
+        "foot": "Applications must handle input safely"
+      }
+    ],
+    "idoVisual": {
+      "title": "ACCOUNT GUESSING",
+      "layout": "flow",
+      "boxes": [
+        "Many guesses",
+        "Login system",
+        "Possible access"
+      ],
+      "foot": "Failed attempts can be restricted"
+    },
+    "m": {
+      "title": "Unavailable online resource",
+      "q": "A school's web service receives overwhelming requests and genuine users cannot log in. Explain the likely attack and its effect. [4 marks]",
+      "headings": [
+        "Recognise the symptom",
+        "Name the attack",
+        "Explain overload",
+        "Explain impact"
+      ],
+      "st": [
+        "The service is overloaded and genuine users cannot access it.",
+        "A denial-of-service (DoS) attack targets service availability [1].",
+        "Excess traffic or requests [1] overload server resources [1].",
+        "Legitimate pupils and staff are prevented from accessing the website [1]."
+      ]
+    },
+    "w": [
+      [
+        "An account receives thousands of unsuccessful login attempts. Explain the attack and its likely aim. [4 marks]",
+        "A brute-force attack [1] tries many possible passwords [1] seeking the correct combination [1] to gain unauthorised access [1]."
+      ],
+      [
+        "A user sends private details on an unprotected connection. Explain data interception and a consequence. [4 marks]",
+        "Data interception captures data during transmission [1] without authorisation [1]. Private details may be read [1] and misused for impersonation or theft [1]."
+      ],
+      [
+        "An insecure database-backed website misinterprets crafted input as part of a query. Explain the threat and possible damage. [4 marks]",
+        "SQL injection occurs when unsafe user input changes a database query [1] so unintended commands are executed [1]. This may reveal private records [1] or alter/delete stored data [1]."
+      ]
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Focus on repeated guesses, not harmful downloaded software."
+        ],
+        [
+          "Step 1 · identify",
+          "Brute-force repeatedly attempts passwords [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "The goal is to find valid credentials and enter the account [2]."
+        ],
+        [
+          "Check the marks",
+          "A brute-force attack [1] tries many possible passwords [1] seeking the correct combination [1] to gain unauthorised access [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Describe data in transit and what an eavesdropper might gain."
+        ],
+        [
+          "Step 1 · identify",
+          "Someone captures transmitted information without permission [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Exposed details may be read and misused [2]."
+        ],
+        [
+          "Check the marks",
+          "Data interception captures data during transmission [1] without authorisation [1]. Private details may be read [1] and misused for impersonation or theft [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Identify the unsafe form or database query."
+        ],
+        [
+          "Step 1 · identify",
+          "Untrusted input affects a query [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Stored records may be accessed or changed without permission [2]."
+        ],
+        [
+          "Check the marks",
+          "SQL injection occurs when unsafe user input changes a database query [1] so unintended commands are executed [1]. This may reveal private records [1] or alter/delete stored data [1]."
+        ]
+      ]
+    ],
+    "wTitles": [
+      "Guided scenario 1",
+      "Guided scenario 2",
+      "Guided scenario 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "Threat example",
+        "layout": "flow",
+        "boxes": [
+          "Excess requests",
+          "Server overloaded",
+          "Users blocked"
+        ],
+        "foot": "Network Attacks"
+      },
+      {
+        "title": "Security analysis",
+        "layout": "compare",
+        "boxes": [
+          "Sender",
+          "Network link",
+          "Receiver"
+        ],
+        "foot": "Network Attacks"
+      },
+      {
+        "title": "Apply the method",
+        "layout": "grid",
+        "boxes": [
+          "Web form",
+          "Database query",
+          "Data at risk"
+        ],
+        "foot": "Network Attacks"
+      }
+    ],
+    "k": {
+      "q": "Use an already supplied count of failed logins to simulate an account-lock warning. Do not test passwords.",
+      "code": "failedAttempts = 5\nif failedAttempts > 3 then\n    print(\"Account review required\")\nelse\n    print(\"Continue monitoring\")\nendif",
+      "p": [
+        "Predict output.",
+        "Change failedAttempts to 2.",
+        "Add print(\"Use secure authentication\") at the end."
+      ],
+      "a": "Five failed attempts: Account review required. Two: Continue monitoring.\n\nExtended OCR ERL:\nfailedAttempts = 2\nif failedAttempts > 3 then\n    print(\"Account review required\")\nelse\n    print(\"Continue monitoring\")\nendif\nprint(\"Use secure authentication\")\n\nThis demonstrates defensive monitoring, not password guessing."
+    },
+    "e": [
+      [
+        "Define a brute-force attack. [2 marks]\n\nSource: Adapted from your Paper 1 revision booklet, 1.4.1.",
+        "Attempts many possible passwords [1] to discover the correct one/gain access [1]."
+      ],
+      [
+        "Explain two consequences of a denial-of-service attack on a school website. [4 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
+        "Service becomes overloaded/unavailable [1], preventing legitimate users from accessing learning materials [1]. Repeated disruption may waste staff time [1] and interrupt lessons or operations [1]."
+      ],
+      [
+        "Describe DoS, interception and SQL injection, including an effect of each. [6 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
+        "DoS overloads a service [1], causing legitimate access failure [1]. Interception captures data in transit [1], risking disclosure [1]. SQL injection manipulates database queries via unsafe input [1], potentially revealing or changing stored records [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Brute-force attack",
+        "Repeated guessing of possible passwords."
+      ],
+      [
+        "DoS",
+        "Denial of Service; overloads availability of a service."
+      ],
+      [
+        "DDoS",
+        "Distributed Denial of Service; traffic from multiple sources."
+      ],
+      [
+        "Data interception",
+        "Capturing information while it is transmitted."
+      ],
+      [
+        "SQL injection",
+        "Using unsafe input handling to affect database queries."
+      ],
+      [
+        "Unauthorised access",
+        "Access without proper permission."
+      ]
+    ],
+    "x": [
+      "A DoS attack aims to make a service unavailable to legitimate users.",
+      true
+    ],
+    "r": [
+      [
+        "Define phishing. [2 marks]",
+        "Deceptive messages impersonate a trusted source [1] to trick users into revealing personal data/credentials [1]."
+      ],
+      [
+        "State one benefit of agreed networking standards. [1 mark]",
+        "They allow equipment/software from different manufacturers to communicate/interoperate [1]."
+      ],
+      [
+        "State one function of SMTP. [1 mark]",
+        "Sends email between clients/servers or mail servers [1]."
+      ],
+      [
+        "A switch receives data for a printer on its LAN. Explain how MAC addresses support forwarding. [4 marks]",
+        "MAC identifies target network interface [1] on LAN [1]. Switch uses MAC destination [1] to forward towards appropriate port/device [1]."
+      ]
+    ],
+    "refs": [
+      "L030 · last lesson",
+      "L029 · earlier learning",
+      "L028 · earlier learning",
+      "L027 · earlier learning"
+    ]
+  }
+}
