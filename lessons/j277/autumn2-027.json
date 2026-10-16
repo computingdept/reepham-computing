@@ -37,56 +37,54 @@
     ],
     "visuals": [
       {
-        "title": "IP ADDRESSES · NETWORK ROUTING",
-        "layout": "flow",
+        "title": "IP · ROUTE BETWEEN NETWORKS",
+        "layout": "router",
         "boxes": [
-          "192.0.2.10",
-          "Router",
-          "198.51.100.5"
+          "Local computer",
+          "IP router",
+          "Remote service"
         ],
-        "foot": "Use documentation addresses in examples"
+        "foot": "IP guides traffic between networks"
       },
       {
-        "title": "MAC ADDRESS FORMAT",
-        "layout": "layers",
+        "title": "MAC · IDENTIFY A LAN INTERFACE",
+        "layout": "address-format",
         "boxes": [
-          "3A:52:00:AB:10:FE",
-          "Six hexadecimal pairs",
-          "Identifies network interface",
-          "Used in LAN forwarding"
+          "74:3B:9D:20:61:AF",
+          "MAC",
+          "Interface"
         ],
-        "foot": "Addresses serve different roles"
+        "foot": "Six hexadecimal pairs"
       },
       {
-        "title": "SWITCH / ROUTER",
+        "title": "MAC AND IP HAVE DIFFERENT JOBS",
+        "layout": "address-route",
+        "boxes": [
+          "Computer NIC",
+          "LAN switch",
+          "IP router"
+        ],
+        "foot": "Local switching and remote routing"
+      },
+      {
+        "title": "IDENTIFY NETWORK ADDRESSES",
         "layout": "compare",
         "boxes": [
-          "Switch → MAC",
-          "Router → IP"
+          "IPv4: 203.0.113.9",
+          "MAC: 7C:21:9A:02:14:EF"
         ],
-        "foot": "Don't swap their roles"
-      },
-      {
-        "title": "TWO DIFFERENT IDENTIFIERS",
-        "layout": "grid",
-        "boxes": [
-          "IP addressing",
-          "MAC addressing",
-          "Routing",
-          "Local forwarding"
-        ],
-        "foot": "Use the right address type"
+        "foot": "Format helps identify purpose"
       }
     ],
     "idoVisual": {
-      "title": "LOCAL MAC · REMOTE IP",
-      "layout": "flow",
+      "title": "FROM LAN TO ANOTHER NETWORK",
+      "layout": "address-route",
       "boxes": [
-        "Computer / MAC",
-        "LAN gateway",
-        "Remote IP"
+        "PC interface",
+        "LAN switch",
+        "Router"
       ],
-      "foot": "Local forwarding and routing differ"
+      "foot": "Use MAC locally, IP to reach remote destinations"
     },
     "m": {
       "title": "A message leaves the school",
@@ -181,33 +179,36 @@
     ],
     "wVisuals": [
       {
-        "title": "LAN PRINTER INTERFACE",
-        "layout": "flow",
+        "title": "MAC ADDRESS IN THE LAN",
+        "layout": "switch",
         "boxes": [
-          "PC MAC",
-          "LAN switch",
-          "Printer MAC"
+          "PC",
+          "Switch",
+          "Printer",
+          "Laptop",
+          "Server"
         ],
-        "foot": "Local interface identification"
+        "foot": "Switch forwards to interface"
       },
       {
-        "title": "COLLEGE WEB SERVER",
-        "layout": "flow",
+        "title": "IP ROUTING TO THE WEBSITE",
+        "layout": "router",
         "boxes": [
           "College LAN",
-          "IP router",
-          "Remote server"
+          "Router",
+          "Web server"
         ],
-        "foot": "Destination IP directs routing"
+        "foot": "Destination IP helps routing"
       },
       {
-        "title": "ADDRESS FORMATS",
-        "layout": "compare",
+        "title": "COMPARE ADDRESS FORMATS",
+        "layout": "address-format",
         "boxes": [
-          "10.2.4.8 = IPv4",
-          "5A:01:2B:0C:34:EF"
+          "10.2.4.8",
+          "5A:01:2B:0C:34:EF",
+          "IPv4 / MAC"
         ],
-        "foot": "MAC uses six hex pairs"
+        "foot": "Compare decimal octets and hex pairs"
       }
     ],
     "k": {
@@ -226,8 +227,8 @@
         "Identifies a network destination/used for routing [1]."
       ],
       [
-        "A switch receives data for a printer on its LAN. Explain how MAC addresses support forwarding. [4 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
-        "MAC identifies target network interface [1] on LAN [1]. Switch uses MAC destination [1] to forward towards appropriate port/device [1]."
+        "A museum ticket scanner sends entry data to the reception computer on the same LAN. Explain how MAC addresses help the switch forward this data. [4 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
+        "The destination computer's NIC has a MAC address [1], which identifies it on the LAN [1]. The switch uses the destination MAC address [1] to forward the data to the appropriate port towards reception [1]."
       ],
       [
         "Compare IP addressing and MAC addressing and explain their use by routers and switches. [6 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
@@ -287,6 +288,54 @@
       "L025 · earlier learning",
       "L024 · earlier learning",
       "L023 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Wireless signal in a busy room",
+        "layout": "wireless",
+        "boxes": [
+          "Tablet",
+          "Wi-Fi AP",
+          "LAN"
+        ],
+        "foot": "What can interfere with the signal?"
+      },
+      null,
+      {
+        "title": "A named website",
+        "layout": "flow",
+        "boxes": [
+          "Web name",
+          "Lookup service",
+          "?"
+        ],
+        "foot": "What kind of address is found?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Museum scanner to reception",
+        "layout": "flow",
+        "boxes": [
+          "Ticket scanner",
+          "LAN switch",
+          "Reception PC"
+        ],
+        "foot": "Data stays inside the museum LAN"
+      },
+      {
+        "title": "Two address formats",
+        "layout": "compare",
+        "boxes": [
+          "203.0.113.18",
+          "7C:21:9A:02:14:EF"
+        ],
+        "foot": "Which address identifies an interface?"
+      }
+    ],
+    "memoryCue": "Switch + MAC = local forwarding; router + IP = forwarding between networks."
   }
 }
