@@ -432,8 +432,7 @@
    font-size:clamp(18px,1.35vw,23px);font-weight:850;border-radius:10px;
  }
  .j277-visual-lesson .j277-assessment-note{font-size:clamp(15px,1.1vw,18px);color:#445448}
- .j277-visual-lesson .j277-assessment .youdo-solutions-link,
- .j277-visual-lesson .youdo-solutions-link{display:none!important}
+ .j277-assessment-lesson .youdo-solutions-link{display:none!important}
  /* Selective yellow highlighter for OCR exam wording (keeps diagrams and code unmarked). */
  .j277-visual-lesson mark.j277-exam-word{
    color:#29230b;
@@ -547,7 +546,7 @@
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
- const html=sharedHead(number,lesson.t)+`<body class="${["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+ const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
