@@ -14,7 +14,7 @@
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
  function diagram(kind){
-  if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary"].includes(kind)){
+  if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary","cpu-we-compare"].includes(kind)){
     // GCSE J277 1.1.2 only. Taller, classroom-size drawings (not miniature badges).
     const frame=(label,contents)=>svgScene(label,contents)
       .replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"')
@@ -50,7 +50,14 @@
       note(21,215,"CORES",19)+pill(174,185,158,46,"2 cores","#e0edfc",21)+pill(369,185,158,46,"4 cores","#e3f3e7",21)+
       note(21,285,"CACHE",19)+pill(174,255,158,46,"4 MB","#e0edfc",21)+pill(369,255,158,46,"8 MB","#e3f3e7",21)+
       note(23,329,"Best CPU depends on the task.",19));
-    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():compare();
+    const weCompare=()=>frame("We Do comparison: CPU C has 3.6 GHz, two cores and 4 MB cache; CPU D has 3.0 GHz, six cores and 12 MB cache.",
+      note(23,39,"COMPARE TWO CPUs · RUNNING SEVERAL PROGRAMS",18)+
+      pill(169,56,170,50,"CPU C","#e0edfc",23)+pill(364,56,170,50,"CPU D","#e3f3e7",23)+
+      note(21,145,"CLOCK",19)+pill(174,115,158,46,"3.6 GHz","#e0edfc",21)+pill(369,115,158,46,"3.0 GHz","#e3f3e7",21)+
+      note(21,215,"CORES",19)+pill(174,185,158,46,"2 cores","#e0edfc",21)+pill(369,185,158,46,"6 cores","#e3f3e7",21)+
+      note(21,285,"CACHE",19)+pill(174,255,158,46,"4 MB","#e0edfc",21)+pill(369,255,158,46,"12 MB","#e3f3e7",21)+
+      note(23,329,"Which features help when many programs are open?",17));
+    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():kind==="cpu-we-compare"?weCompare():compare();
   }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
@@ -144,10 +151,15 @@
  }
  function weDo(lesson){
   const isCpu=lesson.vis==="cpu-performance";
-  const topics=["Clock speed","Cache size","Number of cores"];
-  const views=["cpu-speed","cpu-cache","cpu-cores"];
-  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${escape(answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div></div></article>`);
-  return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"><div class="wedo-focus-deck">${cases}</div></section>`;
+  const topics=["Compare the processors","Clock speed","Cache size"];
+  const views=["cpu-we-compare","cpu-speed","cpu-cache"];
+  const cases=arr(lesson.w,([q,answer],i)=>{
+    const guided=isCpu&&Array.isArray(lesson.wSteps)&&Array.isArray(lesson.wSteps[i]);
+    const stages=guided?arr(lesson.wSteps[i],([title,explanation],j)=>`<div class="wedo-step j277-cpu-guided-step"${j?' hidden':''}><span class="wedo-step-label">GUIDED PRACTICE · STEP ${j+1} OF ${lesson.wSteps[i].length}</span><h2>${escape(title)}</h2><p>${escape(explanation)}</p></div>`):
+      `<div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${escape(answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div>`;
+    return `<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice">${stages}</div></article>`;
+  });
+  return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"${isCpu&&lesson.wSteps?' data-guided-steps="true"':''}><div class="wedo-focus-deck">${cases}</div></section>`;
  }
  function youDo(lesson,number){
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
@@ -230,6 +242,21 @@
   .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
  }
 
+ .j277-cpu-lesson #we-do .j277-cpu-guided-step h2{
+   font-size:clamp(21px,1.55vw,28px);
+   line-height:1.23;
+   margin:0 0 13px;
+ }
+ .j277-cpu-lesson #we-do .j277-cpu-guided-step p{
+   font-size:clamp(19px,1.3vw,24px);
+   font-weight:550;
+   line-height:1.45;
+   overflow-wrap:anywhere;
+ }
+ .j277-cpu-lesson #we-do .j277-cpu-guided-step{
+   min-height:230px;
+   justify-content:flex-start;
+ }
  /* Consistent readable typography; the SVG leads, then the question/explanation. */
  .j277-cpu-lesson{
    --j277-cpu-title:clamp(24px,1.75vw,30px);
