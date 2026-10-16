@@ -227,28 +227,29 @@
  }
  function newLearning(lesson){
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
-  const visuals=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"].map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
-  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
+  const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
+  const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
+  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance.")}</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
 
  function iDo(lesson){
-  const isCpu=lesson.vis==="cpu-performance";
-  const headings=["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
+  const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
+  const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${escape(step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
   const reference=isCpu
-    ?`<h2>Compare CPU specifications</h2>${diagram(lesson.vis)}<p class="j277-cpu-question">${escape(lesson.m.q)}</p>`
+    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${diagram(lesson.idoVisual||lesson.vis)}<p class="j277-cpu-question">${escape(lesson.m.q)}</p>`
     :`<h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}`;
-  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}<span class="ido-example-count">Same example throughout</span></div><div class="ido-method">${steps}</div></article></div></section>`;
+  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
-  const isCpu=lesson.vis==="cpu-performance";
-  const topics=["Compare the processors","Clock speed","Cache size"];
-  const views=["cpu-we-compare","cpu-speed","cpu-cache"];
+  const isCpu=["cpu-performance","embedded-systems"].includes(lesson.vis);
+  const topics=lesson.wTitles||["Compare the processors","Clock speed","Cache size"];
+  const views=lesson.wVisuals||["cpu-we-compare","cpu-speed","cpu-cache"];
   const cases=arr(lesson.w,([q,answer],i)=>{
     const guided=isCpu&&Array.isArray(lesson.wSteps)&&Array.isArray(lesson.wSteps[i]);
     const stages=guided?arr(lesson.wSteps[i],([title,explanation],j)=>`<div class="wedo-step j277-cpu-guided-step"${j?' hidden':''}><span class="wedo-step-label">GUIDED PRACTICE · STEP ${j+1} OF ${lesson.wSteps[i].length}</span><h2>${escape(title)}</h2><p>${escape(explanation)}</p></div>`):
       `<div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span>${isCpu?`<h2>Model answer</h2><p>${escape(answer)}</p>`:`<h2>${escape(answer)}</h2>`}</div>`;
-    return `<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice">${stages}</div></article>`;
+    return `<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>${isCpu?escape(topics[i]||"CPU performance"):"Work it out together"}</h2>${isCpu?diagram(views[i]||"cpu-summary"):""}<p class="${isCpu?"j277-cpu-question":""}">${escape(q)}</p>${!isCpu?(i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`):""}</div><div class="wedo-practice">${stages}</div></article>`;
   });
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"${isCpu&&lesson.wSteps?' data-guided-steps="true"':''}><div class="wedo-focus-deck">${cases}</div></section>`;
  }
@@ -260,7 +261,7 @@
    <p><strong>1 · Predict:</strong> ${escape(lesson.k.q)}</p>
    <pre class="arithmetic">${escape(lesson.k.code)}</pre>
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
-   ${["004","019"].includes(String(number))?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
+   ${["004","019","020"].includes(String(number))?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
   const paper=(lesson.s.startsWith("1.1")?["qp11","ms11"]:["qp12","ms12"]);
@@ -301,142 +302,142 @@
  /* Lesson 019: larger visuals, balanced two-panel classroom layout.
     Scoped to J277 CPU; shared H446 classroom CSS stays untouched. */
  @media(min-width:901px){
-  .j277-cpu-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
-  .j277-cpu-lesson #new-learning .nl-reference,
-  .j277-cpu-lesson #new-learning .nl-explanation{padding:clamp(12px,1.3vw,19px)}
+  .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
+  .j277-visual-lesson #new-learning .nl-reference,
+  .j277-visual-lesson #new-learning .nl-explanation{padding:clamp(12px,1.3vw,19px)}
  }
- .j277-cpu-lesson #new-learning .nl-reference h2{font-size:clamp(23px,1.6vw,30px);line-height:1.2;margin:0 0 9px}
- .j277-cpu-lesson #new-learning .nl-explanation h2{font-size:clamp(22px,1.55vw,29px);line-height:1.23;margin:0 0 13px}
- .j277-cpu-lesson #new-learning .nl-stage p{font-size:clamp(17px,1.12vw,21px);line-height:1.35}
- .j277-cpu-lesson #new-learning .nl-reference-note{font-size:clamp(14px,1vw,17px);padding:9px 12px}
- .j277-cpu-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
- .j277-cpu-lesson #new-learning .j277-cpu-visual[hidden]{display:none!important}
- .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{width:100%;max-width:none;margin:0;display:block}
- .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{
+ .j277-visual-lesson #new-learning .nl-reference h2{font-size:clamp(23px,1.6vw,30px);line-height:1.2;margin:0 0 9px}
+ .j277-visual-lesson #new-learning .nl-explanation h2{font-size:clamp(22px,1.55vw,29px);line-height:1.23;margin:0 0 13px}
+ .j277-visual-lesson #new-learning .nl-stage p{font-size:clamp(17px,1.12vw,21px);line-height:1.35}
+ .j277-visual-lesson #new-learning .nl-reference-note{font-size:clamp(14px,1vw,17px);padding:9px 12px}
+ .j277-visual-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+ .j277-visual-lesson #new-learning .j277-cpu-visual[hidden]{display:none!important}
+ .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{width:100%;max-width:none;margin:0;display:block}
+ .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{
    width:100%;height:auto;max-height:min(68vh,610px);display:block
  }
- .j277-cpu-lesson #i-do .ido-reference h2,
- .j277-cpu-lesson #we-do .wedo-reference h2{font-size:clamp(21px,1.4vw,27px);line-height:1.24}
- .j277-cpu-lesson #i-do .ido-method .ido-step h2,
- .j277-cpu-lesson #we-do .wedo-practice .wedo-step h2{font-size:clamp(20px,1.32vw,25px);line-height:1.28}
- .j277-cpu-lesson #i-do .ido-reference .a1-scene,
- .j277-cpu-lesson #we-do .wedo-reference .a1-scene{max-width:none;width:100%}
- .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
- .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:min(45vh,460px);width:100%;height:auto}
- .j277-cpu-lesson #i-do .ido-reference p,
- .j277-cpu-lesson #we-do .wedo-reference p{font-size:clamp(17px,1.1vw,21px);line-height:1.35}
+ .j277-visual-lesson #i-do .ido-reference h2,
+ .j277-visual-lesson #we-do .wedo-reference h2{font-size:clamp(21px,1.4vw,27px);line-height:1.24}
+ .j277-visual-lesson #i-do .ido-method .ido-step h2,
+ .j277-visual-lesson #we-do .wedo-practice .wedo-step h2{font-size:clamp(20px,1.32vw,25px);line-height:1.28}
+ .j277-visual-lesson #i-do .ido-reference .a1-scene,
+ .j277-visual-lesson #we-do .wedo-reference .a1-scene{max-width:none;width:100%}
+ .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
+ .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{max-height:min(45vh,460px);width:100%;height:auto}
+ .j277-visual-lesson #i-do .ido-reference p,
+ .j277-visual-lesson #we-do .wedo-reference p{font-size:clamp(17px,1.1vw,21px);line-height:1.35}
  @media(max-width:900px){
-  .j277-cpu-lesson #new-learning .nl-focus{grid-template-columns:1fr}
-  .j277-cpu-lesson #new-learning .j277-cpu-visual{flex:none}
-  .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{max-height:none}
-  .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
-  .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
+  .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:1fr}
+  .j277-visual-lesson #new-learning .j277-cpu-visual{flex:none}
+  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{max-height:none}
+  .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
+  .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
  }
 
- .j277-cpu-lesson #we-do .j277-cpu-guided-step h2{
+ .j277-visual-lesson #we-do .j277-cpu-guided-step h2{
    font-size:clamp(21px,1.55vw,28px);
    line-height:1.23;
    margin:0 0 13px;
  }
- .j277-cpu-lesson #we-do .j277-cpu-guided-step p{
+ .j277-visual-lesson #we-do .j277-cpu-guided-step p{
    font-size:clamp(19px,1.3vw,24px);
    font-weight:550;
    line-height:1.45;
    overflow-wrap:anywhere;
  }
- .j277-cpu-lesson #we-do .j277-cpu-guided-step{
+ .j277-visual-lesson #we-do .j277-cpu-guided-step{
    min-height:230px;
    justify-content:flex-start;
  }
  /* Consistent readable typography; the SVG leads, then the question/explanation. */
- .j277-cpu-lesson{
+ .j277-visual-lesson{
    --j277-cpu-title:clamp(24px,1.75vw,30px);
    --j277-cpu-copy:clamp(19px,1.24vw,22px);
  }
- .j277-cpu-lesson #new-learning .nl-reference h2,
- .j277-cpu-lesson #new-learning .nl-explanation h2,
- .j277-cpu-lesson #i-do .ido-reference h2,
- .j277-cpu-lesson #i-do .ido-method .ido-step h2,
- .j277-cpu-lesson #we-do .wedo-reference h2,
- .j277-cpu-lesson #we-do .wedo-practice .wedo-step h2{
+ .j277-visual-lesson #new-learning .nl-reference h2,
+ .j277-visual-lesson #new-learning .nl-explanation h2,
+ .j277-visual-lesson #i-do .ido-reference h2,
+ .j277-visual-lesson #i-do .ido-method .ido-step h2,
+ .j277-visual-lesson #we-do .wedo-reference h2,
+ .j277-visual-lesson #we-do .wedo-practice .wedo-step h2{
    font-size:var(--j277-cpu-title);
    line-height:1.22;
    margin:0 0 12px;
  }
- .j277-cpu-lesson #new-learning .nl-stage p,
- .j277-cpu-lesson #i-do .ido-reference .j277-cpu-question,
- .j277-cpu-lesson #i-do .ido-method .ido-step p,
- .j277-cpu-lesson #we-do .wedo-reference .j277-cpu-question,
- .j277-cpu-lesson #we-do .wedo-practice .wedo-step p{
+ .j277-visual-lesson #new-learning .nl-stage p,
+ .j277-visual-lesson #i-do .ido-reference .j277-cpu-question,
+ .j277-visual-lesson #i-do .ido-method .ido-step p,
+ .j277-visual-lesson #we-do .wedo-reference .j277-cpu-question,
+ .j277-visual-lesson #we-do .wedo-practice .wedo-step p{
    font-size:var(--j277-cpu-copy);
    line-height:1.42;
    font-weight:500;
    margin:8px 0 12px;
    overflow-wrap:break-word;
  }
- .j277-cpu-lesson #i-do .ido-reference .j277-cpu-question,
- .j277-cpu-lesson #we-do .wedo-reference .j277-cpu-question{
+ .j277-visual-lesson #i-do .ido-reference .j277-cpu-question,
+ .j277-visual-lesson #we-do .wedo-reference .j277-cpu-question{
    padding:12px 15px;
    border-left:5px solid var(--green);
    background:var(--green-soft);
    border-radius:0 9px 9px 0;
  }
- .j277-cpu-lesson #new-learning .nl-reference,
- .j277-cpu-lesson #new-learning .nl-explanation,
- .j277-cpu-lesson #i-do .ido-reference,
- .j277-cpu-lesson #i-do .ido-method,
- .j277-cpu-lesson #we-do .wedo-reference,
- .j277-cpu-lesson #we-do .wedo-practice{
+ .j277-visual-lesson #new-learning .nl-reference,
+ .j277-visual-lesson #new-learning .nl-explanation,
+ .j277-visual-lesson #i-do .ido-reference,
+ .j277-visual-lesson #i-do .ido-method,
+ .j277-visual-lesson #we-do .wedo-reference,
+ .j277-visual-lesson #we-do .wedo-practice{
    min-width:0;
  }
- .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual{
+ .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual{
    flex:1;display:flex;align-items:center;justify-content:center;min-height:0;
  }
- .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
+ .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
    display:block;
    width:100%;
    max-width:none;
    margin:0 auto;
  }
- .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg{
+ .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{
    display:block;
    width:100%;
    height:auto;
    max-height:min(67vh,570px);
  }
- .j277-cpu-lesson #i-do .ido-reference .a1-scene,
- .j277-cpu-lesson #we-do .wedo-reference .a1-scene{
+ .j277-visual-lesson #i-do .ido-reference .a1-scene,
+ .j277-visual-lesson #we-do .wedo-reference .a1-scene{
    width:100%;
    max-width:none;
    margin:5px 0 12px;
  }
- .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
- .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{
+ .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
+ .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{
    display:block;
    width:100%;
    height:auto;
    max-height:min(42vh,370px);
  }
- .j277-cpu-lesson #i-do .ido-example-count,
- .j277-cpu-lesson #we-do .wedo-example-count{
+ .j277-visual-lesson #i-do .ido-example-count,
+ .j277-visual-lesson #we-do .wedo-example-count{
    font-size:12px;
    margin-top:4px;
  }
  @media(min-width:901px){
-   .j277-cpu-lesson #new-learning .nl-focus{
+   .j277-visual-lesson #new-learning .nl-focus{
      grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
      gap:16px;
    }
-   .j277-cpu-lesson #i-do .ido-example,
-   .j277-cpu-lesson #we-do .wedo-example{
+   .j277-visual-lesson #i-do .ido-example,
+   .j277-visual-lesson #we-do .wedo-example{
      grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);
      gap:16px;
    }
  }
  @media(max-width:900px){
-   .j277-cpu-lesson #new-learning .nl-reference .j277-cpu-visual svg,
-   .j277-cpu-lesson #i-do .ido-reference .a1-scene svg,
-   .j277-cpu-lesson #we-do .wedo-reference .a1-scene svg{
+   .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg,
+   .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
+   .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{
      max-height:none;
    }
  }
@@ -450,14 +451,14 @@
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-   const cpuSync=lesson.vis==="cpu-performance"?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
- const html=sharedHead(number,lesson.t)+`<body class="${lesson.vis==="cpu-performance"?"j277-cpu-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+   const cpuSync=["cpu-performance","embedded-systems"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
+ const html=sharedHead(number,lesson.t)+`<body class="${["cpu-performance","embedded-systems"].includes(lesson.vis)?"j277-visual-lesson":""}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=${lesson.vis==="cpu-performance"?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=${["cpu-performance","embedded-systems"].includes(lesson.vis)?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
