@@ -513,13 +513,13 @@
        (side.values.length?side.values:["?","?","?"]).forEach((value,i)=>{scene+=txt(side.x+130,65+i*29,value,18);});
      }
    }else if(kind==="cpu-factors-blank"){
-     scene+=rect(222,47,115,71,"#e1eefb");
+     scene+=rect(222,47,115,67,"#e1eefb");
      scene+=txt(280,91,words[0]||"CPU",26);
-     const pts=[[87,83],[451,83],[280,19]];
-     const targets=[[222,83],[338,83],[280,47]];
+     const pts=[[89,82],[471,82],[280,135]];
+     const targets=[[222,82],[338,82],[280,114]];
      pts.forEach((p,i)=>{
        scene+='<path d="M'+p[0]+' '+p[1]+' L'+targets[i][0]+' '+targets[i][1]+'" stroke="'+green+'" stroke-width="3.5" fill="none"/>';
-       scene+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="32" fill="#e5f3e9" stroke="'+green+'" stroke-width="3"/>';
+       scene+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="26" fill="#e5f3e9" stroke="'+green+'" stroke-width="3"/>';
        scene+=txt(p[0],p[1]+9,"?",30);
      });
    }else if(kind==="embedded-flow"){
