@@ -59,6 +59,97 @@
       note(23,329,"Which features help when many programs are open?",17));
     return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():kind==="cpu-we-compare"?weCompare():compare();
   }
+
+  if(["embedded-systems","embedded-purpose","embedded-ipo","embedded-memory","embedded-features","embedded-washer","embedded-thermostat","embedded-crossing","embedded-tracker"].includes(kind)){
+    // Purpose-built GCSE J277 1.1.3 diagrams. Labels fit a 560 by 340 viewbox.
+    const frame=(label,content)=>svgScene(label,content)
+      .replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"')
+      .replace('width="554" height="226"','width="554" height="334"');
+    const arrow=(x1,y,x2,color="#347c5f")=>'<path d="M'+x1+' '+y+' H'+x2+' M'+(x2-12)+' '+(y-8)+' L'+x2+' '+y+' L'+(x2-12)+' '+(y+8)+'" fill="none" stroke="'+color+'" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+    if(kind==="embedded-systems"||kind==="embedded-purpose"){
+      return frame("An embedded controller is a computer performing one specific task inside a larger device.",
+        note(22,37,"EMBEDDED SYSTEM · ONE SPECIFIC JOB",22)+
+        '<rect x="30" y="63" width="500" height="232" rx="21" fill="#ebf5ef" stroke="#589b76" stroke-width="4"/>'+
+        note(53,98,"LARGER DEVICE",22)+
+        pill(58,138,185,90,"SENSOR / INPUT","#e1effc",20)+
+        pill(307,138,190,90,"CONTROLLER","#e0f3e6",20)+
+        arrow(244,184,304)+
+        note(60,269,"Computer built into a larger device",18));
+    }
+    if(kind==="embedded-ipo"){
+      return frame("Input from a sensor is processed by the embedded controller, which directs an output.",
+        note(24,38,"INPUT → PROCESS → OUTPUT",24)+
+        pill(22,108,145,110,"SENSOR","#e2effb",25)+
+        pill(207,108,145,110,"PROCESSOR","#dcefe2",21)+
+        pill(391,108,145,110,"OUTPUT","#f6e9d5",23)+
+        arrow(168,162,204)+arrow(353,162,389)+
+        note(32,267,"Measure",20)+note(217,267,"Decide",20)+note(409,267,"Act",20)+
+        note(22,316,"Example: temperature → decision → heater",18));
+    }
+    if(kind==="embedded-memory"){
+      return frame("Embedded systems store a dedicated control program in non-volatile memory, with temporary data in RAM.",
+        note(22,40,"STORED PROGRAM · WORKING DATA",22)+
+        pill(30,83,234,132,"ROM / FLASH","#e0ecf8",24)+
+        pill(296,83,234,132,"RAM","#e3f3e6",26)+
+        note(59,257,"Program stays stored",19)+
+        note(311,257,"Temporary values",19)+
+        note(31,314,"Non-volatile",19)+note(312,314,"Volatile",19));
+    }
+    if(kind==="embedded-features"){
+      return frame("Embedded systems often have specific purposes, simple interfaces and low-power requirements; some need real-time response.",
+        note(24,40,"TYPICAL CHARACTERISTICS",24)+
+        pill(24,67,244,94,"SPECIFIC JOB","#e1f1e9",22)+
+        pill(292,67,244,94,"SIMPLE INTERFACE","#e4edf9",20)+
+        pill(24,184,244,94,"LOW POWER","#f7ecd7",23)+
+        pill(292,184,244,94,"TIMELY RESPONSE","#e9eefb",20)+
+        note(31,318,"Often, not always: features depend on the device.",17));
+    }
+    if(kind==="embedded-washer"){
+      return frame("A washing machine contains a dedicated controller, water-level sensor and motor output.",
+        note(22,39,"I DO · WASHING MACHINE",24)+
+        '<rect x="20" y="58" width="520" height="247" rx="19" fill="#edf5fa" stroke="#7ca1bb" stroke-width="3"/>'+
+        '<circle cx="139" cy="188" r="86" fill="#daeaf4" stroke="#287a9a" stroke-width="6"/>'+
+        '<circle cx="139" cy="188" r="55" fill="#f8fcff" stroke="#83adc4" stroke-width="4"/>'+
+        '<path d="M104 183 Q145 163 174 189 Q145 220 104 183" stroke="#5c98b7" fill="none" stroke-width="5"/>'+
+        pill(268,95,234,50,"WATER SENSOR","#e0effc",19)+
+        pill(268,162,234,50,"CONTROLLER","#e1f5e8",19)+
+        pill(268,229,234,50,"DRUM MOTOR","#f8e9d3",19)+
+        '<path d="M382 145 V160 M382 213 V227" stroke="#2e7e61" stroke-width="5"/>'+
+        note(26,330,"INPUT → PROCESS → OUTPUT",19));
+    }
+    if(kind==="embedded-thermostat"){
+      return frame("A smart thermostat reads a temperature sensor and switches heating on or off.",
+        note(22,37,"WE DO · SMART THERMOSTAT",22)+
+        pill(22,103,152,119,"TEMPERATURE","#e0effc",19)+
+        pill(203,103,152,119,"CONTROLLER","#def4e7",18)+
+        pill(384,103,153,119,"HEATING","#f8e7d0",19)+
+        arrow(175,160,201)+arrow(356,160,381)+
+        note(41,266,"Sensor input",18)+note(214,266,"Decision",18)+note(395,266,"On / off",18)+
+        note(25,316,"Dedicated job: monitor and control temperature",18));
+    }
+    if(kind==="embedded-crossing"){
+      return frame("A pedestrian crossing receives a push-button input, processes the request and changes signal lights.",
+        note(22,39,"WE DO · PEDESTRIAN CROSSING",21)+
+        pill(24,99,148,112,"PUSH BUTTON","#e2effc",19)+
+        pill(206,99,149,112,"CONTROLLER","#def3e6",18)+
+        '<rect x="402" y="90" width="116" height="140" rx="20" fill="#eff3f6" stroke="#627c8e" stroke-width="4"/>'+
+        '<circle cx="460" cy="129" r="24" fill="#ec5551"/><circle cx="460" cy="194" r="24" fill="#52b76c"/>'+
+        arrow(175,154,203)+arrow(356,154,396)+
+        note(24,270,"Input",20)+note(221,270,"Process",20)+note(420,270,"Lights",20)+
+        note(24,317,"Dedicated job: control crossing signals",18));
+    }
+    if(kind==="embedded-tracker"){
+      return frame("A fitness tracker uses a sensor and a simple display, often with low-power operation.",
+        note(22,37,"WE DO · FITNESS TRACKER",22)+
+        '<rect x="26" y="73" width="200" height="219" rx="35" fill="#e5f0f9" stroke="#718fa7" stroke-width="5"/>'+
+        '<rect x="53" y="124" width="144" height="117" rx="15" fill="#d8f2e7" stroke="#6d9e83" stroke-width="3"/>'+
+        note(81,182,"3 200",30)+note(81,216,"STEPS",17)+
+        pill(272,79,257,67,"MOTION SENSOR","#dfedf9",18)+
+        pill(272,164,257,67,"SMALL DISPLAY","#e1f2e8",19)+
+        note(273,278,"Low power → longer battery life",18)+
+        note(273,312,"Simple controls suit the job",18));
+    }
+  }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
    return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
