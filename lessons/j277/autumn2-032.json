@@ -36,55 +36,55 @@
     ],
     "visuals": [
       {
-        "title": "PROTECT NETWORK TRAFFIC",
-        "layout": "flow",
+        "title": "FIND AND REDUCE WEAKNESSES",
+        "layout": "security-cycle",
         "boxes": [
-          "Incoming traffic",
-          "Firewall rules",
-          "Allowed requests"
+          "Weakness",
+          "Update",
+          "Safer system"
         ],
-        "foot": "Unauthorised traffic is blocked"
+        "foot": "Patching reduces known risks"
       },
       {
-        "title": "FIREWALL FILTER",
-        "layout": "compare",
+        "title": "ALLOW OR BLOCK NETWORK TRAFFIC",
+        "layout": "firewall",
         "boxes": [
-          "Allowed traffic",
-          "Blocked traffic"
+          "Allowed",
+          "Firewall",
+          "Blocked"
         ],
-        "foot": "Configured rules make the decision"
+        "foot": "Rules determine what passes"
       },
       {
-        "title": "MALWARE DEFENCES",
-        "layout": "flow",
+        "title": "FIND AND ISOLATE MALWARE",
+        "layout": "antimalware",
         "boxes": [
-          "Threat detected",
-          "Anti-malware",
-          "Quarantine / remove"
+          "Downloaded file",
+          "Scan",
+          "Quarantine"
         ],
-        "foot": "Updates reduce weaknesses"
+        "foot": "Detection and removal"
       },
       {
-        "title": "CONTROL USER ACCESS",
-        "layout": "grid",
+        "title": "LIMIT PERMISSIONS",
+        "layout": "access",
         "boxes": [
-          "Student rights",
-          "Staff rights",
-          "Administrator",
-          "Protected records"
+          "Students",
+          "Staff records",
+          "Staff only"
         ],
-        "foot": "Limit access to what is needed"
+        "foot": "Least privilege protects records"
       }
     ],
     "idoVisual": {
       "title": "FILE SERVER DEFENCES",
-      "layout": "flow",
+      "layout": "security-layers",
       "boxes": [
-        "Network firewall",
-        "School file server",
-        "User permissions"
+        "Firewall",
+        "File server",
+        "Permissions"
       ],
-      "foot": "Traffic filter plus access rights"
+      "foot": "Traffic rules plus user access control"
     },
     "m": {
       "title": "Protect a school file server",
@@ -179,33 +179,34 @@
     ],
     "wVisuals": [
       {
-        "title": "MALWARE PREVENTION",
-        "layout": "flow",
+        "title": "CLASSROOM THREAT DETECTED",
+        "layout": "antimalware",
         "boxes": [
-          "Suspicious file",
-          "Anti-malware",
+          "PC download",
+          "Scan",
           "Quarantine"
         ],
-        "foot": "Keep security software updated"
+        "foot": "Anti-malware and updates"
       },
       {
-        "title": "ACCESS TO STAFF RECORDS",
-        "layout": "flow",
+        "title": "STAFF RECORDS NEED RESTRICTED ACCESS",
+        "layout": "access",
         "boxes": [
-          "Pupil account",
-          "Access denied",
-          "Staff files"
+          "Student account",
+          "Staff database",
+          "No access"
         ],
-        "foot": "Permissions restrict users"
+        "foot": "Limit who can read data"
       },
       {
-        "title": "FIREWALL LIMITATIONS",
-        "layout": "compare",
+        "title": "FIREWALL HAS LIMITS",
+        "layout": "firewall",
         "boxes": [
-          "Blocks disallowed data",
-          "Not every local threat"
+          "Incoming request",
+          "Allow/block",
+          "Local threat"
         ],
-        "foot": "Use more than one control"
+        "foot": "Not every attack uses the network"
       }
     ],
     "k": {
@@ -224,8 +225,8 @@
         "Monitors/filters network traffic [1] according to rules to block unauthorised traffic [1]."
       ],
       [
-        "Explain how anti-malware and user access levels protect shared school computers. [4 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
-        "Anti-malware detects/removes harmful software [2]. User access levels restrict permissions [1] and limit the files/settings that can be changed [1]."
+        "A public library allows visitors to use shared PCs while storing private customer booking details. Explain how anti-malware software and user access levels can protect the library's systems. [4 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
+        "Anti-malware software scans for malicious programs [1] and can quarantine/remove them to reduce harm [1]. User access levels restrict permissions on public accounts [1], preventing visitors from accessing or changing sensitive customer-booking records [1]."
       ],
       [
         "Explain how firewalls, updates and permissions combine to reduce security risks. [6 marks]\n\nSource: Original OCR J277-style question, not a past-paper original.",
@@ -285,6 +286,55 @@
       "L030 · earlier learning",
       "L029 · earlier learning",
       "L028 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Repeated account attempts",
+        "layout": "brute",
+        "boxes": [
+          "Guess 1",
+          "Guess 2",
+          "Login"
+        ],
+        "foot": "Name this attack"
+      },
+      null,
+      {
+        "title": "Two companies exchange data",
+        "layout": "standard",
+        "boxes": [
+          "Device A",
+          "Shared rules",
+          "Device B"
+        ],
+        "foot": "Why do standards matter?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Public library devices and records",
+        "layout": "access",
+        "boxes": [
+          "Library visitors",
+          "Public computers",
+          "Private data"
+        ],
+        "foot": "What should users be allowed to change?"
+      },
+      {
+        "title": "Layered defence around the school",
+        "layout": "security-layers",
+        "boxes": [
+          "Firewall",
+          "Updates",
+          "Access levels"
+        ],
+        "foot": "Different controls protect different risks"
+      }
+    ],
+    "memoryCue": "A firewall filters connections; anti-malware detects harmful software; updates patch weaknesses; permissions limit access."
   }
 }
