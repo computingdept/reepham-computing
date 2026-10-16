@@ -14,22 +14,38 @@
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
  function diagram(kind){
-  if(kind==="cpu-performance"||kind==="cpu-speed"||kind==="cpu-cache"||kind==="cpu-cores"||kind==="cpu-summary"){
-    const frame=(label,content)=>svgScene(label,content);
-    const speed=()=>frame("Clock-speed diagram compares clock cycles in the same interval; clock cycles are not the same as instructions.",note(22,28,"CLOCK SPEED: cycles per second",19)+
-      note(22,79,"2 GHz",18)+note(22,174,"3 GHz",18)+
+  if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary"].includes(kind)){
+    // All diagrams stay within J277 1.1.2: clock speed, cache size and cores.
+    const speed=()=>svgScene("Two CPU clock speeds: 3 GHz completes more clock cycles each second than 2 GHz.",
+      note(24,28,"CLOCK SPEED: cycles per second",19)+
+      note(25,74,"2 GHz",19)+note(25,169,"3 GHz",19)+
       '<path d="M115 105 V65 H205 V105 H295 V65 H385 V105 H475" stroke="#237a58" stroke-width="4" fill="none"/>'+
-      '<path d="M115 200 V160 H175 V200 H235 V160 H295 V200 H355 V160 H415 V200 H475" stroke="#2679a9" stroke-width="4" fill="none"/>'+
-      note(115,138,"Illustrative time interval",15)+note(115,219,"More cycles; NOT necessarily more instructions",14));
-    const cache=()=>frame("Cache is small fast memory storing frequently accessed data and instructions; RAM is slower.",note(28,33,"CACHE: fast access to frequently used data",18)+
-      pill(18,77,148,85,"CPU","#e1effd",21)+pill(208,77,146,85,"CACHE","#ddf3e4",20)+pill(398,77,145,85,"RAM","#fae9d4",21)+
-      '<path d="M167 117 H205 M197 111 L205 117 L197 123 M355 117 H395 M387 111 L395 117 L387 123" stroke="#317c5d" stroke-width="4" fill="none"/>'+
-      note(30,201,"Cache helps avoid some slower RAM accesses.",17)+note(30,223,"A larger cache can improve some workloads.",16));
-    const cores=()=>frame("One processing core handles work sequentially, whereas four cores can work on separate tasks in parallel.",note(25,30,"CORES: independent work can run in parallel",18)+
-      note(25,80,"ONE CORE",17)+pill(145,48,90,69,"Task A","#e4f0fb",17)+pill(245,48,90,69,"Task B","#e4f0fb",17)+pill(345,48,90,69,"Task C","#e4f0fb",17)+pill(445,48,90,69,"Task D","#e4f0fb",17)+
-      note(25,175,"FOUR CORES",17)+[0,1,2,3].map(i=>pill(145+i*101,144,94,60,"Core "+(i+1),"#def3e6",16)).join("")+note(24,221,"One thread does not automatically use every core.",16));
-    const summary=()=>frame("CPU performance is affected by clock speed, cache size and number of CPU cores.",note(20,29,"THREE FACTORS · explain the mechanism",19)+pill(15,62,170,99,"CLOCK SPEED","#e0edfc",18)+pill(195,62,170,99,"CACHE SIZE","#ddf2e6",18)+pill(375,62,170,99,"CPU CORES","#f7ebd2",18)+note(23,184,"Cycles / second",16)+note(205,184,"Fast data access",16)+note(387,184,"Parallel tasks",16)+note(28,222,"Actual benefit depends on workload and design.",16));
-    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():summary();
+      '<path d="M115 201 V161 H175 V201 H235 V161 H295 V201 H355 V161 H415 V201 H475" stroke="#2679a9" stroke-width="4" fill="none"/>'+
+      note(128,139,"Same time interval (not to scale)",14)+
+      note(115,222,"More cycles per second can improve speed.",15));
+    const cache=()=>svgScene("CPU uses a fast cache for frequently used instructions and data rather than making as many slower visits to RAM.",
+      note(20,31,"CACHE: frequently used instructions + data",18)+
+      pill(18,73,148,85,"CPU","#e1effd",21)+
+      pill(208,73,146,85,"CACHE","#ddf3e4",20)+
+      pill(398,73,145,85,"RAM","#fae9d4",21)+
+      '<path d="M167 113 H205 M197 106 L205 113 L197 120 M355 113 H395 M387 106 L395 113 L387 120" stroke="#317c5d" stroke-width="4" fill="none"/>'+
+      note(23,194,"Cache is small and fast; RAM is slower.",17)+
+      note(23,222,"Larger cache can reduce visits to RAM.",16));
+    const cores=()=>svgScene("Two-core processor and four-core processor: more cores can process more tasks at the same time.",
+      note(22,28,"NUMBER OF CORES: tasks at the same time",18)+
+      note(24,82,"2 CORES",16)+
+      pill(150,49,173,65,"Task A","#e1effd",17)+pill(339,49,172,65,"Task B","#e1effd",17)+
+      note(24,179,"4 CORES",16)+
+      [0,1,2,3].map(i=>pill(117+i*109,145,100,62,"Task "+String.fromCharCode(65+i),"#def3e6",16)).join("")+
+      note(25,224,"More cores can help with several open programs.",15));
+    const comparison=()=>svgScene("Processor comparison: CPU A 3.2 GHz two cores four MB cache; CPU B 2.8 GHz four cores eight MB cache.",
+      note(18,29,"COMPARE TWO PROCESSORS",20)+
+      pill(144,43,163,43,"CPU A","#e0edfc",19)+
+      pill(358,43,166,43,"CPU B","#e3f3e7",19)+
+      note(23,118,"CLOCK",16)+pill(149,96,153,34,"3.2 GHz","#e0edfc",17)+pill(363,96,156,34,"2.8 GHz","#e3f3e7",17)+
+      note(23,160,"CORES",16)+pill(149,138,153,34,"2 cores","#e0edfc",17)+pill(363,138,156,34,"4 cores","#e3f3e7",17)+
+      note(23,202,"CACHE",16)+pill(149,180,153,34,"4 MB","#e0edfc",17)+pill(363,180,156,34,"8 MB","#e3f3e7",17));
+    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():comparison();
   }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
@@ -107,7 +123,7 @@
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
-  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p>${lesson.vis==="cpu-performance"?diagram(["cpu-speed","cpu-cache","cpu-cores","cpu-summary"][i]||"cpu-summary"):""}<span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
+  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p>${lesson.vis==="cpu-performance"&&i<3?diagram(["cpu-speed","cpu-cache","cpu-cores"][i]):""}<span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
   return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${diagram(lesson.vis)}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
  function iDo(lesson){
