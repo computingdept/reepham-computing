@@ -77,6 +77,42 @@
   if(foot)content+=note(22,327,foot,foot.length>55?14:17);
   return frame(title+": "+values.join(", "),content);
  }
+
+ // Compact, meaningful scenario prompts for Years 10 021-024.
+ // Deliberately show relationships without supplying the exam answer.
+ function visualPrompt(spec){
+   const boxes=Array.isArray(spec.boxes)?spec.boxes.slice(0,3).map(x=>String(x).slice(0,23)):[];
+   const title=String(spec.title||"Think about the diagram").slice(0,54);
+   const kind=String(spec.layout||"flow");
+   const W=560,H=165;
+   const ns=escape;
+   const rect=(x,y,w,h,color)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="15" fill="'+color+'" stroke="#669a80" stroke-width="2.5"/>';
+   const txt=(x,y,word,size)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="'+size+'" fill="#194f3b">'+ns(word)+'</text>';
+   const line=(x,y,x2)=>'<path d="M'+x+' '+y+' H'+x2+'" stroke="#367a5d" stroke-width="5" stroke-linecap="round"/>';
+   let inside='';
+   if(kind==="compare"){
+     for(let i=0;i<2;i++){
+       const x=16+i*278;
+       inside+=rect(x,21,250,118,i?"#e4f2e8":"#e4effc");
+       inside+=txt(x+125,90,boxes[i]||"?",24);
+     }
+     inside+=txt(280,159,"COMPARE",15);
+   }else if(kind==="network"){
+     const spots=[[95,65],[280,65],[465,65]];
+     const links=[[0,1],[1,2]];
+     links.forEach(p=>{const a=spots[p[0]],b=spots[p[1]];inside+=line(a[0]+65,a[1]+29,b[0]-65);});
+     spots.forEach((p,i)=>{inside+=rect(p[0]-75,p[1]-29,150,68,i===1?"#dfefd9":"#e2edf9");inside+=txt(p[0],p[1]+10,boxes[i]||"?",20);});
+   }else{
+     const w=158,gap=37;
+     for(let i=0;i<3;i++){
+       const x=14+i*(w+gap);
+       inside+=rect(x,34,w,100,["#e4effc","#e0f2e8","#f7eacf"][i]);
+       inside+=txt(x+w/2,94,boxes[i]||"?",18);
+       if(i!==2){const x2=x+w+24;inside+=line(x+w+2,84,x2);inside+='<path d="M'+(x2-9)+' 76 L'+x2+' 84 L'+(x2-9)+' 92" fill="none" stroke="#367a5d" stroke-width="4"/>';}
+     }
+   }
+   return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+ns(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="558" height="163" rx="15" fill="#f6faf7" stroke="#b8d5c5" stroke-width="2"/>'+inside+'</svg></figure>';
+ }
  function diagram(kind){
   if(kind&&typeof kind==="object")return topicVisual(kind);
   if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary","cpu-we-compare"].includes(kind)){
@@ -286,7 +322,7 @@
   return `<section id="overview" class="page" data-objectives-vocab="true" data-phase-time="Objectives and vocabulary"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><span class="phase-tag">OCR J277 · ${escape(lesson.s)}</span><h1>${escape(lesson.t)}</h1><div class="objectives"><strong>By the end, you can…</strong><ul>${arr(lesson.o,p=>`<li>${escape(p)}</li>`)}</ul></div><div class="vocab-intro"><strong>Key vocabulary</strong><div class="vocab-intro-list">${hovers}</div></div></article><div class="objectives-vocab-right">${terms}</div></div></section>`;
  }
  function doNow(lesson){
-  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong><p>${escape(q)}</p></article>`);
+  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong>${lesson.retrievalVisuals&&lesson.retrievalVisuals[i]?visualPrompt(lesson.retrievalVisuals[i]):""}<p>${escape(q)}</p></article>`);
   const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><p class="review-question">${escape(q)}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(answer)}</p></article></div></div>`);
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
@@ -334,7 +370,7 @@
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
   const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3>${lesson.examVisuals&&lesson.examVisuals[i]?visualPrompt(lesson.examVisuals[i]):""}<div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
@@ -433,6 +469,56 @@
  }
  .j277-visual-lesson .j277-assessment-note{font-size:clamp(15px,1.1vw,18px);color:#445448}
  .j277-assessment-lesson .youdo-solutions-link{display:none!important}
+
+ /* Extra diagram-led teaching for Year 10, opt-in lessons only. */
+ .j277-dense-visual #do-now .donow-question{
+   padding:clamp(10px,1vw,15px);
+ }
+ .j277-dense-visual #do-now .donow-question > strong{
+   margin-bottom:6px;
+   font-size:clamp(11px,.88vw,13px);
+ }
+ .j277-dense-visual #do-now .donow-question p{
+   font-size:clamp(17px,1.34vw,23px);
+   line-height:1.25;
+   overflow-wrap:anywhere;
+ }
+ .j277-dense-visual .j277-prompt-diagram{
+   width:100%;margin:6px auto 8px;
+   flex:none;
+ }
+ .j277-dense-visual .j277-prompt-diagram svg{
+   display:block;
+   width:100%;
+   height:auto;
+   max-height:158px;
+ }
+ .j277-dense-visual #you-do .exam-card > .j277-prompt-diagram{
+   margin:3px auto 12px;
+   max-width:640px;
+ }
+ .j277-dense-visual #you-do .exam-card > .j277-prompt-diagram svg{
+   max-height:170px;
+ }
+ .j277-dense-visual #you-do .exam-card .question-text{
+   font-size:clamp(17px,1.2vw,20px);
+   line-height:1.35;
+   overflow-wrap:anywhere;
+   overflow-y:auto;
+ }
+ .j277-dense-visual #you-do .exam-card .source-note{
+   font-size:clamp(11px,.85vw,13px);
+   line-height:1.22;
+ }
+ @media(max-height:775px) and (min-width:901px){
+   .j277-dense-visual #do-now .j277-prompt-diagram svg{max-height:115px}
+   .j277-dense-visual #you-do .exam-card > .j277-prompt-diagram svg{max-height:125px}
+   .j277-dense-visual #do-now .donow-question p{font-size:18px}
+ }
+ @media(max-width:900px){
+   .j277-dense-visual #do-now .j277-prompt-diagram svg{max-height:none}
+   .j277-dense-visual #you-do .exam-card > .j277-prompt-diagram svg{max-height:none}
+ }
  /* Selective yellow highlighter for OCR exam wording (keeps diagrams and code unmarked). */
  .j277-visual-lesson mark.j277-exam-word{
    color:#29230b;
@@ -546,7 +632,7 @@
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
- const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+ const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
