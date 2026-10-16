@@ -446,8 +446,8 @@ function updateControl(){
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.wedo-step')];
       const stepIndex=visibleIndex(steps);
-      if(stepIndex===0 && steps.length>1)label='Reveal answer →';
-      else if(stepIndex<steps.length-1)label='Next check →';
+      if(stepIndex===0 && steps.length>1)label=page.dataset.guidedSteps==='true'?'Reveal step 1 →':'Reveal answer →';
+      else if(stepIndex<steps.length-1)label=page.dataset.guidedSteps==='true'?'Next guided step →':'Next check →';
       else if(exampleIndex<examples.length-1)label='Next example →';
       else label='Continue → You Do';
     }else if(page.querySelector('[data-reveal-answer][hidden]')){
