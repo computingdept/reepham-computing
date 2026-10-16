@@ -1,0 +1,200 @@
+(function buildAutumn1Module(){
+ "use strict";
+ const PMT={
+  qp12:"https://pmt.physicsandmathstutor.com/download/Computer-Science/GCSE/Topic-Qs/OCR/1-Computer-systems/Set-A/1.2%20Memory%20and%20Storage%20QP.pdf",
+  ms12:"https://pmt.physicsandmathstutor.com/download/Computer-Science/GCSE/Topic-Qs/OCR/1-Computer-systems/Set-A/1.2%20Memory%20and%20Storage%20MS.pdf",
+  qp11:"https://pmt.physicsandmathstutor.com/download/Computer-Science/GCSE/Topic-Qs/OCR/1-Computer-systems/Set-A/1.1%20Systems%20Architecture%20QP.pdf",
+  ms11:"https://pmt.physicsandmathstutor.com/download/Computer-Science/GCSE/Topic-Qs/OCR/1-Computer-systems/Set-A/1.1%20Systems%20Architecture%20MS.pdf"
+ };
+ const escape=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+ function svgScene(label,contents){
+  return `<figure class="a1-scene"><svg viewBox="0 0 560 232" role="img" aria-label="${escape(label)}" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="554" height="226" rx="14" fill="#f7fbf8" stroke="#bfd5c7" stroke-width="2"/>${contents}</svg></figure>`;
+ }
+ const pill=(x,y,w,h,label,color="#e6f3eb",font=17)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${color}" stroke="#92b4a0"/><text x="${x+w/2}" y="${y+h/2+font/3}" fill="#1c573e" font-size="${font}" font-weight="800" text-anchor="middle" font-family="Arial,sans-serif">${escape(label)}</text>`;
+ const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
+ const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+ function diagram(kind){
+  if(kind==="cpu-performance"||kind==="cpu-speed"||kind==="cpu-cache"||kind==="cpu-cores"||kind==="cpu-summary"){
+    const frame=(label,content)=>svgScene(label,content);
+    const speed=()=>frame("Clock-speed diagram compares clock cycles in the same interval; clock cycles are not the same as instructions.",note(22,28,"CLOCK SPEED: cycles per second",19)+
+      note(22,79,"2 GHz",18)+note(22,174,"3 GHz",18)+
+      '<path d="M115 105 V65 H205 V105 H295 V65 H385 V105 H475" stroke="#237a58" stroke-width="4" fill="none"/>'+
+      '<path d="M115 200 V160 H175 V200 H235 V160 H295 V200 H355 V160 H415 V200 H475" stroke="#2679a9" stroke-width="4" fill="none"/>'+
+      note(115,138,"Illustrative time interval",15)+note(115,219,"More cycles; NOT necessarily more instructions",14));
+    const cache=()=>frame("Cache is small fast memory storing frequently accessed data and instructions; RAM is slower.",note(28,33,"CACHE: fast access to frequently used data",18)+
+      pill(18,77,148,85,"CPU","#e1effd",21)+pill(208,77,146,85,"CACHE","#ddf3e4",20)+pill(398,77,145,85,"RAM","#fae9d4",21)+
+      '<path d="M167 117 H205 M197 111 L205 117 L197 123 M355 117 H395 M387 111 L395 117 L387 123" stroke="#317c5d" stroke-width="4" fill="none"/>'+
+      note(30,201,"Cache helps avoid some slower RAM accesses.",17)+note(30,223,"A larger cache can improve some workloads.",16));
+    const cores=()=>frame("One processing core handles work sequentially, whereas four cores can work on separate tasks in parallel.",note(25,30,"CORES: independent work can run in parallel",18)+
+      note(25,80,"ONE CORE",17)+pill(145,48,90,69,"Task A","#e4f0fb",17)+pill(245,48,90,69,"Task B","#e4f0fb",17)+pill(345,48,90,69,"Task C","#e4f0fb",17)+pill(445,48,90,69,"Task D","#e4f0fb",17)+
+      note(25,175,"FOUR CORES",17)+[0,1,2,3].map(i=>pill(145+i*101,144,94,60,"Core "+(i+1),"#def3e6",16)).join("")+note(24,221,"One thread does not automatically use every core.",16));
+    const summary=()=>frame("CPU performance is affected by clock speed, cache size and number of CPU cores.",note(20,29,"THREE FACTORS · explain the mechanism",19)+pill(15,62,170,99,"CLOCK SPEED","#e0edfc",18)+pill(195,62,170,99,"CACHE SIZE","#ddf2e6",18)+pill(375,62,170,99,"CPU CORES","#f7ebd2",18)+note(23,184,"Cycles / second",16)+note(205,184,"Fast data access",16)+note(387,184,"Parallel tasks",16)+note(28,222,"Actual benefit depends on workload and design.",16));
+    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():summary();
+  }
+  if(kind==="shift"){
+   let positions=[128,64,32,16,8,4,2,1],bits="00010110";
+   return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
+  }
+  if(kind==="chars"){
+   return svgScene("Character set: three characters mapped to numbers and binary codes",note(28,34,"CHARACTER",17)+note(208,34,"DENARY CODE",17)+note(380,34,"BINARY",17)+[["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]].map((row,i)=>pill(20,49+i*54,110,43,row[0],"#e4f0e8",22)+pill(168,49+i*54,135,43,row[1]) +pill(335,49+i*54,200,43,row[2],"#fdf2df",19)).join(""));
+  }
+  if(kind==="pixels"||kind==="image-size"){
+   const cells=Array.from({length:24},(_,i)=>{const x=35+(i%6)*53,y=48+Math.floor(i/6)*39;const colors=["#d3e9dc","#a5ceb5","#f2dca7","#c5d7ed"];return `<rect x="${x}" y="${y}" width="49" height="35" rx="3" fill="${colors[(i+Math.floor(i/6))%4]}" stroke="#41765b" stroke-width="1.3"/>`;}).join("");
+   return svgScene("Bitmap image drawn as a six by four grid of pixels",note(35,31,"6 pixels wide",17)+cells+note(387,84,"24 pixels",19)+note(387,126,"8 bits/pixel",18)+note(387,173,"192 bits",20)+note(35,223,"raw size = width × height × colour depth",16));
+  }
+  if(kind==="wave"||kind==="audio-size"){
+   const points=Array.from({length:150},(_,i)=>{let x=20+i*3.35,y=120-55*Math.sin(i*.15)-8*Math.sin(i*.44);return `${i?'L':'M'}${x.toFixed(1)} ${y.toFixed(1)}`;}).join(" ");
+   return svgScene("Sound sampling: measured amplitude at equally spaced points along an analogue waveform",note(24,29,"Analogue sound wave",19)+`<path d="${points}" stroke="#287d6d" stroke-width="3.5" fill="none"/>`+[0,1,2,3,4,5,6,7,8,9].map(i=>{let j=i*15,x=20+j*3.35,y=120-55*Math.sin(j*.15)-8*Math.sin(j*.44);return `<line x1="${x}" x2="${x}" y1="42" y2="195" stroke="#cf9650" stroke-dasharray="4 5" stroke-width="1.7"/><circle cx="${x}" cy="${y}" r="5.5" fill="#c57422" stroke="white" stroke-width="2"/>`;}).join("")+note(215,219,"Samples taken at regular intervals",16));
+  }
+  if(kind==="compression"){
+   return svgScene("Lossless compression can restore an original text file exactly, whereas lossy compression reduces size by permanently discarding some image detail.",
+    pill(22,23,155,49,"TEXT FILE","#e3f1e9",20)+
+    pill(202,23,155,49,"LOSSLESS","#e3f1e9",20)+
+    pill(382,23,155,49,"RESTORED","#e3f1e9",20)+
+    line(177,47,201,47)+line(357,47,381,47)+
+    note(37,94,"Original text",15)+note(219,94,"Smaller file",15)+note(386,94,"Exact copy",15)+
+    pill(22,123,155,49,"PHOTO","#faecce",20)+
+    pill(202,123,155,49,"LOSSY","#faecce",20)+
+    pill(382,123,155,49,"RESULT","#faecce",20)+
+    line(177,147,201,147)+line(357,147,381,147)+
+    note(31,195,"Original detail",15)+note(209,195,"Smaller file",15)+note(383,195,"Some detail lost",15));
+  }
+  if(kind==="memory"){
+   return svgScene("The CPU accesses cache and RAM for working data. ROM holds non-volatile firmware; SSD stores saved files long-term.",
+    pill(175,14,215,48,"CPU","#e5f2e8",22)+
+    pill(212,79,140,40,"CACHE","#faebcc",19)+
+    line(282,62,282,79)+
+    pill(42,160,145,43,"RAM","#e2eff9",21)+
+    pill(209,160,145,43,"ROM","#e2eff9",21)+
+    pill(375,160,145,43,"SSD / HDD","#e8e8ee",19)+
+    line(282,119,114,160)+
+    note(27,218,"RAM: working",15)+note(205,218,"ROM: firmware",15)+note(379,218,"SSD: saved files",15));
+  }
+  if(kind==="virtual"){
+   return svgScene("Virtual memory sends less-used pages from limited RAM to slower secondary storage",pill(20,58,190,120,"RAM   4 GB","#e1eff8",22)+pill(360,58,176,120,"SSD / HDD","#f8edda",21)+`<path d="M216 89 C285 45 297 45 350 89 M342 83 L351 90 L348 73" fill="none" stroke="#be772e" stroke-width="4"/><path d="M350 145 C280 184 270 184 216 145 M222 137 L216 145 L229 150" fill="none" stroke="#28779a" stroke-width="4"/>`+note(241,55,"swap out",16)+note(238,192,"swap in",16));
+  }
+  if(kind==="storage"||kind==="choice"){
+   return svgScene("Three secondary storage technologies: magnetic hard disk, optical disc and solid-state SSD",pill(17,42,166,122,"MAGNETIC HDD","#e5f1ec",19)+pill(195,42,166,122,"OPTICAL DISC","#ecf1f8",18)+pill(373,42,166,122,"SOLID STATE","#faedda",19)+note(33,190,"capacity / cost",16)+note(211,190,"removable media",16)+note(393,190,"speed / durability",16));
+  }
+  if(kind==="units"){
+   return svgScene("Data unit ladder: bit to nibble to byte to KB to MB to GB",["1 bit","4 bits = nibble","8 bits = byte","1,000 bytes = KB","1,000 KB = MB","1,000 MB = GB"].map((t,i)=>pill(30+(i%3)*178,44+Math.floor(i/3)*86,161,56,t,i<3?"#e4f2e8":"#f6edda",i>=3?15:18)).join(""));
+  }
+  if(kind==="cpu"){
+   return svgScene("Inside the CPU, the control unit coordinates operations, the ALU performs calculations, and the cache provides fast access to frequently used data.",
+    `<rect x="39" y="25" width="482" height="187" rx="18" fill="#e5f2e8" stroke="#669e79" stroke-width="3"/>`+
+    note(64,57,"CENTRAL PROCESSING UNIT",20)+
+    pill(65,79,201,69,"CONTROL UNIT","#ffffff",20)+
+    pill(290,79,204,69,"ALU","#ffffff",24)+
+    pill(165,164,230,35,"FAST CACHE","#f7e9c5",17));
+  }
+  if(kind==="fde"){
+   return svgScene("Fetch decode execute cycle with three arrows",pill(27,75,151,82,"FETCH","#e5f3e7",21)+pill(207,75,151,82,"DECODE","#e1eff9",21)+pill(386,75,150,82,"EXECUTE","#fbebcd",20)+`<path d="M178 116 H204 M198 109 L205 116 L198 123 M358 116 H383 M377 109 L384 116 L377 123 M462 166 Q291 220 102 165" fill="none" stroke="#337959" stroke-width="3.5"/>`+note(224,216,"repeat",17));
+  }
+  if(kind==="review") return ""; // Synoptic lesson: omit decorative topic tiles.
+
+  return svgScene("A diagram reinforcing the new learning",pill(60,70,180,78,"INPUT")+pill(317,70,180,78,"OUTPUT")+line(241,109,316,109));
+ }
+ const a=(n)=>(n<10?"00":"0")+n;
+ const arr=(items,fn)=>items.map(fn).join("");
+ function objectives(lesson){
+  const terms=lesson.v.map(([term,definition],i)=>`<article class="objective-vocab-stage"${i?' hidden':''}><span class="objective-vocab-count">KEY TERM ${i+1} OF ${lesson.v.length}</span><h2>${escape(term)}</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>${escape(definition)}</p></div></article>`).join("");
+  const hovers=lesson.v.map(([term,def])=>`<span class="vocab-tip" tabindex="0" data-definition="${escape(def)}">${escape(term)}</span>`).join("");
+  return `<section id="overview" class="page" data-objectives-vocab="true" data-phase-time="Objectives and vocabulary"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><span class="phase-tag">OCR J277 · ${escape(lesson.s)}</span><h1>${escape(lesson.t)}</h1><div class="objectives"><strong>By the end, you can…</strong><ul>${arr(lesson.o,p=>`<li>${escape(p)}</li>`)}</ul></div><div class="vocab-intro"><strong>Key vocabulary</strong><div class="vocab-intro-list">${hovers}</div></div></article><div class="objectives-vocab-right">${terms}</div></div></section>`;
+ }
+ function doNow(lesson){
+  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong><p>${escape(q)}</p></article>`);
+  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><p class="review-question">${escape(q)}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(answer)}</p></article></div></div>`);
+  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
+ }
+ function newLearning(lesson){
+  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p>${lesson.vis==="cpu-performance"?diagram(["cpu-speed","cpu-cache","cpu-cores","cpu-summary"][i]||"cpu-summary"):""}<span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
+  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${diagram(lesson.vis)}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
+ }
+ function iDo(lesson){
+  const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span><h2>${escape(step)}</h2></div>`);
+  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span><h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}<span class="ido-example-count">Same example throughout</span></div><div class="ido-method">${steps}</div></article></div></section>`;
+ }
+ function weDo(lesson){
+  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>Work it out together</h2><p>${escape(q)}</p>${i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span><h2>${escape(answer)}</h2></div></div></article>`);
+  return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"><div class="wedo-focus-deck">${cases}</div></section>`;
+ }
+ function youDo(lesson,number){
+  const codeFirst=`<article class="exam-card youdo-question j277-code-first">
+   <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
+   <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
+   <p class="j277-code-start">Use your mini-whiteboard first. Predict, change, then extend.</p>
+   <p><strong>1 · Predict:</strong> ${escape(lesson.k.q)}</p>
+   <pre class="arithmetic">${escape(lesson.k.code)}</pre>
+   ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
+   ${number==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
+   </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
+   <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
+  const paper=(lesson.s.startsWith("1.1")?["qp11","ms11"]:["qp12","ms12"]);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original practice question based on the J277 specification. <a href="${PMT[paper[0]]}" target="_blank" rel="noopener">PMT past topic questions ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">mark scheme ↗</a></p>`:""}</div></article>`);
+  return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
+ }
+ function vocabulary(lesson){
+  const cards=arr(lesson.v,([term,def],i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${lesson.v.length}</span><h2>What is the term?</h2><p class="vocab-question">${escape(def)}</p><span class="vocab-stage-count">${i+1} of ${lesson.v.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${escape(term)}</div></div></article>`);
+  return `<section id="vocabulary" class="page phase-vocab" data-phase-time="Key vocabulary" data-vocab-flow="retrieval"><div class="vocab-deck">${cards}</div></section>`;
+ }
+ function exit(lesson){
+  return `<section id="exit" class="page phase-exit" data-phase-time="Exit ticket"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">TRUE OR FALSE?</div><p class="exit-check-question">${escape(lesson.x[0])}</p><div class="exit-check-response"><span class="exit-key-item">👍 True</span><span class="exit-key-item">👎 False</span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How confident are you?</strong></div><div class="exit-confidence-choice"><div><strong>👍 Confident</strong><span>I can explain today’s ideas.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Nearly there</strong><span>I need another example.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Help needed</strong><span>I need extra support.</span></div></div></div></div></section>`;
+ }
+ const lessonStyles=`
+ <style>
+ #new-learning .nl-stage .a1-scene{width:100%;max-width:560px;margin:.7rem auto}
+ #new-learning .nl-stage .a1-scene svg{max-height:min(30vh,255px)}
+ .a1-scene{margin:9px auto;max-width:min(100%,540px);background:#f7fbf8;border-radius:12px}
+ .a1-scene svg{display:block;width:100%;height:auto;max-height:min(35vh,220px)}
+ .a1-we-hint{padding:15px;background:#eaf4ed;border-left:5px solid #3b8b5a;border-radius:7px;font-weight:700}
+ .a1-scene text{font-family:Arial,Helvetica,sans-serif}
+ .a1-source{font-size:14px}
+ #you-do .source-note{font-size:clamp(12px,.9vw,15px);line-height:1.3}
+ #i-do .ido-reference .a1-scene{max-width:490px}
+ #we-do .wedo-reference .a1-scene{max-width:460px}
+ #new-learning .nl-reference .a1-scene{max-width:460px}
+ #we-do .wedo-practice .wedo-step h2{font-size:clamp(19px,1.6vw,27px);line-height:1.35}
+ #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
+ @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
+ @media(max-width:900px){.a1-scene svg{max-height:none}#you-do .source-note{font-size:14px}}
+ </style>`;
+ const sharedHead=(number,title)=>`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · ${escape(title)}</title><meta name="description" content="OCR J277 Year 10 lesson ${number}: ${escape(title)}.">
+ <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+ <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
+ <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1">${lessonStyles}</head>`;
+ function renderLesson(number,lesson){
+  const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
+  const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
+  const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
+  const html=sharedHead(number,lesson.t)+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+   <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
+   <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
+   <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
+   <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
+   <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
+   <script src="../../../assets/h446-lesson/lesson.js?v=20261014-j277retrievalrefs1"></script></body></html>`;
+  document.open();document.write(html);document.close();
+ }
+ function renderAnswers(number,lesson){
+  const questions=[lesson.k.q,...lesson.e.map(a=>a[0])];
+  const answers=[lesson.k.a,...lesson.e.map(a=>a[1])];
+  const sections=arr(questions,(q,i)=>`<section class="answer-stage"${i?' hidden':''}><article class="solution-card"><span class="phase-tag">${i===0?"CODE FIRST · WORKED ANSWER":`QUESTION ${i+1} · EXAM-STYLE MODEL`}</span><h2>${i===0?"Code First · "+escape(lesson.t):"Answer and working"}</h2><p><strong>QUESTION:</strong> ${escape(q)}</p>${i===0?`<pre class="solution-code">${escape(lesson.k.code)}</pre>`:""}<div class="answer-heading">MODEL ANSWER</div><pre class="solution-code">${escape(answers[i])}</pre></article></section>`);
+  const html=`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · Worked answers</title>
+   <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815"><link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
+   <style>body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}.answer-toolbar{height:56px;position:fixed;left:0;right:0;top:0;z-index:30;padding:0 3vw;display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid var(--line)}.answer-toolbar a{font-weight:850;text-decoration:none}.answer-counter{margin-left:auto;font-size:15px}.answer-stage[hidden]{display:none!important}main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76px}.answer-stage{height:100%;display:flex;gap:14px}.solution-card{min-width:0;max-width:100%;overflow:auto;flex:1;border:1px solid var(--line);background:white;border-radius:12px;padding:20px}.solution-code{white-space:pre-wrap;line-height:1.5}.answer-controls{position:fixed;left:0;right:0;bottom:0;height:62px;padding:8px 3vw;display:flex;align-items:center;gap:12px;background:white;border-top:1px solid var(--line)}.answer-controls button,.answer-controls a{font:inherit;font-weight:800;border:1px solid var(--line);border-radius:9px;padding:9px 14px;background:white;cursor:pointer;text-decoration:none}.answer-controls #next-answer{margin-left:auto;background:var(--green);color:white}@media(max-width:900px){body.answer-page{height:auto;overflow:auto}.answer-toolbar{position:sticky;height:auto;min-height:56px;padding:10px 14px;flex-wrap:wrap}main.answer-stage-wrap{height:auto;padding:16px 12px 80px}.answer-stage{height:auto}.solution-card{overflow:visible}.answer-controls{position:sticky;bottom:0}}</style></head>
+   <body class="answer-page"><header class="answer-toolbar"><a href="index.html#you-do">← Back to You Do</a><strong>LESSON ${number} · WORKED ANSWERS</strong><span class="answer-counter" id="answer-counter">Answer 1 of ${questions.length}</span></header>
+   <main class="answer-stage-wrap">${sections}</main><div class="answer-controls"><button type="button" id="previous-answer" disabled>← Previous</button><a href="index.html#you-do">Return to lesson</a><button type="button" id="next-answer">Next answer →</button></div>
+   <script>const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;function showAnswer(i){current=Math.max(0,Math.min(i,stages.length-1));stages.forEach((stage,k)=>stage.hidden=k!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to lesson →':'Next answer →';counter.textContent='Answer '+(current+1)+' of '+stages.length}next.onclick=()=>current<stages.length-1?showAnswer(current+1):location.assign('index.html#you-do');previous.onclick=()=>showAnswer(current-1);document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next.click();if(e.key==='ArrowLeft')previous.click()});showAnswer(0);<\/script></body></html>`;
+  document.open();document.write(html);document.close();
+ }
+ function load(number,mode){
+  const n=Number(number),from=String(number);
+  fetch("../autumn2-"+from+".json?v=20261016-j277autumn2a",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(all=>{
+   const data=all[String(number)];if(!data)throw Error("Missing lesson "+number);
+   if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
+   if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
+  }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
+ }
+ window.J277Autumn2={render:load};
+})();
