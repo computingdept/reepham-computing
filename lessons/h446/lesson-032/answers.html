@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 032 · Boolean Circuits Consolidation</title>
+<title>Lesson 32 · C# Login Project · Start from Scratch answers</title>
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261013-answer-align2">
 <style>
@@ -26,36 +26,11 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <body class="answer-page">
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
-  <span class="answer-title">LESSON 032 · BOOLEAN CIRCUITS CONSOLIDATION</span>
+  <span class="answer-title">LESSON 32 · C# LOGIN PROJECT · START FROM SCRATCH · ANSWERS</span>
   <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1</span><h2>D-type trace</h2><pre class="solution-code">D at clock triggers: 1, 0, 1, 1
-Q after each trigger: 1, 0, 1, 1
-
-Q changes only at the triggering clock edge and holds between triggers.</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2</span><h2>Half-adder truth table</h2><pre class="solution-code">A B | Sum Carry
-0 0 |  0    0
-0 1 |  1    0
-1 0 |  1    0
-1 1 |  0    1
-
-Sum = A XOR B
-Carry = A AND B</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3</span><h2>Full-adder truth table</h2><pre class="solution-code">A B Cin | S Cout
-0 0  0  | 0  0
-0 0  1  | 1  0
-0 1  0  | 1  0
-0 1  1  | 0  1
-1 0  0  | 1  0
-1 0  1  | 0  1
-1 1  0  | 0  1
-1 1  1  | 1  1</pre></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4</span><h2>Explain multi-bit addition</h2><pre class="solution-code">Use one full adder for each bit position.
-
-Each full adder adds:
-A + B + CarryIn
-
-Its CarryOut is connected to the CarryIn of the next more significant bit.
-
-This allows carries to propagate through a multi-bit binary addition.</pre></article></section></main>
+<main class="answer-stage-wrap"><section class="answer-stage" ><article class="solution-card"><span class="phase-tag">TASK 1 OF 4 · MODEL RESPONSE</span><h2>CODING 1 · SEQUENCE</h2><p>Model: using System; read the username and demonstration password using Console.ReadLine() ?? "". The task is complete only when the program compiles and handles both inputs. Never use real passwords.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">TASK 2 OF 4 · MODEL RESPONSE</span><h2>CODING 2 · SELECTION</h2><p>if (username == "student" &amp;&amp; password == "demo123") Console.WriteLine("Access granted"); else Console.WriteLine("Access denied");. AND is essential: one matching value alone is insufficient.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">TASK 3 OF 4 · MODEL RESPONSE</span><h2>CODING 3 · ITERATION</h2><p>for (int i = 0; i &lt; 3; i++) { read both credentials; if (both match) { grant access; break; } if (i == 2) display lock message; }. Test successful attempt 1, success attempt 3 and three failures.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">TASK 4 OF 4 · MODEL RESPONSE</span><h2>SYNOPTIC MCQ BANK</h2><p>MCQ exemplars: 3D array arr[2,3,4] holds 24 entries; record groups named fields; a list allows a variable-length collection; a tuple groups a fixed set of possibly different types. Each authored MCQ must identify one correct response and justify distractors.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
