@@ -35,62 +35,62 @@
     ],
     "visuals": [
       {
-        "title": "WHAT IS A TOPOLOGY?",
+        "title": "PHYSICAL NETWORK ARRANGEMENT",
         "layout": "star",
         "boxes": [
           "Switch",
           "PC A",
           "PC B",
-          "PC C",
-          "Printer"
+          "Printer",
+          "Laptop"
         ],
-        "foot": "Topology shows the layout of connections"
+        "foot": "Topology shows physical connections"
       },
       {
-        "title": "STAR · CENTRAL CONNECTION",
-        "layout": "star",
+        "title": "STAR · SHARED CENTRE",
+        "layout": "star-failure",
         "boxes": [
           "Switch",
-          "Room 1",
-          "Room 2",
-          "Room 3",
-          "Room 4"
+          "Room A",
+          "Room B",
+          "Room C",
+          "Printer"
         ],
-        "foot": "Central failure could affect endpoints"
+        "foot": "One central device joins endpoints"
       },
       {
-        "title": "MESH · MULTIPLE PATHS",
-        "layout": "mesh",
+        "title": "MESH · MANY ROUTES",
+        "layout": "mesh-failure",
         "boxes": [
-          "Router 1",
-          "Router 2",
-          "Router 3",
-          "Router 4",
-          "Router 5"
+          "Node A",
+          "Node B",
+          "Node C",
+          "Node D",
+          "Node E"
         ],
-        "foot": "Alternative routes may remain"
+        "foot": "Alternate links can carry traffic"
       },
       {
-        "title": "CHOOSING TOPOLOGY",
+        "title": "STAR COMPARED WITH MESH",
         "layout": "compare",
         "boxes": [
-          "Star: simple",
-          "Mesh: resilient"
+          "Star: central point",
+          "Mesh: more routes"
         ],
-        "foot": "Weigh cost against resilience"
+        "foot": "Resilience versus complexity"
       }
     ],
     "idoVisual": {
-      "title": "SCHOOL STAR TOPOLOGY",
-      "layout": "star",
+      "title": "SCHOOL STAR · CENTRAL SWITCH",
+      "layout": "star-failure",
       "boxes": [
-        "Core switch",
-        "Computer A",
-        "Computer B",
+        "Switch",
+        "Class A",
+        "Class B",
         "Printer",
         "Server"
       ],
-      "foot": "Central switch is critical"
+      "foot": "Failure of the switch affects the LAN"
     },
     "m": {
       "title": "School network failure",
@@ -185,16 +185,16 @@
     ],
     "wVisuals": [
       {
-        "title": "MESH RESILIENCE",
-        "layout": "mesh",
+        "title": "BUSINESS MESH PATHS",
+        "layout": "mesh-failure",
         "boxes": [
-          "Router A",
-          "Router B",
-          "Router C",
-          "Router D",
-          "Router E"
+          "Site A",
+          "Site B",
+          "Site C",
+          "Site D",
+          "Site E"
         ],
-        "foot": "Alternative routes can carry traffic"
+        "foot": "Alternative routes aid resilience"
       },
       {
         "title": "PRIMARY SCHOOL STAR",
@@ -206,19 +206,19 @@
           "Room C",
           "Printer"
         ],
-        "foot": "Easy central management"
+        "foot": "Simple local installation"
       },
       {
-        "title": "MESH LINK FAILURE",
-        "layout": "mesh",
+        "title": "ONE MESH LINK FAILS",
+        "layout": "mesh-failure",
         "boxes": [
-          "Node A",
-          "Node B",
-          "Node C",
-          "Node D",
-          "Node E"
+          "Router A",
+          "Router B",
+          "Router C",
+          "Router D",
+          "Router E"
         ],
-        "foot": "Other paths may remain available"
+        "foot": "Trace another possible path"
       }
     ],
     "k": {
@@ -237,8 +237,8 @@
         "Several routes provide fault tolerance if a link fails [1]."
       ],
       [
-        "A school star network's central switch stops working. Explain the effect and suggest one precaution. [4 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
-        "Central switch is the connection point [1], so connected devices may lose communication [1]. Use a spare/replacement switch or resilient design [1] to restore/reduce downtime [1]."
+        "A cinema uses a star network to connect ticket kiosks and staff computers. The central switch stops working. Explain the effect and suggest one precaution. [4 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
+        "The central switch connects the kiosks/computers [1], so its failure can interrupt network communication [1]. A spare or quickly replaceable switch, or a resilient design, can reduce the problem [1] by restoring service/reducing downtime [1]."
       ],
       [
         "Compare star and mesh topologies for a large organisation. [6 marks]\n\nSource: Original J277-style question, not an OCR past-paper original.",
@@ -298,6 +298,56 @@
       "L023 · earlier learning",
       "L022 · earlier learning",
       "L021 · earlier learning"
-    ]
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "Remember a domain-name lookup",
+        "layout": "flow",
+        "boxes": [
+          "Domain name",
+          "DNS lookup",
+          "?"
+        ],
+        "foot": "Which address is returned?"
+      },
+      null,
+      {
+        "title": "Recognise network service",
+        "layout": "flow",
+        "boxes": [
+          "Computer client",
+          "Network server",
+          "?"
+        ],
+        "foot": "Who provides the requested data?"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "Cinema ticketing network",
+        "layout": "star",
+        "boxes": [
+          "Switch",
+          "Counter A",
+          "Counter B",
+          "Kiosk",
+          "Office"
+        ],
+        "foot": "Consider what happens if the centre fails"
+      },
+      {
+        "title": "Compare these links",
+        "layout": "compare",
+        "boxes": [
+          "Star: central switch",
+          "Mesh: several links"
+        ],
+        "foot": "Explain, don't merely name"
+      }
+    ],
+    "memoryCue": "Star → central switch and a possible single point of failure; mesh → alternative paths."
   }
 }
