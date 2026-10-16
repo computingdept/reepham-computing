@@ -1,0 +1,131 @@
+{
+  "019": {
+    "t": "CPU Performance",
+    "s": "1.1.2",
+    "o": [
+      "Explain the effects of clock speed, cache size and number of CPU cores on CPU performance.",
+      "Use exam command words to explain each factor accurately in context.",
+      "Calculate clock cycles using valid OCR Exam Reference Language."
+    ],
+    "refs": [
+      "L018 · last lesson",
+      "L016 · CPU components",
+      "L015 · units",
+      "L018 / L010 · image size and compression"
+    ],
+    "r": [
+      [
+        "What is stored by the Program Counter (PC), and what is held in the Memory Data Register (MDR)?",
+        "PC: address of the next instruction to be fetched. MDR: the data or instruction currently being transferred to/from memory. Both are registers."
+      ],
+      [
+        "Identify one job of the ALU and one job of the Control Unit.",
+        "ALU: arithmetic and logical operations. Control Unit: decodes instructions and coordinates/controls CPU activity."
+      ],
+      [
+        "Convert 4 KB to bytes using the decimal convention 1 KB = 1,000 bytes.",
+        "4 × 1,000 = 4,000 bytes. Include the unit."
+      ],
+      [
+        "A 120 × 80 pixel image uses 8-bit colour depth. Calculate the uncompressed pixel-data size in bytes. Why should a source-code file use lossless rather than lossy compression?",
+        "120 × 80 = 9,600 pixels. × 8 = 76,800 bits. ÷ 8 = 9,600 bytes. Lossless is required to restore the original source code exactly."
+      ]
+    ],
+    "c": [
+      [
+        "Clock speed",
+        "Clock speed is measured in hertz (Hz): clock cycles per second. 1 GHz is one billion cycles per second. A higher clock speed generally allows the CPU to progress through more work per second. A cycle is NOT necessarily one finished instruction."
+      ],
+      [
+        "Cache size",
+        "Cache is small, fast memory close to or within the CPU. It holds frequently used data and instructions. Increasing cache size can mean fewer slower main-memory (RAM) accesses, improving performance in workloads that benefit."
+      ],
+      [
+        "Number of CPU cores",
+        "A CPU may have multiple cores. Different threads or tasks can execute in parallel on separate cores, improving multitasking. Additional cores do not guarantee a faster single-threaded task."
+      ],
+      [
+        "Link cause to effect",
+        "Write: factor → mechanism → performance consequence. For example, larger cache → more frequently accessed instructions stay close to CPU → fewer slower RAM reads → faster execution in suitable tasks."
+      ]
+    ],
+    "m": {
+      "q": "A school PC runs multiple applications while pupils edit video. Explain how a larger cache and additional CPU cores may improve performance. [4 marks]",
+      "st": [
+        "Identify the two factors in the question: cache size and core count. Plan two explained points, each worth up to two marks.",
+        "Larger cache stores more frequently used instructions and data near the CPU [1]. This can reduce slower main-memory accesses and improve processing speed [1].",
+        "Additional cores can process separate tasks or threads at the same time [1]. This may improve multitasking while pupils run several applications [1].",
+        "Review all four points against the command word 'explain'. Avoid claiming that twice as many cores automatically doubles speed."
+      ]
+    },
+    "w": [
+      [
+        "A processor runs at 3 GHz for 2 seconds. Calculate clock cycles and explain why the value is NOT necessarily the number of instructions executed.",
+        "3 billion cycles per second × 2 seconds = 6 billion clock cycles. One instruction can use more or fewer cycles; actual throughput depends on the CPU and workload."
+      ],
+      [
+        "Explain in two linked points how larger cache size may improve CPU performance. [2 marks]",
+        "Cache holds more frequently used data/instructions close to the CPU [1]; this reduces the need to fetch these from slower RAM [1]."
+      ],
+      [
+        "Two pupils use the same computer. One runs a single-threaded program; the other runs several independent programs. Which is likely to benefit more from extra cores, and why?",
+        "Several independent programs may use different cores in parallel. A strictly single-threaded program may not use extra cores, so speedup is not guaranteed."
+      ]
+    ],
+    "k": {
+      "q": "Predict, change and extend this complete OCR ERL program. Work on your whiteboard first; then check it in the OCR ERL editor.",
+      "code": "clockGHz = 2\nseconds = 3\ncyclesBillions = clockGHz * seconds\nprint(cyclesBillions)",
+      "p": [
+        "Predict the output and state exactly what the number represents.",
+        "Change clockGHz to 3 and seconds to 4. Predict the output, then check.",
+        "Extend the program to print the total number of cycles (not billions): multiply cyclesBillions by 1000000000. Explain why this does not calculate completed instructions."
+      ],
+      "a": "Original output: 6 (six billion clock cycles). With 3 GHz and 4 seconds: 12. Add cycles = cyclesBillions * 1000000000 followed by print(cycles); this displays 12000000000. Clock cycles do not equal instructions completed."
+    },
+    "e": [
+      [
+        "Explain how the number of CPU cores affects performance. [3 marks] (From your Paper 1 revision booklet, 1.1.2, exam-question practice.)",
+        "Multiple CPU cores allow separate tasks or threads to be processed at the same time (parallel processing) [1]. This can improve multitasking [1] and increase processing throughput where the software can use multiple cores [1]. Do not claim every program becomes proportionally faster."
+      ],
+      [
+        "A school is replacing a CPU with one having a larger cache. Explain two ways cache improves access to frequently used instructions. [4 marks] (Original J277-style application question.)",
+        "Cache is fast memory near the CPU [1]. It stores frequently accessed instructions/data [1]. Larger cache can retain more of these items [1], reducing slower main-memory access and helping performance [1]. A valid linked explanation earns the relevant marks."
+      ],
+      [
+        "Explain how clock speed, cache size and number of cores affect CPU performance. [6 marks] (From your Paper 1 revision booklet, 1.1.2, exam-question practice.)",
+        "Clock speed: number of cycles per second [1], higher speeds can allow processing to progress faster [1]. Cache: more frequently used data/instructions available quickly [1], reducing access to slower RAM [1]. Cores: more independent instructions/threads/tasks can run in parallel [1], improving throughput/multitasking for suitable workloads [1]."
+      ]
+    ],
+    "v": [
+      [
+        "clock speed",
+        "Number of clock cycles per second, measured in hertz (Hz)."
+      ],
+      [
+        "hertz (Hz)",
+        "Unit of frequency; one cycle per second."
+      ],
+      [
+        "cache",
+        "Small, fast memory close to or in the CPU containing frequently used data and instructions."
+      ],
+      [
+        "CPU core",
+        "Processing unit capable of executing instructions, potentially independently of other cores."
+      ],
+      [
+        "parallel processing",
+        "Running separate tasks or threads at the same time on multiple processing units."
+      ],
+      [
+        "bottleneck",
+        "A limiting factor holding back overall performance."
+      ]
+    ],
+    "x": [
+      "Doubling the number of CPU cores always makes every program twice as fast.",
+      false
+    ],
+    "vis": "cpu-performance"
+  }
+}
