@@ -473,7 +473,75 @@
 
  // Compact, meaningful scenario prompts for Years 10 021-024.
  // Deliberately show relationships without supplying the exam answer.
+
+ // Scaled schematic prompts for J277 CPU and embedded systems.
+ // Diagrams show the supplied facts/structure without revealing retrieval answers.
+ function j277HardwarePrompt(spec){
+   const kind=String(spec.layout||"");
+   if(!["cpu-registers","bitmap","cpu-comparison","cpu-factors-blank","embedded-flow"].includes(kind))return null;
+   const words=Array.isArray(spec.boxes)?spec.boxes.map(v=>String(v).slice(0,35)):[];
+   const title=String(spec.title||"Use the diagram");
+   const esc=escape,ink="#1b4f3b",green="#3b8063",blue="#4b83ad";
+   const rect=(x,y,w,h,color="#e3f2e9")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="11" fill="'+color+'" stroke="#81aa98" stroke-width="2.5"/>';
+   const txt=(x,y,s,font=17,c=ink)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="'+font+'" font-weight="800" fill="'+c+'">'+esc(String(s))+'</text>';
+   const arrow=(x,y,x2,y2)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+' M'+(x2-10)+' '+(y2-7)+' L'+x2+' '+y2+' L'+(x2-10)+' '+(y2+7)+'" fill="none" stroke="'+green+'" stroke-width="4" stroke-linecap="round"/>';
+   const card=(x,y,w,h,content,color)=>rect(x,y,w,h,color)+txt(x+w/2,y+h/2+6,content,content.length>18?14:18);
+   let scene="";
+   if(kind==="cpu-registers"){
+     scene+=rect(17,25,141,117,"#e1edf9");
+     scene+='<rect x="35" y="45" width="105" height="78" rx="9" fill="#cce4f8" stroke="'+blue+'" stroke-width="3"/>';
+     scene+=txt(87,92,"CPU",25);
+     scene+=arrow(160,83,216,83);
+     scene+=card(220,25,144,117,words[0]||"PC","#e4f2e9");
+     scene+=card(391,25,151,117,words[1]||"MDR","#f8ecd7");
+     scene+=txt(292,123,"?",22);
+     scene+=txt(466,123,"?",22);
+   }else if(kind==="bitmap"){
+     scene+=rect(18,16,225,132,"#e5effa");
+     for(let row=0;row<4;row++)for(let col=0;col<7;col++){
+       const colors=["#5ca78b","#e6bc59","#78a7cb","#8a97b9"];
+       scene+='<rect x="'+(36+col*26)+'" y="'+(28+row*26)+'" width="24" height="24" fill="'+colors[(row*2+col)%4]+'" stroke="#fff" stroke-width="1.5"/>';
+     }
+     scene+=txt(368,50,words[0]||"Width",17);
+     scene+=txt(368,91,words[1]||"Height",17);
+     scene+=txt(368,131,words[2]||"Bit depth",17);
+   }else if(kind==="cpu-comparison"){
+     const sides=[{name:words[0]||"CPU G",values:words.slice(1,4),x:14,c:"#e3effb"},{name:words[4]||"CPU H",values:words.slice(5,8),x:286,c:"#e1f2e7"}];
+     for(const side of sides){
+       scene+=rect(side.x,9,260,146,side.c);
+       scene+=txt(side.x+130,36,side.name,21);
+       (side.values.length?side.values:["?","?","?"]).forEach((value,i)=>{scene+=txt(side.x+130,65+i*29,value,18);});
+     }
+   }else if(kind==="cpu-factors-blank"){
+     scene+=rect(222,47,115,71,"#e1eefb");
+     scene+=txt(280,91,words[0]||"CPU",26);
+     const pts=[[87,83],[451,83],[280,19]];
+     const targets=[[222,83],[338,83],[280,47]];
+     pts.forEach((p,i)=>{
+       scene+='<path d="M'+p[0]+' '+p[1]+' L'+targets[i][0]+' '+targets[i][1]+'" stroke="'+green+'" stroke-width="3.5" fill="none"/>';
+       scene+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="32" fill="#e5f3e9" stroke="'+green+'" stroke-width="3"/>';
+       scene+=txt(p[0],p[1]+9,"?",30);
+     });
+   }else if(kind==="embedded-flow"){
+     const width=162,gap=31;
+     const fill=["#e1eefb","#e2f2e8","#f8ecd6"];
+     for(let i=0;i<3;i++){
+       const x=6+i*(width+gap);
+       scene+=rect(x,23,width,110,fill[i]);
+       const label=words[i]||["Sensor","Controller","Action"][i];
+       const parts=label.split(/\s+/);
+       if(label.length>16&&parts.length>1){
+         const mid=Math.ceil(parts.length/2);
+         scene+=txt(x+width/2,71,parts.slice(0,mid).join(" "),17);
+         scene+=txt(x+width/2,94,parts.slice(mid).join(" "),17);
+       }else scene+=txt(x+width/2,83,label,17);
+       if(i<2)scene+=arrow(x+width+1,78,x+width+gap-5,78);
+     }
+   }
+   return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 560 165" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="558" height="163" rx="15" fill="#f6faf7" stroke="#b8d5c5" stroke-width="2"/>'+scene+'</svg></figure>';
+ }
  function visualPrompt(spec){
+   const hardware=j277HardwarePrompt(spec);if(hardware)return hardware;
    const boxes=Array.isArray(spec.boxes)?spec.boxes.slice(0,5).map(v=>String(v).slice(0,30)):[];
    const title=String(spec.title||"Use the diagram").slice(0,85);
    const kind=String(spec.layout||"flow"),esc=escape,green="#368463",red="#c35a56",blue="#477ca8";
