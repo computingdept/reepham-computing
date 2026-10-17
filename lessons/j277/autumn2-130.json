@@ -1,0 +1,305 @@
+{
+  "130": {
+    "year11": true,
+    "t": "Programming: Files, SQL and Strings",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "State",
+      "Identify",
+      "Explain",
+      "Compare",
+      "Calculate",
+      "Trace",
+      "Describe",
+      "Write",
+      "Evaluate",
+      "Justify"
+    ],
+    "o": [
+      "Explain the core ideas of programming: files, sql and strings using accurate OCR terminology.",
+      "Apply a clear method to the worked and guided questions.",
+      "Use Code First and unseen exam practice to demonstrate independent understanding."
+    ],
+    "c": [
+      [
+        "Link the representations",
+        "The same three pupils can appear as CSV text lines, a 2D table and a typed SQL database. The representation changes, not the facts."
+      ],
+      [
+        "Separate indexing from filtering",
+        "A 2D array uses indexes for cell access; a loop and IF are needed to select every row satisfying a condition."
+      ],
+      [
+        "SQL query",
+        "SELECT chooses displayed fields, FROM names the table and WHERE selects matching records."
+      ],
+      [
+        "Optional integration",
+        "Loading CSV rows into an array and converting string marks into numbers is an ambitious extension; start with a supplied array for core work."
+      ]
+    ],
+    "visuals": [
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Follow the concept in small steps",
+        "focus": 0,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      },
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Follow the concept in small steps",
+        "focus": 1,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      },
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Follow the concept in small steps",
+        "focus": 2,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      },
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Follow the concept in small steps",
+        "focus": 3,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      }
+    ],
+    "m": {
+      "title": "Programming: Files, SQL and Strings",
+      "q": "Compare SQL and code for the shared Pupils table. Show why 'SELECT Name FROM Pupils WHERE Mark >= 50' returns Ada and Mia.",
+      "headings": [
+        "Understand the problem",
+        "Set up the method",
+        "Follow the example",
+        "Check and explain"
+      ],
+      "st": [
+        "Read marks 72, 43 and 81 from the Pupils table; identify that 50 is the minimum included mark.",
+        "SQL SELECT Name requests only the Name field; WHERE Mark >= 50 keeps Ada and Mia.",
+        "In code, loop through aligned names=['Ada','Ben','Mia'] and numeric marks=[72,43,81]; test each mark>=50.",
+        "Print names[0] and names[2]. The code and SQL give the same set of names, although ordering is not guaranteed by SQL without ORDER BY."
+      ]
+    },
+    "idoVisual": {
+      "year11": "filter",
+      "year11Extension": true,
+      "y11Version": 2,
+      "title": "I DO · Programming: Files, SQL and Strings",
+      "topic": "Programming: Files, SQL and Strings",
+      "caption": "Use the visual to justify the answer",
+      "focus": 0,
+      "phase": "i-do",
+      "scenario": "model",
+      "values": [
+        "Link the representations",
+        "Separate indexing from filtering",
+        "SQL query",
+        "Optional integration"
+      ]
+    },
+    "w": [
+      [
+        "Using the SAME dataset, write SQL and describe code that returns the Name of pupils with Mark < 60. [5 marks]",
+        "Equivalent code loops through indexes 0–2 and prints the name only when marks[i] < 60; output Ben."
+      ]
+    ],
+    "wTitles": [
+      "Solve the different example together"
+    ],
+    "wVisuals": [
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "WE DO · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Use the visual to justify the answer",
+        "focus": 0,
+        "phase": "we-do",
+        "scenario": "guided",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read the data",
+          "Check 72, 43 and 81 against the new limit of 60."
+        ],
+        [
+          "Set up the solution",
+          "The only matching row is Ben with mark 43."
+        ],
+        [
+          "Calculate or trace",
+          "SQL: SELECT Name FROM Pupils WHERE Mark < 60;."
+        ],
+        [
+          "Check the answer",
+          "Equivalent code loops through indexes 0–2 and prints the name only when marks[i] < 60; output Ben."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict the two names printed, in code execution order.",
+      "code": "array names = [\"Ada\", \"Ben\", \"Mia\"]\narray marks = [72, 43, 81]\nfor i = 0 to 2\n    if marks[i] >= 50 then\n        print(names[i])\n    endif\nnext i",
+      "p": [
+        "Explain your predicted result using the first assignment or test.",
+        "Change the threshold from 50 to 80; predict which name is printed.",
+        "Add passCount, initialise it to zero and increment it only for qualifying marks."
+      ],
+      "a": "Initially Ada then Mia; at 80, Mia only. With threshold 50, passCount starts at 0 and finishes at 2."
+    },
+    "e": [
+      [
+        "Write SQL to display Name from Pupils for pupils whose Mark >= 70. [3 marks]",
+        "SELECT Name [1] FROM Pupils [1] WHERE Mark >= 70 [1]; Ada and Mia match."
+      ],
+      [
+        "Complete a code condition so that names[i] is printed only when marks[i] < 50. State the result using the shared data. [3 marks]",
+        "IF marks[i] < 50 THEN [2 for correct condition/control] print(names[i]) [1]; prints Ben."
+      ],
+      [
+        "Explain why comparing '72' directly with numeric 50 can be problematic when reading marks from a CSV text file. [3 marks]",
+        "readLine() supplies text [1]; '72' is a string, while 50 is numeric [1]; the field must be converted/validated before a numerical comparison [1]."
+      ]
+    ],
+    "v": [
+      [
+        "String handling",
+        "Concatenate and extract parts of text when cleaning/formatting data."
+      ],
+      [
+        "File processing",
+        "Open, read/write and close files in the appropriate mode."
+      ],
+      [
+        "SQL retrieval",
+        "SELECT selects fields, FROM selects table and WHERE filters rows."
+      ],
+      [
+        "Combined tasks",
+        "A realistic system may read records, filter content and produce a formatted result."
+      ]
+    ],
+    "x": [
+      "SQL SELECT identifies the table to search.",
+      false
+    ],
+    "r": [
+      [
+        "Explain one difference between a function and a procedure.",
+        "A function returns a value; a procedure performs statements without necessarily returning a value."
+      ],
+      [
+        "Identify the fault in if age >= 13 OR age <= 18 for acceptance age 13–18.",
+        "Use AND, not OR; OR incorrectly accepts values outside the range."
+      ],
+      [
+        "Write SQL to display Name from Students where Year=10.",
+        "SELECT Name FROM Students WHERE Year = 10;"
+      ],
+      [
+        "Explain how to count even values in an array.",
+        "Iterate each element; if value MOD 2 = 0 then increment counter; output counter."
+      ]
+    ],
+    "refs": [
+      "L129 · retrieval",
+      "L125 · retrieval",
+      "L118 · retrieval",
+      "L128 · retrieval"
+    ],
+    "memoryCue": "Link the representations: The same three pupils can appear as CSV text lines, a 2D table and a typed SQL database. The representation changes, not the facts.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      {
+        "year11": "filter",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "QUESTION DATA · Programming: Files, SQL and Strings",
+        "topic": "Programming: Files, SQL and Strings",
+        "caption": "Use the visual to justify the answer",
+        "focus": 0,
+        "phase": "question-data",
+        "scenario": "question",
+        "values": [
+          "Link the representations",
+          "Separate indexing from filtering",
+          "SQL query",
+          "Optional integration"
+        ]
+      },
+      null,
+      null
+    ],
+    "challenge": {
+      "n": 130,
+      "coreHint": "Begin with the supplied numeric marks array. Compare each mark with 50 and print the matching pupil name from the same index.",
+      "stretch": {
+        "task": "Change the program and the SQL query to return names where Mark < 60. Write down both results and check that they match.",
+        "hint": "Change IF marks[i]>=50 to marks[i]<60; SQL uses WHERE Mark < 60.",
+        "answer": "Code prints Ben; SQL SELECT Name FROM Pupils WHERE Mark < 60; also returns Ben."
+      },
+      "mastery": {
+        "task": "Optional integration: read pupils.csv, skip the header, split each line, validate/cast Mark, build a table-like structure and return pupils with numeric Mark >= 50. Compare the result with SQL, and explain how erroneous data should be handled.",
+        "hint": "Use file open/read/close, split on comma in the chosen high-level language, convert numeric fields safely, then loop/filter. Only attempt after the core loop is secure.",
+        "answer": "Expected names Ada and Mia. Ben 43 is excluded. A correct outline opens file; discards ID,Name,Mark header; reads/splits each row; checks number fields; converts mark to integer; tests >=50; prints corresponding names; closes file; rejects or reports malformed/non-numeric data. The SQL result contains the same names, with no guaranteed order."
+      }
+    },
+    "priorExam": null,
+    "visualAuditV2": false,
+    "visualAuditV3": false
+  }
+}

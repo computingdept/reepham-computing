@@ -1,0 +1,305 @@
+{
+  "118": {
+    "year11": true,
+    "t": "SQL Queries",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "State",
+      "Identify",
+      "Explain",
+      "Compare",
+      "Calculate",
+      "Trace",
+      "Describe",
+      "Write",
+      "Evaluate",
+      "Justify"
+    ],
+    "o": [
+      "Explain the core ideas of sql queries using accurate OCR terminology.",
+      "Apply a clear method to the worked and guided questions.",
+      "Use Code First and unseen exam practice to demonstrate independent understanding."
+    ],
+    "c": [
+      [
+        "Field and record",
+        "A SQL table stores each pupil as a row/record; Name and Mark are columns/fields."
+      ],
+      [
+        "SELECT",
+        "Names the field(s) to return in the result, such as Name or ID."
+      ],
+      [
+        "FROM",
+        "Names the table to search; our shared example is Pupils."
+      ],
+      [
+        "WHERE",
+        "Filters rows. Comparing the numeric Mark to 50 returns only pupils meeting the condition."
+      ]
+    ],
+    "visuals": [
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Follow the concept in small steps",
+        "focus": 0,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      },
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Follow the concept in small steps",
+        "focus": 1,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      },
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Follow the concept in small steps",
+        "focus": 2,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      },
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Follow the concept in small steps",
+        "focus": 3,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      }
+    ],
+    "m": {
+      "title": "SQL Queries",
+      "q": "Using Pupils(ID, Name, Mark): 101 Ada 72; 102 Ben 43; 103 Mia 81. Write SQL to return the names of pupils with Mark >= 50, and state the result.",
+      "headings": [
+        "Understand the problem",
+        "Set up the method",
+        "Follow the example",
+        "Check and explain"
+      ],
+      "st": [
+        "SELECT Name: ask for the Name field, not the complete record.",
+        "FROM Pupils: identify the table holding these rows.",
+        "WHERE Mark >= 50: Ada (72) and Mia (81) match; Ben (43) does not.",
+        "SELECT Name FROM Pupils WHERE Mark >= 50; returns Ada and Mia, in no guaranteed order unless an ordering rule is specified."
+      ]
+    },
+    "idoVisual": {
+      "year11": "sql",
+      "year11Extension": true,
+      "y11Version": 2,
+      "title": "I DO · SQL Queries",
+      "topic": "SQL Queries",
+      "caption": "Use the visual to justify the answer",
+      "focus": 0,
+      "phase": "i-do",
+      "scenario": "model",
+      "values": [
+        "Field and record",
+        "SELECT",
+        "FROM",
+        "WHERE"
+      ]
+    },
+    "w": [
+      [
+        "Using the same Pupils table, write SQL to return the ID of pupils with Mark < 50. Identify the result. [4 marks]",
+        "SELECT ID FROM Pupils WHERE Mark < 50; returns 102. SELECT/FROM/WHERE [3] and correct resulting row [1]."
+      ]
+    ],
+    "wTitles": [
+      "Solve the different example together"
+    ],
+    "wVisuals": [
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "WE DO · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Use the visual to justify the answer",
+        "focus": 0,
+        "phase": "we-do",
+        "scenario": "guided",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read the data",
+          "Select the required field: ID."
+        ],
+        [
+          "Set up the solution",
+          "Choose the same Pupils table."
+        ],
+        [
+          "Calculate or trace",
+          "Filter rows where Mark < 50, checking 72, 43 and 81."
+        ],
+        [
+          "Check the answer",
+          "SELECT ID FROM Pupils WHERE Mark < 50; returns 102. SELECT/FROM/WHERE [3] and correct resulting row [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict the output, then connect the condition to SQL WHERE Mark >= 50.",
+      "code": "mark = 43\nif mark >= 50 then\n    print(\"Include\")\nelse\n    print(\"Exclude\")\nendif",
+      "p": [
+        "Explain your predicted result using the first assignment or test.",
+        "Change mark to 72 and predict the output.",
+        "Change the program so it displays 'Ada' when mark is 72 and 'Ben' when mark is 43; explain that SQL SELECT chooses what field is returned."
+      ],
+      "a": "Initially Exclude; mark=72 prints Include. A simple additional selection can print Ada/Ben for this small known dataset; SQL SELECT Name returns the corresponding name field without hard-coding individual marks."
+    },
+    "e": [
+      [
+        "Write SQL to return Name from Pupils where Mark > 70. [3 marks]",
+        "SELECT Name [1] FROM Pupils [1] WHERE Mark > 70 [1]; result Ada and Mia."
+      ],
+      [
+        "For the shared table, what value is returned by SELECT Name FROM Pupils WHERE ID = 103;? [2 marks]",
+        "Mia [1]; because the row with ID 103 matches the WHERE condition [1]."
+      ],
+      [
+        "Explain how SELECT and WHERE perform different jobs in SELECT Name FROM Pupils WHERE Mark < 50; [3 marks]",
+        "SELECT Name chooses the field to output [1]; WHERE Mark < 50 filters qualifying rows [1]; in this dataset only Ben matches [1]."
+      ]
+    ],
+    "v": [
+      [
+        "SELECT",
+        "Identifies which field or fields a query retrieves."
+      ],
+      [
+        "FROM",
+        "Names the table containing the records."
+      ],
+      [
+        "WHERE",
+        "Filters rows using a condition."
+      ],
+      [
+        "SQL query",
+        "A database query retrieves only the requested information from a table."
+      ]
+    ],
+    "x": [
+      "SQL WHERE selects the table name.",
+      false
+    ],
+    "r": [
+      [
+        "Name the four basic file-handling operations required by OCR J277. [4 marks]",
+        "Open [1], Read [1], Write [1], Close [1]."
+      ],
+      [
+        "Convert 10110000 binary to denary.",
+        "128+32+16=176."
+      ],
+      [
+        "State the difference between RAM and ROM.",
+        "RAM is volatile working memory; ROM stores persistent firmware."
+      ],
+      [
+        "Explain one benefit of local variables.",
+        "They limit unintended interference between subprograms and make code easier to reason about."
+      ]
+    ],
+    "refs": [
+      "L117 · retrieval",
+      "L100 · retrieval",
+      "L096 · retrieval",
+      "L116 · retrieval"
+    ],
+    "memoryCue": "Field and record: A SQL table stores each pupil as a row/record; Name and Mark are columns/fields.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      {
+        "year11": "sql",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "QUESTION DATA · SQL Queries",
+        "topic": "SQL Queries",
+        "caption": "Use the visual to justify the answer",
+        "focus": 0,
+        "phase": "question-data",
+        "scenario": "question",
+        "values": [
+          "Field and record",
+          "SELECT",
+          "FROM",
+          "WHERE"
+        ]
+      },
+      null,
+      null
+    ],
+    "challenge": {
+      "n": 118,
+      "coreHint": "SELECT = which column to show; FROM = which named table; WHERE = which rows pass the condition.",
+      "stretch": {
+        "task": "Use Pupils(ID,Name,Mark). Write a query for the names with marks below 60. State the exact result and explain why Ada is excluded.",
+        "hint": "SELECT Name FROM Pupils WHERE Mark < 60;",
+        "answer": "Ben is returned because 43 < 60. Ada's 72 and Mia's 81 do not pass. SQL: SELECT Name FROM Pupils WHERE Mark < 60;"
+      },
+      "mastery": {
+        "task": "Explain how a loop and IF could reproduce SELECT Name FROM Pupils WHERE Mark >= 50. Using parallel numeric marks and names arrays, write the code and compare its output to SQL.",
+        "hint": "for i=0 to 2: IF marks[i]>=50 THEN print(names[i]). A SQL result is not guaranteed to be ordered without ORDER BY.",
+        "answer": "For names=[Ada,Ben,Mia] and marks=[72,43,81], code prints Ada then Mia. The SQL result contains Ada and Mia; row ordering is not guaranteed unless explicitly requested."
+      }
+    },
+    "priorExam": null,
+    "visualAuditV2": false,
+    "visualAuditV3": false
+  }
+}
