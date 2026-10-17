@@ -690,7 +690,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "084":{family:"sort",labels:["Start 5,2,4","Compare 5 and 2","Swap 5 and 4","First pass ordered"],values:["5","2","4"],sortType:"bubble",families:["array","sort","sort","sort"],snapshots:[["5","2","4"],["2","5","4"],["2","4","5"],["2","4","5"]]},
  "085":{family:"sort",labels:["Start 4,1,3","Insert key 1","Insert key 3","Sorted 1,3,4"],values:["4","1","3"],sortType:"insertion",families:["array","sort","sort","sort"],snapshots:[["4","1","3"],["1","4","3"],["1","3","4"],["1","3","4"]]},
  "086":{family:"merge",labels:["Split 8,3,5,1","Pairs [8,3] [5,1]","Merge sorted pairs","Final 1,3,5,8"],values:["8","3","5","1"],families:["array","merge","merge","merge"]},
- "087":{family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",families:["search","search","sort","merge"],sortType:"bubble"},
+ "087":{family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",searchTypes:["linear","binary","linear","linear"],families:["search","search","sort","merge"],sortType:"bubble"},
  "088":{family:"gate",labels:["Inputs 0 and 1","AND needs both","OR needs either","NOT reverses input"],families:["gate","gate","gate","gate"],gateStages:["AND","AND","OR","NOT"]},
  "089":{family:"truth",labels:["List 00,01,10,11","AND outputs 0001","OR outputs 0111","NOT reverses one input"],families:["truth","truth","truth","gate"],logicStages:["AND","AND","OR","NOT"],gateStages:["AND","AND","OR","NOT"]},
  "090":{family:"truth",labels:["First AND gate","OR with input C","Compute X then Q","Eight input cases"],families:["gate","gate","gate","truth"],threeInput:true,gateStages:["AND","OR","OR","AND"],logicStages:["AND","AND","OR","AND"]},
@@ -709,13 +709,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const cfg=(index,phase,q)=>{
     const isTeaching=phase==="learning",family=isTeaching?(plan.families?.[index]||plan.family):(phase==="guided"?plan.family:(plan.modelFamily||plan.family));
     const nums=pickNums(q),useNums=nums||plan.values||[];
+    const askedTarget=String(q||"").match(/(?:search(?:ing)?\s+for|find|target|looking\s+for)\s+(\d+)\b/i);
+    const resolvedTarget=askedTarget?askedTarget[1]:String(plan.target||"");
     return {
       family,focus:isTeaching?index:phase==="guided"?index:0,phase,
-      labels:plan.labels.slice(),values:useNums,target:String(plan.target||""),
+      labels:plan.labels.slice(),values:useNums,
+      target:nums&&!useNums.includes(resolvedTarget)?"":resolvedTarget,
       rows:plan.rows||null,threeInput:!!plan.threeInput,
       logic:(plan.logicStages||[])[index]||"AND",
       gate:phase==="guided"?gate(q):(plan.gateStages||[])[index]||gate(q),
-      searchType:plan.searchType||"linear",sortType:plan.sortType||"bubble",
+      searchType:(plan.searchTypes||[])[index]||plan.searchType||"linear",sortType:plan.sortType||"bubble",
       snapshots:(!nums&&phase==="learning")?plan.snapshots||null:null,
       unsafe:/\bunsorted\b|without sorting|not sorted/i.test(q),
       question:String(q||"").slice(0,220)
@@ -731,8 +734,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     return {
       ...(base||{}),
       title:phase==="retrieval"?"PREVIOUS LEARNING · VISUAL RECALL":"EXAM QUESTION · WORK IT OUT",
-      rich:{...oldCfg,phase,focus:0,labels:["Given data","Method?","Answer?"],values:nums||source.values||[],
-        target:String(source.target||""),threeInput:!!source.threeInput,
+      rich:{...oldCfg,phase,focus:0,labels:["Given data","Method?","Answer?"],values:nums||(["array","sort","search","merge","string"].includes(source.family)?["?","?","?","?"]:[]),
+        target:"",threeInput:!!source.threeInput,
         family:["sort","search","array","truth","gate","string","trace"].includes(kind)?kind:
                ["branch","flow","validation","loop"].includes(kind)?"branch":"process"}
     };
@@ -746,7 +749,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   }
   if(!lesson.isAssessment&&Array.isArray(lesson.examVisuals)){
     lesson.examVisuals=[...lesson.examVisuals];
-    if(!lesson.examVisuals[0])lesson.examVisuals[0]=mini({},"independent",lesson.e?.[0]?.[0]||"",0,n);
+    for(let i=0;i<lesson.examVisuals.length;i++){
+      lesson.examVisuals[i]=mini(lesson.examVisuals[i]||{},"independent",lesson.e?.[i]?.[0]||"",i,n);
+    }
   }
   if(lesson.priorExam?.visual)lesson.priorExam.visual=mini(lesson.priorExam.visual,"retrieval",lesson.priorExam.q||"",0,lesson.priorExam.from);
   lesson.visualAuditV3=true;
