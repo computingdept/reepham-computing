@@ -441,7 +441,122 @@
    }
    return null;
  }
+
+ function j277SpringScene(spec){
+  const mode=String(spec.layout||"");
+  const supported=["os-ui","memory-map","multitask","driver-flow","file-tree","os-users","defrag","utility","ethics-map","data-flow","law-map","licensing","stakeholders","decomposition","abstraction","algorithm-steps","ipo","flowchart","trace-grid","code-trace"];
+  if(!supported.includes(mode))return null;
+  const title=String(spec.title||"J277 learning diagram"),words=(Array.isArray(spec.boxes)?spec.boxes:[]).map(x=>String(x).slice(0,30));
+  const e=escape,green="#398266",ink="#244f3d",blue="#497fa7",orange="#ba7c2e",red="#b65053";
+  const t=(x,y,v,size=17,col=ink,weight=800)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-size="'+size+'" font-weight="'+weight+'" fill="'+col+'">'+e(String(v))+'</text>';
+  const shape=(x,y,w,h,col="#e3f2e9",r=11)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+r+'" fill="'+col+'" stroke="#79a991" stroke-width="2.5"/>';
+  const link=(x,y,x2,y2,colour=green,dash=false)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+'" fill="none" stroke="'+colour+'" stroke-width="4" stroke-linecap="round"'+(dash?' stroke-dasharray="8 6"':'')+'/>';
+  const arrow=(x,y,x2,y2,colour=green)=>{const a=Math.atan2(y2-y,x2-x),l=11;return link(x,y,x2,y2,colour)+link(x2-Math.cos(a-.55)*l,y2-Math.sin(a-.55)*l,x2,y2,colour)+link(x2-Math.cos(a+.55)*l,y2-Math.sin(a+.55)*l,x2,y2,colour);};
+  const multiline=(x,y,txt,max=16,sz=18)=>{
+   const ws=String(txt||"?").split(/\s+/),out=[];let line="";
+   ws.forEach(w=>{if(line&&(line+" "+w).length>max){out.push(line);line=w;}else line+=(line?" ":"")+w;});
+   if(line)out.push(line);
+   const arr=out.slice(0,3);return arr.map((v,i)=>t(x,y-(arr.length-1)*12+i*24,v,sz)).join("");
+  };
+  const card=(x,y,w,h,txt,col="#e4f1e9",sz=18)=>shape(x,y,w,h,col)+multiline(x+w/2,y+h/2+6,txt,w>180?20:14,sz);
+  const foot=String(spec.foot||"").slice(0,68);
+  const frame=body=>'<figure class="a1-scene j277-spring-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+e(title)+': '+e(words.join(", "))+'" xmlns="http://www.w3.org/2000/svg">'+shape(3,3,554,334,"#f8fbf9",15)+t(280,39,title.slice(0,44),title.length>34?18:22)+body+(foot?t(280,323,foot,foot.length>50?14:16):"")+'</svg></figure>';
+  const named=(i,defaultVal)=>words[i]||defaultVal;let b="";
+  if(mode==="os-ui"){
+   b+=shape(28,74,244,209,"#e3eef9")+shape(299,74,233,209,"#e4f2e8");
+   b+=t(150,102,"GUI",21)+t(413,102,"CLI",21);
+   b+=shape(47,121,208,144,"#f6fafc")+shape(315,121,201,144,"#172e28");
+   for(let i=0;i<3;i++){const x=75+(i%2)*89,y=143+Math.floor(i/2)*66;b+=shape(x,y,61,51,i===1?"#c9eac9":"#d7e8fc");}
+   b+=t(414,155,"> open file",17,"#a5f6c8")+t(414,192,"> save",17,"#a5f6c8")+t(414,228,"> _",17,"#a5f6c8");
+  }else if(mode==="memory-map"){
+   b+=t(280,83,"TOTAL AVAILABLE RAM",18);
+   const cols=["#a8d6ef","#d8efce","#f8e6bc","#f4cece"];const labels=[named(0,"App A"),named(1,"App B"),named(2,"App C"),"FREE"];
+   for(let i=0;i<4;i++){const x=28+i*128;b+=shape(x,117,116,122,cols[i]);b+=multiline(x+58,184,labels[i],11,18);}
+   b+=arrow(280,96,280,113)+t(280,275,"OS allocates separate portions to applications",16);
+  }else if(mode==="multitask"){
+   const apps=[named(0,"Browser"),named(1,"Music"),named(2,"Editor")];
+   b+=t(280,79,"ILLUSTRATIVE CPU TIME SLICES",17);
+   for(let i=0;i<3;i++){
+    const y=102+i*64;b+=card(20,y,112,45,apps[i],i%2?"#e8f4df":"#e6edf9",15);
+    for(let k=0;k<7;k++){const x=149+k*54;const active=(k%3)===i;b+=shape(x,y,47,43,active?"#a9ddbf":"#edf0ee",5);if(active)b+=t(x+23,y+28,"RUN",12);}
+   }
+   b+=t(280,313,"A CPU can switch between tasks to support multitasking",15);
+  }else if(mode==="driver-flow"){
+   const labs=[named(0,"Application"),named(1,"OS / driver"),named(2,"Peripheral")];
+   labs.forEach((v,i)=>{const x=22+i*179;b+=card(x,116,153,119,v,i===0?"#e2effb":i===1?"#e2f2e8":"#f8ead5");if(i<2)b+=arrow(x+156,171,x+175,171);});
+   b+=t(280,276,"Drivers enable device-specific communication",16);
+  }else if(mode==="file-tree"){
+   b+=card(205,63,150,60,named(0,"Documents"),"#dceaf8");
+   b+=link(280,123,280,156)+link(113,156,447,156)+link(113,156,113,182)+link(447,156,447,182);
+   b+=card(32,184,162,64,named(1,"Coursework"),"#e0f2e7");
+   b+=card(366,184,162,64,named(2,"Revision"),"#f9ebd3");
+   b+=t(280,288,"Folders organise named files",18);
+  }else if(mode==="os-users"){
+   const labels=[named(0,"Student"),named(1,"Teacher"),named(2,"Administrator")];
+   labels.forEach((v,i)=>{const x=20+i*177;b+=card(x,99,157,118,v,["#e4effb","#e5f2e6","#f8ecd9"][i]);b+=t(x+79,255,i===0?"LIMITED":i===1?"STAFF":"HIGHER",16);});
+  }else if(mode==="defrag"){
+   const raw=["A","B","A","FREE","C","B","FREE","A","C"],fixed=["A","A","A","B","B","C","C","FREE","FREE"];
+   for(let row=0;row<2;row++){
+    b+=t(279,row?218:91,row?"AFTER · CONTIGUOUS GROUPS":"BEFORE · FRAGMENTED",18);
+    (row?fixed:raw).forEach((name,i)=>{const x=28+i*57,y=row?232:106;
+     const col=name==="A"?"#bad8f5":name==="B"?"#c3e9cc":name==="C"?"#f6e1a9":"#ecf0ed";
+     b+=shape(x,y,50,56,col,5)+t(x+25,y+33,name,name==="FREE"?10:18);
+    });
+   }
+   b+=t(280,191,"REARRANGE DATA ON A MAGNETIC HARD DISK",15);
+  }else if(mode==="utility"){
+   const ico=[named(0,"Encryption"),named(1,"Compression"),named(2,"Defrag")];
+   ico.forEach((v,i)=>{const x=18+i*180;b+=card(x,97,163,167,v,["#e1effa","#e2f2e7","#f8edd4"][i],18);});
+   b+=t(280,289,"Utilities perform additional maintenance or protection tasks",15);
+  }else if(mode==="ethics-map"||mode==="stakeholders"){
+   const entries=words.slice(0,4);while(entries.length<4)entries.push(["Privacy","Environment","Access","Culture"][entries.length]);
+   entries.forEach((v,i)=>{const x=18+(i%2)*265,y=77+Math.floor(i/2)*111;b+=card(x,y,249,93,v,["#e0ecf8","#e3f2e8","#f8e9d5","#eeeafa"][i],18);});
+  }else if(mode==="data-flow"){
+   const labs=[named(0,"Collect"),named(1,"Store"),named(2,"Use")];
+   labs.forEach((v,i)=>{const x=20+i*179;b+=card(x,111,153,117,v,["#e1ecfa","#e3f3e6","#f8ebd7"][i]);if(i<2)b+=arrow(x+156,166,x+176,166);});
+   b+=t(280,277,"Handle personal data lawfully and securely",17);
+  }else if(mode==="law-map"){
+   const entries=words.length?words:["Data protection","Computer misuse","Copyright"];
+   for(let i=0;i<3;i++){const x=19+i*181;b+=card(x,94,163,170,entries[i]||"Law",["#e2eefa","#e0f2e9","#faebd7"][i],17);}
+  }else if(mode==="licensing"){
+   b+=card(24,102,238,154,named(0,"OPEN SOURCE"),"#e5f1e9",21);
+   b+=card(299,102,238,154,named(1,"PROPRIETARY"),"#e3eefb",20);
+   b+=t(280,289,"Licence conditions govern copying, using and changing code",15);
+  }else if(mode==="decomposition"){
+   b+=card(210,68,140,68,named(0,"Main problem"),"#e1eefb");
+   b+=link(280,136,280,167)+link(100,167,460,167);
+   const names=[named(1,"Input"),named(2,"Calculate"),named(3,"Output")];
+   names.forEach((v,i)=>{const x=23+i*176;b+=link(x+79,167,x+79,203)+card(x,207,158,65,v,"#e3f2e8",16);});
+  }else if(mode==="abstraction"){
+   b+=card(25,104,220,147,named(0,"All real-world details"),"#e6eefb",19);
+   b+=arrow(253,179,310,179);
+   b+=card(319,104,214,147,named(1,"Relevant features"),"#e1f2e7",19);
+   b+=t(280,284,"Keep what the solution needs · leave out the rest",16);
+  }else if(mode==="algorithm-steps"){
+   const parts=[named(0,"Start"),named(1,"Action 1"),named(2,"Action 2"),named(3,"Finish")];
+   for(let i=0;i<4;i++){const x=12+i*139;b+=card(x,119,124,105,parts[i],i%2?"#e2f2e8":"#e3eefb",16);if(i<3)b+=arrow(x+126,172,x+135,172);}
+  }else if(mode==="ipo"){
+   const labels=[named(0,"Input"),named(1,"Process"),named(2,"Output")];
+   for(let i=0;i<3;i++){const x=20+i*179;b+=card(x,112,157,131,labels[i],["#e2edf9","#f8ecd5","#e2f2e8"][i]);if(i<2)b+=arrow(x+159,173,x+176,173);}
+   b+=t(280,280,"List the actual data and transformation, not just their names",15);
+  }else if(mode==="flowchart"){
+   b+=shape(37,141,131,72,"#e5effa",36)+t(102,181,named(0,"START"),17);
+   b+=arrow(169,177,213,177);
+   b+='<path d="M282 93 L365 177 L282 262 L199 177 Z" fill="#f9edd5" stroke="#ba903a" stroke-width="3"/>';
+   b+=multiline(282,176,named(1,"Condition?"),12,15);
+   b+=arrow(366,177,399,177)+card(403,141,134,74,named(2,"YES action"),"#e0f2e7",16);
+   b+=link(282,261,282,291,blue)+t(330,280,"NO",14,blue)+t(382,166,"YES",14);
+  }else if(mode==="trace-grid"||mode==="code-trace"){
+   const cols=words.slice(0,3);while(cols.length<3)cols.push(["step","total","output"][cols.length]);
+   const xs=[28,197,366];
+   for(let c=0;c<3;c++){b+=shape(xs[c],86,166,47,"#d9e8f5",3)+t(xs[c]+83,116,cols[c],16);}
+   for(let row=0;row<4;row++)for(let c=0;c<3;c++){b+=shape(xs[c],133+row*38,166,36,row%2?"#f6f9f7":"#eaf2ec",1);b+=t(xs[c]+83,157+row*38,row===0?"?":"",16);}
+   b+=t(280,308,"Record values after each executed instruction",16);
+  }
+  return frame(b);
+ }
  function topicVisual(spec){
+  const spring=j277SpringScene(spec);if(spring)return spring;
   const richer=j277NetworkExpansion(spec);if(richer)return richer;
   const security=j277SecurityScene(spec);if(security)return security;
   const advanced=networkScene(spec);if(advanced)return advanced;
@@ -909,7 +1024,7 @@
  }
  function youDo(lesson,number){
   if(lesson.isAssessment){
-    return `<section id="you-do" class="page phase-youdo j277-assessment" data-assessment-mode="true" data-phase-time="Independent assessment"><article class="j277-assessment-panel"><span class="phase-tag">45 MINUTES · 45 MARKS · INDEPENDENT</span><h2>Autumn 2 Assessment</h2><p>Open the question paper. Answer every question independently, showing working and linking explanations to the marks available. Do not view model answers during the assessment.</p><a class="j277-assessment-open" href="assessment.html" target="_blank" rel="noopener">Open the 45-mark assessment paper →</a><p class="j277-assessment-note">Teacher: release the separate worked answers only after the assessment has finished.</p></article></section>`;
+    return `<section id="you-do" class="page phase-youdo j277-assessment" data-assessment-mode="true" data-phase-time="Independent assessment"><article class="j277-assessment-panel"><span class="phase-tag">${escape(lesson.assessmentMinutes||45)} MINUTES · ${escape(lesson.assessmentMarks||45)} MARKS · INDEPENDENT</span><h2>${escape(lesson.t)}</h2><p>Open the question paper. Answer every question independently, showing working and linking explanations to the marks available. Do not view model answers during the assessment.</p><a class="j277-assessment-open" href="assessment.html" target="_blank" rel="noopener">Open the 45-mark assessment paper →</a><p class="j277-assessment-note">Teacher: release the separate worked answers only after the assessment has finished.</p></article></section>`;
   }
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
    <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
