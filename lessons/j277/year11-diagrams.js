@@ -16,7 +16,7 @@ function indexed(items,opt={}){
 }
 function binaryBits(s,focus=0,hide=false){
  const v=String(s||"00000000").padStart(8,"0").slice(-8),width=62,gap=6,x=51;
- return [...v].map((b,i)=>R(x+i*(width+gap),113,width,77,focus===i?C.cream:b==="1"?C.mint:C.light,focus===i?C.gold:"#9cbdab",7)+T(x+i*(width+gap)+width/2,143,2**(7-i),14,C.muted)+T(x+i*(width+gap)+width/2,174,hide?"?":b,28)).join("");
+ return [...v].map((b,i)=>R(x+i*(width+gap),113,width,77,focus===i?C.cream:b==="1"?C.mint:C.light,focus===i?C.gold:"#9cbdab",7)+T(x+i*(width+gap)+width/2,143,2**(7-i),14,C.muted)+T(x+i*(width+gap)+width/2,174,b,28)).join("");
 }
 function wave(focus){
  let p="";for(let i=0;i<560;i+=4){let y=180-76*Math.sin((i/560)*Math.PI*4);p+=(i===0?"M":"L")+(40+i)+" "+y+" ";}
@@ -48,7 +48,7 @@ function draw(spec){
  }else if(type==="addition"){
   const A=(a[0]||"00010110").padStart(8,"0").slice(-8),B=(a[1]||"00001101").padStart(8,"0").slice(-8),result=((parseInt(A,2)+parseInt(B,2))%256).toString(2).padStart(8,"0");
   h+=T(70,113,"A",20,C.muted)+T(70,164,"B",20,C.muted)+T(70,224,"SUM",18,C.green);
-  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,115,A[j],22)+T(x+25,164,B[j],22)+T(x+25,227,col<=n?result[j]:"?",22,C.green);}
+  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,115,A[j],22)+T(x+25,164,B[j],22)+T(x+25,227,!spec.hide&&(n===3||col<=n)?result[j]:"?",22,C.green);}
   h+=T(320,285,"Work from the right-hand bit; carry 1 into the next column if needed.",17);
  }else if(type==="hex"){
   const v=(a[0]||"10101111").replace(/[^01]/g,"").padStart(8,"0").slice(-8);
@@ -83,19 +83,26 @@ function draw(spec){
   h+=indexed(values,{active:spec.hide?-1:mid,excluded:discarded});h+=T(320,261,"LOW "+low+"     MID "+mid+"     HIGH "+high,20)+T(320,300,"Sorted data required; discard the half that cannot contain the target",16);
  }else if(type==="bubble"||type==="insertion"){
   let ar=(a.length?a:["5","2","8","1","4"]).map(Number),focus=n;
-  if(type==="bubble"){for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
+  if(type==="bubble"){if(!spec.hide)for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
     h+=indexed(ar.map(String),{active:focus%Math.max(1,ar.length-1)});h+=T(320,265,"Compare neighbouring values; swap when the left value is larger",18);
-  }else{for(let i=1;i<=Math.min(focus+1,ar.length-1);i++){let key=ar[i],j=i-1;while(j>=0&&ar[j]>key){ar[j+1]=ar[j];j--;}ar[j+1]=key;}
+  }else{if(!spec.hide)for(let i=1;i<=Math.min(focus+1,ar.length-1);i++){let key=ar[i],j=i-1;while(j>=0&&ar[j]>key){ar[j+1]=ar[j];j--;}ar[j+1]=key;}
     h+=indexed(ar.map(String),{active:Math.min(focus+1,ar.length-1),done:[...Array(Math.min(focus+2,ar.length)).keys()]});h+=T(320,264,"Keep a sorted prefix; insert the next value in its correct position",17);
   }
  }else if(type==="merge"){
-  let vals=a.length?a:["8","3","5","1","7","2","6","4"];const half=Math.ceil(vals.length/2);
-  h+=box(117,87,408,46,vals.join("  "),C.light,17);
-  h+=L(320,136,177,188)+L(320,136,468,188);
-  h+=box(40,195,275,61,vals.slice(0,half).join("  "),n>=1?C.cream:C.grey,19);
-  h+=box(337,195,265,61,vals.slice(half).join("  "),n>=1?C.cream:C.grey,19);
-  if(n>=2){h+=L(177,260,320,291)+L(468,260,320,291)+box(112,296,416,46,vals.map(Number).sort((x,y)=>x-y).join("  "),C.mint,19);}
-  h+=T(320,283,n<2?"Split recursively into smaller lists":"Merge the sorted sublists in order",17,C.muted);
+  const vals=a.length?a:["8","3","5","1","7","2","6","4"],half=Math.ceil(vals.length/2);
+  h+=box(90,76,460,42,vals.join("  "),C.light,18);
+  if(n>=1){
+    h+=L(320,121,168,142)+L(320,121,469,142);
+    h+=box(20,147,285,43,vals.slice(0,half).join("  "),C.cream,17);
+    h+=box(335,147,285,43,vals.slice(half).join("  "),C.cream,17);
+    const chunks=[];for(let i=0;i<vals.length;i+=Math.ceil(vals.length/4)){chunks.push(vals.slice(i,i+Math.ceil(vals.length/4)))}
+    chunks.slice(0,4).forEach((chunk,i)=>{h+=box(13+i*158,207,141,41,chunk.join("  "),C.light,17)});
+  }
+  if(n>=2){
+    let pairs=[];for(let i=0;i<vals.length;i+=2)pairs.push(vals.slice(i,i+2).map(Number).sort((x,y)=>x-y).join(" "));
+    pairs.slice(0,4).forEach((pair,i)=>{h+=box(13+i*158,265,141,35,pair,C.mint,17)});
+  }
+  if(n>=3)h+=box(95,311,450,38,vals.map(Number).sort((x,y)=>x-y).join("  "),C.mint,19);
  }else if(type==="compare"){
   h+=box(25,116,280,120,"LINEAR SEARCH",C.light,23)+box(335,116,280,120,"BINARY SEARCH",C.mint,23);
   h+=T(165,276,"Works on unsorted lists",17)+T(480,276,"Requires sorted data",17);
