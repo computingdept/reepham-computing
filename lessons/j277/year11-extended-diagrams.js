@@ -222,6 +222,56 @@ function matchedLessonScene(spec,stage){
  const title=String(spec.topic||""),mode=String(spec.scenario||"model"),guided=mode==="guided";
  const info=(heading,rows)=>{let h=small(25,78,heading.toUpperCase());rows.forEach((r,i)=>{const y=109+i*57,highlight=i===stage,visible=i<=stage;h+=label(27,y,183,48,r[0],highlight?K.amber:K.sky,17);h+=label(217,y,393,48,visible?r[1]:"Think: what comes next?",visible?K.mint:K.grey,r[1].length>36?15:18);});return h;};
  const trace=(heading,values,answers)=>{let h=small(25,76,heading.toUpperCase());values.forEach((v,i)=>{let x=23+i*(587/values.length),width=587/values.length-8;h+=label(x,116,width,77,String(v),i===stage?K.amber:K.sky,24);h+=label(x,215,width,55,i<=stage?String(answers[i]):"?",i===stage?K.mint:K.grey,20);});h+=small(41,321,"Top: input / index     Bottom: calculated or traced state");return h;};
+
+ if(title==="Testing and Test Data"&&guided)return info("QUANTITY ACCEPTED FROM 1 TO 10",[
+ ["NORMAL","5 should be accepted"],["BOUNDARY","1 and 10 accepted"],["INVALID","0 and 11 rejected"],["ERRONEOUS","'ten' rejected"]]);
+ if(title==="CPU Architecture and the Fetch-Execute Cycle"){
+   if(guided)return info("CPU · ALU PERFORMS ADDITION",[
+     ["INSTRUCTION","Add two values"],["CONTROL UNIT","Coordinates execution"],["ALU","Calculates the result"],["ACC","Holds arithmetic result"]]);
+   return info("FETCH STAGE · PC, MAR AND MDR",[
+     ["PC","Address of next instruction"],["MAR","Receive the address from PC"],["MEMORY","Fetch instruction at the address"],["MDR","Receive fetched instruction"]]);
+ }
+ if(title==="CPU Performance and Embedded Systems"&&guided){
+   let h=small(29,77,"WASHING MACHINE · EMBEDDED CONTROLLER");
+   h+=label(26,139,163,85,"SENSOR",K.sky,22)+arrow(190,181,239,181);
+   h+=label(241,139,164,85,"CONTROLLER",K.amber,18)+arrow(405,181,450,181);
+   h+=label(454,139,161,85,"MOTOR",K.mint,24);
+   h+=small(38,285,"Inputs tell the dedicated controller what to do");
+   h+=small(38,315,"Outputs operate the appliance — not a general-purpose PC");
+   return h;
+ }
+ if(title==="LANs, WANs and Network Models"&&guided)return info("HOME NETWORK VS NATIONAL RETAILER",[
+   ["HOME","5 local devices in one building"],["COVERAGE","Home devices share LAN"],["RETAILER","Multiple branches have LANs"],["CONNECT","WAN links distant branch networks"]]);
+ if(title==="Network Hardware and Topologies"&&!guided){
+   const labels=["PC / NIC","SWITCH","ROUTER","SERVER"],meta=["local device","forwards on LAN","connects networks","receives request"];
+   let h=small(24,91,"CLASSROOM PC → SERVER ON A DIFFERENT NETWORK");
+   labels.forEach((x,i)=>{let pos=23+i*155;h+=label(pos,143,143,79,x,i===stage?K.amber:i<stage?K.mint:K.sky,x.length>9?18:22);if(i<3)h+=arrow(pos+144,183,pos+155,183);h+=text(pos+70,245,meta[i],14);});
+   h+=small(28,313,"Switch forwards locally; router selects the route to another network");
+   return h;
+ }
+ if(title==="Network Protocols and Layers"&&guided)return info("EMAIL SENDING · SMTP",[
+   ["SENDER","School laptop composes message"],["SMTP","Mail sending protocol"],["NETWORK","Servers transfer the message"],["RECIPIENT","IMAP / POP may be used to receive mail"]]);
+ if(title==="Network Threats"&&guided)return info("DENIAL OF SERVICE · ABNORMAL TRAFFIC",[
+   ["EVIDENCE","Unexpectedly many requests"],["EFFECT","Server becomes slow/unavailable"],["THREAT","Possible denial of service"],["RESPONSE","Filter/rate limit traffic; add capacity"]]);
+ if(title==="Preventing Network Attacks"&&guided)return info("PASSWORD ALONE → MFA PROTECTION",[
+   ["RISK","Password stolen or guessed"],["FACTOR 1","User supplies password"],["FACTOR 2","Independent authenticator check"],["RESULT","Stolen password alone is insufficient"]]);
+ if(title==="Operating Systems"&&guided)return info("USER INTERFACES · GUI VS CLI",[
+   ["CLI","Text commands typed by user"],["SUITABLE","Scripting and experienced operators"],["GUI","Visual icons, windows and menus"],["SUITABLE","Accessible routine interaction"]]);
+ if(title==="Utility Software"&&guided)return info("LOSSLESS COMPRESSION FOR DOCUMENTS",[
+   ["INPUT","Folder contains large documents"],["UTILITY","Compress files losslessly"],["EFFECT","Fewer bytes to transfer"],["RESTORE","Original documents recovered exactly"]]);
+ if(title==="Programming Languages and Translators"&&guided)return info("COMPILER VS INTERPRETER · ERRORS",[
+   ["COMPILER","Translates source to output program"],["ERRORS","May report errors during translation"],["INTERPRETER","Executes through runtime environment"],["ERRORS","May report failures while running"]]);
+ if(title==="Integrated Development Environments"&&guided){
+   let h=small(26,81,"MISSPELT VARIABLE · HOW AN IDE HELPS");
+   h+=label(30,124,350,61,"total = 10",K.sky,22);
+   h+=label(30,199,350,61,"print(totla)",stage>=1?K.amber:K.sky,22);
+   h+=label(400,124,204,61,stage>=2?"Unknown name":"Error hint",stage>=2?K.red:K.grey,17);
+   h+=label(400,199,204,61,stage>=3?"Correct: total":"Autocomplete",K.mint,16);
+   h+=small(30,321,"Error diagnostics and completion can help find a misspelling");
+   return h;
+ }
+ if(title==="Paper 1: Data Representation"&&guided)return info("UNCOMPRESSED BITMAP · 60 × 40 × 4 BIT",[
+   ["PIXELS","60 × 40 = 2400 pixels"],["BIT DEPTH","4 bits for each pixel"],["FILE BITS","2400 × 4 = 9600 bits"],["BYTES","9600 ÷ 8 = 1200 bytes"]]);
  if(title==="Random Numbers and Combined Constructs")return info(guided?"DICE ROLL = 3 · WIN ONLY ON 6":"DICE ROLL = 6 · WIN IF ≥ 5",[
  ["INPUT",guided?"roll = 3":"roll = 6"],["CONDITION",guided?"3 == 6 ?":"6 >= 5 ?"],["BRANCH","TRUE → WIN    |    FALSE → TRY AGAIN"],["OUTPUT",guided?"Try again":"Win"]]);
  if(title==="Assessment Feedback and Corrections")return info(guided?"MISSING PREREQUISITE IN SEARCH ANSWER":"REPAIR THE VIRTUAL MEMORY EXPLANATION",[
