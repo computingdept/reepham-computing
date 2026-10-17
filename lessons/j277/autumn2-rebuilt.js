@@ -678,6 +678,23 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "072":{family:"file",labels:["Open notes.txt","Write a text line","Read file if needed","Close the handle"],families:["file","process","file","file"]},
  "073":{family:"sql",labels:["Pupils table","SELECT Name","FROM Pupils","WHERE Year = 10"],families:["sql","sql","process","sql"]},
  "074":{family:"dice",labels:["Random range","Inclusive endpoints","Possible outcomes","Simulate a dice"],families:["dice","process","dice","branch"]},
+ "075":{family:"validation",labels:["Read mark","0 <= mark <= 100?","Accept input","Reject and retry"],families:["branch","test","validation","loop"]},
+ "076":{family:"comparison",labels:["Meaningful names","Consistent indentation","Helpful comments","Small subprograms"],families:["comparison","process","trace","cycle"]},
+ "077":{family:"test",labels:["Normal: 50","Boundary: 0,100","Invalid: -1,101","Expected output"],families:["test","test","test","test"],rows:[["50","Accepted","?"],["0,100","Accepted","?"],["-1,101","Rejected","?"]]},
+ "078":{family:"cycle",labels:["Design tickets app","Build core feature","Test values","Improve faults"],families:["tree","process","test","cycle"]},
+ "079":{family:"test",labels:["Failed test case","Compare output","Correct fault","Retest"],families:["test","trace","cycle","test"],rows:[["3","18","?"],["0","0","?"],["-1","Reject","?"]]},
+ "080":{family:"trace",labels:["total=0","Add 1,2,3","Record each total","Print sum=6"],families:["trace","loop","trace","test"],rows:[["1","1",""],["2","3",""],["3","6","6"]]},
+ "081":{family:"test",labels:["Expected cost=12","Actual sum=7","Correct * operator","Retest output"],families:["comparison","trace","test","cycle"],rows:[["3 tickets","12","7"],["Corrected","12","12"]]},
+ "082":{family:"search",labels:["Check index 0","Move to index 1","Compare index 2","Find target 2"],values:["8","4","11","2","7"],target:"2",searchType:"linear",families:["array","search","search","search"]},
+ "083":{family:"search",labels:["Sorted prerequisite","Check midpoint","Discard lower half","Find target 12"],values:["2","4","6","8","10","12","14"],target:"12",searchType:"binary",families:["array","search","search","search"]},
+ "084":{family:"sort",labels:["Start 5,2,4","Compare 5 and 2","Swap 5 and 4","First pass ordered"],values:["5","2","4"],sortType:"bubble",families:["array","sort","sort","sort"],snapshots:[["5","2","4"],["2","5","4"],["2","4","5"],["2","4","5"]]},
+ "085":{family:"sort",labels:["Start 4,1,3","Insert key 1","Insert key 3","Sorted 1,3,4"],values:["4","1","3"],sortType:"insertion",families:["array","sort","sort","sort"],snapshots:[["4","1","3"],["1","4","3"],["1","3","4"],["1","3","4"]]},
+ "086":{family:"merge",labels:["Split 8,3,5,1","Pairs [8,3] [5,1]","Merge sorted pairs","Final 1,3,5,8"],values:["8","3","5","1"],families:["array","merge","merge","merge"]},
+ "087":{family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",families:["search","search","sort","merge"],sortType:"bubble"},
+ "088":{family:"gate",labels:["Inputs 0 and 1","AND needs both","OR needs either","NOT reverses input"],families:["gate","gate","gate","gate"],gateStages:["AND","AND","OR","NOT"]},
+ "089":{family:"truth",labels:["List 00,01,10,11","AND outputs 0001","OR outputs 0111","NOT reverses one input"],families:["truth","truth","truth","gate"],logicStages:["AND","AND","OR","NOT"],gateStages:["AND","AND","OR","NOT"]},
+ "090":{family:"truth",labels:["First AND gate","OR with input C","Compute X then Q","Eight input cases"],families:["gate","gate","gate","truth"],threeInput:true,gateStages:["AND","OR","OR","AND"],logicStages:["AND","AND","OR","AND"]},
+
 
  };
  // J277 visual teaching audit V3: scenario-led, stateful SVGs (2026-10-17).
