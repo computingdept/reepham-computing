@@ -1,0 +1,658 @@
+{
+  "id": "143",
+  "title": "Spring Assessment (AP2)",
+  "subtitle": "Year 11 · OCR J277 · Original whole-course school assessment",
+  "minutes": 90,
+  "marks": 80,
+  "officialExam": false,
+  "notes": "Whole-course mixed Paper 1 / Paper 2 school paper; not a replica of the separate OCR J277/01 or J277/02 examination papers.",
+  "instructions": [
+    "Answer all questions in Sections A and B.",
+    "Show calculations, traces and programming steps.",
+    "For programming questions, use OCR Exam Reference Language or clear pseudocode with equivalent logic.",
+    "No calculators. Use zero-based indexes where stated."
+  ],
+  "dataset": {
+    "title": "Pupils",
+    "columns": [
+      "ID",
+      "Name",
+      "Mark"
+    ],
+    "rows": [
+      [
+        101,
+        "Ada",
+        72
+      ],
+      [
+        102,
+        "Ben",
+        43
+      ],
+      [
+        103,
+        "Mia",
+        81
+      ]
+    ]
+  },
+  "sections": [
+    {
+      "title": "Section A · Systems, knowledge and algorithms",
+      "marks": 50,
+      "questions": [
+        {
+          "id": "1",
+          "topic": "CPU and memory",
+          "visual": "cpu",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 3,
+              "prompt": "State the role of the Program Counter (PC), Memory Address Register (MAR) and Memory Data Register (MDR).",
+              "markPoints": [
+                {
+                  "text": "PC: holds address of next instruction to fetch.",
+                  "marks": 1
+                },
+                {
+                  "text": "MAR: holds address of memory location accessed.",
+                  "marks": 1
+                },
+                {
+                  "text": "MDR: holds data/instruction transferred to or from memory.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "Explain one reason a CPU uses cache.",
+              "markPoints": [
+                {
+                  "text": "Cache holds frequently used data/instructions.",
+                  "marks": 1
+                },
+                {
+                  "text": "Cache access is quicker than main RAM, reducing waiting.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 3,
+              "prompt": "Explain how virtual memory is used when a computer has insufficient physical RAM.",
+              "markPoints": [
+                {
+                  "text": "The OS uses secondary storage as backing for memory pages.",
+                  "marks": 1
+                },
+                {
+                  "text": "Pages are exchanged between RAM and secondary storage as needed.",
+                  "marks": 1
+                },
+                {
+                  "text": "Secondary storage is slower than RAM, so frequent paging can reduce performance.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "topic": "Binary, hexadecimal and images",
+          "visual": "binary",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 3,
+              "prompt": "Convert unsigned binary 11001010 into denary. Show which place values contribute.",
+              "markPoints": [
+                {
+                  "text": "Recognises 128 and 64 place values.",
+                  "marks": 1
+                },
+                {
+                  "text": "Includes 8 and 2 place values.",
+                  "marks": 1
+                },
+                {
+                  "text": "Sum is 202.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "Convert hexadecimal B5 into eight-bit binary.",
+              "markPoints": [
+                {
+                  "text": "B = 1011.",
+                  "marks": 1
+                },
+                {
+                  "text": "5 = 0101, giving 10110101.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 4,
+              "prompt": "An uncompressed bitmap is 120 pixels wide and 60 pixels high, with a colour depth of 4 bits per pixel. Calculate its size in bytes.",
+              "markPoints": [
+                {
+                  "text": "120 × 60 = 7200 pixels.",
+                  "marks": 1
+                },
+                {
+                  "text": "7200 × 4 = 28,800 bits.",
+                  "marks": 1
+                },
+                {
+                  "text": "28,800 ÷ 8.",
+                  "marks": 1
+                },
+                {
+                  "text": "3600 bytes.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "topic": "Networks and security",
+          "visual": "network",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 2,
+              "prompt": "Explain the purpose of DNS when visiting a website.",
+              "markPoints": [
+                {
+                  "text": "Maps a human-readable domain name to an IP address.",
+                  "marks": 1
+                },
+                {
+                  "text": "Allows a client to discover the address needed to contact the appropriate web service.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "State the difference between a network switch and a router.",
+              "markPoints": [
+                {
+                  "text": "Switch forwards frames/devices within a LAN using local/data-link information such as MAC addresses.",
+                  "marks": 1
+                },
+                {
+                  "text": "Router forwards packets between networks using IP addressing and routing.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 2,
+              "prompt": "A teacher receives a convincing message asking them to sign in at an unfamiliar link. Name the attack technique and state a safe response.",
+              "markPoints": [
+                {
+                  "text": "Phishing/social engineering.",
+                  "marks": 1
+                },
+                {
+                  "text": "Verify via an official channel instead of entering credentials through the untrusted link.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(d)",
+              "marks": 2,
+              "prompt": "Explain why multifactor authentication can reduce the risk from a stolen password.",
+              "markPoints": [
+                {
+                  "text": "A password is only one authentication factor.",
+                  "marks": 1
+                },
+                {
+                  "text": "The attacker must also satisfy a separate factor before access is granted.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "topic": "Systems software, legislation and impacts",
+          "visual": "systems",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 2,
+              "prompt": "Identify two responsibilities of an operating system.",
+              "markPoints": [
+                {
+                  "text": "One valid OS function: memory management, file management, process scheduling, user interface or peripheral control.",
+                  "marks": 1
+                },
+                {
+                  "text": "A second distinct valid OS function.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "Explain why defragmentation may improve performance on a magnetic HDD.",
+              "markPoints": [
+                {
+                  "text": "File fragments can be reorganised closer together.",
+                  "marks": 1
+                },
+                {
+                  "text": "This reduces mechanical seek movement/time when reading related data.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 2,
+              "prompt": "A person deliberately logs in to another user's account without permission. Identify the relevant UK law and explain the issue.",
+              "markPoints": [
+                {
+                  "text": "Computer Misuse Act 1990.",
+                  "marks": 1
+                },
+                {
+                  "text": "Access is unauthorised regardless of whether the password was known.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(d)",
+              "marks": 2,
+              "prompt": "State one ethical concern about a school app collecting continuous location data, and explain it.",
+              "markPoints": [
+                {
+                  "text": "Privacy/surveillance is a relevant concern.",
+                  "marks": 1
+                },
+                {
+                  "text": "Constant location collection could be disproportionate or expose sensitive pupil information if misused.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "topic": "Searching, sorting and Boolean logic",
+          "visual": "algorithms",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 3,
+              "prompt": "Explain why binary search can take fewer comparisons than linear search on a large sorted list.",
+              "markPoints": [
+                {
+                  "text": "Binary search chooses a midpoint.",
+                  "marks": 1
+                },
+                {
+                  "text": "Each unsuccessful comparison removes half the remaining search area.",
+                  "marks": 1
+                },
+                {
+                  "text": "Linear search may inspect values sequentially; binary generally needs fewer checks for large sorted inputs.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 3,
+              "prompt": "Show the list after each comparison of the first pass of bubble sort on [5,2,4,1].",
+              "markPoints": [
+                {
+                  "text": "After comparing 5 and 2: [2,5,4,1].",
+                  "marks": 1
+                },
+                {
+                  "text": "After comparing 5 and 4: [2,4,5,1].",
+                  "marks": 1
+                },
+                {
+                  "text": "After comparing 5 and 1: [2,4,1,5].",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 3,
+              "prompt": "Evaluate Q = (A AND B) OR C when A=1, B=0, C=1. Show the intermediate AND output, the final Q, and state what Q becomes if C changes to 0.",
+              "markPoints": [
+                {
+                  "text": "A AND B = 0.",
+                  "marks": 1
+                },
+                {
+                  "text": "With C=1, Q = 1.",
+                  "marks": 1
+                },
+                {
+                  "text": "If C=0 and A=1, B=0, Q = 0.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "topic": "Extended response · responsible use of school data",
+          "visual": "essay",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 8,
+              "prompt": "A school plans to store pupil records in an online service so staff can access them remotely. Evaluate the benefits and risks of this change, including security and ethical or legal considerations. Recommend suitable precautions and reach a justified conclusion.",
+              "markPoints": [
+                {
+                  "text": "Relevant benefit such as improved authorised remote access or collaboration.",
+                  "marks": 1
+                },
+                {
+                  "text": "Relevant benefit such as centralised backup and recovery.",
+                  "marks": 1
+                },
+                {
+                  "text": "Relevant risk such as loss of access during internet/service outage.",
+                  "marks": 1
+                },
+                {
+                  "text": "Relevant risk such as breach of sensitive pupil data.",
+                  "marks": 1
+                },
+                {
+                  "text": "Explains strong authentication/MFA or access controls.",
+                  "marks": 1
+                },
+                {
+                  "text": "Explains encryption of information in transit/at rest as appropriate.",
+                  "marks": 1
+                },
+                {
+                  "text": "Applies personal-data protection principles (lawful purpose, minimisation or security) and privacy concerns.",
+                  "marks": 1
+                },
+                {
+                  "text": "Offers a balanced, reasoned conclusion weighing educational benefits against risks; gives actionable precautions.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Section B · Practical programming",
+      "marks": 30,
+      "questions": [
+        {
+          "id": "7",
+          "topic": "Trace arrays, loops and selection",
+          "visual": "trace",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 4,
+              "prompt": "Trace the following program. State total and count after processing 3, 6 and 2, then give both printed outputs.",
+              "code": "array values = [3, 6, 2, 9]\ntotal = 0\ncount = 0\nfor i = 0 to 3\n    if values[i] MOD 2 == 0 then\n        total = total + values[i]\n        count = count + 1\n    endif\nnext i\nprint(total)\nprint(count)",
+              "markPoints": [
+                {
+                  "text": "After value 3: total=0,count=0.",
+                  "marks": 1
+                },
+                {
+                  "text": "After value 6: total=6,count=1.",
+                  "marks": 1
+                },
+                {
+                  "text": "After value 2: total=8,count=2.",
+                  "marks": 1
+                },
+                {
+                  "text": "Printed output: total=8, count=2 (after value9 values stay unchanged).",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "Explain why changing the loop to for i = 0 to 4 would cause a problem for this array.",
+              "markPoints": [
+                {
+                  "text": "The array has four items and valid indexes 0,1,2,3.",
+                  "marks": 1
+                },
+                {
+                  "text": "Index 4 is out of range, so values[4] is invalid.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(c)",
+              "marks": 2,
+              "prompt": "Suggest a four-element input array that should produce total=0 and count=0. Explain your choice.",
+              "markPoints": [
+                {
+                  "text": "Four odd integers are supplied, e.g. [1,3,5,7].",
+                  "marks": 1
+                },
+                {
+                  "text": "None satisfy MOD 2 == 0, so neither accumulator changes.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "topic": "Design a solution using an array",
+          "visual": "code",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 8,
+              "prompt": "A school has five marks in array marks = [45,61,83,61,27]. Write OCR Exam Reference Language pseudocode that counts how many marks are at least 50 and finds the highest mark. Print both results. Do not sort the array.",
+              "markPoints": [
+                {
+                  "text": "Initialises passCount = 0.",
+                  "marks": 1
+                },
+                {
+                  "text": "Initialises highest = marks[0] (or a safe initial value for these data).",
+                  "marks": 1
+                },
+                {
+                  "text": "Uses a loop to traverse all five elements.",
+                  "marks": 1
+                },
+                {
+                  "text": "Correctly uses valid zero-based indexes 0 to 4.",
+                  "marks": 1
+                },
+                {
+                  "text": "Tests marks[i] >= 50.",
+                  "marks": 1
+                },
+                {
+                  "text": "Increments passCount only when the pass condition is true.",
+                  "marks": 1
+                },
+                {
+                  "text": "Checks marks[i] against highest and updates highest when a greater mark is found.",
+                  "marks": 1
+                },
+                {
+                  "text": "Prints both correct outputs: passCount = 3 and highest = 83.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 4,
+              "prompt": "For a five-element marks array, suggest TWO different test arrays and their expected pass count and highest mark. One must test exactly 50; the other must contain no passes.",
+              "markPoints": [
+                {
+                  "text": "First valid test array includes 50 as boundary, e.g. [50,49,0,0,0].",
+                  "marks": 1
+                },
+                {
+                  "text": "First expected result: passCount=1, highest=50.",
+                  "marks": 1
+                },
+                {
+                  "text": "Second test array has no passes, e.g. [0,0,0,0,0].",
+                  "marks": 1
+                },
+                {
+                  "text": "Second expected result: passCount=0, highest=0.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9",
+          "topic": "SQL and file handling",
+          "visual": "table",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 3,
+              "prompt": "The Pupils table has ID, Name and Mark columns. Write SQL that selects only the Name of pupils whose Mark is at least 60.",
+              "markPoints": [
+                {
+                  "text": "SELECT Name.",
+                  "marks": 1
+                },
+                {
+                  "text": "FROM Pupils.",
+                  "marks": 1
+                },
+                {
+                  "text": "WHERE Mark >= 60.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 3,
+              "prompt": "A program needs to read all lines from pupils.csv. Describe the basic file-handling operations in the correct order.",
+              "markPoints": [
+                {
+                  "text": "Open the file for reading.",
+                  "marks": 1
+                },
+                {
+                  "text": "Read its lines (loop/readLine until EOF, as appropriate).",
+                  "marks": 1
+                },
+                {
+                  "text": "Close the file when finished.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "topic": "Validation and robust programming",
+          "visual": "validation",
+          "parts": [
+            {
+              "label": "(a)",
+              "marks": 2,
+              "prompt": "An input check intended to accept whole-number ages 13 to 18 uses age >= 13 OR age <= 18. Explain the logic error.",
+              "markPoints": [
+                {
+                  "text": "OR allows out-of-range numbers because at least one comparison can be true.",
+                  "marks": 1
+                },
+                {
+                  "text": "The bounds must both be met; e.g. age 12 wrongly passes because 12<=18.",
+                  "marks": 1
+                }
+              ]
+            },
+            {
+              "label": "(b)",
+              "marks": 2,
+              "prompt": "Give a corrected Boolean condition and one erroneous-input test that should be handled safely.",
+              "markPoints": [
+                {
+                  "text": "age >= 13 AND age <= 18 (after checking that input is a suitable integer).",
+                  "marks": 1
+                },
+                {
+                  "text": "An erroneous text or decimal input such as 'twelve' or 14.5 should be rejected safely for integer-only input.",
+                  "marks": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "essayLevels": [
+    {
+      "range": "0",
+      "descriptor": "No creditworthy response."
+    },
+    {
+      "range": "1–2",
+      "descriptor": "Limited relevant statements with little development or application to the school."
+    },
+    {
+      "range": "3–5",
+      "descriptor": "Some accurate benefits/risks with relevant safeguards or ethical considerations, but uneven depth or judgement."
+    },
+    {
+      "range": "6–8",
+      "descriptor": "Clear, balanced evaluation with accurate technical safeguards, appropriate legal/ethical application and a justified conclusion."
+    }
+  ],
+  "warmup": {
+    "code": "total = 0\nfor i = 1 to 3\n    total = total + i\nnext i\nprint(total)",
+    "answer": "6",
+    "minutes": 2
+  },
+  "version": "2026-10-17-ap2a"
+}
