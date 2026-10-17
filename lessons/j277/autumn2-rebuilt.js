@@ -641,7 +641,7 @@
  }
  function diagram(kind){
   if(kind&&typeof kind==="object")return topicVisual(kind);
-  if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary","cpu-we-compare"].includes(kind)){
+  if(["cpu-performance","cpu-speed","cpu-cache","cpu-cores","cpu-summary","cpu-we-compare","cpu-speed-ef","cpu-cache-upgrade"].includes(kind)){
     // GCSE J277 1.1.2 only. Taller, classroom-size drawings (not miniature badges).
     const frame=(label,contents)=>svgScene(label,contents)
       .replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"')
@@ -684,7 +684,33 @@
       note(21,215,"CORES",19)+pill(174,185,158,46,"2 cores","#e0edfc",21)+pill(369,185,158,46,"6 cores","#e3f3e7",21)+
       note(21,285,"CACHE",19)+pill(174,255,158,46,"4 MB","#e0edfc",21)+pill(369,255,158,46,"12 MB","#e3f3e7",21)+
       note(23,329,"Which features help when many programs are open?",17));
-    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():kind==="cpu-we-compare"?weCompare():compare();
+    const cpuClockEF=()=>frame("CPU E is 3 GHz and CPU F is 2 GHz. The two waveforms show illustrative clock cycles over the same time interval.",
+      note(22,39,"WE DO · COMPARE CLOCK SPEED",23)+
+      pill(22,73,245,89,"CPU E · 3 GHz","#e0edfc",25)+
+      pill(22,190,245,89,"CPU F · 2 GHz","#e3f3e7",25)+
+      (function(){
+        const wave=(y,cycles,col)=>{
+          const left=301,width=229,cycle=width/cycles;
+          let d="M "+left+" "+y;
+          for(let i=0;i<cycles;i++){
+            const x=left+i*cycle;
+            d+=" H "+(x+cycle*0.1).toFixed(1)+" V "+(y-48)+" H "+(x+cycle*0.58).toFixed(1)+" V "+y+" H "+(x+cycle).toFixed(1);
+          }
+          return '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>';
+        };
+        return wave(151,3,"#3978a6")+wave(268,2,"#32855b");
+      })()+
+      note(22,325,"Same time interval · schematic, not to scale",18));
+    const cpuCacheUpgrade=()=>frame("The CPU cache was increased from 2 MB to 8 MB. The blocks illustrate how the cache can hold more frequently accessed information.",
+      note(22,39,"WE DO · CACHE UPGRADE",24)+
+      pill(22,72,239,68,"BEFORE · 2 MB","#e0edfc",22)+
+      pill(300,72,239,68,"AFTER · 8 MB","#e3f3e7",22)+
+      [0,1].map(i=>pill(56+i*89,170,72,74,"Data","#e0edfc",16)).join("")+
+      [0,1,2,3,4,5,6,7].map(i=>
+        '<rect x="'+(310+(i%4)*55)+'" y="'+(162+Math.floor(i/4)*61)+'" width="46" height="49" rx="7" fill="#d9efe1" stroke="#45976e" stroke-width="2"/>'
+      ).join("")+
+      note(22,321,"Blocks illustrate capacity (not a memory layout).",17));
+    return kind==="cpu-speed"?speed():kind==="cpu-cache"?cache():kind==="cpu-cores"?cores():kind==="cpu-we-compare"?weCompare():kind==="cpu-speed-ef"?cpuClockEF():kind==="cpu-cache-upgrade"?cpuCacheUpgrade():compare();
   }
 
   if(["embedded-systems","embedded-purpose","embedded-ipo","embedded-memory","embedded-features","embedded-washer","embedded-thermostat","embedded-crossing","embedded-tracker"].includes(kind)){
