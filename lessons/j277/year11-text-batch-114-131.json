@@ -1,0 +1,1172 @@
+[
+  {
+    "n": 114,
+    "facts": [
+      [
+        "Concatenation",
+        "Joining strings creates new text; it does not add numerical values."
+      ],
+      [
+        "Length",
+        "Counting characters helps validate usernames and input."
+      ],
+      [
+        "Slicing",
+        "A slice extracts a specified portion of a string, using the selected language's indexing rules."
+      ],
+      [
+        "Data type",
+        "Characters and strings represent text, even when they contain numeric-looking digits."
+      ]
+    ],
+    "ido": {
+      "q": "A school prints a username from firstName = 'Sam' and lastName = 'Lee'. Explain how to produce 'Sam.Lee'.",
+      "steps": [
+        "Identify both strings and the separator.",
+        "Concatenate firstName + '.' + lastName.",
+        "The result is the string 'Sam.Lee'; do not add the text mathematically.",
+        "Check that the period occurs once and no spaces were introduced."
+      ]
+    },
+    "wedo": {
+      "q": "A library creates an ID from 'BK' and '204'. What string is produced?",
+      "steps": [
+        "Recognise that both parts are strings.",
+        "Join them without a space.",
+        "Check that leading text is retained.",
+        "'BK204'."
+      ]
+    },
+    "code": {
+      "source": "prefix = \"CS\"\nnumber = \"27\"\nprint(prefix + number)",
+      "predict": "Predict the printed string.",
+      "change": "Change number to '28'.",
+      "extend": "Add a dash between prefix and number.",
+      "answer": "CS27; CS28; CS-27."
+    },
+    "exam": [
+      {
+        "q": "State the difference between concatenation and arithmetic addition.",
+        "answer": "Concatenation joins string content; arithmetic addition calculates a numerical sum.",
+        "marks": 2
+      },
+      {
+        "q": "A user enters 'AB' and '12'. Write the resulting concatenated string with no spaces.",
+        "answer": "AB12.",
+        "marks": 1
+      },
+      {
+        "q": "Explain why checking string length can support validation of a password.",
+        "answer": "Length checks whether the input meets a stated minimum/maximum number of characters; alone it does not guarantee a secure password.",
+        "marks": 3
+      }
+    ],
+    "visual": "string join, highlighted separator, length ruler",
+    "stage": "text-draft"
+  },
+  {
+    "n": 115,
+    "facts": [
+      [
+        "Two-dimensional arrays",
+        "A 2D array stores values in rows and columns and can be accessed with two indexes."
+      ],
+      [
+        "Zero-based indexing",
+        "In a zero-indexed grid, the first row and column use index 0."
+      ],
+      [
+        "Records",
+        "A record groups related fields about one entity under a single item."
+      ],
+      [
+        "Choice of structure",
+        "Use a grid for table-like values and a record for named fields such as name and age."
+      ]
+    ],
+    "ido": {
+      "q": "Given seats = [[1,0,1],[0,1,0]], identify seats[1][2] with zero-based indexes.",
+      "steps": [
+        "Label row indexes 0 and 1.",
+        "Choose row 1, which contains [0,1,0].",
+        "Read column 2 from that row.",
+        "The value is 0."
+      ]
+    },
+    "wedo": {
+      "q": "Given scores = [[3,6],[8,2]], identify scores[0][1].",
+      "steps": [
+        "Write both row indexes.",
+        "Select row 0.",
+        "Read column 1.",
+        "The value is 6."
+      ]
+    },
+    "code": {
+      "source": "array row = [4, 7, 9]\nprint(row[1])",
+      "predict": "Predict the output.",
+      "change": "Change the index to 2.",
+      "extend": "Explain why index 3 is invalid for this array.",
+      "answer": "7; 9; valid indexes are 0,1,2."
+    },
+    "exam": [
+      {
+        "q": "Explain why a 2D array needs two indexes.",
+        "answer": "One selects the row; the other selects the column.",
+        "marks": 2
+      },
+      {
+        "q": "A table contains 4 rows and 3 columns. How many elements are stored?",
+        "answer": "4 × 3 = 12.",
+        "marks": 2
+      },
+      {
+        "q": "Describe how records differ from 2D arrays.",
+        "answer": "A record groups named fields of one entity, potentially with differing data types; a 2D array holds indexed elements arranged in rows and columns.",
+        "marks": 4
+      }
+    ],
+    "visual": "row/column coordinate grid plus record card",
+    "stage": "text-draft"
+  },
+  {
+    "n": 116,
+    "facts": [
+      [
+        "Parameter",
+        "A value passed to a subprogram when it is called."
+      ],
+      [
+        "Return value",
+        "A function sends a result back to the calling code."
+      ],
+      [
+        "Local scope",
+        "A local variable is accessible within its subprogram."
+      ],
+      [
+        "Global scope",
+        "A global variable is defined outside subprograms and can be accessed more widely, increasing risk of unintended changes."
+      ]
+    ],
+    "ido": {
+      "q": "Trace a function double(x) that returns x*2 when called with 7.",
+      "steps": [
+        "The argument 7 is passed into parameter x.",
+        "Inside the function x*2 gives 14.",
+        "The function returns 14 to its caller.",
+        "If printed, the output is 14."
+      ]
+    },
+    "wedo": {
+      "q": "Trace a function addTax(price) which returns price+2 for input 9.",
+      "steps": [
+        "Identify the argument 9.",
+        "Evaluate the expression 9+2.",
+        "State what returns.",
+        "Return value 11."
+      ]
+    },
+    "code": {
+      "source": "function square(n)\n    return n * n\nendfunction\nprint(square(4))",
+      "predict": "Predict the output.",
+      "change": "Change the argument from 4 to 6.",
+      "extend": "Explain what n represents.",
+      "answer": "16; 36; n is a parameter."
+    },
+    "exam": [
+      {
+        "q": "Differentiate a function and a procedure.",
+        "answer": "A function returns a value; a procedure performs an action and does not need to return a value.",
+        "marks": 2
+      },
+      {
+        "q": "A function returns x+5. What is returned for x=8?",
+        "answer": "13.",
+        "marks": 1
+      },
+      {
+        "q": "Explain one benefit of local variables.",
+        "answer": "They limit unintended interference between subprograms and make code easier to reason about.",
+        "marks": 2
+      }
+    ],
+    "visual": "caller → function → return-value arrows and scope boundaries",
+    "stage": "text-draft"
+  },
+  {
+    "n": 117,
+    "facts": [
+      [
+        "Open",
+        "A file is opened before reading or writing through a program."
+      ],
+      [
+        "Read",
+        "Input from an existing file can be processed by a program."
+      ],
+      [
+        "Write",
+        "Output can be saved to a file, with appropriate mode and permissions."
+      ],
+      [
+        "Close",
+        "Closing releases the file resource and helps ensure changes are saved."
+      ]
+    ],
+    "ido": {
+      "q": "Outline the order to save a new line of scores to a text file.",
+      "steps": [
+        "Open the file in a suitable write or append mode.",
+        "Write the score and any required separator/newline.",
+        "Close the file to release the resource.",
+        "Check that the intended data, not the file path, has been saved."
+      ]
+    },
+    "wedo": {
+      "q": "A program displays values stored in marks.txt. Put its file-handling steps in order.",
+      "steps": [
+        "Identify that input comes from a file.",
+        "Open the text file for reading.",
+        "Read and process the contents.",
+        "Close the file when complete."
+      ]
+    },
+    "code": {
+      "source": "count = 0\nfor i = 1 to 3\n    count = count + 1\nnext i\nprint(count)",
+      "predict": "Predict how many file records the loop could count.",
+      "change": "Change the end value to 5.",
+      "extend": "Explain why a file should be closed when processing ends.",
+      "answer": "3; 5; closing releases resources and helps commit buffered writes."
+    },
+    "exam": [
+      {
+        "q": "Put these file operations in order: close, write, open.",
+        "answer": "Open → write → close.",
+        "marks": 3
+      },
+      {
+        "q": "Explain why opening a file in the wrong mode can cause a problem.",
+        "answer": "Write mode may overwrite data; read mode may prevent updates, depending on the system.",
+        "marks": 3
+      },
+      {
+        "q": "Give one reason to check that a file exists before reading it.",
+        "answer": "To handle an absent file rather than unexpectedly failing.",
+        "marks": 2
+      }
+    ],
+    "visual": "open/read/write/close lifecycle with safe-error branch",
+    "stage": "text-draft"
+  },
+  {
+    "n": 118,
+    "facts": [
+      [
+        "SELECT",
+        "Identifies which field or fields a query retrieves."
+      ],
+      [
+        "FROM",
+        "Names the table containing the records."
+      ],
+      [
+        "WHERE",
+        "Filters rows using a condition."
+      ],
+      [
+        "SQL query",
+        "A database query retrieves only the requested information from a table."
+      ]
+    ],
+    "ido": {
+      "q": "For Pupils(ID, Name, Year), write a query to display Name where Year=11.",
+      "steps": [
+        "Select the Name field.",
+        "Specify FROM Pupils.",
+        "Filter using WHERE Year = 11.",
+        "SELECT Name FROM Pupils WHERE Year = 11;"
+      ]
+    },
+    "wedo": {
+      "q": "For Books(Title, Genre), write a query to display Title where Genre='History'.",
+      "steps": [
+        "Identify the desired Title field.",
+        "Identify the Books table.",
+        "Filter for the text value History.",
+        "SELECT Title FROM Books WHERE Genre = 'History';"
+      ]
+    },
+    "code": {
+      "source": "year = 11\nif year == 11 then\n    print(\"Included\")\nendif",
+      "predict": "Predict the result of the filter.",
+      "change": "Change year to 10.",
+      "extend": "Explain how the test relates to an SQL WHERE clause.",
+      "answer": "Included; no output for year 10; WHERE similarly limits matching rows."
+    },
+    "exam": [
+      {
+        "q": "Write SQL to display Name from Students where Year=10.",
+        "answer": "SELECT Name FROM Students WHERE Year = 10;",
+        "marks": 3
+      },
+      {
+        "q": "Identify the role of FROM in SQL.",
+        "answer": "It names the table containing the data.",
+        "marks": 1
+      },
+      {
+        "q": "Explain why WHERE is useful in a large database.",
+        "answer": "It retrieves only rows meeting a condition, making results more relevant and easier to work with.",
+        "marks": 2
+      }
+    ],
+    "visual": "grounded three-row database table; highlight selected column and filtered rows",
+    "stage": "text-draft"
+  },
+  {
+    "n": 119,
+    "facts": [
+      [
+        "Random integer",
+        "A pseudorandom function can select a whole number from a stated inclusive range when specified."
+      ],
+      [
+        "Sequence",
+        "Statements execute one after another unless control flow changes."
+      ],
+      [
+        "Selection",
+        "A condition decides whether a branch runs."
+      ],
+      [
+        "Iteration",
+        "A loop repeats a process while or until an appropriate stopping condition is met."
+      ]
+    ],
+    "ido": {
+      "q": "Trace a dice game: roll=6; if roll>=5 print('Win'), else print('Try again').",
+      "steps": [
+        "Identify the given roll 6.",
+        "Evaluate 6 >= 5 as true.",
+        "Choose the winning branch.",
+        "The output is Win."
+      ]
+    },
+    "wedo": {
+      "q": "A simulated roll is 3 and the program wins only on 6. Predict the output.",
+      "steps": [
+        "Compare 3 to 6.",
+        "Select the false branch.",
+        "Explain that the random value is an input here.",
+        "The output is Try again."
+      ]
+    },
+    "code": {
+      "source": "roll = 4\nif roll == 6 then\n    print(\"Win\")\nelse\n    print(\"Try again\")\nendif",
+      "predict": "Predict the message.",
+      "change": "Change roll to 6.",
+      "extend": "Extend to award a point whenever roll is 5 or 6.",
+      "answer": "Try again; Win; use roll >= 5."
+    },
+    "exam": [
+      {
+        "q": "Explain the purpose of random number generation in a dice simulation.",
+        "answer": "It models different possible outcomes rather than a fixed predetermined roll.",
+        "marks": 2
+      },
+      {
+        "q": "State two programming constructs in a game with a loop and IF statement.",
+        "answer": "Iteration and selection.",
+        "marks": 2
+      },
+      {
+        "q": "Why should a game test both the minimum and maximum permitted dice rolls?",
+        "answer": "They are boundaries of the expected range and may expose off-by-one errors.",
+        "marks": 2
+      }
+    ],
+    "visual": "dice outcome range and condition branch (no decorative gaming art)",
+    "stage": "text-draft"
+  },
+  {
+    "n": 120,
+    "facts": [
+      [
+        "Assessment conditions",
+        "Complete questions independently and show method alongside numerical answers."
+      ],
+      [
+        "Paper 1 coverage",
+        "CPU, storage, data representation, networks and security may be sampled."
+      ],
+      [
+        "Paper 2 coverage",
+        "Trace code, design algorithms and justify validation/testing."
+      ],
+      [
+        "Mark allocation",
+        "Use one distinct, relevant point per available explanatory mark."
+      ]
+    ],
+    "ido": {
+      "q": "Model how to allocate 4 marks for explaining a virtual-memory slowdown.",
+      "steps": [
+        "Identify demand exceeding physical RAM.",
+        "State that some pages are moved to secondary storage.",
+        "Compare its access time with RAM.",
+        "Explain that repeated paging delays execution; keep four distinct points."
+      ]
+    },
+    "wedo": {
+      "q": "Plan a 4-mark response comparing binary and linear search.",
+      "steps": [
+        "Identify sorted prerequisite for binary.",
+        "Describe midpoint range reduction.",
+        "Describe sequential comparisons for linear.",
+        "Conclude with a justified comparison."
+      ]
+    },
+    "code": {
+      "source": "total = 0\nfor i = 1 to 3\n    total = total + i\nnext i\nprint(total)",
+      "predict": "Predict the output on mini-whiteboards before the assessed section.",
+      "change": "Change loop end to 4.",
+      "extend": "Explain why tracing intermediate totals can prevent an error.",
+      "answer": "6; 10; totals are 1,3,6,(10)."
+    },
+    "exam": [
+      {
+        "q": "State why a trace table is useful in a timed programming question.",
+        "answer": "It captures each variable update and helps avoid skipped iterations or mistaken final output.",
+        "marks": 2
+      },
+      {
+        "q": "A device has 1 GB RAM free and needs 3 GB. State the shortage.",
+        "answer": "2 GB.",
+        "marks": 2
+      },
+      {
+        "q": "Explain the prerequisite for binary search and why it matters.",
+        "answer": "The list must be sorted so midpoint comparisons can safely discard one half.",
+        "marks": 3
+      }
+    ],
+    "visual": "assessment overview only — final 45-mark paper drafted separately",
+    "stage": "text-draft"
+  },
+  {
+    "n": 121,
+    "facts": [
+      [
+        "Read feedback",
+        "Identify exactly which assessment marking point was not secured."
+      ],
+      [
+        "Correct the method",
+        "Amend the explanation or algorithm, not merely the final answer."
+      ],
+      [
+        "Use a model",
+        "Compare the original response with a worked mark-scheme-aligned solution."
+      ],
+      [
+        "Transfer",
+        "Apply the same correction to a new question without copying the worked example."
+      ]
+    ],
+    "ido": {
+      "q": "A student writes 'virtual memory makes RAM faster'. Improve the answer to earn two explanation marks.",
+      "steps": [
+        "Identify the misconception: virtual memory is not physical RAM.",
+        "Explain that secondary storage backs some pages when RAM is insufficient.",
+        "Explain secondary storage access is slower than RAM.",
+        "Write a concise corrected two-sentence response."
+      ]
+    },
+    "wedo": {
+      "q": "A search answer omits 'sorted' before binary search. Improve it.",
+      "steps": [
+        "Identify missing prerequisite.",
+        "State that data must be in sorted order.",
+        "Explain why midpoint comparisons can discard half.",
+        "Binary search works on sorted data, repeatedly halving the active range."
+      ]
+    },
+    "code": {
+      "source": "low = 0\nhigh = 6\nmid = (low + high) DIV 2\nprint(mid)",
+      "predict": "Predict midpoint.",
+      "change": "Change low to 4.",
+      "extend": "Explain why changing low changes which index is tested.",
+      "answer": "3; then 5; midpoint uses current bounds."
+    },
+    "exam": [
+      {
+        "q": "Correct: 'ROM loses its data when power is removed'.",
+        "answer": "ROM is non-volatile; contents remain without power.",
+        "marks": 2
+      },
+      {
+        "q": "A student's trace omits the final loop iteration. Explain the impact.",
+        "answer": "The last update is missed, so the final recorded state and possibly output are incorrect.",
+        "marks": 2
+      },
+      {
+        "q": "Write an improvement target for an incomplete 4-mark explanation.",
+        "answer": "Use four accurate, distinct causal points linked to the scenario and check each against marks.",
+        "marks": 2
+      }
+    ],
+    "visual": "side-by-side flawed answer, annotation and improved answer",
+    "stage": "text-draft"
+  },
+  {
+    "n": 122,
+    "facts": [
+      [
+        "Validation",
+        "Checks whether input meets a defined rule, not whether it is factually true."
+      ],
+      [
+        "Range check",
+        "Rejects a number outside stated minimum and maximum boundaries."
+      ],
+      [
+        "Presence and type",
+        "Detects missing required input or wrong type/format."
+      ],
+      [
+        "Authentication",
+        "Checks a user's claimed identity, which differs from validating an entered value."
+      ]
+    ],
+    "ido": {
+      "q": "Design a range check for an integer mark from 0 to 100 inclusive.",
+      "steps": [
+        "Input the candidate mark.",
+        "Test mark >= 0 AND mark <= 100.",
+        "Accept only when both conditions are true.",
+        "Otherwise display an error and ask for a new input."
+      ]
+    },
+    "wedo": {
+      "q": "A form accepts ages from 13 to 18. Write an acceptance condition.",
+      "steps": [
+        "Name age as the input.",
+        "Choose inclusive boundaries 13 and 18.",
+        "Join tests with AND.",
+        "age >= 13 AND age <= 18."
+      ]
+    },
+    "code": {
+      "source": "mark = 101\nif mark >= 0 AND mark <= 100 then\n    print(\"Valid\")\nelse\n    print(\"Invalid\")\nendif",
+      "predict": "Predict the output.",
+      "change": "Change mark to 100.",
+      "extend": "Extend to request a new value after invalid input.",
+      "answer": "Invalid; Valid; invalid path returns to input."
+    },
+    "exam": [
+      {
+        "q": "Explain validation versus verification.",
+        "answer": "Validation checks a rule or format; verification checks data matches the original/source input.",
+        "marks": 2
+      },
+      {
+        "q": "Give a suitable boundary value when valid ages are 13–18.",
+        "answer": "13 or 18, plus an adjacent invalid such as 12 or 19 for a test set.",
+        "marks": 2
+      },
+      {
+        "q": "State one difference between authentication and validation.",
+        "answer": "Authentication confirms an asserted identity; validation checks input against constraints.",
+        "marks": 2
+      }
+    ],
+    "visual": "validation flowchart with no-branch looping back to input",
+    "stage": "text-draft"
+  },
+  {
+    "n": 123,
+    "facts": [
+      [
+        "Anticipate misuse",
+        "Reject unexpected input and avoid exposing sensitive detail in errors."
+      ],
+      [
+        "Input sanitisation",
+        "Handle or remove harmful/unexpected characters where appropriate."
+      ],
+      [
+        "Maintainability",
+        "Meaningful identifiers, comments and modularity make software easier to inspect."
+      ],
+      [
+        "Defensive design",
+        "Plans for invalid data, malicious use and foreseeable user mistakes."
+      ]
+    ],
+    "ido": {
+      "q": "Improve a login counter that accepts unlimited guesses and prints the correct password on failure.",
+      "steps": [
+        "Remove any display of the secret.",
+        "Limit repeated unsuccessful attempts.",
+        "Present a non-revealing error and lock/slow further attempts.",
+        "Keep attempts in an appropriately scoped variable; test boundary conditions."
+      ]
+    },
+    "wedo": {
+      "q": "A text form permits unescaped SQL input. Suggest improvements.",
+      "steps": [
+        "Identify unsafe trust in user input.",
+        "Use parameterised queries at the database interface.",
+        "Validate expected formats and limit permissions.",
+        "Reject unexpected inputs without leaking data."
+      ]
+    },
+    "code": {
+      "source": "attempts = 3\nif attempts >= 3 then\n    print(\"Locked\")\nelse\n    print(\"Try again\")\nendif",
+      "predict": "Predict the output.",
+      "change": "Change attempts to 2.",
+      "extend": "Extend to increment attempts on an incorrect password.",
+      "answer": "Locked; Try again; attempts = attempts + 1 when incorrect."
+    },
+    "exam": [
+      {
+        "q": "State two defensive programming techniques.",
+        "answer": "Input validation and restricted access or appropriate sanitisation; any two justified techniques.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why meaningful variable names aid maintainability.",
+        "answer": "They make purpose easier to understand and reduce debugging/maintenance effort.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why showing a user's actual password in an error message is unsafe.",
+        "answer": "It exposes a secret to observers and can enable unauthorised access.",
+        "marks": 2
+      }
+    ],
+    "visual": "weak login program annotated with red risk → safe revised flow",
+    "stage": "text-draft"
+  },
+  {
+    "n": 124,
+    "facts": [
+      [
+        "Normal test",
+        "A typical value within permitted range."
+      ],
+      [
+        "Boundary test",
+        "A value at the smallest or largest allowed limit."
+      ],
+      [
+        "Invalid test",
+        "A value of the right type but outside allowed rules."
+      ],
+      [
+        "Erroneous test",
+        "Input of the wrong type that the program should reject safely."
+      ]
+    ],
+    "ido": {
+      "q": "Create a test table for an integer score from 0 to 100 inclusive.",
+      "steps": [
+        "Normal 50 should be accepted.",
+        "Boundary 0 and 100 should both be accepted.",
+        "Invalid -1 and 101 should both be rejected.",
+        "Erroneous 'hello' should produce a safe error, not be accepted."
+      ]
+    },
+    "wedo": {
+      "q": "Plan tests for a quantity between 1 and 10.",
+      "steps": [
+        "Give a normal value, e.g. 5.",
+        "Give both boundary values, 1 and 10.",
+        "Give invalid values 0 and 11.",
+        "An erroneous text input is 'ten'; expected outcome is rejection."
+      ]
+    },
+    "code": {
+      "source": "score = 0\nif score >= 0 AND score <= 100 then\n    print(\"Accept\")\nendif",
+      "predict": "Predict the result at the lower boundary.",
+      "change": "Change score to 101.",
+      "extend": "Extend to test negative one.",
+      "answer": "Accept; no output for 101; no output for -1."
+    },
+    "exam": [
+      {
+        "q": "Identify two boundary tests for valid ages 13–18.",
+        "answer": "13 and 18.",
+        "marks": 2
+      },
+      {
+        "q": "Distinguish invalid and erroneous data for a numeric mark.",
+        "answer": "Invalid: numeric 101 outside 0–100; erroneous: text 'apple' where an integer is expected.",
+        "marks": 4
+      },
+      {
+        "q": "State why expected outcomes belong in a test plan.",
+        "answer": "They allow actual results to be compared with requirements and faults detected.",
+        "marks": 2
+      }
+    ],
+    "visual": "test-data table with normal/boundary/invalid/erroneous bands",
+    "stage": "text-draft"
+  },
+  {
+    "n": 125,
+    "facts": [
+      [
+        "Syntax error",
+        "Code breaks language grammar and may fail to run."
+      ],
+      [
+        "Logic error",
+        "Code runs but behaves incorrectly."
+      ],
+      [
+        "Trace and isolate",
+        "Follow values and conditions to locate the first incorrect change."
+      ],
+      [
+        "Repair and retest",
+        "Correct the cause, then check both the original and adjacent boundary cases."
+      ]
+    ],
+    "ido": {
+      "q": "A loop uses total = total - value when calculating a sum. Diagnose and correct it.",
+      "steps": [
+        "The program runs, so it may be a logic error.",
+        "Trace a small input to observe subtraction.",
+        "Replace subtraction with total = total + value.",
+        "Retest several inputs and compare totals with expected sums."
+      ]
+    },
+    "wedo": {
+      "q": "A range check uses OR instead of AND for score >=0 and score <=100. Fix it.",
+      "steps": [
+        "Check score=-5 against the original condition.",
+        "Notice the OR condition still passes because -5<=100.",
+        "Replace OR with AND.",
+        "Retest -1, 0, 100 and 101."
+      ]
+    },
+    "code": {
+      "source": "score = 101\nif score >= 0 OR score <= 100 then\n    print(\"Valid\")\nendif",
+      "predict": "Predict whether this prints Valid.",
+      "change": "Replace OR with AND.",
+      "extend": "Extend with an ELSE that prints Invalid.",
+      "answer": "Original prints Valid; corrected condition does not; ELSE prints Invalid."
+    },
+    "exam": [
+      {
+        "q": "Differentiate a syntax error from a logic error.",
+        "answer": "Syntax violates language rules; logic produces incorrect behaviour even if program runs.",
+        "marks": 2
+      },
+      {
+        "q": "Identify the fault in if age >= 13 OR age <= 18 for acceptance age 13–18.",
+        "answer": "Use AND, not OR; OR incorrectly accepts values outside the range.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why testing after debugging is necessary.",
+        "answer": "To verify the correction and ensure no new faults were introduced.",
+        "marks": 2
+      }
+    ],
+    "visual": "before/after code trace table highlighting wrong branch",
+    "stage": "text-draft"
+  },
+  {
+    "n": 126,
+    "facts": [
+      [
+        "ALU",
+        "Performs arithmetic and logical operations."
+      ],
+      [
+        "Control Unit",
+        "Coordinates instruction execution and the CPU's internal operations."
+      ],
+      [
+        "Registers",
+        "PC stores next instruction address, MAR stores address accessed, MDR holds transferred data/instruction and ACC holds calculation results."
+      ],
+      [
+        "Fetch–decode–execute",
+        "Instruction fetches from memory, decodes, executes and the cycle repeats."
+      ]
+    ],
+    "ido": {
+      "q": "Trace how the PC, MAR and MDR participate in fetching an instruction.",
+      "steps": [
+        "PC holds the address of the next instruction.",
+        "The address is copied to MAR.",
+        "The instruction at that address is transferred to MDR.",
+        "The instruction is decoded/executed, and PC is updated as appropriate."
+      ]
+    },
+    "wedo": {
+      "q": "Explain how the ALU and accumulator work together for an addition.",
+      "steps": [
+        "Identify arithmetic task.",
+        "ALU performs the addition.",
+        "ACC can hold the calculation result.",
+        "Control Unit coordinates execution of the instruction."
+      ]
+    },
+    "code": {
+      "source": "acc = 4\nacc = acc + 6\nprint(acc)",
+      "predict": "Predict the value held in acc.",
+      "change": "Change the added value to 8.",
+      "extend": "Explain the name ACC in this context.",
+      "answer": "10; 12; accumulator stores intermediate calculation results."
+    },
+    "exam": [
+      {
+        "q": "State the purpose of MAR and MDR.",
+        "answer": "MAR: address of memory location accessed; MDR: data/instruction being transferred.",
+        "marks": 4
+      },
+      {
+        "q": "What does the Program Counter hold?",
+        "answer": "Address of the next instruction to fetch.",
+        "marks": 1
+      },
+      {
+        "q": "Explain the role of the Control Unit.",
+        "answer": "Coordinates CPU operations and controls execution of instructions.",
+        "marks": 2
+      }
+    ],
+    "visual": "CPU schematic connecting PC→MAR→memory→MDR→decode→ALU/ACC",
+    "stage": "text-draft"
+  },
+  {
+    "n": 127,
+    "facts": [
+      [
+        "Clock speed",
+        "The number of CPU cycles per second, commonly measured in GHz."
+      ],
+      [
+        "Number of cores",
+        "More cores can process more independent tasks concurrently."
+      ],
+      [
+        "Cache size",
+        "Larger cache can reduce slower memory accesses for frequently used data."
+      ],
+      [
+        "Embedded system",
+        "A dedicated computer designed into another device for a limited/specific purpose."
+      ]
+    ],
+    "ido": {
+      "q": "Compare CPU A: 2 GHz, two cores with CPU B: 3 GHz, four cores, with other factors unspecified.",
+      "steps": [
+        "B has more cycles per second.",
+        "B also has more cores for potentially parallel work.",
+        "It may perform better in suitable tasks, but other hardware/software factors matter.",
+        "Do not state that it must always run every program faster."
+      ]
+    },
+    "wedo": {
+      "q": "A washing machine has a controller that operates its cycle. Explain why it is an embedded system.",
+      "steps": [
+        "Identify dedicated task.",
+        "Explain controller built into appliance.",
+        "Give sensor/control example.",
+        "It performs a specific function rather than general-purpose computing."
+      ]
+    },
+    "code": {
+      "source": "clockA = 2\nclockB = 3\nif clockB > clockA then\n    print(\"B has higher clock speed\")\nendif",
+      "predict": "Predict the output.",
+      "change": "Change clockB to 1.",
+      "extend": "Extend to check equality separately.",
+      "answer": "First prints the message; with 1 it prints nothing; use an ELSE IF for equal."
+    },
+    "exam": [
+      {
+        "q": "State two CPU factors affecting performance.",
+        "answer": "Clock speed, cache size, number of cores (any two).",
+        "marks": 2
+      },
+      {
+        "q": "Explain why a larger cache may improve performance.",
+        "answer": "Frequently needed instructions/data can be accessed faster, reducing waiting for RAM.",
+        "marks": 3
+      },
+      {
+        "q": "Give an example of an embedded system and explain why it qualifies.",
+        "answer": "For example a washing-machine controller: built into the device for a dedicated control task.",
+        "marks": 3
+      }
+    ],
+    "visual": "CPU factor comparison and sensor→controller→actuator device",
+    "stage": "text-draft"
+  },
+  {
+    "n": 128,
+    "facts": [
+      [
+        "Array iteration",
+        "A loop visits elements by their valid indexes."
+      ],
+      [
+        "Accumulator",
+        "A running total starts at zero and adds each element."
+      ],
+      [
+        "Counting condition",
+        "A counter increments only when a tested item matches a rule."
+      ],
+      [
+        "Off-by-one error",
+        "Accessing index length or missing final element changes the result or causes a fault."
+      ]
+    ],
+    "ido": {
+      "q": "Calculate the total of [3,5,2,4] using a running total.",
+      "steps": [
+        "Start total=0.",
+        "After values 3 and 5, total=8.",
+        "Add 2 to reach 10, then 4 to reach 14.",
+        "Print 14; the four valid indexes are 0–3."
+      ]
+    },
+    "wedo": {
+      "q": "Count values greater than 5 in [2,7,9,4].",
+      "steps": [
+        "Start count=0.",
+        "Test each element against >5.",
+        "Increment for 7 and 9 only.",
+        "Final count=2."
+      ]
+    },
+    "code": {
+      "source": "array values = [3, 5, 2]\ntotal = 0\nfor i = 0 to 2\n    total = total + values[i]\nnext i\nprint(total)",
+      "predict": "Predict the sum.",
+      "change": "Change values[1] to 8.",
+      "extend": "Explain why the loop ends at 2.",
+      "answer": "10; 13; array has valid indexes 0–2."
+    },
+    "exam": [
+      {
+        "q": "Give the output of summing [4,1,3].",
+        "answer": "8.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why index 4 is invalid for a four-element zero-indexed array.",
+        "answer": "Valid indexes are 0,1,2,3; index 4 is out of bounds.",
+        "marks": 2
+      },
+      {
+        "q": "Explain how to count even values in an array.",
+        "answer": "Iterate each element; if value MOD 2 = 0 then increment counter; output counter.",
+        "marks": 3
+      }
+    ],
+    "visual": "live array index highlight and accumulator trace",
+    "stage": "text-draft"
+  },
+  {
+    "n": 129,
+    "facts": [
+      [
+        "Procedure",
+        "Runs a named group of instructions, often for a useful action."
+      ],
+      [
+        "Function",
+        "Returns a value that can be used in another expression."
+      ],
+      [
+        "Parameter",
+        "Allows a subprogram to receive values from its caller."
+      ],
+      [
+        "Modularity",
+        "Separating repeated tasks into subprograms reduces duplicated code."
+      ]
+    ],
+    "ido": {
+      "q": "Trace cube(3) for a function returning n*n*n.",
+      "steps": [
+        "Caller passes argument 3.",
+        "Parameter n receives 3.",
+        "Compute 3×3×3=27.",
+        "Return 27 to the caller."
+      ]
+    },
+    "wedo": {
+      "q": "A procedure printGreeting(name) displays 'Hello '+name for Mia.",
+      "steps": [
+        "Pass 'Mia' to parameter.",
+        "Join 'Hello ' with 'Mia'.",
+        "Display the resulting string.",
+        "Output 'Hello Mia'."
+      ]
+    },
+    "code": {
+      "source": "function triple(x)\n    return x * 3\nendfunction\nprint(triple(5))",
+      "predict": "Predict the output.",
+      "change": "Change argument to 8.",
+      "extend": "Explain why a function is suitable here.",
+      "answer": "15; 24; it returns a reusable calculated value."
+    },
+    "exam": [
+      {
+        "q": "Explain one difference between a function and a procedure.",
+        "answer": "A function returns a value; a procedure performs statements without necessarily returning a value.",
+        "marks": 2
+      },
+      {
+        "q": "State the role of parameters.",
+        "answer": "They pass input values into a subprogram.",
+        "marks": 2
+      },
+      {
+        "q": "Give one benefit of modular programming.",
+        "answer": "Reduces duplication, simplifies testing or maintenance.",
+        "marks": 2
+      }
+    ],
+    "visual": "call stack of caller, argument, parameter, return",
+    "stage": "text-draft"
+  },
+  {
+    "n": 130,
+    "facts": [
+      [
+        "String handling",
+        "Concatenate and extract parts of text when cleaning/formatting data."
+      ],
+      [
+        "File processing",
+        "Open, read/write and close files in the appropriate mode."
+      ],
+      [
+        "SQL retrieval",
+        "SELECT selects fields, FROM selects table and WHERE filters rows."
+      ],
+      [
+        "Combined tasks",
+        "A realistic system may read records, filter content and produce a formatted result."
+      ]
+    ],
+    "ido": {
+      "q": "A library system needs names of overdue borrowers. Plan the SQL and output workflow.",
+      "steps": [
+        "Select the Name field from the Loans table.",
+        "Filter records where Overdue = 1.",
+        "Format names with a label for reporting.",
+        "Use SELECT Name FROM Loans WHERE Overdue = 1;"
+      ]
+    },
+    "wedo": {
+      "q": "A program reads a text file and counts valid records. Outline the sequence.",
+      "steps": [
+        "Open the file for reading.",
+        "Read each record.",
+        "Increment count only if the record passes the stated rule.",
+        "Close the file and output count."
+      ]
+    },
+    "code": {
+      "source": "name = \"Ada\"\nstatus = \"Overdue\"\nprint(name + \": \" + status)",
+      "predict": "Predict the display.",
+      "change": "Change status to Returned.",
+      "extend": "Extend to add a prefix 'Loan - '.",
+      "answer": "Ada: Overdue; Ada: Returned; Loan - Ada: Overdue."
+    },
+    "exam": [
+      {
+        "q": "Write SQL to return Title from Books where Available=1.",
+        "answer": "SELECT Title FROM Books WHERE Available = 1;",
+        "marks": 3
+      },
+      {
+        "q": "Explain why files should be closed after use.",
+        "answer": "Releases resources and helps ensure buffered data changes are finalised.",
+        "marks": 2
+      },
+      {
+        "q": "Distinguish a 2D array and a record.",
+        "answer": "Array uses two indexes for tabular elements; record groups named fields for one entity.",
+        "marks": 2
+      }
+    ],
+    "visual": "data-flow: file → filter/query → formatted report",
+    "stage": "text-draft"
+  },
+  {
+    "n": 131,
+    "facts": [
+      [
+        "Understand the scenario",
+        "Identify input, processing, output and restrictions before coding."
+      ],
+      [
+        "Write a plan",
+        "Use simple steps, selections and loops before translating into code."
+      ],
+      [
+        "Trace unseen code",
+        "Record value changes and follow each condition accurately."
+      ],
+      [
+        "Debug and improve",
+        "Compare expected and actual behaviour, correct the cause and retest."
+      ]
+    ],
+    "ido": {
+      "q": "An unknown program calculates price = quantity * unitPrice but prints unitPrice. Find the fault.",
+      "steps": [
+        "Identify expected output as total price.",
+        "Trace sample quantity=3, unitPrice=4; price=12.",
+        "The print statement uses the wrong variable.",
+        "Change to print(price), retest output 12."
+      ]
+    },
+    "wedo": {
+      "q": "A program should count 1 to 5 but stops at 4. Explain a fix.",
+      "steps": [
+        "Find loop ending boundary.",
+        "Check whether end is exclusive/inclusive for the chosen language.",
+        "Adjust to include 5.",
+        "Test both first and last values."
+      ]
+    },
+    "code": {
+      "source": "quantity = 3\nunitPrice = 4\ntotal = quantity * unitPrice\nprint(unitPrice)",
+      "predict": "Predict actual output.",
+      "change": "Correct the final statement.",
+      "extend": "Extend to calculate total for quantity 5.",
+      "answer": "Prints 4; fix print(total); new total 20."
+    },
+    "exam": [
+      {
+        "q": "Explain why a trace is useful for unfamiliar code.",
+        "answer": "It makes executed steps and changing variable values explicit, exposing incorrect assumptions or logic.",
+        "marks": 3
+      },
+      {
+        "q": "Correct an algorithm that checks 1<=x<=10 using OR between two comparisons.",
+        "answer": "Use x>=1 AND x<=10.",
+        "marks": 2
+      },
+      {
+        "q": "State two steps to take after correcting a logic error.",
+        "answer": "Run/test with expected normal and boundary cases, and compare outcomes.",
+        "marks": 2
+      }
+    ],
+    "visual": "unseen program annotated: input→trace→fault→fix",
+    "stage": "text-draft"
+  }
+]
