@@ -1,0 +1,381 @@
+{
+  "087": {
+    "t": "Searching and Sorting Exam Practice",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "linear search",
+      "binary search",
+      "bubble sort",
+      "insertion sort",
+      "merge sort",
+      "sorted prerequisite"
+    ],
+    "o": [
+      "Compare searching methods with correct prerequisites.",
+      "Choose and trace a suitable sorting algorithm.",
+      "Answer multi-step OCR-style searching and sorting questions."
+    ],
+    "c": [
+      [
+        "Choose a search method",
+        "Linear search inspects elements sequentially and works with unsorted lists. Binary search can discard halves but needs sorted input."
+      ],
+      [
+        "Trace before describing",
+        "When explaining an algorithm, show the actual array values, tested positions and changes—not merely the algorithm's name."
+      ],
+      [
+        "Three required sorting ideas",
+        "Bubble compares and swaps adjacent pairs; insertion places a key into a sorted portion; merge divides and combines sorted lists."
+      ],
+      [
+        "Answer what was asked",
+        "A question about one pass is not a request for complete sorting. A question about a search index uses zero-based array positions."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "LINEAR VERSUS BINARY SEARCH",
+        "layout": "linear-search",
+        "boxes": [
+          "5",
+          "2",
+          "9",
+          "1",
+          "7"
+        ],
+        "foot": "Linear works on unsorted data"
+      },
+      {
+        "title": "BINARY NEEDS SORTED INPUT",
+        "layout": "binary-search",
+        "boxes": [
+          "1",
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
+        "foot": "Discard halves safely"
+      },
+      {
+        "title": "BUBBLE AND INSERTION",
+        "layout": "bubble-sort",
+        "boxes": [
+          "6",
+          "2",
+          "4",
+          "1",
+          "8"
+        ],
+        "foot": "Adjacent swaps versus key insertion"
+      },
+      {
+        "title": "MERGE DIVIDE AND CONQUER",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7"
+        ],
+        "foot": "Divide then merge"
+      }
+    ],
+    "idoVisual": {
+      "title": "LINEAR VERSUS BINARY SEARCH",
+      "layout": "linear-search",
+      "boxes": [
+        "5",
+        "2",
+        "9",
+        "1",
+        "7"
+      ],
+      "foot": "Linear works on unsorted data"
+    },
+    "m": {
+      "title": "Model Searching and Sorting Exam Practice",
+      "q": "A club has an unsorted list [5,2,9,1]. Explain which search method can be used immediately and trace the search for 9. [4 marks]",
+      "headings": [
+        "Read the array",
+        "Make first comparison",
+        "Update indices or positions",
+        "Finish and check"
+      ],
+      "st": [
+        "Because the list is unsorted, choose linear search [1].",
+        "Compare first item 5, not a match [1].",
+        "Compare second item 2, not a match [1].",
+        "Third item 9 matches, so return zero-based index 2 [1]."
+      ]
+    },
+    "w": [
+      [
+        "A sorted array is [2,4,6,8,10]. Trace binary search for 8. [4 marks]",
+        "First mid index 2 = 6 [1]. Target 8 is larger [1], so search right indices 3–4 [1]. Mid = 3 value 8 found at index 3 [1]."
+      ],
+      [
+        "A pupil sorts [4,1,3] using bubble sort. Show the first complete pass. [3 marks]",
+        "Compare 4 and 1 [1], swap to [1,4,3] [1]; compare 4 and 3, swap to [1,3,4] [1]."
+      ],
+      [
+        "Explain why binary search should not be applied directly to [8,1,4,6] and how to prepare it. [3 marks]",
+        "Array is unsorted [1]. Binary search discards halves based on order [1]. Sort ascending [1,4,6,8] before applying it [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided trace 1",
+      "Guided trace 2",
+      "Guided trace 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · BINARY EIGHT",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10"
+        ],
+        "foot": "Trace low/high and mid"
+      },
+      {
+        "title": "GUIDED · FIRST BUBBLE PASS",
+        "layout": "bubble-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "7"
+        ],
+        "foot": "One pass, not repeated passes"
+      },
+      {
+        "title": "GUIDED · SORT BEFORE SEARCH",
+        "layout": "binary-search",
+        "boxes": [
+          "8",
+          "1",
+          "4",
+          "6",
+          "?"
+        ],
+        "foot": "Prerequisite must be checked"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Check that the array is sorted."
+        ],
+        [
+          "Step 1 · identify",
+          "Mid index 2 value 6."
+        ],
+        [
+          "Step 2 · explain",
+          "Keep indices 3–4."
+        ],
+        [
+          "Check the marks",
+          "Mid index 3 value 8 is found."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Begin at first adjacent pair."
+        ],
+        [
+          "Step 1 · identify",
+          "4 and 1 swap."
+        ],
+        [
+          "Step 2 · explain",
+          "4 and 3 swap."
+        ],
+        [
+          "Check the marks",
+          "State the result [1,3,4]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Check the order first."
+        ],
+        [
+          "Step 1 · identify",
+          "Without order a discarded half may contain target."
+        ],
+        [
+          "Step 2 · explain",
+          "Sort the values into ascending order."
+        ],
+        [
+          "Check the marks",
+          "Binary search can now operate safely."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace linear search over a sorted list then explain whether binary search is also possible.",
+      "code": "array values = [1,3,5,7,9]\nfound = -1\nfor i=0 to 4\n    if values[i] == 7 AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
+      "p": [
+        "Predict the index output.",
+        "Change search target 7 to 9.",
+        "Explain the sorted-array requirement for binary search."
+      ],
+      "a": "Target 7 is at index 3. Target 9 is at index 4. Binary search could also be used because [1,3,5,7,9] is sorted."
+    },
+    "e": [
+      [
+        "State the prerequisite for binary search. [1 mark]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "The data must be sorted [1]."
+      ],
+      [
+        "Trace the first bubble-sort pass on [5,3,4] and state the output array. [4 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Compare 5>3 [1], swap to [3,5,4] [1]. Compare 5>4 [1], swap to [3,4,5] [1]."
+      ],
+      [
+        "A dataset [6,2,9,1] is unsorted. Explain how to search for 9 without sorting, then describe how insertion sort would sort the whole list. [6 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Linear search is suitable for unsorted data [1], comparing 6, 2 then 9 [1], found at index 2 [1]. Insertion sort builds sorted section [1]: insert 2 before 6 [1], then 9 and finally 1 into the correct places, giving [1,2,6,9] [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Linear search",
+        "Checks array elements sequentially."
+      ],
+      [
+        "Binary search",
+        "Repeatedly halves a sorted search range."
+      ],
+      [
+        "Bubble sort",
+        "Adjacent comparisons and swaps."
+      ],
+      [
+        "Insertion sort",
+        "Inserts keys into a growing sorted section."
+      ],
+      [
+        "Merge sort",
+        "Splits and merges sorted groups."
+      ],
+      [
+        "Sorted prerequisite",
+        "Requirement that data be ordered before binary search."
+      ]
+    ],
+    "x": [
+      "A binary search can safely discard half a list only when the relevant data is sorted.",
+      true
+    ],
+    "r": [
+      [
+        "State the key idea behind the divide step of merge sort. [2 marks]",
+        "Split an array into smaller halves [1] until individual items/single-element lists remain [1]."
+      ],
+      [
+        "State what is meant by the key in insertion sort. [2 marks]",
+        "The current unsorted element being inserted [1] into its correct place among the already-sorted elements [1]."
+      ],
+      [
+        "State the purpose of the Control Unit. [2 marks]",
+        "Decodes instructions [1] and coordinates CPU operation [1]."
+      ],
+      [
+        "Show insertion sort on [6,3,5] after each insertion. [4 marks]",
+        "Initially 6 is sorted [1]. Shift 6 and insert 3 to produce [3,6,5] [1]. Shift 6 again [1] and insert 5 to get [3,5,6] [1]."
+      ]
+    ],
+    "refs": [
+      "L086 · last lesson",
+      "L085 · earlier learning",
+      "L016 · Autumn 1 retrieval",
+      "L085 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "SPLIT INTO HALVES",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2"
+        ],
+        "foot": "Keep splitting until single items"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · SPACED RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L016",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "BINARY NEEDS SORTED INPUT",
+        "layout": "binary-search",
+        "boxes": [
+          "1",
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
+        "foot": "Discard halves safely"
+      },
+      {
+        "title": "BUBBLE AND INSERTION",
+        "layout": "bubble-sort",
+        "boxes": [
+          "6",
+          "2",
+          "4",
+          "1",
+          "8"
+        ],
+        "foot": "Adjacent swaps versus key insertion"
+      }
+    ],
+    "memoryCue": "Linear search inspects elements sequentially and works with unsorted lists. Binary search can discard halves but needs sorted input.",
+    "priorExam": {
+      "from": "086",
+      "q": "Trace merge sort on [4,1,3,2], showing two sorted pairs and the final result. [4 marks]",
+      "a": "Split into [4,1] and [3,2] [1]; merge singletons into [1,4] [1] and [2,3] [1]; final merge [1,2,3,4] [1].",
+      "visual": {
+        "title": "SINGLE ELEMENTS",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2"
+        ],
+        "foot": "Every one-item list is already sorted"
+      }
+    }
+  }
+}
