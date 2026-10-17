@@ -1,0 +1,350 @@
+{
+  "090": {
+    "t": "Combining Boolean Logic",
+    "s": "2.4.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "combined logic",
+      "Boolean",
+      "AND",
+      "OR",
+      "NOT",
+      "intermediate output"
+    ],
+    "o": [
+      "Read a compound Boolean expression.",
+      "Evaluate intermediate gates in order.",
+      "Complete all eight combinations for a three-input circuit."
+    ],
+    "c": [
+      [
+        "Build gates in sequence",
+        "Combined logic sends one gate's output into another; label each intermediate wire clearly."
+      ],
+      [
+        "Work inside parentheses",
+        "For Q=(A AND B) OR C, calculate X=A AND B before finding Q=X OR C."
+      ],
+      [
+        "All three-input rows",
+        "With A,B,C, there are eight input combinations: 000,001,010,011,100,101,110,111."
+      ],
+      [
+        "Check intermediate values",
+        "Record X and Q separately to spot where a wrong gate evaluation changes the final result."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "COMBINED CIRCUIT",
+        "layout": "combined-logic",
+        "boxes": [
+          "A",
+          "B",
+          "C"
+        ],
+        "foot": "Q=(A AND B) OR C"
+      },
+      {
+        "title": "FIRST STAGE · AND",
+        "layout": "logic-gates",
+        "boxes": [
+          "A",
+          "B",
+          "AND"
+        ],
+        "foot": "Calculate intermediate X"
+      },
+      {
+        "title": "SECOND STAGE · OR",
+        "layout": "logic-or",
+        "boxes": [
+          "X",
+          "C",
+          "OR"
+        ],
+        "foot": "Then calculate final Q"
+      },
+      {
+        "title": "THREE INPUTS · EIGHT CASES",
+        "layout": "combined-truth",
+        "boxes": [
+          "A",
+          "B",
+          "C"
+        ],
+        "foot": "All rows shown"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · COMBINED ALARM",
+      "layout": "combined-logic",
+      "boxes": [
+        "A",
+        "B",
+        "C"
+      ],
+      "foot": "Calculate X then Q"
+    },
+    "m": {
+      "title": "Model intermediate outputs",
+      "q": "A circuit is Q=(A AND B) OR C. Find X=A AND B and Q for inputs (1,0,1) and (1,1,0). [4 marks]",
+      "headings": [
+        "Identify two gates",
+        "First set · AND",
+        "First set · OR",
+        "Second set · both gates"
+      ],
+      "st": [
+        "Work from the AND gate, X=A AND B, then OR X with C.",
+        "For inputs (1,0,1), X=1 AND 0=0 [1].",
+        "Q=0 OR 1=1 [1].",
+        "For (1,1,0), X=1 [1] and Q=1 OR 0=1 [1]."
+      ]
+    },
+    "w": [
+      [
+        "For Q=(A AND B) OR C, evaluate inputs 0,1,0 and 1,1,1. Show X and Q. [4 marks]",
+        "For 0,1,0: X=0 [1] and Q=0 [1]. For 1,1,1: X=1 [1] and Q=1 [1]."
+      ],
+      [
+        "A different system uses Q=NOT A OR B. Find Q when inputs are 1,0 and 0,0. [4 marks]",
+        "For 1,0, NOT A=0 [1] so Q=0 [1]. For 0,0, NOT A=1 [1] so Q=1 [1]."
+      ],
+      [
+        "Explain why Q=(A AND B) OR C is always 1 when C=1. [4 marks]",
+        "X=A AND B can be 0 or 1 [1]. OR combines X with C [1]. With C=1, at least one OR input is 1 [1], so Q=1 [1]."
+      ]
+    ],
+    "wTitles": [
+      "Two combined input sets",
+      "NOT followed by OR",
+      "Why C can force output high"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · COMBINED CONDITION",
+        "layout": "combined-logic",
+        "boxes": [
+          "A",
+          "B",
+          "C"
+        ],
+        "foot": "Work out X then Q"
+      },
+      {
+        "title": "GUIDED · NOT AND OR",
+        "layout": "logic-not",
+        "boxes": [
+          "A",
+          "NOT A"
+        ],
+        "foot": "NOT before OR"
+      },
+      {
+        "title": "GUIDED · OR OUTPUT",
+        "layout": "logic-or",
+        "boxes": [
+          "X",
+          "C",
+          "OR"
+        ],
+        "foot": "Any high input is enough"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Calculate AND before OR."
+        ],
+        [
+          "Step 1 · identify",
+          "For 0,1,0, X=0 and Q=0."
+        ],
+        [
+          "Step 2 · explain",
+          "For 1,1,1, X=1 and Q=1."
+        ],
+        [
+          "Check all marks",
+          "For 0,1,0: X=0 [1] and Q=0 [1]. For 1,1,1: X=1 [1] and Q=1 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Do the NOT operation first."
+        ],
+        [
+          "Step 1 · identify",
+          "For 1,0, NOT A=0 so Q=0."
+        ],
+        [
+          "Step 2 · explain",
+          "For 0,0, NOT A=1 so Q=1."
+        ],
+        [
+          "Check all marks",
+          "For 1,0, NOT A=0 [1] so Q=0 [1]. For 0,0, NOT A=1 [1] so Q=1 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Consider the last gate only."
+        ],
+        [
+          "Step 1 · identify",
+          "The AND stage makes X=0 or 1."
+        ],
+        [
+          "Step 2 · explain",
+          "OR with C=1 guarantees Q=1."
+        ],
+        [
+          "Check all marks",
+          "X=A AND B can be 0 or 1 [1]. OR combines X with C [1]. With C=1, at least one OR input is 1 [1], so Q=1 [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace the combined alarm calculation and predict the final output.",
+      "code": "A = 1\nB = 0\nC = 1\nX = (A == 1 AND B == 1)\nQ = (X OR C == 1)\nif Q then\n    print(\"Alarm\")\nelse\n    print(\"Quiet\")\nendif",
+      "p": [
+        "Predict the output.",
+        "Set C=0, leaving A=1 and B=0.",
+        "Set A=1, B=1 and C=0."
+      ],
+      "a": "Initially X=false and Q=true, so Alarm. With C=0, Q=false and Quiet prints. With A=1,B=1,C=0, X=true and Alarm prints."
+    },
+    "e": [
+      [
+        "State the intermediate expression X for Q=(A AND B) OR C. [1 mark]\n\nSource: Original OCR J277-style practice question.",
+        "X=A AND B [1]."
+      ],
+      [
+        "Find X and Q for (A,B,C)=(0,0,1) and (1,1,0). [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "For 0,0,1 X=0 [1], Q=1 [1]. For 1,1,0 X=1 [1], Q=1 [1]."
+      ],
+      [
+        "Complete the Q column for Q=(A AND B) OR C with inputs 000,001,010,011,100,101,110,111, and explain the 110 output. [6 marks]\n\nSource: Original OCR J277-style practice question.",
+        "Q column: 0,1,0,1,0,1,1,1 [4 marks: one for each correct adjacent pair]. For 110, A AND B=1 [1], so 1 OR C=0 gives Q=1 [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Combined logic",
+        "Several linked gates forming a Boolean expression."
+      ],
+      [
+        "Intermediate output",
+        "Result from a gate before the final gate."
+      ],
+      [
+        "AND",
+        "True only with two high inputs."
+      ],
+      [
+        "OR",
+        "True when at least one input is high."
+      ],
+      [
+        "NOT",
+        "Reverses a Boolean value."
+      ],
+      [
+        "Truth table",
+        "Every input combination and its output."
+      ]
+    ],
+    "x": [
+      "For Q=(A AND B) OR C, Q=1 whenever C=1.",
+      true
+    ],
+    "r": [
+      [
+        "State the number of rows in a two-input truth table, excluding headings. [1 mark]",
+        "Four rows [1]."
+      ],
+      [
+        "State the output of an AND gate given A=1 and B=0. [1 mark]",
+        "0 [1]."
+      ],
+      [
+        "Give the binary result of shifting 00000011 one position left. [1 mark]",
+        "00000110 [1]."
+      ],
+      [
+        "Give OR outputs for input pairs 00, 01, 10 and 11 in that order. [4 marks]",
+        "0 [1], 1 [1], 1 [1], 1 [1]."
+      ]
+    ],
+    "refs": [
+      "L089 · last lesson",
+      "L088 · earlier learning",
+      "L004 · Autumn 1 retrieval",
+      "L088 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "TWO INPUTS · FOUR ROWS",
+        "layout": "truth-table",
+        "boxes": [
+          "AND"
+        ],
+        "foot": "00, 01, 10, 11"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · BINARY SHIFT",
+        "layout": "flow",
+        "boxes": [
+          "00000011",
+          "Left 1",
+          "????????"
+        ],
+        "foot": "One-bit logical shift"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · INTERMEDIATE Q",
+        "layout": "combined-logic",
+        "boxes": [
+          "A",
+          "B",
+          "C"
+        ],
+        "foot": "Show both stages"
+      },
+      {
+        "title": "INDEPENDENT · EIGHT ROWS",
+        "layout": "combined-truth",
+        "boxes": [
+          "A",
+          "B",
+          "C"
+        ],
+        "foot": "List all combinations"
+      }
+    ],
+    "memoryCue": "For Q=(A AND B) OR C, evaluate X=A AND B first, then Q=X OR C.",
+    "priorExam": {
+      "from": "089",
+      "q": "Complete the output column for an OR gate on input pairs 00,01,10,11. [4 marks]",
+      "a": "0 [1]; 1 [1]; 1 [1]; 1 [1].",
+      "visual": {
+        "title": "YOU DO OR TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "OR"
+        ],
+        "foot": "Four rows"
+      }
+    }
+  }
+}
