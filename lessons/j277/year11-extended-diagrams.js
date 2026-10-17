@@ -32,11 +32,11 @@ function table(stage,scenario,asQuery=false){
  if(asQuery){
   const field=scenario==="guided"?"ID":"Name",limit=scenario==="guided"?"Mark < 50":"Mark >= 50";
   const parts=["SELECT "+field,"FROM Pupils","WHERE "+limit];
-  for(let k=0;k<3;k++)h+=label(31+k*205,332,190,49,parts[k],k<=Math.min(stage,2)?K.mint:K.grey,k===2?16:17);
+  for(let k=0;k<3;k++)h+=label(31+k*205,318,190,44,parts[k],k<=Math.min(stage,2)?K.mint:K.grey,k===2?16:17);if(stage===3)h+=text(320,378,"Query result: "+(scenario==="guided"?"102":"Ada, Mia"),17,"middle",K.dark,850);
  }else if(stage>=3){h+=label(152,337,345,37,scenario==="guided"?'pupils[2,1] = "Mia"':'pupils[0,1] = "Ada"',K.mint,17);}
  return h;
 }
-function file(stage,mode){
+function file(stage,mode,phase){
  const header="ID,Name,Mark",entries=["101,Ada,72","102,Ben,43","103,Mia,81"];
  let h=label(25,73,218,49,mode==="guided"?"results.txt":"pupils.csv",K.sky,21);
  if(mode==="guided"){
@@ -57,8 +57,8 @@ function file(stage,mode){
    h+=small(331,y+27,"line "+(i+1));
  }
  h+=arrow(383,234,410,234);
- h+=label(418,159,186,55,stage===0?"open file":stage===1?"read header":stage===2?"read first":"read next",K.sky,19);
- h+=label(418,229,186,72,stage===1?header:stage===2?entries[0]:stage===3?entries[1]:"file handle",K.amber,stage<2?16:15);
+ h+=label(418,159,186,55,stage===0?"open file":stage===1?"read header":stage===2?"read first":phase==="i-do"?"close()":"read next",K.sky,19);
+ h+=label(418,229,186,72,stage===1?header:stage>=2?(phase==="i-do"?entries[0]:stage===3?entries[1]:entries[0]):"file handle",K.amber,stage<2?16:15);
  return h;
 }
 function equivalent(stage,mode){
@@ -222,7 +222,7 @@ function layout(spec,stage){
  const kind=String(spec.y11),scenario=String(spec.scenario||"model"),mode=String(spec.phase||"learning");
  if(kind==="table")return table(stage,scenario,false);
  if(kind==="sql")return table(stage,scenario,true);
- if(kind==="file")return file(stage,scenario);
+ if(kind==="file")return file(stage,scenario,mode);
  if(kind==="filter")return equivalent(stage,scenario);
  if(kind==="arrays"){
   const values=scenario==="guided"?[2,7,9,4]:[3,5,2,4];let total=0;
