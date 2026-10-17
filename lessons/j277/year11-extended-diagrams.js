@@ -217,7 +217,134 @@ function subjectScene(spec,stage){
  return "";
 }
 
+
+function matchedLessonScene(spec,stage){
+ const title=String(spec.topic||""),mode=String(spec.scenario||"model"),guided=mode==="guided";
+ const info=(heading,rows)=>{let h=small(25,78,heading.toUpperCase());rows.forEach((r,i)=>{const y=109+i*57,highlight=i===stage,visible=i<=stage;h+=label(27,y,183,48,r[0],highlight?K.amber:K.sky,17);h+=label(217,y,393,48,visible?r[1]:"Think: what comes next?",visible?K.mint:K.grey,r[1].length>36?15:18);});return h;};
+ const trace=(heading,values,answers)=>{let h=small(25,76,heading.toUpperCase());values.forEach((v,i)=>{let x=23+i*(587/values.length),width=587/values.length-8;h+=label(x,116,width,77,String(v),i===stage?K.amber:K.sky,24);h+=label(x,215,width,55,i<=stage?String(answers[i]):"?",i===stage?K.mint:K.grey,20);});h+=small(41,321,"Top: input / index     Bottom: calculated or traced state");return h;};
+ if(title==="Random Numbers and Combined Constructs")return info(guided?"DICE ROLL = 3 · WIN ONLY ON 6":"DICE ROLL = 6 · WIN IF ≥ 5",[
+ ["INPUT",guided?"roll = 3":"roll = 6"],["CONDITION",guided?"3 == 6 ?":"6 >= 5 ?"],["BRANCH","TRUE → WIN    |    FALSE → TRY AGAIN"],["OUTPUT",guided?"Try again":"Win"]]);
+ if(title==="Assessment Feedback and Corrections")return info(guided?"MISSING PREREQUISITE IN SEARCH ANSWER":"REPAIR THE VIRTUAL MEMORY EXPLANATION",[
+ ["PUPIL ANSWER",guided?"Binary search is quicker":"Virtual memory makes RAM faster"],
+ ["MISSING",guided?"List must be sorted":"Backing is secondary storage"],
+ ["WHY IT MATTERS",guided?"Midpoint safely discards half":"Storage access is slower than RAM"],
+ ["IMPROVED",guided?"Sorted array + halving range":"Paging can make computer slower"]]);
+ if(title==="Defensive Design")return info(guided?"UNSAFE SQL TEXT INPUT":"LOGIN PROTECTION · DEFENSIVE DESIGN",[
+ ["RISK",guided?"Raw user input in query":"Unlimited attempts + reveals password"],
+ ["CONTROL 1",guided?"Use parameterised SQL":"Limit failed attempts"],
+ ["CONTROL 2",guided?"Validate expected input":"Never display password"],
+ ["TEST",guided?"Malicious input fails safely":"3 failures lock account"]]);
+ if(title==="Debugging Syntax and Logic Errors")return info(guided?"OR MAKES AN INVALID MARK PASS":"SUM ALGORITHM · IDENTIFY THE FAULT",[
+ ["EXPECTED",guided?"0 ≤ mark ≤ 100":"Accumulate each value"],
+ ["FAULT",guided?"OR between comparisons":"total = total - value"],
+ ["CORRECT",guided?"Use AND":"total = total + value"],
+ ["TEST",guided?"-1 reject; 0 and 100 accept":"Input 2,4,6 → total = 12"]]);
+ if(title==="Programming: Subprograms and Parameters")return info(guided?"PROCEDURE · PRINT GREETING":"FUNCTION · CUBE(3)",[
+ ["CALL",guided?'printGreeting("Mia")':"cube(3)"],
+ ["PARAMETER",guided?'name = "Mia"':"n = 3"],
+ ["ACTION",guided?'print("Hello " + name)':"return 3 × 3 × 3"],
+ ["OUTPUT",guided?"Hello Mia":"27"]]);
+ if(title==="Programming: Unseen Problems and Debugging")return info(guided?"COUNT 1–5 · WRONG END BOUND":"TOTAL PRICE · INCORRECT OUTPUT",[
+ ["INPUT",guided?"i starts at 1; expected end 5":"quantity=3 · unitPrice=4"],
+ ["FAULT",guided?"Loop stops at 4":"print(unitPrice)"],
+ ["CORRECTION",guided?"Include 5 in loop bound":"print(total)"],
+ ["CHECK",guided?"1,2,3,4,5 all included":"3 × 4 = 12 printed"]]);
+ if(title==="Mixed Paper 1 and Paper 2 Retrieval")return info(guided?"MONO SOUND FILE CALCULATION":"BITMAP FILE-SIZE CALCULATION",[
+ ["DATA",guided?"8000 samples/s · 5s · 8-bit":"100 × 50 pixels · 1-bit"],
+ ["QUANTITY",guided?"8000 × 5 = 40,000 samples":"100 × 50 = 5000 pixels"],
+ ["BITS",guided?"40,000 × 8 = 320,000":"5000 × 1 = 5000"],
+ ["BYTES",guided?"320,000 ÷ 8 = 40,000":"5000 ÷ 8 = 625"]]);
+ if(title==="Ethical, Cultural and Environmental Impacts")return info(guided?"REPLACING PAPER LETTERS WITH APP":"PUPIL LOCATION-TRACKING APP",[
+ ["BENEFIT",guided?"Faster distribution + less paper":"Safety when genuinely necessary"],
+ ["RISK",guided?"Families without digital access":"Privacy and intrusive monitoring"],
+ ["MITIGATION",guided?"Keep paper/phone alternative":"Limit access and retention"],
+ ["JUDGEMENT",guided?"Accessible mixed methods":"Proportionate, transparent use"]]);
+ if(title==="Legislation and Copyright")return info(guided?"UNAUTHORISED ACCOUNT ACCESS":"PAID SOFTWARE COPIED WITHOUT PERMISSION",[
+ ["ACTION",guided?"Access someone else's account":"Install unlicensed copies"],
+ ["LEGAL AREA",guided?"Computer Misuse Act":"Copyright + licence conditions"],
+ ["KEY RULE",guided?"Permission is required":"Permission / valid licence needed"],
+ ["RESPONSE",guided?"Deny access; follow policies":"Obtain appropriate licences"]]);
+ if(title==="Assessment Feedback and Target Setting")return info(guided?"CORRECTING NETWORK ROUTER CLAIM":"CACHE EXPLANATION · MISSING MARKS",[
+ ["WEAK ANSWER",guided?"Router sends all data everywhere":"Cache makes CPU faster"],
+ ["NAME",guided?"Router connects networks":"Cache stores frequent data/instructions"],
+ ["MECHANISM",guided?"Forwards packets by routes":"Faster access than RAM"],
+ ["IMPROVE",guided?"Packet routed toward destination":"CPU spends less time waiting"]]);
+ if(title==="Paper 1: Software, Impacts and Legislation")return info(guided?"UPLOADING COPYRIGHTED MEDIA":"SCHOOL CLOUD BACKUP",[
+ ["SCENARIO",guided?"Distribution without permission":"Off-site records + restoration"],
+ ["BENEFIT / RISK",guided?"Rights of creator affected":"Recovery benefit / dependency risk"],
+ ["LEGAL / SECURITY",guided?"Check licence or exception":"Protect pupil data/access"],
+ ["JUDGEMENT",guided?"Get licence / permission":"Encrypted, tested backups"]]);
+ if(title==="Paper 1: Weakest Topics")return info(guided?"WAN IS NOT DEFINED AS WIRELESS":"CORRECT IMAGE-SIZE UNITS",[
+ ["CLAIM",guided?"WAN always uses Wi-Fi":"10 × 20 at 8 bits/pixel"],
+ ["WHAT IS WRONG",guided?"WAN describes geographic scope":"Bits mistaken for bytes"],
+ ["CORRECT",guided?"Can use wired or wireless":"200 × 8 = 1600 bits"],
+ ["FINAL",guided?"Wide-area network connects LANs":"1600 ÷ 8 = 200 bytes"]]);
+ if(title==="Final Targeted Revision")return info(guided?"CORRECT RAM / ROM MISCONCEPTION":"RETEACH TWO MISSING CONCEPTS",[
+ ["ERROR",guided?"ROM volatile; holds apps":"Virtual memory speeds RAM"],
+ ["FIX 1",guided?"RAM volatile, runs apps":"Secondary storage backs pages"],
+ ["FIX 2",guided?"ROM non-volatile firmware":"Paging slower than physical RAM"],
+ ["TRANSFER",guided?"Test with shutdown scenario":"Binary search needs sorted data"]]);
+ if(title==="Paper 1: CPU, Memory and Storage")return info(guided?"SSD FOR TRAVELLING WORKER":"CACHE AND REPEATED PROGRAM USE",[
+ ["NEED",guided?"Portable, impact-resistant drive":"Frequently accessed instructions"],
+ ["FEATURE",guided?"SSD has no moving parts":"Small fast CPU cache"],
+ ["BENEFIT",guided?"Better shock resistance":"Fewer slower RAM fetches"],
+ ["TRADE-OFF",guided?"Higher cost per GB possible":"Not every access hits cache"]]);
+ if(title==="Paper 1: Networks and Security")return info(guided?"WI-FI SLOWER THAN WIRED":"PHISHING EMAIL TO SCHOOL STAFF",[
+ ["OBSERVATION",guided?"Wired OK, Wi-Fi slow":"Unknown login link asks for password"],
+ ["POSSIBLE CAUSE",guided?"Signal/interference/distance":"Attempt to steal credentials"],
+ ["CHECK / DEFEND",guided?"Compare signal and congestion":"Verify through official channel"],
+ ["CONCLUSION",guided?"Wireless interference may matter":"Training + MFA reduce risk"]]);
+ if(title==="Timed Paper 1 Practice")return info(guided?"COMPARE SSD AND HDD FOR TRAVEL":"80 × 50 BITMAP · 8 BITS/PIXEL",[
+ ["DATA / NEED",guided?"Portable drive used while travelling":"80 × 50 = 4000 pixels"],
+ ["METHOD",guided?"Compare durability + access":"4000 × 8 = 32,000 bits"],
+ ["TRADE-OFF",guided?"SSD: no moving parts; costs more":"÷ 8 to convert bits"],
+ ["ANSWER",guided?"Justify SSD vs HDD":"4000 bytes (4 kB decimal)"]]);
+ if(title==="Timed Paper 2 Practice")return info(guided?"REPAIR OR VALIDATION CONDITION":"TRACE EVEN-COUNT LOOP",[
+ ["INITIAL",guided?"Valid mark = 0 to 100":"count = 0; i = 1 to 5"],
+ ["TEST",guided?"OR incorrectly accepts out-of-range":"i MOD 2 == 0"],
+ ["UPDATE",guided?"Replace OR with AND":"Increment for i = 2,4"],
+ ["RESULT",guided?"-1 fails; 0 and 100 pass":"count = 2"]]);
+ if(title==="Paper 2: Unseen Code and Debugging")return info(guided?"FAILED ATTEMPTS · BOUNDARY ERROR":"SUM [2,4,6] · WRONG INITIAL VALUE",[
+ ["START",guided?"3 failed login attempts":"total starts at 1"],
+ ["FAULT",guided?"attempts > 3":"1+2+4+6 = 13"],
+ ["FIX",guided?"attempts >= 3":"initialise total=0"],
+ ["EXPECTED",guided?"3 attempts → Locked":"2+4+6 = 12"]]);
+ if(title==="Paper 2: Programming Fundamentals")return info(guided?"COUNT PASSES IN FIVE MARKS":"FIND MINIMUM OF FOUR VALUES",[
+ ["START",guided?"passCount = 0":"minimum = first input"],
+ ["LOOP",guided?"Read five marks":"Read three more values"],
+ ["TEST",guided?"mark >= 50":"value < minimum"],
+ ["UPDATE",guided?"Increase passCount if true":"Replace minimum if smaller"]]);
+ if(title==="Paper 2: Writing Code from a Scenario")return info(guided?"COUNT MARKS ≥ 50":"SUM THREE INPUT INTEGERS",[
+ ["INITIALISE",guided?"passCount = 0":"total = 0"],
+ ["ITERATE",guided?"Repeat 5 times":"Repeat 3 times"],
+ ["OPERATE",guided?"If mark≥50, increment":"total = total + value"],
+ ["OUTPUT",guided?"Print passCount after loop":"Print total after loop"]]);
+ if(title==="Paper 1: Calculations and Extended Answers")return info(guided?"MONO SOUND · COMPUTE BITS":"IMAGE 120 × 80 · 4 BITS/PIXEL",[
+ ["DATA",guided?"8000 Hz · 5 sec · 8-bit":"120 × 80 = 9600 pixels"],
+ ["FORMULA",guided?"rate × time × depth":"pixels × bit depth"],
+ ["BITS",guided?"8000 × 5 × 8 = 320,000":"9600 × 4 = 38,400"],
+ ["BYTES",guided?"40,000 (if asked)":"4800"]]);
+ if(title==="Final GCSE Computer Science Consolidation"){
+  if(guided){return info("BINARY SEARCH FOR 18 IN [2,6,10,14,18]",[
+   ["RANGE","low=0, high=4"],["MIDPOINT","mid=2 → 10 < 18"],["NEXT","low=3; mid=3 → 14 < 18"],["MATCH","low=4; mid=4 → 18 found"]]);}
+  return info("20×20 BITMAP AT 8 BITS/PIXEL",[
+   ["PIXELS","20×20 = 400 pixels"],["BITS","400×8 = 3200 bits"],["BYTES","3200÷8 = 400 bytes"],["NETWORK FACTOR","Bandwidth or latency affects upload"]]);
+ }
+ if(title==="Algorithms: Examination Techniques"){
+  if(guided)return trace("BINARY SEARCH TARGET 14 IN SORTED [2,6,10,14,18,22,26]",["2","6","10","14","18","22","26"],["0","1","2","MID 14","4","5","6"]);
+  return trace("LINEAR SEARCH FOR 9 IN [4,6,9,2]",[4,6,9,2],["miss","miss","FOUND","stop"]);
+ }
+ if(title==="Paper 2: Searching and Sorting"){
+  if(guided){let h=small(29,75,"BINARY SEARCH · TARGET 17");const nums=[3,7,11,17,23];nums.forEach((v,i)=>{h+=label(25+i*124,139,115,80,v,stage>=2&&i===3?K.amber:stage===1&&i===2?K.mint:K.sky,29);h+=text(83+i*124,124,"index "+i,14)});h+=label(103,263,436,66,stage>=3?"Found: index 3":stage>=2?"low=3, mid=3":stage>=1?"mid=2 → value 11, go right":"low=0 high=4",K.mint,17);return h;}
+  const vals=[6,1,4,2];for(let i=0;i<Math.min(stage,3);i++){if(vals[i]>vals[i+1]){let tmp=vals[i];vals[i]=vals[i+1];vals[i+1]=tmp;}}let h=small(27,76,"BUBBLE SORT · FIRST PASS [6,1,4,2]");vals.forEach((v,i)=>{h+=label(30+i*153,150,139,85,v,i===stage?K.amber:K.sky,27);h+=text(97+i*153,138,"index "+i,15)});h+=small(44,317,"Compare neighbouring elements, then swap when left > right");return h;
+ }
+ if(title==="Paper 2: Validation, Testing and Debugging")return info(guided?"FIX RANGE VALIDATION FOR 1–20":"TEST PLAN FOR 1–20 INCLUSIVE",[
+ ["BOUNDARY",guided?"1 and 20 accepted":"1 and 20 accepted"],["INVALID",guided?"0 and 21 rejected":"0 and 21 rejected"],["ERROREOUS",guided?"Wrong type handled":"Text 'many' rejected"],["METHOD",guided?"Use >= 1 AND <= 20":"Normal 10 accepted"]]);
+ return "";
+}
+
 function layout(spec,stage){
+ const exact=matchedLessonScene(spec,stage);if(exact)return exact;
  const special=subjectScene(spec,stage);if(special)return special;
  const kind=String(spec.y11),scenario=String(spec.scenario||"model"),mode=String(spec.phase||"learning");
  if(kind==="table")return table(stage,scenario,false);
