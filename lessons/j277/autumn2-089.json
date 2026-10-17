@@ -1,0 +1,337 @@
+{
+  "089": {
+    "t": "Truth Tables",
+    "s": "2.4.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "truth table",
+      "AND",
+      "OR",
+      "NOT",
+      "input",
+      "output",
+      "Boolean"
+    ],
+    "o": [
+      "Write all four two-input combinations.",
+      "Complete AND and OR columns without missing a row.",
+      "Explain why NOT needs just two rows."
+    ],
+    "c": [
+      [
+        "Four combinations for two inputs",
+        "For A and B, list input pairs 00, 01, 10, 11 exactly once. Each row corresponds to one possible combination."
+      ],
+      [
+        "AND truth table",
+        "AND returns 0,0,0,1 for rows 00,01,10,11; only the final row has both inputs high."
+      ],
+      [
+        "OR truth table",
+        "OR returns 0,1,1,1; the first row is the only one without a high input."
+      ],
+      [
+        "NOT truth table",
+        "NOT has one input, so only two rows are required: 0→1 and 1→0."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "TWO INPUTS · FOUR ROWS",
+        "layout": "truth-table",
+        "boxes": [
+          "AND"
+        ],
+        "foot": "00, 01, 10, 11"
+      },
+      {
+        "title": "AND GATE TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "AND"
+        ],
+        "foot": "0,0,0,1"
+      },
+      {
+        "title": "OR GATE TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "OR"
+        ],
+        "foot": "0,1,1,1"
+      },
+      {
+        "title": "NOT GATE · TWO ROWS",
+        "layout": "logic-not",
+        "boxes": [
+          "A",
+          "NOT A"
+        ],
+        "foot": "Single input inversion"
+      }
+    ],
+    "idoVisual": {
+      "title": "MODEL AND TABLE",
+      "layout": "truth-table",
+      "boxes": [
+        "AND"
+      ],
+      "foot": "Check every input combination"
+    },
+    "m": {
+      "title": "Model a complete AND table",
+      "q": "Complete the AND output column for inputs 00,01,10,11, explaining the difference in row 11. [4 marks]",
+      "headings": [
+        "List all combinations",
+        "First two outputs",
+        "Third and fourth outputs",
+        "Check the rule"
+      ],
+      "st": [
+        "Write rows 00,01,10,11 so no input case is missing.",
+        "00 produces 0 [1] and 01 produces 0 [1].",
+        "10 produces 0 [1], while 11 produces 1 [1].",
+        "Only 11 contains both inputs high, so it satisfies AND."
+      ]
+    },
+    "w": [
+      [
+        "Complete OR outputs for input pairs 00,01,10,11 in order. [4 marks]",
+        "00→0 [1]; 01→1 [1]; 10→1 [1]; 11→1 [1]."
+      ],
+      [
+        "Give NOT outputs for A=0 and A=1. [2 marks]",
+        "NOT 0=1 [1] and NOT 1=0 [1]."
+      ],
+      [
+        "For A=1,B=0, explain AND and OR outputs. [4 marks]",
+        "AND gives 0 [1] because both are not 1 [1]. OR gives 1 [1] because one input is 1 [1]."
+      ]
+    ],
+    "wTitles": [
+      "Complete OR truth table",
+      "NOT truth table",
+      "Compare AND and OR"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED OR TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "OR"
+        ],
+        "foot": "Complete all four rows"
+      },
+      {
+        "title": "GUIDED NOT INPUT",
+        "layout": "logic-not",
+        "boxes": [
+          "A",
+          "NOT A"
+        ],
+        "foot": "Two rows only"
+      },
+      {
+        "title": "GUIDED AND/OR COMPARISON",
+        "layout": "truth-table",
+        "boxes": [
+          "AND"
+        ],
+        "foot": "Compare output for inputs 1,0"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "List all input pairs."
+        ],
+        [
+          "Step 1 · identify",
+          "For 00, OR is 0; for 01 OR is 1."
+        ],
+        [
+          "Step 2 · explain",
+          "For 10, OR is 1; for 11 OR is 1."
+        ],
+        [
+          "Check all marks",
+          "00→0 [1]; 01→1 [1]; 10→1 [1]; 11→1 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Remember there is one input."
+        ],
+        [
+          "Step 1 · identify",
+          "NOT 0 is 1."
+        ],
+        [
+          "Step 2 · explain",
+          "NOT 1 is 0."
+        ],
+        [
+          "Check all marks",
+          "NOT 0=1 [1] and NOT 1=0 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Apply both gates to the same pair."
+        ],
+        [
+          "Step 1 · identify",
+          "AND(1,0) is 0."
+        ],
+        [
+          "Step 2 · explain",
+          "OR(1,0) is 1."
+        ],
+        [
+          "Check all marks",
+          "AND gives 0 [1] because both are not 1 [1]. OR gives 1 [1] because one input is 1 [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict four outputs of the nested loop which generates AND table results.",
+      "code": "for A=0 to 1\n    for B=0 to 1\n        if A == 1 AND B == 1 then\n            print(1)\n        else\n            print(0)\n        endif\n    next B\nnext A",
+      "p": [
+        "List all outputs in order.",
+        "Replace AND with OR and list the new outputs.",
+        "Explain why there are four output lines."
+      ],
+      "a": "AND: 0,0,0,1. OR: 0,1,1,1. Two Boolean variables each have two possible values, giving 2×2=4 pairs."
+    },
+    "e": [
+      [
+        "State the number of rows in a two-input truth table, excluding headings. [1 mark]\n\nSource: Original OCR J277-style practice question.",
+        "Four rows [1]."
+      ],
+      [
+        "Complete the output column for an OR gate on input pairs 00,01,10,11. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "0 [1]; 1 [1]; 1 [1]; 1 [1]."
+      ],
+      [
+        "Complete four-row AND and OR output columns and explain why the outputs differ for input 0,1. [6 marks]\n\nSource: Original OCR J277-style practice question.",
+        "AND 0,0,0,1 [2]; OR 0,1,1,1 [2]. For 0,1, AND is 0 [1] because both are not high, while OR is 1 [1] because one input is high."
+      ]
+    ],
+    "v": [
+      [
+        "Truth table",
+        "Lists an output for every possible input case."
+      ],
+      [
+        "Input row",
+        "One combination of the Boolean inputs."
+      ],
+      [
+        "AND",
+        "Output 1 only when both inputs equal 1."
+      ],
+      [
+        "OR",
+        "Output 1 when at least one input equals 1."
+      ],
+      [
+        "NOT",
+        "Reverses a single Boolean input."
+      ],
+      [
+        "Output column",
+        "The results for all specified inputs."
+      ]
+    ],
+    "x": [
+      "A two-input truth table has four combinations.",
+      true
+    ],
+    "r": [
+      [
+        "State the output of an AND gate given A=1 and B=0. [1 mark]",
+        "0 [1]."
+      ],
+      [
+        "State the prerequisite for binary search. [1 mark]",
+        "The data must be sorted [1]."
+      ],
+      [
+        "State one use of RAM. [1 mark]",
+        "Stores currently running programs or working data [1]."
+      ],
+      [
+        "Trace the first bubble-sort pass on [5,3,4] and state the output array. [4 marks]",
+        "Compare 5>3 [1], swap to [3,5,4] [1]. Compare 5>4 [1], swap to [3,4,5] [1]."
+      ]
+    ],
+    "refs": [
+      "L088 · last lesson",
+      "L087 · earlier learning",
+      "L011 · Autumn 1 retrieval",
+      "L087 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "OR GATE · EITHER INPUT",
+        "layout": "logic-or",
+        "boxes": [
+          "A",
+          "B",
+          "OR"
+        ],
+        "foot": "At least one 1 gives 1"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 MEMORY",
+        "layout": "compare",
+        "boxes": [
+          "RAM",
+          "ROM"
+        ],
+        "foot": "Recall what is volatile"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "YOU DO OR TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "OR"
+        ],
+        "foot": "Four rows"
+      },
+      {
+        "title": "YOU DO AND TABLE",
+        "layout": "truth-table",
+        "boxes": [
+          "AND"
+        ],
+        "foot": "Compare gate rules"
+      }
+    ],
+    "memoryCue": "For two Boolean inputs list 00,01,10,11. AND outputs 0001; OR outputs 0111.",
+    "priorExam": {
+      "from": "088",
+      "q": "Give OR outputs for input pairs 00, 01, 10 and 11 in that order. [4 marks]",
+      "a": "0 [1], 1 [1], 1 [1], 1 [1].",
+      "visual": {
+        "title": "INDEPENDENT OR GATE",
+        "layout": "logic-or",
+        "boxes": [
+          "A",
+          "B",
+          "OR"
+        ],
+        "foot": "List all four rows"
+      }
+    }
+  }
+}
