@@ -1,0 +1,375 @@
+{
+  "082": {
+    "t": "Linear Search",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "linear search",
+      "array",
+      "index",
+      "comparison",
+      "unsorted",
+      "found"
+    ],
+    "o": [
+      "Explain that linear search examines elements one by one.",
+      "Trace a successful and unsuccessful search.",
+      "Write an OCR ERL search and return an index."
+    ],
+    "c": [
+      [
+        "Search each position",
+        "Linear search starts at the first element, compares it with the target, and moves through elements in order."
+      ],
+      [
+        "Works with unsorted data",
+        "The values do not need to be sorted. Linear search can inspect a list containing any arrangement."
+      ],
+      [
+        "Record comparisons and result",
+        "Stop once the first target is found (or record it without overwriting), or report not found after every relevant element is checked."
+      ],
+      [
+        "Use array indices",
+        "OCR ERL arrays are zero indexed. The fourth element is at index 3; the number of comparisons and array position are not the same."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "CHECK ONE ARRAY POSITION AT A TIME",
+        "layout": "linear-search",
+        "boxes": [
+          "8",
+          "4",
+          "11",
+          "2",
+          "7"
+        ],
+        "foot": "Target = 2"
+      },
+      {
+        "title": "MOVE FROM LEFT TO RIGHT",
+        "layout": "linear-search",
+        "boxes": [
+          "3",
+          "9",
+          "5",
+          "1",
+          "6"
+        ],
+        "foot": "Compare each item in order"
+      },
+      {
+        "title": "STOP WHEN FOUND",
+        "layout": "linear-search",
+        "boxes": [
+          "8",
+          "4",
+          "11",
+          "2",
+          "7"
+        ],
+        "foot": "Index 3 holds target 2"
+      },
+      {
+        "title": "WHEN VALUE IS ABSENT",
+        "layout": "linear-search",
+        "boxes": [
+          "2",
+          "5",
+          "8",
+          "3",
+          "4"
+        ],
+        "foot": "Report not found"
+      }
+    ],
+    "idoVisual": {
+      "title": "CHECK ONE ARRAY POSITION AT A TIME",
+      "layout": "linear-search",
+      "boxes": [
+        "8",
+        "4",
+        "11",
+        "2",
+        "7"
+      ],
+      "foot": "Target = 2"
+    },
+    "m": {
+      "title": "Model the Linear Search trace",
+      "q": "Trace a linear search for target 2 in [8,4,11,2,7]. State the checked values and zero-based position where 2 is found. [4 marks]",
+      "headings": [
+        "Read the values",
+        "First comparison",
+        "Update the search or sort",
+        "Complete the trace"
+      ],
+      "st": [
+        "Begin at index 0 and check 8; it is not 2 [1].",
+        "At index 1, check 4; still not 2 [1].",
+        "At index 2, check 11; still not 2 [1].",
+        "At index 3, value 2 matches. Report position 3 [1]."
+      ]
+    },
+    "w": [
+      [
+        "Trace linear search for 5 in [3,9,5]. State the comparisons and the index found. [3 marks]",
+        "Check 3 then 9 [1]; check 5 [1]; index found = 2 [1]."
+      ],
+      [
+        "Search for 7 in [8,6,4]. Explain the outcome and number of comparisons. [3 marks]",
+        "Compare 8, 6 and 4 [1]; no element equals 7 [1]; report not found after 3 comparisons [1]."
+      ],
+      [
+        "Search [2,2,5] for 2 using linear search. Explain the first match position and why. [2 marks]",
+        "The first element is 2 [1], so the first matching index is 0 [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided trace 1",
+      "Guided trace 2",
+      "Guided explanation 3"
+    ],
+    "wVisuals": [
+      null,
+      null,
+      null
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Begin at index 0."
+        ],
+        [
+          "Step 1 · identify",
+          "3, then 9 are not equal to 5."
+        ],
+        [
+          "Step 2 · explain",
+          "At index 2, 5 matches. Return index 2."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "GUIDED · FIND FIVE",
+            "layout": "linear-search",
+            "boxes": [
+              "3",
+              "9",
+              "5",
+              "1",
+              "8"
+            ],
+            "foot": "Target 5 · index starts at zero"
+          }
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Target is not necessarily present."
+        ],
+        [
+          "Step 1 · identify",
+          "Compare each of 3 elements."
+        ],
+        [
+          "Step 2 · explain",
+          "No match, so report not found after 3."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "GUIDED · ABSENT VALUE",
+            "layout": "linear-search",
+            "boxes": [
+              "8",
+              "6",
+              "4",
+              "9",
+              "1"
+            ],
+            "foot": "Target = 7 · report if absent"
+          }
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Start at the first element, not the last."
+        ],
+        [
+          "Step 1 · identify",
+          "Element at index 0 is 2."
+        ],
+        [
+          "Step 2 · explain",
+          "First matching index 0 is returned."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "GUIDED · REPEATED VALUE",
+            "layout": "linear-search",
+            "boxes": [
+              "2",
+              "2",
+              "5",
+              "9",
+              "8"
+            ],
+            "foot": "Find the first occurrence of 2"
+          }
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace linear search for target 2 in an unsorted array.",
+      "code": "array values = [8,4,11,2,7]\ntarget = 2\nfound = -1\nfor i=0 to 4\n    if values[i] == target AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
+      "p": [
+        "Predict the found index.",
+        "Change target to 11; predict the index.",
+        "Change target to 99 and predict the result."
+      ],
+      "a": "Original target 2: index 3. Target 11: index 2. Target 99: -1, indicating no match. The loop checks all positions but preserves the first found index."
+    },
+    "e": [
+      [
+        "State one advantage of linear search on an unsorted array. [2 marks]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "It does not require sorted data [1], so it can search the current unsorted array without sorting it first [1]."
+      ],
+      [
+        "A list is [6,3,8,1]. Trace linear search for 1, stating each comparison and index. [4 marks]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "Compare 6 [1], then 3 [1], then 8 [1], then 1 at zero-based index 3 [1]."
+      ],
+      [
+        "A shop has an unsorted array [5,9,2,7,3]. Explain the main steps of linear search for 7, compare successful and unsuccessful outcomes and describe how an index is reported. [6 marks]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "Start at index 0 [1], compare 5 then 9 then 2 [1]; at index 3 value 7 matches [1]. Return index 3 [1]. If all entries were checked without a match [1], report not found, e.g. -1 [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Linear search",
+        "Method checking array elements in sequence until a match is found."
+      ],
+      [
+        "Target",
+        "Value being searched for."
+      ],
+      [
+        "Comparison",
+        "Checking an array value against the target."
+      ],
+      [
+        "Index",
+        "Zero-based position in an array."
+      ],
+      [
+        "Unsorted",
+        "Data not arranged in a particular order."
+      ],
+      [
+        "Not found",
+        "Result when no matching element is present."
+      ]
+    ],
+    "x": [
+      "Linear search requires an array to be sorted before it can be used.",
+      false
+    ],
+    "r": [
+      [
+        "State the difference between a syntax error and a logic error. [2 marks]",
+        "Syntax: invalid language grammar [1]; logic: program runs but produces incorrect results [1]."
+      ],
+      [
+        "State TWO concepts relevant to this topic. [2 marks]",
+        "Trace table [1]; Expected output [1]."
+      ],
+      [
+        "Name the storage technology of a hard disk drive. [1 mark]",
+        "Magnetic [1]."
+      ],
+      [
+        "Explain how accumulator and expected output help in a sports count. [4 marks]",
+        "Accumulator [1]; A variable updated repeatedly to store a running total. [1]. Expected output [1]; The result that should occur according to the problem requirements. [1]."
+      ]
+    ],
+    "refs": [
+      "L081 · last lesson",
+      "L080 · earlier learning",
+      "L013 · Autumn 1 retrieval",
+      "L080 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "SYNTAX ERROR · INVALID PROGRAM",
+        "layout": "debug",
+        "boxes": [
+          "Bad syntax",
+          "Interpreter error",
+          "Repair"
+        ],
+        "foot": "Language rules must be followed"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L013",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "MOVE FROM LEFT TO RIGHT",
+        "layout": "linear-search",
+        "boxes": [
+          "3",
+          "9",
+          "5",
+          "1",
+          "6"
+        ],
+        "foot": "Compare each item in order"
+      },
+      {
+        "title": "STOP WHEN FOUND",
+        "layout": "linear-search",
+        "boxes": [
+          "8",
+          "4",
+          "11",
+          "2",
+          "7"
+        ],
+        "foot": "Index 3 holds target 2"
+      }
+    ],
+    "memoryCue": "Linear search starts at the first element, compares it with the target, and moves through elements in order.",
+    "priorExam": {
+      "from": "081",
+      "q": "A fee calculator adds 5 to the number of tickets instead of multiplying by 5. With 3 tickets, identify the error and correct the calculation. [4 marks]",
+      "a": "Adding gives 8 [1] but expected price is 15 [1]; use multiplication [1], giving 3*5=15 [1].",
+      "visual": {
+        "title": "BUGGY FEE CALCULATOR",
+        "layout": "code-trace",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Correct the operation"
+      }
+    }
+  }
+}
