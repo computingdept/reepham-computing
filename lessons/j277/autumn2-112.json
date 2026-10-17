@@ -1,0 +1,354 @@
+{
+  "112": {
+    "year11": true,
+    "t": "Merge Sort",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "explain",
+      "trace",
+      "identify",
+      "compare",
+      "state"
+    ],
+    "o": [
+      "Explain the steps and required conditions for merge sort.",
+      "Apply the algorithm or method to supplied data.",
+      "Complete an unseen assessment-style problem."
+    ],
+    "c": [
+      [
+        "Divide and conquer",
+        "Merge sort repeatedly splits a list into smaller halves until each sublist has one item."
+      ],
+      [
+        "Single items are sorted",
+        "A one-element list is already in order by itself."
+      ],
+      [
+        "Merge in order",
+        "Take the smaller front item from two sorted sublists; copy it into the merged list."
+      ],
+      [
+        "Complete the sort",
+        "Repeat merging until there is one fully sorted list; do not confuse splitting with swapping."
+      ]
+    ],
+    "visuals": [
+      {
+        "y11": "merge",
+        "title": "DIVIDE AND CONQUER",
+        "values": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2",
+          "6",
+          "4"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      },
+      {
+        "y11": "merge",
+        "title": "SINGLE ITEMS ARE SORTED",
+        "values": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2",
+          "6",
+          "4"
+        ],
+        "focus": 1,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      },
+      {
+        "y11": "merge",
+        "title": "MERGE IN ORDER",
+        "values": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2",
+          "6",
+          "4"
+        ],
+        "focus": 2,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      },
+      {
+        "y11": "merge",
+        "title": "COMPLETE THE SORT",
+        "values": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2",
+          "6",
+          "4"
+        ],
+        "focus": 3,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      }
+    ],
+    "idoVisual": {
+      "y11": "merge",
+      "title": "I DO · Merge Sort",
+      "values": [
+        "8",
+        "3",
+        "5",
+        "1",
+        "7",
+        "2",
+        "6",
+        "4"
+      ],
+      "focus": 0,
+      "target": "",
+      "note": "Draw every split level and merge level; use ordered comparisons when merging."
+    },
+    "m": {
+      "title": "Merge Sort · worked example",
+      "q": "Show the major splitting and merging stages of merge sort for [8,3,5,1,7,2,6,4]. [6 marks]",
+      "headings": [
+        "Read the data",
+        "Set up the algorithm",
+        "Apply the next steps",
+        "Check the outcome"
+      ],
+      "st": [
+        "Split into halves",
+        "[8,3,5,1] and [7,2,6,4], then split until single items remain.",
+        "Merge sorted pairs: [3,8], [1,5], [2,7], [4,6].",
+        "Merge quarters: [1,3,5,8], [2,4,6,7], then final [1,2,3,4,5,6,7,8]. [6]"
+      ]
+    },
+    "w": [
+      [
+        "Split [6,3,8,1] into singletons and merge into ascending order. [5]",
+        "[6,3] and [8,1] [1]; [6],[3],[8],[1] [1]; [3,6],[1,8] [1]; [1,3,6,8] [2]."
+      ],
+      [
+        "Merge two sorted sublists [2,7,9] and [1,3,10]. [4]",
+        "Choose 1,2,3,7,9,10 [3]; resulting [1,2,3,7,9,10] [1]."
+      ],
+      [
+        "Explain why each half must be sorted before it can be merged in the usual merge step. [3]",
+        "The merge chooses the smallest front item [1]; this is safe only when each sublist is ordered [1], producing a sorted merged list [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "y11": "merge",
+        "title": "GUIDED · Merge Sort",
+        "values": [
+          "6",
+          "3",
+          "8",
+          "1"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      },
+      {
+        "y11": "merge",
+        "title": "GUIDED · Merge Sort",
+        "values": [
+          "2",
+          "7",
+          "9",
+          "1",
+          "3",
+          "10"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      },
+      {
+        "y11": "merge",
+        "title": "GUIDED · Merge Sort",
+        "values": [
+          "8",
+          "4",
+          "6",
+          "2"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging."
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read",
+          "Split into two halves."
+        ],
+        [
+          "Plan",
+          "Split again."
+        ],
+        [
+          "Apply",
+          "Merge smaller front values."
+        ],
+        [
+          "Check answer",
+          "[6,3] and [8,1] [1]; [6],[3],[8],[1] [1]; [3,6],[1,8] [1]; [1,3,6,8] [2]."
+        ]
+      ],
+      [
+        [
+          "Read",
+          "Compare the two first values."
+        ],
+        [
+          "Plan",
+          "Move the smaller to output."
+        ],
+        [
+          "Apply",
+          "Repeat with remaining values."
+        ],
+        [
+          "Check answer",
+          "Choose 1,2,3,7,9,10 [3]; resulting [1,2,3,7,9,10] [1]."
+        ]
+      ],
+      [
+        [
+          "Read",
+          "Describe the merge choice."
+        ],
+        [
+          "Plan",
+          "Explain the prerequisite."
+        ],
+        [
+          "Apply",
+          "State resulting order."
+        ],
+        [
+          "Check answer",
+          "The merge chooses the smallest front item [1]; this is safe only when each sublist is ordered [1], producing a sorted merged list [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict which value is selected first when merging two sorted lists.",
+      "code": "leftFirst = 4\nrightFirst = 2\nif leftFirst < rightFirst then\n    print(leftFirst)\nelse\n    print(rightFirst)\nendif",
+      "p": [
+        "Predict the printed value.",
+        "Change rightFirst to 9.",
+        "Extend to explain the next comparison."
+      ],
+      "a": "Initially prints 2; after rightFirst=9 prints 4; next compare the unused front value with the next value from the selected list."
+    },
+    "e": [
+      [
+        "Split [7,2,5,1] to singletons and write the two sorted pairs. [4]\n\nSource: Original OCR J277-style practice question.",
+        "Split [7,2] and [5,1] [1]; singletons [7],[2],[5],[1] [1]; sorted pairs [2,7] [1] and [1,5] [1]."
+      ],
+      [
+        "Merge the already sorted lists [1,4,9] and [2,3,8]. State the resulting list. [3]\n\nSource: Original OCR J277-style practice question.",
+        "[1,2,3,4,8,9] [3; 1 for first three, 1 for last three, 1 for completely correct]."
+      ],
+      [
+        "Explain what divide-and-conquer means in merge sort. [3]\n\nSource: Original OCR J277-style practice question.",
+        "Divide the list into smaller subproblems [1], solve them by sorting/merging sublists [1], combine to obtain one ordered result [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Merge sort",
+        "Divide-and-conquer sort that splits and then merges sorted sublists."
+      ],
+      [
+        "Split",
+        "Divide a list into smaller parts."
+      ],
+      [
+        "Merge",
+        "Combine sorted sublists while preserving order."
+      ],
+      [
+        "Singleton",
+        "Sublist containing one element."
+      ]
+    ],
+    "x": [
+      "Binary search can safely discard half only when data is sorted.",
+      true
+    ],
+    "r": [
+      [
+        "What is a sorted prefix in insertion sort?",
+        "The left section already in order."
+      ],
+      [
+        "How many bits are in a byte?",
+        "8 bits."
+      ],
+      [
+        "Explain why virtual memory can reduce performance.",
+        "Secondary storage is slower than RAM, and moving pages costs time."
+      ],
+      [
+        "Merge [1,5] with [2,4] into ascending order.",
+        "[1,2,4,5]."
+      ]
+    ],
+    "refs": [
+      "L111 · last lesson",
+      "L099 · earlier learning",
+      "L097 · earlier learning",
+      "Earlier learning · high challenge"
+    ],
+    "memoryCue": "Draw every split level and merge level; use ordered comparisons when merging.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      {
+        "y11": "merge",
+        "title": "QUESTION DATA · SOLVE INDEPENDENTLY",
+        "values": [
+          "7",
+          "2",
+          "5",
+          "1"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Draw every split level and merge level; use ordered comparisons when merging.",
+        "hide": true,
+        "required": true
+      },
+      null,
+      null
+    ],
+    "visualAuditV2": false,
+    "visualAuditV3": false,
+    "priorExam": null
+  }
+}

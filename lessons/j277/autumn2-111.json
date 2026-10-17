@@ -1,0 +1,338 @@
+{
+  "111": {
+    "year11": true,
+    "t": "Insertion Sort",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "explain",
+      "trace",
+      "identify",
+      "compare",
+      "state"
+    ],
+    "o": [
+      "Explain the steps and required conditions for insertion sort.",
+      "Apply the algorithm or method to supplied data.",
+      "Complete an unseen assessment-style problem."
+    ],
+    "c": [
+      [
+        "Build a sorted prefix",
+        "Treat the first element as a sorted section, then take the next element as a key."
+      ],
+      [
+        "Make space",
+        "Move larger sorted elements one position right to create room for the key."
+      ],
+      [
+        "Insert the key",
+        "Place the key in the correct position in the existing sorted prefix."
+      ],
+      [
+        "Grow the prefix",
+        "Repeat with each remaining element until the whole list is ordered."
+      ]
+    ],
+    "visuals": [
+      {
+        "y11": "insertion",
+        "title": "BUILD A SORTED PREFIX",
+        "values": [
+          "7",
+          "3",
+          "5",
+          "1",
+          "4"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      },
+      {
+        "y11": "insertion",
+        "title": "MAKE SPACE",
+        "values": [
+          "7",
+          "3",
+          "5",
+          "1",
+          "4"
+        ],
+        "focus": 1,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      },
+      {
+        "y11": "insertion",
+        "title": "INSERT THE KEY",
+        "values": [
+          "7",
+          "3",
+          "5",
+          "1",
+          "4"
+        ],
+        "focus": 2,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      },
+      {
+        "y11": "insertion",
+        "title": "GROW THE PREFIX",
+        "values": [
+          "7",
+          "3",
+          "5",
+          "1",
+          "4"
+        ],
+        "focus": 3,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      }
+    ],
+    "idoVisual": {
+      "y11": "insertion",
+      "title": "I DO · Insertion Sort",
+      "values": [
+        "7",
+        "3",
+        "5",
+        "1",
+        "4"
+      ],
+      "focus": 0,
+      "target": "",
+      "note": "Distinguish shifting an element right from inserting the key left."
+    },
+    "m": {
+      "title": "Insertion Sort · worked example",
+      "q": "Trace insertion sort on [7,3,5,1,4], showing the sorted prefix after each insertion. [5 marks]",
+      "headings": [
+        "Read the data",
+        "Set up the algorithm",
+        "Apply the next steps",
+        "Check the outcome"
+      ],
+      "st": [
+        "Insert 3",
+        "Move 7 right; result [3,7,5,1,4].",
+        "Insert 5 → [3,5,7,1,4]; insert 1 → [1,3,5,7,4].",
+        "Insert 4 → [1,3,4,5,7]. All five values are sorted. [5]"
+      ]
+    },
+    "w": [
+      [
+        "Trace the first two insertions of [6,2,4,1]. [4]",
+        "After inserting 2: [2,6,4,1] [2]; after inserting 4: [2,4,6,1] [2]."
+      ],
+      [
+        "Insert key 3 into sorted prefix [1,4,6] (next value 3). [3]",
+        "Shift 6 right [1], shift 4 right [1]; insert 3 after 1 [1], prefix [1,3,4,6]."
+      ],
+      [
+        "Explain why insertion sort can be efficient on nearly sorted data. [3]",
+        "Many keys are near their correct position [1], so fewer shifts/comparisons are needed [1] than when elements are far out of order [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "y11": "insertion",
+        "title": "GUIDED · Insertion Sort",
+        "values": [
+          "6",
+          "2",
+          "4",
+          "1"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      },
+      {
+        "y11": "insertion",
+        "title": "GUIDED · Insertion Sort",
+        "values": [
+          "1",
+          "4",
+          "6",
+          "3"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      },
+      {
+        "y11": "insertion",
+        "title": "GUIDED · Insertion Sort",
+        "values": [
+          "1",
+          "2",
+          "4",
+          "3",
+          "5"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left."
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read",
+          "Identify first sorted element."
+        ],
+        [
+          "Plan",
+          "Insert the next key."
+        ],
+        [
+          "Apply",
+          "Then insert the following key."
+        ],
+        [
+          "Check answer",
+          "After inserting 2: [2,6,4,1] [2]; after inserting 4: [2,4,6,1] [2]."
+        ]
+      ],
+      [
+        [
+          "Read",
+          "Compare key with rightmost sorted value."
+        ],
+        [
+          "Plan",
+          "Shift greater values."
+        ],
+        [
+          "Apply",
+          "Insert in gap."
+        ],
+        [
+          "Check answer",
+          "Shift 6 right [1], shift 4 right [1]; insert 3 after 1 [1], prefix [1,3,4,6]."
+        ]
+      ],
+      [
+        [
+          "Read",
+          "Think about existing prefix."
+        ],
+        [
+          "Plan",
+          "Count shifts."
+        ],
+        [
+          "Apply",
+          "Link to nearly sorted data."
+        ],
+        [
+          "Check answer",
+          "Many keys are near their correct position [1], so fewer shifts/comparisons are needed [1] than when elements are far out of order [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict whether the current key should move left within the sorted prefix.",
+      "code": "previous = 8\nkey = 5\nif previous > key then\n    print(\"Move previous right\")\nelse\n    print(\"Insert key here\")\nendif",
+      "p": [
+        "Predict the message.",
+        "Change key to 9.",
+        "Extend to explain what happens with equal values."
+      ],
+      "a": "Initially Move previous right; key=9 prints Insert key here; equal values do not move under the > condition."
+    },
+    "e": [
+      [
+        "After inserting the first two unsorted items from [5,2,4,3], state the array at each stage. [4]\n\nSource: Original OCR J277-style practice question.",
+        "Insert 2 → [2,5,4,3] [2]; insert 4 → [2,4,5,3] [2]."
+      ],
+      [
+        "Explain the purpose of the sorted section in insertion sort. [3]\n\nSource: Original OCR J277-style practice question.",
+        "Contains elements already in order [1]; next key is placed at its appropriate position [1] to grow sorted section [1]."
+      ],
+      [
+        "A sorted prefix is [2,6,8] and next key is 5. State the resulting prefix after insertion. [2]\n\nSource: Original OCR J277-style practice question.",
+        "[2,5,6,8] [2]."
+      ]
+    ],
+    "v": [
+      [
+        "Insertion sort",
+        "Builds a growing sorted prefix by inserting each next value."
+      ],
+      [
+        "Key",
+        "Current element being inserted."
+      ],
+      [
+        "Sorted prefix",
+        "Left section already in order."
+      ],
+      [
+        "Shift",
+        "Move an existing value one place right to make room."
+      ]
+    ],
+    "x": [
+      "Binary search can safely discard half only when data is sorted.",
+      true
+    ],
+    "r": [
+      [
+        "In bubble sort, when do you swap for ascending order?",
+        "When left value > right value."
+      ],
+      [
+        "How many bits are in a byte?",
+        "8 bits."
+      ],
+      [
+        "Explain why virtual memory can reduce performance.",
+        "Secondary storage is slower than RAM, and moving pages costs time."
+      ],
+      [
+        "What is [4,2,3] after inserting 2 then 3?",
+        "[2,3,4]."
+      ]
+    ],
+    "refs": [
+      "L110 · last lesson",
+      "L099 · earlier learning",
+      "L097 · earlier learning",
+      "Earlier learning · high challenge"
+    ],
+    "memoryCue": "Distinguish shifting an element right from inserting the key left.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      {
+        "y11": "insertion",
+        "title": "QUESTION DATA · SOLVE INDEPENDENTLY",
+        "values": [
+          "5",
+          "2",
+          "4",
+          "3"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Distinguish shifting an element right from inserting the key left.",
+        "hide": true,
+        "required": true
+      },
+      null,
+      null
+    ],
+    "visualAuditV2": false,
+    "visualAuditV3": false,
+    "priorExam": null
+  }
+}
