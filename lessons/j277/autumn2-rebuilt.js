@@ -763,7 +763,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const p=spec&&spec.rich;if(!p)return null;
   const family=String(p.family||"process"),stage=Math.max(0,Math.min(3,Number(p.focus)||0));
   const input=Array.isArray(p.values)?p.values.map(String):[],labels=Array.isArray(p.labels)?p.labels.map(String):[];
-  const mode=String(p.phase||"learning"),guided=mode==="guided"||mode==="independent",question=String(p.question||"");
+  const mode=String(p.phase||"learning"),guided=mode==="guided"||mode==="independent"||mode==="model",question=String(p.question||"");
   const label=String(spec.title||"OCR J277 visual model").slice(0,65);
   const c={blue:"#3d78a6",blueP:"#e1edf9",green:"#327b61",greenP:"#e0f2e8",gold:"#ab7d2e",goldP:"#f8edd5",rose:"#b15d55",roseP:"#f8e5e3",ink:"#204735",muted:"#506759"};
   const esc=escape;
