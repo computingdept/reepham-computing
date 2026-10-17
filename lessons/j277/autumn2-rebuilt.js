@@ -943,6 +943,25 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       body+=text(x+ww/2-3,y+cell*.67,v,rows>6?14:17);
     }
     lower=family==="grid"?"Select an item using row and column indices":family==="sql"?"SELECT Name FROM Pupils WHERE Year = 10":"Show every Boolean input combination";
+  }else if(family==="compound-gate"){
+    const exampleTwo=mode==="model"&&stage===3;
+    const vals=mode==="model"?(exampleTwo?["1","1","0"]:["1","0","1"]):["A","B","C"];
+    const xval=mode==="model"&&stage>=1?(exampleTwo?"1":"0"):"?";
+    const qval=mode==="model"&&stage>=2?"1":"?";
+    const inputText=mode==="model"?(exampleTwo?"EXAMPLE 2 · A=1 B=1 C=0":"EXAMPLE 1 · A=1 B=0 C=1"):"CIRCUIT · (A AND B) OR C";
+    body+=text(280,80,inputText,17,c.muted);
+    body+=card(12,101,100,51,"A = "+vals[0],c.blueP)+card(12,177,100,51,"B = "+vals[1],c.blueP)+card(12,248,100,51,"C = "+vals[2],c.blueP);
+    body+=line(113,126,163,126)+line(163,126,163,135)+line(163,135,183,135);
+    body+=line(113,202,163,202)+line(163,202,163,191)+line(163,191,183,191);
+    body+='<path d="M183 110 L231 110 C297 110 297 217 231 217 L183 217 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="3.5"/>';
+    body+=text(238,170,"AND",16);
+    body+=line(297,164,323,164)+line(323,164,323,211)+line(323,211,353,211);
+    body+=text(309,150,"X="+xval,15,stage>=1?c.green:c.muted);
+    body+=line(113,274,315,274)+line(315,274,315,253)+line(315,253,353,253);
+    body+='<path d="M351 189 Q388 232 351 280 Q432 287 466 233 Q432 181 351 189 Z" fill="'+c.goldP+'" stroke="'+c.green+'" stroke-width="3.5"/>';
+    body+=text(414,237,"OR",16);
+    body+=line(467,233,488,233)+card(493,196,58,73,"Q="+qval,c.goldP);
+    lower="X = A AND B; then Q = X OR C";
   }else if(family==="gate"){
     const op=(String(p.gate||"AND")).toUpperCase();
     body+=card(22,93,134,72,"A",c.blueP);
