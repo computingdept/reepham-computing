@@ -96,6 +96,29 @@ body.pilot-year12 .year-switch{display:none}
 body.pilot-year12 .tabs .tab:not([data-tab="lessons"]){display:none}
 body.pilot-year12 #lessons .note{display:none}
 .pilot-stamp{display:inline-block;background:#e8f3ed;border:1px solid #b2d2bd;border-radius:4px;color:#145337;padding:4px 7px;font-size:12px;font-weight:900}
+
+/* Minimal H446 lesson tiles, matching J277 on desktop and mobile. */
+.course-hub #lessons .lesson-entry > .lesson{
+  position:relative;overflow:hidden;border-radius:8px;
+  font-variant-numeric:tabular-nums;
+  transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+.course-hub #lessons .lesson-entry > .lesson.live::after{
+  content:'';position:absolute;left:10px;right:10px;bottom:0;
+  height:3px;border-radius:3px 3px 0 0;background:var(--year-accent,#298363);
+}
+.course-hub #lessons .lesson-entry > .lesson.live:hover{
+  box-shadow:0 3px 12px rgba(0,70,55,.1);
+}
+.course-hub #lessons .lesson-entry > .lesson.planned{
+  border-color:#e2e8e5;background:#fbfcfb;
+}
+.course-hub #lessons .lesson-entry > .lesson:focus-visible{
+  outline:3px solid var(--year-accent,#298363);outline-offset:2px;
+}
+@media(prefers-reduced-motion:reduce){
+  .course-hub #lessons .lesson-entry > .lesson{transition:none}
+}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -437,7 +460,7 @@ function renderLessons(){
       const el=document.createElement(href?'a':'div');
       el.className='lesson '+(href?'live':'planned');
       if(href){
-        el.innerHTML=pad(x)+' <span class="live-tick" aria-hidden="true">✓</span>';
+        el.textContent=pad(x);
         el.href=href;
         el.setAttribute('aria-label','Open live lesson '+pad(x));
       }else{el.textContent=pad(x);}
