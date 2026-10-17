@@ -829,14 +829,43 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     }
     lower=family==="test"?"Compare expected and actual results":"Record a value only when it changes or prints";
   }else if(["array","search","sort","merge","string"].includes(family)){
+    if(family==="merge"){
+      const original=items.slice(),len=original.length,half=Math.ceil(len/2),left=original.slice(0,half),right=original.slice(half);
+      const chartRow=(items,x,y,w)=>items.map((a,i)=>box(x+i*(w+5),y,w,64,i%2?c.greenP:c.blueP,5)+text(x+i*(w+5)+w/2,y+42,a,20)).join("");
+      const num=(a,b)=>Number(a)-Number(b);
+      if(stage===0){
+        body+=text(280,93,"START · UNSORTED DATA",18)+chart(original,[],128);
+      }else if(stage===1){
+        body+=text(280,91,"DIVIDE INTO TWO HALVES",18);
+        body+=chartRow(left,48,148,84)+chartRow(right,329,148,84);
+        body+=text(280,182,"+",28,c.gold);
+      }else if(stage===2){
+        body+=text(280,91,"SORT EACH SMALL GROUP",18);
+        body+=chartRow(left.slice().sort(num),48,148,84)+chartRow(right.slice().sort(num),329,148,84);
+        body+=text(280,182,"+",28,c.gold);
+      }else{
+        body+=text(280,93,"MERGE IN ASCENDING ORDER",18);
+        body+=chart(original.slice().sort(num),[],128);
+      }
+      lower="Split → sort small groups → merge ordered values";
+    }else{
     let arr=items.slice();
     if(family==="string"){arr=String(val(0,"COMPUTER")).split("").slice(0,9);}
     const original=arr.slice(),target=String(p.target||"");
     let highlight=[];
     if(family==="search"){
-      if(p.searchType==="binary"&&stage>=1)highlight=[Math.floor((arr.length-1)/2)];
-      else highlight=[Math.min(stage,arr.length-1)];
-      lower=p.searchType==="binary"?"Sorted list required · compare the midpoint":"Linear search checks positions in sequence";
+      if(p.searchType==="binary"){
+        const middle=Math.floor((arr.length-1)/2),goal=arr.findIndex(x=>String(x)===target);
+        if(stage===0)highlight=arr.map((_,i)=>i);
+        else if(stage===1)highlight=[middle];
+        else if(stage===2){
+          highlight=goal<0?[]:arr.map((_,i)=>i).filter(i=>goal>middle?i>middle:i<middle);
+        }else highlight=goal<0?[]:[goal];
+        lower=p.unsafe?"UNSORTED · binary search cannot safely discard half":"Binary search requires sorted values";
+      }else{
+        highlight=[Math.min(stage,arr.length-1)];
+        lower="Linear search checks elements from index zero";
+      }
     }else if(family==="sort"){
       if(!guided&&stage>0){
         if(p.sortType==="bubble"){
@@ -850,10 +879,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     }else if(family==="merge"){highlight=stage<2?[0,1]:[Math.floor(arr.length/2),arr.length-1];lower="Split into halves, then merge sorted sublists";}
     else if(family==="string"){highlight=stage===0?[]:stage===1?[0,1,2,3]:stage===2?[4,5,6,7]:[0];lower="Character positions begin at index 0";}
     else{highlight=stage===0?[]:[Math.min(stage-1,arr.length-1)];lower="Zero-based index: first element is 0";}
-    body+=text(280,94,guided?"IDENTIFY THE NEXT STEP":family==="sort"?"AFTER "+stage+" COMPARISON / INSERTION STEPS":family==="search"?"CHECK THE TARGET":family==="merge"?"DIVIDE · COMPARE · MERGE":family==="string"?"CHARACTER POSITIONS":"INDEXED VALUES",17,c.muted);
+    body+=text(280,94,guided?"IDENTIFY THE NEXT STEP":family==="sort"?"SORTING · STAGE "+(stage+1):family==="search"?"FOLLOW SEARCH RANGE":family==="string"?"CHARACTER POSITIONS":"INDEXED VALUES",17,c.muted);
     body+=chart(arr,highlight,145,guided&&mode==="independent");
-    if(target)body+=text(280,264,"Target: "+target,18);
+    if(target&&(family==="search"||family==="sort"))body+=text(280,264,"Target: "+target,18);
     if(family==="merge"&&!guided&&stage>=2){body+=text(280,268,"One-item lists merge into sorted pairs",16);}
+    }
   }else if(family==="grid"||family==="sql"||family==="truth"){
     const cols=family==="truth"?(p.threeInput?4:3):3;
     const rows=family==="truth"?(p.threeInput?9:5):4;
