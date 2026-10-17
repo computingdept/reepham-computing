@@ -574,7 +574,7 @@
  const row=(parts)=>{const size=parts.length,w=size===4?117:160,gap=size===4?17:23;parts.forEach((p,i)=>{const x=12+i*(w+gap);b+=C(x,124,w,105,p,colour[i%4]);if(i<size-1)b+=A(x+w+2,175,x+w+gap-4,175);});};
  if(["sequence","operators","data-types","procedure-call","debug","project-cycle"].includes(kind))row(labels.length>=3?labels.slice(0,3):["Input","Process","Output"]);
  else if(kind==="variables"){row(labels.length>=3?labels.slice(0,3):["x = 2","x = x+1","x = 3"]);b+=T(280,273,"Assignments replace previous values",17);}
- else if(["boolean","logic-gates","logic-or","logic-not","combined-logic"].includes(kind)){
+ else if(["boolean","logic-gates","logic-or","logic-not"].includes(kind)){
  const isNot=kind==="logic-not",isOr=kind==="logic-or";
  b+=C(18,96,132,75,v(0,"Input A"),colour[0]);
  if(!isNot)b+=C(18,210,132,75,v(1,"Input B"),colour[0]);
@@ -591,7 +591,20 @@
  b+=A(isNot?382:378,193,433,193)+C(438,153,98,81,"Q",colour[2]);
  b+=T(306,192,isNot?"NOT":isOr?"OR":"AND",17);
  b+=T(282,297,kind==="combined-logic"?"Q=(A AND B) OR C · concept stage":isNot?"Q=NOT A":isOr?"Q=A OR B":"Q=A AND B",17);
- }else if(["if-branch","nested-if","validation"].includes(kind)){
+ }
+ else if(kind==="combined-logic"){
+  b+=C(20,77,116,62,"Input A",colour[0]);
+  b+=C(20,193,116,62,"Input B",colour[0]);
+  b+=L(136,107,174,107)+L(136,223,174,223)+L(174,107,174,223);
+  b+='<path d="M174 120 L216 120 C274 120 274 214 216 214 L174 214 Z" fill="#e2f2e8" stroke="'+green+'" stroke-width="4"/>';
+  b+=T(208,171,"AND",16)+A(265,168,312,168);
+  b+=C(289,233,90,64,"C",colour[0]);
+  b+='<path d="M310 116 Q345 167 310 218 Q396 220 430 167 Q396 109 310 116 Z" fill="#f6edd5" stroke="'+green+'" stroke-width="4"/>';
+  b+=L(335,233,335,218)+L(335,218,334,211);
+  b+=T(375,169,"OR",16)+A(433,166,459,166)+C(463,131,78,71,"Q",colour[2]);
+  b+=T(280,289,"Q = (A AND B) OR C",19);
+ }
+else if(["if-branch","nested-if","validation"].includes(kind)){
  b+=C(23,146,127,77,v(0,"Input"),colour[0])+A(151,184,211,184);
  b+='<path d="M287 91 L374 184 L287 274 L200 184 Z" fill="#f9edda" stroke="#bb9437" stroke-width="3"/>';
  b+=label(287,188,v(1,"Condition?"),16)+A(375,184,422,142)+C(429,108,108,74,v(2,"TRUE"),colour[1])+L(286,274,286,293)+T(335,284,"FALSE",13);
@@ -604,8 +617,8 @@
  b+=T(280,264,kind==="binary-search"?"Sorted data · compare midpoint":kind==="linear-search"?"Check each position in turn":kind==="bubble-sort"?"Compare neighbours, swap if necessary":kind==="insertion-sort"?"Grow a sorted section":kind==="merge-sort"?"Divide into halves · merge ordered": "Arrays start at index zero",16);
  }else if(["array-2d","sql-table","truth-table","combined-truth"].includes(kind)){
  const isTruth=kind==="truth-table",isCombined=kind==="combined-truth",op=String(labels[0]||"AND").toUpperCase();
- const cols=(isTruth||isCombined)?4:3,rows=isCombined?9:isTruth?5:4,w=isTruth||isCombined?125:155,x0=(560-cols*w)/2;
- const headings=isCombined?["A","B","C","Q"]:isTruth?["A","B",op.includes("OR")?"A OR B":"A AND B","Q"]:kind==="sql-table"?["ID","Name","Score"]:["COL 0","COL 1","COL 2"];
+ const cols=isCombined?4:3,rows=isCombined?9:isTruth?5:4,w=isCombined?125:isTruth?155:155,x0=(560-cols*w)/2;
+ const headings=isCombined?["A","B","C","Q"]:isTruth?["A","B",op.includes("OR")?"A OR B":"A AND B"]:kind==="sql-table"?["ID","Name","Score"]:["COL 0","COL 1","COL 2"];
  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
   const X=x0+x*w,Y=(isCombined?65:76)+y*(isCombined?28:isTruth?47:57),cellH=isCombined?26:isTruth?43:52;
   b+=B(X,Y,w-5,cellH,y===0?colour[0]:y%2?colour[1]:"#f4f7f6");
