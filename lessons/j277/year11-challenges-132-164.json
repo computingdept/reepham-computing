@@ -1,0 +1,450 @@
+[
+  {
+    "n": 132,
+    "coreHint": "Start with bits ÷ 8, not bits × 8.",
+    "stretch": {
+      "task": "Change the program to display both bits and bytes for a 2400-bit image.",
+      "hint": "Keep original bits; calculate bytes separately.",
+      "answer": "2400 bits and 300 bytes."
+    },
+    "mastery": {
+      "task": "Write a reusable converter that accepts a non-negative number of bits and reports whole bytes plus any leftover bits.",
+      "hint": "DIV gives whole bytes; MOD 8 gives the remainder.",
+      "answer": "For 2405 bits: 300 whole bytes and 5 remaining bits. Reject negatives; test 0,8,9,2405."
+    }
+  },
+  {
+    "n": 133,
+    "coreHint": "A distance comparison is only a simplified illustration, not the definition of a LAN or WAN.",
+    "stretch": {
+      "task": "Add an ELSE branch so the program prints both categories for 20 and 200.",
+      "hint": "Test both sides of 100.",
+      "answer": "20 → Local area; 200 → Wide area."
+    },
+    "mastery": {
+      "task": "Design a network recommendation algorithm with two inputs: are offices in different towns, and is central administration required? Suggest WAN vs LAN connections and client-server vs peer-to-peer.",
+      "hint": "Use independent tests; don't treat physical distance as the sole rule.",
+      "answer": "Across towns calls for connected LANs via WAN; central user administration favours client-server. Test same building with/without central management."
+    }
+  },
+  {
+    "n": 134,
+    "coreHint": "For n full-mesh nodes, use n×(n−1) DIV 2.",
+    "stretch": {
+      "task": "Calculate mesh links for six nodes and compare with a six-device star.",
+      "hint": "A star has one link from each device to a central switch.",
+      "answer": "Full mesh: 6×5÷2=15; six peripherals in a star use six links to the switch."
+    },
+    "mastery": {
+      "task": "Design a loop that tabulates full-mesh and star link counts for n=2 to 8 and identifies where the mesh needs at least twice as many.",
+      "hint": "Compute both values on each iteration and compare.",
+      "answer": "If n is number of peripheral/device nodes: mesh n(n−1)/2, star n; mesh≥2×star from n≥5. State star counting assumption."
+    }
+  },
+  {
+    "n": 135,
+    "coreHint": "The equality test checks the literal string HTTPS.",
+    "stretch": {
+      "task": "Add ELSE IF to recognise SMTP as mail sending; test HTTPS, HTTP and SMTP.",
+      "hint": "Use another conditional branch, not three separate unguarded IFs.",
+      "answer": "HTTPS -> encrypted web, SMTP -> mail sending, HTTP -> other/unrecognised."
+    },
+    "mastery": {
+      "task": "Make a simple protocol classifier for HTTP, HTTPS, SMTP, IMAP and unknown values; explain why a classifier is not a security guarantee.",
+      "hint": "Test each known string and include a default.",
+      "answer": "HTTP web, HTTPS encrypted web, SMTP sending mail, IMAP retrieving/synchronising mail, unknown remains unrecognised. Treat user input case appropriately."
+    }
+  },
+  {
+    "n": 136,
+    "coreHint": "Transfer time uses file size divided by transfer rate, with compatible units.",
+    "stretch": {
+      "task": "Adapt the program to include 2 seconds of fixed latency in the predicted time.",
+      "hint": "Add latency to the transfer time, rather than changing the rate.",
+      "answer": "48Mb/12Mbps =4s; with 2s delay, estimated 6s."
+    },
+    "mastery": {
+      "task": "Write a transfer-time function that rejects zero/negative speed and compares two connection rates, including fixed latency.",
+      "hint": "IF rate <=0 reject before division.",
+      "answer": "For 48Mb at 12Mbps with 2s latency ->6s; at 8Mbps ->8s. Zero speed must not cause division by zero."
+    }
+  },
+  {
+    "n": 137,
+    "coreHint": "With attempts=4 and the test >3, the alert appears.",
+    "stretch": {
+      "task": "Change the logic so the alert appears at three failures, not four.",
+      "hint": ">= includes the threshold.",
+      "answer": "At attempts=3 it now prints Alert."
+    },
+    "mastery": {
+      "task": "Simulate repeated login attempts using a loop: stop at a correct password or lock after three failures. Test the third-attempt boundary.",
+      "hint": "Keep a counter; check success and limit separately.",
+      "answer": "Three failures -> Locked; two failures then correct -> success; counter increments only on failure. Never display the stored secret."
+    }
+  },
+  {
+    "n": 138,
+    "coreHint": "Access is granted only if both factors are true.",
+    "stretch": {
+      "task": "Add a message to distinguish a missing password check from a missing second factor.",
+      "hint": "Test the first condition before the second.",
+      "answer": "If password is false -> password check failed; if password true but MFA false -> second factor needed."
+    },
+    "mastery": {
+      "task": "Write tests for all four combinations of passwordValid and secondFactorValid, then explain why MFA cannot stop all forms of phishing.",
+      "hint": "Build a four-row truth table.",
+      "answer": "False/False Deny, False/True Deny, True/False Deny, True/True Allow. MFA limits use of a stolen password but doesn't eliminate account attacks."
+    }
+  },
+  {
+    "n": 139,
+    "coreHint": "Memory needed must not exceed memory free for this simple check.",
+    "stretch": {
+      "task": "Add a calculation of how much RAM remains after admitting a program.",
+      "hint": "Only subtract when allocation succeeds.",
+      "answer": "600−400=200MB; if request750MB do not subtract."
+    },
+    "mastery": {
+      "task": "Design a resource allocator for several requested program sizes; admit one at a time and keep a running free-memory total without becoming negative.",
+      "hint": "Loop requests and use <= freeRAM.",
+      "answer": "With 600MB free and requests [200,450,150], accept200 (400 left), reject450, accept150 (250 left)."
+    }
+  },
+  {
+    "n": 140,
+    "coreHint": "Saving = original size − compressed size.",
+    "stretch": {
+      "task": "Display both savedKB and percentage saved for 500→300 KB.",
+      "hint": "saved/original×100.",
+      "answer": "200 KB and 40%."
+    },
+    "mastery": {
+      "task": "Design a function computing percentage saving while safely handling original=0 and impossible compressed>original input.",
+      "hint": "Validate before dividing; return meaningful status.",
+      "answer": "500→300 gives 40%; 100→100 gives 0%; original0 rejected/handled; compressed600 for original500 flagged as invalid."
+    }
+  },
+  {
+    "n": 141,
+    "coreHint": "The ELSE branch gives an alternative for families without digital access.",
+    "stretch": {
+      "task": "Introduce a third output for a family that prefers telephone contact.",
+      "hint": "Add a second condition such as needsCall.",
+      "answer": "Online true -> app; online false and needsCall true -> phone; else paper."
+    },
+    "mastery": {
+      "task": "Design a three-method communication chooser using internet access, accessibility need and urgency, then test cases for exclusion.",
+      "hint": "Define priorities and test mutually conflicting preferences.",
+      "answer": "Example: no internet+urgent -> phone; no internet+nonurgent -> paper; internet+accessible -> app; inaccessible app -> accessible alternative. Explain algorithm limits."
+    }
+  },
+  {
+    "n": 142,
+    "coreHint": "False authorisation means the output is Access denied.",
+    "stretch": {
+      "task": "Add a counter that increments for denied access.",
+      "hint": "Count only unauthorised checks.",
+      "answer": "False increments counter to1; true leaves it at0."
+    },
+    "mastery": {
+      "task": "Design a permissions check that allows a user to read but not necessarily write a file. Test authorised role, action and account status.",
+      "hint": "Use roles/permissions, not only password knowledge.",
+      "answer": "A reader requesting read -> Allowed; reader requesting write -> Denied; inactive user -> Denied regardless of role."
+    }
+  },
+  {
+    "n": 144,
+    "coreHint": "marks[2] means the third element in a zero-based array.",
+    "stretch": {
+      "task": "Modify to loop through all three marks and print the sum.",
+      "hint": "Start total at zero; loop 0–2.",
+      "answer": "3+4+5=12."
+    },
+    "mastery": {
+      "task": "Debug a trace that wrongly accesses index 3 in a three-element array and make it safe for either one or three values.",
+      "hint": "Use length−1 for the last index.",
+      "answer": "For [3,4,5] total12; for [9] total9; never attempt index length."
+    }
+  },
+  {
+    "n": 145,
+    "coreHint": "AND requires both inputs true.",
+    "stretch": {
+      "task": "Add a second output for OR and compare both results when A=true, B=false.",
+      "hint": "Evaluate two conditions independently.",
+      "answer": "AND=0, OR=1."
+    },
+    "mastery": {
+      "task": "Generate the complete two-input truth tables for AND, OR and NOT A in a loop, stating four input combinations.",
+      "hint": "Use nested loops for A and B; compute each output.",
+      "answer": "00→AND0 OR0 NOT A1; 01→0,1,1; 10→0,1,0; 11→1,1,0."
+    }
+  },
+  {
+    "n": 146,
+    "coreHint": "(A AND B) OR C is true whenever C is true.",
+    "stretch": {
+      "task": "Change C to false and test both values of B.",
+      "hint": "Compute intermediate A AND B first.",
+      "answer": "With A=true,B=false,C=false no Alarm; B=true prints Alarm."
+    },
+    "mastery": {
+      "task": "Write a small program or full truth table for (A AND B) OR C. Compare a case where C overrides the AND condition.",
+      "hint": "Eight input rows and an intermediate X column.",
+      "answer": "ABC=000 0,001 1,010 0,011 1,100 0,101 1,110 1,111 1; intermediate X=A AND B."
+    }
+  },
+  {
+    "n": 147,
+    "coreHint": "Score is updated before it is printed; a translator still needs to execute the code.",
+    "stretch": {
+      "task": "Replace arithmetic addition with multiplication and predict the result.",
+      "hint": "Change one operator at a time.",
+      "answer": "2×3=6 rather than 5."
+    },
+    "mastery": {
+      "task": "Write a classification algorithm that describes the role of compiler, interpreter and CPU for a chosen code workflow, with an unknown-language input.",
+      "hint": "Keep factual distinctions rather than ranking all implementations by speed.",
+      "answer": "Compiler produces translated executable/intermediate output, interpreter executes through runtime, CPU runs machine instructions. Unknown input should be handled without false claims."
+    }
+  },
+  {
+    "n": 148,
+    "coreHint": "A breakpoint before the update shows the original counter.",
+    "stretch": {
+      "task": "Insert another update then predict the variable after each step.",
+      "hint": "Trace 3→5→7 if two additions of2.",
+      "answer": "Final output 7; a breakpoint before first addition sees3."
+    },
+    "mastery": {
+      "task": "Given a five-line faulty running total, choose two breakpoint positions, list expected variable values and identify the first faulty assignment.",
+      "hint": "Compare expected with actual at each step.",
+      "answer": "Example total starts0, after +3 =3, after accidental -2 =1 instead of5. Pause before/after faulty statement; fix to +2 and retest."
+    }
+  },
+  {
+    "n": 149,
+    "coreHint": "The final array index is 2.",
+    "stretch": {
+      "task": "Add a linear-search loop that prints index when it finds 6 in [4,6,9].",
+      "hint": "Search from index0; stop at first match.",
+      "answer": "Index1 is found."
+    },
+    "mastery": {
+      "task": "Compare linear and binary search code on sorted [2,5,8,11,14,17,20] for target17; trace indexes and describe precondition.",
+      "hint": "Linear visits indexes0..5; binary uses midpoint and halves.",
+      "answer": "Linear six comparisons; binary mid3=11,low4; mid5=17 found in two comparisons."
+    }
+  },
+  {
+    "n": 150,
+    "coreHint": "Adding 2 three times yields 6.",
+    "stretch": {
+      "task": "Modify the loop to accept a different value each pass and add them.",
+      "hint": "Use input() inside the loop, not fixed +2.",
+      "answer": "For inputs 3,5,4 the result is12."
+    },
+    "mastery": {
+      "task": "Write a program that accepts marks until a sentinel -1, ignores invalid marks above100 and outputs count and average of valid marks only.",
+      "hint": "Guard division by zero if no valid marks.",
+      "answer": "For 50,150,70,-1: valid count2, total120, average60; 150 excluded; immediate -1 -> no average available."
+    }
+  },
+  {
+    "n": 151,
+    "coreHint": "The condition with OR wrongly accepts 0.",
+    "stretch": {
+      "task": "Correct to AND and test lower/upper boundaries.",
+      "hint": "Both comparisons must be true.",
+      "answer": "1 and20 accepted, 0 and21 rejected."
+    },
+    "mastery": {
+      "task": "Build a repeat-until-valid integer input routine with explicit erroneous-input handling and tests for text, fractional and boundary inputs.",
+      "hint": "Validate integer type before numeric range check.",
+      "answer": "Normal 10, boundary1/20 accepted; 0/21 invalid; 'abc' and2.5 rejected for integer-only rule."
+    }
+  },
+  {
+    "n": 152,
+    "coreHint": "If required RAM exceeds free RAM, secondary backing might be used.",
+    "stretch": {
+      "task": "Output the shortage in MB for required1200 and available800.",
+      "hint": "shortage=required−available.",
+      "answer": "400 MB shortage."
+    },
+    "mastery": {
+      "task": "Design a memory monitor which processes changing available RAM and warns if a request would require virtual memory, without claiming it always allocates successfully.",
+      "hint": "Distinguish shortage from OS allocation policy.",
+      "answer": "For requests 800,1200 with freeRAM800: first fits, second shortage400; equal boundary fits; virtual-memory warning is an estimate."
+    }
+  },
+  {
+    "n": 153,
+    "coreHint": "The formula outputs size in bits until ÷8 is applied.",
+    "stretch": {
+      "task": "Change bit depth to16 and predict file size.",
+      "hint": "Double bit depth doubles uncompressed bits.",
+      "answer": "4800→9600 bits at fixed image size."
+    },
+    "mastery": {
+      "task": "Write functions for image bytes and mono sound bytes. Validate positive dimensions, sample rate, duration and bit depth.",
+      "hint": "Use image w×h×depth÷8; sound rate×seconds×depth÷8.",
+      "answer": "Image30×20×8=600B; sound1000Hz×4s×8=4000B; reject 0/negative inputs or report invalid."
+    }
+  },
+  {
+    "n": 154,
+    "coreHint": "Three failed attempts trigger the warning at >=3.",
+    "stretch": {
+      "task": "Add an earlier warning for exactly two failures.",
+      "hint": "Check lock threshold before warning.",
+      "answer": "3 locks; 2 warns."
+    },
+    "mastery": {
+      "task": "Design a small layered-security decision system with authentication status, MFA and account-lock state; test conflicting conditions.",
+      "hint": "Account locked should override other successful factors.",
+      "answer": "Locked+valid factors Deny; unlocked+password/MFA true Allow; either factor missing Deny. Explain why firewalls/encryption cover different risks."
+    }
+  },
+  {
+    "n": 155,
+    "coreHint": "Encryption and backup handle different protections.",
+    "stretch": {
+      "task": "Add a status message explaining which protection is missing.",
+      "hint": "Use IF/ELSE IF to give separate outcomes.",
+      "answer": "Encrypted true/backups false -> Backup required; both true -> Ready."
+    },
+    "mastery": {
+      "task": "Design a preparedness checker using encryption, verified backup and update status; prioritise missing controls and justify their roles.",
+      "hint": "Report every missing control, not just first.",
+      "answer": "Test all true -> Ready; missing backup -> recovery risk; missing updates -> vulnerability risk; missing encryption -> confidentiality risk."
+    }
+  },
+  {
+    "n": 156,
+    "coreHint": "32000 bits ÷8 gives 4000 bytes.",
+    "stretch": {
+      "task": "Add decimal-kB output to the calculation.",
+      "hint": "bytes/1000 gives kB.",
+      "answer": "4000B =4kB."
+    },
+    "mastery": {
+      "task": "Write an exam calculator for image file size with selectable bits or bytes output; reject negative image dimensions and include colour depth.",
+      "hint": "Track units explicitly.",
+      "answer": "80×50×8=32,000 bits=4000B=4kB. Negative width invalid; bit depth16 doubles size."
+    }
+  },
+  {
+    "n": 157,
+    "coreHint": "Count increments only on even i.",
+    "stretch": {
+      "task": "Change the loop to count odd values and trace iterations 1–5.",
+      "hint": "i MOD 2 == 1.",
+      "answer": "For1..5 odd count3."
+    },
+    "mastery": {
+      "task": "Write a function to count odd and even values in a supplied array. Check zero, negatives and the empty array.",
+      "hint": "MOD comparison with0 detects even numbers; odd if MOD2 !=0.",
+      "answer": "[0,-3,4] → even2, odd1; []→0,0. Use one traversal."
+    }
+  },
+  {
+    "n": 158,
+    "coreHint": "1600 bits/8 is200 bytes.",
+    "stretch": {
+      "task": "Output both converted bytes and a description of the common mistake of forgetting ÷8.",
+      "hint": "Store bits and bytes separately.",
+      "answer": "1600 bits and200 bytes."
+    },
+    "mastery": {
+      "task": "Create a test harness with known values to catch an incorrect bits-to-bytes conversion routine, including zero and nonmultiples of eight.",
+      "hint": "Use expected data to compare actual code outputs.",
+      "answer": "0bits=0B,8bits=1B,1600bits=200B; for9bits report1 whole byte+1bit (or1.125B as appropriate)."
+    }
+  },
+  {
+    "n": 159,
+    "coreHint": "Left6 > right1, so swap is needed.",
+    "stretch": {
+      "task": "Write the three assignments to swap two values safely using temp.",
+      "hint": "Save the old left before replacing it.",
+      "answer": "temp=left;left=right;right=temp produces left1,right6."
+    },
+    "mastery": {
+      "task": "Complete one bubble-sort pass on [6,1,4,2] in OCR-style code and explain where the largest item ends up.",
+      "hint": "Compare adjacent indexes; swap when first > second.",
+      "answer": "After pass: [1,4,2,6]. The largest6 is last. For [1,2,3], zero swaps."
+    }
+  },
+  {
+    "n": 160,
+    "coreHint": "The smallest variable updates when a lower value appears.",
+    "stretch": {
+      "task": "Extend the code to compare a third value and print the minimum.",
+      "hint": "Apply the same IF test to the third input.",
+      "answer": "Start9, compare4 ->4; compare2 ->2."
+    },
+    "mastery": {
+      "task": "Write a function that finds both minimum and maximum of a non-empty array without sorting; explain behaviour for all-equal values.",
+      "hint": "Initialise min/max to first item; inspect each other item.",
+      "answer": "[4,1,8,1] min1 max8; [7,7] min=max=7. Define handling for empty input."
+    }
+  },
+  {
+    "n": 161,
+    "coreHint": "12×10×4÷8 gives60 bytes.",
+    "stretch": {
+      "task": "Modify for 8-bit colour and show two intermediate calculations.",
+      "hint": "Pixels then bits then bytes.",
+      "answer": "12×10×8=960 bits=120B."
+    },
+    "mastery": {
+      "task": "Build a mixed file-size program that takes an image or mono sound scenario and chooses the correct formula, checking units and unknown type.",
+      "hint": "Use selection on data type and validate parameters.",
+      "answer": "Image12×10×4=60B; sound1000Hz×2s×8=2000B; unknown type rejected; label units."
+    }
+  },
+  {
+    "n": 162,
+    "coreHint": "At attempts3, >3 is false, so Open prints.",
+    "stretch": {
+      "task": "Fix to >=3 and add a test at attempts2.",
+      "hint": "Use boundary tests at2 and3.",
+      "answer": "2 Open,3 Locked."
+    },
+    "mastery": {
+      "task": "Debug a login loop with a counter that sometimes resets inside the loop. Identify the fault by tracing three failures and correct it.",
+      "hint": "Reset after successful login, not each failed attempt.",
+      "answer": "Three wrong passwords must reach attempts3 and lock. A reset on every iteration prevents lock. Test correct login after two failures and subsequent new session."
+    }
+  },
+  {
+    "n": 163,
+    "coreHint": "Multiplying6 by2 produces12.",
+    "stretch": {
+      "task": "Change the code to demonstrate a left shift by two places using multiplication by4.",
+      "hint": "Unsigned shifts act as multiplying by powers of2 only without overflow.",
+      "answer": "6×4=24."
+    },
+    "mastery": {
+      "task": "Write a calculator predicting eight-bit unsigned logical left shift and detecting overflow/lost bits; compare shift1 and shift2.",
+      "hint": "Restrict results to 0–255; inspect bits shifted out.",
+      "answer": "For 6 <<2, result24 no overflow; for 200<<1, mathematical400 cannot fit eight bits, so overflow/lost high bit should be identified."
+    }
+  },
+  {
+    "n": 164,
+    "coreHint": "values[0] and values[2] are2 and10.",
+    "stretch": {
+      "task": "Add a loop to total the three values and compare with the original two-element sum.",
+      "hint": "Loop 0..2 and accumulate.",
+      "answer": "Original output12; full total18."
+    },
+    "mastery": {
+      "task": "Solve a combined problem: input a list, calculate its sum, locate the largest element and output the correct zero-based index, with tied maxima documented.",
+      "hint": "Use single traversal, track total and maxIndex, decide whether the first tie wins.",
+      "answer": "[2,6,10] -> sum18,max10,index2; [5,5] -> sum10,max5,index0 if only updating on >; empty list needs a defined policy."
+    }
+  }
+]
