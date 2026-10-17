@@ -710,7 +710,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const isTeaching=phase==="learning",family=isTeaching?(plan.families?.[index]||plan.family):(phase==="guided"?plan.family:(plan.modelFamily||plan.family));
     const nums=pickNums(q),useNums=nums||plan.values||[];
     return {
-      family,focus:isTeaching?index:phase==="guided"?index:2,phase,
+      family,focus:isTeaching?index:phase==="guided"?index:0,phase,
       labels:plan.labels.slice(),values:useNums,target:String(plan.target||""),
       rows:plan.rows||null,threeInput:!!plan.threeInput,
       logic:(plan.logicStages||[])[index]||"AND",
@@ -724,22 +724,31 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   lesson.visuals=(lesson.visuals||[]).map((spec,i)=>({...spec,rich:cfg(i,"learning",lesson.c?.[i]?.[1]||"")}));
   if(lesson.idoVisual&&n!=="090")lesson.idoVisual={...lesson.idoVisual,rich:cfg(0,"model",lesson.m?.q||"")};
   if(Array.isArray(lesson.wVisuals))lesson.wVisuals=lesson.wVisuals.map((spec,i)=>({...spec,rich:cfg(i,"guided",lesson.w?.[i]?.[0]||"")}));
-  const mini=(base,phase,q,index)=>({
-    ...(base||{}),
-    title:phase==="retrieval"?"PREVIOUSLY TAUGHT · VISUAL QUESTION":"EXAM QUESTION · WORK IT OUT",
-    rich:{...cfg(index,phase,q),phase,labels:["Information","Operation?","Result?"],focus:0,
-      family:plan.family==="sort"||plan.family==="search"||plan.family==="array"||plan.family==="truth"||plan.family==="gate"||plan.family==="string"||plan.family==="trace"?plan.family:
-             ["branch","flow","validation","loop"].includes(plan.family)?"branch":"process"}
-  });
+  const mini=(base,phase,q,index,earlier)=>{
+    const source=J277_VISUAL_PLANS[String(earlier||n).padStart(3,"0")]||plan;
+    const kind=source.family;
+    const oldCfg=cfg(index,phase,q),nums=pickNums(q);
+    return {
+      ...(base||{}),
+      title:phase==="retrieval"?"PREVIOUS LEARNING · VISUAL RECALL":"EXAM QUESTION · WORK IT OUT",
+      rich:{...oldCfg,phase,focus:0,labels:["Given data","Method?","Answer?"],values:nums||source.values||[],
+        target:String(source.target||""),threeInput:!!source.threeInput,
+        family:["sort","search","array","truth","gate","string","trace"].includes(kind)?kind:
+               ["branch","flow","validation","loop"].includes(kind)?"branch":"process"}
+    };
+  };
   if(Array.isArray(lesson.retrievalVisuals)){
     lesson.retrievalVisuals=[...lesson.retrievalVisuals];
-    [1,3].forEach(i=>{if(!lesson.retrievalVisuals[i])lesson.retrievalVisuals[i]=mini({}, "retrieval",lesson.r?.[i]?.[0]||"",i);});
+    [1,3].forEach(i=>{
+      const source=String(lesson.refs?.[i]||"").match(/L(\d{3})/);
+      if(!lesson.retrievalVisuals[i])lesson.retrievalVisuals[i]=mini({},"retrieval",lesson.r?.[i]?.[0]||"",i,source?.[1]);
+    });
   }
   if(!lesson.isAssessment&&Array.isArray(lesson.examVisuals)){
     lesson.examVisuals=[...lesson.examVisuals];
-    if(!lesson.examVisuals[0])lesson.examVisuals[0]=mini({}, "independent",lesson.e?.[0]?.[0]||"",0);
+    if(!lesson.examVisuals[0])lesson.examVisuals[0]=mini({},"independent",lesson.e?.[0]?.[0]||"",0,n);
   }
-  if(lesson.priorExam?.visual)lesson.priorExam.visual=mini(lesson.priorExam.visual,"retrieval",lesson.priorExam.q||"",0);
+  if(lesson.priorExam?.visual)lesson.priorExam.visual=mini(lesson.priorExam.visual,"retrieval",lesson.priorExam.q||"",0,lesson.priorExam.from);
   lesson.visualAuditV3=true;
   return lesson;
  }
