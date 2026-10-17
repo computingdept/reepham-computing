@@ -1565,7 +1565,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #you-do .y11-scene svg{width:100%;height:auto;max-height:190px}
  @media(max-width:900px){.y11-guided-visual .y11-scene svg,#i-do .j277-ido-visual-frame .y11-scene svg{max-height:none}}
  .y11-challenge-hint{margin:16px 0 4px;padding:13px 16px;border:1px solid #c7d9c8;background:#f0f8f2;border-radius:11px}.y11-challenge-hint summary{font-weight:850;cursor:pointer}.y11-challenge-hint p{line-height:1.5} 
- /* Lesson 019: larger visuals, balanced two-panel classroom layout.
+ /* Year 11: scale substantive teaching diagrams for classroom TVs and phones. */
+ .j277-visual-lesson #new-learning .nl-reference .y11-scene,
+ .j277-visual-lesson #i-do .ido-reference .y11-scene,
+ .j277-visual-lesson #we-do .wedo-reference .y11-scene{max-width:min(100%,610px)}
+ .j277-visual-lesson #new-learning .nl-reference .y11-scene svg{max-height:min(41vh,350px)}
+ .j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg{max-height:min(45vh,365px)}
+ .j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:min(43vh,350px)}
+ @media(max-width:900px){.j277-visual-lesson #new-learning .nl-reference .y11-scene svg,.j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg,.j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:none}}
+  /* Lesson 019: larger visuals, balanced two-panel classroom layout.
     Scoped to J277 CPU; shared H446 classroom CSS stays untouched. */
  @media(min-width:901px){
   .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
