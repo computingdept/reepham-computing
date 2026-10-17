@@ -695,14 +695,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     }
   }else if(["branch","flow","validation","loop"].includes(family)){
     const condition=name(1,"Condition?");
-    body+=card(12,146,122,68,name(0,"Input"),c.blueP)+arrow(136,180,191,180);
-    body+='<path d="M279 89 L368 180 L279 271 L190 180 Z" fill="'+c.goldP+'" stroke="'+c.gold+'" stroke-width="3"/>';
+    body+=card(12,146,122,68,name(0,"Input"),stage===0?c.goldP:c.blueP)+arrow(136,180,191,180);
+    body+='<path d="M279 89 L368 180 L279 271 L190 180 Z" fill="'+(stage===1?c.goldP:c.blueP)+'" stroke="'+c.gold+'" stroke-width="3"/>';
     body+=wrap(279,182,condition,13,16);
-    body+=arrow(370,177,414,130)+card(418,95,125,73,name(2,"Yes path"),guided?c.blueP:c.greenP);
+    body+=arrow(370,177,414,130)+card(418,95,125,73,name(2,"Yes path"),stage===2?c.goldP:c.greenP);
     body+=text(398,154,"YES",14,c.green);
-    body+=line(279,271,279,296,c.rose)+text(318,286,"NO",15,c.rose);
-    lower=family==="loop"?"False exits; repeated true paths recheck the condition":"Only the selected branch executes";
-    if(family==="loop"){body+=line(279,292,155,292)+line(155,292,155,107)+line(155,107,213,107)+text(192,100,"REPEAT",13,c.green);}
+    body+=line(279,271,279,284,c.rose)+line(279,284,409,284,c.rose)+card(417,246,125,54,name(3,"No path"),stage===3?c.goldP:c.roseP);
+    body+=text(364,275,"NO",14,c.rose);
+    lower=family==="loop"?"The loop rechecks until its exit condition is reached":"Follow only the branch selected by the decision";
+    if(family==="loop"){body+=line(279,284,155,284)+line(155,284,155,107)+line(155,107,213,107)+text(184,99,"REPEAT",12,c.green);}
   }else if(["trace","test"].includes(family)){
     const rows=p.rows&&Array.isArray(p.rows)?p.rows.slice(0,4):stage===0?[["1",val(0,"4"),""],["2","?",""],["3","?",""]]:[["1",val(0,"4"),""],["2",val(1,"7"),""],["3",val(2,"7"),val(2,"7")]];
     const headers=family==="test"?["TEST INPUT","EXPECTED","ACTUAL"]:["STEP","VARIABLE","OUTPUT"];
