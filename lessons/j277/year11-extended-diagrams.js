@@ -223,6 +223,39 @@ function matchedLessonScene(spec,stage){
  const info=(heading,rows)=>{let h=small(25,78,heading.toUpperCase());rows.forEach((r,i)=>{const y=109+i*57,highlight=i===stage,visible=i<=stage;h+=label(27,y,183,48,r[0],highlight?K.amber:K.sky,17);h+=label(217,y,393,48,visible?r[1]:"Think: what comes next?",visible?K.mint:K.grey,r[1].length>36?15:18);});return h;};
  const trace=(heading,values,answers)=>{let h=small(25,76,heading.toUpperCase());values.forEach((v,i)=>{let x=23+i*(587/values.length),width=587/values.length-8;h+=label(x,116,width,77,String(v),i===stage?K.amber:K.sky,24);h+=label(x,215,width,55,i<=stage?String(answers[i]):"?",i===stage?K.mint:K.grey,20);});h+=small(41,321,"Top: input / index     Bottom: calculated or traced state");return h;};
 
+
+ if(title==="Autumn Assessment (AP1)"||title==="Spring Assessment (AP2)"){
+   const spring=title.includes("Spring"),phase=String(spec.phase||"");
+   if(phase==="new-learning"){
+     return info("EXAM ROUTINE · THINK, WORK, CHECK",[
+       ["READ","Underline the question command word"],
+       ["PLAN","Use available marks to plan detail"],
+       ["WORK","Show calculations, traces or reasons"],
+       ["CHECK","Units, indexes and answer accuracy"]]);
+   }
+   if(!guided){
+     if(spring)return info("AP2 I DO · UNCOMPRESSED IMAGE SIZE (DIFFERENT EXAMPLE)",[
+       ["PIXELS","10 × 10 = 100 pixels"],
+       ["BITS","100 × 8 = 800 bits"],
+       ["CONVERT","800 ÷ 8"],
+       ["OUTPUT","100 bytes"]]);
+     return info("AP1 I DO · UNCOMPRESSED IMAGE SIZE (DIFFERENT EXAMPLE)",[
+       ["PIXELS","10 × 20 = 200 pixels"],
+       ["BITS","200 × 4 = 800 bits"],
+       ["CONVERT","800 ÷ 8"],
+       ["OUTPUT","100 bytes"]]);
+   }
+   if(spring)return info("AP2 WE DO · TRACE AN ACCUMULATOR",[
+       ["INITIAL","total = 0"],
+       ["LOOP","for i = 1 to 3"],
+       ["UPDATES","1 → 3 → 6"],
+       ["OUTPUT","6"]]);
+   return info("AP1 WE DO · TRACE AN ACCUMULATOR",[
+       ["INITIAL","total = 0"],
+       ["LOOP","for i = 1 to 2"],
+       ["UPDATES","1 → 3"],
+       ["OUTPUT","3"]]);
+ }
  if(title==="Testing and Test Data"&&guided)return info("QUANTITY ACCEPTED FROM 1 TO 10",[
  ["NORMAL","5 should be accepted"],["BOUNDARY","1 and 10 accepted"],["INVALID","0 and 11 rejected"],["ERRONEOUS","'ten' rejected"]]);
  if(title==="CPU Architecture and the Fetch-Execute Cycle"){
