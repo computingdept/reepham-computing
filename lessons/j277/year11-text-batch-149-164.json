@@ -1,0 +1,1042 @@
+[
+  {
+    "n": 149,
+    "facts": [
+      [
+        "Read algorithm details",
+        "Distinguish a stated loop boundary, index and test from what the algorithm is intended to do."
+      ],
+      [
+        "Trace faithfully",
+        "Record each update and branch, including false conditions and early stops."
+      ],
+      [
+        "Identify prerequisites",
+        "Explain when searching and sorting methods are valid."
+      ],
+      [
+        "Link method to marks",
+        "An exam explanation should specify precise comparisons, movement or changes to stored data."
+      ]
+    ],
+    "ido": {
+      "q": "Trace linear search for 9 in [4,6,9,2] with zero-based indexes.",
+      "steps": [
+        "Compare index 0: 4 ≠ 9.",
+        "Compare index 1: 6 ≠ 9.",
+        "Compare index 2: 9 = 9; stop.",
+        "Found at index 2 after three comparisons."
+      ]
+    },
+    "wedo": {
+      "q": "Trace binary search for 14 in sorted [2,6,10,14,18,22,26].",
+      "steps": [
+        "low=0 high=6, mid=3.",
+        "The midpoint value 14 equals the target.",
+        "Stop immediately.",
+        "Index 3 found with one comparison."
+      ]
+    },
+    "code": {
+      "source": "array values = [4, 6, 9]\nprint(values[2])",
+      "predict": "Predict the output.",
+      "change": "Change index to 0.",
+      "extend": "Explain why indexes are not element counts.",
+      "answer": "9; 4; first valid index is 0."
+    },
+    "exam": [
+      {
+        "q": "A linear search seeks 7 in [3,5,7,9]. Give number of checks.",
+        "answer": "3.",
+        "marks": 2
+      },
+      {
+        "q": "State a requirement of binary search.",
+        "answer": "Sorted input.",
+        "marks": 1
+      },
+      {
+        "q": "Explain what one pass of bubble sort guarantees.",
+        "answer": "After a full ascending pass, the largest unsorted value has reached the right end of that section.",
+        "marks": 3
+      }
+    ],
+    "visual": "search pointers and algorithm mark scheme checkmarks",
+    "stage": "text-draft"
+  },
+  {
+    "n": 150,
+    "facts": [
+      [
+        "Identify input",
+        "List all inputs, types and relevant constraints before writing code."
+      ],
+      [
+        "Design",
+        "State algorithm steps separately from program syntax."
+      ],
+      [
+        "Select and iterate",
+        "Write appropriate IF/ELSE and loops rather than unnecessary repetition."
+      ],
+      [
+        "Output and test",
+        "Check both a typical value and at least one boundary/unexpected condition."
+      ]
+    ],
+    "ido": {
+      "q": "Write an algorithm to input three integers and output their total.",
+      "steps": [
+        "Set total=0.",
+        "Repeat three times to input a number.",
+        "Add each entered number to total.",
+        "Output total after the loop."
+      ]
+    },
+    "wedo": {
+      "q": "Design a program to input five marks and count those ≥ 50.",
+      "steps": [
+        "Start passCount=0.",
+        "Loop five times reading mark.",
+        "If mark≥50 then increment passCount.",
+        "Print passCount after all entries."
+      ]
+    },
+    "code": {
+      "source": "total = 0\nfor i = 1 to 3\n    total = total + 2\nnext i\nprint(total)",
+      "predict": "Predict output.",
+      "change": "Change loop end to 5.",
+      "extend": "Extend to input one value on each pass instead of adding 2.",
+      "answer": "6; 10; use an input statement and total=total+value."
+    },
+    "exam": [
+      {
+        "q": "Write OCR-style pseudocode to output the larger of two input values.",
+        "answer": "Input a,b; if a>b print(a), else print(b); equality may output either as both are largest.",
+        "marks": 4
+      },
+      {
+        "q": "Explain why an accumulator starts at zero when summing values.",
+        "answer": "Zero is the additive identity and avoids introducing an unwanted starting total.",
+        "marks": 2
+      },
+      {
+        "q": "State why a final output statement should be outside a loop when only one total is required.",
+        "answer": "Inside the loop would print intermediate totals repeatedly.",
+        "marks": 2
+      }
+    ],
+    "visual": "scenario requirements → code construction → trace outcome",
+    "stage": "text-draft"
+  },
+  {
+    "n": 151,
+    "facts": [
+      [
+        "Validation",
+        "Test data against defined rules and loop back after rejection if further input is required."
+      ],
+      [
+        "Testing",
+        "Include normal, boundary, invalid and erroneous inputs."
+      ],
+      [
+        "Logic errors",
+        "A syntactically valid program may still use incorrect conditions or updates."
+      ],
+      [
+        "Maintainability",
+        "Simple named variables, comments and subprograms support future debugging."
+      ]
+    ],
+    "ido": {
+      "q": "A test plan is needed for a quantity 1–20 inclusive. Produce four categories.",
+      "steps": [
+        "Normal quantity=10.",
+        "Boundary quantities=1 and 20.",
+        "Invalid numeric quantities 0 and 21.",
+        "Erroneous input 'many' should be handled safely."
+      ]
+    },
+    "wedo": {
+      "q": "Fix a quantity check using quantity>=1 OR quantity<=20.",
+      "steps": [
+        "Try quantity=0 to show the condition wrongly accepts it.",
+        "Replace OR with AND.",
+        "Test both boundaries.",
+        "Accept 1 and 20, reject 0 and 21."
+      ]
+    },
+    "code": {
+      "source": "quantity = 0\nif quantity >= 1 OR quantity <= 20 then\n    print(\"Accepted\")\nendif",
+      "predict": "Predict output.",
+      "change": "Replace OR with AND.",
+      "extend": "Extend with an ELSE printing Rejected.",
+      "answer": "Original prints Accepted; corrected condition fails; ELSE prints Rejected."
+    },
+    "exam": [
+      {
+        "q": "Give one invalid and one erroneous input for age 5–16.",
+        "answer": "Invalid 20 (integer out of range); erroneous 'cat' (non-numeric text).",
+        "marks": 2
+      },
+      {
+        "q": "Explain the difference between validation and authentication.",
+        "answer": "Validation checks input constraints; authentication checks claimed identity.",
+        "marks": 2
+      },
+      {
+        "q": "Describe how a trace table helps locate a logic error.",
+        "answer": "It records successive states and shows the first variable/branch differing from expected behaviour.",
+        "marks": 3
+      }
+    ],
+    "visual": "input→validate→loop back; boundary test table",
+    "stage": "text-draft"
+  },
+  {
+    "n": 152,
+    "facts": [
+      [
+        "CPU registers",
+        "PC, MAR, MDR and ACC have distinct jobs during instruction processing."
+      ],
+      [
+        "Primary memory",
+        "RAM is volatile working memory; ROM non-volatile firmware; cache accelerates access."
+      ],
+      [
+        "Storage selection",
+        "Compare SSD, HDD and optical media against contextual constraints."
+      ],
+      [
+        "Extended responses",
+        "Explain causal mechanisms, not merely 'faster' or 'cheaper'."
+      ]
+    ],
+    "ido": {
+      "q": "Explain how cache can help a CPU running a frequently repeated program.",
+      "steps": [
+        "Repeated instructions/data may be present in cache.",
+        "Cache access is typically faster than RAM.",
+        "CPU may avoid slower RAM fetches on a cache hit.",
+        "This can improve execution performance."
+      ]
+    },
+    "wedo": {
+      "q": "A mobile field worker needs portable storage. Explain one benefit and drawback of SSD.",
+      "steps": [
+        "No moving parts improves resistance to impacts.",
+        "Often fast read/write access.",
+        "Potential higher cost per GB compared with HDD.",
+        "Give scenario-linked balanced conclusion."
+      ]
+    },
+    "code": {
+      "source": "requiredMB = 1200\navailableMB = 800\nif requiredMB > availableMB then\n    print(\"Storage backing needed\")\nendif",
+      "predict": "Predict output.",
+      "change": "Change availableMB to 1500.",
+      "extend": "Explain which OS technique could be involved when RAM is insufficient.",
+      "answer": "Prints backing needed; then no output; virtual memory/page backing."
+    },
+    "exam": [
+      {
+        "q": "What does MDR hold during a memory operation?",
+        "answer": "Data or instruction being transferred.",
+        "marks": 2
+      },
+      {
+        "q": "Give one difference between RAM and ROM.",
+        "answer": "RAM is volatile working memory; ROM is non-volatile and commonly stores firmware.",
+        "marks": 2
+      },
+      {
+        "q": "Explain one disadvantage of an HDD in a moving laptop.",
+        "answer": "Moving mechanical parts make it more vulnerable to physical shock.",
+        "marks": 3
+      }
+    ],
+    "visual": "FDE registers and primary/secondary storage hierarchy",
+    "stage": "text-draft"
+  },
+  {
+    "n": 153,
+    "facts": [
+      [
+        "Binary place values",
+        "Use 128,64,32,16,8,4,2,1 for unsigned eight-bit numbers."
+      ],
+      [
+        "Hexadecimal",
+        "Group binary digits into nibbles of four bits."
+      ],
+      [
+        "Image size",
+        "Width×height×colour depth yields uncompressed bits."
+      ],
+      [
+        "Sound size",
+        "Samples/second×seconds×bits/sample yields mono uncompressed bits."
+      ]
+    ],
+    "ido": {
+      "q": "Convert eight-bit 10110110 to denary and hexadecimal.",
+      "steps": [
+        "Add values: 128+32+16+4+2=182.",
+        "Split 1011 and 0110.",
+        "Convert to B6 hexadecimal.",
+        "Check 11×16+6=182."
+      ]
+    },
+    "wedo": {
+      "q": "Calculate the bits in a 60×40 bitmap with four-bit colour depth.",
+      "steps": [
+        "Pixels 60×40 = 2400.",
+        "Multiply by 4 bits/pixel.",
+        "Total 9600 bits.",
+        "Divide eight to get 1200 bytes if requested."
+      ]
+    },
+    "code": {
+      "source": "width = 30\nheight = 20\ncolourDepth = 8\nprint(width * height * colourDepth)",
+      "predict": "Predict output in bits.",
+      "change": "Change colourDepth to 16.",
+      "extend": "Extend to output size in bytes.",
+      "answer": "4800 bits; 9600 bits; 600 bytes initially."
+    },
+    "exam": [
+      {
+        "q": "Convert hex 2A to denary.",
+        "answer": "2×16+10=42.",
+        "marks": 3
+      },
+      {
+        "q": "Convert eight-bit binary 11001100 to hex.",
+        "answer": "CC.",
+        "marks": 2
+      },
+      {
+        "q": "Calculate mono sound bytes at 1000 samples/s, 4 s, 8 bits/sample.",
+        "answer": "1000×4×8÷8=4000 bytes.",
+        "marks": 4
+      }
+    ],
+    "visual": "big visual formula grid: bit weights, nibble split, image/sound quantities",
+    "stage": "text-draft"
+  },
+  {
+    "n": 154,
+    "facts": [
+      [
+        "Network choice",
+        "Distinguish LAN/WAN, client-server/peer-to-peer and suitable devices."
+      ],
+      [
+        "Internet services",
+        "DNS maps domain names to IP addresses; routers connect networks."
+      ],
+      [
+        "Recognise attacks",
+        "Distinguish phishing, malware and denial of service."
+      ],
+      [
+        "Prevent attacks",
+        "Combine least privilege, authentication, encryption, updates and backups."
+      ]
+    ],
+    "ido": {
+      "q": "A school receives a phishing email directing staff to an unfamiliar login page. Recommend two defences.",
+      "steps": [
+        "Identify credential theft/social engineering.",
+        "Train staff to verify suspicious links through another channel.",
+        "Use MFA so a password alone is insufficient.",
+        "Explain both measures target different stages of compromise."
+      ]
+    },
+    "wedo": {
+      "q": "A device has poor Wi-Fi but fast wired access. Explain two possible causes.",
+      "steps": [
+        "Signal interference or distance might reduce Wi-Fi quality.",
+        "Contention with other wireless devices reduces available capacity.",
+        "Wired connection avoids some wireless interference.",
+        "Do not assume internet service itself must be slow."
+      ]
+    },
+    "code": {
+      "source": "failed = 2\nfailed = failed + 1\nif failed >= 3 then\n    print(\"Lock account\")\nendif",
+      "predict": "Predict result.",
+      "change": "Change initial failed to 1.",
+      "extend": "Explain why this alone is not complete network security.",
+      "answer": "Lock account; then no output; layered controls are still needed."
+    },
+    "exam": [
+      {
+        "q": "State one role of DNS.",
+        "answer": "Resolves domain names to IP addresses.",
+        "marks": 2
+      },
+      {
+        "q": "Name the device that connects networks.",
+        "answer": "Router.",
+        "marks": 1
+      },
+      {
+        "q": "Explain why encryption alone does not prevent phishing.",
+        "answer": "Encryption protects data in transit but cannot stop a user willingly entering credentials into a fraudulent site.",
+        "marks": 3
+      }
+    ],
+    "visual": "threat pathway with prevention points and LAN routing diagram",
+    "stage": "text-draft"
+  },
+  {
+    "n": 155,
+    "facts": [
+      [
+        "Operating-system services",
+        "Manage memory, files, processes and peripherals."
+      ],
+      [
+        "Utility tools",
+        "Encryption, compression and HDD defragmentation serve different needs."
+      ],
+      [
+        "Societal impacts",
+        "Evaluate benefit and risk for identified stakeholders."
+      ],
+      [
+        "Legal framework",
+        "Match misuse, copyright and personal-data concerns to the appropriate legislation/rules."
+      ]
+    ],
+    "ido": {
+      "q": "Evaluate a school cloud backup service in terms of benefits and risks.",
+      "steps": [
+        "Off-site backups can support data recovery.",
+        "Internet dependency and availability can limit access.",
+        "Student records need protected access and appropriate lawful handling.",
+        "Justify using secure, tested backup procedures."
+      ]
+    },
+    "wedo": {
+      "q": "A staff member uploads copyrighted media without permission. Identify the issue.",
+      "steps": [
+        "Recognise original media may be protected.",
+        "Copying/distribution require a lawful licence or exception.",
+        "Check usage rights.",
+        "Conclude possible copyright infringement."
+      ]
+    },
+    "code": {
+      "source": "encrypted = true\nbackupAvailable = false\nif encrypted AND backupAvailable then\n    print(\"Fully ready\")\nelse\n    print(\"Review controls\")\nendif",
+      "predict": "Predict output.",
+      "change": "Change backupAvailable to true.",
+      "extend": "Explain why encryption and backup address different risks.",
+      "answer": "Review controls; Fully ready; confidentiality vs availability/recovery."
+    },
+    "exam": [
+      {
+        "q": "Give one benefit of OS multitasking.",
+        "answer": "Allows multiple applications/processes to make progress through scheduling.",
+        "marks": 2
+      },
+      {
+        "q": "What is the main purpose of a compression utility?",
+        "answer": "Reduce the size of stored/transmitted data.",
+        "marks": 2
+      },
+      {
+        "q": "Identify relevant law for accessing another user's account without permission.",
+        "answer": "Computer Misuse Act 1990.",
+        "marks": 1
+      }
+    ],
+    "visual": "impact/legal/utility comparison cards with scenario evidence",
+    "stage": "text-draft"
+  },
+  {
+    "n": 156,
+    "facts": [
+      [
+        "Paper 1 timing",
+        "The OCR J277/01 paper has 80 marks in 90 minutes."
+      ],
+      [
+        "Show calculations",
+        "Write formula, substitute numbers and give final units."
+      ],
+      [
+        "Plan explanations",
+        "Match distinct points and justifications to mark tariff."
+      ],
+      [
+        "Track time",
+        "Leave opportunity to revisit unanswered questions without sacrificing required detail."
+      ]
+    ],
+    "ido": {
+      "q": "Model a four-mark image-size calculation: 80×50 pixels at 8 bits/pixel.",
+      "steps": [
+        "Count 80×50=4000 pixels.",
+        "Multiply by eight: 32,000 bits.",
+        "Divide by eight: 4000 bytes.",
+        "Check that metadata/compression are excluded."
+      ]
+    },
+    "wedo": {
+      "q": "Plan a six-mark comparison of SSD and HDD for a traveller.",
+      "steps": [
+        "State SSD is solid-state/no moving parts.",
+        "Explain its durability benefit.",
+        "Explain potential faster access.",
+        "Balance with higher cost per GB; link to travel needs."
+      ]
+    },
+    "code": {
+      "source": "sizeBits = 32000\nsizeBytes = sizeBits DIV 8\nprint(sizeBytes)",
+      "predict": "Predict output.",
+      "change": "Change sizeBits to 48000.",
+      "extend": "Extend to calculate kB with decimal units.",
+      "answer": "4000 bytes; 6000 bytes; 4 kB initially."
+    },
+    "exam": [
+      {
+        "q": "State RAM volatility and its implication.",
+        "answer": "Volatile; active contents are lost without power.",
+        "marks": 2
+      },
+      {
+        "q": "Calculate the largest eight-bit unsigned number.",
+        "answer": "255.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why a router is needed between separate networks.",
+        "answer": "Forwards packets using logical/IP routing, allowing communication between networks.",
+        "marks": 3
+      }
+    ],
+    "visual": "90-minute paper pacing and worked calculation with units",
+    "stage": "text-draft"
+  },
+  {
+    "n": 157,
+    "facts": [
+      [
+        "Paper 2 timing",
+        "The OCR J277/02 paper has 80 marks in 90 minutes."
+      ],
+      [
+        "Code tracing",
+        "Write a reliable value table before selecting the output."
+      ],
+      [
+        "Program design",
+        "Plan input, processing, selection, iteration and output."
+      ],
+      [
+        "Error spotting",
+        "Check indexes, loop bounds, equality tests and branching."
+      ]
+    ],
+    "ido": {
+      "q": "Trace count=0; for i=1 to 5; if i MOD 2=0 then count=count+1. Output count.",
+      "steps": [
+        "Loop through i=1,2,3,4,5.",
+        "Only i=2 and 4 satisfy even test.",
+        "Count progresses 0,1,1,2,2.",
+        "Final output is 2."
+      ]
+    },
+    "wedo": {
+      "q": "Design a three-line correction to a failed validation check using OR.",
+      "steps": [
+        "Identify the accepted range.",
+        "Replace OR by AND for simultaneous lower/upper restrictions.",
+        "Provide invalid handling.",
+        "Check endpoints."
+      ]
+    },
+    "code": {
+      "source": "count = 0\nfor i = 1 to 4\n    if i MOD 2 == 0 then\n        count = count + 1\n    endif\nnext i\nprint(count)",
+      "predict": "Predict the output.",
+      "change": "Change loop end to 5.",
+      "extend": "Extend to count odd values instead.",
+      "answer": "2; still 2; change MOD 2 == 1 (count 2 for 1..4)."
+    },
+    "exam": [
+      {
+        "q": "State what an accumulator stores.",
+        "answer": "A running total updated as a program executes.",
+        "marks": 2
+      },
+      {
+        "q": "Write a valid condition for 0≤score≤100.",
+        "answer": "score >= 0 AND score <= 100.",
+        "marks": 2
+      },
+      {
+        "q": "Explain one common index error in zero-based arrays.",
+        "answer": "Using length instead of length−1 as final index can access outside array bounds.",
+        "marks": 3
+      }
+    ],
+    "visual": "paper-2 trace table, flowchart and code-from-scenario scaffold",
+    "stage": "text-draft"
+  },
+  {
+    "n": 158,
+    "facts": [
+      [
+        "Target weak points",
+        "Use assessed evidence to select a small number of topics, not indiscriminate revision."
+      ],
+      [
+        "Retrieve independently",
+        "Attempt a new problem without notes first."
+      ],
+      [
+        "Fix root causes",
+        "Decide whether error arose from knowledge, calculation, interpretation or timing."
+      ],
+      [
+        "Repeat at interval",
+        "Reattempt a similar question after a delay to check retention."
+      ]
+    ],
+    "ido": {
+      "q": "An image-size answer forgot to convert bits to bytes. Correct it for 10×20 pixels at 8 bits/pixel.",
+      "steps": [
+        "Compute 10×20=200 pixels.",
+        "Multiply by 8=1600 bits.",
+        "Divide by 8=200 bytes.",
+        "Label both quantities and indicate why the original answer was wrong."
+      ]
+    },
+    "wedo": {
+      "q": "A student writes 'WAN is always wireless'. Improve.",
+      "steps": [
+        "Identify that WAN describes geographical scope, not medium.",
+        "Explain WAN can use wired and wireless links.",
+        "Give example of connected offices.",
+        "State correct definition clearly."
+      ]
+    },
+    "code": {
+      "source": "bits = 1600\nbytes = bits DIV 8\nprint(bytes)",
+      "predict": "Predict output.",
+      "change": "Change bits to 800.",
+      "extend": "Extend to print a clear unit label.",
+      "answer": "200; 100; print bytes followed by ' bytes'."
+    },
+    "exam": [
+      {
+        "q": "Why might 'faster' alone fail a CPU-performance explanation?",
+        "answer": "It lacks a mechanism such as reduced cache misses or more parallel independent tasks.",
+        "marks": 2
+      },
+      {
+        "q": "A 100×100 image at 1 bit/pixel has how many bits?",
+        "answer": "10,000 bits.",
+        "marks": 2
+      },
+      {
+        "q": "Explain how spaced retrieval can improve examination readiness.",
+        "answer": "Repeated recall after intervals helps identify and strengthen knowledge that is not yet secure.",
+        "marks": 2
+      }
+    ],
+    "visual": "error log → underlying misconception → corrected worked example",
+    "stage": "text-draft"
+  },
+  {
+    "n": 159,
+    "facts": [
+      [
+        "Linear search",
+        "Checks elements sequentially, regardless of order."
+      ],
+      [
+        "Binary search",
+        "Requires sorted data and repeatedly halves active search range."
+      ],
+      [
+        "Bubble sort",
+        "Adjacent comparisons/swaps move large elements right over passes."
+      ],
+      [
+        "Insertion and merge",
+        "Insertion grows a sorted prefix; merge sorts sublists before combining."
+      ]
+    ],
+    "ido": {
+      "q": "Trace bubble-sort first pass of [6,1,4,2].",
+      "steps": [
+        "Compare 6/1 swap → [1,6,4,2].",
+        "Compare 6/4 swap → [1,4,6,2].",
+        "Compare 6/2 swap → [1,4,2,6].",
+        "Conclude 6 has reached the end."
+      ]
+    },
+    "wedo": {
+      "q": "Use binary search to find 17 in [3,7,11,17,23].",
+      "steps": [
+        "low0 high4 mid2=11.",
+        "17>11 so low3.",
+        "mid=(3+4) DIV2=3 value17.",
+        "Found index3."
+      ]
+    },
+    "code": {
+      "source": "left = 6\nright = 1\nif left > right then\n    print(\"Swap\")\nendif",
+      "predict": "Predict the decision.",
+      "change": "Change left to 0.",
+      "extend": "Extend to perform an exchange with temp.",
+      "answer": "Swap; no output; temp=left; left=right; right=temp."
+    },
+    "exam": [
+      {
+        "q": "Give the array after one bubble pass on [4,3,2,1].",
+        "answer": "[3,2,1,4].",
+        "marks": 3
+      },
+      {
+        "q": "State the prerequisite for binary search.",
+        "answer": "The list must be sorted.",
+        "marks": 1
+      },
+      {
+        "q": "Explain insertion sort in two stages.",
+        "answer": "Take next key from unsorted section; shift greater prefix elements right and insert key correctly.",
+        "marks": 3
+      }
+    ],
+    "visual": "paired independent trace examples for all sorts",
+    "stage": "text-draft"
+  },
+  {
+    "n": 160,
+    "facts": [
+      [
+        "Sequence",
+        "Execute instructions in stated order."
+      ],
+      [
+        "Selection",
+        "Use Boolean conditions to take appropriate branch."
+      ],
+      [
+        "Iteration",
+        "Repeat a process using a controlled loop."
+      ],
+      [
+        "Modularity",
+        "Use subprograms and relevant data structures to avoid duplicated logic."
+      ]
+    ],
+    "ido": {
+      "q": "Develop a program to input four numbers and output the smallest.",
+      "steps": [
+        "Input first value into minimum.",
+        "Loop three times inputting next values.",
+        "If current value is smaller, replace minimum.",
+        "Print minimum after all four values."
+      ]
+    },
+    "wedo": {
+      "q": "Plan a program to count how many of five marks are passes (≥50).",
+      "steps": [
+        "Initialise passCount=0.",
+        "Loop five times reading mark.",
+        "Increment if mark≥50.",
+        "Output passCount once at the end."
+      ]
+    },
+    "code": {
+      "source": "smallest = 9\nvalue = 4\nif value < smallest then\n    smallest = value\nendif\nprint(smallest)",
+      "predict": "Predict output.",
+      "change": "Change value to 12.",
+      "extend": "Extend to check a third value of 2.",
+      "answer": "4; 9; after third check smallest=2."
+    },
+    "exam": [
+      {
+        "q": "Write a condition to test if x is even.",
+        "answer": "x MOD 2 == 0.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why a loop is preferable to repeating the same five input lines.",
+        "answer": "Reduces duplicated code and makes repetition count easy to change.",
+        "marks": 2
+      },
+      {
+        "q": "State when a function is preferable to a procedure.",
+        "answer": "When a calculated value must be returned to the caller.",
+        "marks": 2
+      }
+    ],
+    "visual": "flowchart from input→loop→selection→output and code panel",
+    "stage": "text-draft"
+  },
+  {
+    "n": 161,
+    "facts": [
+      [
+        "Show formulas",
+        "Recall and write the calculation rule before substitutions."
+      ],
+      [
+        "Keep units consistent",
+        "Convert bits/bytes and MB/GB before arithmetic."
+      ],
+      [
+        "Answer command words",
+        "Describe what happens, explain why and evaluate trade-offs."
+      ],
+      [
+        "Earn full tariff",
+        "Add linked causal explanations, not repeated versions of one fact."
+      ]
+    ],
+    "ido": {
+      "q": "Calculate image size: 120×80 pixels at 4-bit colour depth, in bytes.",
+      "steps": [
+        "Pixels: 120×80 = 9600.",
+        "Size: 9600×4=38,400 bits.",
+        "Divide eight = 4800 bytes.",
+        "Identify all figures and correct units."
+      ]
+    },
+    "wedo": {
+      "q": "Calculate sound file bits: 8000 Hz, 5 seconds, 8 bits/sample (mono).",
+      "steps": [
+        "Number of samples: 8000×5=40,000.",
+        "Bits: 40,000×8=320,000.",
+        "If required bytes=40,000.",
+        "No header/compression assumptions."
+      ]
+    },
+    "code": {
+      "source": "width = 12\nheight = 10\nbitsPerPixel = 4\nprint(width * height * bitsPerPixel DIV 8)",
+      "predict": "Predict bytes.",
+      "change": "Change width to 24.",
+      "extend": "Extend to output value in bits.",
+      "answer": "60 bytes; 120 bytes; original size 480 bits."
+    },
+    "exam": [
+      {
+        "q": "Calculate 2560 bits in bytes.",
+        "answer": "2560 ÷ 8 = 320 bytes.",
+        "marks": 2
+      },
+      {
+        "q": "Convert 3 MB to kB under decimal units.",
+        "answer": "3000 kB.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why two distinct SSD benefits may score better than repeating 'fast'.",
+        "answer": "Specific benefits (e.g. impact durability and access time) address different marking points.",
+        "marks": 3
+      }
+    ],
+    "visual": "fully labelled formula+unit worked examples and mark-tariff scaffold",
+    "stage": "text-draft"
+  },
+  {
+    "n": 162,
+    "facts": [
+      [
+        "Read code literally",
+        "Do not assume it does what its title claims."
+      ],
+      [
+        "Trace state",
+        "Follow nested conditions and loops from initial values."
+      ],
+      [
+        "Identify fault location",
+        "Point to the exact condition, bound or assignment."
+      ],
+      [
+        "Repair and retest",
+        "State expected outputs for normal and boundary inputs."
+      ]
+    ],
+    "ido": {
+      "q": "Debug total=1 for a program intended to sum [2,4,6].",
+      "steps": [
+        "Trace initial total=1.",
+        "Add 2,4,6 → final 13, not 12.",
+        "Identify unwanted starting value.",
+        "Set total=0; expected result 12."
+      ]
+    },
+    "wedo": {
+      "q": "A password attempt counter locks after four failures instead of three. Fix it.",
+      "steps": [
+        "Trace attempts 1,2,3.",
+        "Find condition attempts > 3.",
+        "Replace with attempts >= 3.",
+        "Test attempts=2 and 3."
+      ]
+    },
+    "code": {
+      "source": "attempts = 3\nif attempts > 3 then\n    print(\"Locked\")\nelse\n    print(\"Open\")\nendif",
+      "predict": "Predict output.",
+      "change": "Change > to >=.",
+      "extend": "Extend to compare attempt=2.",
+      "answer": "Open; Locked; attempt=2 prints Open."
+    },
+    "exam": [
+      {
+        "q": "A loop runs i=0 to 4 inclusive. How many iterations execute?",
+        "answer": "5.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why total=1 is wrong for a plain sum accumulator.",
+        "answer": "Adds an unintended 1 to every computed total; initialise to zero.",
+        "marks": 2
+      },
+      {
+        "q": "Give a suitable test after fixing an upper boundary error.",
+        "answer": "Test exactly at upper boundary and one beyond, plus normal value.",
+        "marks": 3
+      }
+    ],
+    "visual": "faulty trace vs corrected trace, two-column debug table",
+    "stage": "text-draft"
+  },
+  {
+    "n": 163,
+    "facts": [
+      [
+        "Personalised revision",
+        "Choose priorities from a specific error log, not assumptions."
+      ],
+      [
+        "Interleave topics",
+        "Alternate a calculation, written explanation and algorithm trace."
+      ],
+      [
+        "Self-assessment",
+        "Mark answers against explicit expected points."
+      ],
+      [
+        "Retest",
+        "Move to new questions after correction so improvement transfers."
+      ]
+    ],
+    "ido": {
+      "q": "A pupil missed both virtual memory and binary-search prerequisite. Write two improvements.",
+      "steps": [
+        "Virtual memory: OS stores some pages on secondary storage when RAM insufficient.",
+        "Secondary storage accesses are slower than RAM, reducing performance if paging is frequent.",
+        "Binary search: array must be sorted.",
+        "Midpoint comparisons then safely eliminate half the range."
+      ]
+    },
+    "wedo": {
+      "q": "Correct a mixed two-mark answer: 'ROM is volatile and holds open apps'.",
+      "steps": [
+        "Name RAM as volatile active storage.",
+        "ROM is non-volatile and generally stores firmware.",
+        "State why ROM contents persist at shutdown.",
+        "Correct both terms accurately."
+      ]
+    },
+    "code": {
+      "source": "value = 6\nvalue = value * 2\nprint(value)",
+      "predict": "Predict output.",
+      "change": "Change multiplier to 3.",
+      "extend": "Extend to express two left shifts on a positive unsigned value with no overflow.",
+      "answer": "12; 18; two left shifts correspond to ×4 under no overflow."
+    },
+    "exam": [
+      {
+        "q": "Explain the difference between RAM and virtual memory.",
+        "answer": "RAM is physical primary working memory; virtual memory uses secondary storage to back pages when RAM is insufficient.",
+        "marks": 4
+      },
+      {
+        "q": "What is 11110000 in denary?",
+        "answer": "240.",
+        "marks": 2
+      },
+      {
+        "q": "State why a merge step requires sorted sublists.",
+        "answer": "Choosing the smaller front item produces an ordered result only when each incoming sublist is already ordered.",
+        "marks": 3
+      }
+    ],
+    "visual": "personal gap checklist and corrected example, no distracting visuals",
+    "stage": "text-draft"
+  },
+  {
+    "n": 164,
+    "facts": [
+      [
+        "Recall the full course",
+        "Paper 1 systems and Paper 2 computational thinking are equal components."
+      ],
+      [
+        "Use accurate language",
+        "State precise definitions and causal effects."
+      ],
+      [
+        "Demonstrate independence",
+        "Complete unseen traces, calculations and explanation without hints."
+      ],
+      [
+        "Check answers",
+        "Use command words, units, bounds and allocated marks before submission."
+      ]
+    ],
+    "ido": {
+      "q": "Solve an integrated question: a 20×20 bitmap with 8-bit depth is uploaded over a network. Calculate uncompressed bytes and explain one network factor.",
+      "steps": [
+        "Pixels =20×20=400.",
+        "Bits =400×8=3200.",
+        "Bytes=3200÷8=400.",
+        "Bandwidth, latency or congestion can affect upload time; explain the chosen factor."
+      ]
+    },
+    "wedo": {
+      "q": "A list [2,6,10,14,18] is sorted. Trace binary search for 18.",
+      "steps": [
+        "low0 high4 mid2=10.",
+        "Set low3; mid=(3+4) DIV2=3 value14.",
+        "Set low4; mid4=18.",
+        "Found at index4."
+      ]
+    },
+    "code": {
+      "source": "array values = [2, 6, 10]\nprint(values[0] + values[2])",
+      "predict": "Predict output.",
+      "change": "Change final index from 2 to 1.",
+      "extend": "Extend to calculate the sum of all values.",
+      "answer": "12; 8; full sum=18."
+    },
+    "exam": [
+      {
+        "q": "Give one difference between compiler and interpreter.",
+        "answer": "Compiled source is translated to executable/intermediate output before execution of translated program; interpreted execution is mediated by an interpreter.",
+        "marks": 3
+      },
+      {
+        "q": "Calculate 10101010 binary in denary.",
+        "answer": "170.",
+        "marks": 2
+      },
+      {
+        "q": "Explain how to make a program robust against invalid numeric input.",
+        "answer": "Use type/range checks; handle failure safely and request another value; test boundary/erroneous cases.",
+        "marks": 4
+      }
+    ],
+    "visual": "final integrated revision map and problem → working → checking sequence",
+    "stage": "text-draft"
+  }
+]
