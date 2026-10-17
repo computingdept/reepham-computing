@@ -578,8 +578,8 @@
  const isNot=kind==="logic-not",isOr=kind==="logic-or";
  b+=C(18,96,132,75,v(0,"Input A"),colour[0]);
  if(!isNot)b+=C(18,210,132,75,v(1,"Input B"),colour[0]);
- b+=L(150,134,237,134);
- if(!isNot){b+=L(150,248,237,248)+L(237,134,237,248);}
+ if(isNot){b+=L(150,134,213,134)+L(213,134,213,184)+L(213,184,236,184);}
+ else {b+=L(150,151,236,151)+L(150,229,236,229);}
  if(isNot){
   b+='<path d="M236 126 L364 184 L236 244 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>'+
   '<circle cx="372" cy="184" r="9" fill="#fff" stroke="'+green+'" stroke-width="4"/>';
@@ -593,16 +593,19 @@
  b+=T(282,297,kind==="combined-logic"?"Q=(A AND B) OR C · concept stage":isNot?"Q=NOT A":isOr?"Q=A OR B":"Q=A AND B",17);
  }
  else if(kind==="combined-logic"){
-  b+=C(20,77,116,62,"Input A",colour[0]);
-  b+=C(20,193,116,62,"Input B",colour[0]);
-  b+=L(136,107,174,107)+L(136,223,174,223)+L(174,107,174,223);
-  b+='<path d="M174 120 L216 120 C274 120 274 214 216 214 L174 214 Z" fill="#e2f2e8" stroke="'+green+'" stroke-width="4"/>';
-  b+=T(208,171,"AND",16)+A(265,168,312,168);
-  b+=C(289,233,90,64,"C",colour[0]);
-  b+='<path d="M310 116 Q345 167 310 218 Q396 220 430 167 Q396 109 310 116 Z" fill="#f6edd5" stroke="'+green+'" stroke-width="4"/>';
-  b+=L(335,233,335,218)+L(335,218,334,211);
-  b+=T(375,169,"OR",16)+A(433,166,459,166)+C(463,131,78,71,"Q",colour[2]);
-  b+=T(280,289,"Q = (A AND B) OR C",19);
+   // Separate A/B input wires. AND's output X feeds OR alongside independent C.
+   b+=C(14,87,105,60,"A",colour[0])+C(14,175,105,60,"B",colour[0])+C(14,247,105,60,"C",colour[0]);
+   b+=L(119,117,165,117)+L(165,117,165,130)+L(165,130,185,130);
+   b+=L(119,205,165,205)+L(165,205,165,184)+L(165,184,185,184);
+   b+='<path d="M185 102 L232 102 C303 102 303 212 232 212 L185 212 Z" fill="#dff2e8" stroke="'+green+'" stroke-width="4"/>';
+   b+=T(240,163,"AND",16);
+   b+=L(304,157,332,157)+L(332,157,332,204)+L(332,204,359,204);
+   b+=T(319,142,"X",15);
+   b+=L(119,277,322,277)+L(322,277,322,255)+L(322,255,359,255);
+   b+='<path d="M357 180 Q392 229 357 277 Q442 283 475 229 Q442 175 357 180 Z" fill="#f7edd4" stroke="'+green+'" stroke-width="4"/>';
+   b+=T(420,234,"OR",17);
+   b+=L(477,229,500,229)+C(503,195,49,70,"Q",colour[2]);
+   b+=T(279,329,"Q = (A AND B) OR C",18);
  }
 else if(["if-branch","nested-if","validation"].includes(kind)){
  b+=C(23,146,127,77,v(0,"Input"),colour[0])+A(151,184,211,184);
@@ -944,8 +947,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const op=(String(p.gate||"AND")).toUpperCase();
     body+=card(22,93,134,72,"A",c.blueP);
     if(op!=="NOT")body+=card(22,207,134,72,"B",c.blueP);
-    body+=line(156,128,236,128);
-    if(op!=="NOT")body+=line(156,242,236,242);
+    if(op==="NOT"){body+=line(156,128,208,128)+line(208,128,208,185)+line(208,185,234,185);}
+    else {body+=line(156,148,235,148)+line(156,223,235,223);}
     if(op==="NOT"){body+='<path d="M234 130 L372 185 L234 241 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/><circle cx="380" cy="185" r="9" fill="#fff" stroke="'+c.green+'" stroke-width="4"/>';}
     else if(op==="OR"){body+='<path d="M232 128 Q289 186 232 244 Q343 254 392 185 Q343 116 232 128 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
     else {body+='<path d="M235 129 L301 129 C381 129 381 242 301 242 L235 242 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
