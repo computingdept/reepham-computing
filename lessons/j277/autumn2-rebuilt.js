@@ -658,6 +658,27 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "052":{family:"trace",labels:["points = 5","Add 3","Store 8","Print result"],rows:[["1","5",""],["2","8",""],["3","8","8"]],values:["5","8","8"],families:["trace","trace","comparison","trace"]},
  "053":{family:"process",labels:["Convert input to integer","Multiply by count","Compare value","Output cost"],families:["process","trace","comparison","process"]},
  "054":{family:"gate",labels:["Age >= 16","Membership valid","AND condition","Allow entry"],families:["gate","gate","gate","branch"],gateStages:["AND","AND","OR","AND"]},
+ "055":{family:"branch",labels:["Read height","height >= 140?","Tall enough","Too short"],families:["process","branch","branch","flow"],modelFamily:"branch"},
+ "056":{family:"branch",labels:["Read mark","mark >= 80?","Gold","Other grade"],families:["branch","branch","tree","branch"]},
+ "057":{family:"loop",labels:["Initialise i = 1","i <= 3?","Print i","Next i"],families:["process","loop","trace","loop"],rows:[["i=1","1","1"],["i=2","2","2"],["i=3","3","3"]]},
+ "058":{family:"loop",labels:["Set attempts=0","attempts < 3?","Print attempts","Increment count"],families:["loop","branch","trace","loop"],rows:[["0","0","0"],["1","1","1"],["2","2","2"]]},
+ "059":{family:"trace",labels:["Initial total=0","Add i each loop","Record total","Print final total"],rows:[["0","0",""],["1","1",""],["2","3",""],["3","6","6"]],families:["trace","branch","loop","trace"]},
+ "060":{family:"branch",labels:["Read guess","guess == secret?","Correct","Try again"],families:["process","branch","loop","branch"]},
+ "061":{family:"test",labels:["Find syntax issue","Locate wrong logic","Correct a condition","Retest boundary"],families:["comparison","trace","branch","test"],rows:[["59","Try again","?"],["60","Pass","?"],["61","Pass","?"]]},
+ "062":{family:"cycle",labels:["Set requirements","Implement program","Test outcomes","Refine design"],families:["tree","branch","loop","test"]},
+ "063":{family:"string",labels:["Concatenate text","Use substring","Count characters","Index from zero"],values:["COMPUTER"],families:["process","string","string","string"]},
+ "064":{family:"branch",labels:["Read candidate","Length >= 6?","Accept length","Request again"],families:["string","branch","validation","comparison"]},
+ "065":{family:"array",labels:["Index 0 to 4","Access element","Update element","Keep valid index"],values:["4","7","9","2","6"],families:["array","array","array","trace"]},
+ "066":{family:"array",labels:["Start total = 0","Read next array item","Add to total","Compute mean"],values:["2","5","7","1"],families:["array","loop","trace","array"],rows:[["0","0",""],["1","2",""],["2","7",""],["3","14",""],["4","15","15"]]},
+ "067":{family:"grid",labels:["Choose row","Choose column","Read value","Update a cell"],families:["grid","grid","grid","trace"]},
+ "068":{family:"comparison",labels:["One pupil record","Named fields","Mixed data types","Versus one-type array"],families:["comparison","tree","comparison","grid"]},
+ "069":{family:"function",labels:["Call area(4,3)","Parameters 4 and 3","Multiply values","Return 12"],families:["function","function","process","trace"]},
+ "070":{family:"function",labels:["Call greet(name)","Send argument","Local parameters","Display message"],families:["function","function","comparison","function"]},
+ "071":{family:"function",labels:["Pass score array","Read index 0","Return first value","Test another case"],values:["6","3","8"],families:["function","array","function","test"]},
+ "072":{family:"file",labels:["Open notes.txt","Write a text line","Read file if needed","Close the handle"],families:["file","process","file","file"]},
+ "073":{family:"sql",labels:["Pupils table","SELECT Name","FROM Pupils","WHERE Year = 10"],families:["sql","sql","process","sql"]},
+ "074":{family:"dice",labels:["Random range","Inclusive endpoints","Possible outcomes","Simulate a dice"],families:["dice","process","dice","branch"]},
+
  };
  // J277 visual teaching audit V3: scenario-led, stateful SVGs (2026-10-17).
  // All text is escaped. Worked graphics show states; guided graphics leave answers blank.
