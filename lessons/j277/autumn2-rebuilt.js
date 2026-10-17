@@ -555,7 +555,58 @@
   }
   return frame(b);
  }
+
+ function j277ProgrammingScene(spec){
+ const kind=String(spec.layout||"");
+ const kinds=["sequence","variables","data-types","operators","boolean","if-branch","nested-if","for-loop","while-loop","array-1d","array-2d","record","function-call","procedure-call","file-io","sql-table","random-die","validation","test-cases","debug","project-cycle","linear-search","binary-search","bubble-sort","insertion-sort","merge-sort","logic-gates","truth-table","combined-logic"];
+ if(!kinds.includes(kind))return null;
+ const title=String(spec.title||"J277"),labels=Array.isArray(spec.boxes)?spec.boxes.map(String):[];
+ const colour=["#e5effb","#e4f2e8","#f9ecd4","#eeeafb"],ink="#245342",green="#378161",blue="#4b83a9";
+ const T=(x,y,v,z=18)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="'+z+'" fill="'+ink+'">'+escape(String(v))+'</text>';
+ const B=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" fill="'+c+'" stroke="#79a892" stroke-width="2.5"/>';
+ const L=(x,y,a,b,c=green)=>'<path d="M'+x+' '+y+' L'+a+' '+b+'" fill="none" stroke="'+c+'" stroke-width="4"/>';
+ const A=(x,y,a,b)=>L(x,y,a,b)+L(a-10,b-8,a,b)+L(a-10,b+8,a,b);
+ const label=(x,y,v,w=17)=>{let z=String(v||"?");return z.length>20?T(x,y-7,z.slice(0,17),w)+T(x,y+17,z.slice(17,32),w):T(x,y,z,w);};
+ const C=(x,y,w,h,v,col)=>B(x,y,w,h,col)+label(x+w/2,y+h/2+7,v,w>140?18:15);
+ const v=(i,f)=>labels[i]||f;
+ const F=body=>'<figure class="a1-scene j277-program-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+escape(title)+': '+escape(labels.join(", "))+'" xmlns="http://www.w3.org/2000/svg">'+B(3,3,554,334,"#f9fcfa")+T(280,40,title.slice(0,42),title.length>35?17:21)+body+(spec.foot?T(280,323,String(spec.foot).slice(0,59),15):"")+'</svg></figure>';
+ let b="";
+ const row=(parts)=>{const size=parts.length,w=size===4?117:160,gap=size===4?17:23;parts.forEach((p,i)=>{const x=12+i*(w+gap);b+=C(x,124,w,105,p,colour[i%4]);if(i<size-1)b+=A(x+w+2,175,x+w+gap-4,175);});};
+ if(["sequence","operators","data-types","procedure-call","debug","project-cycle"].includes(kind))row(labels.length>=3?labels.slice(0,3):["Input","Process","Output"]);
+ else if(kind==="variables"){row(labels.length>=3?labels.slice(0,3):["x = 2","x = x+1","x = 3"]);b+=T(280,273,"Assignments replace previous values",17);}
+ else if(["boolean","logic-gates","combined-logic"].includes(kind)){
+ b+=C(18,96,132,75,v(0,"Input A"),colour[0])+C(18,210,132,75,v(1,"Input B"),colour[0]);
+ b+=L(150,134,237,134)+L(150,248,237,248)+L(237,134,237,248);
+ b+='<path d="M236 135 L307 135 C386 135 386 251 307 251 L236 251 Z" fill="#e4f3e9" stroke="'+green+'" stroke-width="4"/>';
+ b+=T(305,198,kind==="boolean"?v(2,"AND"):v(2,"AND"),18)+A(377,193,433,193)+C(438,153,98,81,"Q",colour[2]);
+ }else if(["if-branch","nested-if","validation"].includes(kind)){
+ b+=C(23,146,127,77,v(0,"Input"),colour[0])+A(151,184,211,184);
+ b+='<path d="M287 91 L374 184 L287 274 L200 184 Z" fill="#f9edda" stroke="#bb9437" stroke-width="3"/>';
+ b+=label(287,188,v(1,"Condition?"),16)+A(375,184,422,142)+C(429,108,108,74,v(2,"TRUE"),colour[1])+L(286,274,286,293)+T(335,284,"FALSE",13);
+ }else if(["for-loop","while-loop"].includes(kind)){
+ b+=C(37,99,188,92,v(0,"Loop condition"),colour[0])+A(228,145,317,145)+C(321,99,203,92,v(1,"Loop body"),colour[1]);
+ b+=L(423,195,423,257)+L(423,257,128,257)+L(128,257,128,195)+T(282,289,v(2,"Repeat while required"),17);
+ }else if(["array-1d","linear-search","binary-search","bubble-sort","insertion-sort","merge-sort"].includes(kind)){
+ const a=labels.length>=5?labels.slice(0,6):["3","7","1","9","4","6"],w=80,g=7,x0=(560-(a.length*w+(a.length-1)*g))/2;
+ a.forEach((v,i)=>{const x=x0+i*(w+g);b+=B(x,127,w,96,kind==="binary-search"&&i===Math.floor((a.length-1)/2)?colour[2]:kind==="bubble-sort"&&i<2?"#f9dede":colour[0]);b+=T(x+w/2,185,v,24)+T(x+w/2,109,String(i),15);});
+ b+=T(280,264,kind==="binary-search"?"Sorted data · compare midpoint":kind==="linear-search"?"Check each position in turn":kind==="bubble-sort"?"Compare neighbours, swap if necessary":kind==="insertion-sort"?"Grow a sorted section":kind==="merge-sort"?"Divide into halves · merge ordered": "Arrays start at index zero",16);
+ }else if(["array-2d","sql-table","truth-table"].includes(kind)){
+ const cols=kind==="truth-table"?4:3,rows=4,w=kind==="truth-table"?125:155,x0=(560-cols*w)/2;
+ for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const X=x0+x*w,Y=76+y*57;b+=B(X,Y,w-5,52,y===0?colour[0]:y%2?colour[1]:"#f4f7f6");
+ const value=y===0?(kind==="truth-table"?["A","B","A AND B","Q"][x]:kind==="sql-table"?["ID","Name","Score"][x]:"COL "+x):
+ kind==="sql-table"?[[1,"Mia",7],[2,"Leo",9],[3,"Ava",6]][y-1][x]:kind==="truth-table"?[["0","0","0","0"],["0","1","0","0"],["1","0","0","0"]][y-1][x]:"["+String(y-1)+","+String(x)+"]";
+ b+=T(X+w/2,Y+33,value,17);
+ }
+ }else if(kind==="record"){
+ b+=C(25,76,509,60,"ONE RECORD",colour[0]);["Name","Age","Score"].forEach((name,i)=>{b+=C(25+i*177,151,164,98,v(i,name),colour[(i+1)%4]);});b+=T(280,284,"Related fields describe one item",17);
+ }else if(kind==="function-call"){row([v(0,"Arguments"),v(1,"Function"),v(2,"Return value")]);}
+ else if(kind==="file-io")row([v(0,"Open"),v(1,"Read / write"),v(2,"Close")]);
+ else if(kind==="random-die"){b+=B(187,75,186,186,colour[0]);[[227,115],[328,115],[277,165],[227,215],[328,215]].forEach(p=>{b+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="11" fill="'+blue+'"/>';});b+=T(280,293,"random(1,6) · inclusive",17);}
+ else if(kind==="test-cases")row(["Normal","Boundary","Invalid"]);
+ return F(b);
+ }
  function topicVisual(spec){
+  const codeDiagram=j277ProgrammingScene(spec);if(codeDiagram)return codeDiagram;
   const spring=j277SpringScene(spec);if(spring)return spring;
   const richer=j277NetworkExpansion(spec);if(richer)return richer;
   const security=j277SecurityScene(spec);if(security)return security;
