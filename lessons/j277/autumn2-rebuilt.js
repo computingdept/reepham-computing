@@ -697,6 +697,52 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
 
 
  };
+
+ function j277UpgradeVisuals(lesson,number){
+  const n=String(number).padStart(3,"0"),plan=J277_VISUAL_PLANS[n];
+  if(!plan||!lesson||lesson.visualAuditV3)return lesson;
+  const pickNums=q=>{
+    const m=String(q||"").match(/\[\s*-?\d+(?:\s*,\s*-?\d+){2,}\s*\]/);
+    return m?m[0].slice(1,-1).split(",").map(v=>v.trim()):null;
+  };
+  const gate=q=>/\bNOT\b/i.test(q)?"NOT":/\bOR\b/i.test(q)?"OR":"AND";
+  const cfg=(index,phase,q)=>{
+    const isTeaching=phase==="learning",family=isTeaching?(plan.families?.[index]||plan.family):(phase==="guided"?plan.family:(plan.modelFamily||plan.family));
+    const nums=pickNums(q),useNums=nums||plan.values||[];
+    return {
+      family,focus:isTeaching?index:phase==="guided"?index:2,phase,
+      labels:plan.labels.slice(),values:useNums,target:String(plan.target||""),
+      rows:plan.rows||null,threeInput:!!plan.threeInput,
+      logic:(plan.logicStages||[])[index]||"AND",
+      gate:phase==="guided"?gate(q):(plan.gateStages||[])[index]||gate(q),
+      searchType:plan.searchType||"linear",sortType:plan.sortType||"bubble",
+      snapshots:(!nums&&phase==="learning")?plan.snapshots||null:null,
+      unsafe:/\bunsorted\b|without sorting|not sorted/i.test(q),
+      question:String(q||"").slice(0,220)
+    };
+  };
+  lesson.visuals=(lesson.visuals||[]).map((spec,i)=>({...spec,rich:cfg(i,"learning",lesson.c?.[i]?.[1]||"")}));
+  if(lesson.idoVisual&&n!=="090")lesson.idoVisual={...lesson.idoVisual,rich:cfg(0,"model",lesson.m?.q||"")};
+  if(Array.isArray(lesson.wVisuals))lesson.wVisuals=lesson.wVisuals.map((spec,i)=>({...spec,rich:cfg(i,"guided",lesson.w?.[i]?.[0]||"")}));
+  const mini=(base,phase,q,index)=>({
+    ...(base||{}),
+    title:phase==="retrieval"?"PREVIOUSLY TAUGHT · VISUAL QUESTION":"EXAM QUESTION · WORK IT OUT",
+    rich:{...cfg(index,phase,q),phase,labels:["Information","Operation?","Result?"],focus:0,
+      family:plan.family==="sort"||plan.family==="search"||plan.family==="array"||plan.family==="truth"||plan.family==="gate"||plan.family==="string"||plan.family==="trace"?plan.family:
+             ["branch","flow","validation","loop"].includes(plan.family)?"branch":"process"}
+  });
+  if(Array.isArray(lesson.retrievalVisuals)){
+    lesson.retrievalVisuals=[...lesson.retrievalVisuals];
+    [1,3].forEach(i=>{if(!lesson.retrievalVisuals[i])lesson.retrievalVisuals[i]=mini({}, "retrieval",lesson.r?.[i]?.[0]||"",i);});
+  }
+  if(!lesson.isAssessment&&Array.isArray(lesson.examVisuals)){
+    lesson.examVisuals=[...lesson.examVisuals];
+    if(!lesson.examVisuals[0])lesson.examVisuals[0]=mini({}, "independent",lesson.e?.[0]?.[0]||"",0);
+  }
+  if(lesson.priorExam?.visual)lesson.priorExam.visual=mini(lesson.priorExam.visual,"retrieval",lesson.priorExam.q||"",0);
+  lesson.visualAuditV3=true;
+  return lesson;
+ }
  // J277 visual teaching audit V3: scenario-led, stateful SVGs (2026-10-17).
  // All text is escaped. Worked graphics show states; guided graphics leave answers blank.
  function j277LearningScene(spec){
@@ -1471,6 +1517,19 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
 
  .j277-visual-lesson #you-do .j277-prior-exam{border-top:5px solid #e0b247;}
  .j277-visual-lesson #you-do .j277-prior-exam h3{font-size:clamp(19px,1.35vw,25px);margin:8px 0;}
+
+ .j277-visual-v3 .a1-scene.j277-learning-scene{
+   width:100%;max-width:min(100%,680px);margin:8px auto;
+ }
+ .j277-visual-v3 .a1-scene.j277-learning-scene svg{
+   width:100%;height:auto;max-height:min(42vh,330px);
+ }
+ .j277-visual-v3 #do-now .j277-prompt-diagram svg{max-height:130px;}
+ .j277-visual-v3 #you-do .j277-prompt-diagram svg{max-height:170px;}
+ @media(max-width:720px){
+   .j277-visual-v3 .a1-scene.j277-learning-scene svg{max-height:240px;}
+   .j277-visual-v3 #do-now .j277-prompt-diagram svg{max-height:105px;}
+ }
  /* Extra diagram-led teaching for Year 10, opt-in lessons only. */
  .j277-dense-visual #do-now .donow-question{
    padding:clamp(10px,1vw,15px);
@@ -1629,11 +1688,12 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
  <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
+  lesson=j277UpgradeVisuals(lesson,number);
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
- const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+ const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
