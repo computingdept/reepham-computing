@@ -74,7 +74,128 @@ function equivalent(stage,mode){
  if(stage>=3){h+=label(132,341,377,40,"Result: "+keep.join(", "),K.amber,17);}
  return h;
 }
+
+/* Subject-specific diagrams for high-value OCR J277 visual reasoning. */
+function subjectScene(spec,stage){
+ const title=String(spec.topic||""),mode=String(spec.scenario||"model"),learn=String(spec.phase||"").includes("new-learning");
+ if(/Boolean Logic: AND, OR and NOT/.test(title)){
+  const gate=learn?(stage===1?"OR":stage===2?"NOT":"AND"):(mode==="guided"?"OR":"AND");
+  let h=small(24,78,"LOGIC GATE · "+gate+" · evaluate each input pair");
+  h+=label(24,138,85,46,"A",K.sky,21)+label(24,222,85,46,"B",K.sky,21);
+  h+=arrow(109,161,271,161)+arrow(109,245,271,245);
+  if(gate==="AND"){
+   h+='<path d="M270 130 H328 A73 73 0 0 1 328 276 H270Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
+  }else if(gate==="OR"){
+   h+='<path d="M270 130 Q332 202 270 276 Q362 284 421 203 Q362 122 270 130Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
+  }else{
+   h+='<path d="M279 140 L409 203 L279 266Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/><circle cx="421" cy="203" r="11" fill="white" stroke="#b18738" stroke-width="3"/>';
+  }
+  h+=arrow(435,203,485,203);
+  h+=label(491,171,119,67,stage>=3?(gate==="AND"?"0":gate==="OR"?"1":"0"):"?",stage>=3?K.mint:K.grey,25);
+  h+=small(53,319,"Input example: A = 1, B = 0");
+  h+=small(53,349,gate==="NOT"?"NOT acts on one input; output is inverted":gate==="AND"?"AND only gives 1 when both inputs are 1":"OR gives 1 when one or both inputs are 1");
+  return h;
+ }
+ if(/Truth Tables and Combined Logic/.test(title)){
+  const guided=mode==="guided",formula=guided?"(A OR B) AND C":"(A AND B) OR C";
+  let h=small(29,74,"Q = "+formula);
+  const cols=[["A",40],["B",129],["C",218],["X",341],["Q",482]];
+  cols.forEach(([name,x])=>{h+=label(x,84,name==="Q"?115:96,32,name,K.sky,17)});
+  for(let i=0;i<8;i++){
+   const a=(i>>2)&1,b=(i>>1)&1,c=i&1,x=guided?(a||b)?1:0:(a&&b)?1:0,q=guided?(x&&c)?1:0:(x||c)?1:0;
+   const y=121+i*31;
+   const values=[a,b,c,stage>=1?x:"?",stage>=3||stage===2&&i<4?q:"?"];
+   values.forEach((v,j)=>{const pos=cols[j][1],ww=j===4?115:96;h+=label(pos,y,ww,28,v,j===3&&stage>=1?K.amber:j===4&&v!=="?"?K.mint:K.light,16)});
+  }
+  return h;
+ }
+ if(/Network Hardware and Topologies/.test(title)){
+  let h=small(23,81,"STAR · one central connection point")+small(334,81,"MESH · multiple connections");
+  const pts=[[91,139],[207,139],[90,276],[208,276]];
+  pts.forEach(([x,y],i)=>{h+='<circle cx="'+x+'" cy="'+y+'" r="26" fill="'+K.sky+'" stroke="'+K.blue+'" stroke-width="3"/>'+text(x,y+7,"PC"+(i+1),14);});
+  h+=label(122,181,56,55,"SW",K.mint,16);
+  const c=[150,208];pts.forEach(p=>{h+='<path d="M'+c[0]+' '+c[1]+'L'+p[0]+' '+p[1]+'" stroke="'+K.blue+'" stroke-width="3"/>';});
+  const mp=[[383,143],[541,143],[383,277],[541,277]];
+  const edges=[[0,1],[1,3],[3,2],[2,0],[0,3],[1,2]];
+  edges.forEach(([i,j],idx)=>{if(stage>=1||idx<4){h+='<path d="M'+mp[i][0]+' '+mp[i][1]+'L'+mp[j][0]+' '+mp[j][1]+'" stroke="'+(idx>=4?K.blue:K.line)+'" stroke-width="3"/>';}});
+  mp.forEach((p,i)=>{h+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="27" fill="'+K.mint+'" stroke="'+K.blue+'" stroke-width="3"/>'+text(p[0],p[1]+6,String(i+1),20)});
+  h+=small(30,348,"Star: central device failure matters")+small(337,348,"Mesh: alternative paths; more links");
+  return h;
+ }
+ if(/LANs, WANs and Network Models/.test(title)){
+  let h=small(26,84,"LOCAL NETWORK · OFFICE 1")+small(389,84,"LOCAL NETWORK · OFFICE 2");
+  h+=label(25,111,227,183,"LAN A",K.sky,28)+label(386,111,227,183,"LAN B",K.sky,28);
+  [65,135,203].forEach((x,i)=>{h+=label(x,216,54,42,"PC",K.mint,14);h+=label(420+i*64,216,54,42,"PC",K.mint,14);});
+  h+=label(261,162,115,70,"WAN",stage>=1?K.amber:K.grey,22);
+  h+=arrow(255,195,261,195)+arrow(376,195,389,195);
+  h+=small(67,329,"LAN = limited area")+small(385,329,"WAN links distant LANs");
+  return h;
+ }
+ if(/Network Protocols and Layers/.test(title)){
+  const vals=["DOMAIN NAME","DNS LOOKUP","IP ADDRESS","WEB SERVER"];
+  let h=small(24,83,"BROWSER REQUEST · HOW A WEB ADDRESS IS RESOLVED");
+  vals.forEach((w,i)=>{h+=label(17+i*157,150,147,91,w,i===stage?K.amber:i<stage?K.mint:K.sky,w.length>10?15:19);if(i<3)h+=arrow(163+i*157,195,173+i*157,195);});
+  h+=small(47,287,"DNS converts a domain name to an IP address");
+  h+=small(47,318,"HTTPS governs encrypted web communication");
+  return h;
+ }
+ if(/Network Performance/.test(title)){
+  const sz=mode==="guided"?60:24,rate=mode==="guided"?12:8,time=sz/rate;
+  let h=label(24,102,178,82,sz+" Mb",K.sky,29)+arrow(209,148,266,148)+label(267,102,179,82,rate+" Mb/s",K.mint,24)+arrow(452,148,493,148)+label(493,102,126,82,stage>=3?time+" s":"?",K.amber,29);
+  h+=small(46,239,"time = file size ÷ data rate");
+  if(stage>=2)h+=label(139,266,361,70,sz+" ÷ "+rate+" = "+(stage===3?time+" seconds":"?"),stage===3?K.mint:K.grey,24);
+  h+=small(48,367,"Idealised transfer: protocol overhead and latency not included");
+  return h;
+ }
+ if(/Network Threats|Preventing Network Attacks/.test(title)){
+  const defense=/Preventing/.test(title);
+  const w=defense?["REQUEST","FIREWALL","AUTH + MFA","RESOURCE"]:["PHISHING","USER","PASSWORD","ACCOUNT"];
+  let h=small(22,89,defense?"DEFENCE IN DEPTH · protect each boundary":"ATTACK PATH · locate where controls could help");
+  w.forEach((v,i)=>{h+=label(20+i*154,155,139,91,v,i===stage?K.amber:i<stage?K.mint:K.sky,v.length>10?16:20);if(i<3)h+=arrow(160+i*154,198,174+i*154,198);});
+  h+=small(32,314,defense?"Encryption protects confidentiality; backups protect recovery":"A suspicious message may try to steal credentials");
+  return h;
+ }
+ if(/Operating Systems/.test(title)){
+  let h=label(230,110,175,79,"OS",K.amber,35);
+  const labs=[["PROCESS",24,84],["MEMORY",442,84],["FILES",24,262],["DEVICES",442,262]];
+  labs.forEach(([name,x,y],i)=>{h+=label(x,y,167,60,name,i===stage?K.amber:K.sky,21);h+='<path d="M'+(x<200?x+167:x)+' '+(y+30)+'L'+(x<200?232:403)+' '+(y<180?139:159)+'" stroke="'+K.blue+'" stroke-width="3" fill="none"/>';});
+  h+=small(190,356,"Scheduling · Allocation · Access · Interfaces");
+  return h;
+ }
+ if(/Utility Software/.test(title)){
+  let h=small(31,90,"FRAGMENTED HDD FILE · FILE BLOCKS SPREAD OUT");
+  const seq=["A","B","A","C","B","A","C","B"];
+  seq.forEach((v,i)=>h+=label(28+i*75,122,67,55,v,v==="A"?K.amber:K.sky,24));
+  h+=arrow(317,191,317,241);
+  const sorted=["A","A","A","B","B","B","C","C"];
+  sorted.forEach((v,i)=>h+=label(28+i*75,261,67,55,stage>=2?v:seq[i],stage>=2?K.mint:K.grey,24));
+  h+=small(56,354,"Defragmentation is for spinning HDDs; avoid routine SSD defragmentation.");
+  return h;
+ }
+ if(/Programming Languages and Translators/.test(title)){
+  let h=small(29,85,"SOURCE CODE · TWO TRANSLATION APPROACHES");
+  h+=label(31,148,160,78,"SOURCE",K.sky,23)+arrow(191,185,241,185);
+  h+=label(241,101,169,66,"COMPILER",stage>=1?K.amber:K.grey,20);
+  h+=label(241,217,169,66,"INTERPRETER",stage>=2?K.amber:K.grey,19);
+  h+=arrow(413,136,461,136)+arrow(413,250,461,250);
+  h+=label(465,103,145,64,"OUTPUT",K.mint,18)+label(465,217,145,64,"EXECUTE",K.mint,18);
+  h+=small(47,350,"The CPU ultimately executes machine instructions.");
+  return h;
+ }
+ if(/Integrated Development Environments/.test(title)){
+  let h=box(25,85,592,276,K.light,K.line)+label(29,88,585,39,"EDITOR  •  DEBUGGER  •  OUTPUT",K.sky,17);
+  const source=["counter = 3","counter = counter + 2","print(counter)"];
+  source.forEach((v,i)=>h+=label(42,145+i*53,340,45,(i+1)+": "+v,i===stage-1?K.amber:K.grey,16));
+  h+=label(404,145,194,46,"WATCH",K.mint,18);
+  h+=label(404,200,194,48,"counter = "+(stage>=2?"5":"3"),K.amber,18);
+  h+=label(404,265,194,46,stage>=3?"OUTPUT: 5":"OUTPUT: ?",K.light,17);
+  return h;
+ }
+ return "";
+}
+
 function layout(spec,stage){
+ const special=subjectScene(spec,stage);if(special)return special;
  const kind=String(spec.y11),scenario=String(spec.scenario||"model"),mode=String(spec.phase||"learning");
  if(kind==="table")return table(stage,scenario,false);
  if(kind==="sql")return table(stage,scenario,true);
