@@ -1,0 +1,254 @@
+[
+  {
+    "n": 114,
+    "coreHint": "Treat every value as text: + joins characters.",
+    "stretch": {
+      "task": "Modify the original program to place a hyphen between the prefix and the number, then print the character count.",
+      "hint": "Join three strings, then count characters.",
+      "answer": "print(prefix + \"-\" + number) gives CS-27; the length is 5."
+    },
+    "mastery": {
+      "task": "Accept a two-character prefix and a number string; output a code only when the final code has exactly five characters. Test a shorter input.",
+      "hint": "Create fullCode = prefix + \"-\" + number; use a length check on fullCode.",
+      "answer": "If prefix=\"CS\" and number=\"27\", fullCode=\"CS-27\" has length 5 and is accepted. If number=\"7\", length 4 and it is rejected. State why string length, not numerical value, matters."
+    }
+  },
+  {
+    "n": 115,
+    "coreHint": "Start with row 0, then select the value at column 1.",
+    "stretch": {
+      "task": "Extend the one-dimensional starting code to print the first and last values and their sum.",
+      "hint": "Valid positions are 0, 1 and 2.",
+      "answer": "print(row[0] + row[2]) = 13; adding a two-index grid is the next step."
+    },
+    "mastery": {
+      "task": "Design a 2×3 grid of scores. Write pseudocode that totals each row separately and identifies the row with the larger total.",
+      "hint": "Use an outer loop for rows and inner loop for columns; reset rowTotal each row.",
+      "answer": "For [[1,2,3],[4,5,6]], row totals are 6 and 15, so row 1 is larger. Award credit for two nested index loops and correct totals."
+    }
+  },
+  {
+    "n": 116,
+    "coreHint": "Replace the function argument with its numeric value before calculating.",
+    "stretch": {
+      "task": "Modify square to return n*n+1; predict results for inputs 4 and 6.",
+      "hint": "Change the expression within the function, not the call.",
+      "answer": "17 and 37."
+    },
+    "mastery": {
+      "task": "Write a function larger(a,b) that returns the larger value; test when values tie and when one is negative.",
+      "hint": "Start with IF a > b; use ELSE to return b (either value is valid on a tie).",
+      "answer": "larger(8,3)=8; larger(-2,5)=5; larger(4,4)=4. The function must return a value and should be checked against all three cases."
+    }
+  },
+  {
+    "n": 117,
+    "coreHint": "Count how many times the loop body runs.",
+    "stretch": {
+      "task": "Add a condition that counts only records marked valid, using three fixed values supplied as an array.",
+      "hint": "Start the counter at 0; increment when the current item meets the condition.",
+      "answer": "For [1,0,1] and a 1=valid rule, count is 2."
+    },
+    "mastery": {
+      "task": "Plan pseudocode that reads a file of scores, ignores invalid/non-numeric lines and outputs the count of accepted scores. Include handling when the file does not exist.",
+      "hint": "Separate opening, reading, validation, counting and closing; specify what happens on a failed open.",
+      "answer": "Model outline: check/open safely; for each line attempt numeric conversion; accept score only if 0≤score≤100; count accepted; close file; show a safe error if missing. Tests: valid 0 and 100, invalid 101, erroneous 'cat', absent file."
+    }
+  },
+  {
+    "n": 118,
+    "coreHint": "Follow the IF condition: print only for year 11.",
+    "stretch": {
+      "task": "Make the starting program print 'Excluded' for other years and test years 10 and 11.",
+      "hint": "Add ELSE for the second outcome.",
+      "answer": "Year 11 prints Included; year 10 prints Excluded."
+    },
+    "mastery": {
+      "task": "Design a query and short filtering algorithm for pupils with Year=11 and Attendance<95. Explain why both conditions are joined with AND.",
+      "hint": "First decide which rows match. SQL uses WHERE Year=11 AND Attendance<95.",
+      "answer": "SELECT Name FROM Pupils WHERE Year = 11 AND Attendance < 95; the program equivalent checks BOTH conditions before printing a name. Test a Year 10 pupil with 90% (excluded)."
+    }
+  },
+  {
+    "n": 119,
+    "coreHint": "Follow the branch using the value already assigned to roll.",
+    "stretch": {
+      "task": "Change the winning rule so a roll of 5 or 6 wins. Test values 4, 5 and 6.",
+      "hint": "A single >= comparison can include the top two dice faces.",
+      "answer": "if roll >= 5 then ...; 4 loses, 5 and 6 win."
+    },
+    "mastery": {
+      "task": "Adapt the game to award 3 points for 6, 1 point for 4 or 5, otherwise 0. Write suitable tests for all boundary outcomes.",
+      "hint": "Check 6 first; then check roll>=4; otherwise zero.",
+      "answer": "IF roll==6 points=3 ELSE IF roll>=4 points=1 ELSE points=0. Test rolls 1,3,4,5,6 (outputs 0,0,1,1,3)."
+    }
+  },
+  {
+    "n": 120,
+    "coreHint": "Trace the running total one iteration at a time.",
+    "stretch": {
+      "task": "Before the assessment, change the warm-up loop to add only even i values between 1 and 4; predict its output.",
+      "hint": "Use IF i MOD 2 == 0 inside the loop.",
+      "answer": "2+4=6."
+    },
+    "mastery": {
+      "task": "Outside the timed assessment, develop a short retrieval task that finds the first value above 5 in a small array. Trace found and not-found cases.",
+      "hint": "Use a found flag and scan in index order; do not reveal solutions during an assessment.",
+      "answer": "For [2,4,7,9] the first match is index 2. For [1,3,5] there is no match. The task is optional warm-up/after-paper practice, not part of the assessed mark allocation."
+    }
+  },
+  {
+    "n": 121,
+    "coreHint": "Work out (low+high) using the current bounds before DIV 2.",
+    "stretch": {
+      "task": "Add a target=23 and the sorted array [3,7,11,15,19,23,27]; show whether the current midpoint is too low or too high.",
+      "hint": "Start low0/high6, so midpoint3 is 15.",
+      "answer": "15<23, so new low becomes 4."
+    },
+    "mastery": {
+      "task": "Create a corrected explanation for a binary-search trace that forgets to update low/high after checking the midpoint. Demonstrate with target 23 and show a not-found test.",
+      "hint": "Adjust bounds to mid+1 or mid-1; never keep an excluded midpoint.",
+      "answer": "[3,7,11,15,19,23,27]: mid3=15, low4; mid5=23 found. For target20: mid3=15 low4; mid5=23 high4; mid4=19 low5, so low>high and absent."
+    }
+  },
+  {
+    "n": 122,
+    "coreHint": "Both lower and upper limits must be true at once.",
+    "stretch": {
+      "task": "Modify the program to accept ages 13–18 rather than marks 0–100. Check 12, 13, 18 and 19.",
+      "hint": "Use AND and inclusive >=, <= comparisons.",
+      "answer": "12 invalid, 13 valid, 18 valid, 19 invalid."
+    },
+    "mastery": {
+      "task": "Write a loop that continues asking for a score until an integer in 0–100 is provided. Specify expected results for text input and for both numeric boundaries.",
+      "hint": "Validation is not complete when ELSE only prints 'Invalid'—it must ask again.",
+      "answer": "Use a repeat-until-valid structure; reject wrong-type input safely before numerical comparison; accept 0 and 100; reject -1, 101 and 'cat'. This extends the starting range check rather than requiring a totally new concept."
+    }
+  },
+  {
+    "n": 123,
+    "coreHint": "The condition uses >= so three failed attempts trigger the lock.",
+    "stretch": {
+      "task": "Extend the program to show 'Warning' at exactly two failed attempts and 'Locked' at three or more.",
+      "hint": "Check higher threshold first, then the lower one.",
+      "answer": "IF attempts >= 3 -> Locked; ELSE IF attempts == 2 -> Warning; else Try again."
+    },
+    "mastery": {
+      "task": "Adapt the program to reset the failure counter after a successful login, but not disclose the password. Give test cases for a wrong attempt followed by a success.",
+      "hint": "Maintain attempts separately from a Boolean success flag.",
+      "answer": "On success: attempts=0 and print a generic success message. On failure: increment attempts, lock at >=3. Test 2 failures+success -> reset; 3 failures -> locked; never print a secret."
+    }
+  },
+  {
+    "n": 124,
+    "coreHint": "The original condition includes 0 and 100.",
+    "stretch": {
+      "task": "Change the valid range to 1–10 and add an ELSE for rejected values. Test 0,1,10,11.",
+      "hint": "Use 1 <= score <= 10 as two comparisons joined by AND.",
+      "answer": "0 reject,1 accept,10 accept,11 reject."
+    },
+    "mastery": {
+      "task": "Write a test table for a revised quantity check where the input might be a decimal or text. Explain how the program must avoid crashing before it applies range comparisons.",
+      "hint": "Check type/integer requirement before comparing numerical boundaries.",
+      "answer": "Tests: 5 normal accepted;1 and10 boundary accepted;0/11 invalid rejected; 'five' erroneous rejected; 3.5 rejected if integers required. A safe conversion/type check is needed before numeric comparison."
+    }
+  },
+  {
+    "n": 125,
+    "coreHint": "With OR, one side can be true even when the number is outside the range.",
+    "stretch": {
+      "task": "Correct the code with AND and add an ELSE. Test -1, 0, 100 and 101.",
+      "hint": "An acceptable mark must pass both comparisons.",
+      "answer": "-1 Invalid;0 Valid;100 Valid;101 Invalid."
+    },
+    "mastery": {
+      "task": "Find a second error in an age checker that says IF age >= 13 AND age < 18 even though 18 is valid. Repair both the logic and the upper boundary, then write four tests.",
+      "hint": "Pay attention to AND/OR and inclusive/exclusive symbols.",
+      "answer": "Correct condition age>=13 AND age<=18. Tests 12 invalid,13 valid,18 valid,19 invalid. Explain why <18 incorrectly rejects the upper boundary."
+    }
+  },
+  {
+    "n": 126,
+    "coreHint": "acc begins with 4 and receives an additional 6.",
+    "stretch": {
+      "task": "Extend the accumulator calculation to add 6, then subtract 3. Predict the value at each instruction.",
+      "hint": "Treat each assignment as a separate state update.",
+      "answer": "ACC moves 4 →10→7."
+    },
+    "mastery": {
+      "task": "Given PC=42 and an instruction stored at address 42, create a simple fetch-stage register trace identifying when MAR and MDR change. Explain why ACC need not change during fetch.",
+      "hint": "PC supplies next address; MAR stores address; MDR receives fetched instruction.",
+      "answer": "PC initially42; MAR←42; MDR←memory[42]; PC updated according to instruction length/sequencing; no arithmetic result needed, so ACC need not change. Correct answers distinguish address from data."
+    }
+  },
+  {
+    "n": 127,
+    "coreHint": "Compare the given clock speeds only; do not assume a full performance benchmark.",
+    "stretch": {
+      "task": "Modify the starting condition so it reports when both clock speeds are equal.",
+      "hint": "Use an ELSE IF after the greater-than test.",
+      "answer": "3>2 gives B higher; equal 3 and 3 gives Same speed."
+    },
+    "mastery": {
+      "task": "Design a comparison tool that reads clock speed, core count and cache size for two CPUs, then explains why declaring a single 'winner' is not justified by clock speed alone.",
+      "hint": "A single IF tests only one factor; multiple factors can trade off.",
+      "answer": "Model: compare each specification separately, output differences, and state that workload and architecture affect actual performance. Tests: one CPU has higher clock but fewer cores; equal clock; same cores with different cache."
+    }
+  },
+  {
+    "n": 128,
+    "coreHint": "Total starts at 0 and visits indexes 0,1,2.",
+    "stretch": {
+      "task": "Extend the loop to count marks >= 5 while still calculating their total.",
+      "hint": "Add a second counter and only increment it inside IF.",
+      "answer": "For [3,5,2], total10 and count1."
+    },
+    "mastery": {
+      "task": "For [42,78,78,61,35], write one algorithm that finds the highest mark and counts how many times it occurs. Test tied highs and all-equal values.",
+      "hint": "Initialise highest from the first element; reset tie count on a new high and increment it on equality.",
+      "answer": "A valid one-pass solution: highest=first; ties=1; for every later item if value>highest then highest=value,ties=1 else if value==highest then ties++. Example: highest78 occurs twice; all equal returns the list length."
+    }
+  },
+  {
+    "n": 129,
+    "coreHint": "A parameter receives the argument supplied by the caller.",
+    "stretch": {
+      "task": "Add an optional second argument multiplier to the tripling idea, with a function multiply(x,factor) returning x*factor.",
+      "hint": "Keep the function's return value separate from print.",
+      "answer": "multiply(5,3)=15, multiply(5,4)=20."
+    },
+    "mastery": {
+      "task": "Write a function countAbove(values,limit) that returns how many array items exceed a passed limit. Test equality and an empty list.",
+      "hint": "Parameter limit changes the comparison; count starts at zero.",
+      "answer": "For [2,5,8] with limit5, answer1 (only8); with limit1, answer3; empty list returns0. Iterate the array, increment only when item>limit, and return count."
+    }
+  },
+  {
+    "n": 130,
+    "coreHint": "Concatenation preserves all characters, including spaces and punctuation.",
+    "stretch": {
+      "task": "Extend the output to prepend 'Loan - ' and append an exclamation mark when status is Overdue.",
+      "hint": "Use IF status == 'Overdue' for the suffix.",
+      "answer": "For Ada/Overdue: Loan - Ada: Overdue!; Returned prints no exclamation."
+    },
+    "mastery": {
+      "task": "Design a program that accepts three borrowers with Name and Overdue status, outputs only overdue names and counts them. Then write an equivalent SQL query for the same records.",
+      "hint": "Use a loop and a counter; SQL filters rows with WHERE.",
+      "answer": "Model loop checks status==Overdue and prints name, counter increments; SQL: SELECT Name FROM Loans WHERE Overdue = 1; for [Ada overdue, Mia returned, Jo overdue], output Ada,Jo,count2."
+    }
+  },
+  {
+    "n": 131,
+    "coreHint": "The faulty program prints the unit price instead of the calculated total.",
+    "stretch": {
+      "task": "Add a discount rule: for quantity >= 5, reduce the calculated total by 10%. Predict when quantity=5 and unitPrice=4.",
+      "hint": "Calculate total first, then apply discount to total.",
+      "answer": "5×4=20; discounted total=18."
+    },
+    "mastery": {
+      "task": "Debug a program that calculates totals for three purchases but resets total to zero inside its loop. Fix it and add a boundary test for zero quantity.",
+      "hint": "Initialise total once before the loop, not each iteration.",
+      "answer": "For line costs [4,8,3], correct total15; zero-quantity item adds0; an incorrect reset would leave only the last line cost. Explain where to move the initialisation."
+    }
+  }
+]
