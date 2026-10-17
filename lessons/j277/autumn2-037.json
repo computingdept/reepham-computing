@@ -1,0 +1,356 @@
+{
+  "037": {
+    "t": "Operating Systems: Interfaces and Memory",
+    "s": "1.5.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "operating system",
+      "GUI",
+      "CLI",
+      "user interface",
+      "memory management",
+      "multitasking",
+      "RAM"
+    ],
+    "o": [
+      "Describe how an operating system provides a user interface.",
+      "Explain allocation of memory and how an OS supports multitasking.",
+      "Choose suitable interfaces for different users."
+    ],
+    "c": [
+      [
+        "Why an operating system?",
+        "System software coordinates hardware and applications, and provides services such as a user interface, memory management and security. Without it, applications would have to manage many hardware details."
+      ],
+      [
+        "Graphical and command interfaces",
+        "A GUI lets users select icons, windows and menus, making common tasks approachable. A CLI accepts typed commands, which can be efficient for an experienced user and automation."
+      ],
+      [
+        "Allocating memory",
+        "The OS allocates available RAM to applications, manages which data is kept in RAM and moves data as needed. Paging and segmentation are not required for this specification."
+      ],
+      [
+        "Multitasking",
+        "The OS manages running applications and shares processor time; it allocates memory and handles resources so users can switch between tasks. Switching does not mean one CPU core necessarily runs every task at exactly the same instant."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "OPERATING SYSTEM BETWEEN USER AND HARDWARE",
+        "layout": "driver-flow",
+        "boxes": [
+          "User applications",
+          "Operating system",
+          "Computer hardware"
+        ],
+        "foot": "The OS coordinates computer resources"
+      },
+      {
+        "title": "TWO USER INTERFACES",
+        "layout": "os-ui",
+        "boxes": [
+          "GUI",
+          "CLI"
+        ],
+        "foot": "Windows/icons versus typed commands"
+      },
+      {
+        "title": "RAM ALLOCATION FOR APPLICATIONS",
+        "layout": "memory-map",
+        "boxes": [
+          "Browser",
+          "Editor",
+          "Music"
+        ],
+        "foot": "The OS manages available memory"
+      },
+      {
+        "title": "MULTITASKING · CPU TIME",
+        "layout": "multitask",
+        "boxes": [
+          "Browser",
+          "Music",
+          "Editor"
+        ],
+        "foot": "Time shared among running programs"
+      }
+    ],
+    "idoVisual": {
+      "title": "OPERATING SYSTEM BETWEEN USER AND HARDWARE",
+      "layout": "driver-flow",
+      "boxes": [
+        "User applications",
+        "Operating system",
+        "Computer hardware"
+      ],
+      "foot": "The OS coordinates computer resources"
+    },
+    "m": {
+      "title": "OS manages several applications",
+      "q": "A student has a browser, music app and editor open. Explain how the OS manages their memory and allows multitasking. [4 marks]",
+      "headings": [
+        "Read the evidence",
+        "Step 1 · identify",
+        "Step 2 · explain",
+        "Check the marks"
+      ],
+      "st": [
+        "Identify the three applications competing for resources.",
+        "The OS allocates space in RAM to applications [1], keeping their required data available [1].",
+        "The OS manages CPU time among tasks [1], so the student can switch between or use different applications [1].",
+        "Four linked marks: memory allocation, purpose, processor time, multitasking."
+      ]
+    },
+    "w": [
+      [
+        "A receptionist runs booking software and an email client together. Explain TWO ways the OS helps these applications operate. [4 marks]",
+        "The OS allocates available RAM to each application [1], allowing program data to be held in primary memory [1]. It manages CPU time or resources [1], letting both applications remain usable through multitasking [1]."
+      ],
+      [
+        "A technician prefers typed commands for repetitive setup tasks. Explain one benefit and one drawback of a CLI compared with a GUI. [4 marks]",
+        "A CLI can run repeated or scripted commands efficiently [1], speeding up frequent technical tasks [1]. Users must remember accurate commands [1], so beginners may find it harder and make errors [1]."
+      ],
+      [
+        "A computer has three programs open but limited RAM. Explain TWO memory-management problems the OS must handle. [4 marks]",
+        "The OS must allocate the available RAM across programs [1] to prevent applications from competing for the same allocated space [1]. It manages moving/loading application data in memory [1], so programs have needed data as the user switches between them [1]."
+      ]
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Recognise two simultaneous programs."
+        ],
+        [
+          "Step 1 · identify",
+          "RAM is allocated so each running application can keep required data [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "OS manages processor time and resources so both can remain responsive [2]."
+        ],
+        [
+          "Check the marks",
+          "The OS allocates available RAM to each application [1], allowing program data to be held in primary memory [1]. It manages CPU time or resources [1], letting both applications remain usable through multitasking [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Compare one advantage and one disadvantage for the technician."
+        ],
+        [
+          "Step 1 · identify",
+          "Commands are fast/scriptable for repeated operations [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Commands must be known and typed accurately, increasing difficulty for novices [2]."
+        ],
+        [
+          "Check the marks",
+          "A CLI can run repeated or scripted commands efficiently [1], speeding up frequent technical tasks [1]. Users must remember accurate commands [1], so beginners may find it harder and make errors [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Focus on memory allocation and application data."
+        ],
+        [
+          "Step 1 · identify",
+          "OS manages RAM portions for multiple programs [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "It manages which needed data is in memory as apps are used [2]."
+        ],
+        [
+          "Check the marks",
+          "The OS must allocate the available RAM across programs [1] to prevent applications from competing for the same allocated space [1]. It manages moving/loading application data in memory [1], so programs have needed data as the user switches between them [1]."
+        ]
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "RECEPTION DESK · TWO RUNNING APPS",
+        "layout": "memory-map",
+        "boxes": [
+          "Bookings",
+          "Email",
+          "Free RAM"
+        ],
+        "foot": "Memory is shared between applications"
+      },
+      {
+        "title": "INTERFACES FOR DIFFERENT TASKS",
+        "layout": "os-ui",
+        "boxes": [
+          "GUI",
+          "CLI"
+        ],
+        "foot": "Icons versus typed commands"
+      },
+      {
+        "title": "RAM WITH SEVERAL PROGRAMS",
+        "layout": "memory-map",
+        "boxes": [
+          "App A",
+          "App B",
+          "App C"
+        ],
+        "foot": "How should memory be allocated?"
+      }
+    ],
+    "k": {
+      "q": "Simulate checking whether there is enough RAM to open a photo editor using values in megabytes (MB).",
+      "code": "freeMb = 1200\neditorMb = 850\nif freeMb >= editorMb then\n    print(\"Editor can be loaded\")\nelse\n    print(\"Not enough free RAM\")\nendif",
+      "p": [
+        "Predict the output when freeMb is 1200.",
+        "Change freeMb to 700 and predict the output.",
+        "Add a variable browserMb = 250 and calculate how much RAM would remain after opening both programs (if enough)."
+      ],
+      "a": "Original: Editor can be loaded. With freeMb = 700: Not enough free RAM.\n\nPossible extension:\nfreeMb = 1200\neditorMb = 850\nbrowserMb = 250\nneededMb = editorMb + browserMb\nprint(freeMb - neededMb)\n\nOutput: 100 MB free in this simplified model."
+    },
+    "e": [
+      [
+        "State TWO functions of an operating system. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "Provides a user interface [1]; allocates/manages RAM for applications [1]. Other valid functions include file, device, user management and multitasking."
+      ],
+      [
+        "A photographer switches between photo-editing software and a browser. Explain how operating-system memory management and multitasking support this. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "OS allocates RAM to each program [1] so needed data is available [1]. It manages the running tasks and processor time [1], so the user can switch between programs while both remain active [1]."
+      ],
+      [
+        "Compare GUI and CLI interfaces for an office worker and explain the OS role in memory management. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "GUI uses visual windows/icons and menus [1], making routine functions easier to discover [1]. CLI takes typed commands [1] that can be efficient for expert repetitive tasks [1]. OS allocates RAM to programs [1], allowing applications to run with required data in memory [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Operating system",
+        "System software managing hardware/resources and supplying services to programs."
+      ],
+      [
+        "GUI",
+        "Graphical User Interface using windows, icons, menus and a pointer."
+      ],
+      [
+        "CLI",
+        "Command Line Interface using text commands."
+      ],
+      [
+        "Memory management",
+        "Allocation and management of RAM for running programs."
+      ],
+      [
+        "Multitasking",
+        "Coordinating the execution of multiple applications."
+      ],
+      [
+        "User interface",
+        "Means by which the user interacts with a computer."
+      ],
+      [
+        "RAM",
+        "Volatile primary memory holding active programs and data."
+      ]
+    ],
+    "x": [
+      "The operating system can allocate RAM to different applications to help them run.",
+      true
+    ],
+    "r": [
+      [
+        "In Lesson 036, an unclear answer said that a firewall 'makes the Internet safe'. Explain precisely how a firewall filters traffic. [2 marks]",
+        "A firewall uses configured rules to check network traffic [1] and blocks disallowed traffic/connections [1]."
+      ],
+      [
+        "Assessment Q1. State what LAN and WAN mean, and identify the device that forwards data between networks. [3 marks]",
+        "Local Area Network [1]; Wide Area Network [1]; router [1]."
+      ],
+      [
+        "State one job of the ALU and one job of the Control Unit. [2 marks]",
+        "ALU performs arithmetic/logic [1]. CU coordinates CPU activities and instruction decoding [1]."
+      ],
+      [
+        "Assessment Q2. A public library uses a school-style star LAN to share files and printers. Explain one advantage of the topology and one potential weakness. [4 marks]",
+        "Central switch simplifies adding/managing devices [1], allowing easier administration [1]. The central switch is a single point of failure [1], so if it fails connected devices may be unable to communicate [1]."
+      ]
+    ],
+    "refs": [
+      "L036 · last lesson",
+      "L035 · earlier learning",
+      "L016 · Autumn 1 retrieval",
+      "L035 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "REFINE THE FIREWALL EXPLANATION",
+        "layout": "firewall",
+        "boxes": [
+          "Incoming data",
+          "Rules",
+          "Protected LAN"
+        ],
+        "foot": "Use an accurate mechanism."
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · CPU PARTS",
+        "layout": "compare",
+        "boxes": [
+          "ALU",
+          "CU"
+        ],
+        "foot": "Recall the different jobs."
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "PHOTO EDITOR AND BROWSER",
+        "layout": "memory-map",
+        "boxes": [
+          "Photo editor",
+          "Browser",
+          "Other apps"
+        ],
+        "foot": "Two programs share computer resources."
+      },
+      {
+        "title": "OS RESPONSIBILITIES",
+        "layout": "os-ui",
+        "boxes": [
+          "GUI",
+          "CLI"
+        ],
+        "foot": "Also explain memory allocation."
+      }
+    ],
+    "memoryCue": "System software coordinates hardware and applications, and provides services such as a user interface, memory manag",
+    "priorExam": {
+      "from": "036",
+      "q": "A colleague claims a two-factor login is unnecessary if a password is long. Explain how two-factor authentication still improves security. [4 marks]",
+      "a": "Additional independent evidence is required [1], such as a separate authenticator code/device [1]. A stolen password alone is insufficient [1], reducing unauthorised login risk [1].",
+      "visual": {
+        "title": "Account access with an extra check",
+        "layout": "login",
+        "boxes": [
+          "Member login",
+          "Separate factor",
+          "Account"
+        ],
+        "foot": "What if a password is stolen?"
+      }
+    }
+  }
+}
