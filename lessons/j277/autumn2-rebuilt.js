@@ -1808,7 +1808,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
-  const questions=[lesson.k.q,...(lesson.priorExam?[lesson.priorExam.q]:[]),...lesson.e.map(a=>a[0])];
+  const questions=[lesson.k.q+(lesson.year11?"\n\n"+lesson.k.p.map((p,i)=>(i+1)+". "+p).join("\n"):""),...(lesson.priorExam?[lesson.priorExam.q]:[]),...lesson.e.map(a=>a[0])];
   const answers=[lesson.k.a,...(lesson.priorExam?[lesson.priorExam.a]:[]),...lesson.e.map(a=>a[1])];
   const sections=arr(questions,(q,i)=>`<section class="answer-stage"${i?' hidden':''}><article class="solution-card"><div class="answer-card-pair"><div class="question-pane"><span class="phase-tag">${i===0?"CODE FIRST · OCR ERL":i===1&&lesson.priorExam?"PREVIOUS LEARNING · LESSON "+escape(lesson.priorExam.from):"EXAM QUESTION "+(i-(lesson.priorExam?1:0))+" OF "+lesson.e.length}</span><h2>${i===0?"Coding task · "+escape(lesson.t):"Question"}</h2><p>${escape(q)}</p>${i===0?`<pre class="solution-code">${escape(lesson.k.code)}</pre>`:""}</div><div class="answer-pane"><span class="phase-tag">MODEL ANSWER · MARKING POINTS</span><h2>Worked answer ${i+1} of ${questions.length}</h2><pre class="solution-code">${escape(answers[i])}</pre></div></div></article></section>`);
   const html=`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · Worked answers</title>
