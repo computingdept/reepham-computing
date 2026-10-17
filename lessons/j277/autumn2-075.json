@@ -1,0 +1,356 @@
+{
+  "075": {
+    "t": "Validation and Authentication",
+    "s": "2.3.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Validation",
+      "Range check",
+      "Authentication",
+      "Re-prompt"
+    ],
+    "o": [
+      "Apply validation and authentication to programs.",
+      "Apply this to another software scenario.",
+      "Use test evidence to identify or improve an answer."
+    ],
+    "c": [
+      [
+        "Validation",
+        "Checks input against specified rules, rejecting values outside the allowed range. Consider this in a online age entry."
+      ],
+      [
+        "Range check",
+        "Tests whether a numeric value is between minimum and maximum limits. Consider this in a exam score entry."
+      ],
+      [
+        "Authentication",
+        "Checks identity, for example using username and password, rather than checking input format. Consider this in a club registration."
+      ],
+      [
+        "Re-prompt",
+        "A valid design asks again when input does not meet a validation rule. Consider this in a account login."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "VALIDATION · online age entry",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Range check",
+          "Authentication"
+        ],
+        "foot": "Stage 1 · Validation"
+      },
+      {
+        "title": "RANGE CHECK · exam score entry",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Range check",
+          "Authentication"
+        ],
+        "foot": "Stage 2 · Range check"
+      },
+      {
+        "title": "AUTHENTICATION · club registration",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Range check",
+          "Authentication"
+        ],
+        "foot": "Stage 3 · Authentication"
+      },
+      {
+        "title": "RE-PROMPT · account login",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Range check",
+          "Authentication"
+        ],
+        "foot": "Stage 4 · Re-prompt"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · online age entry",
+      "layout": "validation",
+      "boxes": [
+        "Validation",
+        "Range check",
+        "Authentication"
+      ],
+      "foot": "Model the method before independent practice"
+    },
+    "m": {
+      "title": "Model · online age entry",
+      "q": "A online age entry needs validation and range check. Explain why. [4 marks]",
+      "headings": [
+        "Identify the task",
+        "Explain the first point",
+        "Explain the second point",
+        "Check all four marks"
+      ],
+      "st": [
+        "Identify the inputs, constraints and expected result.",
+        "Validation [1]; Checks input against specified rules, rejecting values outside the allowed range. [1].",
+        "Range check [1]; Tests whether a numeric value is between minimum and maximum limits. [1].",
+        "Give a specific point and a linked reason for each feature."
+      ]
+    },
+    "w": [
+      [
+        "In a exam score entry, explain the purpose of validation. [2 marks]",
+        "Validation [1]; Checks input against specified rules, rejecting values outside the allowed range. [1]."
+      ],
+      [
+        "A club registration needs range check. Explain its role. [2 marks]",
+        "Range check [1]; Tests whether a numeric value is between minimum and maximum limits. [1]."
+      ],
+      [
+        "A account login uses authentication and re-prompt. Explain both. [4 marks]",
+        "Authentication [1]; Checks identity, for example using username and password, rather than checking input format. [1]. Re-prompt [1]; A valid design asks again when input does not meet a validation rule. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "WE DO · exam score entry",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Range check",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      },
+      {
+        "title": "WE DO · club registration",
+        "layout": "validation",
+        "boxes": [
+          "Range check",
+          "Authentication",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      },
+      {
+        "title": "WE DO · account login",
+        "layout": "validation",
+        "boxes": [
+          "Authentication",
+          "Re-prompt",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Validation [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Checks input against specified rules, rejecting values outside the allowed range. [1]"
+        ],
+        [
+          "Check the marks",
+          "Validation [1]; Checks input against specified rules, rejecting values outside the allowed range. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Range check [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Tests whether a numeric value is between minimum and maximum limits. [1]"
+        ],
+        [
+          "Check the marks",
+          "Range check [1]; Tests whether a numeric value is between minimum and maximum limits. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Authentication [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Checks identity, for example using username and password, rather than checking input format. [1]"
+        ],
+        [
+          "Check the marks",
+          "Authentication [1]; Checks identity, for example using username and password, rather than checking input format. [1]. Re-prompt [1]; A valid design asks again when input does not meet a validation rule. [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace the OCR ERL program, test a new input and improve the code.",
+      "code": "mark = 105\nif mark >= 0 AND mark <= 100 then\n    print(\"Valid\")\nelse\n    print(\"Invalid\")\nendif",
+      "p": [
+        "Predict the exact initial output.",
+        "Change mark to 100.",
+        "Use mark = -1 and predict output."
+      ],
+      "a": "Original output: Invalid.\nUpdated tests: Mark 100: Valid. Mark -1: Invalid.\nWrite the expected and actual output separately."
+    },
+    "e": [
+      [
+        "State TWO concepts relevant to this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Validation [1]; Authentication [1]."
+      ],
+      [
+        "Explain how range check and authentication help in a school trip form. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Range check [1]; Tests whether a numeric value is between minimum and maximum limits. [1]. Authentication [1]; Checks identity, for example using username and password, rather than checking input format. [1]."
+      ],
+      [
+        "Explain the roles of validation, authentication and re-prompt in a café membership. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Validation [1]; Checks input against specified rules, rejecting values outside the allowed range. [1]. Authentication [1]; Checks identity, for example using username and password, rather than checking input format. [1]. Re-prompt [1]; A valid design asks again when input does not meet a validation rule. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Validation",
+        "Checks input against specified rules, rejecting values outside the allowed range."
+      ],
+      [
+        "Range check",
+        "Tests whether a numeric value is between minimum and maximum limits."
+      ],
+      [
+        "Authentication",
+        "Checks identity, for example using username and password, rather than checking input format."
+      ],
+      [
+        "Re-prompt",
+        "A valid design asks again when input does not meet a validation rule."
+      ],
+      [
+        "Test case",
+        "An input and expected outcome used to check correctness."
+      ],
+      [
+        "Bug",
+        "A defect in the program."
+      ]
+    ],
+    "x": [
+      "Checks input against specified rules, rejecting values outside the allowed range.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Random numbers [1]; Integer range [1]."
+      ],
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "SELECT [1]; FROM [1]."
+      ],
+      [
+        "Name the storage technology used in a USB flash drive. [1 mark]",
+        "Solid state [1]."
+      ],
+      [
+        "Explain from and where in a café inventory. [4 marks]",
+        "FROM [1]; Identifies the database table from which records are selected. [1]. WHERE [1]; Filters records using a condition. [1]."
+      ]
+    ],
+    "refs": [
+      "L074 · last lesson",
+      "L073 · earlier learning",
+      "L013 · Autumn 1 retrieval",
+      "L073 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "RANDOM NUMBERS · dice game",
+        "layout": "random-die",
+        "boxes": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "foot": "Step 1 · Random numbers"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · SPACED RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L013",
+          "Question",
+          "Remember"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · school trip form",
+        "layout": "validation",
+        "boxes": [
+          "Range check",
+          "Authentication",
+          "Result"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "INDEPENDENT · café membership",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Authentication",
+          "Re-prompt"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "Validation: Checks input against specified rules, rejecting values outside the allowed range.",
+    "priorExam": {
+      "from": "074",
+      "q": "Explain integer range and unpredictability in a virtual spinner. [4 marks]",
+      "a": "Integer range [1]; random(1,6) can return any whole number from 1 to 6. [1]. Unpredictability [1]; Successive random calls can produce different values; outputs are not fixed. [1].",
+      "visual": {
+        "title": "INDEPENDENT · virtual spinner",
+        "layout": "random-die",
+        "boxes": [
+          "Integer range",
+          "Unpredictability",
+          "Output"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
