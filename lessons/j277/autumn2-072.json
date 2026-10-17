@@ -1,0 +1,353 @@
+{
+  "072": {
+    "t": "File Handling",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Open file",
+      "Read line",
+      "Write line",
+      "Close file"
+    ],
+    "o": [
+      "Read, write, open and close text files.",
+      "Use the technique in a different problem.",
+      "Explain the OCR ERL example and test a modification."
+    ],
+    "c": [
+      [
+        "Open file",
+        "open(filename) returns a handle to an existing text file. In the daily attendance file, identify where this technique applies."
+      ],
+      [
+        "Read line",
+        "handle.readLine() obtains the next line of text from an opened file. In the revision notes file, identify where this technique applies."
+      ],
+      [
+        "Write line",
+        "handle.writeLine(text) adds a line to an opened file. In the library loans file, identify where this technique applies."
+      ],
+      [
+        "Close file",
+        "handle.close() releases the file when finished. In the temperature log, identify where this technique applies."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "OPEN FILE · daily attendance file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Write line"
+        ],
+        "foot": "Step 1 · Open file"
+      },
+      {
+        "title": "READ LINE · revision notes file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Write line"
+        ],
+        "foot": "Step 2 · Read line"
+      },
+      {
+        "title": "WRITE LINE · library loans file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Write line"
+        ],
+        "foot": "Step 3 · Write line"
+      },
+      {
+        "title": "CLOSE FILE · temperature log",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Write line"
+        ],
+        "foot": "Step 4 · Close file"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · daily attendance file",
+      "layout": "file-io",
+      "boxes": [
+        "Open file",
+        "Read line",
+        "Write line"
+      ],
+      "foot": "Follow the detailed example"
+    },
+    "m": {
+      "title": "Model · daily attendance file",
+      "q": "A daily attendance file uses open file and read line. Explain what each contributes. [4 marks]",
+      "headings": [
+        "Read the question",
+        "Model the first feature",
+        "Model the second feature",
+        "Check the marks"
+      ],
+      "st": [
+        "Identify the program's purpose and the pieces of data needed.",
+        "Open file [1]; open(filename) returns a handle to an existing text file. [1].",
+        "Read line [1]; handle.readLine() obtains the next line of text from an opened file. [1].",
+        "Each feature needs a correct technical fact plus an explanation."
+      ]
+    },
+    "w": [
+      [
+        "A revision notes file needs open file. Explain the purpose. [2 marks]",
+        "Open file [1]; open(filename) returns a handle to an existing text file. [1]."
+      ],
+      [
+        "Explain read line for a library loans file. [2 marks]",
+        "Read line [1]; handle.readLine() obtains the next line of text from an opened file. [1]."
+      ],
+      [
+        "When programming a temperature log, explain why write line and close file matter. [4 marks]",
+        "Write line [1]; handle.writeLine(text) adds a line to an opened file. [1]. Close file [1]; handle.close() releases the file when finished. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Open file [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "open(filename) returns a handle to an existing text file. [1]"
+        ],
+        [
+          "Check the marks",
+          "Open file [1]; open(filename) returns a handle to an existing text file. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Read line [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "handle.readLine() obtains the next line of text from an opened file. [1]"
+        ],
+        [
+          "Check the marks",
+          "Read line [1]; handle.readLine() obtains the next line of text from an opened file. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Write line [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "handle.writeLine(text) adds a line to an opened file. [1]"
+        ],
+        [
+          "Check the marks",
+          "Write line [1]; handle.writeLine(text) adds a line to an opened file. [1]. Close file [1]; handle.close() releases the file when finished. [1]."
+        ]
+      ]
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · revision notes file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · library loans file",
+        "layout": "file-io",
+        "boxes": [
+          "Read line",
+          "Write line",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · temperature log",
+        "layout": "file-io",
+        "boxes": [
+          "Write line",
+          "Close file",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      }
+    ],
+    "k": {
+      "q": "Trace this OCR ERL program; predict the output and change it.",
+      "code": "myFile = open(\"notes.txt\")\nmyFile.writeLine(\"Revision\")\nmyFile.close()\nprint(\"Saved\")",
+      "p": [
+        "Predict the exact output.",
+        "Change the written text to \"Homework\"; which line is written?",
+        "Add another writeLine before close, then predict how many new lines are appended."
+      ],
+      "a": "Original output: Saved.\nAfter the changes: After first change one line Homework is written. With two writeLine calls, two new lines are appended (assuming notes.txt exists and is writable).\nThe named text file must exist and be writable."
+    },
+    "e": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Open file [1]; Read line [1]."
+      ],
+      [
+        "Explain read line and write line in a sport-result text file. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Read line [1]; handle.readLine() obtains the next line of text from an opened file. [1]. Write line [1]; handle.writeLine(text) adds a line to an opened file. [1]."
+      ],
+      [
+        "A programmer makes a teacher diary file. Explain the roles of open file, write line and close file. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Open file [1]; open(filename) returns a handle to an existing text file. [1]. Write line [1]; handle.writeLine(text) adds a line to an opened file. [1]. Close file [1]; handle.close() releases the file when finished. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Open file",
+        "open(filename) returns a handle to an existing text file."
+      ],
+      [
+        "Read line",
+        "handle.readLine() obtains the next line of text from an opened file."
+      ],
+      [
+        "Write line",
+        "handle.writeLine(text) adds a line to an opened file."
+      ],
+      [
+        "Close file",
+        "handle.close() releases the file when finished."
+      ],
+      [
+        "Algorithm",
+        "A defined set of processing instructions."
+      ],
+      [
+        "Testing",
+        "Checking expected outcomes against actual program behaviour."
+      ]
+    ],
+    "x": [
+      "open(filename) returns a handle to an existing text file.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Subprogram [1]; Array parameter [1]."
+      ],
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Procedure [1]; Parameter [1]."
+      ],
+      [
+        "State the function of the Memory Address Register. [1 mark]",
+        "Holds the address of the memory location being accessed [1]."
+      ],
+      [
+        "Explain parameter and local variable in a sports registration. [4 marks]",
+        "Parameter [1]; A named input to a procedure or function. [1]. Local variable [1]; A variable created inside a subprogram, ordinarily limited to its scope. [1]."
+      ]
+    ],
+    "refs": [
+      "L071 · last lesson",
+      "L070 · earlier learning",
+      "L017 · Autumn 1 retrieval",
+      "L070 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "SUBPROGRAM · score-array helper",
+        "layout": "function-call",
+        "boxes": [
+          "Subprogram",
+          "Array parameter",
+          "Return value"
+        ],
+        "foot": "Step 1 · Subprogram"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L017",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · sport-result text file",
+        "layout": "file-io",
+        "boxes": [
+          "Read line",
+          "Write line",
+          "Output"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "INDEPENDENT · teacher diary file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Write line",
+          "Close file"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "Open file: open(filename) returns a handle to an existing text file.",
+    "priorExam": {
+      "from": "071",
+      "q": "Explain array parameter and return value in a temperature array report. [4 marks]",
+      "a": "Array parameter [1]; An array can be supplied to a subprogram so values can be processed. [1]. Return value [1]; A function passes a result back to the code that called it. [1].",
+      "visual": {
+        "title": "INDEPENDENT · temperature array report",
+        "layout": "function-call",
+        "boxes": [
+          "Array parameter",
+          "Return value",
+          "Output"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
