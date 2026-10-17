@@ -558,7 +558,7 @@
 
  function j277ProgrammingScene(spec){
  const kind=String(spec.layout||"");
- const kinds=["sequence","variables","data-types","operators","boolean","if-branch","nested-if","for-loop","while-loop","array-1d","array-2d","record","function-call","procedure-call","file-io","sql-table","random-die","validation","test-cases","debug","project-cycle","linear-search","binary-search","bubble-sort","insertion-sort","merge-sort","logic-gates","truth-table","combined-logic"];
+ const kinds=["sequence","variables","data-types","operators","boolean","if-branch","nested-if","for-loop","while-loop","array-1d","array-2d","record","function-call","procedure-call","file-io","sql-table","random-die","validation","test-cases","debug","project-cycle","linear-search","binary-search","bubble-sort","insertion-sort","merge-sort","logic-gates","logic-or","logic-not","truth-table","combined-truth","combined-logic"];
  if(!kinds.includes(kind))return null;
  const title=String(spec.title||"J277"),labels=Array.isArray(spec.boxes)?spec.boxes.map(String):[];
  const colour=["#e5effb","#e4f2e8","#f9ecd4","#eeeafb"],ink="#245342",green="#378161",blue="#4b83a9";
@@ -574,11 +574,23 @@
  const row=(parts)=>{const size=parts.length,w=size===4?117:160,gap=size===4?17:23;parts.forEach((p,i)=>{const x=12+i*(w+gap);b+=C(x,124,w,105,p,colour[i%4]);if(i<size-1)b+=A(x+w+2,175,x+w+gap-4,175);});};
  if(["sequence","operators","data-types","procedure-call","debug","project-cycle"].includes(kind))row(labels.length>=3?labels.slice(0,3):["Input","Process","Output"]);
  else if(kind==="variables"){row(labels.length>=3?labels.slice(0,3):["x = 2","x = x+1","x = 3"]);b+=T(280,273,"Assignments replace previous values",17);}
- else if(["boolean","logic-gates","combined-logic"].includes(kind)){
- b+=C(18,96,132,75,v(0,"Input A"),colour[0])+C(18,210,132,75,v(1,"Input B"),colour[0]);
- b+=L(150,134,237,134)+L(150,248,237,248)+L(237,134,237,248);
- b+='<path d="M236 135 L307 135 C386 135 386 251 307 251 L236 251 Z" fill="#e4f3e9" stroke="'+green+'" stroke-width="4"/>';
- b+=T(305,198,kind==="boolean"?v(2,"AND"):v(2,"AND"),18)+A(377,193,433,193)+C(438,153,98,81,"Q",colour[2]);
+ else if(["boolean","logic-gates","logic-or","logic-not","combined-logic"].includes(kind)){
+ const isNot=kind==="logic-not",isOr=kind==="logic-or";
+ b+=C(18,96,132,75,v(0,"Input A"),colour[0]);
+ if(!isNot)b+=C(18,210,132,75,v(1,"Input B"),colour[0]);
+ b+=L(150,134,237,134);
+ if(!isNot){b+=L(150,248,237,248)+L(237,134,237,248);}
+ if(isNot){
+  b+='<path d="M236 126 L364 184 L236 244 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>'+
+  '<circle cx="372" cy="184" r="9" fill="#fff" stroke="'+green+'" stroke-width="4"/>';
+ }else if(isOr){
+  b+='<path d="M230 133 Q280 194 230 253 Q333 262 377 194 Q333 123 230 133 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>';
+ }else{
+  b+='<path d="M236 135 L307 135 C386 135 386 251 307 251 L236 251 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>';
+ }
+ b+=A(isNot?382:378,193,433,193)+C(438,153,98,81,"Q",colour[2]);
+ b+=T(306,192,isNot?"NOT":isOr?"OR":"AND",17);
+ b+=T(282,297,kind==="combined-logic"?"Q=(A AND B) OR C · concept stage":isNot?"Q=NOT A":isOr?"Q=A OR B":"Q=A AND B",17);
  }else if(["if-branch","nested-if","validation"].includes(kind)){
  b+=C(23,146,127,77,v(0,"Input"),colour[0])+A(151,184,211,184);
  b+='<path d="M287 91 L374 184 L287 274 L200 184 Z" fill="#f9edda" stroke="#bb9437" stroke-width="3"/>';
@@ -590,12 +602,20 @@
  const a=labels.length>=5?labels.slice(0,6):["3","7","1","9","4","6"],w=80,g=7,x0=(560-(a.length*w+(a.length-1)*g))/2;
  a.forEach((v,i)=>{const x=x0+i*(w+g);b+=B(x,127,w,96,kind==="binary-search"&&i===Math.floor((a.length-1)/2)?colour[2]:kind==="bubble-sort"&&i<2?"#f9dede":colour[0]);b+=T(x+w/2,185,v,24)+T(x+w/2,109,String(i),15);});
  b+=T(280,264,kind==="binary-search"?"Sorted data · compare midpoint":kind==="linear-search"?"Check each position in turn":kind==="bubble-sort"?"Compare neighbours, swap if necessary":kind==="insertion-sort"?"Grow a sorted section":kind==="merge-sort"?"Divide into halves · merge ordered": "Arrays start at index zero",16);
- }else if(["array-2d","sql-table","truth-table"].includes(kind)){
- const cols=kind==="truth-table"?4:3,rows=4,w=kind==="truth-table"?125:155,x0=(560-cols*w)/2;
- for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const X=x0+x*w,Y=76+y*57;b+=B(X,Y,w-5,52,y===0?colour[0]:y%2?colour[1]:"#f4f7f6");
- const value=y===0?(kind==="truth-table"?["A","B","A AND B","Q"][x]:kind==="sql-table"?["ID","Name","Score"][x]:"COL "+x):
- kind==="sql-table"?[[1,"Mia",7],[2,"Leo",9],[3,"Ava",6]][y-1][x]:kind==="truth-table"?[["0","0","0","0"],["0","1","0","0"],["1","0","0","0"]][y-1][x]:"["+String(y-1)+","+String(x)+"]";
- b+=T(X+w/2,Y+33,value,17);
+ }else if(["array-2d","sql-table","truth-table","combined-truth"].includes(kind)){
+ const isTruth=kind==="truth-table",isCombined=kind==="combined-truth",op=String(labels[0]||"AND").toUpperCase();
+ const cols=(isTruth||isCombined)?4:3,rows=isCombined?9:isTruth?5:4,w=isTruth||isCombined?125:155,x0=(560-cols*w)/2;
+ const headings=isCombined?["A","B","C","Q"]:isTruth?["A","B",op.includes("OR")?"A OR B":"A AND B","Q"]:kind==="sql-table"?["ID","Name","Score"]:["COL 0","COL 1","COL 2"];
+ for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+  const X=x0+x*w,Y=(isCombined?65:76)+y*(isCombined?28:isTruth?47:57),cellH=isCombined?26:isTruth?43:52;
+  b+=B(X,Y,w-5,cellH,y===0?colour[0]:y%2?colour[1]:"#f4f7f6");
+  let value;
+  if(y===0)value=headings[x];
+  else if(isTruth){const A=[0,0,1,1][y-1],Bv=[0,1,0,1][y-1],q=op.includes("OR")?(A||Bv):(A&&Bv);value=x===0?A:x===1?Bv:q;}
+  else if(isCombined){const A=Math.floor((y-1)/4),Bv=Math.floor(((y-1)%4)/2),C=(y-1)%2,q=(A&&Bv)||C;value=[A,Bv,C,q][x];}
+  else if(kind==="sql-table")value=[[1,"Mia",7],[2,"Leo",9],[3,"Ava",6]][y-1][x];
+  else value="["+String(y-1)+","+String(x)+"]";
+  b+=T(X+w/2,Y+(isCombined?19:isTruth?29:33),value,isCombined?14:17);
  }
  }else if(kind==="record"){
  b+=C(25,76,509,60,"ONE RECORD",colour[0]);["Name","Age","Score"].forEach((name,i)=>{b+=C(25+i*177,151,164,98,v(i,name),colour[(i+1)%4]);});b+=T(280,284,"Related fields describe one item",17);
