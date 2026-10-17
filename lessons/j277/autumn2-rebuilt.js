@@ -1493,6 +1493,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   });
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"${isCpu&&lesson.wSteps?' data-guided-steps="true"':''}><div class="wedo-focus-deck">${cases}</div></section>`;
  }
+ // Independent practice: no automatic SVGs. A required source diagram should only be added explicitly alongside the particular question, never inferred from a topic template.
  function youDo(lesson,number){
   if(lesson.isAssessment){
     return `<section id="you-do" class="page phase-youdo j277-assessment" data-assessment-mode="true" data-phase-time="Independent assessment"><article class="j277-assessment-panel"><span class="phase-tag">${escape(lesson.assessmentMinutes||45)} MINUTES · ${escape(lesson.assessmentMarks||45)} MARKS · INDEPENDENT</span><h2>${escape(lesson.t)}</h2><p>Open the question paper. Answer every question independently, showing working and linking explanations to the marks available. Do not view model answers during the assessment.</p><a class="j277-assessment-open" href="assessment.html" target="_blank" rel="noopener">Open the 45-mark assessment paper →</a><p class="j277-assessment-note">Teacher: release the separate worked answers only after the assessment has finished.</p></article></section>`;
@@ -1511,13 +1512,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     ? `<article class="exam-card youdo-question j277-prior-exam" hidden>
        <span class="phase-tag">QUESTION 2 · PREVIOUS LEARNING · LESSON ${escape(lesson.priorExam.from)}</span>
        <h3>Retrieval · earlier learning</h3>
-       ${lesson.priorExam.visual?visualPrompt(lesson.priorExam.visual):""}
+       
        <div class="question-text"><p>${examWords(lesson,lesson.priorExam.q)}</p>
        <p class="source-note">Previously taught OCR J277 content · Lesson ${escape(lesson.priorExam.from)}. Original retrieval question.</p></div>
      </article>`
     : "";
   const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2+(lesson.priorExam?1:0)} · OCR J277 STYLE</span><h3>Exam practice</h3>${lesson.examVisuals&&lesson.examVisuals[i]?visualPrompt(lesson.examVisuals[i]):""}<div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2+(lesson.priorExam?1:0)} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${prior}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
