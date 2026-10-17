@@ -1,0 +1,362 @@
+{
+  "047": {
+    "t": "Inputs, Processes and Outputs",
+    "s": "2.1.2",
+    "vis": "diagram-spec",
+    "highlights": [
+      "input",
+      "process",
+      "output",
+      "IPO",
+      "algorithm",
+      "sensor",
+      "threshold"
+    ],
+    "o": [
+      "Identify inputs, processing and output for a specified problem.",
+      "Construct an accurate IPO diagram.",
+      "Turn an IPO description into simple OCR ERL code."
+    ],
+    "c": [
+      [
+        "Start with the result",
+        "Every problem asks for a useful result: a total, decision, message or control signal. Identify what the result should be first."
+      ],
+      [
+        "Identify specific inputs",
+        "Inputs are supplied values such as length and width, a sensor reading or a selected option. Name exact values, rather than saying 'some data'."
+      ],
+      [
+        "Describe the processing",
+        "Processing includes calculations, comparisons or decisions. For example: total = unitPrice × quantity, rather than 'the computer works it out'."
+      ],
+      [
+        "Output completes the task",
+        "Output could be a displayed cost or warning message. Check that it follows from the processing and answers the stated question."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "INPUT → PROCESS → OUTPUT",
+        "layout": "ipo",
+        "boxes": [
+          "Supplied data",
+          "Calculation",
+          "Result"
+        ],
+        "foot": "Each stage has a purpose"
+      },
+      {
+        "title": "INPUTS FOR RECTANGLE AREA",
+        "layout": "ipo",
+        "boxes": [
+          "Length + width",
+          "Multiply",
+          "Area"
+        ],
+        "foot": "Name the actual input values"
+      },
+      {
+        "title": "PRICE AND QUANTITY",
+        "layout": "ipo",
+        "boxes": [
+          "Item price + count",
+          "Multiply",
+          "Total cost"
+        ],
+        "foot": "Use a precise calculation"
+      },
+      {
+        "title": "SENSOR INPUT TO WARNING",
+        "layout": "ipo",
+        "boxes": [
+          "Temperature",
+          "Compare limit",
+          "Warning"
+        ],
+        "foot": "A decision can determine output"
+      }
+    ],
+    "idoVisual": {
+      "title": "RECTANGLE AREA · IPO",
+      "layout": "ipo",
+      "boxes": [
+        "Length + width",
+        "Multiply",
+        "Area"
+      ],
+      "foot": "What is entered and what is shown?"
+    },
+    "m": {
+      "title": "Identify the rectangle's IPO",
+      "q": "A program takes a rectangle's length and width and calculates its area. Identify the input, processing and output. [4 marks]",
+      "headings": [
+        "Read the result needed",
+        "Identify inputs",
+        "Identify the calculation",
+        "Check the output"
+      ],
+      "st": [
+        "The result required is the rectangle's area.",
+        "Inputs are length and width [1], two values supplied to the algorithm [1].",
+        "Processing multiplies length × width [1].",
+        "Output displays the area [1]. A separate result follows the calculation."
+      ]
+    },
+    "w": [
+      [
+        "A snack shop program calculates the total for five identical snacks. Identify input, processing and output. [4 marks]",
+        "Inputs: price per snack [1] and quantity 5 [1]. Process: multiply price × 5 [1]. Output: the total price [1]."
+      ],
+      [
+        "A temperature monitor displays an ice warning when a reading is below 2°C. Explain input, processing and output. [4 marks]",
+        "Temperature from the sensor is input [1]. The program compares it with 2°C [1]. If below the threshold [1], it outputs an ice warning [1]."
+      ],
+      [
+        "A ticket machine accepts an adult fare and a child fare and displays their total. Give four ordered steps. [4 marks]",
+        "Input adult fare [1]. Input child fare [1]. Add them [1]. Display the sum [1]."
+      ]
+    ],
+    "wTitles": [
+      "Snack-shop IPO",
+      "Sensor threshold",
+      "Ticket-total algorithm"
+    ],
+    "wVisuals": [
+      {
+        "title": "FIVE IDENTICAL SNACKS",
+        "layout": "ipo",
+        "boxes": [
+          "Unit price + 5",
+          "Multiply",
+          "Total"
+        ],
+        "foot": "Identify the input, operation and output"
+      },
+      {
+        "title": "ICE WARNING",
+        "layout": "ipo",
+        "boxes": [
+          "Temperature",
+          "Below 2°C?",
+          "Warning"
+        ],
+        "foot": "One branch gives a warning"
+      },
+      {
+        "title": "ADULT + CHILD TICKETS",
+        "layout": "algorithm-steps",
+        "boxes": [
+          "Adult fare",
+          "Child fare",
+          "Add",
+          "Display"
+        ],
+        "foot": "Inputs before calculation"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Start from the total price needed."
+        ],
+        [
+          "Step 1 · inputs",
+          "Price and quantity are the two inputs [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Multiply price by quantity; output total [2]."
+        ],
+        [
+          "Check the marks",
+          "Inputs: price [1] and quantity 5 [1]. Multiply [1] then display total [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Look for the source of data and the decision."
+        ],
+        [
+          "Step 1 · identify",
+          "Sensor provides temperature [1]; compare with 2°C [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "When below the threshold, print a warning [2]."
+        ],
+        [
+          "Check the marks",
+          "Temperature input [1], compare to 2°C [1], below condition [1], ice warning output [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Four ordered instructions: get values, then add, then show."
+        ],
+        [
+          "Step 1 · identify",
+          "Input adult fare and child fare [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Add the values [1] and display total [1]."
+        ],
+        [
+          "Check the marks",
+          "Input adult [1], input child [1], add [1], display [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Use OCR ERL to calculate the total cost for three tickets.",
+      "code": "price = 7\nquantity = 3\ntotal = price * quantity\nprint(total)",
+      "p": [
+        "Predict the output.",
+        "Change quantity to 4.",
+        "Add fee = 2 and include it in total."
+      ],
+      "a": "Original: 21. With four tickets: 28.\n\nExtension:\nprice = 7\nquantity = 4\nfee = 2\ntotal = price * quantity + fee\nprint(total)\n\nOutput: 30."
+    },
+    "e": [
+      [
+        "Define processing within an algorithm. [2 marks]\n\nSource: Original J277-style teaching question, not an official past paper.",
+        "Operations/calculations performed on inputs [1] to obtain results [1]."
+      ],
+      [
+        "A streaming service calculates subscription cost from months purchased and a price per month. Describe the IPO stages. [4 marks]\n\nSource: Original J277-style teaching question, not an official past paper.",
+        "Inputs are number of months [1] and monthly price [1]. Processing multiplies them [1]. Output displays the cost [1]."
+      ],
+      [
+        "Explain why identifying IPO accurately helps when designing a school uniform ordering algorithm. [6 marks]\n\nSource: Original J277-style teaching question, not an official past paper.",
+        "Inputs could be item types and quantities [1] and unit prices [1]. Processing multiplies unit prices and quantities [1] and totals the order [1]. Output gives total price/confirmation [1]. Precise IPO helps plan/test the algorithm [1]."
+      ]
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "STREAMING SUBSCRIPTION",
+        "layout": "ipo",
+        "boxes": [
+          "Months + rate",
+          "Multiply",
+          "Price"
+        ],
+        "foot": "Data used to compute a total"
+      },
+      {
+        "title": "SCHOOL UNIFORM ORDER",
+        "layout": "ipo",
+        "boxes": [
+          "Items + quantity",
+          "Calculate total",
+          "Order cost"
+        ],
+        "foot": "Be specific about stages"
+      }
+    ],
+    "v": [
+      [
+        "Input",
+        "Data supplied to a program."
+      ],
+      [
+        "Processing",
+        "Operations or decisions performed on data."
+      ],
+      [
+        "Output",
+        "Result produced by an algorithm."
+      ],
+      [
+        "IPO",
+        "Input–Process–Output model."
+      ],
+      [
+        "Algorithm",
+        "Instructions for a problem-solving task."
+      ],
+      [
+        "Sensor",
+        "Device producing measured input."
+      ],
+      [
+        "Threshold",
+        "A comparison value triggering an outcome."
+      ]
+    ],
+    "x": [
+      "Output is produced after suitable processing has been performed on required inputs.",
+      true
+    ],
+    "r": [
+      [
+        "State what an algorithm is. [2 marks]",
+        "A set/sequence of clear instructions [1] for solving a problem [1]."
+      ],
+      [
+        "Define abstraction in computational thinking. [2 marks]",
+        "Removing/ignoring irrelevant detail [1] while keeping information required to solve a problem [1]."
+      ],
+      [
+        "Explain the difference between RAM and ROM when a computer is switched off. [2 marks]",
+        "RAM is volatile and loses data without power [1]; ROM is non-volatile [1]."
+      ],
+      [
+        "A weather app predicts whether to show an umbrella warning. Explain how decomposition and abstraction help design it. [4 marks]",
+        "Break the job into reading forecast, comparing rain probability and displaying advice [2]. Keep forecast/rain likelihood [1] while ignoring irrelevant information such as the user's phone case colour [1]."
+      ]
+    ],
+    "refs": [
+      "L046 · last lesson",
+      "L045 · earlier learning",
+      "L011 · Autumn 1 retrieval",
+      "L045 · high challenge"
+    ],
+    "retrievalVisuals": [
+      {
+        "title": "ALGORITHM IS AN ORDERED METHOD",
+        "layout": "algorithm-steps",
+        "boxes": [
+          "Start",
+          "Read data",
+          "Process data",
+          "Display result"
+        ],
+        "foot": "A clear logical sequence"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · MEMORY",
+        "layout": "compare",
+        "boxes": [
+          "RAM",
+          "ROM"
+        ],
+        "foot": "Which retains data without power?"
+      },
+      null
+    ],
+    "memoryCue": "Identify the exact input values, the calculation or decision, and the output that solves the problem.",
+    "visualAuditV2": true,
+    "priorExam": {
+      "from": "046",
+      "q": "A café calculates the cost of two drinks then adds a £1 service charge. Write FOUR logical steps for the algorithm. [4 marks]",
+      "a": "Input price of drink 1 [1]; input drink 2 price [1]; total = price1 + price2 + 1 [1]; output total [1].",
+      "visual": {
+        "title": "CAFE BILL STEPS",
+        "layout": "algorithm-steps",
+        "boxes": [
+          "First price",
+          "Second price",
+          "Add charge",
+          "Print"
+        ],
+        "foot": "Use the correct order"
+      }
+    }
+  }
+}
