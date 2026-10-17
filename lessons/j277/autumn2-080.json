@@ -1,0 +1,353 @@
+{
+  "080": {
+    "t": "Trace Tables and Algorithm Refinement",
+    "s": "2.1.2",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Trace table",
+      "Accumulator",
+      "Expected output",
+      "Refinement"
+    ],
+    "o": [
+      "Trace, test and refine algorithms.",
+      "Apply this to another software scenario.",
+      "Use test evidence to identify or improve an answer."
+    ],
+    "c": [
+      [
+        "Trace table",
+        "Manually records changes to variables and printed outputs as code executes. Consider this in a points tally."
+      ],
+      [
+        "Accumulator",
+        "A variable updated repeatedly to store a running total. Consider this in a shop receipt sum."
+      ],
+      [
+        "Expected output",
+        "The result that should occur according to the problem requirements. Consider this in a school class score."
+      ],
+      [
+        "Refinement",
+        "Use discrepancies in the trace to revise instructions and retest. Consider this in a three-item total."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "TRACE TABLE · points tally",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Expected output"
+        ],
+        "foot": "Stage 1 · Trace table"
+      },
+      {
+        "title": "ACCUMULATOR · shop receipt sum",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Expected output"
+        ],
+        "foot": "Stage 2 · Accumulator"
+      },
+      {
+        "title": "EXPECTED OUTPUT · school class score",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Expected output"
+        ],
+        "foot": "Stage 3 · Expected output"
+      },
+      {
+        "title": "REFINEMENT · three-item total",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Expected output"
+        ],
+        "foot": "Stage 4 · Refinement"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · points tally",
+      "layout": "trace-grid",
+      "boxes": [
+        "Trace table",
+        "Accumulator",
+        "Expected output"
+      ],
+      "foot": "Model the method before independent practice"
+    },
+    "m": {
+      "title": "Model · points tally",
+      "q": "A points tally needs trace table and accumulator. Explain why. [4 marks]",
+      "headings": [
+        "Identify the task",
+        "Explain the first point",
+        "Explain the second point",
+        "Check all four marks"
+      ],
+      "st": [
+        "Identify the inputs, constraints and expected result.",
+        "Trace table [1]; Manually records changes to variables and printed outputs as code executes. [1].",
+        "Accumulator [1]; A variable updated repeatedly to store a running total. [1].",
+        "Give a specific point and a linked reason for each feature."
+      ]
+    },
+    "w": [
+      [
+        "In a shop receipt sum, explain the purpose of trace table. [2 marks]",
+        "Trace table [1]; Manually records changes to variables and printed outputs as code executes. [1]."
+      ],
+      [
+        "A school class score needs accumulator. Explain its role. [2 marks]",
+        "Accumulator [1]; A variable updated repeatedly to store a running total. [1]."
+      ],
+      [
+        "A three-item total uses expected output and refinement. Explain both. [4 marks]",
+        "Expected output [1]; The result that should occur according to the problem requirements. [1]. Refinement [1]; Use discrepancies in the trace to revise instructions and retest. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "WE DO · shop receipt sum",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      },
+      {
+        "title": "WE DO · school class score",
+        "layout": "trace-grid",
+        "boxes": [
+          "Accumulator",
+          "Expected output",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      },
+      {
+        "title": "WE DO · three-item total",
+        "layout": "trace-grid",
+        "boxes": [
+          "Expected output",
+          "Refinement",
+          "Outcome"
+        ],
+        "foot": "Different scenario · same reasoning"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Trace table [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Manually records changes to variables and printed outputs as code executes. [1]"
+        ],
+        [
+          "Check the marks",
+          "Trace table [1]; Manually records changes to variables and printed outputs as code executes. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Accumulator [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "A variable updated repeatedly to store a running total. [1]"
+        ],
+        [
+          "Check the marks",
+          "Accumulator [1]; A variable updated repeatedly to store a running total. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Match the problem to the stated technique."
+        ],
+        [
+          "Step 1 · identify",
+          "Expected output [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "The result that should occur according to the problem requirements. [1]"
+        ],
+        [
+          "Check the marks",
+          "Expected output [1]; The result that should occur according to the problem requirements. [1]. Refinement [1]; Use discrepancies in the trace to revise instructions and retest. [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace the OCR ERL program, test a new input and improve the code.",
+      "code": "total = 0\nfor n=1 to 3\n    total = total + n\nnext n\nprint(total)",
+      "p": [
+        "Predict the exact initial output.",
+        "Change loop end to 4.",
+        "Add total = total * 2 before print."
+      ],
+      "a": "Original output: 6.\nUpdated tests: End 4 gives 10; with end 3 and doubling, output 12.\nWrite the expected and actual output separately."
+    },
+    "e": [
+      [
+        "State TWO concepts relevant to this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Trace table [1]; Expected output [1]."
+      ],
+      [
+        "Explain how accumulator and expected output help in a sports count. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Accumulator [1]; A variable updated repeatedly to store a running total. [1]. Expected output [1]; The result that should occur according to the problem requirements. [1]."
+      ],
+      [
+        "Explain the roles of trace table, expected output and refinement in a fundraising sum. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Trace table [1]; Manually records changes to variables and printed outputs as code executes. [1]. Expected output [1]; The result that should occur according to the problem requirements. [1]. Refinement [1]; Use discrepancies in the trace to revise instructions and retest. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Trace table",
+        "Manually records changes to variables and printed outputs as code executes."
+      ],
+      [
+        "Accumulator",
+        "A variable updated repeatedly to store a running total."
+      ],
+      [
+        "Expected output",
+        "The result that should occur according to the problem requirements."
+      ],
+      [
+        "Refinement",
+        "Use discrepancies in the trace to revise instructions and retest."
+      ],
+      [
+        "Test case",
+        "An input and expected outcome used to check correctness."
+      ],
+      [
+        "Bug",
+        "A defect in the program."
+      ]
+    ],
+    "x": [
+      "Manually records changes to variables and printed outputs as code executes.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO concepts relevant to this topic. [2 marks]",
+        "Test evidence [1]; Refinement [1]."
+      ],
+      [
+        "State TWO concepts relevant to this topic. [2 marks]",
+        "Design [1]; Testing [1]."
+      ],
+      [
+        "Shift 00000110 left one bit. [1 mark]",
+        "00001100 [1]."
+      ],
+      [
+        "Explain how implementation and testing help in a book-return reminder. [4 marks]",
+        "Implementation [1]; Build a small working feature using appropriate constructs. [1]. Testing [1]; Record test inputs, expected outputs, actual outcomes and pass/fail results. [1]."
+      ]
+    ],
+    "refs": [
+      "L079 · last lesson",
+      "L078 · earlier learning",
+      "L004 · Autumn 1 retrieval",
+      "L078 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "TEST EVIDENCE · project correction",
+        "layout": "feedback",
+        "boxes": [
+          "Test evidence",
+          "Fault diagnosis",
+          "Refinement"
+        ],
+        "foot": "Stage 1 · Test evidence"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · SPACED RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L004",
+          "Question",
+          "Remember"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · sports count",
+        "layout": "trace-grid",
+        "boxes": [
+          "Accumulator",
+          "Expected output",
+          "Result"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "INDEPENDENT · fundraising sum",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Expected output",
+          "Refinement"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "Trace table: Manually records changes to variables and printed outputs as code executes.",
+    "priorExam": {
+      "from": "079",
+      "q": "Explain how fault diagnosis and refinement help in a café receipt bug. [4 marks]",
+      "a": "Fault diagnosis [1]; Compare expectation and observed behaviour to identify a specific error. [1]. Refinement [1]; Change the faulty instruction and run the affected test again. [1].",
+      "visual": {
+        "title": "INDEPENDENT · café receipt bug",
+        "layout": "feedback",
+        "boxes": [
+          "Fault diagnosis",
+          "Refinement",
+          "Result"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
