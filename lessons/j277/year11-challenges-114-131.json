@@ -15,16 +15,16 @@
   },
   {
     "n": 115,
-    "coreHint": "Start with row 0, then select the value at column 1.",
+    "coreHint": "On the table, mark row 0 as Ada and column 1 as Name. Read the cell where they cross.",
     "stretch": {
-      "task": "Extend the one-dimensional starting code to print the first and last values and their sum.",
-      "hint": "Valid positions are 0, 1 and 2.",
-      "answer": "print(row[0] + row[2]) = 13; adding a two-index grid is the next step."
+      "task": "Using the pupil table, locate both pupils[2,1] and pupils[0,2]; then assign the text '72' to the Mark cell in the string-based array.",
+      "hint": "First index = row, second = column. Row 2 is Mia, and column 2 is Mark.",
+      "answer": "pupils[2,1] = 'Mia'; pupils[0,2] = '72' (text). Mark values in the all-string array must be cast/converted before numerical comparison."
     },
     "mastery": {
-      "task": "Design a 2×3 grid of scores. Write pseudocode that totals each row separately and identifies the row with the larger total.",
-      "hint": "Use an outer loop for rows and inner loop for columns; reset rowTotal each row.",
-      "answer": "For [[1,2,3],[4,5,6]], row totals are 6 and 15, so row 1 is larger. Award credit for two nested index loops and correct totals."
+      "task": "Represent the same Pupils data using named records with a text Name and integer Mark. Write an algorithm that outputs the names of pupils with a mark of at least 50.",
+      "hint": "A record may have differently typed fields. For each pupil, IF pupil.Mark >= 50 THEN print(pupil.Name).",
+      "answer": "Records: (101,'Ada',72), (102,'Ben',43), (103,'Mia',81). Iterate records; only Ada and Mia satisfy Mark >= 50. Explain that this is different from comparing text strings."
     }
   },
   {
@@ -43,30 +43,30 @@
   },
   {
     "n": 117,
-    "coreHint": "Count how many times the loop body runs.",
+    "coreHint": "Use the file diagram: the first line is ID,Name,Mark, not Ada's record. Each readLine() moves to the next line.",
     "stretch": {
-      "task": "Add a condition that counts only records marked valid, using three fixed values supplied as an array.",
-      "hint": "Start the counter at 0; increment when the current item meets the condition.",
-      "answer": "For [1,0,1] and a 1=valid rule, count is 2."
+      "task": "Add a second readLine() call after the header and first pupil have been read. Predict the result. Then outline how to write 'Mia,81' to a separate results.txt and close it.",
+      "hint": "The next data line is 102,Ben,43. For output, open an output file, call writeLine(), then close().",
+      "answer": "The next readLine() returns 102,Ben,43. Typical OCR steps: outputFile = open('results.txt'); outputFile.writeLine('Mia,81'); outputFile.close()."
     },
     "mastery": {
-      "task": "Plan pseudocode that reads a file of scores, ignores invalid/non-numeric lines and outputs the count of accepted scores. Include handling when the file does not exist.",
-      "hint": "Separate opening, reading, validation, counting and closing; specify what happens on a failed open.",
-      "answer": "Model outline: check/open safely; for each line attempt numeric conversion; accept score only if 0≤score≤100; count accepted; close file; show a safe error if missing. Tests: valid 0 and 100, invalid 101, erroneous 'cat', absent file."
+      "task": "Optional: read every line of pupils.csv, skip the header, split comma-separated text into fields, validate the marks and store the three rows for later filtering. Explain what must happen to '72' before comparing it with numeric 50.",
+      "hint": "A CSV read returns text. Skip header; split each row; convert the third item to integer if valid; don't assume the input is numeric.",
+      "answer": "Expected rows (101,Ada,72),(102,Ben,43),(103,Mia,81). Marks become numeric after validation/casting; test missing file, blank row, non-numeric mark. CSV parsing is a higher-level application, not a separate compulsory OCR J277 objective."
     }
   },
   {
     "n": 118,
-    "coreHint": "Follow the IF condition: print only for year 11.",
+    "coreHint": "SELECT = which column to show; FROM = which named table; WHERE = which rows pass the condition.",
     "stretch": {
-      "task": "Make the starting program print 'Excluded' for other years and test years 10 and 11.",
-      "hint": "Add ELSE for the second outcome.",
-      "answer": "Year 11 prints Included; year 10 prints Excluded."
+      "task": "Use Pupils(ID,Name,Mark). Write a query for the names with marks below 60. State the exact result and explain why Ada is excluded.",
+      "hint": "SELECT Name FROM Pupils WHERE Mark < 60;",
+      "answer": "Ben is returned because 43 < 60. Ada's 72 and Mia's 81 do not pass. SQL: SELECT Name FROM Pupils WHERE Mark < 60;"
     },
     "mastery": {
-      "task": "Design a query and short filtering algorithm for pupils with Year=11 and Attendance<95. Explain why both conditions are joined with AND.",
-      "hint": "First decide which rows match. SQL uses WHERE Year=11 AND Attendance<95.",
-      "answer": "SELECT Name FROM Pupils WHERE Year = 11 AND Attendance < 95; the program equivalent checks BOTH conditions before printing a name. Test a Year 10 pupil with 90% (excluded)."
+      "task": "Explain how a loop and IF could reproduce SELECT Name FROM Pupils WHERE Mark >= 50. Using parallel numeric marks and names arrays, write the code and compare its output to SQL.",
+      "hint": "for i=0 to 2: IF marks[i]>=50 THEN print(names[i]). A SQL result is not guaranteed to be ordered without ORDER BY.",
+      "answer": "For names=[Ada,Ben,Mia] and marks=[72,43,81], code prints Ada then Mia. The SQL result contains Ada and Mia; row ordering is not guaranteed unless explicitly requested."
     }
   },
   {
@@ -225,16 +225,16 @@
   },
   {
     "n": 130,
-    "coreHint": "Concatenation preserves all characters, including spaces and punctuation.",
+    "coreHint": "Begin with the supplied numeric marks array. Compare each mark with 50 and print the matching pupil name from the same index.",
     "stretch": {
-      "task": "Extend the output to prepend 'Loan - ' and append an exclamation mark when status is Overdue.",
-      "hint": "Use IF status == 'Overdue' for the suffix.",
-      "answer": "For Ada/Overdue: Loan - Ada: Overdue!; Returned prints no exclamation."
+      "task": "Change the program and the SQL query to return names where Mark < 60. Write down both results and check that they match.",
+      "hint": "Change IF marks[i]>=50 to marks[i]<60; SQL uses WHERE Mark < 60.",
+      "answer": "Code prints Ben; SQL SELECT Name FROM Pupils WHERE Mark < 60; also returns Ben."
     },
     "mastery": {
-      "task": "Design a program that accepts three borrowers with Name and Overdue status, outputs only overdue names and counts them. Then write an equivalent SQL query for the same records.",
-      "hint": "Use a loop and a counter; SQL filters rows with WHERE.",
-      "answer": "Model loop checks status==Overdue and prints name, counter increments; SQL: SELECT Name FROM Loans WHERE Overdue = 1; for [Ada overdue, Mia returned, Jo overdue], output Ada,Jo,count2."
+      "task": "Optional integration: read pupils.csv, skip the header, split each line, validate/cast Mark, build a table-like structure and return pupils with numeric Mark >= 50. Compare the result with SQL, and explain how erroneous data should be handled.",
+      "hint": "Use file open/read/close, split on comma in the chosen high-level language, convert numeric fields safely, then loop/filter. Only attempt after the core loop is secure.",
+      "answer": "Expected names Ada and Mia. Ben 43 is excluded. A correct outline opens file; discards ID,Name,Mark header; reads/splits each row; checks number fields; converts mark to integer; tests >=50; prints corresponding names; closes file; rejects or reports malformed/non-numeric data. The SQL result contains the same names, with no guaranteed order."
     }
   },
   {
