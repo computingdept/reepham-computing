@@ -258,8 +258,8 @@ function lessonSpecification(number){
   if(number>=1&&number<=8)return '1.4.1';
   if(number>=9&&number<=16)return '2.2.1';
   if(number>=17&&number<=25)return '1.4.2';
-  if(number>=26&&number<=33)return '1.4.3';
-  if(number>=34&&number<=37)return 'mixed';
+  if(number>=26&&number<=31)return '1.4.3';
+  if(number>=32&&number<=37)return 'mixed';
   if(number>=181&&number<=191)return '2.3.1';
   if(number>=38&&number<=180){const match=plannedYear12.find(([start,end])=>number>=start&&number<=end);return match?match[2]:null;}
   return null; // Do not guess the topic for unplanned lesson slots.
@@ -447,7 +447,8 @@ function renderLessons(){
         if(spec){
           const code=document.createElement('span');code.className='spec-group-code';code.textContent=specKey==='mixed'?'Synoptic':specKey==='nea'?'NEA':specKey;
           const label=document.createElement('span');
-          const plannedLabel=year===12&&x>=37&&x<=42?'OOP foundations · C# classes and objects':
+          const plannedLabel=year===12&&x===32?'Applied Programming & Revision':
+             year===12&&x>=37&&x<=42?'OOP foundations · C# classes and objects':
             year===12&&x>=43&&x<=57?'Data structures revisited · object-oriented C#':spec.label;
           label.textContent=plannedLabel+(year===12&&!href?' · planned':'');
           head.append(code,label);
