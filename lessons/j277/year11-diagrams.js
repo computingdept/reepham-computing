@@ -9,7 +9,7 @@ function box(x,y,w,h,v,fill=C.light,font=17){return R(x,y,w,h,fill)+T(x+w/2,y+h/
 function indexed(items,opt={}){
  const a=items.slice(0,10),w=Math.min(74,(570-(a.length-1)*6)/a.length),x0=(640-a.length*w-(a.length-1)*6)/2;
  return a.map((v,i)=>{
-   const active=opt.active===i,excluded=opt.excluded?.includes(i),done=opt.done?.includes(i);
+   const active=opt.active===i||opt.active2===i,excluded=opt.excluded?.includes(i),done=opt.done?.includes(i);
    const fill=active?C.cream:excluded?C.grey:done?C.mint:C.light;
    return R(x0+i*(w+6),145,w,74,fill,active?C.gold:"#9fbdae",8)+T(x0+i*(w+6)+w/2,190,v,21,excluded?"#9aa5a0":C.ink)+T(x0+i*(w+6)+w/2,136,i,12,C.muted);
  }).join("");
@@ -80,13 +80,13 @@ function draw(spec){
   const values=a.length?a:["3","7","11","15","19","23","27","31"];let low=0,high=values.length-1,mid=0;let discarded=[];
   for(let i=0;i<=n;i++){mid=Math.floor((low+high)/2);const num=Number(values[mid]);if(String(values[mid])===target||i===n)break;if(num<Number(target))low=mid+1;else high=mid-1;if(low>high)break;}
   for(let j=0;j<values.length;j++)if(j<low||j>high)discarded.push(j);
-  h+=indexed(values,{active:spec.hide?-1:mid,excluded:discarded});h+=T(320,261,"LOW "+low+"     MID "+mid+"     HIGH "+high,20)+T(320,300,"Sorted data required; discard the half that cannot contain the target",16);
+  h+=indexed(values,{active:spec.hide?-1:mid,excluded:spec.hide?[]:discarded});if(!spec.hide)h+=T(320,261,"LOW "+low+"     MID "+mid+"     HIGH "+high,20);h+=T(320,300,"Sorted data required; discard the half that cannot contain the target",16);
  }else if(type==="bubble"||type==="insertion"){
   let ar=(a.length?a:["5","2","8","1","4"]).map(Number),focus=n;
   if(type==="bubble"){if(!spec.hide)for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
-    h+=indexed(ar.map(String),{active:focus%Math.max(1,ar.length-1)});h+=T(320,265,"Compare neighbouring values; swap when the left value is larger",18);
+    h+=indexed(ar.map(String),{active:focus%Math.max(1,ar.length-1),active2:focus%Math.max(1,ar.length-1)+1});h+=T(320,265,"Compare neighbouring values; swap when the left value is larger",18);
   }else{if(!spec.hide)for(let i=1;i<=Math.min(focus+1,ar.length-1);i++){let key=ar[i],j=i-1;while(j>=0&&ar[j]>key){ar[j+1]=ar[j];j--;}ar[j+1]=key;}
-    h+=indexed(ar.map(String),{active:Math.min(focus+1,ar.length-1),done:[...Array(Math.min(focus+2,ar.length)).keys()]});h+=T(320,264,"Keep a sorted prefix; insert the next value in its correct position",17);
+    h+=indexed(ar.map(String),{active:Math.min(focus+1,ar.length-1),done:spec.hide?[]:[...Array(Math.min(focus+2,ar.length)).keys()]});h+=T(320,264,"Keep a sorted prefix; insert the next value in its correct position",17);
   }
  }else if(type==="merge"){
   const vals=a.length?a:["8","3","5","1","7","2","6","4"],half=Math.ceil(vals.length/2);
@@ -95,8 +95,7 @@ function draw(spec){
     h+=L(320,121,168,142)+L(320,121,469,142);
     h+=box(20,147,285,43,vals.slice(0,half).join("  "),C.cream,17);
     h+=box(335,147,285,43,vals.slice(half).join("  "),C.cream,17);
-    const chunks=[];for(let i=0;i<vals.length;i+=Math.ceil(vals.length/4)){chunks.push(vals.slice(i,i+Math.ceil(vals.length/4)))}
-    chunks.slice(0,4).forEach((chunk,i)=>{h+=box(13+i*158,207,141,41,chunk.join("  "),C.light,17)});
+    vals.slice(0,8).forEach((value,i)=>{const width=Math.min(70,590/vals.length-5),left=(640-vals.length*(width+4))/2;h+=box(left+i*(width+4),208,width,38,value,C.light,18)});
   }
   if(n>=2){
     let pairs=[];for(let i=0;i<vals.length;i+=2)pairs.push(vals.slice(i,i+2).map(Number).sort((x,y)=>x-y).join(" "));
@@ -109,7 +108,7 @@ function draw(spec){
  }else{
   h+=box(22,130,180,92,a[0]||"INPUT",C.light)+L(206,174,228,174)+box(233,130,175,92,a[1]||"PROCESS",C.mint)+L(412,174,433,174)+box(440,130,175,92,a[2]||"OUTPUT",C.cream);
  }
- if(label)h+=T(320,337,label,14,C.muted);
+ if(label&&!(type==="merge"&&n===3))h+=T(320,337,label,14,C.muted);
  return '<figure class="a1-scene y11-scene" aria-label="'+esc(title)+'"><svg viewBox="0 0 640 360" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg">'+R(1,1,638,358,"#fbfdfc","#bfd4c7",16)+h+'</svg></figure>';
 }
 window.J277Y11Diagram=draw;
