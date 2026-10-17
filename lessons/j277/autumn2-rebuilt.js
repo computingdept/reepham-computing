@@ -639,6 +639,26 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  return F(b);
  }
 
+ const J277_VISUAL_PLANS={
+ "037":{family:"timeline",labels:["Open applications","Allocate RAM","Schedule CPU","Switch between apps"],families:["timeline","timeline","comparison","timeline"]},
+ "038":{family:"file",labels:["Application","OS and driver","Peripheral","Working device"],families:["file","comparison","tree","file"]},
+ "039":{family:"disk",labels:["File fragments","Rearrange blocks","Group file parts","Read faster on HDD"],families:["comparison","process","disk","comparison"],modelFamily:"disk"},
+ "040":{family:"ethics",labels:["Connected people","People without access","Energy and e-waste","Respect privacy"],families:["ethics","comparison","cycle","ethics"]},
+ "041":{family:"process",labels:["Purpose and basis","Collect only needed","Keep data accurate","Protect and delete"],families:["process","comparison","cycle","process"]},
+ "042":{family:"branch",labels:["Account request","Permission?","Authorised use","Refuse access"],families:["branch","comparison","branch","process"]},
+ "043":{family:"comparison",labels:["Open-source licence","Proprietary licence","Permissions matter","Follow licence terms"],families:["comparison","process","comparison","ethics"]},
+ "044":{family:"ethics",labels:["Practical benefits","Risks for users","Environmental costs","Supported judgement"],families:["comparison","ethics","ethics","cycle"]},
+ "045":{family:"tree",labels:["Booking program","Get duration","Calculate cost","Show result"],families:["process","tree","comparison","tree"]},
+ "046":{family:"process",labels:["Read two prices","Add the values","Display total","Test an example"],families:["process","process","trace","cycle"]},
+ "047":{family:"process",labels:["Length and width","Multiply length × width","Area result","Check units"],families:["process","process","process","trace"]},
+ "048":{family:"branch",labels:["Input mark","mark >= 5?","Pass","Try again"],families:["branch","process","branch","branch"],modelFamily:"branch"},
+ "049":{family:"trace",labels:["total = 4","total = total + 3","Print total","Record result"],values:["4","7","7"],rows:[["1","4",""],["2","7",""],["3","7","7"]],families:["trace","trace","branch","trace"],modelFamily:"trace"},
+ "050":{family:"process",labels:["Recall knowledge","Work independently","Show each step","Review afterwards"],families:["cycle","comparison","process","trace"]},
+ "051":{family:"process",labels:["Input two fares","Add fares","Store total","Print result"],families:["process","timeline","trace","process"]},
+ "052":{family:"trace",labels:["points = 5","Add 3","Store 8","Print result"],rows:[["1","5",""],["2","8",""],["3","8","8"]],values:["5","8","8"],families:["trace","trace","comparison","trace"]},
+ "053":{family:"process",labels:["Convert input to integer","Multiply by count","Compare value","Output cost"],families:["process","trace","comparison","process"]},
+ "054":{family:"gate",labels:["Age >= 16","Membership valid","AND condition","Allow entry"],families:["gate","gate","gate","branch"],gateStages:["AND","AND","OR","AND"]},
+ };
  // J277 visual teaching audit V3: scenario-led, stateful SVGs (2026-10-17).
  // All text is escaped. Worked graphics show states; guided graphics leave answers blank.
  function j277LearningScene(spec){
