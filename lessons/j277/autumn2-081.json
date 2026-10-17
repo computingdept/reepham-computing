@@ -1,0 +1,353 @@
+{
+  "081": {
+    "t": "Syntax and Logic Errors",
+    "s": "2.1.2 / 2.3.2",
+    "vis": "diagram-spec",
+    "highlights": [
+      "syntax error",
+      "logic error",
+      "trace table",
+      "debugging",
+      "retest"
+    ],
+    "o": [
+      "Distinguish syntax errors from logic errors.",
+      "Use a trace to identify a fault.",
+      "Correct the program and retest the same data."
+    ],
+    "c": [
+      [
+        "Syntax errors",
+        "A misspelled IF keyword or missing ENDIF violates grammar. In a runnable implementation it may prevent the code from executing."
+      ],
+      [
+        "Logic errors",
+        "A program may run but give the wrong result, for example using addition when the task needs multiplication."
+      ],
+      [
+        "Find the first incorrect step",
+        "Trace variables as instructions execute. Compare expected and observed values to pinpoint the first incorrect result."
+      ],
+      [
+        "Fix and retest",
+        "Correct the faulty instruction then repeat the failed case and nearby boundary cases to check the effect."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "SYNTAX ERROR · INVALID PROGRAM",
+        "layout": "debug",
+        "boxes": [
+          "Bad syntax",
+          "Interpreter error",
+          "Repair"
+        ],
+        "foot": "Language rules must be followed"
+      },
+      {
+        "title": "LOGIC ERROR · WRONG RESULT",
+        "layout": "code-trace",
+        "boxes": [
+          "Expected",
+          "Actual",
+          "Difference"
+        ],
+        "foot": "It may still run"
+      },
+      {
+        "title": "COMPARE TRACE RESULTS",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Locate the first discrepancy"
+      },
+      {
+        "title": "CORRECT AND RETEST",
+        "layout": "project-cycle",
+        "boxes": [
+          "Find fault",
+          "Correct",
+          "Retest"
+        ],
+        "foot": "Check same and new values"
+      }
+    ],
+    "idoVisual": {
+      "title": "CALCULATE TICKET COST",
+      "layout": "sequence",
+      "boxes": [
+        "Unit price 4",
+        "Three tickets",
+        "Expected 12"
+      ],
+      "foot": "Addition gives the wrong total"
+    },
+    "m": {
+      "title": "Correct an incorrect total",
+      "q": "A ticketing program calculates total = price + quantity when it should calculate cost for multiple tickets. With price = 4 and quantity = 3, identify the error, correct it and explain the result. [4 marks]",
+      "headings": [
+        "Identify the expected result",
+        "Find the incorrect operator",
+        "Correct the calculation",
+        "Retest the values"
+      ],
+      "st": [
+        "The expected cost is three tickets priced at £4 = £12 [1].",
+        "The program uses addition, producing 4 + 3 = 7 [1].",
+        "Replace + with multiplication * [1].",
+        "After the correction 4 * 3 gives 12 [1]."
+      ]
+    },
+    "w": [
+      [
+        "A sports club program should find four times a membership fee, but adds 4 to it. With fee = 6, explain the logic error and fix. [4 marks]",
+        "Addition would calculate 6+4=10 [1], rather than 24 [1]. Change operator to multiplication [1], producing 6*4=24 [1]."
+      ],
+      [
+        "An IF block is missing ENDIF in an example. Explain the syntax error and how to correct it. [2 marks]",
+        "Missing ENDIF leaves an IF block unclosed [1]. Add ENDIF after the appropriate branch to complete the block [1]."
+      ],
+      [
+        "A pupil corrects a program but tests it only once. Explain two improvements to the testing process. [4 marks]",
+        "Repeat the originally failing test [1] to confirm the bug is fixed [1]. Also test a boundary or another input [1] to check the change did not cause another failure [1]."
+      ]
+    ],
+    "wTitles": [
+      "Logic error in another calculation",
+      "Syntax error in IF",
+      "Retesting after correction"
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Calculate what multiplication should produce."
+        ],
+        [
+          "Step 1 · identify",
+          "The current addition calculates 10, not 24 [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Change + to *, producing 24 [2]."
+        ],
+        [
+          "Check four marks",
+          "6+4=10 [1]; expected 24 [1]; use * [1]; 6*4=24 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Look for the missing closing keyword."
+        ],
+        [
+          "Step 1 · identify",
+          "The IF is not closed [1]."
+        ],
+        [
+          "Step 2 · explain",
+          "Add ENDIF at the correct location [1]."
+        ],
+        [
+          "Check two marks",
+          "Missing ENDIF breaks the structure [1]; insert ENDIF [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Think about proof the correction works."
+        ],
+        [
+          "Step 1 · identify",
+          "Retest the original failing case [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Try boundary/other inputs to catch regressions [2]."
+        ],
+        [
+          "Check four marks",
+          "Retest failed input [2]; test further inputs and expected results [2]."
+        ]
+      ]
+    ],
+    "wVisuals": [
+      {
+        "title": "COMPARE EXPECTED AND ACTUAL",
+        "layout": "code-trace",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Trace before editing"
+      },
+      {
+        "title": "CLOSE AN IF BLOCK",
+        "layout": "if-branch",
+        "boxes": [
+          "Condition",
+          "True branch",
+          "ENDIF"
+        ],
+        "foot": "Matching blocks"
+      },
+      {
+        "title": "RETEST A PROGRAM",
+        "layout": "test-cases",
+        "boxes": [
+          "Original failure",
+          "Boundary",
+          "Normal"
+        ],
+        "foot": "Record expected vs actual"
+      }
+    ],
+    "k": {
+      "q": "Trace the code. A correct bill uses multiplication, not addition.",
+      "code": "price = 4\nquantity = 3\ntotal = price + quantity\nprint(total)",
+      "p": [
+        "Predict the incorrect output.",
+        "Correct the logic error so the total is calculated properly.",
+        "Change quantity to 0 and test the corrected program."
+      ],
+      "a": "Initial incorrect output: 7.\nReplace total = price + quantity with total = price * quantity.\nCorrected output: 12.\nWith quantity = 0, corrected output: 0."
+    },
+    "e": [
+      [
+        "State the difference between a syntax error and a logic error. [2 marks]\n\nSource: Original OCR J277-style practice question.",
+        "Syntax: invalid language grammar [1]; logic: program runs but produces incorrect results [1]."
+      ],
+      [
+        "A fee calculator adds 5 to the number of tickets instead of multiplying by 5. With 3 tickets, identify the error and correct the calculation. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "Adding gives 8 [1] but expected price is 15 [1]; use multiplication [1], giving 3*5=15 [1]."
+      ],
+      [
+        "Explain how tracing and retesting can identify, fix and confirm both syntax and logic errors in a program. [6 marks]\n\nSource: Original OCR J277-style practice question.",
+        "A syntax error breaks language rules [1] and should be corrected according to diagnostic feedback [1]. Logic errors produce wrong results [1] and trace tables show the first incorrect value [1]. Repeat failed test after correction [1] and test another normal/boundary case to avoid regressions [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Syntax error",
+        "Statement breaking the grammar of a language."
+      ],
+      [
+        "Logic error",
+        "Program runs but produces a wrong result."
+      ],
+      [
+        "Trace table",
+        "A record of variable values as an algorithm executes."
+      ],
+      [
+        "Debugging",
+        "Finding and correcting program faults."
+      ],
+      [
+        "Retesting",
+        "Repeating a test after correcting a bug."
+      ],
+      [
+        "Boundary test",
+        "Testing at and immediately either side of input limits."
+      ]
+    ],
+    "x": [
+      "A logic error can cause an incorrect output even when the program runs.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO concepts relevant to this topic. [2 marks]",
+        "Trace table [1]; Expected output [1]."
+      ],
+      [
+        "State TWO concepts relevant to this topic. [2 marks]",
+        "Test evidence [1]; Refinement [1]."
+      ],
+      [
+        "Explain one difference between RAM and ROM in volatility. [2 marks]",
+        "RAM loses data without power [1]; ROM retains data [1]."
+      ],
+      [
+        "Explain how fault diagnosis and refinement help in a café receipt bug. [4 marks]",
+        "Fault diagnosis [1]; Compare expectation and observed behaviour to identify a specific error. [1]. Refinement [1]; Change the faulty instruction and run the affected test again. [1]."
+      ]
+    ],
+    "refs": [
+      "L080 · last lesson",
+      "L079 · earlier learning",
+      "L011 · Autumn 1 retrieval",
+      "L079 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "TRACE TABLE · points tally",
+        "layout": "trace-grid",
+        "boxes": [
+          "Trace table",
+          "Accumulator",
+          "Expected output"
+        ],
+        "foot": "Stage 1 · Trace table"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · PRIMARY MEMORY",
+        "layout": "compare",
+        "boxes": [
+          "RAM",
+          "ROM"
+        ],
+        "foot": "Recall power dependence"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "BUGGY FEE CALCULATOR",
+        "layout": "code-trace",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Correct the operation"
+      },
+      {
+        "title": "RETEST AND IMPROVE",
+        "layout": "project-cycle",
+        "boxes": [
+          "Find",
+          "Fix",
+          "Retest"
+        ],
+        "foot": "Prove the change"
+      }
+    ],
+    "memoryCue": "Syntax errors break programming rules. Logic errors produce incorrect results. Trace and retest.",
+    "priorExam": {
+      "from": "080",
+      "q": "Explain how accumulator and expected output help in a sports count. [4 marks]",
+      "a": "Accumulator [1]; A variable updated repeatedly to store a running total. [1]. Expected output [1]; The result that should occur according to the problem requirements. [1].",
+      "visual": {
+        "title": "INDEPENDENT · sports count",
+        "layout": "trace-grid",
+        "boxes": [
+          "Accumulator",
+          "Expected output",
+          "Result"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
