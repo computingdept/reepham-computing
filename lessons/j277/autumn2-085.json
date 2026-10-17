@@ -1,0 +1,379 @@
+{
+  "085": {
+    "t": "Insertion Sort",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "insertion sort",
+      "sorted section",
+      "key",
+      "shift",
+      "compare",
+      "insert"
+    ],
+    "o": [
+      "Show how insertion sort builds a sorted portion.",
+      "Trace values moving right to insert a key.",
+      "Explain when a new element is placed into its correct position."
+    ],
+    "c": [
+      [
+        "Sorted prefix",
+        "Insertion sort begins with the first item treated as a sorted portion."
+      ],
+      [
+        "Choose a key",
+        "Take the next unsorted value and compare it with values already in the sorted portion."
+      ],
+      [
+        "Shift larger entries",
+        "Move larger sorted values one position right to make a gap; do not lose the saved key."
+      ],
+      [
+        "Insert and repeat",
+        "Place the key into the gap and extend the sorted portion until the array is fully ordered."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "START ARRAY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "First value is the sorted portion"
+      },
+      {
+        "title": "CHOOSE THE KEY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "Key = 1"
+      },
+      {
+        "title": "SHIFT THE LARGER ELEMENT",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "4",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "Make a place for key 1"
+      },
+      {
+        "title": "INSERT THE KEY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "1",
+          "4",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "The sorted portion grows"
+      }
+    ],
+    "idoVisual": {
+      "title": "START ARRAY",
+      "layout": "insertion-sort",
+      "boxes": [
+        "4",
+        "1",
+        "3",
+        "8",
+        "6"
+      ],
+      "foot": "First value is the sorted portion"
+    },
+    "m": {
+      "title": "Model Insertion Sort",
+      "q": "Trace insertion sort on [4,1,3] and give the array after each insertion. [4 marks]",
+      "headings": [
+        "Read the array",
+        "Make first comparison",
+        "Update indices or positions",
+        "Finish and check"
+      ],
+      "st": [
+        "Initially [4] is treated as sorted [1].",
+        "Insert key 1 before 4, shifting 4 right: [1,4,3] [1].",
+        "Next key 3 is compared with 4 and 4 shifts right [1].",
+        "Insert 3 after 1 to form [1,3,4] [1]."
+      ]
+    },
+    "w": [
+      [
+        "Apply insertion sort to [5,2,4]. Show the array after inserting 2 and after inserting 4. [4 marks]",
+        "Treat 5 as sorted [1]; shift 5 right and insert 2: [2,5,4] [1]. Move 5 right [1]; insert 4 to get [2,4,5] [1]."
+      ],
+      [
+        "Explain what happens when inserting 7 into sorted prefix [2,5,8]. [3 marks]",
+        "Compare 7 with 8 [1], shift 8 one position right [1], place 7 after 5 and before 8 [1]."
+      ],
+      [
+        "Explain one difference between insertion and bubble sorts in how they reorder data. [4 marks]",
+        "Insertion sort takes a key [1] and inserts it into a growing sorted section [1]. Bubble sort compares adjacent pairs [1] and swaps out-of-order neighbours over passes [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided trace 1",
+      "Guided trace 2",
+      "Guided trace 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED INSERTION · 5,2,4",
+        "layout": "insertion-sort",
+        "boxes": [
+          "5",
+          "2",
+          "4",
+          "8",
+          "6"
+        ],
+        "foot": "Track the sorted prefix"
+      },
+      {
+        "title": "INSERT KEY SEVEN",
+        "layout": "insertion-sort",
+        "boxes": [
+          "2",
+          "5",
+          "8",
+          "7",
+          "9"
+        ],
+        "foot": "Compare from the right of the prefix"
+      },
+      null
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Take the second item as key."
+        ],
+        [
+          "Step 1 · identify",
+          "5 moves right for key 2."
+        ],
+        [
+          "Step 2 · explain",
+          "Insert key 2, then take key 4."
+        ],
+        [
+          "Check the marks",
+          "Shift 5 and insert 4 to get [2,4,5]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Identify the sorted prefix."
+        ],
+        [
+          "Step 1 · identify",
+          "Compare key 7 with 8."
+        ],
+        [
+          "Step 2 · explain",
+          "Shift 8 to create a gap."
+        ],
+        [
+          "Check the marks",
+          "Insert 7 in the gap."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Compare what moves in each algorithm."
+        ],
+        [
+          "Step 1 · identify",
+          "Insertion uses a saved key and shifting [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Bubble uses neighbouring comparisons and swaps [2]."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "TWO SORTING STRATEGIES",
+            "layout": "insertion-sort",
+            "boxes": [
+              "3",
+              "1",
+              "4",
+              "2",
+              "9"
+            ],
+            "foot": "Key insertion versus adjacent swaps"
+          }
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Model the first insertion step for [4,1,3], then extend on paper.",
+      "code": "array values = [4,1,3]\nkey = values[1]\nvalues[1] = values[0]\nvalues[0] = key\nprint(values[0])\nprint(values[1])",
+      "p": [
+        "Predict both printed values.",
+        "Change the initial array to [6,2,5] and predict the same step.",
+        "On paper, explain how the third value could be inserted to finish ordering the original array."
+      ],
+      "a": "Original first insertion: [1,4,3]; prints 1 then 4. With [6,2,5], first insertion makes [2,6,5]; prints 2 then 6. For original third value 3, shift 4 right and insert 3 to make [1,3,4]. The code models one insertion, not a full generic sorter."
+    },
+    "e": [
+      [
+        "State what is meant by the key in insertion sort. [2 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "The current unsorted element being inserted [1] into its correct place among the already-sorted elements [1]."
+      ],
+      [
+        "Show insertion sort on [6,3,5] after each insertion. [4 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Initially 6 is sorted [1]. Shift 6 and insert 3 to produce [3,6,5] [1]. Shift 6 again [1] and insert 5 to get [3,5,6] [1]."
+      ],
+      [
+        "Explain how insertion sort orders [7,2,5,1] by maintaining a sorted section and shifting values. [6 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Start with [7] as sorted [1]. Insert 2 before 7 → [2,7,5,1] [1]. Insert 5 before 7 → [2,5,7,1] [1]. For key 1 shift 7 then 5 then 2 right [2]. Insert 1 first → [1,2,5,7] [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Insertion sort",
+        "Builds a sorted section by inserting one value at a time."
+      ],
+      [
+        "Key",
+        "Value currently being inserted."
+      ],
+      [
+        "Sorted portion",
+        "Part of the array already in ascending or descending order."
+      ],
+      [
+        "Shift",
+        "Move a value one position to make room."
+      ],
+      [
+        "Compare",
+        "Test two values to decide their order."
+      ],
+      [
+        "Ascending",
+        "Ordered from smallest to largest."
+      ]
+    ],
+    "x": [
+      "Insertion sort inserts each new key into the correct position of a growing sorted part.",
+      true
+    ],
+    "r": [
+      [
+        "State when two adjacent numbers swap during an ascending bubble sort. [2 marks]",
+        "The left value is greater than the right value [1], so their positions are exchanged [1]."
+      ],
+      [
+        "State the required property of an array before binary search can be used correctly. [1 mark]",
+        "Values must be in sorted order [1]."
+      ],
+      [
+        "What is meant by sound bit depth? [2 marks]",
+        "Bits used per sample [1], allowing more or fewer possible amplitude levels [1]."
+      ],
+      [
+        "For sorted [2,4,8,10,14], trace binary search for 14, showing each midpoint and discarded half. [4 marks]",
+        "Mid = 2, value 8 [1]; target 14 > 8 so low = 3 [1]; next mid = 3, value 10 [1]; target 14 >10 so index 4 is checked and found [1]."
+      ]
+    ],
+    "refs": [
+      "L084 · last lesson",
+      "L083 · earlier learning",
+      "L009 · Autumn 1 retrieval",
+      "L083 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "START · THREE UNSORTED VALUES",
+        "layout": "bubble-sort",
+        "boxes": [
+          "5",
+          "2",
+          "4",
+          "1",
+          "7"
+        ],
+        "foot": "Compare adjacent values"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · SPACED RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L009",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "CHOOSE THE KEY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "Key = 1"
+      },
+      {
+        "title": "SHIFT THE LARGER ELEMENT",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "4",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "Make a place for key 1"
+      }
+    ],
+    "memoryCue": "Insertion sort begins with the first item treated as a sorted portion.",
+    "priorExam": {
+      "from": "084",
+      "q": "Complete one bubble-sort pass on [7,2,5]. State the two intermediate arrays. [4 marks]",
+      "a": "7 > 2 [1], swap [2,7,5] [1]; 7 > 5 [1], swap [2,5,7] [1].",
+      "visual": {
+        "title": "FIRST SWAP",
+        "layout": "bubble-sort",
+        "boxes": [
+          "2",
+          "5",
+          "4",
+          "1",
+          "7"
+        ],
+        "foot": "5 and 2 exchange positions"
+      }
+    }
+  }
+}
