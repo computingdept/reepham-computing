@@ -1,0 +1,360 @@
+{
+  "049": {
+    "t": "Pseudocode and Trace Tables",
+    "s": "2.1.2",
+    "vis": "diagram-spec",
+    "highlights": [
+      "pseudocode",
+      "trace table",
+      "assignment",
+      "variable",
+      "dry run",
+      "logic error",
+      "output"
+    ],
+    "o": [
+      "Read and explain pseudocode statements.",
+      "Trace changing variable values in the correct order.",
+      "Identify a logic error from expected and actual outputs."
+    ],
+    "c": [
+      [
+        "Pseudocode represents an algorithm",
+        "Pseudocode expresses steps in clear, structured language. OCR Exam Reference Language gives a consistent notation for variables, selection and output."
+      ],
+      [
+        "Record each assignment",
+        "A trace table follows execution instruction by instruction. After assignment, record the new value of the variable; do not use its old value again."
+      ],
+      [
+        "Trace conditions accurately",
+        "Evaluate an IF condition against the latest value. Only execute the true or false branch selected. Record printed output when a print statement runs."
+      ],
+      [
+        "Find the first incorrect step",
+        "Compare the table with expected values. When the first mismatch appears, correct that instruction and repeat the dry run with the same inputs."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "CODE → TRACE TABLE",
+        "layout": "code-trace",
+        "boxes": [
+          "instruction",
+          "value",
+          "output"
+        ],
+        "foot": "Record each line executed"
+      },
+      {
+        "title": "UPDATE VARIABLE VALUE",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "score",
+          "output"
+        ],
+        "foot": "Assignment replaces a prior value"
+      },
+      {
+        "title": "CONDITION AFTER ASSIGNMENT",
+        "layout": "flowchart",
+        "boxes": [
+          "Start",
+          "score >= 5?",
+          "Pass"
+        ],
+        "foot": "Check latest value"
+      },
+      {
+        "title": "DEBUG WITH A TRACE",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Locate the first mistake"
+      }
+    ],
+    "idoVisual": {
+      "title": "TRACE THE VARIABLE TOTAL",
+      "layout": "trace-grid",
+      "boxes": [
+        "line",
+        "total",
+        "output"
+      ],
+      "foot": "Record 4, then 7, then output"
+    },
+    "m": {
+      "title": "Complete a basic three-step trace",
+      "q": "Trace: total = 4; total = total + 3; print(total). State total after each assignment and the final output. [3 marks]",
+      "headings": [
+        "Read the instructions",
+        "First assignment",
+        "Second assignment",
+        "Output and check"
+      ],
+      "st": [
+        "The first line sets total to 4. Use the current value for later statements.",
+        "After total = 4, record 4 [1].",
+        "Next, total = total + 3 uses 4 + 3, so total becomes 7 [1].",
+        "print(total) outputs 7 [1], but does not change the variable."
+      ]
+    },
+    "w": [
+      [
+        "Trace: score = 5; score = score + 2; print(score). Give both values and the output. [3 marks]",
+        "First score is 5 [1]. Then score becomes 7 [1]. Output is 7 [1]."
+      ],
+      [
+        "Trace: count = 9; count = count - 4; if count > 6 then print(\"High\") else print(\"Low\") endif. State count and output. [4 marks]",
+        "First count is 9 [1]; after subtraction it is 5 [1]. 5 > 6 is false [1]; Low is printed [1]."
+      ],
+      [
+        "A pupil expects 12 but a trace shows 10. Explain how a trace table helps find and fix the error. [4 marks]",
+        "Records each variable's value after executed steps [1], allowing comparison with expected values [1]. The first incorrect value identifies where to inspect [1]; correct and rerun the trace [1]."
+      ]
+    ],
+    "wTitles": [
+      "Trace the score",
+      "Trace a selection",
+      "Debug with a trace"
+    ],
+    "wVisuals": [
+      {
+        "title": "SCORE TRACE TABLE",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "score",
+          "output"
+        ],
+        "foot": "Fill one row per instruction"
+      },
+      {
+        "title": "COUNT AND BRANCH",
+        "layout": "trace-grid",
+        "boxes": [
+          "line",
+          "count",
+          "output"
+        ],
+        "foot": "Use updated count before IF"
+      },
+      {
+        "title": "EXPECTED AND ACTUAL",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "expected",
+          "actual"
+        ],
+        "foot": "Find the first difference"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Record values in execution order."
+        ],
+        [
+          "Step 1 · assign",
+          "First assignment gives 5 [1]."
+        ],
+        [
+          "Step 2 · calculate",
+          "Adding 2 gives 7 [1]."
+        ],
+        [
+          "Check the marks",
+          "Output is 7 [1]; three marks total."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Trace both assignments before the IF."
+        ],
+        [
+          "Step 1 · values",
+          "9 changes to 5 [2]."
+        ],
+        [
+          "Step 2 · condition",
+          "5 > 6 is false [1], so Low prints [1]."
+        ],
+        [
+          "Check the marks",
+          "Count 9 [1], then 5 [1]; false [1]; Low [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Look for the first variable that differs."
+        ],
+        [
+          "Step 1 · compare",
+          "A trace records actual values for comparison [2]."
+        ],
+        [
+          "Step 2 · fix",
+          "Find the first mismatch, correct and retest [2]."
+        ],
+        [
+          "Check the marks",
+          "Record [1], compare [1], find first mismatch [1], retest [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict and trace these changing OCR ERL variables.",
+      "code": "points = 6\npoints = points + 5\nprint(points)",
+      "p": [
+        "Write the value of points after the first assignment.",
+        "Predict the printed number.",
+        "Insert points = points * 2 before the print statement and predict again."
+      ],
+      "a": "Initial value 6. After adding 5: 11, which is printed.\n\nExtension:\npoints = 6\npoints = points + 5\npoints = points * 2\nprint(points)\n\nFinal output: 22."
+    },
+    "e": [
+      [
+        "State one use of a trace table. [2 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "Records changing variable values as instructions execute [1], helping predict output/check logic [1]."
+      ],
+      [
+        "Trace: cost = 8; cost = cost * 2; cost = cost + 3; print(cost). State cost after each assignment and the output. [4 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "Cost 8 [1], then 16 [1], then 19 [1]; output 19 [1]."
+      ],
+      [
+        "Trace: balance = 20; balance = balance - 6; if balance >= 15 then print(\"Enough\") else print(\"Low\") endif. Explain the branch and output, including the changes to balance. [6 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "Balance starts 20 [1], decreases to 14 [1]. 14 >= 15 is false [1] because 14 is below 15 [1]. The else branch executes [1], printing Low [1]."
+      ]
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "COST TRACE TABLE",
+        "layout": "trace-grid",
+        "boxes": [
+          "step",
+          "cost",
+          "output"
+        ],
+        "foot": "Write each value and output"
+      },
+      {
+        "title": "BALANCE TRACE TABLE",
+        "layout": "code-trace",
+        "boxes": [
+          "step",
+          "balance",
+          "output"
+        ],
+        "foot": "Use 14 in the IF test"
+      }
+    ],
+    "v": [
+      [
+        "Pseudocode",
+        "Readable structured instructions describing an algorithm."
+      ],
+      [
+        "Trace table",
+        "Table following variable values and outputs during execution."
+      ],
+      [
+        "Variable",
+        "Named storage whose value can change."
+      ],
+      [
+        "Assignment",
+        "Storing a value in a variable."
+      ],
+      [
+        "Dry run",
+        "Manually executing an algorithm step by step."
+      ],
+      [
+        "Logic error",
+        "A program executes but gives an incorrect result."
+      ],
+      [
+        "Condition",
+        "True/false test selecting an execution branch."
+      ]
+    ],
+    "x": [
+      "The latest value of a variable is used when tracing the next instruction.",
+      true
+    ],
+    "r": [
+      [
+        "State which flowchart shape represents a decision. [1 mark]",
+        "A diamond [1]."
+      ],
+      [
+        "Define processing within an algorithm. [2 marks]",
+        "Operations/calculations performed on inputs [1] to obtain results [1]."
+      ],
+      [
+        "State what the Program Counter stores. [1 mark]",
+        "The address of the next instruction to fetch [1]."
+      ],
+      [
+        "A streaming service calculates subscription cost from months purchased and a price per month. Describe the IPO stages. [4 marks]",
+        "Inputs are number of months [1] and monthly price [1]. Processing multiplies them [1]. Output displays the cost [1]."
+      ]
+    ],
+    "refs": [
+      "L048 · last lesson",
+      "L047 · earlier learning",
+      "L017 · Autumn 1 retrieval",
+      "L047 · high challenge"
+    ],
+    "retrievalVisuals": [
+      {
+        "title": "FOLLOW THE ARROWS",
+        "layout": "flowchart",
+        "boxes": [
+          "START",
+          "Condition?",
+          "Action"
+        ],
+        "foot": "One path follows each decision"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · PROGRAM COUNTER",
+        "layout": "flow",
+        "boxes": [
+          "CPU",
+          "PC",
+          "Next instruction"
+        ],
+        "foot": "What does PC hold?"
+      },
+      null
+    ],
+    "visualAuditV2": true,
+    "memoryCue": "Trace every executed instruction: assignment changes the variable; print displays its current value; IF chooses one branch.",
+    "priorExam": {
+      "from": "048",
+      "q": "A flowchart checks if a customer is at least 16 years old before printing Eligible. Explain what happens for 18 and 14. [4 marks]",
+      "a": "18 >= 16 is true [1] so Eligible prints [1]. 14 >= 16 is false [1], so the not-eligible alternative prints [1].",
+      "visual": {
+        "title": "AGE DECISION FLOWCHART",
+        "layout": "flowchart",
+        "boxes": [
+          "Start",
+          "age >= 16?",
+          "Eligible"
+        ],
+        "foot": "False goes to Not eligible"
+      }
+    }
+  }
+}
