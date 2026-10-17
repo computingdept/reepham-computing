@@ -829,7 +829,20 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       for(let i=0;i<n;i++){const x=13+i*(w+gap);body+=card(x,119,w,114,entries[i],i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
       lower=family==="file"?"Open → read/write → close the file":family==="function"?"Pass arguments → execute → use return value":family==="cycle"?"Plan → build → test → improve":"Follow the actual data or decision";
     }
-  }else if(["branch","flow","validation","loop"].includes(family)){
+  }else if(family==="loop"){
+    const isFor=/\bfor\b|counter|i\s*<=|next i/i.test(labels.join(" "));
+    body+=card(15,76,140,71,name(0,isFor?"Start counter":"Initial value"),stage===0?c.goldP:c.blueP);
+    body+=arrow(157,112,207,112);
+    body+='<path d="M287 62 L363 114 L287 166 L211 114 Z" fill="'+(stage===1?c.goldP:c.blueP)+'" stroke="'+c.gold+'" stroke-width="3"/>';
+    body+=wrap(287,116,name(1,isFor?"i <= limit?":"Continue?"),11,15);
+    body+=arrow(364,112,416,112)+card(420,77,121,70,name(2,"Repeat body"),stage===2?c.goldP:c.greenP);
+    body+=text(396,99,"TRUE",13,c.green);
+    body+=line(480,148,480,212)+card(380,215,161,62,name(3,isFor?"NEXT i":"Update state"),stage===3?c.goldP:c.greenP);
+    body+=line(379,246,175,246)+line(175,246,175,165)+line(175,165,211,165)+text(284,239,"RECHECK",15,c.green);
+    body+=line(287,167,287,290,c.rose)+text(326,182,"FALSE",13,c.rose);
+    body+=text(287,301,"EXIT",16,c.rose);
+    lower="Condition true → body and update → repeat; false → exit";
+  }else if(["branch","flow","validation"].includes(family)){
     const condition=name(1,"Condition?");
     body+=card(12,146,122,68,name(0,"Input"),stage===0?c.goldP:c.blueP)+arrow(136,180,191,180);
     body+='<path d="M279 89 L368 180 L279 271 L190 180 Z" fill="'+(stage===1?c.goldP:c.blueP)+'" stroke="'+c.gold+'" stroke-width="3"/>';
@@ -838,8 +851,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     body+=text(398,154,"YES",14,c.green);
     body+=line(279,271,279,284,c.rose)+line(279,284,409,284,c.rose)+card(417,246,125,54,name(3,"No path"),stage===3?c.goldP:c.roseP);
     body+=text(364,275,"NO",14,c.rose);
-    lower=family==="loop"?"The loop rechecks until its exit condition is reached":"Follow only the branch selected by the decision";
-    if(family==="loop"){body+=line(279,284,155,284)+line(155,284,155,107)+line(155,107,213,107)+text(184,99,"REPEAT",12,c.green);}
+    lower="Follow only the branch selected by the decision";
   }else if(["trace","test"].includes(family)){
     const rows=p.rows&&Array.isArray(p.rows)?p.rows.slice(0,4):stage===0?[["1",val(0,"4"),""],["2","?",""],["3","?",""]]:[["1",val(0,"4"),""],["2",val(1,"7"),""],["3",val(2,"7"),val(2,"7")]];
     const headers=family==="test"?["TEST INPUT","EXPECTED","ACTUAL"]:["STEP","VARIABLE","OUTPUT"];
