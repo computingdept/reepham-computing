@@ -638,7 +638,153 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  else if(kind==="test-cases")row(["Normal","Boundary","Invalid"]);
  return F(b);
  }
+
+ // J277 visual teaching audit V3: scenario-led, stateful SVGs (2026-10-17).
+ // All text is escaped. Worked graphics show states; guided graphics leave answers blank.
+ function j277LearningScene(spec){
+  const p=spec&&spec.rich;if(!p)return null;
+  const family=String(p.family||"process"),stage=Math.max(0,Math.min(3,Number(p.focus)||0));
+  const input=Array.isArray(p.values)?p.values.map(String):[],labels=Array.isArray(p.labels)?p.labels.map(String):[];
+  const mode=String(p.phase||"learning"),guided=mode==="guided"||mode==="independent",question=String(p.question||"");
+  const label=String(spec.title||"OCR J277 visual model").slice(0,65);
+  const c={blue:"#3d78a6",blueP:"#e1edf9",green:"#327b61",greenP:"#e0f2e8",gold:"#ab7d2e",goldP:"#f8edd5",rose:"#b15d55",roseP:"#f8e5e3",ink:"#204735",muted:"#506759"};
+  const esc=escape;
+  const text=(x,y,t,size=19,color=c.ink,weight=800)=>'<text x="'+x+'" y="'+y+'" font-family="Arial, sans-serif" text-anchor="middle" font-weight="'+weight+'" font-size="'+size+'" fill="'+color+'">'+esc(String(t))+'</text>';
+  const box=(x,y,w,h,fill=c.blueP,rx=11)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+rx+'" fill="'+fill+'" stroke="'+c.green+'" stroke-width="2.4"/>';
+  const line=(x,y,a,b,color=c.green,w=4)=>'<path d="M'+x+' '+y+' L'+a+' '+b+'" fill="none" stroke="'+color+'" stroke-width="'+w+'" stroke-linecap="round"/>';
+  const arrow=(x,y,a,b,color=c.green)=>{const ang=Math.atan2(b-y,a-x),len=10;return line(x,y,a,b,color)+line(a-len*Math.cos(ang-.6),b-len*Math.sin(ang-.6),a,b,color,3)+line(a-len*Math.cos(ang+.6),b-len*Math.sin(ang+.6),a,b,color,3);};
+  const wrap=(x,y,v,max=18,size=17)=>{
+    const parts=String(v||"?").trim().split(/\s+/),lines=[];let row="";
+    parts.forEach(w=>{if(row&&(row+" "+w).length>max){lines.push(row);row=w;}else row+=(row?" ":"")+w;});
+    if(row)lines.push(row);const limited=lines.slice(0,3);
+    return limited.map((v,i)=>text(x,y-(limited.length-1)*12+i*24,v.slice(0,24),size)).join("");
+  };
+  const card=(x,y,w,h,t,fill=c.blueP)=>box(x,y,w,h,fill)+wrap(x+w/2,y+h/2+6,t,w>150?19:12,w>150?18:16);
+  const titleText=(txt)=>text(280,39,String(txt).slice(0,43),String(txt).length>30?18:22);
+  const val=(i,f)=>input[i]===undefined?f:input[i];
+  const name=(i,f)=>labels[i]===undefined?f:labels[i];
+  let body="",lower="";
+  const items=input.length?input.slice(0,8):["4","1","3","8","6"];
+  const chart=(arr,highlight=[],y=130,blank=false)=>{
+    const size=arr.length,w=Math.min(84,(508-(size-1)*7)/size),gap=7,x0=(560-(size*w+(size-1)*gap))/2;
+    return arr.map((v,i)=>{const x=x0+i*(w+gap),colour=highlight.includes(i)?c.goldP:((i%2)?c.greenP:c.blueP);
+      return box(x,y,w,68,colour,6)+text(x+w/2,y+44,blank?"?":v,Math.min(25,w*.41))+text(x+w/2,y-15,i,14,c.muted);}).join("");
+  };
+  if(["process","timeline","cycle","file","function","comparison","ethics","tree","disk"].includes(family)){
+    const entries=labels.length>=4?labels.slice(0,4):labels.length>=3?labels.slice(0,3):["Input","Process","Output"];
+    if(family==="comparison"||family==="ethics"){
+      const left=name(0,"Benefit"),right=name(1,"Concern");
+      body+=card(24,94,241,152,left,c.blueP)+card(295,94,241,152,right,c.greenP);
+      body+=text(280,82,stage%2?"COMPARE EFFECTS":"TWO PERSPECTIVES",16,c.muted);
+      body+=text(280,283,name(stage%Math.max(1,labels.length),left),16,c.muted);
+    }else if(family==="tree"){
+      body+=card(196,70,168,64,name(0,"Whole problem"),c.blueP);
+      body+=line(280,134,280,171)+line(95,171,465,171);
+      [1,2,3].forEach((j)=>{const x=22+(j-1)*180;body+=line(x+79,171,x+79,200)+card(x,206,157,75,name(j,["Input","Calculate","Output"][j-1]),j===stage+1?c.goldP:c.greenP);});
+      lower="Decompose into manageable, testable parts";
+    }else if(family==="disk"){
+      const raw=["A","B","A","free","C","B","free","A","C"],ordered=["A","A","A","B","B","C","C","free","free"];
+      const arr=stage>=2?ordered:raw;
+      body+=text(280,88,stage>=2?"AFTER · GROUP FILE BLOCKS":"BEFORE · FRAGMENTED HDD",19);
+      for(let j=0;j<arr.length;j++){const x=17+j*58,col=arr[j]==="A"?c.blueP:arr[j]==="B"?c.greenP:arr[j]==="C"?c.goldP:"#ebeeed";body+=box(x,135,52,80,col,4)+text(x+26,183,arr[j],arr[j]==="free"?13:20);}
+      lower="Magnetic disk: fewer read-head movements";
+    }else{
+      const n=entries.length,w=n===4?117:156,gap=n===4?17:28;
+      for(let i=0;i<n;i++){const x=13+i*(w+gap);body+=card(x,119,w,114,entries[i],i===stage%c.length?c.greenP:i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
+      lower=family==="file"?"Open → read/write → close the file":family==="function"?"Pass arguments → execute → use return value":family==="cycle"?"Plan → build → test → improve":"Follow the actual data or decision";
+    }
+  }else if(["branch","flow","validation","loop"].includes(family)){
+    const condition=name(1,"Condition?");
+    body+=card(12,146,122,68,name(0,"Input"),c.blueP)+arrow(136,180,191,180);
+    body+='<path d="M279 89 L368 180 L279 271 L190 180 Z" fill="'+c.goldP+'" stroke="'+c.gold+'" stroke-width="3"/>';
+    body+=wrap(279,182,condition,13,16);
+    body+=arrow(370,177,414,130)+card(418,95,125,73,name(2,"Yes path"),guided?c.blueP:c.greenP);
+    body+=text(398,154,"YES",14,c.green);
+    body+=line(279,271,279,296,c.rose)+text(318,286,"NO",15,c.rose);
+    lower=family==="loop"?"False exits; repeated true paths recheck the condition":"Only the selected branch executes";
+    if(family==="loop"){body+=line(279,292,155,292)+line(155,292,155,107)+line(155,107,213,107)+text(192,100,"REPEAT",13,c.green);}
+  }else if(["trace","test"].includes(family)){
+    const rows=p.rows&&Array.isArray(p.rows)?p.rows.slice(0,4):stage===0?[["1",val(0,"4"),""],["2","?",""],["3","?",""]]:[["1",val(0,"4"),""],["2",val(1,"7"),""],["3",val(2,"7"),val(2,"7")]];
+    const headers=family==="test"?["TEST INPUT","EXPECTED","ACTUAL"]:["STEP","VARIABLE","OUTPUT"];
+    const x=[26,195,364];
+    for(let j=0;j<3;j++){body+=box(x[j],91,165,48,c.blueP,4)+text(x[j]+82,121,headers[j],15);}
+    for(let i=0;i<Math.min(rows.length,4);i++)for(let j=0;j<3;j++){
+      body+=box(x[j],141+i*41,165,37,i===stage?c.goldP:i%2?c.greenP:"#f1f7f3",2);
+      const z=guided&&i>=1?"?":String(rows[i][j]??"");
+      body+=text(x[j]+82,166+i*41,z.slice(0,16),16);
+    }
+    lower=family==="test"?"Compare expected and actual results":"Record a value only when it changes or prints";
+  }else if(["array","search","sort","merge","string"].includes(family)){
+    let arr=items.slice();
+    if(family==="string"){arr=String(val(0,"COMPUTER")).split("").slice(0,9);}
+    const original=arr.slice(),target=String(p.target||"");
+    let highlight=[];
+    if(family==="search"){
+      if(p.searchType==="binary"&&stage>=1)highlight=[Math.floor((arr.length-1)/2)];
+      else highlight=[Math.min(stage,arr.length-1)];
+      lower=p.searchType==="binary"?"Sorted list required · compare the midpoint":"Linear search checks positions in sequence";
+    }else if(family==="sort"){
+      if(!guided&&stage>0){
+        if(p.sortType==="bubble"){
+          for(let k=0;k<Math.min(stage,arr.length-1);k++){if(Number(arr[k])>Number(arr[k+1])){const temp=arr[k];arr[k]=arr[k+1];arr[k+1]=temp;}}
+        }else if(p.sortType==="insertion"){
+          for(let k=1;k<=Math.min(stage,arr.length-1);k++){const key=arr[k];let j=k-1;while(j>=0&&Number(arr[j])>Number(key)){arr[j+1]=arr[j];j--;}arr[j+1]=key;}
+        }
+      }
+      highlight=[Math.min(Math.max(stage-1,0),arr.length-1),Math.min(stage,arr.length-1)];
+      lower=p.sortType==="bubble"?"Compare neighbours; swap only if out of order":"Take the key; shift bigger values to its right";
+    }else if(family==="merge"){highlight=stage<2?[0,1]:[Math.floor(arr.length/2),arr.length-1];lower="Split into halves, then merge sorted sublists";}
+    else if(family==="string"){highlight=stage===0?[]:stage===1?[0,1,2,3]:stage===2?[4,5,6,7]:[0];lower="Character positions begin at index 0";}
+    else{highlight=stage===0?[]:[Math.min(stage-1,arr.length-1)];lower="Zero-based index: first element is 0";}
+    body+=text(280,94,guided?"IDENTIFY THE NEXT STEP":family==="sort"?"AFTER "+stage+" COMPARISON / INSERTION STEPS":family==="search"?"CHECK THE TARGET":family==="merge"?"DIVIDE · COMPARE · MERGE":family==="string"?"CHARACTER POSITIONS":"INDEXED VALUES",17,c.muted);
+    body+=chart(arr,highlight,145,guided&&mode==="independent");
+    if(target)body+=text(280,264,"Target: "+target,18);
+    if(family==="merge"&&!guided&&stage>=2){body+=text(280,268,"One-item lists merge into sorted pairs",16);}
+  }else if(family==="grid"||family==="sql"||family==="truth"){
+    const cols=family==="truth"?(p.threeInput?4:3):3;
+    const rows=family==="truth"?(p.threeInput?9:5):4;
+    const ww=family==="truth"?(p.threeInput?122:152):152,x0=(560-ww*cols)/2,cell=family==="truth"?(p.threeInput?27:47):54;
+    const headings=family==="grid"?["ROW","COL 0","COL 1"]:family==="sql"?["ID","NAME","SCORE"]:p.threeInput?["A","B","C","Q"]:["A","B","Q"];
+    for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){
+      const x=x0+j*ww,y=74+i*cell,fill=i===0?c.blueP:i===stage+1?c.goldP:i%2?c.greenP:"#f4f7f5";
+      body+=box(x,y,ww-6,cell-4,fill,3);
+      let v="";
+      if(i===0)v=headings[j];
+      else if(family==="sql")v=([["1","Ava","7"],["2","Leo","9"],["3","Mia","6"]][i-1]||[])[j]||"";
+      else if(family==="grid")v=["row "+(i-1),"["+(i-1)+",0]","["+(i-1)+",1]"][j];
+      else{
+        const A=p.threeInput?Math.floor((i-1)/4):Math.floor((i-1)/2),B=p.threeInput?Math.floor(((i-1)%4)/2):(i-1)%2,C=p.threeInput?(i-1)%2:0;
+        const Q=p.threeInput?((A&&B)||C):(String(p.logic||"AND").includes("OR")?(A||B):(A&&B));
+        v=(p.threeInput?[A,B,C,Q]:[A,B,Q])[j];
+        if(guided&&j===cols-1)v="?";
+      }
+      body+=text(x+ww/2-3,y+cell*.67,v,rows>6?14:17);
+    }
+    lower=family==="grid"?"Select an item using row and column indices":family==="sql"?"SELECT columns · FROM table · WHERE condition":"Show every Boolean input combination";
+  }else if(family==="gate"){
+    const op=(String(p.gate||"AND")).toUpperCase();
+    body+=card(22,93,134,72,"A",c.blueP);
+    if(op!=="NOT")body+=card(22,207,134,72,"B",c.blueP);
+    body+=line(156,128,236,128);
+    if(op!=="NOT")body+=line(156,242,236,242);
+    if(op==="NOT"){body+='<path d="M234 130 L372 185 L234 241 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/><circle cx="380" cy="185" r="9" fill="#fff" stroke="'+c.green+'" stroke-width="4"/>';}
+    else if(op==="OR"){body+='<path d="M232 128 Q289 186 232 244 Q343 254 392 185 Q343 116 232 128 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
+    else {body+='<path d="M235 129 L301 129 C381 129 381 242 301 242 L235 242 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
+    body+=text(309,192,op,18)+arrow(op==="NOT"?390:396,185,442,185)+card(445,150,92,73,guided?"?":"Q",c.goldP);
+    lower=op==="NOT"?"NOT reverses one input":op==="OR"?"OR needs at least one input high":"AND requires both inputs high";
+  }else if(family==="dice"){
+    body+=box(195,88,171,170,c.blueP,18);
+    const dots=[[230,124],[333,124],[280,173],[230,219],[333,219]];
+    dots.forEach(z=>body+='<circle cx="'+z[0]+'" cy="'+z[1]+'" r="12" fill="'+c.blue+'"/>');
+    lower="random(1,6) can give any integer from 1 to 6";
+  }else{
+    body+=card(37,123,140,100,name(0,"Input"),c.blueP)+arrow(181,173,227,173)+card(231,123,141,100,name(1,"Process"),c.greenP)+arrow(376,173,416,173)+card(420,123,112,100,name(2,"Result"),c.goldP);
+    lower="Follow input → process → output";
+  }
+  return '<figure class="a1-scene j277-learning-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(label)+'; '+esc(family)+'; '+esc(mode)+'" xmlns="http://www.w3.org/2000/svg">'+box(2,2,556,336,"#f8fbf9",17)+titleText(label)+body+text(280,314,String(lower).slice(0,65),15,c.muted,700)+'</svg></figure>';
+ }
  function topicVisual(spec){
+  const learning=j277LearningScene(spec);if(learning)return learning;
   const codeDiagram=j277ProgrammingScene(spec);if(codeDiagram)return codeDiagram;
   const spring=j277SpringScene(spec);if(spring)return spring;
   const richer=j277NetworkExpansion(spec);if(richer)return richer;
