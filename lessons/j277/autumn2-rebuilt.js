@@ -988,7 +988,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   return '<figure class="a1-scene j277-learning-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(label)+'; '+esc(family)+'; '+esc(mode)+'" xmlns="http://www.w3.org/2000/svg">'+box(2,2,556,336,"#f8fbf9",17)+titleText(label)+body+text(280,314,String(lower).slice(0,65),15,c.muted,700)+'</svg></figure>';
  }
  function topicVisual(spec){
-  if(spec&&spec.y11&&typeof window.J277Y11Diagram==="function")return window.J277Y11Diagram(spec);
+  // Never silently display STEP 1 / STEP 2 placeholders for Year 11 subject diagrams.
+  // The early Year 11 bank uses spec.y11; the later bank uses spec.year11.
+  if(spec&&(spec.y11||spec.year11Extension)){
+    const family=spec.y11||(typeof spec.year11==="string"?spec.year11:"");
+    if(!family||typeof window.J277Y11Diagram!=="function"){
+      return '<div class="j277-visual-error" role="alert">Teaching diagram unavailable — please refresh the page.</div>';
+    }
+    return window.J277Y11Diagram({...spec,y11:family});
+  }
   const learning=j277LearningScene(spec);if(learning)return learning;
   const codeDiagram=j277ProgrammingScene(spec);if(codeDiagram)return codeDiagram;
   const spring=j277SpringScene(spec);if(spring)return spring;
@@ -1573,7 +1581,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  .j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg{max-height:min(45vh,365px)}
  .j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:min(43vh,350px)}
  @media(max-width:900px){.j277-visual-lesson #new-learning .nl-reference .y11-scene svg,.j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg,.j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:none}}
-  /* Lesson 019: larger visuals, balanced two-panel classroom layout.
+  /* Make failed teaching visuals explicit instead of silently substituting generic boxes. */
+ .j277-visual-error{margin:12px;padding:20px;border:2px solid #b65c48;border-radius:12px;background:#fff2ed;color:#773e2f;font-size:18px;font-weight:800}
+ /* Lesson 019: larger visuals, balanced two-panel classroom layout.
     Scoped to J277 CPU; shared H446 classroom CSS stays untouched. */
  @media(min-width:901px){
   .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
@@ -1805,6 +1815,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
  <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
+  // Canonicalise the Year 11 diagram schema before generating any phase.
+  // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
+  if(lesson.year11){
+    const normalize=spec=>spec&&typeof spec==="object"&&spec.year11Extension&&!spec.y11
+      ?{...spec,y11:typeof spec.year11==="string"?spec.year11:""}:spec;
+    lesson.visuals=Array.isArray(lesson.visuals)?lesson.visuals.map(normalize):lesson.visuals;
+    lesson.idoVisual=normalize(lesson.idoVisual);
+    lesson.wVisuals=Array.isArray(lesson.wVisuals)?lesson.wVisuals.map(normalize):lesson.wVisuals;
+    lesson.requiredVisuals=Array.isArray(lesson.requiredVisuals)?lesson.requiredVisuals.map(normalize):lesson.requiredVisuals;
+  }
   lesson=j277UpgradeVisuals(lesson,number);
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
