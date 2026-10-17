@@ -9,17 +9,17 @@ const rect=(x,y,w,h,fill="#e9f3ec")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" he
 const txt=(x,y,s,size=17)=>'<text x="'+x+'" y="'+y+'" font-family="Arial,sans-serif" font-size="'+size+'" font-weight="750" text-anchor="middle" fill="#1d5540">'+String(s).replace(/[<>&]/g,"")+'</text>';
 const cell=(x,y,w,h,v,color="#eaf4ec")=>rect(x,y,w,h,color)+txt(x+w/2,y+h/2+6,v,19);
 const arrow=(x,y,x2,y2)=>'<path d="M'+x+' '+y+'L'+x2+' '+y2+' M'+(x2-9)+' '+(y2-7)+'L'+x2+' '+y2+'L'+(x2-9)+' '+(y2+7)+'" fill="none" stroke="#3d8b63" stroke-width="3.5"/>';
-function illustration(type){
+function illustration(type,paperId){
 let s="";
 if(type==="cpu"){
 s+=cell(34,90,144,74,"PC")+arrow(180,126,245,126)+cell(246,90,145,74,"MAR")+arrow(395,126,458,126)+cell(460,90,144,74,"MEMORY");
 s+=cell(246,193,145,43,"MDR","#e8f0fa")+txt(326,44,"FETCH: IDENTIFY THE ROLES OF THE REGISTERS",18);
 }else if(type==="binary"){
-const weights=[128,64,32,16,8,4,2,1],bits=[1,1,0,0,1,0,1,0];txt(320,45,"UNSIGNED EIGHT-BIT PLACE VALUES",19);
+const weights=[128,64,32,16,8,4,2,1],bits=paperId==="120"?[1,0,1,1,0,1,1,0]:[1,1,0,0,1,0,1,0];s+=txt(320,45,"UNSIGNED EIGHT-BIT PLACE VALUES",19);
 weights.forEach((v,i)=>{let x=25+i*76;s+=cell(x,75,68,57,v,"#e7f1fa")+cell(x,139,68,57,bits[i],"#f7f0dc");});
 txt(320,238,"Add the weights that correspond to 1 bits",16);
 }else if(type==="image"){
-for(let r=0;r<5;r++)for(let c=0;c<8;c++){s+='<rect x="'+(29+c*49)+'" y="'+(60+r*36)+'" width="47" height="34" fill="'+(r+c)%2?'#d5eadb':'#a8d2c1'+'" stroke="#fff" stroke-width="2"/>';}
+for(let r=0;r<5;r++)for(let c=0;c<8;c++){s+='<rect x="'+(29+c*49)+'" y="'+(60+r*36)+'" width="47" height="34" fill="'+(((r+c)%2)?"#d5eadb":"#a8d2c1")+'" stroke="#fff" stroke-width="2"/>';}
 s+=txt(516,96,"Width × Height",18)+txt(516,139,"× Colour depth",18)+txt(516,186,"= Size in bits",18);
 }else if(type==="search"||type==="algorithms"){
 const a=type==="search"?[4,6,9,2]:[5,2,4,1],width=138;
@@ -30,9 +30,9 @@ const columns=["ID","Name","Mark"],rows=[["101","Ada","72"],["102","Ben","43"],[
 columns.forEach((x,i)=>s+=cell(72+i*168,38,158,43,x,"#dae9f5"));
 rows.forEach((r,j)=>r.forEach((v,i)=>s+=cell(72+i*168,89+j*49,158,44,v)));
 }else if(type==="trace"||type==="code"){
-const top=["index","input","total","count"];
+const top=paperId==="120"?["i","i × 2","total","output"]:["index","input","total","count"];
 top.forEach((v,i)=>s+=cell(27+i*151,49,140,41,v,"#e0ecf7"));
-for(let r=0;r<3;r++)for(let c=0;c<4;c++)s+=cell(27+c*151,99+r*50,140,43,c===0?r:c===1?[3,6,2][r]:"?","#fff");
+for(let r=0;r<3;r++)for(let c=0;c<4;c++)s+=cell(27+c*151,99+r*50,140,43,c===0?(paperId==="120"?r+1:r):c===1?(paperId==="120"?(r+1)*2:[3,6,2][r]):"?","#fff");
 }else if(type==="validation"){
 s+=cell(29,106,156,78,"INPUT")+arrow(188,144,254,144);
 s+='<path d="M367 61 L497 144 L367 225 L242 144Z" fill="#fbefce" stroke="#b68b38" stroke-width="3"/>'+txt(367,149,"VALID?",22);
@@ -78,10 +78,10 @@ for(const sec of p.sections){
  for(const q of sec.questions){
   const wrap=add(page,"section","question");const head=add(wrap,"div","q-heading"),label=add(head,"div");add(label,"h3","","Question "+q.id);add(label,"div","topic",q.topic);
   add(head,"span","q-total",q.parts.reduce((a,b)=>a+b.marks,0)+" marks");
-  if(q.visual&&["binary","image","search","table","trace","validation"].includes(q.visual)){
+  if(q.visual&&["cpu","binary","image","search","table","trace","validation","network","algorithms"].includes(q.visual)){
    // Show source data, but never reveal an answer.
    if(q.visual==="table"&&p.dataset){addTable(wrap,p.dataset);datasetShown=true;}
-   else{const d=add(wrap,"div","diagram");d.innerHTML=illustration(q.visual);}
+   else{const d=add(wrap,"div","diagram");d.innerHTML=illustration(q.visual,p.id);}
   }
   for(const part of q.parts){
    const card=add(wrap,"div","subq"),top=add(card,"div","subq-head");
