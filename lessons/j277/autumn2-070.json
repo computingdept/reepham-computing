@@ -1,0 +1,353 @@
+{
+  "070": {
+    "t": "Procedures and Variable Scope",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Procedure",
+      "Parameter",
+      "Local variable",
+      "Global variable"
+    ],
+    "o": [
+      "Use procedures, parameters and local and global variables.",
+      "Use the technique in a different problem.",
+      "Explain the OCR ERL example and test a modification."
+    ],
+    "c": [
+      [
+        "Procedure",
+        "A named subprogram that performs a task without returning a function value. In the welcome message, identify where this technique applies."
+      ],
+      [
+        "Parameter",
+        "A named input to a procedure or function. In the ticket confirmation, identify where this technique applies."
+      ],
+      [
+        "Local variable",
+        "A variable created inside a subprogram, ordinarily limited to its scope. In the club announcement, identify where this technique applies."
+      ],
+      [
+        "Global variable",
+        "A variable declared for use across program sections, which should be handled carefully. In the text output routine, identify where this technique applies."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "PROCEDURE · welcome message",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Parameter",
+          "Local variable"
+        ],
+        "foot": "Step 1 · Procedure"
+      },
+      {
+        "title": "PARAMETER · ticket confirmation",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Parameter",
+          "Local variable"
+        ],
+        "foot": "Step 2 · Parameter"
+      },
+      {
+        "title": "LOCAL VARIABLE · club announcement",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Parameter",
+          "Local variable"
+        ],
+        "foot": "Step 3 · Local variable"
+      },
+      {
+        "title": "GLOBAL VARIABLE · text output routine",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Parameter",
+          "Local variable"
+        ],
+        "foot": "Step 4 · Global variable"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · welcome message",
+      "layout": "procedure-call",
+      "boxes": [
+        "Procedure",
+        "Parameter",
+        "Local variable"
+      ],
+      "foot": "Follow the detailed example"
+    },
+    "m": {
+      "title": "Model · welcome message",
+      "q": "A welcome message uses procedure and parameter. Explain what each contributes. [4 marks]",
+      "headings": [
+        "Read the question",
+        "Model the first feature",
+        "Model the second feature",
+        "Check the marks"
+      ],
+      "st": [
+        "Identify the program's purpose and the pieces of data needed.",
+        "Procedure [1]; A named subprogram that performs a task without returning a function value. [1].",
+        "Parameter [1]; A named input to a procedure or function. [1].",
+        "Each feature needs a correct technical fact plus an explanation."
+      ]
+    },
+    "w": [
+      [
+        "A ticket confirmation needs procedure. Explain the purpose. [2 marks]",
+        "Procedure [1]; A named subprogram that performs a task without returning a function value. [1]."
+      ],
+      [
+        "Explain parameter for a club announcement. [2 marks]",
+        "Parameter [1]; A named input to a procedure or function. [1]."
+      ],
+      [
+        "When programming a text output routine, explain why local variable and global variable matter. [4 marks]",
+        "Local variable [1]; A variable created inside a subprogram, ordinarily limited to its scope. [1]. Global variable [1]; A variable declared for use across program sections, which should be handled carefully. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Procedure [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "A named subprogram that performs a task without returning a function value. [1]"
+        ],
+        [
+          "Check the marks",
+          "Procedure [1]; A named subprogram that performs a task without returning a function value. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Parameter [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "A named input to a procedure or function. [1]"
+        ],
+        [
+          "Check the marks",
+          "Parameter [1]; A named input to a procedure or function. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "Local variable [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "A variable created inside a subprogram, ordinarily limited to its scope. [1]"
+        ],
+        [
+          "Check the marks",
+          "Local variable [1]; A variable created inside a subprogram, ordinarily limited to its scope. [1]. Global variable [1]; A variable declared for use across program sections, which should be handled carefully. [1]."
+        ]
+      ]
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · ticket confirmation",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Parameter",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · club announcement",
+        "layout": "procedure-call",
+        "boxes": [
+          "Parameter",
+          "Local variable",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · text output routine",
+        "layout": "procedure-call",
+        "boxes": [
+          "Local variable",
+          "Global variable",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      }
+    ],
+    "k": {
+      "q": "Trace this OCR ERL program; predict the output and change it.",
+      "code": "procedure greet(person)\n    print(\"Hello \" + person)\nendprocedure\ngreet(\"Mia\")",
+      "p": [
+        "Predict the exact output.",
+        "Change parameter call to greet(\"Ava\").",
+        "Add a second call greet(\"Leo\") after the first."
+      ],
+      "a": "Original output: Hello Mia.\nAfter the changes: With Ava: Hello Ava. Added call produces Hello Leo on another line.\n"
+    },
+    "e": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Procedure [1]; Parameter [1]."
+      ],
+      [
+        "Explain parameter and local variable in a sports registration. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Parameter [1]; A named input to a procedure or function. [1]. Local variable [1]; A variable created inside a subprogram, ordinarily limited to its scope. [1]."
+      ],
+      [
+        "A programmer makes a library reminder. Explain the roles of procedure, local variable and global variable. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Procedure [1]; A named subprogram that performs a task without returning a function value. [1]. Local variable [1]; A variable created inside a subprogram, ordinarily limited to its scope. [1]. Global variable [1]; A variable declared for use across program sections, which should be handled carefully. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Procedure",
+        "A named subprogram that performs a task without returning a function value."
+      ],
+      [
+        "Parameter",
+        "A named input to a procedure or function."
+      ],
+      [
+        "Local variable",
+        "A variable created inside a subprogram, ordinarily limited to its scope."
+      ],
+      [
+        "Global variable",
+        "A variable declared for use across program sections, which should be handled carefully."
+      ],
+      [
+        "Algorithm",
+        "A defined set of processing instructions."
+      ],
+      [
+        "Testing",
+        "Checking expected outcomes against actual program behaviour."
+      ]
+    ],
+    "x": [
+      "A named subprogram that performs a task without returning a function value.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Function [1]; Parameters [1]."
+      ],
+      [
+        "State TWO relevant techniques from this topic. [2 marks]",
+        "Record [1]; Data types [1]."
+      ],
+      [
+        "Convert binary 1111 to denary and hexadecimal. [2 marks]",
+        "15 [1]; F [1]."
+      ],
+      [
+        "Explain how field and data types help with a train passenger. [4 marks]",
+        "Field [1]; A field is one named property within a record such as name or age. [1]. Data types [1]; A pupil record might store a string name, integer age and real score. [1]."
+      ]
+    ],
+    "refs": [
+      "L069 · last lesson",
+      "L068 · earlier learning",
+      "L003 · Autumn 1 retrieval",
+      "L068 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "FUNCTION · rectangle-area calculator",
+        "layout": "function-call",
+        "boxes": [
+          "Function",
+          "Parameters",
+          "Return"
+        ],
+        "foot": "Step 1 · Function"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L003",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · sports registration",
+        "layout": "procedure-call",
+        "boxes": [
+          "Parameter",
+          "Local variable",
+          "Output"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "INDEPENDENT · library reminder",
+        "layout": "procedure-call",
+        "boxes": [
+          "Procedure",
+          "Local variable",
+          "Global variable"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "Procedure: A named subprogram that performs a task without returning a function value.",
+    "priorExam": {
+      "from": "069",
+      "q": "Explain parameters and return in a shopping cost function. [4 marks]",
+      "a": "Parameters [1]; Named inputs that allow a function to work on supplied arguments. [1]. Return [1]; A RETURN statement sends a calculated value to the calling code. [1].",
+      "visual": {
+        "title": "INDEPENDENT · shopping cost function",
+        "layout": "function-call",
+        "boxes": [
+          "Parameters",
+          "Return",
+          "Output"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
