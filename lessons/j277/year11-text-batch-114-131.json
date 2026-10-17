@@ -68,66 +68,98 @@
     "n": 115,
     "facts": [
       [
-        "Two-dimensional arrays",
-        "A 2D array stores values in rows and columns and can be accessed with two indexes."
+        "Database table",
+        "Each horizontal row is one pupil record. ID, Name and Mark are fields (columns)."
       ],
       [
-        "Zero-based indexing",
-        "In a zero-indexed grid, the first row and column use index 0."
+        "Two-dimensional array",
+        "A fixed-size array emulates rows and columns; pupils[row,column] identifies one cell using zero-based indexes."
+      ],
+      [
+        "Data types",
+        "An OCR ERL array stores one element type. In a string-based table model, '72' is text; convert it before a numerical comparison."
       ],
       [
         "Records",
-        "A record groups related fields about one entity under a single item."
-      ],
-      [
-        "Choice of structure",
-        "Use a grid for table-like values and a record for named fields such as name and age."
+        "A named record can group an integer ID, text Name and integer Mark for one pupil without relying only on column positions."
       ]
     ],
     "ido": {
-      "q": "Given seats = [[1,0,1],[0,1,0]], identify seats[1][2] with zero-based indexes.",
+      "q": "Use the Pupils table: ID 101 Ada 72; ID 102 Ben 43; ID 103 Mia 81. In the string-based 2D array, what is pupils[0,1]? Explain the two indexes.",
       "steps": [
-        "Label row indexes 0 and 1.",
-        "Choose row 1, which contains [0,1,0].",
-        "Read column 2 from that row.",
-        "The value is 0."
+        "Label rows 0, 1 and 2 for Ada, Ben and Mia. Columns 0, 1 and 2 hold ID, Name and Mark.",
+        "The FIRST index 0 selects Ada's record (row 0), not column 0.",
+        "The SECOND index 1 selects the Name field (column 1).",
+        "pupils[0,1] is 'Ada'. Both indexes start at 0; marks are represented as text in this particular array."
       ]
     },
     "wedo": {
-      "q": "Given scores = [[3,6],[8,2]], identify scores[0][1].",
+      "q": "Using the SAME Pupils table, identify the value in pupils[2,1] and explain the indexes. [3 marks]",
       "steps": [
-        "Write both row indexes.",
-        "Select row 0.",
-        "Read column 1.",
-        "The value is 6."
+        "Find row 2 in the zero-based table.",
+        "Choose column 1 (Name).",
+        "Read the value from the intersecting cell.",
+        "pupils[2,1] = 'Mia' [1]; index 2 selects third row [1]; index 1 selects Name column [1]."
       ]
     },
     "code": {
-      "source": "array row = [4, 7, 9]\nprint(row[1])",
-      "predict": "Predict the output.",
-      "change": "Change the index to 2.",
-      "extend": "Explain why index 3 is invalid for this array.",
-      "answer": "7; 9; valid indexes are 0,1,2."
+      "source": "array pupils[3,3]\npupils[0,1] = \"Ada\"\npupils[1,1] = \"Ben\"\npupils[2,1] = \"Mia\"\nprint(pupils[1,1])",
+      "predict": "Predict the name printed. The array has three rows and three columns; only the Name column is initialised here.",
+      "change": "Change the final indexes to [2,1]. Predict the new output.",
+      "extend": "Identify why pupils[3,1] is out of bounds; then assign '72' to pupils[0,2] and explain why the quotes matter.",
+      "answer": "Ben; then Mia. Row 3 is outside indexes 0–2. '72' is stored as text in a string-based table; numeric comparisons require conversion or a numeric structure."
     },
     "exam": [
       {
-        "q": "Explain why a 2D array needs two indexes.",
-        "answer": "One selects the row; the other selects the column.",
+        "q": "In the Pupils table, state the Name stored at row index 1, column index 1. [2 marks]",
+        "answer": "Ben [1]; the first index selects row 1 and the second index selects Name/column 1 [1].",
         "marks": 2
       },
       {
-        "q": "A table contains 4 rows and 3 columns. How many elements are stored?",
-        "answer": "4 × 3 = 12.",
-        "marks": 2
-      },
-      {
-        "q": "Describe how records differ from 2D arrays.",
-        "answer": "A record groups named fields of one entity, potentially with differing data types; a 2D array holds indexed elements arranged in rows and columns.",
+        "q": "Explain what a row (record) and a column (field) represent in the Pupils table. [4 marks]",
+        "answer": "A row stores the data for one pupil [1] across that pupil's related values [1]. A field/column stores the same property, such as Mark [1], for all pupil records [1].",
         "marks": 4
+      },
+      {
+        "q": "Describe one difference between a 2D array of text and a named pupil record. [3 marks]",
+        "answer": "The 2D array is accessed by row and column indexes [1] and uses one consistent element type [1]; a named record uses field names and may store different field types [1].",
+        "marks": 3
       }
     ],
-    "visual": "row/column coordinate grid plus record card",
-    "stage": "text-draft"
+    "visual": "Progressive 3-row table with labelled 0-based row/column indexes; highlight row then column then their intersection. Show separate typed record card. Do not show the queried answer before the final I Do reveal.",
+    "stage": "text-draft · aligned OCR 2.2.3",
+    "support": [
+      "Core: supply the 3×3 table with index labels and ask pupils to point to a cell.",
+      "Stretch: retrieve two different cells and identify when an index is out of bounds.",
+      "Mastery: use an actual typed record or parallel numeric-mark array to compare marks without treating '72' as an integer."
+    ],
+    "sharedDataset": {
+      "name": "Pupils",
+      "headers": [
+        "ID",
+        "Name",
+        "Mark"
+      ],
+      "rows": [
+        [
+          101,
+          "Ada",
+          72
+        ],
+        [
+          102,
+          "Ben",
+          43
+        ],
+        [
+          103,
+          "Mia",
+          81
+        ]
+      ],
+      "file": "pupils.csv",
+      "csv": "ID,Name,Mark\n101,Ada,72\n102,Ben,43\n103,Mia,81"
+    }
   },
   {
     "n": 116,
@@ -198,131 +230,195 @@
     "n": 117,
     "facts": [
       [
-        "Open",
-        "A file is opened before reading or writing through a program."
+        "Persistent storage",
+        "A text file keeps data after the program ends. A filename identifies a file, but does not itself hold the file's contents."
       ],
       [
-        "Read",
-        "Input from an existing file can be processed by a program."
+        "Open and read",
+        "OCR ERL stores an opened file in a variable: f = open('pupils.csv'); f.readLine() returns the next line. This file has a header."
       ],
       [
-        "Write",
-        "Output can be saved to a file, with appropriate mode and permissions."
+        "Write and close",
+        "f.writeLine(text) writes a line to an opened output file; f.close() releases the file handle."
       ],
       [
-        "Close",
-        "Closing releases the file resource and helps ensure changes are saved."
+        "CSV and fields",
+        "In this teaching example, each line separates ID, Name and Mark with commas. Splitting CSV fields into an array is an optional extension, not a separate compulsory OCR requirement."
       ]
     ],
     "ido": {
-      "q": "Outline the order to save a new line of scores to a text file.",
+      "q": "The sample file pupils.csv contains a header followed by 101,Ada,72; 102,Ben,43; 103,Mia,81. Trace two readLine() calls and state the lines returned.",
       "steps": [
-        "Open the file in a suitable write or append mode.",
-        "Write the score and any required separator/newline.",
-        "Close the file to release the resource.",
-        "Check that the intended data, not the file path, has been saved."
+        "Open pupils.csv with file = open('pupils.csv'); save the opened file in a variable.",
+        "First readLine() returns the header: ID,Name,Mark. The next readLine() returns 101,Ada,72.",
+        "Each further readLine() advances to the next line. Use endOfFile() when reading the whole file.",
+        "Close the file. Reading a line returns text; it does not automatically turn comma-separated fields into a 2D array."
       ]
     },
     "wedo": {
-      "q": "A program displays values stored in marks.txt. Put its file-handling steps in order.",
+      "q": "A program creates a separate results.txt containing the lines 'Ada,72' and 'Mia,81'. Outline how it writes and then closes the file. [4 marks]",
       "steps": [
-        "Identify that input comes from a file.",
-        "Open the text file for reading.",
-        "Read and process the contents.",
-        "Close the file when complete."
+        "Create/open results.txt for output, keeping its file handle in a variable.",
+        "Call writeLine('Ada,72') to write the first result.",
+        "Call writeLine('Mia,81') to write the second result.",
+        "Close the file when finished; identify the order open → write → write → close."
       ]
     },
     "code": {
-      "source": "count = 0\nfor i = 1 to 3\n    count = count + 1\nnext i\nprint(count)",
-      "predict": "Predict how many file records the loop could count.",
-      "change": "Change the end value to 5.",
-      "extend": "Explain why a file should be closed when processing ends.",
-      "answer": "3; 5; closing releases resources and helps commit buffered writes."
+      "source": "file = open(\"pupils.csv\")\nheader = file.readLine()\nfirstPupil = file.readLine()\nprint(firstPupil)\nfile.close()",
+      "predict": "Predict exactly what is printed, including commas. The first line is the header.",
+      "change": "Change print(firstPupil) to print(header). What is printed?",
+      "extend": "Add one more readLine() before close(), store it in secondPupil, and print it.",
+      "answer": "Initially 101,Ada,72; when printing header, ID,Name,Mark. The next pupil line is 102,Ben,43. The returned lines are strings, not parsed records."
     },
     "exam": [
       {
-        "q": "Put these file operations in order: close, write, open.",
-        "answer": "Open → write → close.",
-        "marks": 3
+        "q": "Name the four basic file-handling operations required by OCR J277. [4 marks]",
+        "answer": "Open [1], Read [1], Write [1], Close [1].",
+        "marks": 4
       },
       {
-        "q": "Explain why opening a file in the wrong mode can cause a problem.",
-        "answer": "Write mode may overwrite data; read mode may prevent updates, depending on the system.",
-        "marks": 3
+        "q": "Given pupils.csv with a header followed by 101,Ada,72 and 102,Ben,43, state what the second call to readLine() returns after opening the file. [2 marks]",
+        "answer": "101,Ada,72 [1]; because the first readLine() already returned the header [1].",
+        "marks": 2
       },
       {
-        "q": "Give one reason to check that a file exists before reading it.",
-        "answer": "To handle an absent file rather than unexpectedly failing.",
+        "q": "Explain why the file should be closed after reading its final line. [2 marks]",
+        "answer": "Releases the opened file resource/handle [1] and properly completes the file access [1].",
         "marks": 2
       }
     ],
-    "visual": "open/read/write/close lifecycle with safe-error branch",
-    "stage": "text-draft"
+    "visual": "File diagram showing header → first pupil → second pupil → third pupil; read pointer advances once per readLine(). Separate output file panel for We Do, and open/read/write/close lifecycle.",
+    "stage": "text-draft · aligned OCR 2.2.3",
+    "support": [
+      "Core: identify the first and second lines without writing a loop.",
+      "Stretch: predict several readLine() calls, then add a close().",
+      "Mastery: optionally parse each comma-separated data row and build a 2D table in a high-level programming language."
+    ],
+    "sharedDataset": {
+      "name": "Pupils",
+      "headers": [
+        "ID",
+        "Name",
+        "Mark"
+      ],
+      "rows": [
+        [
+          101,
+          "Ada",
+          72
+        ],
+        [
+          102,
+          "Ben",
+          43
+        ],
+        [
+          103,
+          "Mia",
+          81
+        ]
+      ],
+      "file": "pupils.csv",
+      "csv": "ID,Name,Mark\n101,Ada,72\n102,Ben,43\n103,Mia,81"
+    }
   },
   {
     "n": 118,
     "facts": [
       [
+        "Field and record",
+        "A SQL table stores each pupil as a row/record; Name and Mark are columns/fields."
+      ],
+      [
         "SELECT",
-        "Identifies which field or fields a query retrieves."
+        "Names the field(s) to return in the result, such as Name or ID."
       ],
       [
         "FROM",
-        "Names the table containing the records."
+        "Names the table to search; our shared example is Pupils."
       ],
       [
         "WHERE",
-        "Filters rows using a condition."
-      ],
-      [
-        "SQL query",
-        "A database query retrieves only the requested information from a table."
+        "Filters rows. Comparing the numeric Mark to 50 returns only pupils meeting the condition."
       ]
     ],
     "ido": {
-      "q": "For Pupils(ID, Name, Year), write a query to display Name where Year=11.",
+      "q": "Using Pupils(ID, Name, Mark): 101 Ada 72; 102 Ben 43; 103 Mia 81. Write SQL to return the names of pupils with Mark >= 50, and state the result.",
       "steps": [
-        "Select the Name field.",
-        "Specify FROM Pupils.",
-        "Filter using WHERE Year = 11.",
-        "SELECT Name FROM Pupils WHERE Year = 11;"
+        "SELECT Name: ask for the Name field, not the complete record.",
+        "FROM Pupils: identify the table holding these rows.",
+        "WHERE Mark >= 50: Ada (72) and Mia (81) match; Ben (43) does not.",
+        "SELECT Name FROM Pupils WHERE Mark >= 50; returns Ada and Mia, in no guaranteed order unless an ordering rule is specified."
       ]
     },
     "wedo": {
-      "q": "For Books(Title, Genre), write a query to display Title where Genre='History'.",
+      "q": "Using the same Pupils table, write SQL to return the ID of pupils with Mark < 50. Identify the result. [4 marks]",
       "steps": [
-        "Identify the desired Title field.",
-        "Identify the Books table.",
-        "Filter for the text value History.",
-        "SELECT Title FROM Books WHERE Genre = 'History';"
+        "Select the required field: ID.",
+        "Choose the same Pupils table.",
+        "Filter rows where Mark < 50, checking 72, 43 and 81.",
+        "SELECT ID FROM Pupils WHERE Mark < 50; returns 102. SELECT/FROM/WHERE [3] and correct resulting row [1]."
       ]
     },
     "code": {
-      "source": "year = 11\nif year == 11 then\n    print(\"Included\")\nendif",
-      "predict": "Predict the result of the filter.",
-      "change": "Change year to 10.",
-      "extend": "Explain how the test relates to an SQL WHERE clause.",
-      "answer": "Included; no output for year 10; WHERE similarly limits matching rows."
+      "source": "mark = 43\nif mark >= 50 then\n    print(\"Include\")\nelse\n    print(\"Exclude\")\nendif",
+      "predict": "Predict the output, then connect the condition to SQL WHERE Mark >= 50.",
+      "change": "Change mark to 72 and predict the output.",
+      "extend": "Change the program so it displays 'Ada' when mark is 72 and 'Ben' when mark is 43; explain that SQL SELECT chooses what field is returned.",
+      "answer": "Initially Exclude; mark=72 prints Include. A simple additional selection can print Ada/Ben for this small known dataset; SQL SELECT Name returns the corresponding name field without hard-coding individual marks."
     },
     "exam": [
       {
-        "q": "Write SQL to display Name from Students where Year=10.",
-        "answer": "SELECT Name FROM Students WHERE Year = 10;",
+        "q": "Write SQL to return Name from Pupils where Mark > 70. [3 marks]",
+        "answer": "SELECT Name [1] FROM Pupils [1] WHERE Mark > 70 [1]; result Ada and Mia.",
         "marks": 3
       },
       {
-        "q": "Identify the role of FROM in SQL.",
-        "answer": "It names the table containing the data.",
-        "marks": 1
+        "q": "For the shared table, what value is returned by SELECT Name FROM Pupils WHERE ID = 103;? [2 marks]",
+        "answer": "Mia [1]; because the row with ID 103 matches the WHERE condition [1].",
+        "marks": 2
       },
       {
-        "q": "Explain why WHERE is useful in a large database.",
-        "answer": "It retrieves only rows meeting a condition, making results more relevant and easier to work with.",
-        "marks": 2
+        "q": "Explain how SELECT and WHERE perform different jobs in SELECT Name FROM Pupils WHERE Mark < 50; [3 marks]",
+        "answer": "SELECT Name chooses the field to output [1]; WHERE Mark < 50 filters qualifying rows [1]; in this dataset only Ben matches [1].",
+        "marks": 3
       }
     ],
-    "visual": "grounded three-row database table; highlight selected column and filtered rows",
-    "stage": "text-draft"
+    "visual": "Start with full Pupils table: SELECT highlights Name column; FROM highlights title Pupils; WHERE greys out Ben (Mark<50) for the I Do and highlights Ben only for We Do. Reveal result after query, not before.",
+    "stage": "text-draft · aligned OCR 2.2.3",
+    "support": [
+      "Core: match SELECT, FROM, WHERE to field, table and filter using the visible table.",
+      "Stretch: write a query independently and predict returned names/IDs.",
+      "Mastery: reproduce the WHERE filter using a loop and IF, then explain SELECT as field projection."
+    ],
+    "sharedDataset": {
+      "name": "Pupils",
+      "headers": [
+        "ID",
+        "Name",
+        "Mark"
+      ],
+      "rows": [
+        [
+          101,
+          "Ada",
+          72
+        ],
+        [
+          102,
+          "Ben",
+          43
+        ],
+        [
+          103,
+          "Mia",
+          81
+        ]
+      ],
+      "file": "pupils.csv",
+      "csv": "ID,Name,Mark\n101,Ada,72\n102,Ben,43\n103,Mia,81"
+    }
   },
   {
     "n": 119,
@@ -1043,66 +1139,98 @@
     "n": 130,
     "facts": [
       [
-        "String handling",
-        "Concatenate and extract parts of text when cleaning/formatting data."
+        "Link the representations",
+        "The same three pupils can appear as CSV text lines, a 2D table and a typed SQL database. The representation changes, not the facts."
       ],
       [
-        "File processing",
-        "Open, read/write and close files in the appropriate mode."
+        "Separate indexing from filtering",
+        "A 2D array uses indexes for cell access; a loop and IF are needed to select every row satisfying a condition."
       ],
       [
-        "SQL retrieval",
-        "SELECT selects fields, FROM selects table and WHERE filters rows."
+        "SQL query",
+        "SELECT chooses displayed fields, FROM names the table and WHERE selects matching records."
       ],
       [
-        "Combined tasks",
-        "A realistic system may read records, filter content and produce a formatted result."
+        "Optional integration",
+        "Loading CSV rows into an array and converting string marks into numbers is an ambitious extension; start with a supplied array for core work."
       ]
     ],
     "ido": {
-      "q": "A library system needs names of overdue borrowers. Plan the SQL and output workflow.",
+      "q": "Compare SQL and code for the shared Pupils table. Show why 'SELECT Name FROM Pupils WHERE Mark >= 50' returns Ada and Mia.",
       "steps": [
-        "Select the Name field from the Loans table.",
-        "Filter records where Overdue = 1.",
-        "Format names with a label for reporting.",
-        "Use SELECT Name FROM Loans WHERE Overdue = 1;"
+        "Read marks 72, 43 and 81 from the Pupils table; identify that 50 is the minimum included mark.",
+        "SQL SELECT Name requests only the Name field; WHERE Mark >= 50 keeps Ada and Mia.",
+        "In code, loop through aligned names=['Ada','Ben','Mia'] and numeric marks=[72,43,81]; test each mark>=50.",
+        "Print names[0] and names[2]. The code and SQL give the same set of names, although ordering is not guaranteed by SQL without ORDER BY."
       ]
     },
     "wedo": {
-      "q": "A program reads a text file and counts valid records. Outline the sequence.",
+      "q": "Using the SAME dataset, write SQL and describe code that returns the Name of pupils with Mark < 60. [5 marks]",
       "steps": [
-        "Open the file for reading.",
-        "Read each record.",
-        "Increment count only if the record passes the stated rule.",
-        "Close the file and output count."
+        "Check 72, 43 and 81 against the new limit of 60.",
+        "The only matching row is Ben with mark 43.",
+        "SQL: SELECT Name FROM Pupils WHERE Mark < 60;.",
+        "Equivalent code loops through indexes 0–2 and prints the name only when marks[i] < 60; output Ben."
       ]
     },
     "code": {
-      "source": "name = \"Ada\"\nstatus = \"Overdue\"\nprint(name + \": \" + status)",
-      "predict": "Predict the display.",
-      "change": "Change status to Returned.",
-      "extend": "Extend to add a prefix 'Loan - '.",
-      "answer": "Ada: Overdue; Ada: Returned; Loan - Ada: Overdue."
+      "source": "array names = [\"Ada\", \"Ben\", \"Mia\"]\narray marks = [72, 43, 81]\nfor i = 0 to 2\n    if marks[i] >= 50 then\n        print(names[i])\n    endif\nnext i",
+      "predict": "Predict the two names printed, in code execution order.",
+      "change": "Change the threshold from 50 to 80; predict which name is printed.",
+      "extend": "Add passCount, initialise it to zero and increment it only for qualifying marks.",
+      "answer": "Initially Ada then Mia; at 80, Mia only. With threshold 50, passCount starts at 0 and finishes at 2."
     },
     "exam": [
       {
-        "q": "Write SQL to return Title from Books where Available=1.",
-        "answer": "SELECT Title FROM Books WHERE Available = 1;",
+        "q": "Write SQL to display Name from Pupils for pupils whose Mark >= 70. [3 marks]",
+        "answer": "SELECT Name [1] FROM Pupils [1] WHERE Mark >= 70 [1]; Ada and Mia match.",
         "marks": 3
       },
       {
-        "q": "Explain why files should be closed after use.",
-        "answer": "Releases resources and helps ensure buffered data changes are finalised.",
-        "marks": 2
+        "q": "Complete a code condition so that names[i] is printed only when marks[i] < 50. State the result using the shared data. [3 marks]",
+        "answer": "IF marks[i] < 50 THEN [2 for correct condition/control] print(names[i]) [1]; prints Ben.",
+        "marks": 3
       },
       {
-        "q": "Distinguish a 2D array and a record.",
-        "answer": "Array uses two indexes for tabular elements; record groups named fields for one entity.",
-        "marks": 2
+        "q": "Explain why comparing '72' directly with numeric 50 can be problematic when reading marks from a CSV text file. [3 marks]",
+        "answer": "readLine() supplies text [1]; '72' is a string, while 50 is numeric [1]; the field must be converted/validated before a numerical comparison [1].",
+        "marks": 3
       }
     ],
-    "visual": "data-flow: file → filter/query → formatted report",
-    "stage": "text-draft"
+    "visual": "Linked panels for pupils.csv → string 2D table → typed SQL table → equivalent loop. For I Do/We Do, highlight each row and matching condition before showing returned Name. No full CSV parser shown to Core pupils.",
+    "stage": "text-draft · aligned OCR 2.2.3",
+    "support": [
+      "Core: annotate which pupil names pass an IF condition using already supplied numeric marks.",
+      "Stretch: write the equivalent simple SQL and pseudocode filter.",
+      "Mastery: parse a sample CSV (skip header), validate/cast Mark to integer, store records safely and compare its filtered output with SQL."
+    ],
+    "sharedDataset": {
+      "name": "Pupils",
+      "headers": [
+        "ID",
+        "Name",
+        "Mark"
+      ],
+      "rows": [
+        [
+          101,
+          "Ada",
+          72
+        ],
+        [
+          102,
+          "Ben",
+          43
+        ],
+        [
+          103,
+          "Mia",
+          81
+        ]
+      ],
+      "file": "pupils.csv",
+      "csv": "ID,Name,Mark\n101,Ada,72\n102,Ben,43\n103,Mia,81"
+    }
   },
   {
     "n": 131,
