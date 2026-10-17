@@ -1,0 +1,353 @@
+{
+  "073": {
+    "t": "SQL: SELECT, FROM and WHERE",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "SQL query"
+    ],
+    "o": [
+      "Write simple SQL queries to retrieve records.",
+      "Use the technique in a different problem.",
+      "Explain the OCR ERL example and test a modification."
+    ],
+    "c": [
+      [
+        "SELECT",
+        "Specifies columns required from a database table. In the school club database, identify where this technique applies."
+      ],
+      [
+        "FROM",
+        "Identifies the database table from which records are selected. In the library books database, identify where this technique applies."
+      ],
+      [
+        "WHERE",
+        "Filters records using a condition. In the sports team records, identify where this technique applies."
+      ],
+      [
+        "SQL query",
+        "SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. In the museum member list, identify where this technique applies."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "SELECT · school club database",
+        "layout": "sql-table",
+        "boxes": [
+          "ID",
+          "Name",
+          "Year"
+        ],
+        "foot": "Step 1 · SELECT"
+      },
+      {
+        "title": "FROM · library books database",
+        "layout": "sql-table",
+        "boxes": [
+          "ID",
+          "Name",
+          "Year"
+        ],
+        "foot": "Step 2 · FROM"
+      },
+      {
+        "title": "WHERE · sports team records",
+        "layout": "sql-table",
+        "boxes": [
+          "ID",
+          "Name",
+          "Year"
+        ],
+        "foot": "Step 3 · WHERE"
+      },
+      {
+        "title": "SQL QUERY · museum member list",
+        "layout": "sql-table",
+        "boxes": [
+          "ID",
+          "Name",
+          "Year"
+        ],
+        "foot": "Step 4 · SQL query"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · school club database",
+      "layout": "sql-table",
+      "boxes": [
+        "SELECT",
+        "FROM",
+        "WHERE"
+      ],
+      "foot": "Follow the detailed example"
+    },
+    "m": {
+      "title": "Model · school club database",
+      "q": "A school club database uses select and from. Explain what each contributes. [4 marks]",
+      "headings": [
+        "Read the question",
+        "Model the first feature",
+        "Model the second feature",
+        "Check the marks"
+      ],
+      "st": [
+        "Identify the program's purpose and the pieces of data needed.",
+        "SELECT [1]; Specifies columns required from a database table. [1].",
+        "FROM [1]; Identifies the database table from which records are selected. [1].",
+        "Each feature needs a correct technical fact plus an explanation."
+      ]
+    },
+    "w": [
+      [
+        "A library books database needs select. Explain the purpose. [2 marks]",
+        "SELECT [1]; Specifies columns required from a database table. [1]."
+      ],
+      [
+        "Explain from for a sports team records. [2 marks]",
+        "FROM [1]; Identifies the database table from which records are selected. [1]."
+      ],
+      [
+        "When programming a museum member list, explain why where and sql query matter. [4 marks]",
+        "WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided example 1",
+      "Guided example 2",
+      "Guided example 3"
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "SELECT [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Specifies columns required from a database table. [1]"
+        ],
+        [
+          "Check the marks",
+          "SELECT [1]; Specifies columns required from a database table. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "FROM [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Identifies the database table from which records are selected. [1]"
+        ],
+        [
+          "Check the marks",
+          "FROM [1]; Identifies the database table from which records are selected. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Find the relevant operation or concept."
+        ],
+        [
+          "Step 1 · identify",
+          "WHERE [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Filters records using a condition. [1]"
+        ],
+        [
+          "Check the marks",
+          "WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+        ]
+      ]
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · library books database",
+        "layout": "sql-table",
+        "boxes": [
+          "SELECT",
+          "FROM",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · sports team records",
+        "layout": "sql-table",
+        "boxes": [
+          "FROM",
+          "WHERE",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      },
+      {
+        "title": "GUIDED · museum member list",
+        "layout": "sql-table",
+        "boxes": [
+          "WHERE",
+          "SQL query",
+          "Output"
+        ],
+        "foot": "Apply it to this example"
+      }
+    ],
+    "k": {
+      "q": "Trace this OCR ERL program; predict the output and change it.",
+      "code": "query = \"SELECT Name FROM Pupils WHERE Year = 10\"\nprint(query)",
+      "p": [
+        "Predict the exact output.",
+        "Change Year = 10 to Year = 11.",
+        "Write a separate SQL query selecting Title FROM Books WHERE Available = true."
+      ],
+      "a": "Original output: SELECT Name FROM Pupils WHERE Year = 10.\nAfter the changes: Updated printed SQL ends Year = 11. Example second query: SELECT Title FROM Books WHERE Available = true. The OCR ERL program prints a query; a database system would execute it.\nSQL is displayed as text; it is not executed by OCR ERL."
+    },
+    "e": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "SELECT [1]; FROM [1]."
+      ],
+      [
+        "Explain from and where in a café inventory. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "FROM [1]; Identifies the database table from which records are selected. [1]. WHERE [1]; Filters records using a condition. [1]."
+      ],
+      [
+        "A programmer makes a school house records. Explain the roles of select, where and sql query. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "SELECT [1]; Specifies columns required from a database table. [1]. WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "SELECT",
+        "Specifies columns required from a database table."
+      ],
+      [
+        "FROM",
+        "Identifies the database table from which records are selected."
+      ],
+      [
+        "WHERE",
+        "Filters records using a condition."
+      ],
+      [
+        "SQL query",
+        "SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows."
+      ],
+      [
+        "Algorithm",
+        "A defined set of processing instructions."
+      ],
+      [
+        "Testing",
+        "Checking expected outcomes against actual program behaviour."
+      ]
+    ],
+    "x": [
+      "Specifies columns required from a database table.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Open file [1]; Read line [1]."
+      ],
+      [
+        "State TWO relevant ideas or operations from this topic. [2 marks]",
+        "Subprogram [1]; Array parameter [1]."
+      ],
+      [
+        "Describe colour depth in a bitmap. [2 marks]",
+        "Bits per pixel [1] determining the number of colours possible [1]."
+      ],
+      [
+        "Explain array parameter and return value in a temperature array report. [4 marks]",
+        "Array parameter [1]; An array can be supplied to a subprogram so values can be processed. [1]. Return value [1]; A function passes a result back to the code that called it. [1]."
+      ]
+    ],
+    "refs": [
+      "L072 · last lesson",
+      "L071 · earlier learning",
+      "L006 · Autumn 1 retrieval",
+      "L071 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "OPEN FILE · daily attendance file",
+        "layout": "file-io",
+        "boxes": [
+          "Open file",
+          "Read line",
+          "Write line"
+        ],
+        "foot": "Step 1 · Open file"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L006",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT · café inventory",
+        "layout": "sql-table",
+        "boxes": [
+          "FROM",
+          "WHERE",
+          "Output"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "INDEPENDENT · school house records",
+        "layout": "sql-table",
+        "boxes": [
+          "SELECT",
+          "WHERE",
+          "SQL query"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "SELECT: Specifies columns required from a database table.",
+    "priorExam": {
+      "from": "072",
+      "q": "Explain read line and write line in a sport-result text file. [4 marks]",
+      "a": "Read line [1]; handle.readLine() obtains the next line of text from an opened file. [1]. Write line [1]; handle.writeLine(text) adds a line to an opened file. [1].",
+      "visual": {
+        "title": "INDEPENDENT · sport-result text file",
+        "layout": "file-io",
+        "boxes": [
+          "Read line",
+          "Write line",
+          "Output"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
