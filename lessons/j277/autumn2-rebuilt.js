@@ -690,7 +690,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       lower="Magnetic disk: fewer read-head movements";
     }else{
       const n=entries.length,w=n===4?117:156,gap=n===4?17:28;
-      for(let i=0;i<n;i++){const x=13+i*(w+gap);body+=card(x,119,w,114,entries[i],i===stage%c.length?c.greenP:i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
+      for(let i=0;i<n;i++){const x=13+i*(w+gap);body+=card(x,119,w,114,entries[i],i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
       lower=family==="file"?"Open → read/write → close the file":family==="function"?"Pass arguments → execute → use return value":family==="cycle"?"Plan → build → test → improve":"Follow the actual data or decision";
     }
   }else if(["branch","flow","validation","loop"].includes(family)){
