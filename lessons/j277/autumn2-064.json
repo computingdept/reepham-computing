@@ -1,0 +1,353 @@
+{
+  "064": {
+    "t": "Strings and Input Checking",
+    "s": "2.2.3 / 2.3.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Length check",
+      "Validation",
+      "Input checking",
+      "Authentication"
+    ],
+    "o": [
+      "Manipulate strings and check inputs against rules.",
+      "Use the technique in an independent scenario.",
+      "Trace and edit the OCR ERL example."
+    ],
+    "c": [
+      [
+        "Length check",
+        "A string's .length property can check that a minimum number of characters were supplied. Apply this in a school portal username."
+      ],
+      [
+        "Validation",
+        "Checking entered data against rules improves reliability but does not verify identity. Apply this in a library account."
+      ],
+      [
+        "Input checking",
+        "Reject a value that fails a stated rule and request another valid one. Apply this in a club membership."
+      ],
+      [
+        "Authentication",
+        "Checking a user's identity is different from checking whether input fits a format. Apply this in a mobile app sign-up."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "LENGTH CHECK · school portal username",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Validation",
+          "Input checking"
+        ],
+        "foot": "Step 1 · Length check"
+      },
+      {
+        "title": "VALIDATION · library account",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Validation",
+          "Input checking"
+        ],
+        "foot": "Step 2 · Validation"
+      },
+      {
+        "title": "INPUT CHECKING · club membership",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Validation",
+          "Input checking"
+        ],
+        "foot": "Step 3 · Input checking"
+      },
+      {
+        "title": "AUTHENTICATION · mobile app sign-up",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Validation",
+          "Input checking"
+        ],
+        "foot": "Step 4 · Authentication"
+      }
+    ],
+    "idoVisual": {
+      "title": "I DO · school portal username",
+      "layout": "validation",
+      "boxes": [
+        "Length check",
+        "Validation",
+        "Input checking"
+      ],
+      "foot": "Follow the teacher's model"
+    },
+    "m": {
+      "title": "Model · school portal username",
+      "q": "A school portal username is being developed. Explain how length check and validation are used. [4 marks]",
+      "headings": [
+        "Understand the task",
+        "Model first concept",
+        "Model second concept",
+        "Check all marks"
+      ],
+      "st": [
+        "Read the scenario and identify the data the program needs.",
+        "Length check [1]; A string's .length property can check that a minimum number of characters were supplied. [1].",
+        "Validation [1]; Checking entered data against rules improves reliability but does not verify identity. [1].",
+        "Two linked points for each concept."
+      ]
+    },
+    "w": [
+      [
+        "A library account uses length check. Explain how it helps. [2 marks]",
+        "Length check [1]; A string's .length property can check that a minimum number of characters were supplied. [1]."
+      ],
+      [
+        "Explain validation in a club membership. [2 marks]",
+        "Validation [1]; Checking entered data against rules improves reliability but does not verify identity. [1]."
+      ],
+      [
+        "A mobile app sign-up uses input checking and authentication. Explain both. [4 marks]",
+        "Input checking [1]; Reject a value that fails a stated rule and request another valid one. [1]. Authentication [1]; Checking a user's identity is different from checking whether input fits a format. [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided question 1",
+      "Guided question 2",
+      "Guided question 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "WE DO · library account",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Validation",
+          "Result"
+        ],
+        "foot": "Solve this different scenario"
+      },
+      {
+        "title": "WE DO · club membership",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Input checking",
+          "Result"
+        ],
+        "foot": "Solve this different scenario"
+      },
+      {
+        "title": "WE DO · mobile app sign-up",
+        "layout": "validation",
+        "boxes": [
+          "Input checking",
+          "Authentication",
+          "Result"
+        ],
+        "foot": "Solve this different scenario"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Choose the relevant construct and consider its purpose."
+        ],
+        [
+          "Step 1 · identify",
+          "Length check [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "A string's .length property can check that a minimum number of characters were supplied. [1]"
+        ],
+        [
+          "Check the marks",
+          "Length check [1]; A string's .length property can check that a minimum number of characters were supplied. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Choose the relevant construct and consider its purpose."
+        ],
+        [
+          "Step 1 · identify",
+          "Validation [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Checking entered data against rules improves reliability but does not verify identity. [1]"
+        ],
+        [
+          "Check the marks",
+          "Validation [1]; Checking entered data against rules improves reliability but does not verify identity. [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Choose the relevant construct and consider its purpose."
+        ],
+        [
+          "Step 1 · identify",
+          "Input checking [1]"
+        ],
+        [
+          "Step 2 · explain",
+          "Reject a value that fails a stated rule and request another valid one. [1]"
+        ],
+        [
+          "Check the marks",
+          "Input checking [1]; Reject a value that fails a stated rule and request another valid one. [1]. Authentication [1]; Checking a user's identity is different from checking whether input fits a format. [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict the output of the OCR ERL program, modify it and test the changed result.",
+      "code": "candidate = \"abc123\"\nif candidate.length >= 6 then\n    print(\"Length valid\")\nelse\n    print(\"Too short\")\nendif",
+      "p": [
+        "Predict the exact output.",
+        "Change candidate to \"abc\".",
+        "Change minimum length from 6 to 8."
+      ],
+      "a": "Original output: Length valid.\nChanged version: At abc: Too short. A six-character string fails a minimum length of 8.\nReview zero-based indexing and data types."
+    },
+    "e": [
+      [
+        "State TWO relevant techniques from this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "Length check [1]; Input checking [1]."
+      ],
+      [
+        "Explain how validation and input checking help with a video service username. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "Validation [1]; Checking entered data against rules improves reliability but does not verify identity. [1]. Input checking [1]; Reject a value that fails a stated rule and request another valid one. [1]."
+      ],
+      [
+        "A programmer designs a sports team password. Explain why length check, input checking and authentication matter. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "Length check [1]; A string's .length property can check that a minimum number of characters were supplied. [1]. Input checking [1]; Reject a value that fails a stated rule and request another valid one. [1]. Authentication [1]; Checking a user's identity is different from checking whether input fits a format. [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Length check",
+        "A string's .length property can check that a minimum number of characters were supplied."
+      ],
+      [
+        "Validation",
+        "Checking entered data against rules improves reliability but does not verify identity."
+      ],
+      [
+        "Input checking",
+        "Reject a value that fails a stated rule and request another valid one."
+      ],
+      [
+        "Authentication",
+        "Checking a user's identity is different from checking whether input fits a format."
+      ],
+      [
+        "Syntax",
+        "The rules governing valid programming statements."
+      ],
+      [
+        "Test data",
+        "An input used to check expected results."
+      ]
+    ],
+    "x": [
+      "A string's .length property can check that a minimum number of characters were supplied.",
+      true
+    ],
+    "r": [
+      [
+        "State TWO relevant techniques from this topic. [2 marks]",
+        "Concatenation [1]; Length [1]."
+      ],
+      [
+        "State TWO concepts needed for this programming technique. [2 marks]",
+        "Planning [1]; Iteration [1]."
+      ],
+      [
+        "A bitmap measures 100 × 20 with 8 bits per pixel. Find its size in bytes. [3 marks]",
+        "2000 pixels [1]; 16000 bits [1]; 2000 bytes [1]."
+      ],
+      [
+        "Explain how selection and iteration can help a fundraising tickets. [4 marks]",
+        "Selection [1]; Use IF or ELSE to choose valid outcomes. [1]. Iteration [1]; Repeat actions with a bounded FOR or condition-controlled WHILE. [1]."
+      ]
+    ],
+    "refs": [
+      "L063 · last lesson",
+      "L062 · earlier learning",
+      "L007 · Autumn 1 retrieval",
+      "L062 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "CONCATENATION · welcome message",
+        "layout": "sequence",
+        "boxes": [
+          "Concatenation",
+          "Substring",
+          "Length"
+        ],
+        "foot": "Step 1 · Concatenation"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 RETRIEVAL",
+        "layout": "flow",
+        "boxes": [
+          "L007",
+          "Recall",
+          "Respond"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "YOU DO · video service username",
+        "layout": "validation",
+        "boxes": [
+          "Validation",
+          "Input checking",
+          "Result"
+        ],
+        "foot": ""
+      },
+      {
+        "title": "YOU DO · sports team password",
+        "layout": "validation",
+        "boxes": [
+          "Length check",
+          "Input checking",
+          "Authentication"
+        ],
+        "foot": ""
+      }
+    ],
+    "memoryCue": "Length check: A string's .length property can check that a minimum number of characters were supplied.",
+    "priorExam": {
+      "from": "063",
+      "q": "Explain how substring and length help with a school password hint. [4 marks]",
+      "a": "Substring [1]; substring(start,length) returns characters beginning at a zero-based index. [1]. Length [1]; The .length property gives the number of characters in a string. [1].",
+      "visual": {
+        "title": "YOU DO · school password hint",
+        "layout": "sequence",
+        "boxes": [
+          "Substring",
+          "Length",
+          "Result"
+        ],
+        "foot": ""
+      }
+    }
+  }
+}
