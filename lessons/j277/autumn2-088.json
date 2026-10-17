@@ -1,0 +1,356 @@
+{
+  "088": {
+    "t": "Logic Gates: AND, OR and NOT",
+    "s": "2.4.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Boolean",
+      "AND",
+      "OR",
+      "NOT",
+      "logic gate"
+    ],
+    "o": [
+      "Recognise gate symbols and explain each gate.",
+      "Predict outputs for specified input values.",
+      "Use gates to represent everyday control rules."
+    ],
+    "c": [
+      [
+        "Binary logic",
+        "Logic gates work with Boolean input and output values 0 and 1."
+      ],
+      [
+        "AND gate",
+        "AND outputs 1 only if both inputs are 1. Its symbol has a flat input edge and rounded output edge."
+      ],
+      [
+        "OR gate",
+        "OR outputs 1 if either or both inputs are 1; it outputs 0 only for 0,0."
+      ],
+      [
+        "NOT gate",
+        "NOT has one input and outputs the opposite value; its symbol has a small inversion bubble."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "AND GATE · BOTH INPUTS",
+        "layout": "logic-gates",
+        "boxes": [
+          "A",
+          "B",
+          "AND"
+        ],
+        "foot": "Only 1 AND 1 gives 1"
+      },
+      {
+        "title": "OR GATE · EITHER INPUT",
+        "layout": "logic-or",
+        "boxes": [
+          "A",
+          "B",
+          "OR"
+        ],
+        "foot": "At least one 1 gives 1"
+      },
+      {
+        "title": "NOT GATE · INVERT",
+        "layout": "logic-not",
+        "boxes": [
+          "A",
+          "NOT A"
+        ],
+        "foot": "One input only"
+      },
+      {
+        "title": "BOOLEAN GATES IN CONTROL",
+        "layout": "logic-gates",
+        "boxes": [
+          "Door",
+          "Armed",
+          "AND"
+        ],
+        "foot": "Apply logic to an alarm"
+      }
+    ],
+    "idoVisual": {
+      "title": "ALARM REQUIREMENT · BOTH TRUE",
+      "layout": "logic-gates",
+      "boxes": [
+        "Door open",
+        "Armed",
+        "AND"
+      ],
+      "foot": "Both inputs control Q"
+    },
+    "m": {
+      "title": "Model an AND alarm",
+      "q": "An alarm sounds only if a door is open (A=1) AND the system is armed (B=1). Explain the outputs for A=1,B=1 and A=1,B=0. [4 marks]",
+      "headings": [
+        "Write the operation",
+        "Evaluate first input pair",
+        "Evaluate second input pair",
+        "Check the alarm"
+      ],
+      "st": [
+        "This is an AND rule because both conditions must be true [1].",
+        "With 1,1 the output is 1 [1], so the alarm sounds.",
+        "With 1,0 the output is 0 [1] because both are not true [1].",
+        "Show each input pair alongside its output before revealing."
+      ]
+    },
+    "w": [
+      [
+        "A buzzer sounds if either A or B is on. Give OR outputs for A,B = 00,01,10,11. [4 marks]",
+        "0,1,1,1 in the given order, one mark for each correct output."
+      ],
+      [
+        "A safety indicator is NOT A. Give output for A=0 and A=1. [2 marks]",
+        "For A=0 output 1 [1]; for A=1 output 0 [1]."
+      ],
+      [
+        "A fan needs power A and permission B. Explain why AND is suitable and state outputs for 1,0 and 1,1. [4 marks]",
+        "Both inputs must be high [1], so AND is suitable [1]. 1 AND 0=0 [1]; 1 AND 1=1 [1]."
+      ]
+    ],
+    "wTitles": [
+      "OR light switches",
+      "NOT safety switch",
+      "AND fan permission"
+    ],
+    "wVisuals": [
+      {
+        "title": "TWO SWITCHES · OR",
+        "layout": "logic-or",
+        "boxes": [
+          "A",
+          "B",
+          "OR"
+        ],
+        "foot": "Either switch activates buzzer"
+      },
+      {
+        "title": "SINGLE INPUT · NOT",
+        "layout": "logic-not",
+        "boxes": [
+          "A",
+          "NOT A"
+        ],
+        "foot": "Output reverses input"
+      },
+      {
+        "title": "FAN CONTROL · AND",
+        "layout": "logic-gates",
+        "boxes": [
+          "Power",
+          "Permission",
+          "AND"
+        ],
+        "foot": "Both conditions must be true"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "List 00,01,10,11."
+        ],
+        [
+          "Step 1 · identify",
+          "00 gives 0; 01 gives 1."
+        ],
+        [
+          "Step 2 · explain",
+          "10 gives 1; 11 gives 1."
+        ],
+        [
+          "Check the marks",
+          "0,1,1,1 in the given order, one mark for each correct output."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "NOT reverses its input."
+        ],
+        [
+          "Step 1 · identify",
+          "NOT 0 gives 1."
+        ],
+        [
+          "Step 2 · explain",
+          "NOT 1 gives 0."
+        ],
+        [
+          "Check the marks",
+          "For A=0 output 1 [1]; for A=1 output 0 [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Identify the phrase 'both'."
+        ],
+        [
+          "Step 1 · identify",
+          "Use AND because both inputs are required."
+        ],
+        [
+          "Step 2 · explain",
+          "1,0 gives 0 and 1,1 gives 1."
+        ],
+        [
+          "Check the marks",
+          "Both inputs must be high [1], so AND is suitable [1]. 1 AND 0=0 [1]; 1 AND 1=1 [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace the alarm's AND condition, then change the inputs.",
+      "code": "armed = true\ndoorOpen = false\nif armed AND doorOpen then\n    print(\"Alarm\")\nelse\n    print(\"Quiet\")\nendif",
+      "p": [
+        "Predict the original output.",
+        "Set doorOpen to true.",
+        "With doorOpen false, replace AND with OR and predict."
+      ],
+      "a": "Initially Quiet. When both are true, Alarm. With OR, true OR false is true, so Alarm."
+    },
+    "e": [
+      [
+        "State the output of an AND gate given A=1 and B=0. [1 mark]\n\nSource: Original OCR J277-style practice question.",
+        "0 [1]."
+      ],
+      [
+        "Give OR outputs for input pairs 00, 01, 10 and 11 in that order. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "0 [1], 1 [1], 1 [1], 1 [1]."
+      ],
+      [
+        "Explain AND, OR and NOT with TWO different inputs or examples for each. [6 marks]\n\nSource: Original OCR J277-style practice question.",
+        "AND 1,1→1 [1] and 1,0→0 [1]. OR 0,1→1 [1] and 0,0→0 [1]. NOT input 0→1 [1] and input 1→0 [1]."
+      ]
+    ],
+    "v": [
+      [
+        "AND",
+        "Output 1 only when both inputs are 1."
+      ],
+      [
+        "OR",
+        "Output 1 when either or both inputs are 1."
+      ],
+      [
+        "NOT",
+        "Reverses one Boolean input."
+      ],
+      [
+        "Gate",
+        "Electronic circuit implementing a Boolean rule."
+      ],
+      [
+        "Inversion bubble",
+        "Small circle on a symbol indicating logical inversion."
+      ],
+      [
+        "Boolean",
+        "Logic with values 0 and 1 (false and true)."
+      ]
+    ],
+    "x": [
+      "An OR gate outputs 1 when both its inputs are 1.",
+      true
+    ],
+    "r": [
+      [
+        "State the prerequisite for binary search. [1 mark]",
+        "The data must be sorted [1]."
+      ],
+      [
+        "State the key idea behind the divide step of merge sort. [2 marks]",
+        "Split an array into smaller halves [1] until individual items/single-element lists remain [1]."
+      ],
+      [
+        "Convert hex A into denary. [1 mark]",
+        "10 [1]."
+      ],
+      [
+        "Trace merge sort on [4,1,3,2], showing two sorted pairs and the final result. [4 marks]",
+        "Split into [4,1] and [3,2] [1]; merge singletons into [1,4] [1] and [2,3] [1]; final merge [1,2,3,4] [1]."
+      ]
+    ],
+    "refs": [
+      "L087 · last lesson",
+      "L086 · earlier learning",
+      "L003 · Autumn 1 retrieval",
+      "L086 · high challenge"
+    ],
+    "retrievalVisuals": [
+      {
+        "title": "LINEAR VERSUS BINARY SEARCH",
+        "layout": "linear-search",
+        "boxes": [
+          "5",
+          "2",
+          "9",
+          "1",
+          "7"
+        ],
+        "foot": "Linear works on unsorted data"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 HEX",
+        "layout": "flow",
+        "boxes": [
+          "Hex A",
+          "Denary",
+          "?"
+        ],
+        "foot": "Retrieve old knowledge"
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "INDEPENDENT OR GATE",
+        "layout": "logic-or",
+        "boxes": [
+          "A",
+          "B",
+          "OR"
+        ],
+        "foot": "List all four rows"
+      },
+      {
+        "title": "INDEPENDENT COMPARISON",
+        "layout": "logic-gates",
+        "boxes": [
+          "A",
+          "B",
+          "AND"
+        ],
+        "foot": "Explain different gates"
+      }
+    ],
+    "memoryCue": "AND needs both inputs high; OR needs at least one; NOT reverses its single input.",
+    "priorExam": {
+      "from": "087",
+      "q": "Trace the first bubble-sort pass on [5,3,4] and state the output array. [4 marks]",
+      "a": "Compare 5>3 [1], swap to [3,5,4] [1]. Compare 5>4 [1], swap to [3,4,5] [1].",
+      "visual": {
+        "title": "BINARY NEEDS SORTED INPUT",
+        "layout": "binary-search",
+        "boxes": [
+          "1",
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
+        "foot": "Discard halves safely"
+      }
+    },
+    "visualAuditV2": true
+  }
+}
