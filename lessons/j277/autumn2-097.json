@@ -1,0 +1,312 @@
+{
+  "097": {
+    "year11": true,
+    "t": "Virtual Memory",
+    "s": "1.2.1",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Virtual Memory",
+      "state",
+      "explain",
+      "calculate",
+      "compare"
+    ],
+    "o": [
+      "Recall key facts about virtual memory.",
+      "Work through a new example with correct technical language.",
+      "Apply the method independently and justify your answer."
+    ],
+    "c": [
+      [
+        "When RAM is insufficient",
+        "More working data may be required than physical RAM can hold at once."
+      ],
+      [
+        "Virtual memory",
+        "The operating system uses a reserved area of secondary storage as extra backing space for memory pages."
+      ],
+      [
+        "Moving pages",
+        "Pages are moved between RAM and secondary storage as needed; this is substantially slower than accessing RAM."
+      ],
+      [
+        "Performance consequence",
+        "Frequent movement between RAM and storage can cause a noticeable slowdown (thrashing)."
+      ]
+    ],
+    "visuals": [
+      {
+        "y11": "virtual",
+        "title": "WHEN RAM IS INSUFFICIENT",
+        "values": [
+          "RAM",
+          "Virtual storage",
+          "Pages"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Virtual memory provides capacity, not the speed of additional RAM.",
+        "hide": false
+      },
+      {
+        "y11": "virtual",
+        "title": "VIRTUAL MEMORY",
+        "values": [
+          "RAM",
+          "Virtual storage",
+          "Pages"
+        ],
+        "focus": 1,
+        "target": "",
+        "note": "Virtual memory provides capacity, not the speed of additional RAM.",
+        "hide": false
+      },
+      {
+        "y11": "virtual",
+        "title": "MOVING PAGES",
+        "values": [
+          "RAM",
+          "Virtual storage",
+          "Pages"
+        ],
+        "focus": 2,
+        "target": "",
+        "note": "Virtual memory provides capacity, not the speed of additional RAM.",
+        "hide": false
+      },
+      {
+        "y11": "virtual",
+        "title": "PERFORMANCE CONSEQUENCE",
+        "values": [
+          "RAM",
+          "Virtual storage",
+          "Pages"
+        ],
+        "focus": 3,
+        "target": "",
+        "note": "Virtual memory provides capacity, not the speed of additional RAM.",
+        "hide": false
+      }
+    ],
+    "idoVisual": {
+      "y11": "virtual",
+      "title": "I DO · Virtual Memory",
+      "values": [
+        "RAM",
+        "Virtual storage",
+        "Pages"
+      ],
+      "focus": 0,
+      "target": "",
+      "note": "Virtual memory provides capacity, not the speed of additional RAM.",
+      "hide": false
+    },
+    "m": {
+      "title": "Virtual Memory · worked example",
+      "q": "A laptop needs 6 GB for active programs but has only 4 GB available RAM. Explain what virtual memory does and why performance may fall. [4 marks]",
+      "headings": [
+        "Read the problem",
+        "Identify the method",
+        "Work through the steps",
+        "Check the answer"
+      ],
+      "st": [
+        "Identify demand and capacity",
+        "6 GB is needed but only 4 GB of physical RAM is available.",
+        "The OS can use some secondary storage as backing for inactive pages.",
+        "Accessing secondary storage is slower; swapping pages frequently slows the system. [4]"
+      ]
+    },
+    "w": [
+      [
+        "A laptop opens many browser tabs. Explain why virtual memory might be used. [3]",
+        "The total working memory demand may exceed RAM [1]; the OS temporarily stores less-used pages on secondary storage [1] and brings them back when needed [1]."
+      ],
+      [
+        "Explain why adding RAM could reduce use of virtual memory. [3]",
+        "More active data fits in physical RAM [1], reducing page transfers to secondary storage [1] and therefore decreasing slow accesses [1]."
+      ],
+      [
+        "A student says virtual memory makes a laptop faster than RAM. Evaluate the statement. [4]",
+        "Virtual memory extends apparent working capacity [1] and can allow more programs to remain open [1], but its secondary-storage backing is slower than RAM [1], so heavy paging reduces performance [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided practice · 1",
+      "Guided practice · 2",
+      "Guided practice · 3"
+    ],
+    "wVisuals": [
+      {
+        "y11": "virtual",
+        "title": "GUIDED · Virtual Memory",
+        "values": [
+          "Browser tabs",
+          "RAM",
+          "Disk"
+        ],
+        "focus": 0,
+        "target": ""
+      },
+      {
+        "y11": "virtual",
+        "title": "GUIDED · Virtual Memory",
+        "values": [
+          "RAM +",
+          "Less paging",
+          "Faster"
+        ],
+        "focus": 0,
+        "target": ""
+      },
+      {
+        "y11": "virtual",
+        "title": "GUIDED · Virtual Memory",
+        "values": [
+          "RAM",
+          "Storage",
+          "Speed"
+        ],
+        "focus": 0,
+        "target": ""
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read the question",
+          "Compare demand with physical RAM."
+        ],
+        [
+          "Choose a method",
+          "Identify the alternative storage."
+        ],
+        [
+          "Explain or calculate",
+          "Explain moving pages."
+        ],
+        [
+          "Check the marks",
+          "The total working memory demand may exceed RAM [1]; the OS temporarily stores less-used pages on secondary storage [1] and brings them back when needed [1]."
+        ]
+      ],
+      [
+        [
+          "Read the question",
+          "State what more RAM changes."
+        ],
+        [
+          "Choose a method",
+          "Explain fewer swaps."
+        ],
+        [
+          "Explain or calculate",
+          "Link to speed."
+        ],
+        [
+          "Check the marks",
+          "More active data fits in physical RAM [1], reducing page transfers to secondary storage [1] and therefore decreasing slow accesses [1]."
+        ]
+      ],
+      [
+        [
+          "Read the question",
+          "Acknowledge the capacity benefit."
+        ],
+        [
+          "Choose a method",
+          "Compare storage speeds."
+        ],
+        [
+          "Explain or calculate",
+          "Make a balanced judgement."
+        ],
+        [
+          "Check the marks",
+          "Virtual memory extends apparent working capacity [1] and can allow more programs to remain open [1], but its secondary-storage backing is slower than RAM [1], so heavy paging reduces performance [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict whether the memory check reports extra storage is needed.",
+      "code": "neededGB = 6\nfreeRAMGB = 4\nif neededGB > freeRAMGB then\n    print(\"Virtual memory needed\")\nelse\n    print(\"RAM sufficient\")\nendif",
+      "p": [
+        "Predict the message.",
+        "Change freeRAMGB to 8.",
+        "Extend to output the shortage in GB."
+      ],
+      "a": "Initially \"Virtual memory needed\"; with 8 GB it prints \"RAM sufficient\"; shortage is 2 GB initially."
+    },
+    "e": [
+      [
+        "State what type of storage is used to provide virtual memory. [1]\n\nSource: Original OCR J277-style practice question.",
+        "Secondary storage, e.g. SSD/HDD [1]."
+      ],
+      [
+        "Explain two reasons why extensive paging can reduce performance. [4]\n\nSource: Original OCR J277-style practice question.",
+        "Pages transferred between RAM and storage [1], requiring additional input/output operations [1]; secondary storage is slower than RAM [1], so applications wait for required data [1]."
+      ],
+      [
+        "A program needs 5 GB but only 3 GB of free RAM is available. Explain the purpose of virtual memory in this scenario. [3]\n\nSource: Original OCR J277-style practice question.",
+        "Demand exceeds RAM by 2 GB [1]; some pages can be held in secondary storage [1] and restored to RAM when needed [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Virtual memory",
+        "Secondary storage used as backing space for RAM."
+      ],
+      [
+        "Page",
+        "Block of memory moved between physical and secondary storage."
+      ],
+      [
+        "Paging",
+        "Transferring memory pages between RAM and backing storage."
+      ],
+      [
+        "Thrashing",
+        "Severe slowdown caused by excessive page transfers."
+      ]
+    ],
+    "x": [
+      "An algorithm only gives reliable results when its inputs are handled as specified.",
+      true
+    ],
+    "r": [
+      [
+        "Which type of storage loses contents when switched off?",
+        "RAM."
+      ],
+      [
+        "What does volatile mean?",
+        "Contents lost without power."
+      ],
+      [
+        "How many bits make one byte? [1]",
+        "Eight bits [1]."
+      ],
+      [
+        "A machine has 8 GB RAM, 7 GB occupied and needs another 3 GB. What is the shortage?",
+        "2 GB."
+      ]
+    ],
+    "refs": [
+      "L096 · last lesson",
+      "L001–095 · earlier learning",
+      "L099 · prior knowledge",
+      "Earlier learning · challenge"
+    ],
+    "memoryCue": "Virtual memory provides capacity, not the speed of additional RAM.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      null,
+      null,
+      null
+    ],
+    "visualAuditV2": false,
+    "visualAuditV3": false,
+    "priorExam": null
+  }
+}

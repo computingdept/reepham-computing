@@ -1,0 +1,312 @@
+{
+  "101": {
+    "year11": true,
+    "t": "Binary Addition and Shifts",
+    "s": "1.2.4",
+    "vis": "diagram-spec",
+    "highlights": [
+      "Binary Addition and Shifts",
+      "state",
+      "explain",
+      "calculate",
+      "compare"
+    ],
+    "o": [
+      "Recall key facts about binary addition and shifts.",
+      "Work through a new example with correct technical language.",
+      "Apply the method independently and justify your answer."
+    ],
+    "c": [
+      [
+        "Binary addition rules",
+        "0+0=0; 0+1=1; 1+1=10, so write 0 and carry 1 into the next column."
+      ],
+      [
+        "Work right to left",
+        "Line up bits, add each column including any carry, then record the output."
+      ],
+      [
+        "Logical shifts",
+        "A logical left or right shift moves each bit by the stated number of places, introducing zeros at the vacated end."
+      ],
+      [
+        "Overflow and loss",
+        "With fixed eight-bit storage, a carry beyond bit 7 is lost (overflow); bits shifted out are discarded."
+      ]
+    ],
+    "visuals": [
+      {
+        "y11": "addition",
+        "title": "BINARY ADDITION RULES",
+        "values": [
+          "00010110",
+          "00001101"
+        ],
+        "focus": 0,
+        "target": "",
+        "note": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+        "hide": false
+      },
+      {
+        "y11": "addition",
+        "title": "WORK RIGHT TO LEFT",
+        "values": [
+          "00010110",
+          "00001101"
+        ],
+        "focus": 1,
+        "target": "",
+        "note": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+        "hide": false
+      },
+      {
+        "y11": "addition",
+        "title": "LOGICAL SHIFTS",
+        "values": [
+          "00010110",
+          "00001101"
+        ],
+        "focus": 2,
+        "target": "",
+        "note": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+        "hide": false
+      },
+      {
+        "y11": "addition",
+        "title": "OVERFLOW AND LOSS",
+        "values": [
+          "00010110",
+          "00001101"
+        ],
+        "focus": 3,
+        "target": "",
+        "note": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+        "hide": false
+      }
+    ],
+    "idoVisual": {
+      "y11": "addition",
+      "title": "I DO · Binary Addition and Shifts",
+      "values": [
+        "00010110",
+        "00001101"
+      ],
+      "focus": 0,
+      "target": "",
+      "note": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+      "hide": false
+    },
+    "m": {
+      "title": "Binary Addition and Shifts · worked example",
+      "q": "Add the eight-bit values 00010110 and 00001101, showing the carry where needed. [4 marks]",
+      "headings": [
+        "Read the problem",
+        "Identify the method",
+        "Work through the steps",
+        "Check the answer"
+      ],
+      "st": [
+        "Line up eight positions",
+        "Add from the right: 0+1=1; next 1+0=1.",
+        "At the third bit, 1+1=0 carry 1; continue including the carry.",
+        "The eight-bit result is 00100011 (35 denary). [4]"
+      ]
+    },
+    "w": [
+      [
+        "Calculate 00101101 + 00000111 in binary. [4]",
+        "00101101 (45) + 00000111 (7) = 00110100 (52) [4; credit aligned working/carries]."
+      ],
+      [
+        "Perform a logical left shift of 00010101 by one place. [3]",
+        "00101010 [2]; all bits move one position left and 0 enters at the right [1]."
+      ],
+      [
+        "Perform a logical right shift of 10110000 by two places. [3]",
+        "00101100 [2]; two zeros enter on the left [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided practice · 1",
+      "Guided practice · 2",
+      "Guided practice · 3"
+    ],
+    "wVisuals": [
+      {
+        "y11": "addition",
+        "title": "GUIDED · Binary Addition and Shifts",
+        "values": [
+          "00101101",
+          "00000111"
+        ],
+        "focus": 0,
+        "target": ""
+      },
+      {
+        "y11": "addition",
+        "title": "GUIDED · Binary Addition and Shifts",
+        "values": [
+          "00010101"
+        ],
+        "focus": 0,
+        "target": ""
+      },
+      {
+        "y11": "addition",
+        "title": "GUIDED · Binary Addition and Shifts",
+        "values": [
+          "10110000"
+        ],
+        "focus": 0,
+        "target": ""
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read the question",
+          "Align rightmost bits."
+        ],
+        [
+          "Choose a method",
+          "Record every carry."
+        ],
+        [
+          "Explain or calculate",
+          "Check with denary."
+        ],
+        [
+          "Check the marks",
+          "00101101 (45) + 00000111 (7) = 00110100 (52) [4; credit aligned working/carries]."
+        ]
+      ],
+      [
+        [
+          "Read the question",
+          "Move each bit left one position."
+        ],
+        [
+          "Choose a method",
+          "Insert a zero on the right."
+        ],
+        [
+          "Explain or calculate",
+          "Check whether bits were lost."
+        ],
+        [
+          "Check the marks",
+          "00101010 [2]; all bits move one position left and 0 enters at the right [1]."
+        ]
+      ],
+      [
+        [
+          "Read the question",
+          "Shift twice to the right."
+        ],
+        [
+          "Choose a method",
+          "Insert zeros on the left."
+        ],
+        [
+          "Explain or calculate",
+          "Record the final eight bits."
+        ],
+        [
+          "Check the marks",
+          "00101100 [2]; two zeros enter on the left [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Predict the output for multiplying a value by two using arithmetic.",
+      "code": "value = 11\nshifted = value * 2\nprint(shifted)",
+      "p": [
+        "Predict the output.",
+        "Change value to 17.",
+        "Extend to apply the operation twice."
+      ],
+      "a": "22; then 34; applying twice to original 11 gives 44."
+    },
+    "e": [
+      [
+        "Add 00011001 and 00000111 as eight-bit unsigned binary. [3]\n\nSource: Original OCR J277-style practice question.",
+        "00011001 (25) + 00000111 (7) = 00100000 (32) [3]."
+      ],
+      [
+        "Apply a logical left shift of two places to 00001011. [2]\n\nSource: Original OCR J277-style practice question.",
+        "00101100 [2]."
+      ],
+      [
+        "Explain why adding 11111111 to 00000001 causes overflow in an eight-bit register. [3]\n\nSource: Original OCR J277-style practice question.",
+        "The mathematical result is 256 [1], requiring a ninth bit [1]; the carry beyond eight bits cannot be stored [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Carry",
+        "Value passed to the next binary column during addition."
+      ],
+      [
+        "Overflow",
+        "Result exceeds the largest value representable in fixed-width storage."
+      ],
+      [
+        "Logical left shift",
+        "Move bits left and insert zeros on right."
+      ],
+      [
+        "Logical right shift",
+        "Move bits right and insert zeros on left."
+      ]
+    ],
+    "x": [
+      "An algorithm only gives reliable results when its inputs are handled as specified.",
+      true
+    ],
+    "r": [
+      [
+        "Convert binary 00001111 to denary.",
+        "15."
+      ],
+      [
+        "State binary 5 in four bits.",
+        "0101."
+      ],
+      [
+        "How many bits make one byte? [1]",
+        "Eight bits [1]."
+      ],
+      [
+        "What is 11111111 + 00000001 using only eight stored bits?",
+        "00000000, with an overflow carry."
+      ]
+    ],
+    "refs": [
+      "L100 · last lesson",
+      "L001–095 · earlier learning",
+      "L099 · prior knowledge",
+      "Earlier learning · challenge"
+    ],
+    "memoryCue": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      {
+        "y11": "addition",
+        "title": "QUESTION DATA ONLY · COMPLETE THE WORKING",
+        "values": [
+          "00011001",
+          "00000111"
+        ],
+        "hide": true,
+        "required": true,
+        "target": ""
+      },
+      null,
+      null
+    ],
+    "visualAuditV2": false,
+    "visualAuditV3": false,
+    "priorExam": null
+  }
+}
