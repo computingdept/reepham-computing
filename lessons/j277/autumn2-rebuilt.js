@@ -866,7 +866,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
         else if(stage===2){
           highlight=goal<0?[]:arr.map((_,i)=>i).filter(i=>goal>middle?i>middle:i<middle);
         }else highlight=goal<0?[]:[goal];
-        lower=p.unsafe?"UNSORTED · binary search cannot safely discard half":"Binary search requires sorted values";
+        lower=guided?"Check whether the required ordering is present":p.unsafe?"UNSORTED · do not discard halves":"Binary search requires sorted values";
       }else{
         highlight=[Math.min(stage,arr.length-1)];
         lower="Linear search checks elements from index zero";
@@ -893,13 +893,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const cols=family==="truth"?(p.threeInput?4:3):3;
     const rows=family==="truth"?(p.threeInput?9:5):4;
     const ww=family==="truth"?(p.threeInput?122:152):152,x0=(560-ww*cols)/2,cell=family==="truth"?(p.threeInput?27:47):54;
-    const headings=family==="grid"?["ROW","COL 0","COL 1"]:family==="sql"?["ID","NAME","SCORE"]:p.threeInput?["A","B","C","Q"]:["A","B","Q"];
+    const headings=family==="grid"?["ROW","COL 0","COL 1"]:family==="sql"?(guided?["FIELD 1","FIELD 2","FIELD 3"]:["ID","NAME","SCORE"]):p.threeInput?["A","B","C","Q"]:["A","B","Q"];
     for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){
       const x=x0+j*ww,y=74+i*cell,fill=i===0?c.blueP:i===stage+1?c.goldP:i%2?c.greenP:"#f4f7f5";
       body+=box(x,y,ww-6,cell-4,fill,3);
       let v="";
       if(i===0)v=headings[j];
-      else if(family==="sql")v=([["1","Ava","7"],["2","Leo","9"],["3","Mia","6"]][i-1]||[])[j]||"";
+      else if(family==="sql")v=guided?"?":([["1","Ava","7"],["2","Leo","9"],["3","Mia","6"]][i-1]||[])[j]||"";
       else if(family==="grid")v=["row "+(i-1),"["+(i-1)+",0]","["+(i-1)+",1]"][j];
       else{
         const A=p.threeInput?Math.floor((i-1)/4):Math.floor((i-1)/2),B=p.threeInput?Math.floor(((i-1)%4)/2):(i-1)%2,C=p.threeInput?(i-1)%2:0;
@@ -922,10 +922,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     body+=text(309,192,op,18)+arrow(op==="NOT"?390:396,185,442,185)+card(445,150,92,73,guided?"?":"Q",c.goldP);
     lower=op==="NOT"?"NOT reverses one input":op==="OR"?"OR needs at least one input high":"AND requires both inputs high";
   }else if(family==="dice"){
+    if(guided){body+=chart(["1","2","3","4","5","6"],[],126);lower="Possible values within the stated range";}
+    else{
     body+=box(195,88,171,170,c.blueP,18);
     const dots=[[230,124],[333,124],[280,173],[230,219],[333,219]];
     dots.forEach(z=>body+='<circle cx="'+z[0]+'" cy="'+z[1]+'" r="12" fill="'+c.blue+'"/>');
     lower="random(1,6) can give any integer from 1 to 6";
+    }
   }else{
     body+=card(37,123,140,100,name(0,"Input"),c.blueP)+arrow(181,173,227,173)+card(231,123,141,100,name(1,"Process"),c.greenP)+arrow(376,173,416,173)+card(420,123,112,100,name(2,"Result"),c.goldP);
     lower="Follow input → process → output";
