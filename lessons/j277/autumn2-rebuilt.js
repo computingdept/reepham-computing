@@ -670,7 +670,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "061":{family:"test",labels:["Find syntax issue","Locate wrong logic","Correct a condition","Retest boundary"],families:["comparison","trace","branch","test"],rows:[["59","Try again","?"],["60","Pass","?"],["61","Pass","?"]]},
  "062":{family:"cycle",labels:["Set requirements","Implement program","Test outcomes","Refine design"],families:["tree","branch","loop","test"]},
  "063":{family:"string",labels:["Concatenate text","Use substring","Count characters","Index from zero"],values:["COMPUTER"],families:["process","string","string","string"]},
- "064":{family:"branch",labels:["Read candidate","Length >= 6?","Accept length","Request again"],families:["string","branch","validation","comparison"]},
+ "064":{family:"branch",labels:["Read candidate","Length >= 6?","Accept length","Request again"],values:["abc123"],families:["string","branch","validation","comparison"]},
  "065":{family:"array",labels:["Index 0 to 4","Access element","Update element","Keep valid index"],values:["4","7","9","2","6"],families:["array","array","array","trace"]},
  "066":{family:"array",labels:["Start total = 0","Read next array item","Add to total","Compute mean"],values:["2","5","7","1"],families:["array","loop","trace","array"],rows:[["0","0",""],["1","2",""],["2","7",""],["3","14",""],["4","15","15"]]},
  "067":{family:"grid",labels:["Choose row","Choose column","Read value","Update a cell"],families:["grid","grid","grid","trace"]},
@@ -696,7 +696,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "087":{stageValues:[["5","2","9","1"],["1","3","5","7","9"],["6","2","4","1","8"],["8","3","5","1"]],family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",searchTypes:["linear","binary","linear","linear"],families:["search","search","sort","merge"],sortType:"bubble"},
  "088":{family:"gate",labels:["Inputs 0 and 1","AND needs both","OR needs either","NOT reverses input"],families:["gate","gate","gate","gate"],gateStages:["AND","AND","OR","NOT"]},
  "089":{family:"truth",labels:["List 00,01,10,11","AND outputs 0001","OR outputs 0111","NOT reverses one input"],families:["truth","truth","truth","gate"],logicStages:["AND","AND","OR","NOT"],gateStages:["AND","AND","OR","NOT"]},
- "090":{family:"truth",labels:["First AND gate","OR with input C","Compute X then Q","Eight input cases"],families:["gate","gate","gate","truth"],threeInput:true,gateStages:["AND","OR","OR","AND"],logicStages:["AND","AND","OR","AND"]},
+ "090":{family:"truth",labels:["First AND gate","OR with input C","Compute X then Q","Eight input cases"],families:["compound-gate","gate","truth","truth"],modelFamily:"compound-gate",threeInput:true,gateStages:["AND","AND","OR","AND"],logicStages:["AND","AND","OR","AND"]},
 
 
  };
@@ -741,7 +741,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     };
   };
   lesson.visuals=(lesson.visuals||[]).map((spec,i)=>plan.keepOriginalStages?.includes(i)?spec:({...spec,rich:cfg(i,"learning",lesson.c?.[i]?.[1]||"")}));
-  if(lesson.idoVisual&&n!=="090"&&!plan.keepOriginalModel)lesson.idoVisual={...lesson.idoVisual,rich:cfg(0,"model",lesson.m?.q||"")};
+  if(lesson.idoVisual&&!plan.keepOriginalModel)lesson.idoVisual={...lesson.idoVisual,rich:cfg(0,"model",lesson.m?.q||"")};
   if(Array.isArray(lesson.wVisuals))lesson.wVisuals=lesson.wVisuals.map((spec,i)=>{
     const question=lesson.w?.[i]?.[0]||"";
     if(plan.keepOriginalGuided||(n==="090"&&i===1))return spec;
@@ -926,13 +926,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const cols=family==="truth"?(p.threeInput?4:3):3;
     const rows=family==="truth"?(p.threeInput?9:5):4;
     const ww=family==="truth"?(p.threeInput?122:152):152,x0=(560-ww*cols)/2,cell=family==="truth"?(p.threeInput?27:47):54;
-    const headings=family==="grid"?["ROW","COL 0","COL 1"]:family==="sql"?(guided?["FIELD 1","FIELD 2","FIELD 3"]:["ID","NAME","SCORE"]):p.threeInput?["A","B","C","Q"]:["A","B","Q"];
+    const headings=family==="grid"?["ROW","COL 0","COL 1"]:family==="sql"?(guided?["FIELD 1","FIELD 2","FIELD 3"]:["NAME","YEAR","SCORE"]):p.threeInput?["A","B","C","Q"]:["A","B","Q"];
     for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){
       const x=x0+j*ww,y=74+i*cell,fill=i===0?c.blueP:i===stage+1?c.goldP:i%2?c.greenP:"#f4f7f5";
       body+=box(x,y,ww-6,cell-4,fill,3);
       let v="";
       if(i===0)v=headings[j];
-      else if(family==="sql")v=guided?"?":([["1","Ava","7"],["2","Leo","9"],["3","Mia","6"]][i-1]||[])[j]||"";
+      else if(family==="sql")v=guided?"?":([["Ava","10","7"],["Leo","11","9"],["Mia","10","6"]][i-1]||[])[j]||"";
       else if(family==="grid")v=["row "+(i-1),"["+(i-1)+",0]","["+(i-1)+",1]"][j];
       else{
         const A=p.threeInput?Math.floor((i-1)/4):Math.floor((i-1)/2),B=p.threeInput?Math.floor(((i-1)%4)/2):(i-1)%2,C=p.threeInput?(i-1)%2:0;
@@ -942,7 +942,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       }
       body+=text(x+ww/2-3,y+cell*.67,v,rows>6?14:17);
     }
-    lower=family==="grid"?"Select an item using row and column indices":family==="sql"?"SELECT columns · FROM table · WHERE condition":"Show every Boolean input combination";
+    lower=family==="grid"?"Select an item using row and column indices":family==="sql"?"SELECT Name FROM Pupils WHERE Year = 10":"Show every Boolean input combination";
   }else if(family==="gate"){
     const op=(String(p.gate||"AND")).toUpperCase();
     body+=card(22,93,134,72,"A",c.blueP);
