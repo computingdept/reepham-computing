@@ -826,7 +826,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       lower="Magnetic disk: fewer read-head movements";
     }else{
       const n=entries.length,w=n===4?117:156,gap=n===4?17:28;
-      for(let i=0;i<n;i++){const x=13+i*(w+gap);body+=card(x,119,w,114,entries[i],i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
+      for(let i=0;i<n;i++){const x=13+i*(w+gap),shown=mode==="model"&&i>stage?"?":entries[i];body+=card(x,119,w,114,shown,i===stage?c.goldP:[c.blueP,c.greenP,c.goldP,c.roseP][i%4]);if(i<n-1)body+=arrow(x+w+2,176,x+w+gap-4,176);}
       lower=family==="file"?"Open → read/write → close the file":family==="function"?"Pass arguments → execute → use return value":family==="cycle"?"Plan → build → test → improve":"Follow the actual data or decision";
     }
   }else if(family==="loop"){
@@ -859,7 +859,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     for(let j=0;j<3;j++){body+=box(x[j],91,165,48,c.blueP,4)+text(x[j]+82,121,headers[j],15);}
     for(let i=0;i<Math.min(rows.length,4);i++)for(let j=0;j<3;j++){
       body+=box(x[j],141+i*41,165,37,i===stage?c.goldP:i%2?c.greenP:"#f1f7f3",2);
-      const z=guided&&i>=1?"?":String(rows[i][j]??"");
+      const z=(mode==="model"&&i>stage)||(mode!=="model"&&guided&&i>=1)?"?":String(rows[i][j]??"");
       body+=text(x[j]+82,166+i*41,z.slice(0,16),16);
     }
     lower=family==="test"?"Compare expected and actual results":"Record a value only when it changes or prints";
@@ -935,7 +935,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
         const A=p.threeInput?Math.floor((i-1)/4):Math.floor((i-1)/2),B=p.threeInput?Math.floor(((i-1)%4)/2):(i-1)%2,C=p.threeInput?(i-1)%2:0;
         const Q=p.threeInput?((A&&B)||C):(String(p.logic||"AND").includes("OR")?(A||B):(A&&B));
         v=(p.threeInput?[A,B,C,Q]:[A,B,Q])[j];
-        if(guided&&j===cols-1)v="?";
+        if(j===cols-1&&((mode==="model"&&(stage===0||stage===1&&i>2))||(mode!=="model"&&guided)))v="?";
       }
       body+=text(x+ww/2-3,y+cell*.67,v,rows>6?14:17);
     }
@@ -1450,8 +1450,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${examWords(lesson,step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
+  const stageVisuals=lesson.visualAuditV3&&lesson.idoVisual?.rich
+    ?lesson.m.st.map((_,i)=>`<div class="j277-ido-visual-frame" data-ido-step-visual="${i}"${i?" hidden":""}>${diagram({...lesson.idoVisual,rich:{...lesson.idoVisual.rich,focus:i,phase:"model"}})}</div>`).join("")
+    :diagram(lesson.idoVisual||lesson.vis);
   const reference=isCpu
-    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${diagram(lesson.idoVisual||lesson.vis)}<p class="j277-cpu-question">${examWords(lesson,lesson.m.q)}</p>`
+    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${stageVisuals}<p class="j277-cpu-question">${examWords(lesson,lesson.m.q)}</p>`
     :`<h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}`;
   return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
@@ -1596,6 +1599,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  .j277-visual-lesson #you-do .j277-prior-exam h3{font-size:clamp(19px,1.35vw,25px);margin:8px 0;}
 
  .j277-visual-v3 #new-learning .a1-scene svg{max-height:min(42vh,330px);}
+ .j277-visual-v3 .j277-ido-visual-frame[hidden]{display:none!important;}
+ .j277-visual-v3 .j277-ido-visual-frame{width:100%;}
  .j277-visual-v3 .a1-scene.j277-learning-scene{
    width:100%;max-width:min(100%,680px);margin:8px auto;
  }
@@ -1771,13 +1776,14 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
+ const idoSync=lesson.visualAuditV3?'<script>(function(){const root=document.getElementById("i-do");if(!root)return;const steps=[...root.querySelectorAll(".ido-step")],scenes=[...root.querySelectorAll("[data-ido-step-visual]")];if(!steps.length||!scenes.length)return;function sync(){const active=Math.max(0,steps.findIndex(s=>!s.hidden));scenes.forEach((v,i)=>v.hidden=i!==active);}const observer=new MutationObserver(sync);steps.forEach(s=>observer.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\\/script>':"";
  const html=sharedHead(number,lesson.t)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=${["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}</body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=${["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"20261016-j277guided1":"20261014-j277retrievalrefs1"}"></script>${cpuSync}${idoSync}</body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
