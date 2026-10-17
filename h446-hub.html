@@ -92,7 +92,7 @@
 }
 
 /* Year 12 pilot public navigation: staff mode reveals the whole course. */
-body.pilot-year12 .year-switch{display:none}
+body.pilot-year12 .year-switch{display:flex}
 body.pilot-year12 .tabs .tab:not([data-tab="lessons"]){display:none}
 body.pilot-year12 #lessons .note{display:none}
 .pilot-stamp{display:inline-block;background:#e8f3ed;border:1px solid #b2d2bd;border-radius:4px;color:#145337;padding:4px 7px;font-size:12px;font-weight:900}
@@ -140,7 +140,7 @@ body.pilot-year12 #lessons .note{display:none}
     <div class="summary"><h2 id="lessonTitle">Year 12 lessons</h2><span class="count" id="lessonCount"></span></div>
     
     <div id="terms"></div>
-    <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320, with all 140 lesson periods shown. Protected NEA periods and synoptic practice are labelled in their tiles. Year 12 examined content is planned through Summer 1 (001–160); Summer 2 (161–180) is protected for NEA. Lessons 013–016 now follow a sequence-to-iteration coding journey; previously published lessons 016–036 have moved to 017–037. Year 13 links remain unchanged. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
+    <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320, with all 140 lesson periods shown. Year 13 is a curriculum outline under redevelopment, and NEA is covered through brief check-ins during normal lessons until the end of Autumn 2. Year 12 examined content is planned through Summer 1 (001–160); Summer 2 (161–180) is protected for NEA. Lessons 013–016 now follow a sequence-to-iteration coding journey; previously published lessons 016–036 have moved to 017–037. Year 13 links remain unchanged. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
   </section>
 
   <section class="panel" id="booklet"><div class="summary"><h2>Revision booklets</h2><span class="count">Choose an H446 specification point</span></div><div class="cards"><article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types revision booklet</h3><p>One booklet for specification point 1.4.1, bringing together lessons 001–008. Read the explanations and worked examples, or print the whole booklet.</p><a class="action" href="revision/h446/data-types/index.html">Open revision booklet →</a></article><article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming techniques revision booklet</h3><p>Constructs, scope, modularity, parameters and IDE debugging. Points (a), (c), (d), (e), with C# and OCR pseudocode.</p><a class="action" href="revision/h446/programming-techniques/index.html">Open revision booklet →</a></article></div><div class="note">Each booklet brings together the lessons for an H446 specification point. Its matching self-test is in the Revision Hub. Further booklets will be added as they are taught; earlier booklets remain available.</div></section>
@@ -181,7 +181,7 @@ const staffPreview=window.RHSCPilot.isStaff();
 document.body.classList.toggle('pilot-year12',!staffPreview);
 const stamp=document.getElementById('pilotStamp');if(stamp)stamp.hidden=staffPreview;
 const yearTitle=document.querySelector('.heading .sub');if(yearTitle&&!staffPreview)yearTitle.textContent='Year 12 teaching pilot';
-const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=staffPreview&&requestedYear===13?13:12;
+const requestedYear=Number(new URLSearchParams(location.search).get('year'));let year=requestedYear===13?13:12;
 const yearThemes={"10":{"accent":"#39816c","pale":"#edf5f2","border":"#88b4a4","ink":"#245e4c"},"11":{"accent":"#246b55","pale":"#e7f0ec","border":"#73a08f","ink":"#164d3d"},"12":{"accent":"#10513f","pale":"#e1ece7","border":"#5f8e7b","ink":"#0a4234"},"13":{"accent":"#003a31","pale":"#dce8e3","border":"#4f7c6c","ink":"#003a31"}};
 function applyYearTheme(){
   document.body.dataset.year=String(year);
@@ -207,7 +207,7 @@ function openTab(name){
   panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
 }
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{if(!staffPreview)return;year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);history.replaceState(null,'',location.pathname+'?year='+year+'#lessons');yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
 
 /* Provisional FIRST-COVERAGE route for Year 12. Existing published lessons 001–035 are unchanged.
@@ -429,12 +429,12 @@ function renderLessons(){
       holder.append(sec);continue;
     }
     const end=n+term.count-1;
-    if(!staffPreview&&!Array.from({length:term.count},(_,j)=>Boolean(liveMap[n+j])).some(Boolean)){n=end+1;continue;}
+    if(!staffPreview&&year!==13&&!Array.from({length:term.count},(_,j)=>Boolean(liveMap[n+j])).some(Boolean)){n=end+1;continue;}
     sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+(term.note?' · '+term.note:'')+'</span></div>';
     let group=null,groupKey=null,grid=null,detail=null;
     for(let x=n;x<=end;x++){
       const href=liveMap[x];
-      if(!staffPreview&&!href)continue;
+      if(!staffPreview&&year!==13&&!href)continue;
       const specKey=lessonSpecification(x);
       const key=specKey||'planned';
       if(key!==groupKey){
