@@ -1,0 +1,359 @@
+{
+  "048": {
+    "t": "Flowcharts and Algorithm Design",
+    "s": "2.1.2",
+    "vis": "diagram-spec",
+    "highlights": [
+      "flowchart",
+      "terminal",
+      "decision",
+      "process",
+      "input",
+      "output",
+      "branch"
+    ],
+    "o": [
+      "Recognise the purpose of standard OCR J277 flowchart symbols.",
+      "Trace a Yes/No decision for two values.",
+      "Translate a simple flowchart into OCR Exam Reference Language."
+    ],
+    "c": [
+      [
+        "Reading a flowchart",
+        "A flowchart represents an algorithm visually. Follow arrows from Start through each process or decision until End."
+      ],
+      [
+        "Use the right shapes",
+        "Start and End use terminal shapes. Inputs and outputs use parallelograms, processes use rectangles, and decisions use diamonds. Predefined subprograms have their own symbol."
+      ],
+      [
+        "Decisions choose one branch",
+        "A diamond evaluates a condition. True/Yes and False/No lead down alternative routes, so a value follows only the appropriate path."
+      ],
+      [
+        "Correct loops and missing paths",
+        "Follow the algorithm with a test value. If input is invalid, an arrow can return to input/check for another attempt. Each branch should lead to a defined next action or End."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "FOLLOW THE ARROWS",
+        "layout": "flowchart",
+        "boxes": [
+          "START",
+          "Condition?",
+          "Action"
+        ],
+        "foot": "One path follows each decision"
+      },
+      {
+        "title": "STANDARD SHAPES",
+        "layout": "flowchart",
+        "boxes": [
+          "Terminal",
+          "Decision",
+          "Process"
+        ],
+        "foot": "Terminal · parallelogram · rectangle · diamond"
+      },
+      {
+        "title": "BRANCH WHEN A CONDITION IS TRUE",
+        "layout": "flowchart",
+        "boxes": [
+          "Start",
+          "mark >= 5?",
+          "Pass"
+        ],
+        "foot": "Else branch gives Try again"
+      },
+      {
+        "title": "VALIDATION CAN LOOP BACK",
+        "layout": "flowchart",
+        "boxes": [
+          "Input",
+          "Valid choice?",
+          "Continue"
+        ],
+        "foot": "Invalid input returns for rechecking"
+      }
+    ],
+    "idoVisual": {
+      "title": "SCORE FLOWCHART · TRUE OR FALSE",
+      "layout": "flowchart",
+      "boxes": [
+        "START",
+        "mark >= 5?",
+        "Print Pass"
+      ],
+      "foot": "No route prints Try again"
+    },
+    "m": {
+      "title": "Trace two branches",
+      "q": "A flowchart checks if a mark is at least 5. If true it prints 'Pass'; otherwise it prints 'Try again'. Explain which branch is followed for 7 and 3. [4 marks]",
+      "headings": [
+        "Read the test",
+        "Trace mark 7",
+        "Trace mark 3",
+        "Check four points"
+      ],
+      "st": [
+        "The diamond checks mark >= 5. Only one branch is followed per test.",
+        "7 >= 5 is true [1], so the Yes branch prints Pass [1].",
+        "3 >= 5 is false [1], so the No branch prints Try again [1].",
+        "Check both comparisons and the different outputs; avoid running both branches for one input."
+      ]
+    },
+    "w": [
+      [
+        "A flowchart checks whether a number is greater than 10. Explain the route and output for 12 and 8. [4 marks]",
+        "12 > 10 is true [1], follows Yes and prints High [1]. 8 > 10 is false [1], follows No and prints Low [1]."
+      ],
+      [
+        "A lunch-order flowchart repeats a question after an invalid choice. Explain why an arrow loops back to the input. [4 marks]",
+        "Invalid choice follows the No route [1] and causes another input request [1]. The return arrow rechecks the new choice [1] until it is valid [1]."
+      ],
+      [
+        "A flowchart uses a rectangle 'total = a + b' then a parallelogram 'Display total'. Explain both symbols. [4 marks]",
+        "Rectangle represents processing [1] calculating and storing a sum [1]. Parallelogram represents output [1], displaying the calculated total [1]."
+      ]
+    ],
+    "wTitles": [
+      "Compare 12 and 8",
+      "Validation loop",
+      "Processing versus output"
+    ],
+    "wVisuals": [
+      {
+        "title": "GREATER THAN TEN?",
+        "layout": "flowchart",
+        "boxes": [
+          "START",
+          "number > 10?",
+          "High"
+        ],
+        "foot": "Other path prints Low"
+      },
+      {
+        "title": "INVALID INPUT LOOPS",
+        "layout": "flowchart",
+        "boxes": [
+          "Input",
+          "Choice valid?",
+          "Continue"
+        ],
+        "foot": "No means try again"
+      },
+      {
+        "title": "SYMBOL PURPOSE",
+        "layout": "flowchart",
+        "boxes": [
+          "Input",
+          "total = a + b",
+          "Display"
+        ],
+        "foot": "Rectangle calculates; parallelogram displays"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Test the condition separately for each number."
+        ],
+        [
+          "Step 1 · 12",
+          "12 > 10 is true, follow Yes and print High [2]."
+        ],
+        [
+          "Step 2 · 8",
+          "8 > 10 is false, follow No and print Low [2]."
+        ],
+        [
+          "Check the marks",
+          "12 > 10: Yes, High [2]. 8 > 10: No, Low [2]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Look for the invalid-input branch."
+        ],
+        [
+          "Step 1 · identify",
+          "No branch requests another value [2]."
+        ],
+        [
+          "Step 2 · explain",
+          "Return arrow repeats checking until valid [2]."
+        ],
+        [
+          "Check the marks",
+          "Invalid follows No [1], retries [1], loops back [1], tests a new value [1]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Match each shape to its job."
+        ],
+        [
+          "Step 1 · process",
+          "Rectangle performs a calculation and assignment [2]."
+        ],
+        [
+          "Step 2 · output",
+          "Parallelogram outputs the calculated value [2]."
+        ],
+        [
+          "Check the marks",
+          "Process rectangle [1] calculates total [1]; output parallelogram [1] displays it [1]."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Translate a simple Yes/No flowchart to OCR ERL using selection.",
+      "code": "age = 18\nif age >= 16 then\n    print(\"Eligible\")\nelse\n    print(\"Not eligible\")\nendif",
+      "p": [
+        "Predict output for age 18.",
+        "Change age to 14 and predict.",
+        "Change the test to age >= 21, then predict for 18."
+      ],
+      "a": "Age 18 at threshold 16 prints Eligible. Age 14 prints Not eligible.\n\nAfter changing condition:\nage = 18\nif age >= 21 then\n    print(\"Eligible\")\nelse\n    print(\"Not eligible\")\nendif\n\nOutput: Not eligible."
+    },
+    "e": [
+      [
+        "State which flowchart shape represents a decision. [1 mark]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "A diamond [1]."
+      ],
+      [
+        "A flowchart checks if a customer is at least 16 years old before printing Eligible. Explain what happens for 18 and 14. [4 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "18 >= 16 is true [1] so Eligible prints [1]. 14 >= 16 is false [1], so the not-eligible alternative prints [1]."
+      ],
+      [
+        "Describe the purposes of terminal, input/output, process and decision symbols in flowcharts and the use of arrows. [6 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "Terminal identifies start/end [1]; parallelogram input/output [1]; rectangle performs process/calculation [1]; diamond checks condition [1]; it directs to alternative Yes/No branches [1]; arrows show sequence/control flow [1]."
+      ]
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "AGE DECISION FLOWCHART",
+        "layout": "flowchart",
+        "boxes": [
+          "Start",
+          "age >= 16?",
+          "Eligible"
+        ],
+        "foot": "False goes to Not eligible"
+      },
+      {
+        "title": "IDENTIFY SYMBOLS",
+        "layout": "flowchart",
+        "boxes": [
+          "START",
+          "Condition?",
+          "Action"
+        ],
+        "foot": "Give the job of each shape"
+      }
+    ],
+    "v": [
+      [
+        "Flowchart",
+        "Diagram of algorithm steps and control flow."
+      ],
+      [
+        "Terminal",
+        "Start or End symbol."
+      ],
+      [
+        "Decision",
+        "Diamond evaluating a condition."
+      ],
+      [
+        "Process",
+        "Rectangle for a calculation or instruction."
+      ],
+      [
+        "Input/output",
+        "Parallelogram for accepting/displaying data."
+      ],
+      [
+        "Arrow",
+        "Indicates the next stage of flow."
+      ],
+      [
+        "Sub-program",
+        "Named procedure represented by a predefined-process symbol."
+      ]
+    ],
+    "x": [
+      "A flowchart's decision diamond can direct execution down one of two branches.",
+      true
+    ],
+    "r": [
+      [
+        "Define processing within an algorithm. [2 marks]",
+        "Operations/calculations performed on inputs [1] to obtain results [1]."
+      ],
+      [
+        "State what an algorithm is. [2 marks]",
+        "A set/sequence of clear instructions [1] for solving a problem [1]."
+      ],
+      [
+        "Explain why source-code files need lossless compression. [2 marks]",
+        "Lossless keeps all original data [1], so every character of code can be reconstructed exactly [1]."
+      ],
+      [
+        "A café calculates the cost of two drinks then adds a £1 service charge. Write FOUR logical steps for the algorithm. [4 marks]",
+        "Input price of drink 1 [1]; input drink 2 price [1]; total = price1 + price2 + 1 [1]; output total [1]."
+      ]
+    ],
+    "refs": [
+      "L047 · last lesson",
+      "L046 · earlier learning",
+      "L010 · Autumn 1 retrieval",
+      "L046 · high challenge"
+    ],
+    "retrievalVisuals": [
+      {
+        "title": "INPUT → PROCESS → OUTPUT",
+        "layout": "ipo",
+        "boxes": [
+          "Supplied data",
+          "Calculation",
+          "Result"
+        ],
+        "foot": "Each stage has a purpose"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · LOSSLESS",
+        "layout": "compare",
+        "boxes": [
+          "Lossy",
+          "Lossless"
+        ],
+        "foot": "Recover code exactly"
+      },
+      null
+    ],
+    "visualAuditV2": true,
+    "memoryCue": "Parallelogram = input/output; rectangle = process; diamond = decision; terminal = Start/End; arrows show flow.",
+    "priorExam": {
+      "from": "047",
+      "q": "A streaming service calculates subscription cost from months purchased and a price per month. Describe the IPO stages. [4 marks]",
+      "a": "Inputs are number of months [1] and monthly price [1]. Processing multiplies them [1]. Output displays the cost [1].",
+      "visual": {
+        "title": "STREAMING SUBSCRIPTION",
+        "layout": "ipo",
+        "boxes": [
+          "Months + rate",
+          "Multiply",
+          "Price"
+        ],
+        "foot": "Data used to compute a total"
+      }
+    }
+  }
+}
