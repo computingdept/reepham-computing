@@ -1,0 +1,1107 @@
+[
+  {
+    "n": 132,
+    "facts": [
+      [
+        "Synoptic retrieval",
+        "Recall previously learned Paper 1 and Paper 2 material in mixed order."
+      ],
+      [
+        "Choose the method",
+        "Decide whether a task needs an explanation, calculation, trace or evaluation."
+      ],
+      [
+        "Link systems and coding",
+        "Variables, memory and data representation affect the way programs execute."
+      ],
+      [
+        "Identify gaps",
+        "Use wrong answers to choose the next targeted practice rather than repeat every topic."
+      ]
+    ],
+    "ido": {
+      "q": "A monochrome 100 × 50 bitmap uses 1 bit/pixel. Calculate its uncompressed file size in bytes.",
+      "steps": [
+        "Compute pixels: 100×50=5000.",
+        "Multiply by one bit per pixel: 5000 bits.",
+        "Convert 5000 ÷ 8=625 bytes.",
+        "State assumptions: ignoring metadata and compression."
+      ]
+    },
+    "wedo": {
+      "q": "A mono sound clip lasts 5 seconds at 8000 samples/s and 8 bits/sample. Find bytes.",
+      "steps": [
+        "Compute 8000×5 samples.",
+        "Multiply by 8 bits/sample.",
+        "Divide bits by eight.",
+        "40,000 bytes."
+      ]
+    },
+    "code": {
+      "source": "bits = 2400\nbytes = bits DIV 8\nprint(bytes)",
+      "predict": "Predict converted size.",
+      "change": "Change bits to 4000.",
+      "extend": "Extend to output leftover bits for a non-multiple of eight.",
+      "answer": "300 bytes; 500 bytes; remainder bits MOD 8."
+    },
+    "exam": [
+      {
+        "q": "Calculate the denary value of unsigned binary 10101010.",
+        "answer": "128+32+8+2 = 170.",
+        "marks": 3
+      },
+      {
+        "q": "Explain why binary search requires a sorted list.",
+        "answer": "Midpoint comparisons only allow safe elimination of half the list when values are ordered.",
+        "marks": 3
+      },
+      {
+        "q": "Explain one advantage and one limitation of virtual memory.",
+        "answer": "Lets the OS accommodate memory demand beyond physical RAM; uses slower secondary storage, so paging can reduce performance.",
+        "marks": 4
+      }
+    ],
+    "visual": "worked formula mats for image/sound plus retrieval knowledge graph",
+    "stage": "text-draft"
+  },
+  {
+    "n": 133,
+    "facts": [
+      [
+        "LAN",
+        "Covers a small geographical area such as one building, usually under a single organisation."
+      ],
+      [
+        "WAN",
+        "Connects networks over wider geographical areas, often via third-party infrastructure."
+      ],
+      [
+        "Client-server",
+        "Central servers provide resources/services for client devices."
+      ],
+      [
+        "Peer-to-peer",
+        "Devices share resources directly without a dedicated central server for those resources."
+      ]
+    ],
+    "ido": {
+      "q": "A company has two offices in different cities connected so staff share files. Identify network types.",
+      "steps": [
+        "Each office can use its own LAN.",
+        "A WAN connects geographically separate LANs.",
+        "A server can centrally control shared files and access.",
+        "Explain why peer-to-peer may be less suitable for many managed users."
+      ]
+    },
+    "wedo": {
+      "q": "Compare a five-computer home network with a national retailer's network.",
+      "steps": [
+        "Identify small geographic home coverage.",
+        "Explain larger inter-site scope for retailer.",
+        "Compare likely LAN and WAN categories.",
+        "Home is LAN; retailer uses LANs connected by WAN."
+      ]
+    },
+    "code": {
+      "source": "distance = 200\nif distance > 100 then\n    print(\"Wide area\")\nelse\n    print(\"Local area\")\nendif",
+      "predict": "Predict classification.",
+      "change": "Change distance to 20.",
+      "extend": "Explain why geographical distance alone is an oversimplification.",
+      "answer": "Wide area; Local area; LAN/WAN also depend on network ownership and topology."
+    },
+    "exam": [
+      {
+        "q": "Explain one difference between LAN and WAN.",
+        "answer": "LAN covers smaller/local area; WAN connects over wide geographical areas.",
+        "marks": 2
+      },
+      {
+        "q": "Give one advantage of client-server networking.",
+        "answer": "Centralised user account, access or resource management.",
+        "marks": 2
+      },
+      {
+        "q": "Explain one drawback of peer-to-peer for a large school.",
+        "answer": "Harder to centrally manage permissions, security or backups across many devices.",
+        "marks": 3
+      }
+    ],
+    "visual": "two-building LAN/WAN route and client-server vs peer-to-peer topology",
+    "stage": "text-draft"
+  },
+  {
+    "n": 134,
+    "facts": [
+      [
+        "NIC",
+        "Provides a device's connection to a network."
+      ],
+      [
+        "Switch",
+        "Forwards frames between devices within a LAN using MAC address information."
+      ],
+      [
+        "Router",
+        "Connects networks and forwards packets using IP address/routing information."
+      ],
+      [
+        "Star and mesh",
+        "Star connects devices via a central point; mesh offers multiple potential paths between nodes."
+      ]
+    ],
+    "ido": {
+      "q": "Explain how data travels from a classroom PC to a server on another network.",
+      "steps": [
+        "The PC connects via its NIC.",
+        "A switch forwards traffic inside the LAN.",
+        "A router forwards the packet to the other network.",
+        "The destination network delivers data to the server."
+      ]
+    },
+    "wedo": {
+      "q": "Compare star and mesh topology after one connection fails.",
+      "steps": [
+        "A star's peripheral link failure isolates the affected device.",
+        "If the central switch fails, many devices can lose connectivity.",
+        "Mesh may have alternative routes.",
+        "Explain the trade-off: mesh uses more connections and costs more."
+      ]
+    },
+    "code": {
+      "source": "devices = 5\nconnections = devices * (devices - 1) DIV 2\nprint(connections)",
+      "predict": "Predict full-mesh links.",
+      "change": "Change devices to 4.",
+      "extend": "Explain why a star usually needs fewer physical links.",
+      "answer": "10; 6; five-node star normally has four peripheral links to central switch."
+    },
+    "exam": [
+      {
+        "q": "State what a switch does in a LAN.",
+        "answer": "Forwards frames to the appropriate device/port using learned MAC address information.",
+        "marks": 2
+      },
+      {
+        "q": "Give the purpose of a router.",
+        "answer": "Connects separate networks and forwards packets between them using IP routing.",
+        "marks": 2
+      },
+      {
+        "q": "Calculate full-mesh connections for four nodes.",
+        "answer": "4×3÷2=6 connections.",
+        "marks": 2
+      }
+    ],
+    "visual": "labeled switches, routers, NICs plus accurate star/mesh connections",
+    "stage": "text-draft"
+  },
+  {
+    "n": 135,
+    "facts": [
+      [
+        "IP address",
+        "Identifies devices/interfaces for routing across IP networks."
+      ],
+      [
+        "MAC address",
+        "Identifies a network interface at the data-link level for local communication."
+      ],
+      [
+        "DNS",
+        "Resolves a domain name to an IP address."
+      ],
+      [
+        "Protocols and layers",
+        "Agreed rules such as HTTP(S), TCP/IP and SMTP support interoperable communication."
+      ]
+    ],
+    "ido": {
+      "q": "A pupil enters a website domain name into a browser. Explain DNS and packet delivery.",
+      "steps": [
+        "The browser needs the server's IP address.",
+        "DNS provides the mapping from domain name to IP.",
+        "Packets can be routed to the destination across networks.",
+        "The browser and server use suitable protocols, e.g. HTTPS for encrypted web transfer."
+      ]
+    },
+    "wedo": {
+      "q": "Explain how a school laptop sends an email.",
+      "steps": [
+        "Identify SMTP as a mail-sending protocol.",
+        "Describe addressing and sending through network services.",
+        "Explain layered protocols divide communication tasks.",
+        "Avoid confusing SMTP with IMAP/POP reception."
+      ]
+    },
+    "code": {
+      "source": "protocol = \"HTTPS\"\nif protocol == \"HTTPS\" then\n    print(\"Encrypted web connection\")\nendif",
+      "predict": "Predict output.",
+      "change": "Change protocol to HTTP.",
+      "extend": "Extend with a comparison for SMTP.",
+      "answer": "First displays message; HTTP prints nothing; SMTP branch could print 'Mail sending'."
+    },
+    "exam": [
+      {
+        "q": "State the purpose of DNS.",
+        "answer": "Resolves domain names to IP addresses.",
+        "marks": 2
+      },
+      {
+        "q": "Distinguish IP and MAC addresses.",
+        "answer": "IP used for logical addressing/routing across networks; MAC identifies a network interface for local data-link forwarding.",
+        "marks": 4
+      },
+      {
+        "q": "Name a suitable protocol for sending email.",
+        "answer": "SMTP.",
+        "marks": 1
+      }
+    ],
+    "visual": "layered communication journey: domain→DNS→IP packets→HTTPS",
+    "stage": "text-draft"
+  },
+  {
+    "n": 136,
+    "facts": [
+      [
+        "Bandwidth",
+        "The available data transfer capacity of a connection over time."
+      ],
+      [
+        "Latency",
+        "Delay before data begins or a response is received."
+      ],
+      [
+        "Wired and wireless",
+        "Wired links tend to be less affected by wireless interference; wireless provides mobility."
+      ],
+      [
+        "Performance factors",
+        "Traffic, distance, medium, devices, interference and service contention affect observed speed."
+      ]
+    ],
+    "ido": {
+      "q": "A 24 Mb file travels at a constant 8 Mb/s. Calculate ideal transfer time.",
+      "steps": [
+        "Identify units: both are megabits.",
+        "Use time = file size ÷ transfer rate.",
+        "Compute 24 ÷ 8 = 3 seconds.",
+        "Explain this ideal figure excludes latency/overhead."
+      ]
+    },
+    "wedo": {
+      "q": "A 60 Mb file travels at 12 Mb/s. Calculate ideal time.",
+      "steps": [
+        "Keep matching Mb units.",
+        "Divide 60 by 12.",
+        "Record answer with seconds.",
+        "5 seconds."
+      ]
+    },
+    "code": {
+      "source": "sizeMb = 48\nrateMbps = 12\ntimeSeconds = sizeMb DIV rateMbps\nprint(timeSeconds)",
+      "predict": "Predict transfer time.",
+      "change": "Change rateMbps to 8.",
+      "extend": "Explain why actual time might be longer.",
+      "answer": "4 s; 6 s; protocol overhead, latency or congestion."
+    },
+    "exam": [
+      {
+        "q": "Explain the difference between bandwidth and latency.",
+        "answer": "Bandwidth is data capacity per unit time; latency is delay before response/transfer.",
+        "marks": 2
+      },
+      {
+        "q": "Calculate time for a 40 Mb file over 10 Mb/s ideal link.",
+        "answer": "40 ÷ 10 = 4 seconds.",
+        "marks": 2
+      },
+      {
+        "q": "Give two factors reducing Wi-Fi performance.",
+        "answer": "Interference, weak signal/distance, number of users or obstacles.",
+        "marks": 2
+      }
+    ],
+    "visual": "large-unit transfer timeline with separate bandwidth/latency annotations",
+    "stage": "text-draft"
+  },
+  {
+    "n": 137,
+    "facts": [
+      [
+        "Malware",
+        "Malicious software such as ransomware, spyware or viruses."
+      ],
+      [
+        "Social engineering",
+        "Manipulating people into revealing information or bypassing safeguards."
+      ],
+      [
+        "Denial of service",
+        "Overwhelms a service to degrade or prevent access."
+      ],
+      [
+        "Unauthorised access",
+        "Guessing credentials or exploiting flaws may expose or change protected information."
+      ]
+    ],
+    "ido": {
+      "q": "A staff member receives a message asking for their password through an unfamiliar link. Identify the risk and response.",
+      "steps": [
+        "Classify the attempt as phishing/social engineering.",
+        "Explain that the link could harvest credentials.",
+        "Do not enter details; verify independently via official channels.",
+        "Report to school IT and follow account-security procedures."
+      ]
+    },
+    "wedo": {
+      "q": "An online service receives huge volumes of requests and slows down. Diagnose.",
+      "steps": [
+        "Identify symptoms of service overload.",
+        "Explain a denial-of-service possibility.",
+        "Give relevant mitigation: filtering/rate limits and resilience.",
+        "Distinguish attack evidence from a normal traffic spike."
+      ]
+    },
+    "code": {
+      "source": "attempts = 4\nif attempts > 3 then\n    print(\"Alert\")\nendif",
+      "predict": "Predict when an alert appears.",
+      "change": "Change attempts to 3.",
+      "extend": "Extend to lock an account after three failed attempts.",
+      "answer": "Alert; no output for 3; use attempts >= 3."
+    },
+    "exam": [
+      {
+        "q": "Give the meaning of phishing.",
+        "answer": "Deceptive communication designed to trick a user into disclosing data or taking unsafe actions.",
+        "marks": 2
+      },
+      {
+        "q": "Explain how ransomware can harm a school.",
+        "answer": "Malware may encrypt/deny access to files, disrupt services and cause recovery costs.",
+        "marks": 3
+      },
+      {
+        "q": "Name one precaution against social engineering.",
+        "answer": "Staff training, verifying requests independently or multifactor authentication.",
+        "marks": 2
+      }
+    ],
+    "visual": "attack decision-tree with scenario evidence and risk/mitigation arrows",
+    "stage": "text-draft"
+  },
+  {
+    "n": 138,
+    "facts": [
+      [
+        "Firewall",
+        "Filters network traffic according to predefined rules."
+      ],
+      [
+        "Encryption",
+        "Makes data unreadable without the appropriate key."
+      ],
+      [
+        "Authentication",
+        "Confirms identity; MFA uses multiple factors."
+      ],
+      [
+        "Updates and backups",
+        "Patching reduces exploitable vulnerabilities; recoverable backups reduce loss after incidents."
+      ]
+    ],
+    "ido": {
+      "q": "A school wants remote access for staff while protecting student data. Recommend layered controls.",
+      "steps": [
+        "Require authenticated accounts and MFA.",
+        "Use encrypted connections to protect data in transit.",
+        "Filter unnecessary traffic using appropriate firewall policies.",
+        "Apply updates and maintain tested backups; explain different risk each control addresses."
+      ]
+    },
+    "wedo": {
+      "q": "A company uses only passwords, with no MFA. Explain an improvement.",
+      "steps": [
+        "Passwords may be guessed or stolen.",
+        "Add a second independent authentication factor.",
+        "Explain it reduces success of stolen-password login.",
+        "Require user training for phishing-resistant practice."
+      ]
+    },
+    "code": {
+      "source": "authenticated = true\nsecondFactor = false\nif authenticated AND secondFactor then\n    print(\"Allow\")\nelse\n    print(\"Deny\")\nendif",
+      "predict": "Predict the decision.",
+      "change": "Change secondFactor to true.",
+      "extend": "Explain why both checks are combined by AND.",
+      "answer": "Deny; Allow; both conditions must be true."
+    },
+    "exam": [
+      {
+        "q": "Explain why encryption protects intercepted information.",
+        "answer": "The interceptor sees ciphertext; without the relevant key it is not readily readable.",
+        "marks": 3
+      },
+      {
+        "q": "State one role of a firewall.",
+        "answer": "Allow or block traffic according to filtering rules.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why software updates can improve security.",
+        "answer": "Fix known vulnerabilities that might otherwise be exploited.",
+        "marks": 2
+      }
+    ],
+    "visual": "layered defence with identity, encrypted channel and firewall boundaries",
+    "stage": "text-draft"
+  },
+  {
+    "n": 139,
+    "facts": [
+      [
+        "User interface",
+        "CLI uses typed commands; GUI uses graphics and controls."
+      ],
+      [
+        "Memory management",
+        "OS allocates and manages memory for active processes."
+      ],
+      [
+        "Multitasking",
+        "OS schedules CPU time among tasks/processes."
+      ],
+      [
+        "File and peripheral management",
+        "OS organises files and controls device access."
+      ]
+    ],
+    "ido": {
+      "q": "A laptop plays music while a document is edited. Explain three operating-system responsibilities.",
+      "steps": [
+        "Allocate CPU processing time to both programs.",
+        "Allocate memory for active processes.",
+        "Manage access to audio hardware and saved document files.",
+        "Describe how scheduling gives an impression of simultaneous progress."
+      ]
+    },
+    "wedo": {
+      "q": "Compare use of a CLI and GUI to manage school computers.",
+      "steps": [
+        "CLI uses typed instructions and can support scripting.",
+        "GUI uses icons/windows that are easier for many users.",
+        "Choose one suitable example.",
+        "Both allow users to interact with OS services."
+      ]
+    },
+    "code": {
+      "source": "memoryFree = 600\nmemoryNeeded = 400\nif memoryFree >= memoryNeeded then\n    print(\"Run program\")\nendif",
+      "predict": "Predict the result.",
+      "change": "Change memoryNeeded to 750.",
+      "extend": "Explain how this relates to memory management.",
+      "answer": "Run program; no output; OS manages whether resources can be allocated."
+    },
+    "exam": [
+      {
+        "q": "Name two operating-system functions.",
+        "answer": "Memory management, process scheduling, file management, user interface or peripherals (any two).",
+        "marks": 2
+      },
+      {
+        "q": "Explain process scheduling in multitasking.",
+        "answer": "The OS allocates CPU time to processes so multiple programs can make progress.",
+        "marks": 3
+      },
+      {
+        "q": "Give one benefit of GUI over CLI.",
+        "answer": "Many users find labelled visual controls easier to learn/use.",
+        "marks": 2
+      }
+    ],
+    "visual": "OS at centre with process, memory, file, peripheral spokes and resource table",
+    "stage": "text-draft"
+  },
+  {
+    "n": 140,
+    "facts": [
+      [
+        "Utility software",
+        "Carries out system maintenance or security tasks alongside the operating system."
+      ],
+      [
+        "Encryption utility",
+        "Protects stored data by transforming it into ciphertext."
+      ],
+      [
+        "Compression utility",
+        "Reduces file sizes for storage or transmission."
+      ],
+      [
+        "Defragmentation",
+        "Reorganises file fragments on spinning magnetic disks; not normally beneficial for SSDs."
+      ]
+    ],
+    "ido": {
+      "q": "A school has a slow magnetic HDD with heavily fragmented files. Explain defragmentation.",
+      "steps": [
+        "Explain file fragments may be spread across disk positions.",
+        "Defragmentation rearranges related blocks contiguously.",
+        "This can reduce mechanical seek movement.",
+        "Avoid recommending it as a routine performance fix for SSDs."
+      ]
+    },
+    "wedo": {
+      "q": "A teacher must email a folder of large documents. Select a utility.",
+      "steps": [
+        "Identify large files.",
+        "Choose file compression.",
+        "Explain fewer bytes may need transferring.",
+        "Note lossless methods when exact files are required."
+      ]
+    },
+    "code": {
+      "source": "originalKB = 500\ncompressedKB = 300\nsavedKB = originalKB - compressedKB\nprint(savedKB)",
+      "predict": "Predict space saved.",
+      "change": "Change compressedKB to 250.",
+      "extend": "Extend to calculate percentage saved.",
+      "answer": "200 KB; 250 KB; original 40% saved (200/500*100)."
+    },
+    "exam": [
+      {
+        "q": "State a purpose of encryption utility software.",
+        "answer": "Converts readable data into ciphertext to restrict unauthorised reading.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why defragmentation can improve HDD access.",
+        "answer": "It places related fragments closer together, reducing mechanical seek time.",
+        "marks": 3
+      },
+      {
+        "q": "Explain why lossless compression matters for source code.",
+        "answer": "Original bytes must be recovered exactly; lossy removal could corrupt instructions.",
+        "marks": 3
+      }
+    ],
+    "visual": "magnetic disk blocks before/after defragmentation plus SSD caution",
+    "stage": "text-draft"
+  },
+  {
+    "n": 141,
+    "facts": [
+      [
+        "Ethical impacts",
+        "Consider fairness, privacy and responsible uses of collected data."
+      ],
+      [
+        "Cultural impacts",
+        "Digital technology changes communication, access to information and how groups participate."
+      ],
+      [
+        "Environmental impacts",
+        "Device manufacture, energy usage and electronic waste all have costs."
+      ],
+      [
+        "Stakeholders",
+        "A balanced evaluation considers benefits, harms and who experiences each effect."
+      ]
+    ],
+    "ido": {
+      "q": "Evaluate a school app that tracks pupil location all day. Give a balanced response.",
+      "steps": [
+        "Benefit: can support safety or locating missing equipment if appropriate.",
+        "Risk: constant tracking may intrude on privacy.",
+        "Identify need for proportionality, consent/legal basis and secure access.",
+        "Give a justified judgement about limited, transparent use."
+      ]
+    },
+    "wedo": {
+      "q": "Discuss replacing paper letters with a school app.",
+      "steps": [
+        "Benefit: fast delivery and reduced printing.",
+        "Risk: digital exclusion for families without reliable access.",
+        "Suggest an accessible alternative.",
+        "Provide a balanced conclusion."
+      ]
+    },
+    "code": {
+      "source": "hasAccess = false\nif hasAccess then\n    print(\"Send app message\")\nelse\n    print(\"Provide paper copy\")\nendif",
+      "predict": "Predict the output.",
+      "change": "Change hasAccess to true.",
+      "extend": "Extend with a third alternative: phone contact.",
+      "answer": "Provide paper copy; Send app message; additional route for inaccessible formats."
+    },
+    "exam": [
+      {
+        "q": "Explain one environmental disadvantage of frequent device replacement.",
+        "answer": "Creates electronic waste and uses energy/resources in manufacture.",
+        "marks": 3
+      },
+      {
+        "q": "Give an ethical concern about large-scale personal-data collection.",
+        "answer": "Privacy, informed use/consent or biased profiling, with contextual explanation.",
+        "marks": 3
+      },
+      {
+        "q": "Explain one benefit and one disadvantage of online-only school communication.",
+        "answer": "Faster cheaper access for connected households; excludes families without dependable devices/internet.",
+        "marks": 4
+      }
+    ],
+    "visual": "stakeholder impact matrix of positives, risks and mitigations",
+    "stage": "text-draft"
+  },
+  {
+    "n": 142,
+    "facts": [
+      [
+        "Data protection",
+        "Personal data must be handled lawfully, fairly and securely under applicable UK data-protection rules."
+      ],
+      [
+        "Computer Misuse Act",
+        "Unauthorised access and certain unauthorised acts involving computer systems are offences."
+      ],
+      [
+        "Copyright",
+        "Protects creators' original works against unauthorised copying and distribution, subject to exceptions/licences."
+      ],
+      [
+        "Licensing and scenario",
+        "Decisions must consider permissions, access rights and purpose rather than treating all digital copying as legal."
+      ]
+    ],
+    "ido": {
+      "q": "A student copies a paid program onto every school laptop without permission. Identify the legal issue.",
+      "steps": [
+        "Identify software as copyright-protected work.",
+        "Explain licence terms may not permit copying/installation on additional machines.",
+        "Describe need for correct licences or permission.",
+        "Do not confuse copyright infringement with automatically being a Computer Misuse Act offence."
+      ]
+    },
+    "wedo": {
+      "q": "An employee accesses another person's account without permission. Identify law and rationale.",
+      "steps": [
+        "Check access was not authorised.",
+        "Name Computer Misuse Act 1990.",
+        "Explain unauthorised access is the relevant prohibited conduct.",
+        "State that knowing the password alone does not supply permission."
+      ]
+    },
+    "code": {
+      "source": "authorised = false\nif authorised then\n    print(\"Access granted\")\nelse\n    print(\"Access denied\")\nendif",
+      "predict": "Predict the output.",
+      "change": "Change authorised to true.",
+      "extend": "Explain why credentials alone may not imply permission.",
+      "answer": "Access denied; Access granted; legal authorisation and policy still matter."
+    },
+    "exam": [
+      {
+        "q": "Name the UK law relevant to unauthorised access to a computer.",
+        "answer": "Computer Misuse Act 1990.",
+        "marks": 1
+      },
+      {
+        "q": "Give one legal consideration when installing licensed software on many computers.",
+        "answer": "Whether the licence permits the number and type of installations.",
+        "marks": 2
+      },
+      {
+        "q": "Explain one principle of data protection for school pupil records.",
+        "answer": "Collect/use for lawful specified purpose, minimise data and keep appropriately secure.",
+        "marks": 3
+      }
+    ],
+    "visual": "scenario → governing law decision map, distinguish three legal domains",
+    "stage": "text-draft"
+  },
+  {
+    "n": 143,
+    "facts": [
+      [
+        "Full-course assessment",
+        "Apply Paper 1 and Paper 2 knowledge in an independent timed response."
+      ],
+      [
+        "Command words",
+        "Identify, describe, explain, compare and evaluate require different answer depth."
+      ],
+      [
+        "Calculation working",
+        "Show units, formula and intermediate steps."
+      ],
+      [
+        "Programming accuracy",
+        "Trace variables, boundaries and indexes rather than assume intent."
+      ]
+    ],
+    "ido": {
+      "q": "Plan a 6-mark answer comparing two network-security strategies.",
+      "steps": [
+        "Identify each control and what it protects.",
+        "Explain how it reduces a distinct risk.",
+        "Link controls to the scenario.",
+        "Finish with balanced suitability/trade-offs instead of repeating synonyms."
+      ]
+    },
+    "wedo": {
+      "q": "Plan a 4-mark algorithm trace on an unseen loop.",
+      "steps": [
+        "Write starting variable values.",
+        "Record each executed update.",
+        "Follow condition and stopping rule.",
+        "Check final printed value."
+      ]
+    },
+    "code": {
+      "source": "total = 0\nfor i = 1 to 4\n    total = total + 2\nnext i\nprint(total)",
+      "predict": "Predict output before assessment.",
+      "change": "Change loop bound to 3.",
+      "extend": "Explain why a trace helps with repeated increments.",
+      "answer": "8; 6; track total 2,4,6,8."
+    },
+    "exam": [
+      {
+        "q": "Convert eight-bit unsigned 10010001 to denary.",
+        "answer": "128+16+1=145.",
+        "marks": 3
+      },
+      {
+        "q": "Explain why an OS uses process scheduling.",
+        "answer": "Allocates processor time between competing tasks, supporting multitasking.",
+        "marks": 3
+      },
+      {
+        "q": "Explain why MFA protects against a stolen password.",
+        "answer": "Even with a stolen password, the attacker lacks another required independent factor.",
+        "marks": 3
+      }
+    ],
+    "visual": "review script only: timed full-course paper needs dedicated 80-mark exam companion",
+    "stage": "text-draft"
+  },
+  {
+    "n": 144,
+    "facts": [
+      [
+        "Classify errors",
+        "Separate knowledge gaps, misreading command words and calculation/algorithm mistakes."
+      ],
+      [
+        "Marking points",
+        "Award credit only for information that answers the question."
+      ],
+      [
+        "Correct at source",
+        "Redo the reasoning or trace, not only the final statement."
+      ],
+      [
+        "Retest learning",
+        "Attempt a different question on the same concept without relying on copied notes."
+      ]
+    ],
+    "ido": {
+      "q": "A 4-mark answer says 'cache stores memory to make CPU faster'. Improve it.",
+      "steps": [
+        "State that cache holds frequently accessed data/instructions.",
+        "Explain faster access than main RAM.",
+        "Explain fewer slow memory accesses.",
+        "Connect to reduced CPU waiting and improved performance when accesses hit cache."
+      ]
+    },
+    "wedo": {
+      "q": "A network answer says 'the router sends all data everywhere'. Improve it.",
+      "steps": [
+        "Identify inaccurate forwarding claim.",
+        "Explain routers connect networks.",
+        "Packets are forwarded towards the destination using routing information.",
+        "Compare with a switch forwarding frames on a LAN."
+      ]
+    },
+    "code": {
+      "source": "array marks = [3, 4, 5]\nprint(marks[2])",
+      "predict": "Predict the output.",
+      "change": "Change index to 0.",
+      "extend": "Explain one exam mistake from off-by-one indexing.",
+      "answer": "5; 3; miscounting indexes may select wrong element."
+    },
+    "exam": [
+      {
+        "q": "Explain why a bare 'faster' may fail to score an explanation mark.",
+        "answer": "It lacks the causal mechanism and scenario-specific improvement required by the question.",
+        "marks": 2
+      },
+      {
+        "q": "Correct the statement: 'MAC addresses route packets between networks'.",
+        "answer": "IP addressing/routing is used by routers; MAC addresses support local data-link forwarding.",
+        "marks": 2
+      },
+      {
+        "q": "Describe one effective correction routine after an assessment.",
+        "answer": "Identify missing mark point, rewrite fully and attempt a new transfer question.",
+        "marks": 3
+      }
+    ],
+    "visual": "annotated mark scheme overlay with evidence → correction → reattempt",
+    "stage": "text-draft"
+  },
+  {
+    "n": 145,
+    "facts": [
+      [
+        "AND gate",
+        "Output 1 only when both inputs are 1."
+      ],
+      [
+        "OR gate",
+        "Output 1 when at least one input is 1."
+      ],
+      [
+        "NOT gate",
+        "Reverses its single binary input."
+      ],
+      [
+        "Boolean expressions",
+        "Symbols and truth tables describe logic gate relationships independently of hardware."
+      ]
+    ],
+    "ido": {
+      "q": "For Q = A AND B, complete all four rows of the two-input truth table.",
+      "steps": [
+        "List A,B as 00,01,10,11.",
+        "AND returns 1 only if both are 1.",
+        "Outputs are 0,0,0,1.",
+        "Draw a two-input AND symbol matching the rule."
+      ]
+    },
+    "wedo": {
+      "q": "For Q = A OR B, complete the truth table.",
+      "steps": [
+        "List the four input combinations.",
+        "Mark output 0 only for 00.",
+        "Mark output 1 for 01,10,11.",
+        "Outputs 0,1,1,1."
+      ]
+    },
+    "code": {
+      "source": "A = true\nB = false\nif A AND B then\n    print(\"1\")\nelse\n    print(\"0\")\nendif",
+      "predict": "Predict output.",
+      "change": "Change B to true.",
+      "extend": "Extend to test A OR B instead.",
+      "answer": "0; 1; OR with A=true and B=false prints 1."
+    },
+    "exam": [
+      {
+        "q": "State AND output when A=1, B=0.",
+        "answer": "0.",
+        "marks": 1
+      },
+      {
+        "q": "Write OR outputs for inputs 00,01,10,11.",
+        "answer": "0,1,1,1.",
+        "marks": 4
+      },
+      {
+        "q": "Explain NOT output for input 0.",
+        "answer": "NOT inverts the bit; output 1.",
+        "marks": 2
+      }
+    ],
+    "visual": "accurate OCR gate symbols and per-row truth-table reveal",
+    "stage": "text-draft"
+  },
+  {
+    "n": 146,
+    "facts": [
+      [
+        "Combined logic",
+        "Work out intermediate gate outputs before calculating the final result."
+      ],
+      [
+        "Operator precedence",
+        "Use brackets to clarify order when translating logic diagrams."
+      ],
+      [
+        "Three inputs",
+        "A truth table has 2³ = 8 unique input combinations."
+      ],
+      [
+        "Intermediate columns",
+        "Recording a gate's result reduces mistakes in multi-stage circuits."
+      ]
+    ],
+    "ido": {
+      "q": "Complete Q = (A AND B) OR C for all eight input combinations.",
+      "steps": [
+        "List 000,001,010,011,100,101,110,111 in ABC order.",
+        "Find X=A AND B: 0,0,0,0,0,0,1,1.",
+        "Then Q=X OR C: 0,1,0,1,0,1,1,1.",
+        "Check rows with C=1 must have Q=1."
+      ]
+    },
+    "wedo": {
+      "q": "Find Q=(A OR B) AND C when A=1, B=0, C=0 and then C=1.",
+      "steps": [
+        "Find intermediate A OR B=1.",
+        "With C=0, Q=0.",
+        "With C=1, Q=1.",
+        "Explain why AND is applied last."
+      ]
+    },
+    "code": {
+      "source": "A = true\nB = false\nC = true\nif (A AND B) OR C then\n    print(\"Alarm\")\nendif",
+      "predict": "Predict the result.",
+      "change": "Change C to false.",
+      "extend": "Extend to express when both branches would trigger.",
+      "answer": "Alarm; no output when C=false; first branch requires A and B both true."
+    },
+    "exam": [
+      {
+        "q": "How many rows are needed for a 3-input truth table?",
+        "answer": "2³=8.",
+        "marks": 2
+      },
+      {
+        "q": "Evaluate (A AND B) OR C when A=1 B=0 C=1.",
+        "answer": "1.",
+        "marks": 2
+      },
+      {
+        "q": "Explain the benefit of an intermediate X column.",
+        "answer": "Allows accurate separate evaluation of one gate and helps trace errors in combined expressions.",
+        "marks": 2
+      }
+    ],
+    "visual": "OCR logic gates with highlighted intermediate connection and 8-row working table",
+    "stage": "text-draft"
+  },
+  {
+    "n": 147,
+    "facts": [
+      [
+        "High-level language",
+        "Human-readable abstraction; generally portable with suitable runtime/translator support."
+      ],
+      [
+        "Low-level language",
+        "Close to processor instruction architecture, giving greater hardware control."
+      ],
+      [
+        "Compiler",
+        "Translates source code into executable machine or intermediate output before running the resulting program."
+      ],
+      [
+        "Interpreter",
+        "Processes/translates and executes code using an interpreter during execution."
+      ]
+    ],
+    "ido": {
+      "q": "A developer wants one program to run on different processors. Explain how language level and translators matter.",
+      "steps": [
+        "High-level code is less tied to a specific processor architecture.",
+        "A suitable translator/runtime must still exist for each target.",
+        "Low-level machine code is closely processor-specific.",
+        "Explain why a compiler/interpreter approach is chosen for the environment, not a guaranteed speed ranking."
+      ]
+    },
+    "wedo": {
+      "q": "Compare an interpreter and compiler in detecting errors.",
+      "steps": [
+        "Compiled code usually needs translation before execution.",
+        "An interpreter may report errors during attempted execution of statements.",
+        "Both can report syntax problems.",
+        "Do not claim all interpreters execute exactly one source line directly."
+      ]
+    },
+    "code": {
+      "source": "score = 2\nscore = score + 3\nprint(score)",
+      "predict": "Predict output.",
+      "change": "Change + to *.",
+      "extend": "Explain that source must be translated/interpreted before CPU executes machine instructions.",
+      "answer": "5; 6; processor executes machine instructions."
+    },
+    "exam": [
+      {
+        "q": "Give one benefit of high-level languages.",
+        "answer": "More readable and often easier to develop/maintain, or portable with suitable runtimes.",
+        "marks": 2
+      },
+      {
+        "q": "Compare compiler and interpreter at a broad level.",
+        "answer": "Compiler translates a program to executable/intermediate output; interpreter executes through an interpreting environment.",
+        "marks": 4
+      },
+      {
+        "q": "Explain why machine code depends on processor architecture.",
+        "answer": "Instructions use a machine-specific instruction set understood by that CPU.",
+        "marks": 2
+      }
+    ],
+    "visual": "source code → compiler executable and source → interpreter runtime branches",
+    "stage": "text-draft"
+  },
+  {
+    "n": 148,
+    "facts": [
+      [
+        "Editor",
+        "Provides tools for entering and organising source code."
+      ],
+      [
+        "Syntax highlighting and completion",
+        "Make code structure and possible mistakes easier to notice."
+      ],
+      [
+        "Breakpoints and debugging",
+        "Pause execution to inspect variables and follow faulty logic."
+      ],
+      [
+        "Runtime/output tools",
+        "Allow programmers to run/test code and view results from the environment."
+      ]
+    ],
+    "ido": {
+      "q": "A program produces 9 instead of expected 10. Explain how a debugger could locate the error.",
+      "steps": [
+        "Set a breakpoint before the suspect calculation.",
+        "Run to the breakpoint.",
+        "Inspect current variable values and step line by line.",
+        "Find first unexpected update, fix it and rerun tests."
+      ]
+    },
+    "wedo": {
+      "q": "A pupil has misspelled a variable. Identify two IDE features that may help.",
+      "steps": [
+        "Syntax highlighting may make code patterns clear.",
+        "Error diagnostics/underlining may report undefined names.",
+        "Autocompletion may reduce repeated typing mistakes.",
+        "Test after correction."
+      ]
+    },
+    "code": {
+      "source": "counter = 3\ncounter = counter + 2\nprint(counter)",
+      "predict": "Predict output.",
+      "change": "Change +2 to -1.",
+      "extend": "Describe a good breakpoint location to observe the assignment.",
+      "answer": "5; then 2; pause before/after updating counter."
+    },
+    "exam": [
+      {
+        "q": "Name two IDE features.",
+        "answer": "Code editor, syntax highlighting, autocomplete, debugging, breakpoints, error diagnostics or run console.",
+        "marks": 2
+      },
+      {
+        "q": "Explain why a breakpoint helps a developer.",
+        "answer": "Pauses execution at a selected point, allowing variables/program state to be inspected.",
+        "marks": 3
+      },
+      {
+        "q": "State why a program should be tested after fixing an IDE-reported syntax error.",
+        "answer": "Syntax correction only ensures code can be parsed; logical behaviour still needs checking.",
+        "marks": 2
+      }
+    ],
+    "visual": "IDE mock layout: editor, highlighted statement, variables watch panel, output",
+    "stage": "text-draft"
+  }
+]
