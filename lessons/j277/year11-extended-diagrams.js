@@ -81,8 +81,8 @@ function subjectScene(spec,stage){
  if(/Boolean Logic: AND, OR and NOT/.test(title)){
   const gate=learn?(stage===1?"OR":stage===2?"NOT":"AND"):(mode==="guided"?"OR":"AND");
   let h=small(24,78,"LOGIC GATE · "+gate+" · evaluate each input pair");
-  h+=label(24,138,85,46,"A",K.sky,21)+label(24,222,85,46,"B",K.sky,21);
-  h+=arrow(109,161,271,161)+arrow(109,245,271,245);
+  h+=label(24,138,85,46,"A",K.sky,21)+arrow(109,161,271,161);
+  if(gate!=="NOT"){h+=label(24,222,85,46,"B",K.sky,21)+arrow(109,245,271,245);}
   if(gate==="AND"){
    h+='<path d="M270 130 H328 A73 73 0 0 1 328 276 H270Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
   }else if(gate==="OR"){
@@ -92,7 +92,7 @@ function subjectScene(spec,stage){
   }
   h+=arrow(435,203,485,203);
   h+=label(491,171,119,67,stage>=3?(gate==="AND"?"0":gate==="OR"?"1":"0"):"?",stage>=3?K.mint:K.grey,25);
-  h+=small(53,319,"Input example: A = 1, B = 0");
+  h+=small(53,319,gate==="NOT"?"Input example: A = 1":"Input example: A = 1, B = 0");
   h+=small(53,349,gate==="NOT"?"NOT acts on one input; output is inverted":gate==="AND"?"AND only gives 1 when both inputs are 1":"OR gives 1 when one or both inputs are 1");
   return h;
  }
@@ -172,7 +172,30 @@ function subjectScene(spec,stage){
   h+=small(56,354,"Defragmentation is for spinning HDDs; avoid routine SSD defragmentation.");
   return h;
  }
- if(/Programming Languages and Translators/.test(title)){
+ if(/CPU Performance and Embedded Systems/.test(title)){
+  let h=small(25,83,"CPU PERFORMANCE · HOW HARDWARE CAN AFFECT EXECUTION");
+  const vals=[["CLOCK SPEED","3 GHz vs 2 GHz"],["CORES","4 vs 2"],["CACHE","faster access"],["EMBEDDED","dedicated task"]];
+  vals.forEach(([head,detail],i)=>{const x=20+i*156;h+=label(x,133,144,71,head,i===stage?K.amber:K.sky,18);h+=label(x,210,144,69,detail,i===stage?K.mint:K.grey,detail.length>13?15:18);});
+  h+=small(41,332,"Comparisons depend on workload; embedded computers serve a specific purpose.");
+  return h;
+ }
+ if(/Paper 1: Data Representation/.test(title)){
+  let h=small(27,85,"REPRESENTATION · KEEP VALUE AND UNIT VISIBLE");
+  const bits=["128","64","32","16","8","4","2","1"];
+  bits.forEach((bit,i)=>{h+=label(18+i*77,123,70,69,bit,i<=stage?K.amber:K.sky,20);});
+  h+=label(28,230,276,61,"1011   0110 → B6",stage>=2?K.mint:K.grey,20);
+  h+=label(326,230,280,61,"pixels × bits/pixel",stage>=2?K.mint:K.grey,18);
+  h+=small(38,336,"Binary place values, hexadecimal groups and image-size units are distinct steps.");
+  return h;
+ }
+ if(/Paper 1: Calculations and Extended Answers/.test(title)){
+  const vals=mode==="guided"?["8000 Hz","5 s","8 bits","320,000 bits"]:["120 px","80 px","4 bpp","38,400 bits"];
+  let h=small(26,90,"SET UP THE RIGHT FORMULA AND SHOW UNITS");
+  vals.forEach((t,i)=>{h+=label(23+i*154,163,145,87,i<=stage?t:"?",i===stage?K.amber:i<stage?K.mint:K.sky,t.length>12?17:20);if(i<3)h+=arrow(169+i*154,205,177+i*154,205);});
+  h+=small(40,328,"Size in bytes requires dividing the calculated bits by eight.");
+  return h;
+ }
+  if(/Programming Languages and Translators/.test(title)){
   let h=small(29,85,"SOURCE CODE · TWO TRANSLATION APPROACHES");
   h+=label(31,148,160,78,"SOURCE",K.sky,23)+arrow(191,185,241,185);
   h+=label(241,101,169,66,"COMPILER",stage>=1?K.amber:K.grey,20);
