@@ -885,7 +885,41 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    }
    return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 560 165" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="558" height="163" rx="15" fill="#f6faf7" stroke="#b8d5c5" stroke-width="2"/>'+scene+'</svg></figure>';
  }
+
+ // Compact question-first drawings: hide worked outputs until answers are revealed.
+ function j277MiniLearningScene(spec){
+  const p=spec&&spec.rich;if(!p)return null;
+  const kind=String(p.family||"process"),answersHidden=p.phase!=="model"&&p.phase!=="learning";
+  const e=escape,values=Array.isArray(p.values)?p.values.map(String):[],labels=Array.isArray(p.labels)?p.labels.map(String):[];
+  const ink="#194f3d",blue="#4a7fa9",green="#3d8869";
+  const T=(x,y,v,z=17)=>'<text x="'+x+'" y="'+y+'" font-family="Arial,sans-serif" font-weight="800" text-anchor="middle" font-size="'+z+'" fill="'+ink+'">'+e(String(v).slice(0,24))+'</text>';
+  const R=(x,y,w,h,c="#e5f1ea")=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" fill="'+c+'" stroke="#83b09c" stroke-width="2"/>';
+  const A=(x,y,a,b)=>'<path d="M'+x+' '+y+' L'+a+' '+b+' M'+(a-9)+' '+(b-6)+' L'+a+' '+b+' L'+(a-9)+' '+(b+6)+'" fill="none" stroke="'+green+'" stroke-width="3"/>';
+  const row=(arr)=>{const n=Math.max(2,Math.min(7,arr.length)),w=(514-(n-1)*5)/n;return arr.slice(0,n).map((v,i)=>{const x=24+i*(w+5);return R(x,68,w,67,i%2?"#e2f2e8":"#e2eefb")+T(x+w/2,107,v,Math.min(18,w*.32))+T(x+w/2,58,i,13);}).join("");};
+  const doc=(a,b,c)=>R(18,64,154,74,"#e3eefb")+T(95,107,a,15)+A(176,101,199,101)+R(202,64,154,74,"#e2f2e8")+T(279,107,b,15)+A(360,101,385,101)+R(390,64,152,74,"#f8edda")+T(466,107,c,15);
+  let content="";
+  if(["array","search","sort","merge","string"].includes(kind)){
+    const arr=kind==="string"?String(values[0]||"COMPUTER").split(""):(values.length?values:["?","?","?","?"]);
+    content+=row(arr);
+  }else if(kind==="truth"||kind==="gate"){
+    content+=doc(labels[0]||"Input A",labels[1]||"Gate",answersHidden?"?":labels[2]||"Output");
+  }else if(kind==="branch"||kind==="flow"||kind==="validation"||kind==="loop"){
+    content+=R(26,69,147,62,"#e3eefb")+T(99,104,labels[0]||"Input",16)+A(175,100,225,100);
+    content+='<path d="M287 59 L350 100 L287 140 L224 100 Z" fill="#f8edda" stroke="#ba903a" stroke-width="2.7"/>';
+    content+=T(287,105,"?",23)+A(352,100,402,100)+R(406,69,129,62,"#e3f2e9")+T(470,105,answersHidden?"?":"Output",17);
+  }else if(kind==="trace"||kind==="test"){
+    content+=doc(labels[0]||"Input",labels[1]||"Update","?");
+    content+=T(280,149,"Record the changing value after each step",13);
+  }else if(kind==="grid"||kind==="sql"){
+    content+=row(["[0,0]","[0,1]","[1,0]","[1,1]"]);
+  }else{
+    const a=labels[0]||"Input",b=labels[1]||"Process",c=answersHidden?"?":labels[2]||"Result";
+    content+=doc(a,b,c);
+  }
+  return '<figure class="j277-prompt-diagram"><svg viewBox="0 0 560 165" role="img" aria-label="'+e(String(spec.title||"Earlier learning question"))+'" xmlns="http://www.w3.org/2000/svg">'+R(1,1,558,163,"#f8fbf9")+T(280,29,String(spec.title||"VISUAL RETRIEVAL").slice(0,48),17)+content+'</svg></figure>';
+ }
  function visualPrompt(spec){
+   const mini=j277MiniLearningScene(spec);if(mini)return mini;
    const hardware=j277HardwarePrompt(spec);if(hardware)return hardware;
    const boxes=Array.isArray(spec.boxes)?spec.boxes.slice(0,5).map(v=>String(v).slice(0,30)):[];
    const title=String(spec.title||"Use the diagram").slice(0,85);
