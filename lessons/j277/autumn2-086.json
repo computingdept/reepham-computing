@@ -1,0 +1,386 @@
+{
+  "086": {
+    "t": "Merge Sort",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "merge sort",
+      "split",
+      "merge",
+      "sorted halves",
+      "divide and conquer",
+      "comparison"
+    ],
+    "o": [
+      "Show recursive splitting into smaller parts conceptually.",
+      "Explain the merge of two sorted lists.",
+      "Complete a correct merge-sort diagram and trace."
+    ],
+    "c": [
+      [
+        "Divide the problem",
+        "Merge sort divides a collection into halves until single elements remain."
+      ],
+      [
+        "Single elements are sorted",
+        "A list containing one item needs no further sorting."
+      ],
+      [
+        "Merge in order",
+        "Merge two sorted halves by comparing their front values, taking the smaller one and repeating."
+      ],
+      [
+        "Rebuild the whole list",
+        "The smaller sorted lists combine step by step to produce one completely sorted result. OCR requires the main steps, not code memorisation."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "SPLIT INTO HALVES",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2"
+        ],
+        "foot": "Keep splitting until single items"
+      },
+      {
+        "title": "SINGLE ELEMENTS",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2"
+        ],
+        "foot": "Every one-item list is already sorted"
+      },
+      {
+        "title": "MERGE TWO SORTED HALVES",
+        "layout": "merge-sort",
+        "boxes": [
+          "3",
+          "8",
+          "1",
+          "5",
+          "7",
+          "2"
+        ],
+        "foot": "Compare the first elements"
+      },
+      {
+        "title": "BUILD THE FINAL SORTED ARRAY",
+        "layout": "merge-sort",
+        "boxes": [
+          "1",
+          "3",
+          "5",
+          "8",
+          "2",
+          "7"
+        ],
+        "foot": "Repeat merging in order"
+      }
+    ],
+    "idoVisual": {
+      "title": "SPLIT INTO HALVES",
+      "layout": "merge-sort",
+      "boxes": [
+        "8",
+        "3",
+        "5",
+        "1",
+        "7",
+        "2"
+      ],
+      "foot": "Keep splitting until single items"
+    },
+    "m": {
+      "title": "Model Merge Sort",
+      "q": "Trace merge sort on [8,3,5,1]. Show the split, the sorted pairs and the final sorted list. [4 marks]",
+      "headings": [
+        "Read the array",
+        "Make first comparison",
+        "Update indices or positions",
+        "Finish and check"
+      ],
+      "st": [
+        "Split into [8,3] and [5,1] [1].",
+        "Split into individual elements [8],[3],[5],[1] [1].",
+        "Merge into sorted pairs [3,8] and [1,5] [1].",
+        "Merge these pairs in order: [1,3,5,8] [1]."
+      ]
+    },
+    "w": [
+      [
+        "Merge sort [6,2,7,1]. Give the sorted pairs and final result. [4 marks]",
+        "Split [6,2] and [7,1] [1]. Sort pairs as [2,6] and [1,7] [1]. Compare leading elements when merging [1]. Final order [1,2,6,7] [1]."
+      ],
+      [
+        "Explain why merge sort splits [9,3,4,2] down to single values. [2 marks]",
+        "Single values are already sorted [1] and can then be merged into correctly ordered larger groups [1]."
+      ],
+      [
+        "Merge the sorted lists [2,7] and [3,6] into one sorted result. [4 marks]",
+        "Compare 2 and 3, take 2 [1]. Compare 7 and 3, take 3 [1]. Compare 7 and 6, take 6 [1]. Then append 7 → [2,3,6,7] [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided trace 1",
+      "Guided trace 2",
+      "Guided trace 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED MERGE · SIX TWO SEVEN ONE",
+        "layout": "merge-sort",
+        "boxes": [
+          "6",
+          "2",
+          "7",
+          "1",
+          "9"
+        ],
+        "foot": "Show split and ordered merge"
+      },
+      null,
+      {
+        "title": "MERGE TWO SORTED LISTS",
+        "layout": "merge-sort",
+        "boxes": [
+          "2",
+          "7",
+          "3",
+          "6",
+          "9"
+        ],
+        "foot": "Take smaller front value"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Split the four items into two pairs."
+        ],
+        [
+          "Step 1 · identify",
+          "Sort each pair by merging one-item lists."
+        ],
+        [
+          "Step 2 · explain",
+          "Compare first items of sorted halves."
+        ],
+        [
+          "Check the marks",
+          "Write [1,2,6,7]."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Consider the smallest possible list."
+        ],
+        [
+          "Step 1 · identify",
+          "A one-item list needs no sorting."
+        ],
+        [
+          "Step 2 · explain",
+          "Sorted groups can be combined correctly."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "SPLIT TO ONE-ELEMENT GROUPS",
+            "layout": "merge-sort",
+            "boxes": [
+              "9",
+              "3",
+              "4",
+              "2",
+              "7"
+            ],
+            "foot": "Why stop at single values?"
+          }
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Each input list is already sorted."
+        ],
+        [
+          "Step 1 · identify",
+          "Compare 2 and 3, take 2."
+        ],
+        [
+          "Step 2 · explain",
+          "Compare 7 and 3, take 3, then 6."
+        ],
+        [
+          "Check the marks",
+          "Take remaining 7 and finish."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Model the first comparison when merging the already sorted pairs [3,8] and [1,5].",
+      "code": "array left = [3,8]\narray right = [1,5]\nif left[0] < right[0] then\n    print(left[0])\nelse\n    print(right[0])\nendif",
+      "p": [
+        "Predict the first value printed during merging.",
+        "Change right[0] to 4 and predict the new output.",
+        "On paper write the fully merged order of the original pairs."
+      ],
+      "a": "Original first value is 1, as 1 < 3. Changing right[0] to 4 causes 3 to print. Fully merging [3,8] and [1,5] gives [1,3,5,8]. The code models one comparison, not an entire merge-sort routine."
+    },
+    "e": [
+      [
+        "State the key idea behind the divide step of merge sort. [2 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Split an array into smaller halves [1] until individual items/single-element lists remain [1]."
+      ],
+      [
+        "Trace merge sort on [4,1,3,2], showing two sorted pairs and the final result. [4 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Split into [4,1] and [3,2] [1]; merge singletons into [1,4] [1] and [2,3] [1]; final merge [1,2,3,4] [1]."
+      ],
+      [
+        "Explain the merge-sort process for [7,2,6,1], including split, comparison and merge. [6 marks]\n\nSource: Original OCR J277-style question; not an official past-paper original.",
+        "Split into [7,2] and [6,1] [1]; split into singletons [1]. Merge into [2,7] [1] and [1,6] [1]. Compare leading values of sorted halves and take smaller repeatedly [1], producing [1,2,6,7] [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Merge sort",
+        "Divide-and-conquer sorting method that merges ordered sublists."
+      ],
+      [
+        "Divide and conquer",
+        "Split a problem into smaller subproblems, then combine solutions."
+      ],
+      [
+        "Split",
+        "Separate the list into smaller parts."
+      ],
+      [
+        "Merge",
+        "Combine sorted lists into one ordered list."
+      ],
+      [
+        "Sorted list",
+        "Elements arranged in order."
+      ],
+      [
+        "Comparison",
+        "Check two values to decide which enters the result next."
+      ]
+    ],
+    "x": [
+      "Merge sort combines sorted smaller lists to produce a sorted full list.",
+      true
+    ],
+    "r": [
+      [
+        "State what is meant by the key in insertion sort. [2 marks]",
+        "The current unsorted element being inserted [1] into its correct place among the already-sorted elements [1]."
+      ],
+      [
+        "State when two adjacent numbers swap during an ascending bubble sort. [2 marks]",
+        "The left value is greater than the right value [1], so their positions are exchanged [1]."
+      ],
+      [
+        "Convert hexadecimal C to denary. [1 mark]",
+        "12 [1]."
+      ],
+      [
+        "Complete one bubble-sort pass on [7,2,5]. State the two intermediate arrays. [4 marks]",
+        "7 > 2 [1], swap [2,7,5] [1]; 7 > 5 [1], swap [2,5,7] [1]."
+      ]
+    ],
+    "refs": [
+      "L085 · last lesson",
+      "L084 · earlier learning",
+      "L003 · Autumn 1 retrieval",
+      "L084 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "START ARRAY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "First value is the sorted portion"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · SPACED RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L003",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "SINGLE ELEMENTS",
+        "layout": "merge-sort",
+        "boxes": [
+          "8",
+          "3",
+          "5",
+          "1",
+          "7",
+          "2"
+        ],
+        "foot": "Every one-item list is already sorted"
+      },
+      {
+        "title": "MERGE TWO SORTED HALVES",
+        "layout": "merge-sort",
+        "boxes": [
+          "3",
+          "8",
+          "1",
+          "5",
+          "7",
+          "2"
+        ],
+        "foot": "Compare the first elements"
+      }
+    ],
+    "memoryCue": "Merge sort divides a collection into halves until single elements remain.",
+    "priorExam": {
+      "from": "085",
+      "q": "Show insertion sort on [6,3,5] after each insertion. [4 marks]",
+      "a": "Initially 6 is sorted [1]. Shift 6 and insert 3 to produce [3,6,5] [1]. Shift 6 again [1] and insert 5 to get [3,5,6] [1].",
+      "visual": {
+        "title": "CHOOSE THE KEY",
+        "layout": "insertion-sort",
+        "boxes": [
+          "4",
+          "1",
+          "3",
+          "8",
+          "6"
+        ],
+        "foot": "Key = 1"
+      }
+    }
+  }
+}
