@@ -1,0 +1,387 @@
+{
+  "083": {
+    "t": "Binary Search",
+    "s": "2.1.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "binary search",
+      "sorted",
+      "midpoint",
+      "low",
+      "high",
+      "half",
+      "index"
+    ],
+    "o": [
+      "State that binary search requires sorted data.",
+      "Trace low, high and mid values correctly.",
+      "Compare the search with a linear search."
+    ],
+    "c": [
+      [
+        "Sorted prerequisite",
+        "Binary search relies on sorted data. Without sorting, discarding half the list may incorrectly discard the target."
+      ],
+      [
+        "Find the midpoint",
+        "Keep low and high indices of the remaining range; calculate mid = (low + high) DIV 2 using integer division."
+      ],
+      [
+        "Discard half appropriately",
+        "If target is greater than the midpoint value, set low = mid + 1. If smaller, set high = mid - 1."
+      ],
+      [
+        "Repeat until found or empty",
+        "Compare the midpoint again until target is found, or low becomes greater than high, indicating no match."
+      ]
+    ],
+    "visuals": [
+      {
+        "title": "START WITH SORTED ARRAY",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Search only ordered values"
+      },
+      {
+        "title": "FIND THE MIDDLE",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Use low, high and mid"
+      },
+      {
+        "title": "DISCARD THE WRONG HALF",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Choose remaining half from comparison"
+      },
+      {
+        "title": "REPEAT IN THE SMALLER RANGE",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Stop once found or empty"
+      }
+    ],
+    "idoVisual": {
+      "title": "START WITH SORTED ARRAY",
+      "layout": "binary-search",
+      "boxes": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "foot": "Search only ordered values"
+    },
+    "m": {
+      "title": "Model the Binary Search trace",
+      "q": "A sorted array is [2,4,6,8,10,12,14]. Trace binary search for 12 using low, high and mid. [4 marks]",
+      "headings": [
+        "Read the values",
+        "First comparison",
+        "Update the search or sort",
+        "Complete the trace"
+      ],
+      "st": [
+        "Sorted prerequisite is satisfied; low = 0 and high = 6 [1].",
+        "mid = (0+6) DIV 2 = 3, value 8 [1].",
+        "12 > 8, so discard indexes 0–3; now low = 4, high = 6 [1].",
+        "mid = (4+6) DIV 2 = 5, value 12, so return index 5 [1]."
+      ]
+    },
+    "w": [
+      [
+        "Trace binary search for 9 in sorted [1,3,5,7,9], noting each midpoint. [4 marks]",
+        "low 0, high 4 gives mid 2, value 5 [1]. Since 9 > 5, low = 3 [1]. mid (3+4) DIV 2 = 3 gives 7 [1]; low = 4 and index 4 contains 9 [1]."
+      ],
+      [
+        "Explain what happens if binary search is used on [10,3,8,1] without sorting. [2 marks]",
+        "The list is not sorted [1], so discarding half based on a midpoint comparison may wrongly exclude the target [1]."
+      ],
+      [
+        "Trace search for target 6 in sorted [1,2,4,7,9] and explain the unsuccessful result. [4 marks]",
+        "First mid index 2 gives value 4 [1], so low becomes 3 [1]. Next mid index 3 gives 7 [1], so high becomes 2 and low > high; target is absent [1]."
+      ]
+    ],
+    "wTitles": [
+      "Guided trace 1",
+      "Guided trace 2",
+      "Guided explanation 3"
+    ],
+    "wVisuals": [
+      {
+        "title": "GUIDED · FIND NINE",
+        "layout": "binary-search",
+        "boxes": [
+          "1",
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
+        "foot": "All values already sorted"
+      },
+      null,
+      {
+        "title": "GUIDED · MISSING SIX",
+        "layout": "binary-search",
+        "boxes": [
+          "1",
+          "2",
+          "4",
+          "7",
+          "9"
+        ],
+        "foot": "No item equals the target"
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Your turn · plan",
+          "Initial low 0, high 4."
+        ],
+        [
+          "Step 1 · identify",
+          "The first midpoint is index 2, value 5."
+        ],
+        [
+          "Step 2 · explain",
+          "Discard lower part and keep indices 3–4."
+        ],
+        [
+          "Check the marks",
+          "Check 7 then 9, returning index 4."
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Check the prerequisite first."
+        ],
+        [
+          "Step 1 · identify",
+          "Array is unsorted."
+        ],
+        [
+          "Step 2 · explain",
+          "Midpoint comparison cannot safely remove a half."
+        ],
+        [
+          "Check the marks",
+          {
+            "title": "UNSORTED ARRAY · UNSAFE",
+            "layout": "binary-search",
+            "boxes": [
+              "10",
+              "3",
+              "8",
+              "1",
+              "?"
+            ],
+            "foot": "What prerequisite is missing?"
+          }
+        ]
+      ],
+      [
+        [
+          "Your turn · plan",
+          "Start with 0 to 4."
+        ],
+        [
+          "Step 1 · identify",
+          "Mid value 4 is too small."
+        ],
+        [
+          "Step 2 · explain",
+          "New midpoint value 7 is too large."
+        ],
+        [
+          "Check the marks",
+          "Range is empty: not found."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "Trace this sorted-array binary search and predict the returned index.",
+      "code": "array values = [2,4,6,8,10,12,14]\ntarget = 12\nlow = 0\nhigh = 6\nfound = -1\nwhile low <= high AND found == -1\n    mid = (low + high) DIV 2\n    if values[mid] == target then\n        found = mid\n    elseif values[mid] < target then\n        low = mid + 1\n    else\n        high = mid - 1\n    endif\nendwhile\nprint(found)",
+      "p": [
+        "Predict the index printed.",
+        "Change target to 2; predict the index.",
+        "Explain why an unsorted input would make this algorithm unreliable."
+      ],
+      "a": "Target 12 returns index 5. Target 2 returns index 0. Binary search discards halves according to sorted order; an unsorted list breaks that reasoning."
+    },
+    "e": [
+      [
+        "State the required property of an array before binary search can be used correctly. [1 mark]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "Values must be in sorted order [1]."
+      ],
+      [
+        "For sorted [2,4,8,10,14], trace binary search for 14, showing each midpoint and discarded half. [4 marks]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "Mid = 2, value 8 [1]; target 14 > 8 so low = 3 [1]; next mid = 3, value 10 [1]; target 14 >10 so index 4 is checked and found [1]."
+      ],
+      [
+        "Explain how binary search finds 5 in sorted [1,3,5,7,9,11,13], why sorting is essential and what happens when a target is missing. [6 marks]\n\nSource: Original OCR J277-style question; not an official OCR past-paper original.",
+        "Begin with low 0 high 6 [1], midpoint index 3 value 7 [1]. Target 5 is smaller so reduce high to 2 [1]. New midpoint index 1 value 3, so move low to 2 [1]; index 2 contains 5 [1]. Sorted data is essential because only then can half be discarded safely [1]."
+      ]
+    ],
+    "v": [
+      [
+        "Binary search",
+        "Search method repeatedly checking the midpoint of a sorted range."
+      ],
+      [
+        "Sorted",
+        "Arranged in order, such as ascending values."
+      ],
+      [
+        "Low index",
+        "Lowest index still being searched."
+      ],
+      [
+        "High index",
+        "Highest index still being searched."
+      ],
+      [
+        "Midpoint",
+        "Central index of the current search interval."
+      ],
+      [
+        "DIV",
+        "Integer quotient operator used to find a whole-number midpoint."
+      ]
+    ],
+    "x": [
+      "Binary search works reliably on any unsorted list.",
+      false
+    ],
+    "r": [
+      [
+        "State one advantage of linear search on an unsorted array. [2 marks]",
+        "It does not require sorted data [1], so it can search the current unsorted array without sorting it first [1]."
+      ],
+      [
+        "State the difference between a syntax error and a logic error. [2 marks]",
+        "Syntax: invalid language grammar [1]; logic: program runs but produces incorrect results [1]."
+      ],
+      [
+        "Calculate bytes for an 80 × 20 image with 8 bits per pixel. [3 marks]",
+        "1600 pixels [1]; 12800 bits [1]; 1600 bytes [1]."
+      ],
+      [
+        "A fee calculator adds 5 to the number of tickets instead of multiplying by 5. With 3 tickets, identify the error and correct the calculation. [4 marks]",
+        "Adding gives 8 [1] but expected price is 15 [1]; use multiplication [1], giving 3*5=15 [1]."
+      ]
+    ],
+    "refs": [
+      "L082 · last lesson",
+      "L081 · earlier learning",
+      "L007 · Autumn 1 retrieval",
+      "L081 · high challenge"
+    ],
+    "visualAuditV2": true,
+    "retrievalVisuals": [
+      {
+        "title": "CHECK ONE ARRAY POSITION AT A TIME",
+        "layout": "linear-search",
+        "boxes": [
+          "8",
+          "4",
+          "11",
+          "2",
+          "7"
+        ],
+        "foot": "Target = 2"
+      },
+      null,
+      {
+        "title": "AUTUMN 1 · RECALL",
+        "layout": "flow",
+        "boxes": [
+          "L007",
+          "Recall",
+          "Answer"
+        ],
+        "foot": ""
+      },
+      null
+    ],
+    "examVisuals": [
+      null,
+      {
+        "title": "FIND THE MIDDLE",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Use low, high and mid"
+      },
+      {
+        "title": "DISCARD THE WRONG HALF",
+        "layout": "binary-search",
+        "boxes": [
+          "2",
+          "4",
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "foot": "Choose remaining half from comparison"
+      }
+    ],
+    "memoryCue": "Binary search relies on sorted data. Without sorting, discarding half the list may incorrectly discard the target.",
+    "priorExam": {
+      "from": "082",
+      "q": "A list is [6,3,8,1]. Trace linear search for 1, stating each comparison and index. [4 marks]",
+      "a": "Compare 6 [1], then 3 [1], then 8 [1], then 1 at zero-based index 3 [1].",
+      "visual": {
+        "title": "MOVE FROM LEFT TO RIGHT",
+        "layout": "linear-search",
+        "boxes": [
+          "3",
+          "9",
+          "5",
+          "1",
+          "6"
+        ],
+        "foot": "Compare each item in order"
+      }
+    }
+  }
+}
