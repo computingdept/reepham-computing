@@ -702,23 +702,36 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const n=String(number).padStart(3,"0"),plan=J277_VISUAL_PLANS[n];
   if(!plan||!lesson||lesson.visualAuditV3)return lesson;
   const pickNums=q=>{
-    const m=String(q||"").match(/\[\s*-?\d+(?:\s*,\s*-?\d+){2,}\s*\]/);
-    return m?m[0].slice(1,-1).split(",").map(v=>v.trim()):null;
+    const lists=[...String(q||"").matchAll(/\[\s*-?\d+(?:\s*,\s*-?\d+)+\s*\]/g)];
+    if(!lists.length)return null;
+    return lists.map(v=>v[0].slice(1,-1).split(",").map(x=>x.trim())).flat();
   };
   const gate=q=>/\bNOT\b/i.test(q)?"NOT":/\bOR\b/i.test(q)?"OR":"AND";
   const cfg=(index,phase,q)=>{
-    const isTeaching=phase==="learning",family=isTeaching?(plan.families?.[index]||plan.family):(phase==="guided"?plan.family:(plan.modelFamily||plan.family));
+    const isTeaching=phase==="learning";
+    let family=isTeaching?(plan.families?.[index]||plan.family):(phase==="guided"?plan.family:(plan.modelFamily||plan.family));
+    if(phase==="guided"){
+      if(/\bbubble sort\b/i.test(q))family="sort";
+      else if(/\binsertion sort\b/i.test(q))family="sort";
+      else if(/\bmerge sort\b|\bmerge the sorted\b/i.test(q))family="merge";
+      else if(/\bbinary search\b|\blinear search\b/i.test(q))family="search";
+      else if(/\bNOT(?: gate| outputs?)\b/i.test(q)&&!(/\bAND\b|\bOR\b/i.test(q)))family="gate";
+    }
     const nums=pickNums(q),useNums=nums||plan.values||[];
     const askedTarget=String(q||"").match(/(?:search(?:ing)?\s+for|find|target|looking\s+for)\s+(\d+)\b/i);
     const resolvedTarget=askedTarget?askedTarget[1]:String(plan.target||"");
+    const neutral=(phase==="guided"&&["branch","flow","validation","loop"].includes(family));
+    const contextLabels=neutral?["Given input","Condition?","Yes branch","No branch"]:plan.labels.slice();
+    const effectiveSearch=/\bbinary search\b/i.test(q)?"binary":/\blinear search\b/i.test(q)?"linear":(plan.searchTypes||[])[index]||plan.searchType||"linear";
+    const effectiveSort=/\binsertion sort\b/i.test(q)?"insertion":/\bbubble sort\b/i.test(q)?"bubble":plan.sortType||"bubble";
     return {
       family,focus:isTeaching?index:phase==="guided"?index:0,phase,
-      labels:plan.labels.slice(),values:useNums,
+      labels:contextLabels,values:useNums,
       target:nums&&!useNums.includes(resolvedTarget)?"":resolvedTarget,
       rows:plan.rows||null,threeInput:!!plan.threeInput,
       logic:(plan.logicStages||[])[index]||"AND",
       gate:phase==="guided"?gate(q):(plan.gateStages||[])[index]||gate(q),
-      searchType:(plan.searchTypes||[])[index]||plan.searchType||"linear",sortType:plan.sortType||"bubble",
+      searchType:effectiveSearch,sortType:effectiveSort,
       snapshots:(!nums&&phase==="learning")?plan.snapshots||null:null,
       unsafe:/\bunsorted\b|without sorting|not sorted/i.test(q),
       question:String(q||"").slice(0,220)
@@ -726,7 +739,12 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   };
   lesson.visuals=(lesson.visuals||[]).map((spec,i)=>({...spec,rich:cfg(i,"learning",lesson.c?.[i]?.[1]||"")}));
   if(lesson.idoVisual&&n!=="090")lesson.idoVisual={...lesson.idoVisual,rich:cfg(0,"model",lesson.m?.q||"")};
-  if(Array.isArray(lesson.wVisuals))lesson.wVisuals=lesson.wVisuals.map((spec,i)=>({...spec,rich:cfg(i,"guided",lesson.w?.[i]?.[0]||"")}));
+  if(Array.isArray(lesson.wVisuals))lesson.wVisuals=lesson.wVisuals.map((spec,i)=>{
+    const question=lesson.w?.[i]?.[0]||"";
+    if(n==="090"&&i===1)return spec;
+    if(n==="048"&&i===2)return spec;
+    return {...spec,rich:cfg(i,"guided",question)};
+  });
   const mini=(base,phase,q,index,earlier)=>{
     const source=J277_VISUAL_PLANS[String(earlier||n).padStart(3,"0")]||plan;
     const kind=source.family;
