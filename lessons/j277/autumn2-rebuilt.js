@@ -1637,18 +1637,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    .j277-visual-v3 #do-now .j277-prompt-diagram svg{max-height:105px;}
  }
  /* Extra diagram-led teaching for Year 10, opt-in lessons only. */
- .j277-dense-visual #do-now .donow-question{
-   padding:clamp(10px,1vw,15px);
- }
- .j277-dense-visual #do-now .donow-question > strong{
-   margin-bottom:6px;
-   font-size:clamp(11px,.88vw,13px);
- }
- .j277-dense-visual #do-now .donow-question p{
-   font-size:clamp(17px,1.34vw,23px);
-   line-height:1.25;
-   overflow-wrap:anywhere;
- }
+ /* Year 10 Do Now typography deliberately inherits Lesson 001's shared classroom CSS.
+    Do not shrink questions for visual or diagram-heavy lessons. */
  .j277-dense-visual .j277-prompt-diagram{
    width:100%;margin:6px auto 8px;
    flex:none;
@@ -1679,7 +1669,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  @media(max-height:775px) and (min-width:901px){
    .j277-dense-visual #do-now .j277-prompt-diagram svg{max-height:115px}
    .j277-dense-visual #you-do .exam-card > .j277-prompt-diagram svg{max-height:125px}
-   .j277-dense-visual #do-now .donow-question p{font-size:18px}
+
  }
  @media(max-width:900px){
    .j277-dense-visual #do-now .j277-prompt-diagram svg{max-height:none}
