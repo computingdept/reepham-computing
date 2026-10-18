@@ -2138,15 +2138,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "060": {
     "paper1Ref": "1.4",
-    "paper1Topic": "Network security rules",
-    "q": "Combine FOR and IF to classify three simulated firewall events.",
+    "paper1Topic": "Firewalls and network protection",
+    "q": "Use a FOR loop and IF statement in a simplified firewall-rule model.",
     "code": "for request = 1 to 3\n    if request == 2 then\n        print(\"Blocked\")\n    else\n        print(\"Allowed\")\n    endif\nnext request",
     "p": [
-      "Predict all three outputs in order.",
+      "Predict all three printed results.",
       "Change the blocked request from 2 to 3.",
-      "Explain one limitation of this example compared with a real firewall."
+      "Explain what a firewall helps prevent and why anti-malware software is still useful."
     ],
-    "a": "Originally: Allowed, Blocked, Allowed. Blocking request 3 gives Allowed, Allowed, Blocked. Real firewalls examine traffic characteristics and policy rules; request numbers alone are not security decisions."
+    "a": "The original outputs are Allowed, Blocked, Allowed. Blocking request 3 produces Allowed, Allowed, Blocked. Firewalls filter network traffic using configured rules; anti-malware helps detect or remove malicious software. This is a simplified rule demonstration, not a working firewall.",
+    "paper1Point": "1.4.2"
   },
   "061": {
     "paper1Ref": "1.5",
@@ -2225,15 +2226,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "067": {
     "paper1Ref": "1.1",
-    "paper1Topic": "Embedded systems",
-    "q": "Access a sensor reading in a two-dimensional array representing two devices.",
+    "paper1Topic": "Embedded-system characteristics",
+    "q": "Access a sensor reading from a two-dimensional array in a device controller.",
     "code": "array readings[2,3]\nreadings[0,0] = 21\nreadings[1,2] = 25\nprint(readings[1,2])",
     "p": [
       "Predict the output.",
       "Change the print statement to readings[0,0].",
-      "Add readings[0,1] = 22 and print that value; explain why an embedded system might use sensors."
+      "Name one embedded-system example and give two typical characteristics."
     ],
-    "a": "readings[1,2] prints 25. readings[0,0] prints 21. After assignment, readings[0,1] prints 22. An embedded system may take input from sensors to carry out a dedicated function."
+    "a": "At [1,2], the output is 25; at [0,0], it is 21. An embedded system is built into another device to carry out a dedicated function, such as a washing-machine controller. It may have a limited user interface and be designed for low power or reliable real-time response.",
+    "paper1Point": "1.1.3"
   },
   "068": {
     "paper1Ref": "1.3",
@@ -2299,27 +2301,29 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "073": {
     "paper1Ref": "1.6",
-    "paper1Topic": "Privacy and data minimisation",
-    "q": "Predict the output of this SQL query string and relate it to collecting only necessary data.",
-    "code": "query = \"SELECT Model FROM Laptops WHERE NeedsRepair = true\"\nprint(query)",
+    "paper1Topic": "Data Protection Act 2018 and data minimisation",
+    "q": "Trace a program that constructs, but does not execute, an SQL query selecting personal data.",
+    "code": "query = \"SELECT Email FROM Pupils WHERE Year = 10\"\nprint(query)",
     "p": [
-      "Predict the exact printed SQL statement.",
-      "Change Model to AssetID in the query string.",
-      "Explain why requesting only fields needed for a task helps data minimisation."
+      "Predict the exact printed SQL string.",
+      "Change Email to Name, keeping valid SELECT, FROM and WHERE syntax.",
+      "Explain how data minimisation relates to the Data Protection Act 2018 and why the query should request only needed fields."
     ],
-    "a": "The program prints the SQL text; it does not execute a database query. Changing Model to AssetID changes the selected field. Data minimisation means collecting and processing only personal data necessary for a stated purpose; limiting fields is a useful design habit."
+    "a": "The program prints the string SELECT Email FROM Pupils WHERE Year = 10; it does not access a database. Replacing Email with Name changes the requested column. Personal data should be processed for legitimate purposes and limited to what is necessary; data minimisation is a core protection principle.",
+    "paper1Point": "1.6.1"
   },
   "074": {
     "paper1Ref": "1.4",
-    "paper1Topic": "Authentication and security",
-    "q": "Trace a randomly generated three-digit code in a simulated login system.",
+    "paper1Topic": "Phishing and authentication",
+    "q": "Generate a simplified random one-time code, then consider its security limitations.",
     "code": "code = random(100,999)\nprint(code)",
     "p": [
-      "State the possible lowest and highest outputs.",
-      "Change the range to 1000–9999.",
-      "Explain why a simple random-number example alone is not a secure authentication system."
+      "State the smallest and largest possible outputs.",
+      "Change the range to four-digit numbers, from 1000 to 9999.",
+      "Explain how phishing might still trick someone into revealing a code, and why real systems need additional safeguards."
     ],
-    "a": "The initial possible outputs are integers 100 to 999 inclusive. The changed range produces 1000 to 9999. Real authentication also needs secure generation, delivery, verification, expiry and protections against guessing; this snippet alone is not secure."
+    "a": "The initial random integer can be 100–999 inclusive. The new range is 1000–9999. Phishing manipulates users into disclosing information, so making a code harder to guess does not stop someone from giving it away. Real systems need securely generated short-lived codes and protections against repeated guesses.",
+    "paper1Point": "1.4.1 / 1.4.2"
   },
   "075": {
     "paper1Ref": "1.3",
@@ -2335,39 +2339,42 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "076": {
     "paper1Ref": "1.6",
-    "paper1Topic": "Responsible use of personal data",
-    "q": "Read a clearly named privacy-aware calculation and improve maintainability.",
-    "code": "// Count fields needed for a simple contact form\nrequiredFields = 2\nprovidedFields = 2\nmissingFields = requiredFields - providedFields\nprint(missingFields)",
+    "paper1Topic": "Computer Misuse Act 1990",
+    "q": "Inspect a maintainable access-control program with descriptive names and a clear comment.",
+    "code": "// Only allow authorised users to open the file\nuserAuthorised = false\nif userAuthorised then\n    print(\"Open file\")\nelse\n    print(\"Access denied\")\nendif",
     "p": [
-      "Predict the output.",
-      "Change providedFields to 1.",
-      "Rename missingFields to fieldsStillNeeded everywhere; explain why collecting unnecessary personal data should be avoided."
+      "Predict the printed output.",
+      "Change userAuthorised to true, then rename the variable consistently.",
+      "Explain what the Computer Misuse Act 1990 prohibits and why clear naming helps maintainability."
     ],
-    "a": "The original output is 0; changing providedFields to 1 gives 1. Consistent descriptive names help maintainability. Under data minimisation, systems should not collect personal data irrelevant to their purpose."
+    "a": "Initially Access denied; if the variable becomes true the output is Open file. Renaming consistently leaves the behaviour unchanged. The Computer Misuse Act prohibits forms of unauthorised access and other computer misuse. Clear variable names help programmers understand and maintain code.",
+    "paper1Point": "1.6.1"
   },
   "077": {
     "paper1Ref": "1.3",
-    "paper1Topic": "IPv4 range testing",
-    "q": "Select normal, boundary and invalid numeric test values for an IPv4 octet.",
+    "paper1Topic": "IPv4 addresses and MAC addresses",
+    "q": "Test normal, boundary and invalid values for one IPv4 octet.",
     "code": "octet = 255\nif octet >= 0 AND octet <= 255 then\n    print(\"Accepted\")\nelse\n    print(\"Rejected\")\nendif",
     "p": [
       "Predict the output for 255.",
-      "Test -1, 0, 1, 128, 254, 255 and 256, recording expected outputs.",
-      "Classify 0 and 255 as boundary values and 128 as normal valid data."
+      "Test -1, 0, 1, 128, 254, 255 and 256; record expected results.",
+      "Explain why a valid octet does not by itself validate a full IPv4 address, and state what a MAC address identifies."
     ],
-    "a": "255 is Accepted. -1 and 256 are Rejected; 0, 1, 128, 254 and 255 are Accepted. Boundaries for the stated rule are 0 and 255; 128 is normal valid input. An erroneous value would have the wrong data type, such as a non-numeric word."
+    "a": "255 is Accepted. -1 and 256 are Rejected; 0, 1, 128, 254 and 255 are Accepted. A full IPv4 address has four octets, so checking one is not enough. A MAC address identifies a network interface for local network communication.",
+    "paper1Point": "1.3.2"
   },
   "078": {
     "paper1Ref": "1.6",
-    "paper1Topic": "Software licensing",
-    "q": "Use a selection and validation check for a hypothetical per-device software licence.",
+    "paper1Topic": "Software licences and copyright law",
+    "q": "Trace a simple per-device software licence check using selection.",
     "code": "licensedDevices = 5\ninstalledDevices = 8\nif installedDevices >= 0 AND installedDevices <= licensedDevices then\n    print(\"Within licence\")\nelse\n    print(\"Check installations\")\nendif",
     "p": [
-      "Predict the initial output.",
-      "Test installedDevices = 3 and -1.",
-      "Extend by printing how many installations exceed the licence count when installedDevices > licensedDevices."
+      "Predict the output.",
+      "Test installedDevices = 3 and then -1.",
+      "Name the Copyright, Designs and Patents Act 1988 and explain why a licence controls permitted software use."
     ],
-    "a": "At 8 installations with a limit of 5: Check installations. A count of 3 gives Within licence; -1 is rejected as invalid. For 8 installations, the excess is 8 − 5 = 3. Software licences have different terms; this is only a hypothetical per-device licence."
+    "a": "At 8 installations with a hypothetical limit of 5, output is Check installations. 3 prints Within licence; -1 is rejected. The Copyright, Designs and Patents Act 1988 protects creative works including software from unauthorised copying. Software licence terms set permitted uses; different licences impose different conditions.",
+    "paper1Point": "1.6.1"
   },
   "079": {
     "paper1Ref": "1.3",
@@ -2383,27 +2390,29 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "080": {
     "paper1Ref": "1.5",
-    "paper1Topic": "Operating system memory allocation",
-    "q": "Use a trace table to model three simple RAM allocations.",
+    "paper1Topic": "Operating systems and multitasking",
+    "q": "Use a trace table to model an operating system allocating RAM to three applications.",
     "code": "freeMB = 400\nfor application = 1 to 3\n    freeMB = freeMB - 50\nnext application\nprint(freeMB)",
     "p": [
       "Record freeMB after each iteration.",
-      "Predict the final output.",
-      "Change the allocation to 100 MB per application and refine the trace."
+      "Predict the output, then change the allocation per application to 100 MB.",
+      "Explain how an operating system manages memory so several applications can run at once."
     ],
-    "a": "Free memory: 400 → 350 → 300 → 250, so output 250 MB. With 100 MB allocations, values are 300, 200, 100 MB; output is 100. Real operating systems manage memory allocation using more sophisticated mechanisms."
+    "a": "The original remaining values are 350, 300 and 250 MB; output 250. With 100 MB per application, output is 100 MB. The OS allocates memory to running applications and manages system resources to support multitasking. This calculation is a simplified model.",
+    "paper1Point": "1.5.1"
   },
   "081": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Image size calculation",
-    "q": "Find and correct the logic error in an uncompressed bitmap file-size calculator.",
-    "code": "width = 100\nheight = 100\ncolourDepth = 8\nbits = width * height * colourDepth\nbytes = bits * 8\nprint(bytes)",
+    "paper1Topic": "Binary addition and overflow",
+    "q": "Identify and correct a logic error in an addition calculation.",
+    "code": "first = 250\nsecond = 10\ntotal = first - second\nprint(total)",
     "p": [
       "Predict the incorrect output.",
-      "Correct the single incorrect operator.",
-      "Change width to 200 and predict the corrected byte count."
+      "Correct the operator and predict the new total.",
+      "Explain why the correct total causes overflow if stored as an unsigned 8-bit number."
     ],
-    "a": "Pixel data is 100 × 100 × 8 = 80,000 bits. Incorrect multiplication gives 640,000. Correct statement: bytes = bits / 8, giving 10,000 bytes. At width 200, corrected result is 20,000 bytes. File metadata is excluded."
+    "a": "The incorrect output is 240. Correcting subtraction to addition produces 260. Eight unsigned bits can represent values only from 0 to 255; storing 260 would require more than eight bits. The code uses ordinary mathematical integers rather than an 8-bit register.",
+    "paper1Point": "1.2.4"
   },
   "082": {
     "paper1Ref": "1.1",
@@ -2430,16 +2439,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "Target 32 is at zero-based index 5; target 128 is at index 7. The list is sorted, a prerequisite for binary search. The numbers 1,2,4,8,16,32,64,128 are powers of two used as binary place values."
   },
   "084": {
-    "paper1Ref": "1.2",
-    "paper1Topic": "Secondary storage performance",
-    "q": "Trace one bubble-sort pass over three example storage read rates (MB/s).",
-    "code": "array speeds = [100,30,200]\nfor i = 0 to 1\n    if speeds[i] > speeds[i+1] then\n        temp = speeds[i]\n        speeds[i] = speeds[i+1]\n        speeds[i+1] = temp\n    endif\nnext i\nprint(speeds[0])\nprint(speeds[1])\nprint(speeds[2])",
+    "paper1Ref": "1.3",
+    "paper1Topic": "Star and mesh network topologies",
+    "q": "Trace one bubble-sort pass over illustrative numbers of network links.",
+    "code": "array links = [6,2,4]\nfor i = 0 to 1\n    if links[i] > links[i+1] then\n        temp = links[i]\n        links[i] = links[i+1]\n        links[i+1] = temp\n    endif\nnext i\nprint(links[0])\nprint(links[1])\nprint(links[2])",
     "p": [
-      "Predict all outputs after one pass.",
-      "Change the first speed to 50 and repeat the trace.",
-      "Explain why read speed alone is insufficient to choose a storage device."
+      "Predict all three numbers after one pass.",
+      "Change the starting list to [3,1,5] and trace one pass.",
+      "Compare the fault tolerance and wiring requirements of star and mesh networks."
     ],
-    "a": "Original one-pass result: [30,100,200]. Changing the first value to 50 gives [30,50,200]. Storage selection also considers capacity, durability, reliability, portability and cost. These are illustrative rates, not fixed values for a storage technology."
+    "a": "The original pass gives [2,4,6]. For [3,1,5], one pass gives [1,3,5]. Mesh networks can offer alternative paths if links fail but typically require more connections; star networks are easier to manage but depend on the central device. These sample numbers are illustrative, not a topology calculation.",
+    "paper1Point": "1.3.1"
   },
   "085": {
     "paper1Ref": "1.3",
@@ -2467,27 +2477,29 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "087": {
     "paper1Ref": "1.3",
-    "paper1Topic": "Network protocols",
-    "q": "Trace a search through a sorted list of common network protocols.",
-    "code": "array protocols = [\"DNS\",\"FTP\",\"HTTP\",\"HTTPS\",\"SMTP\"]\nfound = -1\nfor i = 0 to 4\n    if protocols[i] == \"HTTPS\" AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
+    "paper1Topic": "Email and web protocols",
+    "q": "Trace linear search through a sorted array of network protocol names.",
+    "code": "array protocols = [\"FTP\",\"HTTP\",\"HTTPS\",\"IMAP\",\"SMTP\"]\nfound = -1\nfor i = 0 to 4\n    if protocols[i] == \"SMTP\" AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
     "p": [
-      "Predict the zero-based index printed.",
-      "Change the search target from HTTPS to DNS.",
-      "Explain how HTTPS differs from HTTP for data travelling between browser and website."
+      "Predict the zero-based index.",
+      "Change the search target to \"IMAP\".",
+      "Explain the roles of SMTP, IMAP and POP when sending or receiving email."
     ],
-    "a": "HTTPS is at index 3; DNS at index 0. HTTPS uses encryption through TLS to protect web traffic in transit; HTTP does not provide this transport encryption. The sorted order also makes binary search possible, but this code uses linear search."
+    "a": "SMTP is found at index 4; IMAP at index 3. SMTP sends email, while IMAP and POP are used to retrieve received email; IMAP commonly keeps mail synchronised on the server, whereas POP traditionally downloads messages. This code is linear search and does not implement a network protocol.",
+    "paper1Point": "1.3.2"
   },
   "088": {
     "paper1Ref": "1.5",
-    "paper1Topic": "Operating system access permissions",
-    "q": "Predict an AND condition in a simplified file-permission rule.",
-    "code": "signedIn = true\ncanReadFile = false\nif signedIn AND canReadFile then\n    print(\"File opened\")\nelse\n    print(\"Access denied\")\nendif",
+    "paper1Topic": "Encryption utility software",
+    "q": "Apply Boolean logic to a simplified encrypted-file access rule.",
+    "code": "encrypted = true\nhasKey = false\nif encrypted AND hasKey then\n    print(\"Can decrypt\")\nelse\n    print(\"Cannot decrypt\")\nendif",
     "p": [
       "Predict the output.",
-      "Set canReadFile to true.",
-      "Replace AND with OR and explain the security weakness introduced."
+      "Set hasKey to true; then replace AND with OR and predict.",
+      "Explain why encryption utilities protect stored data and why this Boolean condition is only a teaching model."
     ],
-    "a": "Initially Access denied; with canReadFile true, File opened. Using OR would grant access when only one condition is true, potentially bypassing a required permission check. Operating systems manage user accounts and file permissions."
+    "a": "Initially Cannot decrypt. With hasKey = true, Can decrypt. Using OR would print Can decrypt when only encrypted is true, which would not be a meaningful security check. Encryption changes readable data into ciphertext so it cannot be understood without the appropriate key; real encryption is not performed by this code.",
+    "paper1Point": "1.5.2"
   },
   "089": {
     "paper1Ref": "1.4",
@@ -2503,39 +2515,42 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "090": {
     "paper1Ref": "1.4",
-    "paper1Topic": "Network security events",
-    "q": "Evaluate a combined Boolean expression for a simplified security alert.",
-    "code": "suspiciousFile = false\nrepeatedFailures = true\nunknownDevice = true\nalert = suspiciousFile OR (repeatedFailures AND unknownDevice)\nif alert then\n    print(\"Investigate\")\nelse\n    print(\"No alert\")\nendif",
+    "paper1Topic": "Denial-of-service attacks and SQL injection",
+    "q": "Evaluate a simple Boolean alert based on unusually heavy traffic or suspicious input.",
+    "code": "requestsPerSecond = 5000\nsuspiciousInput = false\nalert = requestsPerSecond > 1000 OR suspiciousInput\nif alert then\n    print(\"Investigate\")\nelse\n    print(\"No alert\")\nendif",
     "p": [
       "Predict the output.",
-      "Change unknownDevice to false.",
-      "Change suspiciousFile to true as well; explain how OR and AND combine the conditions."
+      "Change requestsPerSecond to 500 and keep suspiciousInput false.",
+      "Explain how a denial-of-service attack differs from an SQL injection attack."
     ],
-    "a": "Initially repeatedFailures AND unknownDevice is true, so Investigate. If unknownDevice is false, and suspiciousFile remains false, No alert. Changing suspiciousFile to true gives Investigate. This illustrates rule evaluation, not an actual security detection system."
+    "a": "The initial output is Investigate. With 500 requests per second and no flagged input, output is No alert. Denial-of-service tries to disrupt a service by overwhelming it with traffic or requests; SQL injection exploits poorly handled input to interfere with database queries. This flag-based example neither detects nor performs either attack.",
+    "paper1Point": "1.4.1"
   },
   "091": {
     "paper1Ref": "1.1",
-    "paper1Topic": "CPU processing",
-    "q": "Trace a short high-level program and relate it to CPU execution.",
-    "code": "cycles = 4\ncycles = cycles + 2\nprint(cycles)",
-    "p": [
-      "Predict the final output.",
-      "Change the first assignment to 7.",
-      "Explain why a high-level language program must be translated into executable instructions before the CPU runs it."
-    ],
-    "a": "Output is 6, or 9 after changing the first assignment to 7. High-level source must be translated to machine-executable instructions. The variable named cycles is merely program data; it is not a measurement of actual CPU clock cycles."
-  },
-  "092": {
-    "paper1Ref": "1.2",
-    "paper1Topic": "Data units and storage",
-    "q": "Predict the output of source code that converts bytes to kilobytes.",
-    "code": "bytes = 8000\nkilobytes = bytes / 1000\nprint(kilobytes)",
+    "paper1Topic": "ALU and Control Unit",
+    "q": "Trace a simple high-level arithmetic program and relate it to CPU components.",
+    "code": "first = 8\nsecond = 4\ntotal = first + second\nprint(total)",
     "p": [
       "Predict the output.",
-      "Change bytes to 12500.",
-      "Explain whether a compiler or interpreter changes the mathematical conversion being carried out."
+      "Change second to 7 and predict again.",
+      "State the role of the ALU and the Control Unit when executing machine instructions."
     ],
-    "a": "8000 bytes gives 8 KB; 12500 bytes gives 12.5 KB under the J277 decimal unit convention. The program's arithmetic is the same regardless of translation method, assuming equivalent execution."
+    "a": "Originally output is 12; after changing second to 7 it is 15. The ALU carries out arithmetic and logical operations; the Control Unit coordinates and controls CPU operations, including instruction decoding. High-level code is translated before the processor executes it.",
+    "paper1Point": "1.1.1"
+  },
+  "092": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Compression utility software",
+    "q": "Trace a program calculating how much storage a compression utility could save.",
+    "code": "originalKB = 100\ncompressedKB = 70\nsavedKB = originalKB - compressedKB\nprint(savedKB)",
+    "p": [
+      "Predict the storage saved in KB.",
+      "Change compressedKB to 60.",
+      "Explain how compression utility software differs from a compiler or interpreter."
+    ],
+    "a": "Initially 30 KB is saved; after changing compressedKB to 60, 40 KB is saved. Compression utility software reduces file storage requirements; compilers and interpreters translate or execute source code. This program calculates savings but does not compress a file.",
+    "paper1Point": "1.5.2"
   },
   "093": {
     "paper1Ref": "1.2",
@@ -2551,15 +2566,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "095": {
     "paper1Ref": "1.6",
-    "paper1Topic": "Data retention and privacy",
-    "q": "Trace a program applying an organisation's example data-retention policy.",
-    "code": "daysStored = 40\npolicyLimitDays = 30\nif daysStored > policyLimitDays then\n    print(\"Review for deletion\")\nelse\n    print(\"Within policy\")\nendif",
+    "paper1Topic": "Digital inclusion and social impacts",
+    "q": "Trace a choice in a hypothetical online-only school service.",
+    "code": "needsInternet = true\nhasInternet = false\nif needsInternet AND hasInternet then\n    print(\"Can participate online\")\nelse\n    print(\"Offer another route\")\nendif",
     "p": [
       "Predict the output.",
-      "Change daysStored to 20 and then 30.",
-      "Explain why 30 days is only this organisation's example policy limit, not a universal legal retention period."
+      "Change hasInternet to true.",
+      "Explain one social or cultural disadvantage of online-only access and suggest a reasonable alternative."
     ],
-    "a": "40 days gives Review for deletion. Values 20 and 30 give Within policy. Retention periods should be appropriate to the purpose and relevant requirements; 30 days is only an illustrative policy value here."
+    "a": "The initial output is Offer another route; with internet access it becomes Can participate online. Online-only provision may exclude households without reliable connectivity or digital skills. A paper, telephone or in-person option can improve access. This program illustrates a decision, not a full assessment of social impacts.",
+    "paper1Point": "1.6.1"
   }
 };
  function load(number,mode){
