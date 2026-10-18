@@ -12,14 +12,14 @@
       "identify"
     ],
     "o": [
-      "Recall the essential ideas of sound and compression.",
-      "Apply a clearly modelled method.",
-      "Complete independent OCR J277-style questions."
+      "Describe how regular samples turn an analogue sound wave into digital data.",
+      "Calculate uncompressed mono sound size using sample rate, duration and bit depth.",
+      "Explain when lossy or lossless compression is appropriate."
     ],
     "c": [
       [
         "Analogue to digital",
-        "An analogue sound wave is sampled at regular time intervals, and each sample is quantised to an available binary level."
+        "Sound in the world is a continuous analogue wave. The revision booklet describes digital sampling as taking regular snapshots of the wave and recording each measurement as binary."
       ],
       [
         "Sample rate",
@@ -27,7 +27,7 @@
       ],
       [
         "Bit depth and size",
-        "Bit depth controls possible amplitude levels. Uncompressed mono size in bits = sample rate × duration × bit depth."
+        "Bit depth controls the number of possible amplitude levels. Booklet mono formula: samples per second × duration (seconds) × bits per sample = bits; divide by 8 for bytes."
       ],
       [
         "Compression",
@@ -237,8 +237,8 @@
     },
     "e": [
       [
-        "A mono recording lasts 4 seconds, with 4000 samples/second and 8 bits/sample. Calculate the uncompressed size in bytes. [4]\n\nSource: Original OCR J277-style practice question.",
-        "4000×4=16,000 samples [1]; ×8=128,000 bits [2]; ÷8=16,000 bytes [1]."
+        "The booklet records 10 samples each second for 5 seconds, at 8 bits per sample (mono). Calculate the uncompressed size in bits and bytes. Show working. [3]\n\nSource: Revision booklet worked example, adapted as independent practice.",
+        "10 × 5 = 50 samples [1]; 50 × 8 = 400 bits [1]; 400 ÷ 8 = 50 bytes [1]."
       ],
       [
         "Explain one effect of increasing bit depth while sample rate and duration stay the same. [3]\n\nSource: Original OCR J277-style practice question.",
@@ -277,20 +277,20 @@
     ],
     "r": [
       [
-        "What is the image file size in bits of 10×10 pixels at 8 bits per pixel?",
-        "800 bits."
+        "Give the formula for uncompressed bitmap image size in bits.",
+        "Width × height × colour depth."
       ],
       [
-        "How many bits are in a byte?",
-        "8 bits."
+        "How many bytes are in a 20 × 10 image at 8-bit depth?",
+        "20 × 10 × 8 ÷ 8 = 200 bytes."
       ],
       [
-        "State what volatile means.",
-        "Loses data on power loss."
+        "Give one advantage of Unicode over basic ASCII.",
+        "Represents a far wider range of characters and writing systems."
       ],
       [
-        "At 1000 samples/second for 2 seconds, how many samples are recorded?",
-        "2000."
+        "The ASCII code for C is 01000011. State the codes for D and E, explaining the pattern.",
+        "D=01000100, E=01000101. Consecutive upper-case letters have consecutive codes."
       ]
     ],
     "refs": [
@@ -299,7 +299,7 @@
       "L096 · earlier learning",
       "Previously taught · challenge"
     ],
-    "memoryCue": "Sound size formula assumes one channel unless the question specifies more.",
+    "memoryCue": "Booklet 'sound snapshots': sample rate = samples per second, duration = seconds, bit depth = bits per sample. Mono size (bits) = sample rate × duration × bit depth. Lossless restores EXACTLY; lossy removes data.",
     "retrievalVisuals": [],
     "examVisuals": [],
     "requiredVisuals": [
@@ -309,6 +309,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "103",
+      "q": "An uncompressed bitmap has width 50 pixels, height 40 pixels and colour depth 8 bits. Calculate its size in bytes. [3]",
+      "a": "50×40 = 2000 pixels [1]; ×8 = 16000 bits [1]; ÷8 = 2000 bytes [1]."
+    },
+    "challenge": {
+      "n": 104,
+      "coreHint": "Multiply the three sound factors before converting bits to bytes.",
+      "stretch": {
+        "task": "Modify Code First so it prints file size in bytes for 2 seconds at 2000 samples/s and 16-bit depth.",
+        "hint": "sizeBits = sampleRate × duration × bitDepth; sizeBytes = sizeBits DIV 8.",
+        "answer": "2000 × 2 × 16 = 64,000 bits, equivalent to 8000 bytes."
+      },
+      "mastery": {
+        "task": "Two mono recordings are the same duration. A is 8000 samples/s at 8 bits; B is 16000 samples/s at 16 bits. Calculate the ratio of their uncompressed sizes and explain the possible quality trade-off.",
+        "hint": "Multiply rate × depth for each; the common duration cancels.",
+        "answer": "A uses 64,000 bits each second and B 256,000 bits each second, so B is four times the uncompressed size. B can capture more temporal detail and amplitude precision; this does not guarantee a perceptible improvement in every case."
+      }
+    }
   }
 }
