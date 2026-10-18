@@ -4,283 +4,264 @@
     "s": "2.5.2",
     "vis": "diagram-spec",
     "highlights": [
-      "Integrated",
+      "identify",
+      "describe",
       "explain",
       "compare",
-      "identify"
+      "source code",
+      "translator",
+      "interpreter",
+      "compiler",
+      "IDE"
     ],
     "o": [
-      "Identify common IDE features.",
-      "Use breakpoints and stepping to debug.",
-      "Explain how IDE tools aid programmers."
+      "Identify the four main IDE facilities named in J277.",
+      "Explain what each does for a programmer.",
+      "Use simple IDE diagnostics and run tools to improve code."
     ],
     "c": [
       [
         "Editor",
-        "Syntax highlighting distinguishes tokens; auto-completion can suggest language constructs and identifiers."
+        "The editor is where programmers write and change source code. Syntax highlighting and suggestions may make code easier to read and reduce typing mistakes."
       ],
       [
-        "Diagnostics",
-        "IDE tools may report syntax errors or warnings."
+        "Error diagnostics",
+        "Diagnostics report issues in code, such as missing brackets or incorrect syntax. A programmer can use the message and line number to find and correct the error."
       ],
       [
-        "Debugging",
-        "Breakpoints pause execution; stepping follows the program; watches inspect changing variables."
+        "Run-time environment",
+        "The IDE provides a way to run and test the program and inspect the output. This helps programmers check whether the program behaves as expected."
       ],
       [
-        "Build and run",
-        "Integrated tools help test and execute code without switching applications."
+        "Translators",
+        "A compiler or interpreter provided within an IDE converts source code into executable instructions. Together, editor, diagnostics, translator and running tools support the development cycle."
       ]
     ],
     "visuals": [
       {
-        "title": "EDITOR",
-        "layout": "flow",
-        "boxes": [
-          "Editor",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Syntax highlighting distinguishes tokens; auto-com"
+        "layout": "ide-editor",
+        "title": "1 · THE CODE EDITOR",
+        "boxes": [],
+        "foot": "A place to write and edit the program"
       },
       {
-        "title": "DIAGNOSTICS",
-        "layout": "flow",
-        "boxes": [
-          "Diagnostics",
-          "Example",
-          "Effect"
-        ],
-        "foot": "IDE tools may report syntax errors or warnings."
+        "layout": "ide-diagnostics",
+        "title": "2 · ERROR DIAGNOSTICS",
+        "boxes": [],
+        "foot": "Read the message; correct the faulty source"
       },
       {
-        "title": "DEBUGGING",
-        "layout": "flow",
-        "boxes": [
-          "Debugging",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Breakpoints pause execution; stepping follows the "
+        "layout": "ide-features",
+        "title": "3 · RUN-TIME ENVIRONMENT",
+        "boxes": [],
+        "foot": "Run and test code; inspect the result"
       },
       {
-        "title": "BUILD AND RUN",
-        "layout": "flow",
-        "boxes": [
-          "Build and run",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Integrated tools help test and execute code withou"
+        "layout": "ide-workflow",
+        "title": "4 · TRANSLATOR AND RUN",
+        "boxes": [],
+        "foot": "Write · diagnose · translate · run · improve"
       }
     ],
     "idoVisual": {
-      "title": "EDITOR",
-      "layout": "flow",
-      "boxes": [
-        "Editor",
-        "Example",
-        "Effect"
-      ],
-      "foot": "Syntax highlighting distinguishes tokens; auto-com"
+      "layout": "ide-editor",
+      "title": "I DO · RUNNING TOTAL",
+      "boxes": [],
+      "foot": "Set a breakpoint; inspect the current value"
     },
     "m": {
-      "title": "Modelled explanation",
-      "q": "A running total is wrong. Explain how a breakpoint and a watch can help. [4 marks]",
+      "title": "Model an IDE debugging explanation",
+      "q": "A program's running total is incorrect. Explain how a breakpoint and a watch can help locate the error. [4 marks]",
       "headings": [
-        "Read the question",
-        "Find the knowledge",
-        "Link the explanation",
-        "Check marks"
+        "Locate the calculation",
+        "Use a breakpoint",
+        "Check the variable",
+        "Explain the benefit"
       ],
       "st": [
-        "Identify the command word, scenario and total marks.",
-        "Choose accurate technical terms and examples.",
-        "Connect each feature to the consequence in the scenario.",
-        "A breakpoint stops the program before the calculation [1], allowing the code to be inspected [1]. A watch displays a variable's current value [1], making it easier to spot where the total becomes incorrect [1]."
+        "In the editor, identify where the total is updated; a breakpoint can be placed just before that line.",
+        "The breakpoint pauses execution [1], so the programmer can investigate the calculation [1].",
+        "A watch displays the current value of total [1] while stepping through the program.",
+        "The programmer can compare values before and after each change and find where the incorrect result first appears [1]."
       ]
     },
     "w": [
       [
-        "Explain how syntax highlighting and auto-completion help a programmer. [4 marks]",
-        "Highlighting differentiates code elements [1] and improves readability [1]. Auto-completion suggests constructs or names [1] and can reduce typing errors [1]."
+        "Explain how an editor's syntax highlighting and auto-completion can help a programmer. [4 marks]",
+        "Syntax highlighting makes different code elements easier to distinguish [1], making code easier to read [1]. Auto-completion suggests names or commands [1], which can reduce typing errors [1]."
       ],
       [
-        "Describe how stepping can help investigate a faulty condition. [4 marks]",
-        "Place a breakpoint before the condition [1], run to that point [1], step through instructions individually [1], and inspect values and the branch taken [1]."
+        "Describe the purpose of the run-time environment and translator provided by an IDE. [4 marks]",
+        "The run-time environment allows a program to be executed and tested [1], letting the programmer inspect behaviour and output [1]. A translator converts source code into a form the CPU can execute [1], enabling the program to run [1]."
       ],
       [
-        "A running total is wrong. Explain how a breakpoint and a watch can help. [4 marks]",
-        "A breakpoint stops the program before the calculation [1], allowing the code to be inspected [1]. A watch displays a variable's current value [1], making it easier to spot where the total becomes incorrect [1]."
+        "An IDE reports 'missing closing bracket' at line 2. Explain how diagnostics and the editor help fix the problem. [4 marks]",
+        "Diagnostics identify the possible issue [1] and help locate the line [1]. The editor lets the programmer change the code [1], after which they can run or test it again to check the correction [1]."
       ]
     ],
     "wTitles": [
-      "Guided practice · scenario",
-      "Guided practice · comparison",
-      "Guided practice · transfer"
+      "Editor features",
+      "Run-time and translator",
+      "Responding to diagnostics"
     ],
     "wVisuals": [
       {
-        "title": "GUIDED PRACTICE 1",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "ide-editor",
+        "title": "WE DO · CODE EDITOR",
+        "boxes": [],
+        "foot": "Two facilities support writing code"
       },
       {
-        "title": "GUIDED PRACTICE 2",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "ide-workflow",
+        "title": "WE DO · RUN AND TRANSLATE",
+        "boxes": [],
+        "foot": "Name each facility and its function"
       },
       {
-        "title": "GUIDED PRACTICE 3",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "ide-diagnostics",
+        "title": "WE DO · ERROR MESSAGE",
+        "boxes": [],
+        "foot": "Locate the fault before fixing it"
       }
     ],
     "wSteps": [
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Identify one editor feature at a time."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Highlighting",
+          "What does colouring code help you notice?"
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Completion",
+          "Why do suggestions help reduce mistakes?"
         ],
         [
-          "Check",
-          "Highlighting differentiates code elements [1] and improves readability [1]. Auto-completion suggests constructs or names [1] and can reduce typing errors [1]."
+          "Check [4]",
+          "Highlights code elements [1] for readability [1]; suggestions [1] reduce mistyping [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Which facility makes code executable? Which runs it?"
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Translator",
+          "Explain conversion from source code."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Run-time",
+          "Explain execution and observation of output."
         ],
         [
-          "Check",
-          "Place a breakpoint before the condition [1], run to that point [1], step through instructions individually [1], and inspect values and the branch taken [1]."
+          "Check [4]",
+          "Translator converts [1] for CPU [1]; run-time executes/tests [1] to inspect results [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Read the message and locate its line."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Correct",
+          "Use the editor to insert the missing bracket."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Verify",
+          "Run the updated source to test the correction."
         ],
         [
-          "Check",
-          "A breakpoint stops the program before the calculation [1], allowing the code to be inspected [1]. A watch displays a variable's current value [1], making it easier to spot where the total becomes incorrect [1]."
+          "Check [4]",
+          "Diagnostic message [1] and location [1]; editor correction [1] and retest [1]."
         ]
       ]
     ],
     "k": {
-      "q": "Predict the output, then change one input and explain your prediction.",
-      "code": "value = 2\nvalue = value + 3\nprint(value)",
+      "q": "Predict the output. A learner expected 7 — is this code correct?",
+      "code": "total = 5\ntotal = total + 2\ntotal = total + 2\nprint(total)",
       "p": [
-        "Predict the output.",
-        "Change value to 4: predict the output.",
-        "Explain each assignment."
+        "Find the line that causes the unexpected result.",
+        "Edit the source so it prints 7.",
+        "Run the changed program again and check your prediction."
       ],
-      "a": "The original prints 5. Changing value to 4 prints 7."
+      "a": "Original output 9. Remove the second addition on line 3 to print 7; retest."
     },
     "e": [
       [
-        "Describe how stepping can help investigate a faulty condition. [4 marks]\n\nSource: Original OCR J277-style practice question.",
-        "Place a breakpoint before the condition [1], run to that point [1], step through instructions individually [1], and inspect values and the branch taken [1]."
+        "A pupil writes a program in an IDE. Describe how an editor and error diagnostics help the pupil. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "The editor allows entry and correction of source code [1] so mistakes can be fixed [1]. Diagnostics report errors [1] and help the pupil locate the faulty code [1]."
       ],
       [
-        "Explain how syntax highlighting and auto-completion help a programmer. [4 marks]\n\nSource: Original OCR J277-style practice question.",
-        "Highlighting differentiates code elements [1] and improves readability [1]. Auto-completion suggests constructs or names [1] and can reduce typing errors [1]."
+        "Explain how a run-time environment and a translator within an IDE are used while developing a program. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "The translator converts source code into instructions suitable for execution [1], enabling the program to run [1]. The run-time environment executes or tests the program [1], allowing output and behaviour to be checked [1]."
       ],
       [
-        "A running total is wrong. Explain how a breakpoint and a watch can help. [4 marks]\n\nSource: Original OCR J277-style practice question.",
-        "A breakpoint stops the program before the calculation [1], allowing the code to be inspected [1]. A watch displays a variable's current value [1], making it easier to spot where the total becomes incorrect [1]."
+        "A learner's program should print 7 but prints 9. Suggest TWO distinct IDE actions to locate and correct the error. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "Use the IDE's editor to inspect and correct the repeated calculation [1] and save the corrected source [1]. Run the corrected code in the IDE [1] and verify that its output is now 7 [1]."
       ]
     ],
     "v": [
       [
-        "Integrated",
-        "A key concept from this lesson."
+        "IDE",
+        "Integrated Development Environment: software bringing programming tools together."
       ],
       [
-        "Source code",
-        "Instructions written in a programming language."
+        "Editor",
+        "Tool used to write and modify source code."
       ],
       [
-        "Machine code",
-        "Binary instructions executed by a processor."
+        "Error diagnostic",
+        "A message that helps identify an error and often its location."
       ],
       [
-        "Debug",
-        "Find and correct errors in a program."
+        "Run-time environment",
+        "Facility for executing and testing a program."
+      ],
+      [
+        "Translator",
+        "Tool that turns source code into executable instructions."
+      ],
+      [
+        "Breakpoint",
+        "A point where a debugger can pause a running program for inspection."
       ]
     ],
     "x": [
-      "An interpreter executes statements as a program runs.",
+      "An IDE's run-time environment helps a programmer execute and test code.",
       true
     ],
     "r": [
       [
-        "Give the output of A AND B where A=1 and B=0. [1 mark]",
-        "0 [1]."
+        "When does a compiler normally translate the source program? [1 mark]",
+        "Before execution, translating the whole source program [1]."
       ],
       [
-        "State what an intermediate output means in combined logic. [1 mark]",
-        "The result of one gate before the final output [1]."
+        "State ONE advantage of a high-level language for school application development. [1 mark]",
+        "Easier to read, maintain or port [1]."
       ],
       [
-        "Give the result of a left shift of 00000011 by one bit. [1 mark]",
-        "00000110 [1]."
+        "For a three-input AND gate, state the output when its inputs are 1,1,0. [1 mark]",
+        "0 [1]; all three must be 1 for AND to give 1."
       ],
       [
-        "Explain why a three-input truth table has eight rows. [2 marks]",
-        "Three inputs each have two possible values [1], giving 2×2×2=8 combinations [1]."
+        "A program changes frequently and must give quick error feedback while testing. Explain why an interpreter may suit this development task. [3 marks]",
+        "It executes code during interpretation [1], allowing immediate testing [1] and identifying errors when the relevant statement is reached [1]."
       ]
     ],
     "refs": [
-      "L090 · last lesson",
+      "L092 · last lesson",
+      "L091 · earlier learning",
       "L088 · earlier learning",
-      "L004 · earlier learning",
-      "L090 · challenge"
+      "L092 · high challenge"
     ],
     "visualAuditV2": true,
     "retrievalVisuals": [],
     "examVisuals": [],
-    "memoryCue": "For Q=(A AND B) OR C, evaluate X=A AND B first, then Q=X OR C.",
+    "memoryCue": "J277 IDE: editor writes; diagnostics locate faults; translator prepares; run-time executes and tests.",
     "priorExam": null,
     "visualAuditV3": false
   }
