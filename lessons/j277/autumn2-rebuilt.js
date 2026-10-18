@@ -2367,6 +2367,186 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change sizeMB to 50 and predict the corrected estimate; state the simplifying assumption."
     ],
     "a": "The incorrect output is 1200. Transfer time at constant rate should be size ÷ rate: 120 ÷ 10 = 12 seconds. At 50 MB: 5 seconds. MB/s means megabytes per second; the simplified estimate ignores overhead and network variability."
+  },
+  "080": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system memory allocation",
+    "q": "Use a trace table to model three simple RAM allocations.",
+    "code": "freeMB = 400\nfor application = 1 to 3\n    freeMB = freeMB - 50\nnext application\nprint(freeMB)",
+    "p": [
+      "Record freeMB after each iteration.",
+      "Predict the final output.",
+      "Change the allocation to 100 MB per application and refine the trace."
+    ],
+    "a": "Free memory: 400 → 350 → 300 → 250, so output 250 MB. With 100 MB allocations, values are 300, 200, 100 MB; output is 100. Real operating systems manage memory allocation using more sophisticated mechanisms."
+  },
+  "081": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Image size calculation",
+    "q": "Find and correct the logic error in an uncompressed bitmap file-size calculator.",
+    "code": "width = 100\nheight = 100\ncolourDepth = 8\nbits = width * height * colourDepth\nbytes = bits * 8\nprint(bytes)",
+    "p": [
+      "Predict the incorrect output.",
+      "Correct the single incorrect operator.",
+      "Change width to 200 and predict the corrected byte count."
+    ],
+    "a": "Pixel data is 100 × 100 × 8 = 80,000 bits. Incorrect multiplication gives 640,000. Correct statement: bytes = bits / 8, giving 10,000 bytes. At width 200, corrected result is 20,000 bytes. File metadata is excluded."
+  },
+  "082": {
+    "paper1Ref": "1.1",
+    "paper1Topic": "CPU registers",
+    "q": "Trace linear search through a list of CPU register names.",
+    "code": "array registers = [\"MAR\",\"MDR\",\"PC\",\"ACC\"]\ntarget = \"PC\"\nfound = -1\nfor i = 0 to 3\n    if registers[i] == target AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
+    "p": [
+      "Predict the index reported.",
+      "Change target to \"ACC\" and predict again.",
+      "State the purpose of the PC and ACC registers."
+    ],
+    "a": "Searching PC finds index 2; ACC finds index 3. PC stores the address of the next instruction; ACC stores results of calculations. The array need not be sorted for linear search."
+  },
+  "083": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Binary place values",
+    "q": "Use binary search to locate a value in a sorted list of binary place values.",
+    "code": "array values = [1,2,4,8,16,32,64,128]\ntarget = 32\nlow = 0\nhigh = 7\nfound = -1\nwhile low <= high AND found == -1\n    mid = (low + high) DIV 2\n    if values[mid] == target then\n        found = mid\n    elseif values[mid] < target then\n        low = mid + 1\n    else\n        high = mid - 1\n    endif\nendwhile\nprint(found)",
+    "p": [
+      "Predict the index printed.",
+      "Change target to 128.",
+      "Explain why both the list ordering and these place values matter."
+    ],
+    "a": "Target 32 is at zero-based index 5; target 128 is at index 7. The list is sorted, a prerequisite for binary search. The numbers 1,2,4,8,16,32,64,128 are powers of two used as binary place values."
+  },
+  "084": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Secondary storage performance",
+    "q": "Trace one bubble-sort pass over three example storage read rates (MB/s).",
+    "code": "array speeds = [100,30,200]\nfor i = 0 to 1\n    if speeds[i] > speeds[i+1] then\n        temp = speeds[i]\n        speeds[i] = speeds[i+1]\n        speeds[i+1] = temp\n    endif\nnext i\nprint(speeds[0])\nprint(speeds[1])\nprint(speeds[2])",
+    "p": [
+      "Predict all outputs after one pass.",
+      "Change the first speed to 50 and repeat the trace.",
+      "Explain why read speed alone is insufficient to choose a storage device."
+    ],
+    "a": "Original one-pass result: [30,100,200]. Changing the first value to 50 gives [30,50,200]. Storage selection also considers capacity, durability, reliability, portability and cost. These are illustrative rates, not fixed values for a storage technology."
+  },
+  "085": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network latency",
+    "q": "Trace an insertion-sort step ordering example network latencies (milliseconds).",
+    "code": "array latencyMs = [40,10,20]\nkey = latencyMs[1]\nlatencyMs[1] = latencyMs[0]\nlatencyMs[0] = key\nprint(latencyMs[0])\nprint(latencyMs[1])",
+    "p": [
+      "Predict the two outputs.",
+      "Change the starting list to [60,25,50] and trace the same step.",
+      "On paper finish inserting the third value and explain whether a lower latency is generally preferable."
+    ],
+    "a": "Original outputs are 10 and 40; finish the ordering as [10,20,40] ms. Changed list prints 25 and 60; finish [25,50,60] ms. Lower latency generally helps time-sensitive network interactions. This snippet models only the first insertion."
+  },
+  "086": {
+    "paper1Ref": "1.1",
+    "paper1Topic": "CPU cache",
+    "q": "Predict the first number selected while merging two sorted lists of example CPU cache sizes in MB.",
+    "code": "array left = [4,8]\narray right = [2,6]\nif left[0] < right[0] then\n    print(left[0])\nelse\n    print(right[0])\nendif",
+    "p": [
+      "Predict the first value printed.",
+      "Change right[0] to 5 and predict again.",
+      "Give the merged order of the original lists and explain why CPUs use cache."
+    ],
+    "a": "Initially 2 prints first. If right[0] becomes 5, the first printed value is 4. Original merged order: [2,4,6,8]. CPU cache stores frequently used data and instructions near the CPU, reducing access time; cache size alone does not determine overall speed."
+  },
+  "087": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network protocols",
+    "q": "Trace a search through a sorted list of common network protocols.",
+    "code": "array protocols = [\"DNS\",\"FTP\",\"HTTP\",\"HTTPS\",\"SMTP\"]\nfound = -1\nfor i = 0 to 4\n    if protocols[i] == \"HTTPS\" AND found == -1 then\n        found = i\n    endif\nnext i\nprint(found)",
+    "p": [
+      "Predict the zero-based index printed.",
+      "Change the search target from HTTPS to DNS.",
+      "Explain how HTTPS differs from HTTP for data travelling between browser and website."
+    ],
+    "a": "HTTPS is at index 3; DNS at index 0. HTTPS uses encryption through TLS to protect web traffic in transit; HTTP does not provide this transport encryption. The sorted order also makes binary search possible, but this code uses linear search."
+  },
+  "088": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system access permissions",
+    "q": "Predict an AND condition in a simplified file-permission rule.",
+    "code": "signedIn = true\ncanReadFile = false\nif signedIn AND canReadFile then\n    print(\"File opened\")\nelse\n    print(\"Access denied\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Set canReadFile to true.",
+      "Replace AND with OR and explain the security weakness introduced."
+    ],
+    "a": "Initially Access denied; with canReadFile true, File opened. Using OR would grant access when only one condition is true, potentially bypassing a required permission check. Operating systems manage user accounts and file permissions."
+  },
+  "089": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Authentication and authorisation",
+    "q": "Use nested loops to generate a simple two-input access-control truth table.",
+    "code": "for A = 0 to 1\n    for B = 0 to 1\n        if A == 1 AND B == 1 then\n            print(1)\n        else\n            print(0)\n        endif\n    next B\nnext A",
+    "p": [
+      "Predict the four outputs in order.",
+      "Replace AND with OR and predict the outputs.",
+      "Explain what A=authenticated and B=authorised mean for allowing access."
+    ],
+    "a": "With AND: 0, 0, 0, 1 for pairs (0,0),(0,1),(1,0),(1,1). With OR: 0, 1, 1, 1. Authentication checks identity; authorisation checks permission. Both should hold in this simplified rule."
+  },
+  "090": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Network security events",
+    "q": "Evaluate a combined Boolean expression for a simplified security alert.",
+    "code": "suspiciousFile = false\nrepeatedFailures = true\nunknownDevice = true\nalert = suspiciousFile OR (repeatedFailures AND unknownDevice)\nif alert then\n    print(\"Investigate\")\nelse\n    print(\"No alert\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change unknownDevice to false.",
+      "Change suspiciousFile to true as well; explain how OR and AND combine the conditions."
+    ],
+    "a": "Initially repeatedFailures AND unknownDevice is true, so Investigate. If unknownDevice is false, and suspiciousFile remains false, No alert. Changing suspiciousFile to true gives Investigate. This illustrates rule evaluation, not an actual security detection system."
+  },
+  "091": {
+    "paper1Ref": "1.1",
+    "paper1Topic": "CPU processing",
+    "q": "Trace a short high-level program and relate it to CPU execution.",
+    "code": "cycles = 4\ncycles = cycles + 2\nprint(cycles)",
+    "p": [
+      "Predict the final output.",
+      "Change the first assignment to 7.",
+      "Explain why a high-level language program must be translated into executable instructions before the CPU runs it."
+    ],
+    "a": "Output is 6, or 9 after changing the first assignment to 7. High-level source must be translated to machine-executable instructions. The variable named cycles is merely program data; it is not a measurement of actual CPU clock cycles."
+  },
+  "092": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Data units and storage",
+    "q": "Predict the output of source code that converts bytes to kilobytes.",
+    "code": "bytes = 8000\nkilobytes = bytes / 1000\nprint(kilobytes)",
+    "p": [
+      "Predict the output.",
+      "Change bytes to 12500.",
+      "Explain whether a compiler or interpreter changes the mathematical conversion being carried out."
+    ],
+    "a": "8000 bytes gives 8 KB; 12500 bytes gives 12.5 KB under the J277 decimal unit convention. The program's arithmetic is the same regardless of translation method, assuming equivalent execution."
+  },
+  "093": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Debugging image file sizes",
+    "q": "Find the bug in a bitmap byte-size calculator using your IDE.",
+    "code": "width = 20\nheight = 10\ndepth = 8\nbits = width * height * depth\nbytes = bits * 8\nprint(bytes)",
+    "p": [
+      "Predict the incorrect result before running.",
+      "Correct the calculation and verify the byte count.",
+      "Double width, run the program and explain the change in stored pixel data."
+    ],
+    "a": "bits = 20 × 10 × 8 = 1600. Incorrect bytes = 1600 × 8 = 12800. Correct bytes = bits / 8 = 200. Doubling width doubles the pixel data to 400 bytes. A debugging tool helps locate and correct logic errors."
+  },
+  "095": {
+    "paper1Ref": "1.6",
+    "paper1Topic": "Data retention and privacy",
+    "q": "Trace a program applying an organisation's example data-retention policy.",
+    "code": "daysStored = 40\npolicyLimitDays = 30\nif daysStored > policyLimitDays then\n    print(\"Review for deletion\")\nelse\n    print(\"Within policy\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change daysStored to 20 and then 30.",
+      "Explain why 30 days is only this organisation's example policy limit, not a universal legal retention period."
+    ],
+    "a": "40 days gives Review for deletion. Values 20 and 30 give Within policy. Retention periods should be appropriate to the purpose and relevant requirements; 30 days is only an illustrative policy value here."
   }
 };
  function load(number,mode){
