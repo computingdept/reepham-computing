@@ -12,14 +12,14 @@
       "identify"
     ],
     "o": [
-      "Recall the essential ideas of hexadecimal.",
-      "Apply a clearly modelled method.",
-      "Complete independent OCR J277-style questions."
+      "Read hexadecimal digits 0–9 and A–F and explain why hex is used.",
+      "Convert between eight-bit binary and hexadecimal in four-bit groups.",
+      "Convert a two-digit hexadecimal value to denary using place values."
     ],
     "c": [
       [
         "Hex uses base 16",
-        "Hexadecimal digits are 0–9 and A–F, where A=10 through F=15."
+        "Hexadecimal is base 16, using 0–9 and A–F (10–15). The booklet uses colour code #00FF00 to show a practical use: hex shortens binary for humans; computers still store binary."
       ],
       [
         "Four bits per digit",
@@ -261,20 +261,20 @@
     ],
     "r": [
       [
-        "What is the eight-bit result of shifting 00000101 left one place?",
-        "00001010."
+        "Shift eight-bit 00000101 left by two positions.",
+        "00010100."
       ],
       [
-        "How many bits are in a byte?",
-        "8 bits."
+        "What happens to bits shifted beyond the end of a fixed-width number?",
+        "They are lost/discarded."
       ],
       [
-        "State what volatile means.",
-        "Loses data on power loss."
+        "Calculate 00101101 + 00000111 in eight-bit binary.",
+        "00110100."
       ],
       [
-        "Convert 11111111 binary into hexadecimal.",
-        "FF."
+        "Explain why 11111111 + 00000001 causes overflow in eight bits.",
+        "The answer is 256, which needs nine bits; the ninth carry cannot fit."
       ]
     ],
     "refs": [
@@ -283,7 +283,7 @@
       "L096 · earlier learning",
       "Previously taught · challenge"
     ],
-    "memoryCue": "Write one hex digit per nibble. Retain leading zeros in binary groups.",
+    "memoryCue": "Booklet: hex is shorter and easier for humans to read — it does not replace binary. One nibble = one hex digit. A=10, B=11, C=12, D=13, E=14, F=15. Example colour #00FF00 means full green.",
     "retrievalVisuals": [],
     "examVisuals": [],
     "requiredVisuals": [
@@ -304,6 +304,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "101",
+      "q": "Perform a logical left shift of 00001011 by two positions in an eight-bit register. State the result. [2]",
+      "a": "Shift all bits left two positions and insert zeros on the right [1]; 00101100 [1]."
+    },
+    "challenge": {
+      "n": 102,
+      "coreHint": "Separate the byte into two nibbles before converting either one.",
+      "stretch": {
+        "task": "Convert 11110000 to hexadecimal, then to denary. Explain the two four-bit groups.",
+        "hint": "The first nibble is 1111 and the second is 0000.",
+        "answer": "1111 = F and 0000 = 0, so F0. In denary, 15×16 + 0 = 240."
+      },
+      "mastery": {
+        "task": "A colour is stored as #00FF00. Explain the three pairs, then change it to pure red and explain why hex is convenient for this representation.",
+        "hint": "Each pair is an eight-bit red, green or blue channel ranging from 00 to FF.",
+        "answer": "#00FF00: red 00=0, green FF=255, blue 00=0. Pure red is #FF0000. Six hex symbols compactly represent 24 bits of RGB colour."
+      }
+    }
   }
 }
