@@ -1973,16 +1973,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "800 × 600 × 8 = 3,840,000 bits. At 16 bits per pixel: 7,680,000 bits. Width, height and colour depth matter; the filename does not affect the pixel-data calculation. File metadata may add extra bytes."
   },
   "046": {
-    "paper1Ref": "1.3",
-    "paper1Topic": "Network performance",
-    "q": "Trace the steps estimating ideal transfer time at a fixed data rate.",
-    "code": "fileSizeMB = 20\nrateMBPerSecond = 5\nseconds = fileSizeMB / rateMBPerSecond\nprint(seconds)",
+    "paper1Ref": "1.6",
+    "paper1Topic": "Environmental impacts of technology",
+    "q": "Break this environmental-impact calculation into inputs, processing and output.",
+    "code": "retiredDevices = 12\nreused = 4\nrecycled = 3\nremaining = retiredDevices - reused - recycled\nprint(remaining)",
     "p": [
-      "Predict the estimated transfer time in seconds.",
-      "Change fileSizeMB to 35.",
-      "State why this simplified algorithm ignores network overhead and interruptions."
+      "Predict how many retired devices remain unaccounted for.",
+      "Change recycled to 5 and calculate again.",
+      "Explain why reuse, repair and appropriate recycling can reduce electronic waste."
     ],
-    "a": "20 ÷ 5 = 4 seconds; 35 ÷ 5 = 7 seconds. This assumes a constant rate of 5 megabytes per second (MB/s), with no overhead or delays."
+    "a": "Initially 12 − 4 − 3 = 5 devices remain. If recycled rises to 5, the remainder is 3. Reuse, repair and recycling may reduce waste and demand for new materials. This example treats reused and recycled groups as separate."
   },
   "047": {
     "paper1Ref": "1.2",
@@ -2154,15 +2154,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "062": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Bitmap data and capacity",
-    "q": "Combine arithmetic and selection to decide whether uncompressed image data fits in a given capacity.",
-    "code": "width = 20\nheight = 10\ndepth = 8\nbytes = width * height * depth / 8\nif bytes <= 300 then\n    print(\"Fits\")\nelse\n    print(\"Too large\")\nendif",
+    "paper1Topic": "Lossy and lossless compression",
+    "q": "Calculate the storage saved by compressing a file, then use selection to check that it is smaller.",
+    "code": "originalBytes = 1000\ncompressedBytes = 700\nsavedBytes = originalBytes - compressedBytes\nif compressedBytes < originalBytes then\n    print(savedBytes)\nelse\n    print(\"No saving\")\nendif",
     "p": [
-      "Predict the size in bytes and printed output.",
-      "Double the width and predict again.",
-      "Extend by printing the number of bytes before the decision."
+      "Predict the output and convert the saving to a percentage of the original.",
+      "Change compressedBytes to 900 and predict.",
+      "Explain the difference between lossy and lossless compression."
     ],
-    "a": "20 × 10 × 8 ÷ 8 = 200 bytes, so Fits. Width 40 gives 400 bytes, so Too large. Print bytes before the IF to display the calculated value. This excludes file header and other metadata."
+    "a": "Initially 300 bytes saved, which is 300 ÷ 1000 × 100 = 30% of the original. With 900 compressed bytes, 100 bytes (10%) are saved. Lossless compression preserves all original information so the original can be reconstructed; lossy compression permanently removes some data."
   },
   "063": {
     "paper1Ref": "1.3",
@@ -2345,16 +2345,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "255 is Accepted. -1 and 256 are Rejected; 0, 1, 128, 254 and 255 are Accepted. Boundaries for the stated rule are 0 and 255; 128 is normal valid input. An erroneous value would have the wrong data type, such as a non-numeric word."
   },
   "078": {
-    "paper1Ref": "1.2",
-    "paper1Topic": "Storage capacity",
-    "q": "Use arithmetic, selection and validation in a mini storage-capacity project.",
-    "code": "capacityGB = 32\nfileSizeGB = 12\nif fileSizeGB >= 0 AND fileSizeGB <= capacityGB then\n    print(\"Can store file\")\nelse\n    print(\"Cannot store file\")\nendif",
+    "paper1Ref": "1.6",
+    "paper1Topic": "Software licensing",
+    "q": "Use a selection and validation check for a hypothetical per-device software licence.",
+    "code": "licensedDevices = 5\ninstalledDevices = 8\nif installedDevices >= 0 AND installedDevices <= licensedDevices then\n    print(\"Within licence\")\nelse\n    print(\"Check installations\")\nendif",
     "p": [
-      "Predict the result.",
-      "Test fileSizeGB = 0 and 40.",
-      "Extend the program to calculate and print the free space remaining when the file fits."
+      "Predict the initial output.",
+      "Test installedDevices = 3 and -1.",
+      "Extend by printing how many installations exceed the licence count when installedDevices > licensedDevices."
     ],
-    "a": "12 GB fits within 32 GB, so Can store file. A 0 GB value passes this simplified range check, while 40 GB fails. If the file fits, remaining space is capacityGB − fileSizeGB = 20 GB for the original values."
+    "a": "At 8 installations with a limit of 5: Check installations. A count of 3 gives Within licence; -1 is rejected as invalid. For 8 installations, the excess is 8 − 5 = 3. Software licences have different terms; this is only a hypothetical per-device licence."
   },
   "079": {
     "paper1Ref": "1.3",
@@ -2526,15 +2526,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "093": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Debugging image file sizes",
-    "q": "Find the bug in a bitmap byte-size calculator using your IDE.",
-    "code": "width = 20\nheight = 10\ndepth = 8\nbits = width * height * depth\nbytes = bits * 8\nprint(bytes)",
+    "paper1Topic": "Logical binary shifts",
+    "q": "Use the IDE to debug an incorrect calculation intended to model a two-place logical left shift.",
+    "code": "value = 8\nplaces = 2\nresult = value * places\nprint(result)",
     "p": [
-      "Predict the incorrect result before running.",
-      "Correct the calculation and verify the byte count.",
-      "Double width, run the program and explain the change in stored pixel data."
+      "Predict the incorrect output.",
+      "Correct the expression for a two-place left shift without 8-bit overflow.",
+      "Change value to 10; predict and run the corrected output."
     ],
-    "a": "bits = 20 × 10 × 8 = 1600. Incorrect bytes = 1600 × 8 = 12800. Correct bytes = bits / 8 = 200. Doubling width doubles the pixel data to 400 bytes. A debugging tool helps locate and correct logic errors."
+    "a": "Incorrect result: 8 × 2 = 16. A logical left shift by two places multiplies a non-overflowing unsigned value by 2² = 4. Correct expression: result = value * 4, giving 32 for value 8 and 40 for value 10. The code models the arithmetic effect; it does not perform a bitwise shift instruction."
   },
   "095": {
     "paper1Ref": "1.6",
