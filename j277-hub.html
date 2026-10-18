@@ -179,7 +179,7 @@ function showLessonInfo(target,n){
  if(task){const c=document.createElement('div');c.className='lesson-preview-coding';const ch=document.createElement('b');ch.textContent='Code first · OCR ERL';const ct=document.createElement('p');ct.textContent=task;c.append(ch,ct);target.append(c);}
 }
 
-/* Show section colours consistently across both years of the J277 course. */
+/* Year 10 colour map; Year 11 metadata needs separate confirmation. */
 const specSections=[
  {code:'1.1',name:'Systems architecture',color:'#4264AD'},
  {code:'1.2',name:'Memory & storage',color:'#3289B8'},
@@ -196,7 +196,7 @@ const specSections=[
 const specPalette=Object.fromEntries(specSections.map(item=>[item.code,item.color]));
 function sectionForLesson(n){
  const ref=String(lessonInfo(n)[1]||'');
- const sections=[...new Set(ref.match(/[12]\\.[1-6]/g)||[])];
+ const sections=[...new Set(ref.match(/[12]\.[1-6]/g)||[])];
  // A mixed-topic assessment is not the same as a single covered section.
  return sections.length===1&&specPalette[sections[0]]?sections[0]:'Mixed';
 }
@@ -328,16 +328,16 @@ tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.r
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 function renderLessons(){
  closeLessonSheet();
- const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
+ const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';document.getElementById('specLegendMount').hidden=(year!==10);let n=p.start,total=0;
  for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');
-   for(let x=n;x<=end;x++){const live=liveMap[x],specCode=sectionForLesson(x);const el=document.createElement(live?'a':'div');el.className='lesson spec-tile '+(live?'live':'planned');el.style.setProperty('--spec-color',specPalette[specCode]||'#9aa6a1');el.textContent=pad(x);const shortCode=document.createElement('small');shortCode.className='spec-tile-code';shortCode.textContent=specCode==='Mixed'?'MIX':specCode;el.append(shortCode);if(live){el.href=live;el.setAttribute('aria-label','Open live lesson '+pad(x)+' · '+(specCode==='Mixed'?'mixed specification sections':('section '+specCode)));}else{el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='Mixed'?'mixed specification sections':('section '+specCode)));}const entry=document.createElement('div');entry.className='lesson-entry';
+   for(let x=n;x<=end;x++){const live=liveMap[x],mapped=year===10,specCode=mapped?sectionForLesson(x):'';const el=document.createElement(live?'a':'div');el.className='lesson '+(mapped?'spec-tile ':'')+(live?'live':'planned');el.textContent=pad(x);if(mapped){el.style.setProperty('--spec-color',specPalette[specCode]||'#9aa6a1');const shortCode=document.createElement('small');shortCode.className='spec-tile-code';shortCode.textContent=specCode==='Mixed'?'MIX':specCode;el.append(shortCode);}if(live){el.href=live;el.setAttribute('aria-label','Open live lesson '+pad(x)+(mapped?' · '+(specCode==='Mixed'?'mixed specification sections':'section '+specCode):''));}else if(mapped){el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='Mixed'?'mixed specification sections':'section '+specCode));}const entry=document.createElement('div');entry.className='lesson-entry';
    if(mobileLessonQuery.matches){
      if(live){
        el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,live,el);});
      }else{
        el.tabIndex=0;
        el.setAttribute('role','button');
-       el.setAttribute('aria-label','Preview planned lesson '+pad(x));
+       el.setAttribute('aria-label','Preview planned lesson '+pad(x)+(mapped?' · '+(specCode==='Mixed'?'mixed specification sections':'section '+specCode):''));
        el.addEventListener('click',()=>openLessonSheet(x,null,el));
        el.addEventListener('keydown',event=>{
          if(event.key==='Enter'||event.key===' '){
