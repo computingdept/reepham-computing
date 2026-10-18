@@ -1970,7 +1970,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change colourDepth to 16 and recalculate.",
       "Explain why the image file name is irrelevant when calculating pixel data size."
     ],
-    "a": "800 × 600 × 8 = 3,840,000 bits. At 16 bits per pixel: 7,680,000 bits. Width, height and colour depth matter; the filename does not affect the pixel-data calculation. File metadata may add extra bytes."
+    "a": "800 × 600 × 8 = 3,840,000 bits. At 16 bits per pixel: 7,680,000 bits. Width, height and colour depth matter; the filename does not affect the pixel-data calculation. File metadata may add extra bytes.",
+    "paper1Point": "1.2.4"
   },
   "046": {
     "paper1Ref": "1.6",
@@ -1982,7 +1983,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change recycled to 5 and calculate again.",
       "Explain why reuse, repair and appropriate recycling can reduce electronic waste."
     ],
-    "a": "Initially 12 − 4 − 3 = 5 devices remain. If recycled rises to 5, the remainder is 3. Reuse, repair and recycling may reduce waste and demand for new materials. This example treats reused and recycled groups as separate."
+    "a": "Initially 12 − 4 − 3 = 5 devices remain. If recycled rises to 5, the remainder is 3. Reuse, repair and recycling may reduce waste and demand for new materials. This example treats reused and recycled groups as separate.",
+    "paper1Point": "1.6.1"
   },
   "047": {
     "paper1Ref": "1.2",
@@ -1992,9 +1994,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "p": [
       "Predict the number of bits for the uncompressed mono sound sample.",
       "Change duration to 5 seconds.",
-      "Extend the code to output bytes as well."
+      "Extend the code to print bytes, then explain what bit depth tells us about each sound sample."
     ],
-    "a": "10 × 4 × 8 = 320 bits. At 5 seconds: 400 bits. To output bytes, add print(bits / 8); results are 40 bytes initially and 50 bytes after changing duration. This simplified formula assumes mono uncompressed audio."
+    "a": "10 × 4 × 8 = 320 bits. At 5 seconds: 400 bits. To output bytes, add print(bits / 8); results are 40 bytes initially and 50 bytes after changing duration. This simplified formula assumes mono uncompressed audio.\nBit depth gives the number of bits used to store each digital sample.",
+    "paper1Point": "1.2.4"
   },
   "048": {
     "paper1Ref": "1.1",
@@ -2084,7 +2087,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change fileSizeGB to 30.",
       "Explain why capacity alone does not determine which storage device is best."
     ],
-    "a": "35 > 32, so Too large. At 30 GB, Fits. Device selection also considers speed, reliability, durability, portability and cost."
+    "a": "35 > 32, so Too large. At 30 GB, Fits. Device selection also considers speed, reliability, durability, portability and cost.",
+    "paper1Point": "1.2.2"
   },
   "056": {
     "paper1Ref": "1.3",
@@ -2109,7 +2113,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the upper loop bound to 4.",
       "Explain why increasing colour depth increases an uncompressed bitmap's data size."
     ],
-    "a": "Outputs: 1000, 2000 and 3000 bits. Ending at 4 adds 4000 bits. Bitmap pixel data uses pixels × colour depth; each extra bit per pixel increases the total."
+    "a": "Outputs: 1000, 2000 and 3000 bits. Ending at 4 adds 4000 bits. Bitmap pixel data uses pixels × colour depth; each extra bit per pixel increases the total.",
+    "paper1Point": "1.2.4"
   },
   "058": {
     "paper1Ref": "1.4",
@@ -2121,7 +2126,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the limit to 2.",
       "Explain why limiting unsuccessful login attempts can help defend against brute-force attacks."
     ],
-    "a": "Outputs 1, 2, 3. Limit 2 outputs 1, 2. Repeated attempts can indicate a brute-force attack; rate limits or lockouts can help defend against it. The code only counts attempts."
+    "a": "Outputs 1, 2, 3. Limit 2 outputs 1, 2. Repeated attempts can indicate a brute-force attack; rate limits or lockouts can help defend against it. The code only counts attempts.",
+    "paper1Point": "1.4.1"
   },
   "059": {
     "paper1Ref": "1.1",
@@ -2172,7 +2178,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change compressedBytes to 900 and predict.",
       "Explain the difference between lossy and lossless compression."
     ],
-    "a": "Initially 300 bytes saved, which is 300 ÷ 1000 × 100 = 30% of the original. With 900 compressed bytes, 100 bytes (10%) are saved. Lossless compression preserves all original information so the original can be reconstructed; lossy compression permanently removes some data."
+    "a": "Initially 300 bytes saved, which is 300 ÷ 1000 × 100 = 30% of the original. With 900 compressed bytes, 100 bytes (10%) are saved. Lossless compression preserves all original information so the original can be reconstructed; lossy compression permanently removes some data.",
+    "paper1Point": "1.2.5"
   },
   "063": {
     "paper1Ref": "1.3",
@@ -2184,7 +2191,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the operation to substring(0,3).",
       "Explain what DNS does with a domain name when a browser needs the site's IP address."
     ],
-    "a": "substring(4,6) prints school; substring(0,3) prints www. DNS resolves domain names to IP addresses. This code manipulates a string; it does not itself perform a DNS lookup."
+    "a": "substring(4,6) prints school; substring(0,3) prints www. DNS resolves domain names to IP addresses. This code manipulates a string; it does not itself perform a DNS lookup.",
+    "paper1Point": "1.3.1"
   },
   "064": {
     "paper1Ref": "1.2",
@@ -2209,7 +2217,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the index to 3.",
       "Explain what PC and ACC store in the CPU."
     ],
-    "a": "Index 2 gives PC; index 3 gives ACC. The Program Counter stores the address of the next instruction; the accumulator stores results of calculations."
+    "a": "Index 2 gives PC; index 3 gives ACC. The Program Counter stores the address of the next instruction; the accumulator stores results of calculations.",
+    "paper1Point": "1.1.1"
   },
   "066": {
     "paper1Ref": "1.3",
@@ -2245,9 +2254,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "p": [
       "Predict the two outputs.",
       "Change networkType to \"WAN\" and predict the second output.",
-      "Explain how grouping these related fields into a record would improve organisation."
+      "Explain why these related fields could form a record, and state one difference between a LAN and a WAN."
     ],
-    "a": "Outputs OfficePC and LAN; after the change, OfficePC and WAN. A record could group name, IP address and network type under one item. A LAN normally covers a limited geographic area, often one site."
+    "a": "Outputs OfficePC and LAN; after the change, OfficePC and WAN. A record could group name, IP address and network type under one item. A LAN normally covers a limited geographic area, often one site.\nA LAN covers a limited local area, such as a school site; a WAN spans a larger geographic area and can connect multiple LANs.",
+    "paper1Point": "1.3.1"
   },
   "069": {
     "paper1Ref": "1.2",
@@ -2272,7 +2282,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the argument to \"Scanner\".",
       "Add a second call for \"Keyboard\" and recall what a device driver enables the OS to do."
     ],
-    "a": "Initially Connected: Printer. Scanner changes the output to Connected: Scanner. An additional call prints Connected: Keyboard. A device driver enables the operating system to communicate with and control a peripheral."
+    "a": "Initially Connected: Printer. Scanner changes the output to Connected: Scanner. An additional call prints Connected: Keyboard. A device driver enables the operating system to communicate with and control a peripheral.",
+    "paper1Point": "1.5.1"
   },
   "071": {
     "paper1Ref": "1.3",
@@ -2295,9 +2306,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "p": [
       "Predict what appears on screen.",
       "Change the line written to \"ROM is non-volatile\".",
-      "Add another writeLine before close; distinguish console output from data written to the file."
+      "Add another writeLine before close, and state one operating-system file-management function used here."
     ],
-    "a": "The console prints Saved. The file receives RAM is volatile initially or ROM is non-volatile after the edit. Adding another writeLine adds a further line to the file. File management is an operating system function; this is a simplified teaching example."
+    "a": "The console prints Saved. The file receives RAM is volatile initially or ROM is non-volatile after the edit. Adding another writeLine adds a further line to the file. File management is an operating system function; this is a simplified teaching example.\nThe operating system manages file creation, naming, saving, organisation and access; writing to a named file uses file-management services.",
+    "paper1Point": "1.5.1"
   },
   "073": {
     "paper1Ref": "1.6",
@@ -2335,7 +2347,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change octet to 255.",
       "Test -1 and 0 and identify which boundary values are accepted."
     ],
-    "a": "256 produces Invalid range. 255 and 0 produce Valid range, while -1 produces Invalid range. This tests only one octet; a full IPv4 address needs exactly four valid octets."
+    "a": "256 produces Invalid range. 255 and 0 produce Valid range, while -1 produces Invalid range. This tests only one octet; a full IPv4 address needs exactly four valid octets.",
+    "paper1Point": "1.3.2"
   },
   "076": {
     "paper1Ref": "1.6",
@@ -2384,9 +2397,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "p": [
       "Predict the incorrect output.",
       "Correct the logic error in the formula.",
-      "Change sizeMB to 50 and predict the corrected estimate; state the simplifying assumption."
+      "Change sizeMB to 50, predict the corrected result, and name a factor that can reduce real network performance."
     ],
-    "a": "The incorrect output is 1200. Transfer time at constant rate should be size ÷ rate: 120 ÷ 10 = 12 seconds. At 50 MB: 5 seconds. MB/s means megabytes per second; the simplified estimate ignores overhead and network variability."
+    "a": "The incorrect output is 1200. Transfer time at constant rate should be size ÷ rate: 120 ÷ 10 = 12 seconds. At 50 MB: 5 seconds. MB/s means megabytes per second; the simplified estimate ignores overhead and network variability.\nReal transfer rates may be reduced by limited bandwidth, network congestion or many devices sharing the connection.",
+    "paper1Point": "1.3.1"
   },
   "080": {
     "paper1Ref": "1.5",
@@ -2424,7 +2438,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change target to \"ACC\" and predict again.",
       "State the purpose of the PC and ACC registers."
     ],
-    "a": "Searching PC finds index 2; ACC finds index 3. PC stores the address of the next instruction; ACC stores results of calculations. The array need not be sorted for linear search."
+    "a": "Searching PC finds index 2; ACC finds index 3. PC stores the address of the next instruction; ACC stores results of calculations. The array need not be sorted for linear search.",
+    "paper1Point": "1.1.1"
   },
   "083": {
     "paper1Ref": "1.2",
@@ -2436,7 +2451,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change target to 128.",
       "Explain why both the list ordering and these place values matter."
     ],
-    "a": "Target 32 is at zero-based index 5; target 128 is at index 7. The list is sorted, a prerequisite for binary search. The numbers 1,2,4,8,16,32,64,128 are powers of two used as binary place values."
+    "a": "Target 32 is at zero-based index 5; target 128 is at index 7. The list is sorted, a prerequisite for binary search. The numbers 1,2,4,8,16,32,64,128 are powers of two used as binary place values.",
+    "paper1Point": "1.2.4"
   },
   "084": {
     "paper1Ref": "1.3",
@@ -2461,7 +2477,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change the starting list to [60,25,50] and trace the same step.",
       "On paper finish inserting the third value and explain whether a lower latency is generally preferable."
     ],
-    "a": "Original outputs are 10 and 40; finish the ordering as [10,20,40] ms. Changed list prints 25 and 60; finish [25,50,60] ms. Lower latency generally helps time-sensitive network interactions. This snippet models only the first insertion."
+    "a": "Original outputs are 10 and 40; finish the ordering as [10,20,40] ms. Changed list prints 25 and 60; finish [25,50,60] ms. Lower latency generally helps time-sensitive network interactions. This snippet models only the first insertion.",
+    "paper1Point": "1.3.1"
   },
   "086": {
     "paper1Ref": "1.1",
@@ -2473,7 +2490,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Change right[0] to 5 and predict again.",
       "Give the merged order of the original lists and explain why CPUs use cache."
     ],
-    "a": "Initially 2 prints first. If right[0] becomes 5, the first printed value is 4. Original merged order: [2,4,6,8]. CPU cache stores frequently used data and instructions near the CPU, reducing access time; cache size alone does not determine overall speed."
+    "a": "Initially 2 prints first. If right[0] becomes 5, the first printed value is 4. Original merged order: [2,4,6,8]. CPU cache stores frequently used data and instructions near the CPU, reducing access time; cache size alone does not determine overall speed.",
+    "paper1Point": "1.1.1"
   },
   "087": {
     "paper1Ref": "1.3",
@@ -2511,7 +2529,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Replace AND with OR and predict the outputs.",
       "Explain what A=authenticated and B=authorised mean for allowing access."
     ],
-    "a": "With AND: 0, 0, 0, 1 for pairs (0,0),(0,1),(1,0),(1,1). With OR: 0, 1, 1, 1. Authentication checks identity; authorisation checks permission. Both should hold in this simplified rule."
+    "a": "With AND: 0, 0, 0, 1 for pairs (0,0),(0,1),(1,0),(1,1). With OR: 0, 1, 1, 1. Authentication checks identity; authorisation checks permission. Both should hold in this simplified rule.",
+    "paper1Point": "1.4.2"
   },
   "090": {
     "paper1Ref": "1.4",
@@ -2562,7 +2581,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Correct the expression for a two-place left shift without 8-bit overflow.",
       "Change value to 10; predict and run the corrected output."
     ],
-    "a": "Incorrect result: 8 × 2 = 16. A logical left shift by two places multiplies a non-overflowing unsigned value by 2² = 4. Correct expression: result = value * 4, giving 32 for value 8 and 40 for value 10. The code models the arithmetic effect; it does not perform a bitwise shift instruction."
+    "a": "Incorrect result: 8 × 2 = 16. A logical left shift by two places multiplies a non-overflowing unsigned value by 2² = 4. Correct expression: result = value * 4, giving 32 for value 8 and 40 for value 10. The code models the arithmetic effect; it does not perform a bitwise shift instruction.",
+    "paper1Point": "1.2.4"
   },
   "095": {
     "paper1Ref": "1.6",
