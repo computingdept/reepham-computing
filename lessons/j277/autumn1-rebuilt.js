@@ -13,7 +13,55 @@
  const pill=(x,y,w,h,label,color="#e6f3eb",font=17)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${color}" stroke="#92b4a0"/><text x="${x+w/2}" y="${y+h/2+font/3}" fill="#1c573e" font-size="${font}" font-weight="800" text-anchor="middle" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
- function diagram(kind){
+ 
+ function guideMatchedDiagram(kind,phase){
+  const card=(x,y,w,h,label,fill="#e4f2e9",font=18)=>pill(x,y,w,h,label,fill,font);
+  const bar=(label,expression,result)=>{
+   return svgScene(label,
+    note(23,35,label,20)+
+    card(22,58,515,48,expression,"#e0eef9",17)+
+    '<path d="M280 107 V143 M272 134 L280 143 L288 134" fill="none" stroke="#337a65" stroke-width="3"/>'+
+    card(85,152,390,55,result,"#e4f2e9",22));
+  };
+  if(kind==="chars"){
+    const rows=phase==="model"?[["B","66","01000010"],["C","67","01000011"],["NEXT","+1","ONE CODE ON"]]:
+      phase==="guided"?[["H","72","01001000"],["I","73","01001001"],["NEXT","+1","ONE CODE ON"]]:
+      [["A","65","01000001"],["B","66","01000010"],["C","67","01000011"]];
+    return svgScene("ASCII capital letters: consecutive codes shown in eight-bit form",
+      note(31,30,"CAPITAL",16)+note(202,30,"DENARY",16)+note(390,30,"8-BIT FORM",16)+
+      rows.map((r,i)=>card(19,45+i*54,129,43,r[0],"#e4f0e8",19)+card(168,45+i*54,148,43,r[1],"#e0eef9",18)+card(329,45+i*54,211,43,r[2],"#fff0d1",r[2].length>12?14:19)).join(""));
+  }
+  if(kind==="pixels"&&phase==="model"){
+    const cells=Array.from({length:12},(_,i)=>{const x=32+(i%4)*59,y=53+Math.floor(i/4)*48;return '<rect x="'+x+'" y="'+y+'" width="54" height="44" rx="4" fill="'+(["#c9e7d6","#93c1e2","#f3d38c","#e3d5ec"][i%4])+'" stroke="#658c78" stroke-width="1.7"/>';}).join("");
+    return svgScene("4 by 3 bitmap, 12 pixels at 2 bits per pixel",
+      note(29,34,"4 × 3 PIXELS",19)+cells+note(310,83,"12 pixels",22)+note(310,126,"2 bits each",19)+note(310,167,"4 colour codes",18)+note(306,210,"24 bits raw",19));
+  }
+  if(kind==="pixels"&&phase==="guided"){
+    return bar("COUNT PIXELS · GUIDED","6 pixels wide × 4 pixels high","24 PIXELS");
+  }
+  if(kind==="image-size"){
+    if(phase==="model")return bar("I DO · RAW IMAGE SIZE","200 × 100 pixels × 8 bits/pixel","160,000 bits = 20,000 bytes");
+    if(phase==="guided")return bar("WE DO · RAW IMAGE SIZE","40 × 20 pixels × 4 bits/pixel","3,200 bits = 400 bytes");
+    return bar("BOOKLET METHOD · IMAGE SIZE","8 × 8 pixels × 2 bits/pixel","128 bits = 16 bytes");
+  }
+  if(kind==="audio-size"){
+    if(phase==="model")return bar("I DO · MONO SOUND SIZE","1,000 samples/s × 3 s × 8 bits","24,000 bits = 3,000 bytes");
+    if(phase==="guided")return bar("WE DO · MONO SOUND SIZE","2,000 samples/s × 2 s × 4 bits","16,000 bits = 2,000 bytes");
+    return bar("BOOKLET METHOD · MONO SOUND","20 samples/s × 100 s × 8 bits","16,000 bits = 2,000 bytes");
+  }
+  if(kind==="shift"&&phase==="guided"){
+    const bits="00101000";
+    return svgScene("8-bit right shift: 00101000 becomes 00010100",
+      note(25,33,"8-BIT SHIFT · RIGHT 1",20)+
+      [128,64,32,16,8,4,2,1].map((v,i)=>card(20+i*65,55,60,43,bits[i],"#e0eef9",22)).join("")+
+      '<path d="M280 106 V141 M271 132 L280 142 L289 132" stroke="#b37f3d" stroke-width="4" fill="none"/>'+
+      note(83,175,"00101000  →  00010100",21)+note(152,210,"40 ÷ 2 = 20",19));
+  }
+  return null;
+ }
+ function diagram(kind,phase="reference"){
+  const aligned=guideMatchedDiagram(kind,phase);if(aligned)return aligned;
+
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
    return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
@@ -91,14 +139,14 @@
  }
  function newLearning(lesson){
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
-  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${diagram(lesson.vis)}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
+  return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${diagram(lesson.vis,"reference")}<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div></article><article class="nl-explanation">${stages}</article></div></section>`;
  }
  function iDo(lesson){
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span><h2>${escape(step)}</h2></div>`);
-  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span><h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}<span class="ido-example-count">Same example throughout</span></div><div class="ido-method">${steps}</div></article></div></section>`;
+  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span><h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis,"model")}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
-  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>Work it out together</h2><p>${escape(q)}</p>${i===0?diagram(lesson.vis):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`}<span class="wedo-example-count">Question stays on the left</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span><h2>${escape(answer)}</h2></div></div></article>`);
+  const cases=arr(lesson.w,([q,answer],i)=>`<article class="wedo-example"${i?' hidden':''}><div class="wedo-reference"><span class="phase-tag">WE DO ${i+1} OF ${lesson.w.length} · MINI-WHITEBOARDS</span><h2>Work it out together</h2><p>${escape(q)}</p>${i===0?diagram(lesson.vis,"guided"):`<p class="a1-we-hint">Use the same method as the I Do. Explain your first step before revealing.</p>`}</div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN · THINK AND WRITE</span><h2>Explain your method</h2><p>Work on your mini-whiteboard. Be ready to justify your answer.</p></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK · MODEL ANSWER</span><h2>${escape(answer)}</h2></div></div></article>`);
   return `<section id="we-do" class="page phase-wedo" data-phase-time="Guided practice"><div class="wedo-focus-deck">${cases}</div></section>`;
  }
  function youDo(lesson,number){
