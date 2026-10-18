@@ -1614,7 +1614,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
    <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
    <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
-   <p class="j277-code-start">Use your mini-whiteboard first. Predict, change, then extend.</p>
+   <p class="j277-code-start">Use your mini-whiteboard first. Predict, change, then extend.</p>${lesson.k.paper1Ref?`<p class="source-note">Paper 1 retrieval · ${escape(lesson.k.paper1Ref)} ${escape(lesson.k.paper1Topic||"")}</p>`:""}
    <p><strong>1 · Predict:</strong> ${escape(lesson.k.q)}</p>
    <pre class="arithmetic">${escape(lesson.k.code)}</pre>
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
@@ -1958,11 +1958,219 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    <script>const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;function showAnswer(i){current=Math.max(0,Math.min(i,stages.length-1));stages.forEach((stage,k)=>stage.hidden=k!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to lesson →':'Next answer →';counter.textContent='Answer '+(current+1)+' of '+stages.length}next.onclick=()=>current<stages.length-1?showAnswer(current+1):location.assign('index.html#you-do');previous.onclick=()=>showAnswer(current-1);document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next.click();if(e.key==='ArrowLeft')previous.click()});showAnswer(0);<\/script></body></html>`;
   document.open();document.write(html);document.close();
  }
+ /* Year 10 You Do: live Paper 1 retrieval through genuine OCR ERL programming. */
+ const interleaveY10={
+  "045": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Image representation",
+    "q": "Predict the uncompressed bitmap size in bits. Which details are essential for the algorithm?",
+    "code": "width = 800\nheight = 600\ncolourDepth = 8\nbits = width * height * colourDepth\nprint(bits)",
+    "p": [
+      "Predict the printed number and identify input, process and output.",
+      "Change colourDepth to 16 and recalculate.",
+      "Explain why the image file name is irrelevant when calculating pixel data size."
+    ],
+    "a": "800 × 600 × 8 = 3,840,000 bits. At 16 bits per pixel: 7,680,000 bits. Width, height and colour depth matter; the filename does not affect the pixel-data calculation. File metadata may add extra bytes."
+  },
+  "046": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network performance",
+    "q": "Trace the steps estimating ideal transfer time at a fixed data rate.",
+    "code": "fileSizeMB = 20\nrateMBPerSecond = 5\nseconds = fileSizeMB / rateMBPerSecond\nprint(seconds)",
+    "p": [
+      "Predict the estimated transfer time in seconds.",
+      "Change fileSizeMB to 35.",
+      "State why this simplified algorithm ignores network overhead and interruptions."
+    ],
+    "a": "20 ÷ 5 = 4 seconds; 35 ÷ 5 = 7 seconds. This assumes a constant rate of 5 megabytes per second (MB/s), with no overhead or delays."
+  },
+  "047": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Sound sampling",
+    "q": "Identify input, process and output in this sound-data calculation.",
+    "code": "sampleRate = 10\nduration = 4\nbitDepth = 8\nbits = sampleRate * duration * bitDepth\nprint(bits)",
+    "p": [
+      "Predict the number of bits for the uncompressed mono sound sample.",
+      "Change duration to 5 seconds.",
+      "Extend the code to output bytes as well."
+    ],
+    "a": "10 × 4 × 8 = 320 bits. At 5 seconds: 400 bits. To output bytes, add print(bits / 8); results are 40 bytes initially and 50 bytes after changing duration. This simplified formula assumes mono uncompressed audio."
+  },
+  "048": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Access control",
+    "q": "Predict the simplified access-check output and sketch its decision as a flowchart.",
+    "code": "hasPermission = false\nif hasPermission then\n    print(\"Access granted\")\nelse\n    print(\"Access denied\")\nendif",
+    "p": [
+      "Predict the exact output.",
+      "Set hasPermission to true and predict again.",
+      "Explain why a real system must check permissions before allowing access."
+    ],
+    "a": "False prints Access denied; true prints Access granted. The diamond in the flowchart tests hasPermission. Access controls help prevent unauthorised access; this is only a simplified model."
+  },
+  "049": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system memory management",
+    "q": "Trace the free-RAM variable as three processes are allocated 100 MB each.",
+    "code": "freeRAM = 600\nfor process = 1 to 3\n    freeRAM = freeRAM - 100\nnext process\nprint(freeRAM)",
+    "p": [
+      "Record freeRAM after each iteration.",
+      "Predict the final printed value.",
+      "Change each allocation to 150 MB and complete a new trace table."
+    ],
+    "a": "Free RAM follows 600 → 500 → 400 → 300 MB, so output is 300. Allocating 150 MB three times gives 600 → 450 → 300 → 150 MB. The code models a simplified allocation, not an actual operating system."
+  },
+  "051": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Image file size",
+    "q": "Predict the output of this sequence that calculates uncompressed bitmap data size.",
+    "code": "width = 10\nheight = 10\ncolourDepth = 8\nbits = width * height * colourDepth\nprint(bits)",
+    "p": [
+      "Predict the output and state its unit.",
+      "Change height to 20.",
+      "Extend with another print statement to display the size in bytes."
+    ],
+    "a": "Original: 10 × 10 × 8 = 800 bits. Changing height to 20 gives 1,600 bits. print(bits / 8) gives 100 bytes originally or 200 bytes after the change, excluding metadata."
+  },
+  "052": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "RAM allocation",
+    "q": "Trace how a variable represents remaining RAM after an application loads.",
+    "code": "freeMB = 1024\napplicationMB = 256\nfreeMB = freeMB - applicationMB\nprint(freeMB)",
+    "p": [
+      "Predict the output.",
+      "Change applicationMB to 512.",
+      "Add a second allocation of 128 MB and print the final free space."
+    ],
+    "a": "Initially 1024 − 256 = 768 MB. Changing to 512 gives 512 MB. A further 128 MB allocation gives 384 MB after the changed example. RAM holds working data for running programs; this is a simplified model."
+  },
+  "053": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Storage units",
+    "q": "Trace the type conversion and storage calculation.",
+    "code": "fileKB = int(\"500\")\nnumberOfFiles = 3\nprint(fileKB * numberOfFiles)",
+    "p": [
+      "Predict the total number of kilobytes.",
+      "Change numberOfFiles to 4.",
+      "Extend the program to print the total in megabytes (1 MB = 1000 KB)."
+    ],
+    "a": "int(\"500\") produces integer 500. Three files require 1,500 KB; four require 2,000 KB. For megabytes, add print((fileKB * numberOfFiles) / 1000): 2 MB for four files."
+  },
+  "054": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "IPv4 addresses",
+    "q": "Predict whether this single IPv4 octet passes a numerical range check.",
+    "code": "octet = 258\nif octet >= 0 AND octet <= 255 then\n    print(\"In range\")\nelse\n    print(\"Out of range\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change octet to 255.",
+      "Use OR instead of AND: why would that be an incorrect range test?"
+    ],
+    "a": "258 prints Out of range; 255 prints In range. An IPv4 octet must lie from 0 to 255. OR incorrectly accepts values outside the range because almost any number meets one of the two conditions. This validates only one octet, not a complete IPv4 address."
+  },
+  "055": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Secondary storage capacity",
+    "q": "Use an IF statement to test whether a file fits on a storage device.",
+    "code": "fileSizeGB = 35\nfreeSpaceGB = 32\nif fileSizeGB <= freeSpaceGB then\n    print(\"Fits\")\nelse\n    print(\"Too large\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change fileSizeGB to 30.",
+      "Explain why capacity alone does not determine which storage device is best."
+    ],
+    "a": "35 > 32, so Too large. At 30 GB, Fits. Device selection also considers speed, reliability, durability, portability and cost."
+  },
+  "056": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Authentication and access levels",
+    "q": "Trace nested selection for a simplified security check.",
+    "code": "signedIn = true\nisAdmin = false\nif signedIn then\n    if isAdmin then\n        print(\"Admin tools\")\n    else\n        print(\"Standard access\")\n    endif\nelse\n    print(\"Please sign in\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change isAdmin to true.",
+      "Change signedIn to false; explain why isAdmin no longer matters to this branch."
+    ],
+    "a": "Initially Standard access. With signedIn true and isAdmin true: Admin tools. With signedIn false: Please sign in. Authentication confirms identity; authorisation checks access rights. This is an illustrative model."
+  },
+  "057": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Image colour depth",
+    "q": "Use a FOR loop to calculate pixel-data sizes for several colour depths.",
+    "code": "pixels = 1000\nfor depth = 1 to 3\n    print(pixels * depth)\nnext depth",
+    "p": [
+      "Predict all three outputs in bits.",
+      "Change the upper loop bound to 4.",
+      "Explain why increasing colour depth increases an uncompressed bitmap's data size."
+    ],
+    "a": "Outputs: 1000, 2000 and 3000 bits. Ending at 4 adds 4000 bits. Bitmap pixel data uses pixels × colour depth; each extra bit per pixel increases the total."
+  },
+  "058": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Network security",
+    "q": "Trace a WHILE loop counting failed login attempts in a simplified security log.",
+    "code": "attempts = 0\nwhile attempts < 3\n    attempts = attempts + 1\n    print(attempts)\nendwhile",
+    "p": [
+      "Predict every printed value.",
+      "Change the limit to 2.",
+      "Explain why limiting unsuccessful login attempts can help defend against brute-force attacks."
+    ],
+    "a": "Outputs 1, 2, 3. Limit 2 outputs 1, 2. Repeated attempts can indicate a brute-force attack; rate limits or lockouts can help defend against it. The code only counts attempts."
+  },
+  "059": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Memory management",
+    "q": "Trace the free-memory value as three programs reserve space.",
+    "code": "freeMB = 500\nfor program = 1 to 3\n    freeMB = freeMB - 100\nnext program\nprint(freeMB)",
+    "p": [
+      "Predict the final free memory in MB.",
+      "Change the loop to run four times.",
+      "Extend with an IF after the loop printing \"Low memory\" when freeMB < 150."
+    ],
+    "a": "500 − (3 × 100) = 200 MB. Four iterations give 100 MB. With the IF after four iterations, Low memory is printed. An OS manages memory for running programs; this is a simplified allocation calculation."
+  },
+  "060": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Network security rules",
+    "q": "Combine FOR and IF to classify three simulated firewall events.",
+    "code": "for request = 1 to 3\n    if request == 2 then\n        print(\"Blocked\")\n    else\n        print(\"Allowed\")\n    endif\nnext request",
+    "p": [
+      "Predict all three outputs in order.",
+      "Change the blocked request from 2 to 3.",
+      "Explain one limitation of this example compared with a real firewall."
+    ],
+    "a": "Originally: Allowed, Blocked, Allowed. Blocking request 3 gives Allowed, Allowed, Blocked. Real firewalls examine traffic characteristics and policy rules; request numbers alone are not security decisions."
+  },
+  "061": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system memory",
+    "q": "Trace a boundary condition in a simplified RAM allocation test.",
+    "code": "freeMB = 256\nneededMB = 256\nif freeMB >= neededMB then\n    print(\"Can allocate\")\nelse\n    print(\"Not enough RAM\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change >= to > and predict again.",
+      "Explain why the change creates a logic error at the equal-capacity boundary."
+    ],
+    "a": "At 256 MB required and 256 MB free, >= prints Can allocate. Changing to > prints Not enough RAM. Equal space is sufficient in this simplified calculation; changing the condition incorrectly excludes the boundary."
+  },
+  "062": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Bitmap data and capacity",
+    "q": "Combine arithmetic and selection to decide whether uncompressed image data fits in a given capacity.",
+    "code": "width = 20\nheight = 10\ndepth = 8\nbytes = width * height * depth / 8\nif bytes <= 300 then\n    print(\"Fits\")\nelse\n    print(\"Too large\")\nendif",
+    "p": [
+      "Predict the size in bytes and printed output.",
+      "Double the width and predict again.",
+      "Extend by printing the number of bytes before the decision."
+    ],
+    "a": "20 × 10 × 8 ÷ 8 = 200 bytes, so Fits. Width 40 gives 400 bytes, so Too large. Print bytes before the IF to display the calculated value. This excludes file header and other metadata."
+  }
+};
  function load(number,mode){
   const n=Number(number),from=String(number);
   fetch("../autumn2-"+from+".json?v=20261016-j277autumn2a",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(all=>{
    const data=all[String(number)];if(!data)throw Error("Missing lesson "+number);
    if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
+   if(interleaveY10[String(number)] && !data.isAssessment) data.k={...data.k,...interleaveY10[String(number)]};
    if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
  }
