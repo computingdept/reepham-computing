@@ -12,9 +12,9 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about primary storage: ram, rom and cache.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Describe the roles and volatility of RAM, ROM and cache.",
+      "Explain how these types of memory support a running computer.",
+      "Compare RAM, ROM and cache using technical reasons."
     ],
     "c": [
       [
@@ -280,20 +280,20 @@
     ],
     "r": [
       [
-        "Name one benefit of checking an exam answer against a mark scheme.",
-        "It identifies a missing marking point."
+        "In an exam 'explain' question, what should follow a technical point? [1]",
+        "A linked reason, consequence or effect relevant to the scenario [1]."
       ],
       [
-        "Convert four-bit binary 1010 to denary. [1]",
+        "Convert the binary number 1010 into denary. [1]",
         "10 [1]."
       ],
       [
-        "How many bits are in one byte? [1]",
-        "Eight bits [1]."
+        "What is the output of 1 AND 0? [1]",
+        "0 [1]."
       ],
       [
-        "A computer has 4 GB of RAM with 3 GB in use. How much remains?",
-        "1 GB."
+        "A logic circuit has four independent binary inputs. Explain why its complete truth table has 16 rows. [2]",
+        "Each input has two possible states [1], giving 2 × 2 × 2 × 2 = 16 combinations [1]."
       ]
     ],
     "refs": [
@@ -312,6 +312,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "095",
+      "q": "A student names a correct feature in a four-mark 'explain' answer but does not explain its effect. Identify one improvement and why it could earn further marks. [2]",
+      "a": "Link the named technical feature to an accurate consequence in the question context [1]; this supplies the explanation rather than an unsupported statement [1]."
+    },
+    "challenge": {
+      "n": 96,
+      "coreHint": "Compare the two amounts before deciding which branch executes.",
+      "stretch": {
+        "task": "Modify the Code First program so that when there is insufficient RAM it also prints the shortage in MB. Test freeMB = 900 and neededMB = 950.",
+        "hint": "Only subtract when neededMB > freeMB. The shortage is neededMB - freeMB.",
+        "answer": "With freeMB=900 and neededMB=950, the program prints Wait and shortage 50 MB. Add inside else: print(neededMB - freeMB)."
+      },
+      "mastery": {
+        "task": "Adapt the code for two applications. Use appA = 400 MB, appB = 550 MB and freeMB = 900 MB; compare the combined requirement with free RAM. Test again when both applications total exactly 900 MB.",
+        "hint": "Set neededMB = appA + appB, then use >= so the equality case is accepted.",
+        "answer": "400 + 550 = 950 MB, so the output is Wait with a 50 MB shortage. When total required is 900 MB the output is Load because freeMB >= neededMB. This models the decision; actual memory allocation has further overheads."
+      }
+    }
   }
 }
