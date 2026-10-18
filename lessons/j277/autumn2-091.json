@@ -4,218 +4,191 @@
     "s": "2.5.1",
     "vis": "diagram-spec",
     "highlights": [
-      "High-Level",
+      "identify",
+      "describe",
       "explain",
       "compare",
-      "identify"
+      "source code",
+      "translator",
+      "interpreter",
+      "compiler",
+      "IDE"
     ],
     "o": [
-      "Distinguish high-level and low-level languages.",
-      "Explain how language choice affects development.",
-      "Compare portability and processor control."
+      "Recognise high-level and low-level languages.",
+      "Explain why programs need translation into machine code.",
+      "Choose a language for a scenario and justify it."
     ],
     "c": [
       [
         "High-level languages",
-        "High-level languages use readable constructs and abstractions to make software easier to develop and maintain."
+        "High-level code is designed to be readable: for example, score = score + 1. It is usually easier to develop, debug and maintain than processor-specific instructions."
       ],
       [
         "Low-level languages",
-        "Machine code consists of binary processor instructions; assembly uses mnemonics that correspond closely to processor instructions."
+        "Machine code is made of binary instructions executed by a CPU. Assembly is a low-level form using short instruction mnemonics: you only need to recognise the difference, not learn an assembler."
       ],
       [
-        "Processor dependence",
-        "Assembly and machine code are tied to the instruction set of a particular processor family."
+        "Why translate?",
+        "Processors execute machine code. Source programs written in high-level languages need translation into executable instructions before or while running."
       ],
       [
-        "Choosing a language",
-        "Consider readability, portability, speed requirements and direct hardware control."
+        "Choose for the task",
+        "A school application benefits from readable, maintainable, portable code. Direct processor control may justify a lower-level approach, but is harder to maintain and is processor-dependent."
       ]
     ],
     "visuals": [
       {
-        "title": "HIGH-LEVEL LANGUAGES",
-        "layout": "flow",
-        "boxes": [
-          "High-level languages",
-          "Example",
-          "Effect"
-        ],
-        "foot": "High-level languages use readable constructs and a"
+        "layout": "language-levels",
+        "title": "READABLE CODE · CPU INSTRUCTIONS",
+        "boxes": [],
+        "foot": "Compare abstraction, readability and portability"
       },
       {
-        "title": "LOW-LEVEL LANGUAGES",
-        "layout": "flow",
-        "boxes": [
-          "Low-level languages",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Machine code consists of binary processor instruct"
+        "layout": "language-machine",
+        "title": "WHY A TRANSLATOR IS NEEDED",
+        "boxes": [],
+        "foot": "The CPU only executes machine instructions"
       },
       {
-        "title": "PROCESSOR DEPENDENCE",
-        "layout": "flow",
-        "boxes": [
-          "Processor dependence",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Assembly and machine code are tied to the instruct"
+        "layout": "language-tradeoffs",
+        "title": "HIGH-LEVEL OR LOW-LEVEL?",
+        "boxes": [],
+        "foot": "Each level offers advantages and limitations"
       },
       {
-        "title": "CHOOSING A LANGUAGE",
-        "layout": "flow",
-        "boxes": [
-          "Choosing a language",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Consider readability, portability, speed requireme"
+        "layout": "language-choice",
+        "title": "CHOOSE FOR THE SCENARIO",
+        "boxes": [],
+        "foot": "First justify the requirement; then the language level"
       }
     ],
     "idoVisual": {
-      "title": "HIGH-LEVEL LANGUAGES",
-      "layout": "flow",
-      "boxes": [
-        "High-level languages",
-        "Example",
-        "Effect"
-      ],
-      "foot": "High-level languages use readable constructs and a"
+      "layout": "language-choice",
+      "title": "I DO · TIMETABLE APPLICATION",
+      "boxes": [],
+      "foot": "Readable code and portability are relevant here"
     },
     "m": {
-      "title": "Modelled explanation",
-      "q": "A school writes a timetable application. Explain TWO benefits of using a high-level language. [4 marks]",
+      "title": "Model two linked benefits",
+      "q": "A school is developing a timetable application. Explain TWO benefits of using a high-level language. [4 marks]",
       "headings": [
-        "Read the question",
-        "Find the knowledge",
-        "Link the explanation",
-        "Check marks"
+        "Identify the setting",
+        "Explain readability",
+        "Explain portability",
+        "Build a four-mark answer"
       ],
       "st": [
-        "Identify the command word, scenario and total marks.",
-        "Choose accurate technical terms and examples.",
-        "Connect each feature to the consequence in the scenario.",
-        "A high-level language is easier to read and maintain [1], reducing the time needed to develop or alter the system [1]. It is usually more portable [1] so the program can be adapted to different processor types with less rewriting [1]."
+        "The application will be maintained and may be used on different computers. Choose benefits relevant to that context.",
+        "High-level code is more readable [1], so staff can understand and change the program more quickly [1].",
+        "High-level code is generally more portable [1], so moving to a different processor is likely to require less rewriting [1].",
+        "Award a knowledge mark and a linked consequence for EACH explained benefit. Do not simply name two features."
       ]
     },
     "w": [
       [
-        "A microcontroller needs precise hardware control. Explain an advantage and a disadvantage of using assembly. [4 marks]",
-        "Assembly is close to machine instructions [1], allowing detailed processor control [1]. It is processor-specific [1], so a change of hardware could require rewriting [1]."
+        "A controller needs precise access to processor instructions. Explain ONE advantage and ONE disadvantage of using a low-level language. [4 marks]",
+        "Instructions can give precise processor control [1] useful for managing the device hardware [1]. They are processor-specific [1], so code may need rewriting for different hardware [1]."
       ],
       [
-        "Compare high-level and low-level languages using readability and portability. [4 marks]",
-        "High-level code is more readable [1] and generally more portable [1]. Low-level code resembles processor instructions [1] and normally depends on the processor instruction set [1]."
+        "Compare high-level with low-level code in terms of readability and portability. [4 marks]",
+        "High-level programs are usually easier for people to read [1] and are more portable [1]. Low-level code corresponds closely to CPU instructions [1] and is usually processor-specific [1]."
       ],
       [
-        "A school writes a timetable application. Explain TWO benefits of using a high-level language. [4 marks]",
-        "A high-level language is easier to read and maintain [1], reducing the time needed to develop or alter the system [1]. It is usually more portable [1] so the program can be adapted to different processor types with less rewriting [1]."
+        "A school wants an attendance application that teachers can edit and run on different computers. Recommend a language level and explain TWO reasons. [4 marks]",
+        "High-level [1]; the code is easier to read and maintain as rules change [1]; it is usually more portable [1], making it easier to move across processor families [1]."
       ]
     ],
     "wTitles": [
-      "Guided practice · scenario",
-      "Guided practice · comparison",
-      "Guided practice · transfer"
+      "Control versus maintenance",
+      "Explain two differences",
+      "Recommend for a school app"
     ],
     "wVisuals": [
       {
-        "title": "GUIDED PRACTICE 1",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "language-choice",
+        "title": "WE DO · DEVICE CONTROLLER",
+        "boxes": [],
+        "foot": "Identify the benefit and the trade-off"
       },
       {
-        "title": "GUIDED PRACTICE 2",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "language-levels",
+        "title": "WE DO · TWO LEVELS",
+        "boxes": [],
+        "foot": "Use readability and portability"
       },
       {
-        "title": "GUIDED PRACTICE 3",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "language-choice",
+        "title": "WE DO · CROSS-PLATFORM APP",
+        "boxes": [],
+        "foot": "Match the requirements to the language level"
       }
     ],
     "wSteps": [
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "What matters to a device controller?"
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Benefit",
+          "Identify how the code interacts with processor instructions."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Drawback",
+          "Think about portability to different CPUs."
         ],
         [
-          "Check",
-          "Assembly is close to machine instructions [1], allowing detailed processor control [1]. It is processor-specific [1], so a change of hardware could require rewriting [1]."
+          "Check [4]",
+          "Control [1] with hardware explanation [1]; processor-specific [1] with a consequence [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Make two columns: readability and portability."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Readability",
+          "Explain who finds high-level code easier to use."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Portability",
+          "Relate low-level code to the CPU instruction set."
         ],
         [
-          "Check",
-          "High-level code is more readable [1] and generally more portable [1]. Low-level code resembles processor instructions [1] and normally depends on the processor instruction set [1]."
+          "Check [4]",
+          "High-level readable [1] and portable [1]; low-level processor-close [1] and CPU-specific [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Underline 'edit' and 'different computers'."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Choose",
+          "Identify the suitable level, not a brand name."
         ],
         [
           "Explain",
-          "Link the detail to the scenario."
+          "Give two benefits tied to this school scenario."
         ],
         [
-          "Check",
-          "A high-level language is easier to read and maintain [1], reducing the time needed to develop or alter the system [1]. It is usually more portable [1] so the program can be adapted to different processor types with less rewriting [1]."
+          "Check [4]",
+          "High-level [1]; maintainability linked [1]; portability [1] and use on new hardware [1]."
         ]
       ]
     ],
     "k": {
-      "q": "Predict the output, then change one input and explain your prediction.",
-      "code": "value = 2\nvalue = value + 3\nprint(value)",
+      "q": "What value will be printed after the second assignment?",
+      "code": "score = 4\nscore = score + 2\nprint(score)",
       "p": [
-        "Predict the output.",
-        "Change value to 4: predict the output.",
-        "Explain each assignment."
+        "Check the final value of score before print.",
+        "Change the first assignment to 7. Predict the new output.",
+        "Extend by adding score = score * 2 before print."
       ],
-      "a": "The original prints 5. Changing value to 4 prints 7."
+      "a": "Original output 6; changed first assignment gives 9; extending the original with multiplication prints 12."
     },
     "e": [
       [
@@ -227,60 +200,64 @@
         "Assembly is close to machine instructions [1], allowing detailed processor control [1]. It is processor-specific [1], so a change of hardware could require rewriting [1]."
       ],
       [
-        "A school writes a timetable application. Explain TWO benefits of using a high-level language. [4 marks]\n\nSource: Original OCR J277-style practice question.",
-        "A high-level language is easier to read and maintain [1], reducing the time needed to develop or alter the system [1]. It is usually more portable [1] so the program can be adapted to different processor types with less rewriting [1]."
+        "A medical practice is creating an appointment-booking program that will need regular updates. Explain TWO advantages of using a high-level language. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "Readable code makes maintenance and correction easier [1], saving development time when appointment rules change [1]. High-level code is generally portable [1], reducing rewriting if the system is moved to other processor types [1]."
       ]
     ],
     "v": [
       [
-        "High-Level",
-        "A key concept from this lesson."
+        "High-level language",
+        "A programming language with readable instructions less tied to a particular CPU."
       ],
       [
-        "Source code",
-        "Instructions written in a programming language."
+        "Low-level language",
+        "A language close to machine instructions, such as assembly language or machine code."
       ],
       [
         "Machine code",
-        "Binary instructions executed by a processor."
+        "Binary instructions the CPU can execute."
       ],
       [
-        "Debug",
-        "Find and correct errors in a program."
+        "Portability",
+        "How easily a program can be moved to different hardware or systems."
+      ],
+      [
+        "Translator",
+        "Software that converts source code into a form the computer can execute."
       ]
     ],
     "x": [
-      "An interpreter executes statements as a program runs.",
+      "Machine code is made of processor instructions that the CPU executes.",
       true
     ],
     "r": [
       [
-        "Give the output of A AND B where A=1 and B=0. [1 mark]",
-        "0 [1]."
+        "For Q=(A AND B) OR C, find Q when A=1, B=0 and C=0. [2 marks]",
+        "A AND B = 0 [1], so Q = 0 OR 0 = 0 [1]."
       ],
       [
-        "State what an intermediate output means in combined logic. [1 mark]",
-        "The result of one gate before the final output [1]."
+        "State the output of a NOT gate for an input of 0. [1 mark]",
+        "1 [1]."
       ],
       [
-        "Give the result of a left shift of 00000011 by one bit. [1 mark]",
-        "00000110 [1]."
+        "In the array [7,2,9,4], state the zero-based index of 9. [1 mark]",
+        "2 [1]."
       ],
       [
-        "Explain why a three-input truth table has eight rows. [2 marks]",
-        "Three inputs each have two possible values [1], giving 2×2×2=8 combinations [1]."
+        "Explain why a truth table with three independent Boolean inputs requires eight rows. [2 marks]",
+        "Each input can be 0 or 1 [1], giving 2 × 2 × 2 = 8 combinations [1]."
       ]
     ],
     "refs": [
       "L090 · last lesson",
       "L088 · earlier learning",
-      "L004 · earlier learning",
-      "L090 · challenge"
+      "L087 · earlier learning",
+      "L089 · high challenge"
     ],
     "visualAuditV2": true,
     "retrievalVisuals": [],
     "examVisuals": [],
-    "memoryCue": "For Q=(A AND B) OR C, evaluate X=A AND B first, then Q=X OR C.",
+    "memoryCue": "Readable high-level source → translator → machine instructions; choose a language for the job.",
     "priorExam": null,
     "visualAuditV3": false
   }
