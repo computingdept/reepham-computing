@@ -12,9 +12,9 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about virtual memory.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Explain when a computer needs virtual memory.",
+      "Describe how the operating system moves pages between RAM and secondary storage.",
+      "Explain why heavy use of virtual memory reduces performance."
     ],
     "c": [
       [
@@ -275,20 +275,20 @@
     ],
     "r": [
       [
-        "Which type of storage loses contents when switched off?",
-        "RAM."
+        "What does volatile mean when describing RAM? [1]",
+        "Its contents are lost when power is switched off [1]."
       ],
       [
-        "What does volatile mean?",
-        "Contents lost without power."
+        "Explain why the CPU uses cache even when RAM is installed. [2]",
+        "Cache holds frequently needed data/instructions [1] and is faster to access than RAM [1]."
       ],
       [
-        "How many bits make one byte? [1]",
-        "Eight bits [1]."
+        "Convert the binary value 00101101 to denary. [2]",
+        "32 + 8 + 4 + 1 = 45 [2]."
       ],
       [
-        "A machine has 8 GB RAM, 7 GB occupied and needs another 3 GB. What is the shortage?",
-        "2 GB."
+        "A device has 8 GB of RAM, 7 GB is in use and a new program needs another 3 GB. Calculate the shortage and show your working. [2]",
+        "Free RAM = 8 - 7 = 1 GB [1]; shortage = 3 - 1 = 2 GB [1]."
       ]
     ],
     "refs": [
@@ -307,6 +307,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "096",
+      "q": "Explain the difference between RAM and ROM in terms of purpose and volatility. [4]",
+      "a": "RAM holds current programs and data [1] and is volatile [1]. ROM holds firmware/startup instructions [1] and is non-volatile [1]."
+    },
+    "challenge": {
+      "n": 97,
+      "coreHint": "Calculate whether neededGB is greater than freeRAMGB first.",
+      "stretch": {
+        "task": "Extend Code First so that it also prints the shortage in GB when extra storage is needed. Test 6 GB needed against 4 GB and then 8 GB free RAM.",
+        "hint": "Within the first branch, subtract freeRAMGB from neededGB; avoid reporting a negative shortage.",
+        "answer": "At 6 GB needed and 4 GB free, it prints Virtual memory needed and 2 GB shortage. At 8 GB free, it prints RAM sufficient and no shortage."
+      },
+      "mastery": {
+        "task": "A school computer runs tasks needing 2 GB, 3 GB and 4 GB, with 7 GB of available RAM. Adapt your program to total the three values, check for a shortage, and explain why any secondary-storage backing could slow the system.",
+        "hint": "Total demand = 2+3+4. Compare this with 7; then connect page movement to storage speed.",
+        "answer": "Demand = 9 GB, free RAM = 7 GB, shortage = 2 GB. The program reports extra memory needed. Moving pages between RAM and secondary storage creates slower accesses because secondary storage is slower than RAM."
+      }
+    }
   }
 }
