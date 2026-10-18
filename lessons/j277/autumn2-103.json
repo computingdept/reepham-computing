@@ -12,14 +12,14 @@
       "identify"
     ],
     "o": [
-      "Recall the essential ideas of characters and images.",
-      "Apply a clearly modelled method.",
-      "Complete independent OCR J277-style questions."
+      "Explain how a character set maps characters to numerical codes.",
+      "Explain pixels, resolution and colour depth in uncompressed bitmap images.",
+      "Calculate bitmap size in bits, bytes and decimal MB."
     ],
     "c": [
       [
         "Characters need codes",
-        "Character sets map symbols to numerical codes stored in binary; ASCII and Unicode are examples."
+        "Character sets map symbols to numerical codes stored in binary. The booklet's ASCII sequence uses C = 01000011, D = 01000100, E = 01000101, F = 01000110. Unicode covers far more scripts and symbols."
       ],
       [
         "Pixels build bitmaps",
@@ -31,7 +31,7 @@
       ],
       [
         "Image file size",
-        "Uncompressed size (bits) = width × height × colour depth; divide by eight for bytes (ignoring metadata)."
+        "Revision booklet calculation chain: width × height = pixels; × colour depth = bits; ÷8 = bytes; ÷1000 = kB and ÷1000 again = MB (decimal units; ignore metadata/headers unless specified)."
       ]
     ],
     "visuals": [
@@ -237,8 +237,8 @@
     },
     "e": [
       [
-        "An image is 50 pixels wide and 40 pixels high, using 8 bits per pixel. Calculate the uncompressed image size in bytes. [4]\n\nSource: Original OCR J277-style practice question.",
-        "50×40=2000 pixels [1]; ×8=16,000 bits [1]; ÷8 [1] =2000 bytes [1]."
+        "A 1000 × 800 bitmap has 8-bit colour depth. Calculate its uncompressed size in MB using decimal units. Show each conversion. [5]\n\nSource: Revised booklet worked-example question for OCR J277.",
+        "1000 × 800 = 800,000 pixels [1]; ×8 = 6,400,000 bits [1]; ÷8 = 800,000 bytes [1]; ÷1000 = 800 kB [1]; ÷1000 = 0.8 MB [1], ignoring metadata."
       ],
       [
         "Explain why increasing an image's resolution increases file size when colour depth stays constant. [3]\n\nSource: Original OCR J277-style practice question.",
@@ -277,20 +277,20 @@
     ],
     "r": [
       [
-        "What binary nibble represents hex D?",
-        "1101."
+        "Convert hexadecimal A4 to denary.",
+        "10×16+4 = 164."
       ],
       [
-        "How many bits are in a byte?",
-        "8 bits."
+        "What does one hexadecimal digit represent in binary?",
+        "Four bits (one nibble)."
       ],
       [
-        "State what volatile means.",
-        "Loses data on power loss."
+        "Explain why hexadecimal is useful when writing a colour code.",
+        "It is a compact, human-readable representation of binary values."
       ],
       [
-        "How many uncompressed bytes are in a 10×10 image at 8 bits per pixel?",
-        "100 bytes."
+        "Convert hex FA into denary, showing the two positional contributions.",
+        "15×16 + 10 = 250."
       ]
     ],
     "refs": [
@@ -299,7 +299,7 @@
       "L096 · earlier learning",
       "Previously taught · challenge"
     ],
-    "memoryCue": "Uncompressed image bits = width × height × colour depth; convert to bytes at the end.",
+    "memoryCue": "Booklet: ASCII C=01000011, so D/E/F each increase by 1. For a bitmap, width × height = pixels; pixels × colour depth = bits; ÷8 = bytes; for decimal MB divide by 1000 twice.",
     "retrievalVisuals": [],
     "examVisuals": [],
     "requiredVisuals": [
@@ -309,6 +309,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "102",
+      "q": "Convert hexadecimal A4 into denary and show working. [3]",
+      "a": "A = 10 [1]; 10×16 + 4×1 [1]; 164 [1]."
+    },
+    "challenge": {
+      "n": 103,
+      "coreHint": "Image size starts with pixel count, not with bytes.",
+      "stretch": {
+        "task": "Extend Code First to print both sizeBits and sizeBytes for a 20 × 10 pixel, 16-bit image. Predict both values.",
+        "hint": "Calculate pixels × bitsPerPixel first, then use DIV 8.",
+        "answer": "20×10×16 = 3200 bits; 3200 DIV 8 = 400 bytes."
+      },
+      "mastery": {
+        "task": "A school image must be below 1 kB (decimal), with no compression. Choose the larger possible image: 40 × 20 at 8-bit depth, or 20 × 20 at 16-bit depth. Show working and justify.",
+        "hint": "Calculate both sizes in bytes first, then compare with 1000 bytes.",
+        "answer": "40×20×8/8 = 800 bytes; 20×20×16/8 = 800 bytes. Both occupy the same 800 bytes, so neither is larger; both meet the under-1 kB limit. Their resolution/colour trade-offs differ."
+      }
+    }
   }
 }
