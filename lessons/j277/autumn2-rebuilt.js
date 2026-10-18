@@ -987,6 +987,80 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   }
   return '<figure class="a1-scene j277-learning-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(label)+'; '+esc(family)+'; '+esc(mode)+'" xmlns="http://www.w3.org/2000/svg">'+box(2,2,556,336,"#f8fbf9",17)+titleText(label)+body+text(280,314,String(lower).slice(0,65),15,c.muted,700)+'</svg></figure>';
  }
+
+ // Subject-specific schematics for OCR J277 2.5.1 / 2.5.2.
+ // Illustrate code translation and IDE facilities rather than decorative flow boxes.
+ function j277LanguageToolScene(spec){
+  const mode=String(spec?.layout||"");
+  const supported=["language-levels","language-machine","language-tradeoffs","language-choice","compiler-pipeline","interpreter-pipeline","translator-errors","translator-choice","ide-editor","ide-diagnostics","ide-features","ide-workflow"];
+  if(!supported.includes(mode))return null;
+  const esc=escape,ink="#235040",green="#388362",blue="#4d83ab",gold="#f7e8c4",cool="#e2eff9",soft="#e3f2e9";
+  const R=(x,y,w,h,fill,r=10)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+r+'" fill="'+fill+'" stroke="#9ebdaf" stroke-width="2"/>';
+  const T=(x,y,value,size=17,weight=750,color=ink,anchor="middle")=>'<text x="'+x+'" y="'+y+'" text-anchor="'+anchor+'" font-family="Arial,Helvetica,sans-serif" font-size="'+size+'" font-weight="'+weight+'" fill="'+color+'">'+esc(value)+'</text>';
+  const A=(x,y,x2,y2)=>'<path d="M'+x+' '+y+' L'+x2+' '+y2+' m-9 -7 l9 7 l-9 7" fill="none" stroke="'+green+'" stroke-width="3" stroke-linecap="round"/>';
+  const C=(x,y,w,h,one,two,fill)=>R(x,y,w,h,fill)+T(x+w/2,y+Math.max(23,h/2-2),one,w>145?18:15,850)+(two?T(x+w/2,y+Math.max(46,h/2+25),two,w>145?15:13,600):"");
+  const L=(x,y,str)=>T(x,y,str,16,650);
+  let p="";
+  if(mode==="language-levels"){
+   p+=C(24,79,244,149,"HIGH-LEVEL","score = score + 1",cool)+C(292,79,244,149,"LOW-LEVEL","ADD R1, #1",soft);
+   p+=T(146,251,"Easier to read and change",16)+T(413,251,"Close to CPU instructions",16);
+   p+=T(146,280,"Usually more portable",15,750,blue)+T(413,280,"Processor-dependent",15,750,blue);
+  } else if(mode==="language-machine"){
+   p+=C(15,102,140,103,"SOURCE CODE","Human-readable",cool)+A(158,154,199,154);
+   p+=C(204,102,143,103,"TRANSLATOR","Converts code",gold)+A(351,154,392,154);
+   p+=C(397,102,145,103,"MACHINE CODE","CPU instructions",soft);
+   p+=T(280,245,"A processor executes machine code, not source code.",17);
+  } else if(mode==="language-tradeoffs"){
+   p+=C(22,92,249,142,"HIGH-LEVEL","Portable and readable",cool)+C(289,92,249,142,"LOW-LEVEL","Precise hardware control",soft);
+   p+=T(146,264,"More abstraction",17)+T(413,264,"Less abstraction",17);
+   p+=T(280,299,"Both ultimately require executable machine instructions.",15);
+  } else if(mode==="language-choice"){
+   p+=C(22,93,248,142,"SCHOOL TIMETABLE","Maintenance and portability?",cool)+C(291,93,246,142,"DEVICE CONTROLLER","Hardware-specific control?",soft);
+   p+=T(280,283,"What matters most in each scenario?",18,800);
+  } else if(mode==="compiler-pipeline"){
+   p+=C(16,91,137,93,"SOURCE","Whole program",cool)+A(156,139,194,139);
+   p+=C(199,91,150,93,"COMPILER","Translate first",gold)+A(352,139,392,139);
+   p+=C(397,91,146,93,"EXECUTABLE","Machine code",soft);
+   p+=A(468,189,468,222)+C(328,225,215,63,"RUN AGAIN","No retranslation",soft);
+  } else if(mode==="interpreter-pipeline"){
+   p+=C(18,86,161,112,"SOURCE","Statement 1, 2, 3...",cool)+A(183,144,220,144);
+   p+=C(225,86,156,112,"INTERPRETER","Translate and run",gold)+A(385,144,424,144);
+   p+=C(429,86,113,112,"RESULT","As it runs",soft);
+   p+=T(280,253,"Execution can stop when it reaches an error.",16);
+  } else if(mode==="translator-errors"){
+   p+=C(20,82,248,148,"COMPILER","Errors during translation",cool)+C(291,82,246,148,"INTERPRETER","Error when reached",soft);
+   p+=T(280,266,"The stage at which errors appear is different.",17);
+  } else if(mode==="translator-choice"){
+   p+=C(20,94,249,138,"DISTRIBUTED APP","Run repeatedly?",cool)+C(290,94,248,138,"QUICK TESTING","Change and retry?",soft);
+   p+=T(280,279,"Compare preparation, running and error feedback.",16);
+  } else if(mode==="ide-editor"){
+   p+=R(28,68,504,220,"#f4f9fc",13)+R(29,69,503,36,"#cbe3f5",10)+T(135,93,"EDITOR · main.erl",17,800);
+   p+=T(66,146,"1",17,650,blue)+T(100,146,"total = 5",18,700,ink,"start");
+   p+=T(66,183,"2",17,650,blue)+T(100,183,"total = total + 2",18,700,ink,"start");
+   p+=T(66,222,"3",17,650,blue)+T(100,222,"print(total)",18,700,ink,"start");
+   p+=R(380,121,128,98,soft)+T(444,154,"RUN",19,900)+T(444,186,"Output: 7",16);
+  } else if(mode==="ide-diagnostics"){
+   p+=R(28,76,505,196,"#f5f9fb")+T(67,117,"1",17,700,blue)+T(109,117,"total = 5",18,750,ink,"start");
+   p+=T(67,154,"2",17,700,blue)+T(109,154,"print(total",18,750,ink,"start");
+   p+='<path d="M106 167 L260 167" stroke="#be5656" stroke-width="4" stroke-dasharray="5 5"/>';
+   p+=R(110,189,381,59,"#fae6e4")+T(301,225,"Diagnostic: check missing bracket",15,780,"#9b3e3e");
+  } else if(mode==="ide-features"){
+   p+=C(17,77,249,88,"EDITOR","Write and edit code",cool);
+   p+=C(294,77,249,88,"DIAGNOSTICS","Find coding errors",gold);
+   p+=C(17,186,249,88,"RUN-TIME","Execute and test",soft);
+   p+=C(294,186,249,88,"TRANSLATOR","Prepare code to run","#e8e5f6");
+  } else if(mode==="ide-workflow"){
+   p+=C(14,98,120,104,"EDITOR","Write",cool)+A(136,150,151,150);
+   p+=C(155,98,120,104,"CHECK","Diagnostics",gold)+A(278,150,294,150);
+   p+=C(298,98,120,104,"TRANSLATE","Prepare",soft)+A(422,150,438,150);
+   p+=C(441,98,105,104,"RUN","Test",cool);
+   p+=T(280,250,"Use feedback from testing to improve the source code.",16);
+  }
+  const heading=String(spec?.title||"OCR J277 · 2.5").slice(0,42);
+  const footer=String(spec?.foot||"").slice(0,70);
+  return '<figure class="a1-scene j277-tools-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(heading)+'" xmlns="http://www.w3.org/2000/svg">'+R(2,2,556,336,"#f9fcfa",15)+T(280,43,heading,heading.length>32?18:21,850)+p+(footer?T(280,317,footer,footer.length>49?13:15,650):"")+'</svg></figure>';
+ }
+
  function topicVisual(spec){
   // Never silently display STEP 1 / STEP 2 placeholders for Year 11 subject diagrams.
   // The early Year 11 bank uses spec.y11; the later bank uses spec.year11.
@@ -998,6 +1072,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     return window.J277Y11Diagram({...spec,y11:family});
   }
   const learning=j277LearningScene(spec);if(learning)return learning;
+  const specialist=j277LanguageToolScene(spec);if(specialist)return specialist;
   const codeDiagram=j277ProgrammingScene(spec);if(codeDiagram)return codeDiagram;
   const spring=j277SpringScene(spec);if(spring)return spring;
   const richer=j277NetworkExpansion(spec);if(richer)return richer;
