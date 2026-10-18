@@ -1997,76 +1997,82 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "10 × 4 × 8 = 320 bits. At 5 seconds: 400 bits. To output bytes, add print(bits / 8); results are 40 bytes initially and 50 bytes after changing duration. This simplified formula assumes mono uncompressed audio."
   },
   "048": {
-    "paper1Ref": "1.4",
-    "paper1Topic": "Access control",
-    "q": "Predict the simplified access-check output and sketch its decision as a flowchart.",
-    "code": "hasPermission = false\nif hasPermission then\n    print(\"Access granted\")\nelse\n    print(\"Access denied\")\nendif",
+    "paper1Ref": "1.1",
+    "paper1Topic": "Fetch–execute cycle",
+    "q": "Trace selection that identifies a stage of the fetch–decode–execute cycle.",
+    "code": "stage = 2\nif stage == 1 then\n    print(\"Fetch\")\nelseif stage == 2 then\n    print(\"Decode\")\nelse\n    print(\"Execute\")\nendif",
     "p": [
-      "Predict the exact output.",
-      "Set hasPermission to true and predict again.",
-      "Explain why a real system must check permissions before allowing access."
+      "Predict the output and sketch the decision.",
+      "Change stage to 3 and predict again.",
+      "State the job of the Control Unit and what happens during decode."
     ],
-    "a": "False prints Access denied; true prints Access granted. The diamond in the flowchart tests hasPermission. Access controls help prevent unauthorised access; this is only a simplified model."
+    "a": "At stage 2 the output is Decode; stage 3 prints Execute. The Control Unit coordinates CPU operations and decodes instructions to determine what must happen. The program labels stages; it does not simulate a real CPU.",
+    "paper1Point": "1.1.1"
   },
   "049": {
-    "paper1Ref": "1.5",
-    "paper1Topic": "Operating system memory management",
-    "q": "Trace the free-RAM variable as three processes are allocated 100 MB each.",
-    "code": "freeRAM = 600\nfor process = 1 to 3\n    freeRAM = freeRAM - 100\nnext process\nprint(freeRAM)",
+    "paper1Ref": "1.3",
+    "paper1Topic": "Star and mesh topologies",
+    "q": "Trace a loop counting cables from four computers to a central switch in a star network.",
+    "code": "computers = 4\nlinks = 0\nfor i = 1 to computers\n    links = links + 1\nnext i\nprint(links)",
     "p": [
-      "Record freeRAM after each iteration.",
-      "Predict the final printed value.",
-      "Change each allocation to 150 MB and complete a new trace table."
+      "Record links after every iteration.",
+      "Change computers to 6 and predict the output.",
+      "Describe one advantage and one disadvantage of a star topology compared with a mesh."
     ],
-    "a": "Free RAM follows 600 → 500 → 400 → 300 MB, so output is 300. Allocating 150 MB three times gives 600 → 450 → 300 → 150 MB. The code models a simplified allocation, not an actual operating system."
+    "a": "The total increases 1, 2, 3, 4: output 4 links; with six computers output 6. In this simplified star network each computer has one connection to a central switch. A failed computer link affects only that computer, but failure of the central switch can stop the whole network; a mesh can offer alternative paths.",
+    "paper1Point": "1.3.1"
   },
   "051": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Image file size",
-    "q": "Predict the output of this sequence that calculates uncompressed bitmap data size.",
-    "code": "width = 10\nheight = 10\ncolourDepth = 8\nbits = width * height * colourDepth\nprint(bits)",
+    "paper1Topic": "Text-file size and characters",
+    "q": "Use a sequence to calculate the bits needed for an uncompressed text file.",
+    "code": "characters = 20\nbitsPerCharacter = 8\nbits = characters * bitsPerCharacter\nprint(bits)",
     "p": [
-      "Predict the output and state its unit.",
-      "Change height to 20.",
-      "Extend with another print statement to display the size in bytes."
+      "Predict the output and state the unit.",
+      "Change characters to 40 and predict again.",
+      "Add a statement that prints bytes and explain why the character encoding matters."
     ],
-    "a": "Original: 10 × 10 × 8 = 800 bits. Changing height to 20 gives 1,600 bits. print(bits / 8) gives 100 bytes originally or 200 bytes after the change, excluding metadata."
+    "a": "20 × 8 = 160 bits or 20 bytes, ignoring metadata. At 40 characters: 320 bits or 40 bytes. Add print(bits / 8). Different character encodings may use different numbers of bits or bytes to represent characters.",
+    "paper1Point": "1.2.3"
   },
   "052": {
-    "paper1Ref": "1.5",
-    "paper1Topic": "RAM allocation",
-    "q": "Trace how a variable represents remaining RAM after an application loads.",
-    "code": "freeMB = 1024\napplicationMB = 256\nfreeMB = freeMB - applicationMB\nprint(freeMB)",
+    "paper1Ref": "1.2",
+    "paper1Topic": "RAM and virtual memory",
+    "q": "Trace a simplified memory shortfall calculation using assignment.",
+    "code": "ramMB = 512\nneededMB = 700\nshortfallMB = neededMB - ramMB\nprint(shortfallMB)",
     "p": [
-      "Predict the output.",
-      "Change applicationMB to 512.",
-      "Add a second allocation of 128 MB and print the final free space."
+      "Predict the printed shortfall in MB.",
+      "Change neededMB to 800.",
+      "Explain how virtual memory uses secondary storage when RAM is insufficient and why this may be slower."
     ],
-    "a": "Initially 1024 − 256 = 768 MB. Changing to 512 gives 512 MB. A further 128 MB allocation gives 384 MB after the changed example. RAM holds working data for running programs; this is a simplified model."
+    "a": "The shortfall is 188 MB; at 800 MB required it is 288 MB. Virtual memory uses part of secondary storage when available RAM is insufficient, transferring data between RAM and secondary storage. Secondary storage is usually slower than RAM. This program calculates a shortfall, not actual virtual-memory activity.",
+    "paper1Point": "1.2.1"
   },
   "053": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Storage units",
-    "q": "Trace the type conversion and storage calculation.",
-    "code": "fileKB = int(\"500\")\nnumberOfFiles = 3\nprint(fileKB * numberOfFiles)",
+    "paper1Topic": "Hexadecimal number representation",
+    "q": "Use casting and arithmetic to calculate a denary value, then express it in hexadecimal.",
+    "code": "first = int(\"10\")\nsecond = 5\ntotal = first + second\nprint(total)",
     "p": [
-      "Predict the total number of kilobytes.",
-      "Change numberOfFiles to 4.",
-      "Extend the program to print the total in megabytes (1 MB = 1000 KB)."
+      "Predict the denary output and its single hexadecimal digit.",
+      "Change second to 6: give the new denary output and two-digit hexadecimal equivalent.",
+      "State why two hexadecimal digits can represent one 8-bit binary number."
     ],
-    "a": "int(\"500\") produces integer 500. Three files require 1,500 KB; four require 2,000 KB. For megabytes, add print((fileKB * numberOfFiles) / 1000): 2 MB for four files."
+    "a": "10 + 5 = 15 denary = F hexadecimal. With second = 6: 16 denary = 10 hexadecimal. Each hexadecimal digit represents four bits, so two represent eight bits. The program uses denary arithmetic; students carry out the base conversion themselves.",
+    "paper1Point": "1.2.4"
   },
   "054": {
-    "paper1Ref": "1.3",
-    "paper1Topic": "IPv4 addresses",
-    "q": "Predict whether this single IPv4 octet passes a numerical range check.",
-    "code": "octet = 258\nif octet >= 0 AND octet <= 255 then\n    print(\"In range\")\nelse\n    print(\"Out of range\")\nendif",
+    "paper1Ref": "1.2",
+    "paper1Topic": "Unsigned 8-bit overflow",
+    "q": "Use a Boolean condition to detect a total that exceeds the unsigned 8-bit range.",
+    "code": "value = 250\nextra = 10\nif value + extra > 255 then\n    print(\"8-bit overflow\")\nelse\n    print(value + extra)\nendif",
     "p": [
-      "Predict the output.",
-      "Change octet to 255.",
-      "Use OR instead of AND: why would that be an incorrect range test?"
+      "Predict the output and calculate the denary sum.",
+      "Change extra to 5 and predict again.",
+      "Explain why an unsigned 8-bit value cannot represent 260."
     ],
-    "a": "258 prints Out of range; 255 prints In range. An IPv4 octet must lie from 0 to 255. OR incorrectly accepts values outside the range because almost any number meets one of the two conditions. This validates only one octet, not a complete IPv4 address."
+    "a": "250 + 10 = 260, so the program prints 8-bit overflow. With extra = 5, it prints 255. Eight bits represent unsigned values from 0 to 255; 260 requires more than eight bits. This code detects overflow in a mathematical sum; it does not perform 8-bit arithmetic.",
+    "paper1Point": "1.2.4"
   },
   "055": {
     "paper1Ref": "1.2",
@@ -2081,16 +2087,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "35 > 32, so Too large. At 30 GB, Fits. Device selection also considers speed, reliability, durability, portability and cost."
   },
   "056": {
-    "paper1Ref": "1.4",
-    "paper1Topic": "Authentication and access levels",
-    "q": "Trace nested selection for a simplified security check.",
-    "code": "signedIn = true\nisAdmin = false\nif signedIn then\n    if isAdmin then\n        print(\"Admin tools\")\n    else\n        print(\"Standard access\")\n    endif\nelse\n    print(\"Please sign in\")\nendif",
+    "paper1Ref": "1.3",
+    "paper1Topic": "Client–server and peer-to-peer networks",
+    "q": "Trace nested selection in a simplified client–server access check.",
+    "code": "networkConnected = true\nserverOnline = false\nif networkConnected then\n    if serverOnline then\n        print(\"Use server\")\n    else\n        print(\"Server unavailable\")\n    endif\nelse\n    print(\"No connection\")\nendif",
     "p": [
-      "Predict the output.",
-      "Change isAdmin to true.",
-      "Change signedIn to false; explain why isAdmin no longer matters to this branch."
+      "Predict the printed output.",
+      "Change serverOnline to true; then change networkConnected to false.",
+      "Explain a difference between a client–server network and a peer-to-peer network."
     ],
-    "a": "Initially Standard access. With signedIn true and isAdmin true: Admin tools. With signedIn false: Please sign in. Authentication confirms identity; authorisation checks access rights. This is an illustrative model."
+    "a": "Initially Server unavailable. With serverOnline = true: Use server. When networkConnected = false: No connection. A client requests a service from a server; in peer-to-peer systems computers can share resources directly without a dedicated central server.",
+    "paper1Point": "1.3.1"
   },
   "057": {
     "paper1Ref": "1.2",
@@ -2117,16 +2124,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "Outputs 1, 2, 3. Limit 2 outputs 1, 2. Repeated attempts can indicate a brute-force attack; rate limits or lockouts can help defend against it. The code only counts attempts."
   },
   "059": {
-    "paper1Ref": "1.5",
-    "paper1Topic": "Memory management",
-    "q": "Trace the free-memory value as three programs reserve space.",
-    "code": "freeMB = 500\nfor program = 1 to 3\n    freeMB = freeMB - 100\nnext program\nprint(freeMB)",
+    "paper1Ref": "1.1",
+    "paper1Topic": "Clock speed and CPU performance",
+    "q": "Trace a loop that counts an illustrative number of billions of CPU clock cycles.",
+    "code": "clockGHz = 2\nseconds = 3\nbillionsOfCycles = 0\nfor i = 1 to seconds\n    billionsOfCycles = billionsOfCycles + clockGHz\nnext i\nprint(billionsOfCycles)",
     "p": [
-      "Predict the final free memory in MB.",
-      "Change the loop to run four times.",
-      "Extend with an IF after the loop printing \"Low memory\" when freeMB < 150."
+      "Predict the output in billions of clock cycles.",
+      "Change clockGHz to 3 and recalculate.",
+      "Explain how cache size and core count can also affect performance; does one cycle always mean one instruction?"
     ],
-    "a": "500 − (3 × 100) = 200 MB. Four iterations give 100 MB. With the IF after four iterations, Low memory is printed. An OS manages memory for running programs; this is a simplified allocation calculation."
+    "a": "At 2 GHz for three seconds the estimate is 6 billion clock cycles; 3 GHz gives 9 billion. Cache can reduce time spent fetching frequently used data; multiple cores can support parallel processing. One clock cycle does not necessarily equal one instruction.",
+    "paper1Point": "1.1.2"
   },
   "060": {
     "paper1Ref": "1.4",
@@ -2142,15 +2150,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "061": {
     "paper1Ref": "1.5",
-    "paper1Topic": "Operating system memory",
-    "q": "Trace a boundary condition in a simplified RAM allocation test.",
-    "code": "freeMB = 256\nneededMB = 256\nif freeMB >= neededMB then\n    print(\"Can allocate\")\nelse\n    print(\"Not enough RAM\")\nendif",
+    "paper1Topic": "Defragmentation utility",
+    "q": "Trace a conditional suggesting a disk-maintenance utility for a fragmented HDD.",
+    "code": "diskType = \"HDD\"\nfragmented = true\nif diskType == \"HDD\" AND fragmented then\n    print(\"Consider defragmentation\")\nelse\n    print(\"No defrag suggested\")\nendif",
     "p": [
       "Predict the output.",
-      "Change >= to > and predict again.",
-      "Explain why the change creates a logic error at the equal-capacity boundary."
+      "Set fragmented to false; then set diskType to \"SSD\".",
+      "Explain why defragmentation is useful for a magnetic HDD but not normally beneficial for an SSD."
     ],
-    "a": "At 256 MB required and 256 MB free, >= prints Can allocate. Changing to > prints Not enough RAM. Equal space is sufficient in this simplified calculation; changing the condition incorrectly excludes the boundary."
+    "a": "A fragmented HDD prints Consider defragmentation. A non-fragmented HDD and an SSD print No defrag suggested. Defragmentation reorganises scattered file data on an HDD to reduce head movement; SSDs have no moving read/write heads and generally should not be manually defragmented.",
+    "paper1Point": "1.5.2"
   },
   "062": {
     "paper1Ref": "1.2",
@@ -2177,16 +2186,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "substring(4,6) prints school; substring(0,3) prints www. DNS resolves domain names to IP addresses. This code manipulates a string; it does not itself perform a DNS lookup."
   },
   "064": {
-    "paper1Ref": "1.3",
-    "paper1Topic": "IPv4 format",
-    "q": "Check a written IPv4 octet using its string length, then consider the limitation.",
-    "code": "octetText = \"258\"\nif octetText.length == 3 then\n    print(\"Three digits\")\nelse\n    print(\"Different length\")\nendif",
+    "paper1Ref": "1.2",
+    "paper1Topic": "ASCII and Unicode",
+    "q": "Check the character code of B using a short string and Boolean condition.",
+    "code": "letter = \"B\"\nif ASC(letter) == 66 then\n    print(\"Character code 66\")\nelse\n    print(\"Different code\")\nendif",
     "p": [
-      "Predict the printed line.",
-      "Change octetText to \"25\" and predict.",
-      "Explain why checking length alone cannot tell whether an IPv4 octet is valid."
+      "Predict the output; the code 66 is supplied, not something to memorise.",
+      "Change letter to \"A\" and predict again.",
+      "Explain why Unicode can represent a wider range of characters than ASCII."
     ],
-    "a": "258 has three characters, so Three digits. 25 prints Different length. The octet 258 is invalid because IPv4 octets must be 0 to 255; a length check cannot verify the numeric range."
+    "a": "B has ASCII code 66, so Character code 66 is printed. A has code 65, so Different code is printed. ASCII uses a limited character set whereas Unicode supports a much larger range of writing systems and symbols. OCR does not require memorising character codes.",
+    "paper1Point": "1.2.4"
   },
   "065": {
     "paper1Ref": "1.1",
@@ -2201,16 +2211,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     "a": "Index 2 gives PC; index 3 gives ACC. The Program Counter stores the address of the next instruction; the accumulator stores results of calculations."
   },
   "066": {
-    "paper1Ref": "1.2",
-    "paper1Topic": "Image pixel data",
-    "q": "Traverse an array of pixel counts and calculate uncompressed data for 8 bits per pixel.",
-    "code": "array pixels = [100,200,150,50]\ntotalPixels = 0\nfor i = 0 to 3\n    totalPixels = totalPixels + pixels[i]\nnext i\nprint(totalPixels * 8)",
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network hardware",
+    "q": "Traverse an array containing four pieces of network hardware.",
+    "code": "array hardware = [\"NIC\",\"Switch\",\"Router\",\"WAP\"]\nfor i = 0 to 3\n    print(hardware[i])\nnext i",
     "p": [
-      "Predict the total number of bits.",
-      "Change pixels[0] to 300.",
-      "Extend the code to output the data size in bytes."
+      "Predict the four outputs in order.",
+      "Change the loop start to 1 and predict again.",
+      "State the jobs of a switch, a router and a wireless access point."
     ],
-    "a": "Total pixels = 500; at 8 bits per pixel, output is 4000 bits. Changing the first value to 300 gives 700 pixels and 5600 bits. Divide bits by 8 to display 500 or 700 bytes, excluding metadata."
+    "a": "Outputs NIC, Switch, Router, WAP. Starting at index 1 outputs Switch, Router, WAP. A switch connects devices and forwards data within a LAN; a router connects networks and forwards packets between them; a wireless access point connects wireless devices to a network.",
+    "paper1Point": "1.3.1"
   },
   "067": {
     "paper1Ref": "1.1",
@@ -2238,15 +2249,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "069": {
     "paper1Ref": "1.2",
-    "paper1Topic": "Bitmap file sizes",
-    "q": "Trace a function that returns the size of uncompressed pixel data in bits.",
-    "code": "function imageBits(width,height,depth)\n    return width * height * depth\nendfunction\nprint(imageBits(10,10,8))",
+    "paper1Topic": "RAM and ROM",
+    "q": "Trace a function that returns whether one named memory type is volatile.",
+    "code": "function isVolatile(kind)\n    if kind == \"RAM\" then\n        return true\n    else\n        return false\n    endif\nendfunction\nprint(isVolatile(\"ROM\"))",
     "p": [
-      "Predict the returned value.",
-      "Change the colour depth argument to 16.",
-      "Store the function result in a variable and print its size in bytes."
+      "Predict the Boolean output.",
+      "Call isVolatile(\"RAM\") instead.",
+      "Explain what RAM and ROM are normally used for and which retains its contents without power."
     ],
-    "a": "imageBits(10,10,8) returns 800 bits; depth 16 returns 1600 bits. For bytes: bits = imageBits(10,10,16), then print(bits / 8), giving 200. These are pixel-data sizes excluding metadata."
+    "a": "ROM returns false; RAM returns true. RAM is volatile working memory for running programs and loses its contents when power is removed; ROM is non-volatile and stores instructions needed to start the computer. The function models only these two named types.",
+    "paper1Point": "1.2.1"
   },
   "070": {
     "paper1Ref": "1.5",
@@ -2262,15 +2274,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   },
   "071": {
     "paper1Ref": "1.3",
-    "paper1Topic": "Network latency",
-    "q": "Trace a function that returns the first latency value from an array.",
-    "code": "function firstLatency(values)\n    return values[0]\nendfunction\narray latencyMs = [20,40,10]\nprint(firstLatency(latencyMs))",
+    "paper1Topic": "Cloud storage",
+    "q": "Trace a function that calculates free space in a remote cloud-storage quota.",
+    "code": "function spaceLeft(quotaMB,usedMB)\n    return quotaMB - usedMB\nendfunction\nprint(spaceLeft(500,180))",
     "p": [
-      "Predict the value returned.",
-      "Change latencyMs[0] to 35 before calling the function.",
-      "Explain why lower network latency can help interactive applications."
+      "Predict the free storage in MB.",
+      "Change usedMB to 350.",
+      "Explain one advantage and one disadvantage of cloud storage compared with a local device."
     ],
-    "a": "Initially output is 20; changing index 0 to 35 prints 35. Latency is the delay before data is transferred or a response is received; less latency generally benefits real-time interaction."
+    "a": "500 − 180 = 320 MB free; changing usedMB to 350 gives 150 MB. Cloud storage offers remote access and managed infrastructure, but may depend on connectivity and the provider's availability or terms. The calculation is a simplified capacity model.",
+    "paper1Point": "1.3.1"
   },
   "072": {
     "paper1Ref": "1.5",
