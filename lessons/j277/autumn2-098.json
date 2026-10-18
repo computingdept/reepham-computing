@@ -12,9 +12,9 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about secondary storage.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Identify magnetic, optical and solid-state storage technologies.",
+      "Compare storage choices using capacity, cost, speed and durability.",
+      "Justify the most suitable storage for a given user."
     ],
     "c": [
       [
@@ -275,20 +275,20 @@
     ],
     "r": [
       [
-        "What backs virtual memory when RAM is insufficient?",
-        "Secondary storage."
+        "Why can heavy use of virtual memory make a computer slower? [2]",
+        "Pages move between RAM and secondary storage [1], which is slower to access than RAM [1]."
       ],
       [
-        "Name a type of solid-state storage.",
-        "SSD or USB flash drive."
+        "What is the purpose of RAM? [1]",
+        "To hold programs and data currently in use [1]."
       ],
       [
-        "How many bits make one byte? [1]",
-        "Eight bits [1]."
+        "State one job performed by the CPU's control unit. [1]",
+        "It coordinates and controls instructions/operations, including sending control signals [1]."
       ],
       [
-        "An 8 GB drive holds 2 GB of files. How much capacity remains?",
-        "6 GB."
+        "A program needs 9 GB of working memory but only 6 GB of RAM is free. Calculate the shortage and explain a possible performance effect if the OS uses virtual memory. [3]",
+        "Shortage = 9 - 6 = 3 GB [1]. Virtual memory stores some pages on secondary storage [1], which is slower than RAM and may reduce performance [1]."
       ]
     ],
     "refs": [
@@ -307,6 +307,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "097",
+      "q": "Explain why virtual memory can allow programs to remain open yet reduce a computer's performance. [3]",
+      "a": "The operating system uses secondary storage for memory pages when RAM is insufficient [1]; moving/accessing those pages takes time [1] because secondary storage is slower than RAM [1]."
+    },
+    "challenge": {
+      "n": 98,
+      "coreHint": "Use DIV for the number of whole files; ignore partial files.",
+      "stretch": {
+        "task": "Change capacityMB to 2300. Predict how many whole 500 MB files fit and use MOD to print remaining space.",
+        "hint": "Compute both 2300 DIV 500 and 2300 MOD 500.",
+        "answer": "4 whole files fit, with 300 MB left: 2300 DIV 500 = 4; 2300 MOD 500 = 300."
+      },
+      "mastery": {
+        "task": "Extend the original program to calculate the number of whole files and unused storage for capacities of 2300 MB and 2500 MB. Explain why the same number of files may not imply the same unused space.",
+        "hint": "Use DIV for the count and MOD for remainder. Compare both outputs.",
+        "answer": "For 2300 MB, 4 files fit and 300 MB remains; for 2500 MB, 5 files fit and 0 MB remains. The capacity is not always an exact multiple of the file size. Real drives have filesystem overhead."
+      }
+    }
   }
 }
