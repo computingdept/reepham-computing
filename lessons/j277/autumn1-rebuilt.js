@@ -225,8 +225,8 @@
    ${number==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
    <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
-  const paper=(lesson.s.startsWith("1.1")?["qp11","ms11"]:["qp12","ms12"]);
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original practice question based on the J277 specification. <a href="${PMT[paper[0]]}" target="_blank" rel="noopener">PMT past topic questions ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">mark scheme ↗</a></p>`:""}</div></article>`);
+  const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original OCR J277-style teaching question; not an official past-paper original. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related Paper 1 practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related marking guidance ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
  }
  function vocabulary(lesson){
