@@ -1,1 +1,602 @@
-{"009":{"t":"Sound and Text File Sizes","s":"1.2.3 / 1.2.4b / 1.2.4d","o":["Calculate raw mono sound storage in bits and bytes.","Calculate text storage when the encoding size is specified.","Show clear workings and units without a calculator."],"r":[["Explain the difference between sound sample rate and bit depth.","Sample rate is samples taken per second; bit depth is bits used to store each sample."],["Why is Unicode useful for multilingual text?","It represents many more characters and writing systems than standard ASCII."],["Convert 4,000 bits into bytes.","4,000 ÷ 8 = 500 bytes."],["Mono sound is sampled at 1,000 Hz, four bits per sample, for two seconds. Calculate the raw data size in bits and bytes.","1,000 × 4 × 2 = 8,000 bits = 1,000 bytes."]],"c":[["Raw mono sound","sample rate × duration × bit depth gives bits, assuming one channel and no compression."],["Convert units","Divide by 8 for bytes. At this level use the conversion stated in the exam question for KB and MB."],["Text files","If each character is stored in one byte, n characters take approximately n bytes before metadata/compression."],["Check your assumptions","Unicode can use varying numbers of bytes per character. Never assume all text uses one byte unless stated."],["Exam technique","Write the formula and units, even if the final calculation is simple."]],"m":{"q":"Find the uncompressed size of 3 seconds of mono sound at 1,000 samples/s and 8 bits/sample.","st":["Sample rate = 1,000 per second. Duration = 3 seconds. Bit depth = 8.","Samples = 1,000 × 3 = 3,000.","Bits = 3,000 × 8 = 24,000 bits.","Bytes = 24,000 ÷ 8 = 3,000 bytes.","State assumption: raw mono data only, no header or compression."]},"w":[["Find raw bits for 2 s of mono sound at 2,000 Hz and 4-bit depth.","2,000 × 2 × 4 = 16,000 bits."],["Convert 16,000 bits to bytes.","2,000 bytes."],["A message contains 250 characters at 8 bits each. What size in bytes?","250 × 8 = 2,000 bits = 250 bytes."]],"k":{"q":"Create a sound-file size calculation on your mini-whiteboard.","code":"rate = 1000\nseconds = 3\ndepth = 8\nprint(rate * seconds * depth)","p":["Predict the size in bits.","Change seconds to 5 and predict again.","Write a print instruction to display the size in bytes."],"a":"24,000 bits initially; 40,000 bits with 5 seconds; print(rate * seconds * depth DIV 8) displays 5,000 bytes for 5 s."},"e":[["Calculate bits needed for 4 s of 500 Hz mono sound using 8 bits per sample. [3]","500 × 4 × 8 = 16,000 bits."],["Convert 16,000 bits to bytes. [2]","16,000 ÷ 8 = 2,000 bytes."],["A text file contains 600 characters stored using eight bits each. Give its size in bytes, ignoring metadata. [2]","600 × 8 ÷ 8 = 600 bytes."]],"v":[["hertz","One measurement or cycle per second; used for sample rate."],["duration","How long the sound lasts."],["bit depth","Number of bits used per sound sample."],["encoding","Method of representing characters or samples with binary."]],"x":["A mono sound file’s raw bit count increases when the recording gets longer.",true],"vis":"audio-size"},"010":{"t":"Lossy and Lossless Compression","s":"1.2.5","o":["Explain why files are compressed.","Distinguish lossy from lossless compression.","Select suitable compression for a given scenario."],"r":[["Calculate the raw bit size of three seconds of mono sound sampled at 2,000 Hz with eight-bit depth.","3 × 2,000 × 8 = 48,000 bits."],["What does bitmap colour depth measure?","The number of bits used for each pixel."],["What is a character set?","A mapping between characters and numerical/binary codes."],["A file contains 15 characters at eight bits each and a 4 × 4 bitmap at two bits per pixel. Calculate the combined raw data size in bytes, ignoring metadata.","Text = 120 bits; image = 32 bits; total = 152 bits = 19 bytes."]],"c":[["Compression","Reduces file size, helping storage and transmission."],["Lossless","Original data can be perfectly reconstructed; important for code, documents and other files that must remain exact."],["Lossy","Discards some information judged less noticeable. May achieve smaller files but original is not perfectly restored."],["Choices depend on context","Text files need exact recovery; online photography can sometimes tolerate quality loss; medical or scientific images may not."],["Not examined at algorithm level","OCR J277 expects the principle and scenarios; designing run-length/Huffman compression is not required."]],"m":{"q":"Choose how to compress a school website’s text files and promotional photographs.","st":["For HTML or program files, no character or instruction may be lost.","Choose lossless compression so original text/code can be fully recovered.","For a large photographic banner, some quality reduction may be acceptable.","Choose lossy compression if a smaller download is more valuable than perfect pixel recovery.","Justify using the actual needs of each file, not simply which is 'better'."]},"w":[["Why must a Python source file use lossless compression?","A missing or altered character could break code; it must be restored exactly."],["Choose for a social-media photo where small file size matters.","Lossy can be appropriate; accept reduced quality in exchange for smaller size."],["What could make lossless better than lossy for an archival original?","Preserving every bit ensures the file can be recovered exactly for future use."]],"k":{"q":"Model a change in file size using simple code.","code":"original = 900\ncompressed = 600\nprint(original - compressed)","p":["Predict how many storage units were saved.","Change compressed to 450 and predict the saving.","Write a second print instruction that shows the remaining compressed size."],"a":"300 units saved initially; 450 saved after change; print(compressed) displays 450. This models the result, not a compression algorithm."},"e":[["Give one reason for compressing a file before emailing it. [1]","Reduces file size so it transmits faster or uses less bandwidth/storage."],["A program’s source code must be stored exactly. Select a compression type and justify. [3]","Lossless: decompression recreates every bit exactly; a change to program instructions could prevent it from working."],["Explain why lossy compression may be suitable for a video clip. [2]","Some data can be removed to reduce file size; slight quality loss may be acceptable to the viewer."]],"v":[["compression","Reducing the number of bits needed to store a file."],["lossless","Compression from which the exact original can be recovered."],["lossy","Compression that removes some information permanently."],["decompression","Reconstructing or extracting data from a compressed file."]],"x":["Lossy compression can always restore every original bit.",false],"vis":"compression"},"011":{"t":"Primary Storage: RAM, ROM and Cache","s":"1.2.1","o":["Explain why primary storage is necessary.","Compare RAM and ROM and explain cache.","Apply memory concepts to a real computer."],"r":[["What is the difference between lossy and lossless compression?","Lossless allows exact reconstruction; lossy permanently discards some information."],["What is the difference between sound sample rate and bit depth?","Sample rate is samples per second; bit depth is bits per sample."],["Perform a two-place logical right shift on 00110100.","00001101."],["A school needs to compress a program's source code and a photograph for its website. Recommend an appropriate compression method for each and justify your choices.","Source code: lossless, to preserve every character. Photograph: lossy may be acceptable to reduce size if some visual quality loss is tolerable."]],"c":[["Why a computer needs primary storage","The processor needs quick access to data and instructions being used now."],["RAM","Main working memory: read/write and volatile. Data usually disappears when power is removed."],["ROM","Non-volatile storage containing fixed/firmware startup instructions; retains contents without power."],["Cache","Very fast memory near/in the CPU for frequently accessed data and instructions; reduces slower RAM accesses."],["Memory versus storage","RAM is working memory; SSD/HDD are long-term secondary storage. Cache, RAM and ROM have different jobs."]],"m":{"q":"A laptop starts up, opens a game, and then shuts down. Identify where information is stored.","st":["On start-up, ROM/firmware contains instructions to begin loading the system.","The operating system and game are loaded from secondary storage into RAM.","The CPU reads needed data and instructions from RAM; frequently used items can be cached.","As the game runs, RAM changes; cache speeds repeated access.","On power-off, RAM loses its data. Saved game files remain on secondary storage."]},"w":[["A word processor is running. Which memory stores its working data?","RAM."],["Which type retains start-up firmware after power is removed?","ROM or other non-volatile firmware storage."],["Why does the CPU use cache despite having RAM?","Cache is faster and holds frequently accessed information, reducing RAM access latency."]],"k":{"q":"Model the difference between a saved value and a changing working value.","code":"score = 10\nprint(score)\nscore = 15\nprint(score)","p":["Predict the two output values.","Change the final value to 20.","Explain why an assigned variable models changing data in RAM, not real physical ROM."],"a":"Displays 10 then 15. With the change, 10 then 20. An OCR ERL variable is a classroom model of working data; it does not simulate memory hardware."},"e":[["State one difference between RAM and ROM. [2]","RAM is volatile/read-write working memory; ROM is non-volatile and normally holds firmware."],["Explain why a CPU uses cache memory. [2]","Frequently needed data/instructions can be accessed faster than from RAM, improving average performance."],["An embedded device must start correctly after losing power. Explain which memory may hold its start-up instructions. [2]","ROM/non-volatile firmware retains start-up instructions when power is off."]],"v":[["RAM","Volatile working memory for active programs/data."],["ROM","Non-volatile memory holding fixed instructions/firmware."],["cache","Small, very fast memory used to speed repeated CPU access."],["volatile","Loses stored data when power is removed."]],"x":["RAM normally retains the data of running programs after power is removed.",false],"vis":"memory"},"012":{"t":"Virtual Memory","s":"1.2.1","o":["Explain why virtual memory may be needed.","Describe moving data between RAM and secondary storage.","Explain the performance cost of excessive swapping."],"r":[["Explain one difference between RAM and ROM.","RAM is volatile working memory. ROM is non-volatile and commonly stores firmware."],["A 300 × 100 bitmap uses four bits per pixel. Calculate its raw pixel-data size in bytes.","300 × 100 × 4 = 120,000 bits = 15,000 bytes."],["Why is lossless compression suitable for program files?","The exact original instructions must be recovered; lost or changed characters could break the program."],["Explain why the CPU benefits from cache memory but cannot use a small cache as a complete replacement for main RAM.","Cache is very fast but small; it holds frequently needed data/instructions. RAM has much greater capacity for active programs and data."]],"c":[["When RAM is insufficient","The operating system can use part of secondary storage as virtual memory."],["Data moves between locations","Inactive pages of a program can be stored on secondary storage so RAM can hold data needed now."],["Virtual memory is slower","SSDs/HDDs have much slower access than RAM, so swapping can slow a computer."],["A common misunderstanding","Virtual memory is not extra physical RAM. It allows the system to use secondary storage when needed."],["Context","Too many open applications can cause heavy swapping and poor responsiveness."]],"m":{"q":"A computer has 4 GB RAM but the active programs need 6 GB. What happens?","st":["Compare required memory 6 GB with available RAM 4 GB.","The deficit is 6 − 4 = 2 GB.","Operating system moves some less-needed memory pages to secondary storage.","When those pages are required, the system transfers data back, possibly moving other pages out.","Repeated transfers slow performance because secondary storage is slower than RAM."]},"w":[["Where is virtual memory stored?","In part of secondary storage such as an SSD or HDD."],["Why does heavy swapping slow a computer?","Data is being transferred between RAM and slower secondary storage."],["Does virtual memory increase the amount of installed RAM?","No. It uses secondary storage as an extension of available memory."]],"k":{"q":"Model a memory shortfall with arithmetic.","code":"required = 6\nram = 4\nprint(required - ram)","p":["Predict the required extra capacity in GB.","Change ram to 5.","Write a line to print zero when sufficient RAM is available (no IF needed: choose a suitable value)."],"a":"2 GB shortfall initially; 1 GB when ram = 5; choose required = 4, ram = 4 and the subtraction prints 0. This is a simple capacity model, not a simulation of virtual memory."},"e":[["Define virtual memory. [2]","Part of secondary storage temporarily used to hold data/instructions when RAM is insufficient."],["Describe the movement of data when RAM becomes full. [3]","Less-used data/pages move from RAM to secondary storage; required pages return to RAM when needed; this frees RAM for active processes."],["Explain a possible effect of virtual memory on performance. [2]","Slower disk/SSD access and frequent swapping can delay program execution compared with RAM."]],"v":[["virtual memory","Secondary storage used as an extension when RAM is insufficient."],["page","A unit of memory data moved between RAM and backing storage."],["swap","Transfer memory data between RAM and secondary storage."],["secondary storage","Non-volatile storage such as an SSD or HDD."]],"x":["Virtual memory usually operates at the same speed as physical RAM.",false],"vis":"virtual"},"013":{"t":"Secondary Storage Technologies","s":"1.2.2","o":["Explain why secondary storage is needed.","Compare magnetic, optical and solid-state technologies.","Identify suitable uses and trade-offs."],"r":[["Why can using virtual memory make a computer slower?","Data must be moved between RAM and slower secondary storage; frequent swapping causes delays."],["State one difference between RAM and ROM.","RAM is volatile/read-write working memory; ROM is non-volatile firmware storage."],["State one advantage of Unicode over ASCII.","It can represent many more characters from different scripts."],["A computer has 4 GB of RAM, but its active applications require 7 GB. Explain how the computer may continue running and why performance could decrease.","There is a 3 GB shortfall. The OS may use secondary storage as virtual memory, moving pages between RAM and storage; this is slower than accessing RAM."]],"c":[["Why secondary storage exists","It preserves programs, files and data after power is removed."],["Magnetic","Hard disk drives offer large capacity at relatively low price per GB; moving parts make them vulnerable to knocks."],["Optical","CDs, DVDs and Blu-ray discs use lasers; portable/removable, often slower and lower capacity than SSDs/HDDs."],["Solid state","SSDs and flash drives have no moving parts, fast access and good portability, typically at a higher price per GB than HDDs."],["Compare in context","OCR asks about capacity, speed, portability, durability, reliability and cost."]],"m":{"q":"A film-editing workstation needs fast storage for active files and cheap capacity for archives.","st":["Identify need one: fast access to current large video files.","Recommend SSD for working projects: high access speed and no moving parts.","Identify need two: lots of long-term storage on a budget.","Recommend HDD for archives: often lower cost per GB for large capacities.","Explain that either must be backed up; the storage type does not guarantee data safety."]},"w":[["Name one magnetic storage device.","Hard disk drive (HDD)."],["Name one optical storage medium.","DVD, CD or Blu-ray."],["Why is an SSD often suitable for a laptop?","Fast, durable against knocks, and no moving parts."]],"k":{"q":"Calculate how many files fit into a drive.","code":"capacity = 1000\nfileSize = 200\nprint(capacity DIV fileSize)","p":["Predict how many equal-sized files fit.","Change fileSize to 250.","Explain why storage capacity alone does not tell us which drive is best."],"a":"5 files initially; 4 files when fileSize = 250. Speed, durability, reliability, portability and cost also matter. Units must match."},"e":[["Name three technologies used for secondary storage. [3]","Magnetic, optical, solid state."],["Explain one advantage and one disadvantage of an SSD compared with an HDD. [4]","Advantage: faster access / more resistant to shocks because no moving parts. Disadvantage: commonly higher purchase cost per GB."],["Justify a suitable storage device for a school’s high-capacity, low-cost backup. [3]","HDD: large capacity and lower cost per GB; suitable for backups where maximum speed is less important."]],"v":[["magnetic storage","Stores bits through magnetic properties, e.g. HDD."],["optical storage","Uses a laser to access disc data, e.g. DVD."],["solid state","Stores bits electronically with no moving parts, e.g. SSD."],["non-volatile","Retains data without power."]],"x":["An HDD generally has no moving mechanical parts.",false],"vis":"storage"}}
+{
+  "009": {
+    "t": "Sound and Text File Sizes",
+    "s": "1.2.3 / 1.2.4b / 1.2.4d",
+    "o": [
+      "Calculate raw mono sound storage in bits and bytes.",
+      "Calculate text storage when the encoding size is specified.",
+      "Show clear workings and units without a calculator."
+    ],
+    "r": [
+      [
+        "Explain the difference between sound sample rate and bit depth.",
+        "Sample rate is samples taken per second; bit depth is bits used to store each sample."
+      ],
+      [
+        "Why is Unicode useful for multilingual text?",
+        "It represents many more characters and writing systems than standard ASCII."
+      ],
+      [
+        "Convert 4,000 bits into bytes.",
+        "4,000 ÷ 8 = 500 bytes."
+      ],
+      [
+        "Mono sound is sampled at 1,000 Hz, four bits per sample, for two seconds. Calculate the raw data size in bits and bytes.",
+        "1,000 × 4 × 2 = 8,000 bits = 1,000 bytes."
+      ]
+    ],
+    "c": [
+      [
+        "Sound file size · three factors",
+        "Booklet formula for raw MONO sound: sample rate (samples/s) × duration (s) × bit depth (bits/sample) = file size in bits."
+      ],
+      [
+        "Write the working in stages",
+        "First find sample count: sample rate × duration. Then multiply by bit depth; never add the three factors together."
+      ],
+      [
+        "Convert bits to bytes",
+        "Divide the number of bits by eight. If the exam asks for kilobytes, use the number of bytes per KB specified by that question."
+      ],
+      [
+        "Text files · use the stated encoding",
+        "Text size in bits = character count × bits per character. Standard ASCII uses 7-bit codes (often stored in 8-bit bytes); Unicode byte lengths vary by encoding. For calculations, follow the bits per character stated in the question."
+      ],
+      [
+        "Check units and assumptions",
+        "Use the same 5-step calculation as the booklet: identify factors → samples → bits → bytes → requested unit. Calculations here ignore headers and compression."
+      ]
+    ],
+    "m": {
+      "q": "Find the uncompressed size of 3 seconds of mono sound at 1,000 samples/s and 8 bits/sample.",
+      "st": [
+        "Sample rate = 1,000 per second. Duration = 3 seconds. Bit depth = 8.",
+        "Samples = 1,000 × 3 = 3,000.",
+        "Bits = 3,000 × 8 = 24,000 bits.",
+        "Bytes = 24,000 ÷ 8 = 3,000 bytes.",
+        "State the assumptions: mono, raw sample data only, no header or compression. Use the guide's bits → bytes approach."
+      ]
+    },
+    "w": [
+      [
+        "Find raw bits for 2 s of mono sound at 2,000 Hz and 4-bit depth.",
+        "2,000 × 2 × 4 = 16,000 bits."
+      ],
+      [
+        "Convert 16,000 bits to bytes.",
+        "2,000 bytes."
+      ],
+      [
+        "A message contains 250 characters at 8 bits each. What size in bytes?",
+        "250 × 8 = 2,000 bits = 250 bytes."
+      ]
+    ],
+    "k": {
+      "q": "Create a sound-file size calculation on your mini-whiteboard.",
+      "code": "rate = 1000\nseconds = 3\ndepth = 8\nprint(rate * seconds * depth)",
+      "p": [
+        "Predict the size in bits.",
+        "Change seconds to 5 and predict again.",
+        "Write a print instruction to display the size in bytes."
+      ],
+      "a": "24,000 bits initially; 40,000 bits with 5 seconds; print(rate * seconds * depth DIV 8) displays 5,000 bytes for 5 s."
+    },
+    "e": [
+      [
+        "A mono sound clip has a sample rate of 20 samples per second, duration of 100 seconds and bit depth of 8 bits. Calculate its raw file size in bits and bytes. [4]\n\nRevision booklet example · corrected arithmetic.",
+        "20 × 100 = 2,000 samples [1]. 2,000 × 8 = 16,000 bits [1]. 16,000 ÷ 8 = 2,000 bytes [1]. Correct units [1]. The guide misprints the bit count as 10,600."
+      ],
+      [
+        "A text file has 200 characters stored using 8 bits per character. Calculate the size in bits and bytes. [3]\n\nRevision booklet example · 1.2.3.",
+        "200 × 8 = 1,600 bits [1]; 1,600 ÷ 8 = 200 bytes [1]. State units [1]."
+      ],
+      [
+        "A short recording is mono, 500 samples/s, duration 4 s, 8 bits/sample. Calculate the raw size in bytes and identify ONE assumption. [3]",
+        "500 × 4 × 8 = 16,000 bits [1]; 16,000 ÷ 8 = 2,000 bytes [1]; assumes no compression/headers or only one channel [1]."
+      ]
+    ],
+    "v": [
+      [
+        "hertz",
+        "One measurement or cycle per second; used for sample rate."
+      ],
+      [
+        "duration",
+        "How long the sound lasts."
+      ],
+      [
+        "bit depth",
+        "Number of bits used per sound sample."
+      ],
+      [
+        "encoding",
+        "Method of representing characters or samples with binary."
+      ]
+    ],
+    "x": [
+      "A mono sound file’s raw bit count increases when the recording gets longer.",
+      true
+    ],
+    "vis": "audio-size"
+  },
+  "010": {
+    "t": "Lossy and Lossless Compression",
+    "s": "1.2.5",
+    "o": [
+      "Explain why files are compressed.",
+      "Distinguish lossy from lossless compression.",
+      "Select suitable compression for a given scenario."
+    ],
+    "r": [
+      [
+        "Calculate the raw bit size of three seconds of mono sound sampled at 2,000 Hz with eight-bit depth.",
+        "3 × 2,000 × 8 = 48,000 bits."
+      ],
+      [
+        "What does bitmap colour depth measure?",
+        "The number of bits used for each pixel."
+      ],
+      [
+        "What is a character set?",
+        "A mapping between characters and numerical/binary codes."
+      ],
+      [
+        "A file contains 15 characters at eight bits each and a 4 × 4 bitmap at two bits per pixel. Calculate the combined raw data size in bytes, ignoring metadata.",
+        "Text = 120 bits; image = 32 bits; total = 152 bits = 19 bytes."
+      ]
+    ],
+    "c": [
+      [
+        "Why compress?",
+        "Compression reduces file size, so a file needs less storage and may transfer faster over a network."
+      ],
+      [
+        "Lossless · keep every detail",
+        "Lossless compression allows the ORIGINAL file to be reconstructed exactly after decompression. Use it for text, code and documents where losing a bit could change the meaning."
+      ],
+      [
+        "Lossy · smaller but not identical",
+        "Lossy compression permanently discards some data. Images, audio and video may tolerate a small loss of quality to reduce file size."
+      ],
+      [
+        "Choose using the scenario",
+        "Follow the booklet comparison: text or programs → lossless; photos or video for the web → often lossy. An archival original or medical image may still require lossless."
+      ],
+      [
+        "Explain, don't only name",
+        "In an exam answer, name the type, describe whether data is lost, and link that fact to the specific file's purpose."
+      ]
+    ],
+    "m": {
+      "q": "Choose how to compress a school website’s text files and promotional photographs.",
+      "st": [
+        "For HTML or program files, no character or instruction may be lost.",
+        "Choose lossless compression so original text/code can be fully recovered.",
+        "For a large photographic banner, some quality reduction may be acceptable.",
+        "Choose lossy compression if a smaller download is more valuable than perfect pixel recovery.",
+        "Justify using the actual needs of each file, not simply which is 'better'."
+      ]
+    },
+    "w": [
+      [
+        "Why must a Python source file use lossless compression?",
+        "A missing or altered character could break code; it must be restored exactly."
+      ],
+      [
+        "Choose for a social-media photo where small file size matters.",
+        "Lossy can be appropriate; accept reduced quality in exchange for smaller size."
+      ],
+      [
+        "What could make lossless better than lossy for an archival original?",
+        "Preserving every bit ensures the file can be recovered exactly for future use."
+      ]
+    ],
+    "k": {
+      "q": "Model a change in file size using simple code.",
+      "code": "original = 900\ncompressed = 600\nprint(original - compressed)",
+      "p": [
+        "Predict how many storage units were saved.",
+        "Change compressed to 450 and predict the saving.",
+        "Write a second print instruction that shows the remaining compressed size."
+      ],
+      "a": "300 units saved initially; 450 saved after change; print(compressed) displays 450. This models the result, not a compression algorithm."
+    },
+    "e": [
+      [
+        "State TWO benefits of compressing a file before sending it across a network. [2]",
+        "It uses less data/bandwidth [1] and can be transferred faster [1]."
+      ],
+      [
+        "Explain why a program's source-code file should use lossless rather than lossy compression. [3]\n\nRevision booklet-style question · 1.2.5.",
+        "Lossless allows exact reconstruction [1]; no characters or instructions are removed [1], so the decompressed program still runs as intended [1]."
+      ],
+      [
+        "Explain why lossy compression is often suitable for online photographs or videos. [3]",
+        "It can remove less noticeable information [1], making the files smaller and faster to transfer [1], where slight quality loss is acceptable [1]."
+      ]
+    ],
+    "v": [
+      [
+        "compression",
+        "Reducing the number of bits needed to store a file."
+      ],
+      [
+        "lossless",
+        "Compression from which the exact original can be recovered."
+      ],
+      [
+        "lossy",
+        "Compression that removes some information permanently."
+      ],
+      [
+        "decompression",
+        "Reconstructing or extracting data from a compressed file."
+      ]
+    ],
+    "x": [
+      "Lossy compression can always restore every original bit.",
+      false
+    ],
+    "vis": "compression"
+  },
+  "011": {
+    "t": "Primary Storage: RAM, ROM and Cache",
+    "s": "1.2.1",
+    "o": [
+      "Explain why primary storage is necessary.",
+      "Compare RAM and ROM and explain cache.",
+      "Apply memory concepts to a real computer."
+    ],
+    "r": [
+      [
+        "What is the difference between lossy and lossless compression?",
+        "Lossless allows exact reconstruction; lossy permanently discards some information."
+      ],
+      [
+        "What is the difference between sound sample rate and bit depth?",
+        "Sample rate is samples per second; bit depth is bits per sample."
+      ],
+      [
+        "Perform a two-place logical right shift on 00110100.",
+        "00001101."
+      ],
+      [
+        "A school needs to compress a program's source code and a photograph for its website. Recommend an appropriate compression method for each and justify your choices.",
+        "Source code: lossless, to preserve every character. Photograph: lossy may be acceptable to reduce size if some visual quality loss is tolerable."
+      ]
+    ],
+    "c": [
+      [
+        "Why a computer needs primary storage",
+        "The processor needs quick access to data and instructions being used now."
+      ],
+      [
+        "RAM",
+        "Main working memory: read/write and volatile. Data usually disappears when power is removed."
+      ],
+      [
+        "ROM",
+        "Non-volatile storage containing fixed/firmware startup instructions; retains contents without power."
+      ],
+      [
+        "Cache",
+        "Very fast memory near/in the CPU for frequently accessed data and instructions; reduces slower RAM accesses."
+      ],
+      [
+        "Memory versus storage",
+        "RAM is working memory; SSD/HDD are long-term secondary storage. Cache, RAM and ROM have different jobs."
+      ]
+    ],
+    "m": {
+      "q": "A laptop starts up, opens a game, and then shuts down. Identify where information is stored.",
+      "st": [
+        "On start-up, ROM/firmware contains instructions to begin loading the system.",
+        "The operating system and game are loaded from secondary storage into RAM.",
+        "The CPU reads needed data and instructions from RAM; frequently used items can be cached.",
+        "As the game runs, RAM changes; cache speeds repeated access.",
+        "On power-off, RAM loses its data. Saved game files remain on secondary storage."
+      ]
+    },
+    "w": [
+      [
+        "A word processor is running. Which memory stores its working data?",
+        "RAM."
+      ],
+      [
+        "Which type retains start-up firmware after power is removed?",
+        "ROM or other non-volatile firmware storage."
+      ],
+      [
+        "Why does the CPU use cache despite having RAM?",
+        "Cache is faster and holds frequently accessed information, reducing RAM access latency."
+      ]
+    ],
+    "k": {
+      "q": "Model the difference between a saved value and a changing working value.",
+      "code": "score = 10\nprint(score)\nscore = 15\nprint(score)",
+      "p": [
+        "Predict the two output values.",
+        "Change the final value to 20.",
+        "Explain why an assigned variable models changing data in RAM, not real physical ROM."
+      ],
+      "a": "Displays 10 then 15. With the change, 10 then 20. An OCR ERL variable is a classroom model of working data; it does not simulate memory hardware."
+    },
+    "e": [
+      [
+        "State one difference between RAM and ROM. [2]",
+        "RAM is volatile/read-write working memory; ROM is non-volatile and normally holds firmware."
+      ],
+      [
+        "Explain why a CPU uses cache memory. [2]",
+        "Frequently needed data/instructions can be accessed faster than from RAM, improving average performance."
+      ],
+      [
+        "An embedded device must start correctly after losing power. Explain which memory may hold its start-up instructions. [2]",
+        "ROM/non-volatile firmware retains start-up instructions when power is off."
+      ]
+    ],
+    "v": [
+      [
+        "RAM",
+        "Volatile working memory for active programs/data."
+      ],
+      [
+        "ROM",
+        "Non-volatile memory holding fixed instructions/firmware."
+      ],
+      [
+        "cache",
+        "Small, very fast memory used to speed repeated CPU access."
+      ],
+      [
+        "volatile",
+        "Loses stored data when power is removed."
+      ]
+    ],
+    "x": [
+      "RAM normally retains the data of running programs after power is removed.",
+      false
+    ],
+    "vis": "memory"
+  },
+  "012": {
+    "t": "Virtual Memory",
+    "s": "1.2.1",
+    "o": [
+      "Explain why virtual memory may be needed.",
+      "Describe moving data between RAM and secondary storage.",
+      "Explain the performance cost of excessive swapping."
+    ],
+    "r": [
+      [
+        "Explain one difference between RAM and ROM.",
+        "RAM is volatile working memory. ROM is non-volatile and commonly stores firmware."
+      ],
+      [
+        "A 300 × 100 bitmap uses four bits per pixel. Calculate its raw pixel-data size in bytes.",
+        "300 × 100 × 4 = 120,000 bits = 15,000 bytes."
+      ],
+      [
+        "Why is lossless compression suitable for program files?",
+        "The exact original instructions must be recovered; lost or changed characters could break the program."
+      ],
+      [
+        "Explain why the CPU benefits from cache memory but cannot use a small cache as a complete replacement for main RAM.",
+        "Cache is very fast but small; it holds frequently needed data/instructions. RAM has much greater capacity for active programs and data."
+      ]
+    ],
+    "c": [
+      [
+        "When RAM is insufficient",
+        "The operating system can use part of secondary storage as virtual memory."
+      ],
+      [
+        "Data moves between locations",
+        "Inactive pages of a program can be stored on secondary storage so RAM can hold data needed now."
+      ],
+      [
+        "Virtual memory is slower",
+        "SSDs/HDDs have much slower access than RAM, so swapping can slow a computer."
+      ],
+      [
+        "A common misunderstanding",
+        "Virtual memory is not extra physical RAM. It allows the system to use secondary storage when needed."
+      ],
+      [
+        "Context",
+        "Too many open applications can cause heavy swapping and poor responsiveness."
+      ]
+    ],
+    "m": {
+      "q": "A computer has 4 GB RAM but the active programs need 6 GB. What happens?",
+      "st": [
+        "Compare required memory 6 GB with available RAM 4 GB.",
+        "The deficit is 6 − 4 = 2 GB.",
+        "Operating system moves some less-needed memory pages to secondary storage.",
+        "When those pages are required, the system transfers data back, possibly moving other pages out.",
+        "Repeated transfers slow performance because secondary storage is slower than RAM."
+      ]
+    },
+    "w": [
+      [
+        "Where is virtual memory stored?",
+        "In part of secondary storage such as an SSD or HDD."
+      ],
+      [
+        "Why does heavy swapping slow a computer?",
+        "Data is being transferred between RAM and slower secondary storage."
+      ],
+      [
+        "Does virtual memory increase the amount of installed RAM?",
+        "No. It uses secondary storage as an extension of available memory."
+      ]
+    ],
+    "k": {
+      "q": "Model a memory shortfall with arithmetic.",
+      "code": "required = 6\nram = 4\nprint(required - ram)",
+      "p": [
+        "Predict the required extra capacity in GB.",
+        "Change ram to 5.",
+        "Write a line to print zero when sufficient RAM is available (no IF needed: choose a suitable value)."
+      ],
+      "a": "2 GB shortfall initially; 1 GB when ram = 5; choose required = 4, ram = 4 and the subtraction prints 0. This is a simple capacity model, not a simulation of virtual memory."
+    },
+    "e": [
+      [
+        "Define virtual memory. [2]",
+        "Part of secondary storage temporarily used to hold data/instructions when RAM is insufficient."
+      ],
+      [
+        "Describe the movement of data when RAM becomes full. [3]",
+        "Less-used data/pages move from RAM to secondary storage; required pages return to RAM when needed; this frees RAM for active processes."
+      ],
+      [
+        "Explain a possible effect of virtual memory on performance. [2]",
+        "Slower disk/SSD access and frequent swapping can delay program execution compared with RAM."
+      ]
+    ],
+    "v": [
+      [
+        "virtual memory",
+        "Secondary storage used as an extension when RAM is insufficient."
+      ],
+      [
+        "page",
+        "A unit of memory data moved between RAM and backing storage."
+      ],
+      [
+        "swap",
+        "Transfer memory data between RAM and secondary storage."
+      ],
+      [
+        "secondary storage",
+        "Non-volatile storage such as an SSD or HDD."
+      ]
+    ],
+    "x": [
+      "Virtual memory usually operates at the same speed as physical RAM.",
+      false
+    ],
+    "vis": "virtual"
+  },
+  "013": {
+    "t": "Secondary Storage Technologies",
+    "s": "1.2.2",
+    "o": [
+      "Explain why secondary storage is needed.",
+      "Compare magnetic, optical and solid-state technologies.",
+      "Identify suitable uses and trade-offs."
+    ],
+    "r": [
+      [
+        "Why can using virtual memory make a computer slower?",
+        "Data must be moved between RAM and slower secondary storage; frequent swapping causes delays."
+      ],
+      [
+        "State one difference between RAM and ROM.",
+        "RAM is volatile/read-write working memory; ROM is non-volatile firmware storage."
+      ],
+      [
+        "State one advantage of Unicode over ASCII.",
+        "It can represent many more characters from different scripts."
+      ],
+      [
+        "A computer has 4 GB of RAM, but its active applications require 7 GB. Explain how the computer may continue running and why performance could decrease.",
+        "There is a 3 GB shortfall. The OS may use secondary storage as virtual memory, moving pages between RAM and storage; this is slower than accessing RAM."
+      ]
+    ],
+    "c": [
+      [
+        "Why secondary storage exists",
+        "It preserves programs, files and data after power is removed."
+      ],
+      [
+        "Magnetic",
+        "Hard disk drives offer large capacity at relatively low price per GB; moving parts make them vulnerable to knocks."
+      ],
+      [
+        "Optical",
+        "CDs, DVDs and Blu-ray discs use lasers; portable/removable, often slower and lower capacity than SSDs/HDDs."
+      ],
+      [
+        "Solid state",
+        "SSDs and flash drives have no moving parts, fast access and good portability, typically at a higher price per GB than HDDs."
+      ],
+      [
+        "Compare in context",
+        "OCR asks about capacity, speed, portability, durability, reliability and cost."
+      ]
+    ],
+    "m": {
+      "q": "A film-editing workstation needs fast storage for active files and cheap capacity for archives.",
+      "st": [
+        "Identify need one: fast access to current large video files.",
+        "Recommend SSD for working projects: high access speed and no moving parts.",
+        "Identify need two: lots of long-term storage on a budget.",
+        "Recommend HDD for archives: often lower cost per GB for large capacities.",
+        "Explain that either must be backed up; the storage type does not guarantee data safety."
+      ]
+    },
+    "w": [
+      [
+        "Name one magnetic storage device.",
+        "Hard disk drive (HDD)."
+      ],
+      [
+        "Name one optical storage medium.",
+        "DVD, CD or Blu-ray."
+      ],
+      [
+        "Why is an SSD often suitable for a laptop?",
+        "Fast, durable against knocks, and no moving parts."
+      ]
+    ],
+    "k": {
+      "q": "Calculate how many files fit into a drive.",
+      "code": "capacity = 1000\nfileSize = 200\nprint(capacity DIV fileSize)",
+      "p": [
+        "Predict how many equal-sized files fit.",
+        "Change fileSize to 250.",
+        "Explain why storage capacity alone does not tell us which drive is best."
+      ],
+      "a": "5 files initially; 4 files when fileSize = 250. Speed, durability, reliability, portability and cost also matter. Units must match."
+    },
+    "e": [
+      [
+        "Name three technologies used for secondary storage. [3]",
+        "Magnetic, optical, solid state."
+      ],
+      [
+        "Explain one advantage and one disadvantage of an SSD compared with an HDD. [4]",
+        "Advantage: faster access / more resistant to shocks because no moving parts. Disadvantage: commonly higher purchase cost per GB."
+      ],
+      [
+        "Justify a suitable storage device for a school’s high-capacity, low-cost backup. [3]",
+        "HDD: large capacity and lower cost per GB; suitable for backups where maximum speed is less important."
+      ]
+    ],
+    "v": [
+      [
+        "magnetic storage",
+        "Stores bits through magnetic properties, e.g. HDD."
+      ],
+      [
+        "optical storage",
+        "Uses a laser to access disc data, e.g. DVD."
+      ],
+      [
+        "solid state",
+        "Stores bits electronically with no moving parts, e.g. SSD."
+      ],
+      [
+        "non-volatile",
+        "Retains data without power."
+      ]
+    ],
+    "x": [
+      "An HDD generally has no moving mechanical parts.",
+      false
+    ],
+    "vis": "storage"
+  }
+}
