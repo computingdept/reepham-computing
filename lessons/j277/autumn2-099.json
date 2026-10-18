@@ -12,9 +12,9 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about storage units and conversions.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Recall bit, nibble, byte and decimal storage-capacity units.",
+      "Convert correctly between bits, bytes, kB, MB and GB.",
+      "Calculate the number of whole files that fit on a storage device."
     ],
     "c": [
       [
@@ -289,20 +289,20 @@
     ],
     "r": [
       [
-        "Which secondary storage technology uses a laser?",
-        "Optical."
+        "A school needs a low-cost, high-capacity archive drive that rarely moves. Which technology is suitable? [1]",
+        "A magnetic hard disk drive (HDD) [1]."
       ],
       [
-        "How many bytes in a kilobyte (decimal)?",
-        "1000."
+        "State one reason an SSD is often more durable than an HDD. [1]",
+        "It has no moving parts, so physical shocks are less likely to damage its mechanism [1]."
       ],
       [
         "How many bits make one byte? [1]",
         "Eight bits [1]."
       ],
       [
-        "How many bits are in 3 bytes?",
-        "24 bits."
+        "A travelling photographer needs to carry large files. Justify choosing an SSD rather than an HDD using one advantage and one disadvantage. [4]",
+        "SSD has no moving parts [1], so is more resistant to knocks during travel [1]. However, it usually costs more per GB [1], which matters for large file collections [1]."
       ]
     ],
     "refs": [
@@ -321,6 +321,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "098",
+      "q": "A school needs a high-capacity, low-cost backup drive for files accessed infrequently. Identify suitable storage and justify two characteristics. [3]",
+      "a": "Magnetic HDD [1]: typically lower cost per GB [1] and large available capacities [1], suitable where frequent fast access is not a priority."
+    },
+    "challenge": {
+      "n": 99,
+      "coreHint": "There are eight bits per byte. DIV gives the number of complete bytes.",
+      "stretch": {
+        "task": "Change bits to 41 and extend Code First to print the whole bytes and leftover bits using DIV and MOD.",
+        "hint": "Use bits DIV 8 and bits MOD 8 as separate calculations.",
+        "answer": "41 DIV 8 = 5 whole bytes; 41 MOD 8 = 1 remaining bit."
+      },
+      "mastery": {
+        "task": "Write code to calculate how many complete 250 MB files fit into a device with 2.6 GB available, using decimal conversion. Print both the whole-file count and unused MB.",
+        "hint": "First convert 2.6 GB to 2600 MB. Then use DIV and MOD with 250.",
+        "answer": "capacityMB = 2.6 * 1000; files = capacityMB DIV 250; spareMB = capacityMB MOD 250; print(files); print(spareMB). Result: 10 complete files and 100 MB spare, assuming no storage overhead."
+      }
+    }
   }
 }
