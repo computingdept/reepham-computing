@@ -2163,6 +2163,210 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       "Extend by printing the number of bytes before the decision."
     ],
     "a": "20 × 10 × 8 ÷ 8 = 200 bytes, so Fits. Width 40 gives 400 bytes, so Too large. Print bytes before the IF to display the calculated value. This excludes file header and other metadata."
+  },
+  "063": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "DNS and domain names",
+    "q": "Predict which part of a web address the string operation prints.",
+    "code": "domain = \"www.school.org\"\nprint(domain.substring(4,6))",
+    "p": [
+      "Predict the output using zero-based indexing.",
+      "Change the operation to substring(0,3).",
+      "Explain what DNS does with a domain name when a browser needs the site's IP address."
+    ],
+    "a": "substring(4,6) prints school; substring(0,3) prints www. DNS resolves domain names to IP addresses. This code manipulates a string; it does not itself perform a DNS lookup."
+  },
+  "064": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "IPv4 format",
+    "q": "Check a written IPv4 octet using its string length, then consider the limitation.",
+    "code": "octetText = \"258\"\nif octetText.length == 3 then\n    print(\"Three digits\")\nelse\n    print(\"Different length\")\nendif",
+    "p": [
+      "Predict the printed line.",
+      "Change octetText to \"25\" and predict.",
+      "Explain why checking length alone cannot tell whether an IPv4 octet is valid."
+    ],
+    "a": "258 has three characters, so Three digits. 25 prints Different length. The octet 258 is invalid because IPv4 octets must be 0 to 255; a length check cannot verify the numeric range."
+  },
+  "065": {
+    "paper1Ref": "1.1",
+    "paper1Topic": "CPU registers",
+    "q": "Use a one-dimensional array to retrieve the name of a CPU register.",
+    "code": "array registers = [\"MAR\",\"MDR\",\"PC\",\"ACC\"]\nprint(registers[2])",
+    "p": [
+      "Predict the output using zero-based indexes.",
+      "Change the index to 3.",
+      "Explain what PC and ACC store in the CPU."
+    ],
+    "a": "Index 2 gives PC; index 3 gives ACC. The Program Counter stores the address of the next instruction; the accumulator stores results of calculations."
+  },
+  "066": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Image pixel data",
+    "q": "Traverse an array of pixel counts and calculate uncompressed data for 8 bits per pixel.",
+    "code": "array pixels = [100,200,150,50]\ntotalPixels = 0\nfor i = 0 to 3\n    totalPixels = totalPixels + pixels[i]\nnext i\nprint(totalPixels * 8)",
+    "p": [
+      "Predict the total number of bits.",
+      "Change pixels[0] to 300.",
+      "Extend the code to output the data size in bytes."
+    ],
+    "a": "Total pixels = 500; at 8 bits per pixel, output is 4000 bits. Changing the first value to 300 gives 700 pixels and 5600 bits. Divide bits by 8 to display 500 or 700 bytes, excluding metadata."
+  },
+  "067": {
+    "paper1Ref": "1.1",
+    "paper1Topic": "Embedded systems",
+    "q": "Access a sensor reading in a two-dimensional array representing two devices.",
+    "code": "array readings[2,3]\nreadings[0,0] = 21\nreadings[1,2] = 25\nprint(readings[1,2])",
+    "p": [
+      "Predict the output.",
+      "Change the print statement to readings[0,0].",
+      "Add readings[0,1] = 22 and print that value; explain why an embedded system might use sensors."
+    ],
+    "a": "readings[1,2] prints 25. readings[0,0] prints 21. After assignment, readings[0,1] prints 22. An embedded system may take input from sensors to carry out a dedicated function."
+  },
+  "068": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "LANs and IP addresses",
+    "q": "Trace three related fields describing a device on a local network.",
+    "code": "deviceName = \"OfficePC\"\nipAddress = \"192.0.2.5\"\nnetworkType = \"LAN\"\nprint(deviceName)\nprint(networkType)",
+    "p": [
+      "Predict the two outputs.",
+      "Change networkType to \"WAN\" and predict the second output.",
+      "Explain how grouping these related fields into a record would improve organisation."
+    ],
+    "a": "Outputs OfficePC and LAN; after the change, OfficePC and WAN. A record could group name, IP address and network type under one item. A LAN normally covers a limited geographic area, often one site."
+  },
+  "069": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Bitmap file sizes",
+    "q": "Trace a function that returns the size of uncompressed pixel data in bits.",
+    "code": "function imageBits(width,height,depth)\n    return width * height * depth\nendfunction\nprint(imageBits(10,10,8))",
+    "p": [
+      "Predict the returned value.",
+      "Change the colour depth argument to 16.",
+      "Store the function result in a variable and print its size in bytes."
+    ],
+    "a": "imageBits(10,10,8) returns 800 bits; depth 16 returns 1600 bits. For bytes: bits = imageBits(10,10,16), then print(bits / 8), giving 200. These are pixel-data sizes excluding metadata."
+  },
+  "070": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system device management",
+    "q": "Trace a procedure that displays the name of a connected peripheral.",
+    "code": "procedure showDevice(device)\n    print(\"Connected: \" + device)\nendprocedure\nshowDevice(\"Printer\")",
+    "p": [
+      "Predict the exact output.",
+      "Change the argument to \"Scanner\".",
+      "Add a second call for \"Keyboard\" and recall what a device driver enables the OS to do."
+    ],
+    "a": "Initially Connected: Printer. Scanner changes the output to Connected: Scanner. An additional call prints Connected: Keyboard. A device driver enables the operating system to communicate with and control a peripheral."
+  },
+  "071": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network latency",
+    "q": "Trace a function that returns the first latency value from an array.",
+    "code": "function firstLatency(values)\n    return values[0]\nendfunction\narray latencyMs = [20,40,10]\nprint(firstLatency(latencyMs))",
+    "p": [
+      "Predict the value returned.",
+      "Change latencyMs[0] to 35 before calling the function.",
+      "Explain why lower network latency can help interactive applications."
+    ],
+    "a": "Initially output is 20; changing index 0 to 35 prints 35. Latency is the delay before data is transferred or a response is received; less latency generally benefits real-time interaction."
+  },
+  "072": {
+    "paper1Ref": "1.5",
+    "paper1Topic": "Operating system file management",
+    "q": "Predict the output of a file-writing program and explain the OS connection.",
+    "code": "myFile = open(\"revision.txt\")\nmyFile.writeLine(\"RAM is volatile\")\nmyFile.close()\nprint(\"Saved\")",
+    "p": [
+      "Predict what appears on screen.",
+      "Change the line written to \"ROM is non-volatile\".",
+      "Add another writeLine before close; distinguish console output from data written to the file."
+    ],
+    "a": "The console prints Saved. The file receives RAM is volatile initially or ROM is non-volatile after the edit. Adding another writeLine adds a further line to the file. File management is an operating system function; this is a simplified teaching example."
+  },
+  "073": {
+    "paper1Ref": "1.6",
+    "paper1Topic": "Privacy and data minimisation",
+    "q": "Predict the output of this SQL query string and relate it to collecting only necessary data.",
+    "code": "query = \"SELECT Model FROM Laptops WHERE NeedsRepair = true\"\nprint(query)",
+    "p": [
+      "Predict the exact printed SQL statement.",
+      "Change Model to AssetID in the query string.",
+      "Explain why requesting only fields needed for a task helps data minimisation."
+    ],
+    "a": "The program prints the SQL text; it does not execute a database query. Changing Model to AssetID changes the selected field. Data minimisation means collecting and processing only personal data necessary for a stated purpose; limiting fields is a useful design habit."
+  },
+  "074": {
+    "paper1Ref": "1.4",
+    "paper1Topic": "Authentication and security",
+    "q": "Trace a randomly generated three-digit code in a simulated login system.",
+    "code": "code = random(100,999)\nprint(code)",
+    "p": [
+      "State the possible lowest and highest outputs.",
+      "Change the range to 1000–9999.",
+      "Explain why a simple random-number example alone is not a secure authentication system."
+    ],
+    "a": "The initial possible outputs are integers 100 to 999 inclusive. The changed range produces 1000 to 9999. Real authentication also needs secure generation, delivery, verification, expiry and protections against guessing; this snippet alone is not secure."
+  },
+  "075": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "IPv4 octet validation",
+    "q": "Test a numerical rule that one IPv4 octet must be between 0 and 255.",
+    "code": "octet = 256\nif octet >= 0 AND octet <= 255 then\n    print(\"Valid range\")\nelse\n    print(\"Invalid range\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change octet to 255.",
+      "Test -1 and 0 and identify which boundary values are accepted."
+    ],
+    "a": "256 produces Invalid range. 255 and 0 produce Valid range, while -1 produces Invalid range. This tests only one octet; a full IPv4 address needs exactly four valid octets."
+  },
+  "076": {
+    "paper1Ref": "1.6",
+    "paper1Topic": "Responsible use of personal data",
+    "q": "Read a clearly named privacy-aware calculation and improve maintainability.",
+    "code": "// Count fields needed for a simple contact form\nrequiredFields = 2\nprovidedFields = 2\nmissingFields = requiredFields - providedFields\nprint(missingFields)",
+    "p": [
+      "Predict the output.",
+      "Change providedFields to 1.",
+      "Rename missingFields to fieldsStillNeeded everywhere; explain why collecting unnecessary personal data should be avoided."
+    ],
+    "a": "The original output is 0; changing providedFields to 1 gives 1. Consistent descriptive names help maintainability. Under data minimisation, systems should not collect personal data irrelevant to their purpose."
+  },
+  "077": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "IPv4 range testing",
+    "q": "Select normal, boundary and invalid numeric test values for an IPv4 octet.",
+    "code": "octet = 255\nif octet >= 0 AND octet <= 255 then\n    print(\"Accepted\")\nelse\n    print(\"Rejected\")\nendif",
+    "p": [
+      "Predict the output for 255.",
+      "Test -1, 0, 1, 128, 254, 255 and 256, recording expected outputs.",
+      "Classify 0 and 255 as boundary values and 128 as normal valid data."
+    ],
+    "a": "255 is Accepted. -1 and 256 are Rejected; 0, 1, 128, 254 and 255 are Accepted. Boundaries for the stated rule are 0 and 255; 128 is normal valid input. An erroneous value would have the wrong data type, such as a non-numeric word."
+  },
+  "078": {
+    "paper1Ref": "1.2",
+    "paper1Topic": "Storage capacity",
+    "q": "Use arithmetic, selection and validation in a mini storage-capacity project.",
+    "code": "capacityGB = 32\nfileSizeGB = 12\nif fileSizeGB >= 0 AND fileSizeGB <= capacityGB then\n    print(\"Can store file\")\nelse\n    print(\"Cannot store file\")\nendif",
+    "p": [
+      "Predict the result.",
+      "Test fileSizeGB = 0 and 40.",
+      "Extend the program to calculate and print the free space remaining when the file fits."
+    ],
+    "a": "12 GB fits within 32 GB, so Can store file. A 0 GB value passes this simplified range check, while 40 GB fails. If the file fits, remaining space is capacityGB − fileSizeGB = 20 GB for the original values."
+  },
+  "079": {
+    "paper1Ref": "1.3",
+    "paper1Topic": "Network transfer rates",
+    "q": "Check whether the algorithm estimates transfer time correctly.",
+    "code": "sizeMB = 120\nrateMBPerSecond = 10\nseconds = sizeMB * rateMBPerSecond\nprint(seconds)",
+    "p": [
+      "Predict the incorrect output.",
+      "Correct the logic error in the formula.",
+      "Change sizeMB to 50 and predict the corrected estimate; state the simplifying assumption."
+    ],
+    "a": "The incorrect output is 1200. Transfer time at constant rate should be size ÷ rate: 120 ÷ 10 = 12 seconds. At 50 MB: 5 seconds. MB/s means megabytes per second; the simplified estimate ignores overhead and network variability."
   }
 };
  function load(number,mode){
