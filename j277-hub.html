@@ -299,7 +299,7 @@ function renderLessons(){
      }else{
        el.tabIndex=0;
        el.setAttribute('role','button');
-       el.setAttribute('aria-label','Preview planned lesson '+pad(x)+(mapped?' · '+(specCode==='Mixed'?'mixed specification sections':'section '+specCode):''));
+       el.setAttribute('aria-label','Preview planned lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));
        el.addEventListener('click',()=>openLessonSheet(x,null,el));
        el.addEventListener('keydown',event=>{
          if(event.key==='Enter'||event.key===' '){
