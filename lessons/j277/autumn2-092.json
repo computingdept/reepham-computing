@@ -4,218 +4,191 @@
     "s": "2.5.1",
     "vis": "diagram-spec",
     "highlights": [
-      "Compilers",
+      "identify",
+      "describe",
       "explain",
       "compare",
-      "identify"
+      "source code",
+      "translator",
+      "interpreter",
+      "compiler",
+      "IDE"
     ],
     "o": [
-      "Describe how compilers translate source programs.",
-      "Describe how interpreters translate and execute.",
-      "Choose a translator for a scenario."
+      "Explain why translators are needed.",
+      "Trace the compilation and interpretation processes.",
+      "Compare benefits and drawbacks for real situations."
     ],
     "c": [
       [
-        "Compiling",
-        "A compiler translates a whole source program into executable machine code before it is run."
+        "Why translation is needed",
+        "A processor runs machine instructions. A translator converts source code written in a programming language so the computer can execute it."
       ],
       [
-        "Interpreting",
-        "An interpreter translates and executes statements as the program runs."
+        "Compiler",
+        "A compiler translates the entire program before it is run and produces executable code. The executable can normally be run again without recompiling unchanged source."
       ],
       [
-        "Errors",
-        "Compiler diagnostics arise during translation; an interpreter may stop when it reaches an invalid statement."
+        "Interpreter",
+        "An interpreter translates and executes the program during running, commonly one statement at a time. It usually has to be present each time the source is run."
       ],
       [
-        "Choosing",
-        "Consider repeated execution, development, distribution and translation requirements."
+        "Choose and compare",
+        "Compilation is useful when a finished program runs repeatedly or is distributed. Interpretation can be useful when developing and testing; error feedback can appear at the statement being executed."
       ]
     ],
     "visuals": [
       {
-        "title": "COMPILING",
-        "layout": "flow",
-        "boxes": [
-          "Compiling",
-          "Example",
-          "Effect"
-        ],
-        "foot": "A compiler translates a whole source program into "
+        "layout": "language-machine",
+        "title": "WHY PROGRAMS NEED TRANSLATION",
+        "boxes": [],
+        "foot": "Source code is not itself CPU-executable"
       },
       {
-        "title": "INTERPRETING",
-        "layout": "flow",
-        "boxes": [
-          "Interpreting",
-          "Example",
-          "Effect"
-        ],
-        "foot": "An interpreter translates and executes statements "
+        "layout": "compiler-pipeline",
+        "title": "COMPILING · BEFORE RUNNING",
+        "boxes": [],
+        "foot": "The executable can be used again"
       },
       {
-        "title": "ERRORS",
-        "layout": "flow",
-        "boxes": [
-          "Errors",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Compiler diagnostics arise during translation; an "
+        "layout": "interpreter-pipeline",
+        "title": "INTERPRETING · DURING RUNNING",
+        "boxes": [],
+        "foot": "Statements are translated and executed as it runs"
       },
       {
-        "title": "CHOOSING",
-        "layout": "flow",
-        "boxes": [
-          "Choosing",
-          "Example",
-          "Effect"
-        ],
-        "foot": "Consider repeated execution, development, distribu"
+        "layout": "translator-choice",
+        "title": "WHICH TRANSLATOR FITS?",
+        "boxes": [],
+        "foot": "Compare execution, distribution and testing"
       }
     ],
     "idoVisual": {
-      "title": "COMPILING",
-      "layout": "flow",
-      "boxes": [
-        "Compiling",
-        "Example",
-        "Effect"
-      ],
-      "foot": "A compiler translates a whole source program into "
+      "layout": "compiler-pipeline",
+      "title": "I DO · COMPILER",
+      "boxes": [],
+      "foot": "Whole source translated before execution"
     },
     "m": {
-      "title": "Modelled explanation",
+      "title": "Model how compilation works",
       "q": "Explain TWO features of a compiler. [4 marks]",
       "headings": [
-        "Read the question",
-        "Find the knowledge",
-        "Link the explanation",
-        "Check marks"
+        "Start with the source code",
+        "Explain translation",
+        "Explain the output",
+        "Link to repeat execution"
       ],
       "st": [
-        "Identify the command word, scenario and total marks.",
-        "Choose accurate technical terms and examples.",
-        "Connect each feature to the consequence in the scenario.",
-        "It translates the whole source program before running [1] and produces executable code [1]. Compilation reports translation errors [1] so errors can be corrected before a successful build [1]."
+        "A programmer begins with source code: this is not normally directly executable by the CPU.",
+        "The compiler translates the whole source program before it runs [1], rather than executing each statement as it is processed [1].",
+        "The compiler produces executable machine code [1] that the CPU can run.",
+        "The executable can be run repeatedly without translating the unchanged source again [1]."
       ]
     },
     "w": [
       [
-        "Explain why an interpreter can be useful during development. [4 marks]",
-        "An interpreter executes statements as it processes them [1], allowing tests without producing a separate compiled executable [1]. It can report errors at the statement reached [1], helping programmers locate faults during testing [1]."
+        "Explain TWO reasons an interpreter might be useful while developing a program. [4 marks]",
+        "It translates and executes during running [1], allowing source code to be tested without producing a separate executable [1]. Errors can be reported at the statement reached [1], helping the programmer locate a fault [1]."
       ],
       [
-        "Compare compilation with interpretation in TWO ways. [4 marks]",
-        "A compiler translates the whole program before execution [1], whereas an interpreter translates/executes statements during running [1]. A compiled executable can be run again [1], while an interpreted program normally needs the interpreter to run [1]."
+        "Compare when a compiler and an interpreter translate code, and what happens when the program runs again. [4 marks]",
+        "A compiler translates the whole program before execution [1]; an interpreter translates and executes during running [1]. A compiled executable can normally run again without recompilation [1]; an interpreted program normally needs the interpreter each time [1]."
       ],
       [
-        "Explain TWO features of a compiler. [4 marks]",
-        "It translates the whole source program before running [1] and produces executable code [1]. Compilation reports translation errors [1] so errors can be corrected before a successful build [1]."
+        "An application is distributed to many school computers and run every day. Explain TWO benefits of compiling it before distribution. [4 marks]",
+        "The compiled executable can be distributed to run on the target platform [1], without each user needing the source-language interpreter [1]. The unchanged executable can be run many times [1], without repeating compilation on every launch [1]."
       ]
     ],
     "wTitles": [
-      "Guided practice · scenario",
-      "Guided practice · comparison",
-      "Guided practice · transfer"
+      "Interpreter in development",
+      "Two meaningful differences",
+      "Repeated execution"
     ],
     "wVisuals": [
       {
-        "title": "GUIDED PRACTICE 1",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "interpreter-pipeline",
+        "title": "WE DO · INTERPRETER",
+        "boxes": [],
+        "foot": "Explain the process and benefit"
       },
       {
-        "title": "GUIDED PRACTICE 2",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "translator-errors",
+        "title": "WE DO · COMPARE",
+        "boxes": [],
+        "foot": "Think about when translation happens"
       },
       {
-        "title": "GUIDED PRACTICE 3",
-        "layout": "flow",
-        "boxes": [
-          "Technical detail",
-          "Reason",
-          "Effect"
-        ],
-        "foot": "Complete the explanation"
+        "layout": "translator-choice",
+        "title": "WE DO · DEPLOYMENT",
+        "boxes": [],
+        "foot": "Match the requirement to the method"
       }
     ],
     "wSteps": [
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Think about how an interpreter runs code."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "First reason",
+          "Link immediate execution to testing."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Second reason",
+          "Link stopping at the faulty statement to debugging."
         ],
         [
-          "Check",
-          "An interpreter executes statements as it processes them [1], allowing tests without producing a separate compiled executable [1]. It can report errors at the statement reached [1], helping programmers locate faults during testing [1]."
+          "Check [4]",
+          "Execution during running [1] with testing benefit [1]; error at reached statement [1] with diagnosis benefit [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Use two rows: translation and rerunning."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "Compiler",
+          "What exists once the whole source program is translated?"
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Interpreter",
+          "What must be present during subsequent runs?"
         ],
         [
-          "Check",
-          "A compiler translates the whole program before execution [1], whereas an interpreter translates/executes statements during running [1]. A compiled executable can be run again [1], while an interpreted program normally needs the interpreter to run [1]."
+          "Check [4]",
+          "Before run [1] vs during run [1]; executable reuse [1] vs interpreter needed [1]."
         ]
       ],
       [
         [
-          "Read",
-          "Identify the command word."
+          "Plan",
+          "Underline 'distributed' and 'every day'."
         ],
         [
-          "Recall",
-          "Retrieve relevant knowledge."
+          "First benefit",
+          "Explain what users receive."
         ],
         [
-          "Explain",
-          "Link the detail to the scenario."
+          "Second benefit",
+          "Explain why repeated running is straightforward."
         ],
         [
-          "Check",
-          "It translates the whole source program before running [1] and produces executable code [1]. Compilation reports translation errors [1] so errors can be corrected before a successful build [1]."
+          "Check [4]",
+          "Executable produced [1] for distribution [1]; reused [1] without recompiling [1]."
         ]
       ]
     ],
     "k": {
-      "q": "Predict the output, then change one input and explain your prediction.",
-      "code": "value = 2\nvalue = value + 3\nprint(value)",
+      "q": "Predict the output: the code is the same whether compiled or interpreted.",
+      "code": "total = 3\ntotal = total + 4\nprint(total)",
       "p": [
-        "Predict the output.",
-        "Change value to 4: predict the output.",
-        "Explain each assignment."
+        "State the output; do not confuse output with translation method.",
+        "Change the value 4 to 6 and predict again.",
+        "Explain why the CPU still needs executable instructions in both cases."
       ],
-      "a": "The original prints 5. Changing value to 4 prints 7."
+      "a": "Prints 7, changed prints 9; the translator makes instructions executable by the machine."
     },
     "e": [
       [
@@ -227,60 +200,64 @@
         "An interpreter executes statements as it processes them [1], allowing tests without producing a separate compiled executable [1]. It can report errors at the statement reached [1], helping programmers locate faults during testing [1]."
       ],
       [
-        "Explain TWO features of a compiler. [4 marks]\n\nSource: Original OCR J277-style practice question.",
-        "It translates the whole source program before running [1] and produces executable code [1]. Compilation reports translation errors [1] so errors can be corrected before a successful build [1]."
+        "A game studio wants users to run a finished game repeatedly on their own computers. Explain TWO advantages of compiling the game. [4 marks]\n\nSource: Original OCR J277-style practice question.",
+        "The whole program is translated into executable code [1], so the distributed version can run on the target system [1]. The executable can run repeatedly [1], so recompilation of unchanged source is not needed each time [1]."
       ]
     ],
     "v": [
       [
-        "Compilers",
-        "A key concept from this lesson."
+        "Translator",
+        "Program that converts source code into a form a computer can execute."
+      ],
+      [
+        "Compiler",
+        "Translator that processes the whole source program before execution and produces an executable."
+      ],
+      [
+        "Interpreter",
+        "Translator that executes a program as it translates it during running."
       ],
       [
         "Source code",
-        "Instructions written in a programming language."
+        "Instructions written by the programmer in a programming language."
       ],
       [
-        "Machine code",
-        "Binary instructions executed by a processor."
-      ],
-      [
-        "Debug",
-        "Find and correct errors in a program."
+        "Executable",
+        "A translated program that can be run by the target computer."
       ]
     ],
     "x": [
-      "An interpreter executes statements as a program runs.",
+      "A compiler normally translates the whole source program before the executable runs.",
       true
     ],
     "r": [
       [
-        "Give the output of A AND B where A=1 and B=0. [1 mark]",
-        "0 [1]."
+        "State which language level is generally easier for people to read and maintain. [1 mark]",
+        "High-level language [1]."
       ],
       [
-        "State what an intermediate output means in combined logic. [1 mark]",
-        "The result of one gate before the final output [1]."
+        "For Q=(A AND B) OR C, give Q when A=1, B=1, C=0. [2 marks]",
+        "A AND B=1 [1]; 1 OR 0=1 [1]."
       ],
       [
-        "Give the result of a left shift of 00000011 by one bit. [1 mark]",
-        "00000110 [1]."
+        "Explain why low-level machine instructions are processor-dependent. [2 marks]",
+        "Different processors can have different instruction sets [1], so instructions for one CPU may not execute on another [1]."
       ],
       [
-        "Explain why a three-input truth table has eight rows. [2 marks]",
-        "Three inputs each have two possible values [1], giving 2×2×2=8 combinations [1]."
+        "A school wants code that staff can change frequently and use on different processor families. Choose a language level and justify TWO advantages. [4 marks]",
+        "High-level [1]; generally easier to maintain [1], more portable [1], so less processor-specific rewriting is needed [1]."
       ]
     ],
     "refs": [
-      "L090 · last lesson",
-      "L088 · earlier learning",
-      "L004 · earlier learning",
-      "L090 · challenge"
+      "L091 · last lesson",
+      "L090 · earlier learning",
+      "L091 · earlier learning",
+      "L091 · high challenge"
     ],
     "visualAuditV2": true,
     "retrievalVisuals": [],
     "examVisuals": [],
-    "memoryCue": "For Q=(A AND B) OR C, evaluate X=A AND B first, then Q=X OR C.",
+    "memoryCue": "Compiler: before running, makes executable. Interpreter: translates and executes during running.",
     "priorExam": null,
     "visualAuditV3": false
   }
