@@ -12,9 +12,9 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about binary addition and shifts.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Perform unsigned binary addition using carry bits.",
+      "Apply logical left and right shifts, inserting zeros.",
+      "Explain overflow and loss of bits in fixed-width values."
     ],
     "c": [
       [
@@ -27,7 +27,7 @@
       ],
       [
         "Logical shifts",
-        "A logical left or right shift moves each bit by the stated number of places, introducing zeros at the vacated end."
+        "A logical shift moves bits left or right and fills empty positions with zeros. The booklet shortcut is left ×2^n and right ÷2^n for unsigned numbers, subject to lost bits and integer results."
       ],
       [
         "Overflow and loss",
@@ -265,20 +265,20 @@
     ],
     "r": [
       [
-        "Convert binary 00001111 to denary.",
-        "15."
+        "Convert eight-bit binary 00001101 to denary.",
+        "13."
       ],
       [
-        "State binary 5 in four bits.",
-        "0101."
+        "Convert denary 254 into eight-bit binary.",
+        "11111110."
       ],
       [
-        "How many bits make one byte? [1]",
-        "Eight bits [1]."
+        "What is the largest unsigned value that fits in eight bits?",
+        "255."
       ],
       [
-        "What is 11111111 + 00000001 using only eight stored bits?",
-        "00000000, with an overflow carry."
+        "A device stores eight bits. Explain why the denary value 256 cannot be stored in the eight-bit value.",
+        "It exceeds the maximum 255 and needs a ninth bit."
       ]
     ],
     "refs": [
@@ -287,7 +287,7 @@
       "L001 · Year 10 binary recall",
       "Earlier learning · challenge"
     ],
-    "memoryCue": "Never treat a shift as cyclic rotation; shifted-out bits are lost.",
+    "memoryCue": "Booklet shift rule: left by n positions multiplies by 2^n; right by n divides by 2^n for unsigned values when no important bits are lost. Zeros enter; bits shifted out are LOST, not rotated.",
     "retrievalVisuals": [],
     "examVisuals": [],
     "requiredVisuals": [
@@ -307,6 +307,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "100",
+      "q": "Convert denary 13 into eight-bit binary and show its selected place values. [3]",
+      "a": "Select 8, 4 and 1 [1]; write the eight-bit places 128 64 32 16 8 4 2 1 [1]; result 00001101 [1]."
+    },
+    "challenge": {
+      "n": 101,
+      "coreHint": "Write down the bits, shift the required number of positions, fill vacancies with 0.",
+      "stretch": {
+        "task": "Change the original value to 13. Predict the result of shifting its eight-bit form left twice, and explain the arithmetic shortcut.",
+        "hint": "13 is 00001101. Each left shift doubles the value when no significant bit is lost.",
+        "answer": "00001101 → 00011010 → 00110100. Denary 13 × 4 = 52."
+      },
+      "mastery": {
+        "task": "A student shifts 11000001 left by two places in an eight-bit register. Give the result, identify the bits lost, and explain why simply multiplying by four gives a different value.",
+        "hint": "Discard the leftmost two bits before filling two zeros on the right.",
+        "answer": "11000001 << 2 gives 00000100 (4) in eight bits. The leading 11 is discarded. 193 × 4 = 772 cannot fit in eight bits: overflow occurs."
+      }
+    }
   }
 }
