@@ -992,7 +992,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  // Illustrate code translation and IDE facilities rather than decorative flow boxes.
  function j277LanguageToolScene(spec){
   const mode=String(spec?.layout||"");
-  const supported=["language-levels","language-machine","language-tradeoffs","language-choice","compiler-pipeline","interpreter-pipeline","translator-errors","translator-choice","ide-editor","ide-diagnostics","ide-features","ide-workflow"];
+  const supported=["language-levels","language-machine","language-tradeoffs","language-choice","compiler-pipeline","interpreter-pipeline","translator-errors","translator-choice","ide-editor","ide-diagnostics","ide-features","ide-workflow","revision-map","revision-feedback","revision-plan","revision-code","revision-storage","revision-security"];
   if(!supported.includes(mode))return null;
   const esc=escape,ink="#235040",green="#388362",blue="#4d83ab",gold="#f7e8c4",cool="#e2eff9",soft="#e3f2e9";
   const R=(x,y,w,h,fill,r=10)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+r+'" fill="'+fill+'" stroke="#9ebdaf" stroke-width="2"/>';
@@ -1056,6 +1056,35 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    p+=C(441,98,105,104,"RUN","Test",cool);
    p+=T(280,250,"Use feedback from testing to improve the source code.",16);
   }
+
+  if(mode==="revision-map"){
+   p+=R(17,77,252,211,cool)+R(290,77,252,211,soft);
+   p+=T(143,110,"PAPER 1",20,850)+T(414,110,"PAPER 2",20,850);
+   [["Systems and CPU","Memory and storage","Networks and security","Software and impacts"],["Algorithms and traces","Programming techniques","Robustness and testing","Logic, languages, IDEs"]].forEach((items,col)=>items.forEach((s,i)=>{p+=T(col?414:143,145+i*35,s,16,700);}));
+   p+=T(280,308,"Two papers · 50% each",17,800);
+  }else if(mode==="revision-feedback"){
+   p+=C(17,87,245,154,"WEAK ANSWER","RAM is fast",cool)+C(295,87,247,154,"BETTER ANSWER","RAM stores active data",soft);
+   p+=T(139,276,"Too little explanation",16,700,"#a34c49");
+   p+=T(415,276,"Link fact to effect",16,800,green);
+  }else if(mode==="revision-plan"){
+   const labels=[["FIND GAP","Mark scheme"],["RECALL","No notes"],["CORRECT","Model answer"],["REVISIT","New question"]];
+   labels.forEach((v,i)=>{const x=13+i*139;p+=C(x,122,125,114,v[0],v[1],i%2?soft:cool);if(i<3)p+=A(x+127,178,x+138,178);});
+   p+=T(280,275,"Repeat retrieval after a delay, then check progress.",16,700);
+  }else if(mode==="revision-code"){
+   p+=R(30,83,500,212,"#eff6fa")+T(78,127,"1",17,700,blue)+T(119,127,"total = 2",18,750,ink,"start");
+   p+=T(78,174,"2",17,700,blue)+T(119,174,"total = total + 3",18,750,ink,"start");
+   p+=T(78,220,"3",17,700,blue)+T(119,220,"print(total)",18,750,ink,"start");
+   p+=R(375,127,126,114,soft)+T(438,158,"TRACE",17,800)+T(438,191,"2 → 5",22,850)+T(438,217,"Print 5",15);
+  }else if(mode==="revision-storage"){
+   p+=C(19,91,248,157,"HDD","Moving mechanical parts",cool)+C(291,91,248,157,"SSD","Flash memory; no moving parts",soft);
+   p+=T(280,284,"Compare reliability, speed, capacity and cost.",16);
+  }else if(mode==="revision-security"){
+   p+=C(17,103,154,111,"MESSAGE","Urgent link",cool)+A(175,159,214,159);
+   p+=C(219,103,145,111,"CHECK","Sender + URL",gold)+A(367,159,404,159);
+   p+=C(408,103,132,111,"DECIDE","Do not click?",soft);
+   p+=T(280,264,"Identify the risk and explain the protective action.",16);
+  }
+
   const heading=String(spec?.title||"OCR J277 · 2.5").slice(0,42);
   const footer=String(spec?.foot||"").slice(0,70);
   return '<figure class="a1-scene j277-tools-scene"><svg viewBox="0 0 560 340" role="img" aria-label="'+esc(heading)+'" xmlns="http://www.w3.org/2000/svg">'+R(2,2,556,336,"#f9fcfa",15)+T(280,43,heading,heading.length>32?18:21,850)+p+(footer?T(280,317,footer,footer.length>49?13:15,650):"")+'</svg></figure>';
