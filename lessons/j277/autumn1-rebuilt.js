@@ -32,12 +32,12 @@
       rows.map((r,i)=>card(19,45+i*54,129,43,r[0],"#e4f0e8",19)+card(168,45+i*54,148,43,r[1],"#e0eef9",18)+card(329,45+i*54,211,43,r[2],"#fff0d1",r[2].length>12?14:19)).join(""));
   }
   if(kind==="pixels"&&phase==="model"){
-    const cells=Array.from({length:12},(_,i)=>{const x=32+(i%4)*59,y=53+Math.floor(i/4)*48;return '<rect x="'+x+'" y="'+y+'" width="54" height="44" rx="4" fill="'+(["#c9e7d6","#93c1e2","#f3d38c","#e3d5ec"][i%4])+'" stroke="#658c78" stroke-width="1.7"/>';}).join("");
-    return svgScene("4 by 3 bitmap, 12 pixels at 2 bits per pixel",
-      note(29,34,"4 × 3 PIXELS",19)+cells+note(310,83,"12 pixels",22)+note(310,126,"2 bits each",19)+note(310,167,"4 colour codes",18)+note(306,210,"24 bits raw",19));
+    const cells=Array.from({length:64},(_,i)=>{const x=29+(i%8)*26,y=50+Math.floor(i/8)*21;return '<rect x="'+x+'" y="'+y+'" width="23" height="18" rx="2" fill="'+(["#b1d9c8","#90bce0","#f3d38c","#d5c5e8"][i%4])+'" stroke="#739482" stroke-width="1"/>';}).join("");
+    return svgScene("8 by 8 bitmap, 2-bit colour depth, 128 bits or 16 bytes",
+      note(30,34,"8 × 8 BITMAP",19)+cells+note(276,80,"64 pixels",20)+note(276,122,"2 bits per pixel",17)+note(276,161,"128 bits",20)+note(276,201,"16 bytes",20));
   }
   if(kind==="pixels"&&phase==="guided"){
-    return bar("COUNT PIXELS · GUIDED","6 pixels wide × 4 pixels high","24 PIXELS");
+    return bar("WE DO · BITMAP DATA","10 × 6 pixels × 4 bits per pixel","240 bits = 30 bytes");
   }
   if(kind==="image-size"){
     if(phase==="model")return bar("I DO · RAW IMAGE SIZE","200 × 100 pixels × 8 bits/pixel","160,000 bits = 20,000 bytes");
@@ -48,6 +48,71 @@
     if(phase==="model")return bar("I DO · MONO SOUND SIZE","1,000 samples/s × 3 s × 8 bits","24,000 bits = 3,000 bytes");
     if(phase==="guided")return bar("WE DO · MONO SOUND SIZE","2,000 samples/s × 2 s × 4 bits","16,000 bits = 2,000 bytes");
     return bar("BOOKLET METHOD · MONO SOUND","20 samples/s × 100 s × 8 bits","16,000 bits = 2,000 bytes");
+  }
+  if(kind==="cpu-performance"){
+    return svgScene("CPU performance is affected by clock speed, cache and cores",
+      note(26,37,"CPU PERFORMANCE",20)+
+      pill(20,63,163,79,"CLOCK SPEED","#e0eef9",18)+
+      pill(198,63,163,79,"CACHE","#e4f2e9",21)+
+      pill(376,63,163,79,"CORES","#fff0d1",21)+
+      note(36,176,"Cycles per second",15)+note(206,176,"Fast local data",15)+note(385,176,"Parallel tasks",15)+
+      note(74,217,"Also consider software and architecture",18));
+  }
+  if(kind==="computational"){
+    return svgScene("An algorithm transforms essential inputs through a process into outputs",
+      note(20,34,"KEEP THE ESSENTIAL DETAILS",18)+
+      pill(20,64,145,76,"INPUT","#e0eef9",21)+
+      pill(209,64,145,76,"PROCESS","#fff0d1",19)+
+      pill(398,64,142,76,"OUTPUT","#e4f2e9",20)+
+      line(168,103,208,103)+line(356,103,397,103)+
+      note(32,174,"Distance, speed",16)+note(235,174,"Divide",17)+note(421,174,"Hours",18)+
+      note(80,211,"Ignore the irrelevant car colour",17));
+  }
+  if(kind==="flowchart"){
+    return svgScene("Input leads to a decision diamond and distinct true and false branches",
+      pill(18,93,122,63,"INPUT","#e0eef9",21)+
+      '<path d="M230 58 L308 125 L230 192 L152 125 Z" stroke="#926424" fill="#fff0d1" stroke-width="2.5"/>'+
+      '<text x="230" y="130" text-anchor="middle" fill="#234d3d" font-size="17" font-weight="700">CONDITION</text>'+
+      pill(380,28,158,62,"TRUE output","#e4f2e9",18)+
+      pill(380,158,158,62,"FALSE output","#f5e6e1",18)+
+      '<path d="M140 125 H152 M308 107 L380 60 M308 143 L380 188" stroke="#28775d" fill="none" stroke-width="3"/>'+
+      note(320,62,"Yes",15)+note(320,184,"No",15));
+  }
+  if(kind==="linear-search"){
+    const values=phase==="guided"?[7,2,6,4]:[3,9,1,8,5],target=phase==="guided"?6:8,match=phase==="guided"?2:3;
+    const start=values.length===4?83:27,width=values.length===4?96:92,gap=10;
+    return svgScene("Linear search: compare each item with the target and identify its zero-based index",
+      note(26,34,"FIND "+target+" · SCAN LEFT TO RIGHT",20)+
+      values.map((n,i)=>pill(start+i*(width+gap),76,width,81,String(n),i===match?"#f9e3a6":"#e0eef9",25)).join("")+
+      values.map((n,i)=>note(start+29+i*(width+gap),65,"i="+i,16)).join("")+
+      note(130,205,"MATCH AT INDEX "+match+" · ZERO-BASED",19));
+  }
+  if(kind==="sorting"){
+    const original=phase==="guided"?"4    2    3":"5    1    4    2";
+    const after=phase==="guided"?"2    3    4":"1    4    2    5";
+    return svgScene("One full bubble-sort pass swaps out-of-order neighbouring values",
+      note(22,31,"BUBBLE SORT · ONE PASS",19)+
+      pill(32,54,496,52,original,"#e0eef9",24)+
+      '<path d="M280 108 V143 M272 134 L280 143 L288 134" fill="none" stroke="#337a65" stroke-width="3"/>'+
+      pill(32,150,496,51,after,"#e4f2e9",25)+
+      note(164,224,"Largest value moves right",16));
+  }
+  if(kind==="programming"){
+    const nums=phase==="guided"?[6,3,8]:[4,7,9];
+    return svgScene("One-dimensional array has zero-based indexes",
+      note(27,32,"ONE-DIMENSIONAL ARRAY",20)+
+      nums.map((n,i)=>pill(32+i*171,80,157,70,String(n),i===0?"#fff0d1":"#e0eef9",25)).join("")+
+      nums.map((n,i)=>note(82+i*171,67,"index "+i,16)).join("")+
+      note(78,204,"First item is at index 0, not 1",18));
+  }
+  if(kind==="testing"){
+    return svgScene("Validation example: boundary values 0 and 100 accepted, 101 rejected",
+      note(25,33,"VALIDATION · 0 TO 100",20)+
+      pill(22,66,158,86,"0","#e4f2e9",29)+
+      pill(200,66,158,86,"100","#e4f2e9",29)+
+      pill(378,66,158,86,"101","#f5e6e1",29)+
+      note(58,180,"Boundary",17)+note(233,180,"Boundary",17)+note(426,180,"Invalid",17)+
+      note(72,214,"Normal: 56 · Erroneous: hello",16));
   }
   if(kind==="shift"&&phase==="guided"){
     const bits="00101000";
