@@ -37,7 +37,7 @@
       note(30,34,"8 × 8 BITMAP",19)+cells+note(276,80,"64 pixels",20)+note(276,122,"2 bits per pixel",17)+note(276,161,"128 bits",20)+note(276,201,"16 bytes",20));
   }
   if(kind==="pixels"&&phase==="guided"){
-    return bar("WE DO · BITMAP DATA","10 × 6 pixels × 4 bits per pixel","240 bits = 30 bytes");
+    return bar("WE DO · BITMAP DATA","10 × 6 pixels × 4 bits per pixel","How many bits and bytes?");
   }
   if(kind==="image-size"){
     if(phase==="model")return bar("I DO · RAW IMAGE SIZE","200 × 100 pixels × 8 bits/pixel","160,000 bits = 20,000 bytes");
@@ -65,8 +65,8 @@
       pill(209,64,145,76,"PROCESS","#fff0d1",19)+
       pill(398,64,142,76,"OUTPUT","#e4f2e9",20)+
       line(168,103,208,103)+line(356,103,397,103)+
-      note(32,174,"Distance, speed",16)+note(235,174,"Divide",17)+note(421,174,"Hours",18)+
-      note(80,211,"Ignore the irrelevant car colour",17));
+      note(phase==="guided"?28:32,174,phase==="guided"?"Quantity, price":"Distance, speed",16)+note(phase==="guided"?220:235,174,phase==="guided"?"Multiply":"Divide",17)+note(phase==="guided"?419:421,174,phase==="guided"?"Cost":"Hours",18)+
+      note(phase==="guided"?88:80,211,phase==="guided"?"Ignore the plate colour":"Ignore the car colour",17));
   }
   if(kind==="flowchart"){
     return svgScene("Input leads to a decision diamond and distinct true and false branches",
@@ -79,23 +79,23 @@
       note(320,62,"Yes",15)+note(320,184,"No",15));
   }
   if(kind==="linear-search"){
-    const values=phase==="guided"?[7,2,6,4]:[3,9,1,8,5],target=phase==="guided"?6:8,match=phase==="guided"?2:3;
+    const values=phase==="guided"?[7,2,6,4]:[3,9,1,8,5],target=phase==="guided"?6:8,match=phase==="guided"?-1:3;
     const start=values.length===4?83:27,width=values.length===4?96:92,gap=10;
     return svgScene("Linear search: compare each item with the target and identify its zero-based index",
       note(26,34,"FIND "+target+" · SCAN LEFT TO RIGHT",20)+
       values.map((n,i)=>pill(start+i*(width+gap),76,width,81,String(n),i===match?"#f9e3a6":"#e0eef9",25)).join("")+
       values.map((n,i)=>note(start+29+i*(width+gap),65,"i="+i,16)).join("")+
-      note(130,205,"MATCH AT INDEX "+match+" · ZERO-BASED",19));
+      note(phase==="guided"?99:130,205,phase==="guided"?"COMPARE IN ORDER · FIND INDEX":"MATCH AT INDEX "+match+" · ZERO-BASED",19));
   }
   if(kind==="sorting"){
     const original=phase==="guided"?"4    2    3":"5    1    4    2";
-    const after=phase==="guided"?"2    3    4":"1    4    2    5";
+    const after=phase==="guided"?"?    ?    ?":"1    4    2    5";
     return svgScene("One full bubble-sort pass swaps out-of-order neighbouring values",
       note(22,31,"BUBBLE SORT · ONE PASS",19)+
       pill(32,54,496,52,original,"#e0eef9",24)+
       '<path d="M280 108 V143 M272 134 L280 143 L288 134" fill="none" stroke="#337a65" stroke-width="3"/>'+
       pill(32,150,496,51,after,"#e4f2e9",25)+
-      note(164,224,"Largest value moves right",16));
+      note(phase==="guided"?108:164,224,phase==="guided"?"Predict the result after one pass":"Largest value moves right",16));
   }
   if(kind==="programming"){
     const nums=phase==="guided"?[6,3,8]:[4,7,9];
