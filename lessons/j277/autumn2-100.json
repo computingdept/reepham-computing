@@ -12,14 +12,14 @@
       "compare"
     ],
     "o": [
-      "Recall key facts about binary and denary.",
-      "Work through a new example with correct technical language.",
-      "Apply the method independently and justify your answer."
+      "Read and write unsigned eight-bit binary using the 128–64–32–16–8–4–2–1 number line.",
+      "Convert binary to denary by adding columns containing 1.",
+      "Convert denary to binary and check the result."
     ],
     "c": [
       [
         "Eight-bit place values",
-        "Read unsigned place values as 128, 64, 32, 16, 8, 4, 2, 1 from left to right."
+        "Use the revision booklet's number line, always in this order: 128, 64, 32, 16, 8, 4, 2, 1. A 1 selects a place value and a 0 skips it."
       ],
       [
         "Binary to denary",
@@ -27,7 +27,7 @@
       ],
       [
         "Denary to binary",
-        "Start with the largest place value that fits, subtract, then continue until the remainder is zero."
+        "Start with the largest place value. Ask the booklet question 'Do I need this to make the number?' If yes, write 1 and subtract; if not, write 0. For 13, use 8 + 4 + 1, giving 00001101."
       ],
       [
         "Check your answer",
@@ -263,20 +263,20 @@
     ],
     "r": [
       [
-        "How many bytes are there in 32 bits?",
-        "4 bytes."
+        "How many kB are in 3 MB using decimal units?",
+        "3000 kB."
       ],
       [
-        "What is 2^7?",
-        "128."
+        "State one difference between SSD and HDD storage.",
+        "An SSD uses flash memory with no moving parts; a magnetic HDD has rotating platters."
       ],
       [
-        "How many bits make one byte? [1]",
-        "Eight bits [1]."
+        "What does ROM retain when the power is off?",
+        "Start-up instructions/firmware."
       ],
       [
-        "What is 11110000 in denary?",
-        "240."
+        "A 5 GB drive has 2 GB of files stored. Calculate its free space and explain whether deleting the files changes capacity.",
+        "3 GB free. Deleting the files increases free space but capacity remains 5 GB."
       ]
     ],
     "refs": [
@@ -285,7 +285,7 @@
       "L001 · Year 10 binary recall",
       "Earlier learning · challenge"
     ],
-    "memoryCue": "Show place values, select 1s, then add; do not guess from the pattern.",
+    "memoryCue": "Booklet number line: 128–64–32–16–8–4–2–1 (each place halves). For denary → binary ask 'Do I need this value?' and write 1/0. Examples to recognise: 5, 13, 254, 255.",
     "retrievalVisuals": [],
     "examVisuals": [],
     "requiredVisuals": [
@@ -304,6 +304,24 @@
     ],
     "visualAuditV2": false,
     "visualAuditV3": false,
-    "priorExam": null
+    "priorExam": {
+      "from": "099",
+      "q": "A device has capacity 8 GB and 3 GB is used. State the free space and explain why deleting a file does not change the drive's capacity. [3]",
+      "a": "8 − 3 = 5 GB free [1]. Capacity is the maximum storage amount [1]; deleting files changes free space, not maximum capacity [1]."
+    },
+    "challenge": {
+      "n": 100,
+      "coreHint": "Use the eight place values and add only those with 1.",
+      "stretch": {
+        "task": "Modify Code First so that it prints the two selected place values being added and the total. Predict the total for 128 + 32 + 8 + 1.",
+        "hint": "Store the four values separately, then add them.",
+        "answer": "128 + 32 + 8 + 1 = 169. The eight-bit binary value is 10101001."
+      },
+      "mastery": {
+        "task": "Write an algorithm in words to convert 254 to eight-bit unsigned binary using the place-value subtraction method. Give the result and explain why 256 is not representable.",
+        "hint": "Start with 128, then 64, 32, 16, 8, 4, 2, 1. Stop when remainder is zero.",
+        "answer": "254 = 128+64+32+16+8+4+2, so 11111110. The maximum unsigned eight-bit value is 255, and 256 requires a ninth bit."
+      }
+    }
   }
 }
