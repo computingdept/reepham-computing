@@ -118,3 +118,33 @@
 2. Audit the remaining 45-mark papers for precisely allocated marks and independent timed assessment isolation.
 3. Continue authentic SVG render and classroom-display inspection across 140 pages.
 4. Complete OCR H446 specification clause coverage and teacher sign-off.
+
+## Batch 5 — C# safety, boundary cases and assessment marking (19 October 2026)
+
+**Five distinct Year 13 lesson pages corrected:** 182, 197, 224, 308 and 317.
+
+| Lesson | Verified issue and fix |
+| --- | --- |
+| 182 — Recursion call stack | `SumTo(n)` stopped only for n==1, so zero/negative inputs recursed away from the base case. Added an explicit `ArgumentOutOfRangeException` guard and stated the valid positive-input precondition. Existing positive worked traces/diagrams remain valid. |
+| 197 — Stacks and queues | I Do and We Do were displayed as C# but called `Push`, `Pop`, `Enqueue` and `Dequeue` without a collection instance. Replaced both with standalone C# examples declaring a `Stack<int>` and `Queue<char>` and using their instance methods. |
+| 224 — BST C# implementation | Equal keys were silently ignored by the `Insert` function but the explanation omitted that fact. Added an explicit code comment and corresponding teaching explanation. |
+| 308 — 45-mark Paper 2 diagnostic | Bubble-sort trace carried eight marks although the prompt asked only for two resulting passes and the mark scheme did not identify eight independent creditworthy points. Revised the prompt and detailed the comparison, intermediate-state and explanation points for all eight marks; retained [15] Q2 total with [7] complexity comparison. |
+| 317 — Independent algorithm question | Asked learners to *write pseudocode* to count distinct values in a sorted array but gave only a terse list of marking criteria. Added a complete OCR-style function with empty input, adjacent comparison and 8 precisely allocated marking points; explicit equivalent pseudocode acceptance. |
+
+### Checks completed
+
+- All five revised GitHub files re-fetched: eight lesson phases, four Do Now questions, SVGs and Draft title remain on each.
+- Positive `SumTo` traces remain unchanged. Zero and negative inputs are now expressly rejected.
+- Stack/queue code now uses explicit instance declarations and returns 5 from the stack example and 'A' from the queue example.
+- The bubble-sort trace on [5,2,4,1] yields [2,4,1,5] after pass 1, then [2,1,4,5] after pass 2; that state remains unsorted as 2>1.
+- Algorithm in lesson 317 returns 0 for [], 1 for [3,3], and 3 for [2,2,5,5,6] when sorted.
+- **Limitations:** Static reasoning/source checks and algorithm examples are not equivalent to a real C# compilation suite. Web deployment and SVG browser rendering remain unconfirmed.
+
+**Cumulative distinct Year 13 lesson pages corrected: 30/140** (prior 25 plus 182, 197, 224, 308, 317).
+
+### Subsequent checks
+
+- Remaining independently timed assessment papers: validate every subpart and mark point against prompt and assessment time.
+- Real C# compile-and-run coverage in a supported compiler environment, especially type declarations, nullability and unusual inputs.
+- Browser-rendered diagram readability/overlap at classroom and mobile sizes.
+- Final OCR H446 specification clause-by-clause coverage matrix.
