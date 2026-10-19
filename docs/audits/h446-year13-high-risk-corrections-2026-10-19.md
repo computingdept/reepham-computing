@@ -1,4 +1,6 @@
 # H446 Year 13 — High-risk correction log
+
+> **Historical correction evidence.** The single consolidated course-wide audit is [H446 Year 13 master audit](h446-year13-master-audit-2026-10-19.md). This log records previously committed individual fixes; do not treat it as a separate ongoing audit.
 **Date:** 19 October 2026  
 **Scope:** lessons 181–320 (140 pages). All lessons remain **DRAFT** pending QA.  
 **Status:** First targeted correction batch applied on `main`; this is not full QA sign-off.
