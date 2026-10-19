@@ -95,3 +95,8 @@ This counts **primary hub labels**, not all cross-curricular occurrences or conf
 ## Follow-up correction — 19 October 2026: OOP cross-year progression
 
 **Lesson 229 (Programming paradigms)** now includes a second I Do C# demonstration of base-class references calling virtual/overridden methods on distinct derived classes, and a second We Do comparing true overriding with C# method hiding using the new keyword. The core independent question now applies that concept to procedural vs OOP accounts. This deliberately **deepens** Year 12 Lesson 123, which now first teaches inheritance and polymorphism explicitly. Original paradigm examples were retained, and the existing eight phase structure and Ready status remain. Source-level checks pass for nesting and phase counts; C# has not received real compiler or multi-device rendered verification.
+
+
+## Follow-on improvement: Year 13 file writing (19 October 2026)
+
+**Lesson 232** now goes beyond reading loops: after the existing read and EOF worked examples, a second I Do models `openWrite`, two `writeLine` calls and `close()` on scores.txt; a separate guided writing example addresses replacement of prior contents. The independent challenge now tests reading-versus-writing choice, overwrite risk and a debugging strategy (8 mark points). This deliberately deepens Year 12 Lesson 057's introductory file I/O. The eight-phase / four-Do-Now / three-You-Do source structure was rechecked; nested tags balanced and Ready remains set. No shared CSS/JS changes. Real runtime and visual display sign-off remain open.
