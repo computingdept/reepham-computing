@@ -5,7 +5,7 @@
 
 **Baseline date:** 19 October 2026  
 **Scope:** Year 12 H446 lessons 001–160, hub navigation, and protected NEA periods 161–180.  
-**Stage:** Repository and linked-file baseline COMPLETE; full content/pedagogy/specification/visual QA NOT YET COMPLETED. Do not conflate 'file exists', 'linked', 'no Draft marker', 'publicly deployed' or 'approved for teaching'.
+**Stage:** All 160 Year 12 pages have received a first-pass teaching-section source review; selected high-risk lessons have been deep-read. Full specification-clause crosswalk, code execution, assessment independence and rendered visual QA are NOT YET COMPLETE. Do not conflate 'file exists', 'linked', 'no Draft marker', 'publicly deployed' or 'approved for teaching'.
 
 ## Verified repository inventory
 
@@ -52,16 +52,52 @@ The Year 13 audit repeatedly revisited lessons, created many small commits, and 
 Related: [Year 13 master audit](h446-year13-master-audit-2026-10-19.md).
 
 
-## Quality audit progress — 19 October 2026 (evidence snapshot)
+## Consolidated Year 12 teaching-quality findings — 19 October 2026
 
-The new quality pass has **not** yet examined all 160 lesson contents. Twenty actual lesson HTML pages were individually fetched and reviewed at source level: **001–010, 018, 024–025, 035–037, 070, 100, 125, 160**. Treat findings below as provisional and do not claim full-course sign-off.
+### Evidence and boundaries
 
-- 001–010: sizeable New Learning and guided We Do sections; generally substantial first-teaching models. Specific algorithm correctness, diagrams and code still need proof.
-- 018, 024, 025, 035–037: no inline SVG; 035–037 are revision/test/feedback and do not require visuals merely to meet a quota. Lessons 018/024/025 deserve assessment of whether C#/data structure conceptual diagrams would actually improve explanation.
-- 070 (Heuristics and Performance Modelling): 247 characters of extracted I Do text and 296 of We Do. Inspect whether path-cost reasoning, heuristic choice and correctness conditions are explicitly taught rather than asserted.
-- 100 (GPU): 223 characters in I Do and 274 in We Do. Inspect whether the CPU/GPU comparison models independence, throughput and limitations adequately.
-- 125 (Assembly and LMC) has substantially more modelled trace content and diagrams; check accumulator, mailbox and output trace carefully rather than imposing a word-count threshold.
-- 160 (Investigatory Powers/RIPA): instructional text is present; currency, legal distinctions and historical applicability require source verification.
-- Early assessment exception: 036 and 037 intentionally diverge from four-question introductory Do Now pattern.
+- **All 160 Year 12 HTML lessons (001–160) were individually fetched and screened**, using lesson titles and New Learning / I Do / We Do content. Representative lessons were examined deeply: 004–007, 025, 044–045, 058, 061, 083–084, 088, 098, 121, 155 and 157–160.
+- **Compared with Year 13** using the curriculum map and actual Year 13 teaching sections from 218–221 (Dijkstra/A*) and 232, 296–297 (file handling and ethics).
+- **Assessment spot checks:** the displayed mark allocations and internal point breakdowns of original 45-mark assessments 058, 088 and 098 each sum to 45 (three 15-mark questions). This is not independent mark-scheme moderation.
+- Sampled binary floating-point methods (004–007), PageRank arithmetic (155) and Year 13 graph-path examples are coherent on the examples inspected. Do not interpret this as a complete compiler, algorithm, marking or diagram sign-off.
+- The prior 20-page progress snapshot is superseded by this fuller evidence. Word lengths and SVG presence counts were not used as proxy judgements.
 
-**Next audit requirement:** examine remaining lesson contents, crosswalk precise H446 subclauses against lessons 001–160 and Year 13 181–320, then rank confirmed technical and instructional issues before editing lesson pages. All Ready statuses remain unchanged.
+### Strengths worth preserving
+
+1. **001–012**: data representation, floating-point working and foundational C# teach transformations and use different guided examples. The mathematical floating-point examples checked were internally consistent.
+2. **025**: binary search has a clear index/-1 contract, sorted data precondition, worked C# function and substantial guided bounds tracing; a useful modelling benchmark.
+3. **026–031**: varied Boolean logic, K-map, adder and flip-flop representations deserve rendered accuracy testing rather than automatic rewriting.
+4. **089–110**: connected journey through CPU concepts, fetch-decode-execute, LMC, multicore, memory and operating-system scheduling.
+5. **134–145**: progression from database relationships and SQL to networking and encapsulation; **157–160** explicitly distinguish OCR's historical legislation references from modern UK context.
+6. **Year 13 lessons 218–221** go deeper into Dijkstra tentative distances, A* frontier selection, predecessors and heuristic failure: good differentiation to retain.
+
+### Prioritised findings
+
+| Priority | Lesson(s) | Evidence / educational judgement | Specific next step |
+| --- | --- | --- | --- |
+| **P0 confirmed assessment issue** | **098** | The closed-book LMC question Q2(b) says COUNT starts 2 in the loop of lesson 97, but does not reproduce the LMC program. A learner needs external lesson context to infer its behaviour. | Include the complete relevant loop in the actual question and revalidate the marking points; retain 45 marks. |
+| **P1 first-teaching weakness** | **044–046** | 044 I Do repeats a short class/instance example with a generic explanation prompt; We Do only identifies class and reference. 045 repeats an Account constructor and checks definitions of private field/constructor. 046 proceeds to collections of objects. | Model two independent objects and evolving state, genuine constructor input and validation, then a different scaffolded C# task; maintain the progression into collections. |
+| **P1 whole-method modelling** | **083–084** | Dijkstra/A* New Learning names the method correctly, but I Do/We Do largely compare two route costs or one f=g+h decision. They do not fully show tentative-distance, unsettled/open choices and predecessor updates in those teaching phases. | Provide one small complete changing-state trace for each method; leave Year 13 218–221 as the deeper extension. |
+| **P1 modelling/guided alignment** | **061** | I Do deals with inputs and preconditions; We Do immediately switches to caching. Both are relevant, but guided practice never repeats a validation/precondition task. | Add a different guided precondition case; keep caching as a subsequent linked application. |
+| **P1 cross-year placement question** | **Course-wide** | No *dedicated Year 12 title* on OCR file handling identified; Year 13 232 introduces openRead, readLine, endOfFile. Year 13 296–297 also teaches explicit AI, social, environment, censorship and accessibility issues more extensively than Year 12's primarily legal 157–160. This is not proof of an overall specification omission. | Check the exact specification subclauses and the full existing tasks, then decide how much introductory Year 12 coverage is warranted. |
+| **Not automatically defective** | **038–043** | Very concise, but revisit techniques initially taught in 009–012. | Only expand if transfer/application is genuinely weak, not to satisfy a word quota. |
+| **Review** | **070, 100** | Reasoning in heuristics and GPU suitability is concise; visual/model use may or may not adequately explain the decision. | Judge lesson purpose and likely misconceptions rather than length. |
+| **Unverified technical/visual** | **Selected code and diagram-heavy lessons** | No real C# course-wide compilation, end-user assessment interactions, mobile/TV render checks or complete SQL/LMC runtime suite. | Test these families directly before claiming full QA. |
+
+### Assessment allocation spot checks
+
+- **058:** three 15-mark questions: collections and queues, linked lists/BST/graphs, hashing and OOP. Subpart points total 45.
+- **088:** three 15-mark questions: searches, sorting, algorithm design and testing. Subpart points total 45.
+- **098:** three 15-mark questions: CPU registers, LMC, buses and architecture. Subpart points total 45, but **Q2(b) must be self-contained**.
+- A correct total does not prove question clarity, model answer correctness, marking reliability or effective answer hiding.
+
+### Single improvement strategy
+
+1. Fix confirmed assessment-context weakness in **098**, independently rechecking the paper.
+2. Repair **044–046** first-teaching quality; make **083–084** demonstrate actual changing algorithm state. Preserve strong Year 13 lessons.
+3. Crosswalk every OCR subclause against Year 12 *first teaching* and Year 13 *revisit/deepen*. Confirm file handling and 1.5.2 coverage placement before inserting any content.
+4. Verify C#, OCR ERL, graph algorithms, floating-point examples, SQL, LMC and mathematical assessment tasks **by topic family**, not in page order.
+5. Render the educationally essential diagrams and controls at TV, desktop and mobile widths; repair real teaching/legibility defects only.
+6. Leave lessons **Ready**, preserve 161–180 as protected NEA, and retain teacher review before each delivery.
+
+**Status:** the first whole-course teaching-section source pass is complete. The deeper specification-subclause, runnable code, full question moderation and visual testing are **not yet signed off**. No lessons, hub navigation or Ready labels have been modified in this audit pass.
