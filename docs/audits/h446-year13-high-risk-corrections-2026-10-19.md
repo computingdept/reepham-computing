@@ -52,3 +52,39 @@
 **Reference-language grounding:** Checked the basic array, byVal/byRef and file I/O conventions against Cambridge OCR's H446 specification, including the April 2026 version 3.0 text. Exact executable validation across all 140 lessons, visual SVG checks and the clause-by-clause curriculum sign-off remain outstanding.
 
 **Current corrected lesson count across batches 1 and 2:** 12 distinct lesson pages (218, 219, 220, 221, 236, 247, 250, 277, 280, 303, 306, 308).
+
+## Batch 3 — LMC, SQL and C# correctness (19 October 2026)
+
+**Seven additional distinct lesson pages updated** (225, 227, 262, 263, 272, 278, 279). All changes were committed to `main` and individually re-fetched.
+
+| Lesson | Confirmed issue / correction |
+| --- | --- |
+| 225 — OOP testing and debugging | A runnable C# top-level example placed executable statements after a class declaration, which is invalid for top-level C#. Reordered statements and added an explicit displayed output. |
+| 227 — OOP debugging with IDEs | Same C# top-level declaration-order problem. Reordered statements before class. |
+| 262 — LMC instructions and data | Subtract-two-inputs prompt stated only non-negative inputs, allowing an unrepresentable negative result. Made first≥second and 0–999 input range explicit. |
+| 263 — LMC branching | Stored a negative accumulator value before checking `BRP`, potentially losing negative-flag semantics in some simulators. Changed loop to `SUB ONE; BRP SAVE; HLT; SAVE STA COUNT; BRA LOOP` so `BRP` tests the arithmetic result immediately. Updated dependent explanation and both relevant SVG labels. |
+| 272 — SQL retrieval | Used `//` rather than standard SQL `--` comment syntax in example. Also labelled sample relation rows as SQL comments rather than executable statements and qualified selected columns. |
+| 278 — SQL SELECT and JOIN | Qualified Student.Name to make the JOIN origin clear; labelled example source data as SQL comments. |
+| 279 — SQL manipulation | The demonstration mixed runnable SQL and `DROP TABLE` without sufficiently separating a destructive operation. Explicitly labelled the examples as independent and identified `DROP TABLE` as only safe for disposable practice data. |
+
+### Independent checks during Batch 3
+- **LMC countdown:** A small instruction-level simulation of revised lesson 263 (signed-accumulator/BRP semantics) returned:
+  - input 0 → output `0`
+  - input 1 → output `1,0`
+  - input 2 → output `2,1,0`
+  - input 3 → output `3,2,1,0`
+  - input 4 → output `4,3,2,1,0`
+  - In all five cases, COUNT never stored a negative value.
+- **SQL JOINs and nested queries:** Six queries from lesson 278 executed using an in-memory SQLite database and returned the expected Ada/Ben results. SQL syntax comments `--` follow standard SQL.
+- **GitHub source validation:** all seven edited pages re-fetched with expected corrected text; 8 sections, 4 Do Now questions, inline SVGs and Draft labels retained.
+- **Limitations:** This simulation is not a real LMC browser simulator. `dotnet`, `csc` and `mcs` are not installed here, so C# source was corrected against known top-level statement syntax rules but not compiler-tested. Browser layout/visual testing remains.
+
+**Cumulative distinct Year 13 lesson pages corrected: 19/140** (218, 219, 220, 221, 225, 227, 236, 247, 250, 262, 263, 272, 277, 278, 279, 280, 303, 306, 308).
+
+### Further high-priority work
+1. Full C# compilation/execution checks using a supported runtime, including classes, linked lists, trees, code traces and boundary cases.
+2. Audit LMC/SQL SVG content and worked examples at lesson display size.
+3. Remaining 45-mark assessment mark schemes and original question-bank integrity.
+4. Clause-by-clause spec mapping and final visual QA.
+
+**Source guidance:** Cambridge OCR H446 specification version 3.0 (2026), Appendix 5d. It illustrates OCR pseudocode conventions but learners are not required to memorise the exact notation in assessed answers; reward logically clear equivalent pseudocode as the specification permits.
