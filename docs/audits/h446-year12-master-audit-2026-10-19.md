@@ -180,3 +180,36 @@ The Year 12 course remains **Ready**, with protected NEA periods 161–180 uncha
 **Validation:** all five updated Year 12 pages re-fetched from GitHub, eight phase IDs each, four Do Now questions each, three independent You Do questions each, balanced div/article/pre/code/section counts, `meta lesson-status=ready` retained. These are **source-level structural checks**, not visual TV/mobile sign-off. The public `rhsccs.org` pages were not accessible through the external verification tool and deployment remains unconfirmed. No real C# compiler installed in the available execution environment; compilation is an outstanding check.
 
 **Remaining coverage judgement:** OCR 2.2.1(b) recursion and the file notation appendix now have initial Year 12 worked exposure. The 1.5.2 topics now have multiple Year 12 worked introductions instead of being relegated entirely to Year 13; however, **complete independent exam-standard assessment of every 1.5.2 strand is not yet proven**. A formal per-subclause moderation and student-facing rendered QA remain open. Preserve Year 13 181–183 and 232, 296–297 as deeper practice.
+
+
+## Recent thirteen-lesson QA — 19 October 2026
+
+**Scope:** Y12 lessons 044, 045, 057, 083, 084, 098, 120, 123, 150, 157, 160 and Y13 lessons 229, 232. This is a focused regression test of the corrected batch, not an audit certificate for every lesson in the course.
+
+### Results verified
+
+- **13/13 source-structure PASS:** eight named phases, four Do Now prompts, three independent You Do questions, three hidden/default-closed answer areas, Ready status and matched opening/closing counts of section, div, article, pre, code and details elements. Re-fetched and re-tested after changes.
+- **Source-level interaction compatibility:** shared lesson.js visibly supports progressing through successive I Do and We Do examples and their individually hidden steps. Inline figure-sync code scopes itself to individual examples. **Real browser clicking through the deployed lessons has not occurred.**
+- **Independent numerical tests PASS:** Y12 083 Dijkstra reaches P-Q-R at cost 5 and X-Y-Z at cost 7; Y12 084 A* using its supplied admissible heuristics reaches the same costs and correct g/h/f ordering; Y12 120 SumTo(3)=6, SumTo(4)=10, Factorial(3)=6; Y12 098 LMC COUNT=2 prints 2, 1 and ends with COUNT 0. These were computed independently rather than copied from model answers.
+- **Official OCR pseudocode check:** H446 Appendix 5d supports openRead, readLine, endOfFile, openWrite, writeLine and close. openWrite replaces previous content; examples in Y12 057 and Y13 232 use these appropriately.
+- **C# meaning checked against Microsoft documentation:** top-level statement ordering and the distinctions between inheritance, virtual/override and new method hiding are accurately represented after fixes. **Actual compilation is not certified.**
+- **Representative offline Chromium layout smoke test:** locally recreated the updated code panels from Y12 044 and 045 with their scoped presentation rules and inspected them at 1920x1080 and 390x844. Both had no horizontal/vertical code-panel clipping. **These are snippet fixtures, not actual deployed lesson pages.**
+
+### Concrete fixes during QA
+
+| Lesson | Defect confirmed and fixed |
+| --- | --- |
+| 044 | Demonstration had type declarations preceding executable top-level C# statements and one-line code difficult to read. A complete ordered Badge example, shorter Student example and independently traceable Counter example now use legible code blocks with page-local styling. |
+| 045 | Account type was placed before executable top-level statements in the demonstration and guard code was densely compressed. Now shows a correctly ordered full program, formatted validated constructor and readable I Do. |
+| 057 | Loan class appeared before executable top-level Queue instructions. Reordered this as a complete C# top-level program and preserved the actual output and purpose. |
+
+**No shared CSS or JS modifications.** All affected lesson pages retain Ready.
+
+### Visual and runtime limits — do not misreport as passing
+
+1. The public rhsccs.org lesson URLs could not be opened via the available web or Chromium connection (network unavailable/blocked). **Deployment, actual full-page rendering, live navigation, answer reveals, clipping and browser/mobile quality remain UNVERIFIED.**
+2. There is no usable C# compiler in the current execution environment. The revised programs still require a genuine .NET compilation/execution check.
+3. Y12 lessons 057 and 123 have 14-line teaching code blocks inside panels with a 38vh max-height and overflow scrolling. Treat this as a **live visual review flag** at shorter classroom resolutions; do not rewrite without seeing the actual page.
+4. Lesson 098 was already corrected to include its LMC program; mark allocation remains 45. Full pupil-flow testing and independent moderation of every exam-mark point are separate, unfinished QA stages.
+
+**Disposition:** 13/13 structural pass; numerical test examples passed; three C# correctness/presentation fixes committed; representative offline snippet display passed; **production visual and compiler testing pending**.
