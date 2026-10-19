@@ -1,5 +1,8 @@
 # H446 Year 13 — whole-course master audit
 
+> **Status update — 19 October 2026:** The operational status policy has changed: all existing H446 lessons (Year 12 001–160; Year 13 181–320) are labelled **Ready** for teacher-led delivery, with teacher review before each taught lesson. Year 12 NEA 161–180 remains protected time rather than standalone lesson pages. The dated audit findings below are historical QA evidence, **not** a current Draft inventory. Ready does not mean the full technical, visual and specification audits are signed off.
+
+
 **Date:** 19 October 2026  
 **Scope:** all 140 draft lesson pages, `lessons/h446/lesson-181/index.html` through `lesson-320/index.html`, and their Year 13 entries in `h446-hub.html`.  
 **Status:** source-level whole-course inventory completed; content and visual quality *not yet signed off*. The established high-risk corrections log remains the record of confirmed and committed lesson fixes.
