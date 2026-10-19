@@ -144,6 +144,31 @@
 .pilot-exit[hidden]{display:none}
 body.pilot-public .footer-school-picker,body.pilot-public .footer .sources{display:none}
 @media(max-width:700px){.pilot-home{margin:12px auto 35px;padding:0 3px}.pilot-options{grid-template-columns:1fr}.pilot-option{padding:18px}.pilot-home .pilot-intro{font-size:16px}.pilot-staff button{width:100%}.pilot-staff input{max-width:none}}
+
+/* GCSE and A Level course choice: use the same curriculum colours as both hubs. */
+.pilot-home{max-width:980px;gap:18px}
+.pilot-course-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pilot-course{background:#fff;border:1px solid #d5e1dc;border-radius:16px;padding:23px;min-width:0;display:flex;flex-direction:column;gap:13px}
+.pilot-course .pilot-course-kicker{font-size:12px;font-weight:850;letter-spacing:.08em;color:#4d665a}
+.pilot-course h2{margin:0;font-size:clamp(21px,2.7vw,27px);line-height:1.15;color:#153e32}
+.pilot-course .pilot-course-desc{margin:0;color:#52665b;font-size:14px;line-height:1.45}
+.pilot-spec-key{display:flex;gap:5px;height:4px;margin:1px 0 2px}
+.pilot-spec-key span{height:4px;flex:1;border-radius:4px}
+.pilot-spec-key .p1{background:#417FA5}.pilot-spec-key .p2{background:#B77A3B}
+.pilot-year-choices{display:grid;gap:0;margin-top:auto}
+.pilot-year-choice{display:grid;grid-template-columns:minmax(68px,1fr) 1fr 1fr;gap:9px;align-items:center;padding:12px 0;border-top:1px solid #e5ece8}
+.pilot-year-name{font-size:15px;font-weight:800;color:#153e32}
+.pilot-route,.pilot-route:visited{display:flex;align-items:center;justify-content:center;min-height:44px;padding:9px 8px;border:1px solid #a7c5b7;border-radius:9px;background:#f1f7f3;color:#12533e;text-decoration:none;text-align:center;font-weight:800;font-size:13px;line-height:1.25}
+.pilot-route:hover{background:#e3f1e9;border-color:#609b7e}
+.pilot-route:focus-visible{outline:3px solid #eabf59;outline-offset:3px}
+.pilot-staff-only{grid-column:2/-1;color:#687a70;background:#f3f5f4;border:1px solid #e1e6e2;border-radius:9px;display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;font-size:13px;font-weight:750}
+.pilot-footnote{font-size:13px;line-height:1.5;color:#566d61;margin:0}
+.pilot-portal{padding:12px 2px 3px;border-top:1px solid #d8e5dd}
+.pilot-portal p{margin:0;color:#52665b;font-size:14px}
+.pilot-portal a{font-weight:800;color:#135740;text-underline-offset:3px}
+.pilot-staff{padding-top:17px}
+@media(max-width:760px){.pilot-course-grid{grid-template-columns:1fr}.pilot-course{padding:19px}}
+@media(max-width:460px){.pilot-course{padding:17px}.pilot-year-choice{grid-template-columns:1fr 1fr}.pilot-year-name{grid-column:1/-1}.pilot-staff-only{grid-column:1/-1}.pilot-course h2{font-size:24px}}
 </style>
 <link rel="stylesheet" href="assets/hub.css?v=20260929-0856"></head><body class="learning-hub"><a class="skip" href="#main">Skip to learning</a><header class="top"><div class="top-inner"><a class="brand school-brand" id="schoolBrandLink" href="/" aria-label="Learning Hub home"><span><small id="schoolNameHeader"></small><strong>Learning Hub</strong></span></a><button type="button" id="pilotExit" class="pilot-exit" hidden>Exit staff preview</button></div></header><main id="main"></main><footer class="footer"><div class="footer-inner footer-trust"><div class="footer-school"><strong id="schoolNameFooter"></strong><span id="schoolAcademicYear"></span></div><div class="synergy-footer-block"><a class="synergy-lockup" href="https://www.synergymat.org.uk/" target="_blank" rel="noopener" aria-label="Synergy Multi-Academy Trust website"><span>Part of</span><img src="https://www.synergymat.org.uk/images/uploads/4/488/Synergy%20MASTER%20Logo%20RGB%20no%20bground.png" alt="Synergy Multi-Academy Trust" width="150" height="68" loading="lazy" decoding="async"></a><a class="footer-school-picker" href="choose-school.html">Choose your school</a></div><div class="sources"><a id="schoolCurriculumLink" href="#">School curriculum ↗</a><a id="schoolCollegeCoursesLink" href="#">College courses ↗</a></div></div></footer><script src="assets/year8/y8-booklet-accessibility.js"></script>
 <script src="assets/schools.js?v=20260929-0922"></script>
@@ -325,18 +350,49 @@ function renderPilotLanding(){
   main.innerHTML=`<section class="pilot-home" aria-labelledby="pilotTitle">
     <div><span class="pilot-pill">RHSC · TEACHING PILOT</span>
       <h1 id="pilotTitle">Computer Science Learning Hub</h1>
-      <p class="pilot-intro">An experimental teaching resource currently being trialled by teachers and Year 12 Computer Science students. It is not the official school Student Portal.</p></div>
-    <div class="pilot-options">
-      <section class="pilot-option"><small>OFFICIAL SCHOOL WEBSITE</small><h2>RHSC Student Portal</h2>
-        <p>Looking for school information and services? Use the official school Student Portal.</p>
-        <a class="pilot-action school" href="https://synergymat.sharepoint.com/SitePages/ReephamHighandCollege-Student.aspx">Open official Student Portal ↗</a></section>
-      <section class="pilot-option"><small>CURRENT TEACHING PILOT</small><h2>Year 12 Computer Science</h2>
-        <p>Access published OCR H446 lessons and teaching resources.</p>
-        <a class="pilot-action year12" href="h446-hub.html?year=12#lessons">Open Year 12 lessons →</a></section>
-    </div>
+      <p class="pilot-intro">Your learning, beyond the classroom. Find lessons and independent revision from GCSE through to A Level.</p></div>
+    <nav class="pilot-course-grid" aria-label="Choose your Computer Science qualification and year">
+      <section class="pilot-course" aria-labelledby="pilotGcseTitle">
+        <small class="pilot-course-kicker">GCSE · OCR J277</small>
+        <h2 id="pilotGcseTitle">Computer Science</h2>
+        <p class="pilot-course-desc">Years 10–11 · Follow your lessons or practise independently.</p>
+        <div class="pilot-spec-key" aria-label="Blue Paper 1, orange Paper 2"><span class="p1"></span><span class="p2"></span></div>
+        <div class="pilot-year-choices">
+          <div class="pilot-year-choice">
+            <span class="pilot-year-name">Year 10</span>
+            <a class="pilot-route" href="j277-hub.html?year=10#lessons" aria-label="Year 10 GCSE Computer Science lessons">Lessons ↗</a>
+            <a class="pilot-route" href="j277-hub.html?year=10#revisionhub" aria-label="Year 10 GCSE Computer Science Revision Hub">Revision Hub ↗</a>
+          </div>
+          <div class="pilot-year-choice">
+            <span class="pilot-year-name">Year 11</span>
+            <a class="pilot-route" href="j277-hub.html?year=11#lessons" aria-label="Year 11 GCSE Computer Science lessons">Lessons ↗</a>
+            <a class="pilot-route" href="j277-hub.html?year=11#revisionhub" aria-label="Year 11 GCSE Computer Science Revision Hub">Revision Hub ↗</a>
+          </div>
+        </div>
+      </section>
+      <section class="pilot-course" aria-labelledby="pilotAlevelTitle">
+        <small class="pilot-course-kicker">A LEVEL · OCR H446</small>
+        <h2 id="pilotAlevelTitle">Computer Science</h2>
+        <p class="pilot-course-desc">Years 12–13 · Build knowledge, practise and prepare for assessment.</p>
+        <div class="pilot-spec-key" aria-label="Blue Paper 1, orange Paper 2"><span class="p1"></span><span class="p2"></span></div>
+        <div class="pilot-year-choices">
+          <div class="pilot-year-choice">
+            <span class="pilot-year-name">Year 12</span>
+            <a class="pilot-route" href="h446-hub.html?year=12#lessons" aria-label="Year 12 A Level Computer Science lessons">Lessons ↗</a>
+            <a class="pilot-route" href="h446-hub.html?year=12#revisionhub" aria-label="Year 12 A Level Computer Science Revision Hub">Revision Hub ↗</a>
+          </div>
+          <div class="pilot-year-choice">
+            <span class="pilot-year-name">Year 13</span>
+            <span class="pilot-staff-only">Under development · staff preview</span>
+          </div>
+        </div>
+      </section>
+    </nav>
+    <p class="pilot-footnote">Teaching pilot: resources are being developed and reviewed. The J277 Revision Hub currently includes self-marking algorithm practice, while the H446 Revision Hub has topic self-tests.</p>
+    <div class="pilot-portal"><p>For official school information and services, use the <a href="https://synergymat.sharepoint.com/SitePages/ReephamHighandCollege-Student.aspx">RHSC Student Portal ↗</a>. This teaching pilot is separate from the official Student Portal.</p></div>
     <section class="pilot-staff" aria-labelledby="pilotStaffTitle">
       <h2 id="pilotStaffTitle">Teaching staff · preview the full site</h2>
-      <p>Enter the shared pilot code to reveal the other years and resources for this browser session.</p>
+      <p>Enter the shared pilot code to view the wider Learning Hub and draft Year 13 curriculum for this browser session.</p>
       <form id="pilotCodeForm">
         <label for="pilotCodeInput">Staff preview code<input type="password" id="pilotCodeInput" autocomplete="off" spellcheck="false" required placeholder="Enter code"></label>
         <button type="submit">Unlock staff preview</button>
