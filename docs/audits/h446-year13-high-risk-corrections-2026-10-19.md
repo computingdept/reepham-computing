@@ -182,3 +182,30 @@ The OCR H446/01 **sample** mark scheme treats extended levels-of-response answer
 - Detailed mark validity and OCR-style holistic response review for other Year 13 assessment/extension lessons.
 - Full OCR H446 specification crosswalk and student-facing skill/depth checks across 181–320.
 - Confirm GitHub Pages public deployment and interactions.
+
+## Batch 7 — Remaining exam-style marking precision (19 October 2026)
+
+**Seven lesson pages edited, six distinct pages newly corrected**: 240, 268, 278, 283, 284, 285, 290. Lesson 278 was corrected in an earlier batch. **Cumulative distinct corrected Year 13 lesson pages: 43/140.**
+
+| Lesson | Source-level issue and committed correction |
+| --- | --- |
+| 240 — Validating boundary values | The four-mark answer listed two independent comparisons and gave no assembled C# predicate, even though the student was asked to correct an AND expression. Added the full `x >= 5 && x <= 15` condition, retaining explicit credit for both endpoints. |
+| 268 — Scheduling | FCFS and RR worked examples / six-mark questions used one order for processes all arriving at t=0, without stating the tie-break. Clarified listed A/B/C (or P1/P2/P3) order for equal arrivals and non-preemptive SJF rule; applies to New Learning, We Do, and both relevant You Do questions. |
+| 278 — SQL sorting | The four-mark ORDER BY scheme separately awarded a mark for the explicit `ASC` keyword, potentially rejecting valid SQL that omits it because ascending is the default. Reallocated to `ORDER BY Name` for two marks with or without `ASC`. |
+| 283 — DNS/TCP/IP | Three independent questions lacked mark totals or discrete credit criteria. Added [2], [6], [4] and specific layer/function credit. Accurate separation of DNS name resolution, TLS and Wi-Fi/link-layer roles retained. |
+| 284 — Packet/circuit switching | Added [2], [4], [4] and explicit marking criteria. TCP answer now spells out using byte sequence information, buffering and in-order application delivery; notes the segment numbering simplification. |
+| 285 — Firewall/proxy | Added [2], [4], [6], making the questions ask for the relevant evidence, including explanation of two proxy functions and two risks plus extra safeguards for permitted traffic. |
+| 290 — Misconception diagnostics | Six-mark answer for choosing three misconceptions from Q1 mistakenly offered examples from *other* lessons (HTTPS phishing and compression without repeats). Replaced with four relevant illustrative counterexamples, each with one mark for the example and one for its technical explanation; students choose any three. |
+
+### Verification and limits
+- Re-fetched all seven GitHub HTML files following successful commits.
+- Each still contains eight section phases, four Do Now questions, three hidden You Do solution areas, SVGs and Draft status.
+- Independently checked the validator accepts exactly integer inputs 5–15 inclusive.
+- Scheduling result checked: A=5,B=3,C=1 all t0, stated FCFS order waits 0,5,8 (mean 13/3) and non-preemptive SJF waits 0,1,4 (mean 5/3).
+- SQL `ORDER BY Name` ascending without explicit `ASC` is standard SQL behaviour. Full browser runtime and visual verification not performed in this batch.
+- This batch audited practice questions in lessons 240–303 and previously reviewed diagnostics; it is **not** an exhaustive semantic sign-off for all Year 13 lessons.
+
+### Next priorities
+1. Deep-check remaining 45-mark assessments and extended responses for accurate time-per-mark, mark schemes and answer isolation; validate any review/synoptic duplicates.
+2. Check curricular depth, topic progression, misconceptions and SVG teaching relevance rather than SVG presence alone.
+3. Systematic whole-course specification crosswalk and actual browser/mobile/TV readability QA.
