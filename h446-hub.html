@@ -494,7 +494,7 @@ function renderLessons(){
       if(!staffPreview&&year!==13&&!href)continue;
       const specKey=lessonSpecification(x);
       const groupedComputationalThinking=year===12&&x>=59&&x<=64&&/^2\.1\.[1-5]$/.test(specKey||'');
-      const key=groupedComputationalThinking?'2.1.x':(specKey||'planned');
+      const key=groupedComputationalThinking?'2.1':(specKey||'planned');
       if(key!==groupKey){
         group=document.createElement('div');
         group.className='spec-group'+(!href&&year===12?' spec-group-planned':'');
@@ -508,7 +508,7 @@ function renderLessons(){
           const plannedLabel=year===12&&x===32?'Applied Programming & Revision':
              year===12&&x>=37&&x<=42?'OOP foundations · C# classes and objects':
             year===12&&x>=43&&x<=57?'Data structures revisited · object-oriented C#':spec.label;
-          label.textContent=(groupedComputationalThinking?'Computational thinking · abstraction, anticipation, procedural, logical and concurrent thinking':plannedLabel)+(year===12&&!href?' · planned':'');
+          label.textContent=(groupedComputationalThinking?'Computational Thinking':plannedLabel)+(year===12&&!href?' · planned':'');
           head.append(code,label);
         }else{
           head.textContent='Future lessons · specification point to be confirmed';
