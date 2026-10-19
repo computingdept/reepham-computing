@@ -88,3 +88,33 @@
 4. Clause-by-clause spec mapping and final visual QA.
 
 **Source guidance:** Cambridge OCR H446 specification version 3.0 (2026), Appendix 5d. It illustrates OCR pseudocode conventions but learners are not required to memorise the exact notation in assessed answers; reward logically clear equivalent pseudocode as the specification permits.
+
+## Batch 4 — Programming structures, backtracking and visual correctness (19 October 2026)
+
+**Six additional distinct Year 13 lessons corrected:** 198, 199, 201, 226, 298, 310.
+
+| Lesson | Risk / fix |
+| --- | --- |
+| 198 — Index-based linked lists | The I Do and We Do used `new.next = ...` and `node4.next = new`. `new` is a reserved C# keyword, not a valid node variable. Replaced with explicitly labelled pointer pseudocode using `node7` and `node6`, preserving the successor pointer before rewiring the previous node. |
+| 199 — BST insertion | The inserted node 25 lay at y=301 with r=23 on a 700×275 SVG viewBox, clipping the whole node. Expanded this SVG to 700×340, adjusted its background to height 334 and rewrote all seven BST diagram aria-labels to describe the tree structure without placeholder commas. |
+| 201 — Hash tables | C# `key % 7` yields a negative remainder for negative keys, potentially causing a negative bucket index. Normalised to `(key % 7 + 7) % 7`, preserving positive-key examples and mapping -1 to index 6. |
+| 226 — BFS and post-order | The C# BFS example assumed a non-null root and could enqueue a null root; in an empty tree this is inappropriate for the declared `Queue<Node>`. Recast as a method accepting `Node? root` with an empty-tree guard and aligned the relevant You Do mark scheme. |
+| 298 — Backtracking | The I Do and We Do implied undoing value 3 directly after adding value 4, skipping the necessary unwind/exclusion of 4. Expanded code trace and shortened matching SVG step descriptions to explicitly undo 4 before skipping 3 and taking the alternative branch. |
+| 310 — Recursion | Challenge asked for iterative sum of *all* integers while comparing against the lesson's odd-number recursive `SumOdds`. Changed it to an iterative odd-sum matching `SumOdds(n)` with a congruent 6-mark answer including O(n) time and O(1) auxiliary storage. |
+
+### Batch 4 verification and boundaries
+
+- Re-fetched all six HTML pages after commits. Every one still has eight expected lesson phases, four Do Now questions, SVGs and a Draft title.
+- An independent small Python algorithm test confirmed the expected outputs for linked-list insertion (10→15→20→30), BST in-order traversals, BFS including empty roots, hash indices for -1/0/9/16/23, subset-sum target cases and SumOdds at inputs 0/1/4/5/6.
+- Reviewed SVG `viewBox` geometry in 15 algorithm-heavy lessons; no remaining out-of-bounds circle or text anchors found in that sample after correcting Lesson 199. **This is not an overlap, browser-rendering, screen-reader or mobile readability sign-off.**
+- Public rhsccs.org pages could not be retrieved during this pass; GitHub source commits were verified but the site deployment was **not** confirmed.
+- C# examples were checked for evident syntactic/algorithmic errors but a real dotnet/C# compile-run of all lessons remains outstanding.
+
+**Cumulative distinct Year 13 lesson pages corrected: 25/140** (previous 19 plus 198, 199, 201, 226, 298, 310).
+
+### Next high-risk block
+
+1. Complete the C# tree/linked-list code checks and empty/null/duplicate-key cases, using a C# runtime where available.
+2. Audit the remaining 45-mark papers for precisely allocated marks and independent timed assessment isolation.
+3. Continue authentic SVG render and classroom-display inspection across 140 pages.
+4. Complete OCR H446 specification clause coverage and teacher sign-off.
