@@ -146,3 +146,20 @@ Related: [Year 13 master audit](h446-year13-master-audit-2026-10-19.md).
 5. **2026 NEA AI rules:** preserve 161–180 protected time; add appropriate guidance only where actually needed after checking the student-facing materials and JCQ policy.
 
 **Scope limit:** this is an evidence-based clause-location matrix, not full yes/no lesson-level certification. All existing H446 lessons remain Ready, and no teaching pages were edited during this OCR crosswalk.
+
+
+## Implemented correction batch — 19 October 2026
+
+The following changes have **actually been committed** to the teaching pages, beyond the audit-only baseline. Their Ready labels, eight phases, and lesson-number paths remain unchanged. This changes the earlier open-action status of these items; retain the original findings as an audit history, not as unresolved defects.
+
+| Lesson | Change completed | Verification / scope limit |
+| --- | --- | --- |
+| **044** | Replaced generic model and recall-only guided tasks with a complete C# Badge class, two independent instances, method calls, output trace, and different Counter guided practice. New Learning now distinguishes class from instance explicitly. | Eight phases and nested tags checked; C# has not been compiled in a local compiler. |
+| **045** | Modelled a validated Account constructor, private field, guarded Deposit method, accepted/rejected values, and distinct Box validation scenario. Updated initial teaching explanation. | Eight phases and nested tags checked; runtime exception behaviour still needs compiled spot-test. |
+| **098** | Made closed-book LMC Q2(b) **self-contained** by printing the complete COUNT DAT 2 program, and closed the missing I Do and We Do grid containers. | Mark allocation remains Q1/Q2/Q3 = 15 each (45 total); source divs now balance (53/53). Full independent paper moderation outstanding. |
+| **123** | In the programming-paradigms lesson, added a separate runnable-style inheritance/virtual/override/polymorphism C# model and distinct Animal guided trace. Updated stated objectives, vocabulary and the third assessment question. | Two I Do examples, two We Do examples and seven vocabulary stages; source HTML counts balanced. This is the principal **Year 12 first-teach placement** of H446 1.2.4(e). |
+| **083** | Dijkstra I Do and We Do now explicitly step through the unsettled vertex choice, tentative-distance changes, predecessor updates and reconstructed route rather than jumping to a final path cost. | Three model and three guided reveal stages; existing problem SVG retained; source div counts balanced. |
+| **084** | A* I Do and We Do now teach successive OPEN-set g/h/f decisions, updated route cost and predecessor chain, instead of a single f-score comparison. | Three model and three guided reveal stages; existing graph SVG retained; source div counts balanced. |
+| **229 (Year 13)** | Preserved prior paradigms examples and added higher-challenge overriding vs method hiding, with model and guided source code and revised core assessment. | Year 13 master audit updated separately. |
+
+**Immediate corrected items:** the previously identified assessment-context error in 098 and the explicit OOP inheritance/polymorphism first-teaching gap in the targeted OOP sequence have been addressed at source level. The first-teaching depth gaps in 044–045 and Dijkstra/A* worked phases in 083–084 have also been revised. **This is not full specification coverage certification**—remaining cross-year checks include file handling, recursion placement, ethical issues, code/compiler validation and visual classroom/phone rendering. No shared lesson CSS or JS source files were edited in this batch.
