@@ -90,3 +90,8 @@ This counts **primary hub labels**, not all cross-curricular occurrences or conf
 **Background correction record:** [Earlier high-risk fixes](h446-year13-high-risk-corrections-2026-10-19.md).
 
 **External reference:** [Cambridge OCR H446 specification at a glance](https://www.ocr.org.uk/qualifications/as-and-a-level/computer-science-h046-h446-from-2015/specification-at-a-glance/). Formal clause-level sign-off must use the currently published full accredited specification, not simply the teaching-hub labels.
+
+
+## Follow-up correction — 19 October 2026: OOP cross-year progression
+
+**Lesson 229 (Programming paradigms)** now includes a second I Do C# demonstration of base-class references calling virtual/overridden methods on distinct derived classes, and a second We Do comparing true overriding with C# method hiding using the new keyword. The core independent question now applies that concept to procedural vs OOP accounts. This deliberately **deepens** Year 12 Lesson 123, which now first teaches inheritance and polymorphism explicitly. Original paradigm examples were retained, and the existing eight phase structure and Ready status remain. Source-level checks pass for nesting and phase counts; C# has not received real compiler or multi-device rendered verification.
