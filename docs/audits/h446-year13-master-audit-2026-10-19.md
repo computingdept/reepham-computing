@@ -100,3 +100,8 @@ This counts **primary hub labels**, not all cross-curricular occurrences or conf
 ## Follow-on improvement: Year 13 file writing (19 October 2026)
 
 **Lesson 232** now goes beyond reading loops: after the existing read and EOF worked examples, a second I Do models `openWrite`, two `writeLine` calls and `close()` on scores.txt; a separate guided writing example addresses replacement of prior contents. The independent challenge now tests reading-versus-writing choice, overwrite risk and a debugging strategy (8 mark points). This deliberately deepens Year 12 Lesson 057's introductory file I/O. The eight-phase / four-Do-Now / three-You-Do source structure was rechecked; nested tags balanced and Ready remains set. No shared CSS/JS changes. Real runtime and visual display sign-off remain open.
+
+
+## October 19 focused functional regression QA
+
+Year 13 Lessons **229 and 232** were included in the **13-lesson focused QA batch** documented in [Year 12 master audit — Recent thirteen-lesson QA](h446-year12-master-audit-2026-10-19.md#recent-thirteen-lesson-qa--19-october-2026). Their eight phases, four Do Now questions, three You Do questions, hidden answers, Ready labels and source tag balance were rechecked. Lesson 229 method-hiding semantics agree with Microsoft C# documentation; Lesson 232 uses official OCR file notation. Neither lesson was tested on the live public site or compiled in a C# toolchain; those checks remain pending.
