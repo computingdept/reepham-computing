@@ -50,3 +50,18 @@ The Year 13 audit repeatedly revisited lessons, created many small commits, and 
 **No Year 12 lesson files have been edited in this baseline task.** The previously amended Year 13 lessons remain preserved. The audit is designed to avoid duplicating or contradicting the Year 13 corrective work.
 
 Related: [Year 13 master audit](h446-year13-master-audit-2026-10-19.md).
+
+
+## Quality audit progress — 19 October 2026 (evidence snapshot)
+
+The new quality pass has **not** yet examined all 160 lesson contents. Twenty actual lesson HTML pages were individually fetched and reviewed at source level: **001–010, 018, 024–025, 035–037, 070, 100, 125, 160**. Treat findings below as provisional and do not claim full-course sign-off.
+
+- 001–010: sizeable New Learning and guided We Do sections; generally substantial first-teaching models. Specific algorithm correctness, diagrams and code still need proof.
+- 018, 024, 025, 035–037: no inline SVG; 035–037 are revision/test/feedback and do not require visuals merely to meet a quota. Lessons 018/024/025 deserve assessment of whether C#/data structure conceptual diagrams would actually improve explanation.
+- 070 (Heuristics and Performance Modelling): 247 characters of extracted I Do text and 296 of We Do. Inspect whether path-cost reasoning, heuristic choice and correctness conditions are explicitly taught rather than asserted.
+- 100 (GPU): 223 characters in I Do and 274 in We Do. Inspect whether the CPU/GPU comparison models independence, throughput and limitations adequately.
+- 125 (Assembly and LMC) has substantially more modelled trace content and diagrams; check accumulator, mailbox and output trace carefully rather than imposing a word-count threshold.
+- 160 (Investigatory Powers/RIPA): instructional text is present; currency, legal distinctions and historical applicability require source verification.
+- Early assessment exception: 036 and 037 intentionally diverge from four-question introductory Do Now pattern.
+
+**Next audit requirement:** examine remaining lesson contents, crosswalk precise H446 subclauses against lessons 001–160 and Year 13 181–320, then rank confirmed technical and instructional issues before editing lesson pages. All Ready statuses remain unchanged.
