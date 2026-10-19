@@ -101,3 +101,48 @@ Related: [Year 13 master audit](h446-year13-master-audit-2026-10-19.md).
 6. Leave lessons **Ready**, preserve 161–180 as protected NEA, and retain teacher review before each delivery.
 
 **Status:** the first whole-course teaching-section source pass is complete. The deeper specification-subclause, runnable code, full question moderation and visual testing are **not yet signed off**. No lessons, hub navigation or Ready labels have been modified in this audit pass.
+
+
+
+## OCR H446 version 3.0 (April 2026) — cross-year curriculum crosswalk
+
+**Reference:** Cambridge OCR's [current accredited H446 specification](https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf), particularly the precise clauses in sections 2b–2c, Appendix 5d and the April 2026 addition of section 4e on AI and NEA. This matrix represents *plausible primary teaching/revisiting locations in the actual lesson files and Year 13 hub mapping*. It does **not** certify that every lettered requirement is demonstrated and assessed. Evidence levels: **Mapped** = relevant actual source lesson and Year 13 revisit identifiable; **Inspect** = exact clause demonstration needs proving; **Priority gap risk** = selected relevant lessons lack explicit demonstration of a named OCR requirement.
+
+| OCR content heading | Year 12 likely first teaching | Year 13 revisit/deepen | Status and precise check |
+| --- | --- | --- | --- |
+| **1.1.1 (a–e)** CPU, FDE, performance, pipeline, architectures | 089–098 | 251–254 | Mapped; independently check exact register states and pipeline conditions |
+| **1.1.2 (a–c)** RISC/CISC, GPUs, multicore | 099–102 | 255–256 | Mapped; GPU 100 explanation and limits deserve focused inspection |
+| **1.1.3 (a–d)** IO, secondary storage, RAM/ROM, virtual storage | 103–105 | 257, 259–260 | Mapped; distinguish virtual *storage* from virtual *memory* |
+| **1.2.1 (a–h)** OS memory, interrupts, scheduling, categories, firmware and VMs | 106–111 | 264–270 | Mapped; test all five scheduling algorithms and intermediate states |
+| **1.2.2 (a–f)** applications, utilities, licensing, translators, linkers | 112–116 | 271, 273–274 | Mapped; test compilation stages and distinctions |
+| **1.2.3 (a–c)** software methods, algorithm writing/following | 117–122 | 233–237, 240, 245 | Mapped; verify transfer into applied algorithm construction |
+| **1.2.4 (a–e)** paradigms, LMC, addressing, full OOP | 044–046, 096–097, 123–126 | 225, 227–230, 261–263 | **Priority gap risk:** (e) explicitly requires **inheritance and polymorphism**, not just classes/objects/encapsulation. The actual likely OOP source lessons sampled (Y12 044–046 and Y13 223, 225, 227–230) do not explicitly name or teach these mechanisms. Search every other lesson before declaring a full-course omission; add a clear worked C# inheritance/overriding/polymorphic-dispatch sequence if not demonstrated elsewhere |
+| **1.3.1 (a–d)** compression, encoding, encryption, hashing | 127–133 | 286–289 | Mapped; distinguish hashing uses, including passwords vs table hashing |
+| **1.3.2 (a–f)** relational databases, capture, normalisation, SQL, integrity, ACID | 134–141 | 272, 275–281 | Mapped; verify secondary keys, all SQL forms and record locking, not only 3NF |
+| **1.3.3 (a–e)** networking, TCP/IP, security and structures | 142–149 | 282–285 | Mapped; independently verify layer/protocol/hardware diagrams |
+| **1.3.4 (a–d)** web, indexing, PageRank, server/client | 150–156 | 291–294 | Mapped; numerical PageRank example in 155 spot-checked as internally coherent |
+| **1.4.1 (a–j)** types, signed binary, hex, floats, masks and characters | 001–008 | 193–195, 312 | Mapped; sampled 004–007 float representations internally consistent; full arithmetic/bit masks still require QA |
+| **1.4.2 (a–c)** up-to-3D arrays, records/tuples, and operations on named structures | 017–025, 044–058 | 196–204, 223–228 | **Inspect:** do not infer (c) from merely naming each structure. Check create, traverse, add and remove for linked lists, graphs, stack/queue, trees, BSTs and hashes |
+| **1.4.3 (a–e)** Boolean algebra, K-map, gates, D flip-flop, adders | 026–031 | mixed Paper 1 and synoptic lessons | Mapped; require actual truth-table/diagram correctness tests |
+| **1.5.1 (a–d)** four named pieces of computing legislation | 157–160 | 295 | Mapped; distinguish OCR historic named laws from current law without changing required exam references |
+| **1.5.2** nine specified moral/social/cultural/ethical themes | Y12 157–160 primarily law; other incidental contexts | 296–297 | **Priority gap risk:** workforce, automated decisions, AI, environment, censorship, monitoring, personal-data analysis, piracy/offensive communications and layout/colour/characters should be explicitly represented in Year 12 if it is intended as initial coverage of all examined content. 296–297 have substantially clearer deliberate coverage |
+| **2.1.1 (a–d)** abstraction | 059–060 | 238 | Mapped |
+| **2.1.2 (a–d)** thinking ahead, preconditions, caching, reuse | 061 | 239 | Mapped; align I Do and guided We Do validation |
+| **2.1.3 (a–d)** procedural thinking | 062 | 241 | Mapped |
+| **2.1.4 (a–c)** logical thinking | 063 | 242 | Mapped |
+| **2.1.5 (a–b)** concurrent thinking | 064 | 244 | Mapped |
+| **2.2.1 (a–f)** constructs, recursion, scope, modularity/byRef, IDE, OOP | 009–016, 032–046, 120–124 | 181–183, 191–192, 225–232, 303 | **Inspect:** Year 13 181–183 is a substantial introduction to **recursion**; verify any Year 12 independent first-teaching before claiming that Year 13 merely revisits it. Full OOP techniques overlap the separate 1.2.4(e) priority |
+| **2.2.2 (a–f)** solvability, abstraction, decomposition, computational methods | 059–071 | 246, 298–300 | Mapped; assess genuine applied choices and failure cases |
+| **2.3.1 (a–f)** analysis, complexity, data structure algorithms, eight specified standard algorithms | 072–088 | 184–190, 216–222, 249, 301–302 | Mapped; 083–084 need more explicit Dijkstra/A* frontier/relaxation/predecessor tracing in *first teaching* |
+| **Appendix 5d** exam notation: files, arrays, pseudocode, OOP and SQL forms | 009–025, 046–058, 120–125, 138–139 | 232, 278–279, 303 | **Inspect:** file-handling with openRead/readLine/endOfFile/openWrite/writeLine is directly in OCR's notation appendix; Year 13 232 explicitly teaches reading, but Year 12 introductory file tasks remain unverified |
+| **NEA 03/04, section 4e (2026)** AI/independent-work authentication | **161–180 protected NEA periods**, not lesson-page omissions | Year 13 NEA teacher check-ins | **Policy safeguard:** OCR 2026 explicitly requires supervision/authentication and proper handling/acknowledgment of AI-assisted materials. The Learning Hub must not supply student-specific assessed-project solutions. This is a guidance and delivery check, not a request to generate filler lessons |
+
+### What the official subclauses change in our priorities
+
+1. **OOP inheritance/polymorphism:** investigate urgently before expanding cosmetic elements. OCR **1.2.4(e)** explicitly names both. Clear source evidence was *not found in the sampled lessons most obviously responsible for it*; absence elsewhere remains unproved.
+2. **Year 12 versus Year 13 initial teaching:** Year 13 is not automatically a revisit: recursion (181–183), file I/O (232) and the nine 1.5.2 ethical themes (296–297) require placement decisions and a fuller cross-course search. If deliberately introduced in Year 13, label that accurately rather than calling Year 12 exhaustive.
+3. **Prioritise confirmed assessment error 098** before any optional enrichment. The closed-book question referencing "loop of lesson 97" is not self-contained.
+4. **Check algorithms as methods:** Year 12 083–084 have mathematically sensible answers but their worked phases need full frontier/relaxation/path reconstruction. Year 13 218–221 already shows that deeper method.
+5. **2026 NEA AI rules:** preserve 161–180 protected time; add appropriate guidance only where actually needed after checking the student-facing materials and JCQ policy.
+
+**Scope limit:** this is an evidence-based clause-location matrix, not full yes/no lesson-level certification. All existing H446 lessons remain Ready, and no teaching pages were edited during this OCR crosswalk.
