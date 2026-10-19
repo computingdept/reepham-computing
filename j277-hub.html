@@ -81,7 +81,7 @@
 }
 
 
-/* Year 10 lesson journey. Specification sections are shades; assessments grey. */
+/* Shared J277 curriculum journey: both years use specification shades and neutral assessments. */
 .course-hub #lessons .paper-key{display:flex;flex-wrap:wrap;align-items:center;gap:10px 25px;padding:2px 0 12px;margin-bottom:5px}
 .course-hub #lessons .paper-key-item{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:750;color:#4e615a;white-space:nowrap}
 .course-hub #lessons .paper-key-line{width:28px;min-width:28px;height:4px;border-radius:4px;background:var(--key-colour)}
@@ -152,7 +152,7 @@ function showLessonInfo(target,n){
  if(task){const c=document.createElement('div');c.className='lesson-preview-coding';const ch=document.createElement('b');ch.textContent='Code first · OCR ERL';const ct=document.createElement('p');ct.textContent=task;c.append(ch,ct);target.append(c);}
 }
 
-/* Year 10 colour map; Year 11 metadata needs separate confirmation. */
+/* Common specification-colour mapping for the complete J277 two-year sequence. */
 
 const specSections=[
  ['1.1','#29527D'],['1.2','#356994'],['1.3','#417FA5'],
@@ -162,7 +162,7 @@ const specSections=[
 ];
 const specPalette=Object.fromEntries(specSections);
 const assessmentColour='#929B9A';
-const consolidationLessons=new Set([18,35,36,50,62,78,79,87,94,95]);
+const consolidationLessons=new Set([18,35,36,50,62,78,79,87,94,95,113,120,121,132,143,144,156,157,163,164]);
 const primarySectionByObjective={34:'1.4',59:'2.2',61:'2.2',64:'2.2',81:'2.1'};
 function sectionForLesson(n){
  if(consolidationLessons.has(n))return 'assessment';
@@ -191,6 +191,13 @@ const year10Journeys=[
  'Programming basics → Selection → Iteration → Coding challenge',
  'Strings & data structures → Subprograms → Robust programs → Project',
  'Algorithm design & sorting → Boolean logic → Languages & IDEs → Review'
+];
+const year11Journeys=[
+ 'Memory & data representation → Computational thinking → Searches & sorts → Consolidation',
+ 'Data structures, files & SQL → AP1 → Robust programming → CPU & debugging',
+ 'Retrieval → Networks & security → Software & impacts → AP2 → Boolean logic',
+ 'Boolean logic → Translators & IDEs → Exam techniques → Timed practice',
+ 'Targeted revision → Algorithms, code & calculations → Final consolidation'
 ];
 const pad=n=>String(n).padStart(3,'0');
 
@@ -290,9 +297,9 @@ tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.r
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 function renderLessons(){
  closeLessonSheet();
- const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';document.getElementById('specLegendMount').hidden=(year!==10);let n=p.start,total=0;
- for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');if(year===10){const subtitle=document.createElement('p');subtitle.className='term-route';subtitle.textContent=year10Journeys[p.terms.indexOf(term)];sec.insertBefore(subtitle,grid);}
-   for(let x=n;x<=end;x++){const live=liveMap[x],mapped=year===10,specCode=mapped?sectionForLesson(x):'';const el=document.createElement(live?'a':'div');el.className='lesson '+(mapped?'spec-tile ':'')+(live?'live':'planned');el.textContent=pad(x);if(mapped)el.style.setProperty('--spec-colour',specPalette[specCode]||assessmentColour);if(live){el.href=live;el.setAttribute('aria-label','Open lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));}else if(mapped){el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode));}const entry=document.createElement('div');entry.className='lesson-entry';
+ const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';document.getElementById('specLegendMount').hidden=false;let n=p.start,total=0;
+ for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');const subtitle=document.createElement('p');subtitle.className='term-route';subtitle.textContent=(year===10?year10Journeys:year11Journeys)[p.terms.indexOf(term)];sec.insertBefore(subtitle,grid);
+   for(let x=n;x<=end;x++){const live=liveMap[x],mapped=true,specCode=sectionForLesson(x);const el=document.createElement(live?'a':'div');el.className='lesson '+(mapped?'spec-tile ':'')+(live?'live':'planned');el.textContent=pad(x);if(mapped)el.style.setProperty('--spec-colour',specPalette[specCode]||assessmentColour);if(live){el.href=live;el.setAttribute('aria-label','Open lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));}else if(mapped){el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode));}const entry=document.createElement('div');entry.className='lesson-entry';
    if(mobileLessonQuery.matches){
      if(live){
        el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,live,el);});
