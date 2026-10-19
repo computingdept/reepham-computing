@@ -138,6 +138,11 @@ body.pilot-year12 #lessons .note{display:none}
 @media(prefers-reduced-motion:reduce){
   .course-hub #lessons .lesson-entry > .lesson{transition:none}
 }
+.h446-year-route{display:flex;justify-content:flex-end;margin:12px 0 18px}
+.h446-year-route a{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 17px;border-radius:10px;background:#003a31;color:#fff;font-weight:800;text-decoration:none}
+.h446-year-route a:hover{background:#006347;color:#fff}
+.h446-year-route a:focus-visible{outline:3px solid #eabf59;outline-offset:3px}
+@media(max-width:700px){.h446-year-route a{width:100%;box-sizing:border-box}}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -148,6 +153,8 @@ body.pilot-year12 #lessons .note{display:none}
 <main>
   <a class="back" id="yearBack" href="index.html#year/12">← Year 12 subjects</a>
   <div class="heading"><div><p class="eyebrow">OCR H446 · A LEVEL <span id="pilotStamp" class="pilot-stamp" hidden>YEAR 12 PILOT</span></p><h1>Computer Science</h1></div><div class="sub">Years 12 and 13</div></div>
+
+  <nav class="h446-year-route" aria-label="Switch H446 year"><a id="otherYearLink" href="h446-hub.html?year=13#lessons">Explore Year 13 draft lessons →</a></nav>
 
   <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Booklets</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision Hub</button></div>
 
@@ -217,6 +224,11 @@ function applyYearTheme(){
   root.setProperty('--year-ink',t.ink);
 }
 function updateYearNavigation(){
+  const otherYear=document.getElementById('otherYearLink');
+  if(otherYear){
+    otherYear.href='h446-hub.html?year='+(year===12?'13':'12')+'#lessons';
+    otherYear.textContent=year===12?'Explore Year 13 draft lessons →':'← Return to Year 12 lessons';
+  }
   const back=document.getElementById('yearBack');
   if(back){
     back.href=staffPreview?'index.html#year/'+year:'index.html';
