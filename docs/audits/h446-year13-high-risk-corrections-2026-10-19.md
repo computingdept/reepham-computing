@@ -148,3 +148,37 @@
 - Real C# compile-and-run coverage in a supported compiler environment, especially type declarations, nullability and unusual inputs.
 - Browser-rendered diagram readability/overlap at classroom and mobile sizes.
 - Final OCR H446 specification clause-by-clause coverage matrix.
+
+## Batch 6 — Assessment validity, mark-scheme precision and evaluative responses (19 October 2026)
+
+**Nine lesson pages changed, seven not previously corrected:** 214, 305, 308, 311, 313, 316, 317, 318, 320. The cumulative count of distinct corrected Year 13 lessons is **37/140**.
+
+| Lesson | Confirmed concern and correction |
+| --- | --- |
+| 214 — Autumn 1 diagnostic | Four BST marks were awarded for four facts but the question only asked for two. Stack and queue questions rewarded intermediate operations they had not requested. Bubble-sort marking rewarded additional states not required by prompt. Reworded the task prompts to request the creditworthy evidence and expanded six-mark bubble trace with exact comparisons and swap states. |
+| 305 — End-of-content diagnostic | A three-stage pipeline cycle calculation lacked necessary assumptions of equal one-cycle stages and no stalls/hazards. Stated those assumptions and strengthened method marks. SQL INNER JOIN table schemas/join keys now defined. The algorithm boundary test allows any valid justified boundary, rather than one prescribed example. |
+| 308 — Paper 2 timed diagnostic | Queue question under-specified expected output; CountPositive(int[] a) question did not define positive-count behaviour or empty-array expectations. Added these requirements and a complete, properly formatted five-mark C# worked answer that accepts equivalent correct loops. |
+| 311 — Unfamiliar programming challenges | Eight-mark C# method-writing task had only terse bullet criteria rather than a complete solution. Added runnable-looking model `CountRuns`, including empty input and one point for each explicit criterion. Source text not compiler-tested. |
+| 313 — Processors/scheduling | FCFS for three equal-arrival-time processes had no tie-break, so the stated mean waiting time was not uniquely determined. Specified FCFS A/B/C order and non-preemptive SJF. |
+| 316 — Paper 1 extended evaluation | Two nine-mark responses were represented as rigid one-mark/two-mark bullet checklists. Replaced each with an authored best-fit 1–3 / 4–6 / 7–9 *practice* rubric, indicative factors and a fully developed, balanced model argument. Clearly labelled the rubric as not an official OCR scheme. |
+| 317 — Paper 2 algorithm evaluation | Nine-mark decision about sorted counting versus an unsorted-data hash set used a rigid point allocation without holistic judgement. Added an authored best-fit rubric, indicative factors and a developed evidence-based comparison. |
+| 318 — Targeted Paper 1 | Fetch trace could not specify actual MDR/CIR contents because no memory instruction was provided. Specified memory[70] = LOAD 25 and the no-branch assumption, updating model values. INNER JOIN question now defines table schemas and joined ID columns. |
+| 320 — Final mixed-paper | Fetch trace from PC12 did not specify contents of memory[12]. Supplied ADD 7, no-branch assumption and explicit MDR/CIR answers. Replaced nine-mark cloud-versus-USB bullet marks with authored best-fit criteria and a reasoned, inclusive school-revision evaluation. |
+
+### Independent sample checks
+- Bubble passes: [6,2,5,1] -> [2,5,1,6] -> [2,1,5,6]; [5,2,4,1] -> [2,4,1,5] -> [2,1,4,5].
+- Serial 4 instructions × 3 stages = 12 cycles; ideal pipeline 3 + 4 - 1 = 6 cycles.
+- FCFS waiting mean (0+4+6)/3 = 3.33, SJF waiting mean (0+1+3)/3 = 1.33.
+- CountRuns test outputs: empty [] -> 0, [3,3] -> 1, [2,2,5,5,6] -> 3, [1,2,1] -> 3.
+- Sample FDE traced MAR/MDR/CIR and PC increments from both explicitly stated memory instructions.
+- Nine pages re-fetched from GitHub; each has eight phases, four Do Now questions, three hidden answer blocks and remains Draft.
+
+### OCR marking alignment
+
+The OCR H446/01 **sample** mark scheme treats extended levels-of-response answers using best-fit bands, awarding credit for relevant unexpected approaches and distinguishing supported contextual judgements from isolated facts. Link: https://www.ocr.org.uk/images/170852-unit-h446-1-computer-systems-sample-assessment-materials.pdf (see mark-scheme pages 7–10). This guided the authored practice rubrics; the invented 9-mark 1–3/4–6/7–9 bands are **not official OCR bands** and should not be presented as such.
+
+### Outstanding
+- Real C# compiler and browser-based diagram/readability tests.
+- Detailed mark validity and OCR-style holistic response review for other Year 13 assessment/extension lessons.
+- Full OCR H446 specification crosswalk and student-facing skill/depth checks across 181–320.
+- Confirm GitHub Pages public deployment and interactions.
