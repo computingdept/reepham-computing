@@ -24,15 +24,23 @@
 .badge{display:inline-block;width:max-content;padding:5px 8px;border-radius:20px;background:#dce8e3;color:#003a31;font-size:12px;font-weight:900;margin-bottom:10px}
 @media(max-width:700px){.cards{grid-template-columns:1fr}}
 
-/* Specification groups: understated outlines rather than borders on every tile */
-.spec-group{--spec-color:#99a1a7;border:1.5px solid var(--spec-color);border-radius:12px;padding:11px 12px 12px;margin:12px 0;background:#fff}
-.spec-group-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;color:var(--year-ink);font-size:13px;font-weight:800}
-.spec-group-code{border:1px solid var(--spec-color);color:var(--year-ink);border-radius:5px;padding:2px 7px;font-size:12px;white-space:nowrap}
+/* Curriculum groups stay visible, but do not compete with the lesson tiles. */
+.spec-group{--spec-color:#929b9a;margin:15px 0 0;padding:12px 0 0;border:0;border-top:1px solid #e6ede9;background:transparent}
+.spec-group:first-of-type{margin-top:4px;border-top:0;padding-top:5px}
+.spec-group-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;color:#405a51;font-size:13px;font-weight:750}
+.spec-group-code{border:0;border-left:4px solid var(--spec-color);color:#344e44;padding:2px 8px 2px 9px;font-size:12px;font-weight:850;white-space:nowrap}
 .spec-group .lesson-grid{margin:0}
 .spec-group .lesson{border-color:var(--line);box-shadow:none}
 .spec-group .lesson:focus-visible{outline:2px solid var(--year-accent);outline-offset:2px}
-.spec-group-planned{border-color:#d3d8d7;background:rgba(110,120,120,.025)}
-@media(max-width:700px){.spec-group{padding:9px;margin:10px 0}.spec-group-title{font-size:12px}}
+.spec-group-planned{background:transparent}
+@media(max-width:700px){.spec-group{padding-top:10px;margin-top:12px}.spec-group-title{font-size:12px}}
+/* Same curriculum shorthand as J277: blue Paper 1, orange Paper 2,
+   neutral synoptic / assessment, green protected NEA. */
+.course-hub #lessons .paper-key{display:flex;align-items:center;flex-wrap:wrap;gap:10px 25px;padding:4px 0 13px}
+.course-hub #lessons .paper-key-item{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:750;color:#4e615a;white-space:nowrap}
+.course-hub #lessons .paper-key-line{display:inline-block;width:28px;min-width:28px;height:4px;border-radius:4px;background:var(--key-colour)}
+.course-hub #lessons .term-route{margin:0;padding:10px 12px 2px;color:#597169;font-size:12px;line-height:1.4}
+@media(max-width:700px){.course-hub #lessons .paper-key{gap:9px 15px}.course-hub #lessons .paper-key-item{font-size:11px}}
 
 /* Lesson finder: direct lesson links plus separate accessible info controls */
 /* Term cards must not crop lesson objective tooltips. */
@@ -97,15 +105,26 @@ body.pilot-year12 .tabs .tab:not([data-tab="lessons"]){display:none}
 body.pilot-year12 #lessons .note{display:none}
 .pilot-stamp{display:inline-block;background:#e8f3ed;border:1px solid #b2d2bd;border-radius:4px;color:#145337;padding:4px 7px;font-size:12px;font-weight:900}
 
-/* Minimal H446 lesson tiles, matching J277 on desktop and mobile. */
+/* Specification-coloured underlines, on both published and planned lessons. */
 .course-hub #lessons .lesson-entry > .lesson{
   position:relative;overflow:hidden;border-radius:8px;
   font-variant-numeric:tabular-nums;
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease;
 }
-.course-hub #lessons .lesson-entry > .lesson.live::after{
-  content:'';position:absolute;left:10px;right:10px;bottom:0;
-  height:3px;border-radius:3px 3px 0 0;background:var(--year-accent,#298363);
+.course-hub #lessons .lesson-entry > .lesson.spec-tile{
+  min-height:49px;padding:6px 25px 13px 8px;
+  border-color:#d9e3de;background:#fff;color:#184d3d;
+}
+.course-hub #lessons .lesson-entry > .lesson.spec-tile.planned{
+  background:#fbfcfb;color:#65736d;
+}
+.course-hub #lessons .lesson-entry > .lesson.spec-tile::after{
+  content:'';position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  width:55%;max-width:82px;height:4px;border-radius:4px;
+  background:var(--spec-colour,#929b9a);
+}
+@media(max-width:700px),(pointer:coarse){
+  .course-hub #lessons .lesson-entry > .lesson.spec-tile{min-height:49px;padding:6px 8px 13px}
 }
 .course-hub #lessons .lesson-entry > .lesson.live:hover{
   box-shadow:0 3px 12px rgba(0,70,55,.1);
@@ -138,7 +157,12 @@ body.pilot-year12 #lessons .note{display:none}
       <button class="year-btn" data-year="13" aria-pressed="false">Year 13</button>
     </div>
     <div class="summary"><h2 id="lessonTitle">Year 12 lessons</h2><span class="count" id="lessonCount"></span></div>
-    
+    <div class="paper-key" role="group" aria-label="H446 specification colours">
+      <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#417FA5" aria-hidden="true"></span>Paper 1 · Computer Systems</span>
+      <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#B77A3B" aria-hidden="true"></span>Paper 2 · Algorithms &amp; Programming</span>
+      <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#929B9A" aria-hidden="true"></span>Synoptic &amp; assessment</span>
+      <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#628D75" aria-hidden="true"></span>NEA</span>
+    </div>
     <div id="terms"></div>
     <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320, with all 140 lesson periods shown. Year 13 is a curriculum outline under redevelopment, and NEA is covered through brief check-ins during normal lessons until the end of Autumn 2. Year 12 examined content is planned through Summer 1 (001–160); Summer 2 (161–180) is protected for NEA. Lessons 013–016 now follow a sequence-to-iteration coding journey; previously published lessons 016–036 have moved to 017–037. Year 13 links remain unchanged. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
   </section>
@@ -224,6 +248,34 @@ const plannedYear12=[
   [106,111,'1.2.1'],[112,116,'1.2.2'],[117,122,'1.2.3'],[123,126,'1.2.4'],
   [127,133,'1.3.1'],[134,141,'1.3.2'],[142,149,'1.3.3'],[150,156,'1.3.4'],
   [157,160,'1.5.1'],[161,180,'nea']
+];
+/* Paper 1 = 1.x (blue shades); Paper 2 = 2.x (orange shades).
+   Note that H446 1.4 remains Paper 1, including its programming-related work. */
+const paperPalette={
+  '1.1':'#29527D','1.2':'#356994','1.3':'#417FA5','1.4':'#538EAF','1.5':'#659DB6',
+  '2.1':'#92521E','2.2':'#A86429','2.3':'#B77A3B',
+  mixed:'#929B9A',nea:'#628D75',planned:'#929B9A'
+};
+function curriculumColour(specKey){
+  if(!specKey)return paperPalette.planned;
+  if(specKey==='mixed'||specKey==='nea')return paperPalette[specKey];
+  const section=String(specKey).match(/^[12]\.\d/);
+  return section?paperPalette[section[0]]||paperPalette.planned:paperPalette.planned;
+}
+const year12Journeys=[
+  'Data types → Programming techniques → Data structures → Boolean algebra → Consolidation',
+  'OOP foundations → Data structures revisited → Computational thinking & methods',
+  'Computational methods → Algorithms → Processor architecture',
+  'Processor architecture → Processor types → Input/output → Systems software',
+  'Software development → Data exchange → Networks → Legal issues',
+  'Protected NEA project time'
+];
+const year13Journeys=[
+  'Recursion → Searching & sorting → Data structures → Synoptic assessment',
+  'Advanced algorithms → OOP → Software development → Autumn mocks',
+  'Processors & memory → Systems software → Applications → Networks',
+  'Web technologies → Data exchange → Legal & ethical issues → Synoptic practice',
+  'Timed papers → Examiner feedback → Targeted revision'
 ];
 const specificationThemes={
   '2.1.1':{label:'Thinking abstractly',color:'#8a91b9'},
@@ -431,6 +483,11 @@ function renderLessons(){
     const end=n+term.count-1;
     if(!staffPreview&&year!==13&&!Array.from({length:term.count},(_,j)=>Boolean(liveMap[n+j])).some(Boolean)){n=end+1;continue;}
     sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+(term.note?' · '+term.note:'')+'</span></div>';
+    const journey=(year===12?year12Journeys:year13Journeys)[p.terms.indexOf(term)];
+    if(journey){
+      const route=document.createElement('p');route.className='term-route';route.textContent=journey;
+      sec.append(route);
+    }
     let group=null,groupKey=null,grid=null,detail=null;
     for(let x=n;x<=end;x++){
       const href=liveMap[x];
@@ -441,7 +498,7 @@ function renderLessons(){
         group=document.createElement('div');
         group.className='spec-group'+(!href&&year===12?' spec-group-planned':'');
         const spec=specificationThemes[specKey];
-        if(spec)group.style.setProperty('--spec-color',spec.color);
+        group.style.setProperty('--spec-color',curriculumColour(specKey));
         const head=document.createElement('div');
         head.className='spec-group-title';
         if(spec){
@@ -459,7 +516,10 @@ function renderLessons(){
         detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid);grid.append(detail);sec.append(group);groupKey=key;
       }
       const el=document.createElement(href?'a':'div');
-      el.className='lesson '+(href?'live':'planned');
+      el.className='lesson spec-tile '+(href?'live':'planned');
+      const tileColour=curriculumColour(specKey);
+      el.style.setProperty('--spec-colour',tileColour);
+      el.setAttribute('data-paper',specKey==='nea'?'NEA':specKey==='mixed'?'Synoptic':String(specKey||'').startsWith('1.')?'Paper 1':String(specKey||'').startsWith('2.')?'Paper 2':'Unmapped');
       if(href){
         el.textContent=pad(x);
         el.href=href;
