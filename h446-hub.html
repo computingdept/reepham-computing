@@ -143,6 +143,25 @@ body.pilot-year12 #lessons .note{display:none}
 .h446-year-route a:hover{background:#006347;color:#fff}
 .h446-year-route a:focus-visible{outline:3px solid #eabf59;outline-offset:3px}
 @media(max-width:700px){.h446-year-route a{width:100%;box-sizing:border-box}}
+
+/* H446 three-choice student journey: lessons, guides, interactive practice. */
+.h446-intro{margin:0 0 19px;color:#536b61;line-height:1.5}
+.cards.h446-guides{grid-template-columns:repeat(2,minmax(0,1fr))}
+.h446-guide-card{min-height:205px;position:relative;border-top:5px solid var(--h446-guide-accent)}
+.h446-guide-paper1{--h446-guide-accent:#417fa5}
+.h446-guide-paper2{--h446-guide-accent:#b77a3b}
+.h446-guide-card .kicker{color:#415b52}
+.h446-guide-card h3{font-size:clamp(19px,2vw,24px)}
+.h446-guide-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:auto;padding-top:23px}
+.course-hub .card .h446-guide-actions a.action{margin-top:0}
+.h446-guide-download{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid #a9beb3;border-radius:6px;color:#124937;text-decoration:none;font-weight:800}
+.h446-guide-download:hover,.h446-guide-download:focus-visible{background:#e5f2ec}
+.h446-extra-booklets{margin-top:24px;border-top:1px solid #e1eae5;padding-top:15px}
+.h446-extra-booklets summary{color:#214c3b;font-weight:850;cursor:pointer;padding:10px 2px}
+.h446-extra-booklets .cards{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}
+.h446-extra-booklets .card{min-height:145px}
+.h446-online .card{min-height:175px}
+@media(max-width:700px){.cards.h446-guides,.h446-extra-booklets .cards{grid-template-columns:1fr}.h446-guide-card{min-height:175px}.h446-guide-actions{padding-top:15px}.course-hub .tabs .tab{white-space:normal;font-size:clamp(12px,3.25vw,16px);line-height:1.2;padding:8px 5px;text-align:center}}
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -156,7 +175,7 @@ body.pilot-year12 #lessons .note{display:none}
 
   <nav class="h446-year-route" aria-label="Switch H446 year"><a id="otherYearLink" href="h446-hub.html?year=13#lessons">Explore Year 13 lessons →</a></nav>
 
-  <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Booklets</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision Hub</button></div>
+  <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision Guides</button><button class="tab" data-tab="revisionhub" aria-selected="false">Online Learning</button></div>
 
   <section class="panel active" id="lessons">
     <div class="year-switch">
@@ -174,13 +193,44 @@ body.pilot-year12 #lessons .note{display:none}
     <div class="note"><strong>Numbering:</strong> Year 12 is 001–180. Year 13 is 181–320, with all 140 lesson periods shown. Year 12 and Year 13 examined-content lessons are ready for teaching and reviewed by the teacher before delivery. Curriculum quality improvements continue independently. NEA is covered through brief check-ins during normal lessons until the end of Autumn 2. Year 12 examined content is planned through Summer 1 (001–160); Summer 2 (161–180) is protected for NEA. Lessons 013–016 now follow a sequence-to-iteration coding journey; previously published lessons 016–036 have moved to 017–037. Year 13 links remain unchanged. Year 12 teaching ends before work experience on 7–20 July 2027. Year 13 numbering stops at the start of study leave rather than continuing through the examination period.</div>
   </section>
 
-  <section class="panel" id="booklet"><div class="summary"><h2>Revision booklets</h2><span class="count">Choose an H446 specification point</span></div><div class="cards"><article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types revision booklet</h3><p>One booklet for specification point 1.4.1, bringing together lessons 001–008. Read the explanations and worked examples, or print the whole booklet.</p><a class="action" href="revision/h446/data-types/index.html">Open revision booklet →</a></article><article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming techniques revision booklet</h3><p>Constructs, scope, modularity, parameters and IDE debugging. Points (a), (c), (d), (e), with C# and OCR pseudocode.</p><a class="action" href="revision/h446/programming-techniques/index.html">Open revision booklet →</a></article></div><div class="note">Each booklet brings together the lessons for an H446 specification point. Its matching self-test is in the Revision Hub. Further booklets will be added as they are taught; earlier booklets remain available.</div></section>
+  <section class="panel" id="booklet" aria-labelledby="revisionGuidesHeading">
+  <div class="summary"><h2 id="revisionGuidesHeading">Revision Guides</h2><span class="count">For Year 12 &amp; Year 13</span></div>
+  <p class="h446-intro">Choose your paper. Read online or save a copy for revision and exam practice.</p>
+  <div class="cards h446-guides" role="list">
+    <article class="card h446-guide-card h446-guide-paper1" role="listitem">
+      <p class="kicker">H446/01 · PAPER 1</p>
+      <h3>Computer Systems</h3>
+      <p>249-page revision guide · worked explanations, diagrams and exam-style questions.</p>
+      <div class="h446-guide-actions">
+        <a class="action" href="revision/h446/guides/H446_Paper_1_MASTER_FROZEN_2026-10-19.pdf" target="_blank" rel="noopener" aria-label="Read Paper 1 Computer Systems revision guide online">Read guide ↗</a>
+        <a class="h446-guide-download" href="revision/h446/guides/H446_Paper_1_MASTER_FROZEN_2026-10-19.pdf" download>Download PDF ↓</a>
+      </div>
+    </article>
+    <article class="card h446-guide-card h446-guide-paper2" role="listitem">
+      <p class="kicker">H446/02 · PAPER 2</p>
+      <h3>Algorithms and Programming</h3>
+      <p>169-page revision guide · algorithm traces, code practice and exam-style questions.</p>
+      <div class="h446-guide-actions">
+        <a class="action" href="revision/h446/guides/H446_Paper_2_MASTER_2026-10-19.pdf" target="_blank" rel="noopener" aria-label="Read Paper 2 Algorithms and Programming revision guide online">Read guide ↗</a>
+        <a class="h446-guide-download" href="revision/h446/guides/H446_Paper_2_MASTER_2026-10-19.pdf" download>Download PDF ↓</a>
+      </div>
+    </article>
+  </div>
+  <details class="h446-extra-booklets">
+    <summary>Short topic booklets</summary>
+    <div class="cards">
+      <article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types</h3><p>A shorter topic booklet with explanations and examples.</p><a class="action" href="revision/h446/data-types/index.html">Open topic booklet →</a></article>
+      <article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming Techniques</h3><p>A shorter topic booklet covering programming techniques.</p><a class="action" href="revision/h446/programming-techniques/index.html">Open topic booklet →</a></article>
+    </div>
+  </details>
+</section>
 <section class="panel" id="revisionhub">
-  <div class="summary"><h2>Revision Hub</h2><span class="count">Self-tests matched to your revision booklets</span></div>
-  
-    <div class="cards"><article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types self-test</h3><p>Test yourself on the 1.4.1 booklet: 26 questions across its eight sections. Choose the whole booklet or one section, then use feedback to revisit your notes.</p><a class="action" href="revision/h446/data-types/practice.html">Test this booklet →</a></article><article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming techniques self-test</h3><p>24 questions on the matching booklet: recall, code tracing and original exam-style practice. Choose all six sections or focus on one.</p><a class="action" href="revision/h446/programming-techniques/practice.html">Test this booklet →</a></article></div>
-  
-  <div class="note">Read the revision booklet, then test yourself here. Choose a specification point above for quizzes, practice questions and feedback on the same content.</div>
+  <div class="summary"><h2>Online Learning</h2><span class="count">Interactive practice</span></div>
+  <p class="h446-intro">Practise what you have learnt. Choose a topic, answer questions and check your understanding.</p>
+  <div class="cards h446-online">
+    <article class="card"><p class="kicker">1.4.1 · DATA TYPES</p><h3>Data Types</h3><p>26 questions across eight sections, with feedback to guide your revision.</p><a class="action" href="revision/h446/data-types/practice.html">Practise online →</a></article>
+    <article class="card"><p class="kicker">2.2.1 · PROGRAMMING TECHNIQUES</p><h3>Programming Techniques</h3><p>24 questions on recall, code tracing and exam-style problems.</p><a class="action" href="revision/h446/programming-techniques/practice.html">Practise online →</a></article>
+  </div>
 </section>
 </main>
 
@@ -582,7 +632,7 @@ function renderLessons(){
   document.getElementById('lessonCount').textContent=year===13?'140 ready lessons': '160 ready lessons · 20 protected NEA periods';
 }
 
-applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',online:'revisionhub',guides:'booklet'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script>
 </body>
 </html>
