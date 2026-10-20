@@ -9,7 +9,7 @@
   // renderer for the real 004–018 sequence. 001–003 keep their existing pages.
   if (Number(n) >= 4 && Number(n) <= 18) {
     const loader = document.createElement("script");
-    loader.src = "../autumn1-rebuilt.js?v=20261020-mcq2";
+    loader.src = "../autumn1-rebuilt.js?v=20261020-plain11";
     loader.onload = () => window.J277Autumn1.render(n,mode);
     loader.onerror = () => { document.body.textContent = "Year 10 lesson resources could not be loaded."; };
     document.head.appendChild(loader);
