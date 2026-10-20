@@ -1572,7 +1572,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
 
  let j277RetrievalPromise;
  async function applyJ277Retrieval(data,number){
-  j277RetrievalPromise ||= fetch("../donow-bank-20261020.json?v=20261020-mcq1").then(r=>{if(!r.ok)throw Error("Do Now bank unavailable");return r.json()});
+  j277RetrievalPromise ||= fetch("../donow-bank-20261020.json?v=20261020-mcq2").then(r=>{if(!r.ok)throw Error("Do Now bank unavailable");return r.json()});
   const bank=await j277RetrievalPromise, entry=bank.lessons[String(number).padStart(3,"0")];
   if(!entry||entry.questions.length!==4)throw Error("Incomplete Do Now bank");
   data.doNowItems=entry.questions;
