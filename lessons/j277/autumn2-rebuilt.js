@@ -1569,13 +1569,31 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const hovers=lesson.v.map(([term,def])=>`<span class="vocab-tip" tabindex="0" data-definition="${escape(def)}">${escape(term)}</span>`).join("");
   return `<section id="overview" class="page" data-objectives-vocab="true" data-phase-time="Objectives and vocabulary"><div class="objectives-vocab-layout"><article class="objectives-vocab-left"><span class="phase-tag">OCR J277 · ${escape(lesson.s)}</span><h1>${escape(lesson.t)}</h1><div class="objectives"><strong>By the end, you can…</strong><ul>${arr(lesson.o,p=>`<li>${escape(p)}</li>`)}</ul></div><div class="vocab-intro"><strong>Key vocabulary</strong><div class="vocab-intro-list">${hovers}</div></div></article><div class="objectives-vocab-right">${terms}</div></div></section>`;
  }
+
+ let j277RetrievalPromise;
+ async function applyJ277Retrieval(data,number){
+  j277RetrievalPromise ||= fetch("../donow-bank-20261020.json?v=20261020-mcq1").then(r=>{if(!r.ok)throw Error("Do Now bank unavailable");return r.json()});
+  const bank=await j277RetrievalPromise, entry=bank.lessons[String(number).padStart(3,"0")];
+  if(!entry||entry.questions.length!==4)throw Error("Incomplete Do Now bank");
+  data.doNowItems=entry.questions;
+  data.r=entry.questions.map(q=>[q.question+(q.options.length?"\n"+q.options.map((o,i)=>"ABCD"[i]+") "+o).join("\n"):""),q.explanation]);
+  data.refs=entry.questions.map(q=>q.source_lesson);
+  data.c=[...data.c,...(entry.teachingAdditions||[])];
+  data.teachingVisuals=entry.teachingVisuals||{};
+ }
+ function j277Question(lesson,i){
+  const item=lesson.doNowItems?.[i];
+  if(!item)return '<p>'+escape(lesson.r[i][0])+'</p>';
+  return '<p>'+escape(item.question)+'</p>'+(item.options.length?'<ol class="j277-mcq" type="A">'+item.options.map(o=>'<li>'+escape(o)+'</li>').join("")+'</ol>':"");
+ }
  function doNow(lesson){
-  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong><p>${escape(q)}</p></article>`);
-  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${["LAST LESSON","EARLIER LEARNING","EARLIER LEARNING","HIGH CHALLENGE"][i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><p class="review-question">${escape(q)}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(answer)}</p></article></div></div>`);
-  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
+  const labels=["LAST LESSON","EARLIER LEARNING · MCQ","EARLIER LEARNING","HIGH CHALLENGE"];
+  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong>${j277Question(lesson,i)}</article>`);
+  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><div class="review-question">${j277Question(lesson,i)}</div></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(lesson.doNowItems?.[i]?.answer||answer)}</p>${lesson.doNowItems?.[i]?.correct_option?'<p>'+escape(lesson.doNowItems[i].explanation)+'</p>':""}</article></div></div>`);
+  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><style>#do-now .j277-mcq{padding-left:1.5em;margin:.45em 0 0;font-size:clamp(17px,1.15vw,22px);line-height:1.25}#do-now .j277-mcq li{padding-left:.15em;margin:.18em 0}#do-now .donow-question p{font-size:clamp(19px,1.35vw,25px);line-height:1.27}</style><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
-  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2><p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
+  const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2>${lesson.teachingVisuals?.[title]||""}<p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
   const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
   const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${diagram(type)}</div>`).join(""):diagram(lesson.vis);
   return `<section id="new-learning" class="page phase-focus" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference"><span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>${visuals}<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.memoryCue||(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance."))}</div></article><article class="nl-explanation">${stages}</article></div></section>`;
@@ -2600,9 +2618,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
 };
  function load(number,mode){
   const n=Number(number),from=String(number);
-  fetch("../autumn2-"+from+".json?v=20261016-j277autumn2a",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(all=>{
+  fetch("../autumn2-"+from+".json?v=20261016-j277autumn2a",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(async all=>{
    const data=all[String(number)];if(!data)throw Error("Missing lesson "+number);
-   if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
+   await applyJ277Retrieval(data,number);
+   if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<(data.isAssessment?1:3))throw Error("Incomplete lesson "+number);
    if(interleaveY10[String(number)] && !data.isAssessment) data.k={...data.k,...interleaveY10[String(number)]};
    if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
