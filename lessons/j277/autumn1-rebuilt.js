@@ -236,8 +236,8 @@
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
    <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
    <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
-   <p class="j277-code-start">Use your mini-whiteboard first. Predict, change, then extend.</p>
-   <p><strong>1 · Predict:</strong> ${escape(lesson.k.q)}</p>
+   <p class="j277-code-start">One short task: begin on your mini-whiteboard, then test when appropriate.</p>
+   <p><strong>YOUR TASK:</strong> ${escape(lesson.k.q)}</p>
    <pre class="arithmetic">${escape(lesson.k.code)}</pre>
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
    ${number==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
@@ -300,11 +300,27 @@
    <script>const stages=[...document.querySelectorAll('.answer-stage')],previous=document.getElementById('previous-answer'),next=document.getElementById('next-answer'),counter=document.getElementById('answer-counter');let current=0;function showAnswer(i){current=Math.max(0,Math.min(i,stages.length-1));stages.forEach((stage,k)=>stage.hidden=k!==current);previous.disabled=current===0;next.textContent=current===stages.length-1?'Return to lesson →':'Next answer →';counter.textContent='Answer '+(current+1)+' of '+stages.length}next.onclick=()=>current<stages.length-1?showAnswer(current+1):location.assign('index.html#you-do');previous.onclick=()=>showAnswer(current-1);document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next.click();if(e.key==='ArrowLeft')previous.click()});showAnswer(0);<\/script></body></html>`;
   document.open();document.write(html);document.close();
  }
+
+ // J277-only Code First master: one task, with a model answer on the existing answers page.
+ // Any lesson not in the bank is a reserved exception and retains its current content.
+ async function applyCodeFirstMaster(lesson,number){
+   try{
+     const response=await fetch("../code-first-master-20261021.json?v=20261021-release1");
+     if(!response.ok)throw Error("Code First bank unavailable");
+     const entry=(await response.json()).lessons[String(number)];
+     if(!entry)return;
+     const paper=String(lesson.s||"").startsWith("2.")?String(entry.paper1||"").match(/^(1\.\d+(?:\.\d+)?)(?:\s+(.+))?$/):null;
+     lesson.k={...lesson.k,q:entry.task,code:entry.starter,p:[],a:"MODEL "+entry.language+"\n"+entry.model+"\n\nEXPECTED RESULT\n"+entry.expected};
+     if(paper){lesson.k.paper1Ref=paper[1];lesson.k.paper1Topic=paper[2]||"";}
+     else{delete lesson.k.paper1Ref;delete lesson.k.paper1Topic;}
+   }catch(error){console.error("J277 Code First: bank could not load; original task retained.",error);}
+ }
  function load(number,mode){
   const n=Number(number),from=n<=8?"004-008":n<=13?"009-013":"014-018";
   fetch("../autumn1-"+from+".json?v=20261014-donow1",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(async all=>{
    const data=all[String(number)];if(!data)throw Error("Missing lesson "+number);
    await applyJ277Retrieval(data,number);
+   await applyCodeFirstMaster(data,number);
    if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
    if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
