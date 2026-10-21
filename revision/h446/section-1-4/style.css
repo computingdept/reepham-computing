@@ -49,3 +49,22 @@ main:has(#quiz:not([hidden]))>.eyebrow{display:none}
 footer{padding:12px}
 @media(max-width:850px){#topic-grid .topic{grid-template-columns:minmax(0,1fr) auto}#topic-grid .topic .status{grid-column:1;grid-row:3;margin-top:6px}#topic-grid .topic button{grid-column:2;grid-row:1/4}.quiz-workspace{grid-template-columns:minmax(0,1.4fr) minmax(210px,1fr);gap:0 16px}}
 @media(max-width:700px){#topic-grid{grid-template-columns:1fr}.sections a{flex-direction:column;align-items:flex-start;gap:1px}.quiz-workspace{display:flex;flex-direction:column;gap:14px}#answer-form,.feedback-panel,.quiz-actions{width:100%}.feedback-panel{min-height:0;padding:14px}.feedback-panel:has(#feedback[hidden]){display:none}.quiz-actions{margin-top:0}#quiz .quiz-top{display:flex}#quiz .quiz-top h1{font-size:1.35rem}#quiz #counter{margin:0}main{padding-top:16px}}
+
+/* Title and topic switch share a compact directory header. */
+header{padding-top:10px;padding-bottom:10px}
+main{padding-top:14px}
+main:has(#directory:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;align-items:center}
+#directory:not([hidden]){display:contents}
+.directory-heading{grid-column:1;grid-row:1;min-width:0}
+#directory h1{font-size:1.6rem;margin:0 0 5px}
+.practice-meta{display:flex;align-items:center;gap:7px;font-size:.78rem;color:#526b60;flex-wrap:wrap}
+.save-info{position:relative}
+.save-info summary{padding:0;min-width:28px;min-height:28px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.save-info summary::-webkit-details-marker{display:none}
+#directory .save-info .save-note{position:absolute;left:0;top:100%;z-index:10;width:280px;max-width:calc(100vw - 40px);padding:13px 15px;margin:4px 0 0;background:white;border:1px solid #b9cfc2;border-radius:8px;box-shadow:0 5px 18px #173f3315;font-size:.8rem;color:#173f33}
+main:has(#directory:not([hidden]))>.sections{grid-column:2;grid-row:1;margin:0;gap:7px}
+.sections a{padding:8px 11px;min-height:42px}
+.sections a span{font-size:.82rem}
+#topic-grid{grid-column:1/-1;grid-row:2}
+@media(max-width:850px){main:has(#directory:not([hidden])){grid-template-columns:1fr;gap:12px}main:has(#directory:not([hidden]))>.sections{grid-column:1;grid-row:2}#topic-grid{grid-row:3}.sections a{flex-direction:row;align-items:center;justify-content:center}}
+@media(max-width:520px){#directory h1{font-size:1.4rem}.practice-meta{font-size:.72rem}.sections a{padding:8px 6px}.sections a span{font-size:.76rem}#directory .save-info .save-note{left:auto;right:0}}
