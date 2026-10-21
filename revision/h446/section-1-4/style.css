@@ -3,3 +3,13 @@
 
 /* Programmatic reading focus does not need a control outline. */
 h1[tabindex="-1"]:focus,legend[tabindex="-1"]:focus{outline:none}
+
+/* Compact result actions. */
+#results .score{margin:8px 0 0}
+#results #result-message{margin:0 0 20px;color:#526b60}
+#results .compact-support{padding:0;border:0;background:transparent;margin:18px 0}
+#results .resource-buttons{display:flex;flex-wrap:wrap;gap:10px}
+#results .resource-button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 15px;background:white;color:#174c3a;border:1px solid #a2bcae;border-radius:8px;font-weight:650;text-decoration:none}
+#results .resource-button:hover{background:#e6f2eb}
+#results .result-actions{margin:22px 0}
+@media(max-width:520px){#results .resource-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#results .resource-button{padding:10px;font-size:.9rem}}
