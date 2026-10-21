@@ -13,3 +13,39 @@ h1[tabindex="-1"]:focus,legend[tabindex="-1"]:focus{outline:none}
 #results .resource-button:hover{background:#e6f2eb}
 #results .result-actions{margin:22px 0}
 @media(max-width:520px){#results .resource-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#results .resource-button{padding:10px;font-size:.9rem}}
+
+/* Compact skills and a stable desktop quiz workspace. */
+main{padding-top:22px;padding-bottom:28px}
+.sections{margin:10px 0 20px}
+.sections a{flex-direction:row;align-items:center;gap:9px;padding:10px 13px;min-height:48px}
+.sections a span{margin:0;font-size:.9rem}
+#directory h1{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:8px}
+#directory .intro{font-size:1rem;margin-bottom:4px}
+#directory .save-note{margin:0 0 18px}
+#topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 14px}
+#topic-grid .topic{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;grid-template-rows:auto auto;align-items:center;column-gap:12px;min-height:78px;padding:11px 14px;border-top:1px solid #d3e1d9;border-left:4px solid #417fa5;border-radius:8px}
+#topic-grid .topic .spec{grid-column:1;grid-row:1;font-size:.67rem}
+#topic-grid .topic h2{grid-column:1;grid-row:2;font-size:.94rem;margin:2px 0 0;line-height:1.25}
+#topic-grid .topic .status{grid-column:2;grid-row:1/3;margin:0;font-size:.72rem;line-height:1.3}
+#topic-grid .topic button{grid-column:3;grid-row:1/3;padding:8px 11px;font-size:.83rem;white-space:nowrap;min-height:44px;align-self:center}
+#quiz{max-width:100%;margin:0}
+main:has(#quiz:not([hidden]))>.eyebrow{display:none}
+#quiz .back{margin:0 0 7px;font-size:.82rem;min-height:34px}
+#quiz .eyebrow{margin-bottom:4px}
+#quiz .quiz-top h1{font-size:1.5rem;margin-bottom:10px}
+#quiz progress{margin:0 0 18px;height:7px}
+.quiz-workspace{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(220px,1fr);grid-template-rows:1fr auto;gap:0 24px;align-items:start}
+#answer-form{grid-column:1;grid-row:1/3;min-width:0}
+#quiz legend{font-size:1.08rem;line-height:1.4;margin-bottom:17px}
+#quiz #choices{gap:9px;margin-bottom:0}
+#quiz .choice{min-height:48px;padding:11px 15px;font-size:.95rem}
+.feedback-panel{grid-column:2;grid-row:1;align-self:stretch;background:#e7efea;border-radius:10px;padding:18px;min-height:160px}
+.feedback-hint{margin:0;color:#526b60;font-size:.9rem}
+.feedback-panel:has(#feedback:not([hidden])) .feedback-hint{display:none}
+#quiz .feedback{margin:0;border:0;padding:0;background:transparent;font-size:.95rem;overflow-wrap:anywhere}
+#quiz .feedback p{margin-top:10px}
+.quiz-actions{grid-column:2;grid-row:2;margin-top:14px;display:flex;align-items:center;min-height:48px}
+.quiz-actions button{width:100%}
+footer{padding:12px}
+@media(max-width:850px){#topic-grid .topic{grid-template-columns:minmax(0,1fr) auto}#topic-grid .topic .status{grid-column:1;grid-row:3;margin-top:6px}#topic-grid .topic button{grid-column:2;grid-row:1/4}.quiz-workspace{grid-template-columns:minmax(0,1.4fr) minmax(210px,1fr);gap:0 16px}}
+@media(max-width:700px){#topic-grid{grid-template-columns:1fr}.sections a{flex-direction:column;align-items:flex-start;gap:1px}.quiz-workspace{display:flex;flex-direction:column;gap:14px}#answer-form,.feedback-panel,.quiz-actions{width:100%}.feedback-panel{min-height:0;padding:14px}.feedback-panel:has(#feedback[hidden]){display:none}.quiz-actions{margin-top:0}#quiz .quiz-top{display:flex}#quiz .quiz-top h1{font-size:1.35rem}#quiz #counter{margin:0}main{padding-top:16px}}
