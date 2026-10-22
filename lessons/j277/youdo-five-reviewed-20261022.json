@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-22-reviewed-5",
+  "version": "2026-10-22-j277-qa-batch-051-060",
   "description": "Teacher-approved OCR J277 five-lesson You Do pilot",
   "lessons": {
     "109": {
@@ -400,6 +400,717 @@
           "note": "Accept equivalent technically accurate justifications. The scenario fixes other specifications to isolate RAM."
         }
       ]
+    },
+    "052": {
+      "title": "Variables, Assignment and Data Types",
+      "spec": "2.2.1 / 2.2.2",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "A school stores pupilName = \"Amira\" and visits = 3. State the most suitable data type for each variable. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "pupilName: string (text)."
+            },
+            {
+              "marks": 1,
+              "point": "visits: integer (whole-number count)."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A club starts with visits = 2, then runs visits = visits + 1 and print(visits). Explain the new stored value and the output. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Original value of visits is 2."
+            },
+            {
+              "marks": 1,
+              "point": "The assignment updates visits to 3 by adding 1."
+            },
+            {
+              "marks": 1,
+              "point": "Output is 3, because print uses the new value."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A school club logs visits. Write OCR ERL to input a pupil name and an integer number of visits, increase visits by one, then display the pupil name and updated count. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Input and store the pupil name in a variable."
+            },
+            {
+              "marks": 1,
+              "point": "Input the visit count and cast it to integer."
+            },
+            {
+              "marks": 1,
+              "point": "Increase the stored visit count by 1."
+            },
+            {
+              "marks": 1,
+              "point": "Display both the pupil name and the updated count."
+            }
+          ],
+          "model_code": "name = input(\"Pupil name?\")\nvisits = int(input(\"Visits?\"))\nvisits = visits + 1\nprint(name)\nprint(visits)",
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        }
+      ]
+    },
+    "053": {
+      "title": "Arithmetic, Comparison and Casting",
+      "spec": "2.2.1 / 2.2.2",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "Calculate"
+          ],
+          "text": "Calculate (a) 17 DIV 5 and (b) 17 MOD 5. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "17 DIV 5 = 3 (whole-number quotient)."
+            },
+            {
+              "marks": 1,
+              "point": "17 MOD 5 = 2 (remainder)."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "The input function returns the text \"4\". Explain why a program must cast this value before adding it to the integer 6. Include the numeric result. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "The input is initially a string/text value."
+            },
+            {
+              "marks": 1,
+              "point": "Casting with int() converts suitable numeric text to an integer."
+            },
+            {
+              "marks": 1,
+              "point": "4 + 6 gives the numeric result 10."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A cycle-hire company charges £5 for every hour plus a £3 fixed booking fee. Write OCR ERL to input the number of hours, calculate the bill and display it. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Input the duration and convert it to integer."
+            },
+            {
+              "marks": 1,
+              "point": "Multiply hours by 5 to find the hourly charge."
+            },
+            {
+              "marks": 1,
+              "point": "Add the fixed booking fee of 3 exactly once."
+            },
+            {
+              "marks": 1,
+              "point": "Display the calculated total."
+            }
+          ],
+          "model_code": "hours = int(input(\"Hours?\"))\ntotal = hours * 5 + 3\nprint(total)",
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        }
+      ]
+    },
+    "054": {
+      "title": "Boolean Conditions in Code",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "A visitor has age = 16 and hasTicket = false. State the results of (age >= 18 AND hasTicket) and (age < 18 OR hasTicket). [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "First expression evaluates to false."
+            },
+            {
+              "marks": 1,
+              "point": "Second expression evaluates to true, since age < 18."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A sports club admits someone only when they are a registered member AND their subscription is paid. Explain why AND is suitable rather than OR. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Membership must be true to admit a visitor."
+            },
+            {
+              "marks": 1,
+              "point": "Paid subscription must also be true."
+            },
+            {
+              "marks": 1,
+              "point": "AND requires both conditions; OR could admit someone with only one of them."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A museum permits entry when a visitor is at least 16 AND has a ticket, OR has a staff pass. Write OCR ERL using age, hasTicket and hasPass to display \"Enter\" or \"Wait\". [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Correct age comparison age >= 16."
+            },
+            {
+              "marks": 1,
+              "point": "Combine age and ticket using AND."
+            },
+            {
+              "marks": 1,
+              "point": "Allow the staff-pass alternative using OR and suitable grouping."
+            },
+            {
+              "marks": 1,
+              "point": "Use IF/ELSE and output the matching message."
+            }
+          ],
+          "model_code": "if (age >= 16 AND hasTicket) OR hasPass then\n    print(\"Enter\")\nelse\n    print(\"Wait\")\nendif",
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        }
+      ]
+    },
+    "055": {
+      "title": "Selection: IF Statements",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "State what happens to instructions inside an IF block when its condition is (a) true and (b) false. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "When true, instructions inside the IF block run."
+            },
+            {
+              "marks": 1,
+              "point": "When false, those instructions are skipped."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A program runs:\nscore = 47\nif score >= 50 then\n    print(\"Pass\")\nendif\nprint(\"Finished\")\nExplain the output. [3 marks]",
+          "kind": "Trace",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "47 >= 50 evaluates to false."
+            },
+            {
+              "marks": 1,
+              "point": "The IF block is skipped so Pass is not printed."
+            },
+            {
+              "marks": 1,
+              "point": "Finished is printed after ENDIF."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "Cinema tickets cost £8 for children under 16 and £12 otherwise. Write OCR ERL to input an age, select the correct price and display it. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Input age and cast it to an integer."
+            },
+            {
+              "marks": 1,
+              "point": "Use the condition age < 16 in an IF statement."
+            },
+            {
+              "marks": 1,
+              "point": "Assign 8 for under-16s and 12 for everyone else."
+            },
+            {
+              "marks": 1,
+              "point": "Display the selected price after the IF/ELSE."
+            }
+          ],
+          "model_code": "age = int(input(\"Age?\"))\nif age < 16 then\n    price = 8\nelse\n    price = 12\nendif\nprint(price)",
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        }
+      ]
+    },
+    "056": {
+      "title": "Selection: ELSE and Nested Conditions",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "A program applies these conditions in order: age < 5, age < 18, otherwise. State which branch is selected for ages 4 and 12. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Age 4 selects the first (under 5) branch."
+            },
+            {
+              "marks": 1,
+              "point": "Age 12 selects the second (under 18) branch."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A museum charges different prices for under-5s, 5–17s and adults. Explain why one IF/ELSEIF/ELSE chain is preferable to three independent IF statements. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "The conditions are checked in a defined order."
+            },
+            {
+              "marks": 1,
+              "point": "Once a branch matches, the remaining alternatives are skipped."
+            },
+            {
+              "marks": 1,
+              "point": "This avoids multiple price assignments for the same visitor."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "Museum entry is free under age 5, £4 for ages 5–17, and £9 for adults. Write OCR ERL to choose and display the price for an integer variable age. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Test age < 5 and assign price 0."
+            },
+            {
+              "marks": 1,
+              "point": "Use ELSEIF age < 18 for the 5–17 group."
+            },
+            {
+              "marks": 1,
+              "point": "Use ELSE to assign price 9 for adults."
+            },
+            {
+              "marks": 1,
+              "point": "Close with ENDIF and display the selected price."
+            }
+          ],
+          "model_code": "if age < 5 then\n    price = 0\nelseif age < 18 then\n    price = 4\nelse\n    price = 9\nendif\nprint(price)",
+          "note": "Award each independent marking point once; credit equivalent accurate OCR ERL."
+        }
+      ]
+    },
+    "057": {
+      "title": "Iteration: FOR Loops",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "The code runs:\nfor i = 1 to 5\n    print(i)\nnext i\nState the first number and the last number printed. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "First printed number is 1."
+            },
+            {
+              "marks": 1,
+              "point": "Last printed number is 5."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Show"
+          ],
+          "text": "A school totals points using:\ntotal = 0\nfor i = 1 to 3\n    total = total + i\nnext i\nShow the value of total after each iteration. [3 marks]",
+          "kind": "Trace",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "After i = 1, total is 1."
+            },
+            {
+              "marks": 1,
+              "point": "After i = 2, total is 3."
+            },
+            {
+              "marks": 1,
+              "point": "After i = 3, total is 6."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A cinema sells exactly four tickets, each costing £6. Write OCR ERL using a FOR loop to calculate and display the total price. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Initialise total to 0."
+            },
+            {
+              "marks": 1,
+              "point": "Use FOR to repeat four times."
+            },
+            {
+              "marks": 1,
+              "point": "Add 6 to total on each iteration."
+            },
+            {
+              "marks": 1,
+              "point": "Close the loop and print total."
+            }
+          ],
+          "model_code": "total = 0\nfor i = 1 to 4\n    total = total + 6\nnext i\nprint(total)",
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        }
+      ]
+    },
+    "058": {
+      "title": "Iteration: WHILE Loops",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "The loop begins with count = 0 and repeats while count < 3, adding 1 to count each time. State the number of iterations and final value of count. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "The loop runs 3 times."
+            },
+            {
+              "marks": 1,
+              "point": "The final value of count is 3."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A school login program keeps asking for a PIN until the correct PIN is entered. Explain why a WHILE loop is suitable and how it eventually stops. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "The number of attempts is not known in advance."
+            },
+            {
+              "marks": 1,
+              "point": "WHILE checks the continuation condition before each attempt."
+            },
+            {
+              "marks": 1,
+              "point": "A new input updates the tested value so the loop can end when the PIN is correct."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A school club accepts a score from 0 to 10 inclusive. Write OCR ERL to read a score, ask again while it is out of range, and display \"Accepted\" when valid. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Input score as an integer before the loop."
+            },
+            {
+              "marks": 1,
+              "point": "Continue the WHILE loop when score < 0 OR score > 10."
+            },
+            {
+              "marks": 1,
+              "point": "Re-read the score inside the loop."
+            },
+            {
+              "marks": 1,
+              "point": "End the loop and print Accepted."
+            }
+          ],
+          "model_code": "score = int(input(\"Score?\"))\nwhile score < 0 OR score > 10\n    score = int(input(\"Try again:\"))\nendwhile\nprint(\"Accepted\")",
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        }
+      ]
+    },
+    "059": {
+      "title": "Tracing Programming Constructs",
+      "spec": "2.1.2 / 2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "State"
+          ],
+          "text": "A program starts with total = 2, then executes total = total + 3 followed by total = total * 2. State total after each assignment. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "After adding 3, total is 5."
+            },
+            {
+              "marks": 1,
+              "point": "After multiplying by 2, total is 10."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Show"
+          ],
+          "text": "A school program executes:\npoints = 4\nif points > 5 then\n    points = points + 1\nelse\n    points = points + 3\nendif\npoints = points * 2\nprint(points)\nShow points after the IF/ELSE, after the multiplication, and at output. [3 marks]",
+          "kind": "Trace",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "After IF/ELSE: points = 7 because 4 > 5 is false and 4 + 3 = 7."
+            },
+            {
+              "marks": 1,
+              "point": "After multiplication: points = 14."
+            },
+            {
+              "marks": 1,
+              "point": "Printed result is 14."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Show"
+          ],
+          "text": "A fitness app executes:\ncount = 0\nfor i = 1 to 4\n    if i MOD 2 == 0 then\n        count = count + 1\n    endif\nnext i\nprint(count)\nShow how count changes during iteration and include the printed value. [4 marks]",
+          "kind": "Trace",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "For i = 1 and i = 3 the condition is false, so count does not change."
+            },
+            {
+              "marks": 1,
+              "point": "For i = 2, count increases from 0 to 1."
+            },
+            {
+              "marks": 1,
+              "point": "For i = 4, count increases from 1 to 2."
+            },
+            {
+              "marks": 1,
+              "point": "The printed result is 2."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        }
+      ]
+    },
+    "060": {
+      "title": "Combining Programming Constructs",
+      "spec": "2.2.1",
+      "questions": [
+        {
+          "number": "Q2",
+          "marks": 2,
+          "command": [
+            "Identify"
+          ],
+          "text": "A school program repeats inputting a test mark and uses IF to check whether the mark is at least 50. Identify the two control-flow constructs used. [2 marks]",
+          "kind": "Knowledge",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Iteration for repeated input."
+            },
+            {
+              "marks": 1,
+              "point": "Selection for the IF condition."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q3",
+          "marks": 3,
+          "command": [
+            "Explain"
+          ],
+          "text": "A charity records donations until a volunteer enters 0. Explain how sequence and iteration would work together in this program. [3 marks]",
+          "kind": "Application",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "An initial input is read before checking the loop condition."
+            },
+            {
+              "marks": 1,
+              "point": "Iteration repeats the input and processing while the sentinel 0 has not been entered."
+            },
+            {
+              "marks": 1,
+              "point": "Input is updated each iteration so the loop eventually stops when 0 is entered."
+            }
+          ],
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        },
+        {
+          "number": "Q4",
+          "marks": 4,
+          "command": [
+            "Write"
+          ],
+          "text": "A teacher enters three test marks. Write OCR ERL using a loop and an IF statement to count and display how many marks are at least 80. [4 marks]",
+          "kind": "Programming",
+          "scheme": [
+            {
+              "marks": 1,
+              "point": "Initialise the counter to 0."
+            },
+            {
+              "marks": 1,
+              "point": "Use FOR to input three marks, converting to integer."
+            },
+            {
+              "marks": 1,
+              "point": "Use IF mark >= 80 to increment the counter."
+            },
+            {
+              "marks": 1,
+              "point": "Close the loop and print the counter."
+            }
+          ],
+          "model_code": "count = 0\nfor i = 1 to 3\n    mark = int(input(\"Mark?\"))\n    if mark >= 80 then\n        count = count + 1\n    endif\nnext i\nprint(count)",
+          "note": "Award each independent marking point once; credit equivalent correct responses."
+        }
+      ]
     }
-  }
+  },
+  "qa_note": "Source-reviewed OCR J277 question bank. Live TV/mobile browser verification pending; teacher classroom QA required."
 }

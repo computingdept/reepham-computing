@@ -13,7 +13,7 @@ var host=document.querySelector("#you-do:not(.j277-assessment)"),deck=host&&host
 if(!host||!deck||!deck.querySelector(".j277-code-first"))return;
 var css=document.createElement("link");css.rel="stylesheet";css.href="../../../assets/j277/youdo-grouped.css?v=20261022-5";document.head.appendChild(css);
 var esc=function(x){return String(x==null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
-var commands=/\b(Analyse|Calculate|Compare|Complete|Convert|Define|Describe|Design|Discuss|Draw|Evaluate|Explain|Give|Identify|Justify|Label|List|Outline|Refine|Show|State|Trace|Write)\b/gi;
+var commands=/\b(Add|Analyse|Annotate|Calculate|Compare|Complete|Convert|Define|Describe|Design|Discuss|Draw|Evaluate|Explain|Give|How|Identify|Justify|Label|List|Order|Outline|Refine|Show|Solve|State|Tick|What|Write|Rewrite)\b/gi;
 function emphasized(s,keywords){
  var text=String(s||""),start=0,out="",first=false;
  var allowed=Array.isArray(keywords)?new Set(keywords.map(function(x){return x.toLowerCase()})):null;
