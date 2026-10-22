@@ -1466,7 +1466,8 @@
 /* H446 layout repair: generated lessons nest their two-pane grid inside
    the shared example grid. Span both outer tracks rather than halving it. */
 body:has(.course-back[href*="h446-hub"]) .ido-example > .h13-grid,
-body:has(.course-back[href*="h446-hub"]) .wedo-example > .h13-grid{
+body:has(.course-back[href*="h446-hub"]) .wedo-example > .h13-grid,
+body:has(.course-back[href*="h446-hub"]) .wedo-example > .guided-example:has(> .h13-grid){
   grid-column:1 / -1;min-width:0;width:100%;
 }
 /* Plain generated You Do prompts need the same readable grouping as cards. */
