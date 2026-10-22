@@ -186,6 +186,37 @@ function prepareVocabulary(){
   const stages=[...page.querySelectorAll('.vocab-stage')];
   if(!stages.length)return;
 
+
+  // H446 vocabulary uses definition-first retrieval, matching Lesson 001.
+  // Older generated pages store term and definition together; build the same
+  // prompt/hidden-answer markup before the normal phase controller runs.
+  if(document.querySelector('.course-back[href*="h446-hub"]')){
+    if(stages.every(stage=>stage.querySelector('.vocab-prompt')&&stage.querySelector('[data-vocab-answer]'))){
+      page.dataset.vocabFlow='retrieval';
+    }else if(stages.every(stage=>stage.querySelector('h2')&&stage.querySelector('p'))){
+      const entries=stages.map(stage=>({
+        term:stage.querySelector('h2').textContent.trim(),
+        definition:stage.querySelector('p').textContent.trim()
+      }));
+      const deck=document.createElement('div');
+      deck.className='vocab-deck';
+      const make=(tag,cls,text)=>{const el=document.createElement(tag);el.className=cls;if(text!==undefined)el.textContent=text;return el;};
+      entries.forEach((entry,i)=>{
+        const stage=make('article','vocab-stage');stage.hidden=i!==0;
+        const prompt=make('div','vocab-prompt');
+        prompt.append(make('span','vocab-test-label','QUESTION '+(i+1)+' OF '+entries.length),
+          make('h2','','Recall the term'),make('p','vocab-question',entry.definition),
+          make('span','vocab-stage-count',(i+1)+' of '+entries.length));
+        const answer=make('div','vocab-answer');answer.setAttribute('data-vocab-answer','');answer.hidden=true;
+        answer.append(make('span','vocab-test-label','ANSWER'),make('div','vocab-answer-value',entry.term));
+        stage.append(prompt,answer);deck.append(stage);
+      });
+      page.replaceChildren(deck);
+      page.dataset.vocabFlow='retrieval';
+    }
+    if(page.dataset.vocabFlow==='retrieval'){page.dataset.vocabPrepared='true';return;}
+  }
+
   if(page.dataset.vocabFlow==='retrieval'){
     page.dataset.vocabPrepared='true';
     return;
