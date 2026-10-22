@@ -194,6 +194,26 @@ body.pilot-year12 #lessons .note{display:none}
 @media(max-width:900px){#revisionhub .h446-practice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){#revisionhub .h446-practice-grid{grid-template-columns:1fr;gap:0}#revisionhub .h446-practice-tile{border-radius:0;min-height:58px;padding:10px 12px;border-bottom:0}#revisionhub .h446-practice-tile:first-child{border-radius:9px 9px 0 0}#revisionhub .h446-practice-tile:last-child{border-bottom:1px solid var(--line,#d5dfdb);border-radius:0 0 9px 9px}#revisionhub .h446-practice-tile:only-child{border-radius:9px}#revisionhub .h446-practice-name{font-size:.95rem}#revisionhub .h446-practice-group>h3 span{display:block;margin-left:0}#revisionhub .h446-practice-subgroup{padding-left:9px}}
 
+
+/* Compact H446-only course header and tab-to-content spacing. */
+.course-hub main>.heading{margin-top:5px;margin-bottom:10px;padding-bottom:10px;align-items:end;gap:12px}
+.course-hub main>.heading .eyebrow{margin-bottom:3px}
+.course-hub main>.heading h1{margin-top:0;margin-bottom:0;line-height:1.08}
+.course-hub main>.heading .sub{font-size:.82rem}
+.course-hub main>.tabs{margin-top:0;margin-bottom:12px}
+.course-hub #lessons .h446-year-route{margin:0 0 10px}
+.course-hub #lessons .year-switch{margin-bottom:8px}
+.course-hub #lessons .h446-year-route a{padding:8px 12px;font-size:.85rem}
+.course-hub #revisionhub .h446-practice-intro{margin:0 0 12px}
+.course-hub #revisionhub .h446-practice-group{margin-bottom:14px}
+@media(max-width:700px){
+ .course-hub main>.heading{margin-top:3px;margin-bottom:8px;padding-bottom:8px;gap:5px}
+ .course-hub main>.heading h1{font-size:clamp(1.8rem,7vw,2.4rem)}
+ .course-hub main>.heading .sub{font-size:.75rem}
+ .course-hub main>.tabs{margin-bottom:9px}
+ .course-hub #lessons .h446-year-route a{width:100%}
+}
+
 </style>
 </head>
 <body class="course-hub" data-year="12">
@@ -205,8 +225,6 @@ body.pilot-year12 #lessons .note{display:none}
   <a class="back" id="yearBack" href="index.html#year/12">← Year 12 subjects</a>
   <div class="heading"><div><p class="eyebrow">OCR H446 · A LEVEL <span id="pilotStamp" class="pilot-stamp" hidden>YEAR 12 PILOT</span></p><h1>Computer Science</h1></div><div class="sub">Years 12 and 13</div></div>
 
-  <nav class="h446-year-route" aria-label="Switch H446 year"><a id="otherYearLink" href="h446-hub.html?year=13#lessons">Explore Year 13 lessons →</a></nav>
-
   <div class="tabs" role="tablist" aria-label="A Level Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false">Revision guides</button><button class="tab" data-tab="revisionhub" aria-selected="false">Revision practice</button></div>
 
   <section class="panel active" id="lessons">
@@ -214,6 +232,7 @@ body.pilot-year12 #lessons .note{display:none}
       <button class="year-btn" data-year="12" aria-pressed="true">Year 12</button>
       <button class="year-btn" data-year="13" aria-pressed="false">Year 13</button>
     </div>
+    <nav class="h446-year-route" aria-label="Switch H446 year"><a id="otherYearLink" href="h446-hub.html?year=13#lessons">Explore Year 13 lessons →</a></nav>
     <div class="summary"><h2 id="lessonTitle">Year 12 lessons</h2><span class="count" id="lessonCount"></span></div>
     <div class="paper-key" role="group" aria-label="H446 specification colours">
       <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#417FA5" aria-hidden="true"></span>Paper 1 · Computer Systems</span>
