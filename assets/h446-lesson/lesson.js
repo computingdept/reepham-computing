@@ -928,7 +928,9 @@ function next(){
       const maxStart=Math.max(0,questions.length-size);
       const start=Number(page.dataset.windowStart||0);
       if(start<maxStart){
-        setYouDoWindow(page,start+1);updateControl();return;
+        // Rich-review coding/diagram lessons advance complete question windows.
+        // Lesson 020: Q1–Q2 → Q3–Q4; Lesson 029: one diagram at a time.
+        setYouDoWindow(page,start+(isH446RichReview(page)?size:1));updateControl();return;
       }
       if(isH446RichReview(page)&&showH446RichReview(page,true,0)){
         updateControl();return;
@@ -1133,7 +1135,8 @@ function previousAction(){
     if(questions.length){
       const start=Number(page.dataset.windowStart||0);
       if(start>0){
-        setYouDoWindow(page,start-1);
+        const windowSize=Math.max(1,Number(page.dataset.windowSize||3));
+        setYouDoWindow(page,start-(isH446RichReview(page)?windowSize:1));
         updateControl();
         return;
       }
