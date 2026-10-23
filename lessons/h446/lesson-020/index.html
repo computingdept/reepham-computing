@@ -8,7 +8,71 @@
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1915">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261022-layout2">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
-<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style></head>
+<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}
+/* Rich You Do review pilot — only Lessons 020 and 029. */
+#you-do[data-self-marking="rich"].phase-youdo{
+  overflow-y:auto!important;overflow-x:hidden!important;
+}
+#you-do .h446-rich-review[hidden],#you-do .h446-rich-stage[hidden]{display:none!important}
+#you-do .h446-rich-review{min-width:0;padding-bottom:12px}
+#you-do .h446-rich-kicker{color:#176849;font-size:clamp(17px,1.2vw,21px);font-weight:900;margin:0 0 12px}
+#you-do .h446-rich-panel{
+  background:#fff;border:1px solid #c9ded1;border-top:6px solid #176b4a;
+  border-radius:14px;padding:clamp(18px,2vw,34px);min-width:0;overflow:visible;
+}
+#you-do .h446-rich-panel>h2{
+  margin:0 0 18px;font-size:clamp(28px,2.05vw,38px);
+  line-height:1.2;overflow-wrap:anywhere;
+}
+#you-do .h446-rich-panel .h446-rich-content{min-width:0;margin:0}
+#you-do .h446-rich-panel .question-text,
+#you-do .h446-rich-panel .question-text p{
+  font-size:clamp(23px,1.8vw,34px);line-height:1.4;
+}
+#you-do .h446-rich-panel .k29-independent{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  align-items:start;gap:clamp(16px,2vw,30px);max-width:none;
+}
+#you-do .h446-rich-panel .k29-map{width:100%;margin:0;max-width:100%}
+#you-do .h446-rich-panel .k29-map svg{
+  display:block;width:100%;height:auto;max-height:57vh;
+}
+#you-do .h446-rich-panel .k29-instructions,
+#you-do .h446-rich-panel .k29-independent>div:last-child{
+  font-size:clamp(19px,1.42vw,27px);line-height:1.4;
+}
+#you-do .h446-rich-panel .k29-result{font-size:clamp(23px,1.8vw,34px)}
+#you-do .h446-rich-panel .youdo-solution{
+  border:0;max-height:none;min-height:0;overflow:visible;
+  margin:0;padding:0;background:transparent;color:#19382e;
+}
+#you-do .h446-rich-panel .youdo-solution pre{
+  max-width:100%;white-space:pre;overflow-x:auto;
+  padding:clamp(14px,1.5vw,24px);border:1px solid #c9ded1;
+  border-radius:12px;font-size:clamp(20px,1.5vw,28px);line-height:1.42;
+  background:#f1f6f3;color:#19382e;
+}
+#you-do .h446-rich-panel .youdo-solution p{
+  font-size:clamp(21px,1.5vw,28px);line-height:1.38;margin:16px 0 0;
+}
+#you-do[data-self-marking="rich"] .youdo-deck .k29-model-answer[hidden]{
+  display:none!important;
+}
+@media(max-width:900px){
+  #you-do .h446-rich-panel .k29-independent{grid-template-columns:1fr}
+  #you-do .h446-rich-panel .k29-map svg{max-height:none}
+  #you-do .h446-rich-panel .youdo-solution pre{font-size:17px}
+}
+@media(max-width:700px){
+  #you-do .h446-rich-kicker{font-size:15px}
+  #you-do .h446-rich-panel{padding:15px}
+  #you-do .h446-rich-panel>h2{font-size:26px}
+  #you-do .h446-rich-panel .question-text,
+  #you-do .h446-rich-panel .question-text p{font-size:21px}
+  #you-do .h446-rich-panel .k29-instructions,
+  #you-do .h446-rich-panel .k29-independent>div:last-child{font-size:19px}
+}
+</style></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -98,21 +162,21 @@ stack[top] = value;</pre></div></div></article><article class="wedo-example" hid
 front = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">value = queue[front];
 front = front + 1;</pre></div></div></article></div></section>
 
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · STACK</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement push/pop</h3><div class="question-text"><p>Create an integer stack array and write code that pushes 5, 8 and 3, then pops and prints one item.</p></div><div class="success-check">3 is printed first and top points to 8 afterwards.</div><div class="youdo-solution" hidden><strong>ANSWER 1 OF 4</strong><pre class="arithmetic">int[] stack = new int[5];
+<section id="you-do" data-self-marking="rich" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · STACK</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement push/pop</h3><div class="question-text"><p>Create an integer stack array and write code that pushes 5, 8 and 3, then pops and prints one item.</p></div><div class="success-check">Trace the top pointer before and after each push or pop.</div><div class="youdo-solution" hidden><strong>ANSWER 1 OF 4</strong><pre class="arithmetic">int[] stack = new int[5];
 int top = -1;
 top++; stack[top] = 5;
 top++; stack[top] = 8;
 top++; stack[top] = 3;
 Console.WriteLine(stack[top]); // 3
 top--;
-Console.WriteLine(stack[top]); // 8</pre><p>The top pointer becomes 1, pointing to 8.</p></div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement enqueue/dequeue</h3><div class="question-text"><p>Create an integer queue and enqueue 10, 20, 30. Dequeue and print one item.</p></div><div class="success-check">10 is printed first.</div><div class="youdo-solution" hidden><strong>ANSWER 2 OF 4</strong><pre class="arithmetic">int[] queue = new int[5];
+Console.WriteLine(stack[top]); // 8</pre><p>The top pointer becomes 1, pointing to 8.</p></div></article><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · QUEUE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement enqueue/dequeue</h3><div class="question-text"><p>Create an integer queue and enqueue 10, 20, 30. Dequeue and print one item.</p></div><div class="success-check">Trace which queue position is used when removing an item.</div><div class="youdo-solution" hidden><strong>ANSWER 2 OF 4</strong><pre class="arithmetic">int[] queue = new int[5];
 int front = 0;
 int rear = -1;
 rear++; queue[rear] = 10;
 rear++; queue[rear] = 20;
 rear++; queue[rear] = 30;
 Console.WriteLine(queue[front]); // 10
-front++;</pre><p>The front pointer becomes 1, pointing to 20.</p></div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · TRACE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Compare order</h3><div class="question-text"><p>Use the same values 2, 4, 6 in a stack and queue and print the first removed value from each.</p></div><div class="success-check">Stack removes 6; queue removes 2.</div><div class="youdo-solution" hidden><strong>ANSWER 3 OF 4</strong><pre class="arithmetic">int[] stack = { 2, 4, 6 };
+front++;</pre><p>The front pointer becomes 1, pointing to 20.</p></div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 3 · TRACE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Compare order</h3><div class="question-text"><p>Use the same values 2, 4, 6 in a stack and queue and print the first removed value from each.</p></div><div class="success-check">Show the first value removed by each structure and explain the order.</div><div class="youdo-solution" hidden><strong>ANSWER 3 OF 4</strong><pre class="arithmetic">int[] stack = { 2, 4, 6 };
 int top = 2;
 Console.WriteLine(stack[top]); // 6
 
@@ -120,7 +184,7 @@ top--;
 int[] queue = { 2, 4, 6 };
 int front = 0;
 Console.WriteLine(queue[front]); // 2
-front++;</pre><p>Stack: last in, first out (6). Queue: first in, first out (2).</p></div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · OCR</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Explain an error</h3><div class="question-text"><p>Using the OCR 2023 calculator-stack context, explain what happens if an operation tries to pop more values than are stored.</p></div><div class="success-check">Your explanation identifies stack underflow / an attempted pop from an empty stack.</div><div class="youdo-solution" hidden><strong>ANSWER 4 OF 4</strong><p><strong>Stack underflow</strong> occurs when a pop operation is attempted on an empty stack (top = -1). The program should check whether the stack is empty before reading an array element. Otherwise it may access an invalid index or produce an error.</p></div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
+front++;</pre><p>Stack: last in, first out (6). Queue: first in, first out (2).</p></div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · OCR</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Explain an error</h3><div class="question-text"><p>Using the OCR 2023 calculator-stack context, explain what happens if an operation tries to pop more values than are stored.</p></div><div class="success-check">Describe the invalid operation, its likely effect and a suitable check.</div><div class="youdo-solution" hidden><strong>ANSWER 4 OF 4</strong><p><strong>Stack underflow</strong> occurs when a pop operation is attempted on an empty stack (top = -1). The program should check whether the stack is empty before reading an array element. Otherwise it may access an invalid index or produce an error.</p></div></article></div><div class="youdo-window-progress">Challenges 1–2 of 4</div></div></section>
 
 <section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A LIFO data structure.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">stack</div><p>The newest item is removed first.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A FIFO data structure.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">queue</div><p>The oldest item is removed first.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Last In, First Out.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">LIFO</div><p>Stack behaviour.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">First In, First Out.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">FIFO</div><p>Queue behaviour.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Add to the top of a stack.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">push</div><p>Move top then store data.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Remove from the top of a stack.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">pop</div><p>Read top then move top.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Add at the rear of a queue.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">enqueue</div><p>Move/use rear.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Remove from the front of a queue.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">dequeue</div><p>Read front then move front.</p></div></article></div></section>
 
@@ -129,6 +193,6 @@ front++;</pre><p>Stack: last in, first out (6). Queue: first in, first out (2).<
 </main>
 
 <div class="lesson-footer">Lesson 020 · OCR H446 1.4.2 Data Structures <span>Use the menu or ← → keys</span> · READY</div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261022-vocab1"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20261023-richpilot1"></script>
 </body>
 </html>
