@@ -3,7 +3,7 @@
 The H446 hub serves these maintained student editions:
 
 - `H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf`: 249 pages, reorganised into specification order on 23 October 2026. The existing public filename is retained so external links continue to open the guide.
-- `H446_Paper_2_REVIEW_READY_2026-10-21.pdf`: unchanged by this reordering.
+- `H446_Paper_2_REVIEW_READY_2026-10-21.pdf`: now ordered 2.1, 2.2.1(a-f), 2.2.2, 2.3.1(a-f), then mixed recall. All 169 pages are retained.
 
 The 19 October `MASTER` PDFs are historical snapshots and remain unchanged.
 
@@ -18,3 +18,9 @@ The edition query string updates the PDF URL's cache version. Publish the PDF, l
 The contents page links and 53 bookmarks use the new physical PDF page numbers. Footers and the PDF viewer now agree. Four internal page-reference numbers were updated. Multi-topic practice/answer sets remain intact within their specification section. Mixed memory banks remain at the end.
 
 `docs/audits/h446-paper1-page-order-20261023.csv` records all 249 old-to-new positions. `tools/revision/reorder_h446_paper1.py` records the checked ordering and retention checks. Its original input is the approved pre-reorder PDF; never apply the permutation again to the reordered edition.
+
+## Paper 2 specification order
+
+`paper-2-page-map.json` maps all 169 stable old-edition page keys to current destinations. The four Paper 2 apps use `RHSC_GUIDE_LINKS.paper2(key)`. Publish the guide, generated lookup, app dependencies and hub together. Lesson destinations, question banks and saved results are unchanged.
+
+`docs/audits/h446-paper2-page-order-20261023.csv` records every destination. `tools/revision/reorder_h446_paper2.py` retains complete mixed-topic practice blocks and their answers; its input must be the pre-reorder edition. All 168 content page bodies are pixel-identical above the updated footers. The contents, bookmarks and continuous page numbers have been rebuilt.
