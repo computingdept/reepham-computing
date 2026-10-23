@@ -119,10 +119,12 @@ function prepareH446GroupedMarking(page){
   questions.forEach((q,i)=>{
     const card=document.createElement('article');
     card.className='h446-marking-card';
-    const label=document.createElement('strong');
-    label.className='h446-marking-label';
-    const level=(q.querySelector('.phase-tag')?.textContent||'').replace(/QUESTION\s+\d+\s+OF\s+\d+/gi,'').replace(/^[·\s]+|[·\s]+$/g,'').trim();
-    label.textContent='Q'+(i+1)+(level?' · '+level:'');
+    const phaseTag=q.querySelector('.phase-tag')?.textContent||'';
+    const phaseMarks=phaseTag.match(/\b(\d+)\s*marks?\b/i);
+    const originalScheme=q.querySelector('.youdo-solution p')?.textContent||'';
+    const schemeMarks=originalScheme.match(/^\s*\[(\d+)\]/);
+    const markCount=phaseMarks?.[1]||schemeMarks?.[1]||'';
+    if(markCount)card.dataset.reviewMarks=markCount;
     const sourcePrompt=q.querySelector('.youdo-question-prompt');
     const questionText=sourcePrompt?.querySelector('h2')?.textContent?.trim()||'';
     // Two screens for long questions or substantial visual/code content.
@@ -190,10 +192,15 @@ function prepareH446GroupedMarking(page){
         solution.append(points);
       }
     }
-    card.append(label,body);
+    card.append(body);
     cards.append(card);
   });
-  screen.append(heading,cards);
+  const header=document.createElement('div');
+  header.className='h446-marking-header';
+  const marks=document.createElement('span');
+  marks.className='h446-marking-total';
+  header.append(heading,marks);
+  screen.append(header,cards);
   page.querySelector('.youdo-deck')?.after(screen);
   page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
 }
@@ -220,8 +227,14 @@ function showH446GroupedMarking(page,visible,index=0,requestedStep){
     if(answer)answer.hidden=!visible||i!==safe||step!=='answer';
   });
   const heading=screen.querySelector('.h446-marking-heading');
-  if(heading)heading.textContent='Self-marking · Q'+(safe+1)+' of '+cards.length+
-    ' · '+(step==='question'?'Review question':'Mark your answer');
+  if(heading)heading.textContent='Self-marking · Question '+(safe+1)+' of '+cards.length+
+    (step==='answer'?' · Model answer':'');
+  const marks=screen.querySelector('.h446-marking-total');
+  if(marks){
+    const count=active.dataset.reviewMarks;
+    marks.hidden=!count;
+    marks.textContent=count?count+' '+(count==='1'?'mark':'marks'):'';
+  }
   if(!visible)page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
   return true;
 }
