@@ -127,11 +127,15 @@ function prepareH446GroupedMarking(page){
     if(markCount)card.dataset.reviewMarks=markCount;
     const sourcePrompt=q.querySelector('.youdo-question-prompt');
     const questionText=sourcePrompt?.querySelector('h2')?.textContent?.trim()||'';
-    // Two screens for long questions or substantial visual/code content.
-    // Per-question data-review-layout="one" or "two" can override the default.
+    // One review screen by default, regardless of question wording length.
+    // Use two only for substantial structured content (code blocks, diagrams,
+    // figures, tables) or an explicit teacher-authored "two" override.
+    // Inline code, e.g. a single variable name, is not a reason to split.
     const override=q.dataset.reviewLayout;
-    const richQuestion=!!sourcePrompt?.querySelector('pre,svg,img,table,figure,canvas,code,math,iframe');
-    const twoScreens=override==='two'||(override!=='one'&&(richQuestion||questionText.length>145));
+    const richQuestion=!!sourcePrompt?.querySelector(
+      'pre,svg,img,table,figure,canvas,iframe,.code-block,.trace-table'
+    );
+    const twoScreens=override==='two'||(override!=='one'&&richQuestion);
     card.dataset.reviewLayout=twoScreens?'two':'one';
     if(twoScreens&&sourcePrompt){
       const questionStage=document.createElement('div');
