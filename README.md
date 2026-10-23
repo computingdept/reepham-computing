@@ -81,6 +81,10 @@ The shared answer presentation is in `assets/h446-lesson/answer-layout.css`. Les
 
 All updates must remain usable on iPhones and Safari, at narrow screen widths and with enlarged text. Preserve RHSC green branding, keyboard focus, touch targets of at least 44px and clear back links. Avoid horizontal page overflow. Keep year-group content separate.
 
+## J277 assessment confidentiality (staff)
+
+Assessment lessons use a separate student assessment paper. The corresponding mark scheme is not linked from the student paper. **Do not assume that an unlinked URL is private:** this website is publicly hosted. For confidential tests or mark schemes, use school-approved restricted access and follow school assessment and information-security procedures. Check permissions before sharing an assessment link. This instruction is for staff documentation and should not appear on the student lesson screen.
+
 ## Hosting
 
 GitHub Pages uses main, root. Custom domain: rhsccs.org.
