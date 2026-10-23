@@ -123,9 +123,26 @@ function prepareH446GroupedMarking(page){
     label.className='h446-marking-label';
     const level=(q.querySelector('.phase-tag')?.textContent||'').replace(/QUESTION\s+\d+\s+OF\s+\d+/gi,'').replace(/^[·\s]+|[·\s]+$/g,'').trim();
     label.textContent='Q'+(i+1)+(level?' · '+level:'');
+    const sourcePrompt=q.querySelector('.youdo-question-prompt');
+    const questionText=sourcePrompt?.querySelector('h2')?.textContent?.trim()||'';
+    // Two screens for long questions or substantial visual/code content.
+    // Per-question data-review-layout="one" or "two" can override the default.
+    const override=q.dataset.reviewLayout;
+    const richQuestion=!!sourcePrompt?.querySelector('pre,svg,img,table,figure,canvas,code,math,iframe');
+    const twoScreens=override==='two'||(override!=='one'&&(richQuestion||questionText.length>145));
+    card.dataset.reviewLayout=twoScreens?'two':'one';
+    if(twoScreens&&sourcePrompt){
+      const questionStage=document.createElement('div');
+      questionStage.className='h446-review-question-stage';
+      const fullPrompt=sourcePrompt.cloneNode(true);
+      fullPrompt.querySelector('.phase-tag')?.remove();
+      questionStage.append(fullPrompt);
+      questionStage.hidden=true;
+      card.append(questionStage);
+    }
     const prompt=document.createElement('p');
     prompt.className='h446-marking-question';
-    prompt.textContent=q.querySelector('.youdo-question-prompt h2')?.textContent||'';
+    prompt.textContent=twoScreens&&questionText.length>110?questionText.slice(0,107).trimEnd()+'…':questionText;
     const solution=q.querySelector('.youdo-solution').cloneNode(true);
     solution.hidden=false;
     const body=document.createElement('div');
@@ -180,22 +197,31 @@ function prepareH446GroupedMarking(page){
   page.querySelector('.youdo-deck')?.after(screen);
   page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
 }
-function showH446GroupedMarking(page,visible,index=0){
+function showH446GroupedMarking(page,visible,index=0,requestedStep){
   const screen=page.querySelector('.h446-marking-screen');
   const deck=page.querySelector('.youdo-deck');
   if(!screen||!deck)return false;
   const cards=[...screen.querySelectorAll('.h446-marking-card')];
+  if(!cards.length)return false;
   const safe=Math.min(cards.length-1,Math.max(0,index));
+  const active=cards[safe];
+  const step=active.dataset.reviewLayout==='two'&&requestedStep!=='answer'?'question':'answer';
   page.dataset.answerMode=visible?'true':'false';
   page.dataset.answerIndex=String(safe);
+  page.dataset.reviewStep=step;
   deck.hidden=!!visible;
   screen.hidden=!visible;
   cards.forEach((card,i)=>{
     card.classList.toggle('is-active',i===safe);
     card.hidden=!visible||i!==safe;
+    const fullQuestion=card.querySelector('.h446-review-question-stage');
+    const answer=card.querySelector('.h446-marking-body');
+    if(fullQuestion)fullQuestion.hidden=!visible||i!==safe||step!=='question';
+    if(answer)answer.hidden=!visible||i!==safe||step!=='answer';
   });
   const heading=screen.querySelector('.h446-marking-heading');
-  if(heading)heading.textContent='Self-marking · Question '+(safe+1)+' of '+cards.length;
+  if(heading)heading.textContent='Self-marking · Q'+(safe+1)+' of '+cards.length+
+    ' · '+(step==='question'?'Review question':'Mark your answer');
   if(!visible)page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
   return true;
 }
@@ -597,7 +623,8 @@ function updateControl(){
     if(isH446GroupedMarking(page)&&page.querySelector('.h446-marking-screen')){
       const count=page.querySelectorAll('.h446-marking-card').length;
       const index=Number(page.dataset.answerIndex||0);
-      if(page.dataset.answerMode==='true')label=index<count-1?'Next answer →':'Continue → Key Vocabulary';
+      if(page.dataset.answerMode==='true')label=page.dataset.reviewStep==='question'?'Show model answer →':
+        index<count-1?'Next question →':'Continue → Key Vocabulary';
       else label=page.dataset.workMode==='independent'?'Self-mark answers →':'Begin silent work →';
     }else if(page.dataset.answerMode==='true'){
       const count=page.querySelectorAll('.youdo-question').length;
@@ -759,6 +786,9 @@ function next(){
     if(isH446GroupedMarking(page)&&page.querySelector('.h446-marking-screen')&&page.dataset.answerMode==='true'){
       const count=page.querySelectorAll('.h446-marking-card').length;
       const index=Number(page.dataset.answerIndex||0);
+      if(page.dataset.reviewStep==='question'){
+        showH446GroupedMarking(page,true,index,'answer');updateControl();return;
+      }
       if(index<count-1){showH446GroupedMarking(page,true,index+1);updateControl();return;}
       showPage(order[order.indexOf('you-do')+1]||'vocabulary');return;
     }
@@ -926,7 +956,7 @@ function previousAction(){
     if(youPage?.dataset.assessmentMode!=='true'){
       youPage.dataset.workMode='independent';
       const questions=[...youPage.querySelectorAll('.youdo-question')];
-      if(questions.length&&isH446GroupedMarking(youPage)&&showH446GroupedMarking(youPage,true,Math.max(0,questions.length-1))){
+      if(questions.length&&isH446GroupedMarking(youPage)&&showH446GroupedMarking(youPage,true,Math.max(0,questions.length-1),'answer')){
         // Back from vocabulary returns to the final teacher-led review screen.
       }else if(questions.length){
         const requestedSize=Math.max(1,Number(youPage.dataset.windowSize||3));
@@ -944,7 +974,10 @@ function previousAction(){
   if(current==='you-do'){
     if(isH446GroupedMarking(page)&&page.dataset.answerMode==='true'){
       const index=Number(page.dataset.answerIndex||0);
-      if(index>0){showH446GroupedMarking(page,true,index-1);updateControl();return;}
+      if(page.dataset.reviewStep==='answer'&&page.querySelectorAll('.h446-marking-card')[index]?.dataset.reviewLayout==='two'){
+        showH446GroupedMarking(page,true,index,'question');updateControl();return;
+      }
+      if(index>0){showH446GroupedMarking(page,true,index-1,'answer');updateControl();return;}
       showH446GroupedMarking(page,false);
       page.dataset.workMode='independent';
       updateSignals('you-do');updateControl();return;
@@ -1142,7 +1175,7 @@ function prepareMobileSwipeNavigation(){
 
   // On phones the reference sits above the changing panel. Bring the newly
   // revealed answer/step into view instead of returning to the unchanged title.
-  const changeSelector='.donow-stage,.objective-vocab-stage,[data-objective-vocab-definition],.nl-stage,.ido-example,.ido-step,.model-stage,.wedo-example,.wedo-step,[data-reveal-answer],.youdo-question,.youdo-stage,.vocab-stage,[data-vocab-answer],.vocab-card [data-answer],.exit-stage,details.answers';
+  const changeSelector='.h446-review-question-stage,.h446-marking-body,.donow-stage,.objective-vocab-stage,[data-objective-vocab-definition],.nl-stage,.ido-example,.ido-step,.model-stage,.wedo-example,.wedo-step,[data-reveal-answer],.youdo-question,.youdo-stage,.vocab-stage,[data-vocab-answer],.vocab-card [data-answer],.exit-stage,details.answers';
   function isVisible(element){
     return !element.closest('[hidden]')&&(!element.closest('.page')||element.closest('.page').classList.contains('active'));
   }
