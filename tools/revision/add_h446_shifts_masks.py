@@ -73,7 +73,7 @@ for old,targets,expected in [(225,{221},1),(240,{237,241},3)]:
   for line in block.get('lines',[]):
    for span in line['spans']:
     if span['text'] in {str(n) for n in targets} and span['bbox'][1]<h-51:
- found.append(span);p.add_redact_annot(fitz.Rect(span['bbox'])+(-.05,-.05,.05,.05),fill=(1,1,1))
+     found.append(span);p.add_redact_annot(fitz.Rect(span['bbox'])+(-.05,-.05,.05,.05),fill=(1,1,1))
  assert len(found)==expected,(old,found)
  p.apply_redactions(images=0,graphics=0)
  for span in found:

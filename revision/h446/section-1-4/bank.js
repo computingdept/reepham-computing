@@ -3945,7 +3945,7 @@ const SKILLS = [
         "prompt": "Inputs (A,B) are ordered 00, 01, 10, 11. What output sequence does an NOR gate produce?",
         "answer": "1000",
         "options": [
-       "1000",
+          "1000",
           "0000",
           "1111",
           "0101"
