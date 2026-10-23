@@ -19,7 +19,7 @@ console.log(JSON.stringify(rows));
 '''
 rows=json.loads(subprocess.check_output(['node','-e',js],cwd=ROOT))
 notes={
- '141-j':'Priority 1: guide destination is a marking page; add a dedicated ASCII/Unicode teaching page before remapping this key.',
+ '141-j':'Resolved 23 October: dedicated ASCII/Unicode teaching page 178, key 250, aligned with Lesson 008.',
  '143-gates':'Priority 1: guide destination teaches Boolean rewriting laws; add foundational gate symbols, behaviour and truth tables.',
  '143-model':'Priority 2: Boolean-law destination is related but lacks a complete scenario-to-expression worked model.',
  '23-stack':'Priority 2: guide destination introduces the data structures; a dedicated push/pop algorithm example would better match this quiz.',

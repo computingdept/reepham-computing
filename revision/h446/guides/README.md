@@ -24,3 +24,7 @@ The contents page links and 53 bookmarks use the new physical PDF page numbers. 
 `paper-2-page-map.json` maps all 169 stable old-edition page keys to current destinations. The four Paper 2 apps use `RHSC_GUIDE_LINKS.paper2(key)`. Publish the guide, generated lookup, app dependencies and hub together. Lesson destinations, question banks and saved results are unchanged.
 
 `docs/audits/h446-paper2-page-order-20261023.csv` records every destination. `tools/revision/reorder_h446_paper2.py` retains complete mixed-topic practice blocks and their answers; its input must be the pre-reorder edition. All 168 content page bodies are pixel-identical above the updated footers. The contents, bookmarks and continuous page numbers have been rebuilt.
+
+## Character sets addition — 23 October 2026
+
+Paper 1 now has 250 pages. Page 178 adds 1.4.1(j), ASCII and Unicode, aligned with Lesson 008. Stable key `250` identifies this new page; key `132` still identifies the original marking page. Later physical page destinations advance by one. The contents, bookmarks, continuous footers and four printed internal cross-references were updated. The lookup edition is `2026-10-23-character-sets`. `tools/revision/add_h446_character_sets.py` records this migration and refuses repeat application; use the 249-page pre-insertion edition as its input.
