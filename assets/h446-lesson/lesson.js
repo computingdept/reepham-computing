@@ -373,7 +373,9 @@ function setYouDoWindow(page,start){
       const first=safe+1;
       const last=Math.min(safe+size,questions.length);
       const noun=page.dataset.youDoMode==='coding'?'Challenges':'Questions';
-      progress.textContent=noun+' '+first+'–'+last+' of '+questions.length;
+      progress.textContent=isH446RichReview(page)&&size===1
+        ?'Question '+first+' of '+questions.length
+        :noun+' '+first+'–'+last+' of '+questions.length;
     }
   }
 }
