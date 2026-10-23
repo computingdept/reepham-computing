@@ -128,7 +128,52 @@ function prepareH446GroupedMarking(page){
     prompt.textContent=q.querySelector('.youdo-question-prompt h2')?.textContent||'';
     const solution=q.querySelector('.youdo-solution').cloneNode(true);
     solution.hidden=false;
-    card.append(label,prompt,solution);
+    const body=document.createElement('div');
+    body.className='h446-marking-body';
+    body.append(prompt,solution);
+
+    // Present the existing authored mark scheme as discrete marking points.
+    // Leave the original paragraph in the DOM, without changing its wording.
+    const original=solution.querySelector('p');
+    const raw=original?.textContent?.trim()||'';
+    const total=raw.match(/^\[(\d+)\]\s*/);
+    if(total){
+      const rest=raw.slice(total[0].length);
+      const matches=[...rest.matchAll(/([\s\S]*?)\s*\[(\d+)\]/g)];
+      const entries=matches.map(match=>({
+        text:match[1].replace(/^[,;:\s]+/,'').trim(),
+        marks:Number(match[2])
+      }));
+      const last=matches[matches.length-1];
+      const tail=last?rest.slice(last.index+last[0].length):rest;
+      const valid=entries.length>0
+        && entries.reduce((n,part)=>n+part.marks,0)===Number(total[1])
+        && entries.every(part=>part.text&&part.marks>0)
+        && /^[.;\s]*$/.test(tail);
+      if(valid){
+        const points=document.createElement('div');
+        points.className='h446-marking-points';
+        points.setAttribute('aria-label','Marking points');
+        entries.forEach(entry=>{
+          const item=document.createElement('div');
+          item.className='h446-mark-point';
+          const criterion=document.createElement('span');
+          criterion.className='h446-mark-criterion';
+          criterion.textContent=entry.text;
+          const credit=document.createElement('span');
+          credit.className='h446-mark-credit';
+          credit.textContent=entry.marks+' '+(entry.marks===1?'mark':'marks');
+          item.append(criterion,credit);
+          if(/^(?:[AB]\s*=\s*\d+|x remains \d+)/i.test(entry.text)){
+            item.classList.add('h446-mark-result');
+          }
+          points.append(item);
+        });
+        original.hidden=true;
+        solution.append(points);
+      }
+    }
+    card.append(label,body);
     cards.append(card);
   });
   screen.append(heading,cards);
