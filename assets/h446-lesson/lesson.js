@@ -1000,8 +1000,13 @@ function previousAction(){
         const qs=[...yp.querySelectorAll('.youdo-question')];
         yp.dataset.workMode='independent';
         if(qs.length){
-          yp.dataset.answerMode='true';
-          showYouDoAnswer(yp,qs.length-1);
+          if(isH446RichReview(yp)&&showH446RichReview(yp,true,
+              yp.querySelectorAll('.h446-rich-stage').length-1)){
+            // Restore the final model answer when returning from an optional phase.
+          }else{
+            yp.dataset.answerMode='true';
+            showYouDoAnswer(yp,qs.length-1);
+          }
         }
         updateSignals('you-do');updateControl();
       }
