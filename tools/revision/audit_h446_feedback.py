@@ -20,8 +20,8 @@ console.log(JSON.stringify(rows));
 rows=json.loads(subprocess.check_output(['node','-e',js],cwd=ROOT))
 notes={
  '141-j':'Resolved 23 October: dedicated ASCII/Unicode teaching page 178, key 250, aligned with Lesson 008.',
- '143-gates':'Priority 1: guide destination teaches Boolean rewriting laws; add foundational gate symbols, behaviour and truth tables.',
- '143-model':'Priority 2: Boolean-law destination is related but lacks a complete scenario-to-expression worked model.',
+ '143-gates':'Resolved 23 October: dedicated gate symbols, rules and truth tables on page 214, key 251.',
+ '143-model':'Resolved 23 October: secure-door problem-to-expression model with a complete 16-row truth table on page 215, key 252.',
  '23-stack':'Priority 2: guide destination introduces the data structures; a dedicated push/pop algorithm example would better match this quiz.',
  '23-queue':'Priority 2: guide destination introduces the data structures; a dedicated enqueue/dequeue algorithm example would better match this quiz.',
  '141-i':'Priority 2: guide destination is an exam-practice page; consider a direct worked example for shifts and each mask operation.',

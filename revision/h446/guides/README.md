@@ -28,3 +28,7 @@ The contents page links and 53 bookmarks use the new physical PDF page numbers. 
 ## Character sets addition — 23 October 2026
 
 Paper 1 now has 250 pages. Page 178 adds 1.4.1(j), ASCII and Unicode, aligned with Lesson 008. Stable key `250` identifies this new page; key `132` still identifies the original marking page. Later physical page destinations advance by one. The contents, bookmarks, continuous footers and four printed internal cross-references were updated. The lookup edition is `2026-10-23-character-sets`. `tools/revision/add_h446_character_sets.py` records this migration and refuses repeat application; use the 249-page pre-insertion edition as its input.
+
+## Logic foundations addition — 23 October 2026
+
+Paper 1 now has 252 pages. New keys `251` and `252` open pages 214 and 215: gate symbols/rules/truth tables, followed by the secure-door model from Lesson 026 and a complete 16-row truth table. These begin 1.4.3; all prior content is retained. The model and gates quiz topics now open these pages. Later destinations advance by two, with contents, bookmarks, footers and four printed references updated together. Edition: `2026-10-23-logic-gates`. `tools/revision/add_h446_logic_gates.py` requires the preceding 250-page edition and refuses repeat application. Its page drawing code is `h446_logic_gate_pages.py`.

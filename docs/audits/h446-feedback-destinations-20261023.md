@@ -10,8 +10,6 @@ These are checks against the checked-out source. They establish destination exis
 
 | Priority | Topic | Current destination | Finding and next action |
 |---|---|---|---|
-| 1 | 1.4.3(d), gates and truth tables | Paper 1 page 225, key 190 | The destination teaches Boolean rewriting laws rather than introducing gate symbols and truth tables. Lesson 026 is correctly linked. Add a gate-reference and worked truth-table page. |
-| 2 | 1.4.3(a), defining a Boolean problem | Paper 1 page 225, key 190 | Related content, but the page does not provide a complete scenario-to-condition-to-expression model. Add that model before expecting independent transfer. |
 | 2 | 1.4.1(i), shifts and masks | Paper 1 page 170, key 131 | The destination is an exam-practice page. Prefer a worked example showing fixed-width shifts and AND/OR/XOR masks. Lesson 003 is relevant. |
 | 2 | 2.3.1(e), stack algorithms | Paper 2 page 121, key 95 | The destination introduces linked lists and defines stack behaviour. A direct push/pop algorithm example would be a better starting point for the stack quiz. Lessons 020 and 049 are relevant. |
 | 2 | 2.3.1(e), queue algorithms | Paper 2 page 121, key 95 | The destination introduces structures and defines FIFO. A direct enqueue/dequeue algorithm example would be a better starting point for the queue quiz. Lessons 020 and 050 are relevant. |
@@ -22,7 +20,9 @@ The recommendations concern where feedback begins. They are not claims that the 
 
 ASCII/Unicode was resolved on 23 October: a dedicated teaching page was inserted at Paper 1 page 178, key 250, and the ASCII quiz now opens it. The page follows Lesson 008's AB worked example and distinguishes repertoire, code point and encoding. All original pages remain. Later guide destinations, contents, bookmarks and four printed cross-references were updated together.
 
-Next: gate foundations. The remaining recommendations above are unchanged. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
+Gate foundations were resolved on 23 October: new pages 214-215 show standard AND/OR/NOT/XOR symbols, rules and tables, then the Lesson 026 secure-door model and a complete 16-row table. The gates and Boolean-model quizzes now link directly to the relevant page. All prior content is retained and later destinations advance by two.
+
+Next: shifts and bitwise masks. The remaining recommendations above are unchanged. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
 
 ## Reproduction
 

@@ -3231,7 +3231,7 @@ const SKILLS = [
     "lessons": [
       26
     ],
-    "page": 190,
+    "page": 252,
     "questions": [
       {
         "id": "143-model-1",
@@ -3840,7 +3840,7 @@ const SKILLS = [
     "lessons": [
       26
     ],
-    "page": 190,
+    "page": 251,
     "questions": [
       {
         "id": "143-gates-1",
