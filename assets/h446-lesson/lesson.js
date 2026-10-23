@@ -144,7 +144,10 @@ function prepareH446GroupedMarking(page){
     }
     const prompt=document.createElement('p');
     prompt.className='h446-marking-question';
-    prompt.textContent=twoScreens&&questionText.length>110?questionText.slice(0,107).trimEnd()+'…':questionText;
+    // A two-screen answer may use an authored, complete one-line recap.
+    // Without one, retain the full question rather than cutting it mid-sentence.
+    const recap=twoScreens?(q.dataset.reviewRecap||'').trim():'';
+    prompt.textContent=recap?'Question focus: '+recap:questionText;
     const solution=q.querySelector('.youdo-solution').cloneNode(true);
     solution.hidden=false;
     const body=document.createElement('div');
