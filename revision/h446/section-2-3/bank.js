@@ -442,7 +442,7 @@ const SKILLS = [
       20,
       49
     ],
-    "page": 95,
+    "page": 170,
     "questions": [
       {
         "id": "23-stack-1",
@@ -585,7 +585,7 @@ const SKILLS = [
       20,
       50
     ],
-    "page": 95,
+    "page": 171,
     "questions": [
       {
         "id": "23-queue-1",

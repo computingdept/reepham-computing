@@ -6,16 +6,13 @@ The source check passes for all 146 quiz topics (108 Paper 1; 38 Paper 2). Each 
 
 These are checks against the checked-out source. They establish destination existence and navigation wiring. They do not certify browser behaviour, the teaching quality of every page, question accuracy, or full specification coverage. The findings below come from targeted reading of destination content.
 
-## Content improvements in teaching order
+## Targeted content findings — all six addressed
 
-| Priority | Topic | Current destination | Finding and next action |
-|---|---|---|---|
-| 2 | 2.3.1(e), stack algorithms | Paper 2 page 121, key 95 | The destination introduces linked lists and defines stack behaviour. A direct push/pop algorithm example would be a better starting point for the stack quiz. Lessons 020 and 049 are relevant. |
-| 2 | 2.3.1(e), queue algorithms | Paper 2 page 121, key 95 | The destination introduces structures and defines FIFO. A direct enqueue/dequeue algorithm example would be a better starting point for the queue quiz. Lessons 020 and 050 are relevant. |
+The six targeted findings and their resolutions are recorded below and in the companion CSV.
 
 The recommendations concern where feedback begins. They are not claims that the wider guide contains no related material. Shared overview pages elsewhere are acceptable where they contain the relevant explanation.
 
-## Next small change
+## Resolution history
 
 ASCII/Unicode was resolved on 23 October: a dedicated teaching page was inserted at Paper 1 page 178, key 250, and the ASCII quiz now opens it. The page follows Lesson 008's AB worked example and distinguishes repertoire, code point and encoding. All original pages remain. Later guide destinations, contents, bookmarks and four printed cross-references were updated together.
 
@@ -23,7 +20,7 @@ Gate foundations were resolved on 23 October: new pages 214-215 show standard AN
 
 Shifts and masks were resolved on 23 October: new page 172, key 253, shows fixed-width logical shifts, lost-bit warnings and worked AND/OR/XOR masks aligned with Lesson 003. Its quiz now links directly to that explanation. ASCII and gate pages have moved to 179 and 215-216 respectively; the shared lookup preserves their quiz destinations.
 
-Next: stack and queue algorithm feedback. The remaining recommendations above are unchanged. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
+Stack/queue feedback was resolved on 23 October: Paper 2 pages 121-122 provide guarded array operations, checked pointer traces and a count-based circular queue. Both quizzes now open the relevant algorithm page. All six targeted findings from this audit have been addressed; this remains a destination audit, not a certification of every question or lesson. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
 
 ## Reproduction
 

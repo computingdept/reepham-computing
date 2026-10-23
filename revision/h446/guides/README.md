@@ -36,3 +36,7 @@ Paper 1 now has 252 pages. New keys `251` and `252` open pages 214 and 215: gate
 ## Shifts and masks addition — 23 October 2026
 
 Paper 1 now has 253 pages. New key `253` opens page 172, a Lesson 003-aligned worked page for fixed-width logical shifts and AND/OR/XOR masks. The shifts quiz opens this page. All prior content remains; later page destinations, added-page metadata, contents, bookmarks, footers and four printed references advance together. Edition: `2026-10-23-shifts-masks`. `tools/revision/add_h446_shifts_masks.py` requires the preceding 252-page edition and refuses repeat application.
+
+## Stack and queue algorithms addition — 23 October 2026
+
+Paper 2 now has 171 pages. New keys `170` and `171` open pages 121 and 122: checked stack operations and a count-based circular queue. The pages preserve Lesson 020's pointer meanings and explicitly extend its linear queue to wraparound; Lessons 049/050 provide the associated collection behaviour. Both quiz topics open the corresponding worked algorithm page. All prior content is retained; contents, bookmarks and later page destinations advance by two. Edition: `2026-10-23-stack-queue`. The migration `tools/revision/add_h446_stack_queue.py` requires the preceding 169-page edition and refuses repeat application. Its visual retention check permits only the verified two-pixel vector rounding difference on old page 161; that page's body text is identical. All 167 other prior content-page bodies are pixel-identical.
