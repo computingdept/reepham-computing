@@ -121,7 +121,8 @@ function prepareH446GroupedMarking(page){
     card.className='h446-marking-card';
     const label=document.createElement('strong');
     label.className='h446-marking-label';
-    label.textContent='ANSWER '+(i+1)+' OF '+questions.length+' · '+(q.querySelector('.phase-tag')?.textContent||'').trim();
+    const level=(q.querySelector('.phase-tag')?.textContent||'').replace(/QUESTION\s+\d+\s+OF\s+\d+/gi,'').replace(/^[·\s]+|[·\s]+$/g,'').trim();
+    label.textContent='Q'+(i+1)+(level?' · '+level:'');
     const prompt=document.createElement('p');
     prompt.className='h446-marking-question';
     prompt.textContent=q.querySelector('.youdo-question-prompt h2')?.textContent||'';
