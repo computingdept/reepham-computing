@@ -110,3 +110,11 @@ main:has(#directory:not([hidden])){display:block}
 @media(max-width:600px){.argument-context{padding:12px 14px;font-size:.9rem}.argument-results>details{padding:12px 14px}.argument-results{font-size:.9rem}#quiz #choices .choice{font-size:.9rem}}
 
 main:has(#directory:not([hidden])){display:block}#directory:not([hidden]){display:block}.practice-intro{margin:12px 0 20px}textarea:focus-visible{outline:3px solid #b87e1d;outline-offset:4px}
+
+/* Stable Check answer / Next controls: feedback never moves the form action. */
+.quiz-workspace{grid-template-rows:auto}
+#answer-form{grid-row:1}
+.feedback-panel{grid-row:1;align-self:start}
+#answer-form .quiz-actions{margin-top:14px;width:100%}
+.quiz-actions button{min-height:48px}
+.quiz-actions button:disabled{opacity:.55;cursor:not-allowed}

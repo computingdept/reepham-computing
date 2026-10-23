@@ -94,3 +94,11 @@ main:has(#directory:not([hidden])){display:block}
 @media(max-width:600px){.practice-code{font-size:.78rem;padding:11px}.practice-nav .nav-spec{font-size:.75rem}.practice-nav{justify-content:space-between}.choice span{min-width:0}}
 
 #figure .question-table,.review-item .question-table{font-size:.87rem;width:100%;table-layout:fixed}#figure .question-table th,#figure .question-table td,.review-item .question-table th,.review-item .question-table td{padding:7px 10px;overflow-wrap:anywhere}.question-table caption{color:#526b60;font-size:.75rem;line-height:1.4}
+
+/* Stable Check answer / Next controls: feedback never moves the form action. */
+.quiz-workspace{grid-template-rows:auto}
+#answer-form{grid-row:1}
+.feedback-panel{grid-row:1;align-self:start}
+#answer-form .quiz-actions{margin-top:14px;width:100%}
+.quiz-actions button{min-height:48px}
+.quiz-actions button:disabled{opacity:.55;cursor:not-allowed}

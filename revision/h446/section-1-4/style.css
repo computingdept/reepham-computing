@@ -84,3 +84,11 @@ main:has(#directory:not([hidden])){display:block}
 #topic-grid .topic button{font-size:.78rem}
 @media(max-width:850px){#topic-grid .topic{grid-template-columns:minmax(0,1fr) auto}}
 @media(max-width:600px){.practice-nav{gap:10px;padding:8px 16px}.practice-nav .nav-title,.desktop-label{display:none}.mobile-label{display:inline}.practice-nav>a{font-size:.8rem}.topic-switch select{font-size:.78rem;width:100%;padding-left:9px;padding-right:24px}.topic-switch{max-width:calc(100% - 68px)}#quiz .quiz-top{align-items:baseline;flex-wrap:wrap;gap:4px 12px}#counter{font-size:.78rem}}
+
+/* Stable Check answer / Next controls: feedback never moves the form action. */
+.quiz-workspace{grid-template-rows:auto}
+#answer-form{grid-row:1}
+.feedback-panel{grid-row:1;align-self:start}
+#answer-form .quiz-actions{margin-top:14px;width:100%}
+.quiz-actions button{min-height:48px}
+.quiz-actions button:disabled{opacity:.55;cursor:not-allowed}
