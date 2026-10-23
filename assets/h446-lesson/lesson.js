@@ -95,6 +95,60 @@ function showYouDoAnswer(page,index){
   const progress=page.querySelector('.youdo-window-progress');
   if(progress)progress.textContent='ANSWER '+(index+1)+' OF '+questions.length;
 }
+
+/* Opt-in H446 You Do self-marking for explicitly flagged lessons only.
+   Independent questions and model answers must never occupy the same screen. */
+function isH446GroupedMarking(page){
+  return page?.dataset.selfMarking==='grouped'
+    && /^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname);
+}
+function prepareH446GroupedMarking(page){
+  if(!isH446GroupedMarking(page))return;
+  if(page.querySelector('.h446-marking-screen'))return;
+  const questions=[...page.querySelectorAll('.youdo-questions > .youdo-question')];
+  if(!questions.length||questions.some(q=>!q.querySelector('.youdo-solution')))return;
+  const screen=document.createElement('div');
+  screen.className='h446-marking-screen';
+  screen.hidden=true;
+  const heading=document.createElement('h2');
+  heading.className='h446-marking-heading';
+  heading.textContent='Self-marking · Model answers';
+  const cards=document.createElement('div');
+  cards.className='h446-marking-cards';
+  cards.setAttribute('aria-label','You Do model answers');
+  questions.forEach((q,i)=>{
+    const card=document.createElement('article');
+    card.className='h446-marking-card';
+    const label=document.createElement('strong');
+    label.className='h446-marking-label';
+    label.textContent='ANSWER '+(i+1)+' OF '+questions.length+' · '+(q.querySelector('.phase-tag')?.textContent||'').trim();
+    const prompt=document.createElement('p');
+    prompt.className='h446-marking-question';
+    prompt.textContent=q.querySelector('.youdo-question-prompt h2')?.textContent||'';
+    const solution=q.querySelector('.youdo-solution').cloneNode(true);
+    solution.hidden=false;
+    card.append(label,prompt,solution);
+    cards.append(card);
+  });
+  screen.append(heading,cards);
+  page.querySelector('.youdo-deck')?.after(screen);
+  page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
+}
+function showH446GroupedMarking(page,visible,index=0){
+  const screen=page.querySelector('.h446-marking-screen');
+  const deck=page.querySelector('.youdo-deck');
+  if(!screen||!deck)return false;
+  const cards=[...screen.querySelectorAll('.h446-marking-card')];
+  const safe=Math.min(cards.length-1,Math.max(0,index));
+  page.dataset.answerMode=visible?'true':'false';
+  page.dataset.answerIndex=String(safe);
+  deck.hidden=!!visible;
+  screen.hidden=!visible;
+  cards.forEach((card,i)=>card.classList.toggle('is-active',i===safe));
+  if(!visible)page.querySelectorAll('.youdo-questions .youdo-solution').forEach(a=>a.hidden=true);
+  return true;
+}
+
 function prepareYouDoAnswers(page){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -340,6 +394,10 @@ function resetPhaseState(id){
     page.dataset.answerMode='false';
     page.dataset.answerIndex='0';
     prepareYouDoAnswers(page);
+    if(isH446GroupedMarking(page)){
+      prepareH446GroupedMarking(page);
+      showH446GroupedMarking(page,false);
+    }
     page.dataset.workMode=page.dataset.assessmentMode==='true'?'independent':'discuss';
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
@@ -485,7 +543,12 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(page.dataset.answerMode==='true'){
+    if(isH446GroupedMarking(page)&&page.querySelector('.h446-marking-screen')){
+      const count=page.querySelectorAll('.h446-marking-card').length;
+      const index=Number(page.dataset.answerIndex||0);
+      if(page.dataset.answerMode==='true')label=window.matchMedia('(max-width:700px)').matches&&index<count-1?'Next answer →':'Continue → Key Vocabulary';
+      else label=page.dataset.workMode==='independent'?'Self-mark answers →':'Begin silent work →';
+    }else if(page.dataset.answerMode==='true'){
       const count=page.querySelectorAll('.youdo-question').length;
       const index=Number(page.dataset.answerIndex||0);
       label=index<count-1?'Next answer →':'Continue → Key Vocabulary';
@@ -642,6 +705,12 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(isH446GroupedMarking(page)&&page.querySelector('.h446-marking-screen')&&page.dataset.answerMode==='true'){
+      const count=page.querySelectorAll('.h446-marking-card').length;
+      const index=Number(page.dataset.answerIndex||0);
+      if(window.matchMedia('(max-width:700px)').matches&&index<count-1){showH446GroupedMarking(page,true,index+1);updateControl();return;}
+      showPage(order[order.indexOf('you-do')+1]||'vocabulary');return;
+    }
     if(page.dataset.answerMode==='true'){
       const count=page.querySelectorAll('.youdo-question').length;
       const index=Number(page.dataset.answerIndex||0);
@@ -667,6 +736,9 @@ function next(){
       const start=Number(page.dataset.windowStart||0);
       if(start<maxStart){
         setYouDoWindow(page,start+1);updateControl();return;
+      }
+      if(isH446GroupedMarking(page)&&showH446GroupedMarking(page,true,0)){
+        updateControl();window.scrollTo({top:0,behavior:'instant'});return;
       }
       page.dataset.answerMode='true';
       showYouDoAnswer(page,0);updateControl();return;
@@ -803,7 +875,9 @@ function previousAction(){
     if(youPage?.dataset.assessmentMode!=='true'){
       youPage.dataset.workMode='independent';
       const questions=[...youPage.querySelectorAll('.youdo-question')];
-      if(questions.length){
+      if(questions.length&&isH446GroupedMarking(youPage)&&showH446GroupedMarking(youPage,true,Math.max(0,questions.length-1))){
+        // Back from vocabulary returns to the final self-marking answer on mobile.
+      }else if(questions.length){
         const requestedSize=Math.max(1,Number(youPage.dataset.windowSize||3));
         const size=Math.min(requestedSize,questions.length);
         setYouDoWindow(youPage,questions.length-size);
@@ -817,6 +891,13 @@ function previousAction(){
     return;
   }
   if(current==='you-do'){
+    if(isH446GroupedMarking(page)&&page.dataset.answerMode==='true'){
+      const index=Number(page.dataset.answerIndex||0);
+      if(window.matchMedia('(max-width:700px)').matches&&index>0){showH446GroupedMarking(page,true,index-1);updateControl();return;}
+      showH446GroupedMarking(page,false);
+      page.dataset.workMode='independent';
+      updateSignals('you-do');updateControl();return;
+    }
     if(page.dataset.assessmentMode==='true'){
       updateSignals('you-do');
       updateControl();
@@ -933,6 +1014,7 @@ function previousAction(){
 // Keep the normal phase order: You Do → Key Vocabulary → Exit.
 // Solutions remain a separate, optional self-marking action after the exit check.
 function prepareYouDoSolutionsLink(){
+  if(isH446GroupedMarking(document.getElementById('you-do')))return;
   const createLink=()=>{
     const anchor=document.createElement('a');
     anchor.className='answer-cta youdo-solutions-link';
