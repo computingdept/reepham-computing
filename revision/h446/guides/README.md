@@ -32,3 +32,7 @@ Paper 1 now has 250 pages. Page 178 adds 1.4.1(j), ASCII and Unicode, aligned wi
 ## Logic foundations addition — 23 October 2026
 
 Paper 1 now has 252 pages. New keys `251` and `252` open pages 214 and 215: gate symbols/rules/truth tables, followed by the secure-door model from Lesson 026 and a complete 16-row truth table. These begin 1.4.3; all prior content is retained. The model and gates quiz topics now open these pages. Later destinations advance by two, with contents, bookmarks, footers and four printed references updated together. Edition: `2026-10-23-logic-gates`. `tools/revision/add_h446_logic_gates.py` requires the preceding 250-page edition and refuses repeat application. Its page drawing code is `h446_logic_gate_pages.py`.
+
+## Shifts and masks addition — 23 October 2026
+
+Paper 1 now has 253 pages. New key `253` opens page 172, a Lesson 003-aligned worked page for fixed-width logical shifts and AND/OR/XOR masks. The shifts quiz opens this page. All prior content remains; later page destinations, added-page metadata, contents, bookmarks, footers and four printed references advance together. Edition: `2026-10-23-shifts-masks`. `tools/revision/add_h446_shifts_masks.py` requires the preceding 252-page edition and refuses repeat application.

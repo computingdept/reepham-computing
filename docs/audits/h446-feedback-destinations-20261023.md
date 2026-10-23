@@ -10,7 +10,6 @@ These are checks against the checked-out source. They establish destination exis
 
 | Priority | Topic | Current destination | Finding and next action |
 |---|---|---|---|
-| 2 | 1.4.1(i), shifts and masks | Paper 1 page 170, key 131 | The destination is an exam-practice page. Prefer a worked example showing fixed-width shifts and AND/OR/XOR masks. Lesson 003 is relevant. |
 | 2 | 2.3.1(e), stack algorithms | Paper 2 page 121, key 95 | The destination introduces linked lists and defines stack behaviour. A direct push/pop algorithm example would be a better starting point for the stack quiz. Lessons 020 and 049 are relevant. |
 | 2 | 2.3.1(e), queue algorithms | Paper 2 page 121, key 95 | The destination introduces structures and defines FIFO. A direct enqueue/dequeue algorithm example would be a better starting point for the queue quiz. Lessons 020 and 050 are relevant. |
 
@@ -22,7 +21,9 @@ ASCII/Unicode was resolved on 23 October: a dedicated teaching page was inserted
 
 Gate foundations were resolved on 23 October: new pages 214-215 show standard AND/OR/NOT/XOR symbols, rules and tables, then the Lesson 026 secure-door model and a complete 16-row table. The gates and Boolean-model quizzes now link directly to the relevant page. All prior content is retained and later destinations advance by two.
 
-Next: shifts and bitwise masks. The remaining recommendations above are unchanged. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
+Shifts and masks were resolved on 23 October: new page 172, key 253, shows fixed-width logical shifts, lost-bit warnings and worked AND/OR/XOR masks aligned with Lesson 003. Its quiz now links directly to that explanation. ASCII and gate pages have moved to 179 and 215-216 respectively; the shared lookup preserves their quiz destinations.
+
+Next: stack and queue algorithm feedback. The remaining recommendations above are unchanged. Question content, scoring rules, lesson links and saved-results keys were not changed by the character-sets update.
 
 ## Reproduction
 

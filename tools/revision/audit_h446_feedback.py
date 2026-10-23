@@ -19,12 +19,12 @@ console.log(JSON.stringify(rows));
 '''
 rows=json.loads(subprocess.check_output(['node','-e',js],cwd=ROOT))
 notes={
- '141-j':'Resolved 23 October: dedicated ASCII/Unicode teaching page 178, key 250, aligned with Lesson 008.',
- '143-gates':'Resolved 23 October: dedicated gate symbols, rules and truth tables on page 214, key 251.',
- '143-model':'Resolved 23 October: secure-door problem-to-expression model with a complete 16-row truth table on page 215, key 252.',
+ '141-j':'Resolved 23 October: dedicated ASCII/Unicode teaching page 179, key 250, aligned with Lesson 008.',
+ '143-gates':'Resolved 23 October: dedicated gate symbols, rules and truth tables on page 215, key 251.',
+ '143-model':'Resolved 23 October: secure-door problem-to-expression model with a complete 16-row truth table on page 216, key 252.',
  '23-stack':'Priority 2: guide destination introduces the data structures; a dedicated push/pop algorithm example would better match this quiz.',
  '23-queue':'Priority 2: guide destination introduces the data structures; a dedicated enqueue/dequeue algorithm example would better match this quiz.',
- '141-i':'Priority 2: guide destination is an exam-practice page; consider a direct worked example for shifts and each mask operation.',
+ '141-i':'Resolved 23 October: worked fixed-width logical shifts and AND/OR/XOR masks on page 172, key 253.',
 }
 fields=['quiz_app','topic_id','specification','topic','stable_page_key','current_pdf_page','guide_url','lesson_numbers','lesson_phase_urls','example_phase_urls','structural_result','review_note']
 audit=[];errors=[];lesson_ids=set();pairs=0
