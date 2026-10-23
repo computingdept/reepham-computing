@@ -1218,6 +1218,26 @@ document.addEventListener('keydown',e=>{
 });
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
+/* H446-only: publication status belongs in source and the staff workflow,
+   not in the student-facing Classroom TV heading, footer or browser tab. */
+function hideH446PublicationStatus(){
+  if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
+  document.querySelectorAll('.lesson-label .ready-badge, .lesson-label .h13-draft, .lesson-label .draft-pill')
+    .forEach(badge=>{if(badge.textContent.trim().toUpperCase()==='READY')badge.remove();});
+  document.querySelectorAll('.lesson-label, .lesson-footer').forEach(container=>{
+    container.childNodes.forEach(node=>{
+      if(node.nodeType!==Node.TEXT_NODE || !/\bREADY\b/.test(node.textContent))return;
+      node.textContent=node.textContent
+        .replace(/\bREADY\b\s*(?:·\s*)?/g,'')
+        .replace(/\s*[·•]\s*$/,'')
+        .replace(/^\s*[·•]\s*/,'')
+        .replace(/\s{2,}/g,' ');
+    });
+  });
+  document.title=document.title.replace(/\s*[·|—–-]\s*Ready\s*$/i,'');
+}
+
+hideH446PublicationStatus();
 prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
 prepareH446DoNowSourceLabels();
