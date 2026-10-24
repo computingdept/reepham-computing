@@ -119,7 +119,8 @@ textarea{min-height:94px;resize:vertical;line-height:1.45}
     }catch(e){/* A different origin can still use a hash URL on the next reload. */}
     const path=frame.id==="j277-frame"?"j277":"h446";
     const url="../../lessons/"+path+"/lesson-001/index.html#"+active();
-    if(!frame.src.endsWith(url))frame.src=url;
+    const target=new URL(url,location.href); const current=new URL(frame.src,location.href);
+    if(current.pathname!==target.pathname||current.hash!==target.hash)frame.src=url;
   }
   function renderPhase(){
     document.querySelectorAll("[data-phase]").forEach(btn=>{
