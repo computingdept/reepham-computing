@@ -43,3 +43,6 @@ See [workstreams.csv](workstreams.csv). Counts in that CSV are **historical repo
 6. Update evidence and workstream status; do not silently mark items complete.
 
 **GitHub holds evidence. ChatGPT Project “RHSC Computer Science — J277 & H446 Master Audit” holds discussion and decisions.** Moving a chat into the Project does not automatically copy its history into GitHub.
+
+## Interactive Lesson 001 presentation review
+- [Compare J277 and H446 — phase-by-phase reviewer](compare-lesson-001.html). This is a UI/UX review instrument, not a live lesson modification. Feedback stays in the reviewer's browser until copied back to the audit conversation.
