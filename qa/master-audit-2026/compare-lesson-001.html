@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>RHSC Lesson 001 — J277 / H446 UI Review</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#17332e;background:#f3f7f5;--green:#176449;--line:#cbded4}
+*{box-sizing:border-box}
+body{margin:0}
+header{padding:19px clamp(14px,2.3vw,36px);background:#fff;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(21px,2vw,31px);margin:0 0 7px}
+h2{font-size:18px;margin:0 0 8px}
+p{margin:4px 0 0;line-height:1.45}
+small,.muted{color:#567267}
+main{padding:16px clamp(10px,2.3vw,36px) 32px;max-width:2000px;margin:auto}
+.phasebar,.toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+button,.linkbtn{font:inherit;border:1px solid #afccbb;background:#fff;border-radius:8px;padding:9px 12px;color:#174e39;cursor:pointer;text-decoration:none;font-weight:650}
+button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #edbe50;outline-offset:2px}
+button[aria-current="step"],button[aria-pressed="true"]{background:#176449;color:#fff;border-color:#176449}
+button:disabled{opacity:.4;cursor:default}
+.stepmeta{font-weight:700;margin:9px 0}
+.info{border:1px solid #e2d8b9;background:#fff9e7;border-radius:9px;padding:10px 14px;font-size:14px}
+.views{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:13px}
+.views[data-mode="j277"],.views[data-mode="h446"]{grid-template-columns:minmax(0,1fr)}
+.views[data-mode="j277"] #h446-panel,.views[data-mode="h446"] #j277-panel{display:none}
+.panel{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.panelbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 13px;border-bottom:1px solid var(--line)}
+.panelbar strong{font-size:15px}
+.panelbar a{font-size:13px;font-weight:650;color:#176449}
+.lessonframe{display:block;width:100%;height:clamp(530px,76vh,1160px);border:0;background:white}
+.feedback{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:17px;max-width:900px}
+label{display:block;font-weight:700;margin:12px 0 6px}
+select,textarea{font:inherit;color:#17332e;background:#fff;border:1px solid #aec8b9;border-radius:8px;padding:10px;max-width:100%;width:100%}
+textarea{min-height:94px;resize:vertical;line-height:1.45}
+.feedback .toolbar{margin-top:13px}
+#save-status{color:#567267;font-size:13px}
+@media(max-width:950px){.views{grid-template-columns:minmax(0,1fr)}.views[data-mode="both"] .lessonframe{height:620px}}
+</style>
+</head>
+<body>
+<header>
+<h1>RHSC Classroom TV · Lesson 001 comparison</h1>
+<p>UI/UX review first. Compare J277 and H446 phase by phase. Do not change pedagogy or lesson content yet.</p>
+</header>
+<main>
+<nav class="phasebar" id="phases" aria-label="Review phase">
+<button data-phase="do-now" aria-current="step">1 · Do Now</button>
+<button data-phase="overview">2 · Objectives</button>
+<button data-phase="new-learning">3 · New Learning</button>
+<button data-phase="i-do">4 · I Do</button>
+<button data-phase="we-do">5 · We Do</button>
+<button data-phase="you-do">6 · You Do</button>
+<button data-phase="vocabulary">7 · Vocabulary</button>
+<button data-phase="exit">8 · Exit</button>
+</nav>
+<div class="toolbar" role="group" aria-label="Comparison display">
+<button id="view-both" aria-pressed="true">Compare both</button>
+<button id="view-j277" aria-pressed="false">Focus J277</button>
+<button id="view-h446" aria-pressed="false">Focus H446</button>
+<button id="previous-phase" disabled>← Previous phase</button>
+<button id="next-phase">Next phase →</button>
+</div>
+<div class="stepmeta" id="stepmeta">Phase 1 of 8 · Do Now</div>
+<p class="info">For full Classroom TV judgement, use <strong>Focus J277</strong> and <strong>Focus H446</strong>. Side-by-side frames are narrower than a real 1920 × 1080 TV, so their layouts may switch to a tablet or mobile breakpoint. Use the links above each lesson to open it in a full browser tab.</p>
+<div class="views" id="views" data-mode="both">
+<section class="panel" id="j277-panel" aria-label="J277 Lesson 001">
+<div class="panelbar"><strong>J277 · Binary &amp; Denary</strong><a id="j277-open" target="_blank" rel="noopener" href="../../lessons/j277/lesson-001/index.html#do-now">Open J277 full screen ↗</a></div>
+<iframe class="lessonframe" id="j277-frame" title="J277 Lesson 001 preview" src="../../lessons/j277/lesson-001/index.html#do-now"></iframe>
+</section>
+<section class="panel" id="h446-panel" aria-label="H446 Lesson 001">
+<div class="panelbar"><strong>H446 · Data Types &amp; Unsigned Binary</strong><a id="h446-open" target="_blank" rel="noopener" href="../../lessons/h446/lesson-001/index.html#do-now">Open H446 full screen ↗</a></div>
+<iframe class="lessonframe" id="h446-frame" title="H446 Lesson 001 preview" src="../../lessons/h446/lesson-001/index.html#do-now"></iframe>
+</section>
+</div>
+<section class="feedback" aria-label="Record review decisions">
+<h2>Phase feedback</h2>
+<p class="muted">Your notes stay in this browser until you copy them into our ChatGPT Master Audit chat. Nothing here changes the lessons or writes to GitHub.</p>
+<label for="verdict">Format decision for this phase</label>
+<select id="verdict">
+<option value="Not yet reviewed">Not yet reviewed</option>
+<option value="Format approved">Format approved</option>
+<option value="Format needs changes">Format needs changes</option>
+</select>
+<label for="notes">What should J277 inherit from H446? What needs changing?</label>
+<textarea id="notes" placeholder="E.g. retain the H446 question-review screen; make J277 Q2 MCQ choices easier to read."></textarea>
+<div class="toolbar">
+<button id="copy-notes">Copy all eight phase decisions</button>
+<button id="export-notes">Download decisions (.txt)</button>
+<span id="save-status" role="status" aria-live="polite">Notes are saved in this browser.</span>
+</div>
+</section>
+</main>
+<script>
+(() => {
+  "use strict";
+  const phases=[
+    ["do-now","Do Now"],["overview","Objectives"],["new-learning","New Learning"],["i-do","I Do"],
+    ["we-do","We Do"],["you-do","You Do"],["vocabulary","Vocabulary"],["exit","Exit Ticket"]
+  ];
+  const storageKey="rhsc-lesson-001-ui-review-v1";
+  const frames=[document.getElementById("j277-frame"),document.getElementById("h446-frame")];
+  const notes=document.getElementById("notes"),verdict=document.getElementById("verdict");
+  const views=document.getElementById("views");
+  let idx=0,mode="both",data={};
+  try{data=JSON.parse(localStorage.getItem(storageKey)||"{}")||{};}catch(e){data={};}
+  const active=()=>phases[idx][0];
+  function persist(){
+    data[active()]={verdict:verdict.value,notes:notes.value};
+    try{localStorage.setItem(storageKey,JSON.stringify(data));}catch(e){document.getElementById("save-status").textContent="Browser storage unavailable: copy notes before leaving.";}
+  }
+  function syncFrame(frame){
+    try{
+      const win=frame.contentWindow,bridge=win && win.H446OptionalBridge;
+      if(bridge && typeof bridge.go==="function"){bridge.go(active());return;}
+      const button=frame.contentDocument?.querySelector('[data-page="'+active()+'"]');
+      if(button){button.click();return;}
+    }catch(e){/* A different origin can still use a hash URL on the next reload. */}
+    const path=frame.id==="j277-frame"?"j277":"h446";
+    const url="../../lessons/"+path+"/lesson-001/index.html#"+active();
+    if(!frame.src.endsWith(url))frame.src=url;
+  }
+  function renderPhase(){
+    document.querySelectorAll("[data-phase]").forEach(btn=>{
+      if(btn.dataset.phase===active())btn.setAttribute("aria-current","step");
+      else btn.removeAttribute("aria-current");
+    });
+    document.getElementById("stepmeta").textContent="Phase "+(idx+1)+" of 8 · "+phases[idx][1];
+    document.getElementById("previous-phase").disabled=idx===0;
+    document.getElementById("next-phase").disabled=idx===phases.length-1;
+    for(const subject of ["j277","h446"]){
+      document.getElementById(subject+"-open").href="../../lessons/"+subject+"/lesson-001/index.html#"+active();
+    }
+    notes.value=data[active()]?.notes||"";
+    verdict.value=data[active()]?.verdict||"Not yet reviewed";
+    frames.forEach(syncFrame);
+    history.replaceState(null,"","#"+active());
+  }
+  function setPhase(phase){
+    persist();
+    idx=Math.max(0,phases.findIndex(p=>p[0]===phase));
+    renderPhase();
+  }
+  function setMode(next){
+    mode=next;views.dataset.mode=mode;
+    document.querySelectorAll("[id^='view-']").forEach(b=>b.setAttribute("aria-pressed",String(b.id==="view-"+(mode==="both"?"both":mode))));
+  }
+  function report(){
+    const rows=["RHSC J277 / H446 UI comparison — Lesson 001","UI review only; pedagogy/content follow separately.",""];
+    for(const [p,name] of phases){
+      const x=data[p]||{};
+      rows.push(name+" — "+(x.verdict||"Not yet reviewed"));
+      if(x.notes?.trim())rows.push("Feedback: "+x.notes.trim());
+      rows.push("");
+    }
+    return rows.join("\n");
+  }
+  document.getElementById("phases").addEventListener("click",e=>{
+    const b=e.target.closest("[data-phase]");if(b)setPhase(b.dataset.phase);
+  });
+  document.getElementById("previous-phase").onclick=()=>{if(idx>0)setPhase(phases[idx-1][0]);};
+  document.getElementById("next-phase").onclick=()=>{if(idx<phases.length-1)setPhase(phases[idx+1][0]);};
+  for(const opt of ["both","j277","h446"])document.getElementById("view-"+opt).onclick=()=>setMode(opt);
+  notes.addEventListener("input",persist);
+  verdict.addEventListener("change",persist);
+  document.getElementById("copy-notes").onclick=async()=>{
+    persist();
+    try{
+      await navigator.clipboard.writeText(report());
+      document.getElementById("save-status").textContent="Copied — paste into the Master Audit conversation.";
+    }catch(e){
+      notes.value += "\n\nClipboard unavailable. Use Download decisions instead.";
+      persist();
+      document.getElementById("save-status").textContent="Clipboard unavailable; use Download decisions.";
+    }
+  };
+  document.getElementById("export-notes").onclick=()=>{
+    persist();
+    const blob=new Blob([report()],{type:"text/plain;charset=utf-8"});
+    const url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download="RHSC-lesson-001-phase-feedback.txt";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  frames.forEach(f=>f.addEventListener("load",()=>syncFrame(f)));
+  const phaseFromHash=location.hash.slice(1);
+  if(phases.some(p=>p[0]===phaseFromHash))idx=phases.findIndex(p=>p[0]===phaseFromHash);
+  renderPhase();
+})();
+</script>
+</body>
+</html>
