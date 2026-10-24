@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RHSC · J277/H446 Classroom TV smoke test</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#172a25;background:#f6f8f7}
+*{box-sizing:border-box}body{margin:0}header{background:#143a2c;color:white;padding:20px clamp(16px,3vw,48px)}
+h1{font-size:clamp(22px,2vw,32px);margin:4px 0}header p{margin:6px 0;color:#e0eee7}
+main{max-width:1220px;margin:auto;padding:20px;display:grid;gap:15px}
+.card{background:white;border:1px solid #d8e1dc;border-radius:12px;padding:18px}p{line-height:1.45}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}label{display:grid;gap:5px;font-weight:700;font-size:13px}
+select,button{font:inherit;padding:10px 12px;border:1px solid #9bb6a6;border-radius:9px;background:white;cursor:pointer}
+button.primary{background:#176b4a;color:white;border-color:#176b4a;font-weight:700}
+button:disabled{opacity:.6;cursor:wait}.viewbox{max-width:100%;overflow:auto;border:1px solid #baccc3;border-radius:10px;background:#eaf1ec;padding:10px}
+iframe{display:block;border:2px solid #557968;background:white;max-width:none}
+pre{white-space:pre-wrap;word-break:break-word;font:13px/1.5 ui-monospace,Consolas,monospace;background:#f6f8f7;padding:12px;border-radius:8px}
+.pass{color:#146443}.fail{color:#a72323}.warn{color:#855e08}.muted{color:#526d5e}
+ul{padding-left:24px}li{margin:8px 0}a{color:#165f45}
+</style></head><body>
+<header><h1>Classroom TV · smoke test</h1><p>J277 / H446 · shared lesson engine · 24 October 2026</p></header>
+<main>
+<section class="card">
+<p><strong>Purpose:</strong> inspect representative GCSE and A Level lessons at desktop (1920×1080) and mobile (390×844), without changing their content. This tests DOM wiring and basic controls; it is <strong>not</strong> an OCR subject-accuracy audit or a complete visual-clipping test.</p>
+<div class="controls">
+<label>Lesson <select id="lesson">
+<option value="j277:001">J277 001 · legacy standalone</option>
+<option value="j277:004">J277 004 · Autumn 1</option>
+<option value="j277:068" selected>J277 068 · core content</option>
+<option value="j277:109">J277 109 · binary search</option>
+<option value="j277:141">J277 141 · long-response pilot</option>
+<option value="j277:164">J277 164 · Year 11</option>
+<option value="j277:018">J277 018 · excluded case</option>
+<option value="j277:113">J277 113 · special revision</option>
+<option value="h446:068">H446 068 · A Level regression</option>
+</select></label>
+<label>Viewport <select id="viewport">
+<option value="desktop">Classroom TV · 1920×1080</option><option value="mobile">Mobile · 390×844</option>
+</select></label>
+<button id="test" class="primary">Load and test</button><button id="next">Next example</button>
+<button id="copy">Copy findings</button>
+</div>
+<p id="status" class="muted" role="status" aria-live="polite">Select a lesson and run the check. The embedded lesson is visible below for manual review.</p>
+</section>
+<section class="card"><h2>Check results</h2><ul id="checks"><li>No lesson tested yet.</li></ul><p class="muted">Confirm long questions, diagrams, code legibility, self-marking and navigation manually. A pass here does not mean every lesson has been audited.</p></section>
+<section class="card"><h2>Lesson preview</h2><div class="viewbox"><iframe title="Classroom lesson test preview" id="frame" width="1920" height="1080"></iframe></div></section>
+</main>
+<script>
+(()=>{'use strict';
+const $=x=>document.getElementById(x),frame=$('frame'),cases=[...$('lesson').options].map(x=>x.value);
+const DELAY=200,MAX=18000;
+let findings=[],last='';
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+async function until(ok,timeout=MAX){for(let n=0;n<timeout;n+=DELAY){try{const x=ok();if(x)return x}catch(e){}await delay(DELAY)}return null}
+function result(ok,label,detail=''){
+ const css=ok===true?'pass':ok===false?'fail':'warn';
+ findings.push((ok===true?'PASS':ok===false?'FAIL':'CHECK')+' — '+label+(detail?' ('+detail+')':''));
+ const li=document.createElement('li');li.className=css;li.textContent=findings[findings.length-1];$('checks').appendChild(li);
+}
+function readyDoc(){const d=frame.contentDocument;return d&&d.querySelector('#you-do')&&d.querySelector('#do-now')?d:null}
+async function run(){
+ const [course,num]=$('lesson').value.split(':'),isGcse=course==='j277',special=num==='113',exception=new Set(['018','035','050','078','094','113','120','143','156','157']).has(num);
+ const mobile=$('viewport').value==='mobile',size=mobile?[390,844]:[1920,1080];
+ frame.width=size[0];frame.height=size[1];$('checks').replaceChildren();findings=[];
+ $('test').disabled=true;$('status').textContent='Loading '+course.toUpperCase()+' lesson '+num+'…';
+ const path='../../lessons/'+course+'/lesson-'+num+'/index.html';
+ frame.src=path+'?qa='+Date.now();
+ const d=await until(()=>special?(frame.contentDocument?.body?.textContent?.length>2000?frame.contentDocument:null):readyDoc());
+ if(!d){result(false,'Lesson rendered','No complete page within 18 seconds');finish();return}
+ result(true,'Lesson loaded',course.toUpperCase()+' '+num);
+ if(special){result(null,'Separate revision experience','Lesson 113 intentionally uses a distinct layout; inspect manually');finish();return}
+ const sections=['do-now','overview','new-learning','i-do','we-do','you-do','vocabulary','exit'];
+ result(sections.every(id=>d.getElementById(id)),'All eight lesson phases present');
+ const sharedCss=[...d.querySelectorAll('link[rel="stylesheet"]')].some(x=>x.href.includes('h446-lesson/lesson-classroom.css'));
+ result(sharedCss,'Shared classroom CSS linked');
+ const sharedJs=[...d.querySelectorAll('script[src]')].some(x=>x.src.includes('h446-lesson/lesson.js'));
+ result(sharedJs,'Shared lesson engine linked');
+ const nav=d.querySelector('.phase-nav [data-page="you-do"]');
+ result(!!nav,'You Do phase-navigation button present');
+ if(nav)nav.click();
+ await delay(120);
+ const p=d.getElementById('you-do');
+ result(!!p&&!p.hidden,'You Do phase available');
+ if(isGcse&&!exception){
+   const g=await until(()=>d.querySelector('#you-do.j277-sm-ready'),8000);
+   result(!!g,'Adaptive J277 examination layout initialised');
+   if(g){
+     const cards=[...g.querySelectorAll('.j277-sm-questions > .j277-sm-card')];
+     const groups=[...g.querySelectorAll('.j277-sm-group')];
+     result(cards.length===3,'Three J277 exam questions retained','found '+cards.length+', on '+groups.length+' classroom screen(s)');
+     result(!!g.querySelector('.j277-code-first'),'Code First remains separate');
+     result(![...g.querySelectorAll('.youdo-solution')].some(e=>!e.hidden),'Mark schemes initially concealed');
+     if(mobile){
+       const multi=groups.find(x=>x.querySelectorAll('.j277-sm-questions > .j277-sm-card').length>1);
+       if(multi){
+         const active=[...multi.querySelectorAll('.j277-sm-questions > .j277-sm-card')].filter(x=>getComputedStyle(x).display!=='none');
+         result(active.length===1,'Mobile presents one exam question at a time','visible '+active.length);
+         const next=multi.querySelector('[data-j277-q-next]');
+         result(!!next,'Mobile question Next control present');
+         if(next){next.click();result(multi.querySelector('.j277-sm-question-active')===multi.querySelectorAll('.j277-sm-questions > .j277-sm-card')[1],'Mobile Next switches question')}
+       }else result(null,'Mobile question pager','All questions already have separate classroom screens');
+     }
+   }
+ }else if(exception){
+   result(null,'Special-case lesson','Excluded from ordinary J277 grouped-question transform');
+ }
+ const active=d.querySelector('#you-do');
+ if(active){
+   const rect=active.getBoundingClientRect();
+   result(rect.width>0,'You Do content has measurable width','width '+Math.round(rect.width)+'px');
+ }
+ finish();
+}
+function finish(){
+ last=findings.join('\n');$('status').textContent='Checks finished · '+findings.filter(x=>x.startsWith('PASS')).length+' passed, '+findings.filter(x=>x.startsWith('FAIL')).length+' failed. Inspect the preview before approving.';
+ $('test').disabled=false;
+}
+$('test').addEventListener('click',()=>run().catch(e=>{result(false,'Test runner error',e.message);finish()}));
+$('next').addEventListener('click',()=>{const i=cases.indexOf($('lesson').value);$('lesson').value=cases[(i+1)%cases.length];run().catch(e=>{result(false,'Test runner error',e.message);finish()})});
+$('copy').addEventListener('click',async()=>{const text='RHSC UI smoke test · '+$('lesson').value+' · '+$('viewport').value+'\n'+last;if(navigator.clipboard)try{await navigator.clipboard.writeText(text);$('status').textContent='Findings copied';return}catch(e){}prompt('Copy the test findings',text)});
+})();
+</script></body></html>
