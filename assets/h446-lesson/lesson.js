@@ -71,6 +71,9 @@ function visibleIndex(items){
 function showOnly(items,index){
   items.forEach((item,i)=>item.hidden=i!==index);
 }
+// -1 means the starting problem is visible and no modelled step is revealed.
+function modellingStepIndex(steps){return steps.findIndex(step=>!step.hidden);}
+function resetModelSteps(steps){steps.forEach(step=>{step.hidden=true;});}
 function showYouDoAnswer(page,index){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -536,7 +539,7 @@ function resetPhaseState(id){
       showOnly(examples,0);
       examples.forEach(example=>{
         const steps=[...example.querySelectorAll('.ido-step')];
-        if(steps.length)showOnly(steps,0);
+        if(steps.length)resetModelSteps(steps);
       });
     }else{
       const stages=[...page.querySelectorAll('.model-stage')];
@@ -549,7 +552,7 @@ function resetPhaseState(id){
       showOnly(examples,0);
       examples.forEach(example=>{
         const steps=[...example.querySelectorAll('.wedo-step')];
-        if(steps.length)showOnly(steps,0);
+        if(steps.length)resetModelSteps(steps);
       });
     }else{
       page.querySelectorAll('[data-reveal-answer]').forEach(el=>el.hidden=true);
@@ -690,8 +693,9 @@ function updateControl(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=visibleIndex(steps);
-      if(stepIndex<steps.length-1)label='Next step →';
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<0)label='Reveal Step 1 →';
+      else if(stepIndex<steps.length-1)label='Reveal next step →';
       else if(exampleIndex<examples.length-1)label='Next example →';
       else label='Continue → We Do';
     }else{
@@ -705,9 +709,9 @@ function updateControl(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.wedo-step')];
-      const stepIndex=visibleIndex(steps);
-      if(stepIndex===0 && steps.length>1)label=page.dataset.guidedSteps==='true'?'Reveal step 1 →':'Reveal answer →';
-      else if(stepIndex<steps.length-1)label=page.dataset.guidedSteps==='true'?'Next guided step →':'Next check →';
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<0)label='Reveal Step 1 →';
+      else if(stepIndex<steps.length-1)label=page.dataset.guidedSteps==='true'?'Reveal next step →':'Next check →';
       else if(exampleIndex<examples.length-1)label='Next example →';
       else label='Continue → You Do';
     }else if(page.querySelector('[data-reveal-answer][hidden]')){
@@ -847,14 +851,14 @@ function next(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=visibleIndex(steps);
-      if(stepIndex<steps.length-1){
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<steps.length-1){
         showOnly(steps,stepIndex+1);updateControl();return;
       }
       if(exampleIndex<examples.length-1){
         showOnly(examples,exampleIndex+1);
         const nextSteps=[...examples[exampleIndex+1].querySelectorAll('.ido-step')];
-        if(nextSteps.length)showOnly(nextSteps,0);
+        if(nextSteps.length)resetModelSteps(nextSteps);
         updateControl();return;
       }
     }else{
@@ -869,8 +873,8 @@ function next(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.wedo-step')];
-      const stepIndex=visibleIndex(steps);
-      if(stepIndex<steps.length-1){
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<steps.length-1){
         showOnly(steps,stepIndex+1);
         updateControl();
         return;
@@ -878,7 +882,7 @@ function next(){
       if(exampleIndex<examples.length-1){
         showOnly(examples,exampleIndex+1);
         const nextSteps=[...examples[exampleIndex+1].querySelectorAll('.wedo-step')];
-        if(nextSteps.length)showOnly(nextSteps,0);
+        if(nextSteps.length)resetModelSteps(nextSteps);
         updateControl();
         return;
       }
@@ -1179,10 +1183,11 @@ function previousAction(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.wedo-step')];
-      const stepIndex=visibleIndex(steps);
+      const stepIndex=modellingStepIndex(steps);
 
-      if(stepIndex>0){
-        showOnly(steps,stepIndex-1);
+      if(stepIndex>=0){
+        if(stepIndex===0)resetModelSteps(steps);
+        else showOnly(steps,stepIndex-1);
         updateControl();
         return;
       }
@@ -1202,10 +1207,11 @@ function previousAction(){
       const exampleIndex=visibleIndex(examples);
       const example=examples[exampleIndex];
       const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=visibleIndex(steps);
+      const stepIndex=modellingStepIndex(steps);
 
-      if(stepIndex>0){
-        showOnly(steps,stepIndex-1);
+      if(stepIndex>=0){
+        if(stepIndex===0)resetModelSteps(steps);
+        else showOnly(steps,stepIndex-1);
         updateControl();
         return;
       }
