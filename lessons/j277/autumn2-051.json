@@ -352,6 +352,79 @@
         ],
         "foot": "Marks reward precise explanations"
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A school kiosk sells wraps for £4 each. Write OCR ERL that inputs the number sold as an integer, calculates the cost and prints the total.",
+        "scaffold": "price = 4\nquantity = _____\ntotal = _____\nprint(_____)",
+        "steps": [
+          {
+            "title": "1 · Store the price",
+            "explanation": "Start with an assignment. This must run before the price is used.",
+            "code": "price = 4"
+          },
+          {
+            "title": "2 · Read an integer quantity",
+            "explanation": "input() supplies text, so int() converts the response into a whole number.",
+            "code": "price = 4\nquantity = int(input(\"How many wraps?\"))"
+          },
+          {
+            "title": "3 · Calculate the total",
+            "explanation": "Multiply the price by the quantity and store the result.",
+            "code": "price = 4\nquantity = int(input(\"How many wraps?\"))\ntotal = price * quantity"
+          },
+          {
+            "title": "4 · Display the answer",
+            "explanation": "Output the calculated value. The complete solution now runs in sequence.",
+            "code": "price = 4\nquantity = int(input(\"How many wraps?\"))\ntotal = price * quantity\nprint(total)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A school shop sells exercise books for £3 each. On your mini-whiteboard, write a program that inputs the number bought and prints the total price.",
+          "scaffold": "unitPrice = 3\nbooks = _____\ntotal = _____\nprint(_____)",
+          "steps": [
+            {
+              "title": "1 · Input",
+              "explanation": "You write the input line first. How will you convert the quantity to an integer?",
+              "code": "unitPrice = 3\nbooks = int(input(\"How many books?\"))"
+            },
+            {
+              "title": "2 · Process",
+              "explanation": "Calculate the bill using the stored values.",
+              "code": "unitPrice = 3\nbooks = int(input(\"How many books?\"))\ntotal = unitPrice * books"
+            },
+            {
+              "title": "3 · Output",
+              "explanation": "Check the complete program and explain the order of execution.",
+              "code": "unitPrice = 3\nbooks = int(input(\"How many books?\"))\ntotal = unitPrice * books\nprint(total)"
+            }
+          ]
+        },
+        {
+          "question": "A sports day stall sells programmes for £2 each. Construct an OCR ERL program to input an integer quantity and display the cost. Try without a scaffold first.",
+          "scaffold": "price = 2\n\nYour turn: write the remaining lines.",
+          "steps": [
+            {
+              "title": "1 · Plan independently",
+              "explanation": "Write the missing input, calculation and output lines on your mini-whiteboard. Which variable must be available first?",
+              "code": "price = 2"
+            },
+            {
+              "title": "2 · Check input and processing",
+              "explanation": "Compare your first two new lines with the model. Correct any conversion or multiplication errors.",
+              "code": "price = 2\nquantity = int(input(\"How many programmes?\"))\ncost = price * quantity"
+            },
+            {
+              "title": "3 · Check the completed solution",
+              "explanation": "Explain why each line appears in this order; then check your own solution.",
+              "code": "price = 2\nquantity = int(input(\"How many programmes?\"))\ncost = price * quantity\nprint(cost)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
