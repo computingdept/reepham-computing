@@ -1482,6 +1482,20 @@ body:has(.course-back[href*="h446-hub"]) .wedo-example > :is(.h446-grid,.algorit
   width:100%;
 }
 
+
+/* H446 Year 13 specialist grid families: make the inner pedagogical pair
+   occupy the WHOLE shared example, never the first half of an outer grid.
+   This corrects inherited quarter-width and compact-TV content clipping. */
+body:has(.course-back[href*="h446-hub"]) .ido-example >
+  :is(.v13-grid,.s-grid,.lesson-grid13,.syn22-grid,.draft-grid,.p-grid,.p23-grid),
+body:has(.course-back[href*="h446-hub"]) .wedo-example >
+  :is(.v13-grid,.s-grid,.lesson-grid13,.syn22-grid,.draft-grid,.p-grid,.p23-grid),
+body:has(.course-back[href*="h446-hub"]) .wedo-example > .guided-example:has(> :is(.v13-grid,.s-grid,.lesson-grid13,.syn22-grid,.draft-grid,.p-grid,.p23-grid)){
+  grid-column:1 / -1;
+  min-width:0;
+  max-width:none;
+  width:100%;
+}
 /* H446 mobile: long database field names and identifiers must wrap inside
    their teaching panels, never expand the entire page beyond the viewport.
    This changes presentation only; model questions and code remain unchanged. */
