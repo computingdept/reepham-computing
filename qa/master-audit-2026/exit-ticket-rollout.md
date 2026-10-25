@@ -22,8 +22,11 @@
 ## Verification state
 
 - Confirmed: source commits exist; all edited JavaScript files parsed successfully; the answer-verification gate prevents applying guessed truth values; the shared lesson navigation already supports `.exit-stage` reveals; source used for J277 003 explicitly marks the statement False.
-- Sampled J277 JSON: Autumn 1 Lessons 004–018 and Autumn 2 Lessons 019, 035, 068, 113 and 164 all have Boolean `x[1]`.
-- **Not yet verified:** exhaustive Boolean presence across all 146 individual Autumn 2 JSON files; full live-browser behaviour at 1920×1080 and 390×844; every H446 Exit Ticket; publication status of any subsequent source commits.
+- **Exhaustive J277 Boolean presence check completed**: all 15 Autumn 1 generated lesson records (004–018) and all 146 Autumn 2 individual JSON files (019–164) have Boolean `x[1]` values. Lesson 001 uses its approved manually composed YES answer; Lesson 002 explicitly records YES; Lesson 003's original source marks FALSE. This verifies *presence* of answer data across 164 J277 lessons, not necessarily the subject accuracy of all 164 decisions.
+- **J277 wording refinement**: corrected 13 definition fragments/imperatives in lesson Exit Tickets 059, 060, 062, 065, 067, 068, 069, 070, 073, 075, 077, 078 and 080 so that pupils can judge a complete statement. Their recorded truth values were preserved.
+- **Explanation safeguard**: when a J277 record provides a truth value but no explanation, the answer screen asks pupils to explain why; it no longer displays the tautology “This statement is correct/incorrect” as a supposed model answer. Writing checked explanations across generated J277 lessons remains a content-audit task.
+- **Repeatable smoke checks added** to [classroom-tv-smoke-test.html](classroom-tv-smoke-test.html), testing staged navigation, hidden answer, Choral tile, horizontal centring, green answer reveal, reasoning text and Previous navigation on selectable 1920×1080 and 390×844 viewports. The smoke-test source parses but must be run in a browser to report actual outcomes.
+- **Not yet verified:** full live-browser behaviour at 1920×1080 and 390×844; every H446 Exit Ticket; question correctness against OCR/source mark schemes.
 - H446 is only partially rolled out (38 of 300 source lessons); 262 remain unchanged or need audit. Counts describe opted-in source lessons, not live-rendered functional tests. Do not copy a known answer between different statements.
 
 ## Next QA gate
