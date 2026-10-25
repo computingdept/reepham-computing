@@ -26,6 +26,7 @@ ul{padding-left:24px}li{margin:8px 0}a{color:#165f45}
 <option value="j277:002">J277 002 · verified YES</option>
 <option value="j277:003">J277 003 · verified NO</option>
 <option value="j277:019">J277 019 · generated YES</option>
+<option value="j277:051">J277 051 · code modelling and guided examples</option>
 <option value="j277:057">J277 057 · FOR-loop explanation trial</option>
 <option value="j277:059">J277 059 · corrected wording</option>
 <option value="j277:080">J277 080 · corrected wording</option>
@@ -248,7 +249,11 @@ async function checkModelling(d,phase){
  await delay(110);
  const page=d.getElementById(phase);
  const cls=phase==='i-do'?'ido':'wedo';
- const example=[...page.querySelectorAll('.'+cls+'-example')].find(x=>!x.hidden);
+ const examples=[...page.querySelectorAll('.'+cls+'-example')];
+ const rendered=x=>d.defaultView.getComputedStyle(x).display!=='none'&&x.getClientRects().length>0;
+ result(examples.filter(rendered).length===1,phase+' exactly one example rendered','found '+examples.filter(rendered).length);
+ result(examples.filter(x=>x.hidden).every(x=>!rendered(x)),phase+' hidden examples removed from layout');
+ const example=examples.find(x=>!x.hidden);
  const steps=example?[...example.querySelectorAll('.'+cls+'-step')]:[];
  if(!steps.length){result(null,phase+' staged reveal','No standard '+cls+'-step deck; requires separate review');return;}
  const heading=example.querySelector('.'+cls+'-reference h2, .model-card h2, .'+cls+'-reference .focus-code');
@@ -266,7 +271,6 @@ async function checkModelling(d,phase){
    previous.click();await delay(75);
    result(!steps[0].hidden&&steps[1].hidden,phase+' Previous returns to Step 1');
  }
- const examples=[...page.querySelectorAll('.'+cls+'-example')];
  if(examples.length>1){
    // Start the first example again and advance all of its steps to the next.
    nav.click();
@@ -275,6 +279,8 @@ async function checkModelling(d,phase){
    const secondSteps=[...examples[1].querySelectorAll('.'+cls+'-step')];
    result(!examples[1].hidden&&(!secondSteps.length||secondSteps.every(x=>x.hidden)),
      phase+' next example begins with all steps hidden');
+   result(examples.filter(rendered).length===1&&examples[0].hidden&&!rendered(examples[0])&&rendered(examples[1]),
+     phase+' next example is the ONLY rendered example');
  }
 }
 async function checkExitTicket(d,course,num){
