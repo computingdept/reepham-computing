@@ -45,13 +45,14 @@ function markCard(q,i){
  }else if(q.scheme){
     content='<ul class="j277-sm-answer-list">'+q.scheme.map(function(m){return '<li><span class="j277-sm-point">✓ '+esc(m.marks)+'</span><span>'+esc(m.point)+'</span></li>'}).join("")+'</ul>';
  }else{
-    content='<div class="j277-sm-model">'+esc(q.answer)+'</div>';
+    content=(q.answerVisual?'<div class="j277-sm-visual">'+q.answerVisual+'</div>':'')+'<div class="j277-sm-model">'+esc(q.answer)+'</div>';
  }
  if(q.model_code)content+='<div class="j277-sm-kind">One valid model · OCR ERL</div><pre class="j277-sm-code">'+esc(q.model_code)+'</pre>';
  if(q.indicative)content+='<div class="j277-sm-level"><strong>Indicative content</strong><ul>'+q.indicative.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div>';
- return '<section class="j277-sm-card j277-sm-answer-card'+(i===0?' j277-sm-mobile-active':'')+'" data-j277-answer="'+i+'">'+head(q)+content+'<div class="j277-sm-note">'+esc(q.note||"Mark your own work against this guidance. Credit equivalent correct answers.")+'</div><div class="j277-sm-score">My mark: _____ / '+esc(q.marks!=null?q.marks:"?")+'</div></section>';
+ return '<section class="j277-sm-card j277-sm-answer-card'+(i===0?' j277-sm-mobile-active':'')+'" data-j277-answer="'+i+'">'+head(q)+content+'<div class="j277-sm-note">'+esc(q.note||"Mark your own work against this guidance. Credit equivalent correct answers.")+'</div><div class="j277-sm-score">My mark: _____'+(q.marks!=null?' / '+esc(q.marks):'')+'</div></section>';
 }
 function phoneNav(questions){
+ if(questions.length<2)return '';
  return '<div class="j277-sm-phone"><button type="button" data-j277-prev disabled>← Previous</button><strong data-j277-counter>1 of '+questions.length+' answers</strong><button type="button" data-j277-next '+(questions.length===1?'disabled':'')+'>Next →</button></div>';
 }
 function questionNav(qs){
@@ -65,7 +66,7 @@ function group(qs,extra,extended){
  if(extra&&extra.priorExam){question+='<details class="j277-sm-extra"><summary>Optional retrieval · earlier learning</summary><p>'+esc(clean(extra.priorExam.q))+'</p></details>'}
  if(extra&&extra.challenge){question+='<details class="j277-sm-extra"><summary>Optional stretch and mastery</summary><p>'+esc(extra.challenge.stretch&&extra.challenge.stretch.task||"")+'</p><p>'+esc(extra.challenge.mastery&&extra.challenge.mastery.task||"")+'</p></details>'}
  var answers='<div class="j277-sm-toolbar">'+(extended?"Q4 · levels of response":"SELF-MARK · "+qs.map(function(q){return q.name}).join(" · "))+'</div><div class="j277-sm-grid j277-sm-answers'+classes+'">'+qs.map(markCard).join("")+'</div>'+phoneNav(qs);
- answers+='<div class="j277-sm-total">Self-mark: '+qs.map(function(q){return q.name+" ___/"+(q.marks||"?")}).join(" · ")+(qs.every(function(q){return Number.isInteger(q.marks)})?" · Total ___/"+qs.reduce(function(v,q){return v+q.marks},0):"")+'</div>';
+ if(qs.length>1)answers+='<div class="j277-sm-total">Self-mark: '+qs.map(function(q){return q.name+" ___/"+(q.marks||"?")}).join(" · ")+(qs.every(function(q){return Number.isInteger(q.marks)})?" · Total ___/"+qs.reduce(function(v,q){return v+q.marks},0):"")+'</div>';
  var article=document.createElement("article");
  article.className="exam-card youdo-question j277-sm-group";article.hidden=true;
  article.innerHTML=question+'<div class="youdo-solution" hidden>'+answers+'</div>';
@@ -82,6 +83,7 @@ function installFromData(original,pilot,master){
  var questions=qs.slice(0,3).map(function(q,i){
    var fig=existing[i]&&existing[i].querySelector("svg");
    var item=oneQuestion(q,i,fig?fig.outerHTML:"");
+   if(q[1]&&typeof q[1]==='object'){item.answer=String(q[1].answer||'');item.answerVisual=String(q[1].visual||'');}
    if(n==="002"){
      // The SVG shows both operands. Avoid repeating them as cramped text.
      item.body=item.body.replace(/^\s*[01]{8}\s*\+\s*[01]{8}\s*$/gm,"").trim();
@@ -231,7 +233,10 @@ if(!dataPath){
           const explanation=[...card.querySelectorAll("pre.solution-code, p")].map(function(el){return el.textContent.trim()}).filter(Boolean).join("\n");
           return {answer:explanation,visual:svg?svg.outerHTML:""};
         }
-        return card.textContent.trim();
+        // Preserve worked SVG and preformatted calculations; never flatten SVG labels into text.
+        const svg=card.querySelector('svg');
+        const parts=[...card.querySelectorAll('pre.solution-code, p')].map(function(el){return el.textContent.trim()}).filter(Boolean);
+        return {answer:parts.length?parts.join('\n'):card.textContent.trim(),visual:svg?svg.outerHTML:''};
       });
     });
   }
