@@ -573,3 +573,18 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
  body.course-hub #lessons .lesson-entry>.lesson{min-height:44px}
 }
+
+/* 2026-10-25: single-line mobile course identity; retain desktop branding. */
+@media(max-width:700px){
+ body.course-hub .topbar{min-height:44px;padding:5px 12px}
+ body.course-hub .topbar .brand{display:flex;align-items:center;gap:9px}
+ body.course-hub .topbar .mark{width:34px;height:34px;font-size:17px;flex-shrink:0}
+ body.course-hub .topbar .brand-copy span{display:none}
+ body.course-hub .topbar .brand-copy::after{content:'GCSE Computer Science';font-size:15px;font-weight:800;letter-spacing:0;white-space:nowrap}
+ body.course-hub:has(.heading .eyebrow) .topbar .brand-copy::after{content:'GCSE Computer Science'}
+ body.course-hub main>.heading{display:none}
+ body.course-hub main{padding-top:5px}
+ body.course-hub .tabs{margin:3px 0 7px}
+ body.course-hub #lessons .term-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:7px 10px;margin:0 0 6px}
+ body.course-hub #lessons .term-head span{white-space:nowrap}
+}
