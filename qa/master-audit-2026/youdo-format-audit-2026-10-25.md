@@ -46,3 +46,18 @@ Both changes retain original exam questions and mark schemes. Any small residual
 ## Verification policy
 
 Source patches and GitHub Pages deployment are not equivalent to visual verification. Only count source assertions, browser assertions, diagram measurements and full rollout sign-offs at their verified scope. Keep user approval at **batch/root-cause** level; do not require lesson-by-lesson review.
+
+## Complete successful browser run — 25 October, post SVG/CSS correction
+
+[GitHub Actions **40231881184**](https://github.com/computingdept/reepham-computing/actions/runs/40231881184) completed successfully in all four shards: **463 standard lessons**, three viewports, **13,615 passed assertions**, **0 hard failures**, **34 review flags**.
+
+J277 Lesson **001**, Q3 place-value diagram was explicitly tested at Classroom TV, compact TV and phone widths. Each test found eight place-value cells, the source sequence `128,64,32,16,8,4,2,1`, unchanged `00000000` starter bits, **responsive version visible and original SVG hidden** in the narrow question card. Later commits added a targeted assertion that the question sentence excludes concatenated SVG text; that enhanced assertion awaits a complete fresh four-shard run. The earlier four-shard success remains valid evidence for the rendered diagram and the repaired shared phone layout.
+
+**34 warnings**, not automatically confirmed defects:
+- **10** narrow dense-diagram warnings (10 J277 lessons: 100, 101, 102, 108, 109, 110, 111, 115, 118, 130).
+- **3** same potential label collision in **J277 115** (one at each viewport; requires interpretation of the source graphic).
+- **18** custom assessment-structure review flags, from six special pages (J277 035, 050, 094, 120, 143; H446 036). These are not `.youdo-question` templates.
+- **2** vertically extended, apparently scrollable H446 296/303 compact-TV phases, not yet established as clipped.
+- **1** H446 008 compact-TV code-question warning, substantially reduced after setting one question per screen; inspect residual fit before changing text sizes.
+
+**Do not read '0 hard failures' as '0 presentation concerns.'** The mobile/question reveal checks have passed the baseline; the above items require separate visual or special-layout QA. OCR pedagogical and marking-accuracy checks remain outside this formatting audit.
