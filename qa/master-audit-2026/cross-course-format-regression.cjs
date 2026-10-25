@@ -85,6 +85,24 @@ async function auditPage(browser,course,id,view){
          phaseOverflow:getComputedStyle(sect).overflowY
        };
      },phase);
+     // Targeted compact-TV diagram layouts must preserve every staged figure,
+     // put them with the model on short screens, and restore the source position
+     // on ordinary TV/mobile. A missing or misplaced diagram is a hard failure.
+     const hasCompactScript=await page.locator('script[src*="compact-tv-model-layout.js"]').count()>0;
+     if(hasCompactScript){
+       const layout=await page.evaluate(phase=>{
+         const section=document.getElementById(phase);
+         const selected=section.querySelector(".ido-example,.wedo-example");
+         const grid=selected?.querySelector(".h13-grid,.s-grid,.v13-grid,.p-grid,.p23-grid");
+         const cards=grid?[...grid.children].filter(e=>e.matches(".h13-pane,.h13-panel,.s-panel,.v13-panel,.p-panel,.p23-panel")):[];
+         const figures=[...section.querySelectorAll(".compact-tv-model-figure")];
+         const staged=figures.filter(el=>el.hidden);
+         return {pairs:cards.length,figures:figures.length,inRight:figures.length>0&&figures.every(x=>cards[1]?.contains(x)),hiddenCount:staged.length};
+       },phase);
+       const short=view.width>=901&&view.height<=700;
+       result(short?layout.pairs===2&&layout.figures>=1&&layout.inRight:
+         layout.figures===0,course,id,view.name,phase+" staged diagrams in expected panel",JSON.stringify(layout));
+     }
      if(payload.count===0){
        watch(course,id,view.name,phase+" non-standard example layout","No ."+(phase==="i-do"?"ido":"wedo")+"-example found");
        continue;
