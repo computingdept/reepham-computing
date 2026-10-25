@@ -3,10 +3,12 @@ const { chromium } = require("playwright");
 
 const ORIGIN = process.env.QA_ORIGIN || "http://127.0.0.1:8765";
 const LESSONS = ["051","052","053","054","055","056","057","058","060","068"];
+const TEST_LESSONS = process.env.QA_LESSONS ? process.env.QA_LESSONS.split(",").map(x=>x.trim()) : LESSONS;
 const SIZES = [
   { name: "Classroom TV", width: 1920, height: 1080 },
   { name: "mobile", width: 390, height: 844 }
 ];
+const TEST_SIZES=process.env.QA_VIEWPORT ? SIZES.filter(x=>x.name.toLowerCase().includes(process.env.QA_VIEWPORT.toLowerCase())) : SIZES;
 const failures = [];
 let passed = 0;
 
@@ -69,7 +71,23 @@ async function verify(browser, id, size) {
       if (size.name === "mobile") await touchSwipe("right");
       else await previous.click();
     }
+
+    async function captureLayout(stage) {
+      if (id !== "068" || size.name !== "mobile") return;
+      console.log("DIAGNOSTIC " + id + " " + stage + " " + JSON.stringify(await page.evaluate(() => {
+        const nodes=["#main","#i-do","#we-do","#i-do .ido-example","#i-do .ido-reference","#we-do .wedo-example","#we-do .wedo-reference",".phase-nav",".navwrap"];
+        return {
+          hash:location.hash,
+          active:[...document.querySelectorAll("section.page.active")].map(x=>x.id),
+          nodes:nodes.map(sel=>{
+            const x=document.querySelector(sel), style=x&&getComputedStyle(x), box=x?.getBoundingClientRect();
+            return {sel,exists:!!x,display:style?.display,visibility:style?.visibility,hidden:x?.hidden,active:x?.classList.contains("active"),height:box?.height,width:box?.width,ancestorHidden:!!x?.closest("[hidden]")};
+          })
+        };
+      })));
+    }
     await phaseNav(idoNav);
+    await captureLayout("I Do entry");
 
     const model = page.locator("#i-do .ido-example");
     const modelSteps = model.locator(".ido-step");
@@ -84,6 +102,7 @@ async function verify(browser, id, size) {
     check(!await visible(modelSteps.nth(0)),id,size.name,"Previous conceals first model step");
 
     await phaseNav(wedoNav);
+    await captureLayout("We Do entry");
     const examples = page.locator("#we-do .wedo-example");
     check(await examples.count()===2,id,size.name,"Two guided examples authored");
     check(await visible(examples.nth(0)) && !await visible(examples.nth(1)),id,size.name,"Exactly first We Do example visible");
@@ -133,7 +152,7 @@ async function verify(browser, id, size) {
 (async()=>{
   const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
   try{
-    for(const size of SIZES) for(const id of LESSONS) await verify(browser,id,size);
+    for(const size of TEST_SIZES) for(const id of TEST_LESSONS) await verify(browser,id,size);
   }finally{await browser.close();}
   console.log("\nJ277 CODE MODELLING RESULT: "+passed+" passed; "+failures.length+" failed.");
   if(failures.length){
