@@ -1535,3 +1535,36 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
 @media(max-width:900px){
   body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(.exam-card){padding:14px 16px}
 }
+
+
+/* J277 binary place-value question SVGs are too small inside a 3-up You Do
+   card. Keep the original SVG on wide cards; reflow the very same 8 values
+   and bits into two rows of four when the individual card is narrow. */
+#you-do .j277-place-value-shell{
+  width:100%;min-width:0;max-width:100%;container-type:inline-size;
+  margin:12px 0;
+}
+#you-do .j277-place-value-original{
+  display:block;width:100%;height:auto;max-width:100%;
+}
+#you-do .j277-place-value-responsive{display:none}
+@container (max-width:460px){
+  #you-do .j277-place-value-original{display:none}
+  #you-do .j277-place-value-responsive{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:5px;width:100%;min-width:0;
+  }
+  #you-do .j277-place-value-cell{
+    display:flex;flex-direction:column;align-items:center;
+    min-width:0;border:1px solid #9cb8a9;border-radius:7px;
+    background:#f3f8f5;padding:7px 2px;gap:3px;
+  }
+  #you-do .j277-place-value-label{
+    font:800 clamp(12px,3.5cqw,17px)/1.2 Arial,sans-serif;
+    color:#245741;
+  }
+  #you-do .j277-place-value-bit{
+    font:850 clamp(18px,5.4cqw,24px)/1.2 Arial,sans-serif;
+    color:#173e30;
+  }
+}
