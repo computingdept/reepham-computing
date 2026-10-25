@@ -8,7 +8,7 @@
  if(except.has(id))return;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const base='../../../assets/j277/';
- const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-all154';document.head.appendChild(link);
+ const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-bottom2';document.head.appendChild(link);
  const wait=()=>new Promise(resolve=>{let n=0;const poll=()=>{const card=document.querySelector('#you-do .j277-code-first');if(card||n++>30)return resolve(card);setTimeout(poll,80)};poll()});
  const stages=['predict','write','test','iterate'];
  async function run(){
@@ -20,9 +20,10 @@
   let host=card.querySelector('.j277-code-cycle');
   if(!host){
     host=document.createElement('div');host.className='j277-code-cycle';
-    const title=card.querySelector('.j277-code-topic')||card.querySelector('.j277-code-first-title');
-    if(title)title.insertAdjacentElement('afterend',host);else card.prepend(host);
+    card.append(host);
   }
+  // Existing static pilot may already contain the cycle at the top: dock it below task and code.
+  card.append(host);
   host.dataset.focus=entry.focus_stage;
   host.setAttribute('role','group');host.setAttribute('aria-label','Coding routine. Current focus: '+entry.focus_stage);
   // Inline the SVG so all four stages remain visible and the active stage can change.
