@@ -11,3 +11,17 @@
 #you-do .j277-selective-trace th{background:#e6f1ea;font-weight:700}
 #you-do .j277-selective-trace td{height:30px;background:white}
 @media(max-width:720px){#you-do .j277-code-cycle-graphic{max-height:none}#you-do .j277-cycle-tip{font-size:14px}#you-do .j277-selective-trace{padding:8px}}
+
+/* Approved Classroom TV hierarchy: question and starter first, routine at bottom. */
+#you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-first-title{display:none!important}
+#you-do .j277-code-first[data-cycle-rollout="1"]{display:flex;flex-direction:column;min-height:0;gap:0}
+#you-do .j277-code-first[data-cycle-rollout="1"]>.j277-code-cycle{order:50;flex:0 0 auto;align-self:stretch;margin:12px 0 0;padding-top:9px;border-top:1px solid #cdded2}
+#you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-cycle-graphic{height:auto;max-height:108px;width:100%;object-fit:contain}
+#you-do .j277-code-first[data-cycle-rollout="1"] .j277-cycle-tip{font-size:clamp(12px,.85vw,15px);margin:2px 0 0}
+#you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-topic{font-size:clamp(16px,1.3vw,22px);margin-bottom:8px}
+#you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-tasks pre{max-height:min(32vh,270px);overflow:auto}
+@media(max-width:720px){
+ #you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-cycle-graphic{max-height:85px}
+ #you-do .j277-code-first[data-cycle-rollout="1"] .j277-cycle-tip{font-size:12px}
+ #you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-tasks pre{max-height:none}
+}
