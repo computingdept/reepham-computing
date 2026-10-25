@@ -356,11 +356,18 @@ function prepareYouDoAnswers(page){
     });
   }).finally(()=>{page.dataset.modelAnswersLoading='false';});
 }
+/* The three-question classroom window becomes a single question on phones.
+   Keep question, mark scheme and source order unchanged across both courses. */
+function youDoWindowSize(page,total){
+  const requested=Math.max(1,Number(page.dataset.windowSize||3));
+  return window.matchMedia('(max-width:700px)').matches
+    ? 1
+    : Math.min(requested,total);
+}
 function setYouDoWindow(page,start){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
-  const requestedSize=Math.max(1,Number(page.dataset.windowSize||3));
-  const size=Math.min(requestedSize,questions.length);
+  const size=youDoWindowSize(page,questions.length);
   const maxStart=Math.max(0,questions.length-size);
   const safe=Math.max(0,Math.min(start,maxStart));
   page.dataset.windowStart=String(safe);
@@ -949,8 +956,7 @@ function next(){
     }
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
-      const requestedSize=Math.max(1,Number(page.dataset.windowSize||3));
-      const size=Math.min(requestedSize,questions.length);
+      const size=youDoWindowSize(page,questions.length);
       const maxStart=Math.max(0,questions.length-size);
       const start=Number(page.dataset.windowStart||0);
       if(start<maxStart){
