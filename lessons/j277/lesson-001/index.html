@@ -214,19 +214,21 @@ print(value)</pre>
 #exit.exit-yesno .exit-yn-kicker{margin:0;color:var(--green-dark);font-size:clamp(14px,1.08vw,19px);font-weight:900;letter-spacing:.055em}
 #exit.exit-yesno .exit-yn-question{margin:0;font-size:clamp(30px,3vw,54px);font-weight:850;line-height:1.17;max-width:1150px}
 #exit.exit-yesno .exit-yn-instruction{margin:0;color:var(--muted);font-size:clamp(17px,1.3vw,23px);line-height:1.3}
-#exit.exit-yesno .exit-yn-question-stage .exit-yn-panel{display:grid;grid-template-rows:auto auto minmax(0,1fr);align-items:start}
+#exit.exit-yesno .exit-yn-question-stage .exit-yn-panel,#exit.exit-yesno .exit-yn-answer-stage .exit-yn-panel{display:grid;grid-template-rows:auto auto minmax(0,1fr);align-items:start}
 #exit.exit-yesno .exit-yn-choice-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,3vh,32px);min-height:0;width:100%;padding:12px 0}
 #exit.exit-yesno .exit-yn-choice-zone .exit-yn-instruction{text-align:center}
 #exit.exit-yesno .exit-yn-choices{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:clamp(20px,4vw,80px);margin-top:0;width:100%}
-#exit.exit-yesno .exit-yn-option{display:grid;place-items:center;min-width:clamp(190px,23vw,330px);min-height:clamp(86px,14vh,145px);border:2px solid #b8d2c3;border-radius:13px;background:var(--green-soft);color:var(--green-dark);font-size:clamp(26px,2.5vw,42px);font-weight:900}
-#exit.exit-yesno .exit-yn-answer{font-size:clamp(26px,3vw,47px);font-weight:900;color:var(--green-dark);margin:0}
-#exit.exit-yesno .exit-yn-explain{margin:0;max-width:1100px;font-size:clamp(21px,1.7vw,30px);line-height:1.35}
+#exit.exit-yesno .exit-yn-option{display:grid;place-items:center;min-width:clamp(190px,23vw,330px);min-height:clamp(86px,14vh,145px);border:2px solid #cbd8d1;border-radius:13px;background:#f5f7f6;color:var(--green-dark);font-size:clamp(26px,2.5vw,42px);font-weight:900}
+#exit.exit-yesno .exit-yn-answer-stage .exit-yn-option.is-correct{background:#dcf5e5;border-color:#6aaf83;color:#125b30;box-shadow:0 0 0 3px rgba(59,144,90,.12)}
+#exit.exit-yesno .exit-yn-answer-stage .exit-yn-option.is-incorrect{background:#f4f5f4;border-color:#d8dfda;color:#89948c}
+#exit.exit-yesno .exit-yn-answer-stage .exit-yn-choice-zone{gap:clamp(18px,2.5vh,28px)}
+#exit.exit-yesno .exit-yn-explain{margin:0;max-width:950px;text-align:center;font-size:clamp(20px,1.75vw,30px);line-height:1.4;overflow-wrap:break-word}
 #exit.exit-yesno .exit-yn-confidence{display:grid;gap:12px;width:100%;max-width:1200px;margin-top:4px}
 #exit.exit-yesno .exit-yn-confidence-choice{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;align-items:center;padding:clamp(13px,1.5vw,20px);border:1px solid var(--line);border-radius:12px;background:var(--paper,#f7faf8);font-size:clamp(18px,1.4vw,25px)}
 #exit.exit-yesno .exit-yn-confidence-choice strong{color:var(--green-dark)}
 #exit.exit-yesno .exit-yn-confidence-choice span{color:var(--muted)}
 @media(max-width:900px){
- #exit.exit-yesno .exit-yn-question-stage .exit-yn-panel{display:flex;flex-direction:column;align-items:stretch}
+ #exit.exit-yesno .exit-yn-question-stage .exit-yn-panel,#exit.exit-yesno .exit-yn-answer-stage .exit-yn-panel{display:flex;flex-direction:column;align-items:stretch}
  #exit.exit-yesno .exit-yn-choice-zone{min-height:210px;justify-content:center;gap:18px}
  #exit.exit-yesno .exit-deck,#exit.exit-yesno .exit-stage,#exit.exit-yesno .exit-yn-panel{height:auto;min-height:0}
  #exit.exit-yesno .exit-yn-question{font-size:clamp(27px,6vw,38px)}
@@ -248,12 +250,16 @@ print(value)</pre>
       </div>
     </div>
   </article>
-  <article class="exit-stage" hidden>
+  <article class="exit-stage exit-yn-answer-stage" hidden>
     <div class="exit-yn-panel">
       <p class="exit-yn-kicker">EXIT TICKET · CHECK YOUR ANSWER</p>
       <h2 class="exit-yn-question">Is 255 the largest unsigned number that can be stored in 8 bits?</h2>
-      <p class="exit-yn-answer">YES</p>
-      <p class="exit-yn-explain">Eight bits give 256 different values, starting at 0 and ending at 255.</p>
+      <div class="exit-yn-choice-zone">
+        <div class="exit-yn-choices" aria-label="Correct answer: Yes">
+          <span class="exit-yn-option is-correct">YES</span><span class="exit-yn-option is-incorrect">NO</span>
+        </div>
+        <p class="exit-yn-explain"><strong>Why?</strong> Eight bits represent 256 different values, from 0 to 255.</p>
+      </div>
     </div>
   </article>
   <article class="exit-stage" hidden>
@@ -272,7 +278,7 @@ print(value)</pre>
 
 </main>
 <div class="lesson-footer">Lesson 001 · Binary &amp; Denary <span>Year 10 · OCR J277</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261025-exit-choral2"></script>
+<script src="../../../assets/h446-lesson/lesson.js?v=20261025-exit-review3"></script>
 <script src="../../../assets/j277/code-first-static.js?v=20261021-release1"></script>
 <script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>
 </body>
