@@ -1470,6 +1470,17 @@ body:has(.course-back[href*="h446-hub"]) .wedo-example > .h13-grid,
 body:has(.course-back[href*="h446-hub"]) .wedo-example > .guided-example:has(> .h13-grid){
   grid-column:1 / -1;min-width:0;width:100%;
 }
+/* H446 specialist two-panel teaching layouts must span the shared outer grid.
+   The outer .ido-example/.wedo-example is already a two-track grid; nesting
+   another two-track grid in the FIRST outer track produces quarter-width cards
+   and short-TV clipping. Keep its existing internal columns and reveal logic. */
+body:has(.course-back[href*="h446-hub"]) .ido-example > :is(.h446-grid,.algorithm-grid,.route-grid),
+body:has(.course-back[href*="h446-hub"]) .wedo-example > :is(.h446-grid,.algorithm-grid,.route-grid){
+  grid-column:1 / -1;
+  min-width:0;
+  max-width:none;
+  width:100%;
+}
 /* Plain generated You Do prompts need the same readable grouping as cards. */
 body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(.exam-card){
   background:#fff;border:1px solid var(--line);border-radius:12px;
