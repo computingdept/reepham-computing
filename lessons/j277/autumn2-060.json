@@ -348,6 +348,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A teacher inputs four marks. Use a FOR loop and IF to count how many are at least 60, then print the count.",
+        "scaffold": "count = _____\nfor i = _____\n    mark = _____\n    if _____ then\n        count = _____\n    endif\nnext i\nprint(_____)",
+        "steps": [
+          {
+            "title": "Initialize the count",
+            "explanation": "The counter must start at zero.",
+            "code": "count = 0"
+          },
+          {
+            "title": "Loop and read four marks",
+            "explanation": "Get a fresh integer mark on every loop iteration.",
+            "code": "count = 0\nfor i = 1 to 4\n    mark = int(input(\"Mark?\"))"
+          },
+          {
+            "title": "Count qualifying marks",
+            "explanation": "The IF decides whether this mark increases the counter.",
+            "code": "count = 0\nfor i = 1 to 4\n    mark = int(input(\"Mark?\"))\n    if mark >= 60 then\n        count = count + 1\n    endif"
+          },
+          {
+            "title": "Output after all passes",
+            "explanation": "Close both constructs before printing the count once.",
+            "code": "count = 0\nfor i = 1 to 4\n    mark = int(input(\"Mark?\"))\n    if mark >= 60 then\n        count = count + 1\n    endif\nnext i\nprint(count)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A PE teacher enters three race times. Count how many are less than 15 seconds and display the total.",
+          "scaffold": "fast = _____\nfor i = _____\n    time = _____\n    if _____ then\n        fast = _____\n    endif\nnext i\nprint(_____)",
+          "steps": [
+            {
+              "title": "Start the counter",
+              "explanation": "Initialise fast outside the loop.",
+              "code": "fast = 0"
+            },
+            {
+              "title": "Count matching entries",
+              "explanation": "For each time, only increment when the time is below 15.",
+              "code": "fast = 0\nfor i = 1 to 3\n    time = int(input(\"Time?\"))\n    if time < 15 then\n        fast = fast + 1\n    endif"
+            },
+            {
+              "title": "Complete and test",
+              "explanation": "Trace 12, 17, 14: the answer should be 2.",
+              "code": "fast = 0\nfor i = 1 to 3\n    time = int(input(\"Time?\"))\n    if time < 15 then\n        fast = fast + 1\n    endif\nnext i\nprint(fast)"
+            }
+          ]
+        },
+        {
+          "question": "Input four quiz scores, count how many reach at least 50, and display the count. Start without a detailed scaffold.",
+          "scaffold": "passed = _____\n# Write FOR, IF, NEXT and output.",
+          "steps": [
+            {
+              "title": "Plan counting",
+              "explanation": "Write the whole program before reveal.",
+              "code": "passed = 0"
+            },
+            {
+              "title": "Write the IF inside the loop",
+              "explanation": "Each score must be read on every pass; increment only when the condition is true.",
+              "code": "passed = 0\nfor i = 1 to 4\n    mark = int(input(\"Score?\"))\n    if mark >= 50 then\n        passed = passed + 1\n    endif"
+            },
+            {
+              "title": "Check the full structure",
+              "explanation": "Explain why ENDIF is before NEXT i and print is after it.",
+              "code": "passed = 0\nfor i = 1 to 4\n    mark = int(input(\"Score?\"))\n    if mark >= 50 then\n        passed = passed + 1\n    endif\nnext i\nprint(passed)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
