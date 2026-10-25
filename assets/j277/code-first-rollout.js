@@ -35,10 +35,6 @@
   svg.setAttribute('class','j277-code-cycle-graphic');svg.setAttribute('aria-hidden','true');
   svg.querySelectorAll('[data-cycle-step]').forEach(node=>node.classList.toggle('is-active',node.getAttribute('data-cycle-step')===entry.focus_stage));
   host.replaceChildren(svg);
-  const tip=document.createElement('p');tip.className='j277-cycle-tip';
-  const reasons={predict:'Think through what the code will do before you change it.',write:'Write a small amount of OCR ERL so you can check it carefully.',test:'Check the result with a useful input or a dry run.',iterate:'Use what you found to correct or improve the code.'};
-  tip.textContent='TODAY: '+entry.focus_stage.toUpperCase()+' · '+reasons[entry.focus_stage];
-  host.append(tip);
   // Existing Lesson 057 trace stays intact; only its responsive placement changes.
   // Keep the full-width task until the teacher opens the optional trace.
   // On wide screens the two areas then share one row; mobile stays stacked.
