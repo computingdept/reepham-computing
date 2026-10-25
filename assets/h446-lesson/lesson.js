@@ -1565,8 +1565,9 @@ function prepareVerifiedExitTicket(){
   const options=correct=>'<div class="exit-yn-choices" aria-label="'+(correct?'Correct answer: '+answer.toUpperCase():'Response choices: Yes or No')+'">'+
     '<span class="exit-yn-option'+(correct?(answer==='yes'?' is-correct':' is-incorrect'):'')+'">YES</span>'+
     '<span class="exit-yn-option'+(correct?(answer==='no'?' is-correct':' is-incorrect'):'')+'">NO</span></div>';
-  const explanation=page.dataset.exitExplanation?.trim()||
-    (answer==='yes'?'This statement is correct.':'This statement is incorrect.');
+  // A truth value is not an explanation. Ask for reasoning when no verified
+  // subject-specific explanation exists; do not invent model feedback.
+  const explanation=page.dataset.exitExplanation?.trim()||'Explain why this answer is correct.';
   const confidence=reflection.length?reflection:[
     {title:'👍 Confident',detail:'I can explain today’s learning.'},
     {title:'↔ Nearly there',detail:'I need another example.'},
