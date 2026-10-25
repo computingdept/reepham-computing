@@ -1,6 +1,6 @@
 "use strict";
 const { chromium } = require("playwright");
-const ids = ["020","083","125","192","255","262","197","191"];
+const ids = ["020","022","045","046","048","050","057","059","069","070","084","193","195","228","232","234","251","252","254","258","263"];
 const base = process.env.QA_ORIGIN || "http://127.0.0.1:8765";
 (async()=>{
 const b = await chromium.launch({headless:true,args:["--no-sandbox"]});
@@ -30,10 +30,10 @@ try{
       // unless phase fits and staged reveal behaviour remain intact.
       const experiment=await page.evaluate(phase=>{
         const sect=document.getElementById(phase);
-        const grid=sect.querySelector(".h13-grid,.s-grid");
+        const grid=sect.querySelector(".h13-grid,.s-grid,.v13-grid,.draft-grid,.p-grid,.p23-grid,.lesson-grid13,.syn22-grid");
         const panels=grid?[...grid.children].filter(x=>/pane|panel/.test(String(x.className))):[];
         const left=panels[0],right=panels[1];
-        const fig=left?.querySelector(":scope > .h13-figure,:scope > .concept-structure,:scope > svg,:scope > .h13-diagram,:scope > .y13-structure,:scope > .h13-svg");
+        const fig=left?.querySelector(":scope > .h13-figure,:scope > .concept-structure,:scope > .concept-step,:scope > .v13-svg,:scope > .v13-figure,:scope > .p-figure,:scope > .p23-figure,:scope > .file-svg,:scope > .draft-figure,:scope > .h13-diagram,:scope > .y13-structure,:scope > svg");
         if(!right||!fig)return {attempted:false,reason:!right?"no right panel":"no figure"};
         right.insertBefore(fig,right.firstChild);
         return {attempted:true,
