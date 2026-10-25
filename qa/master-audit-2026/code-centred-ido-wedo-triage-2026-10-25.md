@@ -85,3 +85,32 @@ Teacher identified a genuine J277 Lesson 051 We Do regression on 25 October: bot
 6. Do not stamp `Verified` solely because source compiled, GitHub Pages built, or the page URL opens.
 
 **Current status:** Lesson 051 navigation repair committed and regression checks authored. Remaining nine programming lessons still require **one coherent batch treatment**, not isolated teacher reviews. H446 specialist grids remain a separate shared-layout risk group.
+
+## Completed source batch — J277 ten programming lessons (25 October)
+
+**Affected lesson IDs:** 051, 052, 053, 054, 055, 056, 057, 058, 060 and 068. The original Lesson 051 proof was extended as a **single pedagogical cohort**, not ten manual teacher review requests.
+
+| Lesson(s) | Coding progression |
+|---|---|
+| 051 | input → integer casting → processing → output |
+| 052 | store string/integer variables → update assignment → output |
+| 053 | numeric input → arithmetic with one fixed fee → output |
+| 054 | AND/OR grouping → IF/ELSE responses |
+| 055 | IF condition → two price branches → output |
+| 056 | IF/ELSEIF/ELSE boundary cases → output |
+| 057 | initialise accumulator → counted FOR → add each pass → output |
+| 058 | read input → WHILE invalid → update within loop → output |
+| 060 | initialise counter → FOR input → nested IF condition → output |
+| 068 | use 2D array rows as entries and columns as fields; zero-indexed table to represent record-like information |
+
+**Implementation:** Nine new `codeModelling` objects in their individual `autumn2-NNN.json` files, in addition to the existing 051 opt-in. Every page wrapper was cache-busted to load the updated shared generator. The same renderer handles all ten. Each lesson shows one cumulative I Do model, then two We Do examples with less scaffolding in the second.
+
+**Content source-of-truth:** the reviewed `youdo-five-reviewed-20261022.json` bank contains a **Programming Q4** for all ten lessons. It and all Code First task sources were untouched. The new model programmes use different numbers and scenarios from the final reviewed independent question; no C# is introduced into J277.
+
+**OCR-specific caveat:** 068's independent Q4 concerns a two-dimensional array, while its existing title/content discuss records. The lesson now explains that a 2D array can *represent* rows and columns of record-like data and is not the same as a named-field record type. OCR J277 2.2.3 explicitly includes records and use of 2D arrays to emulate tables and records. This prevents presenting them as identical constructs.
+
+**Static QA performed:** 10/10 reviewed Q4s exist and are classified programming; 10/10 generated I Do fragments contain 3–4 initially hidden steps; 10/10 generated We Do fragments have **exactly two example containers**, with example 2 hidden on entry and six hidden worked stages; 10/10 progressive models are cumulative and do not duplicate the independent Q4 model. Generator JavaScript syntax check passed. Cache-version references of all ten wrappers were reconciled.
+
+**Runtime QA:** a repository GitHub Actions Playwright test was added at `.github/workflows/j277-code-model-regression.yml`, using `j277-code-model-regression.cjs`. It loads **all ten lessons at 1920×1080 and 390×844** through a local web server, checks I Do and We Do initial hiding/advancement/Previous/next-example reset, full-width layout and uncaught errors. A source pass **is not a browser pass**; record CI results separately and correct failures. Status remains not fully verified until that run completes.
+
+**Workflow:** all ten updated and source-checked as a batch; no lesson-by-lesson sign-off required from the teacher. Remaining J277, H446 and standalone exceptions are separate audit scope, not implicitly covered by these ten.
