@@ -242,6 +242,17 @@ if(!dataPath){
       // Preserve the graphic separately in item.visual, never flatten its
       // numeric labels into the spoken OCR exam question (especially 001 Q3).
       var copy=question.cloneNode(true);
+      // Keep only authored question text preceding the first diagram. The shared
+      // responsive diagram helper can inject a textual place-value fallback;
+      // flattening that fallback creates stray 1280 / 641 / 321 lines.
+      var firstGraphic=question.querySelector("svg,picture,img,canvas");
+      if(firstGraphic){
+        var range=document.createRange();
+        range.selectNodeContents(question);
+        range.setEndBefore(firstGraphic);
+        copy=document.createElement("div");
+        copy.appendChild(range.cloneContents());
+      }
       copy.querySelectorAll("svg,picture,img,canvas").forEach(function(el){el.remove()});
       copy.querySelectorAll("p,pre,li,div").forEach(function(el){
         el.insertAdjacentText("beforebegin","\n");
