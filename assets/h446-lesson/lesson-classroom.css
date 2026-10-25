@@ -1575,3 +1575,14 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
     color:#173e30;
   }
 }
+
+
+/* Mobile objectives: retain the lesson title and vocabulary preview, but
+   remove the lengthy learning-outcomes list on phones only.
+   Preserve vocabulary-stage hidden state on every screen size. */
+.objective-vocab-stage[hidden],
+.objective-vocab-definition[hidden]{display:none!important}
+@media(max-width:700px){
+  #overview[data-objectives-vocab] .objectives{display:none!important}
+  #overview[data-objectives-vocab] .objectives-vocab-right{display:none!important}
+}
