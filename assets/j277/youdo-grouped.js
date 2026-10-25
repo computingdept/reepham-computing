@@ -124,6 +124,7 @@ function installFromData(original,pilot,master){
        '<div class="j277-sm-note">Check your method and correct any errors.</div></section></div>'));
    });
    deck.replaceChildren.apply(deck,nodes);
+ window.prepareResponsivePlaceValues?.();
    host.dataset.windowSize="1";
    host.dataset.codingFirst="true";
    host.dataset.j277SeparateReview="true";
@@ -175,6 +176,7 @@ function installFromData(original,pilot,master){
  // Build after the current shared lesson script has established its navigation.
  // The two or three outer .youdo-question elements are the original JS's navigation units.
  deck.replaceChildren.apply(deck,nodes);
+ window.prepareResponsivePlaceValues?.();
  host.dataset.windowSize="1";host.dataset.codingFirst="true";
  delete host.dataset.answerMode;delete host.dataset.answerIndex;
  host.dataset.windowStart="0";host.classList.add("j277-sm-ready");
@@ -236,17 +238,15 @@ if(!dataPath){
   Promise.all([getOriginalAnswers(),json("../code-first-master-20261021.json")]).then(function(v){
     var e=oldCards.map(function(card,i){
       var question=card.querySelector(".question-text")||card;
-      if(n==="002"){
-        // textContent includes all the SVG's internal numbers (128, 64, etc.)
-        // and runs inline paragraphs together. Extract only spoken question text.
-        var copy=question.cloneNode(true);
-        copy.querySelectorAll("svg,picture,img,canvas").forEach(function(el){el.remove()});
-        copy.querySelectorAll("p,pre,li,div").forEach(function(el){
-          el.insertAdjacentText("beforebegin","\n");
-        });
-        return [clean(copy.textContent.replace(/[ \t]*\n[ \t]*/g,"\n").replace(/\n{3,}/g,"\n\n")),v[0][i]];
-      }
-      return [question.textContent.trim(),v[0][i]];
+      // Older J277 lessons can embed place-value SVG text inside the question.
+      // Preserve the graphic separately in item.visual, never flatten its
+      // numeric labels into the spoken OCR exam question (especially 001 Q3).
+      var copy=question.cloneNode(true);
+      copy.querySelectorAll("svg,picture,img,canvas").forEach(function(el){el.remove()});
+      copy.querySelectorAll("p,pre,li,div").forEach(function(el){
+        el.insertAdjacentText("beforebegin","\n");
+      });
+      return [clean(copy.textContent.replace(/[ \t]*\n[ \t]*/g,"\n").replace(/\n{3,}/g,"\n\n")),v[0][i]];
     });
     installFromData({e:e},null,v[1]);
   }).catch(function(e){console.error("J277 older You Do grouped layout unavailable; original retained",e)});
