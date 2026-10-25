@@ -845,6 +845,12 @@ function showPage(id){
 }
 function next(){
   const page=document.getElementById(current);
+  // Phone objectives show the key terms as a reference list; do not require
+  // twelve separate reveal swipes before the student can reach New Learning.
+  if(current==='overview'&&page.dataset.objectivesVocab==='true'&&window.matchMedia('(max-width:700px)').matches){
+    showPage(order[order.indexOf('overview')+1]||'new-learning');
+    return;
+  }
   if(current==='overview'&&page.dataset.objectivesVocab==='true'){
     const stages=[...page.querySelectorAll('.objective-vocab-stage')];
     const i=visibleIndex(stages);
