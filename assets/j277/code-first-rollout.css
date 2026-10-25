@@ -25,3 +25,21 @@
  #you-do .j277-code-first[data-cycle-rollout="1"] .j277-cycle-tip{font-size:12px}
  #you-do .j277-code-first[data-cycle-rollout="1"] .j277-code-tasks pre{max-height:none}
 }
+
+/* The teacher reveals the blank trace table; no wasted second column until then. */
+#you-do .j277-code-first .j277-trace-responsive{display:block;min-width:0}
+#you-do .j277-code-first .j277-code-primary{min-width:0}
+#you-do .j277-code-first .j277-trace-responsive>.j277-code-trace{min-width:0}
+@media(min-width:1000px){
+ #you-do .j277-code-first .j277-trace-responsive.j277-trace-open{
+   display:grid!important;grid-template-columns:minmax(0,3fr) minmax(0,2fr);
+   align-items:start;gap:clamp(12px,1.2vw,22px);
+ }
+ #you-do .j277-code-first .j277-trace-responsive.j277-trace-open>.j277-code-trace{
+   margin:0;max-width:100%;overflow:hidden;
+ }
+}
+@media(max-width:999px){
+ #you-do .j277-code-first .j277-trace-responsive.j277-trace-open{display:block!important}
+ #you-do .j277-code-first .j277-trace-responsive>.j277-code-trace{margin-top:12px}
+}
