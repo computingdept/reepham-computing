@@ -1701,6 +1701,42 @@ prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
 prepareH446DoNowSourceLabels();
 prepareMobileSwipeNavigation();
+/* Responsive binary place-value scaffold, generated from the SVG's actual
+   eight column labels and eight bits: no question or answer data is rewritten. */
+function prepareResponsivePlaceValues(){
+  const placeValues=['128','64','32','16','8','4','2','1'];
+  document.querySelectorAll('#you-do svg[aria-label^="Binary place value diagram"]').forEach(svg=>{
+    if(svg.closest('.j277-place-value-shell'))return;
+    const values=[...svg.querySelectorAll('text')].map(t=>t.textContent.trim());
+    if(values.length!==16)return;
+    const headers=values.filter((_,i)=>i%2===0);
+    const bits=values.filter((_,i)=>i%2===1);
+    if(headers.some((v,i)=>v!==placeValues[i])||bits.some(v=>v!=='0'&&v!=='1'))return;
+    const shell=document.createElement('div');
+    shell.className='j277-place-value-shell';
+    const responsive=document.createElement('div');
+    responsive.className='j277-place-value-responsive';
+    responsive.setAttribute('role','img');
+    responsive.setAttribute('aria-label',svg.getAttribute('aria-label')||'Binary place-value table');
+    responsive.setAttribute('aria-hidden','true');
+    headers.forEach((label,i)=>{
+      const cell=document.createElement('div');
+      cell.className='j277-place-value-cell';
+      const place=document.createElement('span');
+      place.className='j277-place-value-label';
+      place.textContent=label;
+      const digit=document.createElement('strong');
+      digit.className='j277-place-value-bit';
+      digit.textContent=bits[i];
+      cell.append(place,digit);
+      responsive.appendChild(cell);
+    });
+    svg.classList.add('j277-place-value-original');
+    svg.before(shell);
+    shell.append(svg,responsive);
+  });
+}
+prepareResponsivePlaceValues();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
 if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
