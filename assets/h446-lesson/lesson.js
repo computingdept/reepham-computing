@@ -1598,7 +1598,8 @@ function prepareVerifiedExitTicket(){
     '<span class="exit-yn-option'+(correct?(answer==='no'?' is-correct':' is-incorrect'):'')+'">NO</span></div>';
   // A truth value is not an explanation. Ask for reasoning when no verified
   // subject-specific explanation exists; do not invent model feedback.
-  const explanation=page.dataset.exitExplanation?.trim()||'Explain why this answer is correct.';
+  const authoredExplanation=page.dataset.exitExplanation?.trim()||'';
+  const explanation=authoredExplanation||'Explain your choice using one idea from today’s lesson.';
   const confidence=reflection.length?reflection:[
     {title:'👍 Confident',detail:'I can explain today’s learning.'},
     {title:'↔ Nearly there',detail:'I need another example.'},
@@ -1619,8 +1620,11 @@ function prepareVerifiedExitTicket(){
       '<article class="exit-stage" hidden><div class="exit-yn-panel">'+
         '<p class="exit-yn-kicker">EXIT TICKET · CHECK YOUR ANSWER</p>'+
         '<h2 class="exit-yn-question">'+questionHTML+'</h2>'+
-        '<div class="exit-yn-choice-zone">'+options(true)+
-        '<p class="exit-yn-explain">'+escaped(explanation)+'</p></div>'+
+        '<div class="exit-yn-choice-zone exit-yn-answer-zone">'+
+        '<p class="exit-yn-answer-kicker" aria-live="polite">✓ CORRECT ANSWER: '+answer.toUpperCase()+'</p>'+
+        options(true)+
+        '<div class="exit-yn-reason"><h3>'+ (authoredExplanation?'WHY?':'EXPLAIN YOUR THINKING') +'</h3>'+
+        '<p class="exit-yn-explain">'+escaped(explanation)+'</p></div></div>'+
       '</div></article>'+
       '<article class="exit-stage" hidden><div class="exit-yn-panel">'+
         '<p class="exit-yn-kicker">EXIT TICKET · YOUR CONFIDENCE</p>'+
