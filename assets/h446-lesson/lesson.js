@@ -785,8 +785,8 @@ function updateControl(){
     const stages=[...page.querySelectorAll('.exit-stage')];
     if(stages.length){
       const i=visibleIndex(stages);
-      if(i===0)label='Reveal answers →';
-      else if(i===1)label='How did the lesson go? →';
+      if(i===0)label=page.classList.contains('exit-yesno')?'Reveal answer →':'Reveal answers →';
+      else if(i===1)label=page.classList.contains('exit-yesno')?'Next → Confidence':'How did the lesson go? →';
       else label='Back to Do Now';
     }else{
       label='Back to Do Now';
