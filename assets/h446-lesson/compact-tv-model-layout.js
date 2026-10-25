@@ -30,9 +30,10 @@
     function apply(){
       for(const {worked,items} of pairs){
         if(compact.matches){
-          // Inserting each figure at the start in sequence preserves original order.
+          // Keep all staged diagrams in their original order in the worked panel.
+          const anchor=worked.firstChild;
           items.forEach(({node})=>{
-            worked.insertBefore(node,worked.firstChild);
+            worked.insertBefore(node,anchor);
             node.classList.add("compact-tv-model-figure");
           });
         }else{
