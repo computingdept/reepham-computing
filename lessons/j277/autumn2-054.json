@@ -351,6 +351,74 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A school event admits a pupil if they are at least 15 AND have permission, OR are on the organiser list. Use age, permission and organiser variables.",
+        "scaffold": "if _____ then\n    print(\"Admit\")\nelse\n    print(\"Wait\")\nendif",
+        "steps": [
+          {
+            "title": "Group the conditions",
+            "explanation": "AND requires both age and permission. OR offers the organiser alternative.",
+            "code": "if (age >= 15 AND permission) OR organiser then"
+          },
+          {
+            "title": "Write the true branch",
+            "explanation": "Print the admitted message only when the whole condition is true.",
+            "code": "if (age >= 15 AND permission) OR organiser then\n    print(\"Admit\")"
+          },
+          {
+            "title": "Complete both outcomes",
+            "explanation": "ELSE covers the remaining cases; ENDIF closes selection.",
+            "code": "if (age >= 15 AND permission) OR organiser then\n    print(\"Admit\")\nelse\n    print(\"Wait\")\nendif"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A sports centre allows entry if a child is at least 12 AND has a pass, OR is accompanied by staff. Use age, hasPass and withStaff.",
+          "scaffold": "if _____ then\n    print(\"Enter\")\nelse\n    print(\"Wait\")\nendif",
+          "steps": [
+            {
+              "title": "Construct condition",
+              "explanation": "Group age and pass with brackets; staff is an alternative.",
+              "code": "if (age >= 12 AND hasPass) OR withStaff then"
+            },
+            {
+              "title": "True outcome",
+              "explanation": "Only matching visitors see Enter.",
+              "code": "if (age >= 12 AND hasPass) OR withStaff then\n    print(\"Enter\")"
+            },
+            {
+              "title": "Complete selection",
+              "explanation": "Use ELSE and ENDIF to handle all remaining inputs.",
+              "code": "if (age >= 12 AND hasPass) OR withStaff then\n    print(\"Enter\")\nelse\n    print(\"Wait\")\nendif"
+            }
+          ]
+        },
+        {
+          "question": "A club allows access if a pupil is at least 14 AND registered, OR holds a helper badge. Use age, registered and helper. Write the full condition first.",
+          "scaffold": "if _____ then\n    # add both responses",
+          "steps": [
+            {
+              "title": "Plan the expression",
+              "explanation": "Write your solution on the whiteboard before revealing.",
+              "code": "if (age >= 14 AND registered) OR helper then"
+            },
+            {
+              "title": "Add successful branch",
+              "explanation": "The AND subgroup and OR alternative must be correctly grouped.",
+              "code": "if (age >= 14 AND registered) OR helper then\n    print(\"Allowed\")"
+            },
+            {
+              "title": "Self-check the alternative",
+              "explanation": "Check the unsuccessful branch and the ENDIF.",
+              "code": "if (age >= 14 AND registered) OR helper then\n    print(\"Allowed\")\nelse\n    print(\"Not allowed\")\nendif"
+            }
+          ]
+        }
+      ]
     }
   }
 }
