@@ -8,7 +8,7 @@
  if(except.has(id))return;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const base='../../../assets/j277/';
- const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-bottom2';document.head.appendChild(link);
+ const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-side3';document.head.appendChild(link);
  const wait=()=>new Promise(resolve=>{let n=0;const poll=()=>{const card=document.querySelector('#you-do .j277-code-first');if(card||n++>30)return resolve(card);setTimeout(poll,80)};poll()});
  const stages=['predict','write','test','iterate'];
  async function run(){
@@ -39,8 +39,26 @@
   const reasons={predict:'Think through what the code will do before you change it.',write:'Write a small amount of OCR ERL so you can check it carefully.',test:'Check the result with a useful input or a dry run.',iterate:'Use what you found to correct or improve the code.'};
   tip.textContent='TODAY: '+entry.focus_stage.toUpperCase()+' · '+reasons[entry.focus_stage];
   host.append(tip);
-  // The existing 057 trace-table pilot is preserved unmodified.
-  if(card.querySelector('.j277-code-trace'))return;
+  // Existing Lesson 057 trace stays intact; only its responsive placement changes.
+  // Keep the full-width task until the teacher opens the optional trace.
+  // On wide screens the two areas then share one row; mobile stays stacked.
+  function arrangeTrace(){
+    const tasks=card.querySelector('.j277-code-tasks');
+    const trace=tasks?.querySelector('.j277-code-trace');
+    if(!tasks||!trace)return;
+    let primary=tasks.querySelector(':scope > .j277-code-primary');
+    if(!primary){
+      primary=document.createElement('div');
+      primary.className='j277-code-primary';
+      for(const node of [...tasks.childNodes])if(node!==trace)primary.append(node);
+      tasks.prepend(primary);
+    }
+    tasks.append(trace);
+    tasks.classList.add('j277-trace-responsive');
+    const sync=()=>tasks.classList.toggle('j277-trace-open',trace.open);
+    trace.addEventListener('toggle',sync);sync();
+  }
+  if(card.querySelector('.j277-code-trace')){arrangeTrace();return;}
   const source=String(entry.starter||'');
   // Opt in only for observable state changes in a loop. Never assume the correct trace or output.
   const loops=/\b(for\s+\w+\s*=|while\b|repeat\b)/i.test(source);
@@ -57,6 +75,7 @@
   const head=document.createElement('thead');head.innerHTML='<tr><th scope="col">Pass</th><th scope="col">'+esc(variable)+'</th><th scope="col">Output / observation</th></tr>';table.append(head);
   const body=document.createElement('tbody');for(let i=0;i<5;i++){const row=document.createElement('tr');row.innerHTML='<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>';body.append(row)}table.append(body);scroll.append(table);details.append(scroll);
   content.append(details);
+  arrangeTrace();
  }
  run().catch(e=>console.warn('J277 Code First enhancement: existing task kept',e));
 })();
