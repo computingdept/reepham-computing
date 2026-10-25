@@ -77,7 +77,12 @@ function installFromData(original,pilot,master){
  var qs=(p&&p.questions)||lesson.e;
  if(!Array.isArray(qs)||qs.length<3){console.warn("J277 self-mark: fewer than 3 authored questions for",n);return}
  var existing=[...deck.querySelectorAll(".youdo-question")].filter(function(el){return !el.classList.contains("j277-code-first")&&!el.classList.contains("j277-prior-exam")&&!el.querySelector(".y11-challenge-hint")});
- var questions=qs.slice(0,3).map(function(q,i){var fig=existing[i]&&existing[i].querySelector("svg");return oneQuestion(q,i,fig?fig.outerHTML:"")});
+ // Lesson 002's binary place-value diagram belongs in teaching, not in
+ // its independent exam question card. It was being squeezed and duplicated.
+ var questions=qs.slice(0,3).map(function(q,i){
+   var fig=n==="002"?null:existing[i]&&existing[i].querySelector("svg");
+   return oneQuestion(q,i,fig?fig.outerHTML:"");
+ });
  var entry=master&&master.lessons&&master.lessons[n];
  if(!entry){console.warn("J277 self-mark: Code First missing for",n);return}
  // Authoritative reviewed Code First answer comes from the J277-only task bank.
@@ -167,7 +172,17 @@ if(!dataPath){
   Promise.all([getOriginalAnswers(),json("../code-first-master-20261021.json")]).then(function(v){
     var e=oldCards.map(function(card,i){
       var question=card.querySelector(".question-text")||card;
-      return [question.textContent.trim(),v[0][i]]
+      if(n==="002"){
+        // textContent includes all the SVG's internal numbers (128, 64, etc.)
+        // and runs inline paragraphs together. Extract only spoken question text.
+        var copy=question.cloneNode(true);
+        copy.querySelectorAll("svg,picture,img,canvas").forEach(function(el){el.remove()});
+        copy.querySelectorAll("p,pre,li,div").forEach(function(el){
+          el.insertAdjacentText("beforebegin","\n");
+        });
+        return [clean(copy.textContent.replace(/[ \t]*\n[ \t]*/g,"\n").replace(/\n{3,}/g,"\n\n")),v[0][i]];
+      }
+      return [question.textContent.trim(),v[0][i]];
     });
     installFromData({e:e},null,v[1]);
   }).catch(function(e){console.error("J277 older You Do grouped layout unavailable; original retained",e)});
