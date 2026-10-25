@@ -1586,3 +1586,25 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
   #overview[data-objectives-vocab] .objectives{display:none!important}
   #overview[data-objectives-vocab] .objectives-vocab-right{display:none!important}
 }
+
+/* Phone vocabulary definitions: anchor popovers within the viewport. */
+@media(max-width:700px){
+  .vocab-intro-list .vocab-tip:hover::after,
+  .vocab-intro-list .vocab-tip:focus::after{
+    position:fixed;
+    left:12px;
+    right:12px;
+    top:auto;
+    bottom:18px;
+    transform:none;
+    box-sizing:border-box;
+    width:auto;
+    max-width:none;
+    max-height:40dvh;
+    overflow-wrap:anywhere;
+    font-size:15px;
+    line-height:1.4;
+    z-index:1000;
+  }
+  #overview[data-objectives-vocab="true"]{overflow:visible!important;}
+}
