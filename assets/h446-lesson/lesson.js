@@ -9,7 +9,7 @@ const signalMap={
   'catch-up':['Catch Up','Quiet Working','Independent'],
   'exam-practice':['Exam Practice','Quiet Working','Independent'],
   vocabulary:['Questioning','Listening','Cold Calling'],
-  exit:['Exit Questioning','Silence','Thumbs']
+  exit:['Exit Questioning','Silence','Choral']
 };
 const youDoIndependentSignals=['You Do','Silence','Independent'];
 const pages=[...document.querySelectorAll('.page')];
@@ -613,11 +613,6 @@ function updateSignals(id){
   let values=id==='you-do'&&(page?.dataset.workMode==='independent'||page?.dataset.assessmentMode==='true')
     ?youDoIndependentSignals
     :(signalMap[id]||['','','']);
-  // The staged YES/NO Exit Ticket uses hands-up voting, not whiteboards or thumbs.
-  // Other exit layouts retain their current response signal.
-  if(id==='exit' && page?.classList.contains('exit-yesno')){
-    values=['Exit Ticket','Listening','Hands Up'];
-  }
   const kinds=['phase','routine','response'];
 
   ['phase-logo','behaviour-logo','response-logo'].forEach((key,i)=>{
