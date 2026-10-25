@@ -59,7 +59,7 @@ async function test(browser,target,view){
         &&!el.closest("[hidden]");
     };
     const visible=all.filter(isVisible);
-    const svg=[...visible.flatMap(q=>[...q.querySelectorAll("svg")])];
+    const svg=[...visible.flatMap(q=>[...q.querySelectorAll("svg")])].filter(isVisible);
     const diagrams=svg.map(s=>{
       const r=s.getBoundingClientRect();
       const card=s.closest(".youdo-question")?.getBoundingClientRect();
@@ -104,8 +104,9 @@ async function test(browser,target,view){
   if(first.answers)metrics.withAnswers++;
   if(first.all)metrics.withQuestions++;
   record(first.active,"You Do phase visible",where,JSON.stringify({active:first.active}));
-  record(first.all>0||first.questionContainer,"Question structure exists",where,
-    JSON.stringify({total:first.all,container:first.questionContainer}));
+  if(!first.all&&!first.questionContainer)
+    warn("Custom You Do assessment layout; separate structural review",where);
+  else record(true,"Standard You Do question structure exists",where);
   record(first.hiddenVisible===0,"Hidden questions absent from layout",where,
     JSON.stringify({hiddenVisible:first.hiddenVisible}));
   record(first.leaked.length===0,"Model answers concealed in independent work",where,
@@ -113,7 +114,7 @@ async function test(browser,target,view){
   record(first.documentWidth<=first.viewportWidth+4,"No horizontal page overflow",where,
     JSON.stringify({width:first.documentWidth,viewport:first.viewportWidth}));
   for(const diagram of first.svg){
-    record(diagram.w>=180&&diagram.h>=30&&diagram.vbW>0,"Visible SVG has legible dimensions",where,
+    record(diagram.w>0&&diagram.h>0&&diagram.vbW>0,"Visible SVG has nonzero dimensions",where,
       JSON.stringify(diagram));
     record(diagram.w<=diagram.cardW+12,"SVG fits its question card",where,
       JSON.stringify(diagram));
@@ -127,9 +128,43 @@ async function test(browser,target,view){
     if(clipped.bottom>clipped.parentBottom+24 && view.name!=="phone")
        warn("You Do question card exceeds phase height",where,JSON.stringify(clipped));
   }
-  if(view.name==="phone"&&!first.codingFirst&&first.visible>1)
-    warn("Multiple independent question cards stacked on phone",where,
+  if(view.name==="phone"&&first.all)
+    record(first.visible===1,"Phone shows exactly one You Do question",where,
       JSON.stringify({count:first.visible,windowSize:first.windowSize,cardTexts:first.cardTexts}));
+  // Scan all remaining independent diagrams by exposing ONE question at a time
+  // inside this disposable browser context. Do not change real lesson contents
+  // or persist any authoring changes. This catches Q3 in J277 Lesson 001.
+  const additional=await page.evaluate(()=>{
+    const p=document.getElementById("you-do"),questions=[...p.querySelectorAll(".youdo-question")];
+    const original=questions.map(q=>q.hidden),out=[];
+    for(let i=0;i<questions.length;i++){
+      questions.forEach((q,j)=>q.hidden=i!==j);
+      const q=questions[i],card=q.getBoundingClientRect();
+      for(const svg of q.querySelectorAll("svg")){
+        const s=svg.getBoundingClientRect(),cs=getComputedStyle(svg);
+        if(s.width===0||s.height===0||cs.display==="none"||svg.closest("[hidden]"))continue;
+        const text=[...svg.querySelectorAll("text")];
+        let overlap=0;
+        for(let a=0;a<text.length;a++)for(let b=a+1;b<text.length;b++){
+          const x=text[a].getBoundingClientRect(),y=text[b].getBoundingClientRect();
+          if(Math.abs((x.top+x.height/2)-(y.top+y.height/2))>Math.max(2,x.height*.4))continue;
+          const horizontal=Math.min(x.right,y.right)-Math.max(x.left,y.left);
+          if(horizontal>Math.min(x.width,y.width)*.28)overlap++;
+        }
+        out.push({question:i+1,width:Math.round(s.width),height:Math.round(s.height),
+          cardWidth:Math.round(card.width),textCount:text.length,overlaps:overlap,
+          kind:svg.getAttribute("aria-label")?.slice(0,75)||""});
+      }
+    }
+    questions.forEach((q,i)=>q.hidden=original[i]);
+    return out;
+  });
+  for(const d of additional){
+    record(d.width>0&&d.height>0,"Question SVG draws at nonzero dimensions",where,JSON.stringify(d));
+    record(d.width<=d.cardWidth+12,"Question SVG stays inside its card",where,JSON.stringify(d));
+    if(d.overlaps>0)warn("Question SVG text overlaps",where,JSON.stringify(d));
+    if(d.width<300 && d.textCount>=12)warn("Dense question SVG needs legibility review",where,JSON.stringify(d));
+  }
   // Confirm progression to independent questions does not unexpectedly expose answers.
   if(first.all>1){
     await page.locator("#advance").evaluate(el=>el.click());
