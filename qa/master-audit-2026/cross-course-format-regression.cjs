@@ -48,7 +48,7 @@ async function auditPage(browser,course,id,view){
        const visible=e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&!e.closest("[hidden]")&&getComputedStyle(e).display!=="none"};
        const stages=elements.length?[...elements[0].querySelectorAll("."+flag+"-step")]:[];
        const active=document.querySelector("section.page.active");
-       const boxes=elements[0]?[...elements[0].querySelectorAll(".ido-reference,.ido-method,.wedo-reference,.wedo-practice,.model-card")].filter(x=>x.getBoundingClientRect().width>0):[];
+       const boxes=elements[0]?[...elements[0].querySelectorAll(".ido-reference,.ido-method,.wedo-reference,.wedo-practice,.model-card,.h446-panel,.algorithm-panel,.route-pane")].filter(x=>x.getBoundingClientRect().width>0):[];
        const rect=boxes.map(x=>({name:x.className,w:Math.round(x.getBoundingClientRect().width),h:Math.round(x.getBoundingClientRect().height),x:Math.round(x.getBoundingClientRect().x)}));
        const bounds=sect.getBoundingClientRect();
        const overflowing=[...sect.querySelectorAll("pre,svg,img")].filter(x=>visible(x)).filter(x=>{
@@ -82,7 +82,7 @@ async function auditPage(browser,course,id,view){
        // into approximately one quarter of the available width.
        const big=payload.boxes.filter(x=>x.w>0).slice(0,2);
        const min=Math.min(...big.map(x=>x.w));
-       if(min<Math.min(330,view.width*.24))watch(course,id,view.name,phase+" narrow teaching panel",JSON.stringify(big));
+       if(min<Math.min(330,view.width*.24))result(false,course,id,view.name,phase+" quarter-width teaching panel",JSON.stringify(big));
      }
      if(payload.heightExcess>40&&payload.phaseOverflow==="hidden"){
        watch(course,id,view.name,phase+" possible vertical clipping","excess "+payload.heightExcess+"px");
