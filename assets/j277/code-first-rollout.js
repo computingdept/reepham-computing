@@ -26,7 +26,7 @@
   host.dataset.focus=entry.focus_stage;
   host.setAttribute('role','group');host.setAttribute('aria-label','Coding routine. Current focus: '+entry.focus_stage);
   // Inline the SVG so all four stages remain visible and the active stage can change.
-  const response=await fetch(base+'code-first-cycle.svg?v=20261025-trace-or-run1');
+  const response=await fetch(base+'code-first-cycle.svg?v=20261025-label-fit2');
   if(!response.ok)throw Error('Cycle unavailable');
   const doc=new DOMParser().parseFromString(await response.text(),'image/svg+xml');
   if(doc.querySelector('parsererror'))throw Error('Invalid SVG');
