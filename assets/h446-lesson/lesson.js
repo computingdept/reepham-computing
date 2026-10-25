@@ -1681,6 +1681,15 @@ function prepareVerifiedExitTicket(){
 }
 
 hideH446PublicationStatus();
+// Versioned standalone CSS ensures the new exit style even when a lesson
+// references an older, cached lesson-base.css.
+if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollout-style')){
+  const link=document.createElement('link');
+  link.id='exit-answer-rollout-style';
+  link.rel='stylesheet';
+  link.href='../../../assets/h446-lesson/exit-answer-rollout.css?v=20261025-complete1';
+  document.head.appendChild(link);
+}
 prepareVerifiedExitTicket();
 prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
