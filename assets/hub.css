@@ -543,3 +543,33 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
 .learning-hub .footer-school-picker:focus-visible{
   text-decoration:underline;
 }
+
+/* 2026-10-25: compact student-first course navigation on phones only. */
+@media(max-width:700px){
+ body.course-hub .topbar{min-height:48px;padding:6px 12px}
+ body.course-hub .topbar .brand{gap:8px}
+ body.course-hub .topbar .brand-copy strong{display:none}
+ body.course-hub .topbar .brand-copy span{font-size:14px;letter-spacing:.02em}
+ body.course-hub .topbar .home{font-size:12px}
+ body.course-hub main{padding-top:8px}
+ body.course-hub main>.back{display:none}
+ body.course-hub main>.heading{margin:4px 0 8px;gap:0}
+ body.course-hub main>.heading .eyebrow,
+ body.course-hub main>.heading .sub{display:none}
+ body.course-hub main>.heading h1{font-size:19px;line-height:1.2;margin:0}
+ body.course-hub main>.heading h1::before{content:'Computer Science · ';font-size:0}
+ body.course-hub .tabs{margin:6px 0 8px;gap:4px}
+ body.course-hub .tabs .tab{min-height:38px;padding:7px 8px;font-size:12px}
+ body.course-hub #lessons .year-switch{margin:4px 0 8px;gap:6px}
+ body.course-hub #lessons .year-switch button{min-height:40px}
+ body.course-hub #lessons .summary,
+ body.course-hub #lessons .paper-key,
+ body.course-hub #lessons .h446-year-route{display:none}
+ body.course-hub #lessons .term{margin:10px 0 14px}
+ body.course-hub #lessons .term-head{padding:7px 0;margin:0 0 6px}
+ body.course-hub #lessons .term-head strong{font-size:17px}
+ body.course-hub #lessons .term-head span{font-size:11px}
+ body.course-hub #lessons .term-route{display:none}
+ body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+ body.course-hub #lessons .lesson-entry>.lesson{min-height:44px}
+}
