@@ -360,9 +360,15 @@ function prepareYouDoAnswers(page){
    Keep question, mark scheme and source order unchanged across both courses. */
 function youDoWindowSize(page,total){
   const requested=Math.max(1,Number(page.dataset.windowSize||3));
-  return window.matchMedia('(max-width:700px)').matches
-    ? 1
-    : Math.min(requested,total);
+  if(window.matchMedia('(max-width:700px)').matches)return 1;
+  // Explicit formatting opt-in only: a full-width question window for
+  // unusually long Year 13 written/ERL questions on short classroom screens.
+  // Standard 1080p TV continues using the approved three-question grouping.
+  if(page.dataset.compactWindowSize
+     && window.matchMedia('(min-width:901px) and (max-height:700px)').matches){
+    return Math.min(requested,total,Math.max(1,Number(page.dataset.compactWindowSize)));
+  }
+  return Math.min(requested,total);
 }
 function setYouDoWindow(page,start){
   const questions=[...page.querySelectorAll('.youdo-question')];
