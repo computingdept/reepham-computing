@@ -1586,3 +1586,19 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
   #overview[data-objectives-vocab] .objectives{display:none!important}
   #overview[data-objectives-vocab] .objectives-vocab-right{display:none!important}
 }
+
+/* Mobile audit fix: always expose accessible phase navigation as a swipe fallback. */
+@media(max-width:700px){
+  .navwrap{grid-template-columns:auto minmax(0,1fr);}
+  .nav-tools{
+    display:flex!important;grid-column:1/-1;align-items:center;
+    gap:8px;padding:6px 10px;border-top:1px solid var(--line);
+  }
+  .nav-tools #advance,.nav-tools #previous{
+    display:inline-flex!important;align-items:center;justify-content:center;
+    width:auto;min-height:44px;margin:0;padding:8px 14px;
+    font-size:14px;touch-action:manipulation;
+  }
+  .nav-tools #page-count{margin-left:auto;font-size:12px;}
+  main{padding-bottom:72px;}
+}
