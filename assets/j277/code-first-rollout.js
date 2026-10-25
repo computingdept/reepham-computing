@@ -43,10 +43,10 @@
   const source=String(entry.starter||'');
   // Opt in only for observable state changes in a loop. Never assume the correct trace or output.
   const loops=/\b(for\s+\w+\s*=|while\b|repeat\b)/i.test(source);
-  const update=/\b([A-Za-z]\w*)\s*=\s*\1\s*[+\-*\/]/.test(source);
+  const update=/\b([A-Za-z]\w*)\s*=\s*\1\s*[+*/-]/.test(source);
   const nested=/\b(for|while)\b[\s\S]*\b(for|while)\b/i.test(source);
   if(!loops||!update||nested)return;
-  const variable=(source.match(/\b([A-Za-z]\w*)\s*=\s*\1\s*[+\-*\/]/)||[])[1];
+  const variable=(source.match(/\b([A-Za-z]\w*)\s*=\s*\1\s*[+*/-]/)||[])[1];
   if(!variable)return;
   const details=document.createElement('details');details.className='j277-code-trace j277-selective-trace';details.dataset.codeFirstTrace='optional';
   const summary=document.createElement('summary');summary.textContent='TEST · Optional blank trace table';details.append(summary);
