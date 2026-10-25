@@ -133,6 +133,17 @@ async function run(){
      result(cards.length===3,'Three J277 exam questions retained','found '+cards.length+', on '+groups.length+' classroom screen(s)');
      result(!!g.querySelector('.j277-code-first'),'Code First remains separate');
      result(![...g.querySelectorAll('.youdo-solution')].some(e=>!e.hidden),'Mark schemes initially concealed');
+     if(num==='057'){
+       const trace=g.querySelector('.j277-code-first .j277-code-trace');
+       const table=trace?.querySelector('table');
+       const body=table?.querySelectorAll('tbody tr')||[];
+       result(!!trace && trace.tagName==='DETAILS' && !trace.open,
+         'FOR-loop Code First trace table is optional and collapsed initially');
+       result(body.length===4&&[...body].every(row=>[...row.cells].every(cell=>!cell.textContent.trim())),
+         'Four practice trace rows are completely blank, without model answers');
+       result(trace?.querySelector('summary')?.textContent.includes('TEST'),
+         'Optional dry-run trace activity is labelled TEST');
+     }
      if(num==='002'){
        const routine=g.querySelector('.j277-code-first .j277-code-cycle');
        const first=g.querySelector('.j277-code-first .j277-code-prompt');
