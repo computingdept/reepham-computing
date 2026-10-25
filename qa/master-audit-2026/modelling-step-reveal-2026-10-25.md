@@ -41,3 +41,11 @@
 - The H446/J277 shared engine URL on J277 002 and H446 001/181 may have differing query-version tokens; this is a cache-validation concern rather than evidence of broken logic.
 - No automatic content changes applied: must not erase diagrams or cover results until an actual premature-answer element has been identified.
 - **Still outstanding**: browser check of Step 1 initially concealed, reference graphics not showing answers, 1920x1080 and 390x844 presentation and Previous behaviour in samples.
+
+## Classroom TV layout defect corrected — H446 recursion 181–183
+- User's Lesson 181 screenshot (1300×635) showed two narrow cards on the left and a wide unused area.
+- Root cause: shared `.ido-example`/`.wedo-example` already provides an outer two-column grid, while each recursion lesson placed a second two-column `.model-grid` as the single first grid child. This nested-grid combination reduced usable panel width to roughly a quarter.
+- Applied scoped lesson styles to 181, 182, 183: outer example is full width, inner model grid occupies full teaching width with two equal columns; card typography, SVG height, overflow and mobile stacking corrected.
+- The recursion SVG had numeric returns inside each row prior to the final step. Its returns column and accessible answer description now remain concealed until the last `.ido-step`/`.wedo-step` is revealed. Previously Lesson 182/183 also showed the first SVG row even while all steps were hidden; the corrected synchroniser shows none.
+- Source audit: all three files contain two `.model-grid` instances (one per phase), both diagrams are flagged pending, and both phases share explicit final-step-only answer reveal logic. Verified at the file/source level only.
+- Still pending: independent browser viewport test at 1920×1080 and 390×844, including revisit/reset, full SVG visibility and no premature answer leakage. This is not a course-wide assertion.
