@@ -1,9 +1,26 @@
 "use strict";
 const {chromium}=require("playwright");
+const fs=require("node:fs");
+const path=require("node:path");
 const COURSES={
   j277:["001","002","019","024","035","050","059","080","096","109","131","141","164"],
   h446:["001","024","068","082","093","104","131","146","181","182","183","184","187","205","220","240","279","320"]
 };
+// In comprehensive mode enumerate existing pages directly from the checked-out
+// repository, excluding 113: a documented standalone revision experience without
+// the standard eight-phase lesson interface.
+if(process.env.QA_FORMAT_ALL==="1"){
+ for(const course of Object.keys(COURSES)){
+   COURSES[course]=fs.readdirSync(path.join("lessons",course),{withFileTypes:true})
+     .filter(x=>x.isDirectory()&&/^lesson-\d{3}$/.test(x.name))
+     .map(x=>x.name.slice(-3))
+     .filter(id=>fs.existsSync(path.join("lessons",course,"lesson-"+id,"index.html")))
+     .filter(id=>!(course==="j277"&&id==="113"))
+     .sort();
+ }
+}
+const SHARD_COUNT=Number(process.env.QA_FORMAT_SHARDS||1);
+const SHARD_INDEX=Number(process.env.QA_FORMAT_SHARD||0);
 const VIEWPORTS=[
   {name:"TV 1080p",width:1920,height:1080},
   {name:"compact TV",width:1300,height:635},
@@ -113,14 +130,18 @@ async function auditPage(browser,course,id,view){
 (async()=>{
  const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
  try{
+   const targets=Object.entries(COURSES).flatMap(([course,ids])=>ids
+     .filter(id=>!FILTER||FILTER.includes(course+":"+id)||FILTER.includes(id))
+     .map(id=>({course,id})));
+   const work=targets.filter((_,idx)=>idx%SHARD_COUNT===SHARD_INDEX);
    for(const view of VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))))
-     for(const [course,ids] of Object.entries(COURSES))
-       for(const id of ids.filter(i=>!FILTER||FILTER.includes(course+":"+i)||FILTER.includes(i)))
-         await auditPage(browser,course,id,view);
+     for(const {course,id} of work) await auditPage(browser,course,id,view);
  }finally{await browser.close();}
- const summary={testedSamples:Object.entries(COURSES).reduce((n,[c,a])=>n+a.filter(id=>!FILTER||FILTER.includes(c+":"+id)||FILTER.includes(id)).length,0),
+ const summary={testedSamples:Object.entries(COURSES).flatMap(([course,a])=>a.filter(id=>!FILTER||FILTER.includes(course+":"+id)||FILTER.includes(id))).filter((_,idx)=>idx%SHARD_COUNT===SHARD_INDEX).length,
   viewports:VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))).map(x=>x.name),
+  mode:process.env.QA_FORMAT_ALL==="1"?"whole-course":"representative",shardIndex:SHARD_INDEX,shardCount:SHARD_COUNT,
   checksPassed:pass,failures:issues.length,reviewFlags:watches.length,issues,watches};
+ if(process.env.QA_REPORT){fs.mkdirSync(path.dirname(process.env.QA_REPORT),{recursive:true});fs.writeFileSync(process.env.QA_REPORT,JSON.stringify(summary,null,2)+"\n")}
  console.log("FORMAT_AUDIT_SUMMARY "+JSON.stringify(summary));
  // Visible structural/navigation regression is a CI failure. Review flags alone
  // are triage evidence, not hard failure or proof of a defect.
