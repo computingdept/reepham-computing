@@ -97,6 +97,8 @@ function installFromData(original,pilot,master){
  // Lesson 002 pilot: all questions first, all self-marking afterwards.
  // Review screens are distinct siblings, never answer panels beneath questions.
  if(n==="002"){
+   // Do not retain the generic answer panel underneath Code First.
+   code.querySelectorAll(".youdo-solution").forEach(function(el){el.remove()});
    var makeStage=function(klass,body){
      var el=document.createElement("article");
      el.className="exam-card youdo-question "+klass;
