@@ -1321,6 +1321,24 @@ function prepareMobileSwipeNavigation(){
   }
   updateMobileLessonStatus();
 
+  // Touch-friendly definitions: tap a term to reveal; tap again to dismiss.
+  // This avoids depending on mobile browsers' inconsistent :hover/:focus.
+  document.querySelectorAll('.vocab-intro-list .vocab-tip').forEach(chip=>{
+    chip.setAttribute('role','button');
+    chip.setAttribute('aria-expanded','false');
+    chip.addEventListener('click',()=>{
+      const open=chip.classList.contains('is-definition-open');
+      document.querySelectorAll('.vocab-intro-list .vocab-tip.is-definition-open').forEach(other=>{
+        other.classList.remove('is-definition-open');
+        other.setAttribute('aria-expanded','false');
+      });
+      if(!open){chip.classList.add('is-definition-open');chip.setAttribute('aria-expanded','true');}
+    });
+    chip.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){event.preventDefault();chip.click();}
+    });
+  });
+
   let startX=0;
   let startY=0;
   let tracking=false;
