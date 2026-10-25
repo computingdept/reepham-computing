@@ -8,7 +8,7 @@
  if(except.has(id))return;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const base='../../../assets/j277/';
- const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-clean4';document.head.appendChild(link);
+ const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-visible6';document.head.appendChild(link);
  const wait=()=>new Promise(resolve=>{let n=0;const poll=()=>{const card=document.querySelector('#you-do .j277-code-first');if(card||n++>30)return resolve(card);setTimeout(poll,80)};poll()});
  const stages=['predict','write','test','iterate'];
  async function run(){
@@ -50,6 +50,9 @@
       tasks.prepend(primary);
     }
     tasks.append(trace);
+    trace.open=true;
+    trace.removeAttribute('data-code-first-trace');
+    trace.dataset.codeFirstTrace='visible';
     tasks.classList.add('j277-trace-responsive');
     const sync=()=>tasks.classList.toggle('j277-trace-open',trace.open);
     trace.addEventListener('toggle',sync);sync();
@@ -64,8 +67,8 @@
   const variable=(source.match(/\b([A-Za-z]\w*)\s*=\s*\1\s*[+*/-]/)||[])[1];
   if(!variable)return;
   const details=document.createElement('details');details.className='j277-code-trace j277-selective-trace';details.dataset.codeFirstTrace='optional';
-  const summary=document.createElement('summary');summary.textContent='TEST · Optional blank trace table';details.append(summary);
-  const explain=document.createElement('p');explain.textContent='If it helps, trace the changing value of '+variable+' after each loop pass. Leave rows that do not execute empty.';details.append(explain);
+  const summary=document.createElement('summary');summary.textContent='TRACE TABLE';details.append(summary);
+  const explain=document.createElement('p');explain.textContent='Track '+variable+' after each loop pass.';details.append(explain);
   const scroll=document.createElement('div');scroll.className='j277-trace-scroll';
   const table=document.createElement('table');table.setAttribute('aria-label','Blank optional loop trace table');
   const head=document.createElement('thead');head.innerHTML='<tr><th scope="col">Pass</th><th scope="col">'+esc(variable)+'</th><th scope="col">Output / observation</th></tr>';table.append(head);
