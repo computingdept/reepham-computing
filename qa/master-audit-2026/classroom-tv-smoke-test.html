@@ -93,21 +93,24 @@ async function run(){
    const chips=[...obj.querySelectorAll('.vocab-intro-list .vocab-tip')];
    const answers=[...voc.querySelectorAll('.vocab-answer')];
    result(keywords.length>=15,'J277 002 yellow key terms placed in teaching phases',keywords.length+' semantic highlights');
-   result(chips.length===4&&chips.every(el=>getComputedStyle(el).backgroundColor==='rgb(255, 243, 91)'),
-     'J277 002 yellow objectives vocabulary chips','count '+chips.length);
+   result(chips.length===4&&chips.every(el=>getComputedStyle(el).backgroundImage.includes('data:image/svg+xml')),
+     'J277 002 objectives vocabulary chips use hand-drawn SVG ink','count '+chips.length);
    result(answers.length===4&&answers.every(el=>el.hidden),
      'J277 002 Key Vocabulary answers remain hidden before reveal');
-   const examMark=g?.querySelector('.j277-sm-command');
-   if(examMark)result(getComputedStyle(examMark).backgroundImage.includes('linear-gradient'),
-     'J277 002 exam command words match the yellow marker stroke');
+   // The dynamic grouped lesson script may not have loaded yet; do not
+   // reference the later 'g' variable before its declaration (TDZ).
+   const allMarkers=[...d.querySelectorAll('#overview mark.rhsc-keyword,#new-learning mark.rhsc-keyword,#i-do mark.rhsc-keyword,#we-do mark.rhsc-keyword')];
+   const variantCount=new Set(allMarkers.map(el=>getComputedStyle(el).backgroundImage)).size;
+   result(variantCount===3,'J277 002 uses three distinct hand-drawn brush shapes',
+     'found '+variantCount+' marker backgrounds');
    const btn=d.querySelector('.phase-nav [data-page="vocabulary"]');
    btn.click();await delay(90);
    const first=voc.querySelector('.vocab-answer');
    result(first?.hidden===true,'Key Vocabulary still hides term on entry');
    d.getElementById('advance').click();await delay(90);
    const mark=first?.querySelector('mark.rhsc-keyword');
-   result(first?.hidden===false&&!!mark&&getComputedStyle(mark).backgroundImage.includes('linear-gradient'),
-     'First term gets highlighter-pen stroke only after teacher presses Reveal');
+   result(first?.hidden===false&&!!mark&&getComputedStyle(mark).backgroundImage.includes('data:image/svg+xml'),
+     'First term gets hand-drawn highlighter stroke only after teacher presses Reveal');
  }
  const nav=d.querySelector('.phase-nav [data-page="you-do"]');
  result(!!nav,'You Do phase-navigation button present');
@@ -129,6 +132,11 @@ async function run(){
      result(cards.length===3,'Three J277 exam questions retained','found '+cards.length+', on '+groups.length+' classroom screen(s)');
      result(!!g.querySelector('.j277-code-first'),'Code First remains separate');
      result(![...g.querySelectorAll('.youdo-solution')].some(e=>!e.hidden),'Mark schemes initially concealed');
+     if(num==='002'){
+       const commandMarks=[...g.querySelectorAll('.j277-sm-question-only mark.j277-sm-command')];
+       result(commandMarks.length>=1&&commandMarks.every(el=>getComputedStyle(el).backgroundImage.includes('data:image/svg+xml')),
+         'J277 002 OCR command words also use hand-drawn yellow');
+     }
      if(num==='002'){
        const examSvg=[...g.querySelectorAll('.j277-sm-question-only .j277-sm-visual svg')];
        const stages=[...g.querySelectorAll('.youdo-rolling > .youdo-question')];
