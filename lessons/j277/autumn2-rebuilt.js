@@ -1966,10 +1966,15 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  /* Opt-in J277 coding model: persistent reference and incrementally revealed code. */
  #i-do.j277-code-model-phase .ido-example,
  #we-do.j277-code-model-phase .wedo-example{
-   display:grid!important;
+   display:grid;
    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
    align-items:start;gap:clamp(12px,1.35vw,22px);width:100%;max-width:none;
  }
+ /* Lesson navigation owns visibility: never let layout overrides display [hidden] examples. */
+ #i-do.j277-code-model-phase .ido-example[hidden],
+ #we-do.j277-code-model-phase .wedo-example[hidden],
+ #i-do.j277-code-model-phase .ido-step[hidden],
+ #we-do.j277-code-model-phase .wedo-step[hidden]{display:none!important}
  #i-do.j277-code-model-phase .ido-reference,
  #i-do.j277-code-model-phase .ido-method,
  #we-do.j277-code-model-phase .wedo-reference,
