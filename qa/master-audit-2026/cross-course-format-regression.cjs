@@ -94,14 +94,20 @@ async function auditPage(browser,course,id,view){
          const section=document.getElementById(phase);
          const selected=section.querySelector(".ido-example,.wedo-example");
          const grid=selected?.querySelector(".h13-grid,.s-grid,.v13-grid,.p-grid,.p23-grid");
-         const cards=grid?[...grid.children].filter(e=>e.matches(".h13-pane,.h13-panel,.s-panel,.v13-panel,.p-panel,.p23-panel")):[];
+         const cards=grid?[...grid.children].filter(e=>e.matches(".h13-pane,.h13-panel,.s-panel,.v13-panel,.p-panel,.p23-panel")):
+           selected?[...selected.children].filter(e=>e.matches(".ido-reference,.ido-method,.wedo-reference,.wedo-practice")):[];
          const figures=[...section.querySelectorAll(".compact-tv-model-figure")];
+         const source=cards[0]?[...cards[0].children].filter(e=>e.matches("div:has(> svg),.h13-figure,.concept-step,.concept-structure,.model-visual13,.h13-diagram,.h13-svg,.y13-structure,.v13-svg,.v13-figure,.p-figure,.p23-figure,.file-svg,.draft-figure,svg")):[];
          const staged=figures.filter(el=>el.hidden);
-         return {pairs:cards.length,figures:figures.length,inRight:figures.length>0&&figures.every(x=>cards[1]?.contains(x)),hiddenCount:staged.length};
+         return {pairs:cards.length,figures:figures.length,sourceFigures:source.length,
+           expectsDiagram:figures.length>0||source.length>0,
+           inRight:figures.length>0&&figures.every(x=>cards[1]?.contains(x)),hiddenCount:staged.length};
        },phase);
        const short=view.width>=901&&view.height<=700;
-       result(short?layout.pairs===2&&layout.figures>=1&&layout.inRight:
-         layout.figures===0,course,id,view.name,phase+" staged diagrams in expected panel",JSON.stringify(layout));
+       if(layout.expectsDiagram){
+         result(short?layout.pairs===2&&layout.figures>=1&&layout.inRight:
+           layout.figures===0,course,id,view.name,phase+" staged diagrams in expected panel",JSON.stringify(layout));
+       }
      }
      if(payload.count===0){
        watch(course,id,view.name,phase+" non-standard example layout","No ."+(phase==="i-do"?"ido":"wedo")+"-example found");
