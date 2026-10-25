@@ -1635,6 +1635,24 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    <p class="j277-code-start">One short task: begin on your mini-whiteboard, then test when appropriate.</p>${lesson.k.paper1Ref?`<p class="source-note">Paper 1 retrieval · ${escape(lesson.k.paper1Ref)} ${escape(lesson.k.paper1Topic||"")}</p>`:""}
    <p><strong>YOUR TASK:</strong> ${escape(lesson.k.q)}</p>
    <pre class="arithmetic">${escape(lesson.k.code)}</pre>
+   ${String(number)==="057"?`<details class="j277-code-trace" data-code-first-trace="optional">
+     <summary>TEST · Optional blank trace table</summary>
+     <div class="j277-code-trace-body">
+       <p>After filling the missing loop bound, dry-run your code on a mini-whiteboard. Write the value of <code>attempt</code> and what the program prints on each pass. Only complete rows that execute.</p>
+       <div class="j277-code-trace-scroll">
+         <table aria-label="Empty trace table for the FOR loop">
+           <thead><tr><th scope="col">Loop pass</th><th scope="col">attempt</th><th scope="col">Printed message</th></tr></thead>
+           <tbody>
+             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+           </tbody>
+         </table>
+       </div>
+       <p class="j277-trace-note">Use the spare row only if your loop reaches it. Marking remains at the end of You Do.</p>
+     </div>
+   </details>`:''}
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
    ${(Number(number)>=19||String(number)==="004")&&!lesson.isAssessment?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
    </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
@@ -1955,7 +1973,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const idoSync=(lesson.visualAuditV3||lesson.year11)?'<script>(function(){const root=document.getElementById("i-do");if(!root)return;const steps=[...root.querySelectorAll(".ido-step")],scenes=[...root.querySelectorAll("[data-ido-step-visual]")];if(!steps.length||!scenes.length)return;function sync(){const active=Math.max(0,steps.findIndex(s=>!s.hidden));scenes.forEach((v,i)=>v.hidden=i!==active);}const observer=new MutationObserver(sync);steps.forEach(s=>observer.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const y11Sync=lesson.year11?'<script>(function(){document.querySelectorAll("#we-do .wedo-example").forEach(ex=>{const steps=[...ex.querySelectorAll(".wedo-step")],visuals=[...ex.querySelectorAll("[data-y11-guided-visual]")];if(!steps.length||!visuals.length)return;function sync(){const i=Math.max(0,steps.findIndex(el=>!el.hidden));visuals.forEach((v,j)=>v.hidden=i!==j)}const obs=new MutationObserver(sync);steps.forEach(x=>obs.observe(x,{attributes:true,attributeFilter:["hidden"]}));sync()})})();<\/script>':"";
- const html=sharedHead(number,lesson.t,lesson.year11)+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+ const baseHead=sharedHead(number,lesson.t,lesson.year11);
+  const pageHead=String(number)==="057"
+    ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
+    :baseHead;
+  const html=pageHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
