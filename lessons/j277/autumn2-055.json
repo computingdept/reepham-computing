@@ -351,6 +351,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "An exhibition charges £3 for children under 12 and £7 otherwise. Input age, select a price and print it.",
+        "scaffold": "age = _____\nif _____ then\n    price = _____\nelse\n    price = _____\nendif\nprint(_____)",
+        "steps": [
+          {
+            "title": "Read the age",
+            "explanation": "Integer conversion permits a numerical comparison.",
+            "code": "age = int(input(\"Age?\"))"
+          },
+          {
+            "title": "Set the child price",
+            "explanation": "Only ages below 12 enter the first branch.",
+            "code": "age = int(input(\"Age?\"))\nif age < 12 then\n    price = 3"
+          },
+          {
+            "title": "Cover all other ages",
+            "explanation": "ELSE assigns 7 when age is 12 or older, then ENDIF closes the selection.",
+            "code": "age = int(input(\"Age?\"))\nif age < 12 then\n    price = 3\nelse\n    price = 7\nendif"
+          },
+          {
+            "title": "Output the result",
+            "explanation": "Print outside the IF so both paths produce a price.",
+            "code": "age = int(input(\"Age?\"))\nif age < 12 then\n    price = 3\nelse\n    price = 7\nendif\nprint(price)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A swimming pool charges £4 under age 16 and £9 otherwise. Input age and display the price.",
+          "scaffold": "age = _____\nif _____ then\n    fee = _____\nelse\n    fee = _____\nendif\nprint(_____)",
+          "steps": [
+            {
+              "title": "Read and convert",
+              "explanation": "Ensure the input is an integer.",
+              "code": "age = int(input(\"Age?\"))"
+            },
+            {
+              "title": "First price branch",
+              "explanation": "Choose the correct strict comparison for under 16.",
+              "code": "age = int(input(\"Age?\"))\nif age < 16 then\n    fee = 4"
+            },
+            {
+              "title": "Complete both paths",
+              "explanation": "ELSE handles age 16 and above; print after ENDIF.",
+              "code": "age = int(input(\"Age?\"))\nif age < 16 then\n    fee = 4\nelse\n    fee = 9\nendif\nprint(fee)"
+            }
+          ]
+        },
+        {
+          "question": "A youth theatre charges £5 under age 18 and £11 otherwise. Input age and display the price without a detailed scaffold.",
+          "scaffold": "age = _____\n# Complete the IF/ELSE and output.",
+          "steps": [
+            {
+              "title": "Input and test",
+              "explanation": "Write the full solution before checking.",
+              "code": "age = int(input(\"Age?\"))"
+            },
+            {
+              "title": "True branch",
+              "explanation": "The test must use <, not <=, for under 18.",
+              "code": "age = int(input(\"Age?\"))\nif age < 18 then\n    cost = 5"
+            },
+            {
+              "title": "Check complete program",
+              "explanation": "Explain what prints at exactly age 18.",
+              "code": "age = int(input(\"Age?\"))\nif age < 18 then\n    cost = 5\nelse\n    cost = 11\nendif\nprint(cost)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
