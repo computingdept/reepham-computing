@@ -65,3 +65,23 @@ The Lesson 051 I Do (`m.q`, `m.st`) and We Do (`w`) in the original JSON still a
 - **Responsive layout:** I Do and We Do use half-width panels on desktop, stack on narrower screens, preserve 15–20px code, and avoid introducing internal vertical scroll for a four-line program.
 - **QA:** syntactic compilation of the updated generator succeeded, both opt-in render functions were executed against 051 data, and their output produced 4 hidden I Do stages, 2 We Do examples and 6 hidden We Do stages. Generator/body/wrapper cache references were inspected at source level.
 - **Status:** source checks passed. GitHub Pages build and *live* 1920×1080 and 390×844 browser checks must be confirmed before marking this lesson **Verified**. Do not bulk-migrate the remaining nine lessons until the pilot's behaviour is judged acceptable on Classroom TV.
+
+## Process correction — lesson-by-lesson approval is NOT the audit workflow
+
+Teacher identified a genuine J277 Lesson 051 We Do regression on 25 October: both guided examples displayed simultaneously.
+
+**Root cause:** new opt-in code-model CSS set `display:grid!important` for `#we-do.j277-code-model-phase .wedo-example`. Its greater CSS specificity overrode the shared `.wedo-example[hidden]{display:none!important}`, even though the generated HTML and shared `showOnly()` logic correctly hid the second example. The initial source check had verified the presence of `hidden` but had **not checked computed CSS visibility**. This was an avoidable test gap.
+
+**Repair applied:** drop the `!important` from the grid `display` declaration, add specific opt-in `[hidden]` guards for both example and step containers, and refresh Lesson 051's generator URL. Retain its approved coding progression, question bank and mark schemes.
+
+**Regression check:** extend `qa/master-audit-2026/classroom-tv-smoke-test.html` with CSS-computed visibility assertions for *both* courses: exactly one example rendered on phase entry, every `[hidden]` example absent from layout, and the next example alone rendered when advanced. J277 051 is an explicit test case. Separately, equivalent CSS rules were exercised in Chromium at 1920×1080 and 390×844; initial and switched example visibility both passed. This is **not** a claim that the live site was visually tested end-to-end.
+
+**Whole-course audit protocol going forward:**
+1. Inventory all J277 and H446 lesson pages/versions and label lesson type/exception. Existing `lesson-inventory.csv` and source audits remain authoritative starting points.
+2. Group issues by **shared root cause** or **pedagogical pattern** rather than soliciting teacher approval on every numbered lesson. Apply the reusable renderer/CSS fix once for all affected templates; use opt-in modes for content where a blanket change would be wrong.
+3. Run **automated source tests plus browser navigation and visibility regressions** across representative and exception sets at both standard viewports before claiming a fix. If full browser coverage is not available, label untested rather than ask the teacher to validate each lesson.
+4. Preserve existing teacher-approved content, OCR exam question banks, solutions, You Do and Code First flows unless a **documented content problem** requires change.
+5. Publish **batch summaries** with affected lesson counts, passed/failed/not-tested statuses, and a short exception queue. Raise only substantive teaching/content decisions for teacher judgment; **no lesson-by-lesson manual approval loop**.
+6. Do not stamp `Verified` solely because source compiled, GitHub Pages built, or the page URL opens.
+
+**Current status:** Lesson 051 navigation repair committed and regression checks authored. Remaining nine programming lessons still require **one coherent batch treatment**, not isolated teacher reviews. H446 specialist grids remain a separate shared-layout risk group.
