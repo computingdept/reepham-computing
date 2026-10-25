@@ -20,6 +20,12 @@ Central audit register. Started 24 October 2026.
 - J277 You Do: separate Code First; three exam-style questions; yellow command words; grouped marking on classroom TV and sequential mobile marking.
 - Do not make content or CSS changes just to redesign approved features; fix independently confirmed issues.
 
+## You Do presentation audit · 25 October 2026
+
+- [Cross-course You Do formatting audit and defect ledger](youdo-format-audit-2026-10-25.md): user-observed Lesson 001 binary SVG numbers concatenated by J277's exam-card adapter; root-cause code repair and responsive diagram grid committed; shared one-question-per-phone navigation; long H446 exam questions given own screen.
+- [Automated You Do TV/compact TV/phone regression](../../.github/workflows/youdo-presentation-audit.yml): 463 standard lesson pages, all question diagrams, visible answers and source card geometry. The latest complete sign-off remains pending until all four browser shards pass. Do not count this as part of the completed I Do / We Do audit.
+- Separate presentation exceptions remain for dense J277 phone diagrams and non-standard assessment pages. Repeated Lesson 001 number 154 is a **content-quality** exception only, left unchanged during formatting.
+
 ## Whole-course presentation audit · 25 October 2026
 
 - [Comprehensive I Do / We Do formatting report](cross-course-format-audit-2026-10-25.md) — **463 standard lessons**, three screen sizes, **26,391 passed browser checks**, zero hard failures; 41 potential compact-TV clipping warnings in 28 H446 lessons remain under review.
