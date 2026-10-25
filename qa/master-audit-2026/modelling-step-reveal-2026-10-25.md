@@ -49,3 +49,12 @@
 - The recursion SVG had numeric returns inside each row prior to the final step. Its returns column and accessible answer description now remain concealed until the last `.ido-step`/`.wedo-step` is revealed. Previously Lesson 182/183 also showed the first SVG row even while all steps were hidden; the corrected synchroniser shows none.
 - Source audit: all three files contain two `.model-grid` instances (one per phase), both diagrams are flagged pending, and both phases share explicit final-step-only answer reveal logic. Verified at the file/source level only.
 - Still pending: independent browser viewport test at 1920×1080 and 390×844, including revisit/reset, full SVG visibility and no premature answer leakage. This is not a course-wide assertion.
+
+## Code-centric modelling layout: general design rule (25 October discussion)
+- A coded I Do / We Do should keep the **actual question and relevant code continuously visible** while the teacher reveals the explanation. This is a reusable pedagogical pattern, not a requirement to copy every code diagram or code block into every lesson.
+- For trace/recursion: left = concise question + code; right = stage-by-stage explanation + progressive trace diagram/table. For debugging, left = original code; right = evidence and correction. For code-writing, left = specification/starter code; right = iterative model.
+- Ordinary concept/diagram questions stay in their existing format; source code should appear only where pupils need to inspect, trace, debug or extend it. Long code that cannot stay readable at 1920×1080 should be split into teaching stages rather than shrunken or internally scrolled.
+- H446 Lesson 181 is the layout pilot: moved the existing recursion SVG from the left reference card to the right modelling card, **outside the hidden individual worked steps**, preserving shared reveal control and final-step-only returned values. C# Factorial method remains on left. Checked balanced structural DIV/article/section markup, one SVG, three steps, and progressive return metadata in GitHub source.
+- H446 182/183 remain untouched during this pilot: their existing corrected half-width layouts were accepted.
+- The broader rollout must use an audited opt-in content mode; do not globally move every code/diagram node based solely on HTML tags or edit all lessons without content QA.
+- Live TV/mobile visual verification remains outstanding for the revised H446 181 pilot.
