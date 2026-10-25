@@ -349,6 +349,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A tuck shop sells three £2 snacks. Use an OCR ERL FOR loop to accumulate and display the cost.",
+        "scaffold": "total = _____\nfor i = _____\n    total = _____\nnext i\nprint(_____)",
+        "steps": [
+          {
+            "title": "Initialise total",
+            "explanation": "Begin with zero so the accumulator does not contain an unknown value.",
+            "code": "total = 0"
+          },
+          {
+            "title": "Repeat exactly three times",
+            "explanation": "The inclusive range 1 to 3 executes three times.",
+            "code": "total = 0\nfor i = 1 to 3"
+          },
+          {
+            "title": "Update on each pass",
+            "explanation": "Add £2 inside the loop; NEXT i closes the counted repetition.",
+            "code": "total = 0\nfor i = 1 to 3\n    total = total + 2\nnext i"
+          },
+          {
+            "title": "Display the result",
+            "explanation": "The total is 6; print after the loop, not on each pass.",
+            "code": "total = 0\nfor i = 1 to 3\n    total = total + 2\nnext i\nprint(total)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A cinema sells four £3 posters. Use a FOR loop to calculate and print the total.",
+          "scaffold": "total = _____\nfor i = _____\n    total = _____\nnext i\nprint(_____)",
+          "steps": [
+            {
+              "title": "Set up accumulator",
+              "explanation": "What value should total begin with?",
+              "code": "total = 0"
+            },
+            {
+              "title": "Complete four loop passes",
+              "explanation": "Explain why 1 to 4 runs four times and updates in the loop.",
+              "code": "total = 0\nfor i = 1 to 4\n    total = total + 3\nnext i"
+            },
+            {
+              "title": "Print the final total",
+              "explanation": "Show a trace of total: 3, 6, 9, 12.",
+              "code": "total = 0\nfor i = 1 to 4\n    total = total + 3\nnext i\nprint(total)"
+            }
+          ]
+        },
+        {
+          "question": "A club collects five £2 entry fees. Write OCR ERL to use a counted loop and display the total, without a full scaffold.",
+          "scaffold": "total = _____\n# Build a counted loop and output.",
+          "steps": [
+            {
+              "title": "Plan total",
+              "explanation": "Write the complete solution on your mini-whiteboard.",
+              "code": "total = 0"
+            },
+            {
+              "title": "Build the loop",
+              "explanation": "Explain why the updated total is inside the loop.",
+              "code": "total = 0\nfor count = 1 to 5\n    total = total + 2\nnext count"
+            },
+            {
+              "title": "Check output",
+              "explanation": "Use a trace to confirm 10 is printed.",
+              "code": "total = 0\nfor count = 1 to 5\n    total = total + 2\nnext count\nprint(total)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
