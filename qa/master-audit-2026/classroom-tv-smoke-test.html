@@ -107,27 +107,41 @@ async function run(){
      result(!!g.querySelector('.j277-code-first'),'Code First remains separate');
      result(![...g.querySelectorAll('.youdo-solution')].some(e=>!e.hidden),'Mark schemes initially concealed');
      if(num==='002'){
-       result(g.querySelectorAll('.youdo-question svg').length===0,
-         'J277 002 removes duplicate SVG diagrams from independent exam questions');
-       const q=g.querySelector('.j277-sm-question');
-       result(!!q && !/128\s*64\s*32|128·|00\?64/i.test(q.textContent),
-         'J277 002 examination text excludes SVG column labels',q?.textContent?.slice(0,90)||'missing');
-       result(!!q && /carries\.\s+0{3,}/i.test(q.textContent),
-         'J277 002 question has separation between instruction and binary values');
+       const examSvg=[...g.querySelectorAll('.j277-sm-question-only .j277-sm-visual svg')];
+       const stages=[...g.querySelectorAll('.youdo-rolling > .youdo-question')];
+       const reviews=[...g.querySelectorAll('.youdo-rolling > .j277-sm-review')];
+       result(examSvg.length===3,'Lesson 002 preserves one SVG per Q2/Q3/Q4',
+         'SVG count '+examSvg.length);
+       result(stages.length===8&&reviews.length===4,
+         'Code First and Q2–Q4 precede four separate marking screens',
+         stages.length+' screens; '+reviews.length+' review screens');
+       result(!stages.slice(0,4).some(e=>e.querySelector('.youdo-solution')),
+         'Independent questions contain no embedded marking panels');
+       result(reviews.every(x=>x.hidden),'Marking stages are hidden initially');
+       const prompts=[...g.querySelectorAll('.j277-sm-question-only .j277-sm-question')];
+       result(prompts.length===3&&prompts.every(x=>!/\b128\s*64\s*32|128·|00\?64/i.test(x.textContent)),
+         'SVG column labels do not pollute independent question text');
        const progress=g.querySelector('.youdo-window-progress');
        result(!!progress && getComputedStyle(progress).position==='static',
-         'J277 002 progress is part of layout, not floating over lesson footer');
+         'Question/answer counter participates in layout above the card');
        const next=d.getElementById('advance');
-       const grouped=[...g.querySelectorAll('.j277-sm-group')];
-       if(next&&grouped.length){
-         for(let attempt=0;attempt<5&&grouped.every(el=>el.hidden);attempt++){next.click();await delay(45)}
-         const shown=grouped.find(el=>!el.hidden);
-         if(shown&&progress){
-           const c=shown.getBoundingClientRect(),pRect=progress.getBoundingClientRect();
-           result(pRect.height>0 && pRect.bottom<=c.top+8,
-             'J277 002 answer/question progress sits above exam card',
-             'counter bottom '+Math.round(pRect.bottom)+'px, card top '+Math.round(c.top)+'px');
-         }else result(false,'J277 002 exam card navigation','Grouped exam card did not become visible');
+       if(next&&stages.length===8){
+         for(let step=1;step<=4;step++){
+           next.click();await delay(65);
+           result(stages[step].hidden===false,'Lesson 002 navigation screen '+(step+1)+' visible');
+           if(step<=3)result(reviews.every(x=>x.hidden),'No model answers before completion of Q4');
+         }
+         result(reviews[0].hidden===false,'Self-marking starts only after Q4');
+         if(progress){
+           const card=stages[4].getBoundingClientRect(),counter=progress.getBoundingClientRect();
+           result(counter.height>0&&counter.bottom<=card.top+8,
+             'Answer counter is above marking card',
+             'counter bottom '+Math.round(counter.bottom)+'px; card top '+Math.round(card.top)+'px');
+         }
+         const previous=d.getElementById('previous');
+         previous.click();await delay(70);
+         result(!stages[3].hidden&&reviews.every(x=>x.hidden),
+           'Previous returns to final independent question without showing answers');
        }
      }
      if(mobile){
