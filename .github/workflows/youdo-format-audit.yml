@@ -1,0 +1,51 @@
+name: J277 and H446 You Do formatting audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'qa/master-audit-2026/youdo-format-regression.cjs'
+      - '.github/workflows/youdo-format-audit.yml'
+      - 'assets/h446-lesson/lesson.js'
+      - 'assets/h446-lesson/lesson-classroom.css'
+      - 'lessons/j277/lesson-*/index.html'
+      - 'lessons/h446/lesson-*/index.html'
+
+permissions:
+  contents: read
+
+jobs:
+  youdo-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Audit all standard lesson You Do pages at TV, compact TV, mobile
+        env:
+          QA_SHARDS: '4'
+          QA_SHARD: '${{ matrix.shard }}'
+          QA_REPORT: 'qa-output/youdo-shard-${{ matrix.shard }}.json'
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/rhsc-youdo.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/youdo-format-regression.cjs
+      - name: Upload measured question and SVG evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youdo-shard-${{ matrix.shard }}
+          path: qa-output/youdo-shard-${{ matrix.shard }}.json
+          if-no-files-found: warn
