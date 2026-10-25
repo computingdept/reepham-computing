@@ -351,6 +351,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A workshop charges £0 under age 6, £3 for ages 6–15, and £8 otherwise. Choose a fee from an integer age and display it.",
+        "scaffold": "if _____ then\n    fee = _____\nelseif _____ then\n    fee = _____\nelse\n    fee = _____\nendif\nprint(_____)",
+        "steps": [
+          {
+            "title": "First age band",
+            "explanation": "The first true condition assigns the free price.",
+            "code": "if age < 6 then\n    fee = 0"
+          },
+          {
+            "title": "Next unmatched band",
+            "explanation": "After the first branch fails, age < 16 covers ages 6–15.",
+            "code": "if age < 6 then\n    fee = 0\nelseif age < 16 then\n    fee = 3"
+          },
+          {
+            "title": "Else handles adults",
+            "explanation": "ELSE covers all remaining values; only one branch runs.",
+            "code": "if age < 6 then\n    fee = 0\nelseif age < 16 then\n    fee = 3\nelse\n    fee = 8\nendif"
+          },
+          {
+            "title": "Print the selected fee",
+            "explanation": "Print once after ENDIF.",
+            "code": "if age < 6 then\n    fee = 0\nelseif age < 16 then\n    fee = 3\nelse\n    fee = 8\nendif\nprint(fee)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A climbing club charges £0 under 5, £6 for ages 5–17, £10 otherwise. Use integer age and print price.",
+          "scaffold": "if _____ then\n    price = _____\nelseif _____ then\n    price = _____\nelse\n    price = _____\nendif\nprint(_____)",
+          "steps": [
+            {
+              "title": "Under-five group",
+              "explanation": "The first condition is checked before any other.",
+              "code": "if age < 5 then\n    price = 0"
+            },
+            {
+              "title": "Second age band",
+              "explanation": "ELSEIF is only checked if the first IF is false.",
+              "code": "if age < 5 then\n    price = 0\nelseif age < 18 then\n    price = 6"
+            },
+            {
+              "title": "Complete all branches",
+              "explanation": "ELSE and ENDIF complete selection; output once.",
+              "code": "if age < 5 then\n    price = 0\nelseif age < 18 then\n    price = 6\nelse\n    price = 10\nendif\nprint(price)"
+            }
+          ]
+        },
+        {
+          "question": "A cinema charges £2 for under-4s, £7 for ages 4–14, and £12 otherwise. Use age; code it before viewing the completed model.",
+          "scaffold": "if _____ then\n    # Write the remaining branches yourself.",
+          "steps": [
+            {
+              "title": "First boundary",
+              "explanation": "Use a strict less-than comparison.",
+              "code": "if age < 4 then\n    price = 2"
+            },
+            {
+              "title": "Next boundary",
+              "explanation": "The next band must exclude the first and include age 14.",
+              "code": "if age < 4 then\n    price = 2\nelseif age < 15 then\n    price = 7"
+            },
+            {
+              "title": "Review full program",
+              "explanation": "Check prices at ages 3, 4, 14 and 15.",
+              "code": "if age < 4 then\n    price = 2\nelseif age < 15 then\n    price = 7\nelse\n    price = 12\nendif\nprint(price)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
