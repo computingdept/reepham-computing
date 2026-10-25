@@ -7,18 +7,18 @@
   if(!/\/lessons\/h446\/lesson-\d{3}\//.test(location.pathname))return;
   const compact=window.matchMedia("(min-width:901px) and (max-height:700px)");
   const pairs=[];
-  const figureSelector=":scope > .h13-figure,:scope > .concept-step,:scope > .concept-structure,:scope > .model-visual13,:scope > .h13-diagram,:scope > .h13-svg,:scope > .y13-structure,:scope > svg";
+  const figureSelector=".h13-figure,.concept-step,.concept-structure,.model-visual13,.h13-diagram,.h13-svg,.y13-structure,.v13-svg,.v13-figure,.p-figure,.p23-figure,.file-svg,.draft-figure,svg";
   function bootstrap(){
     for(const phase of ["i-do","we-do"]){
       const section=document.getElementById(phase);
       if(!section)continue;
       const model=section.querySelector(".ido-example,.wedo-example");
-      const grid=model?.querySelector(".h13-grid,.s-grid");
+      const grid=model?.querySelector(".h13-grid,.s-grid,.v13-grid,.p-grid,.p23-grid");
       if(!grid)continue;
-      const panels=[...grid.children].filter(el=>el.matches(".h13-pane,.h13-panel,.s-panel"));
+      const panels=[...grid.children].filter(el=>el.matches(".h13-pane,.h13-panel,.s-panel,.v13-panel,.p-panel,.p23-panel"));
       if(panels.length!==2)continue;
       const [reference,worked]=panels;
-      const figures=[...reference.children].filter(el=>el.matches(figureSelector.replaceAll(":scope > ","")));
+      const figures=[...reference.children].filter(el=>el.matches(figureSelector));
       if(!figures.length)continue;
       const items=figures.map(node=>{
         const placeholder=document.createComment("compact TV diagram original position");
