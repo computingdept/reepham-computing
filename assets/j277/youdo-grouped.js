@@ -80,11 +80,65 @@ function installFromData(original,pilot,master){
  // Lesson 002's binary place-value diagram belongs in teaching, not in
  // its independent exam question card. It was being squeezed and duplicated.
  var questions=qs.slice(0,3).map(function(q,i){
-   var fig=n==="002"?null:existing[i]&&existing[i].querySelector("svg");
-   return oneQuestion(q,i,fig?fig.outerHTML:"");
+   var fig=existing[i]&&existing[i].querySelector("svg");
+   var item=oneQuestion(q,i,fig?fig.outerHTML:"");
+   if(n==="002"){
+     // The SVG shows both operands. Avoid repeating them as cramped text.
+     item.body=item.body.replace(/^\s*[01]{8}\s*\+\s*[01]{8}\s*$/gm,"").trim();
+     if(q[1]&&typeof q[1]==="object"){
+       item.answer=String(q[1].answer||"");
+       item.answerVisual=String(q[1].visual||"");
+     }
+   }
+   return item;
  });
  var entry=master&&master.lessons&&master.lessons[n];
  if(!entry){console.warn("J277 self-mark: Code First missing for",n);return}
+ // Lesson 002 pilot: all questions first, all self-marking afterwards.
+ // Review screens are distinct siblings, never answer panels beneath questions.
+ if(n==="002"){
+   var makeStage=function(klass,body){
+     var el=document.createElement("article");
+     el.className="exam-card youdo-question "+klass;
+     el.hidden=true;el.innerHTML=body;return el;
+   };
+   var nodes=[code];
+   questions.forEach(function(q){
+     nodes.push(makeStage("j277-sm-group j277-sm-question-only",
+       '<div class="j277-sm-grid one j277-sm-questions">'+questionCard(q,0)+'</div>'));
+   });
+   nodes.push(makeStage("j277-sm-review",
+     '<div class="j277-sm-toolbar">SELF-MARKING · CODE FIRST</div>'+
+     '<div class="j277-sm-card j277-sm-review-card"><strong>Predict the number printed.</strong>'+
+     '<pre class="j277-sm-code">'+esc(entry.model)+'</pre>'+
+     '<div class="j277-sm-total">Expected output: '+esc(entry.expected)+'</div></div>'));
+   questions.forEach(function(q){
+     nodes.push(makeStage("j277-sm-review",
+       '<div class="j277-sm-toolbar">SELF-MARKING · '+esc(q.name)+'</div>'+
+       '<div class="j277-sm-grid one j277-sm-answers"><section class="j277-sm-card j277-sm-review-card">'+
+       '<div class="j277-sm-card-head"><strong>'+esc(q.name)+' · WORKED ANSWER</strong></div>'+
+       (q.answerVisual?'<div class="j277-sm-visual">'+q.answerVisual+'</div>':'')+
+       '<div class="j277-sm-model">'+esc(q.answer)+'</div>'+
+       '<div class="j277-sm-note">Check your method and correct any errors.</div></section></div>'));
+   });
+   deck.replaceChildren.apply(deck,nodes);
+   host.dataset.windowSize="1";
+   host.dataset.codingFirst="true";
+   host.dataset.j277SeparateReview="true";
+   host.dataset.j277ReviewStart="4";
+   host.dataset.windowStart="0";
+   host.dataset.workMode="independent";
+   delete host.dataset.answerMode;
+   delete host.dataset.answerIndex;
+   host.classList.add("j277-sm-ready");
+   nodes.forEach(function(el,i){el.hidden=i!==0});
+   var counter=host.querySelector(".youdo-window-progress");
+   if(counter)counter.textContent="";
+   // Re-entering the phase is handled by the shared engine's reset.
+   var nav=document.querySelector('.phase-nav [data-page="you-do"]');
+   if(nav&&nav.classList.contains("active"))nav.click();
+   return;
+ }
  // Authoritative reviewed Code First answer comes from the J277-only task bank.
  var model=code.querySelector(".youdo-solution");
  if(!model){model=document.createElement("div");model.className="youdo-solution";model.hidden=true;code.appendChild(model)}
@@ -166,7 +220,15 @@ if(!dataPath){
       var doc=new DOMParser().parseFromString(text,"text/html");
       var stages=[...doc.querySelectorAll(".answer-stage")].slice(1,4);
       if(stages.length!==3)throw Error("Expected three exam marking stages");
-      return stages.map(function(x){return (x.querySelector(".solution-card")||x).textContent.trim()});
+      return stages.map(function(x){
+        const card=x.querySelector(".solution-card")||x;
+        if(n==="002"){
+          const svg=card.querySelector("svg");
+          const explanation=[...card.querySelectorAll("pre.solution-code, p")].map(function(el){return el.textContent.trim()}).filter(Boolean).join("\n");
+          return {answer:explanation,visual:svg?svg.outerHTML:""};
+        }
+        return card.textContent.trim();
+      });
     });
   }
   Promise.all([getOriginalAnswers(),json("../code-first-master-20261021.json")]).then(function(v){
