@@ -46,7 +46,7 @@
       const illustration=cycle.querySelector("img.j277-code-cycle-graphic");
       if(illustration){
         try{
-          const r=await fetch("../../../assets/j277/code-first-cycle.svg?v=20261025-task-focus1");
+          const r=await fetch("../../../assets/j277/code-first-cycle.svg?v=20261025-trace-or-run1");
           if(!r.ok)throw Error("Code First vector unavailable");
           const documentSvg=new DOMParser().parseFromString(await r.text(),"image/svg+xml");
           if(documentSvg.querySelector("parsererror"))throw Error("Invalid cycle SVG");
