@@ -348,6 +348,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A school asks for a rating from 1 to 5 inclusive. Keep asking while the integer rating is invalid, then print Accepted.",
+        "scaffold": "rating = _____\nwhile _____\n    rating = _____\nendwhile\nprint(\"Accepted\")",
+        "steps": [
+          {
+            "title": "First input",
+            "explanation": "The test requires a numeric rating, so cast the input to int.",
+            "code": "rating = int(input(\"Rating?\"))"
+          },
+          {
+            "title": "Write the invalid condition",
+            "explanation": "A rating is invalid below 1 OR above 5.",
+            "code": "rating = int(input(\"Rating?\"))\nwhile rating < 1 OR rating > 5"
+          },
+          {
+            "title": "Re-read within the loop",
+            "explanation": "Update rating inside the WHILE to avoid an infinite loop.",
+            "code": "rating = int(input(\"Rating?\"))\nwhile rating < 1 OR rating > 5\n    rating = int(input(\"Try again:\"))\nendwhile"
+          },
+          {
+            "title": "Output after validation",
+            "explanation": "A valid rating exits the loop before Accepted is displayed.",
+            "code": "rating = int(input(\"Rating?\"))\nwhile rating < 1 OR rating > 5\n    rating = int(input(\"Try again:\"))\nendwhile\nprint(\"Accepted\")"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "Enter a school-house number from 1 to 4. Re-prompt while the integer is outside that range, then print Ready.",
+          "scaffold": "house = _____\nwhile _____\n    house = _____\nendwhile\nprint(\"Ready\")",
+          "steps": [
+            {
+              "title": "Input and convert",
+              "explanation": "Enter a number first before testing the loop.",
+              "code": "house = int(input(\"House?\"))"
+            },
+            {
+              "title": "Condition and repeat input",
+              "explanation": "Both out-of-range cases are joined by OR; update the stored number.",
+              "code": "house = int(input(\"House?\"))\nwhile house < 1 OR house > 4\n    house = int(input(\"Again:\"))"
+            },
+            {
+              "title": "Finish and check",
+              "explanation": "Explain what happens when the initial input is already valid.",
+              "code": "house = int(input(\"House?\"))\nwhile house < 1 OR house > 4\n    house = int(input(\"Again:\"))\nendwhile\nprint(\"Ready\")"
+            }
+          ]
+        },
+        {
+          "question": "A quiz accepts difficulty levels 1, 2 or 3. Input an integer, repeat until valid, then print Start. Build it without blanks.",
+          "scaffold": "level = _____\n# Complete the validation loop and output.",
+          "steps": [
+            {
+              "title": "Read a level",
+              "explanation": "Write your full solution before revealing any stages.",
+              "code": "level = int(input(\"Level?\"))"
+            },
+            {
+              "title": "Write the repeat-until-valid behaviour",
+              "explanation": "The same variable must be updated on every invalid entry.",
+              "code": "level = int(input(\"Level?\"))\nwhile level < 1 OR level > 3\n    level = int(input(\"Choose again:\"))"
+            },
+            {
+              "title": "Self-check",
+              "explanation": "Check values 0, 1 and 4 to trace both outcomes.",
+              "code": "level = int(input(\"Level?\"))\nwhile level < 1 OR level > 3\n    level = int(input(\"Choose again:\"))\nendwhile\nprint(\"Start\")"
+            }
+          ]
+        }
+      ]
     }
   }
 }
