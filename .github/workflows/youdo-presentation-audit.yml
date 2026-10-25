@@ -1,0 +1,47 @@
+name: J277 H446 You Do presentation audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'qa/master-audit-2026/youdo-presentation-regression.cjs'
+      - '.github/workflows/youdo-presentation-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  youdo-viewport-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Scan all standard lessons
+        env:
+          QA_SHARDS: '4'
+          QA_SHARD: '${{ matrix.shard }}'
+          QA_REPORT: 'qa-output/youdo-shard-${{ matrix.shard }}.json'
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/youdo-audit-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/youdo-presentation-regression.cjs
+      - name: Upload browser audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youdo-presentation-shard-${{ matrix.shard }}
+          path: qa-output/youdo-shard-${{ matrix.shard }}.json
+          if-no-files-found: warn
