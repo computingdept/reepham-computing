@@ -1600,6 +1600,12 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  }
 
  function iDo(lesson){
+  // Explicit opt-in: keep the coding question/scaffold visible while model ERL builds one step at a time.
+  if(lesson.codeModelling && lesson.codeModelling.ido){
+    const m=lesson.codeModelling.ido;
+    const steps=arr(m.steps,(item,i)=>'<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p><pre class="j277-model-code j277-model-result"><code>'+escape(item.code)+'</code></pre></div>');
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">STARTER · BLANKS TO COMPLETE</p><pre class="j277-model-code j277-model-starter"><code>'+escape(m.scaffold)+'</code></pre><p class="j277-code-scaffold-note">The blanks are planning prompts, not executable ERL.</p></div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+  }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span>${isCpu?`<h2>${escape(headings[i]||"Explain the method")}</h2><p>${examWords(lesson,step)}</p>`:`<h2>${escape(step)}</h2>`}</div>`);
@@ -1612,6 +1618,14 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
+  // Explicit opt-in: guide short ERL programs through mini-whiteboard stages, fading the scaffold.
+  if(lesson.codeModelling && Array.isArray(lesson.codeModelling.wedo)){
+    const cases=arr(lesson.codeModelling.wedo,(item,i)=>{
+      const stages=arr(item.steps,(step,j)=>'<div class="wedo-step" hidden><span class="wedo-step-label">STEP '+(j+1)+' OF '+item.steps.length+'</span><h2>'+escape(step.title)+'</h2><p>'+escape(step.explanation)+'</p><pre class="j277-model-code j277-model-result"><code>'+escape(step.code)+'</code></pre></div>');
+      return '<article class="wedo-example"'+(i?' hidden':'')+'><div class="wedo-reference"><span class="phase-tag">WE DO '+(i+1)+' OF '+lesson.codeModelling.wedo.length+' · MINI-WHITEBOARDS</span><h2>'+escape(item.question)+'</h2><p class="j277-code-scaffold-label">STARTER · TRY BEFORE REVEAL</p><pre class="j277-model-code j277-model-starter"><code>'+escape(item.scaffold)+'</code></pre><p class="j277-code-scaffold-note">Complete the missing instructions on your mini-whiteboard first.</p></div><div class="wedo-practice"><span class="phase-tag">GUIDED CHECK · REVEAL EACH STAGE</span>'+stages+'</div></article>';
+    });
+    return '<section id="we-do" class="page phase-wedo j277-code-model-phase" data-phase-time="Guided coding" data-guided-steps="true"><div class="wedo-focus-deck">'+cases+'</div></section>';
+  }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const topics=lesson.wTitles||["Compare the processors","Clock speed","Cache size"];
   const views=lesson.wVisuals||["cpu-we-compare","cpu-speed","cpu-cache"];
@@ -1948,7 +1962,60 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      max-height:none;
    }
  }
- </style>`;
+ 
+ /* Opt-in J277 coding model: persistent reference and incrementally revealed code. */
+ #i-do.j277-code-model-phase .ido-example,
+ #we-do.j277-code-model-phase .wedo-example{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+   align-items:start;gap:clamp(12px,1.35vw,22px);width:100%;max-width:none;
+ }
+ #i-do.j277-code-model-phase .ido-reference,
+ #i-do.j277-code-model-phase .ido-method,
+ #we-do.j277-code-model-phase .wedo-reference,
+ #we-do.j277-code-model-phase .wedo-practice{
+   min-width:0;max-width:none;overflow:visible;
+   padding:clamp(12px,1.2vw,20px);
+ }
+ #i-do.j277-code-model-phase h2,
+ #we-do.j277-code-model-phase h2{
+   font-size:clamp(19px,1.75vw,27px);
+   line-height:1.24;margin:8px 0 10px;
+ }
+ #i-do.j277-code-model-phase p,
+ #we-do.j277-code-model-phase p{
+   font-size:clamp(16px,1.2vw,20px);line-height:1.34;margin:8px 0;
+ }
+ .j277-code-model-phase .j277-code-scaffold-label{
+   font-size:clamp(12px,.85vw,15px)!important;font-weight:850;letter-spacing:.04em;
+   color:#286e53;margin:16px 0 6px!important;
+ }
+ .j277-code-model-phase .j277-code-scaffold-note{
+   font-size:clamp(13px,.9vw,16px)!important;color:#52675d;
+ }
+ .j277-code-model-phase pre.j277-model-code{
+   box-sizing:border-box;display:block;min-width:0;width:100%;
+   margin:8px 0 10px;padding:clamp(10px,1.1vw,15px);
+   font:600 clamp(15px,1.23vw,20px)/1.5 Consolas,"Liberation Mono",monospace;
+   white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible;
+   background:#153044;color:#f7fcff;border-radius:9px;
+ }
+ .j277-code-model-phase pre.j277-model-starter{
+   background:#f3f8f5;color:#1b392f;border:1px solid #b6d2c4;
+ }
+ @media(max-width:900px){
+   #i-do.j277-code-model-phase .ido-example,
+   #we-do.j277-code-model-phase .wedo-example{
+     grid-template-columns:minmax(0,1fr)!important;
+   }
+   #i-do.j277-code-model-phase .ido-reference,
+   #i-do.j277-code-model-phase .ido-method,
+   #we-do.j277-code-model-phase .wedo-reference,
+   #we-do.j277-code-model-phase .wedo-practice{
+     height:auto;max-height:none;
+   }
+ }
+</style>`;
  const sharedHead=(number,title,year11=false)=>`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson ${number} · ${escape(title)}</title><meta name="description" content="OCR J277 Year ${year11?11:10} lesson ${number}: ${escape(title)}.">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
