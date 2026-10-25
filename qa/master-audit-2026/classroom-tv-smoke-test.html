@@ -65,7 +65,7 @@ function result(ok,label,detail=''){
  findings.push((ok===true?'PASS':ok===false?'FAIL':'CHECK')+' — '+label+(detail?' ('+detail+')':''));
  const li=document.createElement('li');li.className=css;li.textContent=findings[findings.length-1];$('checks').appendChild(li);
 }
-function readyDoc(){const d=frame.contentDocument;return d&&d.querySelector('#you-do')&&d.querySelector('#do-now')?d:null}
+function readyDoc(){const d=frame.contentDocument,w=frame.contentWindow;return d&&d.readyState==='complete'&&d.querySelector('#you-do')&&d.querySelector('#do-now')&&typeof w?.H446OptionalBridge?.state==='function'?d:null}
 async function run(){
  const [course,num]=$('lesson').value.split(':'),isGcse=course==='j277',special=num==='113',exception=new Set(['018','035','050','078','094','113','120','143','156','157']).has(num);
  const mobile=$('viewport').value==='mobile',size=mobile?[390,844]:[1920,1080];
@@ -86,9 +86,14 @@ async function run(){
  const nav=d.querySelector('.phase-nav [data-page="you-do"]');
  result(!!nav,'You Do phase-navigation button present');
  if(nav)nav.click();
- await delay(120);
+ // The section exists even while hidden (display:none): presence is not visibility.
+ // Wait for the shared engine to activate it and for layout to acquire a real width.
+ const visibleYouDo=await until(()=>{
+   const el=d.getElementById('you-do');
+   return el?.classList.contains('active')&&el.getBoundingClientRect().width>0?el:null;
+ },5000);
  const p=d.getElementById('you-do');
- result(!!p&&!p.hidden,'You Do phase available');
+ result(!!visibleYouDo,'You Do visible after selection',visibleYouDo?'width '+Math.round(visibleYouDo.getBoundingClientRect().width)+'px':'phase '+String(frame.contentWindow?.H446OptionalBridge?.state?.()||'unavailable')+', width '+Math.round(p?.getBoundingClientRect().width||0)+'px');
  if(isGcse&&!exception){
    const g=await until(()=>d.querySelector('#you-do.j277-sm-ready'),8000);
    result(!!g,'Adaptive J277 examination layout initialised');
@@ -112,10 +117,11 @@ async function run(){
  }else if(exception){
    result(null,'Special-case lesson','Excluded from ordinary J277 grouped-question transform');
  }
- const active=d.querySelector('#you-do');
- if(active){
-   const rect=active.getBoundingClientRect();
-   result(rect.width>0,'You Do content has measurable width','width '+Math.round(rect.width)+'px');
+ // Do not re-measure a hidden phase after an interaction has advanced elsewhere.
+ // The visibility/width assertion was already done immediately after selection.
+ const phaseAfterChecks=frame.contentWindow?.H446OptionalBridge?.state?.();
+ if(phaseAfterChecks!=='you-do'){
+   result(null,'You Do final width','Skipped because another phase is active ('+String(phaseAfterChecks||'unknown')+'); use the initial visible-width result');
  }
  await checkExitTicket(d,course,num);
  finish();
