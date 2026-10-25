@@ -1481,6 +1481,34 @@ body:has(.course-back[href*="h446-hub"]) .wedo-example > :is(.h446-grid,.algorit
   max-width:none;
   width:100%;
 }
+
+/* H446 mobile: long database field names and identifiers must wrap inside
+   their teaching panels, never expand the entire page beyond the viewport.
+   This changes presentation only; model questions and code remain unchanged. */
+@media(max-width:700px){
+  body:has(.course-back[href*="h446-hub"]) :is(#i-do,#we-do)
+    :is(.ido-example,.wedo-example,.ido-reference,.wedo-reference,.ido-method,.wedo-practice,
+        .h13-grid,.h13-pane,.guided-example,.h446-grid,.h446-panel,
+        .algorithm-grid,.algorithm-panel,.route-grid,.route-pane){
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  body:has(.course-back[href*="h446-hub"]) :is(#i-do,#we-do)
+    :is(h2,h3,p,.focus-code){
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  body:has(.course-back[href*="h446-hub"]) :is(#i-do,#we-do)
+    :is(pre,.arithmetic,.h13-code,.h446-code,.route-code){
+    box-sizing:border-box;
+    min-width:0;
+    max-width:100%;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    overflow-x:auto;
+  }
+}
 /* Plain generated You Do prompts need the same readable grouping as cards. */
 body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(.exam-card){
   background:#fff;border:1px solid var(--line);border-radius:12px;
