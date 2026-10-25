@@ -2,6 +2,7 @@
 const { chromium } = require("playwright");
 const ids = ["020","083","125","192","255","262","197","191"];
 const base = process.env.QA_ORIGIN || "http://127.0.0.1:8765";
+(async()=>{
 const b = await chromium.launch({headless:true,args:["--no-sandbox"]});
 let records=[];
 try{
@@ -28,3 +29,5 @@ try{
   }
 }finally{await b.close();}
 console.log("COMPACT_DIAG_SUMMARY "+JSON.stringify({count:records.length}));
+
+})().catch(e=>{console.error(e);process.exitCode=1});
