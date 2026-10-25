@@ -133,6 +133,31 @@ async function run(){
      result(!!g.querySelector('.j277-code-first'),'Code First remains separate');
      result(![...g.querySelectorAll('.youdo-solution')].some(e=>!e.hidden),'Mark schemes initially concealed');
      if(num==='002'){
+       const routine=g.querySelector('.j277-code-first .j277-code-cycle');
+       const first=g.querySelector('.j277-code-first .j277-code-prompt');
+       const program=g.querySelector('.j277-code-first pre.arithmetic');
+       const routineMobile=[...g.querySelectorAll('.j277-code-cycle-mobile [data-code-first-step]')];
+       result(!!routine&&routine.dataset.focus==='predict',
+         'Lesson 002 Code First cycle automatically selects PREDICT');
+       result(!!first&&!!program&&first.compareDocumentPosition(routine)&Node.DOCUMENT_POSITION_FOLLOWING,
+         'Coding question and ERL come before the cycle illustration');
+       result(routineMobile.length===4&&routineMobile.filter(x=>x.classList.contains('is-active')).length===1
+         &&routineMobile.find(x=>x.classList.contains('is-active'))?.dataset.codeFirstStep==='predict',
+         'Mobile coding cycle contains four steps and highlights Predict');
+       if(routine){
+         const svg=await until(()=>routine.querySelector('svg'),8000);
+         result(!!svg,'Coding cycle loads as scalable SVG');
+         if(svg){
+           const stages=[...svg.querySelectorAll('[data-cycle-step]')];
+           result(stages.length===4 && stages.filter(x=>x.classList.contains('is-active')).length===1
+             &&stages.find(x=>x.classList.contains('is-active'))?.getAttribute('data-cycle-step')==='predict',
+             'SVG step emphasis matches authored Predict task');
+           const isVisible=getComputedStyle(svg).display!=='none';
+           result(mobile?!isVisible:isVisible,'SVG/compact cycle responds to mobile viewport');
+         }
+       }
+     }
+     if(num==='002'){
        const commandMarks=[...g.querySelectorAll('.j277-sm-question-only mark.j277-sm-command')];
        result(commandMarks.length>=1&&commandMarks.every(el=>getComputedStyle(el).backgroundImage.includes('data:image/svg+xml')),
          'J277 002 OCR command words also use hand-drawn yellow');
