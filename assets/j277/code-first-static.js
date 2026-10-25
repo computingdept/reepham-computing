@@ -6,7 +6,7 @@
   if(!match)return;
   const num=match[1],esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   try{
-    const response=await fetch("../../../lessons/j277/code-first-master-20261021.json?v=20261021-release1");
+    const response=await fetch("../../../lessons/j277/code-first-master-20261021.json?v=20261025-stage-map1");
     if(!response.ok)throw Error("Code First bank unavailable");
     const item=(await response.json()).lessons[num];
     if(!item)throw Error("Code First task missing: "+num);
