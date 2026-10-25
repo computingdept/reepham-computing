@@ -165,6 +165,35 @@ async function test(browser,target,view){
     if(d.overlaps>0)warn("Question SVG text overlaps",where,JSON.stringify(d));
     if(d.width<300 && d.textCount>=12)warn("Dense question SVG needs legibility review",where,JSON.stringify(d));
   }
+  if(course==="j277"&&id==="001"){
+    const pv=await page.evaluate(view=>{
+      const sect=document.getElementById("you-do");
+      const cards=[...sect.querySelectorAll(".youdo-question")];
+      const old=cards.map(q=>q.hidden);
+      // Simulate actual Q2–Q4 classroom grouping; phones show Q3 by itself.
+      cards.forEach((q,i)=>q.hidden=view==="phone"?i!==2:!(i>=1&&i<=3));
+      const question=cards[2];
+      const shell=question?.querySelector(".j277-place-value-shell");
+      const orig=shell?.querySelector(".j277-place-value-original");
+      const responsive=shell?.querySelector(".j277-place-value-responsive");
+      const visible=el=>!!el && getComputedStyle(el).display!=="none" && el.getBoundingClientRect().width>0;
+      const result={shellWidth:Math.round(shell?.getBoundingClientRect().width||0),
+        originalVisible:visible(orig),responsiveVisible:visible(responsive),
+        cells:responsive?.querySelectorAll(".j277-place-value-cell").length||0,
+        labels:[...responsive?.querySelectorAll(".j277-place-value-label")||[]].map(x=>x.textContent),
+        bits:[...responsive?.querySelectorAll(".j277-place-value-bit")||[]].map(x=>x.textContent),
+        columns:responsive?getComputedStyle(responsive).gridTemplateColumns:""};
+      cards.forEach((q,i)=>q.hidden=old[i]);
+      return result;
+    },view.name);
+    console.log("YOUDO_PV_001 "+JSON.stringify({view:view.name,...pv}));
+    record(pv.cells===8,"Lesson 001 Q3 has eight responsive place-value cells",where,JSON.stringify(pv));
+    record(pv.labels.join(",")==="128,64,32,16,8,4,2,1","Lesson 001 Q3 preserves all place values",where,JSON.stringify(pv));
+    record(pv.bits.join("")==="00000000","Lesson 001 Q3 preserves authored starter bits",where,JSON.stringify(pv));
+    record(pv.shellWidth>460 ? pv.originalVisible&&!pv.responsiveVisible
+      : pv.responsiveVisible&&!pv.originalVisible,
+      "Lesson 001 Q3 uses the appropriate diagram for the card width",where,JSON.stringify(pv));
+  }
   // Confirm progression to independent questions does not unexpectedly expose answers.
   if(first.all>1){
     await page.locator("#advance").evaluate(el=>el.click());
