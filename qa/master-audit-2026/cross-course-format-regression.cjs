@@ -49,7 +49,7 @@ async function auditPage(browser,course,id,view){
  page.on("pageerror",e=>exceptions.push(String(e)));
  try{
    await page.goto(ORIGIN+"/lessons/"+course+"/lesson-"+id+"/index.html",{waitUntil:"domcontentloaded",timeout:25000});
-   await page.waitForFunction(()=>!!document.querySelector("#i-do")&&!!document.querySelector("#we-do")&&!!document.querySelector("#advance"),{},{timeout:20000});
+   await page.waitForFunction(()=>!!document.querySelector("#i-do")&&!!document.querySelector("#we-do")&&!!document.querySelector("#advance")&&!!document.querySelector("section.page.active"),{},{timeout:20000});
    const initial=await page.evaluate(()=>({
      phases:[...document.querySelectorAll("section.page")].map(x=>x.id),
      engine:!!document.querySelector('script[src*="assets/h446-lesson/lesson.js"]')
@@ -58,6 +58,7 @@ async function auditPage(browser,course,id,view){
    result(initial.engine,course,id,view.name,"Shared navigation engine loaded");
    for(const phase of ["i-do","we-do"]){
      await page.locator('.phase-nav [data-page="'+phase+'"]').evaluate(x=>x.click());
+     await page.waitForFunction(expected=>document.querySelector("section.page.active")?.id===expected,phase,{timeout:6000});
      const payload=await page.evaluate(phase=>{
        const sect=document.getElementById(phase);
        const flag=phase==="i-do"?"ido":"wedo";
