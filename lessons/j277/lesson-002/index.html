@@ -82,32 +82,38 @@
 @media(max-width:900px){#you-do.j277-002-youdo-clean .j277-sm-question-only,#you-do.j277-002-youdo-clean .j277-sm-review{padding:13px!important}
 #you-do.j277-002-youdo-clean .j277-sm-question-only .j277-sm-visual svg,#you-do.j277-002-youdo-clean .j277-sm-review .j277-sm-visual svg{max-height:45vh}}
 
-/* RHSC English-department literacy trial: J277 Lesson 002 ONLY.
-   Subtle pale yellow for subject terms and OCR command words, never for a
-   hidden retrieval answer before the teacher reveals that answer. */
+/* RHSC English-department literacy trial — J277 Lesson 002 ONLY.
+   Yellow marker stroke: bright yellow ink, no badge borders/pill effect.
+   Recall terms remain concealed by the existing Reveal navigation. */
 #overview mark.rhsc-keyword,
 #new-learning mark.rhsc-keyword,
 #i-do mark.rhsc-keyword,
 #we-do mark.rhsc-keyword,
 #vocabulary mark.rhsc-keyword,
-#overview .vocab-intro-list .vocab-tip,
 #you-do.j277-002-youdo-clean mark.j277-sm-command {
-  background:#fff4c4;
-  color:#29240d;
+  background-color:transparent;
+  background-image:linear-gradient(to bottom,
+    transparent 13%, #fff35b 13%, #fff35b 89%, transparent 89%);
+  color:#24241a;
   font-weight:850;
-  padding:.03em .16em;
-  border-radius:3px;
+  padding:0 .10em;
+  border:0;
+  border-radius:0;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
 }
 #overview .vocab-intro-list .vocab-tip {
-  padding:.12em .32em;
   display:inline-block;
-  border:1px solid #e9dca5;
+  background:#fff35b;
+  color:#24241a;
+  font-weight:850;
+  padding:.1em .22em;
+  border:0;
+  border-radius:1px;
 }
 #overview .objective-vocab-stage h2 mark.rhsc-keyword,
 #vocabulary .vocab-answer-value mark.rhsc-keyword {
-  padding:.05em .22em;
+  padding:0 .12em;
 }
 @media (prefers-contrast:more) {
   #overview mark.rhsc-keyword,
@@ -115,8 +121,12 @@
   #i-do mark.rhsc-keyword,
   #we-do mark.rhsc-keyword,
   #vocabulary mark.rhsc-keyword,
-  #overview .vocab-intro-list .vocab-tip,
-  #you-do.j277-002-youdo-clean mark.j277-sm-command { border:1px solid #7b6008; }
+  #you-do.j277-002-youdo-clean mark.j277-sm-command {
+    background-color:#fff35b;
+    background-image:none;
+    box-shadow:0 0 0 1px #574e00;
+  }
+  #overview .vocab-intro-list .vocab-tip{outline:1px solid #574e00}
 }
 </style>
 </head>
