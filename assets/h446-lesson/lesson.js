@@ -1552,7 +1552,7 @@ function prepareVerifiedExitTicket(){
   if(answer!=='yes' && answer!=='no')return;
   const compact=page.querySelector('.exit-compact');
   if(!compact)return;
-  const question=compact.querySelector('.exit-check-question')?.textContent?.trim();
+  const question=page.dataset.exitQuestion?.trim()||compact.querySelector('.exit-check-question')?.textContent?.trim();
   if(!question)return;
   const reflection=[...compact.querySelectorAll('.exit-confidence-choice')].map(item=>({
     title:item.querySelector('strong')?.textContent?.trim()||'',
