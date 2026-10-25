@@ -1579,16 +1579,61 @@ function hideH446PublicationStatus(){
 function prepareVerifiedExitTicket(){
   const page=document.getElementById('exit');
   if(!page || page.classList.contains('exit-yesno'))return;
-  const answer=String(page.dataset.exitCorrect||'').trim().toLowerCase();
-  if(answer!=='yes' && answer!=='no')return;
-  const compact=page.querySelector('.exit-compact');
-  if(!compact)return;
-  const question=page.dataset.exitQuestion?.trim()||compact.querySelector('.exit-check-question')?.textContent?.trim();
-  if(!question)return;
-  const reflection=[...compact.querySelectorAll('.exit-confidence-choice')].map(item=>({
+  let answer=String(page.dataset.exitCorrect||'').trim().toLowerCase();
+  let compact=page.querySelector('.exit-compact');
+  let question=page.dataset.exitQuestion?.trim()||compact?.querySelector('.exit-check-question')?.textContent?.trim()||'';
+  let authoredExplanation=page.dataset.exitExplanation?.trim()||'';
+  let reflection=compact?[...compact.querySelectorAll('.exit-confidence-choice')].map(item=>({
     title:item.querySelector('strong')?.textContent?.trim()||'',
     detail:item.querySelector('span')?.textContent?.trim()||''
-  })).filter(item=>item.title);
+  })).filter(item=>item.title):[];
+  let legacyConfidencePrompt='';
+  const h446Path=/\/lessons\/h446\/lesson-\d{3}\//.test(location.pathname);
+  const explicitTruth=text=>{
+    // Only a clearly AUTHORED answer, never merely a YES/NO choice.
+    // Do not infer correctness from question wording or a topic classifier.
+    const match=String(text||'').trim().match(/^(True|False)(?:\s*[.:–—-]\s*|\s*$)([\s\S]*)$/i);
+    return match?{answer:match[1].toLowerCase()==='true'?'yes':'no',why:match[2].trim()}:null;
+  };
+  if(answer!=='yes'&&answer!=='no'&&h446Path&&compact){
+    // Early H446 compact tickets sometimes print the answer inside the
+    // response choices (e.g. "False."). Remove that premature answer leak.
+    const statements=[...compact.querySelectorAll('.exit-check-response .exit-key-item')];
+    const authored=statements.length===1?explicitTruth(statements[0].textContent):null;
+    if(authored){
+      answer=authored.answer;
+      authoredExplanation=authoredExplanation||authored.why;
+      page.dataset.exitSource='h446-authored-compact';
+    }
+  }
+  if(answer!=='yes'&&answer!=='no'&&h446Path&&!compact){
+    // Legacy H446 Y12/Y13: QUESTION -> AUTHORED ANSWER -> CONFIDENCE,
+    // sometimes with ANSWER and CONFIDENCE combined in a second stage.
+    const stages=[...page.querySelectorAll(':scope > .exit-stage')];
+    const firstHeading=stages[0]?.querySelector('h2')?.textContent?.trim()||'';
+    const second=stages[1];
+    const answerLine=second?.querySelector('.exit-feedback p,p')?.textContent?.trim()||'';
+    const authored=stages.length>=2&&stages.length<=3&&/true\s+or\s+false/i.test(firstHeading)
+      ?explicitTruth(answerLine):null;
+    if(authored){
+      const firstQuestion=stages[0].querySelector('p')?.textContent?.trim();
+      if(firstQuestion){
+        answer=authored.answer;
+        question=firstQuestion;
+        authoredExplanation=authoredExplanation||authored.why;
+        const final=stages.length===3?stages[2]:second;
+        const confidenceP=[...final.querySelectorAll('p')].filter(el=>!el.closest('.exit-feedback'));
+        legacyConfidencePrompt=confidenceP.at(-1)?.textContent?.trim()||'';
+        page.dataset.exitSource='h446-authored-stages';
+      }
+    }
+  }
+  if((answer!=='yes'&&answer!=='no')||!question||( !compact&&!page.dataset.exitSource))return;
+  // The phase heading already asks YES/NO; don't repeat "True or false:".
+  question=question.replace(/^true\s+or\s+false\s*[:?]\s*/i,'').trim();
+  if(!question)return;
+  page.dataset.exitCorrect=answer;
+  if(authoredExplanation)page.dataset.exitExplanation=authoredExplanation;
   const escaped=value=>String(value??'').replace(/[&<>"']/g,char=>({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[char]));
@@ -1596,15 +1641,16 @@ function prepareVerifiedExitTicket(){
   const options=correct=>'<div class="exit-yn-choices" aria-label="'+(correct?'Correct answer: '+answer.toUpperCase():'Response choices: Yes or No')+'">'+
     '<span class="exit-yn-option'+(correct?(answer==='yes'?' is-correct':' is-incorrect'):'')+'">YES</span>'+
     '<span class="exit-yn-option'+(correct?(answer==='no'?' is-correct':' is-incorrect'):'')+'">NO</span></div>';
-  // A truth value is not an explanation. Ask for reasoning when no verified
-  // subject-specific explanation exists; do not invent model feedback.
-  const authoredExplanation=page.dataset.exitExplanation?.trim()||'';
+  // An explicit True/False is not itself an explanation. Keep "WHY?"
+  // exclusively for authored reasoning; never invent a model explanation.
   const explanation=authoredExplanation||'Explain your choice using one idea from today’s lesson.';
-  const confidence=reflection.length?reflection:[
-    {title:'👍 Confident',detail:'I can explain today’s learning.'},
-    {title:'↔ Nearly there',detail:'I need another example.'},
-    {title:'👎 Help needed',detail:'I need more practice.'}
-  ];
+  const confidence=reflection.length?reflection:legacyConfidencePrompt
+    ?[{title:'Reflect',detail:legacyConfidencePrompt}]
+    :[
+      {title:'👍 Confident',detail:'I can explain today’s learning.'},
+      {title:'↔ Nearly there',detail:'I need another example.'},
+      {title:'👎 Help needed',detail:'I need more practice.'}
+    ];
   const confidenceHTML=confidence.map(item=>
     '<div class="exit-yn-confidence-choice"><strong>'+escaped(item.title)+'</strong><span>'+escaped(item.detail)+'</span></div>'
   ).join('');
