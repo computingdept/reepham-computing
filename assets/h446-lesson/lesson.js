@@ -1542,7 +1542,64 @@ function hideH446PublicationStatus(){
   document.title=document.title.replace(/\s*[·|—–-]\s*Ready\s*$/i,'');
 }
 
+/* Answer-verified Exit Ticket conversion.
+   Preserves the original question and recorded confidence choices; only lessons
+   with an explicit yes/no answer opt in. Never infer correctness from a question. */
+function prepareVerifiedExitTicket(){
+  const page=document.getElementById('exit');
+  if(!page || page.classList.contains('exit-yesno'))return;
+  const answer=String(page.dataset.exitCorrect||'').trim().toLowerCase();
+  if(answer!=='yes' && answer!=='no')return;
+  const compact=page.querySelector('.exit-compact');
+  if(!compact)return;
+  const question=compact.querySelector('.exit-check-question')?.textContent?.trim();
+  if(!question)return;
+  const reflection=[...compact.querySelectorAll('.exit-confidence-choice')].map(item=>({
+    title:item.querySelector('strong')?.textContent?.trim()||'',
+    detail:item.querySelector('span')?.textContent?.trim()||''
+  })).filter(item=>item.title);
+  const escaped=value=>String(value??'').replace(/[&<>"']/g,char=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[char]));
+  const questionHTML=escaped(question);
+  const options=correct=>'<div class="exit-yn-choices" aria-label="'+(correct?'Correct answer: '+answer.toUpperCase():'Response choices: Yes or No')+'">'+
+    '<span class="exit-yn-option'+(correct?(answer==='yes'?' is-correct':' is-incorrect'):'')+'">YES</span>'+
+    '<span class="exit-yn-option'+(correct?(answer==='no'?' is-correct':' is-incorrect'):'')+'">NO</span></div>';
+  const explanation=page.dataset.exitExplanation?.trim()||
+    (answer==='yes'?'This statement is correct.':'This statement is incorrect.');
+  const confidence=reflection.length?reflection:[
+    {title:'👍 Confident',detail:'I can explain today’s learning.'},
+    {title:'↔ Nearly there',detail:'I need another example.'},
+    {title:'👎 Help needed',detail:'I need more practice.'}
+  ];
+  const confidenceHTML=confidence.map(item=>
+    '<div class="exit-yn-confidence-choice"><strong>'+escaped(item.title)+'</strong><span>'+escaped(item.detail)+'</span></div>'
+  ).join('');
+  page.classList.add('exit-yesno','exit-yesno-generated');
+  page.innerHTML=
+    '<div class="exit-deck">'+
+      '<article class="exit-stage"><div class="exit-yn-panel">'+
+        '<p class="exit-yn-kicker">EXIT TICKET · YES OR NO?</p>'+
+        '<h2 class="exit-yn-question">'+questionHTML+'</h2>'+
+        '<div class="exit-yn-choice-zone"><p class="exit-yn-instruction">Think silently. On my signal, say YES or NO together.</p>'+
+        options(false)+'</div>'+
+      '</div></article>'+
+      '<article class="exit-stage" hidden><div class="exit-yn-panel">'+
+        '<p class="exit-yn-kicker">EXIT TICKET · CHECK YOUR ANSWER</p>'+
+        '<h2 class="exit-yn-question">'+questionHTML+'</h2>'+
+        '<div class="exit-yn-choice-zone">'+options(true)+
+        '<p class="exit-yn-explain">'+escaped(explanation)+'</p></div>'+
+      '</div></article>'+
+      '<article class="exit-stage" hidden><div class="exit-yn-panel">'+
+        '<p class="exit-yn-kicker">EXIT TICKET · YOUR CONFIDENCE</p>'+
+        '<h2 class="exit-yn-question">How confident are you with today’s learning?</h2>'+
+        '<div class="exit-yn-choice-zone"><div class="exit-yn-confidence">'+confidenceHTML+'</div></div>'+
+      '</div></article>'+
+    '</div>';
+}
+
 hideH446PublicationStatus();
+prepareVerifiedExitTicket();
 prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
 prepareH446DoNowSourceLabels();
