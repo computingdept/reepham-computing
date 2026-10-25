@@ -34,7 +34,13 @@ ul{padding-left:24px}li{margin:8px 0}a{color:#165f45}
 <option value="h446:032">H446 032 · hidden legacy answer</option>
 <option value="h446:039">H446 039 · removed visible answer</option>
 <option value="h446:043">H446 043 · verified YES</option>
-<option value="h446:181">H446 181 · Y13 recursion modelling</option>
+<option value="h446:044">H446 044 · compact answer leak removed</option>
+<option value="h446:045">H446 045 · constructor rationale</option>
+<option value="h446:046">H446 046 · authored three-stage answer</option>
+<option value="h446:068">H446 068 · old Answer stage</option>
+<option value="h446:181">H446 181 · old mixed answer/confidence</option>
+<option value="h446:320">H446 320 · late Y13 lesson</option>
+
 <option value="j277:004">J277 004 · Autumn 1</option>
 <option value="j277:068" selected>J277 068 · core content</option>
 <option value="j277:109">J277 109 · binary search</option>
@@ -42,7 +48,7 @@ ul{padding-left:24px}li{margin:8px 0}a{color:#165f45}
 <option value="j277:164">J277 164 · Year 11</option>
 <option value="j277:018">J277 018 · excluded case</option>
 <option value="j277:113">J277 113 · special revision</option>
-<option value="h446:068">H446 068 · A Level regression</option>
+
 </select></label>
 <label>Viewport <select id="viewport">
 <option value="desktop">Classroom TV · 1920×1080</option><option value="mobile">Mobile · 390×844</option>
@@ -272,9 +278,9 @@ async function checkModelling(d,phase){
  }
 }
 async function checkExitTicket(d,course,num){
- const hasVerified=new Set(['j277:001','j277:002','j277:003','j277:004','j277:019','j277:057','j277:059','j277:080','h446:005','h446:015','h446:032','h446:039','h446:043']);
+ const hasAuthored=new Set(['j277:001','j277:002','j277:003','j277:004','j277:019','j277:057','j277:059','j277:080','j277:164','h446:005','h446:015','h446:032','h446:039','h446:043','h446:044','h446:045','h446:046','h446:068','h446:181','h446:320']);
  const key=course+':'+num;
- if(!hasVerified.has(key)){result(null,'Exit Ticket stages','No verified answer expected for this sample');return;}
+ if(!hasAuthored.has(key)){result(null,'Exit Ticket stages','Not a sampled normal answer-bearing ticket');return;}
  const exitNav=d.querySelector('.phase-nav [data-page="exit"]');
  const advance=d.getElementById('advance'),back=d.getElementById('previous');
  if(!exitNav||!advance||!back){result(false,'Exit Ticket navigation controls','Required controls absent');return;}
@@ -283,11 +289,21 @@ async function checkExitTicket(d,course,num){
  const page=d.getElementById('exit');
  const stages=[...page.querySelectorAll('.exit-stage')];
  result(stages.length===3,'Exit Ticket uses three stages','found '+stages.length);
+ if(['h446:046','h446:068','h446:181','h446:320'].includes(key)){
+   result(page.dataset.exitSource==='h446-authored-stages',
+     'H446 authored True/False legacy stage was safely converted to three screens');
+ }
+ if(['h446:044','h446:045'].includes(key)){
+   result(page.dataset.exitCorrect==='no'&&!!page.dataset.exitExplanation,
+     'H446 compact legacy answer is author-labelled and has a subject-specific explanation');
+ }
  if(stages.length!==3)return;
  result(!stages[0].hidden&&stages[1].hidden&&stages[2].hidden,'Correct answer hidden on question stage');
  result(d.getElementById('response-logo')?.textContent?.trim()==='Choral','Top response tile reads Choral');
  const title=stages[0].querySelector('.exit-yn-question'),choices=[...stages[0].querySelectorAll('.exit-yn-option')];
  result(!!title&&choices.map(x=>x.textContent.trim()).join('/')==='YES/NO','Question at top with YES/NO choices');
+ result(!!title&&!/^(true|false)[.!]?$/i.test(title.textContent.trim()),
+   'No legacy answer leaks into the question heading');
  result(choices.length===2&&choices.every(x=>!x.classList.contains('is-correct')&&!x.classList.contains('is-incorrect')
    &&getComputedStyle(x).backgroundColor==='rgb(255, 255, 255)'),
    'Before reveal both choices are neutral white; no answer colour leaks');
