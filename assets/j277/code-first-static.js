@@ -12,9 +12,16 @@
     if(!item)throw Error("Code First task missing: "+num);
     const tasks=document.querySelector(".j277-code-first .j277-code-tasks");
     if(tasks){
-      tasks.innerHTML='<p class="j277-code-start">One short task. Start on your mini-whiteboard.</p>'+
-       '<p><strong>YOUR TASK:</strong> '+esc(item.task)+'</p>'+
-       '<pre class="arithmetic">'+esc(item.starter)+'</pre>';
+      if(num==='002'){
+        // Teacher-approved lesson 002 pilot: task-first, no duplicate binary panel.
+        tasks.innerHTML='<h2 class="j277-code-prompt">'+esc(item.task)+'</h2>'+
+          '<pre class="arithmetic">'+esc(item.starter)+'</pre>'+
+          '<p class="j277-code-instruction">Work on your mini-whiteboard.</p>';
+      }else{
+        tasks.innerHTML='<p class="j277-code-start">One short task. Start on your mini-whiteboard.</p>'+
+         '<p><strong>YOUR TASK:</strong> '+esc(item.task)+'</p>'+
+         '<pre class="arithmetic">'+esc(item.starter)+'</pre>';
+      }
     }
     if(location.pathname.endsWith("/answers.html")){
       const card=document.querySelector("main .answer-stage .solution-card");
