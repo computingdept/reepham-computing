@@ -48,3 +48,9 @@ Each sampled `lessons/h446/lesson-NNN/index.html` was re-read from GitHub. The w
 - Confirmed: existing J277 10-lesson mismatch reported in published audit; 20 named H446 source pages inspected for code-tag, diagram, step and structural patterns; L181 pilot source checks passed previously.
 - Not confirmed: pixel fitting, browser execution, full specification coverage, mark-scheme correctness, whether every H446 class/diagram is pedagogically appropriate, or all unsampled lessons.
 - No new H446/J277 lesson changes made by this triage. It is an evidence-and-priority record.
+
+## Important source-of-truth reconciliation — J277 Lesson 051
+
+The original `lessons/j277/autumn2-051.json` still contains **explanatory** Q2–Q4 wording; that alone is not the effective student view. The runtime `assets/j277/youdo-grouped.js` also loads `lessons/j277/youdo-five-reviewed-20261022.json` and selects reviewed entries for the applicable lessons. Lesson **051** is present in that bank with: Q2 knowledge 2 marks; Q3 applied input/processing/output 3 marks; **Q4 writing ERL 4 marks** with model code `ticketPrice = 6`, integer input, multiplication and output.
+
+The Lesson 051 I Do (`m.q`, `m.st`) and We Do (`w`) in the original JSON still ask students mainly to explain concepts. The mismatch thus matters **when the reviewed bank is applied**. Before applying live teaching-content changes, check the effective question-selection path and mobile/TV rendering to ensure the revised model aligns with the actual displayed Q4 and marking scheme. No new question text or mark scheme should be invented.
