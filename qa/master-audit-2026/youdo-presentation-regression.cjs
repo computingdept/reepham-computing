@@ -48,7 +48,10 @@ async function test(browser,target,view){
     !!document.getElementById("advance"),null,{timeout:20000});
   // Use phase selection only as a setup step; mobile phase buttons are intentionally hidden.
   await page.locator('.phase-nav [data-page="you-do"]').evaluate(el=>el.click());
-  await page.waitForTimeout(20);
+  // Some J277 pages are constructed by a separate asynchronous adapter.
+  // Wait for its CSS and phase initialisation before asserting geometry.
+  if(course==="j277"&&id==="003")await page.waitForTimeout(450);
+  else await page.waitForTimeout(20);
   metrics.loaded++;
   const first=await page.evaluate(()=>{
     const section=document.getElementById("you-do");
@@ -182,7 +185,8 @@ async function test(browser,target,view){
         cells:responsive?.querySelectorAll(".j277-place-value-cell").length||0,
         labels:[...responsive?.querySelectorAll(".j277-place-value-label")||[]].map(x=>x.textContent),
         bits:[...responsive?.querySelectorAll(".j277-place-value-bit")||[]].map(x=>x.textContent),
-        columns:responsive?getComputedStyle(responsive).gridTemplateColumns:""};
+        columns:responsive?getComputedStyle(responsive).gridTemplateColumns:"",
+        questionText:question?.querySelector(".j277-sm-question")?.textContent?.trim()||""};
       cards.forEach((q,i)=>q.hidden=old[i]);
       return result;
     },view.name);
@@ -190,6 +194,8 @@ async function test(browser,target,view){
     record(pv.cells===8,"Lesson 001 Q3 has eight responsive place-value cells",where,JSON.stringify(pv));
     record(pv.labels.join(",")==="128,64,32,16,8,4,2,1","Lesson 001 Q3 preserves all place values",where,JSON.stringify(pv));
     record(pv.bits.join("")==="00000000","Lesson 001 Q3 preserves authored starter bits",where,JSON.stringify(pv));
+    record(/154/.test(pv.questionText)&&!/1280\s*64|128064032016/.test(pv.questionText),
+      "Lesson 001 Q3 omits flattened SVG labels from the question sentence",where,JSON.stringify(pv));
     record(pv.shellWidth>460 ? pv.originalVisible&&!pv.responsiveVisible
       : pv.responsiveVisible&&!pv.originalVisible,
       "Lesson 001 Q3 uses the appropriate diagram for the card width",where,JSON.stringify(pv));
