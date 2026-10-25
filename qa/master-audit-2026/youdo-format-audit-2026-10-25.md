@@ -61,3 +61,13 @@ J277 Lesson **001**, Q3 place-value diagram was explicitly tested at Classroom T
 - **1** H446 008 compact-TV code-question warning, substantially reduced after setting one question per screen; inspect residual fit before changing text sizes.
 
 **Do not read '0 hard failures' as '0 presentation concerns.'** The mobile/question reveal checks have passed the baseline; the above items require separate visual or special-layout QA. OCR pedagogical and marking-accuracy checks remain outside this formatting audit.
+
+## Supplemental independent You Do width audit and targeted corrections
+
+An additional cross-course browser audit at `qa/master-audit-2026/youdo-format-regression.cjs` checks individual question-card scroll widths, SVG containment, responsive question windows and premature answer visibility, independently of the presentation audit above. The first tested shards found **confirmed compact-TV horizontal overflow** in H446 004 (two question cards, 373px content in 347px card) and H446 007 (one question, 370px in 347px). The source shows long exam-source `.phase-tag` labels combined with a `width:max-content` rule.
+
+**Shared formatting correction committed:** `assets/h446-lesson/lesson-classroom.css` now allows exam-source labels within `.youdo-rolling .exam-card` to wrap within 100% card width, without reducing text size. H446 004/007 stylesheet references were refreshed. **A complete post-correction browser rerun remains to be confirmed; do not call these fixed merely from source inspection.**
+
+The supplemental scan also detected potential short-TV vertical clipping in H446 296 (76px) and H446 303 (147px). Their long narrative/ERL questions use the standard 3-question grouping. An explicitly opt-in `data-compact-window-size="1"` mode was added for **only H446 296 and 303**, and `youDoWindowSize` now uses that mode for 901px+ viewports at maximum height 700px. The usual three-question 1080p layout and one-question mobile mode remain unchanged. This change affects presentation only; no questions, code or mark schemes were edited. The responsive and stepping behaviours still require post-commit browser verification.
+
+**Test scope caveat:** The extra audit does not fully verify all rich/grouped marking screens and does not replace standalone assessment-interface checks. Keep outstanding cases in the separate review register rather than declaring an all-course finish.
