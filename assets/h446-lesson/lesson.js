@@ -1718,7 +1718,6 @@ function prepareResponsivePlaceValues(){
     responsive.className='j277-place-value-responsive';
     responsive.setAttribute('role','img');
     responsive.setAttribute('aria-label',svg.getAttribute('aria-label')||'Binary place-value table');
-    responsive.setAttribute('aria-hidden','true');
     headers.forEach((label,i)=>{
       const cell=document.createElement('div');
       cell.className='j277-place-value-cell';
