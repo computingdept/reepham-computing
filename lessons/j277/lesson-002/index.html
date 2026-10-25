@@ -150,6 +150,45 @@
     outline:1px solid #615700;
   }
 }
+
+/* The coding question remains first; the stage diagram reinforces the action. */
+#you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle{
+ width:min(100%,1030px);margin:clamp(10px,2.2vh,24px) auto 0;
+ flex:0 0 auto;min-width:0;align-self:center;
+}
+#you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle>svg,
+#you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle-graphic{
+ display:block;width:100%;max-width:100%;height:auto;max-height:min(24vh,206px);
+ object-fit:contain;
+}
+#you-do.j277-002-youdo-clean .j277-code-cycle-mobile{display:none}
+#you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-prompt{margin-bottom:clamp(12px,2vh,20px)}
+#you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-tasks pre.arithmetic{
+ margin-bottom:clamp(10px,1.7vh,17px);padding:clamp(15px,1.7vw,27px);
+}
+@media(max-height:760px) and (min-width:901px){
+ #you-do.j277-002-youdo-clean .j277-code-first-preview{padding:clamp(12px,1.7vw,23px)!important}
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-eyebrow{margin-bottom:10px}
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-prompt{font-size:clamp(28px,2.6vw,44px);margin-bottom:10px}
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle>svg,
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle-graphic{max-height:21vh}
+}
+@media(max-width:720px){
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle>svg,
+ #you-do.j277-002-youdo-clean .j277-code-first-preview .j277-code-cycle-graphic{display:none}
+ #you-do.j277-002-youdo-clean .j277-code-cycle-mobile{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
+ }
+ #you-do.j277-002-youdo-clean .j277-code-cycle-mobile span{
+  display:flex;flex-direction:column;gap:5px;min-width:0;padding:12px;
+  background:#edf7f1;border:2px solid #9fcbbb;border-radius:11px;color:#096447;
+ }
+ #you-do.j277-002-youdo-clean .j277-code-cycle-mobile span.is-active{
+  background:#fff2a2;border-color:#076c4d;
+ }
+ #you-do.j277-002-youdo-clean .j277-code-cycle-mobile b{font-size:clamp(15px,4vw,18px)}
+ #you-do.j277-002-youdo-clean .j277-code-cycle-mobile small{font-size:13px;line-height:1.2}
+}
 </style>
 </head>
 <body>
@@ -219,6 +258,18 @@
       <h2 class="j277-code-prompt">Predict the number printed.</h2>
       <pre class="arithmetic">print(11 + 6)</pre>
       <p class="j277-code-instruction">Work on your mini-whiteboard.</p>
+
+    </div>
+  </div>
+  <div class="j277-code-cycle" data-focus="predict" role="img"
+       aria-label="Code First routine: Predict, Write, Test, Iterate. Current task: Predict.">
+    <img class="j277-code-cycle-graphic" src="../../../assets/j277/code-first-cycle.svg?v=20261025-task-focus1"
+         width="1200" height="234" alt="" aria-hidden="true">
+    <div class="j277-code-cycle-mobile" aria-hidden="true">
+      <span data-code-first-step="predict" class="is-active"><b>1 · PREDICT</b><small>Think first</small></span>
+      <span data-code-first-step="write"><b>2 · WRITE</b><small>Keep it small</small></span>
+      <span data-code-first-step="test"><b>3 · TEST</b><small>Does it work?</small></span>
+      <span data-code-first-step="iterate"><b>4 · ITERATE</b><small>Refine &amp; retry</small></span>
     </div>
   </div>
 </article>
@@ -234,7 +285,7 @@
 </main>
 <div class="lesson-footer">Lesson 002 · Binary Addition <span>Year 10 · OCR J277</span></div>
 <script src="../../../assets/h446-lesson/lesson.js?v=20261025-j277-002-separated-marking1"></script>
-<script src="../../../assets/j277/code-first-static.js?v=20261025-tasktop002"></script>
+<script src="../../../assets/j277/code-first-static.js?v=20261025-task-focus1"></script>
 <script src="../../../assets/j277/youdo-grouped.js?v=20261025-separated-marking2"></script>
 </body>
 </html>
