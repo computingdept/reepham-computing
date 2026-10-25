@@ -370,6 +370,13 @@ function setYouDoWindow(page,start){
   questions.forEach((q,i)=>q.hidden=codingFirst&&safe===0 ? i!==0 : !(i>=safe&&i<safe+size));
   const progress=page.querySelector('.youdo-window-progress');
   if(progress){
+    if(page.dataset.j277SeparateReview==='true'){
+      const reviewStart=Number(page.dataset.j277ReviewStart||4);
+      progress.textContent=safe===0?'':safe<reviewStart
+        ?'QUESTION '+safe+' OF '+(reviewStart-1)
+        :'ANSWER '+(safe-reviewStart+1)+' OF '+(questions.length-reviewStart);
+      return;
+    }
     if(codingFirst&&safe===0){
       progress.textContent='CODE FIRST · THEN EXAM PRACTICE';
     }else{
@@ -565,14 +572,14 @@ function resetPhaseState(id){
     if(isH446RichReview(page)){
       prepareH446RichReview(page);
       showH446RichReview(page,false);
-    }else{
+    }else if(page.dataset.j277SeparateReview!=='true'){
       prepareYouDoAnswers(page);
     }
     if(isH446GroupedMarking(page)){
       prepareH446GroupedMarking(page);
       showH446GroupedMarking(page,false);
     }
-    page.dataset.workMode=page.dataset.assessmentMode==='true'?'independent':'discuss';
+    page.dataset.workMode=page.dataset.assessmentMode==='true'||page.dataset.j277SeparateReview==='true'?'independent':'discuss';
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       setYouDoWindow(page,0);
@@ -718,7 +725,14 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(isH446RichReview(page)&&page.querySelector('.h446-rich-review')){
+    if(page.dataset.j277SeparateReview==='true'){
+      const i=Number(page.dataset.windowStart||0);
+      const reviewStart=Number(page.dataset.j277ReviewStart||4);
+      const count=page.querySelectorAll('.youdo-question').length;
+      label=i===0?'Continue → Q2':i<reviewStart-1?'Continue → Q'+(i+2):
+        i===reviewStart-1?'Begin self-marking →':
+        i<count-1?'Next marking scheme →':'Continue → Key Vocabulary';
+    }else if(isH446RichReview(page)&&page.querySelector('.h446-rich-review')){
       const all=page.querySelectorAll('.h446-rich-stage');
       const index=Number(page.dataset.richStepIndex||0);
       if(page.dataset.answerMode==='true'){
@@ -895,6 +909,12 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.j277SeparateReview==='true'){
+      const items=page.querySelectorAll('.youdo-question');
+      const i=Number(page.dataset.windowStart||0);
+      if(i<items.length-1){setYouDoWindow(page,i+1);updateControl();return;}
+      showPage(order[order.indexOf('you-do')+1]||'vocabulary');return;
+    }
     if(isH446RichReview(page)&&page.dataset.answerMode==='true'){
       const index=Number(page.dataset.richStepIndex||0);
       const total=page.querySelectorAll('.h446-rich-stage').length;
@@ -1103,6 +1123,11 @@ function previousAction(){
     return;
   }
   if(current==='you-do'){
+    if(page.dataset.j277SeparateReview==='true'){
+      const i=Number(page.dataset.windowStart||0);
+      if(i>0){setYouDoWindow(page,i-1);updateControl();return;}
+      showPage(order[Math.max(0,order.indexOf('you-do')-1)]);return;
+    }
     if(isH446RichReview(page)&&page.dataset.answerMode==='true'){
       const index=Number(page.dataset.richStepIndex||0);
       if(index>0){showH446RichReview(page,true,index-1);updateControl();return;}
