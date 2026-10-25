@@ -20,6 +20,12 @@ Central audit register. Started 24 October 2026.
 - J277 You Do: separate Code First; three exam-style questions; yellow command words; grouped marking on classroom TV and sequential mobile marking.
 - Do not make content or CSS changes just to redesign approved features; fix independently confirmed issues.
 
+## Whole-course presentation audit · 25 October 2026
+
+- [Comprehensive I Do / We Do formatting report](cross-course-format-audit-2026-10-25.md) — **463 standard lessons**, three screen sizes, **26,391 passed browser checks**, zero hard failures; 41 potential compact-TV clipping warnings in 28 H446 lessons remain under review.
+- [Complete H446 compact-TV exception CSV](h446-compact-tv-vertical-fit-2026-10-25.csv) — measured excess height, grouped for follow-up. J277 113 is a standalone revision-interface exception.
+- [Automated whole-course browser workflow](../../.github/workflows/full-course-format-audit.yml) — four shards, all existing standard lesson pages at TV, compact TV and mobile sizes.
+
 ## Current position
 See [workstreams.csv](workstreams.csv). Counts in that CSV are **historical reports, not a new repository-wide audit**. Treat completion, publication and coverage claims as unverified until the evidence is linked and retested.
 
