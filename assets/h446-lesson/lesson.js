@@ -1384,7 +1384,9 @@ function prepareMobileSwipeNavigation(){
     direction=null;
     if(!phone.matches||e.touches.length!==1)return;
     const target=e.target instanceof Element?e.target:null;
-    if(target?.closest(interactiveSelector)||startsInHorizontalScroller(target))return;
+    // Allow a lesson swipe to begin over ordinary links/buttons inside content;
+    // only editable fields and genuine horizontal scrollers should intercept it.
+    if(target?.closest('input,textarea,select,[contenteditable="true"]')||startsInHorizontalScroller(target))return;
     startX=e.touches[0].clientX;
     startY=e.touches[0].clientY;
     // Let the browser own edge gestures such as back/forward.
