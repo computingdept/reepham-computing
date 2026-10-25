@@ -240,7 +240,7 @@
       return {definition:text(ds[0]),term:text(ds[1])};
     });
     const exit=d.querySelector('[data-label="Exit Ticket"]');
-    const exitQ=html(exit?.querySelector(".card p"));
+    const exitQ=html(exit?.querySelector(".card p")).replace(/^\s*True\s+or\s+False\s*:\s*/i,"");
 
     if(mode==="answers"){
       const qs=[codeFirst.predict,...youDo,examQ];
@@ -248,7 +248,7 @@
       document.open();
       document.write(`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lesson ${n} · You Do Answers</title>
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-rollout1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
 <style>
 body.answer-page{height:100vh;overflow:hidden;background:var(--paper)}
@@ -307,7 +307,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     document.open();
     document.write(`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lesson ${n} · ${esc(title)}</title><meta name="description" content="OCR J277 Lesson ${n}: ${esc(subtitle)}">
-<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20260929-1815">
+<link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-rollout1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
 <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"></head><body>
@@ -322,9 +322,9 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <section id="we-do" class="page phase-wedo" data-phase-time="10 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>${esc(title)}</h2><p>${wdQ}</p><div class="nl-reference-note"><strong>Turn &amp; Talk:</strong> ${turnTalk}</div><span class="wedo-example-count">Guided example</span></div><div class="wedo-practice">${wdHtml}</div></article></div></section>
 <section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="2" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${qCards}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>
 <section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">${vocabStages}</div></section>
-<section id="exit" class="page phase-exit" data-phase-time="2 minutes"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">${exitQ}</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can apply this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I understand most of it but need more practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with this topic.</span></div></div></div></div></section>
+<section id="exit" class="page phase-exit" data-phase-time="2 minutes" data-exit-correct="${n==='003'?'no':''}" data-exit-explanation="${n==='003'?'Hexadecimal is a shorter way to write binary; it does not change how bits are stored.':''}"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">${exitQ}</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can apply this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I understand most of it but need more practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with this topic.</span></div></div></div></div></section>
 </main><div class="lesson-footer">Lesson ${n} · ${esc(title)} <span>Year 10 · OCR J277</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261014-j277retrievalrefs1"><\/script><script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script></body></html>`);
+<script src="../../../assets/h446-lesson/lesson.js?v=20261025-exit-rollout1"><\/script><script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script></body></html>`);
     document.close();
   }).catch(err => {
     document.body.innerHTML='<p style="font-family:sans-serif;padding:2rem">Lesson failed to load: '+esc(err.message)+'</p>';
