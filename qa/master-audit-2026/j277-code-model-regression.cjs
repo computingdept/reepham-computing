@@ -22,7 +22,7 @@ function check(condition, lesson, viewport, label, detail = "") {
 }
 async function visible(locator) { return locator.isVisible(); }
 async function verify(browser, id, size) {
-  const context = await browser.newContext({ viewport: { width: size.width, height: size.height } });
+  const context = await browser.newContext({ viewport: { width: size.width, height: size.height }, isMobile: size.name === "mobile", hasTouch: size.name === "mobile" });
   const page = await context.newPage();
   const runtimeErrors = [];
   page.on("pageerror", e => runtimeErrors.push(e.message));
@@ -39,7 +39,37 @@ async function verify(browser, id, size) {
     const wedoNav = page.locator('.phase-nav [data-page="we-do"]');
     const advance = page.locator("#advance");
     const previous = page.locator("#previous");
-    await idoNav.click();
+    // The desktop phase bar/buttons are intentionally hidden on phones.
+    // On mobile, activate a phase for test setup and exercise real touch swipes
+    // for all actual forward/back step navigation.
+    async function phaseNav(locator) {
+      if (size.name === "mobile") await locator.evaluate(el => el.click());
+      else await locator.click();
+    }
+    async function touchSwipe(direction) {
+      await page.evaluate(dir => {
+        const target = document.querySelector("#main");
+        const start = dir === "left" ? 300 : 90;
+        const end = dir === "left" ? 90 : 300;
+        const y = 310;
+        const finger = x => new Touch({identifier:1,target,clientX:x,clientY:y});
+        const dispatch=(name,touches,changedTouches)=>
+          target.dispatchEvent(new TouchEvent(name,{bubbles:true,cancelable:true,
+            touches,changedTouches,targetTouches:touches}));
+        dispatch("touchstart",[finger(start)],[finger(start)]);
+        dispatch("touchmove",[finger(end)],[finger(end)]);
+        dispatch("touchend",[],[finger(end)]);
+      },direction);
+    }
+    async function nextStage() {
+      if (size.name === "mobile") await touchSwipe("left");
+      else await advance.click();
+    }
+    async function previousStage() {
+      if (size.name === "mobile") await touchSwipe("right");
+      else await previous.click();
+    }
+    await phaseNav(idoNav);
 
     const model = page.locator("#i-do .ido-example");
     const modelSteps = model.locator(".ido-step");
@@ -48,12 +78,12 @@ async function verify(browser, id, size) {
     check(await visible(model), id, size.name, "I Do example visible");
     check(await visible(page.locator("#i-do .j277-model-starter")), id, size.name, "Starter code stays visible");
     check((await Promise.all(Array.from({length: modelCount}, (_,i)=>visible(modelSteps.nth(i))))).every(x=>!x),id,size.name,"I Do opens with no answer visible");
-    await advance.click();
+    await nextStage();
     check(await visible(modelSteps.nth(0)),id,size.name,"I Do reveals first step");
-    await previous.click();
+    await previousStage();
     check(!await visible(modelSteps.nth(0)),id,size.name,"Previous conceals first model step");
 
-    await wedoNav.click();
+    await phaseNav(wedoNav);
     const examples = page.locator("#we-do .wedo-example");
     check(await examples.count()===2,id,size.name,"Two guided examples authored");
     check(await visible(examples.nth(0)) && !await visible(examples.nth(1)),id,size.name,"Exactly first We Do example visible");
@@ -63,13 +93,13 @@ async function verify(browser, id, size) {
     const initially=await Promise.all(Array.from({length:count},(_,i)=>visible(firstSteps.nth(i))));
     check(initially.every(x=>!x),id,size.name,"Guided answers initially hidden");
 
-    await advance.click();
+    await nextStage();
     check(await visible(firstSteps.nth(0)),id,size.name,"We Do first reveal");
-    await previous.click();
+    await previousStage();
     check(!await visible(firstSteps.nth(0)),id,size.name,"We Do Previous conceals first stage");
 
     // From the problem-only state, reveal each stage and advance to the second example.
-    for(let i=0;i<count+1;i++) await advance.click();
+    for(let i=0;i<count+1;i++) await nextStage();
     check(!await visible(examples.nth(0)) && await visible(examples.nth(1)),
       id,size.name,"Only second We Do example visible after navigation");
     const secondSteps=examples.nth(1).locator(".wedo-step");
