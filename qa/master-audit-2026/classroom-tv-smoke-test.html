@@ -22,7 +22,17 @@ ul{padding-left:24px}li{margin:8px 0}a{color:#165f45}
 <p><strong>Purpose:</strong> inspect representative GCSE and A Level lessons at desktop (1920×1080) and mobile (390×844), without changing their content. This tests DOM wiring and basic controls; it is <strong>not</strong> an OCR subject-accuracy audit or a complete visual-clipping test.</p>
 <div class="controls">
 <label>Lesson <select id="lesson">
-<option value="j277:001">J277 001 · legacy standalone</option>
+<option value="j277:001">J277 001 · staged Exit Ticket reference</option>
+<option value="j277:002">J277 002 · verified YES</option>
+<option value="j277:003">J277 003 · verified NO</option>
+<option value="j277:019">J277 019 · generated YES</option>
+<option value="j277:059">J277 059 · corrected wording</option>
+<option value="j277:080">J277 080 · corrected wording</option>
+<option value="h446:005">H446 005 · verified NO</option>
+<option value="h446:015">H446 015 · verified NO</option>
+<option value="h446:032">H446 032 · hidden legacy answer</option>
+<option value="h446:039">H446 039 · removed visible answer</option>
+<option value="h446:043">H446 043 · verified YES</option>
 <option value="j277:004">J277 004 · Autumn 1</option>
 <option value="j277:068" selected>J277 068 · core content</option>
 <option value="j277:109">J277 109 · binary search</option>
@@ -107,7 +117,47 @@ async function run(){
    const rect=active.getBoundingClientRect();
    result(rect.width>0,'You Do content has measurable width','width '+Math.round(rect.width)+'px');
  }
+ await checkExitTicket(d,course,num);
  finish();
+}
+async function checkExitTicket(d,course,num){
+ const hasVerified=new Set(['j277:001','j277:002','j277:003','j277:004','j277:019','j277:059','j277:080','h446:005','h446:015','h446:032','h446:039','h446:043']);
+ const key=course+':'+num;
+ if(!hasVerified.has(key)){result(null,'Exit Ticket stages','No verified answer expected for this sample');return;}
+ const exitNav=d.querySelector('.phase-nav [data-page="exit"]');
+ const advance=d.getElementById('advance'),back=d.getElementById('previous');
+ if(!exitNav||!advance||!back){result(false,'Exit Ticket navigation controls','Required controls absent');return;}
+ exitNav.click();
+ await delay(120);
+ const page=d.getElementById('exit');
+ const stages=[...page.querySelectorAll('.exit-stage')];
+ result(stages.length===3,'Exit Ticket uses three stages','found '+stages.length);
+ if(stages.length!==3)return;
+ result(!stages[0].hidden&&stages[1].hidden&&stages[2].hidden,'Correct answer hidden on question stage');
+ result(d.getElementById('response-logo')?.textContent?.trim()==='Choral','Top response tile reads Choral');
+ const title=stages[0].querySelector('.exit-yn-question'),choices=[...stages[0].querySelectorAll('.exit-yn-option')];
+ result(!!title&&choices.map(x=>x.textContent.trim()).join('/')==='YES/NO','Question at top with YES/NO choices');
+ if(title&&choices.length===2){
+   const panel=stages[0].querySelector('.exit-yn-panel'),bounds=panel.getBoundingClientRect(),questionRect=title.getBoundingClientRect(),left=choices[0].getBoundingClientRect(),right=choices[1].getBoundingClientRect();
+   const choicesCentre=(left.left+right.right)/2,panelCentre=(bounds.left+bounds.right)/2;
+   result(Math.abs(choicesCentre-panelCentre)<Math.max(18,bounds.width*.06),'YES/NO centred horizontally','offset '+Math.round(choicesCentre-panelCentre)+'px');
+   result(questionRect.top<bounds.top+Math.max(170,bounds.height*.3),'Question near top of screen');
+ }
+ advance.click();
+ await delay(80);
+ result(stages[0].hidden&&!stages[1].hidden&&stages[2].hidden,'Continue reveals answer on separate stage');
+ const correct=stages[1].querySelector('.exit-yn-option.is-correct');
+ const expected=page.dataset.exitCorrect?.toUpperCase()||(key==='j277:001'?'YES':null);
+ result(!!correct&&correct.textContent.trim()===expected,'Correct answer highlighted light green',correct?.textContent?.trim()||'none');
+ const explanation=stages[1].querySelector('.exit-yn-explain');
+ result(!!explanation&&explanation.textContent.trim().length>8,'Answer-stage explanation or reasoning prompt');
+ advance.click();
+ await delay(80);
+ result(stages[0].hidden&&stages[1].hidden&&!stages[2].hidden,'Continue opens separate confidence screen');
+ back.click();
+ await delay(80);
+ result(stages[0].hidden&&!stages[1].hidden&&stages[2].hidden,'Previous returns to answer screen');
+ exitNav.click();
 }
 function finish(){
  last=findings.join('\n');$('status').textContent='Checks finished · '+findings.filter(x=>x.startsWith('PASS')).length+' passed, '+findings.filter(x=>x.startsWith('FAIL')).length+' failed. Inspect the preview before approving.';
