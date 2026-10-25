@@ -348,6 +348,79 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A 2D array represents a two-row pupil table: column 0 stores names and column 1 stores tutor groups. Store 'Mia' and '9C' in row 1 and print the tutor group.",
+        "scaffold": "array pupils[2,2]\npupils[_,_] = _____\npupils[_,_] = _____\nprint(pupils[_,_])",
+        "steps": [
+          {
+            "title": "Create the table",
+            "explanation": "Each row represents one record-like item; the two columns represent fields.",
+            "code": "array pupils[2,2]"
+          },
+          {
+            "title": "Store name in field 0",
+            "explanation": "OCR ERL arrays start at index 0, so row 1 is the second pupil.",
+            "code": "array pupils[2,2]\npupils[1,0] = \"Mia\""
+          },
+          {
+            "title": "Store group in field 1",
+            "explanation": "A 2D array represents fields in columns; it is not a named-field record data type.",
+            "code": "array pupils[2,2]\npupils[1,0] = \"Mia\"\npupils[1,1] = \"9C\""
+          },
+          {
+            "title": "Read the correct field",
+            "explanation": "Print the tutor group at row 1, column 1.",
+            "code": "array pupils[2,2]\npupils[1,0] = \"Mia\"\npupils[1,1] = \"9C\"\nprint(pupils[1,1])"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A two-row club table uses column 0 for a member name and column 1 for their team. Store 'Ava' and 'Blue' in the second row, then print the team.",
+          "scaffold": "array members[2,2]\nmembers[_,_] = _____\nmembers[_,_] = _____\nprint(members[_,_])",
+          "steps": [
+            {
+              "title": "Declare the shape",
+              "explanation": "2 rows × 2 columns creates four positions.",
+              "code": "array members[2,2]"
+            },
+            {
+              "title": "Populate row one",
+              "explanation": "The second row has index 1, with fields in columns 0 and 1.",
+              "code": "array members[2,2]\nmembers[1,0] = \"Ava\"\nmembers[1,1] = \"Blue\""
+            },
+            {
+              "title": "Output team field",
+              "explanation": "Print the field at index [1,1].",
+              "code": "array members[2,2]\nmembers[1,0] = \"Ava\"\nmembers[1,1] = \"Blue\"\nprint(members[1,1])"
+            }
+          ]
+        },
+        {
+          "question": "A two-row class table holds a pupil name in column 0 and reading group in column 1. Store 'Leo' and 'Gold' in the second row, print the reading group. Try without blanks.",
+          "scaffold": "array pupils[2,2]\n# Write both assignments and the print.",
+          "steps": [
+            {
+              "title": "Plan the table",
+              "explanation": "Build both assignments and the output on your mini-whiteboard.",
+              "code": "array pupils[2,2]"
+            },
+            {
+              "title": "Write indexed assignments",
+              "explanation": "Explain how the second row differs from the second column.",
+              "code": "array pupils[2,2]\npupils[1,0] = \"Leo\"\npupils[1,1] = \"Gold\""
+            },
+            {
+              "title": "Check indexed output",
+              "explanation": "Only [1,1] prints the Gold group.",
+              "code": "array pupils[2,2]\npupils[1,0] = \"Leo\"\npupils[1,1] = \"Gold\"\nprint(pupils[1,1])"
+            }
+          ]
+        }
+      ]
     }
   }
 }
