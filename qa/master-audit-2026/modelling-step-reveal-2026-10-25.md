@@ -34,3 +34,10 @@
 - [H446 Lesson 001 · We Do](https://rhsccs.org/lessons/h446/lesson-001/index.html#we-do)
 - [H446 Lesson 181 · I Do](https://rhsccs.org/lessons/h446/lesson-181/index.html#i-do)
 - [QA smoke test](https://rhsccs.org/qa/master-audit-2026/classroom-tv-smoke-test.html)
+
+## Follow-up source audit — 25 October
+- Independently re-read current shared lesson JS: entering I Do calls resetModelSteps on each .ido-example's .ido-step descendants; We Do likewise resets .wedo-step descendants. The Continue label is explicitly "Reveal Step 1" when no step is visible.
+- Representative source inventories: J277 Lesson 002 has 6 .ido-step and 16 .wedo-step class appearances; H446 Lesson 001 has 6 and 20; H446 Lesson 181 has 6 and 6. This is a count of markup references, not a total number of distinct worked stages.
+- The H446/J277 shared engine URL on J277 002 and H446 001/181 may have differing query-version tokens; this is a cache-validation concern rather than evidence of broken logic.
+- No automatic content changes applied: must not erase diagrams or cover results until an actual premature-answer element has been identified.
+- **Still outstanding**: browser check of Step 1 initially concealed, reference graphics not showing answers, 1920x1080 and 390x844 presentation and Previous behaviour in samples.
