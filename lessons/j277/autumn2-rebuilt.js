@@ -1654,9 +1654,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      </div>
    </details>`:''}
    ${arr(lesson.k.p,(p,i)=>`<p><strong>${i===0?"Check":i===1?"Change":"Extend"}:</strong> ${escape(p)}</p>`)}
-   ${(Number(number)>=19||String(number)==="004")&&!lesson.isAssessment?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">After whiteboards: open the OCR ERL editor →</a></p>':''}
-   </div><aside class="j277-code-reference"><strong>Code First · MWB</strong>
-   <p>Write and check the logic before using a computer.</p><span>${escape(lesson.t)}</span></aside></div></div></article>`;
+   
+   </div></div></div></article>`;
   const prior=lesson.priorExam
     ? `<article class="exam-card youdo-question j277-prior-exam" hidden>
        <span class="phase-tag">QUESTION 2 · PREVIOUS LEARNING · LESSON ${escape(lesson.priorExam.from)}</span>
@@ -1673,7 +1672,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const c=lesson.challenge[level],kind=i?"MASTERY · INDEPENDENT DESIGN":"STRETCH · ADAPT THE CODE";
       return `<article class="exam-card youdo-question" hidden><span class="phase-tag">${kind}</span><h3>${i?"Mastery · Design and test":"Stretch · Modify and apply"}</h3><div class="question-text"><p>${examWords(lesson,c.task)}</p><details class="y11-challenge-hint"><summary>Need a hint?</summary><p>${escape(c.hint)}</p></details><p class="source-note">Continue from Code First. These are optional extensions after exam practice.</p></div></article>`;
     }).join(""):"";
-  return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${prior}${exams}${extensions}</div><div class="youdo-window-progress">CODE FIRST · THEN EXAM PRACTICE</div></div></section>`;
+  return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${prior}${exams}${extensions}</div></div></section>`;
  }
  function vocabulary(lesson){
   const cards=arr(lesson.v,([term,def],i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${lesson.v.length}</span><h2>What is the term?</h2><p class="vocab-question">${escape(def)}</p><span class="vocab-stage-count">${i+1} of ${lesson.v.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${escape(term)}</div></div></article>`);
