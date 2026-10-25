@@ -29,6 +29,15 @@
 - **Not yet verified:** full live-browser behaviour at 1920×1080 and 390×844; every H446 Exit Ticket; question correctness against OCR/source mark schemes.
 - H446 is only partially rolled out (38 of 300 source lessons); 262 remain unchanged or need audit. Counts describe opted-in source lessons, not live-rendered functional tests. Do not copy a known answer between different statements.
 
+## 25 October refinement — answer contrast and explanatory reveal
+
+- **Question screen:** both YES and NO remain equally prominent and uncoloured (white surfaces, neutral border/ink). No green or red can cue the answer before the teacher advances.
+- **Teacher reveal:** correct option becomes stronger light green; other option becomes muted; a separate “✓ CORRECT ANSWER: YES/NO” label appears above both choices, followed by a clearly labelled **WHY?** explanation.
+- **Safeguard:** a lesson's real `data-exit-explanation` is required for the heading **WHY?**. Where no explanation has been verified, the heading reads **EXPLAIN YOUR THINKING** and prompts students rather than fabricating an explanation.
+- **J277 pilot examples:** Lesson 002 retains its known overflow explanation; Lesson 057 now has an authored FOR/NEXT inclusive-range explanation. The existing Code First trace exercise and SVG are unaffected.
+- Updated `lesson.js`, `lesson-base.css`, J277 generated-lesson routes for Lesson 057, standalone Lesson 002, and the regression checks. These shared source styles become visible elsewhere as cache versions refresh; this entry does **not** claim the missing explanations in other lessons are resolved.
+- **Live visual verification remains outstanding** at 1920×1080 and 390×844.
+
 ## Next QA gate
 
 1. Live-test J277 001, 002, 003, 004, 019, 035, 113 and 164 through Question → Reveal → Confidence → Back, desktop and mobile.
