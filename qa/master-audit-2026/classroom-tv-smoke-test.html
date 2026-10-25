@@ -86,6 +86,26 @@ async function run(){
  result(sharedJs,'Shared lesson engine linked');
  await checkModelling(d,'i-do');
  await checkModelling(d,'we-do');
+ if(course==='j277'&&num==='002'){
+   const obj=d.getElementById('overview');
+   const voc=d.getElementById('vocabulary');
+   const keywords=[...d.querySelectorAll('#overview mark.rhsc-keyword,#new-learning mark.rhsc-keyword,#i-do mark.rhsc-keyword,#we-do mark.rhsc-keyword')];
+   const chips=[...obj.querySelectorAll('.vocab-intro-list .vocab-tip')];
+   const answers=[...voc.querySelectorAll('.vocab-answer')];
+   result(keywords.length>=15,'J277 002 yellow key terms placed in teaching phases',keywords.length+' semantic highlights');
+   result(chips.length===4&&chips.every(el=>getComputedStyle(el).backgroundColor==='rgb(255, 228, 119)'),
+     'J277 002 yellow objectives vocabulary chips','count '+chips.length);
+   result(answers.length===4&&answers.every(el=>el.hidden),
+     'J277 002 Key Vocabulary answers remain hidden before reveal');
+   const btn=d.querySelector('.phase-nav [data-page="vocabulary"]');
+   btn.click();await delay(90);
+   const first=voc.querySelector('.vocab-answer');
+   result(first?.hidden===true,'Key Vocabulary still hides term on entry');
+   d.getElementById('advance').click();await delay(90);
+   const mark=first?.querySelector('mark.rhsc-keyword');
+   result(first?.hidden===false&&!!mark&&getComputedStyle(mark).backgroundColor==='rgb(255, 228, 119)',
+     'First term highlights yellow only after teacher presses Reveal');
+ }
  const nav=d.querySelector('.phase-nav [data-page="you-do"]');
  result(!!nav,'You Do phase-navigation button present');
  if(nav)nav.click();
