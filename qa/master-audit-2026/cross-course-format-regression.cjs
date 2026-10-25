@@ -1,0 +1,128 @@
+"use strict";
+const {chromium}=require("playwright");
+const COURSES={
+  j277:["001","002","019","024","035","050","059","080","096","109","131","141","164"],
+  h446:["001","024","068","082","093","104","131","146","181","182","183","184","187","205","220","240","279","320"]
+};
+const VIEWPORTS=[
+  {name:"TV 1080p",width:1920,height:1080},
+  {name:"compact TV",width:1300,height:635},
+  {name:"mobile",width:390,height:844}
+];
+const ORIGIN=process.env.QA_ORIGIN||"http://127.0.0.1:8765";
+const FILTER=process.env.QA_FORMAT_IDS?.split(",").map(x=>x.trim()).filter(Boolean)||null;
+const SIZES=process.env.QA_FORMAT_SIZES?.split(",").map(x=>x.trim()).filter(Boolean)||null;
+const issues=[],watches=[];
+let pass=0;
+function result(ok,course,id,view,label,detail=""){
+  const entry={course,lesson:id,view,label,detail};
+  if(ok){pass++;return;}
+  issues.push(entry);
+  console.log("FAIL "+JSON.stringify(entry));
+}
+function watch(course,id,view,label,detail=""){
+  const entry={course,lesson:id,view,label,detail};
+  watches.push(entry);
+  console.log("REVIEW "+JSON.stringify(entry));
+}
+async function auditPage(browser,course,id,view){
+ const context=await browser.newContext({viewport:{width:view.width,height:view.height},isMobile:view.name==="mobile",hasTouch:view.name==="mobile"});
+ const page=await context.newPage();
+ let exceptions=[];
+ page.on("pageerror",e=>exceptions.push(String(e)));
+ try{
+   await page.goto(ORIGIN+"/lessons/"+course+"/lesson-"+id+"/index.html",{waitUntil:"domcontentloaded",timeout:25000});
+   await page.waitForFunction(()=>!!document.querySelector("#i-do")&&!!document.querySelector("#we-do")&&!!document.querySelector("#advance"),{},{timeout:20000});
+   const initial=await page.evaluate(()=>({
+     phases:[...document.querySelectorAll("section.page")].map(x=>x.id),
+     engine:!!document.querySelector('script[src*="assets/h446-lesson/lesson.js"]')
+   }));
+   result(initial.phases.includes("i-do")&&initial.phases.includes("we-do"),course,id,view.name,"Phase sections exist");
+   result(initial.engine,course,id,view.name,"Shared navigation engine loaded");
+   for(const phase of ["i-do","we-do"]){
+     await page.locator('.phase-nav [data-page="'+phase+'"]').evaluate(x=>x.click());
+     const payload=await page.evaluate(phase=>{
+       const sect=document.getElementById(phase);
+       const flag=phase==="i-do"?"ido":"wedo";
+       const elements=[...sect.querySelectorAll("."+flag+"-example")];
+       const visible=e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&!e.closest("[hidden]")&&getComputedStyle(e).display!=="none"};
+       const stages=elements.length?[...elements[0].querySelectorAll("."+flag+"-step")]:[];
+       const active=document.querySelector("section.page.active");
+       const boxes=elements[0]?[...elements[0].querySelectorAll(".ido-reference,.ido-method,.wedo-reference,.wedo-practice,.model-card")].filter(x=>x.getBoundingClientRect().width>0):[];
+       const rect=boxes.map(x=>({name:x.className,w:Math.round(x.getBoundingClientRect().width),h:Math.round(x.getBoundingClientRect().height),x:Math.round(x.getBoundingClientRect().x)}));
+       const bounds=sect.getBoundingClientRect();
+       const overflowing=[...sect.querySelectorAll("pre,svg,img")].filter(x=>visible(x)).filter(x=>{
+         const r=x.getBoundingClientRect();
+         const anc=x.parentElement?.getBoundingClientRect();
+         return r.width>window.innerWidth+4||(anc&&r.width>anc.width+30);
+       }).slice(0,5).map(x=>x.tagName+":"+Math.round(x.getBoundingClientRect().width));
+       const current=[...elements].filter(visible);
+       const hiddenVisible=elements.filter(x=>x.hidden&&visible(x)).length;
+       const hiddenStagesVisible=stages.filter(x=>x.hidden&&visible(x)).length;
+       return{
+         active:active?.id,phaseVisible:visible(sect),count:elements.length,visibleCount:current.length,
+         hiddenVisible,stepCount:stages.length,visibleStages:stages.filter(visible).length,hiddenStagesVisible,
+         scrollWidth:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth,
+         boxes:rect,overflowing,phaseHeight:Math.round(bounds.height),
+         heightExcess:sect.scrollHeight-sect.clientHeight,
+         phaseOverflow:getComputedStyle(sect).overflowY
+       };
+     },phase);
+     if(payload.count===0){
+       watch(course,id,view.name,phase+" non-standard example layout","No ."+(phase==="i-do"?"ido":"wedo")+"-example found");
+       continue;
+     }
+     result(payload.active===phase&&payload.phaseVisible,course,id,view.name,phase+" opens visibly",JSON.stringify(payload));
+     result(payload.visibleCount===1,course,id,view.name,phase+" exactly one example rendered",JSON.stringify(payload));
+     result(payload.hiddenVisible===0&&payload.hiddenStagesVisible===0,course,id,view.name,phase+" hidden elements absent from layout",JSON.stringify(payload));
+     result(payload.scrollWidth<=payload.viewport+5,course,id,view.name,phase+" document has no horizontal overflow",JSON.stringify(payload));
+     result(payload.overflowing.length===0,course,id,view.name,phase+" code and diagram width fits panel",JSON.stringify(payload));
+     if(view.name!=="mobile"&&payload.boxes.length>=2){
+       // Two visible cards under a 50/50 teaching layout must not each be squeezed
+       // into approximately one quarter of the available width.
+       const big=payload.boxes.filter(x=>x.w>0).slice(0,2);
+       const min=Math.min(...big.map(x=>x.w));
+       if(min<Math.min(330,view.width*.24))watch(course,id,view.name,phase+" narrow teaching panel",JSON.stringify(big));
+     }
+     if(payload.heightExcess>40&&payload.phaseOverflow==="hidden"){
+       watch(course,id,view.name,phase+" possible vertical clipping","excess "+payload.heightExcess+"px");
+     }
+     if(payload.stepCount){
+       result(payload.visibleStages===0,course,id,view.name,phase+" starts with modelling answer concealed",JSON.stringify(payload));
+       await page.locator("#advance").evaluate(x=>x.click());
+       const after=await page.evaluate(phase=>{
+         const p=document.getElementById(phase),key=phase==="i-do"?"ido":"wedo";
+         const visible=[...p.querySelectorAll("."+key+"-example")].find(x=>!x.hidden);
+         const stages=visible?[...visible.querySelectorAll("."+key+"-step")]:[];
+         return {phase:document.querySelector("section.page.active")?.id,
+           count:stages.filter(x=>!x.hidden&&x.getBoundingClientRect().height>0).length};
+       },phase);
+       result(after.phase===phase&&after.count===1,course,id,view.name,phase+" reveals only first model step",JSON.stringify(after));
+       await page.locator("#previous").evaluate(x=>x.click());
+       const back=await page.evaluate(phase=>{
+         const p=document.getElementById(phase),key=phase==="i-do"?"ido":"wedo";
+         return [...p.querySelectorAll("."+key+"-step")].every(x=>x.hidden);
+       },phase);
+       result(back,course,id,view.name,phase+" Previous conceals first model step");
+     }
+   }
+   result(exceptions.length===0,course,id,view.name,"No uncaught browser errors",exceptions.join(" ; "));
+ }catch(e){result(false,course,id,view.name,"Page test completed",String(e).slice(0,500));}
+ finally{await context.close();}
+}
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ try{
+   for(const view of VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))))
+     for(const [course,ids] of Object.entries(COURSES))
+       for(const id of ids.filter(i=>!FILTER||FILTER.includes(course+":"+i)||FILTER.includes(i)))
+         await auditPage(browser,course,id,view);
+ }finally{await browser.close();}
+ const summary={testedSamples:Object.entries(COURSES).reduce((n,[c,a])=>n+a.filter(id=>!FILTER||FILTER.includes(c+":"+id)||FILTER.includes(id)).length,0),
+  viewports:VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))).map(x=>x.name),
+  checksPassed:pass,failures:issues.length,reviewFlags:watches.length,issues,watches};
+ console.log("FORMAT_AUDIT_SUMMARY "+JSON.stringify(summary));
+ // Visible structural/navigation regression is a CI failure. Review flags alone
+ // are triage evidence, not hard failure or proof of a defect.
+ if(issues.length)process.exitCode=1;
+})().catch(e=>{console.error(e);process.exitCode=1});
