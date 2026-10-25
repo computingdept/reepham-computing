@@ -31,6 +31,7 @@ See [workstreams.csv](workstreams.csv). Counts in that CSV are **historical repo
 - [J277-H446-UI-INTEGRATION.md](J277-H446-UI-INTEGRATION.md): actual shared architecture, applied changes and pending tests
 - [Classroom TV smoke test](classroom-tv-smoke-test.html): representative J277/H446 live browser checks
 - [Exit Ticket rollout and QA](exit-ticket-rollout.md): approved staged YES/NO design; 164 J277 answer-data checks; 38 H446 verified-answer opt-ins; remaining exceptions and smoke-test plan
+- [I Do / We Do reveal standard](modelling-step-reveal-2026-10-25.md): teacher-controlled first worked step, shared implementation, exceptions and verification samples
 - [lesson-inventory.csv](lesson-inventory.csv): 164 J277 and 320 expected H446 lesson slots, source SHAs, exceptions and verification status
 
 **Coverage tables are intentionally unpopulated.** Do not interpret an empty table as zero coverage or claim full specification coverage until every applicable point, including appendices, has been checked against the latest relevant OCR specification and actual lesson/question files.
