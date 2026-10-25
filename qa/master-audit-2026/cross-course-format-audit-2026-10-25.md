@@ -42,3 +42,11 @@ The **complete 41-warning/28-lesson evidence list**, with phase and measured pix
 - **Outside this targeted audit:** You Do detailed marking density, full New Learning diagrams, Do Now retrieval quality, specification coverage, and educational content accuracy remain independent workstreams.
 
 **Audit policy:** Never call a page fully verified merely because it deploys successfully. Only a confirmed browser result supports a pass, and warnings must remain unresolved until independently cleared or shown to be false positives.
+
+## Latest revalidation — 25 October, post compact-TV layout corrections
+
+**Authoritative latest browser run:** [GitHub Actions 40228209877](https://github.com/computingdept/reepham-computing/actions/runs/40228209877) — all four sharded jobs successful. Across the 463 standard lesson pages and three viewport sizes: **26,547 browser assertions passed; 0 failed; 0 compact-TV review flags**. The related GitHub Pages deployment [40228209682](https://github.com/computingdept/reepham-computing/actions/runs/40228209682) also succeeded.
+
+The compact-TV relocation code uses a stable insertion anchor to retain the ordering of staged diagrams, and can restore original node positions outside the compact breakpoint. The test outcome supersedes historical 41-warning and 27-warning records above, which remain as diagnosis history rather than current open exceptions.
+
+**Scope of sign-off:** automated formatting and navigation regression for I Do/We Do standard lesson interfaces only. This is not a screenshot-by-screenshot pedagogical visual review, and it does not sign off the separate J277 lesson 113 interface or unrelated You Do, Do Now, or New Learning workstreams. No teaching content changed in this verification step.
