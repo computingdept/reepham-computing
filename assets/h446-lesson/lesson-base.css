@@ -788,6 +788,69 @@ main.answer-content{height:auto;min-height:100vh;margin:0 auto;max-width:1050px;
 #exit.exit-yesno-generated .exit-yn-confidence-choice{display:grid;grid-template-columns:minmax(155px,auto) minmax(0,1fr);gap:18px;align-items:center;padding:clamp(13px,1.5vw,20px);border:1px solid var(--line);border-radius:12px;background:#f7faf8;font-size:clamp(18px,1.4vw,25px)}
 #exit.exit-yesno-generated .exit-yn-confidence-choice strong{color:var(--green-dark)}
 #exit.exit-yesno-generated .exit-yn-confidence-choice span{color:var(--muted)}
+/* Reveal contrast: the question starts neutral; only the correct answer
+   receives green after the teacher advances the exit ticket. */
+#exit.exit-yesno-generated .exit-stage:first-child .exit-yn-panel{
+  border-top-color:#c6d0ca;
+}
+#exit.exit-yesno-generated .exit-stage:first-child .exit-yn-kicker{
+  color:#3d4740;
+}
+#exit.exit-yesno-generated .exit-yn-option{
+  background:#fff;
+  border-color:#bec7c2;
+  color:#202923;
+  box-shadow:none;
+}
+#exit.exit-yesno-generated .exit-yn-option.is-correct{
+  background:#c5efd3;
+  border-color:#248451;
+  border-width:3px;
+  color:#135831;
+  box-shadow:0 0 0 3px rgba(36,132,81,.11);
+}
+#exit.exit-yesno-generated .exit-yn-option.is-incorrect{
+  background:#f8f8f8;
+  border-color:#e0e4e0;
+  color:#8a928d;
+}
+#exit.exit-yesno-generated .exit-yn-answer-zone{
+  gap:clamp(13px,2vh,24px);
+}
+#exit.exit-yesno-generated .exit-yn-answer-kicker{
+  margin:0;color:#17643c;
+  font-size:clamp(20px,1.7vw,31px);
+  font-weight:950;
+  letter-spacing:.035em;
+  text-align:center;
+}
+#exit.exit-yesno-generated .exit-yn-reason{
+  background:#f3faf5;
+  border:1px solid #b9d9c6;
+  border-left:5px solid #278b51;
+  border-radius:10px;
+  padding:clamp(12px,1.7vw,23px);
+  width:min(100%,950px);
+}
+#exit.exit-yesno-generated .exit-yn-reason h3{
+  margin:0 0 7px;
+  color:#175c37;
+  font-size:clamp(17px,1.1vw,22px);
+  letter-spacing:.035em;
+}
+#exit.exit-yesno-generated .exit-yn-reason .exit-yn-explain{
+  margin:0;
+  max-width:none;
+  text-align:left;
+  font-size:clamp(19px,1.45vw,27px);
+  line-height:1.38;
+  color:#172d20;
+}
+@media(max-height:760px) and (min-width:901px){
+  #exit.exit-yesno-generated .exit-yn-answer-zone{gap:9px}
+  #exit.exit-yesno-generated .exit-yn-reason{padding:11px 14px}
+  #exit.exit-yesno-generated .exit-yn-reason .exit-yn-explain{font-size:18px}
+}
 @media(max-width:900px){
  #exit.exit-yesno-generated .exit-deck,
  #exit.exit-yesno-generated .exit-stage,
