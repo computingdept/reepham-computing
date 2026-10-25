@@ -19,3 +19,11 @@
 - 154 master entries and stage metadata counted directly from current GitHub source.
 - **Not verified:** live DOM execution, actual GitHub Pages release, browser visuals at 1920×1080 and 390×844, lesson-by-lesson rendered cycle and trace expansion. A local attempt to retrieve public source for Node syntax checking failed due to environment DNS, so do not claim automated JavaScript syntax verification.
 - Check sample lessons 001, 002, 057, 059, 080, 096, 124, 164; verify that no cycle or trace appears on reserved exceptions, and that examination answers remain separate.
+
+## Follow-up QA, 25 October
+- Inspected the current master tasks: 059 and 080 both have a single FOR loop updating an accumulator and are sensible optional trace-table examples. Lesson 057 retains its existing special blank table.
+- Confirmed the 154 original stage classifications are unchanged; the cycle shows one focus at a time.
+- Inspected current SVG after label repair: shared label font is now 29px; PREDICT and ITERATE text positions were adjusted, and versioned SVG requests refreshed.
+- Refreshed cached generator references in lessons 059, 080, 096, 124 and 164, representing Predict, Iterate, Test, and Write. These are QA examples; the remaining wrappers may still serve cached old generator scripts until revalidation.
+- Attempted live page and asset checks through web retrieval, but rhsccs.org was inaccessible from this environment. Real browser testing remains outstanding.
+- Verified static source references only. Do not report full 154 live lessons visually verified.
