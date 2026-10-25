@@ -24,6 +24,27 @@ try{
       },phase);
       records.push({lesson:id,phase,result});
       console.log("COMPACT_DIAG "+JSON.stringify({lesson:id,phase,result}));
+
+      // EXPERIMENT ONLY: move the first model figure into the worked-steps
+      // panel in browser memory. Do not commit this change to lesson content
+      // unless phase fits and staged reveal behaviour remain intact.
+      const experiment=await page.evaluate(phase=>{
+        const sect=document.getElementById(phase);
+        const grid=sect.querySelector(".h13-grid,.s-grid");
+        const panels=grid?[...grid.children].filter(x=>/pane|panel/.test(String(x.className))):[];
+        const left=panels[0],right=panels[1];
+        const fig=left?.querySelector(":scope > .h13-figure,:scope > .concept-structure,:scope > svg,:scope > .h13-diagram,:scope > .y13-structure,:scope > .h13-svg");
+        if(!right||!fig)return {attempted:false,reason:!right?"no right panel":"no figure"};
+        right.insertBefore(fig,right.firstChild);
+        return {attempted:true,
+          afterExcess:sect.scrollHeight-sect.clientHeight,
+          leftH:Math.round(left.getBoundingClientRect().height),
+          rightH:Math.round(right.getBoundingClientRect().height),
+          figureH:Math.round(fig.getBoundingClientRect().height),
+          screenH:Math.round(sect.getBoundingClientRect().height)};
+      },phase);
+      console.log("COMPACT_EXPERIMENT "+JSON.stringify({lesson:id,phase,experiment}));
+
     }
     await context.close();
   }
