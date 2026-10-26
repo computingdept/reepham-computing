@@ -80,7 +80,10 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   await gesture("left");
   s=await snapshot();
   assert(s.phase==="new-learning","Swipe left moves Objectives to New Learning",JSON.stringify(s));
+  // A same-document fragment navigation doesn't reload the lesson engine.
+  // Reload the deep-linked URL as a pupil opening it in a new tab would do.
   await page.goto(PAGE+"#vocabulary",{waitUntil:"domcontentloaded"});
+  await page.reload({waitUntil:"domcontentloaded"});
   await page.waitForFunction(()=>document.querySelector("#vocabulary.page.active")&&document.querySelector("#mobile-lesson-status"),null,{timeout:20000});
   s=await snapshot();
   assert(s.phase==="vocabulary"&&s.vocab===0&&!s.vocabAnswer,"Deep link opens Key Vocabulary term 1",JSON.stringify(s));
