@@ -74,6 +74,54 @@ function showOnly(items,index){
 // -1 means the starting problem is visible and no modelled step is revealed.
 function modellingStepIndex(steps){return steps.findIndex(step=>!step.hidden);}
 function resetModelSteps(steps){steps.forEach(step=>{step.hidden=true;});}
+
+/* Opt-in J277 Welcome review only: Code First, then Q2–Q4 together on TV
+   or one at a time on mobile. Numbered lessons remain unchanged. */
+function welcomeReviewPrepare(page){
+  if(page?.dataset.welcomeGroupedReview!=='true')return false;
+  if(page.querySelector('.welcome-marking-screen'))return true;
+  const questions=[...page.querySelectorAll('.youdo-rolling > .youdo-question')];
+  if(questions.length!==4||questions.some(q=>!q.querySelector('.youdo-solution')||!q.querySelector('.question-text')))return false;
+  const screen=document.createElement('div');
+  screen.className='welcome-marking-screen';screen.hidden=true;
+  const stages=['code','exam'].map(type=>{
+    const stage=document.createElement('section');
+    stage.className='welcome-review-stage welcome-review-'+type;
+    stage.hidden=type==='exam';return stage;
+  });
+  questions.forEach((q,i)=>{
+    const card=document.createElement('article');card.className='welcome-review-card';
+    const title=document.createElement('h3');
+    title.textContent=i===0?'Code First · check and improve':'Question '+(i+1)+' · model response';
+    const prompt=q.querySelector('.question-text').cloneNode(true);
+    prompt.classList.add('welcome-review-question');
+    const answer=q.querySelector('.youdo-solution').cloneNode(true);
+    answer.hidden=false;answer.className='welcome-review-answer';
+    card.append(title,prompt,answer);stages[i===0?0:1].append(card);
+  });
+  screen.append(...stages);
+  page.querySelector('.youdo-deck').append(screen);
+  return true;
+}
+function welcomeReviewShow(page,index){
+  if(!welcomeReviewPrepare(page))return false;
+  const phone=window.matchMedia('(max-width:700px)').matches;
+  const step=Math.min(phone?3:1,Math.max(0,index));
+  const screen=page.querySelector('.welcome-marking-screen');
+  const code=screen.querySelector('.welcome-review-code');
+  const exam=screen.querySelector('.welcome-review-exam');
+  code.hidden=step!==0;exam.hidden=step===0;
+  [...exam.querySelectorAll('.welcome-review-card')].forEach((card,i)=>{
+    card.hidden=phone?(step!==i+1):false;
+  });
+  screen.hidden=false;
+  page.querySelector('.youdo-rolling').hidden=true;
+  page.dataset.answerMode='true';page.dataset.reviewIndex=String(step);
+  const progress=page.querySelector('.youdo-window-progress');
+  if(progress)progress.textContent=step===0?'SELF-MARK · CODE FIRST':
+    phone?'SELF-MARK · Q'+(step+1)+' OF 4':'SELF-MARK · Q2–Q4';
+  return true;
+}
 function showYouDoAnswer(page,index){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -580,6 +628,13 @@ function resetPhaseState(id){
     }
   }
   if(id==='you-do'){
+    if(page.dataset.welcomeGroupedReview==='true'){
+      const screen=page.querySelector('.welcome-marking-screen');
+      if(screen)screen.hidden=true;
+      const rolling=page.querySelector('.youdo-rolling');
+      if(rolling)rolling.hidden=false;
+      page.dataset.reviewIndex='0';
+    }
     page.dataset.answerMode='false';
     page.dataset.answerIndex='0';
     if(isH446RichReview(page)){
@@ -809,7 +864,21 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(page.dataset.j277SeparateReview==='true'){
+    if(page.dataset.welcomeGroupedReview==='true'){
+      if(page.dataset.answerMode==='true'){
+        const index=Number(page.dataset.reviewIndex||0);
+        const max=window.matchMedia('(max-width:700px)').matches?3:1;
+        label=index===max?'Continue → Key Vocabulary':
+          index===0?'Self-mark Q2–Q4 →':'Next marking scheme →';
+      }else if(page.dataset.workMode!=='independent'){
+        label='Begin independent work →';
+      }else{
+        const index=Number(page.dataset.windowStart||0);
+        const mobile=window.matchMedia('(max-width:700px)').matches;
+        label=index===0?(mobile?'Next question →':'Continue → Q2–Q4'):
+          mobile&&index<3?'Next question →':'Begin self-marking →';
+      }
+    }else if(page.dataset.j277SeparateReview==='true'){
       const i=Number(page.dataset.windowStart||0);
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
       const count=page.querySelectorAll('.youdo-question').length;
@@ -999,6 +1068,12 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(page.dataset.welcomeGroupedReview==='true'&&page.dataset.answerMode==='true'){
+      const index=Number(page.dataset.reviewIndex||0);
+      const max=window.matchMedia('(max-width:700px)').matches?3:1;
+      if(index<max){welcomeReviewShow(page,index+1);updateControl();return;}
+      showPage('vocabulary');return;
+    }
     if(page.dataset.j277SeparateReview==='true'){
       const items=page.querySelectorAll('.youdo-question');
       const i=Number(page.dataset.windowStart||0);
@@ -1052,6 +1127,9 @@ function next(){
       }
       if(isH446GroupedMarking(page)&&showH446GroupedMarking(page,true,0)){
         updateControl();window.scrollTo({top:0,behavior:'instant'});return;
+      }
+      if(page.dataset.welcomeGroupedReview==='true'&&welcomeReviewShow(page,0)){
+        updateControl();return;
       }
       page.dataset.answerMode='true';
       showYouDoAnswer(page,0);updateControl();return;
