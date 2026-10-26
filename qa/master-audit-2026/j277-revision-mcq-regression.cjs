@@ -12,6 +12,31 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
   for(const [view,width,height] of views){
    const context=await browser.newContext({viewport:{width,height},isMobile:view==='phone',hasTouch:view==='phone'});
    const page=await context.newPage();
+   // J277 Revision Hub must use the same compact tiles and dark-green palette as H446.
+   const hubUrl=origin+'/j277-hub.html?year=11#revisionhub';
+   const hubErrors=[];
+   const hubError=e=>hubErrors.push(String(e));
+   page.on('pageerror',hubError);
+   try{
+    const hubResponse=await page.goto(hubUrl,{waitUntil:'networkidle',timeout:25000});
+    assert(hubResponse?.status()===200,view+' J277 hub HTTP 200',hubResponse?.status());
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active'));
+    const visual=await page.evaluate(()=>{
+     const tiles=[...document.querySelectorAll('#revisionhub a.j277-practice-tile')];
+     const groups=[...document.querySelectorAll('#revisionhub .j277-practice-group')];
+     const fg=tiles.length?getComputedStyle(tiles[0]).color:null;
+     const heading=groups.length?getComputedStyle(groups[0].querySelector('h3')).color:null;
+     const rects=tiles.map(t=>t.getBoundingClientRect());
+     return {tileCount:tiles.length,groupCount:groups.length,fg,heading,withinViewport:rects.every(r=>r.left>=-2&&r.right<=document.documentElement.clientWidth+2),urls:tiles.map(t=>t.getAttribute('href')),labels:tiles.every(t=>!!t.querySelector('.j277-practice-name')&&!!t.querySelector('.j277-practice-code'))};
+    });
+    assert(visual.tileCount===11&&visual.groupCount===2,view+' H446-style topic tiles and Paper groups',visual);
+    assert(visual.fg==='rgb(0, 58, 49)'&&visual.heading==='rgb(0, 58, 49)',view+' H446 dark-green palette',visual);
+    assert(visual.withinViewport&&visual.labels,view+' readable responsive tiles',visual);
+    assert(visual.urls.length===11&&visual.urls.every(u=>/^revision\/j277\/section-[12]-[1-6]\/index\.html#[12]\.[1-6]$/.test(u)),view+' preserves all 11 topic routes',visual.urls);
+    assert(!hubErrors.length,view+' hub JavaScript errors',hubErrors);
+    console.log('J277_HUB_SURVEY '+JSON.stringify({view,tiles:visual.tileCount,groups:visual.groupCount,colour:visual.fg,withinViewport:visual.withinViewport}));
+   }catch(e){assert(false,view+' J277 hub smoke test',String(e).slice(0,400))}
+   finally{page.off('pageerror',hubError)}
    for(const id of sections){
     const errors=[],onerror=e=>errors.push(String(e));page.on('pageerror',onerror);
     const url=origin+'/revision/j277/section-'+id+'/index.html';
