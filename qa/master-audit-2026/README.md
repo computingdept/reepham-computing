@@ -32,6 +32,13 @@ Central audit register. Started 24 October 2026.
 - [Complete H446 compact-TV exception CSV](h446-compact-tv-vertical-fit-2026-10-25.csv) — measured excess height, grouped for follow-up. J277 113 is a standalone revision-interface exception.
 - [Automated whole-course browser workflow](../../.github/workflows/full-course-format-audit.yml) — four shards, all existing standard lesson pages at TV, compact TV and mobile sizes.
 
+## Shared yellow marker regression · 26 October 2026
+
+- [Completed four-shard browser run 40322377801](https://github.com/computingdept/reepham-computing/actions/runs/40322377801): **463 standard lesson pages** (J277 163 + H446 300), **926 browser visits** at 1920×1080 and 390×844. Four successful shards, **zero hard failures and zero width-review warnings**.
+- The test independently checks that the shared marker module and CSS load, vocabulary previews receive drawn pen-stroke styling when applicable, auto-highlighted vocabulary/command words have no solid rectangular fill, and no uncaught page errors occur. Counts across both viewports: **920 pages with vocabulary previews correctly drawn**, 1,694 shared vocabulary highlights, 1,808 shared command-word highlights, and 46 authored keyword highlights.
+- [Automated source checker](keyword-highlighter-regression.cjs) and [workflow](../../.github/workflows/keyword-highlighter-audit.yml) rerun when shared marker styling or the lesson engine changes.
+- **Scope limit:** evidence establishes shared highlight rendering and width consistency in Chromium, not the correctness or completeness of authored vocabulary, actual mobile-device appearance, or pixel-perfect visual review. Lesson 113 is a separate standalone interface.
+
 ## Current position
 See [workstreams.csv](workstreams.csv). Counts in that CSV are **historical reports, not a new repository-wide audit**. Treat completion, publication and coverage claims as unverified until the evidence is linked and retested.
 
