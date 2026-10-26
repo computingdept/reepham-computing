@@ -122,43 +122,72 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
       return {count:tiles.length,colour:tiles[0]?getComputedStyle(tiles[0]).color:null,viewport:tiles.every(t=>{const r=t.getBoundingClientRect();return r.left>=-2&&r.right<=document.documentElement.clientWidth+2}),paths:tiles.map(t=>t.getAttribute('href'))};
     });
     assert(hview.count===11&&hview.colour==='rgb(0, 58, 49)'&&hview.viewport,view+' shared H446 tile styling',hview);
-    const papers=await page.evaluate(()=>({
-      ids:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.id),
-      counts:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.querySelectorAll('.rhsc-practice-tile').length),
-      jumps:[...document.querySelectorAll('#revisionhub .rhsc-paper-nav-button')].map(b=>b.textContent.trim()),
-      codes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].map(t=>t.href.split('#').pop())
+    const hierarchy=await page.evaluate(()=>{
+      const one=document.querySelector('#rhsc-revision-paper-1');
+      const two=document.querySelector('#rhsc-revision-paper-2');
+      const items=[...one.querySelector(':scope > .rhsc-practice-grid').children];
+      const top=items.map(el=>el.dataset.spec||(el.getAttribute('href')||'').split('#').pop());
+      return {
+        top,topCount:items.length,paperTwoCount:two.querySelectorAll(':scope > .rhsc-practice-grid > a').length,
+        groupCount:document.querySelectorAll('#revisionhub .rhsc-practice-group').length,
+        sublinks:[...one.querySelectorAll('.rhsc-practice-subtopics a')].map(a=>a.getAttribute('href').split('#').pop()),
+        legacyHeading:!!document.querySelector('.rhsc-practice-subgroup'),
+        sourceHas14:items[3]?.classList.contains('rhsc-practice-expand')
+      };
+    });
+    assert(hierarchy.top.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hierarchy.topCount===5&&hierarchy.paperTwoCount===4,
+      view+' H446 five equal Paper 1 topics in OCR order',hierarchy);
+    assert(hierarchy.sublinks.join(',')==='1.4.1,1.4.2,1.4.3'&&hierarchy.sourceHas14&&!hierarchy.legacyHeading&&hierarchy.groupCount===2,
+      view+' H446 1.4 legacy group removed and three destinations retained',hierarchy);
+    const initial=await page.evaluate(()=>({
+      shown:[...document.querySelectorAll('#rhsc-revision-paper-1 > .rhsc-practice-grid > .rhsc-practice-tile')].filter(e=>e.getClientRects().length).length,
+      subHidden:document.getElementById('rhsc-h446-14-skills').hidden,
+      paper2Hidden:document.getElementById('rhsc-revision-paper-2').hidden,
+      expanded:document.getElementById('rhsc-h446-14-toggle').getAttribute('aria-expanded')
     }));
-    assert(papers.ids.join(',')==='rhsc-revision-paper-1,rhsc-revision-paper-2'&&papers.counts.join(',')==='7,4',view+' H446 Paper 1 then Paper 2',papers);
-    assert(papers.jumps.join(',')==='Paper 1,Paper 2'&&papers.codes.join(',')==='1.1,1.2,1.3,1.4.1,1.4.2,1.4.3,1.5,2.1,2.2.1,2.2.2,2.3',view+' H446 shared paper navigation and OCR order',papers);
+    assert(initial.shown===5&&initial.subHidden&&initial.paper2Hidden&&initial.expanded==='false',view+' H446 clean default Paper 1 layout',initial);
+    await page.locator('#rhsc-h446-14-toggle').click();
+    const expanded=await page.evaluate(()=>({
+      expanded:document.getElementById('rhsc-h446-14-toggle').getAttribute('aria-expanded'),
+      shown:[...document.querySelectorAll('#rhsc-h446-14-skills a')].filter(e=>e.getClientRects().length).map(e=>e.getAttribute('href').split('#').pop()),
+      overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
+    }));
+    assert(expanded.expanded==='true'&&expanded.shown.join(',')==='1.4.1,1.4.2,1.4.3'&&expanded.overflow<=5,
+      view+' H446 1.4 reveals exactly three skills without horizontal overflow',expanded);
+    await page.locator('#rhsc-h446-14-toggle').click();
+    assert(await page.evaluate(()=>document.getElementById('rhsc-h446-14-skills').hidden),
+      view+' H446 1.4 collapses again');
     const first=await page.evaluate(()=>({
       paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
       paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
-      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
       tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
     }));
-    assert(first.paper1&&first.paper2&&first.visibleCodes.length===7&&first.visibleCodes.every(c=>c.startsWith('1.')),view+' H446 default shows ONLY Paper 1',first);
-    assert(first.tabs.join(',')==='true,false',view+' H446 initial active filter',first.tabs);
+    assert(first.paper1&&first.paper2&&first.tabs.join(',')==='true,false',view+' H446 Paper 1 is default filter',first);
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
     const second=await page.evaluate(()=>({
       paper1:document.querySelector('#rhsc-revision-paper-1').hidden,
       paper2:!document.querySelector('#rhsc-revision-paper-2').hidden,
-      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
+      shown:[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.getAttribute('href').split('#').pop()),
       tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
     }));
-    assert(second.paper1&&second.paper2&&second.visibleCodes.length===4&&second.visibleCodes.every(c=>c.startsWith('2.')),view+' H446 clicking Paper 2 hides ALL Paper 1 topics',second);
-    assert(second.tabs.join(',')==='false,true',view+' H446 Paper 2 active filter',second.tabs);
+    assert(second.paper1&&second.paper2&&second.shown.join(',')==='2.1,2.2.1,2.2.2,2.3'&&second.tabs.join(',')==='false,true',
+      view+' H446 Paper 2 hides all Paper 1 content',second);
     await page.locator('#revisionhub .rhsc-paper-nav-button').first().click();
-    const back=await page.evaluate(()=>({
-      paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
-      paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
-      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop())
-    }));
-    assert(back.paper1&&back.paper2&&back.visibleCodes.length===7,view+' H446 Paper 1 filter switches back',back);
-    // Keyboard users must have the same filter functionality.
+    assert(await page.evaluate(()=>!document.querySelector('#rhsc-revision-paper-1').hidden&&document.querySelector('#rhsc-revision-paper-2').hidden),
+      view+' H446 Paper 1 filter switches back');
     await page.locator('#revisionhub .rhsc-paper-nav-button').first().focus();
     await page.keyboard.press('ArrowRight');
-    assert(await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-1').hidden&&!document.querySelector('#rhsc-revision-paper-2').hidden),view+' H446 arrow key filter works');
-
+    assert(await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-1').hidden&&!document.querySelector('#rhsc-revision-paper-2').hidden),
+      view+' H446 arrow key filter works');
+    // Check the three unchanged subskills still open the correct section directory.
+    for(const subSpec of ['1.4.1','1.4.2','1.4.3']){
+      const response=await page.goto(origin+'/revision/h446/section-1-4/index.html#'+subSpec,{waitUntil:'networkidle',timeout:25000});
+      await page.waitForFunction(spec=>document.getElementById('section-select')?.value===spec,subSpec);
+      assert(response?.status()===200&&(await page.locator('#topic-grid .topic').count())>0,
+        view+' H446 '+subSpec+' original questions remain accessible');
+    }
+    await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
    }catch(e){assert(false,view+' H446 hub smoke test',String(e).slice(0,400))}
    for(const id of sections){
