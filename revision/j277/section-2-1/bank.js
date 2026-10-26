@@ -1,17 +1,12 @@
 'use strict';
-// J277 Paper 2: small skills grouped by OCR sub-specification point. Original RHSC MCQs.
-const J277_SECTION={"code":"2.1","title":"Algorithms","lessons":{"12":"Abstraction and decomposition","13":"Flowcharts and pseudocode","14":"Linear search","15":"Bubble sort and insertion sort","59":"Tracing constructs","82":"Linear search","83":"Binary search","84":"Bubble sort","85":"Insertion sort","86":"Merge sort","105":"Computational thinking","106":"Algorithm design","107":"Trace tables"}};
+// OCR J277 MCQs. Stable skill IDs link via guides/skill-index.json; no page numbers in question banks.
+const J277_SECTION={"code":"2.1","title":"Algorithms"};
 const SKILLS=[
   {
     "id": "21-thinking",
     "section": "2.1",
     "spec": "2.1.1",
     "title": "Computational thinking: decomposition and abstraction",
-    "lessons": [
-      12,
-      105
-    ],
-    "page": 4,
     "questions": [
       {
         "id": "21-thinking-1",
@@ -150,12 +145,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.1",
     "title": "Algorithmic thinking and planning",
-    "lessons": [
-      12,
-      13,
-      105
-    ],
-    "page": 4,
     "questions": [
       {
         "id": "21-algorithmic-1",
@@ -294,11 +283,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.2",
     "title": "Flowcharts and pseudocode",
-    "lessons": [
-      13,
-      106
-    ],
-    "page": 7,
     "questions": [
       {
         "id": "21-design-1",
@@ -441,11 +425,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.2",
     "title": "Trace tables and dry runs",
-    "lessons": [
-      59,
-      107
-    ],
-    "page": 10,
     "questions": [
       {
         "id": "21-tracing-1",
@@ -592,11 +571,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.3",
     "title": "Linear search",
-    "lessons": [
-      14,
-      82
-    ],
-    "page": 14,
     "questions": [
       {
         "id": "21-linear-1",
@@ -737,11 +711,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.3",
     "title": "Binary search",
-    "lessons": [
-      83,
-      109
-    ],
-    "page": 14,
     "questions": [
       {
         "id": "21-binary-1",
@@ -880,12 +849,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.3",
     "title": "Bubble sort",
-    "lessons": [
-      15,
-      84,
-      110
-    ],
-    "page": 15,
     "questions": [
       {
         "id": "21-bubble-1",
@@ -1024,12 +987,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.3",
     "title": "Insertion sort",
-    "lessons": [
-      15,
-      85,
-      111
-    ],
-    "page": 16,
     "questions": [
       {
         "id": "21-insertion-1",
@@ -1168,11 +1125,6 @@ const SKILLS=[
     "section": "2.1",
     "spec": "2.1.3",
     "title": "Merge sort",
-    "lessons": [
-      86,
-      112
-    ],
-    "page": 16,
     "questions": [
       {
         "id": "21-merge-1",
