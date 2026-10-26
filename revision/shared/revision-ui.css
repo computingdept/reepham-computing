@@ -3,6 +3,16 @@
    New layout and responsive UX rules belong here: one source, both qualifications. */
 :root{--rhsc-revision-ink:#003a31;--rhsc-revision-green:#005640;--rhsc-revision-line:#d5dfdb;--rhsc-revision-soft:#f3f8f5;--rhsc-revision-focus:#b87e1d}
 
+/* Shared, deliberately minimal revision heading across GCSE and A Level. */
+#revisionhub .rhsc-revision-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;margin:0 0 10px}
+#revisionhub .rhsc-revision-heading h2{margin:0;color:var(--rhsc-revision-ink);font-size:clamp(1.15rem,1.5vw,1.4rem);line-height:1.25}
+#revisionhub .rhsc-revision-heading .count{display:block;color:#526b60;font-size:.82rem;font-weight:500;line-height:1.4;white-space:normal}
+@media(max-width:600px){
+ #revisionhub .rhsc-revision-heading{display:flex;align-items:flex-start;gap:4px;margin-bottom:8px}
+ #revisionhub .rhsc-revision-heading h2{width:100%;font-size:1.22rem}
+ #revisionhub .rhsc-revision-heading .count{font-size:.77rem}
+}
+
 /* Course hub: H446 and J277 use the same compact practice directory. */
 #revisionhub .rhsc-practice-intro{margin:0 0 12px;color:var(--muted,#52655f)}
 #revisionhub .rhsc-practice-group{margin:0 0 14px}
