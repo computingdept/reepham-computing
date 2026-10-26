@@ -51,6 +51,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      assert(state.includes('80% reached'),view+' '+id+' stored mastery after reload',state);
      // Verify low-score feedback: centralized lesson, model example and guide-page references.
      await page.locator('#topic-grid .topic button').first().click();
+     await page.waitForFunction(()=>!document.getElementById('quiz').hidden&&document.getElementById('prompt').textContent.length>5);
      for(let i=0;i<5;i++){
       const target=await page.evaluate(()=>{
        const prompt=document.getElementById('prompt').textContent;
