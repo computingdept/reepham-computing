@@ -120,33 +120,20 @@
         summary.append(bar);
         summary.hidden=false;
       }
-      const groups=new Map();
-      for(const row of rows){
-        if(!groups.has(row.spec))groups.set(row.spec,[]);
-        groups.get(row.spec).push(row.card);
+      // Preserve the bank's original reading order in one uninterrupted grid.
+      // Specification boundaries are marked on cards, never as new layout rows.
+      grid.classList.remove('rhsc-grouped');
+      grid.classList.add('rhsc-continuous');
+      const frag=document.createDocumentFragment();
+      for(let i=0;i<rows.length;i++){
+        const current=rows[i],before=rows[i-1],after=rows[i+1];
+        const card=current.card;
+        card.classList.toggle('rhsc-spec-first',!before||before.spec!==current.spec);
+        card.classList.toggle('rhsc-spec-last',!after||after.spec!==current.spec);
+        card.dataset.specGroup=current.spec;
+        frag.append(card);
       }
-      grid.classList.toggle('rhsc-grouped',groups.size>1);
-      if(groups.size>1){
-        const frag=document.createDocumentFragment();
-        for(const [name,cards] of groups){
-          const group=document.createElement('section');
-          group.className='rhsc-spec-group';
-          group.dataset.skillCount=String(cards.length);
-          group.setAttribute('aria-label','Specification '+name);
-          const title=document.createElement('h2');
-          title.className='rhsc-spec-group-title';
-          title.append(document.createTextNode(name));
-          const count=document.createElement('small');
-          count.textContent=cards.length+' skill'+(cards.length===1?'':'s');
-          title.append(count);
-          const body=document.createElement('div');
-          body.className='rhsc-spec-grid';
-          body.append(...cards);
-          group.append(title,body);
-          frag.append(group);
-        }
-        grid.replaceChildren(frag);
-      }
+      grid.replaceChildren(frag);
     }finally{
       observer.observe(grid,{childList:true});
       updating=false;
