@@ -131,6 +131,7 @@
         for(const [name,cards] of groups){
           const group=document.createElement('section');
           group.className='rhsc-spec-group';
+          group.dataset.skillCount=String(cards.length);
           group.setAttribute('aria-label','Specification '+name);
           const title=document.createElement('h2');
           title.className='rhsc-spec-group-title';
