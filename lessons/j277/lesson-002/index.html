@@ -139,6 +139,44 @@
 #overview .vocab-intro-list .vocab-tip:nth-child(3n){background-image:var(--rhsc-ink-c)}
 #overview .objective-vocab-stage h2 mark.rhsc-keyword,
 #vocabulary .vocab-answer-value mark.rhsc-keyword{padding:.02em .17em}
+
+/* On phones the shared compact Objectives view hides the long outcome list.
+   Preserve its teacher-authored highlighter keywords as a compact strip;
+   never restore the lengthy desktop two-column panel. */
+@media(max-width:700px){
+  #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword){
+    display:block!important;
+    margin:8px 0 0!important;
+    padding:8px 10px!important;
+    border:0;
+    box-shadow:none;
+    background:#fffdf4;
+  }
+  #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword)>strong{
+    display:none!important;
+  }
+  #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword) ul{
+    display:flex;flex-wrap:wrap;gap:7px 10px;
+    list-style:none;margin:0;padding:0;
+  }
+  #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword) li{
+    font-size:0!important;line-height:1.45;
+    list-style:none;margin:0;padding:0;
+  }
+  #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword) li mark.rhsc-keyword{
+    font-size:15px;line-height:1.4;
+    white-space:normal;
+  }
+  #overview .vocab-intro-list .vocab-tip,
+  #new-learning mark.rhsc-keyword,
+  #i-do mark.rhsc-keyword,
+  #we-do mark.rhsc-keyword,
+  #vocabulary mark.rhsc-keyword{
+    /* Android/browser fallback beneath the existing hand-drawn SVG stroke. */
+    background-color:#fff9a9;
+  }
+}
+
 @media (prefers-contrast:more){
   #overview mark.rhsc-keyword,#new-learning mark.rhsc-keyword,
   #i-do mark.rhsc-keyword,#we-do mark.rhsc-keyword,
