@@ -119,7 +119,7 @@
 </style></head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
-<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision Booklet</span><span class="nav-short">Booklet</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision Hub</span><span class="nav-short">Practice</span></button></div></nav></div>
+<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision Booklet</span><span class="nav-short">Booklet</span></button></div></nav></div>
 <section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div id="terms"></div></section>
 <section class="panel" id="booklet">
   <div class="cards">
@@ -131,12 +131,7 @@
     </article>
   </div>
 </section>
-<section class="panel" id="revisionhub">
-  <div class="summary"><h2>Revision Hub</h2><span class="count">Practice · retrieval · exam preparation</span></div>
-  <p class="note">Use these pages again and again. They are not tied to one lesson.</p><div class="cards"><article class="card"><p class="kicker">DATA</p><h3>Binary and hexadecimal</h3><p>Convert numbers, add binary, spot overflow and use shifts.</p></article><article class="card"><p class="kicker">PROGRAMMING</p><h3>Coding practice</h3><p>Practise sequence, selection, iteration, arrays, strings and files.</p></article><article class="card"><p class="kicker">ALGORITHMS</p><h3>Trace tables, searches &amp; sorts</h3><p>Self-marking practice for linear search, binary search, bubble sort, insertion sort and merge sort.</p><a class="action" href="revision/j277/trace-tables/index.html">Open self-marking practice</a></article></div>
-  <div class="summary" style="margin-top:22px"><h2>Assessment and exam preparation</h2></div>
-  <div class="cards"><article class="card"><span class="badge">CURRENT YEAR 11 · 2026–27</span><p class="kicker">J277/01</p><h3>Computer systems</h3><div class="exam-date">10 May 2027 · AM</div><p>80 marks · 1 hour 30 minutes.</p></article><article class="card"><span class="badge">CURRENT YEAR 11 · 2026–27</span><p class="kicker">J277/02</p><h3>Algorithms and programming</h3><div class="exam-date">19 May 2027 · PM</div><p>80 marks · 1 hour 30 minutes.</p></article><article class="card"><p class="kicker">YEAR 10 COHORT</p><h3>Summer 2028</h3><p>The exact 2028 OCR dates have not been published yet. The lesson plan leaves revision space up to the normal May exam window.</p></article></div>
-</section></main>
+</main>
 <script>const programmes={
 10:{start:1,terms:[{name:'Autumn 1',count:18},{name:'Autumn 2',count:18},{name:'Spring 1',count:14},{name:'Spring 2',count:12},{name:'Summer 1',count:17},{name:'Summer 2',count:16,note:'assessment, feedback and Year 11 bridge'}]},
 11:{start:96,terms:[{name:'Autumn 1',count:18},{name:'Autumn 2',count:18},{name:'Spring 1',count:14},{name:'Spring 2',count:12},{name:'Summer 1',count:7,note:'targeted revision · teaching ends by 1 May'}]}
@@ -355,5 +350,5 @@ function renderLessons(){
  document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
  document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
-applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'revisionhub',revision:'revisionhub',exam:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'lessons',revision:'lessons',exam:'lessons',revisionhub:'lessons'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script></body></html>
