@@ -40,11 +40,6 @@ body.j277-welcome #new-learning .nl-stage{padding:clamp(15px,1.75vw,24px)}
 body.j277-welcome #new-learning .nl-stage h2{font-size:clamp(27px,2vw,38px)}
 body.j277-welcome #new-learning .nl-stage p{font-size:clamp(19px,1.35vw,23px)}
 body.j277-welcome #overview .objectives li{font-size:clamp(17px,1.22vw,21px)}
-body.j277-welcome #you-do .youdo-questions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:stretch}
-body.j277-welcome #you-do .youdo-question{min-width:0;background:#fff;border:1px solid #d3e0d8;border-radius:14px;padding:clamp(16px,1.55vw,26px)}
-body.j277-welcome #you-do .youdo-question h2{font-size:clamp(23px,1.75vw,33px)}
-body.j277-welcome #you-do .youdo-question p{font-size:clamp(19px,1.25vw,23px)}
-body.j277-welcome #you-do .youdo-solution{font-size:clamp(17px,1.1vw,20px)}
 body.j277-welcome .welcome-footer-link{color:#176b4a;font-weight:800;font-size:16px}
 body.j277-welcome #vocabulary .vocab-stage{max-width:100%}
 /* Desktop short screens may scroll inside a single teaching slide instead of clipping its point. */
@@ -57,7 +52,6 @@ body.j277-welcome #vocabulary .vocab-stage{max-width:100%}
 @media(max-width:900px){
  body.j277-welcome .welcome-routine-row{gap:7px}
  body.j277-welcome .welcome-homework-grid{grid-template-columns:1fr}
- body.j277-welcome #you-do .youdo-questions{display:block}
 }
 @media(max-width:700px){
  body.j277-welcome .welcome-two,body.j277-welcome .welcome-three{grid-template-columns:1fr;gap:9px}
@@ -70,8 +64,24 @@ body.j277-welcome #vocabulary .vocab-stage{max-width:100%}
  body.j277-welcome .welcome-routine small{font-size:11px}
  body.j277-welcome .welcome-phase-list{grid-template-columns:repeat(2,minmax(0,1fr))}
  body.j277-welcome .welcome-cycle{max-height:100px}
- body.j277-welcome #you-do .youdo-questions{display:block}
- body.j277-welcome #you-do .youdo-question{padding:17px}
  body.j277-welcome #new-learning .nl-stage p{font-size:17px}
  body.j277-welcome .welcome-softnote{font-size:15px}
+}
+
+/* Welcome adopts the ordinary J277 You Do cards and shared rolling window.
+   Code First alone, Q2–Q4 together on TV, one at a time on phones;
+   all answers appear only after the pupil questions. */
+body.j277-welcome #you-do .youdo-rolling>.exam-card{min-width:0}
+body.j277-welcome #you-do .j277-code-first{align-items:flex-start}
+body.j277-welcome #you-do .j277-code-first .question-text{width:100%}
+body.j277-welcome #you-do .j277-code-first .question-text p{margin:5px 0;font-size:clamp(18px,1.26vw,23px)}
+body.j277-welcome #you-do .j277-code-first .arithmetic{margin:9px 0}
+body.j277-welcome #you-do .j277-code-first .welcome-cycle{margin:12px 0 0;max-height:94px;width:min(100%,800px);align-self:center}
+body.j277-welcome #you-do .youdo-solution{font-size:clamp(17px,1.15vw,22px);line-height:1.4;overflow-y:auto}
+body.j277-welcome #you-do .youdo-solution p{margin:12px 0}
+body.j277-welcome #you-do[data-answer-mode="true"] .exam-card{display:flex;flex-direction:column;gap:10px}
+@media(max-width:700px){
+ body.j277-welcome #you-do .j277-code-first .question-text p{font-size:17px}
+ body.j277-welcome #you-do .j277-code-first .arithmetic{font-size:17px;white-space:pre-wrap}
+ body.j277-welcome #you-do .j277-code-first .welcome-cycle{max-height:78px}
 }
