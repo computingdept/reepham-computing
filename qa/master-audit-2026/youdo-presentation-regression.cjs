@@ -46,6 +46,11 @@ async function test(browser,target,view){
   await page.waitForFunction(()=>!!document.getElementById("you-do") &&
     !!document.querySelector(".phase-nav [data-page='you-do']") &&
     !!document.getElementById("advance"),null,{timeout:20000});
+  // Dynamically rendered J277 lessons create navigation elements before the
+  // shared lesson engine attaches handlers. Wait for its first showPage()
+  // instead of racing that initialisation and accidentally returning to Do Now.
+  await page.waitForFunction(()=>location.hash==="#do-now" &&
+    document.querySelector("section.page.active")?.id==="do-now",null,{timeout:20000});
   // Use phase selection only as a setup step; mobile phase buttons are intentionally hidden.
   await page.locator('.phase-nav [data-page="you-do"]').evaluate(el=>el.click());
   // Some J277 pages are constructed by a separate asynchronous adapter.
