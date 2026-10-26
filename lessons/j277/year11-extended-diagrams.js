@@ -516,6 +516,9 @@ window.J277Y11Diagram=function(spec){
  const stage=Math.max(0,Math.min(3,Number(spec.focus)||0));
  const header=String(spec.title||spec.topic||"J277 VISUAL MODEL"),body=layout(spec,stage);
  const labelText=String(spec.caption||"Model the question, then reveal the method");
- return '<figure class="a1-scene y11-scene" role="group" aria-label="'+E(header)+'"><svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+E(header)+'">'+box(1,1,638,402,"#fcfefc","#c7d9cc")+text(23,38,header.slice(0,52),21,"start")+text(615,39,stage===3?"CHECK":("STEP "+(stage+1)),14,"end","#247552")+body+text(320,394,labelText.slice(0,84),14,"middle","#537268")+'</svg></figure>';
+ // Independent question-data diagrams are reference material, not guided steps.
+ // Omitting the step badge also leaves the full header legible on all screens.
+ const stepBadge=spec.phase==="question-data"?"":text(615,39,stage===3?"CHECK":("STEP "+(stage+1)),14,"end","#247552");
+ return '<figure class="a1-scene y11-scene" role="group" aria-label="'+E(header)+'"><svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+E(header)+'">'+box(1,1,638,402,"#fcfefc","#c7d9cc")+text(23,38,header.slice(0,52),21,"start")+stepBadge+body+text(320,394,labelText.slice(0,84),14,"middle","#537268")+'</svg></figure>';
 };
 })();
