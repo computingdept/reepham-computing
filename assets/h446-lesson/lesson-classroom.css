@@ -1631,3 +1631,27 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
     overscroll-behavior:contain;
   }
 }
+
+/* Phone lesson header: tiny live working/routine and response icons.
+   Full-size blue/green/orange Classroom TV tiles remain unchanged. */
+.mobile-lesson-signals{display:none}
+@media(max-width:700px){
+  #mobile-lesson-status{min-width:0}
+  .mobile-lesson-signals{
+    display:flex;align-items:center;justify-content:flex-end;
+    flex:0 0 auto;gap:4px;margin-left:auto;
+  }
+  .mobile-signal-icon{
+    width:26px;height:26px;box-sizing:border-box;
+    display:grid;place-items:center;border-radius:7px;
+    border:1px solid transparent;flex:0 0 auto;
+  }
+  .mobile-signal-routine{background:#e5f3e9;border-color:#bcd9c5;color:#205e3e}
+  .mobile-signal-response{background:#fff1df;border-color:#ebcba2;color:#8e520e}
+  .mobile-signal-icon svg{display:block;width:17px;height:17px}
+}
+@media(max-width:360px){
+  .mobile-lesson-signals{gap:3px}
+  .mobile-signal-icon{width:23px;height:23px}
+  .mobile-signal-icon svg{width:15px;height:15px}
+}
