@@ -1718,6 +1718,25 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
  @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
  @media(max-width:900px){.a1-scene svg{max-height:none}#you-do .source-note{font-size:14px}}
+ /* J277 independent question-data SVGs: at portrait phone width the labels
+    become ~7 px if a whole 560/640-unit diagram is shrunk into a 290 px card.
+    Keep diagrams readable at near-native scale inside their own horizontal
+    panning region. The shared touch-navigation engine recognises overflow-x
+    scrollers, so panning the diagram does not accidentally advance the lesson.
+    Teaching-phase diagrams, TV and landscape layouts are left unchanged. */
+ @media(max-width:700px){
+   #you-do .exam-card .a1-scene{
+     box-sizing:border-box;display:block;width:100%;max-width:100%;
+     overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
+     -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+     border:1px solid #cedfd3;border-radius:10px;
+     touch-action:pan-x;
+   }
+   #you-do .exam-card .a1-scene>svg{
+     display:block;width:560px!important;min-width:560px;
+     max-width:none!important;height:auto!important;max-height:none!important;
+   }
+ }
 
  /* Year 11 step-synchronised classroom diagrams. */
  .y11-guided-visual[hidden]{display:none!important}
