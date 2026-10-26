@@ -1623,3 +1623,11 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
     box-shadow:0 8px 22px rgba(0,0,0,.2);
   }
 }
+
+/* Compact TV You Do: never clip the last lines of a long independent question. */
+@media (min-width:901px) and (max-height:760px){
+  #you-do:not([data-answer-mode="true"]) .youdo-rolling > .youdo-question.exam-card{
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
