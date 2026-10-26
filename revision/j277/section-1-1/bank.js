@@ -1,17 +1,12 @@
 'use strict';
-// OCR J277 1.1: separate ten-question banks for individual specification skills.
-const J277_SECTION={"code":"1.1","title":"Systems Architecture","lessons":{"10":"CPU architecture and registers","11":"CPU performance","20":"Embedded systems","126":"CPU architecture revision","127":"Performance and embedded systems"}};
+// OCR J277 MCQs. Stable skill IDs link via guides/skill-index.json; no page numbers in question banks.
+const J277_SECTION={"code":"1.1","title":"Systems Architecture"};
 const SKILLS=[
   {
     "id": "11-components",
     "section": "1.1",
     "spec": "1.1.1",
     "title": "ALU, control unit and cache",
-    "lessons": [
-      10,
-      126
-    ],
-    "page": 7,
     "questions": [
       {
         "id": "11-components-1",
@@ -150,11 +145,6 @@ const SKILLS=[
     "section": "1.1",
     "spec": "1.1.1",
     "title": "CPU registers: MAR, MDR, PC and ACC",
-    "lessons": [
-      10,
-      126
-    ],
-    "page": 8,
     "questions": [
       {
         "id": "11-registers-1",
@@ -293,11 +283,6 @@ const SKILLS=[
     "section": "1.1",
     "spec": "1.1.1",
     "title": "Fetch–decode–execute cycle",
-    "lessons": [
-      10,
-      126
-    ],
-    "page": 6,
     "questions": [
       {
         "id": "11-fde-1",
@@ -436,11 +421,6 @@ const SKILLS=[
     "section": "1.1",
     "spec": "1.1.2",
     "title": "CPU performance factors",
-    "lessons": [
-      11,
-      127
-    ],
-    "page": 11,
     "questions": [
       {
         "id": "11-performance-1",
@@ -579,11 +559,6 @@ const SKILLS=[
     "section": "1.1",
     "spec": "1.1.3",
     "title": "Embedded systems",
-    "lessons": [
-      20,
-      127
-    ],
-    "page": 13,
     "questions": [
       {
         "id": "11-embedded-1",
