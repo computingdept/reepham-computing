@@ -124,6 +124,43 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     }catch(e){assert(false,view+' '+id+' browser exception',String(e).slice(0,400))}
     finally{page.off('pageerror',onerror);}
    }
+   const h446Sections=['1-1','1-2','1-3','1-4','1-5','2-1','2-2-1','2-2-2','2-3'];
+   for(const id of h446Sections){
+    const errors=[],onerror=e=>errors.push(String(e));
+    page.on('pageerror',onerror);
+    const url=origin+'/revision/h446/section-'+id+'/index.html';
+    try{
+      const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
+      assert(resp?.status()===200,view+' H446 '+id+' HTTP 200',resp?.status());
+      await page.waitForFunction(()=>document.querySelector('.rhsc-progress-summary:not([hidden])'));
+      const before=await page.evaluate(()=>({
+        topics:document.querySelectorAll('#topic-grid .topic').length,
+        shared:document.documentElement.classList.contains('rhsc-revision-ui'),
+        assets:[...document.styleSheets].some(s=>s.href?.includes('/revision/shared/revision-ui.css')),
+        nextSlot:document.getElementById('next')?.parentElement?.className,
+        progress:document.querySelector('.rhsc-progress-summary')?.innerText
+      }));
+      assert(before.topics>0&&before.shared&&before.assets&&before.nextSlot==='feedback-next',view+' H446 '+id+' shared design intact',before);
+      await page.locator('#topic-grid .topic button').first().click();
+      await page.waitForFunction(()=>!document.getElementById('quiz').hidden);
+      assert((await page.locator('#counter').innerText()).includes('Question 1'),view+' H446 '+id+' quiz entry');
+      const radios=page.locator('input[name=answer]');
+      if(await radios.count()){
+        await radios.first().check();
+        await page.locator('#check').click();
+        assert(!(await page.locator('#feedback').isHidden()),view+' H446 '+id+' feedback works');
+        if(view==='phone'){
+         const seq=await page.evaluate(()=>{const f=document.getElementById('feedback').getBoundingClientRect(),n=document.getElementById('next').getBoundingClientRect();return {feedbackBottom:f.bottom,nextTop:n.top,ok:n.top>=f.bottom-2};});
+         assert(seq.ok,view+' H446 '+id+' feedback before Next',seq);
+        }
+        await page.locator('#next').click();
+        assert((await page.locator('#counter').innerText()).includes('Question 2'),view+' H446 '+id+' advances');
+      }
+      assert(!errors.length,view+' H446 '+id+' no JavaScript errors',errors);
+      console.log('SHARED_H446_SURVEY '+JSON.stringify({view,id,topics:before.topics}));
+    }catch(e){assert(false,view+' H446 '+id+' browser exception',String(e).slice(0,400))}
+    finally{page.off('pageerror',onerror);}
+   }
    await context.close();
   }
  }finally{await browser.close();}
