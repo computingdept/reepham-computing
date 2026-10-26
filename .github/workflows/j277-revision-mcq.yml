@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify centralized J277 guide index
+        run: python3 tools/revision/build_j277_guide_links.py --check
       - name: Install Chromium
         run: |
           npm install --no-save --package-lock=false playwright@1.56.1
