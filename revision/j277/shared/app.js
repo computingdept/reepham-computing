@@ -1,5 +1,5 @@
 'use strict';
-const SECTION=window.J277_SECTION;
+const SECTION=J277_SECTION;
 const KEY='rhsc-j277-'+SECTION.code.replace(/\D/g,'')+'-v1';
 const TITLES={[SECTION.code]:SECTION.title};
 const LESSONS=SECTION.lessons;
