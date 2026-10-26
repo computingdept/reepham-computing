@@ -42,7 +42,7 @@ function fail(where,test,detail){const item={...where,test,detail};failures.push
      }
      const s=await page.evaluate(()=>{
       const visible=e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&!e.closest("[hidden]")};
-      const questions=document.querySelectorAll(".question,.exam-card,.scheme-question,.j277-assessment-panel");
+      const questions=document.querySelectorAll(".question,.exam-card,.scheme-question,.j277-assessment-panel,main section");
       const links=[...document.querySelectorAll('a[href$="assessment.html"]')].map(x=>x.getAttribute("href"));
       const schemes=[...document.querySelectorAll(".scheme-points,.scheme-question")].filter(visible);
       const svgs=[...document.querySelectorAll("svg")].filter(visible);
