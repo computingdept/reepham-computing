@@ -1,12 +1,298 @@
 'use strict';
-// Original J277 MCQ bank built from the AP1-aligned Paper 1 guide; spec 1.1.1–1.1.3.
-const J277_SECTION={"code":"1.1","title":"Systems Architecture","guidePublished":false,"guideFile":"J277_Paper_1_Revision_Guide_AP1_Aligned.pdf","lessons":{"10":"CPU architecture and registers","11":"CPU performance","20":"Embedded systems","126":"CPU architecture revision","127":"Performance and embedded systems"}};
+// OCR J277 1.1: separate ten-question banks for individual specification skills.
+const J277_SECTION={"code":"1.1","title":"Systems Architecture","lessons":{"10":"CPU architecture and registers","11":"CPU performance","20":"Embedded systems","126":"CPU architecture revision","127":"Performance and embedded systems"}};
 const SKILLS=[
   {
-    "id": "11-cpu",
+    "id": "11-components",
     "section": "1.1",
     "spec": "1.1.1",
-    "title": "CPU components and registers",
+    "title": "ALU, control unit and cache",
+    "lessons": [
+      10,
+      126
+    ],
+    "page": 7,
+    "questions": [
+      {
+        "id": "11-components-1",
+        "prompt": "What does the ALU do?",
+        "answer": "Performs arithmetic and logical operations",
+        "options": [
+          "Performs arithmetic and logical operations",
+          "Stores all files permanently",
+          "Controls the display resolution",
+          "Holds the next instruction address"
+        ],
+        "explanation": "The arithmetic logic unit carries out calculations and logical comparisons.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-2",
+        "prompt": "What is the purpose of the control unit?",
+        "answer": "Coordinates operations and decodes instructions",
+        "options": [
+          "Coordinates operations and decodes instructions",
+          "Permanently stores software",
+          "Carries out only arithmetic",
+          "Replaces RAM"
+        ],
+        "explanation": "The CU decodes instructions and coordinates CPU components using control signals.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-3",
+        "prompt": "Which CPU component performs a comparison such as whether 7 is greater than 4?",
+        "answer": "ALU",
+        "options": [
+          "ALU",
+          "Program counter",
+          "Control unit",
+          "Optical drive"
+        ],
+        "explanation": "Logic comparisons are performed by the ALU.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-4",
+        "prompt": "Which CPU component coordinates the movement of data and instructions?",
+        "answer": "Control unit",
+        "options": [
+          "Control unit",
+          "Hard disk drive",
+          "Accumulator only",
+          "Output monitor"
+        ],
+        "explanation": "The control unit directs other parts of the CPU.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-5",
+        "prompt": "Why does the CPU use cache?",
+        "answer": "To access frequently used data and instructions quickly",
+        "options": [
+          "To access frequently used data and instructions quickly",
+          "To replace every register",
+          "To store photographs permanently",
+          "To connect to the internet"
+        ],
+        "explanation": "Cache reduces the need to fetch frequently used data from slower RAM.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-6",
+        "prompt": "Which storage inside or near the CPU is very fast but relatively small?",
+        "answer": "Cache",
+        "options": [
+          "Cache",
+          "SSD",
+          "Optical disc",
+          "USB stick"
+        ],
+        "explanation": "Cache is fast, small-capacity storage used by the CPU.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-7",
+        "prompt": "What is the CPU primarily responsible for?",
+        "answer": "Fetching, decoding and executing instructions",
+        "options": [
+          "Fetching, decoding and executing instructions",
+          "Printing documents without software",
+          "Displaying power to the mains",
+          "Storing every file when switched off"
+        ],
+        "explanation": "A processor runs program instructions through the fetch–decode–execute cycle.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-8",
+        "prompt": "Which component is mainly responsible for interpreting an instruction?",
+        "answer": "Control unit",
+        "options": [
+          "Control unit",
+          "ALU",
+          "Secondary storage",
+          "Network adapter"
+        ],
+        "explanation": "The control unit decodes the instruction and directs its execution.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-9",
+        "prompt": "An instruction requires 12 + 9. Which component completes the calculation?",
+        "answer": "ALU",
+        "options": [
+          "ALU",
+          "Control unit",
+          "Program counter",
+          "Network switch"
+        ],
+        "explanation": "The ALU performs arithmetic.",
+        "skill": "ALU, control unit and cache"
+      },
+      {
+        "id": "11-components-10",
+        "prompt": "Which pairing is correct?",
+        "answer": "ALU: calculation; CU: coordination",
+        "options": [
+          "ALU: calculation; CU: coordination",
+          "ALU: permanent files; CU: disk storage",
+          "ALU: email; CU: network cabling",
+          "ALU: power supply; CU: screen output"
+        ],
+        "explanation": "The ALU computes, while the CU orchestrates execution.",
+        "skill": "ALU, control unit and cache"
+      }
+    ]
+  },
+  {
+    "id": "11-registers",
+    "section": "1.1",
+    "spec": "1.1.1",
+    "title": "CPU registers: MAR, MDR, PC and ACC",
+    "lessons": [
+      10,
+      126
+    ],
+    "page": 8,
+    "questions": [
+      {
+        "id": "11-registers-1",
+        "prompt": "Which register holds the address of the next instruction?",
+        "answer": "PC",
+        "options": [
+          "PC",
+          "MDR",
+          "ACC",
+          "MAR"
+        ],
+        "explanation": "The program counter contains the next instruction address.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-2",
+        "prompt": "Which register holds the address of a memory location in use?",
+        "answer": "MAR",
+        "options": [
+          "MAR",
+          "ACC",
+          "PC",
+          "MDR"
+        ],
+        "explanation": "MAR is the memory address register.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-3",
+        "prompt": "Which register holds information transferred to or from memory?",
+        "answer": "MDR",
+        "options": [
+          "MDR",
+          "MAR",
+          "PC",
+          "ACC"
+        ],
+        "explanation": "MDR contains the data or instruction being moved.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-4",
+        "prompt": "What is usually stored in the accumulator?",
+        "answer": "Intermediate calculation results",
+        "options": [
+          "Intermediate calculation results",
+          "The address of a file on the internet",
+          "The clock frequency",
+          "The next instruction address"
+        ],
+        "explanation": "ACC stores calculation results used by the CPU.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-5",
+        "prompt": "Which statement is true?",
+        "answer": "MAR holds an address and MDR holds a value",
+        "options": [
+          "MAR holds an address and MDR holds a value",
+          "MDR holds an address and MAR holds a value",
+          "PC stores the screen colour",
+          "ACC always stores the next instruction"
+        ],
+        "explanation": "Addresses and data are held in different registers.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-6",
+        "prompt": "The processor needs to read address 24. Where is 24 placed?",
+        "answer": "MAR",
+        "options": [
+          "MAR",
+          "ACC",
+          "MDR",
+          "CU"
+        ],
+        "explanation": "The memory location being accessed is held in MAR.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-7",
+        "prompt": "The number 99 is retrieved from RAM. Which register can hold 99 in transit?",
+        "answer": "MDR",
+        "options": [
+          "MDR",
+          "MAR",
+          "PC",
+          "Clock"
+        ],
+        "explanation": "MDR holds the value being read or written.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-8",
+        "prompt": "A jump instruction changes which register to redirect execution?",
+        "answer": "PC",
+        "options": [
+          "PC",
+          "MDR",
+          "MAR",
+          "ACC"
+        ],
+        "explanation": "Changing the program counter changes which instruction is fetched next.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-9",
+        "prompt": "A calculation gives 27. Which register is designed to hold that interim result?",
+        "answer": "ACC",
+        "options": [
+          "ACC",
+          "PC",
+          "MAR",
+          "MDR"
+        ],
+        "explanation": "Accumulator holds intermediate results.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      },
+      {
+        "id": "11-registers-10",
+        "prompt": "Why are CPU registers useful?",
+        "answer": "They provide very fast temporary storage inside the processor",
+        "options": [
+          "They provide very fast temporary storage inside the processor",
+          "They archive files when power is off",
+          "They replace an entire operating system",
+          "They extend internet bandwidth"
+        ],
+        "explanation": "Registers provide quick access to instructions, data, addresses and results.",
+        "skill": "CPU registers: MAR, MDR, PC and ACC"
+      }
+    ]
+  },
+  {
+    "id": "11-fde",
+    "section": "1.1",
+    "spec": "1.1.1",
+    "title": "Fetch–decode–execute cycle",
     "lessons": [
       10,
       126
@@ -14,134 +300,134 @@ const SKILLS=[
     "page": 6,
     "questions": [
       {
-        "id": "11-cpu-1",
-        "prompt": "Which part of the CPU performs arithmetic and logical operations?",
-        "answer": "ALU",
-        "options": [
-          "ALU",
-          "Control unit",
-          "Program counter",
-          "Cache"
-        ],
-        "explanation": "The arithmetic logic unit performs calculations and logic comparisons.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-2",
-        "prompt": "What is the main job of the control unit?",
-        "answer": "Coordinate CPU operations and decode instructions",
-        "options": [
-          "Coordinate CPU operations and decode instructions",
-          "Store every file permanently",
-          "Perform all arithmetic itself",
-          "Display results on a monitor"
-        ],
-        "explanation": "The control unit decodes instructions and sends control signals to coordinate components.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-3",
-        "prompt": "Which register holds the address of the next instruction to fetch?",
-        "answer": "Program counter (PC)",
-        "options": [
-          "Program counter (PC)",
-          "Memory data register (MDR)",
-          "Accumulator (ACC)",
-          "Memory address register (MAR)"
-        ],
-        "explanation": "The program counter stores the address of the next instruction. A branch may change its value.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-4",
-        "prompt": "What does the memory address register (MAR) hold?",
-        "answer": "The address of the memory location being accessed",
-        "options": [
-          "The address of the memory location being accessed",
-          "The result of a calculation",
-          "The contents being transferred from memory",
-          "The number of CPU cores"
-        ],
-        "explanation": "MAR holds an address, not the data at that address.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-5",
-        "prompt": "What does the memory data register (MDR) hold?",
-        "answer": "Data or an instruction being transferred to or from memory",
-        "options": [
-          "Data or an instruction being transferred to or from memory",
-          "The address of the next instruction",
-          "The CPU clock frequency",
-          "The current screen resolution"
-        ],
-        "explanation": "MDR holds the value being transferred; MAR holds where to access it.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-6",
-        "prompt": "What is stored in the accumulator (ACC)?",
-        "answer": "Intermediate results of calculations",
-        "options": [
-          "Intermediate results of calculations",
-          "The location of the next instruction",
-          "Files saved on the SSD",
-          "The CPU clock speed"
-        ],
-        "explanation": "The accumulator stores data and arithmetic results used by the CPU.",
-        "skill": "CPU components and registers"
-      },
-      {
-        "id": "11-cpu-7",
-        "prompt": "What is the correct order of the fetch–decode–execute cycle?",
+        "id": "11-fde-1",
+        "prompt": "In what order does the CPU handle an instruction?",
         "answer": "Fetch, decode, execute",
         "options": [
           "Fetch, decode, execute",
-          "Decode, execute, fetch",
           "Execute, fetch, decode",
+          "Decode, execute, fetch",
           "Fetch, execute, decode"
         ],
-        "explanation": "The CPU fetches an instruction, the control unit decodes it, and the CPU executes it.",
-        "skill": "CPU components and registers"
+        "explanation": "A new instruction is fetched, interpreted, then acted upon.",
+        "skill": "Fetch–decode–execute cycle"
       },
       {
-        "id": "11-cpu-8",
-        "prompt": "A CPU retrieves an instruction from main memory. Which stage is this?",
-        "answer": "Fetch",
+        "id": "11-fde-2",
+        "prompt": "What happens during the fetch stage?",
+        "answer": "An instruction is brought from memory",
         "options": [
+          "An instruction is brought from memory",
+          "The user installs software",
+          "The ALU stores files on disk",
+          "The monitor displays a webpage"
+        ],
+        "explanation": "Fetch gets the instruction identified by the PC.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-3",
+        "prompt": "What happens during decode?",
+        "answer": "The control unit interprets the instruction",
+        "options": [
+          "The control unit interprets the instruction",
+          "The keyboard produces a result",
+          "The monitor receives power",
+          "The hard drive formats itself"
+        ],
+        "explanation": "Decode determines the operation required.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-4",
+        "prompt": "What happens during execute?",
+        "answer": "The CPU carries out the instruction",
+        "options": [
+          "The CPU carries out the instruction",
+          "The computer must shut down",
+          "The instruction is only copied",
+          "The program counter is always reset to zero"
+        ],
+        "explanation": "Execute performs the requested operation.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-5",
+        "prompt": "Which register normally provides the address of the next instruction to fetch?",
+        "answer": "PC",
+        "options": [
+          "PC",
+          "ACC",
+          "MDR",
+          "Cache"
+        ],
+        "explanation": "The program counter identifies the next instruction.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-6",
+        "prompt": "Where is a memory address placed when the next instruction is fetched?",
+        "answer": "MAR",
+        "options": [
+          "MAR",
+          "ACC",
+          "Monitor",
+          "ALU"
+        ],
+        "explanation": "MAR holds the memory location being accessed.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-7",
+        "prompt": "An instruction has arrived from memory. Which stage identifies what action it specifies?",
+        "answer": "Decode",
+        "options": [
+          "Decode",
+          "Fetch",
+          "Execute",
+          "Storage"
+        ],
+        "explanation": "Decode determines what the retrieved instruction means.",
+        "skill": "Fetch–decode–execute cycle"
+      },
+      {
+        "id": "11-fde-8",
+        "prompt": "The ALU adds two values as requested by an instruction. Which stage is this?",
+        "answer": "Execute",
+        "options": [
+          "Execute",
           "Fetch",
           "Decode",
-          "Execute",
-          "Store"
+          "Input"
         ],
-        "explanation": "Fetch obtains the next instruction from main memory.",
-        "skill": "CPU components and registers"
+        "explanation": "The calculation is the execution of the decoded instruction.",
+        "skill": "Fetch–decode–execute cycle"
       },
       {
-        "id": "11-cpu-9",
-        "prompt": "Which statement correctly distinguishes MAR and MDR?",
-        "answer": "MAR stores an address; MDR stores a value",
+        "id": "11-fde-9",
+        "prompt": "Which statement about the FDE cycle is accurate?",
+        "answer": "It repeats as a program runs",
         "options": [
-          "MAR stores an address; MDR stores a value",
-          "MAR stores a value; MDR stores an address",
-          "Both store addresses only",
-          "Both store calculation results only"
+          "It repeats as a program runs",
+          "It happens only once when the computer is switched on",
+          "It is used only for graphics",
+          "It always requires internet access"
         ],
-        "explanation": "A memory address identifies a location; memory data is what is read or written there.",
-        "skill": "CPU components and registers"
+        "explanation": "The processor repeats the cycle to run instructions.",
+        "skill": "Fetch–decode–execute cycle"
       },
       {
-        "id": "11-cpu-10",
-        "prompt": "When does the control unit interpret what an instruction means?",
-        "answer": "During decode",
+        "id": "11-fde-10",
+        "prompt": "How can a branch affect the next fetch?",
+        "answer": "It can change the PC to a different instruction address",
         "options": [
-          "During decode",
-          "During fetch only",
-          "Only after the whole program ends",
-          "Only when saving files"
+          "It can change the PC to a different instruction address",
+          "It permanently increases cache size",
+          "It deletes all registers",
+          "It turns RAM into secondary storage"
         ],
-        "explanation": "The control unit decodes an instruction before coordinating its execution.",
-        "skill": "CPU components and registers"
+        "explanation": "Branch instructions change program flow by changing the PC.",
+        "skill": "Fetch–decode–execute cycle"
       }
     ]
   },
