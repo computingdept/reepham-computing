@@ -18,10 +18,12 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     try{
      const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
      assert(resp?.status()===200,view+' '+id+' HTTP 200',resp?.status());
-     assert((await page.locator('#topic-grid .topic').count())===3,view+' '+id+' three skills');
-     const bank=await page.evaluate(()=>({skills:SKILLS.map(s=>({id:s.id,title:s.title,count:s.questions.length,valid:s.questions.every(q=>q.options.length===4&&q.options.includes(q.answer)&&new Set(q.options).size===4)})),section:J277_SECTION.code}));
+     const expectedCount=id==='1-1'?5:9;
+     assert((await page.locator('#topic-grid .topic').count())===expectedCount,view+' '+id+' small skills');
+     const bank=await page.evaluate(()=>({skills:SKILLS.map(s=>({id:s.id,title:s.title,count:s.questions.length,valid:s.questions.every(q=>q.options.length===4&&q.options.includes(q.answer)&&new Set(q.options).size===4)})),section:J277_SECTION.code,links:SKILLS.map(s=>({id:s.id,mapped:!!window.J277_RESOURCE_INDEX.skills[s.id],lessons:window.J277_RESOURCE_INDEX.skills[s.id]?.lessons||[],guide:window.J277_RESOURCE_INDEX.pageLabel(s.id)}))}));
      assert(bank.section===id.replace('-','.'),view+' '+id+' correct section',bank.section);
      assert(bank.skills.every(s=>s.count===10&&s.valid),view+' '+id+' original question bank',bank.skills);
+     assert(bank.links.every(r=>r.mapped&&r.lessons.length&&r.guide.includes('page ')),view+' '+id+' central lesson and guide mapping',bank.links);
      const first=bank.skills[0].id;
      await page.locator('#topic-grid .topic button').first().click();
      await page.waitForFunction(()=>!document.getElementById('quiz').hidden);
@@ -47,6 +49,24 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      await page.goto(url,{waitUntil:'networkidle'});
      const state=await page.locator('#topic-grid .topic .status').first().innerText();
      assert(state.includes('80% reached'),view+' '+id+' stored mastery after reload',state);
+     // Verify low-score feedback: centralized lesson, model example and guide-page references.
+     await page.locator('#topic-grid .topic button').first().click();
+     for(let i=0;i<5;i++){
+      const target=await page.evaluate(()=>{
+       const prompt=document.getElementById('prompt').textContent;
+       const q=SKILLS.flatMap(s=>s.questions).find(q=>q.prompt===prompt);
+       return q.options.find(v=>v!==q.answer);
+      });
+      await page.locator('input[name=answer]').evaluateAll((inputs,v)=>inputs.find(e=>e.value===v)?.closest('label')?.click(),target);
+      await page.locator('#check').click();
+      await page.locator('#next').click();
+     }
+     assert(await page.locator('#score').innerText()==='0%',view+' '+id+' below-mastery score');
+     assert((await page.locator('#support a[href*="/lessons/j277/"]').count())>=2,view+' '+id+' targeted classroom and I Do links');
+     const guideNote=await page.locator('#support').innerText();
+     const pageMapped=await page.evaluate(()=>window.J277_RESOURCE_INDEX.pageLabel(SKILLS[0].id));
+     assert(guideNote.includes(pageMapped),view+' '+id+' centrally mapped guide page',guideNote);
+     assert(!(await page.locator('#support a[href*="/guides/"]').count()),view+' '+id+' no broken unpublished PDF links');
      assert(!errors.length,view+' '+id+' no JavaScript errors',errors);
      console.log('J277_MCQ_SURVEY '+JSON.stringify({view,id,bankQuestions:bank.skills.reduce((n,x)=>n+x.count,0),screens:'directory quiz feedback results retry reload',mastery:state,overflow:over}));
     }catch(e){assert(false,view+' '+id+' browser exception',String(e).slice(0,400))}
