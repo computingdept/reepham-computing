@@ -174,7 +174,38 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
     "H446 Objectives updates the same icons",JSON.stringify(signals));
   assert(/Objectives/.test(signals.phase)&&signals.match&&signals.sameIcons,
     "H446 legend reuses the three Classroom TV labels and header symbols",JSON.stringify(signals));
-  assert(errors.length===0,"No browser JavaScript errors",errors.join(" | "));
+  // J277 002: the desktop authoring highlights are preserved on mobile
+  // without reintroducing the verbose objectives or losing tap definitions.
+  await page.goto(ORIGIN+"/lessons/j277/lesson-002/index.html#overview",{waitUntil:"domcontentloaded"});
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.waitForFunction(()=>!!document.querySelector("#overview.page.active")&&
+    !!document.querySelector("#overview .objectives mark.rhsc-keyword"),null,{timeout:20000});
+  const keywords=await page.evaluate(()=>{
+    const objectives=document.querySelector('#overview .objectives');
+    const terms=[...objectives.querySelectorAll('mark.rhsc-keyword')];
+    const cards=[...document.querySelectorAll('#overview .vocab-intro-list .vocab-tip')];
+    const visible=el=>{const rect=el.getBoundingClientRect();return rect.width>0&&rect.height>0&&getComputedStyle(el).display!=='none'};
+    return {
+      objectivesVisible:visible(objectives),
+      terms:terms.map(el=>({text:el.textContent.trim(),visible:visible(el),
+        color:getComputedStyle(el).backgroundColor,
+        image:getComputedStyle(el).backgroundImage.slice(0,50)})),
+      chipsVisible:cards.every(visible),
+      width:document.documentElement.scrollWidth,
+      viewport:document.documentElement.clientWidth
+    };
+  });
+  assert(keywords.objectivesVisible&&keywords.terms.length>=4&&keywords.terms.every(x=>x.visible),
+    "J277 002 yellow-highlighted objective keywords remain visible on mobile",JSON.stringify(keywords));
+  assert(keywords.width<=keywords.viewport+4,
+    "Mobile keyword strip fits without horizontal page overflow",JSON.stringify(keywords));
+  assert(keywords.chipsVisible,
+    "Mobile keyword chips with tap definitions remain visible",JSON.stringify(keywords));
+  const secondTip=page.locator("#overview .vocab-tip").first();
+  await secondTip.click();
+  assert(await secondTip.evaluate(el=>el.classList.contains('is-definition-open')),
+    "J277 002 keyword definitions still open by tapping");
+    assert(errors.length===0,"No browser JavaScript errors",errors.join(" | "));
  }catch(error){
   assert(false,"Functional phone test completed",String(error));
  }finally{await browser.close();}
