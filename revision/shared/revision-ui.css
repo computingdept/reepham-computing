@@ -74,3 +74,16 @@
 @media(prefers-reduced-motion:reduce){
  #revisionhub a.rhsc-practice-tile,.rhsc-revision-ui .rhsc-progress-fill{transition:none}
 }
+
+/* One JavaScript-driven Paper 1 -> Paper 2 journey for both qualifications. */
+#revisionhub .rhsc-paper-nav{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 17px}
+#revisionhub .rhsc-paper-nav-button{min-height:44px;padding:9px 16px;border:1px solid #a2bcae;border-radius:8px;background:#fff;color:var(--rhsc-revision-ink);font:inherit;font-size:.9rem;font-weight:750;cursor:pointer}
+#revisionhub .rhsc-paper-nav-button:hover{background:#eaf5ee;border-color:#5c987f}
+#revisionhub .rhsc-paper-nav-button:focus-visible{outline:3px solid var(--rhsc-revision-focus);outline-offset:3px}
+#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]{scroll-margin-top:160px}
+#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]>h3:focus{outline:none}
+@media(max-width:600px){
+ #revisionhub .rhsc-paper-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:4px 0 16px}
+ #revisionhub .rhsc-paper-nav-button{width:100%;min-height:48px;padding:10px 8px}
+ #revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]{scroll-margin-top:110px}
+}
