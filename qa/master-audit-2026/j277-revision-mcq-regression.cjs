@@ -20,7 +20,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
    try{
     const hubResponse=await page.goto(hubUrl,{waitUntil:'networkidle',timeout:25000});
     assert(hubResponse?.status()===200,view+' J277 hub HTTP 200',hubResponse?.status());
-    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active'));
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active')&&document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     const visual=await page.evaluate(()=>{
      const tiles=[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')];
      const groups=[...document.querySelectorAll('#revisionhub .rhsc-practice-group')];
@@ -30,6 +30,17 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      return {tileCount:tiles.length,groupCount:groups.length,fg,heading,withinViewport:rects.every(r=>r.left>=-2&&r.right<=document.documentElement.clientWidth+2),urls:tiles.map(t=>t.getAttribute('href')),labels:tiles.every(t=>!!t.querySelector('.rhsc-practice-name')&&!!t.querySelector('.rhsc-practice-code'))};
     });
     assert(visual.tileCount===11&&visual.groupCount===2,view+' H446-style topic tiles and Paper groups',visual);
+    const papers=await page.evaluate(()=>({
+      ids:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.id),
+      counts:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.querySelectorAll('.rhsc-practice-tile').length),
+      jumps:[...document.querySelectorAll('#revisionhub .rhsc-paper-nav-button')].map(b=>b.textContent.trim()),
+      codes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].map(t=>t.href.split('#').pop())
+    }));
+    assert(papers.ids.join(',')==='rhsc-revision-paper-1,rhsc-revision-paper-2'&&papers.counts.join(',')==='6,5',view+' J277 Paper 1 then Paper 2',papers);
+    assert(papers.jumps.join(',')==='Paper 1,Paper 2'&&papers.codes.join(',')==='1.1,1.2,1.3,1.4,1.5,1.6,2.1,2.2,2.3,2.4,2.5',view+' J277 shared paper navigation and OCR order',papers);
+    await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
+    assert(await page.evaluate(()=>document.activeElement?.id==='rhsc-revision-paper-heading-2'),view+' J277 Paper 2 jump works');
+
     assert(visual.fg==='rgb(0, 58, 49)'&&visual.heading==='rgb(0, 58, 49)',view+' H446 dark-green palette',visual);
     assert(visual.withinViewport&&visual.labels,view+' readable responsive tiles',visual);
     assert(visual.urls.length===11&&visual.urls.every(u=>/^revision\/j277\/section-[12]-[1-6]\/index\.html#[12]\.[1-6]$/.test(u)),view+' preserves all 11 topic routes',visual.urls);
@@ -41,12 +52,23 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
    try{
     const hresp=await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle',timeout:25000});
     assert(hresp?.status()===200,view+' H446 hub HTTP 200',hresp?.status());
-    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active'));
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active')&&document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     const hview=await page.evaluate(()=>{
       const tiles=[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')];
       return {count:tiles.length,colour:tiles[0]?getComputedStyle(tiles[0]).color:null,viewport:tiles.every(t=>{const r=t.getBoundingClientRect();return r.left>=-2&&r.right<=document.documentElement.clientWidth+2}),paths:tiles.map(t=>t.getAttribute('href'))};
     });
     assert(hview.count===11&&hview.colour==='rgb(0, 58, 49)'&&hview.viewport,view+' shared H446 tile styling',hview);
+    const papers=await page.evaluate(()=>({
+      ids:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.id),
+      counts:[...document.querySelectorAll('#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]')].map(g=>g.querySelectorAll('.rhsc-practice-tile').length),
+      jumps:[...document.querySelectorAll('#revisionhub .rhsc-paper-nav-button')].map(b=>b.textContent.trim()),
+      codes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].map(t=>t.href.split('#').pop())
+    }));
+    assert(papers.ids.join(',')==='rhsc-revision-paper-1,rhsc-revision-paper-2'&&papers.counts.join(',')==='7,4',view+' H446 Paper 1 then Paper 2',papers);
+    assert(papers.jumps.join(',')==='Paper 1,Paper 2'&&papers.codes.join(',')==='1.1,1.2,1.3,1.4.1,1.4.2,1.4.3,1.5,2.1,2.2.1,2.2.2,2.3',view+' H446 shared paper navigation and OCR order',papers);
+    await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
+    assert(await page.evaluate(()=>document.activeElement?.id==='rhsc-revision-paper-heading-2'),view+' H446 Paper 2 jump works');
+
     assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
    }catch(e){assert(false,view+' H446 hub smoke test',String(e).slice(0,400))}
    for(const id of sections){
