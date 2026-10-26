@@ -1,0 +1,39 @@
+name: J277 Lesson 113 standalone mobile and TV audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'lessons/j277/lesson-113/index.html'
+      - 'qa/master-audit-2026/lesson-113-standalone-regression.cjs'
+      - '.github/workflows/j277-lesson-113.yml'
+permissions:
+  contents: read
+jobs:
+  standalone-layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Audit all 47 slides on TV, compact TV and phone
+        env:
+          QA_REPORT: 'qa-output/lesson-113-standalone.json'
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/lesson113-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/lesson-113-standalone-regression.cjs
+      - name: Save audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-lesson113-layout
+          path: qa-output/lesson-113-standalone.json
+          if-no-files-found: warn
