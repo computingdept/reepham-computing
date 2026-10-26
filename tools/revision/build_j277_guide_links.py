@@ -34,6 +34,14 @@ def generate(data):
 
 
 def validate(data):
+    for paper_id, guide in data["guides"].items():
+        if guide.get("published"):
+            pdf = ROOT / "revision/j277/guides" / guide["file"]
+            if not pdf.is_file() or pdf.stat().st_size < 10000:
+                raise ValueError(f"Paper {paper_id} guide is marked published but PDF is missing or empty: {pdf}")
+            with pdf.open("rb") as stream:
+                if stream.read(5) != b"%PDF-":
+                    raise ValueError(f"Paper {paper_id} guide has an invalid PDF header: {pdf}")
     assert isinstance(data["skills"], dict) and data["skills"], "No J277 skills indexed"
     for skill_id, item in data["skills"].items():
         paper = data["guides"][item["paper"]]
