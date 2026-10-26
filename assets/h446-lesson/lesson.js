@@ -1268,6 +1268,11 @@ function previousAction(){
   if(current==='vocabulary'){
     showPage('you-do');
     const youPage=document.getElementById('you-do');
+    if(youPage?.dataset.welcomeGroupedReview==='true'){
+      youPage.dataset.workMode='independent';
+      welcomeReviewShow(youPage,window.matchMedia('(max-width:700px)').matches?3:1);
+      updateSignals('you-do');updateControl();return;
+    }
     if(youPage?.dataset.assessmentMode!=='true'){
       youPage.dataset.workMode='independent';
       const questions=[...youPage.querySelectorAll('.youdo-question')];
@@ -1290,6 +1295,18 @@ function previousAction(){
     return;
   }
   if(current==='you-do'){
+    if(page.dataset.welcomeGroupedReview==='true'&&page.dataset.answerMode==='true'){
+      const i=Number(page.dataset.reviewIndex||0);
+      if(i>0){welcomeReviewShow(page,i-1);updateControl();return;}
+      page.dataset.answerMode='false';
+      page.dataset.reviewIndex='0';
+      page.querySelector('.welcome-marking-screen').hidden=true;
+      page.querySelector('.youdo-rolling').hidden=false;
+      const count=page.querySelectorAll('.youdo-question').length;
+      const size=youDoWindowSize(page,count);
+      setYouDoWindow(page,Math.max(0,count-size));
+      updateControl();return;
+    }
     if(page.dataset.j277SeparateReview==='true'){
       const i=Number(page.dataset.windowStart||0);
       if(i>0){setYouDoWindow(page,i-1);updateControl();return;}
