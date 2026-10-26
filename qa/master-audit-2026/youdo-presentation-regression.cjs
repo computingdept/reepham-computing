@@ -172,7 +172,7 @@ async function test(browser,target,view){
               collisionPairs.push([text[a].textContent.trim(),text[b].textContent.trim()]);
           }
         }
-        const scroller=svg.closest(".a1-scene");
+        const scroller=svg.closest(".a1-scene,.j277-sm-visual");
         const scrollBox=scroller?.getBoundingClientRect();
         const scrollStyle=scroller?getComputedStyle(scroller):null;
         const canPan=!!scroller && ["auto","scroll"].includes(scrollStyle?.overflowX)
