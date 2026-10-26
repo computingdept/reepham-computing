@@ -5,10 +5,11 @@
   const hub=document.getElementById('revisionhub');
   if(!hub||hub.dataset.rhscPaperNav==='ready')return;
   const previous=[...hub.querySelectorAll('.rhsc-practice-group')];
-  const tiles=[...hub.querySelectorAll('a.rhsc-practice-tile')];
+  const tiles=[...hub.querySelectorAll('.rhsc-practice-group > .rhsc-practice-grid > .rhsc-practice-tile')];
+  const subtopics=hub.querySelector('.rhsc-practice-subtopics');
   if(previous.length<2||tiles.length<2)return;
 
-  const spec=t=>(t.getAttribute('href')||'').split('#').pop();
+  const spec=t=>t.dataset.spec||(t.getAttribute('href')||'').split('#').pop();
   const number=t=>spec(t).split('.')[0];
   const sort=(a,b)=>{
     const aa=spec(a).split('.').map(Number),bb=spec(b).split('.').map(Number);
@@ -45,35 +46,23 @@
     sub.textContent=headings[n];
     title.append(sub);
     group.append(title);
+    const grid=document.createElement('div');
+    grid.className='rhsc-practice-grid';
+    grid.append(...byPaper[n]);
+    group.append(grid);
 
-    if(n===1&&byPaper[n].some(t=>spec(t).startsWith('1.4.'))){
-      // H446's 1.4 remains a recognisable sub-group, not a flattened list.
-      const regular=byPaper[n].filter(t=>!spec(t).startsWith('1.4.'));
-      const intro=regular.filter(t=>Number(spec(t).split('.')[1])<4);
-      const after=regular.filter(t=>Number(spec(t).split('.')[1])>=4);
-      const appendGrid=items=>{
-        if(!items.length)return;
-        const grid=document.createElement('div');
-        grid.className='rhsc-practice-grid';
-        grid.append(...items);
-        group.append(grid);
-      };
-      appendGrid(intro);
-      const special=document.createElement('div');
-      special.className='rhsc-practice-subgroup';
-      const heading=document.createElement('h4');
-      heading.textContent='1.4 · Data Types, Data Structures and Algorithms';
-      const grid=document.createElement('div');
-      grid.className='rhsc-practice-grid';
-      grid.append(...byPaper[n].filter(t=>spec(t).startsWith('1.4.')));
-      special.append(heading,grid);
-      group.append(special);
-      appendGrid(after);
-    }else{
-      const grid=document.createElement('div');
-      grid.className='rhsc-practice-grid';
-      grid.append(...byPaper[n]);
-      group.append(grid);
+    if(n===1&&subtopics){
+      // The H446 1.4 parent remains a normal grid tile. Its three legacy
+      // destinations appear together below the grid only when requested.
+      const branch=group.querySelector('.rhsc-practice-expand');
+      if(branch){
+        group.append(subtopics);
+        branch.addEventListener('click',()=>{
+          const expanded=branch.getAttribute('aria-expanded')==='true';
+          branch.setAttribute('aria-expanded',String(!expanded));
+          subtopics.hidden=expanded;
+        });
+      }
     }
     groups[n]=group;
   }
