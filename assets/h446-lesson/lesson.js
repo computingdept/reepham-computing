@@ -9,7 +9,7 @@ const signalMap={
   'catch-up':['Catch Up','Quiet Working','Independent'],
   'exam-practice':['Exam Practice','Quiet Working','Independent'],
   vocabulary:['Questioning','Listening','Cold Calling'],
-  exit:['Exit Questioning','Silence','Choral']
+  exit:['Exit Questioning','Silence','Thumbs Up/Down']
 };
 const youDoIndependentSignals=['You Do','Silence','Independent'];
 const pages=[...document.querySelectorAll('.page')];
@@ -730,7 +730,7 @@ function updateMobileRoutineSignals(values){
       return 'quiet';
     }
     if(/MWB|whiteboard/i.test(label))return 'board';
-    if(/hands up/i.test(label))return 'hand';
+    if(/hands up|thumbs up\/down/i.test(label))return 'hand';
     if(/cold call/i.test(label))return 'target';
     if(/turn.*talk/i.test(label))return 'talk';
     if(/choral/i.test(label))return 'choral';
@@ -1893,7 +1893,7 @@ function prepareVerifiedExitTicket(){
       '<article class="exit-stage"><div class="exit-yn-panel">'+
         '<p class="exit-yn-kicker">EXIT TICKET · YES OR NO?</p>'+
         '<h2 class="exit-yn-question">'+questionHTML+'</h2>'+
-        '<div class="exit-yn-choice-zone"><p class="exit-yn-instruction">Think silently. On my signal, say YES or NO together.</p>'+
+        '<div class="exit-yn-choice-zone"><p class="exit-yn-instruction">Think silently. On my signal, show thumbs up for YES or thumbs down for NO.</p>'+
         options(false)+'</div>'+
       '</div></article>'+
       '<article class="exit-stage" hidden><div class="exit-yn-panel">'+
