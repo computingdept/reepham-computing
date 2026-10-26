@@ -62,18 +62,6 @@
     grid.append(...byPaper[n]);
     group.append(grid);
 
-    if(n===1&&subtopics){
-      // Preserve H446's original 1.4 subskills and their existing links.
-      const branch=group.querySelector('.rhsc-practice-expand');
-      if(branch){
-        group.append(subtopics);
-        branch.addEventListener('click',()=>{
-          const expanded=branch.getAttribute('aria-expanded')==='true';
-          branch.setAttribute('aria-expanded',String(!expanded));
-          subtopics.hidden=expanded;
-        });
-      }
-    }
     groups[n]=group;
   }
 
