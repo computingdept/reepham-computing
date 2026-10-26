@@ -342,7 +342,7 @@ function applyYearTheme(){
 function updateYearNavigation(){
   const otherYear=document.getElementById('otherYearLink');
   if(otherYear){
-    otherYear.href='h446-hub.html?year='+(year===12?'13':'12')+'#lessons';
+    const target=new URL('h446-hub.html',location.href);target.searchParams.set('year',year===12?'13':'12');target.hash='lessons';otherYear.href=target.pathname+target.search+target.hash;
     otherYear.textContent=year===12?'Explore Year 13 lessons →':'← Return to Year 12 lessons';
   }
   const back=document.getElementById('yearBack');
@@ -359,7 +359,7 @@ function openTab(name){
   panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
 }
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);history.replaceState(null,'',location.pathname+'?year='+year+'#lessons');yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);const updated=new URL(location.href);updated.searchParams.set('year',String(year));updated.hash='lessons';history.replaceState(null,'',updated.pathname+updated.search+updated.hash);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
 
 /* Provisional FIRST-COVERAGE route for Year 12. Existing published lessons 001–035 are unchanged.
