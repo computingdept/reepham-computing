@@ -590,3 +590,62 @@ body.learning-hub[data-year] .subject:focus-visible{border-color:var(--year-bord
 }
 
 @media(max-width:700px){body.course-hub:has([data-year="12"]) .topbar .brand-copy::after{content:'A Level Computer Science'} body.course-hub[data-year="12"] .topbar .brand-copy::after,body.course-hub[data-year="13"] .topbar .brand-copy::after{content:'A Level Computer Science'}}
+
+
+/* 2026-10-26: Compact, shared GCSE/A Level course navigation. Lesson content is untouched. */
+body.course-hub.course-compact .course-intro{display:flex;align-items:center;gap:18px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+body.course-hub.course-compact .course-intro .back{flex:0 0 auto;margin:0;min-height:38px;padding:6px 11px;font-size:13px;white-space:nowrap}
+body.course-hub.course-compact .course-intro .heading{flex:1;min-width:0;margin:0;padding:0;border:0;display:flex;align-items:center}
+body.course-hub.course-compact .course-intro .heading .eyebrow{margin:0 0 4px;font-size:11px;letter-spacing:.12em}
+body.course-hub.course-compact .course-intro .heading h1{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.03em}
+body.course-hub.course-compact .course-intro .heading .sub{display:none}
+body.course-hub.course-compact .course-nav{display:flex;align-items:stretch;gap:8px;margin:0 0 10px}
+body.course-hub.course-compact .course-nav .tabs{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:0;padding:3px;border:1px solid var(--line);background:#edf3f0;overflow:visible}
+body.course-hub.course-compact .course-nav .tabs .tab{min-height:40px;padding:7px 9px;border-radius:8px;font-size:14px;line-height:1.15;white-space:normal}
+body.course-hub.course-compact .nav-short{display:none}
+body.course-hub.course-compact .course-nav .welcome-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;margin:0;min-height:46px;padding:7px 15px;font-size:14px;text-decoration:none}
+body.course-hub.course-compact #lessons .year-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 14px;margin:0 0 8px}
+body.course-hub.course-compact #lessons .year-switch{display:flex;gap:6px;margin:0}
+body.course-hub.course-compact #lessons .year-switch .year-btn{min-height:38px;padding:6px 12px;font-size:14px}
+body.course-hub.course-compact #lessons .year-tools{display:flex;align-items:center;gap:12px;margin-left:auto}
+body.course-hub.course-compact #lessons .year-tools .count{font-size:12px}
+body.course-hub.course-compact #lessons .h446-year-route{display:none}
+body.course-hub.course-compact .course-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+body.course-hub.course-compact #lessons .course-key{position:relative;font-size:12px;z-index:5}
+body.course-hub.course-compact #lessons .course-key[open]{z-index:25}
+body.course-hub.course-compact #lessons .course-key summary{display:flex;align-items:center;justify-content:center;min-height:38px;padding:6px 12px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--green-dark);font-weight:800;cursor:pointer;list-style:none;white-space:nowrap}
+body.course-hub.course-compact #lessons .course-key summary::-webkit-details-marker{display:none}
+body.course-hub.course-compact #lessons .course-key summary::after{content:"⌄";margin-left:7px;font-size:16px;line-height:1}
+body.course-hub.course-compact #lessons .course-key[open] summary::after{content:"⌃"}
+body.course-hub.course-compact #lessons .course-key > #specLegendMount,
+body.course-hub.course-compact #lessons .course-key > .paper-key{position:absolute;top:calc(100% + 5px);right:0;width:max-content;max-width:min(330px,calc(100vw - 30px));margin:0;padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;box-shadow:0 8px 28px rgba(0,45,32,.12);z-index:25}
+body.course-hub.course-compact #lessons .course-key .paper-key{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:0;padding:0}
+body.course-hub.course-compact #lessons .course-key > .paper-key{padding:12px 14px}
+body.course-hub.course-compact #lessons .course-key .paper-key-item{white-space:normal}
+body.course-hub.course-compact #lessons .course-key .paper-key-line{flex:0 0 28px}
+body.course-hub.course-compact #lessons .course-key summary:focus-visible{outline:3px solid var(--warm);outline-offset:2px}
+@media(min-width:701px){
+ body.course-hub.course-compact .topbar{height:58px;min-height:58px;padding:0 24px}
+ body.course-hub.course-compact .topbar .mark{width:34px;height:34px;font-size:17px}
+ body.course-hub.course-compact .topbar .brand{gap:10px}
+ body.course-hub.course-compact .topbar .brand-copy span{font-size:16px;margin-top:2px}
+ body.course-hub.course-compact .topbar .home{padding:7px 12px;font-size:13px}
+ body.course-hub.course-compact main{padding-top:14px}
+}
+@media(max-width:700px){
+ body.course-hub.course-compact .course-intro{display:none}
+ body.course-hub.course-compact .course-nav{gap:5px;margin:3px 0 7px}
+ body.course-hub.course-compact .course-nav .tabs{gap:4px;padding:0;border:0;background:transparent}
+ body.course-hub.course-compact .course-nav .tabs .tab{min-height:40px;padding:5px 3px;font-size:12px}
+ body.course-hub.course-compact .nav-full{display:none}
+ body.course-hub.course-compact .nav-short{display:inline}
+ body.course-hub.course-compact .course-nav .welcome-link{min-height:40px;padding:5px 8px;font-size:12px}
+ body.course-hub.course-compact #lessons .year-toolbar{flex-wrap:nowrap;gap:7px;margin:0 0 7px}
+ body.course-hub.course-compact #lessons .year-switch{flex:1;gap:6px;min-width:0}
+ body.course-hub.course-compact #lessons .year-switch .year-btn{flex:1;min-height:40px;padding:5px 8px}
+ body.course-hub.course-compact #lessons .year-tools{margin-left:0}
+ body.course-hub.course-compact #lessons .year-tools .count{display:none}
+ body.course-hub.course-compact #lessons .course-key summary{min-height:40px;padding:5px 9px}
+ body.course-hub.course-compact #lessons .course-key #specLegendMount{display:block}
+ body.course-hub.course-compact #lessons .course-key .paper-key{display:flex}
+}
