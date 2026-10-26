@@ -342,7 +342,7 @@ function applyYearTheme(){
 function updateYearNavigation(){
   const otherYear=document.getElementById('otherYearLink');
   if(otherYear){
-    const target=new URL('h446-hub.html',location.href);target.searchParams.set('year',year===12?'13':'12');target.hash='lessons';otherYear.href=target.pathname+target.search+target.hash;
+    const target=new URL(location.href);target.searchParams.set('year',year===12?'13':'12');target.hash='lessons';otherYear.href=target.pathname+target.search+target.hash;
     otherYear.textContent=year===12?'Explore Year 13 lessons →':'← Return to Year 12 lessons';
   }
   const back=document.getElementById('yearBack');
