@@ -1,0 +1,42 @@
+/* RHSC translucent hand-drawn yellow markers, selectable text.
+   Do not override the authored Lesson 002 keyword styling. */
+:root{
+  --rhsc-central-ink-a:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%2056'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%2014%20Q55%2010%20103%2013%20T200%2011%20Q255%2013%20309%2011%20T397%2013%20L399%2043%20Q339%2047%20274%2044%20Q208%2047%20138%2045%20T3%2046Z'%20fill='%23FFF44F'%20fill-opacity='.86'/%3E%3C/svg%3E");
+  --rhsc-central-ink-b:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%2056'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%2016%20Q66%2011%20121%2014%20Q173%2010%20230%2013%20T397%2010%20L399%2046%20Q336%2043%20280%2047%20T140%2045%20Q70%2048%202%2044Z'%20fill='%23FFF557'%20fill-opacity='.87'/%3E%3C/svg%3E");
+  --rhsc-central-ink-c:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%2056'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%2012%20Q76%2014%20133%2010%20T262%2013%20Q333%209%20396%2014%20L397%2044%20Q333%2048%20262%2044%20T126%2046%20Q55%2043%202%2046Z'%20fill='%23FFF14B'%20fill-opacity='.82'/%3E%3C/svg%3E");
+}
+mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command{
+  background-color:#fff7a3;
+  background-image:var(--rhsc-central-ink-a);
+  background-repeat:no-repeat;background-position:center;background-size:100% 100%;
+  color:#24241a;font-weight:850;padding:.02em .15em;
+  border:0;border-radius:0;box-shadow:none;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+#new-learning mark.rhsc-shared-keyword:nth-of-type(3n + 2),
+#i-do mark.rhsc-shared-keyword:nth-of-type(3n + 2),
+#we-do mark.rhsc-shared-keyword:nth-of-type(3n + 2){background-image:var(--rhsc-central-ink-b)}
+#new-learning mark.rhsc-shared-keyword:nth-of-type(3n),
+#i-do mark.rhsc-shared-keyword:nth-of-type(3n),
+#we-do mark.rhsc-shared-keyword:nth-of-type(3n){background-image:var(--rhsc-central-ink-c)}
+/* Highlight vocabulary preview chips on desktop and phones.
+   Lesson 002 already has its own carefully tuned manual CSS. */
+#overview:not(:has(mark.rhsc-keyword)) .vocab-intro-list .vocab-tip{
+  display:inline-block;background-color:#fff7a3;
+  background-image:var(--rhsc-central-ink-a);
+  background-position:center;background-size:100% 100%;background-repeat:no-repeat;
+  color:#24241a;font-weight:850;padding:.12em .28em;
+  border:0;border-radius:0;box-shadow:none;
+}
+#overview:not(:has(mark.rhsc-keyword)) .vocab-intro-list .vocab-tip:nth-child(3n + 2){background-image:var(--rhsc-central-ink-b)}
+#overview:not(:has(mark.rhsc-keyword)) .vocab-intro-list .vocab-tip:nth-child(3n){background-image:var(--rhsc-central-ink-c)}
+@media(max-width:700px){
+  mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command,
+  #overview:not(:has(mark.rhsc-keyword)) .vocab-intro-list .vocab-tip{background-color:#fff9a9}
+}
+@media(prefers-contrast:more){
+  mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command,
+  #overview:not(:has(mark.rhsc-keyword)) .vocab-intro-list .vocab-tip{
+    background:#fff35b;background-image:none;outline:1px solid #615700;
+  }
+}
