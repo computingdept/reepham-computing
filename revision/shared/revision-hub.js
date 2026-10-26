@@ -6,6 +6,7 @@
   if(!hub||hub.dataset.rhscPaperNav==='ready')return;
   const previous=[...hub.querySelectorAll('.rhsc-practice-group')];
   const tiles=[...hub.querySelectorAll('.rhsc-practice-group > .rhsc-practice-grid > .rhsc-practice-tile')];
+  // A Level 1.4 is an expandable button, not a link; include it as a topic.
   const subtopics=hub.querySelector('.rhsc-practice-subtopics');
   if(previous.length<2||tiles.length<2)return;
 
@@ -62,8 +63,7 @@
     group.append(grid);
 
     if(n===1&&subtopics){
-      // The H446 1.4 parent remains a normal grid tile. Its three legacy
-      // destinations appear together below the grid only when requested.
+      // Preserve H446's original 1.4 subskills and their existing links.
       const branch=group.querySelector('.rhsc-practice-expand');
       if(branch){
         group.append(subtopics);
