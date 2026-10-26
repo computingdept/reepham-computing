@@ -1,0 +1,278 @@
+/* Synergy Learning Hub — reversible visual pilot, 26 October 2026.
+   Opt-in only: html.synergy-hub-preview on existing GCSE/J277 and H446 course hubs.
+   Intentionally NO selectors for #lessons, #booklet, lesson pages or PDF guides.
+   This is presentation only; scoring, navigation, links and stored progress are untouched. */
+
+/* Same RHSC identity and controls; calm, high-contrast refinement. */
+html.synergy-hub-preview body.course-hub{
+  --synergy-ink:#18332a;
+  --synergy-green:#005c46;
+  --synergy-muted:#526a60;
+  --synergy-border:#d7e4dc;
+}
+html.synergy-hub-preview body.course-hub .topbar{
+  background:#fff;
+  border-bottom:1px solid var(--synergy-border);
+}
+html.synergy-hub-preview body.course-hub .topbar .mark{
+  background:var(--synergy-green);
+  border-radius:10px;
+}
+html.synergy-hub-preview body.course-hub .course-topline{
+  padding-bottom:8px;
+  border-bottom:1px solid #e4ede7;
+  margin-bottom:18px;
+}
+html.synergy-hub-preview body.course-hub .course-topline .heading h1{
+  color:#183c30;
+  letter-spacing:-.025em;
+}
+html.synergy-hub-preview body.course-hub .course-nav .tabs{
+  background:#f0f5f1;
+  border:1px solid #d7e4dc;
+  border-radius:11px;
+  padding:4px;
+  gap:4px;
+}
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab{
+  min-height:44px;
+  background:transparent;
+  border-radius:8px;
+  color:#425b51;
+  font-weight:750;
+  line-height:1.25;
+}
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab[aria-selected="true"]{
+  background:#fff;
+  color:#004d3a;
+  box-shadow:0 1px 5px rgba(10,51,36,.1);
+}
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab:focus-visible{
+  outline:3px solid #c28220;
+  outline-offset:2px;
+}
+
+/* No separate decorative hero. The familiar revision panel is the content. */
+html.synergy-hub-preview body.course-hub #revisionhub.active{
+  max-width:890px;
+  margin:0 auto;
+  padding-top:10px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading{
+  align-items:center;
+  margin:0 0 12px;
+  gap:6px 20px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading h2{
+  font-size:clamp(1.45rem,2.25vw,1.9rem);
+  font-weight:800;
+  letter-spacing:-.035em;
+  color:var(--synergy-ink);
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading .count{
+  display:block;
+  font-size:.84rem;
+  line-height:1.5;
+  color:var(--synergy-muted);
+}
+
+/* Predictable two-state selection, identical in GCSE and A Level. */
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-nav{
+  width:100%;
+  max-width:500px;
+  margin:9px 0 17px;
+  padding:4px;
+  border:1px solid #d0dfd6;
+  border-radius:10px;
+  background:#eff5f1;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-nav-button{
+  min-height:48px;
+  border-radius:7px;
+  font-size:.93rem;
+  font-weight:750;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-nav-button[aria-selected="true"]{
+  color:#fff;
+  background:#005b44;
+  box-shadow:0 1px 3px rgba(3,52,38,.13);
+}
+
+/* One scan-friendly topic column, no decorative illustrations or competing colours. */
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-panel{
+  margin:0;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-panel>h3{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:3px 11px;
+  padding:0;
+  margin:0 0 11px;
+  font-size:1rem;
+  font-weight:800;
+  color:#164634;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-panel>h3 span{
+  display:inline;
+  margin:0;
+  font-size:.88rem;
+  font-weight:450;
+  color:#526b60;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:9px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile,
+html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile:visited,
+html.synergy-hub-preview body.course-hub #revisionhub button.rhsc-practice-tile{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:76px;
+  width:100%;
+  padding:14px 17px 14px 18px;
+  gap:12px;
+  border:1px solid #dce8df;
+  border-left:4px solid #9cc6b1;
+  border-radius:11px;
+  background:#fff;
+  box-shadow:0 2px 8px rgba(14,60,41,.045);
+  color:#18342a;
+  text-decoration:none;
+  transition:background-color .12s,border-color .12s,box-shadow .12s;
+}
+html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile:hover,
+html.synergy-hub-preview body.course-hub #revisionhub button.rhsc-practice-tile:hover{
+  background:#f4faf6;
+  border-color:#8cbaa2;
+  box-shadow:0 3px 12px rgba(14,60,41,.07);
+}
+html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile:focus-visible,
+html.synergy-hub-preview body.course-hub #revisionhub button.rhsc-practice-tile:focus-visible{
+  outline:3px solid #c28220;
+  outline-offset:3px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-label{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  min-width:0;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-name{
+  font-size:1rem;
+  font-weight:750;
+  line-height:1.36;
+  color:#16392c;
+  overflow-wrap:anywhere;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-code{
+  color:#536d60;
+  font-size:.78rem;
+  font-weight:650;
+  line-height:1.35;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-arrow{
+  font-size:1.5rem;
+  font-weight:400;
+  color:#4a806a;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-expand[aria-expanded="true"]{
+  background:#edf7f1;
+  border-color:#89b79e;
+}
+
+/* H446 1.4 subskills: keep intact, but visually subordinate to its parent. */
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics{
+  padding:14px;
+  margin:10px 0 12px;
+  background:#f7faf8;
+  border:1px solid #dce8df;
+  border-radius:10px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics h4{
+  font-size:.89rem;
+  margin:0 0 12px;
+  color:#244d3e;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics .rhsc-practice-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics a.rhsc-practice-tile{
+  min-height:65px;
+  padding:12px;
+  border-left-width:3px;
+}
+html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics .rhsc-practice-name{font-size:.9rem}
+
+/* Preserve compact phone hierarchy; no horizontal scroll. */
+@media(max-width:700px){
+  html.synergy-hub-preview body.course-hub .course-topline{
+    padding-bottom:0;
+    margin-bottom:9px;
+  }
+  html.synergy-hub-preview body.course-hub .course-nav .tabs{
+    padding:3px;
+    border-radius:9px;
+    gap:3px;
+  }
+  html.synergy-hub-preview body.course-hub .course-nav .tabs .tab{
+    min-height:44px;
+    padding:7px 4px;
+    font-size:.79rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub.active{
+    padding-top:4px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading{
+    display:block;
+    margin:0 0 10px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading h2{
+    font-size:1.45rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-revision-heading .count{
+    margin-top:4px;
+    font-size:.76rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-nav{
+    max-width:none;
+    margin:10px 0 14px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-paper-nav-button{
+    min-height:48px;
+    font-size:.9rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-grid{
+    gap:8px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile,
+  html.synergy-hub-preview body.course-hub #revisionhub button.rhsc-practice-tile{
+    min-height:68px;
+    padding:11px 12px;
+    border:1px solid #dce8df;
+    border-left:4px solid #9cc6b1;
+    border-radius:10px;
+    gap:10px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-name{
+    font-size:.94rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-code{
+    font-size:.72rem;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics{
+    padding:10px;
+  }
+  html.synergy-hub-preview body.course-hub #revisionhub .rhsc-practice-subtopics .rhsc-practice-grid{
+    grid-template-columns:1fr;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html.synergy-hub-preview body.course-hub #revisionhub a.rhsc-practice-tile,
+  html.synergy-hub-preview body.course-hub #revisionhub button.rhsc-practice-tile{transition:none}
+}
