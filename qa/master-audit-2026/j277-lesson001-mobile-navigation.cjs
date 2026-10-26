@@ -47,6 +47,28 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
     };
    });
   }
+  async function signalSnapshot(){
+    return await page.evaluate(()=>{
+      const status=document.getElementById('mobile-lesson-status');
+      const group=document.getElementById('mobile-lesson-signals');
+      const badges=[...group?.querySelectorAll('.mobile-signal-icon')||[]];
+      const b=status?.getBoundingClientRect();
+      const r=group?.getBoundingClientRect();
+      return {routine:badges[0]?.getAttribute('aria-label')||'',
+        response:badges[1]?.getAttribute('aria-label')||'',
+        count:badges.length,svgCount:badges.filter(x=>x.querySelector('svg')).length,
+        iconWidths:badges.map(x=>Math.round(x.getBoundingClientRect().width)),
+        right:Math.round(r?.right||0),headerRight:Math.round(b?.right||0),
+        visible:!!r&&r.width>0&&r.height>0};
+    });
+  }
+  let signals=await signalSnapshot();
+  assert(signals.visible&&signals.count===2&&signals.svgCount===2,
+    "Compact green/orange expectation icons appear in mobile title",JSON.stringify(signals));
+  assert(signals.iconWidths.every(w=>w<=30)&&signals.right<=signals.headerRight+1,
+    "Expectations stay small and at the right of the title",JSON.stringify(signals));
+  assert(/Silent Working/.test(signals.routine)&&/MWBs/.test(signals.response),
+    "J277 Do Now icons show Silent Working and MWBs",JSON.stringify(signals));
   let initial=await snapshot();
   assert(initial.phase==="do-now"&&initial.doNow===0,"Lesson opens on Do Now",JSON.stringify(initial));
   assert(!initial.advanceVisible&&!initial.previousVisible,"Mobile Previous/Next controls stay hidden");
@@ -62,6 +84,9 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   for(let i=0;i<5;i++)await gesture("left");
   s=await snapshot();
   assert(s.phase==="overview","Swipes progress from Do Now to Objectives",JSON.stringify(s));
+  signals=await signalSnapshot();
+  assert(/Listening/.test(signals.routine)&&/Hands Up/.test(signals.response),
+    "Icons update to Listening and Hands Up on Objectives",JSON.stringify(signals));
   const tip=page.locator("#overview .vocab-tip").first();
   if(await tip.isVisible()){
     await tip.scrollIntoViewIfNeeded();
@@ -112,6 +137,17 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   }
   s=await snapshot();
   assert(reachedExit||s.phase==="exit","Swipes complete all vocabulary terms and reach Exit Ticket",JSON.stringify(s));
+  // The very same header must work in H446 without lesson-specific markup.
+  await page.goto(ORIGIN+"/lessons/h446/lesson-001/index.html",{waitUntil:"domcontentloaded"});
+  await page.waitForFunction(()=>document.querySelector("#do-now.page.active")&&
+    document.querySelector(".mobile-signal-response svg"),null,{timeout:20000});
+  signals=await signalSnapshot();
+  assert(/Silent Working/.test(signals.routine)&&/MWBs/.test(signals.response),
+    "H446 Lesson 001 shares compact Do Now icons",JSON.stringify(signals));
+  await page.evaluate(()=>window.H446OptionalBridge.go('overview'));
+  signals=await signalSnapshot();
+  assert(/Listening/.test(signals.routine)&&/Hands Up/.test(signals.response),
+    "H446 Objectives updates the same icons",JSON.stringify(signals));
   assert(errors.length===0,"No browser JavaScript errors",errors.join(" | "));
  }catch(error){
   assert(false,"Functional phone test completed",String(error));
