@@ -32,6 +32,12 @@ function fail(where,test,detail){const item={...where,test,detail};failures.push
     try{
      const response=await page.goto(ORIGIN+"/lessons/"+spec.url,{waitUntil:"domcontentloaded",timeout:25000});
      if(!response?.ok()){fail(where,"URL unavailable",response?.status());continue;}
+     if(spec.kind==="answers"&&spec.course==="j277"&&spec.id==="094"){
+      await page.waitForURL("**/assessment-mark-scheme.html",{timeout:10000});
+     }
+     if(spec.kind==="answers"&&spec.course==="j277"&&["035","050"].includes(spec.id)){
+      await page.waitForFunction(()=>document.querySelector(".answer-stage"),null,{timeout:15000});
+     }
      if(["lesson","practice"].includes(spec.kind)){
       await page.waitForFunction(()=>document.querySelector("#you-do")&&document.querySelector(".phase-nav [data-page='you-do']"),null,{timeout:18000});
       await page.locator(".phase-nav [data-page='you-do']").evaluate(el=>el.click());
@@ -49,6 +55,7 @@ function fail(where,test,detail){const item={...where,test,detail};failures.push
       const code=[...document.querySelectorAll("pre")].filter(visible);
       return {
        title:document.title,loadedQuestions:questions.length,
+       viewportMeta:!!document.querySelector('meta[name="viewport"]'),
        links,schemes:schemes.length,
        paperLeaks:!!document.querySelector("#assessment-root .scheme-points"),
        assessed:!!document.querySelector('#you-do[data-assessment-mode="true"]'),
@@ -62,6 +69,7 @@ function fail(where,test,detail){const item={...where,test,detail};failures.push
      });
      const entry={...where,...s};observations.push(entry);
      console.log("ASSESS_SURVEY "+JSON.stringify(entry));
+     if(name==="phone"&&!s.viewportMeta)fail(where,"mobile viewport metadata absent");
      if(errors.length||s.hasError)fail(where,"assessment rendering error",{errors:errors.slice(0,2),message:s.pageText});
      if(s.width>s.viewWidth+5)fail(where,"horizontal viewport overflow",{page:s.width,viewport:s.viewWidth});
      if(["paper","scheme"].includes(spec.kind)&&!s.loadedQuestions&&!s.schemes)
