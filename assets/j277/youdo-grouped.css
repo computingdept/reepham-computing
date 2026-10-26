@@ -67,3 +67,22 @@
 #you-do .j277-sm-visual{max-width:100%;min-width:0;overflow:hidden}
 #you-do .j277-sm-visual svg{display:block;width:100%;max-width:100%;height:auto;max-height:175px}
 #you-do .j277-sm-card .j277-sm-visual svg text{font-family:Arial,sans-serif}
+
+/* Portrait OCR question-data SVG pan.
+   The grouped J277 renderer extracts the authored SVG into .j277-sm-visual
+   (not its old .a1-scene figure wrapper). A 290px shrink makes labels
+   illegible: retain the diagram at 560px and pan inside only this card.
+   The shared gesture engine already yields to genuine horizontal scrollers. */
+@media(max-width:700px){
+  #you-do .j277-sm-card .j277-sm-visual{
+    display:block;box-sizing:border-box;width:100%;max-width:100%;
+    overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+    border:1px solid #cedfd3;border-radius:10px;
+    touch-action:auto;
+  }
+  #you-do .j277-sm-card .j277-sm-visual>svg{
+    display:block;width:560px!important;min-width:560px!important;
+    max-width:none!important;max-height:none!important;height:auto!important;
+  }
+}
