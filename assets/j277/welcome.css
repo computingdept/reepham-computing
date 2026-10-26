@@ -85,3 +85,28 @@ body.j277-welcome #you-do[data-answer-mode="true"] .exam-card{display:flex;flex-
  body.j277-welcome #you-do .j277-code-first .arithmetic{font-size:17px;white-space:pre-wrap}
  body.j277-welcome #you-do .j277-code-first .welcome-cycle{max-height:78px}
 }
+
+/* Welcome-only grouped answer reveal: Code First, then Q2–Q4 together
+   on Classroom TV; each question separately on phones. */
+body.j277-welcome #you-do .welcome-marking-screen{height:100%;width:100%;min-height:0;display:flex;flex-direction:column}
+body.j277-welcome #you-do .welcome-marking-screen[hidden],
+body.j277-welcome #you-do .welcome-review-stage[hidden],
+body.j277-welcome #you-do .welcome-review-card[hidden]{display:none!important}
+body.j277-welcome #you-do .welcome-review-stage{height:100%;min-height:0}
+body.j277-welcome #you-do .welcome-review-code{display:flex;align-items:stretch;justify-content:center}
+body.j277-welcome #you-do .welcome-review-exam{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+body.j277-welcome #you-do .welcome-review-card{background:#fff;border:1px solid #c9dccd;border-radius:14px;padding:clamp(15px,1.5vw,23px);min-width:0;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+body.j277-welcome #you-do .welcome-review-code .welcome-review-card{width:min(100%,950px)}
+body.j277-welcome #you-do .welcome-review-card h3{font-size:clamp(19px,1.5vw,26px);line-height:1.2;margin:0;padding-bottom:9px;border-bottom:2px solid #ddeae0}
+body.j277-welcome #you-do .welcome-review-question{font-size:clamp(17px,1.16vw,21px);line-height:1.43}
+body.j277-welcome #you-do .welcome-review-question p{margin:6px 0}
+body.j277-welcome #you-do .welcome-review-question .arithmetic{font-size:clamp(16px,1.14vw,20px);padding:9px 12px}
+body.j277-welcome #you-do .welcome-review-answer{background:#f3faf5;border-top:4px solid #297d52;padding:13px 15px;border-radius:9px;font-size:clamp(16px,1.11vw,20px);line-height:1.44}
+body.j277-welcome #you-do .welcome-review-answer p{margin:8px 0}
+body.j277-welcome #you-do .welcome-review-answer strong{color:#165a39}
+@media(max-width:700px){
+ body.j277-welcome #you-do .welcome-review-exam{display:block;height:auto}
+ body.j277-welcome #you-do .welcome-review-card{overflow:visible;height:auto;padding:15px}
+ body.j277-welcome #you-do .welcome-review-question{font-size:17px}
+ body.j277-welcome #you-do .welcome-review-answer{font-size:17px}
+}
