@@ -54,17 +54,39 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
       const badges=[...group?.querySelectorAll('.mobile-signal-icon')||[]];
       const b=status?.getBoundingClientRect();
       const r=group?.getBoundingClientRect();
-      return {routine:badges[0]?.getAttribute('aria-label')||'',
-        response:badges[1]?.getAttribute('aria-label')||'',
+      const key=document.getElementById('mobile-lesson-key');
+      const keys=[...key?.querySelectorAll('.mobile-key-item')||[]];
+      const active=document.querySelector('section.page.active');
+      const actual=[document.getElementById('phase-logo')?.textContent,
+        document.getElementById('behaviour-logo')?.textContent,
+        document.getElementById('response-logo')?.textContent];
+      const labels=keys.map(el=>el.querySelector('.mobile-key-label')?.textContent);
+      const sameIcons=badges.length===3 && keys.length===3 &&
+        badges.every((el,i)=>el.querySelector('svg')?.outerHTML===
+          keys[i]?.querySelector('svg')?.outerHTML);
+      return {phase:badges[0]?.getAttribute('aria-label')||'',
+        routine:badges[1]?.getAttribute('aria-label')||'',
+        response:badges[2]?.getAttribute('aria-label')||'',
         count:badges.length,svgCount:badges.filter(x=>x.querySelector('svg')).length,
         iconWidths:badges.map(x=>Math.round(x.getBoundingClientRect().width)),
         right:Math.round(r?.right||0),headerRight:Math.round(b?.right||0),
-        visible:!!r&&r.width>0&&r.height>0};
+        visible:!!r&&r.width>0&&r.height>0,
+        legend:!!key&&getComputedStyle(key).display!=='none',
+        keyBelow:!!key&&!!active&&key.getBoundingClientRect().top>=active.getBoundingClientRect().bottom-2,
+        keyPosition:key?getComputedStyle(key).position:null,
+        actual,labels,sameIcons,
+        match:actual.every((text,i)=>text===labels[i])};
     });
   }
   let signals=await signalSnapshot();
-  assert(signals.visible&&signals.count===2&&signals.svgCount===2,
-    "Compact green/orange expectation icons appear in mobile title",JSON.stringify(signals));
+  assert(signals.visible&&signals.count===3&&signals.svgCount===3,
+    "All three classroom expectation icons appear in mobile title",JSON.stringify(signals));
+  assert(signals.legend&&signals.match&&signals.sameIcons,
+    "Bottom legend repeats the identical top icons and full Classroom TV labels",JSON.stringify(signals));
+  assert(signals.keyBelow&&signals.keyPosition==='static',
+    "Legend sits below scrollable lesson content, not fixed over questions",JSON.stringify(signals));
+  assert(/Do Now/.test(signals.phase),
+    "Blue phase icon describes the Do Now phase",JSON.stringify(signals));
   assert(signals.iconWidths.every(w=>w<=30)&&signals.right<=signals.headerRight+1,
     "Expectations stay small and at the right of the title",JSON.stringify(signals));
   assert(/Silent Working/.test(signals.routine)&&/MWBs/.test(signals.response),
@@ -87,6 +109,8 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   signals=await signalSnapshot();
   assert(/Listening/.test(signals.routine)&&/Hands Up/.test(signals.response),
     "Icons update to Listening and Hands Up on Objectives",JSON.stringify(signals));
+  assert(/Objectives/.test(signals.phase)&&signals.match&&signals.sameIcons,
+    "Objectives updates all three identical legend icons and labels",JSON.stringify(signals));
   const tip=page.locator("#overview .vocab-tip").first();
   if(await tip.isVisible()){
     await tip.scrollIntoViewIfNeeded();
@@ -148,6 +172,8 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   signals=await signalSnapshot();
   assert(/Listening/.test(signals.routine)&&/Hands Up/.test(signals.response),
     "H446 Objectives updates the same icons",JSON.stringify(signals));
+  assert(/Objectives/.test(signals.phase)&&signals.match&&signals.sameIcons,
+    "H446 legend reuses the three Classroom TV labels and header symbols",JSON.stringify(signals));
   assert(errors.length===0,"No browser JavaScript errors",errors.join(" | "));
  }catch(error){
   assert(false,"Functional phone test completed",String(error));
