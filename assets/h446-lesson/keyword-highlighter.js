@@ -10,7 +10,16 @@ link.rel='stylesheet';link.href='../../../assets/h446-lesson/keyword-highlighter
 document.head.appendChild(link);
 
 var excluded='script,style,pre,code,kbd,samp,svg,math,button,a,mark,.vocab-tip,.vocab-answer,.youdo-solution,.wedo-answer,.model-answer,.solution-card,.answer-panel,.j277-sm-review,.phase-tag,[hidden],[aria-hidden="true"],[data-vocab-answer]';
-var chips=[...document.querySelectorAll('#overview .vocab-intro-list .vocab-tip')];
+var chips=[...document.querySelectorAll('#overview .vocab-intro-list > span')];
+// Older H446 lessons use plain chips; some later lessons show a glossary as
+// Key vocabulary paragraphs instead. Read ONLY terms visibly authored in Overview.
+document.querySelectorAll('#overview h2').forEach(function(heading){
+  if(!/^key vocabulary/i.test(heading.textContent.trim()))return;
+  heading.parentElement.querySelectorAll(':scope > p > strong,:scope > ul > li > strong').forEach(function(el){
+    chips.push(el);
+  });
+});
+chips.forEach(function(chip){chip.classList.add('rhsc-preview-term')});
 var vocabulary=[];
 chips.forEach(function(chip){
   var full=chip.textContent.replace(/\s+/g,' ').trim();
@@ -82,8 +91,12 @@ function markCommands(){
     textNodes(block).forEach(function(node){
       if(count>=2)return;
       commandWords.lastIndex=0;
-      var match=commandWords.exec(node.nodeValue);
-      if(match){wrap(node,match.index,match[0].length,'rhsc-shared-command');count++;}
+      var matches=[...node.nodeValue.matchAll(commandWords)].slice(0,2-count);
+      // Work right to left so two command words in one question stay intact.
+      matches.reverse().forEach(function(match){
+        wrap(node,match.index,match[0].length,'rhsc-shared-command');
+        count++;
+      });
     });
   });
 }
