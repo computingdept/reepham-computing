@@ -1870,6 +1870,15 @@ function prepareResponsivePlaceValues(){
 prepareResponsivePlaceValues();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
+
+/* One shared marker module for GCSE J277 and A Level H446 lessons.
+   It respects authored vocabulary, teacher reveals, and Code First. */
+if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  const markerModule=document.createElement('script');
+  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261026-central2';
+  markerModule.async=true;
+  document.body.appendChild(markerModule);
+}
 if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
   const optionalModule=document.createElement('script');
   optionalModule.src='../../../assets/h446-lesson/optional-resources.js?v=20261015-optionalh4461';
