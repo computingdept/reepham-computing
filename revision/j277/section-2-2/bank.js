@@ -1,5 +1,5 @@
 'use strict';
-// OCR J277 Paper 2 programming fundamentals, original five-question mastery banks.
+// OCR J277 2.2 programming MCQs: twelve small skills and 120 original questions.
 const J277_SECTION={"code":"2.2","title":"Programming Fundamentals"};
 const SKILLS=[
   {
@@ -689,6 +689,972 @@ const SKILLS=[
         ],
         "explanation": "Operations may require conversion or matching data types.",
         "skill": "Data types and casting"
+      }
+    ]
+  },
+  {
+    "id": "22-strings",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "String operations",
+    "questions": [
+      {
+        "id": "22-strings-1",
+        "prompt": "What is a string?",
+        "answer": "A sequence of characters",
+        "options": [
+          "A sequence of characters",
+          "A whole-number type",
+          "A hardware register",
+          "A disk partition"
+        ],
+        "explanation": "Text can be represented as strings.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-2",
+        "prompt": "What does concatenation do?",
+        "answer": "Joins strings together",
+        "options": [
+          "Joins strings together",
+          "Deletes all strings",
+          "Sorts integers",
+          "Divides two real values"
+        ],
+        "explanation": "Concatenation creates text from text parts.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-3",
+        "prompt": "What is the result of joining \"Cat\" and \"fish\"?",
+        "answer": "Catfish",
+        "options": [
+          "Catfish",
+          "Cat fish",
+          "Cat+fish",
+          "fishCat"
+        ],
+        "explanation": "Without an added space concatenation places text directly together.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-4",
+        "prompt": "What does string length measure?",
+        "answer": "The number of characters",
+        "options": [
+          "The number of characters",
+          "The number of RAM chips",
+          "The number of files",
+          "The CPU clock speed"
+        ],
+        "explanation": "Length is the character count.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-5",
+        "prompt": "What is a substring?",
+        "answer": "Part of an existing string",
+        "options": [
+          "Part of an existing string",
+          "A type of CPU cache",
+          "A network protocol",
+          "A whole-number remainder"
+        ],
+        "explanation": "Substring operations take a section of text.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-6",
+        "prompt": "Why might a program use string slicing?",
+        "answer": "To extract characters from specified positions",
+        "options": [
+          "To extract characters from specified positions",
+          "To increase core count",
+          "To download drivers",
+          "To change video resolution"
+        ],
+        "explanation": "Slicing selects a portion of text.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-7",
+        "prompt": "What should be considered when comparing strings?",
+        "answer": "Capitalisation may affect equality",
+        "options": [
+          "Capitalisation may affect equality",
+          "All strings always compare equal",
+          "Only screen size matters",
+          "Strings cannot contain numbers"
+        ],
+        "explanation": "Case and exact characters can affect comparison.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-8",
+        "prompt": "Which data type suits a UK postcode?",
+        "answer": "String",
+        "options": [
+          "String",
+          "Real",
+          "Boolean only",
+          "Integer only"
+        ],
+        "explanation": "Postcodes mix letters and digits and are identifiers rather than quantities.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-9",
+        "prompt": "What could trim do to user-entered text?",
+        "answer": "Remove unwanted leading or trailing spaces",
+        "options": [
+          "Remove unwanted leading or trailing spaces",
+          "Change hardware clocks",
+          "Encrypt the hard disk",
+          "Create extra arrays"
+        ],
+        "explanation": "Trimming can normalise accidental spaces.",
+        "skill": "String operations"
+      },
+      {
+        "id": "22-strings-10",
+        "prompt": "What might a string search return?",
+        "answer": "The position of matching text",
+        "options": [
+          "The position of matching text",
+          "The total number of CPU cores",
+          "The MAC address of a router",
+          "The printer speed"
+        ],
+        "explanation": "A search can locate a substring within a larger string.",
+        "skill": "String operations"
+      }
+    ]
+  },
+  {
+    "id": "22-array1",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "One-dimensional arrays",
+    "questions": [
+      {
+        "id": "22-array1-1",
+        "prompt": "What is a one-dimensional array?",
+        "answer": "An indexed collection of values",
+        "options": [
+          "An indexed collection of values",
+          "A single Boolean operator",
+          "A network topology",
+          "A hard-disk protocol"
+        ],
+        "explanation": "Arrays store multiple values accessible by index.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-2",
+        "prompt": "What is an array index?",
+        "answer": "The position used to select an element",
+        "options": [
+          "The position used to select an element",
+          "The disk serial number",
+          "The address of a website",
+          "The CPU clock speed"
+        ],
+        "explanation": "Indexing selects individual array items.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-3",
+        "prompt": "In a zero-based array what is the first index?",
+        "answer": "0",
+        "options": [
+          "0",
+          "1",
+          "-1",
+          "10"
+        ],
+        "explanation": "Zero-based indexing begins at zero.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-4",
+        "prompt": "A zero-based array holds 5 items. What is its last valid index?",
+        "answer": "4",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "1"
+        ],
+        "explanation": "Indices range from zero to four.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-5",
+        "prompt": "What is array traversal?",
+        "answer": "Visiting array elements in turn",
+        "options": [
+          "Visiting array elements in turn",
+          "Connecting network devices",
+          "Deleting all items",
+          "Compressing the data"
+        ],
+        "explanation": "Traversal processes each element using its index.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-6",
+        "prompt": "An array holds [3, 7, 9]. What is values[1] using zero-based indexing?",
+        "answer": "7",
+        "options": [
+          "7",
+          "3",
+          "9",
+          "1"
+        ],
+        "explanation": "Index 1 accesses the second item.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-7",
+        "prompt": "What can happen if an index is outside an array's valid range?",
+        "answer": "An index error",
+        "options": [
+          "An index error",
+          "The CPU becomes faster",
+          "The array is automatically doubled",
+          "The data becomes encrypted"
+        ],
+        "explanation": "Out-of-range accesses can fail.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-8",
+        "prompt": "Why use an array for 30 test scores?",
+        "answer": "It groups related values with index access",
+        "options": [
+          "It groups related values with index access",
+          "It prevents all programming errors",
+          "It replaces every loop",
+          "It creates a new OS"
+        ],
+        "explanation": "Related scores can be processed as a collection.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-9",
+        "prompt": "What is an array update?",
+        "answer": "Assigning a new value to an indexed element",
+        "options": [
+          "Assigning a new value to an indexed element",
+          "Changing the computer's MAC address",
+          "Formatting the drive",
+          "Changing the data type of the CPU"
+        ],
+        "explanation": "Assigning to an element changes that stored entry.",
+        "skill": "One-dimensional arrays"
+      },
+      {
+        "id": "22-array1-10",
+        "prompt": "Which construct is useful for visiting every array item?",
+        "answer": "FOR loop",
+        "options": [
+          "FOR loop",
+          "Only a print statement",
+          "Only an IF branch",
+          "A storage utility"
+        ],
+        "explanation": "A loop can iterate over valid indices.",
+        "skill": "One-dimensional arrays"
+      }
+    ]
+  },
+  {
+    "id": "22-array2",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "Two-dimensional arrays and records",
+    "questions": [
+      {
+        "id": "22-array2-1",
+        "prompt": "What does a two-dimensional array resemble?",
+        "answer": "A table of rows and columns",
+        "options": [
+          "A table of rows and columns",
+          "One Boolean value",
+          "A single character",
+          "A network packet"
+        ],
+        "explanation": "2D arrays are indexed by row and column.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-2",
+        "prompt": "How many cells are in a 3 by 4 2D array?",
+        "answer": "12",
+        "options": [
+          "12",
+          "7",
+          "3",
+          "4"
+        ],
+        "explanation": "Multiply rows by columns.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-3",
+        "prompt": "How is an element of a 2D array commonly addressed?",
+        "answer": "With two indices",
+        "options": [
+          "With two indices",
+          "By its hard drive capacity",
+          "Only by a filename",
+          "By a public IP address"
+        ],
+        "explanation": "One index chooses the row and another the column.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-4",
+        "prompt": "In a zero-based 3 by 3 grid which pair identifies the top-left cell?",
+        "answer": "[0][0]",
+        "options": [
+          "[0][0]",
+          "[1][1]",
+          "[3][3]",
+          "[-1][0]"
+        ],
+        "explanation": "The top-left is first row and first column.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-5",
+        "prompt": "Why might a game board use a 2D array?",
+        "answer": "Each square has a row and column location",
+        "options": [
+          "Each square has a row and column location",
+          "It eliminates input handling",
+          "It adds processor cores",
+          "It automatically creates graphics"
+        ],
+        "explanation": "Boards naturally form grids.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-6",
+        "prompt": "How many elements are in a 5 by 2 2D array?",
+        "answer": "10",
+        "options": [
+          "10",
+          "7",
+          "25",
+          "2"
+        ],
+        "explanation": "Five rows times two columns equals ten.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-7",
+        "prompt": "What is a record?",
+        "answer": "A collection of named fields describing one item",
+        "options": [
+          "A collection of named fields describing one item",
+          "A CPU register",
+          "Only a list of integers",
+          "A network cable"
+        ],
+        "explanation": "Records group related attributes such as name and score.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-8",
+        "prompt": "Which is a record field?",
+        "answer": "studentName",
+        "options": [
+          "studentName",
+          "A network topology",
+          "CPU speed as hardware only",
+          "An operating system process"
+        ],
+        "explanation": "A field stores one attribute within the record.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-9",
+        "prompt": "What could a record represent?",
+        "answer": "One pupil with name and mark fields",
+        "options": [
+          "One pupil with name and mark fields",
+          "A whole computer network only",
+          "A printer's electric motor",
+          "A CPU control signal"
+        ],
+        "explanation": "Records collect values describing one entity.",
+        "skill": "Two-dimensional arrays and records"
+      },
+      {
+        "id": "22-array2-10",
+        "prompt": "Which approach processes every cell of a 2D grid?",
+        "answer": "Nested iteration over rows and columns",
+        "options": [
+          "Nested iteration over rows and columns",
+          "A single constant assignment",
+          "Only one IF statement",
+          "A disk defragmenter"
+        ],
+        "explanation": "Two nested loops can traverse both dimensions.",
+        "skill": "Two-dimensional arrays and records"
+      }
+    ]
+  },
+  {
+    "id": "22-subprograms",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "Procedures, functions and parameters",
+    "questions": [
+      {
+        "id": "22-subprograms-1",
+        "prompt": "What is a subprogram?",
+        "answer": "A named reusable block of instructions",
+        "options": [
+          "A named reusable block of instructions",
+          "A network protocol",
+          "A type of ROM",
+          "A hard-drive partition"
+        ],
+        "explanation": "Subprograms separate and reuse program behaviour.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-2",
+        "prompt": "What is a procedure?",
+        "answer": "A callable block performing actions without necessarily returning a value",
+        "options": [
+          "A callable block performing actions without necessarily returning a value",
+          "Only a Boolean expression",
+          "A secondary storage device",
+          "A data packet"
+        ],
+        "explanation": "Procedures perform tasks when called.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-3",
+        "prompt": "What is a function?",
+        "answer": "A subprogram designed to return a result",
+        "options": [
+          "A subprogram designed to return a result",
+          "Only a graphical icon",
+          "An optical disk",
+          "A data encryption key"
+        ],
+        "explanation": "Functions compute or provide a value.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-4",
+        "prompt": "What is a parameter?",
+        "answer": "A named input accepted by a subprogram",
+        "options": [
+          "A named input accepted by a subprogram",
+          "A monitor size",
+          "A CPU instruction address",
+          "A kind of network cable"
+        ],
+        "explanation": "Parameters let callers provide different data.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-5",
+        "prompt": "What is an argument?",
+        "answer": "A value supplied when a subprogram is called",
+        "options": [
+          "A value supplied when a subprogram is called",
+          "A compiler error only",
+          "An empty array",
+          "A user login account"
+        ],
+        "explanation": "Arguments populate parameters at call time.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-6",
+        "prompt": "What is a return value?",
+        "answer": "A value sent back by a function",
+        "options": [
+          "A value sent back by a function",
+          "The program's filename",
+          "A router's address",
+          "An array's maximum memory size"
+        ],
+        "explanation": "Functions use a result in the calling expression.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-7",
+        "prompt": "Why use functions instead of duplicating calculations?",
+        "answer": "To improve reuse and maintainability",
+        "options": [
+          "To improve reuse and maintainability",
+          "To avoid all testing",
+          "To speed up every CPU automatically",
+          "To remove input data"
+        ],
+        "explanation": "A single subprogram can be called in several places.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-8",
+        "prompt": "What is local scope?",
+        "answer": "A variable is accessible within its defined subprogram context",
+        "options": [
+          "A variable is accessible within its defined subprogram context",
+          "A value is available globally by default",
+          "A special RAM module",
+          "A file named local"
+        ],
+        "explanation": "Local variables are limited in visibility.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-9",
+        "prompt": "What is global scope?",
+        "answer": "A variable can be accessed across wider program contexts",
+        "options": [
+          "A variable can be accessed across wider program contexts",
+          "A variable always stores text",
+          "A loop runs forever",
+          "A function cannot return values"
+        ],
+        "explanation": "Global variables have wider visibility and can create dependencies.",
+        "skill": "Procedures, functions and parameters"
+      },
+      {
+        "id": "22-subprograms-10",
+        "prompt": "Why split a large program into subprograms?",
+        "answer": "To support decomposition and simpler testing",
+        "options": [
+          "To support decomposition and simpler testing",
+          "To increase monitor brightness",
+          "To disable variables",
+          "To replace all arrays"
+        ],
+        "explanation": "Small reusable units are easier to understand and test.",
+        "skill": "Procedures, functions and parameters"
+      }
+    ]
+  },
+  {
+    "id": "22-files",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "File handling",
+    "questions": [
+      {
+        "id": "22-files-1",
+        "prompt": "Why does a program use file handling?",
+        "answer": "To store or retrieve data persistently",
+        "options": [
+          "To store or retrieve data persistently",
+          "To increase CPU clock speed",
+          "To create a switch",
+          "To resize every image"
+        ],
+        "explanation": "Files allow data to survive after the program exits.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-2",
+        "prompt": "What is the role of opening a file?",
+        "answer": "Establish access for reading or writing",
+        "options": [
+          "Establish access for reading or writing",
+          "Increase RAM physically",
+          "Change an IP address",
+          "Create an encryption algorithm"
+        ],
+        "explanation": "The program opens a file to perform file operations.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-3",
+        "prompt": "What does reading a file do?",
+        "answer": "Load stored content into the program",
+        "options": [
+          "Load stored content into the program",
+          "Erase it by default",
+          "Increase the file-system capacity",
+          "Compile the CPU"
+        ],
+        "explanation": "Reading obtains previously saved data.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-4",
+        "prompt": "What does writing a file do?",
+        "answer": "Store data in the file",
+        "options": [
+          "Store data in the file",
+          "Compare two IP addresses",
+          "Change every variable to Boolean",
+          "Defragment an SSD"
+        ],
+        "explanation": "Writing records information on storage.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-5",
+        "prompt": "What should a program do after finishing file operations?",
+        "answer": "Close the file properly",
+        "options": [
+          "Close the file properly",
+          "Remove the operating system",
+          "Delete every folder",
+          "Disable permissions"
+        ],
+        "explanation": "Closing helps release resources and finish writes.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-6",
+        "prompt": "What can an append operation do?",
+        "answer": "Add content at the end of a file",
+        "options": [
+          "Add content at the end of a file",
+          "Always replace every earlier byte",
+          "Change the filename extension only",
+          "Move the file into RAM permanently"
+        ],
+        "explanation": "Appending preserves existing content while adding new data.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-7",
+        "prompt": "Which file mode is suitable for reading existing data?",
+        "answer": "Read mode",
+        "options": [
+          "Read mode",
+          "Write-only mode",
+          "Random mode",
+          "Delete mode"
+        ],
+        "explanation": "Read mode opens existing content for retrieval.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-8",
+        "prompt": "What is one danger of overwrite write mode?",
+        "answer": "Existing data may be replaced",
+        "options": [
+          "Existing data may be replaced",
+          "The CPU doubles its cores",
+          "Every file becomes Unicode",
+          "It automatically creates backups"
+        ],
+        "explanation": "Programs should avoid unintended loss of saved content.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-9",
+        "prompt": "Why check for file errors?",
+        "answer": "A missing file or unavailable storage may prevent access",
+        "options": [
+          "A missing file or unavailable storage may prevent access",
+          "Files never fail",
+          "File operations are always instant",
+          "Only monitors experience errors"
+        ],
+        "explanation": "Programs should handle failed open and read operations.",
+        "skill": "File handling"
+      },
+      {
+        "id": "22-files-10",
+        "prompt": "What is a sensible use of persistent file data?",
+        "answer": "Saving a player's high score between sessions",
+        "options": [
+          "Saving a player's high score between sessions",
+          "Storing a temporary loop counter only",
+          "Changing the processor model",
+          "Creating a network NIC"
+        ],
+        "explanation": "Persistent records can be loaded when the program runs again.",
+        "skill": "File handling"
+      }
+    ]
+  },
+  {
+    "id": "22-sql",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "SQL SELECT, FROM and WHERE",
+    "questions": [
+      {
+        "id": "22-sql-1",
+        "prompt": "What is SQL mainly used for?",
+        "answer": "Working with relational databases",
+        "options": [
+          "Working with relational databases",
+          "Increasing CPU cache",
+          "Compressing sound",
+          "Drawing flowcharts only"
+        ],
+        "explanation": "SQL can retrieve and manage structured table data.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-2",
+        "prompt": "What does SELECT do in a query?",
+        "answer": "Specify the fields to return",
+        "options": [
+          "Specify the fields to return",
+          "Name the current network",
+          "Delete all rows automatically",
+          "Open an image file"
+        ],
+        "explanation": "SELECT identifies the columns requested.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-3",
+        "prompt": "What does FROM identify?",
+        "answer": "The table to query",
+        "options": [
+          "The table to query",
+          "The CPU's instruction count",
+          "The database password",
+          "The file extension"
+        ],
+        "explanation": "FROM names the source table.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-4",
+        "prompt": "What is WHERE used for?",
+        "answer": "Filter records using a condition",
+        "options": [
+          "Filter records using a condition",
+          "Sort the CPU cache",
+          "Set monitor brightness",
+          "Compress text"
+        ],
+        "explanation": "WHERE limits which rows match the query.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-5",
+        "prompt": "Which query selects every field from Pupils?",
+        "answer": "SELECT * FROM Pupils",
+        "options": [
+          "SELECT * FROM Pupils",
+          "FROM * SELECT Pupils",
+          "SHOW ALL Pupils WHERE",
+          "PRINT Pupils ONLY"
+        ],
+        "explanation": "The asterisk means all columns.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-6",
+        "prompt": "What does SELECT Name FROM Pupils return?",
+        "answer": "Values from the Name column",
+        "options": [
+          "Values from the Name column",
+          "Every column in every table",
+          "Only the number of rows",
+          "The database file size"
+        ],
+        "explanation": "SELECT targets a named column.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-7",
+        "prompt": "What does WHERE Score > 50 do?",
+        "answer": "Return rows with Score greater than 50",
+        "options": [
+          "Return rows with Score greater than 50",
+          "Return every record regardless of score",
+          "Delete scores less than 50",
+          "Create a column named Score"
+        ],
+        "explanation": "The condition filters the result.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-8",
+        "prompt": "What does SELECT Name FROM Pupils WHERE Score >= 70 return?",
+        "answer": "Names of pupils meeting the score condition",
+        "options": [
+          "Names of pupils meeting the score condition",
+          "Every score only",
+          "All pupil names regardless of score",
+          "Nothing because WHERE is forbidden"
+        ],
+        "explanation": "The query selects Name from matching rows.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-9",
+        "prompt": "What is a database record in a table?",
+        "answer": "One row",
+        "options": [
+          "One row",
+          "One column name",
+          "A single SQL keyword",
+          "A CPU register"
+        ],
+        "explanation": "A row stores one entity's field values.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      },
+      {
+        "id": "22-sql-10",
+        "prompt": "What is a database field in a table?",
+        "answer": "A column or named attribute",
+        "options": [
+          "A column or named attribute",
+          "Every row combined",
+          "A physical drive",
+          "A stored password by definition"
+        ],
+        "explanation": "Columns represent categories of information.",
+        "skill": "SQL SELECT, FROM and WHERE"
+      }
+    ]
+  },
+  {
+    "id": "22-random",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "Random values and combined techniques",
+    "questions": [
+      {
+        "id": "22-random-1",
+        "prompt": "What is a random-number function used for?",
+        "answer": "Producing values selected within a specified range",
+        "options": [
+          "Producing values selected within a specified range",
+          "Encrypting every file automatically",
+          "Changing CPU cores",
+          "Creating a DNS lookup"
+        ],
+        "explanation": "Random values are used in simulations and games.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-2",
+        "prompt": "Which is a sensible use of random numbers?",
+        "answer": "Selecting a quiz question at random",
+        "options": [
+          "Selecting a quiz question at random",
+          "Choosing the CPU's physical address",
+          "Guaranteeing a password is secure",
+          "Replacing all program variables"
+        ],
+        "explanation": "Random selection can vary program behaviour.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-3",
+        "prompt": "Why should random values have appropriate bounds?",
+        "answer": "The program may require only valid outcomes",
+        "options": [
+          "The program may require only valid outcomes",
+          "All random values are negative",
+          "Ranges prevent every bug",
+          "Random values never repeat"
+        ],
+        "explanation": "Bounds keep outcomes inside the intended set.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-4",
+        "prompt": "A six-sided dice simulator should generate what values?",
+        "answer": "1 through 6",
+        "options": [
+          "1 through 6",
+          "0 through 9",
+          "1 through 100",
+          "Only 6"
+        ],
+        "explanation": "A dice has six valid face values.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-5",
+        "prompt": "What can happen if two random picks return the same number?",
+        "answer": "A repeated result may occur",
+        "options": [
+          "A repeated result may occur",
+          "The CPU must reboot",
+          "The program is invalid",
+          "The RNG stops permanently"
+        ],
+        "explanation": "Random results can repeat unless uniqueness is explicitly enforced.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-6",
+        "prompt": "Which construct can check whether a random result equals 6?",
+        "answer": "IF statement",
+        "options": [
+          "IF statement",
+          "Defragmentation",
+          "A DNS query",
+          "File compression"
+        ],
+        "explanation": "Selection can react to generated numbers.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-7",
+        "prompt": "Which data type best holds a dice roll?",
+        "answer": "Integer",
+        "options": [
+          "Integer",
+          "String only",
+          "Character only",
+          "Real only"
+        ],
+        "explanation": "A die outcome is a whole number.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-8",
+        "prompt": "Why might a random quiz generator keep a list of chosen indices?",
+        "answer": "To avoid repeats when unique questions are required",
+        "options": [
+          "To avoid repeats when unique questions are required",
+          "To turn a hard drive into RAM",
+          "To reduce monitor resolution",
+          "To avoid any code testing"
+        ],
+        "explanation": "Tracking selections supports sampling without replacement.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-9",
+        "prompt": "What is a pseudorandom number?",
+        "answer": "A value produced by a deterministic algorithm that appears random",
+        "options": [
+          "A value produced by a deterministic algorithm that appears random",
+          "A physical disk drive",
+          "A perfectly predictable user input only",
+          "A guaranteed true random sample"
+        ],
+        "explanation": "Most software RNGs produce pseudorandom sequences.",
+        "skill": "Random values and combined techniques"
+      },
+      {
+        "id": "22-random-10",
+        "prompt": "Why test a program that uses random numbers with varied results?",
+        "answer": "Different outcomes can exercise different branches",
+        "options": [
+          "Different outcomes can exercise different branches",
+          "Random programs never fail",
+          "Only one result matters",
+          "Testing changes the CPU's clock speed"
+        ],
+        "explanation": "Testing multiple outcomes can reveal edge cases.",
+        "skill": "Random values and combined techniques"
       }
     ]
   }
