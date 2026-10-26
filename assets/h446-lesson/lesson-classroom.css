@@ -1646,12 +1646,53 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
     display:grid;place-items:center;border-radius:7px;
     border:1px solid transparent;flex:0 0 auto;
   }
-  .mobile-signal-routine{background:#e5f3e9;border-color:#bcd9c5;color:#205e3e}
-  .mobile-signal-response{background:#fff1df;border-color:#ebcba2;color:#8e520e}
+  .mobile-signal-phase{background:#c1e5f5;border-color:#7aabce;color:#0a3258}
+  .mobile-signal-routine{background:#d9f2d0;border-color:#629264;color:#0b4314}
+  .mobile-signal-response{background:#fbe3d6;border-color:#c5967d;color:#702c07}
   .mobile-signal-icon svg{display:block;width:17px;height:17px}
 }
 @media(max-width:360px){
   .mobile-lesson-signals{gap:3px}
   .mobile-signal-icon{width:23px;height:23px}
   .mobile-signal-icon svg{width:15px;height:15px}
+}
+
+/* Mobile signals key is part of normal document flow, AFTER the lesson screen.
+   Use identical SVGs and phase wording in the top title and bottom legend. */
+.mobile-lesson-key{display:none}
+@media(max-width:700px){
+  main .mobile-lesson-key{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:start;
+    gap:5px;
+    padding:10px 2px 1px;
+    margin:15px 0 0;
+    border-top:1px solid #d8e2dc;
+  }
+  .mobile-key-item{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font:700 11px/1.22 Arial,Helvetica,sans-serif;
+    overflow-wrap:anywhere;
+  }
+  .mobile-key-icon{
+    flex:0 0 23px;width:23px;height:23px;
+    border:1px solid;border-radius:6px;
+    display:grid;place-items:center;
+    box-sizing:border-box;
+  }
+  .mobile-key-icon svg{display:block;width:15px;height:15px}
+  .mobile-key-phase .mobile-key-icon{background:#c1e5f5;border-color:#7aabce;color:#0a3258}
+  .mobile-key-routine .mobile-key-icon{background:#d9f2d0;border-color:#629264;color:#0b4314}
+  .mobile-key-response .mobile-key-icon{background:#fbe3d6;border-color:#c5967d;color:#702c07}
+  .mobile-key-phase .mobile-key-label{color:#0a3258}
+  .mobile-key-routine .mobile-key-label{color:#0b4314}
+  .mobile-key-response .mobile-key-label{color:#702c07}
+}
+@media(max-width:360px){
+  .mobile-key-item{gap:3px;font-size:10px}
+  .mobile-key-icon{flex-basis:21px;width:21px;height:21px}
 }
