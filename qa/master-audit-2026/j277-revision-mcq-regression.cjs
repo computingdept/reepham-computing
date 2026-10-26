@@ -38,8 +38,34 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     }));
     assert(papers.ids.join(',')==='rhsc-revision-paper-1,rhsc-revision-paper-2'&&papers.counts.join(',')==='6,5',view+' J277 Paper 1 then Paper 2',papers);
     assert(papers.jumps.join(',')==='Paper 1,Paper 2'&&papers.codes.join(',')==='1.1,1.2,1.3,1.4,1.5,1.6,2.1,2.2,2.3,2.4,2.5',view+' J277 shared paper navigation and OCR order',papers);
+    const first=await page.evaluate(()=>({
+      paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
+      tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
+    }));
+    assert(first.paper1&&first.paper2&&first.visibleCodes.length===6&&first.visibleCodes.every(c=>c.startsWith('1.')),view+' J277 default shows ONLY Paper 1',first);
+    assert(first.tabs.join(',')==='true,false',view+' J277 initial active filter',first.tabs);
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
-    assert(await page.evaluate(()=>document.activeElement?.id==='rhsc-revision-paper-heading-2'),view+' J277 Paper 2 jump works');
+    const second=await page.evaluate(()=>({
+      paper1:document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:!document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
+      tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
+    }));
+    assert(second.paper1&&second.paper2&&second.visibleCodes.length===5&&second.visibleCodes.every(c=>c.startsWith('2.')),view+' J277 clicking Paper 2 hides ALL Paper 1 topics',second);
+    assert(second.tabs.join(',')==='false,true',view+' J277 Paper 2 active filter',second.tabs);
+    await page.locator('#revisionhub .rhsc-paper-nav-button').first().click();
+    const back=await page.evaluate(()=>({
+      paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop())
+    }));
+    assert(back.paper1&&back.paper2&&back.visibleCodes.length===6,view+' J277 Paper 1 filter switches back',back);
+    // Keyboard users must have the same filter functionality.
+    await page.locator('#revisionhub .rhsc-paper-nav-button').first().focus();
+    await page.keyboard.press('ArrowRight');
+    assert(await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-1').hidden&&!document.querySelector('#rhsc-revision-paper-2').hidden),view+' J277 arrow key filter works');
 
     assert(visual.fg==='rgb(0, 58, 49)'&&visual.heading==='rgb(0, 58, 49)',view+' H446 dark-green palette',visual);
     assert(visual.withinViewport&&visual.labels,view+' readable responsive tiles',visual);
@@ -66,8 +92,34 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     }));
     assert(papers.ids.join(',')==='rhsc-revision-paper-1,rhsc-revision-paper-2'&&papers.counts.join(',')==='7,4',view+' H446 Paper 1 then Paper 2',papers);
     assert(papers.jumps.join(',')==='Paper 1,Paper 2'&&papers.codes.join(',')==='1.1,1.2,1.3,1.4.1,1.4.2,1.4.3,1.5,2.1,2.2.1,2.2.2,2.3',view+' H446 shared paper navigation and OCR order',papers);
+    const first=await page.evaluate(()=>({
+      paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
+      tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
+    }));
+    assert(first.paper1&&first.paper2&&first.visibleCodes.length===7&&first.visibleCodes.every(c=>c.startsWith('1.')),view+' H446 default shows ONLY Paper 1',first);
+    assert(first.tabs.join(',')==='true,false',view+' H446 initial active filter',first.tabs);
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
-    assert(await page.evaluate(()=>document.activeElement?.id==='rhsc-revision-paper-heading-2'),view+' H446 Paper 2 jump works');
+    const second=await page.evaluate(()=>({
+      paper1:document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:!document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop()),
+      tabs:[...document.querySelectorAll('#revisionhub [role="tab"]')].map(e=>e.getAttribute('aria-selected'))
+    }));
+    assert(second.paper1&&second.paper2&&second.visibleCodes.length===4&&second.visibleCodes.every(c=>c.startsWith('2.')),view+' H446 clicking Paper 2 hides ALL Paper 1 topics',second);
+    assert(second.tabs.join(',')==='false,true',view+' H446 Paper 2 active filter',second.tabs);
+    await page.locator('#revisionhub .rhsc-paper-nav-button').first().click();
+    const back=await page.evaluate(()=>({
+      paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
+      paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
+      visibleCodes:[...document.querySelectorAll('#revisionhub .rhsc-practice-tile')].filter(e=>e.getClientRects().length).map(e=>e.href.split('#').pop())
+    }));
+    assert(back.paper1&&back.paper2&&back.visibleCodes.length===7,view+' H446 Paper 1 filter switches back',back);
+    // Keyboard users must have the same filter functionality.
+    await page.locator('#revisionhub .rhsc-paper-nav-button').first().focus();
+    await page.keyboard.press('ArrowRight');
+    assert(await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-1').hidden&&!document.querySelector('#rhsc-revision-paper-2').hidden),view+' H446 arrow key filter works');
 
     assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
    }catch(e){assert(false,view+' H446 hub smoke test',String(e).slice(0,400))}
