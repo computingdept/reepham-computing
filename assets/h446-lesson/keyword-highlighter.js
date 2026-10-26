@@ -6,7 +6,7 @@ if(!/^\/lessons\/(?:j277|h446)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.path
 if(document.documentElement.hasAttribute('data-rhsc-marker-ready'))return;
 document.documentElement.setAttribute('data-rhsc-marker-ready','20261026');
 var link=document.createElement('link');
-link.rel='stylesheet';link.href='../../../assets/h446-lesson/keyword-highlighter.css?v=20261026-central2';
+link.rel='stylesheet';link.href='../../../assets/h446-lesson/keyword-highlighter.css?v=20261026-stroke-only1';
 document.head.appendChild(link);
 
 var excluded='script,style,pre,code,kbd,samp,svg,math,button,a,mark,.vocab-tip,.vocab-answer,.youdo-solution,.wedo-answer,.model-answer,.solution-card,.answer-panel,.j277-sm-review,.phase-tag,[hidden],[aria-hidden="true"],[data-vocab-answer]';
