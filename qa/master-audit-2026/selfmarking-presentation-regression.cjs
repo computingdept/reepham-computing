@@ -32,6 +32,19 @@ async function audit(browser,course,id,viewport){
   if(course==="j277" && ["001","002"].includes(id)){
    await page.waitForFunction(()=>document.querySelector("#you-do.j277-sm-ready"),null,{timeout:20000});
   }
+  if(course==="j277"&&id==="002"){
+    const signal=await page.evaluate(()=>{
+      const els=[...document.querySelectorAll('mark.rhsc-keyword,#overview .vocab-tip,#you-do mark.j277-sm-command')];
+      return els.slice(0,30).map(el=>{
+        const css=getComputedStyle(el),box=el.getBoundingClientRect();
+        const parent=el.closest('#overview .objectives,#overview .vocab-intro,#new-learning,#i-do,#we-do,#you-do,#vocabulary');
+        return {phase:parent?.id||parent?.className||'',label:el.textContent.trim().slice(0,50),
+          cls:el.className,visible:box.width>0&&box.height>0&&!!el.getClientRects().length,
+          bg:css.backgroundImage.slice(0,95),bgcolor:css.backgroundColor};
+      });
+    });
+    console.log("KEYWORD_VISIBILITY "+JSON.stringify({viewport:viewport.name,signal}));
+  }
   // Standalone assessment screens do not have a normal self-marking sequence.
   const assessment=await page.locator("#you-do").getAttribute("data-assessment-mode");
   if(assessment==="true"){
