@@ -77,6 +77,40 @@ function fail(where,test,detail){const item={...where,test,detail};failures.push
      if(spec.kind==="paper"&&s.paperLeaks)fail(where,"pupil paper leaks mark scheme");
      if(spec.kind==="lesson"&&spec.course==="j277"&&(!s.assessed||s.links.length!==1))
        fail(where,"assessment launch missing",{assessmentMode:s.assessed,links:s.links});
+
+     // These three teacher-answer interfaces have staged solutions.
+     // Check that counters, Previous and Next reveal exactly one solution.
+     if(spec.kind==="answers"&&
+       (spec.course==="h446"&&spec.id==="036"||
+        spec.course==="j277"&&["035","050"].includes(spec.id))){
+      const stageState=async()=>page.evaluate(()=>{
+       const stages=[...document.querySelectorAll(".answer-stage")];
+       const visible=stages.filter(el=>!el.hidden&&getComputedStyle(el).display!=="none");
+       return {total:stages.length,visible:visible.length,
+        index:stages.findIndex(el=>!el.hidden),
+        counter:document.getElementById("answer-counter")?.textContent?.trim()||"",
+        previousDisabled:document.getElementById("previous-answer")?.disabled,
+        nextLabel:document.getElementById("next-answer")?.textContent?.trim()||""};
+      });
+      const first=await stageState();
+      if(first.total<2||first.visible!==1||first.index!==0||!first.previousDisabled||
+         !first.counter.includes("1 of "+first.total))
+       fail(where,"staged marking initial screen",first);
+      for(let step=1;step<first.total;step++){
+       await page.locator("#next-answer").click();
+       const after=await stageState();
+       if(after.visible!==1||after.index!==step||
+          !after.counter.includes((step+1)+" of "+first.total))
+        fail(where,"one-answer Next navigation",{step,after});
+      }
+      if(first.total>1){
+       await page.locator("#previous-answer").click();
+       const back=await stageState();
+       if(back.visible!==1||back.index!==first.total-2||
+          !back.counter.includes((first.total-1)+" of "+first.total))
+        fail(where,"Previous restores prior marking screen",back);
+      }
+     }
      if(s.codeOvers)reviews.push({...where,issue:"horizontally scrolling code",count:s.codeOvers});
      if(s.svgOvers)reviews.push({...where,issue:"oversized SVG",count:s.svgOvers});
     }catch(e){fail(where,"browser survey exception",String(e).slice(0,350))}
