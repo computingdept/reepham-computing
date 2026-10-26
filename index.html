@@ -450,7 +450,7 @@ const rawTab=parts[3]||'lessons';const tab=rawTab==='skills'||rawTab==='exam'?'r
 let external='';if(school.id==='reepham'&&s==='Computer Science')external=y>11?'h446-hub.html':'j277-hub.html';
 if(school.id==='reepham'&&s==='Information Technology')external='it-j836-hub.html';
 if(external){
-  const hubTab=tab==='revision'?'revisionhub':tab;
+  const hubTab=tab==='revision'?(external==='j277-hub.html'?'lessons':'revisionhub'):tab;
   location.replace(external+'?year='+y+'#'+hubTab);
   return;
 }
