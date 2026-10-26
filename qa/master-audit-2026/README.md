@@ -23,12 +23,12 @@ Central audit register. Started 24 October 2026.
 ## You Do presentation audit · 25 October 2026
 
 - [Cross-course You Do formatting audit and defect ledger](youdo-format-audit-2026-10-25.md): user-observed Lesson 001 binary SVG numbers concatenated by J277's exam-card adapter; root-cause code repair and responsive diagram grid committed; shared one-question-per-phone navigation; long H446 exam questions given own screen.
-- [Automated You Do TV/compact TV/phone regression](../../.github/workflows/youdo-presentation-audit.yml): 463 standard lesson pages, all question diagrams, visible answers and source card geometry. The latest complete sign-off remains pending until all four browser shards pass. Do not count this as part of the completed I Do / We Do audit.
-- Separate presentation exceptions remain for dense J277 phone diagrams and non-standard assessment pages. Repeated Lesson 001 number 154 is a **content-quality** exception only, left unchanged during formatting.
+- [Automated You Do TV/compact TV/phone regression](../../.github/workflows/youdo-presentation-audit.yml): 463 standard lesson pages, all question diagrams, visible answers and source card geometry. Latest full browser pass: [40304293162](https://github.com/computingdept/reepham-computing/actions/runs/40304293162), all four shards successful (13,646 checks, zero warnings); this remains separate from I Do / We Do.
+- Separate visual spot-checks remain useful for dense J277 phone diagrams; non-standard assessment page structure has been [tested independently](https://github.com/computingdept/reepham-computing/actions/runs/40323952386). Repeated Lesson 001 number 154 is a **content-quality** exception only, left unchanged during formatting.
 
 ## Whole-course presentation audit · 25 October 2026
 
-- [Comprehensive I Do / We Do formatting report](cross-course-format-audit-2026-10-25.md) — **463 standard lessons**, three screen sizes, **26,391 passed browser checks**, zero hard failures; 41 potential compact-TV clipping warnings in 28 H446 lessons remain under review.
+- [Comprehensive I Do / We Do formatting report](cross-course-format-audit-2026-10-25.md) — **463 standard lessons**, three screen sizes, **26,547 passed browser checks**, zero hard failures and zero clipping warnings on the latest [revalidation 40228209877](https://github.com/computingdept/reepham-computing/actions/runs/40228209877). Historical 41 warnings were cleared.
 - [Complete H446 compact-TV exception CSV](h446-compact-tv-vertical-fit-2026-10-25.csv) — measured excess height, grouped for follow-up. J277 113 is a standalone revision-interface exception.
 - [Automated whole-course browser workflow](../../.github/workflows/full-course-format-audit.yml) — four shards, all existing standard lesson pages at TV, compact TV and mobile sizes.
 
@@ -40,6 +40,9 @@ Central audit register. Started 24 October 2026.
 - **Scope limit:** evidence establishes shared highlight rendering and width consistency in Chromium, not the correctness or completeness of authored vocabulary, actual mobile-device appearance, or pixel-perfect visual review. Lesson 113 is a separate standalone interface.
 
 ## Current position
+
+**Authoritative verified formatting status:** [26 October presentation verification register](presentation-verification-2026-10-26.md). It links the cross-course tests, standalone J277 113 and special assessment regression, with explicit limitations. Previous warning totals are historical when superseded by successful reruns.
+
 See [workstreams.csv](workstreams.csv). Counts in that CSV are **historical reports, not a new repository-wide audit**. Treat completion, publication and coverage claims as unverified until the evidence is linked and retested.
 
 ## Evidence files
