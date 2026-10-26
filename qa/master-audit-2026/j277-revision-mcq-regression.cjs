@@ -229,6 +229,33 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
         &&(await page.locator('#section-title').innerText()).includes(subSpec);
       assert(pageWorks,view+' H446 '+subSpec+' original questions remain accessible');
     }
+    await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
+    await page.goto(origin+'/h446-hub.html?year=12&theme=synergy#revisionhub',{waitUntil:'networkidle'});
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    const hp=await page.evaluate(()=>{
+      const root=document.querySelector('#revisionhub');
+      const tiles=[...root.querySelectorAll('#rhsc-revision-paper-1 > .rhsc-practice-grid > .rhsc-practice-tile')];
+      const subs=root.querySelector('#rhsc-h446-14-skills');
+      return {
+        preview:document.documentElement.classList.contains('synergy-hub-preview'),
+        enabled:document.getElementById('synergyHubPreviewCSS')?.media==='all',
+        topics:tiles.map(t=>t.dataset.spec||(t.getAttribute('href')||'').split('#').pop()),
+        subHidden:subs.hidden,
+        border:getComputedStyle(tiles[0]).borderLeftWidth,
+        widthOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
+      };
+    });
+    assert(hp.preview&&hp.enabled&&hp.topics.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hp.subHidden&&hp.border==='4px',
+      view+' H446 pilot five-topic hierarchy remains intact',hp);
+    assert(hp.widthOverflow<=5,view+' H446 optional Synergy styling fits viewport',hp.widthOverflow);
+    await page.locator('#rhsc-h446-14-toggle').click();
+    assert(await page.locator('#rhsc-h446-14-skills a:visible').count()===3,
+      view+' H446 pilot expands three original 1.4 links');
+    await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
+    assert(await page.evaluate(()=>document.getElementById('rhsc-revision-paper-1').hidden&&!document.getElementById('rhsc-revision-paper-2').hidden),
+      view+' H446 preview Paper 2 switch retains behaviour');
     // H446's year links used to discard theme=synergy, unlike J277.
     const hLink=await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-2 a.rhsc-practice-tile')?.href);
     assert(hLink?.includes('theme=synergy'),view+' H446 preview carried into quiz destination',hLink);
@@ -258,33 +285,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     await page.goto(new URL(other,page.url()).href,{waitUntil:'networkidle'});
     assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')&&document.body.dataset.year==='12'),
       view+' H446 Year 12 year-link round trip retains preview');
-    await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
-    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
-    assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
-    await page.goto(origin+'/h446-hub.html?year=12&theme=synergy#revisionhub',{waitUntil:'networkidle'});
-    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
-    const hp=await page.evaluate(()=>{
-      const root=document.querySelector('#revisionhub');
-      const tiles=[...root.querySelectorAll('#rhsc-revision-paper-1 > .rhsc-practice-grid > .rhsc-practice-tile')];
-      const subs=root.querySelector('#rhsc-h446-14-skills');
-      return {
-        preview:document.documentElement.classList.contains('synergy-hub-preview'),
-        enabled:document.getElementById('synergyHubPreviewCSS')?.media==='all',
-        topics:tiles.map(t=>t.dataset.spec||(t.getAttribute('href')||'').split('#').pop()),
-        subHidden:subs.hidden,
-        border:getComputedStyle(tiles[0]).borderLeftWidth,
-        widthOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
-      };
-    });
-    assert(hp.preview&&hp.enabled&&hp.topics.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hp.subHidden&&hp.border==='4px',
-      view+' H446 pilot five-topic hierarchy remains intact',hp);
-    assert(hp.widthOverflow<=5,view+' H446 optional Synergy styling fits viewport',hp.widthOverflow);
-    await page.locator('#rhsc-h446-14-toggle').click();
-    assert(await page.locator('#rhsc-h446-14-skills a:visible').count()===3,
-      view+' H446 pilot expands three original 1.4 links');
-    await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
-    assert(await page.evaluate(()=>document.getElementById('rhsc-revision-paper-1').hidden&&!document.getElementById('rhsc-revision-paper-2').hidden),
-      view+' H446 preview Paper 2 switch retains behaviour');
+
     await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
     assert(await page.evaluate(()=>!document.documentElement.classList.contains('synergy-hub-preview')&&document.getElementById('synergyHubPreviewCSS')?.media==='not all'),
       view+' H446 original design immediately restored without preview parameter');
