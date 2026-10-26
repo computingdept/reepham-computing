@@ -120,3 +120,15 @@
  #revisionhub .rhsc-practice-subtopics .rhsc-practice-grid{grid-template-columns:1fr;gap:7px}
  #revisionhub .rhsc-practice-subtopics .rhsc-practice-tile{border:1px solid var(--rhsc-revision-line);border-radius:7px;min-height:56px}
 }
+
+/* Shared large-screen topic directory: make fuller use of desktop space while
+   preserving the mobile single-column hierarchy and comfortable card widths. */
+@media (min-width:1200px){
+  .rhsc-revision-ui main{max-width:1360px}
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .rhsc-revision-ui #directory #topic-grid .topic{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;min-height:106px;column-gap:8px}
+  .rhsc-revision-ui #directory #topic-grid .topic .spec{grid-column:1;grid-row:1}
+  .rhsc-revision-ui #directory #topic-grid .topic h2{grid-column:1 / -1;grid-row:2}
+  .rhsc-revision-ui #directory #topic-grid .topic .status{grid-column:1;grid-row:3}
+  .rhsc-revision-ui #directory #topic-grid .topic button{grid-column:2;grid-row:3}
+}
