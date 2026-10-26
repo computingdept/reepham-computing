@@ -6,7 +6,7 @@
   --rhsc-central-ink-c:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%2056'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%2012%20Q76%2014%20133%2010%20T262%2013%20Q333%209%20396%2014%20L397%2044%20Q333%2048%20262%2044%20T126%2046%20Q55%2043%202%2046Z'%20fill='%23FFF14B'%20fill-opacity='.82'/%3E%3C/svg%3E");
 }
 mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command{
-  background-color:#fff7a3;
+  background-color:transparent!important; /* Never a rectangular yellow fill */
   background-image:var(--rhsc-central-ink-a);
   background-repeat:no-repeat;background-position:center;background-size:100% 100%;
   color:#24241a;font-weight:850;padding:.02em .15em;
@@ -22,7 +22,7 @@ mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-comm
 /* Highlight vocabulary preview chips on desktop and phones.
    Lesson 002 already has its own carefully tuned manual CSS. */
 #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term{
-  display:inline-block;background-color:#fff7a3;
+  display:inline-block;background-color:transparent!important;
   background-image:var(--rhsc-central-ink-a);
   background-position:center;background-size:100% 100%;background-repeat:no-repeat;
   color:#24241a;font-weight:850;padding:.12em .28em;
@@ -31,12 +31,32 @@ mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-comm
 #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term:nth-child(3n + 2){background-image:var(--rhsc-central-ink-b)}
 #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term:nth-child(3n){background-image:var(--rhsc-central-ink-c)}
 @media(max-width:700px){
+  /* Same translucent pen stroke on phones; do not draw a solid colour block. */
   mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command,
-  #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term{background-color:#fff9a9}
+  #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term{background-color:transparent!important}
 }
 @media(prefers-contrast:more){
   mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-command,
   #overview:not(:has(mark.rhsc-keyword)) .rhsc-preview-term{
-    background:#fff35b;background-image:none;outline:1px solid #615700;
+    background-color:transparent!important;background-image:none;outline:none;
+    text-decoration:underline;text-decoration-color:#937800;text-decoration-thickness:.15em;text-underline-offset:.06em;
+  }
+}
+/* Consistent across authored Lesson 002 and shared J277/H446 rendering.
+   Preserve the original pen-stroke SVG, never the rectangular mobile fallback. */
+body #overview mark.rhsc-keyword,
+body #new-learning mark.rhsc-keyword,
+body #i-do mark.rhsc-keyword,
+body #we-do mark.rhsc-keyword,
+body #vocabulary mark.rhsc-keyword,
+body #you-do mark.j277-sm-command,
+body #overview .vocab-intro-list .vocab-tip,
+body #overview .rhsc-preview-term{
+  background-color:transparent!important;
+}
+@media(max-width:700px){
+  /* Keep the mobile keyword strip compact but unboxed. */
+  body #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword){
+    background:transparent!important;
   }
 }
