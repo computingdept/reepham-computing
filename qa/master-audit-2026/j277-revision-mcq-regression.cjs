@@ -21,6 +21,25 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     const hubResponse=await page.goto(hubUrl,{waitUntil:'networkidle',timeout:25000});
     assert(hubResponse?.status()===200,view+' J277 hub HTTP 200',hubResponse?.status());
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active')&&document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    const headingJ277=await page.evaluate(()=>{
+      const root=document.querySelector('#revisionhub');
+      const heading=root.querySelector('.rhsc-revision-heading');
+      const nav=root.querySelector('.rhsc-paper-nav');
+      const meta=heading?.querySelector('.count');
+      const m=meta?.getBoundingClientRect();
+      const n=nav?.getBoundingClientRect();
+      return {title:heading?.querySelector('h2')?.textContent?.trim(),
+        meta:meta?.textContent?.trim(),
+        introCount:root.querySelectorAll('.rhsc-practice-intro').length,
+        metadataVisible:!!m&&m.width>0&&m.height>0&&getComputedStyle(meta).display!=='none',
+        navigationBelow:!!m&&!!n&&n.top>=m.bottom-2,
+        navButtons:nav?.querySelectorAll('[role="tab"]').length
+      };
+    });
+    assert(headingJ277.title==='Revision Practice'&&headingJ277.meta==='5 questions per skill · 80% to master'&&headingJ277.introCount===0,
+      view+' J277 consistent concise heading without instructions',headingJ277);
+    assert(headingJ277.metadataVisible&&headingJ277.navigationBelow&&headingJ277.navButtons===2,
+      view+' J277 responsive metadata above paper filters',headingJ277);
     const visual=await page.evaluate(()=>{
      const tiles=[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')];
      const groups=[...document.querySelectorAll('#revisionhub .rhsc-practice-group')];
@@ -79,6 +98,25 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     const hresp=await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle',timeout:25000});
     assert(hresp?.status()===200,view+' H446 hub HTTP 200',hresp?.status());
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.classList.contains('active')&&document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    const headingH446=await page.evaluate(()=>{
+      const root=document.querySelector('#revisionhub');
+      const heading=root.querySelector('.rhsc-revision-heading');
+      const nav=root.querySelector('.rhsc-paper-nav');
+      const meta=heading?.querySelector('.count');
+      const m=meta?.getBoundingClientRect();
+      const n=nav?.getBoundingClientRect();
+      return {title:heading?.querySelector('h2')?.textContent?.trim(),
+        meta:meta?.textContent?.trim(),
+        introCount:root.querySelectorAll('.rhsc-practice-intro').length,
+        metadataVisible:!!m&&m.width>0&&m.height>0&&getComputedStyle(meta).display!=='none',
+        navigationBelow:!!m&&!!n&&n.top>=m.bottom-2,
+        navButtons:nav?.querySelectorAll('[role="tab"]').length
+      };
+    });
+    assert(headingH446.title==='Revision Practice'&&headingH446.meta==='5 questions per skill · 80% to master'&&headingH446.introCount===0,
+      view+' H446 consistent concise heading without instructions',headingH446);
+    assert(headingH446.metadataVisible&&headingH446.navigationBelow&&headingH446.navButtons===2,
+      view+' H446 responsive metadata above paper filters',headingH446);
     const hview=await page.evaluate(()=>{
       const tiles=[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')];
       return {count:tiles.length,colour:tiles[0]?getComputedStyle(tiles[0]).color:null,viewport:tiles.every(t=>{const r=t.getBoundingClientRect();return r.left>=-2&&r.right<=document.documentElement.clientWidth+2}),paths:tiles.map(t=>t.getAttribute('href'))};
