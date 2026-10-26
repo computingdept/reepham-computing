@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#006347"><title>OCR J277 GCSE Computer Science · RHSC Computing</title><link rel="stylesheet" href="assets/hub.css?v=20261026-compact-hubs">
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#006347"><title>OCR J277 GCSE Computer Science · RHSC Computing</title><link rel="stylesheet" href="assets/hub.css?v=20261026-inline-nav">
 <style>
 /* J277-specific content cards. Shared header, navigation, tabs, year switch and lesson grid live in assets/hub.css. */
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -116,10 +116,10 @@
  body.course-hub #lessons .paper-key,body.course-hub #lessons #specLegendMount{display:none}
  body.course-hub #lessons .h446-year-route{display:none}
 }
-</style></head><body class="course-hub course-compact" data-year="10">
+</style></head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
-<main><div class="course-intro"><a class="back" id="yearBack" href="index.html#year/10">← Year 10 subjects</a><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
-<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision Booklet</span><span class="nav-short">Booklet</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision Hub</span><span class="nav-short">Practice</span></button></div><a class="welcome-link" href="lessons/j277/J277Welcome.html">Welcome</a></nav>
+<main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
+<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision Booklet</span><span class="nav-short">Booklet</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision Hub</span><span class="nav-short">Practice</span></button></div></nav></div>
 <section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div id="terms"></div></section>
 <section class="panel" id="booklet">
   <div class="cards">
@@ -320,6 +320,18 @@ function renderLessons(){
  closeLessonSheet();
  const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';document.getElementById('specLegendMount').hidden=false;let n=p.start,total=0;
  for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');const subtitle=document.createElement('p');subtitle.className='term-route';subtitle.textContent=(year===10?year10Journeys:year11Journeys)[p.terms.indexOf(term)];sec.insertBefore(subtitle,grid);
+   if(year===10 && n===1){
+     const welcome=document.createElement('a');
+     welcome.className='lesson spec-tile live welcome-tile';
+     welcome.href='lessons/j277/J277Welcome.html';
+     welcome.textContent='Welcome';
+     welcome.style.setProperty('--spec-colour','var(--year-accent)');
+     welcome.setAttribute('aria-label','Open GCSE Computer Science course welcome');
+     const welcomeEntry=document.createElement('div');
+     welcomeEntry.className='lesson-entry welcome-entry';
+     welcomeEntry.append(welcome);
+     grid.append(welcomeEntry);
+   }
    for(let x=n;x<=end;x++){const live=liveMap[x],mapped=true,specCode=sectionForLesson(x);const el=document.createElement(live?'a':'div');el.className='lesson '+(mapped?'spec-tile ':'')+(live?'live':'planned');el.textContent=pad(x);if(mapped)el.style.setProperty('--spec-colour',specPalette[specCode]||assessmentColour);if(live){el.href=live;el.setAttribute('aria-label','Open lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));}else if(mapped){el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode));}const entry=document.createElement('div');entry.className='lesson-entry';
    if(mobileLessonQuery.matches){
      if(live){
