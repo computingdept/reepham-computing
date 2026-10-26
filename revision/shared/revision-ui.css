@@ -75,15 +75,20 @@
  #revisionhub a.rhsc-practice-tile,.rhsc-revision-ui .rhsc-progress-fill{transition:none}
 }
 
-/* One JavaScript-driven Paper 1 -> Paper 2 journey for both qualifications. */
-#revisionhub .rhsc-paper-nav{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 17px}
-#revisionhub .rhsc-paper-nav-button{min-height:44px;padding:9px 16px;border:1px solid #a2bcae;border-radius:8px;background:#fff;color:var(--rhsc-revision-ink);font:inherit;font-size:.9rem;font-weight:750;cursor:pointer}
-#revisionhub .rhsc-paper-nav-button:hover{background:#eaf5ee;border-color:#5c987f}
+/* One compact accessible Paper 1 / Paper 2 tab filter across J277 and H446. */
+#revisionhub .rhsc-paper-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px;gap:0;margin:10px 0 20px;border:1px solid #aac8b9;border-radius:9px;padding:4px;background:#eef4ef}
+#revisionhub .rhsc-paper-nav-button{min-height:44px;padding:9px 12px;border:0;border-radius:6px;background:transparent;color:#365c4b;font:inherit;font-size:.92rem;font-weight:750;cursor:pointer;transition:background-color .15s,color .15s}
+#revisionhub .rhsc-paper-nav-button[aria-selected="true"]{background:#005640;color:white;box-shadow:0 1px 4px rgba(0,42,31,.16)}
+#revisionhub .rhsc-paper-nav-button[aria-selected="false"]:hover{background:#deebe2;color:#003a31}
 #revisionhub .rhsc-paper-nav-button:focus-visible{outline:3px solid var(--rhsc-revision-focus);outline-offset:3px}
-#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]{scroll-margin-top:160px}
-#revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]>h3:focus{outline:none}
+#revisionhub .rhsc-paper-panel[hidden],#revisionhub [hidden]{display:none!important}
+#revisionhub .rhsc-paper-panel{margin-top:0}
+#revisionhub .rhsc-practice-subgroup{margin:15px 0;padding:12px 0 0 12px;border-left:3px solid #d6e5dd}
+#revisionhub .rhsc-practice-subgroup h4{margin:0 0 10px;font-size:.91rem;font-weight:750;color:#003a31}
+#revisionhub .rhsc-paper-panel .rhsc-practice-grid+.rhsc-practice-grid{margin-top:10px}
 @media(max-width:600px){
- #revisionhub .rhsc-paper-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:4px 0 16px}
- #revisionhub .rhsc-paper-nav-button{width:100%;min-height:48px;padding:10px 8px}
- #revisionhub .rhsc-practice-group[id^="rhsc-revision-paper-"]{scroll-margin-top:110px}
+ #revisionhub .rhsc-paper-nav{max-width:none;width:100%;margin:8px 0 16px}
+ #revisionhub .rhsc-paper-nav-button{min-height:48px}
+ #revisionhub .rhsc-practice-subgroup{margin:12px 0;padding:10px 0 0 8px}
 }
+@media(prefers-reduced-motion:reduce){#revisionhub .rhsc-paper-nav-button{transition:none}}
