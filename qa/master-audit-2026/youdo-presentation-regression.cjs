@@ -172,8 +172,18 @@ async function test(browser,target,view){
               collisionPairs.push([text[a].textContent.trim(),text[b].textContent.trim()]);
           }
         }
+        const scroller=svg.closest(".a1-scene");
+        const scrollBox=scroller?.getBoundingClientRect();
+        const scrollStyle=scroller?getComputedStyle(scroller):null;
+        const canPan=!!scroller && ["auto","scroll"].includes(scrollStyle?.overflowX)
+          && scroller.scrollWidth>scroller.clientWidth+40;
+        if(canPan)scroller.scrollLeft=scroller.scrollWidth;
+        const panned=canPan&&scroller.scrollLeft>20;
+        if(canPan)scroller.scrollLeft=0;
         out.push({question:i+1,width:Math.round(s.width),height:Math.round(s.height),
           cardWidth:Math.round(card.width),textCount:text.length,overlaps:overlap,
+          scrollable:canPan,panned,
+          scrollerWidth:Math.round(scrollBox?.width||0),
           collisionPairs,kind:svg.getAttribute("aria-label")?.slice(0,75)||""});
       }
     }
@@ -182,9 +192,14 @@ async function test(browser,target,view){
   });
   for(const d of additional){
     record(d.width>0&&d.height>0,"Question SVG draws at nonzero dimensions",where,JSON.stringify(d));
-    record(d.width<=d.cardWidth+12,"Question SVG stays inside its card",where,JSON.stringify(d));
+    record(d.width<=d.cardWidth+12 ||
+      (d.scrollable&&d.panned&&d.scrollerWidth<=d.cardWidth+12),
+      "Question SVG fits or pans inside a contained viewport",where,JSON.stringify(d));
     if(d.overlaps>0)warn("Question SVG text overlaps",where,JSON.stringify(d));
     if(d.width<300 && d.textCount>=12)warn("Dense question SVG needs legibility review",where,JSON.stringify(d));
+    if(view.name==="phone"&&d.scrollable)
+      record(d.panned&&d.width>=500,
+        "Independent SVG has readable scale and working horizontal pan",where,JSON.stringify(d));
   }
   if(course==="j277"&&id==="001"){
     const pv=await page.evaluate(view=>{
