@@ -1,0 +1,76 @@
+/* RHSC Revision Hub · shared progressive enhancement, GCSE J277 + A Level H446.
+   Legacy course styles remain as compatibility layers during the migration.
+   New layout and responsive UX rules belong here: one source, both qualifications. */
+:root{--rhsc-revision-ink:#003a31;--rhsc-revision-green:#005640;--rhsc-revision-line:#d5dfdb;--rhsc-revision-soft:#f3f8f5;--rhsc-revision-focus:#b87e1d}
+
+/* Course hub: H446 and J277 use the same compact practice directory. */
+#revisionhub .rhsc-practice-intro{margin:0 0 12px;color:var(--muted,#52655f)}
+#revisionhub .rhsc-practice-group{margin:0 0 14px}
+#revisionhub .rhsc-practice-group>h3{margin:0 0 10px;color:var(--rhsc-revision-ink);font-size:1.08rem;line-height:1.4}
+#revisionhub .rhsc-practice-group>h3 span{font-size:.9rem;font-weight:400;color:var(--muted,#52655f);margin-left:10px}
+#revisionhub .rhsc-practice-subgroup{padding-left:12px;border-left:3px solid #d6e5dd}
+#revisionhub .rhsc-practice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#revisionhub a.rhsc-practice-tile,#revisionhub a.rhsc-practice-tile:visited{min-width:0;min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--rhsc-revision-line);border-radius:9px;background:#fff;color:var(--rhsc-revision-ink);text-decoration:none;transition:border-color .15s,background-color .15s}
+#revisionhub a.rhsc-practice-tile:hover{background:#f4faf7;border-color:#7ba696}
+#revisionhub a.rhsc-practice-tile:focus-visible{outline:3px solid #1e8064;outline-offset:2px}
+#revisionhub .rhsc-practice-label{display:flex;flex-direction:column;gap:6px;min-width:0}
+#revisionhub .rhsc-practice-name{font-size:1rem;line-height:1.35;font-weight:700}
+#revisionhub .rhsc-practice-code{font-size:.78rem;color:#59716a;line-height:1.2}
+#revisionhub .rhsc-practice-arrow{color:#427c67;font-size:1.55rem;line-height:1;flex-shrink:0}
+
+/* Shared skills: OCR sub-point grouping, progress and target to return to. */
+.rhsc-revision-ui #topic-grid.rhsc-grouped{display:block}
+.rhsc-revision-ui .rhsc-spec-group{margin:0 0 19px;border:0;min-width:0}
+.rhsc-revision-ui .rhsc-spec-group-title{display:flex;align-items:center;gap:10px;margin:0 0 9px;padding:0 0 8px;border-bottom:1px solid #dbe7e0;color:var(--rhsc-revision-ink);font-size:1rem;font-weight:750}
+.rhsc-revision-ui .rhsc-spec-group-title small{font-size:.76rem;font-weight:550;color:#59716a}
+.rhsc-revision-ui .rhsc-spec-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 14px}
+.rhsc-revision-ui #topic-grid .topic{border-left-color:#417fa5}
+.rhsc-revision-ui #topic-grid .topic:has(.status.reached){border-left-color:#16704c}
+.rhsc-revision-ui #topic-grid .topic:has(.status.revisit){border-left-color:#aa762f}
+.rhsc-revision-ui .rhsc-progress-summary{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#eef6f1;border:1px solid #d3e5da;border-radius:10px;padding:11px 14px;margin:6px 0 17px;color:#124b36}
+.rhsc-revision-ui .rhsc-progress-summary .rhsc-progress-copy{display:flex;flex-wrap:wrap;gap:5px 12px;align-items:baseline}
+.rhsc-revision-ui .rhsc-progress-summary strong{font-size:.9rem}
+.rhsc-revision-ui .rhsc-progress-summary span{font-size:.76rem;color:#526b60}
+.rhsc-revision-ui .rhsc-progress-summary button{min-height:42px;border:0;border-radius:7px;padding:8px 12px;background:var(--rhsc-revision-green);color:#fff;font:inherit;font-size:.83rem;font-weight:750;cursor:pointer}
+.rhsc-revision-ui .rhsc-progress-summary button:focus-visible{outline:3px solid var(--rhsc-revision-focus);outline-offset:3px}
+.rhsc-revision-ui .rhsc-progress-track{height:5px;flex-basis:100%;overflow:hidden;border-radius:4px;background:#d7e6dc}
+.rhsc-revision-ui .rhsc-progress-fill{height:100%;border-radius:4px;background:#16704c;transition:width .15s}
+@media(max-width:900px){#revisionhub .rhsc-practice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.rhsc-revision-ui .rhsc-spec-grid{grid-template-columns:1fr}}
+@media(max-width:600px){
+ #revisionhub .rhsc-practice-grid{grid-template-columns:1fr;gap:0}
+ #revisionhub a.rhsc-practice-tile{border-radius:0;min-height:58px;padding:10px 12px;border-bottom:0}
+ #revisionhub a.rhsc-practice-tile:first-child{border-radius:9px 9px 0 0}
+ #revisionhub a.rhsc-practice-tile:last-child{border-bottom:1px solid var(--rhsc-revision-line);border-radius:0 0 9px 9px}
+ #revisionhub a.rhsc-practice-tile:only-child{border-radius:9px}
+ #revisionhub .rhsc-practice-name{font-size:.95rem}
+ #revisionhub .rhsc-practice-group>h3 span{display:block;margin-left:0}
+ #revisionhub .rhsc-practice-subgroup{padding-left:9px}
+ .rhsc-revision-ui .rhsc-progress-summary{gap:10px}
+ .rhsc-revision-ui .rhsc-progress-summary button{width:100%}
+}
+
+/* Shared quiz feedback sequence:
+   desktop: question at left, explanation + Next together on right;
+   phone: question, Check, explanation, Next in that order. */
+.rhsc-revision-ui .quiz-workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);grid-template-rows:auto auto;grid-template-areas:"question feedback" "question next";gap:0 22px;align-items:start}
+.rhsc-revision-ui #answer-form{grid-area:question;min-width:0}
+.rhsc-revision-ui .feedback-panel{grid-area:feedback;min-width:0;align-self:start}
+.rhsc-revision-ui .feedback-next{grid-area:next;align-self:start;margin-top:10px;min-width:0}
+.rhsc-revision-ui .feedback-next:empty,.rhsc-revision-ui .feedback-next:has(#next[hidden]){display:none}
+.rhsc-revision-ui .feedback-next button{display:block;width:100%;min-height:48px}
+.rhsc-revision-ui #answer-form .quiz-actions{width:100%;margin-top:14px}
+.rhsc-revision-ui #quiz #choices .choice{min-height:50px}
+.rhsc-revision-ui #quiz #choices .choice:focus-within{outline:2px solid var(--rhsc-revision-focus);outline-offset:2px}
+.rhsc-revision-ui #quiz .feedback strong{display:block;line-height:1.4}
+@media(min-width:1150px){.rhsc-revision-ui main{max-width:1180px}.rhsc-revision-ui #quiz{max-width:100%}}
+@media(max-width:760px){
+ .rhsc-revision-ui .quiz-workspace{display:flex;flex-direction:column;gap:12px}
+ .rhsc-revision-ui #answer-form,.rhsc-revision-ui .feedback-panel,.rhsc-revision-ui .feedback-next{width:100%}
+ .rhsc-revision-ui .feedback-panel:has(#feedback[hidden]){display:none}
+ .rhsc-revision-ui .feedback-next{margin-top:0}
+ .rhsc-revision-ui .feedback-next button{min-height:50px}
+}
+@media(prefers-reduced-motion:reduce){
+ #revisionhub a.rhsc-practice-tile,.rhsc-revision-ui .rhsc-progress-fill{transition:none}
+}
