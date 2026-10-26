@@ -112,9 +112,18 @@ async function test(browser,target,view){
   if(first.answers)metrics.withAnswers++;
   if(first.all)metrics.withQuestions++;
   record(first.active,"You Do phase visible",where,JSON.stringify({active:first.active}));
-  if(!first.all&&!first.questionContainer)
-    warn("Custom You Do assessment layout; separate structural review",where);
-  else record(true,"Standard You Do question structure exists",where);
+  if(!first.all&&!first.questionContainer){
+    // A timed assessment intentionally uses a single test sheet, not rolling
+    // You Do cards. Check that structure rather than reporting a false warning.
+    const assessment=await page.evaluate(()=>{
+      const phase=document.getElementById("you-do");
+      return {mode:phase?.dataset.assessmentMode,
+        panels:phase?.querySelectorAll(".j277-assessment-panel,.exam-card").length||0,
+        characters:phase?.textContent.trim().length||0};
+    });
+    record(assessment.mode==="true"&&assessment.panels>0&&assessment.characters>100,
+      "Custom timed-assessment screen contains readable questions",where,JSON.stringify(assessment));
+  }else record(true,"Standard You Do question structure exists",where);
   record(first.hiddenVisible===0,"Hidden questions absent from layout",where,
     JSON.stringify({hiddenVisible:first.hiddenVisible}));
   record(first.leaked.length===0,"Model answers concealed in independent work",where,
@@ -152,16 +161,20 @@ async function test(browser,target,view){
         const s=svg.getBoundingClientRect(),cs=getComputedStyle(svg);
         if(s.width===0||s.height===0||cs.display==="none"||svg.closest("[hidden]"))continue;
         const text=[...svg.querySelectorAll("text")];
-        let overlap=0;
+        let overlap=0;const collisionPairs=[];
         for(let a=0;a<text.length;a++)for(let b=a+1;b<text.length;b++){
           const x=text[a].getBoundingClientRect(),y=text[b].getBoundingClientRect();
           if(Math.abs((x.top+x.height/2)-(y.top+y.height/2))>Math.max(2,x.height*.4))continue;
           const horizontal=Math.min(x.right,y.right)-Math.max(x.left,y.left);
-          if(horizontal>Math.min(x.width,y.width)*.28)overlap++;
+          if(horizontal>Math.min(x.width,y.width)*.28){
+            overlap++;
+            if(collisionPairs.length<5)
+              collisionPairs.push([text[a].textContent.trim(),text[b].textContent.trim()]);
+          }
         }
         out.push({question:i+1,width:Math.round(s.width),height:Math.round(s.height),
           cardWidth:Math.round(card.width),textCount:text.length,overlaps:overlap,
-          kind:svg.getAttribute("aria-label")?.slice(0,75)||""});
+          collisionPairs,kind:svg.getAttribute("aria-label")?.slice(0,75)||""});
       }
     }
     questions.forEach((q,i)=>q.hidden=original[i]);
