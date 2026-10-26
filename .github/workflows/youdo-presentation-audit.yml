@@ -42,6 +42,34 @@ jobs:
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" || true' EXIT
           node qa/master-audit-2026/youdo-presentation-regression.cjs
+      - name: Summarise browser audit results
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          shard = "${{ matrix.shard }}"
+          report = Path(f"qa-output/youdo-shard-{shard}.json")
+          lines = [f"### You Do presentation audit — shard {shard}"]
+          if report.is_file():
+              data = json.loads(report.read_text())
+              lines.append(
+                  f"Lessons: {data.get('lessons', '?')} | "
+                  f"Checks passed: {data.get('passed', '?')} | "
+                  f"Failures: {data.get('failures', '?')} | "
+                  f"Warnings: {data.get('warnings', '?')}"
+              )
+              for issue in (data.get("failed") or [])[:10]:
+                  lines.append("- **FAIL** " + json.dumps(issue, ensure_ascii=False))
+              for issue in (data.get("warningsDetail") or [])[:10]:
+                  lines.append("- **REVIEW** " + json.dumps(issue, ensure_ascii=False))
+          else:
+              lines.append("No report was generated; inspect the scan step logs.")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as stream:
+              stream.write("\n".join(lines) + "\n")
+          PY
       - name: Upload browser audit evidence
         if: always()
         uses: actions/upload-artifact@v4
