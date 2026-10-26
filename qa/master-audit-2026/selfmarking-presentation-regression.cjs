@@ -59,7 +59,9 @@ async function audit(browser,course,id,viewport){
        return {h:Math.round(r.height),scrollH:el.scrollHeight,clientH:el.clientHeight,
          overflowY:cs.overflowY,bottom:Math.round(r.bottom)};
      });
-     return {active,mode:host.dataset.answerMode,reviewStart:host.dataset.j277ReviewStart,
+     return {active,mode:host.dataset.answerMode,richStep:host.dataset.richStepIndex,
+       answerIndex:host.dataset.answerIndex,reviewStep:host.dataset.reviewStep,
+       workMode:host.dataset.workMode,reviewStart:host.dataset.j277ReviewStart,
        separate:host.dataset.j277SeparateReview,rich:host.dataset.selfMarking,
        windowStart:host.dataset.windowStart,questionCount:questions.length,
        reviewCount:reviews.length,leakedCount:leaked.length,answerText,
@@ -68,9 +70,18 @@ async function audit(browser,course,id,viewport){
        caption:host.querySelector(".youdo-window-progress")?.textContent.trim()||""};
    });
    states.push(s);
-   const stateKey=JSON.stringify({active:s.active,mode:s.mode,windowStart:s.windowStart,caption:s.caption,
+   const stateKey=JSON.stringify({active:s.active,mode:s.mode,richStep:s.richStep,
+     answerIndex:s.answerIndex,reviewStep:s.reviewStep,workMode:s.workMode,windowStart:s.windowStart,caption:s.caption,
      questionCount:s.questionCount,reviewCount:s.reviewCount,answer:s.answerText.slice(0,50)});
-   if(s.active!=="you-do")break;
+   if(s.active==="vocabulary")break;
+   // The shared lesson engine may place optional Catch Up/Exam Practice
+   // between self-marking and Key Vocabulary. Progress through them normally.
+   if(s.active!=="you-do" && !["catch-up","exam-practice"].includes(s.active))break;
+   if(s.active!=="you-do"){
+     await page.locator("#advance").evaluate(e=>e.click());
+     await page.waitForTimeout(25);
+     continue;
+   }
    if(seen.has(stateKey)){
      // Some independent-work prompts deliberately pause once to enter independent mode.
      // A second identical state is permitted, repeated repeats indicate stuck navigation.
