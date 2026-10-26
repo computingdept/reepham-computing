@@ -31,6 +31,16 @@
   const byPaper={1:tiles.filter(t=>number(t)==='1').sort(sort),
                  2:tiles.filter(t=>number(t)==='2').sort(sort)};
   if(!byPaper[1].length||!byPaper[2].length||byPaper[1].length+byPaper[2].length!==tiles.length)return;
+  // Keep the opt-in visual preview when a student opens a practice skill.
+  // This changes URL parameters only; quiz display and scoring are untouched.
+  if(new URLSearchParams(location.search).get('theme')==='synergy'){
+    for(const link of hub.querySelectorAll('a.rhsc-practice-tile')){
+      const target=new URL(link.getAttribute('href'),location.href);
+      target.searchParams.set('theme','synergy');
+      link.href=target.pathname+target.search+target.hash;
+    }
+  }
+
 
   const groups={};
   for(const n of [1,2]){
