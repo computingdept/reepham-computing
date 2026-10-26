@@ -1730,7 +1730,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
      -webkit-overflow-scrolling:touch;scrollbar-width:thin;
      border:1px solid #cedfd3;border-radius:10px;
-     touch-action:pan-x;
+     touch-action:auto; /* Allow vertical reading scroll as well as horizontal diagram pan. */
    }
    #you-do .exam-card .a1-scene>svg{
      display:block;width:560px!important;min-width:560px;
