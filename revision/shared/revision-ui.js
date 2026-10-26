@@ -10,6 +10,18 @@
   const storageKey=script?.getAttribute('data-progress-key')||'';
   document.documentElement.classList.add('rhsc-revision-ui');
 
+  // A visual-preview URL is carried back to the course hub without applying
+  // preview styling to any quiz, question, marking or revision guide.
+  if(new URLSearchParams(location.search).get('theme')==='synergy'){
+    const hubBack=document.querySelector('header.practice-nav a[href*="-hub.html"]');
+    if(hubBack){
+      const destination=new URL(hubBack.getAttribute('href'),location.href);
+      destination.searchParams.set('theme','synergy');
+      hubBack.href=destination.pathname+destination.search+destination.hash;
+    }
+  }
+
+
   // Keep the existing Next button and its event listeners. Only its presentation
   // container moves, so explanation precedes Next on desktop and on phones.
   const next=document.getElementById('next');
