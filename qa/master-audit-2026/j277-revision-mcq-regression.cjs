@@ -116,6 +116,16 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
     assert(await page.evaluate(()=>document.getElementById('rhsc-revision-paper-1').hidden&&!document.getElementById('rhsc-revision-paper-2').hidden),
       view+' J277 preview Paper 2 switch retains behaviour');
+    // The same CSS preview must survive an actual quiz visit and Hub back link.
+    const jLink=await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-2 a.rhsc-practice-tile')?.href);
+    assert(jLink?.includes('theme=synergy'),view+' J277 preview carried into quiz destination',jLink);
+    await page.goto(jLink,{waitUntil:'networkidle'});
+    const jBack=await page.evaluate(()=>document.querySelector('header.practice-nav a')?.href);
+    assert(jBack?.includes('theme=synergy'),view+' J277 quiz return preserves preview setting',jBack);
+    await page.locator('header.practice-nav a').click();
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')),
+      view+' J277 Synergy style retained after quiz return');
     await page.goto(origin+'/j277-hub.html?year=11#revisionhub',{waitUntil:'networkidle'});
     assert(await page.evaluate(()=>!document.documentElement.classList.contains('synergy-hub-preview')&&document.getElementById('synergyHubPreviewCSS')?.media==='not all'),
       view+' J277 original design immediately restored without preview parameter');
@@ -219,6 +229,35 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
         &&(await page.locator('#section-title').innerText()).includes(subSpec);
       assert(pageWorks,view+' H446 '+subSpec+' original questions remain accessible');
     }
+    // H446's year links used to discard theme=synergy, unlike J277.
+    const hLink=await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-2 a.rhsc-practice-tile')?.href);
+    assert(hLink?.includes('theme=synergy'),view+' H446 preview carried into quiz destination',hLink);
+    await page.goto(hLink,{waitUntil:'networkidle'});
+    const hBack=await page.evaluate(()=>document.querySelector('header.practice-nav a')?.href);
+    assert(hBack?.includes('theme=synergy'),view+' H446 quiz return preserves preview setting',hBack);
+    await page.locator('header.practice-nav a').click();
+    await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
+    assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')),
+      view+' H446 Synergy style retained after quiz return');
+    await page.locator('.course-nav [data-tab="lessons"]').click();
+    await page.locator('.year-switch [data-year="13"]').click();
+    const switched=await page.evaluate(()=>({
+      search:location.search,
+      year:document.body.dataset.year,
+      theme:document.documentElement.classList.contains('synergy-hub-preview'),
+      yearLink:document.querySelector('#otherYearLink')?.href
+    }));
+    assert(switched.search.includes('theme=synergy')&&switched.year==='13'&&switched.theme,
+      view+' H446 Year 13 change preserves Synergy query and presentation',switched);
+    assert(switched.yearLink?.includes('theme=synergy')&&switched.yearLink.includes('year=12'),
+      view+' H446 return to Year 12 link preserves preview parameter',switched.yearLink);
+    await page.reload({waitUntil:'networkidle'});
+    assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')&&document.body.dataset.year==='13'),
+      view+' H446 Year 13 reload retains preview');
+    const other=await page.locator('#otherYearLink').getAttribute('href');
+    await page.goto(new URL(other,page.url()).href,{waitUntil:'networkidle'});
+    assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')&&document.body.dataset.year==='12'),
+      view+' H446 Year 12 year-link round trip retains preview');
     await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     assert(hview.paths.every(p=>p.startsWith('revision/h446/')),view+' H446 topic routes preserved',hview.paths);
