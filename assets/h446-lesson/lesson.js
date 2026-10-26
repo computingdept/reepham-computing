@@ -1875,7 +1875,7 @@ showPage(location.hash.slice(1)||'do-now');
    It respects authored vocabulary, teacher reveals, and Code First. */
 if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
   const markerModule=document.createElement('script');
-  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261026-central2';
+  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261026-stroke-only1';
   markerModule.async=true;
   document.body.appendChild(markerModule);
 }
