@@ -649,3 +649,26 @@ body.course-hub.course-compact #lessons .course-key summary:focus-visible{outlin
  body.course-hub.course-compact #lessons .course-key #specLegendMount{display:block}
  body.course-hub.course-compact #lessons .course-key .paper-key{display:flex}
 }
+
+/* 2026-10-26: one-row course identity and resource tabs, without duplicate back control. */
+body.course-hub.course-inline-nav .course-topline{display:flex;align-items:center;gap:24px;margin:0 0 9px}
+body.course-hub.course-inline-nav .course-topline .course-intro{display:flex;flex:0 0 auto;align-items:center;min-width:0;margin:0;padding:0;border:0}
+body.course-hub.course-inline-nav .course-topline .heading{display:flex;align-items:center;margin:0;padding:0;border:0}
+body.course-hub.course-inline-nav .course-topline .heading h1{font-size:24px;line-height:1.14;white-space:nowrap}
+body.course-hub.course-inline-nav .course-topline .heading .eyebrow{margin-bottom:2px}
+body.course-hub.course-inline-nav .course-topline .course-nav{flex:1 1 auto;min-width:0;margin:0}
+body.course-hub.course-inline-nav .course-topline .course-nav .tabs{width:100%}
+body.course-hub.course-inline-nav #lessons .lesson-entry>.lesson.welcome-tile{background:var(--year-pale);border-color:var(--year-border);color:var(--year-ink);font-size:13px;font-weight:850;padding:6px 8px 13px;letter-spacing:0}
+body.course-hub.course-inline-nav #lessons .lesson-entry>.lesson.welcome-tile::after{background:var(--year-accent)}
+body.course-hub.course-inline-nav #lessons .lesson-entry>.lesson.welcome-tile:hover{background:#e2efe8}
+@media(min-width:701px) and (max-width:940px){
+ body.course-hub.course-inline-nav .course-topline{gap:14px}
+ body.course-hub.course-inline-nav .course-topline .heading h1{font-size:21px}
+ body.course-hub.course-inline-nav .course-topline .course-nav .tabs .tab{font-size:12px;padding:6px 4px}
+}
+@media(max-width:700px){
+ body.course-hub.course-inline-nav .course-topline{display:block;margin:0}
+ body.course-hub.course-inline-nav .course-topline .course-intro{display:none}
+ body.course-hub.course-inline-nav .course-topline .course-nav{display:flex;margin:3px 0 7px}
+ body.course-hub.course-inline-nav #lessons .lesson-entry>.lesson.welcome-tile{font-size:12px}
+}
