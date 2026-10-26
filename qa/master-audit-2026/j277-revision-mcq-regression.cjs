@@ -183,8 +183,12 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     for(const subSpec of ['1.4.1','1.4.2','1.4.3']){
       const response=await page.goto(origin+'/revision/h446/section-1-4/index.html#'+subSpec,{waitUntil:'networkidle',timeout:25000});
       await page.waitForFunction(spec=>document.getElementById('section-select')?.value===spec,subSpec);
-      assert(response?.status()===200&&(await page.locator('#topic-grid .topic').count())>0,
-        view+' H446 '+subSpec+' original questions remain accessible');
+      // Switching only the URL hash is same-document navigation and Playwright
+      // correctly returns a null network response. Judge the rendered section.
+      const pageWorks=(response===null||response.status()===200)
+        &&(await page.locator('#topic-grid .topic').count())>0
+        &&(await page.locator('#section-title').innerText()).includes(subSpec);
+      assert(pageWorks,view+' H446 '+subSpec+' original questions remain accessible');
     }
     await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
