@@ -132,3 +132,60 @@
   .rhsc-revision-ui #directory #topic-grid .topic .status{grid-column:1;grid-row:3}
   .rhsc-revision-ui #directory #topic-grid .topic button{grid-column:2;grid-row:3}
 }
+
+/* Compact specification groups — shared J277 / H446 practice directories.
+   Groups occupy only the columns required by their skill count. */
+.rhsc-revision-ui #directory #topic-grid.rhsc-grouped{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:8px;
+}
+.rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group{
+  min-width:0;
+  margin:0;
+  border:1px solid #d6e3db;
+  border-radius:10px;
+  padding:10px;
+  background:#f8faf8;
+}
+.rhsc-revision-ui #directory #topic-grid .rhsc-spec-group-title{
+  margin:0 0 8px;
+  padding:0 0 6px;
+  font-size:.92rem;
+}
+.rhsc-revision-ui #directory #topic-grid .rhsc-spec-grid{
+  gap:8px;
+  grid-template-columns:minmax(0,1fr);
+}
+.rhsc-revision-ui #directory #topic-grid .topic{
+  min-width:0;
+  margin:0;
+}
+@media(min-width:760px){
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+  }
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="2"],
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="3"],
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="4"]{
+    grid-column:span 2;
+  }
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-group[data-skill-count="2"] .rhsc-spec-grid,
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-group[data-skill-count="3"] .rhsc-spec-grid,
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-group[data-skill-count="4"] .rhsc-spec-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(min-width:1200px){
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="2"]{grid-column:span 2}
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="3"],
+  .rhsc-revision-ui #directory #topic-grid.rhsc-grouped>.rhsc-spec-group[data-skill-count="4"]{grid-column:span 3}
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-group[data-skill-count="3"] .rhsc-spec-grid,
+  .rhsc-revision-ui #directory #topic-grid .rhsc-spec-group[data-skill-count="4"] .rhsc-spec-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
