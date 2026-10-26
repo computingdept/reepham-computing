@@ -631,6 +631,45 @@ function resetPhaseState(id){
     }
   }
 }
+/* Mobile: compact behaviour + response symbols within the existing lesson title.
+   Values are the same ones displayed in the full-size Classroom TV tiles. */
+function updateMobileRoutineSignals(values){
+  const group=document.querySelector('#mobile-lesson-signals');
+  if(!group)return;
+  const symbols={
+    quiet:'<path d="M5 8H3v8h3l5 4V4L6 8Z"/><path d="M16 9l5 6M21 9l-5 6"/>',
+    listen:'<path d="M6 11a6 6 0 0 1 12 0c0 5-5 5-5 9a3 3 0 0 1-6 0"/><path d="M10 11a2 2 0 0 1 4 0c0 3-3 3-3 6"/>',
+    working:'<path d="M4 20l4.5-1 11-11-3.5-3.5-11 11L4 20Z"/><path d="M14.5 6.5 18 10"/>',
+    board:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M7 21h10M12 17v4M7 9h10M7 12h6"/>',
+    hand:'<path d="M8 13V6a1.5 1.5 0 0 1 3 0v5-7a1.5 1.5 0 0 1 3 0v7-6a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v8c0 4-3 6-7 6h-2c-3 0-5-2-7-6l-1-3a1.5 1.5 0 0 1 3-1l2 3"/>',
+    target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
+    talk:'<path d="M4 5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 9h1a1 1 0 0 1 1 1v8a2 2 0 0 1-2 2h-5"/>',
+    person:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
+    choral:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="3"/><path d="M2 20v-2a7 7 0 0 1 13-4M14 14a7 7 0 0 1 8 6"/>'
+  };
+  const pick=(text,type)=>{
+    if(type==='routine'){
+      if(/listen/i.test(text))return 'listen';
+      if(/quiet work/i.test(text))return 'working';
+      return 'quiet';
+    }
+    if(/MWB|whiteboard/i.test(text))return 'board';
+    if(/hands up/i.test(text))return 'hand';
+    if(/cold call/i.test(text))return 'target';
+    if(/turn.*talk/i.test(text))return 'talk';
+    if(/choral/i.test(text))return 'choral';
+    return 'person';
+  };
+  [['routine',values[1]],['response',values[2]]].forEach(([type,value])=>{
+    const badge=group.querySelector('.mobile-signal-'+type);
+    if(!badge)return;
+    const label=(value||'—').trim();
+    badge.setAttribute('aria-label',(type==='routine'?'Working expectation: ':'Response: ')+label);
+    badge.title=label;
+    badge.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+symbols[pick(label,type)]+'</svg>';
+  });
+}
+
 function updateSignals(id){
   const page=document.getElementById(id);
   let values=id==='you-do'&&(page?.dataset.workMode==='independent'||page?.dataset.assessmentMode==='true')
@@ -662,6 +701,7 @@ function updateSignals(id){
 
   const exitSignal=document.getElementById('exit-ticket-signal');
   if(exitSignal)exitSignal.hidden=true;
+  updateMobileRoutineSignals(values);
 }
 
 function updateMobileLessonStatus(){
@@ -1316,6 +1356,18 @@ function prepareMobileSwipeNavigation(){
     copy.className='mobile-lesson-copy';
     copy.innerHTML='<span class="mobile-lesson-title"></span><span class="mobile-phase-status"></span>';
     if(badge)status.append(badge,copy);else status.append(copy);
+    // Two deliberately tiny symbols: green working behaviour, orange response.
+    const mini=document.createElement('span');
+    mini.id='mobile-lesson-signals';
+    mini.className='mobile-lesson-signals';
+    mini.setAttribute('aria-label','Classroom expectations');
+    for(const type of ['routine','response']){
+      const item=document.createElement('span');
+      item.className='mobile-signal-icon mobile-signal-'+type;
+      item.setAttribute('role','img');
+      mini.appendChild(item);
+    }
+    status.appendChild(mini);
     if(courseBack)courseBack.insertAdjacentElement('afterend',status);
     else navwrap.prepend(status);
   }
