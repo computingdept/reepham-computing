@@ -599,3 +599,83 @@ body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .
     padding:8px;
   }
 }
+
+
+/* Shared desktop structural header: year selector in topline, key below final term
+   The JS re-parents original interactive nodes, with no duplicate controls. */
+@media (min-width:701px) {
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline {
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+    gap:12px;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline > .year-switch {
+    display:flex;
+    align-items:center;
+    flex:0 0 auto;
+    gap:5px;
+    min-width:0;
+    margin:0;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline > .year-switch .year-btn {
+    box-sizing:border-box;
+    min-height:34px;
+    margin:0;
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:12px;
+    line-height:1.25;
+    white-space:nowrap;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline > .course-nav {
+    flex:0 1 280px;
+    max-width:280px;
+    min-width:185px;
+    margin:0 0 0 auto;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline .course-nav .nav-full {
+    display:none;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged .course-topline .course-nav .nav-short {
+    display:inline;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .year-toolbar {
+    display:none;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer {
+    display:flex;
+    justify-content:flex-end;
+    padding:10px 0 4px;
+    margin:9px 0 0;
+    border-top:1px solid #e9e9e9;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key {
+    position:relative;
+    margin:0;
+    font-size:12px;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key > .paper-key,
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key > #specLegendMount,
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key > .ks3-colour-key {
+    position:static;
+    top:auto;
+    right:auto;
+    bottom:auto;
+    left:auto;
+    width:auto;
+    min-width:0;
+    max-width:min(440px,calc(100vw - 40px));
+    margin:6px 0 0;
+    padding:10px 12px;
+    border:1px solid #e6e6e6;
+    border-radius:7px;
+    background:#fff;
+    box-shadow:none;
+  }
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key > .paper-key,
+  body.course-hub.course-inline-nav.desktop-nav-merged #lessons .lesson-footer .course-key .paper-key {
+    flex-wrap:wrap;
+    gap:8px 14px;
+  }
+}
