@@ -3,6 +3,8 @@ const {chromium}=require('playwright');
 const origin=process.env.QA_ORIGIN||'http://127.0.0.1:8765';
 const sections=['1-1','1-2','1-3','1-4','1-5','1-6','2-1','2-2','2-3','2-4','2-5'];
 const views=[['classroom TV',1920,1080],['phone',390,844]];
+// Approved 27 October 2026 interface: Synergy palette by default;
+// the classic option is explicitly selected with theme=classic.
 let checks=0;
 const failures=[];
 function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};failures.push(fail);console.error('J277_MCQ_FAIL '+JSON.stringify(fail));}}
@@ -86,7 +88,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     await page.keyboard.press('ArrowRight');
     assert(await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-1').hidden&&!document.querySelector('#rhsc-revision-paper-2').hidden),view+' J277 arrow key filter works');
 
-    assert(visual.fg==='rgb(0, 58, 49)'&&visual.heading==='rgb(0, 58, 49)',view+' H446 dark-green palette',visual);
+    assert(visual.fg==='rgb(24, 52, 42)'&&visual.heading==='rgb(22, 70, 52)',view+' J277 approved Synergy ink palette',visual);
     assert(visual.withinViewport&&visual.labels,view+' readable responsive tiles',visual);
     assert(visual.urls.length===11&&visual.urls.every(u=>/^revision\/j277\/section-[12]-[1-6]\/index\.html#[12]\.[1-6]$/.test(u)),view+' preserves all 11 topic routes',visual.urls);
     assert(!hubErrors.length,view+' hub JavaScript errors',hubErrors);
@@ -126,9 +128,9 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')),
       view+' J277 Synergy style retained after quiz return');
-    await page.goto(origin+'/j277-hub.html?year=11#revisionhub',{waitUntil:'networkidle'});
+    await page.goto(origin+'/j277-hub.html?year=11&theme=classic#revisionhub',{waitUntil:'networkidle'});
     assert(await page.evaluate(()=>!document.documentElement.classList.contains('synergy-hub-preview')&&document.getElementById('synergyHubPreviewCSS')?.media==='not all'),
-      view+' J277 original design immediately restored without preview parameter');
+      view+' J277 classic style available on explicit classic query');
 
    }catch(e){assert(false,view+' J277 hub smoke test',String(e).slice(0,400))}
    finally{page.off('pageerror',hubError)}
@@ -160,42 +162,28 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
       const tiles=[...document.querySelectorAll('#revisionhub a.rhsc-practice-tile')];
       return {count:tiles.length,colour:tiles[0]?getComputedStyle(tiles[0]).color:null,viewport:tiles.every(t=>{const r=t.getBoundingClientRect();return r.left>=-2&&r.right<=document.documentElement.clientWidth+2}),paths:tiles.map(t=>t.getAttribute('href'))};
     });
-    assert(hview.count===11&&hview.colour==='rgb(0, 58, 49)'&&hview.viewport,view+' shared H446 tile styling',hview);
+    assert(hview.count===9&&hview.colour==='rgb(24, 52, 42)'&&hview.viewport,view+' shared H446 tile styling',hview);
     const hierarchy=await page.evaluate(()=>{
       const one=document.querySelector('#rhsc-revision-paper-1');
       const two=document.querySelector('#rhsc-revision-paper-2');
       const items=[...one.querySelector(':scope > .rhsc-practice-grid').children];
       const top=items.map(el=>el.dataset.spec||(el.getAttribute('href')||'').split('#').pop());
+      const link14=items[3]?.getAttribute('href')||'';
       return {
         top,topCount:items.length,paperTwoCount:two.querySelectorAll(':scope > .rhsc-practice-grid > a').length,
         groupCount:document.querySelectorAll('#revisionhub .rhsc-practice-group').length,
-        sublinks:[...one.querySelectorAll('.rhsc-practice-subtopics a')].map(a=>a.getAttribute('href').split('#').pop()),
-        legacyHeading:!!document.querySelector('.rhsc-practice-subgroup'),
-        sourceHas14:items[3]?.classList.contains('rhsc-practice-expand')
+        direct14:link14.endsWith('/section-1-4/index.html#1.4.1'),
+        legacyExpand:!!document.getElementById('rhsc-h446-14-toggle'),
+        paper2Hidden:two.hidden,
+        visible:items.filter(t=>t.getClientRects().length>0).length,
+        overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
       };
     });
     assert(hierarchy.top.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hierarchy.topCount===5&&hierarchy.paperTwoCount===4,
       view+' H446 five equal Paper 1 topics in OCR order',hierarchy);
-    assert(hierarchy.sublinks.join(',')==='1.4.1,1.4.2,1.4.3'&&hierarchy.sourceHas14&&!hierarchy.legacyHeading&&hierarchy.groupCount===2,
-      view+' H446 1.4 legacy group removed and three destinations retained',hierarchy);
-    const initial=await page.evaluate(()=>({
-      shown:[...document.querySelectorAll('#rhsc-revision-paper-1 > .rhsc-practice-grid > .rhsc-practice-tile')].filter(e=>e.getClientRects().length).length,
-      subHidden:document.getElementById('rhsc-h446-14-skills').hidden,
-      paper2Hidden:document.getElementById('rhsc-revision-paper-2').hidden,
-      expanded:document.getElementById('rhsc-h446-14-toggle').getAttribute('aria-expanded')
-    }));
-    assert(initial.shown===5&&initial.subHidden&&initial.paper2Hidden&&initial.expanded==='false',view+' H446 clean default Paper 1 layout',initial);
-    await page.locator('#rhsc-h446-14-toggle').click();
-    const expanded=await page.evaluate(()=>({
-      expanded:document.getElementById('rhsc-h446-14-toggle').getAttribute('aria-expanded'),
-      shown:[...document.querySelectorAll('#rhsc-h446-14-skills a')].filter(e=>e.getClientRects().length).map(e=>e.getAttribute('href').split('#').pop()),
-      overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
-    }));
-    assert(expanded.expanded==='true'&&expanded.shown.join(',')==='1.4.1,1.4.2,1.4.3'&&expanded.overflow<=5,
-      view+' H446 1.4 reveals exactly three skills without horizontal overflow',expanded);
-    await page.locator('#rhsc-h446-14-toggle').click();
-    assert(await page.evaluate(()=>document.getElementById('rhsc-h446-14-skills').hidden),
-      view+' H446 1.4 collapses again');
+    assert(hierarchy.direct14&&!hierarchy.legacyExpand&&hierarchy.groupCount===2
+      &&hierarchy.paper2Hidden&&hierarchy.visible===5&&hierarchy.overflow<=5,
+      view+' H446 direct 1.4 topic and accessible five-card layout',hierarchy);
     const first=await page.evaluate(()=>({
       paper1:!document.querySelector('#rhsc-revision-paper-1').hidden,
       paper2:document.querySelector('#rhsc-revision-paper-2').hidden,
@@ -237,22 +225,21 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     const hp=await page.evaluate(()=>{
       const root=document.querySelector('#revisionhub');
       const tiles=[...root.querySelectorAll('#rhsc-revision-paper-1 > .rhsc-practice-grid > .rhsc-practice-tile')];
-      const subs=root.querySelector('#rhsc-h446-14-skills');
+      const topic14=root.querySelector('#rhsc-revision-paper-1 a.rhsc-practice-tile[data-spec="1.4"]');
       return {
         preview:document.documentElement.classList.contains('synergy-hub-preview'),
         enabled:document.getElementById('synergyHubPreviewCSS')?.media==='all',
         topics:tiles.map(t=>t.dataset.spec||(t.getAttribute('href')||'').split('#').pop()),
-        subHidden:subs.hidden,
+        topic14Href:topic14?.getAttribute('href'),
         border:getComputedStyle(tiles[0]).borderLeftWidth,
         widthOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
       };
     });
-    assert(hp.preview&&hp.enabled&&hp.topics.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hp.subHidden&&hp.border==='4px',
+    assert(hp.preview&&hp.enabled&&hp.topics.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hp.topic14Href?.endsWith('#1.4.1')&&hp.border==='4px',
       view+' H446 pilot five-topic hierarchy remains intact',hp);
     assert(hp.widthOverflow<=5,view+' H446 optional Synergy styling fits viewport',hp.widthOverflow);
-    await page.locator('#rhsc-h446-14-toggle').click();
-    assert(await page.locator('#rhsc-h446-14-skills a:visible').count()===3,
-      view+' H446 pilot expands three original 1.4 links');
+    assert(hp.topic14Href?.includes('section-1-4/index.html#1.4.1'),
+      view+' H446 1.4 topic opens the original specification selector');
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
     assert(await page.evaluate(()=>document.getElementById('rhsc-revision-paper-1').hidden&&!document.getElementById('rhsc-revision-paper-2').hidden),
       view+' H446 preview Paper 2 switch retains behaviour');
@@ -286,9 +273,9 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')&&document.body.dataset.year==='12'),
       view+' H446 Year 12 year-link round trip retains preview');
 
-    await page.goto(origin+'/h446-hub.html?year=12#revisionhub',{waitUntil:'networkidle'});
+    await page.goto(origin+'/h446-hub.html?year=12&theme=classic#revisionhub',{waitUntil:'networkidle'});
     assert(await page.evaluate(()=>!document.documentElement.classList.contains('synergy-hub-preview')&&document.getElementById('synergyHubPreviewCSS')?.media==='not all'),
-      view+' H446 original design immediately restored without preview parameter');
+      view+' H446 classic style available on explicit classic query');
 
    }catch(e){assert(false,view+' H446 hub smoke test',String(e).slice(0,400))}
    for(const id of sections){
@@ -305,10 +292,10 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      assert(bank.links.every(r=>r.mapped&&r.lessons.length&&r.guide.includes('page ')),view+' '+id+' central lesson and guide mapping',bank.links);
      // New shared directory: OCR sub-specification groups and mastered-score progress.
      await page.waitForFunction(()=>!!document.querySelector('.rhsc-progress-summary:not([hidden])'));
-     const common=await page.evaluate(()=>({enhanced:document.documentElement.classList.contains('rhsc-revision-ui'),progress:document.querySelector('.rhsc-progress-summary')?.innerText,groups:document.querySelectorAll('.rhsc-spec-group').length,assets:[...document.styleSheets].some(s=>s.href?.includes('/revision/shared/revision-ui.css')),next:document.querySelector('#next')?.parentElement?.className}));
+     const common=await page.evaluate(()=>({enhanced:document.documentElement.classList.contains('rhsc-revision-ui'),progress:document.querySelector('.rhsc-progress-summary')?.innerText,groups:document.querySelectorAll('#topic-grid > .topic.rhsc-spec-first').length,continuous:document.getElementById('topic-grid')?.classList.contains('rhsc-continuous'),assets:[...document.styleSheets].some(s=>s.href?.includes('/revision/shared/revision-ui.css')),next:document.querySelector('#next')?.parentElement?.className}));
      assert(common.enhanced&&common.assets&&common.next==='feedback-next',view+' '+id+' shared UI loaded',common);
      assert(common.progress?.includes('skills mastered'),view+' '+id+' progress summary',common);
-     if(expectedCount>3)assert(common.groups>=2,view+' '+id+' specification groups visible',common);
+     if(expectedCount>3)assert(common.groups>=2&&common.continuous,view+' '+id+' continuous grid with specification boundaries',common);
      const first=bank.skills[0].id;
      await page.locator('#topic-grid .topic button').first().click();
      await page.waitForFunction(()=>!document.getElementById('quiz').hidden);
@@ -360,7 +347,13 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      const guideNote=await page.locator('#support').innerText();
      const pageMapped=await page.evaluate(()=>window.J277_RESOURCE_INDEX.pageLabel(SKILLS[0].id));
      assert(guideNote.includes(pageMapped),view+' '+id+' centrally mapped guide page',guideNote);
-     assert(!(await page.locator('#support a[href*="/guides/"]').count()),view+' '+id+' no broken unpublished PDF links');
+     const guideLinks=await page.locator('#support a[href*="/guides/"]').evaluateAll(anchors=>anchors.map(a=>a.getAttribute('href')));
+     const exactGuide=await page.evaluate(()=>window.J277_RESOURCE_INDEX.guideLink(SKILLS[0].id));
+     assert(guideLinks.length===1&&guideLinks[0]===exactGuide,
+       view+' '+id+' published PDF link matches centralized page and edition',{guideLinks,exactGuide});
+     const guideResponse=await page.request.get(new URL(exactGuide,origin).href,{headers:{Range:'bytes=0-4'}});
+     assert([200,206].includes(guideResponse.status())&&(guideResponse.headers()['content-type']||'').includes('pdf'),
+       view+' '+id+' linked PDF responds as a PDF',{status:guideResponse.status(),type:guideResponse.headers()['content-type']});
      assert(!errors.length,view+' '+id+' no JavaScript errors',errors);
      console.log('J277_MCQ_SURVEY '+JSON.stringify({view,id,bankQuestions:bank.skills.reduce((n,x)=>n+x.count,0),screens:'directory quiz feedback results retry reload',mastery:state,overflow:over}));
     }catch(e){assert(false,view+' '+id+' browser exception',String(e).slice(0,400))}
