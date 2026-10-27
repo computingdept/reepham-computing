@@ -214,12 +214,13 @@ body.course-hub #lessons .lesson-grid{display:grid;grid-template-columns:repeat(
 .pilot-resource-actions b{flex:0 0 100%;font-size:12px;color:#285848}
 .pilot-resource-actions a{font-size:12px;color:#164b3c;text-decoration:underline;text-underline-offset:2px}
 .mobile-sheet-actions .mobile-sheet-independent:not([hidden]){display:block;flex:1 1 100%;text-align:center;background:#f3f8f5;border:1px solid #b4cfc0;color:#164c3d;border-radius:8px;padding:11px;text-decoration:none}
-</style><link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-1">
+</style><link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-central1">
+<script src="assets/hub-navigation.js?v=20261027-central1"></script>
 </head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
 <nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision guides</span><span class="nav-short">Guides</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision practice</span><span class="nav-short">Practice</span></button></div></nav></div>
-<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div class="lesson-finder"><label for="lessonQuickFind">Find a lesson</label><input type="search" id="lessonQuickFind" placeholder="003 or hexadecimal" autocomplete="off" aria-describedby="lessonFindTip"><span id="lessonFindTip">Select a lesson number to open it. Hover or tap Options to choose how to use it.</span><span id="lessonFindCount" aria-live="polite"></span></div><div id="terms"></div></section>
+<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div id="terms"></div></section>
 <section class="panel" id="booklet" data-j277-guides="published" aria-labelledby="j277RevisionGuidesHeading">
   <div class="summary"><h2 id="j277RevisionGuidesHeading">Revision guides</h2><span class="count">For Year 10 &amp; Year 11</span></div>
   <div class="cards h446-guides" role="list">
@@ -362,124 +363,51 @@ const independentResourceRoutes = {
 function openLessonResource(n){return independentResourceRoutes[n] || null;}
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);document.getElementById('lessonQuickFind').value='';yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
-function lessonScenario(label,icon,href){
- const action=document.createElement(href?'a':'div');
- action.className='lesson-scenario-action'+(href?'':' unavailable');
- if(href)action.href=href;
- else action.setAttribute('aria-disabled','true');
- const symbol=document.createElement('span');symbol.className='scenario-symbol';symbol.setAttribute('aria-hidden','true');symbol.textContent=icon;
- const copy=document.createElement('span');copy.className='scenario-copy';copy.textContent=label;
- action.append(symbol,copy);
- if(!href){const soon=document.createElement('span');soon.className='scenario-arrow';soon.textContent='Soon';action.append(soon);}
- return action;
-}
-function closeLessonOptions(except){
- document.querySelectorAll('#terms .lesson-choice[data-menu-open="true"]').forEach(card=>{
-  if(card!==except){card.dataset.menuOpen='false';card.querySelector('.lesson-options-toggle')?.setAttribute('aria-expanded','false')}
- });
-}
-function positionLessonOptions(card){
- const menu=card.querySelector('.lesson-scenarios');
- if(!menu)return;
- const rect=card.getBoundingClientRect();
- const width=Math.min(245,window.innerWidth-22);
- const desired=Math.min(0,window.innerWidth-13-rect.left-width);
- menu.style.left=Math.max(13-rect.left,desired)+'px';
-}
+const Navigation=window.LearningHubNavigation;
 function renderLessons(){
- closeLessonOptions();
- const holder=document.getElementById('terms');holder.replaceChildren();
- const prog=programmes[year];document.getElementById('specLegendMount').hidden=false;
- let n=prog.start,total=0;
- for(const term of prog.terms){
-  total+=term.count;
-  const end=n+term.count-1;
-  const sec=document.createElement('section');sec.className='term';
-  sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+'</span></div><div class="lesson-grid"></div>';
-  const grid=sec.querySelector('.lesson-grid');
-  const subtitle=document.createElement('p');subtitle.className='term-route';
-  subtitle.textContent=(year===10?year10Journeys:year11Journeys)[prog.terms.indexOf(term)];
-  sec.insertBefore(subtitle,grid);
-  if(year===10&&n===1){
-    const entry=document.createElement('div');entry.className='lesson-entry lesson-choice lesson-choice-welcome';
-    entry.dataset.search='welcome introduction course';
-    const welcome=document.createElement('a');welcome.className='lesson-tile-open';welcome.href='lessons/j277/J277Welcome.html';
-    const num=document.createElement('span');num.className='lesson-tile-number';num.textContent='Welcome';
-    const name=document.createElement('span');name.className='lesson-tile-title';name.textContent='Start here';
-    welcome.append(num,name);entry.append(welcome);grid.append(entry);
+  Navigation.closeAll();
+  const holder=document.getElementById('terms');
+  holder.replaceChildren();
+  const prog=programmes[year];
+  document.getElementById('specLegendMount').hidden=false;
+  let n=prog.start,total=0;
+  for(const term of prog.terms){
+    total+=term.count;
+    const end=n+term.count-1;
+    const sec=document.createElement('section');
+    sec.className='term';
+    sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+'</span></div><div class="lesson-grid"></div>';
+    const grid=sec.querySelector('.lesson-grid');
+    const subtitle=document.createElement('p');
+    subtitle.className='term-route';
+    subtitle.textContent=(year===10?year10Journeys:year11Journeys)[prog.terms.indexOf(term)];
+    sec.insertBefore(subtitle,grid);
+    if(year===10&&n===1){
+      grid.append(Navigation.createTile({
+        number:'Welcome',title:'Start here',
+        openHref:'lessons/j277/J277Welcome.html',color:'#d5d5d5'
+      }));
+    }
+    for(let x=n;x<=end;x++){
+      const live=liveMap[x];
+      const info=lessonInfo(x);
+      const independent=year===10?openLessonResource(x):null;
+      grid.append(Navigation.createTile({
+        number:pad(x),title:info[0],
+        openHref:live?live+'#do-now':null,
+        learnHref:independent?independent.replace('version=bw','version=colour'):null,
+        printHref:independent?independent+'&print=1':null,
+        color:specPalette[sectionForLesson(x)]||assessmentColour
+      }));
+    }
+    holder.append(sec);
+    n=end+1;
   }
-  for(let x=n;x<=end;x++){
-   const live=liveMap[x];
-   const [title,spec,objective]=lessonInfo(x);
-   const independent=year===10?openLessonResource(x):null;
-   const entry=document.createElement('article');entry.className='lesson-entry lesson-choice';
-   entry.style.setProperty('--spec-colour',specPalette[sectionForLesson(x)]||assessmentColour);
-   entry.dataset.number=pad(x);entry.dataset.search=[pad(x),String(x),'lesson '+x,title,spec,objective].join(' ').toLowerCase();
-   entry.dataset.menuOpen='false';
-   const tile=document.createElement(live?'a':'div');
-   tile.className='lesson-tile-open'+(live?'':' lesson-tile-unavailable');
-   const number=document.createElement('span');number.className='lesson-tile-number';number.textContent=pad(x);
-   const shortTitle=document.createElement('span');shortTitle.className='lesson-tile-title';shortTitle.textContent=title;shortTitle.title=title;
-   tile.append(number,shortTitle);
-   if(live){tile.href=live+'#do-now';tile.setAttribute('aria-label','Open lesson '+pad(x)+': '+title);}
-   else tile.setAttribute('aria-label','Lesson '+pad(x)+' in preparation');
-   const toggle=document.createElement('button');toggle.type='button';
-   toggle.className='lesson-options-toggle';toggle.textContent='Options';toggle.setAttribute('aria-expanded','false');
-   toggle.setAttribute('aria-label','Options for lesson '+pad(x)+': '+title);
-   const menu=document.createElement('div');menu.className='lesson-scenarios';
-   menu.id='j277-lesson-options-'+x;menu.setAttribute('role','group');menu.setAttribute('aria-label','Ways to use lesson '+pad(x));
-   toggle.setAttribute('aria-controls',menu.id);
-   const h=document.createElement('strong');h.className='lesson-scenarios-heading';h.textContent=pad(x)+' · '+title;
-   
-   const learn=independent?independent.replace('version=bw','version=colour'):null;
-   const print=independent?independent+'&print=1':null;
-   menu.append(h,
-     lessonScenario('Open lesson','▣',live?live+'#do-now':null),
-     lessonScenario('Learn independently','◇',learn),
-     lessonScenario('Print lesson','▤',print));
-   toggle.addEventListener('click',event=>{
-    event.stopPropagation();
-    const next=entry.dataset.menuOpen!=='true';
-    closeLessonOptions(entry);
-    entry.dataset.menuOpen=String(next);
-    toggle.setAttribute('aria-expanded',String(next));
-    if(next)positionLessonOptions(entry);
-   });
-   entry.addEventListener('mouseenter',()=>positionLessonOptions(entry));
-   entry.addEventListener('focusin',()=>positionLessonOptions(entry));
-   entry.append(tile,toggle,menu);grid.append(entry);
-  }
-  holder.append(sec);n=end+1;
- }
- document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
- document.getElementById('lessonCount').textContent=total+' planned lesson positions';
- filterLessonCards();
+  document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
+  document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
-document.addEventListener('click',event=>{
- if(!event.target.closest('#terms .lesson-choice'))closeLessonOptions();
-});
-document.addEventListener('keydown',event=>{
- if(event.key==='Escape'){closeLessonOptions();document.activeElement?.blur?.();}
-});
-window.addEventListener('resize',()=>document.querySelectorAll('#terms .lesson-choice[data-menu-open="true"]').forEach(positionLessonOptions));
-function filterLessonCards(){
- const query=document.getElementById('lessonQuickFind').value.trim().toLowerCase();
- const digits=/^0*[0-9]+$/.test(query) ? String(Number(query)).padStart(3,'0') : null;
- let matches=0;
- document.querySelectorAll('#terms .term').forEach(function(sec){
-  let visible=0;
-  sec.querySelectorAll('.lesson-choice').forEach(function(card){
-   const hit=!query || (digits ? card.dataset.number===digits : (card.dataset.search||'').includes(query));
-   card.hidden=!hit;
-   if(hit){matches++;visible++;}
-  });
-  sec.hidden=visible===0;
- });
- document.getElementById('lessonFindCount').textContent=query ? (matches+' result'+(matches===1?'':'s')):'';
-}
-document.getElementById('lessonQuickFind').addEventListener('input',filterLessonCards);
 applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',revisionhub:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script><script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
 </body></html>

@@ -278,3 +278,172 @@ body[data-year="8"] #lessons a:focus-visible {outline:2px solid #222;outline-off
  body.course-hub #lessons .lesson-entry.lesson-choice,
  body.learning-hub .year {transition:none}
 }
+
+
+/* Centralised lesson navigation | KS3 / OCR J277 / OCR H446 | 2026-10-27
+   Core UI is neutral; a thin outline alone uses each course's existing colour.
+   Do not apply this styling to individual lessons or revision resources. */
+body.course-hub #lessons .lesson-grid {
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:8px;
+  align-items:stretch;
+  overflow:visible;
+}
+body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  min-width:0;
+  min-height:76px;
+  margin:0;
+  padding:0;
+  overflow:visible;
+  border:1.5px solid var(--spec-colour,#d5d5d5);
+  border-radius:8px;
+  background:#fff;
+  box-shadow:none;
+}
+body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson:hover,
+body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson:focus-within,
+body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson[data-menu-open="true"] {
+  z-index:60;
+  border-color:var(--spec-colour,#999);
+  box-shadow:0 3px 12px #00000012;
+}
+body.course-hub #lessons .lesson-grid .central-lesson>.lesson-tile-open {
+  box-sizing:border-box;
+  display:flex!important;
+  flex:1 1 auto;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  width:100%;
+  min-width:0;
+  min-height:47px;
+  padding:7px 5px;
+  margin:0;
+  border:0;
+  border-radius:7px 7px 0 0;
+  background:#fff;
+  color:#222;
+  text-align:center;
+  text-decoration:none;
+  overflow:hidden;
+}
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-number {
+  display:block;
+  width:100%;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#202020;
+  font:850 18px/1.15 system-ui,sans-serif;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-title {
+  display:block;
+  width:100%;
+  min-height:0;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#626262;
+  font:600 10px/1.25 system-ui,sans-serif;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+body.course-hub #lessons .lesson-grid .central-lesson.is-planned>.lesson-tile-open {
+  border-radius:7px;
+  color:#777;
+  cursor:default;
+}
+body.course-hub #lessons .lesson-grid .central-lesson.is-planned .lesson-tile-number {color:#777}
+body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle {
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  min-height:32px;
+  margin:0;
+  padding:5px 3px;
+  border:0;
+  border-top:1px solid #e6e6e6;
+  border-radius:0 0 7px 7px;
+  background:#fff;
+  color:#282828;
+  font:750 11px/1.3 system-ui,sans-serif;
+  text-align:center;
+  cursor:pointer;
+}
+body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle:hover,
+body.course-hub #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-options-toggle {background:#f7f7f7}
+body.course-hub #lessons .lesson-grid .central-lesson>.lesson-scenarios {
+  box-sizing:border-box;
+  position:absolute;
+  top:calc(100% + 4px);
+  left:0;
+  z-index:100;
+  display:none;
+  width:min(232px,calc(100vw - 24px));
+  max-height:min(320px,calc(100vh - 24px));
+  padding:5px 10px;
+  margin:0;
+  overflow-y:auto;
+  border:1px solid #bcbcbc;
+  border-radius:8px;
+  background:#fff;
+  color:#222;
+  box-shadow:0 9px 22px #0000001e;
+  text-align:left;
+}
+body.course-hub #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-scenarios {display:block}
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action {
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  min-height:43px;
+  padding:9px 3px;
+  border:0;
+  border-bottom:1px solid #ececec;
+  border-radius:0;
+  background:#fff;
+  color:#222;
+  font:650 13px/1.3 system-ui,sans-serif;
+  text-decoration:none;
+}
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:last-child{border-bottom:0}
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:hover,
+body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:focus-visible{background:#f6f6f6}
+body.course-hub #lessons .lesson-grid .central-lesson .scenario-symbol,
+body.course-hub #lessons .lesson-grid .central-lesson .scenario-copy {
+  display:inline;
+  min-height:0;
+  width:auto;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:inherit;
+}
+body.course-hub #lessons .lesson-grid .central-lesson .scenario-symbol{font-size:16px}
+body.course-hub #lessons .central-lesson .lesson-tile-open:focus-visible,
+body.course-hub #lessons .central-lesson .lesson-options-toggle:focus-visible,
+body.course-hub #lessons .central-lesson .lesson-scenario-action:focus-visible{
+  outline:2px solid #222;
+  outline-offset:2px;
+}
+@media(max-width:900px){
+  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle{min-height:35px}
+}
+@media(max-width:340px){
+  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

@@ -1,4 +1,4 @@
-/* Shared KS3 lesson navigation and previews for Year 7, 8 and 9.
+/* Shared KS3 hub data and legacy year routes for Year 7, 8 and 9.
    Lesson paths and short topic labels come from the individual year pages. */
 (function () {
   'use strict';
@@ -21,20 +21,16 @@
     let year=Number(new URLSearchParams(location.search).get('year'))||Number(cfg.initialYear)||7;
     if(![7,8,9].includes(year))year=7;
     let activeTab=allowed.includes(location.hash.slice(1))?location.hash.slice(1):'lessons';
-    let detail=null, detailTrigger=null;
+    const Navigation=window.LearningHubNavigation;
     function setUrl(){
       const url=new URL(location.href);
       url.searchParams.set('year',String(year));
       url.hash=activeTab;
       history.replaceState(null,'',url.pathname+url.search+url.hash);
     }
-    function closeDetail(){
-      if(detail){detail.remove();detail=null;}
-      if(detailTrigger){detailTrigger.setAttribute('aria-expanded','false');detailTrigger=null;}
-    }
     function changeTab(id){
       if(!allowed.includes(id))id='lessons';
-      closeDetail();activeTab=id;
+      Navigation.closeAll();activeTab=id;
       tabs.forEach(t=>{
         const on=t.dataset.tab===id;
         t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;
@@ -63,70 +59,38 @@
         year===8?'Practise with the existing Year 8 revision hub.':'Online revision practice for Year '+year+' will appear here when it is ready.',
         cfg.revisionLinks?.[year], 'Open Year 8 revision hub →'));
     }
-    function openPreview(button,number,info,available){
-      const wasOpen=detailTrigger===button;
-      closeDetail();
-      if(wasOpen)return;
-      const container=button.closest('.lesson-entry');
-      const grid=container.closest('.lesson-grid');
-      const entries=[...grid.querySelectorAll('.lesson-entry')];
-      const index=entries.indexOf(container);
-      const columns=getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length||4;
-      const next=Math.min(entries.length,Math.ceil((index+1)/columns)*columns);
-      detail=document.createElement('div');detail.className='lesson-detail';
-      detail.setAttribute('role','region');detail.setAttribute('aria-label','Lesson '+pad(number)+' preview');
-      const heading=document.createElement('strong');heading.textContent='Lesson '+pad(number)+' · '+info[0];
-      const summary=document.createElement('p');summary.textContent=info[1];
-      const state=document.createElement('p');state.textContent=available?'Online lesson available':'This lesson is not published yet';
-      detail.append(heading,summary,state);
-      if(available){
-        const link=document.createElement('a');link.href=available;link.className='ks3-preview-start';link.textContent='Start Lesson →';detail.append(link);
-      }
-      const close=document.createElement('button');close.type='button';close.className='lesson-detail-close';close.textContent='Close ×';
-      close.addEventListener('click',()=>{
-        closeDetail();button.focus({preventScroll:true});
-      });
-      detail.append(close);
-      grid.insertBefore(detail,entries[next]||null);
-      detailTrigger=button;button.setAttribute('aria-expanded','true');
-      if(matchMedia('(max-width:700px)').matches)requestAnimationFrame(()=>detail?.scrollIntoView({block:'nearest',behavior:'smooth'}));
-    }
     function renderLessons(){
-      closeDetail();termsNode.replaceChildren();
+      Navigation.closeAll();
+      termsNode.replaceChildren();
       const links=cfg.liveMaps?.[year]||{};
       const previews=cfg.previews?.[year]||{};
       let published=0;
       terms.forEach(([name,start,end])=>{
-        const sec=document.createElement('section');sec.className='term';
-        const head=document.createElement('div');head.className='term-head';
-        const strong=document.createElement('strong');strong.textContent=name;
-        const range=document.createElement('span');range.textContent='Lessons '+pad(start)+'–'+pad(end);
+        const sec=document.createElement('section');
+        sec.className='term';
+        const head=document.createElement('div');
+        head.className='term-head';
+        const strong=document.createElement('strong');
+        strong.textContent=name;
+        const range=document.createElement('span');
+        range.textContent='Lessons '+pad(start)+'–'+pad(end);
         head.append(strong,range);
-        const grid=document.createElement('nav');grid.className='lesson-grid';
+        const grid=document.createElement('nav');
+        grid.className='lesson-grid';
         grid.setAttribute('aria-label','Year '+year+' '+name+' lessons');
         for(let n=start;n<=end;n++){
-          const number=pad(n),href=links[n]||null;
-          const info=previews[number]||['Lesson '+number,href?'Lesson details will be added':'Not yet published'];
+          const number=pad(n);
+          const href=links[n]||null;
+          const info=previews[number]||['Lesson '+number,''];
           if(href)published++;
-          const entry=document.createElement('div');entry.className='lesson-entry';
-          const tile=document.createElement(href?'a':'span');
-          tile.className='lesson spec-tile '+(href?'live':'planned');
-          tile.textContent=number;
-          tile.style.setProperty('--spec-colour',href?'#287852':'#b5c0b9');
-          if(href)tile.href=href;
-          tile.setAttribute('aria-label',href?'Open lesson '+number+': '+info[0]:'Lesson '+number+': planned');
-          const infoButton=document.createElement('button');infoButton.type='button';infoButton.className='lesson-info';
-          infoButton.textContent='i';infoButton.setAttribute('aria-label','Preview lesson '+number);
-          infoButton.setAttribute('aria-expanded','false');
-          infoButton.addEventListener('click',()=>openPreview(infoButton,n,info,href));
-          const tooltip=document.createElement('div');tooltip.className='lesson-popup';tooltip.setAttribute('aria-hidden','true');
-          const title=document.createElement('strong');title.textContent=info[0];
-          const description=document.createElement('p');description.textContent=info[1];
-          tooltip.append(title,description);
-          entry.append(tile,infoButton,tooltip);
-          grid.append(entry);
+          grid.append(Navigation.createTile({
+            number:number,title:info[0],
+            openHref:href,
+            color:href?'#287852':'#b5c0b9'
+          }));
         }
-        sec.append(head,grid);termsNode.append(sec);
+        sec.append(head,grid);
+        termsNode.append(sec);
       });
       lessonCount.textContent='35 planned lesson positions · '+published+' online';
       document.getElementById('lessonTitle').textContent='Year '+year+' Computing lessons';
@@ -140,7 +104,7 @@
     tabs.forEach(t=>t.addEventListener('click',()=>changeTab(t.dataset.tab)));
     years.forEach(btn=>btn.addEventListener('click',()=>selectYear(Number(btn.dataset.year))));
     document.addEventListener('keydown',e=>{
-      if(e.key==='Escape'&&detail){closeDetail();return;}
+      if(e.key==='Escape'){Navigation.closeAll();}
       if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&document.activeElement?.matches('.course-nav .tab')){
         e.preventDefault();const i=tabs.indexOf(document.activeElement),dir=e.key==='ArrowRight'?1:-1;
         const nxt=tabs[(i+dir+tabs.length)%tabs.length];nxt.focus();changeTab(nxt.dataset.tab);

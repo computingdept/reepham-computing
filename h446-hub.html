@@ -222,7 +222,8 @@ body.pilot-year12 #lessons .note{display:none}
 </style>
 <link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
-<link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-1">
+<link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-central1">
+<script src="assets/hub-navigation.js?v=20261027-central1"></script>
 </head>
 <body class="course-hub course-compact course-inline-nav" data-year="12">
 <header class="topbar">
@@ -438,161 +439,9 @@ function lessonSpecification(number){
   return null; // Do not guess the topic for unplanned lesson slots.
 }
 
-const lessonMetaCache=new Map();
-function plannedLessonInfo(n,specKey){
-  if(n>=192&&year13Lessons[n]){
-    const lesson=year13Lessons[n];
-    return {title:lesson.title,objectives:lesson.objectives,note:lesson.spec+' · Ready lesson'};
-  }
-  const spec=specificationThemes[specKey];
-  let topic=spec?spec.label:'Topic to be confirmed';
-  if(n>=38&&n<=43)topic='OOP foundations: C# classes and objects';
-  else if(n>=44&&n<=58)topic='Data structures revisited using object-oriented C#';
-  return {title:topic,objectives:[],note:(specKey==='nea'?'Protected NEA project time':specKey==='mixed'?'Multiple OCR points':specKey||'Specification point to be confirmed')+' · Planned; detailed objectives not yet written'};
-}
-async function getLessonInfo(n,href,specKey){
-  if(!href)return plannedLessonInfo(n,specKey);
-  if(lessonMetaCache.has(n))return lessonMetaCache.get(n);
-  const pending=(async()=>{
-    try{
-      const response=await fetch(href,{cache:'force-cache'});
-      if(!response.ok)throw Error('Lesson not found');
-      const doc=new DOMParser().parseFromString(await response.text(),'text/html');
-      const title=(doc.querySelector('#overview h1')?.textContent||doc.querySelector('title')?.textContent||('Lesson '+pad(n))).split(' · ')[0].trim();
-      const objectives=[...doc.querySelectorAll('#overview .objectives li, #overview ul li')].map(li=>li.textContent.trim()).filter(Boolean).slice(0,5);
-      return {title,objectives,note:(n===24?'1.4.2 + 2.3.1(f)':(specKey||'OCR H446'))+(' · Ready lesson')};
-    }catch(e){return {title:'Lesson '+pad(n),objectives:[],note:'Objectives temporarily unavailable · Open the lesson to view them'};}
-  })();
-  lessonMetaCache.set(n,pending);return pending;
-}
-function fillLessonDetails(container,info){
-  container.replaceChildren();
-  const title=document.createElement('strong');title.textContent=info.title;container.append(title);
-  if(info.objectives.length){
-    const ul=document.createElement('ul');
-    info.objectives.forEach(o=>{const li=document.createElement('li');li.textContent=o;ul.append(li);});
-    container.append(ul);
-  }
-  const note=document.createElement('small');note.textContent=info.note;container.append(note);
-}
-/* Keep each hover/focus tooltip inside the visible viewport. */
-function positionLessonPopup(entry,popup){
-  if(!entry.matches(':hover')&&!entry.matches(':focus-within'))return;
-  popup.style.left='0px';
-  popup.style.top='calc(100% + 6px)';
-  const entryBox=entry.getBoundingClientRect();
-  const popupBox=popup.getBoundingClientRect();
-  if(!popupBox.width||!popupBox.height)return;
-  const margin=12;
-  const x=Math.max(margin,Math.min(entryBox.left,window.innerWidth-margin-popupBox.width));
-  popup.style.left=Math.round(x-entryBox.left)+'px';
-  const spaceBelow=window.innerHeight-entryBox.bottom;
-  const spaceAbove=entryBox.top;
-  if(spaceBelow<popupBox.height+margin&&spaceAbove>spaceBelow){
-    popup.style.top=-Math.round(popupBox.height+6)+'px';
-  }
-}
-function repositionVisibleLessonPopups(){
-  document.querySelectorAll('.lesson-entry:hover,.lesson-entry:focus-within').forEach(entry=>{
-    const popup=entry.querySelector('.lesson-popup');
-    if(popup)positionLessonPopup(entry,popup);
-  });
-}
-window.addEventListener('resize',repositionVisibleLessonPopups);
-
-const mobileLessonQuery=window.matchMedia('(max-width:700px), (pointer:coarse)');
-const sheetBackdrop=document.createElement('div');
-sheetBackdrop.className='mobile-sheet-backdrop';sheetBackdrop.hidden=true;
-const lessonSheet=document.createElement('section');
-lessonSheet.className='mobile-sheet';lessonSheet.hidden=true;
-lessonSheet.setAttribute('role','dialog');lessonSheet.setAttribute('aria-modal','true');
-lessonSheet.setAttribute('aria-label','Lesson preview');
-lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a></div>';
-document.body.append(sheetBackdrop,lessonSheet);
-let sheetTrigger=null, sheetRequest=0, sheetStartY=null;
-function closeLessonSheet(){
-  if(lessonSheet.hidden)return;
-  sheetRequest++;
-  lessonSheet.hidden=true;sheetBackdrop.hidden=true;
-  document.body.style.overflow='';
-  if(sheetTrigger?.isConnected)sheetTrigger.focus({preventScroll:true});
-}
-async function openLessonSheet(n,href,specKey,trigger){
-  sheetTrigger=trigger;
-  const request=++sheetRequest;
-  const id=pad(n);
-  const sheetTitle=lessonSheet.querySelector('.mobile-sheet-title');
-  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
-  const content=lessonSheet.querySelector('.mobile-sheet-content');
-  const actions=lessonSheet.querySelector('.mobile-sheet-actions');
-  const start=lessonSheet.querySelector('.mobile-sheet-open');
-  const jump=lessonSheet.querySelector('.mobile-sheet-jump');
-  lessonSheet.querySelector('.mobile-sheet-number').textContent='L'+id;
-  lessonSheet.querySelector('.mobile-sheet-context').textContent='OCR H446 · Year '+year;
-  sheetTitle.textContent=year13Lessons[n]?.title || specificationThemes[specKey]?.label || 'Lesson '+id;
-  target.textContent='Loading lesson summary…';
-  content.scrollTop=0;
-  actions.hidden=!href;
-  if(href){
-    const cleanHref=href.split('#')[0];
-    start.href=cleanHref+'#do-now';
-    jump.href=cleanHref+'#you-do';
-  }
-  sheetBackdrop.hidden=false;
-  lessonSheet.hidden=false;
-  document.body.style.overflow='hidden';
-  lessonSheet.querySelector('.mobile-sheet-close').focus({preventScroll:true});
-  const info=await getLessonInfo(n,href,specKey);
-  if(request!==sheetRequest)return;
-  sheetTitle.textContent=info.title;
-  target.replaceChildren();
-  if(info.objectives.length){
-    const label=document.createElement('strong');
-    label.textContent='In this lesson';
-    target.append(label);
-    const makeList=objectives=>{
-      const ul=document.createElement('ul');
-      objectives.forEach(itemText=>{
-        const item=document.createElement('li');
-        item.textContent=itemText;
-        ul.append(item);
-      });
-      return ul;
-    };
-    target.append(makeList(info.objectives.slice(0,2)));
-    if(info.objectives.length>2){
-      const details=document.createElement('details');
-      const summary=document.createElement('summary');
-      summary.textContent='More learning objectives ('+(info.objectives.length-2)+')';
-      details.append(summary,makeList(info.objectives.slice(2)));
-      target.append(details);
-    }
-  }
-  if(!href || info.note?.includes('unavailable') || !info.objectives.length){
-    const note=document.createElement('p');
-    note.textContent=!href?'Lesson planned — not yet available.':info.note||'Objectives available in the lesson.';
-    target.append(note);
-  }
-}
-sheetBackdrop.addEventListener('click',closeLessonSheet);
-lessonSheet.querySelector('.mobile-sheet-close').addEventListener('click',closeLessonSheet);
-document.addEventListener('keydown',e=>{
-  if(lessonSheet.hidden)return;
-  if(e.key==='Escape')closeLessonSheet();
-  if(e.key==='Tab'){
-    const controls=[...lessonSheet.querySelectorAll('button,a,summary')].filter(el=>!el.hidden&&!el.closest('[hidden]'));
-    const first=controls[0],last=controls[controls.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
-  }
-});
-lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchstart',e=>{sheetStartY=e.touches[0].clientY;},{passive:true});
-lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchend',e=>{
-  if(sheetStartY!==null&&e.changedTouches[0].clientY-sheetStartY>65)closeLessonSheet();
-  sheetStartY=null;
-},{passive:true});
+const Navigation=window.LearningHubNavigation;
 function renderLessons(){
-  closeLessonSheet();
+  Navigation.closeAll();
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
   for(const term of p.terms){
     total+=term.count;
@@ -637,53 +486,12 @@ function renderLessons(){
         grid=document.createElement('div');grid.className='lesson-grid';
         detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid);grid.append(detail);sec.append(group);groupKey=key;
       }
-      const el=document.createElement(href?'a':'div');
-      el.className='lesson spec-tile '+(href?'live':'planned');
-      const tileColour=curriculumColour(specKey);
-      el.style.setProperty('--spec-colour',tileColour);
-      el.setAttribute('data-paper',specKey==='nea'?'NEA':specKey==='mixed'?'Synoptic':String(specKey||'').startsWith('1.')?'Paper 1':String(specKey||'').startsWith('2.')?'Paper 2':'Unmapped');
-      if(href){
-        el.textContent=pad(x);
-        el.href=href;
-        el.setAttribute('aria-label','Open live lesson '+pad(x));
-      }else{el.textContent=pad(x);}
-
-      const entry=document.createElement('div');entry.className='lesson-entry';
-      if(mobileLessonQuery.matches){
-        if(el.tagName==='A')el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,href,specKey,el);});
-        else{el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Preview planned lesson '+pad(x));el.addEventListener('click',()=>openLessonSheet(x,href,specKey,el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLessonSheet(x,href,specKey,el);}});}
-      }
-
-      const infoButton=document.createElement('button');infoButton.type='button';infoButton.className='lesson-info';
-      infoButton.textContent='i';infoButton.setAttribute('aria-label','View topic and objectives for lesson '+pad(x));
-      infoButton.setAttribute('aria-expanded','false');
-      const popup=document.createElement('div');popup.className='lesson-popup';
-      popup.textContent='Loading objectives…';
-      async function populate(target){
-        const info=await getLessonInfo(x,href,specKey);
-        if(target.isConnected){
-          fillLessonDetails(target,info);
-          if(target===popup)positionLessonPopup(entry,popup);
-        }
-      }
-      entry.addEventListener('mouseenter',()=>positionLessonPopup(entry,popup));
-      entry.addEventListener('mouseenter',()=>{populate(popup);},{once:true});
-      entry.addEventListener('focusin',()=>{positionLessonPopup(entry,popup);populate(popup);});
-      infoButton.addEventListener('click',(event)=>{
-        if(mobileLessonQuery.matches){event.preventDefault();openLessonSheet(x,href,specKey,infoButton);return;}
-        event.stopPropagation();
-        const open=infoButton.getAttribute('aria-expanded')!=='true';
-        holder.querySelectorAll('.lesson-detail').forEach(e=>e.setAttribute('aria-hidden','true'));
-        holder.querySelectorAll('.lesson-info').forEach(e=>e.setAttribute('aria-expanded','false'));
-        if(open){
-          entry.after(detail);
-          detail.setAttribute('aria-hidden','false');infoButton.setAttribute('aria-expanded','true');
-          detail.textContent='Loading objectives…';
-          detail.scrollIntoView({block:'nearest',behavior:'instant'});
-          populate(detail);
-        }else{detail.setAttribute('aria-hidden','true');}
-      });
-      entry.append(el,infoButton,popup);grid.append(entry);
+      grid.append(Navigation.createTile({
+        number:pad(x),
+        title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
+        openHref:href?href.split('#')[0]+'#do-now':null,
+        color:curriculumColour(specKey)
+      }));
     }
     holder.append(sec);n=end+1;
   }
