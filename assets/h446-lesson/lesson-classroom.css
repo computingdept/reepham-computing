@@ -1912,3 +1912,123 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     font-size:15px;
   }
 }
+
+
+/* Classroom focus pilot refinement 3: teaching-first screen hierarchy.
+   Only presentation changes. Do not remove, rewrite, or re-order DOM content,
+   lessons, answers, reveal stages, or lesson-nav controls.
+   Match structural regions only, so subject-specific headings survive.
+   Enabled solely where the body's data-classroom-focus flag is present. */
+body[data-classroom-focus] :is(#i-do,#we-do)
+  :is(.ido-example,.wedo-example) > .ks3-heading{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  align-items:baseline;
+  column-gap:12px;
+  row-gap:2px;
+  margin:0 0 9px;
+  min-width:0;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  :is(.ido-example,.wedo-example) > .ks3-heading > .eyebrow{
+  grid-column:1;
+  margin:0;
+  line-height:1.15;
+  font-size:clamp(10px,.83vw,12px);
+  letter-spacing:.075em;
+  white-space:normal;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  :is(.ido-example,.wedo-example) > .ks3-heading > h1{
+  grid-column:2;
+  font-size:clamp(22px,1.8vw,29px);
+  line-height:1.17;
+  font-weight:780;
+  margin:0;
+  min-width:0;
+  max-width:100%;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split{
+  align-items:start;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .classroom-panel{
+  padding-top:12px;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .prompt-panel > .phase-tag{
+  margin:0 0 7px;
+  padding:4px 7px;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split .teams-flow{
+  margin-top:0;
+}
+/* A model panel with revealed steps is a known teaching structure:
+   compact the static label and heading into a single header row and put
+   the visible modelled step immediately below. The existing instructional
+   paragraph follows the steps as supporting guidance; it is not hidden. */
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .method-panel:has(> .ks3-model-steps){
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  grid-template-rows:auto auto auto;
+  column-gap:9px;
+  row-gap:0;
+  align-items:start;
+  align-content:start;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .method-panel:has(> .ks3-model-steps) > .phase-tag{
+  grid-column:1;
+  grid-row:1;
+  align-self:center;
+  font-size:clamp(10px,.82vw,12px);
+  line-height:1.2;
+  padding:4px 7px;
+  margin:0;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .method-panel:has(> .ks3-model-steps) > h2{
+  grid-column:2;
+  grid-row:1;
+  align-self:center;
+  font-size:clamp(13px,1.07vw,17px);
+  line-height:1.2;
+  font-weight:720;
+  color:#536d5f;
+  margin:0;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .method-panel:has(> .ks3-model-steps) > .ks3-model-steps{
+  grid-column:1/-1;
+  grid-row:2;
+  min-width:0;
+  margin:10px 0 0;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split > .method-panel:has(> .ks3-model-steps) > p{
+  grid-column:1/-1;
+  grid-row:3;
+  min-width:0;
+  font-size:clamp(14px,1.03vw,16px);
+  line-height:1.35;
+  margin:12px 0 0;
+  color:#516a5d;
+}
+@media (max-width:900px){
+  body[data-classroom-focus] :is(#i-do,#we-do)
+    :is(.ido-example,.wedo-example) > .ks3-heading{
+    grid-template-columns:minmax(0,1fr);
+    margin-bottom:9px;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do)
+    :is(.ido-example,.wedo-example) > .ks3-heading > :is(.eyebrow,h1){
+    grid-column:1;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do)
+    :is(.ido-example,.wedo-example) > .ks3-heading > h1{
+    font-size:clamp(22px,4.1vw,29px);
+  }
+}
