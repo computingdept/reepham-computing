@@ -64,7 +64,16 @@ body[data-mode="bw"] .heading,body[data-mode="bw"] .heading.green,body[data-mode
 body[data-mode="bw"] .info,body[data-mode="bw"] .code,body[data-mode="bw"] .bit,body[data-mode="bw"] .bit.one{background:white;border-color:#aaa}
 body[data-mode="bw"] .bit em{color:#111}
 body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
-@media(max-width:700px){.screen-toolbar{position:static}.screen-toolbar strong{width:100%;margin:0}.instructions{margin:10px 12px}.viewer{overflow-x:auto;display:block;padding:0 12px 20px}.viewer .page{transform-origin:top left;box-shadow:none;margin:12px auto;max-width:none}.instructions h1{font-size:18px}}
+@media(max-width:700px){
+.screen-toolbar{position:static}.screen-toolbar strong{width:100%;margin:0}.instructions{margin:10px 12px}.instructions h1{font-size:18px}
+.viewer{overflow-x:visible;display:flex;flex-direction:column;gap:12px;padding:0 10px 20px}
+.viewer .page{width:100%;height:auto;min-height:0;overflow:visible;max-width:none;padding:20px 16px 40px;margin:0 auto;box-shadow:0 2px 12px #0001;font-size:10.5pt}
+.viewer .page footer{bottom:10px;left:16px;right:16px}
+.viewer .page h2{font-size:19px}
+.viewer .bits{gap:2px}.viewer .bit{padding:4px 0;font-size:8pt}
+.viewer .bit em{font-size:8pt;margin:0 1px 3px}.viewer .bit strong{font-size:11pt}
+.viewer .vocab-grid{gap:7px}.viewer .write-line{height:20px}
+}
 @media print{
 @page{size:A3 landscape;margin:0}
 html,body{margin:0!important;padding:0!important;background:white!important}
