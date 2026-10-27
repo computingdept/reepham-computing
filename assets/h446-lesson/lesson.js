@@ -818,6 +818,8 @@ function syncClassroomFocus(){
     if(!page)continue;
     page.querySelectorAll('.classroom-focus-active').forEach(el=>
       el.classList.remove('classroom-focus-active'));
+    page.querySelectorAll('.classroom-focus-visual-active').forEach(el=>
+      el.classList.remove('classroom-focus-visual-active'));
     page.querySelectorAll('[data-classroom-focus-stage]').forEach(el=>
       el.removeAttribute('data-classroom-focus-stage'));
     if(current!==phase)continue;
@@ -830,6 +832,15 @@ function syncClassroomFocus(){
     if(step){
       step.classList.add('classroom-focus-active');
       if(panel)panel.dataset.classroomFocusStage='step';
+      // Optional visual-to-model mapping: author a matching step number on
+      // diagram parts only where the relationship is educationally accurate.
+      // Unannotated lessons work with the same focus typography automatically.
+      const steps=[...example.querySelectorAll(phase==='i-do'?'.ido-step':'.wedo-step')];
+      const activeNumber=String(steps.indexOf(step)+1);
+      example.querySelectorAll('[data-classroom-focus-step]').forEach(visual=>{
+        const mapped=(visual.dataset.classroomFocusStep||'').split(/[\s,]+/);
+        if(mapped.includes(activeNumber))visual.classList.add('classroom-focus-visual-active');
+      });
     }else{
       const prompt=example.querySelector('.prompt-panel,.ido-reference,.wedo-reference');
       if(prompt)prompt.classList.add('classroom-focus-active');
