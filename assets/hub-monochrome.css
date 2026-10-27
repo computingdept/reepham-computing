@@ -283,14 +283,14 @@ body[data-year="8"] #lessons a:focus-visible {outline:2px solid #222;outline-off
 /* Centralised lesson navigation | KS3 / OCR J277 / OCR H446 | 2026-10-27
    Core UI is neutral; a thin outline alone uses each course's existing colour.
    Do not apply this styling to individual lessons or revision resources. */
-body.course-hub #lessons .lesson-grid {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid {
   display:grid;
   grid-template-columns:repeat(8,minmax(0,1fr));
   gap:8px;
   align-items:stretch;
   overflow:visible;
 }
-body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson {
   position:relative;
   display:flex;
   flex-direction:column;
@@ -305,14 +305,14 @@ body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson {
   background:#fff;
   box-shadow:none;
 }
-body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson:hover,
-body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson:focus-within,
-body.course-hub #lessons .lesson-grid .lesson-entry.central-lesson[data-menu-open="true"] {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson:hover,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson:focus-within,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson[data-menu-open="true"] {
   z-index:60;
   border-color:var(--spec-colour,#999);
   box-shadow:0 3px 12px #00000012;
 }
-body.course-hub #lessons .lesson-grid .central-lesson>.lesson-tile-open {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-tile-open {
   box-sizing:border-box;
   display:flex!important;
   flex:1 1 auto;
@@ -333,7 +333,7 @@ body.course-hub #lessons .lesson-grid .central-lesson>.lesson-tile-open {
   text-decoration:none;
   overflow:hidden;
 }
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-number {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-tile-number {
   display:block;
   width:100%;
   padding:0;
@@ -344,7 +344,7 @@ body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-number {
   text-align:center;
   font-variant-numeric:tabular-nums;
 }
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-title {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-tile-title {
   display:block;
   width:100%;
   min-height:0;
@@ -357,13 +357,13 @@ body.course-hub #lessons .lesson-grid .central-lesson .lesson-tile-title {
   text-overflow:ellipsis;
   overflow:hidden;
 }
-body.course-hub #lessons .lesson-grid .central-lesson.is-planned>.lesson-tile-open {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.is-planned>.lesson-tile-open {
   border-radius:7px;
   color:#777;
   cursor:default;
 }
-body.course-hub #lessons .lesson-grid .central-lesson.is-planned .lesson-tile-number {color:#777}
-body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.is-planned .lesson-tile-number {color:#777}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-options-toggle {
   box-sizing:border-box;
   display:block;
   width:100%;
@@ -379,12 +379,12 @@ body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle {
   text-align:center;
   cursor:pointer;
 }
-body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle:hover,
-body.course-hub #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-options-toggle {background:#f7f7f7}
-body.course-hub #lessons .lesson-grid .central-lesson>.lesson-scenarios {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-options-toggle:hover,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-options-toggle {background:#f7f7f7}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-scenarios {
   box-sizing:border-box;
   position:absolute;
-  top:calc(100% + 4px);
+  top:100%;
   left:0;
   z-index:100;
   display:none;
@@ -400,8 +400,8 @@ body.course-hub #lessons .lesson-grid .central-lesson>.lesson-scenarios {
   box-shadow:0 9px 22px #0000001e;
   text-align:left;
 }
-body.course-hub #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-scenarios {display:block}
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson[data-menu-open="true"]>.lesson-scenarios {display:block}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-scenario-action {
   box-sizing:border-box;
   display:flex;
   align-items:center;
@@ -417,11 +417,11 @@ body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action {
   font:650 13px/1.3 system-ui,sans-serif;
   text-decoration:none;
 }
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:last-child{border-bottom:0}
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:hover,
-body.course-hub #lessons .lesson-grid .central-lesson .lesson-scenario-action:focus-visible{background:#f6f6f6}
-body.course-hub #lessons .lesson-grid .central-lesson .scenario-symbol,
-body.course-hub #lessons .lesson-grid .central-lesson .scenario-copy {
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-scenario-action:last-child{border-bottom:0}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-scenario-action:hover,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-scenario-action:focus-visible{background:#f6f6f6}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .scenario-symbol,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .scenario-copy {
   display:inline;
   min-height:0;
   width:auto;
@@ -430,20 +430,59 @@ body.course-hub #lessons .lesson-grid .central-lesson .scenario-copy {
   background:transparent;
   color:inherit;
 }
-body.course-hub #lessons .lesson-grid .central-lesson .scenario-symbol{font-size:16px}
-body.course-hub #lessons .central-lesson .lesson-tile-open:focus-visible,
-body.course-hub #lessons .central-lesson .lesson-options-toggle:focus-visible,
-body.course-hub #lessons .central-lesson .lesson-scenario-action:focus-visible{
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .scenario-symbol{font-size:16px}
+body:is(.course-hub,.central-legacy-hub) #lessons .central-lesson .lesson-tile-open:focus-visible,
+body:is(.course-hub,.central-legacy-hub) #lessons .central-lesson .lesson-options-toggle:focus-visible,
+body:is(.course-hub,.central-legacy-hub) #lessons .central-lesson .lesson-scenario-action:focus-visible{
   outline:2px solid #222;
   outline-offset:2px;
 }
 @media(max-width:900px){
-  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
 }
 @media(max-width:700px){
-  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-  body.course-hub #lessons .lesson-grid .central-lesson>.lesson-options-toggle{min-height:35px}
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-options-toggle{min-height:35px}
 }
 @media(max-width:340px){
-  body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+
+/* Keep a usable expanded colour key at mobile widths; legacy J277 hid its contents. */
+@media(max-width:700px){
+  body.course-hub #lessons .course-key[open] #specLegendMount {display:block}
+  body.course-hub #lessons .course-key[open] .paper-key {display:flex}
+}
+/* Legacy KS3 years share the central controls while preserving their old resource tabs. */
+body.central-legacy-hub #lessons .preview-help{display:none}
+body.central-legacy-hub #lessons .central-legacy-key {
+  position:relative;
+  width:max-content;
+  max-width:100%;
+  margin:5px 0 9px auto;
+  color:#333;
+  font-size:12px;
+}
+body.central-legacy-hub #lessons .central-legacy-key summary{
+  padding:6px 9px;
+  border:1px solid #dedede;
+  border-radius:6px;
+  background:#fff;
+  cursor:pointer;
+}
+body.central-legacy-hub #lessons .ks3-colour-key{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:10px;
+  border:1px solid #dedede;
+  background:#fff;
+}
+body.central-legacy-hub #lessons .central-legacy-key-item{display:inline-flex;align-items:center;gap:6px}
+body.central-legacy-hub #lessons .central-legacy-key-line{
+  display:inline-block;
+  width:18px;
+  height:2px;
+  border-radius:2px;
 }

@@ -17,7 +17,7 @@
     const menu=entry.querySelector('.lesson-scenarios');
     if(!menu)return;
     menu.style.left='0px';
-    menu.style.top='calc(100% + 4px)';
+    menu.style.top='100%';
     menu.style.bottom='auto';
     const anchor=entry.getBoundingClientRect();
     const rect=menu.getBoundingClientRect();
@@ -25,7 +25,7 @@
     menu.style.left=Math.round(x-anchor.left)+'px';
     if(window.innerHeight-anchor.bottom<rect.height+12 && anchor.top>rect.height+12){
       menu.style.top='auto';
-      menu.style.bottom='calc(100% + 4px)';
+      menu.style.bottom='100%';
     }
   }
   function action(label,icon,href){
@@ -121,5 +121,58 @@
   window.addEventListener('resize',function(){
     document.querySelectorAll(selector).forEach(position);
   });
-  window.LearningHubNavigation={createTile:createTile,closeAll:closeAll};
+
+  /* Legacy KS3 year pages still have their own booklet/revision tabs.
+     Replace only their generated/static lesson tiles with the same shared UI. */
+  function enhanceLegacy(root){
+    if(!root)return;
+    root.querySelectorAll('.preview-help').forEach(function(hint){hint.remove();});
+    const previews=window.KS3_HUB_CONFIG?.previews||{};
+    root.querySelectorAll('.lesson-grid').forEach(function(grid){
+      if(grid.dataset.centralNav==='true')return;
+      [...grid.children].forEach(function(existing){
+        if(existing.classList.contains('central-lesson'))return;
+        const inner=existing.matches('a,span')?existing:
+          existing.querySelector(':scope > a,:scope > span');
+        if(!inner)return;
+        const number=(inner.textContent||'').match(/\d{3}/)?.[0];
+        if(!number)return;
+        const liveHref=inner.tagName==='A'?inner.getAttribute('href'):null;
+        const details=previews[number]||[];
+        const heading=existing.querySelector('.lesson-popup strong')?.textContent||
+          details[0]||'Lesson '+number;
+        grid.replaceChild(createTile({
+          number:number,
+          title:heading,
+          openHref:liveHref,
+          color:liveHref?'#287852':'#b5c0b9'
+        }),existing);
+      });
+      grid.dataset.centralNav='true';
+    });
+    if(!root.querySelector('.course-key')){
+      const heading=root.querySelector('.sectionhead');
+      if(heading){
+        const key=document.createElement('details');
+        key.className='course-key central-legacy-key';
+        const toggle=document.createElement('summary');
+        toggle.textContent='Colour key';
+        const content=document.createElement('div');
+        content.className='ks3-colour-key';
+        [['Online lesson','#287852'],['Not yet published','#b5c0b9']].forEach(function(item){
+          const legend=document.createElement('span');
+          legend.className='central-legacy-key-item';
+          const marker=document.createElement('i');
+          marker.className='central-legacy-key-line';
+          marker.style.backgroundColor=item[1];
+          marker.setAttribute('aria-hidden','true');
+          legend.append(marker,document.createTextNode(item[0]));
+          content.append(legend);
+        });
+        key.append(toggle,content);
+        heading.after(key);
+      }
+    }
+  }
+  window.LearningHubNavigation={createTile:createTile,closeAll:closeAll,enhanceLegacy:enhanceLegacy};
 })();
