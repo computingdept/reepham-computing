@@ -351,7 +351,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      const exactGuide=await page.evaluate(()=>window.J277_RESOURCE_INDEX.guideLink(SKILLS[0].id));
      assert(guideLinks.length===1&&guideLinks[0]===exactGuide,
        view+' '+id+' published PDF link matches centralized page and edition',{guideLinks,exactGuide});
-     const guideResponse=await page.request.get(new URL(exactGuide,origin).href,{headers:{Range:'bytes=0-4'}});
+     const guideResponse=await page.request.head(new URL(exactGuide,origin).href);
      assert([200,206].includes(guideResponse.status())&&(guideResponse.headers()['content-type']||'').includes('pdf'),
        view+' '+id+' linked PDF responds as a PDF',{status:guideResponse.status(),type:guideResponse.headers()['content-type']});
      assert(!errors.length,view+' '+id+' no JavaScript errors',errors);
