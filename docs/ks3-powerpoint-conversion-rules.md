@@ -25,6 +25,16 @@
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.
 
+## Shared classroom-focus typography (pilot, 27 October 2026)
+
+- **Teaching focus outranks headings:** the *currently revealed* I Do / We Do step should be readable from the rear of a classroom, not subordinate to large static titles.
+- **Shared CSS:** `assets/h446-lesson/lesson-classroom.css` includes opt-in `body[data-classroom-focus]` rules for smaller phase/card headings, a roomier method panel, and a larger current teaching step. It retains scrolling on shorter screens and one-column reading order on mobile.
+- **Shared JavaScript:** `assets/h446-lesson/lesson.js` adds `syncClassroomFocus()` to the **existing** `updateControl()` flow. It reads the current `.ido-step`/`.wedo-step` hidden state, gives the visible step `.classroom-focus-active`, and otherwise focuses the question/prompt. It must **never** reveal, hide, reorder or advance teaching content.
+- **Pilot only:** `lessons/year7/lesson-003/index.html` has `data-classroom-focus="pilot"` on `body`. Unflagged KS3/J277/H446 lessons remain unchanged while the pilot is checked.
+- **Rollout:** do not edit hundreds of individual lesson files. After representative long-text, code, diagrams and mobile checks, enable the shared rule centrally in the common JS/CSS assets. Keep selectors scoped to I Do/We Do. Identify exceptions automatically and retain rollback by removing/disabling one feature gate.
+- **QA:** test (1) question focus before a reveal, (2) visible step focus after reveal, (3) Previous restores earlier step focus, (4) no styling when flag absent, (5) classroom TV readability without cropped instruction and (6) mobile portrait without horizontal overflow. Source-level tests do not substitute for browser rendering checks.
+- **Status:** shared implementation and pilot committed; pending independent TV and mobile visual confirmation before global rollout.
+
 ## Student-facing editorial standard (approved 27 October 2026)
 
 - **Student screens must read like finished lessons, not notes about converting a PowerPoint.** Include direct teaching explanations, questions, modelled actions and tasks. Do not display phrases such as "the original slides say", "the diagram is an example", "follow current teacher guidance", "this Learning Hub page does not...", or "preview converted from PowerPoint".
@@ -71,6 +81,7 @@
 
 | Date | Lesson | Decision | Status |
 |---|---|---|---|
+| 2026-10-27 | Y7 003 · classroom focus | Use central shared CSS and JS so the current I Do/We Do teaching step, not static headings, commands attention. Roll out after pilot rather than individual lesson edits. | **Pilot — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
