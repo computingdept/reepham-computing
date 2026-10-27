@@ -1,6 +1,6 @@
 # PowerPoint → Online Learning: shared design standard
 
-**Version:** 0.1 · 27 October 2026  
+**Version:** 0.2 · 27 October 2026  
 **Status:** Agreed principles distilled from the RHSC Computing pilot; **a reusable starting point, not an automatic rollout or subject-wide content approval**.  
 **Applies to:** Future school/Trust subject conversions of teacher-authored PowerPoints, worksheets and related resources into Learning Hub lessons.  
 **Related subject-specific rulebook:** [KS3 Computing conversion decisions](ks3-powerpoint-conversion-rules.md).
@@ -77,6 +77,40 @@ The pattern is **illustrative, not mandatory**: other subjects and tasks may nee
 5. **Test representative display cases**: large TV, short-height TV, desktop, mobile portrait, long text, diagrams, code/equations/tables, keyboard access, media links and reveal/back controls.
 6. **Pilot before broad release**. Record layout bugs and design decisions once; fix centrally when feasible; use automated checks for compliance and flag only genuine exceptions for teacher review.
 7. **Record the decision and its status**. Separate *approved standard*, *pilot awaiting visual QA*, *subject-specific choice* and *superseded idea* so an abandoned prototype is not repeated in another department.
+
+
+## 8. Approved rollout sequence and ownership (27 October 2026)
+
+**This is the centrally agreed project strategy, not confirmation that other departments have consented, contributed materials or been scheduled.** The approach remains subject to the relevant department's and school's approval.
+
+### Priorities — protect Computing workload reduction
+
+1. **KS4 Computing (OCR J277):** complete and stabilise teaching and revision resources to reduce the Computing teacher's preparation, delivery and maintenance workload.
+2. **KS5 Computer Science (OCR H446):** complete and stabilise teaching and revision resources for the same workload-reduction purpose.
+3. **KS3 Computing showcase:** aim for **five converted lessons each in Years 7, 8 and 9** (15 lessons total), using original PowerPoints that were **not authored by the project lead**. Test whether the process preserves another teacher's pedagogy, works independently and avoids repeated one-off fixes. No unreviewed KS3 lesson should be marked live.
+4. **Cross-subject pilots after Computing demonstrates the approach:** invite **Science** and **English** first, with departmental AI leads coordinating a small sample of existing lessons. Science tests diagrams/practicals; English tests extended reading, text annotation, modelling and writing. These are *candidate pilots*, not published commitments.
+5. **Maths:** leave for a later, voluntary phase. Show evidence and listen to subject-specific concerns, including notation, worked solutions and existing practices; don't impose the platform or describe caution as a defect.
+
+### Centrally maintained interface — a binding architecture rule
+
+- **One Trust-wide design system:** all reusable layout, typography, task cards, highlighting, stage navigation, reveals, mobile interactions and accessibility behaviours are implemented in **centrally maintained CSS and JavaScript**. Subject lessons supply structured **content**, not per-lesson CSS/JS customisations.
+- Do **not** paste subject-specific fixes into individual pages to make a showcase look polished. When a new activity type needs support, design a **generic, opt-in, reusable component** centrally, then test it across representative KS3/J277/H446 screens before broad activation.
+- Subject variation is legitimate in **curriculum, content, tasks and pedagogical sequence**, but should use a shared set of presentation and interaction primitives. Don't force Computing's exact phases onto Science or English.
+- Allow a **plain first pass**, but **not an unclear, inaccessible or broken one**. Preserve the pupil's ability to know what to do, see relevant content and navigate, even before visual refinements.
+- Diagnose and solve defects **once centrally** where possible. Record whether the fault was content-specific, design-system-wide or a genuine subject-specific exception. Add regression coverage so earlier lessons do not break.
+- Any warranted exception must be centrally documented and supported through a deliberate component/option, not a hidden workaround in a lesson file.
+
+### Responsibilities, review and scale gate
+
+| Role | Owns | Does not automatically own |
+| --- | --- | --- |
+| **Central Learning Hub / conversion process** | Shared CSS/JS, conversion rules, accessible templates, navigation, automated technical checks, staging and publishing | Deciding whether a Science or English explanation is correct |
+| **Departmental AI lead** | Coordinates source packs, liaises with teachers, identifies subject-specific conversion issues and consolidates feedback | Maintaining GitHub, writing bespoke CSS/JS or independently changing curricular intent |
+| **Subject teacher / curriculum owner** | Original teaching intentions, subject accuracy, diagrams/analogies, assessment integrity, approval of meaningful content changes | Debugging common website behaviour or repeating shared UI design decisions |
+
+**Scaling gate:** Before inviting additional departments, show that a representative new PowerPoint can be turned into a correct, accessible lesson with *declining* manual intervention. Evaluate teacher review time, technical exceptions, pupil usability, maintenance effort and regression tests. Do not confuse quantity of published lessons with evidence of workload reduction or scalability.
+
+**Publication rule:** This is a strategy and operating standard only. Do not automatically publish, alter existing teaching content, recruit departments or activate sitewide CSS/JS as a consequence of recording it.
 
 ## Decisions learned from Year 7 Lesson 003
 
