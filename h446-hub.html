@@ -222,8 +222,8 @@ body.pilot-year12 #lessons .note{display:none}
 </style>
 <link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
-<link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-central2">
-<script src="assets/hub-navigation.js?v=20261027-central2"></script>
+<link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-spec1">
+<script src="assets/hub-navigation.js?v=20261027-spec1"></script>
 </head>
 <body class="course-hub course-compact course-inline-nav" data-year="12">
 <header class="topbar">
@@ -471,7 +471,9 @@ function renderLessons(){
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
-        color:curriculumColour(specKey)
+        color:curriculumColour(specKey),
+        specPoint:specKey,
+        specRaw:specKey
       }));
     }
     sec.append(grid);
