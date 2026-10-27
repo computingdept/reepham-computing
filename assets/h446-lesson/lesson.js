@@ -1890,26 +1890,8 @@ function prepareKS3VocabularyIntroduction(){
   overview.dataset.ks3VocabIntro='true';
   document.body.dataset.ks3VocabReady='true';
 
-  // In the established template vocabulary chips also work by touch,
-  // not just desktop hover. They reveal the existing term definition.
-  list.querySelectorAll('.vocab-tip').forEach(chip=>{
-    const toggle=()=>{
-      const isOpen=chip.classList.contains('is-definition-open');
-      list.querySelectorAll('.is-definition-open').forEach(other=>{
-        other.classList.remove('is-definition-open');
-        other.setAttribute('aria-expanded','false');
-      });
-      if(!isOpen){
-        chip.classList.add('is-definition-open');
-        chip.setAttribute('aria-expanded','true');
-      }
-    };
-    chip.setAttribute('aria-expanded','false');
-    chip.addEventListener('click',toggle);
-    chip.addEventListener('keydown',event=>{
-      if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}
-    });
-  });
+  // Existing prepareMobileSwipeNavigation() owns all chip interactions.
+  // Never install duplicate tap or keyboard handlers here.
 }
 
 prepareKS3VocabularyIntroduction();
