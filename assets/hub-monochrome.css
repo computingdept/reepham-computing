@@ -521,3 +521,81 @@ body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .
   border-radius:0;
   background:var(--spec-mark-colour,#999);
 }
+
+
+/* Compact two-row desktop course navigation | centrally shared across KS3, J277 and H446
+   Above 700px only: school bar; subject + tabs; year + colour key; lessons.
+   All lesson content, tiles, Options interactions, and mobile styles remain intact. */
+@media (min-width:701px) {
+  body.course-hub.course-inline-nav .topbar {
+    height:48px;
+    min-height:48px;
+    padding:0 18px;
+  }
+  body.course-hub.course-inline-nav .topbar .mark {
+    width:30px;
+    height:30px;
+    font-size:15px;
+  }
+  body.course-hub.course-inline-nav .topbar .brand {gap:8px}
+  body.course-hub.course-inline-nav .topbar .brand-copy span {
+    font-size:13px;
+    margin-top:0;
+  }
+  body.course-hub.course-inline-nav .topbar .home {
+    padding:5px 9px;
+    font-size:12px;
+  }
+  body.course-hub.course-inline-nav main {padding-top:6px}
+  body.course-hub.course-inline-nav .course-topline,
+  html.synergy-hub-preview body.course-hub.course-inline-nav .course-topline {
+    gap:14px;
+    margin:0 0 5px;
+    padding:0 0 5px;
+    border-bottom:1px solid #e9e9e9;
+  }
+  body.course-hub.course-inline-nav .course-topline .heading h1 {font-size:20px}
+  body.course-hub.course-inline-nav .course-topline .heading .eyebrow {
+    font-size:10px;
+    letter-spacing:.09em;
+    margin:0 0 2px;
+  }
+  body.course-hub.course-inline-nav .course-topline .course-nav .tabs,
+  html.synergy-hub-preview body.course-hub.course-inline-nav .course-topline .course-nav .tabs {
+    gap:6px;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+  }
+  body.course-hub.course-inline-nav .course-topline .course-nav .tabs .tab,
+  html.synergy-hub-preview body.course-hub.course-inline-nav .course-topline .course-nav .tabs .tab {
+    min-height:34px;
+    padding:5px 6px;
+    font-size:13px;
+  }
+  body.course-hub.course-inline-nav #lessons .year-toolbar {
+    gap:6px;
+    margin:0 0 3px;
+  }
+  body.course-hub.course-inline-nav #lessons .year-switch {gap:5px;margin:0}
+  body.course-hub.course-inline-nav #lessons .year-switch .year-btn {
+    min-height:34px;
+    padding:5px 10px;
+    font-size:13px;
+  }
+  body.course-hub.course-inline-nav #lessons .year-tools {gap:6px}
+  body.course-hub.course-inline-nav #lessons .year-tools .count {display:none}
+  body.course-hub.course-inline-nav #lessons .course-key summary {
+    min-height:34px;
+    padding:5px 9px;
+  }
+  body.course-hub.course-inline-nav #lessons .term {margin:6px 0 10px}
+  body.course-hub.course-inline-nav #lessons .term-head {
+    padding:6px 9px;
+    margin:0 0 2px;
+  }
+  body.course-hub.course-inline-nav #lessons .lesson-grid {
+    padding:8px;
+  }
+}
