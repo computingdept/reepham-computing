@@ -25,6 +25,16 @@
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.
 
+## Student-facing editorial standard (approved 27 October 2026)
+
+- **Student screens must read like finished lessons, not notes about converting a PowerPoint.** Include direct teaching explanations, questions, modelled actions and tasks. Do not display phrases such as "the original slides say", "the diagram is an example", "follow current teacher guidance", "this Learning Hub page does not...", or "preview converted from PowerPoint".
+- **Keep authoring notes, uncertain policy details, platform-change caveats and rationale in this conversion rulebook or code comments**, not in learner-facing objectives, diagrams, activities, answer reveals, headers or footers.
+- **Write direct instructions:** "Open OneDrive" rather than "use the route shown by your teacher"; "Save your work in OneDrive so you can access it at home" rather than explaining what the original task meant.
+- **Keep necessary safety instructions** as direct, short pupil actions (e.g. "Keep your password private" and "Crop screenshots so private details are not visible"). Do not remove genuinely educational or safeguarding content when removing commentary.
+- **Preserve the standard classroom phase labels and routines:** "I Do · Teacher demonstration" and exit reflection instructions remain useful elements of the agreed lesson interface.
+- **Final QA:** search the rendered page content for "original", "PowerPoint", "teacher guidance", "pilot", "preview", "current instructions", "this website", and similar editorial phrases. Remove or relocate any that do not serve a real pupil learning action. Do not remove the underlying curriculum content.
+- Only approved converted lessons appear as completed in the KS3 hub; removing "pilot" from the learner screen **does not publish the lesson**.
+
 ## B. Visual & accessibility (established by Lesson 003 corrections)
 
 - Match J277/H446 lesson UI rather than building an independent KS3 visual system. Use responsive layout for classroom display and portrait phones; the same lesson must be understandable in both.
@@ -71,6 +81,7 @@
 | 2026-10-27 | Y7 001 | Keep all original teaching strands: expectations, AUA, filtering, monitoring, sign-in, work presentation and safe evidence. | Pilot — pending review |
 | 2026-10-27 | Y7 001 | Preserve three separate presentation expectations: green folders, paper lessons, Class Notebook; a generic "work neatly" summary loses important instruction. | Pilot — pending review |
 | 2026-10-27 | Y7 001 | A blank/branding-only slide need not become a learning phase; repeat "organisation" slides may be consolidated while retaining each action. | Pilot — pending review |
+| 2026-10-27 | Y7 004 | Student-facing prose must contain teaching and actions only; remove conversion commentary, policy caveats and unnecessary teacher guidance from visible screens. Preserve brief privacy/safety instructions. | **Approved rule** |
 | 2026-10-27 | Y7 004 | Where Microsoft interface screenshots may be outdated, replace with **illustrative SVGs** labelling stable concepts (folder, launcher, notebook, screenshot), not falsely exact screenshots of today's interface. | Pilot — pending review |
 | 2026-10-27 | Y7 004 | Preserve prior-lesson review (Teams Hand In, OneNote, Teams areas, To/Cc/Bcc), including four separate answer screens, and move practical signing-in order into visual new learning. | Pilot — pending review |
 | 2026-10-27 | Y7 004 | Preserve precise Class Notebook evidence task: date on the `7.1 Introduction to Computing` page, screenshots of homework email **and** Teams assignment, safely cropped. | Pilot — pending review |
@@ -127,5 +138,6 @@ Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teac
 - [ ] SVGs labelled, readable on TV/mobile; images accurately represent content.
 - [ ] External links tested; no disabled iframe/unsupported auto-play.
 - [ ] No real passwords/pupil identifiers or obsolete policies presented as current.
+- [ ] No authoring/PowerPoint commentary, teacher-only implementation notes or generic caveats appear in pupil-facing screens.
 - [ ] JS syntax, required page structure, CSS paths and live-map publication checked.
 - [ ] Live-browser visual and interaction QA logged separately from repository checks.
