@@ -807,6 +807,37 @@ function updateMobileLessonStatus(){
   if(phase)phase.textContent=phaseName+' · '+phaseIndex+' / '+order.length;
 }
 
+/* Shared I Do / We Do classroom focus. Opt-in during the Year 7 003 pilot.
+   Read the existing hidden/revealed state; do not advance, reveal, re-order or
+   inject any lesson content. Later rollout needs only the body feature flag. */
+function syncClassroomFocus(){
+  if(document.body.dataset.classroomFocus!=='pilot'&&
+     document.body.dataset.classroomFocus!=='on')return;
+  for(const phase of ['i-do','we-do']){
+    const page=document.getElementById(phase);
+    if(!page)continue;
+    page.querySelectorAll('.classroom-focus-active').forEach(el=>
+      el.classList.remove('classroom-focus-active'));
+    page.querySelectorAll('[data-classroom-focus-stage]').forEach(el=>
+      el.removeAttribute('data-classroom-focus-stage'));
+    if(current!==phase)continue;
+    const example=page.querySelector(phase==='i-do'
+      ?'.ido-example:not([hidden])':'.wedo-example:not([hidden])');
+    if(!example)continue;
+    const step=example.querySelector(phase==='i-do'
+      ?'.ido-step:not([hidden])':'.wedo-step:not([hidden])');
+    const panel=example.querySelector('.method-panel,.ido-method,.wedo-practice');
+    if(step){
+      step.classList.add('classroom-focus-active');
+      if(panel)panel.dataset.classroomFocusStage='step';
+    }else{
+      const prompt=example.querySelector('.prompt-panel,.ido-reference,.wedo-reference');
+      if(prompt)prompt.classList.add('classroom-focus-active');
+      if(panel)panel.dataset.classroomFocusStage='question';
+    }
+  }
+}
+
 function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
@@ -966,6 +997,7 @@ function updateControl(){
   advance.textContent=label;
   previous.disabled=order.indexOf(current)===0||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
+  syncClassroomFocus();
   updateMobileLessonStatus();
 }
 function showPage(id){
