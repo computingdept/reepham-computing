@@ -416,7 +416,7 @@ function renderPilotLanding(){
         <span class="gateway-card-copy"><strong>KS3 Computing</strong><small>Years 7–9 · Lessons and learning resources</small></span>
         <span class="gateway-arrow" aria-hidden="true">›</span>
       </a>
-      <a class="gateway-card gateway-gcse" href="j277-hub.html?year=10" aria-label="GCSE Computer Science, OCR J277 learning hub">
+      <a class="gateway-card gateway-gcse" href="j277-hub.html?year=10&amp;v=20261027-j277-cards" aria-label="GCSE Computer Science, OCR J277 learning hub">
         <span class="gateway-card-copy"><strong>GCSE Computer Science</strong><small>OCR J277 · Years 10–11</small></span>
         <span class="gateway-arrow" aria-hidden="true">↗</span>
       </a>
@@ -479,7 +479,7 @@ let external='';if(school.id==='reepham'&&s==='Computer Science')external=y>11?'
 if(school.id==='reepham'&&s==='Information Technology')external='it-j836-hub.html';
 if(external){
   const hubTab=tab==='revision'?'revisionhub':tab;
-  location.replace(external+'?year='+y+'#'+hubTab);
+  location.replace(external+'?year='+y+(external==='j277-hub.html'?'&v=20261027-j277-cards':'')+'#'+hubTab);
   return;
 }
 let content;
