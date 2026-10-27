@@ -12,6 +12,41 @@
 .exam-date{font-size:24px;font-weight:900;color:var(--green-dark);margin:5px 0 8px}
 .badge{display:inline-block;width:max-content;padding:5px 8px;border-radius:20px;background:var(--green-pale);color:var(--green-mid);font-size:12px;font-weight:900;margin-bottom:10px}
 
+
+/* Reuse the H446 revision-guide card design: same two paper cards, colours,
+   diagrams, typography, actions, focus, motion and responsive layout. */
+.cards.h446-guides{grid-template-columns:repeat(2,minmax(0,1fr))}
+.h446-guide-card{min-height:205px;position:relative;border-top:5px solid var(--h446-guide-accent)}
+.h446-guide-paper1{--h446-guide-accent:#417fa5}
+.h446-guide-paper2{--h446-guide-accent:#b77a3b}
+.h446-guide-card .kicker{color:#415b52}
+.h446-guide-card h3{font-size:clamp(19px,2vw,24px)}
+.h446-guide-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:auto;padding-top:23px}
+.course-hub .card .h446-guide-actions a.action{margin-top:0}
+.h446-guide-download{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid #a9beb3;border-radius:6px;color:#124937;text-decoration:none;font-weight:800}
+.h446-guide-download:hover,.h446-guide-download:focus-visible{background:#e5f2ec}
+
+@media(max-width:700px){
+  .cards.h446-guides{grid-template-columns:1fr}
+  .h446-guide-card{min-height:175px}
+  .h446-guide-actions{padding-top:15px}
+}
+/* Polished revision-guide cards; confined to the booklet panel. */
+#booklet .h446-guide-card{min-height:245px;padding:26px 24px 20px;border-radius:14px;border-top:5px solid var(--h446-guide-accent);box-shadow:0 8px 22px rgba(18,61,48,.06);transition:transform .18s ease,box-shadow .18s ease}
+#booklet .h446-guide-card .kicker{align-self:flex-start;padding:7px 11px;margin:0;border-radius:6px;background:#edf4f9;color:#294c5f;font-size:12px;letter-spacing:.07em}
+#booklet .h446-guide-paper2 .kicker{background:#faf1e7;color:#845221}
+#booklet .h446-guide-icon{position:absolute;right:24px;top:25px;width:28px;height:28px;color:var(--h446-guide-accent)}
+#booklet .h446-guide-card h3{font-size:clamp(23px,2.2vw,28px);line-height:1.16;letter-spacing:-.5px;margin:28px 0 24px;max-width:100%}
+#booklet .h446-guide-actions{gap:10px;padding-top:0}
+#booklet .h446-guide-actions a.action{min-height:44px;box-sizing:border-box;padding:12px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:9px}
+#booklet .h446-guide-download{border:0;border-radius:5px;padding:10px 5px;min-height:44px;box-sizing:border-box;font-size:14px;color:#365e4e;gap:6px}
+#booklet .h446-guide-actions a:focus-visible{outline:3px solid #c18b35;outline-offset:3px}
+@media(hover:hover){#booklet .h446-guide-card:hover{transform:translateY(-3px);box-shadow:0 13px 28px rgba(18,61,48,.1)}}
+@media(max-width:700px){#booklet .h446-guide-card{min-height:210px;padding:23px 22px 20px}#booklet .h446-guide-card h3{margin:24px 0}#booklet .h446-guide-icon{right:22px;top:22px}}
+@media(prefers-reduced-motion:reduce){#booklet .h446-guide-card{transition:none}#booklet .h446-guide-card:hover{transform:none}}
+
+
+
 /* J277 lesson previews: hover on desktop, tap the information button on mobile. */
 .term{overflow:visible!important}.lesson-entry{position:relative;min-width:0}.lesson-entry:hover,.lesson-entry:focus-within{z-index:40}.lesson-entry>.lesson{display:flex;align-items:center;justify-content:center;width:100%;height:100%;box-sizing:border-box;padding-right:24px}.lesson-info{position:absolute;right:5px;top:50%;transform:translateY(-50%);z-index:2;width:24px;height:24px;padding:0;border-radius:50%;border:1px solid #88b4a4;background:#fff;color:#245e4c;font-weight:800;cursor:pointer}.lesson-popup{display:none;position:absolute;bottom:calc(100% + 8px);left:0;min-width:245px;max-width:min(330px,80vw);padding:13px 15px;border:1px solid #88b4a4;border-radius:10px;background:#fff;box-shadow:0 9px 25px #123a2926;z-index:100;color:#244638;font-size:13px;line-height:1.5}.lesson-popup strong,.lesson-detail strong{display:block;font-size:15px;margin-bottom:6px}.lesson-popup ul,.lesson-detail ul{margin:5px 0 0;padding-left:18px}.lesson-detail{display:none;margin:10px 0 5px;padding:12px;border:1px solid #a5cbbb;background:#f1f8f4;border-radius:9px;color:#244638;font-size:13px}.lesson-detail[aria-hidden="false"]{display:block}@media(hover:hover) and (pointer:fine){.lesson-entry:hover>.lesson-popup,.lesson-entry:focus-within>.lesson-popup{display:block}}@media(hover:none),(pointer:coarse){.lesson-popup{display:none!important}}
 
@@ -122,23 +157,28 @@
 </head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
-<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision Booklet</span><span class="nav-short">Booklet</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision Hub</span><span class="nav-short">Practice</span></button></div></nav></div>
+<nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision guides</span><span class="nav-short">Guides</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision practice</span><span class="nav-short">Practice</span></button></div></nav></div>
 <section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div id="terms"></div></section>
-<section class="panel" id="booklet" data-j277-guides="published">
-  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));max-width:860px">
-    <article class="card">
-      <p class="kicker">Paper 1 · Computer Systems</p>
-      <h3>Revision Guide · Paper 1</h3>
-      <p>94 pages · theory, worked examples and examination practice.</p>
-      <a class="action" href="revision/j277/guides/J277_Paper_1_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" target="_blank" rel="noopener" aria-label="Read J277 Paper 1 revision guide">Read revision guide</a>
-      <a href="revision/j277/guides/J277_Paper_1_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" download aria-label="Download J277 Paper 1 revision guide" style="margin-top:10px;color:var(--green-dark);font-weight:700">Download PDF</a>
+<section class="panel" id="booklet" data-j277-guides="published" aria-labelledby="j277RevisionGuidesHeading">
+  <div class="summary"><h2 id="j277RevisionGuidesHeading">Revision guides</h2><span class="count">For Year 10 &amp; Year 11</span></div>
+  <div class="cards h446-guides" role="list">
+    <article class="card h446-guide-card h446-guide-paper1" role="listitem">
+      <p class="kicker">Paper 1</p>
+      <svg class="h446-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/></svg>
+      <h3>Computer Systems</h3>
+      <div class="h446-guide-actions">
+        <a class="action" href="revision/j277/guides/J277_Paper_1_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" target="_blank" rel="noopener" aria-label="Read J277 Paper 1 Computer Systems revision guide online">Read <span aria-hidden="true">↗</span></a>
+        <a class="h446-guide-download" href="revision/j277/guides/J277_Paper_1_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" download aria-label="Download J277 Paper 1 revision guide"><span aria-hidden="true">↓</span> Download</a>
+      </div>
     </article>
-    <article class="card">
-      <p class="kicker">Paper 2 · Computational Thinking and Programming</p>
-      <h3>Revision Guide · Paper 2</h3>
-      <p>97 pages · theory, worked examples and examination practice.</p>
-      <a class="action" href="revision/j277/guides/J277_Paper_2_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" target="_blank" rel="noopener" aria-label="Read J277 Paper 2 revision guide">Read revision guide</a>
-      <a href="revision/j277/guides/J277_Paper_2_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" download aria-label="Download J277 Paper 2 revision guide" style="margin-top:10px;color:var(--green-dark);font-weight:700">Download PDF</a>
+    <article class="card h446-guide-card h446-guide-paper2" role="listitem">
+      <p class="kicker">Paper 2</p>
+      <svg class="h446-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/></svg>
+      <h3>Algorithms and Programming</h3>
+      <div class="h446-guide-actions">
+        <a class="action" href="revision/j277/guides/J277_Paper_2_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" target="_blank" rel="noopener" aria-label="Read J277 Paper 2 Computational Thinking, Algorithms and Programming revision guide online">Read <span aria-hidden="true">↗</span></a>
+        <a class="h446-guide-download" href="revision/j277/guides/J277_Paper_2_Revision_Guide_AP1_Aligned.pdf?v=AP1-aligned-2026-10-27-uploaded" download aria-label="Download J277 Paper 2 revision guide"><span aria-hidden="true">↓</span> Download</a>
+      </div>
     </article>
   </div>
 </section>
