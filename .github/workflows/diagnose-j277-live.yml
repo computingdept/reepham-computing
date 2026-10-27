@@ -1,0 +1,49 @@
+name: Diagnose live J277 revision-guide delivery
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diagnose-j277-live.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check live HTML with and without a cache-busting query
+        run: |
+          python3 - <<'PY'
+          import urllib.request,urllib.error,re
+          from pathlib import Path
+          url='https://rhsccs.org/j277-hub.html'
+          tests=[
+            ('canonical',url),
+            ('year10',url+'?year=10'),
+            ('fresh',url+'?year=10&v=20261027-j277-cards'),
+            ('github-pages-domain','https://computingdept.github.io/reepham-computing/j277-hub.html?v=20261027-j277-cards'),
+          ]
+          for label,target in tests:
+            try:
+              req=urllib.request.Request(target,headers={'User-Agent':'Mozilla/5.0','Cache-Control':'no-cache'})
+              with urllib.request.urlopen(req,timeout=12) as r:
+                s=r.read().decode('utf-8','replace')
+                print(label,'status',r.status,'length',len(s),
+                      'newCards',('<div class="cards h446-guides" role="list">' in s),
+                      'oldCards',('Revision Guide · Paper 1' in s),
+                      'oldTab',('Revision Booklet' in s),
+                      'newTab',('<span class="nav-full">Revision guides</span>' in s),
+                      'cache-control',r.headers.get('Cache-Control'),
+                      'age',r.headers.get('Age'),
+                      'etag',r.headers.get('ETag'),
+                      'last-modified',r.headers.get('Last-Modified'),
+                      'url',r.url)
+            except Exception as e:
+              print(label,'ERROR',repr(e))
+          s=Path('j277-hub.html').read_text()
+          print('GIT_SOURCE','newCards',('<div class="cards h446-guides" role="list">' in s),
+            'oldCards',('Revision Guide · Paper 1' in s),
+            'oldTab',('Revision Booklet' in s),'newTab',('<span class="nav-full">Revision guides</span>' in s))
+          PY
