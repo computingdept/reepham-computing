@@ -1,0 +1,101 @@
+/* Focused H446/J277 Revision Guides visual-contract regression.
+   This intentionally excludes unrelated Revision Practice/quiz UI work. */
+const { chromium } = require("playwright");
+const assert = require("node:assert/strict");
+const { writeFileSync, mkdirSync } = require("node:fs");
+const base="http://127.0.0.1:8765";
+(async()=>{
+  const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+  try{
+    mkdirSync("/tmp/j277-guide-layout",{recursive:true});
+    for(const viewport of [{width:1280,height:800,name:"tv"},{width:390,height:844,name:"phone"}]){
+      const snapshots={};
+      for(const course of ["h446","j277"]){
+        const context=await browser.newContext({viewport:{width:viewport.width,height:viewport.height},deviceScaleFactor:1});
+        const page=await context.newPage();
+        await page.goto(base+"/"+course+"-hub.html#booklet",{waitUntil:"networkidle"});
+        await page.locator('[data-tab="booklet"]').click();
+        const result=await page.evaluate(()=>{
+          const panel=document.querySelector("#booklet");
+          const cards=[...panel.querySelectorAll(".h446-guide-card")];
+          function style(selector,props){
+            const el=panel.querySelector(selector);
+            assertPresent(el,selector);
+            const css=getComputedStyle(el);
+            return Object.fromEntries(props.map(k=>[k,css.getPropertyValue(k).trim()]));
+          }
+          function assertPresent(el,name){if(!el)throw Error("Missing element: "+name)}
+          const grid=panel.querySelector(".cards.h446-guides");
+          assertPresent(grid,"two-column guide grid");
+          return {
+            panelVisible:getComputedStyle(panel).display!=="none",
+            header:panel.querySelector(".summary h2")?.textContent.trim(),
+            count:cards.length,
+            gridCols:getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+            titles:cards.map(el=>el.querySelector("h3")?.textContent.trim()),
+            accent:cards.map(el=>getComputedStyle(el).borderTopColor),
+            cards:cards.map(el=>({
+              css:{
+                minHeight:getComputedStyle(el).minHeight,
+                padding:getComputedStyle(el).padding,
+                radius:getComputedStyle(el).borderTopLeftRadius,
+                shadow:getComputedStyle(el).boxShadow
+              },
+              rect:{x:el.getBoundingClientRect().x,y:el.getBoundingClientRect().y,w:el.getBoundingClientRect().width,h:el.getBoundingClientRect().height},
+              action:{
+                font:getComputedStyle(el.querySelector("a.action")).fontSize,
+                height:getComputedStyle(el.querySelector("a.action")).minHeight,
+                radius:getComputedStyle(el.querySelector("a.action")).borderRadius,
+                padding:getComputedStyle(el.querySelector("a.action")).padding
+              },
+              tag:{
+                fill:getComputedStyle(el.querySelector(".kicker")).backgroundColor,
+                color:getComputedStyle(el.querySelector(".kicker")).color
+              },
+              links:[...el.querySelectorAll(".h446-guide-actions a")].map(a=>({label:a.textContent.trim(),href:a.getAttribute("href"),download:a.hasAttribute("download"),blank:a.target==="_blank"})),
+              icon:!!el.querySelector("svg.h446-guide-icon")
+            })),
+            screenWidth:document.documentElement.scrollWidth,
+            viewportWidth:innerWidth
+          };
+        });
+        assert.equal(result.panelVisible,true,course+" revision guide panel not visible");
+        assert.equal(result.count,2,course+" expected two cards");
+        assert.equal(result.gridCols,viewport.width<=700?1:2,course+" column count");
+        assert.deepEqual(result.titles,["Computer Systems","Algorithms and Programming"]);
+        assert.ok(result.cards.every(c=>c.icon),course+" missing guide icon");
+        assert.ok(result.cards.every(c=>c.links.length===2&&c.links[0].blank&&c.links[1].download),course+" wrong read/download actions");
+        assert.equal(result.screenWidth<=result.viewportWidth,true,course+" horizontal screen overflow");
+        for(const card of result.cards){
+          assert.ok(card.rect.x>=0 && card.rect.x+card.rect.w<=viewport.width+1,course+" card clipped");
+        }
+        if(course==="j277"){
+          for(const [i,filename] of ["J277_Paper_1_Revision_Guide_AP1_Aligned.pdf","J277_Paper_2_Revision_Guide_AP1_Aligned.pdf"].entries()){
+            const links=result.cards[i].links;
+            assert.ok(links.every(link=>link.href.includes(filename)),course+" PDF href mismatch");
+            const response=await context.request.head(base+"/revision/j277/guides/"+filename);
+            assert.equal(response.status(),200,"PDF not available on site");
+            assert.match(response.headers()["content-type"],/application\/pdf/);
+          }
+        }
+        await page.screenshot({path:"/tmp/j277-guide-layout/"+course+"-"+viewport.name+".png",fullPage:false});
+        snapshots[course]=result;
+        await context.close();
+      }
+      for(const i of [0,1]){
+        const a=snapshots.h446.cards[i],b=snapshots.j277.cards[i];
+        assert.equal(a.css.minHeight,b.css.minHeight,"card height mismatch");
+        assert.equal(a.css.padding,b.css.padding,"card padding mismatch");
+        assert.equal(a.css.radius,b.css.radius,"card radius mismatch");
+        assert.equal(a.action.radius,b.action.radius,"Read button radius mismatch");
+        assert.equal(a.action.height,b.action.height,"Read button height mismatch");
+        assert.equal(a.action.padding,b.action.padding,"Read button padding mismatch");
+        assert.equal(a.tag.fill,b.tag.fill,"paper badge fill mismatch");
+        assert.equal(snapshots.h446.accent[i],snapshots.j277.accent[i],"paper accent mismatch");
+        assert.ok(Math.abs(a.rect.w-b.rect.w)<5,"card width mismatch");
+      }
+      console.log("PASS "+viewport.name+": same card styles, "+snapshots.j277.gridCols+" columns, both PDF links readable");
+      writeFileSync("/tmp/j277-guide-layout/results-"+viewport.name+".json",JSON.stringify(snapshots,null,2));
+    }
+  } finally {await browser.close()}
+})().catch(err=>{console.error("J277 GUIDE LAYOUT FAIL",err.stack||err);process.exitCode=1});
