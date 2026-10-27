@@ -109,6 +109,9 @@ for source_no in range(1,len(old)+1):
         for bb,*rest in replacements:
             page.add_redact_annot(bb,fill=False)
         page.apply_redactions(images=0,graphics=0)
+        # Redaction rewrites page resources: register fonts again before adding text.
+        page.insert_font(fontname='GuideBody',fontfile=FONT)
+        page.insert_font(fontname='GuideBold',fontfile=BOLD)
         for bb,x,y,newer,size,is_bold,rgb,before in replacements:
             page.insert_text((x,y),newer,fontname='GuideBold' if is_bold else 'GuideBody',fontsize=size,color=rgb)
             changes.append((source_no,before,newer,round(size,1)))
