@@ -1,0 +1,59 @@
+name: H446 Paper 2 existing-table highlighting
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/mark_h446_paper2_existing_vocab.py'
+      - '.github/workflows/h446-paper2-existing-vocab.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PDF tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core libcairo2
+          python -m pip install pymupdf==1.26.4 cairosvg==2.7.1
+      - name: Highlight existing Paper 2 terminology like lessons
+        run: python tools/revision/mark_h446_paper2_existing_vocab.py
+      - name: Regenerate guide destinations
+        run: python tools/revision/build_guide_links.py
+      - name: Audit all 146 H446 feedback topic destinations
+        run: python tools/revision/audit_h446_feedback.py
+      - name: Validate all 179 page mappings
+        run: |
+          python - <<'PY'
+          import fitz,json
+          from pathlib import Path
+          g=Path('revision/h446/guides')
+          d=json.loads((g/'paper-2-page-map.json').read_text())
+          pdf=fitz.open(g/'H446_Paper_2_REVIEW_READY_2026-10-21.pdf')
+          assert len(pdf)==179==d['page_count']
+          assert d['edition']=='2026-10-27-all-keywords'
+          assert len(d['page_keys'])==179
+          assert sorted(d['page_keys'].values())==list(range(1,180))
+          print('PASS: 179 pages, unchanged destinations and new marker strokes')
+          PY
+          git diff --check
+      - name: Publish PDF and H446 feedback mapping together
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revision/h446/guides/H446_Paper_2_REVIEW_READY_2026-10-21.pdf
+          git add revision/h446/guides/paper-2-page-map.json revision/h446/guide-links.js
+          git add h446-hub.html docs/audits/h446-feedback-destinations-20261023.csv
+          git add docs/audits/h446-paper2-legacy-marker-20261027.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Finish H446 Paper 2 shared lesson-style keyword highlighting"
+            git push
+          fi
