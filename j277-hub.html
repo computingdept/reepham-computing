@@ -159,91 +159,53 @@
 }
 /* Shared practice tile CSS: /revision/shared/revision-ui.css */
 
-/* Unified course navigation pilot: same visible actions on desktop and mobile. */
-#lessons .lesson-finder{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 12px;align-items:center;margin:8px 0 12px;padding:12px 15px;background:#f5f8f6;border:1px solid #d8e5df;border-radius:10px}
-#lessons .lesson-finder label{font-size:14px;font-weight:800;color:#143f32}
-#lessons .lesson-finder input{min-width:0;width:100%;border:1px solid #a3bfb0;background:#fff;border-radius:8px;min-height:45px;padding:10px 12px;font-size:15px;color:#143f32}
-#lessons .lesson-finder input:focus-visible{outline:3px solid #b6cfc3;outline-offset:2px}
-#lessons #lessonFindTip{grid-column:2;grid-row:2;font-size:12px;color:#476558}
-#lessons #lessonFindCount{grid-column:3;grid-row:1;font-size:12px;color:#567166;white-space:nowrap}
-#lessons .lesson-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch;padding:12px}
-#lessons .lesson-entry.lesson-choice{min-width:0;display:flex;flex-direction:column;gap:8px;padding:12px 13px;background:#fff;border:1px solid #d8e4de;border-left:4px solid var(--spec-colour,#357358);border-radius:9px;box-shadow:0 1px 3px rgba(17,54,37,.03)}
-#lessons .lesson-entry.lesson-choice:focus-within{z-index:1}
-#lessons .lesson-choice-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-#lessons .lesson-choice-number{font-variant-numeric:tabular-nums;font-size:13px;font-weight:850;color:#1f5944}
-#lessons .lesson-choice-spec{font-size:10px;color:#5c7067;text-align:right}
-#lessons .lesson-choice-title{display:block;min-height:38px;font-size:15px;line-height:1.25;font-weight:850;color:#173d31;text-decoration:none}
-#lessons a.lesson-choice-title:hover{text-decoration:underline;text-underline-offset:3px}
-#lessons .lesson-choice-objective{font-size:12px;line-height:1.35;color:#556a60;margin:0;min-height:32px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-#lessons .lesson-choice-actions{display:flex;align-items:stretch;gap:7px;margin-top:auto}
-#lessons .lesson-choice-actions a{flex:1 1 0;min-height:43px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid #a4c0b3;padding:7px;text-decoration:none;font-size:13px;font-weight:800;text-align:center;line-height:1.25}
-#lessons .lesson-choice-actions .action-open{background:#064938;border-color:#064938;color:#fff}
-#lessons .lesson-choice-actions .action-open:hover{background:#036047}
-#lessons .lesson-choice-actions .action-independent{background:#eff7f2;color:#154d3d}
-#lessons .lesson-choice-actions .action-independent:hover{background:#dbece1}
-#lessons .lesson-choice-actions .action-waiting{display:flex;flex:1 1 0;align-items:center;justify-content:center;min-height:43px;padding:7px;font-size:12px;line-height:1.25;text-align:center;background:#f5f6f5;border:1px dashed #cedbd2;color:#65766b;cursor:default}
-#lessons .lesson-choice-actions a:focus-visible{outline:3px solid #dfad3e;outline-offset:2px}
-#lessons .lesson-choice-state{font-size:12px;color:#64766c;margin-top:auto}
-#lessons .lesson-choice-welcome{justify-content:center;background:#f2f8f3;border-left-color:#438b6a}
-#lessons .lesson-choice-welcome .lesson-choice-title{min-height:auto}
-#lessons .lesson-choice-welcome .lesson-choice-objective{min-height:auto}
-#lessons .term[hidden],#lessons .lesson-entry[hidden]{display:none!important}
-@media(max-width:960px){#lessons .lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){
-#lessons .lesson-finder{grid-template-columns:1fr;padding:10px;gap:5px}
-#lessons .lesson-finder label,#lessons .lesson-finder input,#lessons #lessonFindTip,#lessons #lessonFindCount{grid-column:1;grid-row:auto}
-#lessons #lessonFindTip{line-height:1.4}
-#lessons .lesson-grid{grid-template-columns:1fr;gap:8px;padding:9px}
-#lessons .lesson-entry.lesson-choice{padding:10px 12px;gap:6px}
-#lessons .lesson-choice-title{min-height:0;font-size:15px}
-#lessons .lesson-choice-objective{min-height:0}
-#lessons .lesson-choice-actions a{min-height:46px}
-}
-@media(min-width:560px) and (max-width:700px){#lessons .lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
-/* Compact lesson navigation — same three routes, across mouse, touch and keyboard. */
-#lessons .lesson-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;align-items:stretch;padding:10px 6px 12px;overflow:visible}
-#lessons .lesson-entry.lesson-choice{position:relative;display:flex;flex-direction:column;align-items:stretch;min-width:0;min-height:91px;padding:0;gap:0;border:1px solid #d7e2dc;border-top:3px solid var(--spec-colour,#3a7c5b);border-left:1px solid #d7e2dc;border-radius:8px;background:#fff;box-shadow:0 1px 4px #153b2810;overflow:visible}
-#lessons .lesson-entry.lesson-choice:hover,#lessons .lesson-entry.lesson-choice:focus-within,#lessons .lesson-entry.lesson-choice[data-menu-open="true"]{z-index:45;border-color:#8bb4a0;box-shadow:0 4px 16px #173c2e18}
-#lessons .lesson-tile-open{display:flex;flex:1 1 auto;flex-direction:column;align-items:center;justify-content:center;min-width:0;gap:4px;padding:8px 5px 5px;text-decoration:none;text-align:center;color:#133f2c}
-#lessons .lesson-tile-open:hover{color:#064b33;background:#edf6ef}
-#lessons .lesson-tile-open:focus-visible,#lessons .lesson-options-toggle:focus-visible{outline:3px solid #dbb14c;outline-offset:0}
-#lessons .lesson-tile-number{font-size:18px;font-weight:850;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
-#lessons .lesson-tile-title{width:100%;font-size:11px;line-height:1.2;font-weight:650;color:#4a6054;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
-#lessons .lesson-tile-unavailable{color:#718078;background:#f9faf9}
+/* Compact J277 navigation: one tile, three actions, no nested boxes.
+   Reset legacy .lesson-grid a/span rules locally; do not affect H446 or KS3. */
+#lessons .lesson-finder{display:flex;align-items:center;gap:10px;margin:8px 0 10px;padding:7px 10px;background:#f7faf8;border:1px solid #e1eae5;border-radius:8px}
+#lessons .lesson-finder label{font-size:13px;font-weight:800;white-space:nowrap;color:#194631}
+#lessons .lesson-finder input{flex:1;min-width:0;height:42px;padding:9px 11px;border:1px solid #acc8b9;border-radius:7px;background:#fff;font:inherit;font-size:14px;color:#194631}
+#lessons .lesson-finder input:focus-visible{outline:3px solid #b0d4bd;outline-offset:2px}
+#lessons #lessonFindTip{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#lessons #lessonFindCount{font-size:12px;color:#587366;white-space:nowrap}
+body.course-hub #lessons .lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;align-items:stretch;padding:10px 4px 12px;overflow:visible}
+#lessons .lesson-entry.lesson-choice{position:relative;display:flex;flex-direction:column;min-width:0;min-height:78px;gap:0;padding:0;border:1px solid #d4e1d8;border-top:3px solid var(--spec-colour,#568974);border-radius:8px;background:#fff;box-shadow:none;overflow:visible}
+#lessons .lesson-entry.lesson-choice:hover,#lessons .lesson-entry.lesson-choice:focus-within,#lessons .lesson-entry.lesson-choice[data-menu-open="true"]{z-index:50;border-color:#92baa2;box-shadow:0 4px 13px #1a423019}
+#lessons .lesson-grid .lesson-choice span{display:inline;align-items:initial;justify-content:initial;min-width:0;min-height:0;padding:0;border:0;border-radius:0;background:transparent;font-weight:inherit;text-decoration:none}
+#lessons .lesson-grid .lesson-choice a{display:flex;min-width:0;min-height:0;border:0;border-radius:0;box-shadow:none;text-decoration:none}
+#lessons .lesson-tile-open{flex:1;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;padding:7px 4px 5px;color:#143d30;text-align:center}
+#lessons .lesson-tile-open:hover{background:#f1f8f3;color:#064c35}
+#lessons .lesson-tile-open:focus-visible,#lessons .lesson-options-toggle:focus-visible{outline:3px solid #dfb54c;outline-offset:0}
+#lessons .lesson-tile-number{font-size:18px;font-weight:850!important;letter-spacing:-.2px;font-variant-numeric:tabular-nums;line-height:1.1}
+#lessons .lesson-grid .lesson-choice .lesson-tile-title{display:block;width:100%;min-height:0;font-size:10px;line-height:1.25;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#597064}
+#lessons .lesson-tile-unavailable{background:#fafbfa;color:#718078}
 #lessons .lesson-tile-unavailable .lesson-tile-number{color:#67746d}
-#lessons .lesson-options-toggle{display:block;width:100%;min-height:32px;padding:5px 4px;border:0;border-top:1px solid #dce7df;background:#f3f7f4;color:#1d6047;border-radius:0 0 7px 7px;font-family:inherit;font-size:11px;font-weight:800;cursor:pointer}
-#lessons .lesson-options-toggle:hover,#lessons .lesson-options-toggle[aria-expanded="true"]{background:#e5f1e8}
-#lessons .lesson-scenarios{position:absolute;top:100%;left:0;z-index:100;width:min(304px,calc(100vw - 26px));display:none;padding:13px;background:#fff;border:1px solid #9ebcaa;border-radius:10px;box-shadow:0 12px 29px #0f322b30;text-align:left}
+#lessons .lesson-options-toggle{width:100%;min-height:30px;padding:4px 3px;border:0;border-top:1px solid #e1e9e3;border-radius:0 0 7px 7px;background:#f5f8f5;font:750 11px/1.3 inherit;color:#285c46;cursor:pointer}
+#lessons .lesson-options-toggle:hover,#lessons .lesson-options-toggle[aria-expanded="true"]{background:#e6f2ea}
+#lessons .lesson-scenarios{position:absolute;top:100%;left:0;z-index:100;display:none;width:min(245px,calc(100vw - 22px));padding:10px 12px 7px;background:#fff;border:1px solid #aec5b7;border-radius:9px;box-shadow:0 11px 26px #122b242c;text-align:left}
 #lessons .lesson-choice[data-menu-open="true"]>.lesson-scenarios{display:block}
-#lessons .lesson-scenarios-heading{display:block;margin-bottom:3px;font-size:15px;line-height:1.3;font-weight:850;color:#173d31}
-#lessons .lesson-scenarios-instruction{display:block;font-size:12px;color:#567265;margin-bottom:10px}
-#lessons .lesson-scenario-action{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 9px;margin-top:4px;border:1px solid #d8e5db;border-radius:8px;background:#f9fbf9;color:#133f2d;text-decoration:none}
-#lessons a.lesson-scenario-action:hover,#lessons a.lesson-scenario-action:focus-visible{background:#e9f4ec;border-color:#92baa2;outline-offset:1px}
-#lessons .lesson-scenario-action strong{display:block;font-size:13px;font-weight:850}
-#lessons .lesson-scenario-action small{display:block;margin-top:3px;font-size:11px;line-height:1.25;color:#587065}
-#lessons .lesson-scenario-action .scenario-symbol{font-size:17px;flex:0 0 19px;text-align:center;color:#2b6c4e}
-#lessons .lesson-scenario-action .scenario-copy{flex:1 1 auto;min-width:0}
-#lessons .lesson-scenario-action .scenario-arrow{flex:0 0 auto;font-size:17px;color:#557e64}
-#lessons .lesson-scenario-action.unavailable{opacity:.62;background:#f6f8f6;cursor:default}
-#lessons .lesson-scenario-action.unavailable .scenario-arrow{font-size:11px;white-space:nowrap}
-#lessons .lesson-choice-welcome .lesson-tile-open{background:#edf7f0}
+#lessons .lesson-scenarios-heading{display:block;margin:2px 0 7px;font-size:14px;line-height:1.25;font-weight:850;color:#153d2e}
+#lessons .lesson-grid .lesson-choice .lesson-scenario-action{display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 2px;margin:0;border:0;border-top:1px solid #e8ede9;border-radius:0;background:transparent;color:#184a37;text-decoration:none}
+#lessons .lesson-grid .lesson-choice .lesson-scenario-action:hover,#lessons .lesson-grid .lesson-choice .lesson-scenario-action:focus-visible{background:#f1f8f3;color:#104732;outline-offset:1px}
+#lessons .lesson-grid .lesson-choice .scenario-symbol{display:inline-flex;align-items:center;justify-content:center;width:20px;min-width:20px;min-height:0;border:0;font-size:17px;line-height:1.1;font-weight:600;color:#387755}
+#lessons .lesson-grid .lesson-choice .scenario-copy{display:block;flex:1 1 auto;min-width:0;min-height:0;font-size:13px;font-weight:750;line-height:1.3}
+#lessons .lesson-grid .lesson-choice .scenario-arrow{display:inline;min-height:0;font-size:17px;font-weight:400;color:#64806e}
+#lessons .lesson-grid .lesson-choice .lesson-scenario-action.unavailable{opacity:.55;cursor:default}
+#lessons .lesson-grid .lesson-choice .lesson-scenario-action.unavailable .scenario-arrow{font-size:10px;white-space:nowrap}
+#lessons .lesson-choice-welcome .lesson-tile-open{background:#f0f7f1}
 #lessons .term[hidden],#lessons .lesson-entry[hidden]{display:none!important}
 @media(hover:hover) and (pointer:fine){
  #lessons .lesson-choice:hover>.lesson-scenarios,#lessons .lesson-choice:focus-within>.lesson-scenarios{display:block}
 }
-@media(max-width:1060px){#lessons .lesson-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(max-width:900px){#lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:1080px){body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
+@media(max-width:900px){body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:700px){
- #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:8px 0}
- #lessons .lesson-entry.lesson-choice{min-height:86px}
- #lessons .lesson-tile-number{font-size:17px}
- #lessons .lesson-tile-title{font-size:10px}
- #lessons .lesson-options-toggle{min-height:35px;font-size:11px}
- #lessons .lesson-scenarios{width:min(302px,calc(100vw - 22px))}
+ #lessons .lesson-finder{margin-top:5px;padding:6px 8px}
+ #lessons .lesson-finder label{font-size:12px}
+ body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:8px 0}
+ #lessons .lesson-entry.lesson-choice{min-height:78px}
+ #lessons .lesson-options-toggle{min-height:34px}
 }
-@media(max-width:340px){#lessons .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-
+@media(max-width:340px){body.course-hub #lessons .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 </style><link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
@@ -256,7 +218,7 @@
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
 <nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision guides</span><span class="nav-short">Guides</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision practice</span><span class="nav-short">Practice</span></button></div></nav></div>
-<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div class="lesson-finder"><label for="lessonQuickFind">Find a lesson</label><input type="search" id="lessonQuickFind" placeholder="Number or topic, e.g. 003 or hexadecimal" autocomplete="off" aria-describedby="lessonFindTip"><span id="lessonFindTip">Select a lesson number to open it. Hover or tap Options to choose how to use it.</span><span id="lessonFindCount" aria-live="polite"></span></div><div id="terms"></div></section>
+<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div class="lesson-finder"><label for="lessonQuickFind">Find a lesson</label><input type="search" id="lessonQuickFind" placeholder="003 or hexadecimal" autocomplete="off" aria-describedby="lessonFindTip"><span id="lessonFindTip">Select a lesson number to open it. Hover or tap Options to choose how to use it.</span><span id="lessonFindCount" aria-live="polite"></span></div><div id="terms"></div></section>
 <section class="panel" id="booklet" data-j277-guides="published" aria-labelledby="j277RevisionGuidesHeading">
   <div class="summary"><h2 id="j277RevisionGuidesHeading">Revision guides</h2><span class="count">For Year 10 &amp; Year 11</span></div>
   <div class="cards h446-guides" role="list">
@@ -401,18 +363,15 @@ function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);document.getElementById('lessonQuickFind').value='';yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
-function lessonScenario(label,description,icon,href){
+function lessonScenario(label,icon,href){
  const action=document.createElement(href?'a':'div');
  action.className='lesson-scenario-action'+(href?'':' unavailable');
  if(href)action.href=href;
  else action.setAttribute('aria-disabled','true');
  const symbol=document.createElement('span');symbol.className='scenario-symbol';symbol.setAttribute('aria-hidden','true');symbol.textContent=icon;
- const copy=document.createElement('span');copy.className='scenario-copy';
- const name=document.createElement('strong');name.textContent=label;
- const explanation=document.createElement('small');explanation.textContent=description;
- copy.append(name,explanation);
- const arrow=document.createElement('span');arrow.className='scenario-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent=href?'›':'In preparation';
- action.append(symbol,copy,arrow);
+ const copy=document.createElement('span');copy.className='scenario-copy';copy.textContent=label;
+ action.append(symbol,copy);
+ if(!href){const soon=document.createElement('span');soon.className='scenario-arrow';soon.textContent='Soon';action.append(soon);}
  return action;
 }
 function closeLessonOptions(except){
@@ -424,7 +383,7 @@ function positionLessonOptions(card){
  const menu=card.querySelector('.lesson-scenarios');
  if(!menu)return;
  const rect=card.getBoundingClientRect();
- const width=Math.min(304,window.innerWidth-26);
+ const width=Math.min(245,window.innerWidth-22);
  const desired=Math.min(0,window.innerWidth-13-rect.left-width);
  menu.style.left=Math.max(13-rect.left,desired)+'px';
 }
@@ -472,13 +431,13 @@ function renderLessons(){
    menu.id='j277-lesson-options-'+x;menu.setAttribute('role','group');menu.setAttribute('aria-label','Ways to use lesson '+pad(x));
    toggle.setAttribute('aria-controls',menu.id);
    const h=document.createElement('strong');h.className='lesson-scenarios-heading';h.textContent=pad(x)+' · '+title;
-   const desc=document.createElement('span');desc.className='lesson-scenarios-instruction';desc.textContent='How would you like to use this lesson?';
+   
    const learn=independent?independent.replace('version=bw','version=colour'):null;
    const print=independent?independent+'&print=1':null;
-   menu.append(h,desc,
-     lessonScenario('Open lesson',live?'Follow the interactive classroom lesson':'Interactive lesson not yet published','▣',live?live+'#do-now':null),
-     lessonScenario('Learn independently',learn?'Learn, think, write and correct at your own pace':'Independent learning being prepared','◇',learn),
-     lessonScenario('Print lesson',print?'Print the independent booklet in black and white':'Printable booklet being prepared','▤',print));
+   menu.append(h,
+     lessonScenario('Open lesson','▣',live?live+'#do-now':null),
+     lessonScenario('Learn independently','◇',learn),
+     lessonScenario('Print lesson','▤',print));
    toggle.addEventListener('click',event=>{
     event.stopPropagation();
     const next=entry.dataset.menuOpen!=='true';
