@@ -148,17 +148,6 @@ rc=p.insert_textbox(fitz.Rect(bb.x0,bb.y0-2,p.rect.width-42,bb.y1+14),
                     color=(.12,.25,.29))
 assert rc>=0,rc
 
-# Remap every original link including the contents page.
-for old_n,links in orig_links.items():
-    p=doc[shifted(old_n)-1]
-    for link in p.get_links():p.delete_link(link)
-    for it in links:
-        copy_link=copy.deepcopy(it)
-        copy_link.pop('xref',None);copy_link.pop('id',None)
-        if copy_link['kind']==fitz.LINK_GOTO:
-            copy_link['page']=shifted(copy_link['page']+1)-1
-        p.insert_link(copy_link)
-
 # Update printed page numbers in the contents index without changing its topic labels.
 contents=doc[0]
 w,h=contents.rect.width,contents.rect.height
@@ -177,6 +166,18 @@ for sp,newnum in replacements:
     size=sp['size']
     x=sp['bbox'][2]-boldfont.text_length(str(newnum),fontsize=size)
     contents.insert_text((x,sp['origin'][1]),str(newnum),fontname='RevBold',fontsize=size,color=(.09,.25,.29))
+
+# Restore all hyperlinks AFTER contents-number redactions, which can remove overlapping links.
+# Remap every original link including the contents page.
+for old_n,links in orig_links.items():
+    p=doc[shifted(old_n)-1]
+    for link in p.get_links():p.delete_link(link)
+    for it in links:
+        copy_link=copy.deepcopy(it)
+        copy_link.pop('xref',None);copy_link.pop('id',None)
+        if copy_link['kind']==fitz.LINK_GOTO:
+            copy_link['page']=shifted(copy_link['page']+1)-1
+        p.insert_link(copy_link)
 
 # Refresh all original printed footer numbers. Glossary-page footers are added below.
 for old_n in range(1,172):
