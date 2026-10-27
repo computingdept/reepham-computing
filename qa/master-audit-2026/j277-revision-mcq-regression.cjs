@@ -392,6 +392,49 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
         await page.locator('#next').click();
         assert((await page.locator('#counter').innerText()).includes('Question 2'),view+' H446 '+id+' advances');
       }
+      // Representative failed attempts for both A Level papers, independent of
+      // the broader question-bank regression. Check the feedback actually points
+      // to the original class lesson, worked example and stable mapped PDF page.
+      if(id==='1-1'||id==='2-1'){
+        await page.goto(url,{waitUntil:'networkidle'});
+        await page.waitForFunction(()=>!!document.querySelector('.rhsc-progress-summary:not([hidden])'));
+        await page.locator('#topic-grid .topic button').first().click();
+        await page.waitForFunction(()=>!document.getElementById('quiz').hidden);
+        for(let questionNumber=0;questionNumber<5;questionNumber++){
+          const wrong=await page.evaluate(()=>{
+            const prompt=document.getElementById('prompt').textContent;
+            const question=SKILLS.flatMap(s=>s.questions).find(q=>q.prompt===prompt);
+            if(!question)throw Error('Unmapped question: '+prompt);
+            return question.options.find(v=>v!==question.answer);
+          });
+          await page.locator('input[name=answer]').evaluateAll((inputs,wrong)=>{
+            const input=inputs.find(x=>x.value===wrong);
+            if(!input)throw Error('Incorrect answer option missing');
+            input.closest('label').click();
+          },wrong);
+          await page.locator('#check').click();
+          await page.locator('#next').click();
+        }
+        assert((await page.locator('#score').innerText())==='0%',
+          view+' H446 '+id+' unsuccessful attempt scored accurately');
+        const support=await page.locator('#support a').evaluateAll(nodes=>nodes.map(n=>({label:n.textContent.trim(),href:n.getAttribute('href')})));
+        assert(support.some(x=>x.href?.includes('/lessons/h446/')&&x.href?.includes('#new-learning'))&&
+               support.some(x=>x.href?.includes('/lessons/h446/')&&x.href?.includes('#i-do')),
+          view+' H446 '+id+' below-80% original lesson and worked example',support);
+        const expected=await page.evaluate(()=>{
+          const key=SKILLS[0].page;
+          return location.pathname.includes('/section-2-')?RHSC_GUIDE_LINKS.paper2(key):RHSC_GUIDE_LINKS.paper1(key);
+        });
+        const guide=support.find(x=>x.href?.includes('/guides/')&&x.href?.includes('.pdf'));
+        assert(!!guide&&new URL(guide.href,origin).href===new URL(expected,origin).href,
+          view+' H446 '+id+' exact stable PDF destination',{guide:guide?.href,expected});
+        const pdfReply=guide?await page.request.head(new URL(guide.href,origin).href):null;
+        assert(pdfReply?.status()===200&&(pdfReply.headers()['content-type']||'').includes('pdf'),
+          view+' H446 '+id+' mapped PDF opens',{status:pdfReply?.status()});
+        const stored=await page.evaluate(()=>JSON.stringify(localStorage));
+        assert(stored.includes('11-components')||stored.includes('21-'),
+          view+' H446 '+id+' saved its 0% attempt');
+      }
       assert(!errors.length,view+' H446 '+id+' no JavaScript errors',errors);
       console.log('SHARED_H446_SURVEY '+JSON.stringify({view,id,topics:before.topics}));
     }catch(e){assert(false,view+' H446 '+id+' browser exception',String(e).slice(0,400))}
