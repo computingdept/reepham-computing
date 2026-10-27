@@ -25,6 +25,18 @@
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.
 
+## Shared vocabulary introduction and highlighting (approved 27 October 2026)
+
+**Non-negotiable teaching sequence:** **Objectives — introduce term and reveal definition → New Learning / I Do / We Do — reinforce with the same yellow highlighter-pen stroke → Key Vocabulary — show definition first and retrieve the term**. Do not test terms pupils have not been explicitly introduced to.
+
+- **Single vocabulary source:** Every KS3 conversion already has definition-first Key Vocabulary retrieval stages in `#vocabulary .vocab-stage`. The shared `assets/h446-lesson/lesson.js` reads those existing terms and definitions, dynamically builds the Objectives introduction (term/definition cards, reveal controls, and introductory keyword chips), and **moves, rather than rewrites**, the original Objectives content. No manually duplicated term lists are required.
+- **Use existing reveal controls and mobile gestures:** The generated Objective stages use the established `data-objectives-vocab="true"`, `.objective-vocab-stage` and `data-objective-vocab-definition` structures. The original shared Next / Previous / tap/swipe controller owns their interactions. KS3 phones must not skip vocabulary introduction.
+- **One shared marker:** Extend `assets/h446-lesson/keyword-highlighter.js` to KS3 routes and read terms from the same generated Objectives chips. `keyword-highlighter.css` applies the established translucent yellow pen-stroke (not a solid yellow block) to both automatic `rhsc-shared-keyword` marks and existing manually marked `mark.keyword` text. No second KS3 highlighter engine.
+- **Content fidelity:** Reuse teacher-authored terms/definitions verbatim. Do not automatically invent technical explanations or replace the original Objectives. The end retrieval remains separate and unchanged.
+- **Safe fallback:** If a converted lesson has no valid definition-first retrieval entries or supplies its own authored Objective vocabulary layout, the shared generator does not fabricate content or override it. The converter must flag the lesson as missing the introduction during QA.
+- **Source QA:** Check Objectives vocabulary staging, exact equality of start/end term sets and definitions, automatic and manual yellow-stroke styling, separate ending retrieval, desktop TV/mobile (including touch-to-reveal), and lesson content preservation. Live browser verification is still required to confirm appearance and interactions.
+- **First rollout:** Year 7 Lessons **001, 003 and 004** use the central shared assets. This updates their behaviour without publishing preview lessons 001 or 004.
+
 ## Shared classroom-focus typography (pilot, 27 October 2026)
 
 - **Teaching focus outranks headings:** the *currently revealed* I Do / We Do step should be readable from the rear of a classroom, not subordinate to large static titles.
@@ -97,6 +109,7 @@
 | 2026-10-27 | Y7 003 · classroom focus | Use central shared CSS and JS so the current I Do/We Do teaching step, not static headings, commands attention. Roll out after pilot rather than individual lesson edits. | **Pilot — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 · visual balance | Match LHS/RHS width (50/50); enlarge meaningful SVG-card captions and link active diagram cards to the current model reveal. Keep the visual legible, not just the RHS text. | **Pilot refinement — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 · teaching-first CSS | Compact existing phase/lesson/model headings into two short header rows, place current modelled step at the top of its panel and supporting notes below; **no content or JS behaviour changes**. | **Pilot — source audit pending, visual QA outstanding** |
+| 2026-10-27 | KS3 001/003/004 · vocabulary | Generate Objectives vocabulary from the unchanged end retrieval set, use shared definition-reveal controls and J277/H446 pen-stroke highlighting. Require this in all future KS3 conversion audits. | **Approved shared standard** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
@@ -160,6 +173,8 @@ Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teac
 - [ ] Every source topic/activity covered, or omissions documented with reason.
 - [ ] Four Do Now questions and separate answer screens; no untaught retrieval.
 - [ ] Eight phases, correct nav IDs, accessible controls and mobile swipes.
+- [ ] Vocabulary introduced in Objectives before end retrieval; identical term/definition source, on mobile too.
+- [ ] Shared yellow pen-stroke highlights technical terms on all lesson screens; no separate KS3 styling engine.
 - [ ] I Do/We Do step reveals readable on TV; no nested half-width containers.
 - [ ] You Do tasks separate from answer screens; expected real-world submission clear.
 - [ ] Definition-first vocabulary; 3 T/F exit answers with explanations and reflection.
