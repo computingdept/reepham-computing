@@ -1030,7 +1030,7 @@ function next(){
   const page=document.getElementById(current);
   // Phone objectives show the key terms as a reference list; do not require
   // twelve separate reveal swipes before the student can reach New Learning.
-  if(current==='overview'&&page.dataset.objectivesVocab==='true'&&window.matchMedia('(max-width:700px)').matches){
+  if(current==='overview'&&page.dataset.objectivesVocab==='true'&&page.dataset.ks3VocabIntro!=='true'&&window.matchMedia('(max-width:700px)').matches){
     showPage(order[order.indexOf('overview')+1]||'new-learning');
     return;
   }
@@ -1828,6 +1828,91 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'){e.preventDefault();next();}
   if(e.key==='ArrowLeft'){e.preventDefault();previousAction();}
 });
+/* KS3 vocabulary introduction: reuse the existing teacher-authored
+   definition-first retrieval deck as the ONE source of truth. Keep the original
+   objectives and assessment markup intact; only move existing Objectives
+   elements into a shared presentation wrapper and add a generated intro. */
+function prepareKS3VocabularyIntroduction(){
+  if(!/^\/lessons\/year[789]\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
+  const overview=document.getElementById('overview');
+  const vocabulary=document.getElementById('vocabulary');
+  if(!overview||!vocabulary||overview.dataset.ks3VocabIntro==='true')return;
+  if(overview.dataset.objectivesVocab==='true')return; // authored layout takes priority
+  if(vocabulary.dataset.vocabFlow!=='retrieval')return;
+  const entries=[...vocabulary.querySelectorAll('.vocab-stage')].map(stage=>({
+    term:(stage.querySelector('[data-vocab-answer] .vocab-answer-value')?.textContent||'').trim(),
+    definition:(stage.querySelector('.vocab-prompt .vocab-question')?.textContent||'').trim()
+  })).filter(item=>item.term&&item.definition);
+  if(!entries.length||entries.length>24)return;
+
+  const el=(tag,cls,value)=>{
+    const node=document.createElement(tag);
+    if(cls)node.className=cls;
+    if(value!==undefined)node.textContent=value;
+    return node;
+  };
+  const layout=el('div','objectives-vocab-layout');
+  const left=el('div','objectives-vocab-left');
+  left.classList.add('ks3-vocab-objectives');
+  // Move, never rewrite, the existing lesson objectives and content.
+  while(overview.firstChild)left.appendChild(overview.firstChild);
+  const intro=el('div','vocab-intro yellow-vocab');
+  intro.append(el('strong','', 'KEY VOCABULARY'));
+  const list=el('div','vocab-intro-list');
+  list.setAttribute('aria-label','Lesson key vocabulary; select a term for its definition');
+  entries.forEach(entry=>{
+    const chip=el('span','vocab-tip',entry.term);
+    chip.tabIndex=0;chip.dataset.definition=entry.definition;
+    chip.setAttribute('role','button');
+    chip.setAttribute('aria-label',entry.term+': '+entry.definition);
+    list.appendChild(chip);
+  });
+  intro.append(list);
+  left.appendChild(intro);
+
+  const right=el('div','objectives-vocab-right');
+  right.setAttribute('aria-live','polite');
+  entries.forEach((entry,i)=>{
+    const stage=el('article','objective-vocab-stage');
+    stage.hidden=i!==0;
+    stage.append(el('span','objective-vocab-count','TERM '+(i+1)+' OF '+entries.length));
+    stage.append(el('h2','',entry.term));
+    const definition=el('div','objective-vocab-definition');
+    definition.dataset.objectiveVocabDefinition='';
+    definition.hidden=true;
+    definition.append(el('span','','DEFINITION'),el('p','',entry.definition));
+    stage.append(definition);
+    right.append(stage);
+  });
+  layout.append(left,right);
+  overview.appendChild(layout);
+  overview.dataset.objectivesVocab='true';
+  overview.dataset.ks3VocabIntro='true';
+  document.body.dataset.ks3VocabReady='true';
+
+  // In the established template vocabulary chips also work by touch,
+  // not just desktop hover. They reveal the existing term definition.
+  list.querySelectorAll('.vocab-tip').forEach(chip=>{
+    const toggle=()=>{
+      const isOpen=chip.classList.contains('is-definition-open');
+      list.querySelectorAll('.is-definition-open').forEach(other=>{
+        other.classList.remove('is-definition-open');
+        other.setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        chip.classList.add('is-definition-open');
+        chip.setAttribute('aria-expanded','true');
+      }
+    };
+    chip.setAttribute('aria-expanded','false');
+    chip.addEventListener('click',toggle);
+    chip.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle();}
+    });
+  });
+}
+
+prepareKS3VocabularyIntroduction();
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
 /* H446-only: publication status belongs in source and the staff workflow,
@@ -2009,11 +2094,11 @@ prepareResponsivePlaceValues();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
 
-/* One shared marker module for GCSE J277 and A Level H446 lessons.
+/* One shared marker module for KS3, GCSE J277 and A Level H446 lessons.
    It respects authored vocabulary, teacher reveals, and Code First. */
-if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+if(/^\/lessons\/(?:j277|h446|year[789])\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
   const markerModule=document.createElement('script');
-  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261026-stroke-only1';
+  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261027-ks3vocab1';
   markerModule.async=true;
   document.body.appendChild(markerModule);
 }
