@@ -158,6 +158,49 @@
  body.course-hub #lessons .h446-year-route{display:none}
 }
 /* Shared practice tile CSS: /revision/shared/revision-ui.css */
+
+/* Unified course navigation pilot: same visible actions on desktop and mobile. */
+#lessons .lesson-finder{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 12px;align-items:center;margin:8px 0 12px;padding:12px 15px;background:#f5f8f6;border:1px solid #d8e5df;border-radius:10px}
+#lessons .lesson-finder label{font-size:14px;font-weight:800;color:#143f32}
+#lessons .lesson-finder input{min-width:0;width:100%;border:1px solid #a3bfb0;background:#fff;border-radius:8px;min-height:45px;padding:10px 12px;font-size:15px;color:#143f32}
+#lessons .lesson-finder input:focus-visible{outline:3px solid #b6cfc3;outline-offset:2px}
+#lessons #lessonFindTip{grid-column:2;grid-row:2;font-size:12px;color:#476558}
+#lessons #lessonFindCount{grid-column:3;grid-row:1;font-size:12px;color:#567166;white-space:nowrap}
+#lessons .lesson-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch;padding:12px}
+#lessons .lesson-entry.lesson-choice{min-width:0;display:flex;flex-direction:column;gap:8px;padding:12px 13px;background:#fff;border:1px solid #d8e4de;border-left:4px solid var(--spec-colour,#357358);border-radius:9px;box-shadow:0 1px 3px rgba(17,54,37,.03)}
+#lessons .lesson-entry.lesson-choice:focus-within{z-index:1}
+#lessons .lesson-choice-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+#lessons .lesson-choice-number{font-variant-numeric:tabular-nums;font-size:13px;font-weight:850;color:#1f5944}
+#lessons .lesson-choice-spec{font-size:10px;color:#5c7067;text-align:right}
+#lessons .lesson-choice-title{display:block;min-height:38px;font-size:15px;line-height:1.25;font-weight:850;color:#173d31;text-decoration:none}
+#lessons a.lesson-choice-title:hover{text-decoration:underline;text-underline-offset:3px}
+#lessons .lesson-choice-objective{font-size:12px;line-height:1.35;color:#556a60;margin:0;min-height:32px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#lessons .lesson-choice-actions{display:flex;align-items:stretch;gap:7px;margin-top:auto}
+#lessons .lesson-choice-actions a{flex:1 1 0;min-height:43px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid #a4c0b3;padding:7px;text-decoration:none;font-size:13px;font-weight:800;text-align:center;line-height:1.25}
+#lessons .lesson-choice-actions .action-open{background:#064938;border-color:#064938;color:#fff}
+#lessons .lesson-choice-actions .action-open:hover{background:#036047}
+#lessons .lesson-choice-actions .action-independent{background:#eff7f2;color:#154d3d}
+#lessons .lesson-choice-actions .action-independent:hover{background:#dbece1}
+#lessons .lesson-choice-actions .action-waiting{background:#f5f6f5;border:1px dashed #cedbd2;color:#65766b;cursor:default}
+#lessons .lesson-choice-actions a:focus-visible{outline:3px solid #dfad3e;outline-offset:2px}
+#lessons .lesson-choice-state{font-size:12px;color:#64766c;margin-top:auto}
+#lessons .lesson-choice-welcome{justify-content:center;background:#f2f8f3;border-left-color:#438b6a}
+#lessons .lesson-choice-welcome .lesson-choice-title{min-height:auto}
+#lessons .lesson-choice-welcome .lesson-choice-objective{min-height:auto}
+#lessons .term[hidden],#lessons .lesson-entry[hidden]{display:none!important}
+@media(max-width:960px){#lessons .lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+#lessons .lesson-finder{grid-template-columns:1fr;padding:10px;gap:5px}
+#lessons .lesson-finder label,#lessons .lesson-finder input,#lessons #lessonFindTip,#lessons #lessonFindCount{grid-column:1;grid-row:auto}
+#lessons #lessonFindTip{line-height:1.4}
+#lessons .lesson-grid{grid-template-columns:1fr;gap:8px;padding:9px}
+#lessons .lesson-entry.lesson-choice{padding:10px 12px;gap:6px}
+#lessons .lesson-choice-title{min-height:0;font-size:15px}
+#lessons .lesson-choice-objective{min-height:0}
+#lessons .lesson-choice-actions a{min-height:46px}
+}
+@media(min-width:560px) and (max-width:700px){#lessons .lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style><link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
 <style id="lesson-print-pilot-styles">
@@ -169,7 +212,7 @@
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
 <nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision guides</span><span class="nav-short">Guides</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision practice</span><span class="nav-short">Practice</span></button></div></nav></div>
-<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div id="terms"></div></section>
+<section class="panel active" id="lessons"><h2 id="lessonTitle" class="course-sr-only">Year 10 lessons</h2><div class="year-toolbar"><div class="year-switch"><button class="year-btn" data-year="10" aria-pressed="true">Year 10</button><button class="year-btn" data-year="11" aria-pressed="false">Year 11</button></div><div class="year-tools"><span class="count" id="lessonCount"></span><details class="course-key"><summary>Colour key</summary><div id="specLegendMount" aria-label="Paper and assessment colour key"></div></details></div></div><div class="lesson-finder"><label for="lessonQuickFind">Find a lesson</label><input type="search" id="lessonQuickFind" placeholder="Number or topic, e.g. 003 or hexadecimal" autocomplete="off" aria-describedby="lessonFindTip"><span id="lessonFindTip">Choose Open lesson to teach, or Independent to work offline.</span><span id="lessonFindCount" aria-live="polite"></span></div><div id="terms"></div></section>
 <section class="panel" id="booklet" data-j277-guides="published" aria-labelledby="j277RevisionGuidesHeading">
   <div class="summary"><h2 id="j277RevisionGuidesHeading">Revision guides</h2><span class="count">For Year 10 &amp; Year 11</span></div>
   <div class="cards h446-guides" role="list">
@@ -304,142 +347,96 @@ const year11Journeys=[
 ];
 const pad=n=>String(n).padStart(3,'0');
 
-/* Phone/touch lesson preview: consistent with H446, while preserving the
-   direct lesson links and hover previews for keyboard/mouse users. */
-const mobileLessonQuery=window.matchMedia('(max-width:700px), (pointer:coarse)');
-const sheetBackdrop=document.createElement('div');
-sheetBackdrop.className='mobile-sheet-backdrop';
-sheetBackdrop.hidden=true;
-const lessonSheet=document.createElement('section');
-lessonSheet.className='mobile-sheet';
-lessonSheet.hidden=true;
-lessonSheet.setAttribute('role','dialog');
-lessonSheet.setAttribute('aria-modal','true');
-lessonSheet.setAttribute('aria-labelledby','j277-mobile-sheet-title');
-lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="j277-mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a><a class="mobile-sheet-independent" href="#" hidden>Independent booklet · B&W</a></div>';
-document.body.append(sheetBackdrop,lessonSheet);
-let sheetTrigger=null;
-let sheetStartY=null;
-function closeLessonSheet(){
-  if(lessonSheet.hidden)return;
-  lessonSheet.hidden=true;
-  sheetBackdrop.hidden=true;
-  document.body.style.overflow='';
-  if(sheetTrigger?.isConnected)sheetTrigger.focus({preventScroll:true});
-}
-function openLessonSheet(n,href,trigger){
-  sheetTrigger=trigger;
-  const [topic,spec,objective,task]=lessonInfo(n);
-  lessonSheet.querySelector('.mobile-sheet-number').textContent='L'+pad(n);
-  lessonSheet.querySelector('.mobile-sheet-context').textContent='OCR J277 · Year '+year;
-  lessonSheet.querySelector('.mobile-sheet-title').textContent=topic;
-  const content=lessonSheet.querySelector('.mobile-sheet-content');
-  content.scrollTop=0;
-  const target=lessonSheet.querySelector('.mobile-sheet-objectives');
-  target.replaceChildren();
-  const specLabel=document.createElement('p');
-  specLabel.className='mobile-sheet-spec';
-  specLabel.textContent='Specification '+spec;
-  target.append(specLabel);
-  if(objective){
-    const label=document.createElement('strong');
-    label.textContent='In this lesson';
-    const summary=document.createElement('p');
-    summary.textContent=objective;
-    target.append(label,summary);
-  }
-  if(task){
-    const details=document.createElement('details');
-    const summary=document.createElement('summary');
-    summary.textContent='Code First activity';
-    const text=document.createElement('p');
-    text.textContent=task;
-    details.append(summary,text);
-    target.append(details);
-  }
-  if(!href){
-    const note=document.createElement('p');
-    note.textContent='Lesson planned — not yet available.';
-    target.append(note);
-  }
-  const actions=lessonSheet.querySelector('.mobile-sheet-actions');
-  actions.hidden=!href;
-  if(href){
-    const cleanHref=href.split('#')[0];
-    lessonSheet.querySelector('.mobile-sheet-open').href=cleanHref+'#do-now';
-    lessonSheet.querySelector('.mobile-sheet-jump').href=cleanHref+'#you-do';
-    const independent=lessonSheet.querySelector('.mobile-sheet-independent');
-    independent.hidden=n!==1;
-    if(n===1)independent.href='lessons/j277/lesson-001/independent.html?version=bw';
-  }
-  sheetBackdrop.hidden=false;
-  lessonSheet.hidden=false;
-  document.body.style.overflow='hidden';
-  lessonSheet.querySelector('.mobile-sheet-close').focus({preventScroll:true});
-}
-sheetBackdrop.addEventListener('click',closeLessonSheet);
-lessonSheet.querySelector('.mobile-sheet-close').addEventListener('click',closeLessonSheet);
-document.addEventListener('keydown',e=>{
-  if(lessonSheet.hidden)return;
-  if(e.key==='Escape'){e.preventDefault();closeLessonSheet();return;}
-  if(e.key==='Tab'){
-    const controls=[...lessonSheet.querySelectorAll('button,a,summary')].filter(el=>!el.hidden&&!el.closest('[hidden]'));
-    if(!controls.length)return;
-    const first=controls[0],last=controls[controls.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
-  }
-});
-lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchstart',e=>{
-  sheetStartY=e.touches[0].clientY;
-},{passive:true});
-lessonSheet.querySelector('.mobile-sheet-handle').addEventListener('touchend',e=>{
-  if(sheetStartY!==null&&e.changedTouches[0].clientY-sheetStartY>65)closeLessonSheet();
-  sheetStartY=null;
-},{passive:true});
-
+/* A single, visible navigation pattern replaces the mobile-only lesson sheet. */
+const independentResourceRoutes = {
+  1:'lessons/j277/lesson-001/independent.html?version=bw'
+};
+function openLessonResource(n){return independentResourceRoutes[n] || null;}
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
-yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
+yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);document.getElementById('lessonQuickFind').value='';yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
+
 function renderLessons(){
- closeLessonSheet();
- const p=programmes[year], holder=document.getElementById('terms');holder.innerHTML='';document.getElementById('specLegendMount').hidden=false;let n=p.start,total=0;
- for(const term of p.terms){total+=term.count;const sec=document.createElement('section');sec.className='term';const end=n+term.count-1;sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>'+(term.count?('Lessons '+pad(n)+'–'+pad(end)):'Course complete')+(term.note?' · '+term.note:'')+'</span></div><div class="lesson-grid"></div>';const grid=sec.querySelector('.lesson-grid');const subtitle=document.createElement('p');subtitle.className='term-route';subtitle.textContent=(year===10?year10Journeys:year11Journeys)[p.terms.indexOf(term)];sec.insertBefore(subtitle,grid);
-   if(year===10 && n===1){
-     const welcome=document.createElement('a');
-     welcome.className='lesson spec-tile live welcome-tile';
-     welcome.href='lessons/j277/J277Welcome.html';
-     welcome.textContent='Welcome';
-     welcome.style.setProperty('--spec-colour','var(--year-accent)');
-     welcome.setAttribute('aria-label','Open GCSE Computer Science course welcome');
-     const welcomeEntry=document.createElement('div');
-     welcomeEntry.className='lesson-entry welcome-entry';
-     welcomeEntry.append(welcome);
-     grid.append(welcomeEntry);
-   }
-   for(let x=n;x<=end;x++){const live=liveMap[x],mapped=true,specCode=sectionForLesson(x);const el=document.createElement(live?'a':'div');el.className='lesson '+(mapped?'spec-tile ':'')+(live?'live':'planned');el.textContent=pad(x);if(mapped)el.style.setProperty('--spec-colour',specPalette[specCode]||assessmentColour);if(live){el.href=live;el.setAttribute('aria-label','Open lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));}else if(mapped){el.setAttribute('aria-label','Lesson '+pad(x)+' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode));}const entry=document.createElement('div');entry.className='lesson-entry';
-   if(mobileLessonQuery.matches){
-     if(live){
-       el.addEventListener('click',event=>{event.preventDefault();openLessonSheet(x,live,el);});
-     }else{
-       el.tabIndex=0;
-       el.setAttribute('role','button');
-       el.setAttribute('aria-label','Preview planned lesson '+pad(x)+(mapped?' · '+(specCode==='assessment'?'assessment or consolidation':'OCR J277 '+specCode):''));
-       el.addEventListener('click',()=>openLessonSheet(x,null,el));
-       el.addEventListener('keydown',event=>{
-         if(event.key==='Enter'||event.key===' '){
-           event.preventDefault();
-           openLessonSheet(x,null,el);
-         }
-       });
-     }
-   }
-   const info=document.createElement('button');info.className='lesson-info';info.type='button';info.textContent='i';info.setAttribute('aria-label','View lesson '+pad(x)+' objectives');info.setAttribute('aria-expanded','false');const popup=document.createElement('div');popup.className='lesson-popup';showLessonInfo(popup,x);const detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');info.addEventListener('click',()=>{if(mobileLessonQuery.matches){openLessonSheet(x,live||null,info);return;}const open=detail.getAttribute('aria-hidden')!=='false';holder.querySelectorAll('.lesson-detail').forEach(d=>{d.setAttribute('aria-hidden','true');d.style.display='none'});holder.querySelectorAll('.lesson-info').forEach(b=>b.setAttribute('aria-expanded','false'));if(open){showLessonInfo(detail,x);detail.setAttribute('aria-hidden','false');detail.style.display='block';info.setAttribute('aria-expanded','true');}});entry.append(el,info,popup);grid.append(entry,detail);}
-   holder.append(sec);n=end+1;
+ const holder=document.getElementById('terms');
+ holder.replaceChildren();
+ const prog=programmes[year];
+ document.getElementById('specLegendMount').hidden=false;
+ let n=prog.start,total=0;
+ for(const term of prog.terms){
+  total+=term.count;
+  const end=n+term.count-1;
+  const sec=document.createElement('section');sec.className='term';
+  sec.innerHTML='<div class="term-head"><strong>'+term.name+'</strong><span>Lessons '+pad(n)+'–'+pad(end)+'</span></div><div class="lesson-grid"></div>';
+  const grid=sec.querySelector('.lesson-grid');
+  const subtitle=document.createElement('p');subtitle.className='term-route';
+  subtitle.textContent=(year===10?year10Journeys:year11Journeys)[prog.terms.indexOf(term)];
+  sec.insertBefore(subtitle,grid);
+  if(year===10 && n===1){
+    const entry=document.createElement('div');entry.className='lesson-entry lesson-choice lesson-choice-welcome';
+    entry.dataset.search='welcome introduction course';
+    entry.innerHTML='<a class="lesson-choice-title" href="lessons/j277/J277Welcome.html">Welcome · How to learn Computing</a><p class="lesson-choice-objective">Course routines, Code First and independent study.</p><div class="lesson-choice-actions"><a class="action-open" href="lessons/j277/J277Welcome.html">Open welcome</a></div>';
+    grid.append(entry);
+  }
+  for(let x=n;x<=end;x++){
+    const live=liveMap[x];
+    const [title,spec,objective]=lessonInfo(x);
+    const colour=specPalette[sectionForLesson(x)]||assessmentColour;
+    const entry=document.createElement('article');
+    entry.className='lesson-entry lesson-choice';
+    entry.style.setProperty('--spec-colour',colour);
+    entry.dataset.number=pad(x);
+    entry.dataset.search=[pad(x),String(x),'lesson '+x,title,spec,objective].join(' ').toLowerCase();
+    const head=document.createElement('div');head.className='lesson-choice-head';
+    const number=document.createElement('span');number.className='lesson-choice-number';number.textContent='L'+pad(x);
+    const specRef=document.createElement('span');specRef.className='lesson-choice-spec';specRef.textContent='OCR J277 · '+spec;
+    head.append(number,specRef);
+    const titleEl=document.createElement(live?'a':'strong');titleEl.className='lesson-choice-title';
+    titleEl.textContent=title;
+    if(live){titleEl.href=live+'#do-now';titleEl.setAttribute('aria-label','Open lesson '+pad(x)+': '+title)}
+    const explanation=document.createElement('p');explanation.className='lesson-choice-objective';explanation.textContent=objective;
+    entry.append(head,titleEl,explanation);
+    if(live){
+      const acts=document.createElement('div');acts.className='lesson-choice-actions';
+      const open=document.createElement('a');open.href=live+'#do-now';open.className='action-open';open.textContent='Open lesson';
+      acts.append(open);
+      const independent=openLessonResource(x);
+      if(independent){
+        const link=document.createElement('a');link.className='action-independent';link.href=independent;link.textContent='Independent';
+        link.setAttribute('aria-label','Open independent lesson '+pad(x)+' with black and white print option');
+        acts.append(link);
+      }else{
+        const waiting=document.createElement('span');waiting.className='action-waiting';waiting.textContent='Independent: coming soon';waiting.setAttribute('aria-label','Independent booklet not yet published');
+        acts.append(waiting);
+      }
+      entry.append(acts);
+    }else{
+      const state=document.createElement('span');state.className='lesson-choice-state';state.textContent='Lesson planned';entry.append(state);
+    }
+    grid.append(entry);
+  }
+  holder.append(sec);
+  n=end+1;
  }
  document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
  document.getElementById('lessonCount').textContent=total+' planned lesson positions';
+ filterLessonCards();
 }
+function filterLessonCards(){
+ const query=document.getElementById('lessonQuickFind').value.trim().toLowerCase();
+ const digits=/^0*[0-9]+$/.test(query) ? String(Number(query)).padStart(3,'0') : null;
+ let matches=0;
+ document.querySelectorAll('#terms .term').forEach(function(sec){
+  let visible=0;
+  sec.querySelectorAll('.lesson-choice').forEach(function(card){
+   const hit=!query || (digits ? card.dataset.number===digits : (card.dataset.search||'').includes(query));
+   card.hidden=!hit;
+   if(hit){matches++;visible++;}
+  });
+  sec.hidden=visible===0;
+ });
+ document.getElementById('lessonFindCount').textContent=query ? (matches+' result'+(matches===1?'':'s')):'';
+}
+document.getElementById('lessonQuickFind').addEventListener('input',filterLessonCards);
 applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',revisionhub:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script><script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
 </body></html>
