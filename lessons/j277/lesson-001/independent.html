@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="OCR J277 Lesson 001: a complete independent, printable Binary and Denary lesson.">
+<title>Independent Lesson 001 · Binary &amp; Denary · RHS Computing</title>
+<link rel="alternate" type="application/json" href="../../../data/lesson-resources.json">
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#132823;background:#eff3f0;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0}
+a{color:inherit}
+.screen-toolbar{position:sticky;top:0;background:#fff;border-bottom:1px solid #bacfc3;z-index:5;padding:11px max(14px,calc((100% - 940px)/2));display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:0 3px 12px #0001}
+.screen-toolbar strong{margin-right:auto;font-size:14px;letter-spacing:-.2px}
+.screen-toolbar a,.screen-toolbar button{font:600 13px Arial,sans-serif;text-decoration:none;border:1px solid #a7beb1;background:white;border-radius:7px;min-height:38px;padding:10px 12px;cursor:pointer}
+.screen-toolbar button.primary{background:#064839;color:white;border-color:#064839}
+.screen-toolbar a[aria-current="page"]{border-color:#064839;box-shadow:inset 0 0 0 1px #064839}
+.instructions{max-width:850px;margin:20px auto;padding:16px 19px;background:#fff;border:1px solid #d0ddd6;border-radius:12px;font-size:14px;line-height:1.5}
+.instructions h1{font-size:20px;margin:0 0 6px}
+.instructions p{margin:5px 0}
+.viewer{display:flex;flex-direction:column;gap:20px;align-items:center;padding:0 12px 30px}
+.page{width:210mm;height:297mm;overflow:hidden;flex:none;background:white;box-shadow:0 8px 26px #08251e1b; padding:12mm 12mm 10mm;display:flex;flex-direction:column;position:relative;font-size:11pt;line-height:1.35}
+.page h2{font-size:16pt;margin:12px 0 7px;color:#104d43}
+.page h3{font-size:11.8pt;margin:9px 0 6px;color:#104d43}
+.page p{margin:4px 0 8px}
+.page .small{font-size:9.1pt}
+.page .faint{color:#4d625a}
+.page header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #bdcfc6;padding-bottom:7px;font-size:8.2pt;font-weight:700;letter-spacing:.3px}
+.page header .cs{display:inline-block;background:#075043;color:white;padding:7px 8px;border-radius:5px;margin-right:7px}
+.page footer{position:absolute;bottom:8mm;left:12mm;right:12mm;border-top:1px solid #c6d6ce;padding-top:5px;font-size:7.8pt;color:#456159;display:flex;justify-content:space-between}
+.page main{flex:1;min-height:0}
+.section{margin-top:9px}
+.heading{font-weight:700;border-left:4px solid #2c739c;padding-left:8px;margin:10px 0 7px;font-size:13pt}
+.heading.green{border-color:#177755}.heading.orange{border-color:#a86429}
+.info{border:1px solid #cee0d4;background:#f5faf7;border-radius:6px;padding:8px 10px;margin:6px 0 9px}
+.term{font-weight:700;position:relative;background:linear-gradient(178deg,transparent 8%,#fff1aa 8%,#fff1aa 92%,transparent 92%);padding:0 3px}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 15px}
+.vocab-grid .entry{font-size:9.4pt}
+.line{display:inline-block;border-bottom:1px solid #8fa79a;height:14px;min-width:80px;vertical-align:bottom}
+.write-line{display:block;border-bottom:1px solid #9bad9e;height:19px;margin:2px 0 6px}
+.q{margin:8px 0 10px}.q b{color:#235f86}
+.bits{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;margin:7px 0}
+.bit{border:1px solid #9cb8aa;border-radius:3px;text-align:center;padding:5px 0 6px;font-size:10pt;background:#f8fbf9}
+.bit em{display:block;font-style:normal;font-size:9pt;color:#2e604e;border-bottom:1px solid #d6e0db;margin:0 4px 4px;padding-bottom:3px}
+.bit strong{font-size:14pt}
+.bit.one{background:#e8f5eb;border-color:#2b8b60}
+.code{background:#f3f6f4;border-left:3px solid #497f66;border-radius:4px;padding:7px 10px;font:700 11pt Consolas,monospace;margin:7px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hair{border-top:1px solid #cbd8d1;margin:10px 0 7px}
+.spacer{height:8px}
+.tight .q{margin:4px 0 6px}
+.tight .write-line{height:15px;margin:1px 0 5px}
+.answer{font-size:9.4pt;margin:4px 0}
+.answer strong{color:#13563f}
+.exit{display:flex;gap:8px;justify-content:space-between;font-size:9.4pt;margin:7px 0}
+.choice{white-space:nowrap}
+.print-spreads{display:none}
+body[data-mode="bw"] .page{color:#111}
+body[data-mode="bw"] .page h2,body[data-mode="bw"] .page h3{color:#111}
+body[data-mode="bw"] .term{background:none;padding:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+body[data-mode="bw"] .page .cs{color:#111;background:white;border:1px solid #777}
+body[data-mode="bw"] .heading,body[data-mode="bw"] .heading.green,body[data-mode="bw"] .heading.orange{border-color:#222}
+body[data-mode="bw"] .info,body[data-mode="bw"] .code,body[data-mode="bw"] .bit,body[data-mode="bw"] .bit.one{background:white;border-color:#aaa}
+body[data-mode="bw"] .bit em{color:#111}
+body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
+@media(max-width:700px){.screen-toolbar{position:static}.screen-toolbar strong{width:100%;margin:0}.instructions{margin:10px 12px}.viewer{overflow-x:auto;display:block;padding:0 12px 20px}.viewer .page{transform-origin:top left;box-shadow:none;margin:12px auto;max-width:none}.instructions h1{font-size:18px}}
+@media print{
+@page{size:A3 landscape;margin:0}
+html,body{margin:0!important;padding:0!important;background:white!important}
+.screen-toolbar,.instructions,.viewer{display:none!important}
+.print-spreads{display:block!important}
+.spread{display:flex!important;flex-direction:row;width:420mm;height:297mm;break-after:page;page-break-after:always;overflow:hidden}
+.spread:last-child{break-after:auto;page-break-after:auto}
+.spread .page{width:210mm;height:297mm;box-shadow:none!important;flex:0 0 210mm;break-inside:avoid;page-break-inside:avoid}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body data-mode="bw">
+<nav class="screen-toolbar" aria-label="Independent lesson resources">
+  <strong>RHS Computing · Independent Lesson 001</strong>
+  <a href="index.html#do-now">Interactive lesson</a>
+  <a href="?version=bw" id="bw-option">Black &amp; white</a>
+  <a href="?version=colour" id="colour-option">Colour</a>
+  <button class="primary" type="button" onclick="window.print()">Print A3 booklet / Save PDF</button>
+</nav>
+<div class="instructions">
+<h1>Binary &amp; Denary — independent lesson</h1>
+<p><strong>Learn · Think · Write · Correct.</strong> Read each page in order. No internet, computer or teacher support is needed once printed.</p>
+<p><strong>Print:</strong> choose black &amp; white or colour, then print A3 landscape, double-sided, <strong>flip on short edge</strong>, at 100% size and fold. Select “Save as PDF” to keep a copy instead. Two A3 sides become four A4 pages.</p>
+</div>
+<div class="viewer" id="viewer">
+<section class="page" data-page="1">
+<header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 001</span></header>
+<main>
+<h2>Binary &amp; Denary</h2>
+<p class="small faint">START · Complete the sections in order. Check answers only after writing your responses.</p>
+<p class="small"><strong>Name</strong> <span class="line" style="width:43%"></span> <strong>Class / Date</strong> <span class="line" style="width:24%"></span></p>
+<div class="heading">Do Now</div>
+<p class="small faint">Four retrieval questions from earlier KS3 learning.</p>
+<div class="q"><b>1.</b> Which two digits are used in binary?<span class="write-line"></span></div>
+<div class="q"><b>2.</b> How many bits make one byte? Circle: <strong>4 / 8 / 16 / 32</strong></div>
+<div class="q"><b>3.</b> Calculate 2 to the power of 4.<span class="write-line"></span></div>
+<div class="q"><b>4.</b> Four ON/OFF switches: how many combinations are possible? Show why.<span class="write-line"></span></div>
+<div class="heading green">Today's learning</div>
+<div class="info small">Use 8-bit place values; convert binary to denary and back; explain the unsigned 0–255 range; write a paper-based <strong>print(...)</strong> instruction.</div>
+<div class="heading green">Key Vocabulary · READ</div>
+<p class="small faint">Read each definition. Cover it. Write the meaning in your own words below.</p>
+<div class="vocab-grid">
+<div class="entry"><span class="term">binary</span> — Base-2 system using 0 and 1.</div>
+<div class="entry"><span class="term">denary</span> — Base-10 system using digits 0–9.</div>
+<div class="entry"><span class="term">bit</span> — One binary digit, 0 or 1.</div>
+<div class="entry"><span class="term">byte</span> — A group of eight bits.</div>
+<div class="entry"><span class="term">place value</span> — A digit's value based on its position.</div>
+<div class="entry"><span class="term">most significant bit</span> — Highest-value bit (on the left).</div>
+</div>
+<div class="heading green">Key Vocabulary · WRITE</div>
+<div class="vocab-grid tight">
+<div class="entry">binary<span class="write-line"></span></div><div class="entry">denary<span class="write-line"></span></div>
+<div class="entry">bit<span class="write-line"></span></div><div class="entry">byte<span class="write-line"></span></div>
+<div class="entry">place value<span class="write-line"></span></div><div class="entry">most significant bit<span class="write-line"></span></div>
+</div>
+</main>
+<footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>1 / 4</span></footer>
+</section>
+<section class="page" data-page="2">
+<header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 001</span></header>
+<main>
+<h2>Learn &amp; follow</h2>
+<p class="small faint">NEW LEARNING · Read the theory and worked examples before the guided task.</p>
+<div class="heading green">New Learning</div>
+<p>Computers use two reliable electronic states, represented by <strong>0</strong> and <strong>1</strong>. Binary has a <span class="term">place value</span> system in which each column is worth twice the value of the one on its right.</p>
+<div class="bits" aria-label="Eight binary place values"><span class="bit"><em>128</em>0</span><span class="bit"><em>64</em>0</span><span class="bit"><em>32</em>0</span><span class="bit"><em>16</em>0</span><span class="bit"><em>8</em>0</span><span class="bit"><em>4</em>0</span><span class="bit"><em>2</em>0</span><span class="bit"><em>1</em>0</span></div>
+<div class="info">An unsigned 8-bit number has <strong>2⁸ = 256</strong> possible patterns. Because counting starts at zero, the range is <strong>0–255</strong>.</div>
+<div class="heading">I Do · Worked example 1</div>
+<p>Convert <strong>11001010</strong> from binary to denary. Identify the columns containing a <strong>1</strong>.</p>
+<div class="bits"><span class="bit one"><em>128</em><strong>1</strong></span><span class="bit one"><em>64</em><strong>1</strong></span><span class="bit"><em>32</em><strong>0</strong></span><span class="bit"><em>16</em><strong>0</strong></span><span class="bit one"><em>8</em><strong>1</strong></span><span class="bit"><em>4</em><strong>0</strong></span><span class="bit one"><em>2</em><strong>1</strong></span><span class="bit"><em>1</em><strong>0</strong></span></div>
+<div class="info">128 + 64 + 8 + 2 = <strong>202</strong>. Columns containing zero do not contribute.</div>
+<div class="heading">I Do · Worked example 2</div>
+<p>Convert denary <strong>74</strong> into 8-bit binary. Select values that make 74: <strong>64 + 8 + 2</strong>.</p>
+<div class="bits"><span class="bit"><em>128</em><strong>0</strong></span><span class="bit one"><em>64</em><strong>1</strong></span><span class="bit"><em>32</em><strong>0</strong></span><span class="bit"><em>16</em><strong>0</strong></span><span class="bit one"><em>8</em><strong>1</strong></span><span class="bit"><em>4</em><strong>0</strong></span><span class="bit one"><em>2</em><strong>1</strong></span><span class="bit"><em>1</em><strong>0</strong></span></div>
+<p><strong>74 = 01001010</strong>. Every one of the eight columns must have a 1 or 0.</p>
+<div class="heading">We Do · Guided practice</div>
+<p>Convert <strong>178</strong> to unsigned 8-bit binary, starting with 128.</p>
+<p><strong>178 = 128 +</strong> <span class="line"></span> + <span class="line"></span> + <span class="line"></span></p>
+<p><strong>8-bit answer:</strong> <span class="line" style="width:67%"></span></p>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>2 / 4</span></footer>
+</section>
+<section class="page" data-page="3">
+<header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 001</span></header>
+<main class="tight">
+<h2>Think &amp; write</h2>
+<p class="small faint">YOU DO · All activities are part of today's learning.</p>
+<div class="heading orange">Code First · Predict, Write, Build</div>
+<p class="small">No computer required. <strong>print(...)</strong> displays the result of the calculation.</p>
+<div class="q"><b>Predict.</b> What would <code>print(8 + 2 + 1)</code> display? <span class="line" style="width:25%"></span></div>
+<div class="q"><b>Write.</b> Write a <code>print(...)</code> instruction displaying binary <strong>1010</strong>.<span class="write-line"></span></div>
+<div class="q"><b>Build.</b> Change the two lines below to display binary <strong>1001</strong>.
+<div class="code">value = 8 + 2 + 1<br>print(value)</div>
+<span class="write-line"></span><span class="write-line"></span></div>
+<div class="heading">Practise · Convert</div>
+<div class="bits"><span class="bit"><em>128</em> </span><span class="bit"><em>64</em> </span><span class="bit"><em>32</em> </span><span class="bit"><em>16</em> </span><span class="bit"><em>8</em> </span><span class="bit"><em>4</em> </span><span class="bit"><em>2</em> </span><span class="bit"><em>1</em> </span></div>
+<div class="q"><b>1.</b> Convert <strong>01101001</strong> to denary, showing your addition.<span class="write-line"></span><span class="write-line"></span></div>
+<div class="q"><b>2.</b> Convert <strong>191</strong> to unsigned 8-bit binary. Show selected place values.<span class="write-line"></span><span class="write-line"></span></div>
+<div class="heading orange">Apply · Check the reasoning</div>
+<p class="small">Someone claims <strong>154 = 10011001</strong>. Convert their answer back to denary. Explain the mistake and write the correct binary for 154.</p>
+<span class="write-line"></span><span class="write-line"></span>
+<div class="heading green">Explain · Make your own example</div>
+<p class="small">Create an 8-bit number strictly <strong>between 150 and 180</strong> containing <strong>exactly four 1s</strong>. Explain how the place values prove your answer.</p>
+<span class="write-line"></span><span class="write-line"></span>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>3 / 4</span></footer>
+</section>
+<section class="page" data-page="4">
+<header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 001</span></header>
+<main class="tight">
+<h2>Check &amp; correct</h2>
+<p class="small faint">Complete the Exit Ticket first. Then check all your answers.</p>
+<div class="heading green">Exit Ticket · True / False</div>
+<div class="exit"><span>1. The largest unsigned 8-bit number is 256.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>2. A 1-bit contributes its place value to the total.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>3. <code>print(8 + 2)</code> would display 10.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="heading green">Self-mark · Do Now and We Do</div>
+<div class="two-col">
+<div class="info answer"><strong>Do Now:</strong> 1. 0 and 1. 2. 8 bits. 3. 16. 4. 16 combinations (2 × 2 × 2 × 2).</div>
+<div class="info answer"><strong>We Do:</strong> 178 = 128 + 32 + 16 + 2, therefore <strong>10110010</strong>.</div>
+</div>
+<div class="heading green">Key Vocabulary · Model definitions</div>
+<div class="vocab-grid">
+<div class="entry"><span class="term">binary</span> — Base-2 system using 0 and 1.</div>
+<div class="entry"><span class="term">denary</span> — Base-10 system using 0–9.</div>
+<div class="entry"><span class="term">bit</span> — A single binary digit.</div>
+<div class="entry"><span class="term">byte</span> — Eight bits.</div>
+<div class="entry"><span class="term">place value</span> — Value based on position.</div>
+<div class="entry"><span class="term">most significant bit</span> — Highest-value bit.</div>
+</div>
+<div class="heading orange">Code First · Check</div>
+<p class="answer"><strong>Predict:</strong> 11. <strong>Write:</strong> <code>print(8 + 2)</code> displays 10. <strong>Build:</strong> <code>value = 8 + 1</code> then <code>print(value)</code> displays 9.</p>
+<div class="heading">Practise, Apply, Explain · Check</div>
+<p class="answer"><strong>1.</strong> 01101001 = 64 + 32 + 8 + 1 = <strong>105</strong>.</p>
+<p class="answer"><strong>2.</strong> 191 = 128 + 32 + 16 + 8 + 4 + 2 + 1 = <strong>10111111</strong>.</p>
+<p class="answer"><strong>Apply:</strong> 10011001 = 153, not 154. Replace the 1-column bit with a 0 and the 2-column bit with a 1: <strong>10011010</strong>.</p>
+<p class="answer"><strong>Explain:</strong> Example 10101010 = 170 (128 + 32 + 8 + 2); this contains four 1s.</p>
+<p class="answer"><strong>Exit:</strong> 1. False (maximum 255). 2. True. 3. True.</p>
+<div class="heading green">Correct an answer · Back to learning</div>
+<p class="small">Choose one error or uncertain answer. Write a correct version and what you need to remember.</p>
+<span class="write-line"></span>
+<span class="write-line"></span>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>4 / 4</span></footer>
+</section>
+</div>
+<div class="print-spreads" aria-hidden="true" id="spreads"></div>
+<script>
+(function(){
+  var params=new URLSearchParams(location.search);
+  var mode=params.get('version')==='colour'?'colour':'bw';
+  document.body.dataset.mode=mode;
+  document.getElementById('bw-option').setAttribute('aria-current',mode==='bw'?'page':'false');
+  document.getElementById('colour-option').setAttribute('aria-current',mode==='colour'?'page':'false');
+  var pages=Array.from(document.querySelectorAll('#viewer .page'));
+  var spreads=document.getElementById('spreads');
+  [[3,0],[1,2]].forEach(function(pair){
+    var spread=document.createElement('div');spread.className='spread';
+    pair.forEach(function(i){spread.appendChild(pages[i].cloneNode(true));});
+    spreads.appendChild(spread);
+  });
+})();
+</script>
+</body>
+</html>
