@@ -42,6 +42,30 @@
     link.append(symbol,name);
     return link;
   }
+
+  /* Specification-point identification: blue family for Paper 1,
+     warm brown for Paper 2, grey for synoptic and muted green for NEA. */
+  function specMarker(code,raw){
+    const original=String(code||'').trim();
+    if(!original)return null;
+    if(/^(mixed|assessment|synoptic)$/i.test(original)){
+      return {label:'Synoptic',colour:'#969696',full:'Synoptic / assessment'};
+    }
+    if(/^nea$/i.test(original)){
+      return {label:'NEA',colour:'#788a7b',full:'NEA'};
+    }
+    const match=original.match(/^([12])\.(\d+)(?:\.(\d+))?/);
+    if(!match)return null;
+    const canonical=match[0];
+    const source=String(raw||original);
+    const references=[...new Set(source.match(/[12]\.\d+(?:\.\d+)?/g)||[])];
+    const multiple=references.some(ref=>ref!==canonical);
+    const variants=match[1]==='1'
+      ? ['#55758f','#69879e','#7894a6','#607f96']
+      : ['#997553','#ad8968','#bc9979','#a27d5c'];
+    const index=([Number(match[2]),Number(match[3]||0)].reduce((a,v)=>a*7+v,0))%variants.length;
+    return {label:canonical+(multiple?' +':''),colour:variants[index],full:source};
+  }
   function createTile(options){
     const o=options||{};
     const number=String(o.number||'');
@@ -55,6 +79,11 @@
     entry.className='lesson-entry lesson-choice central-lesson'+(o.openHref?'':' is-planned');
     entry.dataset.menuOpen='false';
     if(o.color)entry.style.setProperty('--spec-colour',o.color);
+    const spec=specMarker(o.specPoint,o.specRaw);
+    if(spec){
+      entry.classList.add('has-spec-point');
+      entry.style.setProperty('--spec-mark-colour',spec.colour);
+    }
     const tile=document.createElement(o.openHref?'a':'div');
     tile.className='lesson-tile-open'+(o.openHref?'':' lesson-tile-unavailable');
     if(o.openHref)tile.href=o.openHref;
@@ -67,7 +96,20 @@
     shortTitle.textContent=title;
     shortTitle.title=title;
     tile.append(num,shortTitle);
+    if(spec){
+      const code=document.createElement('span');
+      code.className='lesson-spec-code';
+      code.textContent=spec.label;
+      code.title=spec.full;
+      tile.append(code);
+    }
     entry.append(tile);
+    if(spec){
+      const line=document.createElement('div');
+      line.className='lesson-spec-line';
+      line.setAttribute('aria-hidden','true');
+      entry.append(line);
+    }
     if(!routes.length)return entry;
     const button=document.createElement('button');
     button.type='button';
