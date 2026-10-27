@@ -179,3 +179,120 @@ mark.keyword{color:inherit;background:linear-gradient(transparent 36%,#f8e9a7 36
   .ks3-task-step > div > strong{font-size:21px}
   .ks3-task-step p{font-size:17px}
 }
+
+
+/* Reusable Watch Choose Answer task focus for KS3 independent resources.
+   Main pupil task first; short action strip; key questions before resource.
+   Styled classes apply only to lessons that opt into these elements. */
+.ks3-action-strip{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  list-style:none;
+  padding:0;
+  margin:0 0 14px;
+}
+.ks3-action-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-width:0;
+  padding:12px 14px;
+  border:1px solid #cbdcd3;
+  border-radius:12px;
+  background:#f0f7f2;
+  color:#164730;
+}
+.ks3-action-icon{
+  display:grid;
+  place-items:center;
+  flex:0 0 36px;
+  width:36px;height:36px;
+}
+.ks3-action-icon svg{display:block;width:34px;height:34px}
+.ks3-action-card strong{
+  display:block;
+  font-size:clamp(20px,1.8vw,29px);
+  line-height:1.15;
+  font-weight:860;
+}
+.ks3-watch-questions{
+  min-width:0;
+  border:1px solid #d6e3dc;
+  border-radius:12px;
+  background:#fafcfb;
+  padding:clamp(12px,1.3vw,18px);
+  margin:0 0 14px;
+}
+.ks3-watch-questions h2{
+  font-size:clamp(22px,1.9vw,30px);
+  color:#173d2a;
+  line-height:1.15;
+  margin:0 0 10px;
+}
+.ks3-watch-questions ul{
+  list-style:none;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px 14px;
+  padding:0;
+  margin:0;
+}
+.ks3-watch-questions li{
+  position:relative;
+  min-width:0;
+  padding:7px 10px 7px 32px;
+  line-height:1.25;
+  font-weight:700;
+  font-size:clamp(18px,1.36vw,22px);
+  background:#fff;
+  border:1px solid #e5ebe6;
+  border-radius:8px;
+}
+.ks3-watch-questions li::before{
+  content:"";
+  position:absolute;
+  top:11px;left:9px;
+  width:13px;height:13px;
+  border:2px solid #458362;
+  border-radius:50%;
+}
+#ks3-video-stage .ks3-heading{margin-bottom:10px}
+#ks3-video-stage .ks3-heading h1{
+  font-size:clamp(34px,3.65vw,52px);
+  line-height:1.08;
+  margin:0 0 7px;
+}
+#ks3-video-stage .ks3-task-intro{
+  font-size:clamp(20px,1.85vw,27px)!important;
+  margin:0;
+  line-height:1.28!important;
+}
+#ks3-video-stage .ks3-video-link-card{
+  width:100%;
+  box-sizing:border-box;
+  margin:0;
+}
+#ks3-video-stage .ks3-video-link-copy span{
+  font-size:clamp(16px,1.18vw,19px);
+  line-height:1.35;
+  font-weight:650;
+}
+@media(max-width:900px){
+  .ks3-action-strip{gap:8px}
+  .ks3-action-card{flex-direction:column;gap:6px;padding:10px 7px;text-align:center}
+  .ks3-action-card strong{font-size:clamp(17px,2.7vw,22px)}
+  .ks3-action-icon{width:30px;height:30px;flex-basis:30px}
+  .ks3-action-icon svg{width:28px;height:28px}
+}
+@media(max-width:700px){
+  #ks3-video-stage .ks3-heading h1{font-size:clamp(29px,7vw,39px)}
+  #ks3-video-stage .ks3-task-intro{font-size:clamp(19px,5.1vw,24px)!important}
+  .ks3-action-strip{gap:5px}
+  .ks3-action-card{padding:9px 4px;gap:4px}
+  .ks3-action-card strong{font-size:clamp(15px,4.2vw,20px)}
+  .ks3-watch-questions h2{font-size:clamp(21px,5.5vw,26px)}
+  .ks3-watch-questions ul{grid-template-columns:minmax(0,1fr);gap:6px}
+  .ks3-watch-questions li{font-size:clamp(17px,4.6vw,20px);padding-top:9px;padding-bottom:9px}
+}
