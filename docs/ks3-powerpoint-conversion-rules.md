@@ -69,6 +69,25 @@
 | 2026-10-27 | Y7 001 | Use starting-point diagnostic instead of prior-Year-7 retrieval. | Pilot — pending review |
 | 2026-10-27 | Y7 001 | Omit old demonstration password and treat sanctions/credential handling as policy-dependent. | Safety rule — applied |
 | 2026-10-27 | Y7 001 | Keep all original teaching strands: expectations, AUA, filtering, monitoring, sign-in, work presentation and safe evidence. | Pilot — pending review |
+| 2026-10-27 | Y7 001 | Preserve three separate presentation expectations: green folders, paper lessons, Class Notebook; a generic "work neatly" summary loses important instruction. | Pilot — pending review |
+| 2026-10-27 | Y7 001 | A blank/branding-only slide need not become a learning phase; repeat "organisation" slides may be consolidated while retaining each action. | Pilot — pending review |
+
+
+## Lesson 001 pilot source coverage (27 October 2026)
+
+Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teaching content as the current uploaded `(3)` version).
+
+| Original slide | Content | Conversion / exception |
+|---|---|---|
+| 1 | Three Computing expectations | New Learning stage 1, Tasks 1 and 3 |
+| 2 | Blank or brand-only visual | Not a separate learning stage |
+| 3, 5, 7 | Repeated organisation checklist | New Learning stage 5 and You Do Tasks 2–3 |
+| 4 | Filtering, monitoring, school consequence reminders | New Learning stages 3–4; specific sanctions deferred to **current school policy** |
+| 6 | Logging in, password guidance and example credential | New Learning stage 5 and I Do; **sample credential deliberately excluded** |
+| 8 | Safe evidence to Class Notebook; reflection; logistical reminders | You Do Task 4 and exit reflection; time-sensitive site logistics deferred to current teacher instructions |
+| 9 | Presentation standards for folders, paper and Class Notebook | New Learning stage 6 and You Do Task 3 |
+
+**Publication status:** `lessons/year7/lesson-001/index.html` is a review-only pilot. It must not enter the live KS3 lesson map until approved. `lesson-003` remains the only live KS3 conversion.
 
 ## Conversion QA checklist
 
