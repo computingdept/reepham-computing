@@ -38,6 +38,16 @@
 - **QA:** test (1) question focus before a reveal, (2) visible step focus after reveal, (3) Previous restores earlier step focus, (4) no styling when flag absent, (5) classroom TV readability without cropped instruction and (6) mobile portrait without horizontal overflow. Source-level tests do not substitute for browser rendering checks.
 - **Status:** shared implementation and pilot committed; pending independent TV and mobile visual confirmation before global rollout.
 
+## Teaching-first compact screen hierarchy (CSS pilot, 27 October 2026)
+
+- User-approved direction: do not alter educational content or lesson navigation merely to remove repeated visual headings. Test whether **central CSS alone** can solve it.
+- **Pilot:** Year 7 Lesson 003 alone opts in via the existing `body[data-classroom-focus="pilot"]` feature flag and versioned `lesson-classroom.css?v=20261027-teachingfirst3`.
+- Within a compatible I Do/We Do example, arrange the existing eyebrow and learning title in one compact top row; do not hide text or change the DOM.
+- Put existing structural labels (e.g. "REVEAL EACH STEP" / "My demonstration") together as a compact row. Place the **revealed model step immediately below**, with its existing supporting paragraph visually underneath. This is presentation order only; the HTML and spoken/screen-reader order remain untouched.
+- Preserve the 50/50 reference/working panels, rear-of-class legibility, optional step-synchronised diagram highlight and mobile stacking already implemented by the shared focus rules.
+- **Generalisation constraint:** do not hide all `h2` or `.phase-tag` elements globally. Compact the specific model-panel structure (`.method-panel:has(> .ks3-model-steps)`) only. Other content arrangements require representative checks before extending the selector set.
+- **Rollout gate:** share the CSS/JS centrally, but keep it opt-in until the current pilot and J277/H446 representative lessons have been checked for TV readability, mobile overflow and code/diagram safety. Source checks are not live visual QA.
+
 ## Student-facing editorial standard (approved 27 October 2026)
 
 - **Student screens must read like finished lessons, not notes about converting a PowerPoint.** Include direct teaching explanations, questions, modelled actions and tasks. Do not display phrases such as "the original slides say", "the diagram is an example", "follow current teacher guidance", "this Learning Hub page does not...", or "preview converted from PowerPoint".
@@ -86,6 +96,7 @@
 |---|---|---|---|
 | 2026-10-27 | Y7 003 · classroom focus | Use central shared CSS and JS so the current I Do/We Do teaching step, not static headings, commands attention. Roll out after pilot rather than individual lesson edits. | **Pilot — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 · visual balance | Match LHS/RHS width (50/50); enlarge meaningful SVG-card captions and link active diagram cards to the current model reveal. Keep the visual legible, not just the RHS text. | **Pilot refinement — source checks passed; visual QA outstanding** |
+| 2026-10-27 | Y7 003 · teaching-first CSS | Compact existing phase/lesson/model headings into two short header rows, place current modelled step at the top of its panel and supporting notes below; **no content or JS behaviour changes**. | **Pilot — source audit pending, visual QA outstanding** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
