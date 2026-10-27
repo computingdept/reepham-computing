@@ -1,0 +1,236 @@
+/* Learning Hub navigation | monochrome prototype | 2026-10-27
+   One shared presentation layer for course hubs, the Learning Hub landing page
+   and KS3 navigation. Intentionally scoped OUT of classroom lesson pages,
+   print booklets, revision questions, PDF readers and teaching diagrams. */
+:root{
+  --hubnav-ink:#171717;
+  --hubnav-muted:#626262;
+  --hubnav-border:#d5d5d5;
+  --hubnav-faint:#ebebeb;
+  --hubnav-white:#fff;
+}
+body.course-hub, body.learning-hub, body[data-year="8"] {
+  --year-accent:#343434;
+  --year-pale:#fff;
+  --year-border:#d5d5d5;
+  --year-ink:#171717;
+  --green-dark:#171717;
+  --green-mid:#303030;
+  --green-pale:#fff;
+  background:#fff;
+  color:var(--hubnav-ink);
+}
+body.course-hub[data-year], body[data-year="8"] {
+  --year-accent:#343434;
+  --year-pale:#fff;
+  --year-border:#d5d5d5;
+  --year-ink:#171717;
+}
+/* The shell: quiet branding, simple active tabs, no tinted panel backgrounds. */
+body.course-hub .topbar, body.learning-hub .top, body[data-year="8"] .top {
+  background:#fff;
+  border-color:var(--hubnav-border);
+}
+body.course-hub .topbar .mark, body[data-year="8"] .mark {
+  background:#fff;
+  color:#171717;
+  border:1px solid #bdbdbd;
+}
+body.course-hub .topbar .brand-copy strong,
+body.course-hub .heading h1, body.course-hub .heading .eyebrow,
+body.course-hub .term-head strong,
+body[data-year="8"] .eyebrow,
+body[data-year="8"] h1 {color:var(--hubnav-ink)}
+body.course-hub .home, body.course-hub .back, body[data-year="8"] .back,
+body[data-year="8"] .toplinks a {
+  background:#fff;
+  color:var(--hubnav-ink);
+  border-color:var(--hubnav-border);
+}
+/* Override the Synergy experimental tab shading without switching it off. */
+body.course-hub .course-nav .tabs,
+html.synergy-hub-preview body.course-hub .course-nav .tabs {
+  background:#fff;
+  border:0;
+  border-bottom:1px solid var(--hubnav-border);
+  box-shadow:none;
+  border-radius:0;
+  padding:0;
+  gap:3px;
+}
+body.course-hub .course-nav .tabs .tab,
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab {
+  color:#5a5a5a;
+  background:#fff;
+  border-radius:0;
+  box-shadow:none;
+  font-weight:650;
+}
+body.course-hub .course-nav .tabs .tab[aria-selected="true"],
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab[aria-selected="true"] {
+  background:#fff;
+  color:#111;
+  box-shadow:inset 0 -2px 0 #222;
+  font-weight:850;
+}
+body.course-hub .year-btn,
+body.course-hub .year-btn[aria-pressed="true"] {
+  background:#fff;
+  color:#262626;
+  border:1px solid var(--hubnav-border);
+  box-shadow:none;
+  font-weight:700;
+}
+body.course-hub .year-btn[aria-pressed="true"] {
+  border-color:#333;
+  color:#111;
+  font-weight:850;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+body.course-hub #lessons .course-key,
+body.course-hub #lessons .course-key summary {color:var(--hubnav-ink);background:#fff}
+body.course-hub #lessons .year-toolbar .count,
+body.course-hub #lessons .term-head span,
+body.course-hub #lessons .course-key {color:var(--hubnav-muted)}
+body.course-hub #lessons .term,
+body.course-hub #lessons .term-head {
+  background:#fff;
+  border-color:var(--hubnav-faint);
+  box-shadow:none;
+}
+body.course-hub #lessons .term-head{border-bottom:1px solid var(--hubnav-faint)}
+body.course-hub #lessons .term-route{display:none}
+/* Monochrome numbered lesson tiles; no subject/spec bars. */
+body.course-hub #lessons .lesson-entry.lesson-choice {
+  background:#fff;
+  border:1px solid var(--hubnav-border);
+  border-top:1px solid var(--hubnav-border);
+  box-shadow:none;
+}
+body.course-hub #lessons .lesson-entry.lesson-choice:hover,
+body.course-hub #lessons .lesson-entry.lesson-choice:focus-within{
+  border-color:#888;
+  box-shadow:0 3px 12px #00000012;
+}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-open,
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-number,
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-title {color:#222}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-title {color:#676767}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-open:hover {background:#fafafa}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-options-toggle {
+  color:#2b2b2b;
+  background:#fff;
+  border-top:1px solid #e7e7e7;
+}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-options-toggle:hover,
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-options-toggle[aria-expanded="true"] {background:#f8f8f8}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-scenarios {
+  background:#fff;
+  border-color:#bcbcbc;
+  box-shadow:0 9px 24px #00000022;
+}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-scenarios-heading,
+body.course-hub #lessons .lesson-entry.lesson-choice .scenario-copy {color:#222}
+body.course-hub #lessons .lesson-grid .lesson-choice .lesson-scenario-action {
+  background:#fff;
+  color:#222;
+  border-color:#ebebeb;
+}
+body.course-hub #lessons .lesson-grid .lesson-choice .lesson-scenario-action:hover,
+body.course-hub #lessons .lesson-grid .lesson-choice .lesson-scenario-action:focus-visible{background:#f7f7f7;color:#111}
+body.course-hub #lessons .lesson-grid .lesson-choice .scenario-symbol,
+body.course-hub #lessons .lesson-grid .lesson-choice .scenario-arrow {color:#555}
+body.course-hub #lessons .lesson-entry.lesson-choice .lesson-tile-unavailable {color:#777;background:#fff}
+body.course-hub #lessons .lesson-entry.lesson-choice.lesson-choice-welcome .lesson-tile-open {background:#fff}
+/* Legacy H446 lesson tiles use a spec-coloured ::after marker.
+   Keep specification colours available only through the optional colour key. */
+body.course-hub #lessons .lesson-entry > .lesson.spec-tile,
+body.course-hub #lessons .lesson-entry > .lesson.spec-tile.live,
+body.course-hub #lessons .lesson-entry > .lesson.spec-tile.planned,
+body.course-hub #lessons .lesson-entry > .lesson {
+  background:#fff;
+  border-color:var(--hubnav-border);
+  color:#222;
+  box-shadow:none;
+}
+body.course-hub #lessons .lesson-entry > .lesson.spec-tile::after,
+body.course-hub #lessons .lesson-entry > .lesson.live::after{display:none}
+body.course-hub #lessons .lesson-entry > .lesson.planned {color:#777}
+body.course-hub #lessons .lesson-info{background:#fff;border-color:#bdbdbd;color:#333}
+body.course-hub #lessons .spec-group-title,
+body.course-hub #lessons .spec-group-code {color:#333;border-color:#c5c5c5}
+body.course-hub #lessons .spec-group {border-color:#ededed;background:#fff}
+body.course-hub #lessons .lesson-detail {background:#fff;border-color:var(--hubnav-border);color:#222}
+body.course-hub #lessons .lesson-finder{
+  background:#fff;
+  border:1px solid var(--hubnav-faint);
+  box-shadow:none;
+}
+body.course-hub #lessons .lesson-finder input{
+  background:#fff;
+  color:#171717;
+  border:1px solid var(--hubnav-border);
+}
+body.course-hub #lessons .lesson-finder label {color:#222}
+body.course-hub #lessons .lesson-finder input:focus-visible {outline:2px solid #444}
+/* KS3 year navigation and lesson grids — identical neutral identity. */
+body.learning-hub .year.landing-year,
+body.learning-hub .year[data-year]{
+  background:#fff!important;
+  border:1px solid var(--hubnav-border)!important;
+  color:#171717!important;
+  box-shadow:none;
+}
+body.learning-hub .year.landing-year:hover,
+body.learning-hub .year[data-year]:hover {background:#fafafa!important;border-color:#777!important}
+body.learning-hub .year[data-year] .year-bottom,
+body.learning-hub .year[data-year] .year-arrow,
+body.learning-hub .year.landing-year .year-label {color:#333!important}
+body.learning-hub .year[data-year] .year-arrow{background:transparent!important}
+body.learning-hub .ks3-lessonhub .term,
+body[data-year="8"] .term{
+  background:#fff;
+  border-color:var(--hubnav-border);
+  box-shadow:none;
+}
+body.learning-hub .ks3-lessonhub .term-head,
+body[data-year="8"] .term-head {
+  background:#fff;
+  color:#222;
+  border-color:var(--hubnav-faint);
+}
+body.learning-hub .ks3-lessonhub .lesson-grid a,
+body.learning-hub .ks3-lessonhub .lesson-pending,
+body[data-year="8"] #lessons .lesson-grid a,
+body[data-year="8"] #lessons .lesson-grid .lesson-pending {
+  background:#fff;
+  color:#252525;
+  border:1px solid var(--hubnav-border);
+  box-shadow:none;
+}
+body.learning-hub .ks3-lessonhub .lesson-grid a:hover,
+body[data-year="8"] #lessons .lesson-grid a:hover {background:#fafafa;border-color:#777}
+body.learning-hub .ks3-lessonhub .lesson-pending,
+body[data-year="8"] #lessons .lesson-grid .lesson-pending {color:#777}
+body[data-year="8"] .tabs a,
+body[data-year="8"] .tabs button {
+  background:#fff;
+  color:#252525;
+  border-color:var(--hubnav-border);
+}
+body[data-year="8"] .tabs .active,
+body[data-year="8"] .tabs [aria-selected="true"]{
+  background:#fff;
+  color:#111;
+  border-color:#555;
+}
+/* Keep focus unmistakable in both light and dark environments. */
+body.course-hub #lessons a:focus-visible,
+body.course-hub #lessons button:focus-visible,
+body.learning-hub .year:focus-visible,
+body[data-year="8"] #lessons a:focus-visible {outline:2px solid #222;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){
+ body.course-hub #lessons .lesson-entry.lesson-choice,
+ body.learning-hub .year {transition:none}
+}
