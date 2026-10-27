@@ -71,7 +71,33 @@
 | 2026-10-27 | Y7 001 | Keep all original teaching strands: expectations, AUA, filtering, monitoring, sign-in, work presentation and safe evidence. | Pilot — pending review |
 | 2026-10-27 | Y7 001 | Preserve three separate presentation expectations: green folders, paper lessons, Class Notebook; a generic "work neatly" summary loses important instruction. | Pilot — pending review |
 | 2026-10-27 | Y7 001 | A blank/branding-only slide need not become a learning phase; repeat "organisation" slides may be consolidated while retaining each action. | Pilot — pending review |
+| 2026-10-27 | Y7 004 | Where Microsoft interface screenshots may be outdated, replace with **illustrative SVGs** labelling stable concepts (folder, launcher, notebook, screenshot), not falsely exact screenshots of today's interface. | Pilot — pending review |
+| 2026-10-27 | Y7 004 | Preserve prior-lesson review (Teams Hand In, OneNote, Teams areas, To/Cc/Bcc), including four separate answer screens, and move practical signing-in order into visual new learning. | Pilot — pending review |
+| 2026-10-27 | Y7 004 | Preserve precise Class Notebook evidence task: date on the `7.1 Introduction to Computing` page, screenshots of homework email **and** Teams assignment, safely cropped. | Pilot — pending review |
+| 2026-10-27 | Y7 004 | When PPT slides mention older school website labels, preserve navigation intent but acknowledge that school links may be renamed. Homework planner page number/reminders remain a teacher-confirmed historical instruction. | Pilot — pending review |
 
+
+## Lesson 004 pilot source coverage (27 October 2026)
+
+**Source:** `7.1 Lesson 4 - OneDrive & Class Notebook(3).pptx` (12 slides). The original PowerPoint is unchanged; conversion is `lessons/year7/lesson-004/index.html`.
+
+| Original slide | Source content | Conversion coverage |
+|---|---|---|
+| 1 | Do Now and homework checklist: planner p16 signed, email teacher / Arbor, Teams assignment | Do Now homework check (teacher confirms current requirements) |
+| 2 | True/False Hand In; identify the OneNote app | Do Now questions 1–2 with separate answers |
+| 3 | Label Teams picture (Posts, Files, Assignments, Class Notebook); order home Microsoft login | Do Now question 3; New Learning stage 2 shows ordered access steps in SVG |
+| 4 | Flashback To / Cc / Bcc roles | Do Now challenge question 4 and answer |
+| 5 | OneDrive storage, Class Notebook evidence, screenshots | Objectives |
+| 6 | OneDrive from home/school; school website, student links, Outlook/Microsoft, app launcher | New Learning stages 1–2, illustrative SVG (historical menu naming caveat) |
+| 7–8 | Store school subject work in OneDrive rather than My Documents; make folders | New Learning stage 3; I Do; independent Task 1 |
+| 9 | Unit page in Class Notebook as evidence of understanding, effort, presentation | New Learning stage 4; guided practice |
+| 10 | Date 7.1 unit-page table; two earlier works (homework email + Teams assignment); Snipping Tool | New Learning stage 5; You Do Tasks 2–3; teacher guided We Do |
+| 11 | Screenshot, OneDrive, Class Notebook definitions | Definition-first vocabulary, plus useful supporting terms OneNote, folder and app launcher |
+| 12 | Recap objectives, positive recognition, end reminders | 3 T/F exit questions with separate explanations, thumbs reflection; current logistical notices left to teacher |
+
+**Unchanged teaching intent:** pupils store accessible files, retrieve and edit them, and show evidence in Class Notebook. The new diagrams are clearly illustrative, not exact screenshots. Students never submit personal information or credentials via the Learning Hub.
+
+**Publication:** Preview/pilot only. Lesson 003 remains the only teacher-approved live KS3 tile until review.
 
 ## Lesson 001 pilot source coverage (27 October 2026)
 
