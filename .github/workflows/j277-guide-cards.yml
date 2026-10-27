@@ -1,0 +1,37 @@
+name: J277 revision guides visual parity with H446
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'j277-hub.html'
+      - 'qa/master-audit-2026/j277-guide-cards-regression.cjs'
+      - '.github/workflows/j277-guide-cards.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cards:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Compare J277 and H446 guide cards on desktop and phone
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/j277-guides-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/j277-guide-cards-regression.cjs
+      - name: Retain desktop and phone screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-guide-cards-visual-check
+          path: /tmp/j277-guide-layout/
+          if-no-files-found: ignore
