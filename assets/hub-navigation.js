@@ -96,15 +96,15 @@
     shortTitle.textContent=title;
     shortTitle.title=title;
     tile.append(num,shortTitle);
+    entry.append(tile);
     if(spec){
+      // Keep the exact specification reference outside the clipped lesson-link
+      // box. The fixed-size card must never crop the reference.
       const code=document.createElement('span');
       code.className='lesson-spec-code';
       code.textContent=spec.label;
       code.title=spec.full;
-      tile.append(code);
-    }
-    entry.append(tile);
-    if(spec){
+      entry.append(code);
       const line=document.createElement('div');
       line.className='lesson-spec-line';
       line.setAttribute('aria-hidden','true');
