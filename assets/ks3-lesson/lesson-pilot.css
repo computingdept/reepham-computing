@@ -296,3 +296,184 @@ mark.keyword{color:inherit;background:linear-gradient(transparent 36%,#f8e9a7 36
   .ks3-watch-questions ul{grid-template-columns:minmax(0,1fr);gap:6px}
   .ks3-watch-questions li{font-size:clamp(17px,4.6vw,20px);padding-top:9px;padding-bottom:9px}
 }
+
+
+/* KS3 three-choice clip and three-sentence recall.
+   One decision on the video screen; writing happens only on the next stage.
+   Original five teacher-authored Task 1 questions remain optional in details. */
+.ks3-clip-stage,.ks3-recall-stage{
+  max-width:1120px;
+  margin-inline:auto;
+  min-width:0;
+}
+.ks3-clip-stage .ks3-heading,
+.ks3-recall-stage .ks3-heading{margin-bottom:15px}
+.ks3-clip-stage .ks3-heading h1,
+.ks3-recall-stage .ks3-heading h1{
+  font-size:clamp(33px,3.5vw,49px);
+  line-height:1.1;
+  margin:0 0 10px;
+}
+.ks3-clip-instruction,
+.ks3-recall-stage .ks3-heading p{
+  font-size:clamp(20px,1.8vw,27px);
+  font-weight:650;
+  line-height:1.32;
+  margin:0;
+}
+.ks3-clip-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin:16px 0;
+}
+.ks3-clip-choice{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:7px;
+  min-width:0;
+  min-height:172px;
+  box-sizing:border-box;
+  padding:17px;
+  background:#f1f8f4;
+  color:#153e2c;
+  border:2px solid #a5cdb5;
+  border-radius:13px;
+  text-decoration:none;
+}
+.ks3-clip-choice:hover,
+.ks3-clip-choice:focus-visible{
+  background:#e0f2e7;
+  border-color:#17744d;
+  outline:3px solid #9ccab1;
+  outline-offset:2px;
+}
+.ks3-clip-option{
+  display:block;
+  color:#396a50;
+  font-size:clamp(13px,1vw,16px);
+  font-weight:850;
+  letter-spacing:.06em;
+}
+.ks3-clip-choice > strong{
+  font-size:clamp(23px,2.1vw,32px);
+  line-height:1.15;
+  color:#103d29;
+}
+.ks3-clip-name{
+  font-size:clamp(15px,1.15vw,18px);
+  line-height:1.22;
+  color:#416454;
+}
+.ks3-clip-open{
+  margin-top:auto;
+  font-size:clamp(18px,1.3vw,22px);
+  font-weight:850;
+  color:#145f40;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+.ks3-clip-next{
+  background:#fffdf3;
+  border-left:5px solid #b79331;
+  padding:12px 16px;
+  border-radius:8px;
+  line-height:1.33;
+  font-size:clamp(20px,1.7vw,25px);
+  margin:0;
+}
+.ks3-recall-instruction{
+  margin:10px 0 12px;
+  font-size:clamp(18px,1.5vw,23px);
+  line-height:1.32;
+}
+.ks3-recall-frames{
+  list-style:none;
+  margin:0 0 14px;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+.ks3-recall-frames > li{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  min-width:0;
+  padding:11px 13px;
+  background:#f4faf6;
+  border:1px solid #cfe4d8;
+  border-radius:10px;
+}
+.ks3-recall-number{
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#dbeee2;
+  color:#12563b;
+  font-weight:900;
+  font-size:24px;
+}
+.ks3-recall-frames li strong{
+  display:block;
+  font-size:clamp(20px,1.6vw,25px);
+  line-height:1.24;
+}
+.ks3-recall-frames li p{
+  margin:5px 0 0;
+  font-size:clamp(22px,1.85vw,29px);
+  font-weight:650;
+  line-height:1.28;
+}
+.ks3-recall-model{
+  padding:12px 16px;
+  border-radius:10px;
+  border:1px solid #a8cdb9;
+  background:#eef7f1;
+}
+.ks3-recall-model > strong{
+  display:block;
+  font-size:clamp(16px,1.2vw,20px);
+  color:#206246;
+  margin-bottom:5px;
+}
+.ks3-recall-model p{
+  font-size:clamp(17px,1.4vw,23px);
+  line-height:1.36;
+  margin:0;
+}
+.ks3-recall-more{
+  margin:13px 0 0;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid #d4e0d8;
+  background:#fafcfb;
+}
+.ks3-recall-more > summary{
+  cursor:pointer;
+  color:#315745;
+  font-weight:790;
+  font-size:clamp(16px,1.2vw,20px);
+  line-height:1.35;
+}
+.ks3-recall-more .ks3-prompts{
+  margin:14px 0 4px;
+}
+@media(max-width:700px){
+  .ks3-clip-stage .ks3-heading h1,
+  .ks3-recall-stage .ks3-heading h1{font-size:clamp(29px,7vw,39px)}
+  .ks3-clip-instruction,
+  .ks3-recall-stage .ks3-heading p{font-size:clamp(19px,5vw,24px)}
+  .ks3-clip-choice-grid{grid-template-columns:minmax(0,1fr);gap:9px}
+  .ks3-clip-choice{min-height:0;padding:12px;gap:4px}
+  .ks3-clip-choice > strong{font-size:23px}
+  .ks3-clip-next{font-size:19px}
+  .ks3-recall-frames > li{grid-template-columns:34px minmax(0,1fr);gap:9px}
+  .ks3-recall-number{width:32px;height:32px;font-size:20px}
+  .ks3-recall-frames li strong{font-size:19px}
+  .ks3-recall-frames li p{font-size:21px}
+  .ks3-recall-model p{font-size:18px}
+}
