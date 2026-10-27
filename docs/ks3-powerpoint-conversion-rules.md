@@ -28,9 +28,12 @@
 ## Shared classroom-focus typography (pilot, 27 October 2026)
 
 - **Teaching focus outranks headings:** the *currently revealed* I Do / We Do step should be readable from the rear of a classroom, not subordinate to large static titles.
-- **Shared CSS:** `assets/h446-lesson/lesson-classroom.css` includes opt-in `body[data-classroom-focus]` rules for smaller phase/card headings, a roomier method panel, and a larger current teaching step. It retains scrolling on shorter screens and one-column reading order on mobile.
+- **Shared CSS:** `assets/h446-lesson/lesson-classroom.css` includes opt-in `body[data-classroom-focus]` rules for smaller phase/card headings, a larger current teaching step, and **balanced 50/50 visual/method panels** where an I Do/We Do panel pairing exists. Visual-card titles (approximately 18–22px) and instructional captions (approximately 15–18px) remain readable, while the revealed teaching step stays most prominent. It retains scrolling on shorter screens and one-column reading order on mobile.
 - **Shared JavaScript:** `assets/h446-lesson/lesson.js` adds `syncClassroomFocus()` to the **existing** `updateControl()` flow. It reads the current `.ido-step`/`.wedo-step` hidden state, gives the visible step `.classroom-focus-active`, and otherwise focuses the question/prompt. It must **never** reveal, hide, reorder or advance teaching content.
 - **Pilot only:** `lessons/year7/lesson-003/index.html` has `data-classroom-focus="pilot"` on `body`. Unflagged KS3/J277/H446 lessons remain unchanged while the pilot is checked.
+- **Synchronized model diagrams (optional):** for a diagram that genuinely corresponds to reveal steps, annotate existing diagram elements with `data-classroom-focus-step="N"`. The shared JS applies `.classroom-focus-visual-active` to diagram elements for the current N. More than one diagram item may map to the same teaching step. No diagram-specific JS, change to lesson content, or manual annotation of all lessons is required: unannotated lessons retain balanced typography with no diagram highlighting.
+- **Lesson 003 example:** diagram cards 1–4 follow model steps 1–4, while both `Hand In` and `Check submitted` highlight for model step 5; this reflects that the modelled final step covers pressing Hand In and checking completion.
+
 - **Rollout:** do not edit hundreds of individual lesson files. After representative long-text, code, diagrams and mobile checks, enable the shared rule centrally in the common JS/CSS assets. Keep selectors scoped to I Do/We Do. Identify exceptions automatically and retain rollback by removing/disabling one feature gate.
 - **QA:** test (1) question focus before a reveal, (2) visible step focus after reveal, (3) Previous restores earlier step focus, (4) no styling when flag absent, (5) classroom TV readability without cropped instruction and (6) mobile portrait without horizontal overflow. Source-level tests do not substitute for browser rendering checks.
 - **Status:** shared implementation and pilot committed; pending independent TV and mobile visual confirmation before global rollout.
@@ -82,6 +85,7 @@
 | Date | Lesson | Decision | Status |
 |---|---|---|---|
 | 2026-10-27 | Y7 003 · classroom focus | Use central shared CSS and JS so the current I Do/We Do teaching step, not static headings, commands attention. Roll out after pilot rather than individual lesson edits. | **Pilot — source checks passed; visual QA outstanding** |
+| 2026-10-27 | Y7 003 · visual balance | Match LHS/RHS width (50/50); enlarge meaningful SVG-card captions and link active diagram cards to the current model reveal. Keep the visual legible, not just the RHS text. | **Pilot refinement — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
