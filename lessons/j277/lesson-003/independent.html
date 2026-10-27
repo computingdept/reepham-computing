@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="OCR J277 Lesson 003: a complete independent, printable Hexadecimal lesson.">
+<title>Independent Lesson 003 · Hexadecimal · RHS Computing</title>
+<link rel="alternate" type="application/json" href="../../../data/lesson-resources.json">
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#132823;background:#eff3f0;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0}
+a{color:inherit}
+.screen-toolbar{position:sticky;top:0;background:#fff;border-bottom:1px solid #bacfc3;z-index:5;padding:11px max(14px,calc((100% - 940px)/2));display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:0 3px 12px #0001}
+.screen-toolbar strong{margin-right:auto;font-size:14px;letter-spacing:-.2px}
+.screen-toolbar a,.screen-toolbar button{font:600 13px Arial,sans-serif;text-decoration:none;border:1px solid #a7beb1;background:white;border-radius:7px;min-height:38px;padding:10px 12px;cursor:pointer}
+.screen-toolbar button.primary{background:#064839;color:white;border-color:#064839}
+.screen-toolbar a[aria-current="page"]{border-color:#064839;box-shadow:inset 0 0 0 1px #064839}
+.instructions{max-width:850px;margin:20px auto;padding:16px 19px;background:#fff;border:1px solid #d0ddd6;border-radius:12px;font-size:14px;line-height:1.5}
+.instructions h1{font-size:20px;margin:0 0 6px}
+.instructions p{margin:5px 0}
+.viewer{display:flex;flex-direction:column;gap:20px;align-items:center;padding:0 12px 30px}
+.page{width:210mm;height:297mm;overflow:hidden;flex:none;background:white;box-shadow:0 8px 26px #08251e1b; padding:12mm 12mm 10mm;display:flex;flex-direction:column;position:relative;font-size:11pt;line-height:1.35}
+.page h2{font-size:16pt;margin:12px 0 7px;color:#104d43}
+.page h3{font-size:11.8pt;margin:9px 0 6px;color:#104d43}
+.page p{margin:4px 0 8px}
+.page .small{font-size:9.1pt}
+.page .faint{color:#4d625a}
+.page header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #bdcfc6;padding-bottom:7px;font-size:8.2pt;font-weight:700;letter-spacing:.3px}
+.page header .cs{display:inline-block;background:#075043;color:white;padding:7px 8px;border-radius:5px;margin-right:7px}
+.page footer{position:absolute;bottom:8mm;left:12mm;right:12mm;border-top:1px solid #c6d6ce;padding-top:5px;font-size:7.8pt;color:#456159;display:flex;justify-content:space-between}
+.page main{flex:1;min-height:0}
+.section{margin-top:9px}
+.heading{font-weight:700;border-left:4px solid #2c739c;padding-left:8px;margin:10px 0 7px;font-size:13pt}
+.heading.green{border-color:#177755}.heading.orange{border-color:#a86429}
+.info{border:1px solid #cee0d4;background:#f5faf7;border-radius:6px;padding:8px 10px;margin:6px 0 9px}
+.term{font-weight:700;position:relative;background:linear-gradient(178deg,transparent 8%,#fff1aa 8%,#fff1aa 92%,transparent 92%);padding:0 3px}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 15px}
+.vocab-grid .entry{font-size:9.4pt}
+.line{display:inline-block;border-bottom:1px solid #8fa79a;height:14px;min-width:80px;vertical-align:bottom}
+.write-line{display:block;border-bottom:1px solid #9bad9e;height:19px;margin:2px 0 6px}
+.q{margin:8px 0 10px}.q b{color:#235f86}
+.bits{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;margin:7px 0}
+.bit{border:1px solid #9cb8aa;border-radius:3px;text-align:center;padding:5px 0 6px;font-size:10pt;background:#f8fbf9}
+.bit em{display:block;font-style:normal;font-size:9pt;color:#2e604e;border-bottom:1px solid #d6e0db;margin:0 4px 4px;padding-bottom:3px}
+.bit strong{font-size:14pt}
+.bit.one{background:#e8f5eb;border-color:#2b8b60}
+.code{background:#f3f6f4;border-left:3px solid #497f66;border-radius:4px;padding:7px 10px;font:700 11pt Consolas,monospace;margin:7px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hair{border-top:1px solid #cbd8d1;margin:10px 0 7px}
+.spacer{height:8px}
+.tight .q{margin:4px 0 6px}
+.tight .write-line{height:15px;margin:1px 0 5px}
+.answer{font-size:9.4pt;margin:4px 0}
+.answer strong{color:#13563f}
+.exit{display:flex;gap:8px;justify-content:space-between;font-size:9.4pt;margin:7px 0}
+.choice{white-space:nowrap}
+.print-spreads{display:none}
+body[data-mode="bw"] .page{color:#111}
+body[data-mode="bw"] .page h2,body[data-mode="bw"] .page h3{color:#111}
+body[data-mode="bw"] .term{background:none;padding:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+body[data-mode="bw"] .page .cs{color:#111;background:white;border:1px solid #777}
+body[data-mode="bw"] .heading,body[data-mode="bw"] .heading.green,body[data-mode="bw"] .heading.orange{border-color:#222}
+body[data-mode="bw"] .info,body[data-mode="bw"] .code,body[data-mode="bw"] .bit,body[data-mode="bw"] .bit.one{background:white;border-color:#aaa}
+body[data-mode="bw"] .bit em{color:#111}
+body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
+@media(max-width:700px){
+.screen-toolbar{position:static}.screen-toolbar strong{width:100%;margin:0}.instructions{margin:10px 12px}.instructions h1{font-size:18px}
+.viewer{overflow-x:visible;display:flex;flex-direction:column;gap:12px;padding:0 10px 20px}
+.viewer .page{width:100%;height:auto;min-height:0;overflow:visible;max-width:none;padding:20px 16px 40px;margin:0 auto;box-shadow:0 2px 12px #0001;font-size:10.5pt}
+.viewer .page footer{bottom:10px;left:16px;right:16px}
+.viewer .page h2{font-size:19px}
+.viewer .bits{gap:2px}.viewer .bit{padding:4px 0;font-size:8pt}
+.viewer .bit em{font-size:8pt;margin:0 1px 3px}.viewer .bit strong{font-size:11pt}
+.viewer .vocab-grid{gap:7px}.viewer .write-line{height:20px}
+}
+@media print{
+@page{size:A3 landscape;margin:0}
+html,body{margin:0!important;padding:0!important;background:white!important}
+.screen-toolbar,.instructions,.viewer{display:none!important}
+.print-spreads{display:block!important}
+.spread{display:flex!important;flex-direction:row;width:420mm;height:297mm;break-after:page;page-break-after:always;overflow:hidden}
+.spread:last-child{break-after:auto;page-break-after:auto}
+.spread .page{width:210mm;height:297mm;box-shadow:none!important;flex:0 0 210mm;break-inside:avoid;page-break-inside:avoid}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body data-mode="bw">
+<nav class="screen-toolbar" aria-label="Independent lesson resources">
+  <strong>RHS Computing · Independent Lesson 003</strong>
+  <a href="index.html#do-now">Interactive lesson</a>
+  <a href="?version=bw" id="bw-option">Black &amp; white</a>
+  <a href="?version=colour" id="colour-option">Colour</a>
+  <button class="primary" type="button" onclick="window.print()">Print A3 booklet / Save PDF</button>
+</nav>
+<div class="instructions">
+<h1>Hexadecimal — independent lesson</h1>
+<p><strong>Learn · Think · Write · Correct.</strong> Read each page in order. No internet, computer or teacher support is needed once printed.</p>
+<p><strong>Print:</strong> choose black &amp; white or colour, then print A3 landscape, double-sided, <strong>flip on short edge</strong>, at 100% size and fold. Select “Save as PDF” to keep a copy instead. Two A3 sides become four A4 pages.</p>
+</div>
+<div class="viewer" id="viewer"><section class="page" data-page="1"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 003</span></header><main class="tight">
+<h2>Hexadecimal</h2>
+<p class="small faint">START · Complete the four retrieval questions, then read and write today's vocabulary.</p>
+<p class="small"><strong>Name</strong> <span class="line" style="width:40%"></span> <strong>Class / Date</strong> <span class="line" style="width:24%"></span></p>
+<div class="heading">Do Now · Retrieve earlier learning</div>
+<div class="q"><b>1 · Previous lesson.</b> What is 1 + 1 in binary? <span class="line" style="width:24%"></span></div>
+<div class="q"><b>2 · Lesson 001.</b> How many bits make one byte? <span class="line" style="width:24%"></span></div>
+<div class="q"><b>3 · Lesson 001.</b> Convert 10110000 into denary. Show the place values.<span class="write-line"></span></div>
+<div class="q"><b>4 · Challenge.</b> Why is 255 the greatest unsigned 8-bit denary value?<span class="write-line"></span></div>
+<div class="heading green">Today's objectives</div>
+<div class="info small">Convert between <span class="term">binary</span>, <span class="term">denary</span> and <span class="term">hexadecimal</span>; split a byte into two <span class="term">nibbles</span>; explain why people use hexadecimal.</div>
+<div class="heading green">Key Vocabulary · READ</div>
+<p class="small faint">Read carefully. These words appear in the examples and questions.</p>
+<div class="vocab-grid">
+<div class="entry"><span class="term">hexadecimal</span> — Base-16 system using 0–9 and A–F.</div>
+<div class="entry"><span class="term">nibble</span> — A group of four bits.</div>
+<div class="entry"><span class="term">digit</span> — One symbol in a number.</div>
+<div class="entry"><span class="term">conversion</span> — Changing a number from one base to another.</div>
+</div>
+<div class="heading green">Key Vocabulary · WRITE</div>
+<p class="small faint">Cover the definitions above. Write each meaning in your own words, then check on page 4.</p>
+<div class="vocab-grid">
+<div class="entry">hexadecimal<span class="write-line"></span><span class="write-line"></span></div>
+<div class="entry">nibble<span class="write-line"></span><span class="write-line"></span></div>
+<div class="entry">digit<span class="write-line"></span><span class="write-line"></span></div>
+<div class="entry">conversion<span class="write-line"></span><span class="write-line"></span></div>
+</div>
+<div class="info small"><strong>Remember:</strong> In a four-bit nibble the place values are <strong>8, 4, 2, 1</strong>. Two nibbles make one byte (8 bits).</div>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>1 / 4</span></footer></section><section class="page" data-page="2"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 003</span></header><main class="tight">
+<h2>Learn &amp; follow</h2>
+<p class="small faint">NEW LEARNING · The worked examples contain everything you need for page 3.</p>
+<div class="heading green">New Learning · Why hexadecimal?</div>
+<p class="small">Binary uses 0 and 1. Hexadecimal uses sixteen possible digits. One hex digit represents <strong>exactly four binary bits</strong>, so an 8-bit byte can be written using just two hex digits.</p>
+<div class="info small"><strong>Hex reference:</strong><br>
+0=0000 &nbsp; 1=0001 &nbsp; 2=0010 &nbsp; 3=0011 &nbsp; 4=0100 &nbsp; 5=0101 &nbsp; 6=0110 &nbsp; 7=0111<br>
+8=1000 &nbsp; 9=1001 &nbsp; A=1010 &nbsp; B=1011 &nbsp; C=1100 &nbsp; D=1101 &nbsp; E=1110 &nbsp; F=1111
+</div>
+<div class="heading">I Do · Binary → hexadecimal</div>
+<p class="small"><strong>Convert 11000111 to hexadecimal.</strong> Step 1: split into two nibbles. Step 2: work out each nibble using 8–4–2–1. Step 3: replace numbers 10–15 with A–F.</p>
+<div class="bits"><span class="bit one"><em>8</em><strong>1</strong></span><span class="bit one"><em>4</em><strong>1</strong></span><span class="bit"><em>2</em><strong>0</strong></span><span class="bit"><em>1</em><strong>0</strong></span><span class="bit"><em>8</em><strong>0</strong></span><span class="bit one"><em>4</em><strong>1</strong></span><span class="bit one"><em>2</em><strong>1</strong></span><span class="bit one"><em>1</em><strong>1</strong></span></div>
+<div class="info small">1100 = 8 + 4 = 12 = <strong>C</strong>. &nbsp; 0111 = 4 + 2 + 1 = <strong>7</strong>. &nbsp; Answer: <strong>C7</strong>.</div>
+<div class="heading">I Do · Denary → hexadecimal</div>
+<p class="small"><strong>Convert 62 to hexadecimal.</strong> Write 62 in 8-bit binary first:</p>
+<p class="small"><strong>62 = 32 + 16 + 8 + 4 + 2 = 00111110</strong>. Split: 0011 | 1110. The left nibble is 3; the right is 14 = E. So <strong>62 = 3E</strong>.</p>
+<div class="heading">I Do · Hexadecimal → denary</div>
+<p class="small"><strong>Convert A3 to denary.</strong> Hex place values are 16 and 1. A means 10, so (10 × 16) + 3 = <strong>163</strong>.</p>
+<div class="heading green">We Do · Guided practice</div>
+<p class="small">Convert <strong>01101101</strong> to hexadecimal. Fill in the blanks without looking at page 4.</p>
+<p class="small">Split the byte: <strong>0110 | 1101</strong></p>
+<p class="small">Left nibble = <span class="line"></span> &nbsp; Right nibble = <span class="line"></span> &nbsp; Hexadecimal = <span class="line"></span></p>
+<p class="small"><strong>Why does this work?</strong><span class="write-line"></span></p>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>2 / 4</span></footer></section><section class="page" data-page="3"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 003</span></header><main class="tight">
+<h2>Think &amp; write</h2>
+<p class="small faint">YOU DO · Code First, Practise, Apply and Explain are all part of the lesson.</p>
+<div class="heading orange">Code First · Predict → Write → Build</div>
+<p class="small">On paper, <strong>print(...)</strong> means display the result. Multiplication happens before addition.</p>
+<div class="q"><b>Predict.</b> What would <code>print(11 * 16 + 0)</code> display?<span class="write-line"></span></div>
+<div class="q"><b>Write.</b> Write a print instruction that displays the denary value of hex <strong>A3</strong>.<span class="write-line"></span></div>
+<div class="q"><b>Build.</b> Adapt these two lines so the output is the denary value of hex <strong>C7</strong>:
+<div class="code">value = 6 * 16 + 2<br>print(value)</div><span class="write-line"></span><span class="write-line"></span></div>
+<div class="heading">Practise · Convert</div>
+<div class="q"><b>1.</b> Convert <strong>10110000</strong> from binary to hexadecimal. Show the two nibbles.<span class="write-line"></span></div>
+<div class="q"><b>2.</b> Convert hexadecimal <strong>A3</strong> to denary. Show the calculation.<span class="write-line"></span></div>
+<div class="q"><b>3.</b> Convert denary <strong>98</strong> to hexadecimal. Use eight bits and two nibbles.<span class="write-line"></span></div>
+<div class="heading orange">Apply · Find and fix a mistake</div>
+<p class="small">A student says hexadecimal <strong>1E</strong> is 15 in denary because 1 + 14 = 15. Explain their mistake and give the correct answer.</p>
+<span class="write-line"></span><span class="write-line"></span>
+<div class="heading green">Explain · Use your understanding</div>
+<p class="small">A technician uses hexadecimal instead of a long binary code. Explain <strong>one advantage</strong>, and explain why the computer still stores the <strong>same number of bits</strong>.</p>
+<span class="write-line"></span><span class="write-line"></span>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>3 / 4</span></footer></section><section class="page" data-page="4"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 003</span></header><main class="tight">
+<h2>Check &amp; correct</h2>
+<p class="small faint">Complete the Exit Ticket before reading the answers. Tick each error you correct.</p>
+<div class="heading green">Exit Ticket · True / False</div>
+<div class="exit"><span>1. One hexadecimal digit represents four binary bits.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>2. E represents 15 in hexadecimal.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>3. Hexadecimal reduces the storage bits needed by the computer.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="heading green">Do Now · Model answers</div>
+<div class="info answer"><strong>1.</strong> 10 (binary). <strong>2.</strong> 8 bits. <strong>3.</strong> 10110000 = 128 + 32 + 16 = <strong>176</strong>. <strong>4.</strong> Eight bits give 2⁸ = 256 patterns numbered 0–255, so 255 is the highest.</div>
+<div class="heading green">Key Vocabulary · Check definitions</div>
+<div class="vocab-grid">
+<div class="entry"><span class="term">hexadecimal</span> — Base-16 using 0–9 and A–F.</div>
+<div class="entry"><span class="term">nibble</span> — Four bits.</div>
+<div class="entry"><span class="term">digit</span> — A single symbol of a number.</div>
+<div class="entry"><span class="term">conversion</span> — Changing number base.</div>
+</div>
+<div class="heading green">We Do and Code First · Model answers</div>
+<p class="answer"><strong>We Do:</strong> 0110 = 6; 1101 = 13 = D, giving <strong>6D</strong>. Each nibble corresponds to one hexadecimal digit.</p>
+<p class="answer"><strong>Code First:</strong> Predict <strong>176</strong>. Write <code>print(10 * 16 + 3)</code> (163). Build <code>value = 12 * 16 + 7</code>, then <code>print(value)</code> (199).</p>
+<div class="heading green">Practise, Apply, Explain · Check</div>
+<p class="answer"><strong>1.</strong> 1011 | 0000 → 11 = B, 0 = 0 → <strong>B0</strong>.</p>
+<p class="answer"><strong>2.</strong> A3 → (10 × 16) + 3 = <strong>163</strong>.</p>
+<p class="answer"><strong>3.</strong> 98 = 64 + 32 + 2 = 01100010 → 0110 | 0010 → <strong>62</strong> hex.</p>
+<p class="answer"><strong>Apply:</strong> The student forgot that the left hex digit is in the 16s column. 1E = (1 × 16) + 14 = <strong>30</strong>.</p>
+<p class="answer"><strong>Explain:</strong> Hex is shorter and easier for people to read, type or check; each hex digit still represents four bits, so the binary data is unchanged.</p>
+<p class="answer"><strong>Exit:</strong> 1. True. 2. False (E = 14, F = 15). 3. False (the stored bit pattern is the same).</p>
+<div class="heading orange">Correct &amp; return to learning</div>
+<p class="small">Rewrite one answer you got wrong, and explain what you have learnt:</p><span class="write-line"></span>
+<p class="small">Confidence: □ Secure &nbsp;&nbsp; □ Nearly there &nbsp;&nbsp; □ I need help</p>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>4 / 4</span></footer></section></div>
+<div class="print-spreads" aria-hidden="true" id="spreads"></div>
+<script>
+(function(){
+  var params=new URLSearchParams(location.search);
+  var mode=params.get('version')==='colour'?'colour':'bw';
+  document.body.dataset.mode=mode;
+  document.getElementById('bw-option').setAttribute('aria-current',mode==='bw'?'page':'false');
+  document.getElementById('colour-option').setAttribute('aria-current',mode==='colour'?'page':'false');
+  var pages=Array.from(document.querySelectorAll('#viewer .page'));
+  var spreads=document.getElementById('spreads');
+  [[3,0],[1,2]].forEach(function(pair){
+    var spread=document.createElement('div');spread.className='spread';
+    pair.forEach(function(i){spread.appendChild(pages[i].cloneNode(true));});
+    spreads.appendChild(spread);
+  });
+})();
+</script>
+</body>
+</html>
