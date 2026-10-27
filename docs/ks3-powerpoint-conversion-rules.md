@@ -40,6 +40,9 @@
 - For new KS3 conversions, apply this to video, worksheet, independent work and homework screens where the sequence would otherwise be unclear. For J277 and H446, audit existing screens for compatibility before any central rollout.
 - Check classroom display, mobile portrait, keyboard access, and resource links independently. Source-level checks cannot certify rendered-browser usability.
 - **First application:** Year 7 Lesson 003 You Do "Watch and investigate": large three-step directions first, then the unembeddable YouTube video link, followed by Task 1 on the next screen.
+- **Approved refinement (27 October):** the very first and largest instruction is the pupil task, e.g. **"Choose ONE invention from the video"**. Use a short **Watch → Choose → Answer** action strip where useful. Show the *exact* questions pupils will answer **before they open the video**, using `.ks3-action-strip`, `.ks3-action-card` and `.ks3-watch-questions` from the shared KS3 stylesheet. The resource link follows. Avoid a dense introductory paragraph or small-print "what next" instructions.
+- **Screen-to-screen continuity:** use matching, direct task wording on the next screen, e.g. **"Answer five questions about your invention"**, and keep the original five prompts unchanged. Clarify that the video opens in a new tab and pupils should return and choose Next step, in the resource card itself. Do not introduce extra navigation or duplicate directions at the bottom.
+
 
 ## Shared vocabulary introduction and highlighting (approved 27 October 2026)
 
@@ -127,6 +130,7 @@
 | 2026-10-27 | Y7 003 · teaching-first CSS | Compact existing phase/lesson/model headings into two short header rows, place current modelled step at the top of its panel and supporting notes below; **no content or JS behaviour changes**. | **Pilot — source audit pending, visual QA outstanding** |
 | 2026-10-27 | KS3 001/003/004 · vocabulary | Generate Objectives vocabulary from the unchanged end retrieval set, use shared definition-reveal controls and J277/H446 pen-stroke highlighting. Require this in all future KS3 conversion audits. | **Approved shared standard** |
 | 2026-10-27 | Y7 003 · independent instructions | Begin independent video/task screens with large **watch → choose → return/next** actions before the resource; remove repeated small-print directions below. Reusable task-first CSS, no video or quiz changes. | **Approved shared KS3 standard** |
+| 2026-10-27 | Y7 003 · task visibility | Put **Choose ONE invention** as the largest visible task; reinforce with Watch → Choose → Answer and preview the same five Task 1 questions above the video. Match the next screen heading to the task. | **Approved refinement** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
@@ -195,6 +199,7 @@ Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teac
 - [ ] I Do/We Do step reveals readable on TV; no nested half-width containers.
 - [ ] You Do tasks separate from answer screens; expected real-world submission clear.
 - [ ] Independent-learning task has prominent **what/how/next** instructions before resource links, with no duplicated footer instructions.
+- [ ] Task headline is immediately visible; if watching media leads to questions, show the same question wording before the resource and repeat the task heading consistently on the following screen.
 - [ ] Definition-first vocabulary; 3 T/F exit answers with explanations and reflection.
 - [ ] SVGs labelled, readable on TV/mobile; images accurately represent content.
 - [ ] External links tested; no disabled iframe/unsupported auto-play.
