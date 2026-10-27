@@ -1,0 +1,31 @@
+name: H446 Paper 1 layout inspection
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/inspect_h446_paper1.py'
+      - '.github/workflows/h446-paper1-inspect.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install PyMuPDF
+        run: python -m pip install pymupdf==1.26.4
+      - name: Read Paper 1 and record label positions
+        run: python tools/revision/inspect_h446_paper1.py
+      - name: Commit inspection only (no PDF edits)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/audits/h446-paper1-layout-inspection-20261027.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record H446 Paper 1 PDF structure for safe terminology migration"
+            git push
+          fi
