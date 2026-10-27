@@ -122,19 +122,23 @@ for old_n in range(1,172):
             p.insert_text((x,y),after,fontname='RevBold' if is_bold else 'RevBody',fontsize=size,color=col)
             changes.append((old_n,before,after))
 
-# Remove a teacher-facing direction on the recursion theory page, leaving the code intact.
+# Remove two source text-line blocks that contain a teacher-facing
+# direction. They are separate PDF blocks even though they form one paragraph.
 p=doc[shifted(40)-1]
 teacher_blocks=[]
 for b in p.get_text('dict')['blocks']:
     if 'lines' not in b:continue
     joined=' '.join(sp['text'] for ln in b['lines'] for sp in ln['spans'])
-    if 'In your Year 13 teaching' in joined:
+    if ('In your Year 13 teaching' in joined
+            or 'concept. Keep the code visible while tracing it' in joined):
         teacher_blocks.append((b,joined))
-assert len(teacher_blocks)==1,teacher_blocks
-b,old_teacher=teacher_blocks[0]
-assert 'Keep the code visible while tracing it' in old_teacher,old_teacher
-bb=fitz.Rect(b['bbox'])
-p.add_redact_annot(bb,fill=False)
+assert len(teacher_blocks)==2,teacher_blocks
+joined=' '.join(s for b,s in teacher_blocks)
+assert 'In your Year 13 teaching' in joined and 'Keep the code visible while tracing it' in joined
+bb=fitz.Rect(teacher_blocks[0][0]['bbox'])
+for b,_ in teacher_blocks:
+    bb|=fitz.Rect(b['bbox'])
+    p.add_redact_annot(fitz.Rect(b['bbox']),fill=False)
 p.apply_redactions(images=0,graphics=0)
 p.insert_font(fontname='RevBody',fontfile=FONT)
 new_instruction=('Trace the short C# function below. Follow each recursive call and return '
