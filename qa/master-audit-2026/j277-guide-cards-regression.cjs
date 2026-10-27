@@ -46,7 +46,10 @@ const base="http://127.0.0.1:8765";
                 font:getComputedStyle(el.querySelector("a.action")).fontSize,
                 height:getComputedStyle(el.querySelector("a.action")).minHeight,
                 radius:getComputedStyle(el.querySelector("a.action")).borderRadius,
-                padding:getComputedStyle(el.querySelector("a.action")).padding
+                padding:getComputedStyle(el.querySelector("a.action")).padding,
+                color:getComputedStyle(el.querySelector("a.action")).color,
+                background:getComputedStyle(el.querySelector("a.action")).backgroundColor,
+                downloadColor:getComputedStyle(el.querySelector(".h446-guide-download")).color
               },
               tag:{
                 fill:getComputedStyle(el.querySelector(".kicker")).backgroundColor,
@@ -90,6 +93,10 @@ const base="http://127.0.0.1:8765";
         assert.equal(a.action.radius,b.action.radius,"Read button radius mismatch");
         assert.equal(a.action.height,b.action.height,"Read button height mismatch");
         assert.equal(a.action.padding,b.action.padding,"Read button padding mismatch");
+        assert.equal(b.action.color,"rgb(255, 255, 255)","J277 Read text must be white");
+        assert.equal(a.action.color,b.action.color,"Read text colour differs from H446");
+        assert.equal(a.action.background,b.action.background,"Read background differs from H446");
+        assert.equal(a.action.downloadColor,b.action.downloadColor,"Download colour differs from H446");
         assert.equal(a.tag.fill,b.tag.fill,"paper badge fill mismatch");
         assert.equal(snapshots.h446.accent[i],snapshots.j277.accent[i],"paper accent mismatch");
         assert.ok(Math.abs(a.rect.w-b.rect.w)<5,"card width mismatch");
