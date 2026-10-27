@@ -94,3 +94,75 @@ body[data-year="9"] #lessons{--preview-ink:var(--year-ink,#245e4c)}
   #lessons .lesson-popup{display:none!important}
   #lessons .lesson-detail{margin:0 0 4px}
 }
+
+
+/* Unified KS3 course hub: use the EXACT hub.css course-hub layout classes,
+   nav, tabs and year-switch already shared by J277/H446. Only lesson-specific
+   preview styling and the curriculum identity live here. Legacy Year 7–9
+   pages deliberately keep the styles above. */
+body.ks3-unified{--green-mid:#006347;--green-dark:#003f36;--green-pale:#e9f2ee;--wash:#f4f7f6}
+body.ks3-unified .topbar .mark{background:#006347}
+body.ks3-unified .course-topline .heading h1{color:#183c30}
+body.ks3-unified #lessons{--preview-ink:var(--year-ink)}
+body.ks3-unified #lessons .year-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 11px}
+body.ks3-unified #lessons .year-switch{display:flex;gap:6px;margin:0}
+body.ks3-unified #lessons .year-switch .year-btn{min-height:38px;padding:6px 12px;font-size:14px}
+body.ks3-unified #lessons .year-tools{display:flex;align-items:center;gap:12px;margin-left:auto}
+body.ks3-unified #lessons .year-tools .count{font-size:12px}
+body.ks3-unified .course-key{position:relative;z-index:20;font-size:12px}
+body.ks3-unified .course-key summary{list-style:revert;min-height:38px;display:flex;align-items:center;padding:8px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--green-dark);font-weight:750;cursor:pointer}
+body.ks3-unified .course-key[open] summary{border-bottom-right-radius:0;border-bottom-left-radius:0}
+body.ks3-unified .ks3-colour-key{position:absolute;right:0;top:100%;min-width:210px;padding:12px;background:white;border:1px solid var(--line);border-radius:8px 0 8px 8px;box-shadow:0 6px 20px #213a291c;display:grid;gap:9px}
+body.ks3-unified .ks3-colour-key span{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:12px}
+body.ks3-unified .ks3-key-line{display:inline-block;width:32px;height:4px;border-radius:6px}
+body.ks3-unified .ks3-key-live{background:#287852}
+body.ks3-unified .ks3-key-planned{background:#b5c0b9}
+body.ks3-unified #lessons .term{overflow:visible;border:1px solid var(--year-border);border-radius:9px;background:#fff;margin:12px 0 18px}
+body.ks3-unified #lessons .term-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 13px;margin:0;background:var(--year-pale);border-radius:8px 8px 0 0;border-bottom:1px solid #d5e5db}
+body.ks3-unified #lessons .term-head strong{font-size:17px;color:#103f2c}
+body.ks3-unified #lessons .term-head span{font-size:12px;color:#516c5f}
+body.ks3-unified #lessons .lesson-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding:11px 12px 12px}
+body.ks3-unified #lessons .lesson-entry{min-width:0;position:relative}
+body.ks3-unified #lessons .lesson-entry:hover,body.ks3-unified #lessons .lesson-entry:focus-within{z-index:8}
+body.ks3-unified #lessons .lesson-entry>.lesson.spec-tile{box-sizing:border-box;position:relative;display:flex;align-items:center;justify-content:center;min-height:49px;width:100%;padding:6px 23px 13px 8px;border:1px solid #d9e3de;border-radius:8px;background:#fff;color:#174c38;font-size:16px;font-weight:850;font-variant-numeric:tabular-nums;text-decoration:none;overflow:visible;white-space:nowrap}
+body.ks3-unified #lessons .lesson-entry>.lesson.spec-tile.planned{background:#fbfcfb;color:#66756e}
+body.ks3-unified #lessons .lesson-entry>.lesson.spec-tile.live:hover{border-color:var(--year-accent);background:#f3f9f5}
+body.ks3-unified #lessons .lesson-entry>.lesson.spec-tile::after{content:"";position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:55%;max-width:82px;height:4px;border-radius:4px;background:var(--spec-colour,#b5c0b9)}
+body.ks3-unified #lessons .lesson-info{position:absolute;right:5px;top:50%;transform:translateY(-50%);z-index:2;width:24px;height:24px;min-height:24px;padding:0;border:1px solid #88b4a4;border-radius:50%;background:white;color:#245e4c;font-size:13px;font-weight:850;line-height:1;cursor:pointer}
+body.ks3-unified #lessons .lesson-info:hover,body.ks3-unified #lessons .lesson-info[aria-expanded="true"]{background:#edf5ef}
+body.ks3-unified #lessons .lesson-popup{display:none;position:absolute;bottom:calc(100% + 8px);top:auto;left:0;width:270px;max-width:min(340px,80vw);padding:12px 14px;border:1px solid #98bba7;border-radius:10px;background:#fff;color:#234d39;box-shadow:0 9px 25px #123a2926;pointer-events:none;font-size:13px;line-height:1.45;z-index:20}
+body.ks3-unified #lessons .lesson-popup strong{font-size:15px;color:#16422f}
+body.ks3-unified #lessons .lesson-popup p{margin:5px 0 0;font-size:13px;color:#526b5f}
+body.ks3-unified #lessons .lesson-entry:nth-child(8n + 7) .lesson-popup,body.ks3-unified #lessons .lesson-entry:nth-child(8n + 8) .lesson-popup{left:auto;right:0}
+body.ks3-unified #lessons .lesson-detail{grid-column:1/-1;min-width:0;padding:14px;border:1px solid #a7c9b5;border-radius:9px;background:#f0f7f3;color:#214938}
+body.ks3-unified #lessons .lesson-detail[hidden]{display:none!important}
+body.ks3-unified #lessons .lesson-detail p{margin:4px 0 8px;font-size:14px}
+body.ks3-unified #lessons .lesson-detail .ks3-preview-start{display:inline-flex;min-height:41px;align-items:center;padding:8px 12px;border-radius:7px;background:#006347;color:white;text-decoration:none;font-weight:750}
+body.ks3-unified #lessons .lesson-detail .lesson-detail-close{margin-left:8px;min-height:41px}
+body.ks3-unified #lessons>.note{font-size:13px;color:#5b7365}
+body.ks3-unified .ks3-course-resource{max-width:850px;margin:20px auto}
+body.ks3-unified .ks3-resource-card{border:1px solid #d7e4dc;background:white;border-radius:12px;padding:24px;box-shadow:0 6px 18px #203b2910}
+body.ks3-unified .ks3-resource-card h2{font-size:25px;margin:0 0 10px;color:#173d2c}
+body.ks3-unified .ks3-resource-card p{font-size:17px;color:#516a5b;margin:0 0 20px}
+body.ks3-unified .ks3-resource-action{display:inline-flex;align-items:center;min-height:46px;padding:10px 16px;background:#006347;color:#fff;border-radius:8px;text-decoration:none;font-weight:800}
+body.ks3-unified .ks3-resource-pending{font-size:14px;font-weight:800;color:#5d7266}
+@media(hover:hover) and (pointer:fine){
+  body.ks3-unified #lessons .lesson-entry:hover>.lesson-popup,
+  body.ks3-unified #lessons .lesson-entry:focus-within>.lesson-popup{display:block}
+}
+@media(max-width:940px){
+  body.ks3-unified #lessons .lesson-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  body.ks3-unified #lessons .lesson-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:9px}
+  body.ks3-unified #lessons .lesson-entry>.lesson.spec-tile{min-height:48px;padding:6px 20px 13px 4px;font-size:15px}
+  body.ks3-unified #lessons .lesson-info{width:23px;height:23px;min-height:23px;right:2px}
+  body.ks3-unified #lessons .lesson-popup{display:none!important}
+  body.ks3-unified #lessons .year-tools{gap:8px}
+  body.ks3-unified #lessons .year-tools .count{display:none}
+  body.ks3-unified #lessons .term-head{padding:9px 10px}
+  body.ks3-unified #lessons .term-head strong{font-size:15px}
+  body.ks3-unified #lessons .term-head span{font-size:11px}
+  body.ks3-unified .ks3-resource-card{padding:16px}
+  body.ks3-unified .ks3-resource-card h2{font-size:22px}
+}
