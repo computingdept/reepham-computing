@@ -1711,7 +1711,7 @@ body:has(.course-back[href*="h446-hub"]) .youdo-questions > .youdo-question:not(
   body[data-classroom-focus] :is(#i-do,#we-do)
     :is(.ks3-lesson-split,.classroom-focus-panels){
     display:grid;
-    grid-template-columns:minmax(0,0.43fr) minmax(0,0.57fr);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
     gap:14px;
     align-items:start;
     min-width:0;
@@ -1812,5 +1812,103 @@ body[data-classroom-focus] :is(#i-do,#we-do) .ks3-cue{
   body[data-classroom-focus] :is(#i-do,#we-do){
     overflow-y:auto!important;
     overflow-x:hidden!important;
+  }
+}
+
+
+/* Classroom focus pilot refinement 2: equal LHS/RHS legibility.
+   Meaningful captions are readable at classroom distance; when a visual
+   carries a data-classroom-focus-step marker it follows the current reveal.
+   These are add-ons to the opt-in rules above; unflagged lessons unaffected. */
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-flow{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  width:100%;
+  max-width:100%;
+  margin:10px auto 14px;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step{
+  box-sizing:border-box;
+  min-width:0;
+  min-height:126px;
+  padding:10px 8px;
+  gap:5px;
+  border-width:2px;
+  opacity:1;
+  color:#174a35;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-top{
+  font-size:clamp(12px,1vw,15px);
+  line-height:1.18;
+  font-weight:850;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-icon{
+  width:clamp(37px,3vw,45px);
+  height:clamp(37px,3vw,45px);
+  margin:0;
+  flex:none;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step strong{
+  font-size:clamp(18px,1.48vw,22px);
+  line-height:1.14;
+  font-weight:850;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-hint{
+  font-size:clamp(15px,1.17vw,18px);
+  line-height:1.22;
+  color:#425c50;
+}
+body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split
+  .teams-step.classroom-focus-visual-active{
+  background:#ddf4e6;
+  border:3px solid #157d50;
+  box-shadow:0 0 0 3px #d9eee2;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split .teams-step.classroom-focus-visual-active strong{
+  color:#07522f;
+}
+body[data-classroom-focus] :is(#i-do,#we-do)
+  .ks3-lesson-split .prompt-panel > p:not(.ks3-cue){
+  font-size:clamp(21px,1.85vw,28px);
+  line-height:1.32;
+}
+@media (max-width:700px){
+  /* Keep the same mobile diagram-list reading order as the original lesson. */
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-flow{
+    grid-template-columns:minmax(0,1fr);
+    gap:9px;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step{
+    min-height:80px;
+    display:grid;
+    grid-template-columns:38px 46px minmax(0,1fr);
+    grid-template-rows:auto auto;
+    align-items:center;
+    justify-items:start;
+    text-align:left;
+    column-gap:10px;
+    row-gap:2px;
+    padding:10px;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-top{
+    grid-column:1;
+    grid-row:1/3;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-icon{
+    grid-column:2;
+    grid-row:1/3;
+    width:40px;
+    height:40px;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step strong{
+    grid-column:3;
+    grid-row:1;
+    font-size:18px;
+  }
+  body[data-classroom-focus] :is(#i-do,#we-do) .ks3-lesson-split .teams-step-hint{
+    grid-column:3;
+    grid-row:2;
+    font-size:15px;
   }
 }
