@@ -2032,3 +2032,107 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     font-size:clamp(22px,4.1vw,29px);
   }
 }
+
+
+/* KS3 Objectives vocabulary introduction, generated from the END retrieval
+   deck by shared lesson.js. Matches the established H446 two-panel model.
+   Only these routed, generated overview sections get the changes. */
+#overview[data-ks3-vocab-intro="true"]{
+  min-width:0;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+#overview[data-ks3-vocab-intro="true"] .objectives-vocab-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:15px;
+  align-items:start;
+  width:100%;
+  max-width:100%;
+}
+#overview[data-ks3-vocab-intro="true"] .objectives-vocab-left{
+  min-width:0;
+  padding:clamp(13px,1.4vw,20px);
+}
+#overview[data-ks3-vocab-intro="true"] .ks3-heading{
+  margin:0 0 10px;
+}
+#overview[data-ks3-vocab-intro="true"] .ks3-heading h1{
+  font-size:clamp(25px,2.5vw,37px);
+  line-height:1.12;
+  margin:3px 0 5px;
+}
+#overview[data-ks3-vocab-intro="true"] .ks3-learning-card{
+  max-width:none;
+  padding:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  margin:0;
+}
+#overview[data-ks3-vocab-intro="true"] .ks3-learning-card h2{
+  font-size:clamp(20px,1.65vw,26px);
+  margin:8px 0;
+}
+#overview[data-ks3-vocab-intro="true"] .ks3-learning-card li{
+  font-size:clamp(17px,1.35vw,22px);
+  line-height:1.36;
+  margin-bottom:6px;
+}
+#overview[data-ks3-vocab-intro="true"] .vocab-intro{
+  margin:12px 0 0;
+  padding:12px 13px;
+  border:1px solid #e7e4c5;
+  border-radius:10px;
+  background:#fffdf4;
+}
+#overview[data-ks3-vocab-intro="true"] .vocab-intro-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
+}
+#overview[data-ks3-vocab-intro="true"] .vocab-intro-list .vocab-tip{
+  cursor:pointer;
+  border-radius:5px;
+  min-height:36px;
+  display:inline-flex;
+  align-items:center;
+  font-size:clamp(15px,1.13vw,18px);
+}
+#overview[data-ks3-vocab-intro="true"] .objective-vocab-stage{
+  min-width:0;
+  min-height:260px;
+  padding:clamp(18px,2.2vw,30px);
+}
+#overview[data-ks3-vocab-intro="true"] .objective-vocab-stage h2{
+  overflow-wrap:anywhere;
+  font-size:clamp(32px,3.3vw,52px);
+  line-height:1.12;
+}
+#overview[data-ks3-vocab-intro="true"] .objective-vocab-definition p{
+  font-size:clamp(23px,1.95vw,31px);
+  line-height:1.34;
+}
+@media(max-width:900px){
+  #overview[data-ks3-vocab-intro="true"] .objectives-vocab-layout{
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+  }
+  /* H446 skips objective vocabulary stages on phones. KS3 explicitly
+     teaches these terms on both phone and classroom displays. */
+  #overview[data-ks3-vocab-intro="true"] .objectives-vocab-right{
+    display:block!important;
+    min-width:0;
+  }
+  #overview[data-ks3-vocab-intro="true"] .objective-vocab-stage{
+    min-height:0;
+    padding:16px;
+  }
+  #overview[data-ks3-vocab-intro="true"] .objective-vocab-stage h2{
+    font-size:clamp(27px,6vw,39px);
+  }
+  #overview[data-ks3-vocab-intro="true"] .objective-vocab-definition p{
+    font-size:clamp(20px,4.7vw,27px);
+  }
+}
