@@ -238,8 +238,9 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     assert(hp.preview&&hp.enabled&&hp.topics.join(',')==='1.1,1.2,1.3,1.4,1.5'&&hp.topic14Href?.endsWith('#1.4.1')&&hp.border==='4px',
       view+' H446 pilot five-topic hierarchy remains intact',hp);
     assert(hp.widthOverflow<=5,view+' H446 optional Synergy styling fits viewport',hp.widthOverflow);
-    assert(hp.topic14Href?.includes('section-1-4/index.html#1.4.1'),
-      view+' H446 1.4 topic opens the original specification selector');
+    assert(hp.topic14Href&&new URL(hp.topic14Href,origin).pathname.endsWith('/section-1-4/index.html')
+      &&new URL(hp.topic14Href,origin).hash==='#1.4.1',
+      view+' H446 1.4 topic opens the original specification selector with theme query',hp.topic14Href);
     await page.locator('#revisionhub .rhsc-paper-nav-button').nth(1).click();
     assert(await page.evaluate(()=>document.getElementById('rhsc-revision-paper-1').hidden&&!document.getElementById('rhsc-revision-paper-2').hidden),
       view+' H446 preview Paper 2 switch retains behaviour');
