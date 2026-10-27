@@ -1,0 +1,62 @@
+name: H446 Paper 1 existing-table marker alignment
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/mark_h446_paper1_existing_vocab.py'
+      - '.github/workflows/h446-paper1-existing-vocab.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PDF tools and DejaVu
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core libcairo2
+          python -m pip install pymupdf==1.26.4 cairosvg==2.7.1
+      - name: Apply lesson-style marker to existing Paper 1 vocabulary tables
+        run: python tools/revision/mark_h446_paper1_existing_vocab.py
+      - name: Rebuild H446 guide links
+        run: python tools/revision/build_guide_links.py
+      - name: Audit all H446 quiz feedback links
+        run: python tools/revision/audit_h446_feedback.py
+      - name: Verify Paper 1 page/term integrity
+        run: |
+          python - <<'PY'
+          import fitz,json
+          from pathlib import Path
+          folder=Path('revision/h446/guides')
+          map=json.loads((folder/'paper-1-page-map.json').read_text())
+          pdf=fitz.open(folder/'H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf')
+          assert len(pdf)==263==map['page_count']
+          assert map['edition']=='2026-10-27-all-keywords'
+          assert len(map['page_keys'])==263
+          assert sorted(map['page_keys'].values())==list(range(1,264))
+          assert len(pdf.get_toc())>=53
+          for page in (36,74,112,121):
+            assert 'THEORY / KEY TERMINOLOGY' in pdf[page-1].get_text()
+          print('PASS: legacy markers aligned, 263 stable keys, intact bookmarks')
+          PY
+          git diff --check
+      - name: Publish PDF and feedback lookup in one commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revision/h446/guides/H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf
+          git add revision/h446/guides/paper-1-page-map.json revision/h446/guide-links.js
+          git add h446-hub.html docs/audits/h446-feedback-destinations-20261023.csv
+          git add docs/audits/h446-paper1-legacy-marker-audit-20261027.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Align existing H446 Paper 1 key terms with shared lesson marker"
+            git push
+          fi
