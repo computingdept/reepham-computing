@@ -97,9 +97,9 @@ def make_page(p,spec,n):
     footer=str(n)
     p.insert_text((w-45-fitz.get_text_length(footer,fontname='helv',fontsize=8),h-31),
                   footer,fontname='helv',fontsize=8,color=(.10,.25,.30))
-    after=p.get_text()
+    after=' '.join(p.get_text().split())
     for word,definition in terms[spec]:
-        assert word in after and definition in after,(n,word)
+        assert word in after and ' '.join(definition.split()) in after,(n,word)
     return y
 
 for record in new_pages:
