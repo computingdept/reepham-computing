@@ -145,6 +145,28 @@ if content_numbers:
         contents.insert_text((x,span['origin'][1]),str(to),fontname='GuideBold',
                              fontsize=span['size'],color=(.09,.25,.29))
 
+# Four printed cross-references are bare numeric PDF spans; keep them in sync.
+# These are the exact current-edition positions established by the 23 October migration.
+for source_page, targets, expected in [
+    (226,{222},1), (241,{238,242},3)
+]:
+    p=doc[shifted(source_page)-1]
+    refs=[]
+    for b in p.get_text('dict')['blocks']:
+        for line in b.get('lines',[]):
+            for sp in line['spans']:
+                if sp['text'] in {str(n) for n in targets} and sp['bbox'][1]<p.rect.height-51:
+                    refs.append(sp)
+                    p.add_redact_annot(fitz.Rect(sp['bbox']),fill=False)
+    assert len(refs)==expected, f'Unexpected printed references on original page {source_page}: {len(refs)}'
+    p.apply_redactions(images=0,graphics=0)
+    p.insert_font(fontname='GuideBody',fontfile=FONT)
+    p.insert_font(fontname='GuideBold',fontfile=BOLD)
+    for sp in refs:
+        font='GuideBold' if 'bold' in sp['font'].lower() else 'GuideBody'
+        rgb=tuple(((sp['color']>>bit)&255)/255 for bit in (16,8,0))
+        p.insert_text(sp['origin'],str(shifted(int(sp['text']))),fontname=font,fontsize=sp['size'],color=rgb)
+
 # Repaint the printed footer numbers on original pages; inserted pages get them below.
 for original_no in range(1,len(old)+1):
     p=doc[shifted(original_no)-1]
