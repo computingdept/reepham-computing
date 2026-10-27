@@ -25,6 +25,22 @@
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.
 
+## Independent-learning screen clarity (approved 27 October 2026)
+
+**Every independent-learning instruction screen must make three things clear at the top, before any resource:**
+
+1. **What am I doing?** A prominent task title and one-sentence goal.
+2. **How do I do it?** Large, numbered, direct pupil actions, in the order they will be performed.
+3. **What do I do next?** An explicit finishing/returning/submission instruction (e.g., "Return to this lesson. Select Next step to answer the five questions.").
+
+- Put resource links, videos, diagrams and worksheets **after** the prominent instructions. Never make pupils hunt in small-print footnotes for what to do.
+- Avoid duplicate directions in a footer and above a link: one clearly ordered set of instructions is enough.
+- Reuse the shared `assets/ks3-lesson/lesson-pilot.css` classes `.ks3-task-intro`, `.ks3-task-steps`, `.ks3-task-step` and `.ks3-task-number`, rather than inventing a new layout for every converted task.
+- Keep the original video and teacher tasks; this is an **instructional presentation improvement**, not permission to change the required educational outcomes.
+- For new KS3 conversions, apply this to video, worksheet, independent work and homework screens where the sequence would otherwise be unclear. For J277 and H446, audit existing screens for compatibility before any central rollout.
+- Check classroom display, mobile portrait, keyboard access, and resource links independently. Source-level checks cannot certify rendered-browser usability.
+- **First application:** Year 7 Lesson 003 You Do "Watch and investigate": large three-step directions first, then the unembeddable YouTube video link, followed by Task 1 on the next screen.
+
 ## Shared vocabulary introduction and highlighting (approved 27 October 2026)
 
 **Non-negotiable teaching sequence:** **Objectives — introduce term and reveal definition → New Learning / I Do / We Do — reinforce with the same yellow highlighter-pen stroke → Key Vocabulary — show definition first and retrieve the term**. Do not test terms pupils have not been explicitly introduced to.
@@ -110,6 +126,7 @@
 | 2026-10-27 | Y7 003 · visual balance | Match LHS/RHS width (50/50); enlarge meaningful SVG-card captions and link active diagram cards to the current model reveal. Keep the visual legible, not just the RHS text. | **Pilot refinement — source checks passed; visual QA outstanding** |
 | 2026-10-27 | Y7 003 · teaching-first CSS | Compact existing phase/lesson/model headings into two short header rows, place current modelled step at the top of its panel and supporting notes below; **no content or JS behaviour changes**. | **Pilot — source audit pending, visual QA outstanding** |
 | 2026-10-27 | KS3 001/003/004 · vocabulary | Generate Objectives vocabulary from the unchanged end retrieval set, use shared definition-reveal controls and J277/H446 pen-stroke highlighting. Require this in all future KS3 conversion audits. | **Approved shared standard** |
+| 2026-10-27 | Y7 003 · independent instructions | Begin independent video/task screens with large **watch → choose → return/next** actions before the resource; remove repeated small-print directions below. Reusable task-first CSS, no video or quiz changes. | **Approved shared KS3 standard** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
@@ -177,6 +194,7 @@ Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teac
 - [ ] Shared yellow pen-stroke highlights technical terms on all lesson screens; no separate KS3 styling engine.
 - [ ] I Do/We Do step reveals readable on TV; no nested half-width containers.
 - [ ] You Do tasks separate from answer screens; expected real-world submission clear.
+- [ ] Independent-learning task has prominent **what/how/next** instructions before resource links, with no duplicated footer instructions.
 - [ ] Definition-first vocabulary; 3 T/F exit answers with explanations and reflection.
 - [ ] SVGs labelled, readable on TV/mobile; images accurately represent content.
 - [ ] External links tested; no disabled iframe/unsupported auto-play.
