@@ -104,3 +104,78 @@ mark.keyword{color:inherit;background:linear-gradient(transparent 36%,#f8e9a7 36
 .ks3-reflections span{display:block;font-size:.85em}
 .ks3-exit-card .ks3-big{font-size:clamp(21px,2.1vw,35px)}
 @media(max-width:900px){.ks3-lesson-split{grid-template-columns:minmax(0,1fr)}.ks3-lesson-split .classroom-panel{min-height:0}.ks3-prompts{grid-template-columns:1fr}.ks3-reflections{grid-template-columns:1fr}}
+
+
+/* Shared independent-learning instruction sequence.
+   Present WHAT / HOW / NEXT above external media and task resources.
+   Same classes can be reused in future KS3 independent screens without
+   creating a separate You Do engine. */
+.ks3-task-intro{
+  margin:7px 0 10px;
+  max-width:70ch;
+  font-size:clamp(21px,1.9vw,29px)!important;
+  line-height:1.34!important;
+  font-weight:650;
+}
+.ks3-task-steps{
+  counter-reset:none;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:9px;
+  margin:0 0 16px;
+  padding:0;
+  list-style:none;
+}
+.ks3-task-step{
+  display:grid;
+  grid-template-columns:46px minmax(0,1fr);
+  gap:15px;
+  align-items:start;
+  padding:11px 15px;
+  background:#f6faf7;
+  border:1px solid #d1e2d8;
+  border-radius:10px;
+  min-width:0;
+}
+.ks3-task-number{
+  display:grid;
+  place-items:center;
+  background:#dbeee2;
+  color:#115237;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:24px;
+  font-weight:900;
+  line-height:1;
+}
+.ks3-task-step > div{min-width:0}
+.ks3-task-step > div > strong{
+  display:block;
+  color:#163d2b;
+  font-size:clamp(21px,1.85vw,28px);
+  line-height:1.18;
+  margin:0 0 3px;
+}
+.ks3-task-step p{
+  margin:0;
+  color:#294f3d;
+  font-size:clamp(18px,1.4vw,22px);
+  line-height:1.33;
+}
+#ks3-video-stage .ks3-video-link-card{
+  gap:14px;
+  padding:clamp(12px,1.7vw,20px);
+}
+#ks3-video-stage .ks3-video-link-symbol{
+  flex-basis:60px;
+  height:54px;
+}
+#ks3-video-stage .ks3-video-link-symbol svg{width:57px}
+@media(max-width:700px){
+  .ks3-task-intro{font-size:clamp(20px,5.2vw,26px)!important}
+  .ks3-task-step{grid-template-columns:36px minmax(0,1fr);padding:10px;gap:10px}
+  .ks3-task-number{width:34px;height:34px;font-size:19px}
+  .ks3-task-step > div > strong{font-size:21px}
+  .ks3-task-step p{font-size:17px}
+}
