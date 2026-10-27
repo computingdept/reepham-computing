@@ -25,23 +25,18 @@
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.
 
-## Independent-learning screen clarity (approved 27 October 2026)
+## Independent-learning clarity: one decision, then recall (revised 27 October 2026)
 
-**Every independent-learning instruction screen must make three things clear at the top, before any resource:**
+**Do not mistake more visible instructions for better scaffolding.** Classroom You Do screens should show just the action pupils must perform **now**, at the top and in large type. If the activity has multiple thinking stages, separate them with the existing **Next step** lesson navigation rather than fitting all stages onto the first screen.
 
-1. **What am I doing?** A prominent task title and one-sentence goal.
-2. **How do I do it?** Large, numbered, direct pupil actions, in the order they will be performed.
-3. **What do I do next?** An explicit finishing/returning/submission instruction (e.g., "Return to this lesson. Select Next step to answer the five questions.").
-
-- Put resource links, videos, diagrams and worksheets **after** the prominent instructions. Never make pupils hunt in small-print footnotes for what to do.
-- Avoid duplicate directions in a footer and above a link: one clearly ordered set of instructions is enough.
-- Reuse the shared `assets/ks3-lesson/lesson-pilot.css` classes `.ks3-task-intro`, `.ks3-task-steps`, `.ks3-task-step` and `.ks3-task-number`, rather than inventing a new layout for every converted task.
-- Keep the original video and teacher tasks; this is an **instructional presentation improvement**, not permission to change the required educational outcomes.
-- For new KS3 conversions, apply this to video, worksheet, independent work and homework screens where the sequence would otherwise be unclear. For J277 and H446, audit existing screens for compatibility before any central rollout.
-- Check classroom display, mobile portrait, keyboard access, and resource links independently. Source-level checks cannot certify rendered-browser usability.
-- **First application:** Year 7 Lesson 003 You Do "Watch and investigate": large three-step directions first, then the unembeddable YouTube video link, followed by Task 1 on the next screen.
-- **Approved refinement (27 October):** the very first and largest instruction is the pupil task, e.g. **"Choose ONE invention from the video"**. Use a short **Watch → Choose → Answer** action strip where useful. Show the *exact* questions pupils will answer **before they open the video**, using `.ks3-action-strip`, `.ks3-action-card` and `.ks3-watch-questions` from the shared KS3 stylesheet. The resource link follows. Avoid a dense introductory paragraph or small-print "what next" instructions.
-- **Screen-to-screen continuity:** use matching, direct task wording on the next screen, e.g. **"Answer five questions about your invention"**, and keep the original five prompts unchanged. Clarify that the video opens in a new tab and pupils should return and choose Next step, in the resource card itself. Do not introduce extra navigation or duplicate directions at the bottom.
+- **Watch/choose stage:** give a concrete, bounded choice (usually three real examples, grounded in the linked resource). One pupil action: **Choose ONE clip and watch that section**. Provide direct, accessible links to the relevant chapters where available. Explicitly say what happens next: return and select **Next step**.
+- **Recall/write stage:** start with an explicit output, e.g. **Write THREE sentences about your chosen invention**. Offer short writing frames for identification, function and audience/benefit. A single completed worked example can help pupils begin.
+- **Do not front-load retrieval questions:** a screen asking pupils to choose and watch must not also display all the later writing questions. Those belong **after** the resource, on their own screen. Where there is a long teacher-authored question set, preserve it within a clearly labelled **Going further** disclosure rather than deleting it or displaying it all at once. Only make such tasks optional with explicit pedagogical approval.
+- **Real examples, not invented clip claims:** Lesson 003's 2023 YouTube video has timestamped chapters for RayNeo X2 smart glasses (0:18), Aeo helper robot (4:52) and Aiper Elite Pro pool cleaner (5:29). These are three grounded starting options; the original full video remains accessible through those chapter links.
+- **One shared presentation:** use the existing You Do `.youdo-stage` paging and shared `assets/ks3-lesson/lesson-pilot.css` classes `.ks3-clip-choice-grid`, `.ks3-clip-choice`, `.ks3-recall-frames`, `.ks3-recall-model` and `.ks3-recall-more`. No new navigation engine, storage or duplicated lesson-control JS is needed.
+- **Pupil readability:** prominent task heading; minimal explanatory text; three large choices that stack vertically on mobile; a single plain-English next action; no unrelated labels or repeated footer instructions. Do not force pupils to read five questions and make three decisions before clicking Play.
+- **Preserve the teacher's curriculum:** original video, all five source Task 1 questions, subsequent Task 2, homework, assessment and all lesson phases remain in the file. Ensure no answer is fabricated or represented as being provided by the video if it is only an assistant-created worked example.
+- **QA:** verify timestamp links against the video's actual chapter listing; validate that three choices and three writing frames are visible in source and mobile CSS; test Next step from the clip selection to recall, and ensure any expandable original prompts stay within their own stage. Live-browser testing remains required before a wider rollout.
 
 
 ## Shared vocabulary introduction and highlighting (approved 27 October 2026)
@@ -130,7 +125,8 @@
 | 2026-10-27 | Y7 003 · teaching-first CSS | Compact existing phase/lesson/model headings into two short header rows, place current modelled step at the top of its panel and supporting notes below; **no content or JS behaviour changes**. | **Pilot — source audit pending, visual QA outstanding** |
 | 2026-10-27 | KS3 001/003/004 · vocabulary | Generate Objectives vocabulary from the unchanged end retrieval set, use shared definition-reveal controls and J277/H446 pen-stroke highlighting. Require this in all future KS3 conversion audits. | **Approved shared standard** |
 | 2026-10-27 | Y7 003 · independent instructions | Begin independent video/task screens with large **watch → choose → return/next** actions before the resource; remove repeated small-print directions below. Reusable task-first CSS, no video or quiz changes. | **Approved shared KS3 standard** |
-| 2026-10-27 | Y7 003 · task visibility | Put **Choose ONE invention** as the largest visible task; reinforce with Watch → Choose → Answer and preview the same five Task 1 questions above the video. Match the next screen heading to the task. | **Approved refinement** |
+| 2026-10-27 | Y7 003 · task visibility | Put **Choose ONE invention** as the largest visible task; reinforce with Watch → Choose → Answer and preview the same five Task 1 questions above the video. Match the next screen heading to the task. | **Superseded: too much on first screen** |
+| 2026-10-27 | Y7 003 · bounded choice and recall | Give three confirmed timestamped video choices on one screen, then use Next step for a three-sentence recall scaffold and worked example. Retain five original Task 1 questions under optional Going further. | **Current pilot — visual QA outstanding** |
 | 2026-10-27 | Y7 003 | Use J277/H446 eight-phase lesson engine and classroom signs. | Established |
 | 2026-10-27 | Y7 003 | Replace generic flow boxes with SVG icons + action clues, responsive layout. | Established |
 | 2026-10-27 | Y7 003 | Fix nested I Do/We Do two-column layout rather than resizing fonts or hiding content. | Established |
@@ -199,7 +195,7 @@ Original source: `7.1 Lesson 1 - Welcome to Computing.pptx` (9 slides; same teac
 - [ ] I Do/We Do step reveals readable on TV; no nested half-width containers.
 - [ ] You Do tasks separate from answer screens; expected real-world submission clear.
 - [ ] Independent-learning task has prominent **what/how/next** instructions before resource links, with no duplicated footer instructions.
-- [ ] Task headline is immediately visible; if watching media leads to questions, show the same question wording before the resource and repeat the task heading consistently on the following screen.
+- [ ] Clip-choice stage asks for only **one choice and one viewing action**; recall/writing questions appear on **the following screen**, not before the clip. Give a clearly modelled written response and preserve source questions as an optional extension where agreed.
 - [ ] Definition-first vocabulary; 3 T/F exit answers with explanations and reflection.
 - [ ] SVGs labelled, readable on TV/mobile; images accurately represent content.
 - [ ] External links tested; no disabled iframe/unsupported auto-play.
