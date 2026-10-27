@@ -1,12 +1,12 @@
-/* RHSC shared marker highlighting — common to J277 and H446.
+/* RHSC shared marker highlighting — common to KS3, J277 and H446.
    Vocabulary is sourced from the lesson's existing, teacher-authored term chips. */
 (function(){
 'use strict';
-if(!/^\/lessons\/(?:j277|h446)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
+if(!/^\/lessons\/(?:j277|h446|year[789])\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
 if(document.documentElement.hasAttribute('data-rhsc-marker-ready'))return;
 document.documentElement.setAttribute('data-rhsc-marker-ready','20261026');
 var link=document.createElement('link');
-link.rel='stylesheet';link.href='../../../assets/h446-lesson/keyword-highlighter.css?v=20261026-stroke-only1';
+link.rel='stylesheet';link.href='../../../assets/h446-lesson/keyword-highlighter.css?v=20261027-ks3vocab1';
 document.head.appendChild(link);
 
 var excluded='script,style,pre,code,kbd,samp,svg,math,button,a,mark,.vocab-tip,.vocab-answer,.youdo-solution,.wedo-answer,.model-answer,.solution-card,.answer-panel,.j277-sm-review,.phase-tag,[hidden],[aria-hidden="true"],[data-vocab-answer]';
