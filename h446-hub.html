@@ -458,34 +458,15 @@ function renderLessons(){
       const route=document.createElement('p');route.className='term-route';route.textContent=journey;
       sec.append(route);
     }
-    let group=null,groupKey=null,grid=null,detail=null;
+    // One continuous, left-to-right grid per half-term, regardless of specification.
+    // The shared Options component retains each lesson's existing curriculum colour.
+    const grid=document.createElement('nav');
+    grid.className='lesson-grid';
+    grid.setAttribute('aria-label','Year '+year+' '+term.name+' lessons');
     for(let x=n;x<=end;x++){
       const href=liveMap[x];
       if(!staffPreview&&year!==13&&!href)continue;
       const specKey=lessonSpecification(x);
-      const groupedComputationalThinking=year===12&&x>=59&&x<=64&&/^2\.1\.[1-5]$/.test(specKey||'');
-      const key=groupedComputationalThinking?'2.1':(specKey||'planned');
-      if(key!==groupKey){
-        group=document.createElement('div');
-        group.className='spec-group'+(!href&&year===12?' spec-group-planned':'');
-        const spec=specificationThemes[specKey];
-        group.style.setProperty('--spec-color',curriculumColour(specKey));
-        const head=document.createElement('div');
-        head.className='spec-group-title';
-        if(spec){
-          const code=document.createElement('span');code.className='spec-group-code';code.textContent=groupedComputationalThinking?'2.1.x':specKey==='mixed'?'Synoptic':specKey==='nea'?'NEA':specKey;
-          const label=document.createElement('span');
-          const plannedLabel=year===12&&x===32?'Applied Programming & Revision':
-             year===12&&x>=37&&x<=42?'OOP foundations · C# classes and objects':
-            year===12&&x>=43&&x<=57?'Data structures revisited · object-oriented C#':spec.label;
-          label.textContent=(groupedComputationalThinking?'Computational Thinking':plannedLabel)+(year===12&&!href?' · planned':'');
-          head.append(code,label);
-        }else{
-          head.textContent='Future lessons · specification point to be confirmed';
-        }
-        grid=document.createElement('div');grid.className='lesson-grid';
-        detail=document.createElement('div');detail.className='lesson-detail';detail.setAttribute('aria-hidden','true');group.append(head,grid);grid.append(detail);sec.append(group);groupKey=key;
-      }
       grid.append(Navigation.createTile({
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
@@ -493,6 +474,7 @@ function renderLessons(){
         color:curriculumColour(specKey)
       }));
     }
+    sec.append(grid);
     holder.append(sec);n=end+1;
   }
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons · Ready';
