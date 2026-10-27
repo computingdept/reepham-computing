@@ -160,7 +160,12 @@
 /* Shared practice tile CSS: /revision/shared/revision-ui.css */
 </style><link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
-</head><body class="course-hub course-compact course-inline-nav" data-year="10">
+<style id="lesson-print-pilot-styles">
+.pilot-resource-actions{margin-top:12px;border-top:1px solid #d8e7dc;padding-top:10px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.pilot-resource-actions b{flex:0 0 100%;font-size:12px;color:#285848}
+.pilot-resource-actions a{font-size:12px;color:#164b3c;text-decoration:underline;text-underline-offset:2px}
+.mobile-sheet-actions .mobile-sheet-independent:not([hidden]){display:block;flex:1 1 100%;text-align:center;background:#f3f8f5;border:1px solid #b4cfc0;color:#164c3d;border-radius:8px;padding:11px;text-decoration:none}
+</style></head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
 <nav class="course-nav" aria-label="Course resources"><div class="tabs" role="tablist" aria-label="GCSE Computer Science sections"><button class="tab" data-tab="lessons" aria-selected="true">Lessons</button><button class="tab" data-tab="booklet" aria-selected="false"><span class="nav-full">Revision guides</span><span class="nav-short">Guides</span></button><button class="tab" data-tab="revisionhub" aria-selected="false"><span class="nav-full">Revision practice</span><span class="nav-short">Practice</span></button></div></nav></div>
@@ -241,6 +246,13 @@ function showLessonInfo(target,n){
  const oh=document.createElement('b');oh.textContent='Learning objective';const ot=document.createElement('p');ot.textContent=objective;o.append(oh,ot);
  target.append(h,ref,o);
  if(task){const c=document.createElement('div');c.className='lesson-preview-coding';const ch=document.createElement('b');ch.textContent='Code first · OCR ERL';const ct=document.createElement('p');ct.textContent=task;c.append(ch,ct);target.append(c);}
+ if(n===1){
+  const resources=document.createElement('div');resources.className='pilot-resource-actions';
+  const label=document.createElement('b');label.textContent='Independent lesson · print or save';
+  const bw=document.createElement('a');bw.href='lessons/j277/lesson-001/independent.html?version=bw';bw.textContent='Black & white (default)';
+  const colour=document.createElement('a');colour.href='lessons/j277/lesson-001/independent.html?version=colour';colour.textContent='Colour';
+  resources.append(label,bw,colour);target.append(resources);
+ }
 }
 
 /* Common specification-colour mapping for the complete J277 two-year sequence. */
@@ -304,7 +316,7 @@ lessonSheet.hidden=true;
 lessonSheet.setAttribute('role','dialog');
 lessonSheet.setAttribute('aria-modal','true');
 lessonSheet.setAttribute('aria-labelledby','j277-mobile-sheet-title');
-lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="j277-mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a></div>';
+lessonSheet.innerHTML='<div class="mobile-sheet-handle" aria-hidden="true"></div><div class="mobile-sheet-header"><div class="mobile-sheet-id"><strong class="mobile-sheet-number"></strong><span class="mobile-sheet-context"></span></div><button type="button" class="mobile-sheet-close" aria-label="Close preview">×</button></div><div class="mobile-sheet-content"><h2 class="mobile-sheet-title" id="j277-mobile-sheet-title"></h2><div class="mobile-sheet-objectives"></div></div><div class="mobile-sheet-actions"><a class="mobile-sheet-open" href="#">Start Lesson →</a><a class="mobile-sheet-jump" href="#">Jump to You Do →</a><a class="mobile-sheet-independent" href="#" hidden>Independent booklet · B&W</a></div>';
 document.body.append(sheetBackdrop,lessonSheet);
 let sheetTrigger=null;
 let sheetStartY=null;
@@ -356,6 +368,9 @@ function openLessonSheet(n,href,trigger){
     const cleanHref=href.split('#')[0];
     lessonSheet.querySelector('.mobile-sheet-open').href=cleanHref+'#do-now';
     lessonSheet.querySelector('.mobile-sheet-jump').href=cleanHref+'#you-do';
+    const independent=lessonSheet.querySelector('.mobile-sheet-independent');
+    independent.hidden=n!==1;
+    if(n===1)independent.href='lessons/j277/lesson-001/independent.html?version=bw';
   }
   sheetBackdrop.hidden=false;
   lessonSheet.hidden=false;
