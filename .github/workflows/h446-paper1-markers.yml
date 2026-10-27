@@ -1,0 +1,65 @@
+name: H446 Paper 1 lesson-style marker alignment
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/restyle_h446_paper1_markers.py'
+      - '.github/workflows/h446-paper1-markers.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  marker-alignment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PDF tooling and fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core libcairo2
+          python -m pip install pymupdf==1.26.4 cairosvg==2.7.1
+      - name: Apply exact shared lesson SVG yellow strokes to glossary terms
+        run: python tools/revision/restyle_h446_paper1_markers.py
+      - name: Refresh feedback guide URLs without altering stable page keys
+        run: python tools/revision/build_guide_links.py
+      - name: Re-run all 146 H446 feedback destination checks
+        run: python tools/revision/audit_h446_feedback.py
+      - name: Verify PDF pages and unchanged feedback destinations
+        run: |
+          python - <<'PY'
+          import json,fitz
+          from pathlib import Path
+          root=Path('revision/h446/guides')
+          data=json.loads((root/'paper-1-page-map.json').read_text())
+          pdf=fitz.open(root/'H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf')
+          assert len(pdf)==data['page_count']==263
+          assert data['edition']=='2026-10-27-lesson-marker'
+          assert len(data['page_keys'])==263
+          assert sorted(data['page_keys'].values())==list(range(1,264))
+          for row in data['added_pages']:
+            if row['key']>=254:
+              page=pdf[row['page']-1]
+              assert row['spec'] in page.get_text()
+              assert 'Theory / Key terminology' in page.get_text()
+          assert all(0<p<=263 for _,_,p in pdf.get_toc())
+          print('PASS: all 263 stable destinations, 10 SVG-marker terminology pages, valid bookmarks')
+          PY
+          git diff --check
+      - name: Publish coordinated PDF and its unchanged stable-key lookups
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revision/h446/guides/H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf
+          git add revision/h446/guides/paper-1-page-map.json revision/h446/guide-links.js
+          git add h446-hub.html docs/audits/h446-feedback-destinations-20261023.csv
+          git add docs/audits/h446-paper1-marker-alignment-20261027.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Align H446 Paper 1 terminology highlighting with classroom lesson strokes"
+            git push
+          fi
