@@ -27,7 +27,49 @@ mark.keyword{color:inherit;background:linear-gradient(transparent 36%,#f8e9a7 36
 .ks3-lesson-split .teams-step-hint{font-size:12px}
 @media(max-width:700px){.teams-flow,.ks3-lesson-split .teams-flow{grid-template-columns:1fr;gap:9px}.teams-step,.ks3-lesson-split .teams-step{min-height:78px;display:grid;grid-template-columns:35px 46px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;row-gap:2px;text-align:left;justify-items:start;align-items:center;padding:11px}.teams-step-top{grid-column:1;grid-row:1/3;font-size:11px;align-self:center}.teams-step-icon,.ks3-lesson-split .teams-step-icon{grid-column:2;grid-row:1/3;width:38px;height:38px}.teams-step strong,.ks3-lesson-split .teams-step strong{grid-column:3;grid-row:1;font-size:17px}.teams-step-hint,.ks3-lesson-split .teams-step-hint{grid-column:3;grid-row:2;font-size:14px}}
 
-.ks3-lesson-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0}
+/* KS3 pilot: the shared classroom stylesheet makes .ido-example and
+   .wedo-example into two-column grids already. Our pilot has a full-width
+   heading plus its OWN two-column panel wrapper; avoid nested quarter-width
+   columns. This override is deliberately limited to Year 7 lesson 003. */
+#i-do .ido-example,#we-do .wedo-example{
+  display:block!important;
+  grid-template-columns:none!important;
+  width:100%;
+  max-width:none;
+  min-width:0;
+}
+#i-do .ks3-heading,#we-do .ks3-heading{
+  display:block;
+  width:100%;
+  max-width:none;
+  margin:0 0 14px;
+}
+#i-do .ks3-heading h1,#we-do .ks3-heading h1{
+  font-size:clamp(28px,3.05vw,43px);
+  line-height:1.08;
+  max-width:100%;
+  margin:.12em 0 .3em;
+}
+#i-do .ido-deck,#we-do .wedo-deck{width:100%;min-width:0;height:auto}
+.ks3-lesson-split{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:16px;
+  align-items:stretch;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+}
+#i-do .ks3-lesson-split>.classroom-panel,#we-do .ks3-lesson-split>.classroom-panel{
+  min-width:0;
+  min-height:0;
+  height:auto;
+  max-height:none;
+  overflow:visible;
+  padding:clamp(15px,1.5vw,22px);
+}
+#i-do.page,#we-do.page{overflow-y:auto!important;overflow-x:hidden!important}
+
 .ks3-lesson-split .classroom-panel{min-height:min(63vh,610px);height:auto;overflow:auto}
 
 .ks3-model-steps{display:grid;gap:9px}
@@ -42,7 +84,7 @@ mark.keyword{color:inherit;background:linear-gradient(transparent 36%,#f8e9a7 36
 .ks3-reflections>div{background:#f5f8f6;border:1px solid #d5e2db;padding:18px;border-radius:10px}
 .ks3-reflections span{display:block;font-size:.85em}
 .ks3-exit-card .ks3-big{font-size:clamp(21px,2.1vw,35px)}
-@media(max-width:900px){.ks3-lesson-split{grid-template-columns:1fr}.ks3-lesson-split .classroom-panel{min-height:0}.ks3-prompts{grid-template-columns:1fr}.ks3-reflections{grid-template-columns:1fr}}
+@media(max-width:900px){.ks3-lesson-split{grid-template-columns:minmax(0,1fr)}.ks3-lesson-split .classroom-panel{min-height:0}.ks3-prompts{grid-template-columns:1fr}.ks3-reflections{grid-template-columns:1fr}}
 </style></head>
 <body><a class="skip" href="#main">Skip to lesson</a>
 <div class="navwrap"><a class="course-back" href="../../../index.html#year/7/computing/lessons">← Year 7 Computing</a><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button type="button" class="control-btn" id="advance">Next step →</button><button type="button" class="back-btn" id="previous">← Previous</button><p id="page-count"></p></div></div>
