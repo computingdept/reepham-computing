@@ -1,6 +1,7 @@
 # KS3 PowerPoint → Learning Hub conversion rulebook
 
 **Status:** Living specification · Started 27 October 2026  
+**Cross-subject principles:** [PowerPoint → Online Learning: shared design standard](powerpoint-to-online-learning-standard.md). This Computing rulebook remains the subject-specific implementation and decision log.  
 **Applies to:** Year 7, 8 and 9 Computing lessons in `lessons/year{n}/lesson-NNN/index.html`.  
 **Source of truth:** The teacher's PPTX/worksheets for **educational content**; the existing approved J277/H446 classroom lesson assets for **interface and navigation**.  
 **Review standard:** Lesson 003 (Microsoft Teams) is the first completed online KS3 lesson. Lesson 001 is a new pilot, not live until reviewed.
