@@ -24,7 +24,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y fonts-dejavu-core libcairo2
           python -m pip install pymupdf==1.26.4 cairosvg==2.7.1
-      - name: Apply exact shared lesson SVG yellow strokes to glossary terms
+      - name: Centre shared lesson SVG highlighter strokes behind glossary words
         run: python tools/revision/restyle_h446_paper1_markers.py
       - name: Refresh feedback guide URLs without altering stable page keys
         run: python tools/revision/build_guide_links.py
@@ -39,7 +39,7 @@ jobs:
           data=json.loads((root/'paper-1-page-map.json').read_text())
           pdf=fitz.open(root/'H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf')
           assert len(pdf)==data['page_count']==263
-          assert data['edition']=='2026-10-27-lesson-marker'
+          assert data['edition']=='2026-10-27-marker-centred'
           assert len(data['page_keys'])==263
           assert sorted(data['page_keys'].values())==list(range(1,264))
           for row in data['added_pages']:
@@ -48,7 +48,7 @@ jobs:
               assert row['spec'] in page.get_text()
               assert 'Theory / Key terminology' in page.get_text()
           assert all(0<p<=263 for _,_,p in pdf.get_toc())
-          print('PASS: all 263 stable destinations, 10 SVG-marker terminology pages, valid bookmarks')
+          print('PASS: all 263 stable destinations, centred SVG-marker terminology pages, valid bookmarks')
           PY
           git diff --check
       - name: Publish coordinated PDF and its unchanged stable-key lookups

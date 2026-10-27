@@ -1,6 +1,6 @@
 """Match Paper 1 PDF terminology highlighting to the shared H446/J277 lesson SVG marker.
 
-A guarded, visual-only second pass on the 263-page revision edition.
+A guarded, visual-only vertical-position correction on the 263-page revision edition.
 Keeps every PDF page number, legacy stable key and quiz/lesson destination.
 """
 from pathlib import Path
@@ -15,8 +15,8 @@ MAP=GUIDES/'paper-1-page-map.json'
 HUB=ROOT/'h446-hub.html'
 TERMS=ROOT/'tools/revision/h446_paper1_terms.json'
 REPORT=ROOT/'docs/audits/h446-paper1-marker-alignment-20261027.md'
-OLD='2026-10-27-revision-terminology'
-NEW='2026-10-27-lesson-marker'
+OLD='2026-10-27-lesson-marker'
+NEW='2026-10-27-marker-centred'
 FONT='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 BOLD='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
@@ -81,12 +81,26 @@ def make_page(p,spec,n):
         row=fitz.Rect(43,y,w-43,y+62)
         p.draw_rect(row,color=(.85,.88,.90),fill=(.987,.992,.995),width=.6)
         tx=61
-        # The SVG does not become a rectangular pill: visible hand-drawn edges.
+        # A hand-drawn translucent pen stroke crosses the keyword, not below it.
         width=min(150,bold.text_length(word,fontsize=9.6)+10)
-        marker_rect=fitz.Rect(tx-5,y+20,tx-5+width,y+37)
+        # The painted SVG interior is 9..48 of its 56 SVG units. Centre that paint
+        # vertically around the actual glyphs (roughly y+17..y+28), not below them.
+        marker_rect=fitz.Rect(tx-5,y+12,tx-5+width,y+34)
         p.show_pdf_page(marker_rect,sources[i%3],0,keep_proportion=False,overlay=True)
         assert p.insert_textbox(fitz.Rect(tx,y+17,208,y+40),word,
                 fontname='GuideBold',fontsize=9.6,color=dark)>=0,word
+        glyphs=[
+            s for b in p.get_text('dict')['blocks']
+            for ln in b.get('lines',[]) for s in ln['spans']
+            if s['text']==word and tx-1<=s['bbox'][0]<=208
+            and y+14<=s['bbox'][1]<=y+41
+        ]
+        assert len(glyphs)==1,(spec,word,glyphs)
+        glyph=glyphs[0]['bbox']
+        ink_top=marker_rect.y0+marker_rect.height*(9/56)
+        ink_bottom=marker_rect.y0+marker_rect.height*(48/56)
+        assert ink_top<=glyph[1]+1 and ink_bottom>=glyph[3]-1, (
+            spec,word,'Yellow ink misses letters',ink_top,ink_bottom,glyph)
         assert p.insert_textbox(fitz.Rect(225,y+8,w-56,y+54),definition,
                 fontname='GuideBody',fontsize=9.6,lineheight=1.22,color=dark)>=0,definition
         y+=67
@@ -136,11 +150,11 @@ REPORT.parent.mkdir(parents=True,exist_ok=True)
 REPORT.write_text(
     '# H446 Paper 1 / Lesson-marker alignment\n\n'
     '- Kept all 263 pages and all 263 stable page keys.\n'
-    '- Replaced large rectangular yellow keyword backing on the 10 new glossary pages with exact yellow/transparency/paths from the shared lesson SVG marker style.\n'
+    '- Repositioned the exact shared lesson SVG strokes behind the full height of each keyword on all 10 new glossary pages (rather than underneath the text).\n'
     '- Kept selectable words, accessible definitions, grey terminology rows and font sizing.\n'
     '- Kept PDF bookmarks and non-glossary pages unchanged in extracted content.\n'
     '- Existing 5 vocabulary tables were not restyled in this pass; their labels remain consistent.\n'
     '- Revision quiz feedback destinations must be reaudited before publication.\n\n'
-    'Keyword pages: '+', '.join(f"{p['spec']} p.{p['page']}" for p in new_pages)+'\n'
+    '- A geometry assertion confirms that the painted SVG area intersects the full keyword glyph height.\n'\n    'Keyword pages: '+', '.join(f"{p['spec']} p.{p['page']}" for p in new_pages)+'\n'
 )
 print('PASS: 263 pages, 10 lesson-style SVG-stroke terminology pages; no page shifts.')
