@@ -133,8 +133,11 @@ for n in range(2,264):
 ntoc=[]
 for level,title,oldno in toc:
  ntoc.append([level,title,shift(oldno)])
- if oldno==INSERT_AFTER:
-  ntoc.append([min(3,level+1),'1.4.3 / Key terminology',INSERT_AFTER+1])
+# The earlier logic-gates insertion has no bookmark anchored at the exact
+# first section page; insert the glossary bookmark at its physical destination.
+assert not any(t[1]=='1.4.3 / Key terminology' for t in ntoc)
+next_section=next((i for i,t in enumerate(ntoc) if t[2]>INSERT_AFTER+1),len(ntoc))
+ntoc.insert(next_section,[2,'1.4.3 / Key terminology',INSERT_AFTER+1])
 doc.set_toc(ntoc)
 doc.set_page_labels([{'startpage':0,'prefix':'','style':'D','firstpagenum':1}])
 tmp=PDF.with_suffix('.logic-vocab.tmp.pdf')
