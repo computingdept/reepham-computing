@@ -1,0 +1,65 @@
+name: H446 Paper 1 revision-guide terminology migration
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/migrate_h446_paper1_terminology.py'
+      - '.github/workflows/h446-paper1-terminology.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  paper1-migration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PyMuPDF and fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core
+          python -m pip install pymupdf==1.26.4
+      - name: Safely update Paper 1 and its page map
+        run: python tools/revision/migrate_h446_paper1_terminology.py
+      - name: Rebuild stable H446 feedback destinations
+        run: python tools/revision/build_guide_links.py
+      - name: Verify all H446 feedback destinations
+        run: python tools/revision/audit_h446_feedback.py
+      - name: Validate physical pages and stable keys
+        run: |
+          python - <<'PY'
+          import json,fitz
+          from pathlib import Path
+          root=Path('revision/h446/guides')
+          info=json.loads((root/'paper-1-page-map.json').read_text())
+          pdf=fitz.open(root/'H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf')
+          assert len(pdf)==263==info['page_count']
+          assert info['edition']=='2026-10-27-revision-terminology'
+          assert len(info['page_keys'])==len(pdf)
+          assert set(info['page_keys'].values())==set(range(1,len(pdf)+1))
+          assert all(1<=page<=len(pdf) for _,_,page in pdf.get_toc())
+          for n in [2,3,7,26,83,148,169,185,220,242,263]:
+              page=pdf[n-1]
+              assert len(page.get_text().strip())>30,n
+              pix=page.get_pixmap(matrix=fitz.Matrix(1.2,1.2),alpha=False)
+              pix.save('/tmp/h446-terminology-page-'+str(n)+'.png')
+          print('PASS:',len(pdf),'PDF pages; complete unique stable-key map; valid bookmarks.')
+          PY
+          git diff --check
+      - name: Publish PDF and linked files together
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revision/h446/guides/H446_Paper_1_CORRECTED_DRAFT_2026-10-21.pdf
+          git add revision/h446/guides/paper-1-page-map.json revision/h446/guide-links.js
+          git add h446-hub.html docs/audits/h446-feedback-destinations-20261023.csv
+          git add docs/audits/h446-paper1-terminology-migration-20261027.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish H446 Paper 1 terminology and worked examples with feedback links"
+            git push
+          fi
