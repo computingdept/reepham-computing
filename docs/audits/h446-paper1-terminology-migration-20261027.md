@@ -1,0 +1,56 @@
+# Paper 1 revision-guide terminology migration — 27 October 2026
+
+- Original pages: 253; updated pages: 263.
+- New terminology pages: 10; existing dedicated tables: 5.
+- Classroom-label spans revised: 152.
+- Old stable page keys retained: 253; new independent terminology page keys: 10.
+- Original question banks, scoring rules, saved results and lesson files not changed.
+- All bookmarks and PDF contents links remapped; feedback audit required before publishing.
+
+## Changed label examples
+
+- Original p.7: I DO / trace an assembly instruction → WORKED EXAMPLE 1 / trace an assembly instruction (14.8pt)
+- Original p.7: I DO: TRACE LOAD 205 - ONE INSTRUCTION → WORKED EXAMPLE 1: TRACE LOAD 205 - ONE INSTRUCTION (13.2pt)
+- Original p.7: I DO / MEMORY CHECK → WORKED EXAMPLE 1 / MEMORY CHECK (8.0pt)
+- Original p.8: WE DO / different question, same method → WORKED EXAMPLE 2 / different question, same method (14.8pt)
+- Original p.15: Understand it  /  I Do  /  We Do → Theory / Worked Examples (9.0pt)
+- Original p.15: I DO → WORKED EXAMPLE 1 (11.0pt)
+- Original p.15: WE DO → WORKED EXAMPLE 2 (11.0pt)
+- Original p.20: WE DO / fresh problem → WORKED EXAMPLE 2 / fresh problem (12.0pt)
+- Original p.20: I DO / Dividing independent work → WORKED EXAMPLE 1 / Dividing independent work (12.0pt)
+- Original p.26: I DO / Automatic door → WORKED EXAMPLE 1 / Automatic door (14.0pt)
+- Original p.26: WE DO / Pedestrian crossing → WORKED EXAMPLE 2 / Pedestrian crossing (14.0pt)
+- Original p.27: I DO / Photographer → WORKED EXAMPLE 1 / Photographer (14.0pt)
+- Original p.27: WE DO / Offline exhibition → WORKED EXAMPLE 2 / Offline exhibition (14.0pt)
+- Original p.28: I DO / Power cut → WORKED EXAMPLE 1 / Power cut (14.0pt)
+- Original p.28: WE DO / Online coursework → WORKED EXAMPLE 2 / Online coursework (14.0pt)
+- Original p.33: Essential key vocabulary → THEORY / KEY TERMINOLOGY (10.6pt)
+- Original p.34: I DO / worked example → WORKED EXAMPLE 1 / worked example (10.6pt)
+- Original p.34: WE DO / same skill, different problem → WORKED EXAMPLE 2 / same skill, different problem (10.6pt)
+- Original p.39: I Do / browser, backup and printer → WORKED EXAMPLE 1 / browser, backup and printer (12.0pt)
+- Original p.39: We Do / same responsibilities, different problem → WORKED EXAMPLE 2 / same responsibilities, different problem (12.0pt)
+- Original p.40: I Do / translate a virtual address → WORKED EXAMPLE 1 / translate a virtual address (11.7pt)
+- Original p.40: We Do / a different translation → WORKED EXAMPLE 2 / a different translation (11.7pt)
+- Original p.45: I Do / key pressed during a running program → WORKED EXAMPLE 1 / key pressed during a running program (11.7pt)
+- Original p.45: We Do / disk read completes → WORKED EXAMPLE 2 / disk read completes (11.7pt)
+- Original p.49: I DO / CALCULATE WAITING TIME → WORKED EXAMPLE 1 / CALCULATE WAITING TIME (9.7pt)
+- Original p.49: I DO / SRTF PRE-EMPTION → WORKED EXAMPLE 1 / SRTF PRE-EMPTION (9.7pt)
+- Original p.49: WE DO / OS BEYOND SCHEDULING → WORKED EXAMPLE 2 / OS BEYOND SCHEDULING (9.7pt)
+- Original p.51: I DO / EVALUATE WAITING → WORKED EXAMPLE 1 / EVALUATE WAITING (11.3pt)
+- Original p.52: WE DO / A DIFFERENT FEEDBACK-QUEUE SCHEDULE → WORKED EXAMPLE 2 / A DIFFERENT FEEDBACK-QUEUE SCHEDULE (11.3pt)
+- Original p.60: I Do / emergency-stop controller → WORKED EXAMPLE 1 / emergency-stop controller (12.0pt)
+- Original p.60: We Do / school network server → WORKED EXAMPLE 2 / school network server (12.0pt)
+- Original p.64: I Do / laptop is switched on → WORKED EXAMPLE 1 / laptop is switched on (12.0pt)
+- Original p.64: We Do / boot fails before login → WORKED EXAMPLE 2 / boot fails before login (12.0pt)
+- Original p.65: I Do / a printer appears but cannot print → WORKED EXAMPLE 1 / a printer appears but cannot print (12.0pt)
+- Original p.65: We Do / a new scanner → WORKED EXAMPLE 2 / a new scanner (12.0pt)
+- Original p.67: I Do / test another OS on one computer → WORKED EXAMPLE 1 / test another OS on one computer (12.0pt)
+- Original p.67: We Do / program for several platforms → WORKED EXAMPLE 2 / program for several platforms (12.0pt)
+- Original p.71: Essential key vocabulary → THEORY / KEY TERMINOLOGY (10.6pt)
+- Original p.72: I DO / worked example → WORKED EXAMPLE 1 / worked example (10.6pt)
+- Original p.72: WE DO / same skill, different problem → WORKED EXAMPLE 2 / same skill, different problem (10.6pt)
+- Original p.76: I Do / a school writes a report and analyses marks → WORKED EXAMPLE 1 / a school writes a report and analyses marks (12.0pt)
+- Original p.76: We Do / a photo department → WORKED EXAMPLE 2 / a photo department (12.0pt)
+- Original p.77: I Do / coursework protection → WORKED EXAMPLE 1 / coursework protection (12.0pt)
+- Original p.77: We Do / a full school laptop → WORKED EXAMPLE 2 / a full school laptop (12.0pt)
+- Original p.78: I Do / missing PrintReport() implementation → WORKED EXAMPLE 1 / missing PrintReport() implementation (12.0pt)
