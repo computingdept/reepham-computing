@@ -1,19 +1,33 @@
 # OCR J277 revision guides
 
-The two current, audited AP1-aligned source files are:
+## Student edition source PDFs
 
-- `J277_Paper_1_Revision_Guide_AP1_Aligned.pdf` — 94 pages, 20 October 2026
-- `J277_Paper_2_Revision_Guide_AP1_Aligned.pdf` — 97 pages, 20 October 2026
+These are the two original, verified files held in the teacher's ChatGPT Library:
 
-**Status:** The PDFs must be uploaded to this folder as binary files. Do not activate their links until both files are present and open correctly on the public site. The original copies are available as ChatGPT conversation attachments.
+- `J277_Paper_1_Revision_Guide_AP1_Aligned.pdf` — 94 pages; 9,700,116 bytes
+- `J277_Paper_2_Revision_Guide_AP1_Aligned.pdf` — 97 pages; 10,699,995 bytes
+
+The PDFs have not yet been copied into this GitHub folder. **Do not enable student links before both are present.**
+
+### Publish the source PDFs
+
+Using the GitHub web UI, open this `revision/j277/guides/` folder, select **Add file → Upload files**, and upload both original PDFs under the exact names above in one commit to `main`.
+
+The workflow `.github/workflows/publish-j277-pdf-guides.yml` detects the uploads and automatically:
+
+1. Confirms both files have valid PDF headers and 94/97 pages.
+2. Verifies the existing skill-to-page references stay within those page counts.
+3. Replaces the J277 hub's `Revision Booklet coming soon` panel with separate Paper 1 and Paper 2 **Read / Download** cards.
+4. Enables guide-page links in the under-80% interactive revision feedback, without changing the MCQs, marking, thresholds, lessons or student progress.
+5. Regenerates `guide-links.js`, verifies its stable skill IDs, and commits the coordinated activation.
+
+If either PDF is missing or fails validation, the workflow publishes **nothing**, leaving current links and saved results untouched.
 
 ## Stable quiz links
 
-- `skill-index.json` is the editable source mapping J277 skill IDs to OCR sub-specification points, lesson IDs and PDF page numbers.
-- `guide-links.js` is generated, not manually maintained.
-- When a guide changes, revise the skill-to-page map and run `python3 tools/revision/build_j277_guide_links.py` to regenerate the resolver.
-- Verify with `python3 tools/revision/build_j277_guide_links.py --check`.
-- Once PDFs are published and pages verified, set the relevant `guides["1"].published` and `guides["2"].published` fields to `true` in `skill-index.json`, regenerate the resolver and run the J277 MCQ browser audit.
-- Do not insert PDF page numbers directly into the MCQ banks.
+- `skill-index.json` is the sole editable source mapping J277 skill IDs to OCR specification points, lesson IDs and PDF page numbers.
+- `guide-links.js` is generated. Do not manually edit it or put page numbers into MCQ banks.
+- When an edition changes, update page mappings in `skill-index.json`; run `python3 tools/revision/build_j277_guide_links.py` and `python3 tools/revision/build_j277_guide_links.py --check`.
+- Students see lesson, worked-example and guide-page links on the below-80% feedback screen, matching H446. An unpublished guide intentionally shows a non-clickable page reference.
 
-Students receive the lesson, I Do worked-example and guide-page links only on the below-80% feedback screen, matching the H446 flow. An unpublished guide shows a non-clickable page reference, never a broken PDF hyperlink.
+The PDF source files themselves must not be replaced with a recreated or raster-only copy: they are the audited, selectable-text originals.
