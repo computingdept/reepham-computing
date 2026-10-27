@@ -155,6 +155,7 @@ REPORT.write_text(
     '- Kept PDF bookmarks and non-glossary pages unchanged in extracted content.\n'
     '- Existing 5 vocabulary tables were not restyled in this pass; their labels remain consistent.\n'
     '- Revision quiz feedback destinations must be reaudited before publication.\n\n'
-    '- A geometry assertion confirms that the painted SVG area intersects the full keyword glyph height.\n'\n    'Keyword pages: '+', '.join(f"{p['spec']} p.{p['page']}" for p in new_pages)+'\n'
+    '- A geometry assertion confirms that the painted SVG area intersects the full keyword glyph height.\n'
+    'Keyword pages: '+', '.join(f"{p['spec']} p.{p['page']}" for p in new_pages)+'\n'
 )
 print('PASS: 263 pages, 10 lesson-style SVG-stroke terminology pages; no page shifts.')
