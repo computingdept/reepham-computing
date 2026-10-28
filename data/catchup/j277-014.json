@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "id": "j277-014",
+  "title": "Linear Search and Algorithm Tracing",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve two ideas from earlier learning.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "What does a linear search require from the list?",
+          "options": [
+            "No sorting is necessary",
+            "Must be sorted smallest first",
+            "Must contain exactly eight items",
+            "Must contain no duplicate numbers"
+          ],
+          "answer": "No sorting is necessary",
+          "feedback": "Linear search can scan unsorted data."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "What does the CPU fetch stage do?",
+          "options": [
+            "Get the next instruction",
+            "Carry out a calculation",
+            "Check print ink levels",
+            "Save a user file"
+          ],
+          "answer": "Get the next instruction",
+          "feedback": "Fetch retrieves the instruction to decode."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the key concepts, visual model and worked explanation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "A sequential scan",
+          "text": "Linear search starts at one end of a collection and compares one element at a time with the target."
+        },
+        {
+          "type": "paragraph",
+          "title": "Zero-based indices",
+          "text": "The first array element is at index 0, then 1, 2, etc. Do not confuse index with value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stopping",
+          "text": "If the target is found, report its index. If the list ends without a match, report not found."
+        },
+        {
+          "type": "paragraph",
+          "title": "One strength",
+          "text": "Linear search works even if values are unsorted, though it may need to inspect the entire list."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Linear Search and Algorithm Tracing",
+          "layout": "flow",
+          "items": [
+            [
+              "Start at 0",
+              "Read item"
+            ],
+            [
+              "Compare",
+              "Match target?"
+            ],
+            [
+              "Advance or finish",
+              "Next index / found"
+            ]
+          ],
+          "caption": "Linear search checks successive items and can report the first matching zero-based index."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · Trace linear search for 8 in [3, 9, 1, 8, 5]. Give the comparisons and index.",
+          "text": "Start at index 0 and compare 3 with 8: no match. Index 1: 9 is not 8. Index 2: 1 is not 8. Index 3: 8 matches the target. Report found at index 3 after four comparisons."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "linear search — Checks items one by one for a target.",
+            "target — Value being searched for.",
+            "index — Position used to access an array item, starting at zero.",
+            "comparison — Checking an item against a value or condition."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Where does a zero-based array begin?",
+          "options": [
+            "Index 0",
+            "Index 1",
+            "Index -1",
+            "Index 10"
+          ],
+          "answer": "Index 0",
+          "feedback": "The first item is at index 0."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "When does a successful linear search stop?",
+          "options": [
+            "When the target is found",
+            "Only after sorting all values",
+            "After the largest value",
+            "Only after checking every item twice"
+          ],
+          "answer": "When the target is found",
+          "feedback": "It can stop when an item equals the target."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Can linear search find an item in an unsorted list?",
+          "options": [
+            "Yes",
+            "No",
+            "Only if values are numbers",
+            "Only if the target is the last item"
+          ],
+          "answer": "Yes",
+          "feedback": "It checks items in sequence, so sorting is unnecessary."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match and reorder before applying the method yourself.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Distinguish the item value from its position; count indexes from zero."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match the zero-based index to the item in [7,2,6].",
+          "pairs": [
+            [
+              "index 0",
+              "7"
+            ],
+            [
+              "index 1",
+              "2"
+            ],
+            [
+              "index 2",
+              "6"
+            ]
+          ],
+          "feedback": "Indices count positions from zero, not values."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put linear-search steps in order.",
+          "items": [
+            "Compare the current item with the target",
+            "Start at the first item",
+            "If not found, move to the next item or stop at the end"
+          ],
+          "answer": [
+            "Start at the first item",
+            "Compare the current item with the target",
+            "If not found, move to the next item or stop at the end"
+          ],
+          "feedback": "A linear scan examines items one at a time."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "Search [7, 2, 6, 4] for 6. What zero-based index is returned?",
+          "answer": "2",
+          "feedback": "7 is index 0; 2 index 1; 6 index 2."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "How many comparisons are needed to find 8 in [3, 9, 1, 8, 5]?",
+          "answer": "4",
+          "feedback": "Compare 3, 9, 1, then 8."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Predict the Code First result and write one exam-style answer.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "array registers = [\"MAR\",\"MDR\",\"PC\"]",
+            "for i = 0 to 2",
+            "    if registers[i] == \"PC\" then",
+            "        print(i)",
+            "    endif",
+            "next i"
+          ],
+          "caption": "Predict the index printed. Change the target to \"MDR\". State what the PC and MDR hold in a real CPU."
+        },
+        {
+          "type": "prompt",
+          "text": "Search [9, 4, 1, 6] for 1. State each comparison and the zero-based index returned. [3 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "In [MAR, MDR, PC], which zero-based index contains PC?",
+          "answer": "2",
+          "feedback": "MAR is index 0, MDR index 1, PC index 2."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "Change the search target to MDR. What zero-based index is returned?",
+          "answer": "1",
+          "feedback": "MDR is the second element, at index 1."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "Search [9, 4, 1, 6] for 1. At which zero-based index is it found?",
+          "answer": "2",
+          "feedback": "9 index 0, 4 index 1 and 1 index 2."
+        }
+      ],
+      "writing": {
+        "prompt": "Search [9, 4, 1, 6] for 1. State each comparison and the zero-based index returned. [3 marks]",
+        "model": "Compare 9 [1], 4 [1], then 1 at index 2 [1].",
+        "checklist": [
+          "I described how comparison starts at the first item.",
+          "I explained how the search proceeds and where it stops.",
+          "I stated the found index or not-found result."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Check your understanding and review your mastery result.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Linear search can work on unsorted items.",
+          "answer": "true",
+          "feedback": "It checks values one by one without relying on sort order."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "The first item in a zero-based array is at index 1.",
+          "answer": "false",
+          "feedback": "The first array item is index 0."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Linear search must report not found if the list ends without a match.",
+          "answer": "true",
+          "feedback": "An unsuccessful search exhausts the available items."
+        }
+      ]
+    }
+  ]
+}
