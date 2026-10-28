@@ -204,6 +204,8 @@
     return entry;
   }
   document.addEventListener('pointerdown',function(event){
+    // Do not dismiss the mobile sheet on pointerdown: links need the subsequent click.
+    if(mobileDialog&&!mobileDialog.hidden&&mobileDialog.contains(event.target))return;
     if(!event.target.closest('.central-lesson'))closeAll();
   });
   document.addEventListener('keydown',function(event){
