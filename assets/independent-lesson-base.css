@@ -70,17 +70,16 @@ body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
 }
 
 
-/* Teach → Print signage parity: use the ORIGINAL classroom PNG signs.
-   Icons are content, not invented colour chips; keep artwork visible for PDF. */
-.page .heading.classroom-phase{display:flex;align-items:center;gap:6px;min-height:27px;margin:7px 0 5px;padding-left:6px}
-.page .classroom-sign-image{display:block;flex:0 0 auto;width:27px;height:27px;object-fit:contain}
-.page .classroom-phase-label{min-width:0}
-.page .classroom-cue{display:inline-flex;align-items:center;gap:4px;margin-left:auto;font-size:8pt;white-space:nowrap;font-weight:700;line-height:1.1;color:#29493e}
-.page .classroom-cue .classroom-sign-image{width:25px;height:25px}
-.page .heading.classroom-supplement{border-color:#177755}
-.page[data-page="2"] .heading.classroom-phase{margin-top:6px;margin-bottom:4px}
-.page[data-page="2"] .info{margin-top:5px;margin-bottom:6px}
-.page[data-page="3"] .heading.classroom-phase{margin-top:4px;margin-bottom:4px}
-body[data-mode="bw"] .page .classroom-sign-image{filter:grayscale(1)}
-body[data-mode="colour"] .page .classroom-sign-image{filter:none}
-@media print{.page .classroom-sign-image{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* Exact source classroom signalling from H446/J277 lesson.js signalMap and
+   updateMobileRoutineSignals SVG; same colour tiles as lesson-base.css. */
+.page .classroom-signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 6px}
+.page .classroom-signal{display:flex;align-items:center;gap:5px;min-width:0;min-height:27px;border:1.5px solid;border-radius:4px;padding:3px 6px;font-size:9.1pt;font-weight:700;line-height:1.1}
+.page .classroom-signal svg{width:21px;height:21px;min-width:21px;display:block}
+.page .classroom-signal span{overflow-wrap:anywhere}
+.page .classroom-signal-phase{background:#c1e5f5;border-color:#7aabce;color:#0a3258}
+.page .classroom-signal-routine{background:#d9f2d0;border-color:#629264;color:#0b4314}
+.page .classroom-signal-response{background:#fbe3d6;border-color:#c5967d;color:#702c07}
+.page[data-page="2"] .classroom-signs{margin:7px 0 4px}
+.page[data-page="3"] .classroom-signs{margin:5px 0}
+body[data-mode="bw"] .page .classroom-signal{filter:grayscale(1)}
+@media print{.page .classroom-signal{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
