@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "id": "j277-013",
+  "title": "Flowcharts, Pseudocode and Programming Constructs",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve two ideas from earlier learning.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "What does sequence mean in programming?",
+          "options": [
+            "Instructions run in the stated order",
+            "A branch chooses based on a condition",
+            "Instructions always repeat",
+            "Input must be validated by a database"
+          ],
+          "answer": "Instructions run in the stated order",
+          "feedback": "Sequence is ordered execution."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "Forty images are 200 KB each. How many MB in total, using 1 MB = 1,000 KB?",
+          "answer": "8",
+          "feedback": "40 × 200 = 8,000 KB = 8 MB."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the key concepts, visual model and worked explanation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Sequence",
+          "text": "Instructions run in order; arrows on a flowchart show control flow."
+        },
+        {
+          "type": "paragraph",
+          "title": "Selection",
+          "text": "A decision tests a condition and follows one of the branches, often using IF/ELSE."
+        },
+        {
+          "type": "paragraph",
+          "title": "Iteration",
+          "text": "Instructions repeat; a loop can be count-controlled or condition-controlled."
+        },
+        {
+          "type": "paragraph",
+          "title": "Flowchart symbols",
+          "text": "Use terminators (start/end), parallelograms (input/output), rectangles (processes), diamonds (decisions) and arrows. Pseudocode expresses the logic as text."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Flowcharts, Pseudocode and Programming Constructs",
+          "layout": "flow",
+          "items": [
+            [
+              "Input",
+              "Read the mark"
+            ],
+            [
+              "Decision",
+              "Mark >= 50?"
+            ],
+            [
+              "Output",
+              "Pass or try again"
+            ]
+          ],
+          "caption": "In a flowchart use a parallelogram, a diamond, and output with branches; sequence and loops may also be shown."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · Design a pass/fail algorithm: mark 52 passes when mark >= 50.",
+          "text": "Start by reading a mark. Use a diamond decision: is mark >= 50? True branch prints Pass; false branch prints Try again. Both branches lead to End. Pseudocode uses IF, ELSE and ENDIF. For mark 52, the true branch prints Pass."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "sequence — Executing instructions in a stated order.",
+            "selection — Choosing a branch based on a condition.",
+            "iteration — Repeating instructions.",
+            "decision diamond — Flowchart shape containing a condition with branches."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which programming construct chooses between alternative branches?",
+          "options": [
+            "Selection",
+            "Sequence",
+            "Iteration",
+            "Variable assignment"
+          ],
+          "answer": "Selection",
+          "feedback": "IF/ELSE makes a decision using a condition."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which construct repeats a set of instructions?",
+          "options": [
+            "Sequence",
+            "Iteration",
+            "Selection",
+            "Assignment only"
+          ],
+          "answer": "Iteration",
+          "feedback": "Loops repeat code."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which standard flowchart symbol represents a decision?",
+          "options": [
+            "Diamond",
+            "Rectangle",
+            "Parallelogram",
+            "Oval"
+          ],
+          "answer": "Diamond",
+          "feedback": "Diamonds show conditions with alternative branches."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match and reorder before applying the method yourself.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Compare flowchart decisions with conditional branches, and loops with iteration."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each flowchart symbol with its purpose.",
+          "pairs": [
+            [
+              "diamond",
+              "Decision"
+            ],
+            [
+              "rectangle",
+              "Process"
+            ],
+            [
+              "parallelogram",
+              "Input or output"
+            ]
+          ],
+          "feedback": "Different standard shapes communicate distinct functions."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Order the steps of a simple pass/fail algorithm.",
+          "items": [
+            "Display the branch result",
+            "Input the mark",
+            "Test whether mark >= 50"
+          ],
+          "answer": [
+            "Input the mark",
+            "Test whether mark >= 50",
+            "Display the branch result"
+          ],
+          "feedback": "Input → decision → pass/fail output."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "Trace: x = 3; x = x + 4; print(x). What is printed?",
+          "answer": "7",
+          "feedback": "The second assignment adds four to three before output."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which construct would ask again until the user enters a valid password length?",
+          "options": [
+            "Iteration",
+            "Sequence alone",
+            "Selection only with no loop",
+            "Output only"
+          ],
+          "answer": "Iteration",
+          "feedback": "A loop repeats the prompt, with a condition controlling when it stops."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Predict the Code First result and write one exam-style answer.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "fileGB = 12",
+            "freeGB = 10",
+            "if fileGB <= freeGB then",
+            "    print(\"Fits\")",
+            "else",
+            "    print(\"Too large\")",
+            "endif"
+          ],
+          "caption": "Predict the output. Change fileGB to 8. Identify the decision condition and name one other factor in choosing storage."
+        },
+        {
+          "type": "prompt",
+          "text": "Trace: x = 3; x = x + 4; print(x). Give the output and describe sequence. [3 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "In the Code First program, fileGB = 12 and freeGB = 10. What is printed?",
+          "options": [
+            "Fits",
+            "Too large",
+            "12",
+            "10"
+          ],
+          "answer": "Too large",
+          "feedback": "12 GB is greater than 10 GB free space."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "If fileGB is changed to 8, what is printed?",
+          "options": [
+            "Fits",
+            "Too large",
+            "Nothing",
+            "Error"
+          ],
+          "answer": "Fits",
+          "feedback": "8 GB is at most 10 GB and fits."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "If the pass mark is 50 and the learner achieves 52, how many marks above the boundary is this?",
+          "answer": "2",
+          "feedback": "52 − 50 = 2."
+        }
+      ],
+      "writing": {
+        "prompt": "Trace: x = 3; x = x + 4; print(x). Give the output and describe sequence. [3 marks]",
+        "model": "Output 7 [1]; first assignment stores 3 [1]; next adds 4 before print [1].",
+        "checklist": [
+          "I explained what a condition tests.",
+          "I described how selection chooses a branch.",
+          "I explained how iteration repeats a prompt until a valid input is entered."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Check your understanding and review your mastery result.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A flowchart rectangle normally represents a process.",
+          "answer": "true",
+          "feedback": "The rectangle identifies a processing operation."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "An IF statement automatically repeats its body until the condition changes.",
+          "answer": "false",
+          "feedback": "IF is selection; repetition requires iteration."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Pseudocode can express selection using IF, ELSE and ENDIF.",
+          "answer": "true",
+          "feedback": "Pseudocode can represent branches in text."
+        }
+      ]
+    }
+  ]
+}
