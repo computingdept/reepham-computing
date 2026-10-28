@@ -30,7 +30,9 @@
       if(!multiline)box.placeholder='Final answer';
       else box.placeholder='Write your response';
       wrap.append(prompt,box);
-      parent.append(wrap);
+      // Keep paragraphs semantically valid; response controls follow them.
+      if(parent.tagName==='P')parent.after(wrap);
+      else parent.append(wrap);
       answers.set(id,box);
     }
     const start=viewer.querySelector('[data-page="1"]');
@@ -99,6 +101,47 @@
         }
         details.append(holder);
         check.insertBefore(details,last);
+      }
+      // Three True/False exit questions are interactive on-screen, while the
+      // original printed T/F boxes remain in the booklet source.
+      const exitRows=[...check.querySelectorAll('.exit')].slice(0,3);
+      const exitKeys=[true,false,false];
+      const exitInputs=[];
+      exitRows.forEach((row,i)=>{
+        const group=el('fieldset','online-exit');
+        const question=el('legend','visually-hidden','Exit question '+(i+1));
+        group.append(question);
+        ['true','false'].forEach(value=>{
+          const label=el('label','exit-choice');
+          const input=el('input');
+          input.type='radio';
+          input.name='exit-'+(i+1);
+          input.value=value;
+          label.append(input,document.createTextNode(value==='true'?'True':'False'));
+          group.append(label);
+          exitInputs.push(input);
+        });
+        row.append(group);
+      });
+      if(exitRows.length===3){
+        const exitAction=el('div','lesson-check-controls');
+        const exitButton=el('button','','Check my exit ticket');
+        exitButton.type='button';
+        const exitStatus=el('div','lesson-check-result');
+        exitStatus.setAttribute('role','status');
+        exitStatus.setAttribute('aria-live','polite');
+        exitButton.addEventListener('click',()=>{
+          const results=exitKeys.map((expected,i)=>{
+            const selected=check.querySelector('input[name="exit-'+(i+1)+'"]:checked');
+            return selected?selected.value===String(expected):null;
+          });
+          const correct=results.filter(x=>x===true).length;
+          exitStatus.replaceChildren(el('strong','',correct+' of 3 correct.'),
+            ...results.map((result,i)=>el('p',result===true?'positive':'retry',
+              'Statement '+(i+1)+': '+(result===true?'correct.':result===null?'choose True or False.':'review the statement and model answer.'))));
+        });
+        exitAction.append(exitButton,exitStatus);
+        exitRows[2].after(exitAction);
       }
       const controls=el('div','lesson-check-controls');
       const btn=el('button','', 'Check my three conversions');
