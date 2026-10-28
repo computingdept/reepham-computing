@@ -144,3 +144,45 @@ body.independent-paged .page .heading{
   body[data-mode="bw"] .lesson-routines .routine-cue{border-color:#444!important;background:white!important}
   body[data-mode="bw"] .lesson-routines img{filter:grayscale(1)}
 }
+
+
+/* Responsive screen pages: printable A4 dimensions apply to print spreads only.
+   Longer student answers must expand rather than disappear beneath a fixed page. */
+@media screen{
+  body.independent-paged .viewer .page{
+    box-sizing:border-box;
+    width:min(850px,100%);
+    max-width:100%;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    margin:0;
+    padding:22px 26px 54px;
+    border:1px solid #dedede;
+    border-radius:8px;
+    box-shadow:none;
+    font-size:14px;
+    line-height:1.48;
+  }
+  body.independent-paged .viewer .page footer{
+    bottom:12px;
+    left:26px;
+    right:26px;
+    font-size:11px;
+  }
+  body.independent-paged .viewer .page .heading{font-size:16px}
+  body.independent-paged .viewer .page .small{font-size:13px}
+  body.independent-paged .viewer .page .guide-eyebrow{font-size:12px}
+  body.independent-paged .viewer .page .q{margin:9px 0 11px}
+  body.independent-paged .viewer .page .vocab-grid .entry{font-size:13px}
+}
+@media screen and (max-width:700px){
+  body.independent-paged .viewer .page{
+    padding:16px 14px 50px;
+    margin:0;
+    border-radius:5px;
+    font-size:14px;
+  }
+  body.independent-paged .viewer .page footer{left:14px;right:14px}
+  body.independent-paged .viewer .page .vocab-grid{grid-template-columns:1fr 1fr}
+}
