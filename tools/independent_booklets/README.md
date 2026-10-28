@@ -1,6 +1,6 @@
 # Independent booklet draft production · OCR J277 + H446
 
-**Status: experimental, unapproved. Never merge or publish without teacher sign-off.**
+**Status: experimental, unapproved. The user has authorised publishing clearly labelled DRAFT previews on the prototype hub; no draft is approved for classroom issue.**
 
 This is a source-grounded batch renderer, not an automatic guarantee that every lesson
 has a classroom-ready independent booklet. It complements (and does not replace)
@@ -97,4 +97,13 @@ pixel-identical clone of the hand-designed Lesson 002.
 - Page counts vary; the correct response to overflow is more pages,
   not tiny type.
 
-This repository branch and its Actions artifacts are for staff review only.
+## Prototype publication (explicitly authorised 28 October 2026)
+
+The separate workflow `.github/workflows/publish-independent-booklets.yml` builds the grounded PDF drafts, then `publish.py` copies **only real, PDF-validated, non-assessment lessons with no missing source/model-answer checks** to `offline/booklets/`. A machine-readable `catalogue.json` drives the shared J277/H446 hub navigation. It is fetched asynchronously, so the hubs never guess a PDF path or offer a dead link while the catalogue is absent. The PDF and hub labels say **DRAFT**; this is a staff-review prototype, not teacher sign-off.
+
+`quality_audit.py` inspects every source/lesson record and checks PDF text, phase order, model-answer placeholders, font/geometry warnings and known source gaps. It writes `QUALITY_AUDIT.json` and `QUALITY_AUDIT.md`. The publication audit also records deferred lessons and root causes. Each lesson has a five-minute generation timebox; unresolved lessons are logged and skipped.
+
+GitHub Actions commits binary PDFs to the repository, not merely to temporary workflow artifacts. GitHub Pages deployment and live HTTP checks must still be verified independently; a successful Git commit alone does not prove public delivery. Original Teach lessons and revision guides remain unchanged.
+
+**Before distributing to pupils:** review the full booklet against the approved Lesson 002 HTML design, source lesson, revision guide, correct answers, diagrams, A4 print and folded A3 booklet. A PDF being hosted does not mean it is approved.
+
