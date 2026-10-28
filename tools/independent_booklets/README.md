@@ -19,7 +19,7 @@ From the repository root with Python 3.11:
 The branch-only GitHub Actions workflow runs the smoke tests, then builds
 downloadable artifacts for each course. In the Actions run, open the **Artifacts**
 section and download the unapproved J277 or H446 ZIP. Every ZIP contains
-A4 PDFs, A3 booklet-imposed PDFs, SUMMARY.md, manifest.csv and manifest.json.
+both colour and true B&W A4 PDFs, both colour and B&W A3 booklet-imposed PDFs, SUMMARY.md, manifest.csv and manifest.json.
 A3: print **landscape, duplex, flip on short edge, 100%**, then fold.
 The renderer inserts blank pages where necessary to make an A3 booklet.
 
