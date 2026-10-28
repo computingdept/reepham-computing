@@ -73,8 +73,8 @@ body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
 /* Reproduce CURRENT desktop classroom signals, not legacy PNG or mobile mini SVG.
    For paper, display the blue phase and green working-routine signs only.
    Texts follow signalMap in lesson.js; colours follow lesson-base.css. */
-.page .classroom-signs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px auto 6px;max-width:80%}
-.page .classroom-signal{display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;min-height:27px;border:1.5px solid;border-radius:4px;padding:3px 6px;font-size:9.1pt;font-weight:700;line-height:1.1}
+.page .classroom-signs{display:grid;grid-template-columns:47mm 47mm;gap:3mm;width:max-content;max-width:100%;margin:6px 0 5px;justify-content:start}
+.page .classroom-signal{display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;min-height:22px;border:1px solid;border-radius:4px;padding:3px 6px;font-size:8.2pt;font-weight:700;line-height:1.1}
 .page .classroom-signal svg{width:21px;height:21px;min-width:21px;display:block}
 .page .classroom-signal span{overflow-wrap:anywhere}
 .page .classroom-signal-phase{background:#c1e5f5;border-color:#7aabce;color:#0a3258}
@@ -110,3 +110,6 @@ body[data-mode="bw"] .page.selfmark-page .selfmark-row{background:transparent;bo
 /* Use drawn checkbox outlines, not fragile Unicode square characters. */
 .page.selfmark-page .selfmark-tf-choice{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:8.5pt}
 .page.selfmark-page .selfmark-tf-box{width:10px;height:10px;display:inline-block;border:1px solid #546773;margin-left:7px;flex:0 0 10px}
+
+/* Keep the compact two signs within a narrow mobile viewport. */
+@media(max-width:440px){.viewer .page .classroom-signs{grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,96mm);gap:6px}}
