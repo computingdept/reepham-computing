@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "id": "j277-004",
+  "title": "Characters, ASCII, Unicode and Data Units",
+  "year": 10,
+  "estimated_minutes": 12,
+  "pass_percent": 80,
+  "intro": "Catch up with the essential learning in about 10–15 minutes. Complete five short steps and check your answers as you go.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Start with two questions from the previous lesson.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "number",
+          "prompt": "Convert hexadecimal 3C to denary.",
+          "answer": "60",
+          "feedback": "3 × 16 + 12 = 60."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "What is denary 42 in hexadecimal?",
+          "options": [
+            "2B",
+            "29",
+            "A2",
+            "2A"
+          ],
+          "answer": "2A",
+          "feedback": "42 = 2 × 16 + 10, so it is 2A."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read these three short explanations. They contain the essential knowledge.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Characters are stored as numbers",
+          "text": "A character set maps each character to a number. These numbers can be represented in binary. For example, uppercase A has ASCII code 65, represented as 01000001 in eight bits; B has code 66, represented as 01000010."
+        },
+        {
+          "type": "mapping",
+          "items": [
+            [
+              "A",
+              "65",
+              "01000001"
+            ],
+            [
+              "B",
+              "66",
+              "01000010"
+            ],
+            [
+              "C",
+              "67",
+              "01000011"
+            ]
+          ],
+          "caption": "Character → code number → eight-bit binary"
+        },
+        {
+          "type": "paragraph",
+          "title": "ASCII and Unicode",
+          "text": "Standard ASCII covers a relatively small set of characters. Unicode covers many more languages and symbols. Unicode can use different encodings; a character does not always use one byte."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "1 bit = a binary digit (0 or 1)",
+            "1 nibble = 4 bits",
+            "1 byte = 8 bits",
+            "1 KB = 1,000 bytes",
+            "1 MB = 1,000 KB"
+          ]
+        },
+        {
+          "type": "example",
+          "title": "Worked example",
+          "text": "12 characters × 8 bits = 96 bits. 96 ÷ 8 = 12 bytes. This assumes exactly 8 bits per character and ignores file headers."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "What is the ASCII code for uppercase A in our example?",
+          "answer": "65",
+          "feedback": "A → 65 → 01000001."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which statement about Unicode is accurate?",
+          "options": [
+            "It supports fewer symbols than ASCII",
+            "It supports more languages and writing systems",
+            "Every character uses exactly one byte",
+            "It stores only numbers"
+          ],
+          "answer": "It supports more languages and writing systems",
+          "feedback": "Unicode supports far more characters. The number of bytes depends on the encoding and character."
+        },
+        {
+          "id": "l3",
+          "kind": "number",
+          "prompt": "How many bits are in a nibble?",
+          "answer": "4",
+          "feedback": "One nibble has four bits."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Use quick matching, ordering and calculations to secure the ideas.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "For a text-size calculation, multiply the number of characters by bits per character, then divide by 8 for bytes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each uppercase character to the correct ASCII code.",
+          "pairs": [
+            [
+              "A",
+              "65"
+            ],
+            [
+              "B",
+              "66"
+            ],
+            [
+              "C",
+              "67"
+            ]
+          ],
+          "feedback": "A = 65, B = 66 and C = 67. Codes distinguish the characters."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put the stages of storing the character B in the correct order.",
+          "items": [
+            "Store the binary pattern 01000010",
+            "Start with the character B",
+            "Look up its code number 66"
+          ],
+          "answer": [
+            "Start with the character B",
+            "Look up its code number 66",
+            "Store the binary pattern 01000010"
+          ],
+          "feedback": "Character → numerical code → binary pattern."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "How many bits are in one byte?",
+          "answer": "8",
+          "feedback": "A byte contains eight bits."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "A message has 12 characters. Each uses exactly 8 bits. How many bytes is the text?",
+          "answer": "12",
+          "feedback": "12 × 8 = 96 bits, then 96 ÷ 8 = 12 bytes."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First, then one exam-style explanation. The written response is self-checked, not given an unreliable automatic mark.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "characterCode = 65",
+            "print(characterCode)"
+          ],
+          "caption": "Predict the output. Then change the assignment to 66 and predict again."
+        },
+        {
+          "type": "prompt",
+          "text": "Exam-style writing: Explain one advantage of Unicode over ASCII, and why you cannot assume that every Unicode character uses one byte."
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "What number does the original program print?",
+          "answer": "65",
+          "feedback": "It prints the numeric value of characterCode, which starts as 65."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "After changing the assignment to 66, what number is printed?",
+          "answer": "66",
+          "feedback": "The variable is now 66. Printing its number does not automatically print the letter B."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "80 characters use 16 bits each. How many bytes of raw character data is that?",
+          "answer": "160",
+          "feedback": "80 × 16 = 1,280 bits; 1,280 ÷ 8 = 160 bytes."
+        }
+      ],
+      "writing": {
+        "prompt": "Write two or three sentences answering the exam-style question.",
+        "model": "Unicode supports a much wider range of characters and writing systems than ASCII, allowing more languages and symbols to be represented. Unicode has different encodings, and some characters may use multiple bytes, so one byte per character is not always correct.",
+        "checklist": [
+          "I explained that Unicode represents more characters and languages than ASCII.",
+          "I explained that Unicode characters can use different numbers of bytes.",
+          "I compared my explanation with the model answer and corrected anything missing."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Three final statements, then review your whole-lesson score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A byte contains eight bits.",
+          "answer": "true",
+          "feedback": "True: one byte is eight bits."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Unicode is limited to fewer characters than standard ASCII.",
+          "answer": "false",
+          "feedback": "False: Unicode covers a much wider repertoire."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Every Unicode character always occupies exactly one byte.",
+          "answer": "false",
+          "feedback": "False: it depends on the encoding and the character."
+        }
+      ]
+    }
+  ]
+}
