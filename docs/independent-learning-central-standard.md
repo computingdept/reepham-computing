@@ -49,6 +49,24 @@ The independent on-screen version may opt into `assets/independent-auto-mark.js`
 - **Do not add this module to the original teacher-led lesson.** Keep that lesson's content, classroom cues, phase progression and reveals unchanged.
 - Test correct/incorrect answers, keyboard use, mobile, the written-reasoning fallback and printed page pairs before scaling the pilot.
 
+## Separate short Catch-up / Learn mode · 80% mastery pilot
+
+**Lesson 004** now has three distinct student destinations:
+- **Teach**: existing `lessons/j277/lesson-004/index.html`, unchanged.
+- **Learn**: new `lessons/j277/lesson-004/learn.html`, about 12 minutes, five short stages (Remember, Learn, Practise, Apply, Check).
+- **Print**: existing `lessons/j277/lesson-004/independent.html`, unchanged A3 booklet.
+
+The hub uses shared `assets/hub-navigation.js` with an optional `printHref` only for the tri-modal pilot. Other lessons continue using their current routes until fully adapted. The catch-up version uses centrally maintained `assets/catchup-lesson.js`, `assets/catchup-lesson.css`, and lesson data `data/catchup/j277-004.json`. Do not duplicate layouts or assessment logic in each lesson.
+
+**Mastery contract:**
+- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Lesson 004 has 15 questions, so at least 12 must be correct.
+- Students must attempt and check every objective question to be marked as mastered; **unlimited retries**. Changing an answer invalidates its earlier checked result. Never block opening another lesson.
+- Auto-check number entry, MCQs, true/false, matching and reordering. Ordering works by drag and drop on mouse and by explicit up/down buttons for touch, keyboard and accessibility.
+- One extended written question is self-reviewed using a model answer and checklist; do not pretend a free-text matcher reliably grades nuanced exam responses.
+- A small browser-local saved state lets the student resume on that device. No names, accounts, student records or submission to a server are required.
+- The short path must retain all **essential taught concepts**, not every classroom explanation, question or repetition. Printed and classroom resources must remain independently usable.
+- Visual and touch testing at mobile and desktop widths, and a complete user walkthrough of correct/wrong/retry cases, are required before promoting this pilot across the curriculum.
+
 ## Ongoing rule
 
 Fix shared functionality in shared assets, not by copying styles and scripts into individual lesson files. Content changes remain lesson-scoped. Scope new behaviour to a cohort or explicit feature flag until visually checked on both TV/desktop and phone and in print.
