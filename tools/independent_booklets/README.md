@@ -19,8 +19,8 @@ From the repository root with Python 3.11:
 The branch-only GitHub Actions workflow runs the smoke tests, then builds
 downloadable artifacts for each course. In the Actions run, open the **Artifacts**
 section and download the unapproved J277 or H446 ZIP. Every ZIP contains
-both colour and true B&W A4 PDFs, both colour and B&W A3 booklet-imposed PDFs, SUMMARY.md, manifest.csv and manifest.json.
-A3: print **landscape, duplex, flip on short edge, 100%**, then fold.
+both colour and true B&W A4 PDFs, both colour and B&W A3 booklet-imposed PDFs, REVIEW_INDEX.html, SUMMARY.md, manifest.csv and manifest.json.
+Open REVIEW_INDEX.html after extracting the ZIP to search lessons, open PDFs and mark your own local reviews; export your review log CSV to preserve it. A checked box is not pupil approval. A3: print **landscape, duplex, flip on short edge, 100%**, then fold.
 The renderer inserts blank pages where necessary to make an A3 booklet.
 
 ## Source precedence
