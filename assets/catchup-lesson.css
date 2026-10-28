@@ -41,6 +41,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .catchup-map-item strong{display:block;font-family:Arial,sans-serif;font-size:20px;margin-bottom:4px}
 .catchup-code{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f4f4;border-left:3px solid #555;padding:12px;border-radius:4px;font:600 16px/1.6 Consolas,monospace}
 /* Central dual-coded models for number bases and pixels. */
+/* Shared diagram cards: flows and comparisons stay legible on phone and TV. */
+.catchup-diagram{display:flex;align-items:stretch;gap:8px;margin:13px 0;min-width:0}
+.catchup-diagram-part{min-width:0;flex:1 1 0;background:#f8f8f8;border:1px solid #bbb;border-radius:6px;padding:12px 9px;text-align:center}
+.catchup-diagram-part strong{display:block;font-weight:800;font-size:14px;margin-bottom:5px}
+.catchup-diagram-part span{display:block;font-size:13px;line-height:1.4}
+.catchup-diagram-arrow{align-self:center;flex:none;font-size:23px;font-weight:800;color:#4a4a4a}
+@media(max-width:650px){
+ .catchup-diagram{flex-direction:column;gap:5px}
+ .catchup-diagram-arrow{transform:rotate(90deg);font-size:19px}
+ .catchup-diagram-part{padding:11px}
+}
 .catchup-nibbles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
 .catchup-nibble{border:1px solid #aaa;border-radius:7px;padding:9px;min-width:0}
 .catchup-nibble-bits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
