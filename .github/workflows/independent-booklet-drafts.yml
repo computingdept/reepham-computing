@@ -1,0 +1,66 @@
+name: Build DRAFT independent booklet PDFs
+
+on:
+  push:
+    branches:
+      - 'draft/**'
+    paths:
+      - '.github/workflows/independent-booklet-drafts.yml'
+      - 'tools/independent/**'
+      - 'assets/independent-*.css'
+      - 'assets/independent-*.js'
+      - 'lessons/j277/lesson-00*/independent.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  j277-pilot-print:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install browser and PDF checker
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+          python -m pip install pymupdf==1.26.4
+
+      - name: Export J277 001–004 in colour and black and white
+        run: node tools/independent/render_booklets.mjs --course j277 --ids 001,002,003,004
+
+      - name: Validate four-page A4 copies and two-spread A3 versions
+        run: python tools/independent/validate_booklets.py --directory draft-booklets/j277 --strict
+
+      - name: Upload review-only PDF bundle and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-001-004-independent-booklets-DRAFT
+          path: draft-booklets/j277/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Summarise non-published draft artifacts
+        if: always()
+        run: |
+          echo '## J277 independent booklet draft exports' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The PDFs in this workflow artifact are **DRAFTS**. No live hub pages were changed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Review 4 A4 sheets and the 2 A3 imposition spreads before approval.' >> "$GITHUB_STEP_SUMMARY"
+          if [ -s draft-booklets/j277/generation-report.json ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            python -c "import json; r=json.load(open('draft-booklets/j277/generation-report.json')); print(json.dumps(r['counts'], indent=2))" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
