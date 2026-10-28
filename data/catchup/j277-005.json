@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "id": "j277-005",
+  "title": "Images, Pixels, Colour Depth and File Sizes",
+  "year": 10,
+  "estimated_minutes": 12,
+  "pass_percent": 80,
+  "intro": "Catch up with the essential learning in about 10–15 minutes. Complete five short steps and check your answers as you go.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve what you learnt about character codes and bytes.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Which text-encoding standard covers many languages and writing systems?",
+          "options": [
+            "ASCII only",
+            "Unicode",
+            "Binary addition",
+            "RGB"
+          ],
+          "answer": "Unicode",
+          "feedback": "Unicode supports a much wider range of characters than standard ASCII."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "How many bytes are in 48 bits?",
+          "answer": "6",
+          "feedback": "48 ÷ 8 = 6 bytes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Learn how digital bitmap images are represented.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Pixels and resolution",
+          "text": "A bitmap image is made of pixels (picture elements). Its resolution is its width and height in pixels, for example 10 × 6 pixels gives 60 pixels."
+        },
+        {
+          "type": "pixelgrid",
+          "title": "Visual model · bitmap pixels",
+          "width": 8,
+          "height": 8,
+          "colourDepth": 2,
+          "caption": "This 8 × 8 grid has 64 pixels. Each pixel uses 2 bits, giving 128 bits = 16 bytes of raw pixel data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Colour depth",
+          "text": "Colour depth gives the number of bits per pixel. A depth of n bits allows up to 2ⁿ different colour values. For example 2 bits allow 4 colours, while 4 bits allow 16."
+        },
+        {
+          "type": "example",
+          "title": "Uncompressed raw image size",
+          "text": "Width × height × colour depth gives bits. For 8 × 8 pixels at 2 bits/pixel: 8 × 8 × 2 = 128 bits. Divide by 8 = 16 bytes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Bits, bytes and assumptions",
+          "text": "One byte is 8 bits. For course calculations use 1 KB = 1,000 bytes and 1 MB = 1,000 KB when those units are specified. The formula gives only uncompressed pixel data; headers, metadata and compression may change the real file size."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "An image is 10 pixels wide and 6 pixels tall. How many pixels in total?",
+          "answer": "60",
+          "feedback": "10 × 6 = 60 pixels."
+        },
+        {
+          "id": "l2",
+          "kind": "number",
+          "prompt": "How many colours can a 4-bit colour depth represent?",
+          "answer": "16",
+          "feedback": "2⁴ = 16 possible colour values."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "What is colour depth?",
+          "options": [
+            "The width of an image in pixels",
+            "The number of bits used for one pixel's colour",
+            "The number of images in a file",
+            "The amount of image metadata"
+          ],
+          "answer": "The number of bits used for one pixel's colour",
+          "feedback": "Colour depth is bits per pixel."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match key ideas and apply the image-size method.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Raw bits = width × height × colour depth. Divide bits by eight to obtain bytes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match the image term to its meaning.",
+          "pairs": [
+            [
+              "pixel",
+              "One picture element"
+            ],
+            [
+              "resolution",
+              "Width × height in pixels"
+            ],
+            [
+              "colour depth",
+              "Bits for each pixel"
+            ]
+          ],
+          "feedback": "Pixel means picture element; resolution gives dimensions; colour depth is bits per pixel."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put the steps for finding uncompressed bitmap size in bytes in order.",
+          "items": [
+            "Divide by eight to convert bits to bytes",
+            "Multiply width by height to find pixels",
+            "Multiply pixels by colour depth"
+          ],
+          "answer": [
+            "Multiply width by height to find pixels",
+            "Multiply pixels by colour depth",
+            "Divide by eight to convert bits to bytes"
+          ],
+          "feedback": "First pixel count, then bits, then convert to bytes."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "How many bits for a 10 × 6 image with 4-bit colour depth?",
+          "answer": "240",
+          "feedback": "10 × 6 × 4 = 240 bits."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "How many bytes is the raw pixel data in a 10 × 6 image at 4 bits per pixel?",
+          "answer": "30",
+          "feedback": "240 ÷ 8 = 30 bytes."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Predict a short calculation and explain file size.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "width = 10",
+            "height = 8",
+            "depth = 4",
+            "print(width * height * depth)"
+          ],
+          "caption": "Predict the raw size in bits. Change depth to 8 to recalculate the bits."
+        },
+        {
+          "type": "prompt",
+          "text": "Written question: Explain how increasing colour depth affects the uncompressed size of a bitmap. State one limitation of using the raw pixel-data formula."
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "How many bits does the original code print?",
+          "answer": "320",
+          "feedback": "10 × 8 × 4 = 320 bits."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "At depth 8, what number of bits does the code print?",
+          "answer": "640",
+          "feedback": "10 × 8 × 8 = 640 bits."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "A 1,000 × 800 bitmap has 8-bit colour depth. How many megabytes of raw pixel data (decimal units)?",
+          "answer": "0.8",
+          "feedback": "1,000 × 800 × 8 = 6,400,000 bits = 800,000 bytes = 0.8 MB."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain the effect of doubling colour depth and the raw-size assumption.",
+        "model": "If the width and height stay the same, doubling the colour depth doubles the number of bits needed to store the uncompressed pixels, and increases the number of available colour values. This is only the raw pixel data: headers, metadata and compression can change the actual file size.",
+        "checklist": [
+          "I linked colour depth to bits per pixel and colour representation.",
+          "I stated that doubling depth doubles raw pixel-data size at a fixed resolution.",
+          "I explained why real file size may differ because of headers, metadata or compression."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete three quick statements, then review your score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A bitmap image is made up of pixels.",
+          "answer": "true",
+          "feedback": "True: pixels are the individual picture elements."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Doubling colour depth doubles raw pixel-data size if image dimensions stay the same.",
+          "answer": "true",
+          "feedback": "True: more bits per pixel at the same pixel count doubles the raw bits."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "The raw bitmap size formula always includes compression and metadata.",
+          "answer": "false",
+          "feedback": "False: this method calculates uncompressed pixel data only."
+        }
+      ]
+    }
+  ]
+}
