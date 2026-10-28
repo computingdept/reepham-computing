@@ -1,6 +1,6 @@
 # Independent lesson: central code and print contract
 
-**Status:** J277 Lessons 001, 003 and 004 migrated 28 October 2026.
+**Status:** J277 Lessons 001–004 use the central independent booklet architecture as of 28 October 2026.
 **Purpose:** Preserve one source of shared interaction and presentation when scaling to J277, H446, KS3 and other Trust subjects.
 
 ## Lesson file responsibilities
@@ -34,9 +34,9 @@ At the end of the HTML, in this order:
 
 ## Regression checks before release
 
-For **Lessons 001, 003 and 004**, check both B&W and colour, four on-screen pages, step navigation, completed answer areas and three true/false Exit Ticket questions (where authored), working print/save, paper imposition, and no overflow or overlapping content on A3 preview. Confirm the classroom lesson retains its existing phase navigation and mobile gestures.
+For **Lessons 001, 002, 003 and 004**, check both B&W and colour, four on-screen pages, step navigation, completed answer areas and three true/false Exit Ticket questions (where authored), working print/save, paper imposition, and no overflow or overlapping content on A3 preview. Confirm the classroom lesson retains its existing phase navigation and mobile gestures.
 
-Static migration test on 28 October 2026: three lessons' original HTML content matched the pre-refactor versions after replacing central resource links with their extracted original code and restoring the former inline print button attribute. The shared base CSS, print CSS and original print JavaScript were moved without changing their rules or algorithms. **Live browser and paper visual rendering must still be verified separately.**
+Static migration test on 28 October 2026: Lessons 001, 003 and 004 retained their original HTML content matched the pre-refactor versions after replacing central resource links with their extracted original code and restoring the former inline print button attribute. The shared base CSS, print CSS and original print JavaScript were moved without changing their rules or algorithms. Lesson 002 was newly authored from its current interactive content and retrieval bank, then checked for shared asset references, source-aligned content and arithmetic. **Live browser and paper visual rendering must still be verified separately.**
 
 ## Ongoing rule
 
