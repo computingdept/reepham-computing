@@ -53,6 +53,18 @@ jobs:
           PY
           du -sh offline/booklets
 
+      - name: Audit every lesson and classify shared improvement patterns
+        run: |
+          python tools/independent_booklets/quality_audit.py --source build/booklet-publish --dest offline/booklets
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          audit=json.loads(Path('offline/booklets/QUALITY_AUDIT.json').read_text())
+          assert audit['total_records']>=460, 'Missing lesson audit records'
+          print('Audited',audit['total_records'],'lesson records')
+          print('Priority counts:',audit['priority_counts'])
+          PY
+
       - name: Commit public draft PDFs and machine-readable catalogue
         run: |
           git config user.name 'github-actions[bot]'
