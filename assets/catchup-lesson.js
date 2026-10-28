@@ -61,6 +61,23 @@
     }else if(block.type==='code'){
       const pre=$('pre','catchup-code',block.lines.join('\n'));
       section.append(pre,$('p','subtle',block.caption));
+    }else if(block.type==='diagram'){
+      // Shared accessible information diagram. Works for flows and comparisons.
+      const group=$('div','catchup-diagram '+(block.layout==='cards'?'catchup-diagram-cards':'catchup-diagram-flow'));
+      group.setAttribute('role','group');
+      group.setAttribute('aria-label',block.title||'Learning diagram');
+      (block.items||[]).forEach((item,i)=>{
+        const part=$('div','catchup-diagram-part');
+        part.append($('strong','',item[0]),$('span','',item[1]||''));
+        group.append(part);
+        if(block.layout!=='cards'&&i<block.items.length-1){
+          const arrow=$('span','catchup-diagram-arrow','→');
+          arrow.setAttribute('aria-hidden','true');
+          group.append(arrow);
+        }
+      });
+      section.append(group);
+      if(block.caption)section.append($('p','subtle',block.caption));
     }else if(block.type==='nibbles'){
       // Shared bit-group visual: no custom graphics in individual lesson files.
       const bits=String(block.binary||'').replace(/[^01]/g,'');
