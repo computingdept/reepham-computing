@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "id": "j277-017",
+  "title": "Defensive Design, Validation and Testing",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, independent catch-up: learn the essential knowledge, practise and review answers.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve two previously taught ideas.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "What does the MDR hold?",
+          "options": [
+            "Data moving to/from memory",
+            "The next instruction's address",
+            "Only ALU calculation results",
+            "Only user account names"
+          ],
+          "answer": "Data moving to/from memory",
+          "feedback": "A — Data moving to/from memory"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "What is the first valid index of an array in these OCR ERL examples?",
+          "options": [
+            "0",
+            "1",
+            "-1",
+            "10"
+          ],
+          "answer": "0",
+          "feedback": "Arrays in these lessons use zero-based indexes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the explanations, visual and model before answering.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Robust programs",
+          "text": "Defensive design anticipates invalid or malicious input and uses readable, maintainable code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Validation",
+          "text": "Validation checks input against rules such as type, length or range. It does not verify a person's identity."
+        },
+        {
+          "type": "paragraph",
+          "title": "Authentication",
+          "text": "Authentication establishes identity, for example using credentials or another factor."
+        },
+        {
+          "type": "paragraph",
+          "title": "Testing",
+          "text": "Use normal, boundary, invalid and erroneous values; compare expected and actual results. Test during development and again at the end."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model",
+          "layout": "flow",
+          "items": [
+            [
+              "Rule",
+              "Valid marks 0–100"
+            ],
+            [
+              "Tests",
+              "Normal, boundaries, invalid"
+            ],
+            [
+              "Check",
+              "Compare expected/actual"
+            ]
+          ],
+          "caption": "Use these linked concepts to explain your answer."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · A program accepts a mark from 0 to 100 inclusive. Choose test data and explain the expected results.",
+          "text": "Write the validation rule: 0 <= mark <= 100. Choose normal data: 56 → accepted. Choose boundary data: 0 and 100 → accepted. Choose invalid data of the correct type: -1 or 101 → rejected. Choose erroneous data of the wrong type, e.g. 'hello' → rejected or handled safely."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "defensive design — Designing programs to handle invalid input and misuse.",
+            "validation — Checking entered data against defined rules.",
+            "authentication — Checking a user's identity.",
+            "boundary data — Valid data at the extreme limits of an allowed range."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which key term means: Designing programs to handle invalid input and misuse.",
+          "options": [
+            "defensive design",
+            "validation",
+            "authentication",
+            "boundary data"
+          ],
+          "answer": "defensive design",
+          "feedback": "defensive design: Designing programs to handle invalid input and misuse."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which key term means: Checking entered data against defined rules.",
+          "options": [
+            "validation",
+            "authentication",
+            "boundary data",
+            "defensive design"
+          ],
+          "answer": "validation",
+          "feedback": "validation: Checking entered data against defined rules."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which key term means: Checking a user's identity.",
+          "options": [
+            "authentication",
+            "boundary data",
+            "defensive design",
+            "validation"
+          ],
+          "answer": "authentication",
+          "feedback": "authentication: Checking a user's identity."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, order and apply these ideas.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Read each option carefully and use the worked model."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each term with its definition.",
+          "pairs": [
+            [
+              "defensive design",
+              "Designing programs to handle invalid input and misuse."
+            ],
+            [
+              "validation",
+              "Checking entered data against defined rules."
+            ],
+            [
+              "authentication",
+              "Checking a user's identity."
+            ]
+          ],
+          "feedback": "These key words distinguish the ideas used in this lesson."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put these steps in the correct order.",
+          "items": [
+            "Compare actual and expected output",
+            "Identify the rule being tested",
+            "Choose valid, boundary and invalid inputs"
+          ],
+          "answer": [
+            "Identify the rule being tested",
+            "Choose valid, boundary and invalid inputs",
+            "Compare actual and expected output"
+          ],
+          "feedback": "Plan a range of tests and compare results."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "For an inclusive mark range 0–100, which input is invalid?",
+          "options": [
+            "101",
+            "100",
+            "56",
+            "0"
+          ],
+          "answer": "101",
+          "feedback": "101 is just above the valid upper boundary."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which is erroneous test data for an integer mark?",
+          "options": [
+            "hello",
+            "50",
+            "0",
+            "101"
+          ],
+          "answer": "hello",
+          "feedback": "Text is the wrong data type; 101 is numeric but out of range."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Use Code First and write an exam-style response.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "value = 260",
+            "if value >= 0 AND value <= 255 then",
+            "    print(\"Fits\")",
+            "else",
+            "    print(\"Out of range\")",
+            "endif"
+          ],
+          "caption": "Predict the output. Change value to 255. Explain why 8 bits can represent only 0–255 when unsigned."
+        },
+        {
+          "type": "prompt",
+          "text": "Give two boundary values and one invalid value for marks from 0 to 100 inclusive. [3 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "The code checks value = 260 against 0–255. What does it display?",
+          "options": [
+            "Out of range",
+            "Fits",
+            "260",
+            "No output"
+          ],
+          "answer": "Out of range",
+          "feedback": "260 exceeds 255."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "After changing value to 255, what is displayed?",
+          "options": [
+            "Fits",
+            "Out of range",
+            "255 rejected",
+            "No output"
+          ],
+          "answer": "Fits",
+          "feedback": "255 is the valid upper boundary."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Which process checks that a user's password proves identity?",
+          "options": [
+            "Authentication",
+            "Input validation",
+            "Iteration",
+            "Compression"
+          ],
+          "answer": "Authentication",
+          "feedback": "Authentication establishes the user's identity."
+        }
+      ],
+      "writing": {
+        "prompt": "Give two boundary values and one invalid value for marks from 0 to 100 inclusive. [3 marks]",
+        "model": "Boundary 0 [1] and 100 [1]; invalid e.g. 101 or -1 [1].",
+        "checklist": [
+          "I addressed the command word in the question.",
+          "I used the correct computing vocabulary and reasoning.",
+          "I compared my writing with the model answer and improved it."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete the three final checks and review mastery.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "The values 0 and 100 are valid boundaries for an inclusive 0–100 mark input.",
+          "answer": "true",
+          "feedback": "Both inclusive limits should be accepted."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "A value of 101 is erroneous because it has the wrong data type.",
+          "answer": "false",
+          "feedback": "101 is a number of the correct type, but outside the allowed range."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Validation and authentication mean exactly the same thing.",
+          "answer": "false",
+          "feedback": "Review the statement against the original lesson's key concepts."
+        }
+      ]
+    }
+  ]
+}
