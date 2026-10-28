@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "id": "j277-007",
+  "title": "Compression and Storage Calculations",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall two useful ideas from earlier lessons.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "number",
+          "prompt": "At a sample rate of 8,000 Hz, how many samples are taken in one second?",
+          "answer": "8000",
+          "feedback": "The unit Hz means samples per second."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "How many bytes are there in 96 bits?",
+          "answer": "12",
+          "feedback": "96 ÷ 8 = 12 bytes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the essential ideas and worked example before checking your understanding.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Why compress files?",
+          "text": "Compression reduces the amount of storage needed and can reduce transmission times."
+        },
+        {
+          "type": "paragraph",
+          "title": "Lossless",
+          "text": "Lossless compression makes files smaller while allowing exact reconstruction of every original bit. Use it for source code and important documents."
+        },
+        {
+          "type": "paragraph",
+          "title": "Lossy",
+          "text": "Lossy compression permanently removes some data. It can reduce photos, music or video file sizes when some loss of quality is acceptable."
+        },
+        {
+          "type": "paragraph",
+          "title": "Calculating savings",
+          "text": "Storage saved = original size − compressed size. Keep units consistent; if asked for a percentage, divide by original size and multiply by 100."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Compression and Storage Calculations",
+          "layout": "flow",
+          "items": [
+            [
+              "Original data",
+              "Uncompressed file"
+            ],
+            [
+              "Compression",
+              "Lossless or lossy method"
+            ],
+            [
+              "Smaller file",
+              "Less storage/transmission"
+            ]
+          ],
+          "caption": "Lossless preserves exact data; lossy may sacrifice information for further size reduction."
+        },
+        {
+          "type": "example",
+          "title": "Worked model · A text program and a photograph must be compressed. Choose a method for each and calculate the saving if a photo falls from 800 KB to 500 KB.",
+          "text": "Source code must remain exact, so choose lossless compression. A website photograph may use lossy compression if some detail loss is acceptable. Subtract compressed size: 800 KB − 500 KB = 300 KB saved. Percentage saved = 300 ÷ 800 × 100 = 37.5%."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "compression — Reducing the number of bits needed to represent a file.",
+            "lossless — Compression that allows the original to be restored exactly.",
+            "lossy — Compression that permanently removes some original data.",
+            "file size — The quantity of storage required for a file."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which compression type can restore the original data exactly?",
+          "options": [
+            "Lossless",
+            "Lossy",
+            "Image-only",
+            "Sound-only"
+          ],
+          "answer": "Lossless",
+          "feedback": "Lossless is reversible without changing the original data."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which compression type may permanently discard some image details?",
+          "options": [
+            "Lossless",
+            "Lossy",
+            "Encryption",
+            "Archiving without compression"
+          ],
+          "answer": "Lossy",
+          "feedback": "Lossy compression may discard original information irreversibly."
+        },
+        {
+          "id": "l3",
+          "kind": "number",
+          "prompt": "A file shrinks from 800 KB to 500 KB. How many KB are saved?",
+          "answer": "300",
+          "feedback": "800 − 500 = 300 KB."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, reorder and apply what you have learnt.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Compare original and compressed sizes, retaining the same units."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each file need to the suitable concept.",
+          "pairs": [
+            [
+              "Source code",
+              "Exact reconstruction"
+            ],
+            [
+              "Online photograph",
+              "Some loss may be acceptable"
+            ],
+            [
+              "Compressed archive",
+              "Less storage needed"
+            ]
+          ],
+          "feedback": "Source code must be recovered perfectly; photos may tolerate quality loss; both can save space."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Order these steps for finding percentage storage saved.",
+          "items": [
+            "Divide saving by original size",
+            "Subtract compressed size from original",
+            "Multiply fraction by 100"
+          ],
+          "answer": [
+            "Subtract compressed size from original",
+            "Divide saving by original size",
+            "Multiply fraction by 100"
+          ],
+          "feedback": "Saving = original − compressed; percentage uses original size as the denominator."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "A 900 KB image becomes 600 KB. How many KB are saved?",
+          "answer": "300",
+          "feedback": "900 − 600 = 300 KB."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "A 1,000 KB file becomes 750 KB. What percentage of the original size was saved?",
+          "answer": "25",
+          "feedback": "250 ÷ 1,000 × 100 = 25%."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and explain one key idea in writing.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "original = 1000",
+            "compressed = 700",
+            "print(original - compressed)"
+          ],
+          "caption": "Predict storage saved in KB. Change compressed to 600. Explain why this program does not itself compress a file."
+        },
+        {
+          "type": "prompt",
+          "text": "Explain why lossless compression is appropriate for computer program files. [2 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The code sets original = 1000 and compressed = 700. What does it print?",
+          "answer": "300",
+          "feedback": "1,000 − 700 = 300."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "After changing compressed to 600, what does it print?",
+          "answer": "400",
+          "feedback": "1,000 − 600 = 400."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "A 12 MB sound file compresses to 9 MB. How many MB are saved?",
+          "answer": "3",
+          "feedback": "12 − 9 = 3 MB."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain why lossless compression is appropriate for computer program files. [2 marks]",
+        "model": "The original file must be recovered exactly [1], because losing any original instructions could corrupt the program [1].",
+        "checklist": [
+          "I explained that lossless compression restores source code without changing it.",
+          "I explained what could happen if a program's instructions were altered.",
+          "I distinguished lossless from lossy compression."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete the final check and review your score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Lossless compression can restore the original file exactly.",
+          "answer": "true",
+          "feedback": "It is reversible, making it suitable for source code."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Lossy compression guarantees an exact reconstruction of every original bit.",
+          "answer": "false",
+          "feedback": "It permanently discards some original information."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Compression can help reduce transmission time by reducing how much data must be sent.",
+          "answer": "true",
+          "feedback": "Less data can need less time to transfer, all else being equal."
+        }
+      ]
+    }
+  ]
+}
