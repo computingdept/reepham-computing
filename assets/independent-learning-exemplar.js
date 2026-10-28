@@ -56,7 +56,10 @@
         let n=0;
         while(current && current!==nextHeading){
           const subsequent=current.nextElementSibling;
-          if(current.classList.contains('q'))reply(current,'code-'+(++n),'Your Code First answer',true);
+          if(current.classList.contains('q')){
+            n++;
+            reply(current,'code-'+n,'Code First · '+(['Predict','Write','Build'][n-1]||'Respond')+' answer',true);
+          }
           current=subsequent;
         }
       }
