@@ -44,6 +44,16 @@
       menu.style.bottom='100%';
     }
   }
+  /* Local stroke icons for hub navigation only: no fonts, network or lesson assets. */
+  function navIcon(name){
+    const shapes={
+      Teach:'<rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+      Learn:'<rect x="4" y="3" width="16" height="13" rx="2"/><path d="M2 20h20M7 16l-1 4M17 16l1 4"/>',
+      Print:'<path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/>'
+    };
+    const shape=shapes[name];
+    return shape?'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+shape+'</svg>':'';
+  }
   function action(label,icon,href){
     const link=document.createElement('a');
     link.className='lesson-scenario-action';
@@ -51,7 +61,9 @@
     const symbol=document.createElement('span');
     symbol.className='scenario-symbol';
     symbol.setAttribute('aria-hidden','true');
-    symbol.textContent=icon;
+    const kind=label==='Teach lesson'?'Teach':label==='Learn independently'?'Learn':label==='Print lesson'?'Print':'';
+    symbol.innerHTML=navIcon(kind);
+    if(!kind)symbol.hidden=true;
     const name=document.createElement('span');
     name.className='scenario-copy';
     name.textContent=label;
@@ -170,7 +182,11 @@
         group.className='lesson-print-group';
         const label=document.createElement('div');
         label.className='lesson-print-heading';
-        label.textContent='▤  Print lesson';
+        const printIcon=document.createElement('span');
+        printIcon.className='scenario-symbol';
+        printIcon.setAttribute('aria-hidden','true');
+        printIcon.innerHTML=navIcon('Print');
+        label.append(printIcon,document.createTextNode('Print lesson'));
         const variants=document.createElement('div');
         variants.className='lesson-print-variants';
         variants.append(action('Black & white','',item[2]));
@@ -336,7 +352,7 @@
       item.className='lesson-usage-item';
       const symbol=document.createElement('span');
       symbol.className='lesson-usage-icon';
-      symbol.textContent=option[1];
+      symbol.innerHTML=navIcon(option[2]);
       symbol.setAttribute('aria-hidden','true');
       const text=document.createElement('span');
       const name=document.createElement('strong');
