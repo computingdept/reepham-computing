@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "id": "j277-003",
+  "title": "Hexadecimal",
+  "year": 10,
+  "estimated_minutes": 12,
+  "pass_percent": 80,
+  "intro": "Catch up with the essential learning in about 10–15 minutes. Complete five short steps and check your answers as you go.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve binary addition and shifting from Lesson 002.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "number",
+          "prompt": "Add 00001011 and 00000110. Give the denary total.",
+          "answer": "17",
+          "feedback": "11 + 6 = 17, equivalent to 00010001."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Shift unsigned 00110001 left by one bit. What eight-bit binary result do you get?",
+          "options": [
+            "00110001",
+            "00011000",
+            "01100010",
+            "01100011"
+          ],
+          "answer": "01100010",
+          "feedback": "The bit pattern moves left, filling zero on the right."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Understand hexadecimal and how it relates to binary.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Hexadecimal is base 16",
+          "text": "Hex uses digits 0–9 then letters A, B, C, D, E and F for values 10–15. One hexadecimal digit represents four binary bits (a nibble), and two hexadecimal digits represent one byte."
+        },
+        {
+          "type": "nibbles",
+          "title": "Visual model · two nibbles",
+          "binary": "11111110",
+          "left": "F",
+          "right": "E",
+          "caption": "1111 is 15 → F. 1110 is 14 → E. So 11111110₂ = FE₁₆."
+        },
+        {
+          "type": "paragraph",
+          "title": "Binary to hexadecimal",
+          "text": "Split the eight bits into two groups of four; convert each group using its place values 8, 4, 2, 1. For example 1100 | 0111 becomes C7, because 1100 is 12 and 0111 is 7."
+        },
+        {
+          "type": "example",
+          "title": "Hexadecimal to denary",
+          "text": "A3 = (10 × 16) + 3 = 163. The left hexadecimal digit counts multiples of sixteen."
+        },
+        {
+          "type": "example",
+          "title": "Denary to hexadecimal",
+          "text": "62 = 00111110 in eight-bit binary; split 0011 | 1110 → 3E."
+        },
+        {
+          "type": "paragraph",
+          "title": "Real-world use · colours",
+          "text": "A screen colour may be written as #00FF00. The pairs give red 00, green FF, blue 00. Hexadecimal is shorter to read than long binary but it does not reduce stored bits."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "How many binary bits correspond to one hexadecimal digit?",
+          "answer": "4",
+          "feedback": "Four bits (one nibble) correspond to one hexadecimal digit."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which hexadecimal digit represents denary 14?",
+          "options": [
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "answer": "E",
+          "feedback": "A = 10, B = 11, C = 12, D = 13, E = 14, F = 15."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "How many hexadecimal digits represent one eight-bit byte?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "answer": "2",
+          "feedback": "Eight bits contain two four-bit nibbles; each nibble is one hex digit."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match nibble codes and practise conversions.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Four-bit place values are 8, 4, 2 and 1. Each group of four bits becomes one hex digit."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match binary nibbles to hexadecimal digits.",
+          "pairs": [
+            [
+              "1011",
+              "B"
+            ],
+            [
+              "1110",
+              "E"
+            ],
+            [
+              "0010",
+              "2"
+            ]
+          ],
+          "feedback": "1011 is 11 (B); 1110 is 14 (E); 0010 is 2."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Arrange the method for converting eight-bit binary into hexadecimal.",
+          "items": [
+            "Convert each four-bit group to a hex digit",
+            "Split into two groups of four bits",
+            "Join the hex digits from left to right"
+          ],
+          "answer": [
+            "Split into two groups of four bits",
+            "Convert each four-bit group to a hex digit",
+            "Join the hex digits from left to right"
+          ],
+          "feedback": "Split into nibbles, convert them separately, then join the two digits."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Convert binary 11000111 into hexadecimal.",
+          "options": [
+            "C7",
+            "7C",
+            "D7",
+            "B7"
+          ],
+          "answer": "C7",
+          "feedback": "1100 is 12 (C), and 0111 is 7."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Convert binary 10110000 into hexadecimal.",
+          "options": [
+            "A0",
+            "B0",
+            "C0",
+            "0B"
+          ],
+          "answer": "B0",
+          "feedback": "1011 = B; 0000 = 0; together B0."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and explain the usefulness of hex.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "print(11 * 16 + 0)"
+          ],
+          "caption": "Predict the output. Change the expression to print the value of hexadecimal A3."
+        },
+        {
+          "type": "prompt",
+          "text": "Written question: Explain why hexadecimal is useful when people work with binary codes, and why using hex does not reduce the data stored."
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "What does print(11 * 16 + 0) display?",
+          "answer": "176",
+          "feedback": "11 × 16 + 0 = 176, the value of hex B0."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "What is hexadecimal A3 in denary?",
+          "answer": "163",
+          "feedback": "A is 10, so (10 × 16) + 3 = 163."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "What is hexadecimal 1E in denary?",
+          "answer": "30",
+          "feedback": "(1 × 16) + 14 = 30. The left digit has place value sixteen."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain why people use hexadecimal and how the bits are affected.",
+        "model": "Hexadecimal represents the same binary data in shorter, easier-to-read notation. Each hexadecimal digit corresponds to four binary bits. A computer still stores those bits; changing the way people write or display the value does not reduce its storage size.",
+        "checklist": [
+          "I explained that hex is shorter or easier to read than long binary strings.",
+          "I stated that one hex digit represents four bits.",
+          "I explained that the underlying number of stored bits does not change."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Check the main misconceptions before finishing.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "One hexadecimal digit represents four binary bits.",
+          "answer": "true",
+          "feedback": "True: one hexadecimal digit corresponds to one nibble."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "The hexadecimal digit E represents denary 15.",
+          "answer": "false",
+          "feedback": "False: E is 14; F is 15."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Using hexadecimal reduces the number of bits the computer must store.",
+          "answer": "false",
+          "feedback": "False: hexadecimal is an alternate representation, not compression."
+        }
+      ]
+    }
+  ]
+}
