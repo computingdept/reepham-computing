@@ -156,3 +156,38 @@ body[data-mode="bw"] .page .pen-symbol-mark,body[data-mode="bw"] .page .pen-labe
 body[data-mode="bw"] .page .booklet-journey-phase{background:#eee;border-color:#888;color:#111}
 body[data-mode="bw"] .page .booklet-journey-routine{color:#333;background:#f6f6f6;border-color:#999}
 @media(max-width:700px){.viewer .page .booklet-journey-footer{position:static;margin-top:12px;min-height:0}.viewer .page:has(.booklet-journey-footer) main{padding-bottom:0}.viewer .page .booklet-journey{gap:2px}.viewer .page .booklet-journey-word{font-size:6.8pt}.viewer .page .booklet-journey-phase{font-size:6pt;padding:2px 1px}.viewer .page .booklet-journey-routine{font-size:5.6pt}}
+
+/* Independent booklet v12: fixed two-row pen header plus a learning-PURPOSE footer.
+   School identity is first row; pen instructions second; content starts beneath it.
+   Only the footer holds the familiar classroom stage shapes. */
+.page header.booklet-header{display:block;border-bottom:1px solid #c7d3d5;padding:0 0 5px;margin:0;font-size:inherit;letter-spacing:normal}
+.page .booklet-header-id{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#183a43;font-size:7.6pt;line-height:1.2;font-weight:800;white-space:nowrap}
+.page .booklet-header-pens{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.page .booklet-header-pens .pen-routine-item{display:inline-flex;gap:4px;align-items:center;white-space:nowrap;min-width:0;font-size:7.4pt;letter-spacing:0;color:#1e2f35;font-weight:400}
+.page .booklet-header-pens .pen-symbol{width:13px;height:13px;min-width:13px;flex:0 0 13px}
+.page .booklet-header-pens .pen-routine-item strong{font-size:7.4pt;white-space:nowrap;margin:0 3px 0 0}
+.page .booklet-header-pens .pen-label-green{color:#176b42}
+.page .booklet-header-pens .pen-rule-text{font-size:7.3pt}
+.page footer.booklet-purpose-footer{position:absolute;bottom:5.8mm;left:12mm;right:12mm;display:flex;align-items:flex-end;gap:5px;min-height:17mm;border-top:1px solid #c7d3d5;padding:5px 0 0;letter-spacing:0}
+.page .booklet-purpose-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;align-items:start;flex:1}
+.page .booklet-purpose-stage{display:flex;flex-direction:column;align-items:center;min-width:0;gap:3px;opacity:.72;text-align:center;line-height:1.12}
+.page .booklet-purpose-stage.is-active{opacity:1}
+.page .booklet-purpose-title{display:flex;align-items:center;justify-content:center;width:100%;min-height:7mm;padding:2px 3px;background:#f4f9fb;border:1px solid #c4d7e0;border-radius:4px;color:#0a3258;font-weight:800;font-size:6.5pt;line-height:1.1}
+.page .booklet-purpose-stage.is-active .booklet-purpose-title{background:#c1e5f5;border-color:#7aabce;border-width:1.5px}
+.page .booklet-purpose-description{display:block;color:#53626c;font-size:6.3pt;line-height:1.13;min-height:7mm}
+.page .booklet-purpose-stage.is-active .booklet-purpose-description{color:#183a43;font-weight:800}
+.page .booklet-purpose-number{align-self:flex-end;white-space:nowrap;font-size:6.7pt;color:#53626c}
+.page:has(.booklet-purpose-footer) main{padding-bottom:18mm}
+body[data-mode="bw"] .page .booklet-purpose-title{background:#f7f7f7;border-color:#b4b4b4;color:#333}
+body[data-mode="bw"] .page .booklet-purpose-stage.is-active .booklet-purpose-title{background:#e8e8e8;border-color:#777}
+body[data-mode="bw"] .page .booklet-header-pens .pen-label-green,body[data-mode="bw"] .page .booklet-header-pens .pen-symbol-mark{color:#222}
+@media(max-width:700px){
+  .viewer .page header.booklet-header{padding-bottom:7px}
+  .viewer .page .booklet-header-id{font-size:7pt;flex-wrap:wrap;gap:3px}
+  .viewer .page .booklet-header-pens{flex-wrap:wrap;gap:6px;margin-top:6px}
+  .viewer .page footer.booklet-purpose-footer{position:static;margin-top:15px}
+  .viewer .page:has(.booklet-purpose-footer) main{padding-bottom:0}
+  .viewer .page .booklet-purpose-stages{gap:3px}
+  .viewer .page .booklet-purpose-title{font-size:6pt}
+  .viewer .page .booklet-purpose-description{font-size:5.8pt}
+}
