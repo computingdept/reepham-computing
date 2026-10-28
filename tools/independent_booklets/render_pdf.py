@@ -35,6 +35,17 @@ MONO = "Courier"
 FONTS_READY = False
 
 
+def set_palette(mode):
+    """Use real monochrome inks for B&W; never communicate meaning by colour alone."""
+    global GREEN, BLUE
+    if mode == "bw":
+        GREEN = colors.HexColor("#303030")
+        BLUE = colors.HexColor("#F5F5F5")
+    else:
+        GREEN = colors.HexColor("#14543E")
+        BLUE = colors.HexColor("#E7F0F5")
+
+
 def register_fonts():
     global FONT, BOLD, MONO, FONTS_READY
     if FONTS_READY:
@@ -95,7 +106,8 @@ def p(text, style, preserve=False):
         lines = []
         for raw in text.splitlines() or [""]:
             # Long code lines wrap rather than overflow the print area.
-            parts = textwrap.wrap(raw, width=92, subsequent_indent="  ",
+            code_width = 65 if style.fontSize >= 12 else 78
+            parts = textwrap.wrap(raw, width=code_width, subsequent_indent="  ",
                                   replace_whitespace=False, drop_whitespace=False,
                                   break_long_words=True, break_on_hyphens=False) or [""]
             for part in parts:
@@ -207,16 +219,17 @@ def phase(story, name, st):
 
 
 def question(story, number, prompt, st, width, lines=2, large=False):
-    story.append(p(f"<b>Q{number}</b> {esc(prompt)}".replace("&lt;b&gt;", "<b>").replace("&lt;/b&gt;", "</b>"), st["question"]))
+    story.append(p(f"Q{number}. {prompt}", st["question"]))
     ruled_lines(story, width, lines, large)
 
 
 def model_answer(story, number, answer, st):
-    story.append(p(f"<b>Q{number}.</b> {esc(answer).replace(chr(10), '<br/>')}", st["answer"]))
+    story.append(p(f"Q{number}. {answer}", st["answer"]))
     story.append(HRFlowable(width="100%", thickness=.4, color=RULE, spaceBefore=1, spaceAfter=6))
 
 
-def build_a4(path: Path, lesson, large=False):
+def build_a4(path: Path, lesson, large=False, mode="colour"):
+    set_palette(mode)
     st = styles(large)
     width = A4[0] - 76
     story = []
