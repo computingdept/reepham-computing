@@ -28,6 +28,14 @@ For every new PDF/print booklet: verify the original `lessons/j277/lesson-NNN/in
 
 The prototype colour PDF was exported separately for visual review; the repository's live Print mode continues to be generated from `independent.html` by the shared print CSS/JS. Before distributing, compare the exported PDF against the master HTML print view, then review the folded A3 imposition. Only make B&W and final A3 versions after the colour master has passed visual and content review.
 
+## Self-mark page reading order (mandatory, Lesson 002 correction)
+
+The **final page is one continuous, full-width column**. Students read **top → bottom**, never alternate across columns. Order: 1 Do Now → 2 We Do → 3 Code First → 4 You Do → 5 Exit Ticket answers. Present each as **question number · short correct answer · optional one-line reason · empty tick square**. Keep answers in the exact question order and allow space at the end to correct a mistake.
+
+Use thin horizontal separators and plain white paper; **no coloured or grey filled answer cards**, decorative boxes, or Unicode square-glyph placeholders. Use bordered checkbox elements/CSS in the web-print template and vector outline squares in the PDF generator so the rendering is stable in different readers. Keep the student instructions as three short steps: check the number, read the answer, tick or correct. On mobile, use that same single reading order. Only expand explanations where students need them; do not crowd the page.
+
+The central HTML CSS implementation is in `assets/independent-lesson-base.css` under `.selfmark-page`. The reusable HTML skeleton is `docs/independent-booklet-master-template.html`. The current Lesson 002 `independent.html` demonstrates the one-column layout; the four-page PDF prototype was independently rendered and visually inspected. This improvement must be used for subsequent booklets and retrofitted to Lesson 001 before final release.
+
 ## Shared files and order
 
 1. `assets/independent-lesson-base.css` — typography, layout, writing areas and small-screen responsive styles.
