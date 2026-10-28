@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "lesson": "j277-004",
+  "title": "Characters, ASCII, Unicode and Data Units",
+  "note": "Only exact or constrained answers are automatically marked. Extended explanations must be self-reviewed against model answers.",
+  "groups": [
+    {
+      "id": "start",
+      "page": 1,
+      "title": "Do Now",
+      "placement": {
+        "beforeHeading": "Objectives"
+      },
+      "questions": [
+        {
+          "key": "dn-1",
+          "label": "Denary value",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "60"
+            }
+          ],
+          "feedback": "3 × 16 + 12 = 60."
+        },
+        {
+          "key": "dn-2",
+          "label": "Choose the hexadecimal value",
+          "fields": [
+            {
+              "type": "choice",
+              "options": [
+                "2B",
+                "29",
+                "A2",
+                "2A"
+              ],
+              "answer": "2A"
+            }
+          ],
+          "feedback": "42 = 2 × 16 + 10, so the last digit is A."
+        },
+        {
+          "key": "dn-3",
+          "label": "Hexadecimal value",
+          "fields": [
+            {
+              "type": "hex",
+              "answer": "2A"
+            }
+          ],
+          "feedback": "0010 | 1010 converts to 2A."
+        },
+        {
+          "key": "dn-4",
+          "label": "Eight-bit binary value",
+          "fields": [
+            {
+              "type": "binary8",
+              "answer": "00101010"
+            }
+          ],
+          "feedback": "2 is 0010; A is 1010."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "page": 2,
+      "title": "We Do",
+      "placement": {
+        "beforeHeading": null
+      },
+      "questions": [
+        {
+          "key": "we-1",
+          "label": "Number of bits",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "144"
+            }
+          ],
+          "feedback": "18 × 8 = 144 bits."
+        },
+        {
+          "key": "we-2",
+          "label": "Number of bytes",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "18"
+            }
+          ],
+          "feedback": "144 ÷ 8 = 18 bytes."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "page": 3,
+      "title": "Code First and You Do",
+      "placement": {
+        "beforeHeading": "Thinking"
+      },
+      "questions": [
+        {
+          "key": "cf-predict",
+          "label": "Starter output",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "65"
+            }
+          ],
+          "feedback": "The program displays its numeric variable, 65."
+        },
+        {
+          "key": "cf-write",
+          "label": "Write both lines of code",
+          "fields": [
+            {
+              "type": "code",
+              "answer": "characterCode = 66\nprint(characterCode)"
+            }
+          ],
+          "feedback": "Expected: characterCode = 66, then print(characterCode). Other valid coding styles should be checked against the model.",
+          "reviewOnMismatch": true
+        },
+        {
+          "key": "cf-output",
+          "label": "Output after the change",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "66"
+            }
+          ],
+          "feedback": "After changing the assignment, the program prints the number 66; a character-conversion operation would be needed to display B."
+        },
+        {
+          "key": "exam-1",
+          "label": "How many bits?",
+          "fields": [
+            {
+              "type": "number",
+              "label": "Byte",
+              "answer": "8"
+            },
+            {
+              "type": "number",
+              "label": "Nibble",
+              "answer": "4"
+            }
+          ],
+          "feedback": "A byte contains 8 bits; a nibble contains 4."
+        },
+        {
+          "key": "exam-3",
+          "label": "Raw file size",
+          "fields": [
+            {
+              "type": "number",
+              "answer": "160"
+            }
+          ],
+          "feedback": "80 × 16 = 1,280 bits; 1,280 ÷ 8 = 160 bytes."
+        }
+      ]
+    },
+    {
+      "id": "exit",
+      "page": 4,
+      "title": "Exit Ticket",
+      "placement": {
+        "beforeHeading": "Do Now"
+      },
+      "questions": [
+        {
+          "key": "exit-1",
+          "label": "True or false?",
+          "fields": [
+            {
+              "type": "truefalse",
+              "answer": "true"
+            }
+          ],
+          "feedback": "True. One byte consists of eight bits."
+        },
+        {
+          "key": "exit-2",
+          "label": "True or false?",
+          "fields": [
+            {
+              "type": "truefalse",
+              "answer": "false"
+            }
+          ],
+          "feedback": "False. Unicode supports a much larger set of characters than ASCII."
+        },
+        {
+          "key": "exit-3",
+          "label": "True or false?",
+          "fields": [
+            {
+              "type": "truefalse",
+              "answer": "false"
+            }
+          ],
+          "feedback": "False. Unicode encodings can store characters using differing numbers of bytes."
+        }
+      ]
+    }
+  ]
+}
