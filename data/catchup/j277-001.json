@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "id": "j277-001",
+  "title": "Binary and Denary",
+  "year": 10,
+  "estimated_minutes": 12,
+  "pass_percent": 80,
+  "intro": "Catch up with the essential learning in about 10–15 minutes. Complete five short steps and check your answers as you go.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Start with two familiar facts about computer data.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Which two digits are used in binary?",
+          "options": [
+            "0 and 1",
+            "1 and 2",
+            "0 to 9",
+            "A to F"
+          ],
+          "answer": "0 and 1",
+          "feedback": "Binary means base two, so it uses only 0 and 1."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "How many bits make one byte?",
+          "answer": "8",
+          "feedback": "Eight individual bits make a byte."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Learn binary place values and how to convert numbers.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Why binary?",
+          "text": "Digital circuits can reliably represent two states, often called off and on. Binary uses 0 and 1. A bit is one binary digit; denary is base ten."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "Eight-bit positions from left to right: 128 · 64 · 32 · 16 · 8 · 4 · 2 · 1",
+            "For binary → denary, add place values wherever a bit is 1.",
+            "For denary → binary, choose place values that add to the number and fill remaining bits with 0.",
+            "Unsigned eight-bit values run from 0 to 255: there are 2⁸ = 256 possible patterns, including zero."
+          ]
+        },
+        {
+          "type": "example",
+          "title": "Worked example · binary → denary",
+          "text": "11001010 = 128 + 64 + 8 + 2 = 202."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · denary → binary",
+          "text": "154 = 128 + 16 + 8 + 2, so its eight-bit binary form is 10011010."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "What is the value of the leftmost (most significant) bit in an eight-bit unsigned number?",
+          "answer": "128",
+          "feedback": "The place values start at 128 on the left."
+        },
+        {
+          "id": "l2",
+          "kind": "number",
+          "prompt": "Convert binary 00001011 to denary.",
+          "answer": "11",
+          "feedback": "8 + 2 + 1 = 11."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Why is the largest unsigned eight-bit value 255 rather than 256?",
+          "options": [
+            "Eight bits give 255 patterns",
+            "The 256 patterns include zero",
+            "Bits cannot represent zero",
+            "The leftmost bit is worth 256"
+          ],
+          "answer": "The 256 patterns include zero",
+          "feedback": "2⁸ = 256 patterns, numbered 0 through 255."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Convert numbers and organise the method.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Eight bits must be shown, including leading zeros when needed."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each binary pattern to its denary value.",
+          "pairs": [
+            [
+              "00000001",
+              "1"
+            ],
+            [
+              "00000100",
+              "4"
+            ],
+            [
+              "00001000",
+              "8"
+            ]
+          ],
+          "feedback": "Each position has its own power-of-two place value."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put the steps for converting denary 154 to binary in order.",
+          "items": [
+            "Write the final eight bits",
+            "Choose place values totalling 154",
+            "Fill unused positions with zero"
+          ],
+          "answer": [
+            "Choose place values totalling 154",
+            "Fill unused positions with zero",
+            "Write the final eight bits"
+          ],
+          "feedback": "Select 128, 16, 8 and 2, then write 10011010."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "Convert unsigned binary 01101001 to denary.",
+          "answer": "105",
+          "feedback": "64 + 32 + 8 + 1 = 105."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "Convert denary 178 into an eight-bit binary value (enter eight digits).",
+          "answer": "10110010",
+          "feedback": "178 = 128 + 32 + 16 + 2, so 10110010."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and one written exam-style explanation.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "print(8 + 2 + 1)"
+          ],
+          "caption": "Predict the output. Change the expression to add 8 + 2 for the binary pattern 1010."
+        },
+        {
+          "type": "prompt",
+          "text": "Written question: Explain how you would convert the denary number 191 to unsigned eight-bit binary. Include the place values and the resulting bits."
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "What value does print(8 + 2 + 1) display?",
+          "answer": "11",
+          "feedback": "The expression adds 8, 2 and 1, resulting in 11."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "What would print(8 + 2) display?",
+          "answer": "10",
+          "feedback": "The binary place values 8 and 2 total 10."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "Convert denary 154 to eight-bit binary (enter all eight digits).",
+          "answer": "10011010",
+          "feedback": "128 + 16 + 8 + 2 = 154, giving 10011010."
+        }
+      ],
+      "writing": {
+        "prompt": "Write two or three sentences explaining your conversion.",
+        "model": "191 = 128 + 32 + 16 + 8 + 4 + 2 + 1. Put a 1 in each of these columns and a 0 in the 64 column, giving unsigned eight-bit binary 10111111.",
+        "checklist": [
+          "I identified the eight binary place values.",
+          "My chosen place values total 191.",
+          "I gave the eight-bit answer 10111111 and corrected any errors."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Finish with three quick checks and review your mastery.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "An unsigned eight-bit number can represent denary 256.",
+          "answer": "false",
+          "feedback": "False: the largest unsigned eight-bit value is 255."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "The binary number 10000000 is 128 in denary.",
+          "answer": "true",
+          "feedback": "True: only the 128 column contains a 1."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Converting denary to binary changes the number's value.",
+          "answer": "false",
+          "feedback": "False: the value stays the same; only the representation changes."
+        }
+      ]
+    }
+  ]
+}
