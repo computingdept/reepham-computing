@@ -41,10 +41,10 @@ The diagrams are protected teaching content and should be visibly corrected **wi
 
 ## Mobile and physical-print status
 
-- A GitHub Chromium browser job verified the PDF HTTP response, ranged loading and **390px / 1920px iframe geometry** with no surrounding horizontal overflow.
-- **However, the headless Chromium screenshots showed a blank native PDF iframe.** This is **not** a visual PDF-viewer pass.
-- A separate PDF.js page-rendering workflow was added to test actual PDF page pixels in mobile and classroom-sized browser contexts. Review the latest workflow result before signing off.
-- **Physical printing and an actual-phone loading test remain outstanding**. A nine-page greyscale sample was generated for printing, covering source PDF master pages 9, 33, 59, 72, 94, 129, 166, 234 and 254.
+- Initial Chromium-native iframe run: HTTP range delivery and viewport geometry passed, but **the native PDF appeared blank** in headless screenshot; this test cannot certify actual document rendering.
+- A separate [PDF.js-rendering workflow passed on 28 October 2026](https://github.com/computingdept/reepham-computing/actions/runs/40669459096). It genuinely rendered **pages 6, 59, 129 and 234** at 390×844 (phone) and 1920×1080 (classroom) and confirmed 291-page source, visible ink and no surrounding horizontal overflow.
+- **Mobile usability concern:** full-page fit-to-width at 390 px renders teaching text very small; learners must zoom and pan. The PDF is a supplemental reference and should not replace the responsive online lesson/accessible study experience. The test is browser emulation, **not a physical smartphone**, and does not certify download performance on a mobile connection.
+- Greyscale page-wide check is complete, but a **physical printer check remains outstanding**. The nine-page black-and-white sample uses master pages 9, 33, 59, 72, 94, 129, 166, 234 and 254 and is attached in the ChatGPT conversation.
 
 ## Recommendation
 
