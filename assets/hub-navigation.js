@@ -85,7 +85,8 @@
     const title=String(o.title||'');
     const routes=[
       ['Open lesson','▣',o.openHref],
-      ['Learn independently','◇',o.learnHref]
+      ['Learn independently','◇',o.learnHref],
+      ['Print lesson','▤',o.printHref]
     ].filter(function(item){return typeof item[2]==='string' && item[2].trim().length>0;});
     const entry=document.createElement('article');
     entry.className='lesson-entry lesson-choice central-lesson'+(o.openHref?'':' is-planned');
