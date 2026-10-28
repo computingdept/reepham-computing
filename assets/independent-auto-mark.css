@@ -11,15 +11,30 @@ body.auto-mark-ready .viewer .am-answer-input{
  color:#111;background:#fff;font:500 16px/1.35 Arial,Helvetica,sans-serif
 }
 body.auto-mark-ready .viewer textarea.am-answer-input{min-height:78px;resize:vertical}
-body.auto-mark-ready .viewer .am-choice-group{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;border:0;margin:0;padding:0}
-body.auto-mark-ready .viewer .am-choice-group legend{padding:0 0 6px}
-body.auto-mark-ready .viewer .am-option{
- display:inline-flex;align-items:center;gap:6px;min-height:44px;
- padding:7px 11px;border:1px solid #b5b5b5;border-radius:6px;
- background:#fff;color:#222;font:650 14px/1.3 Arial,Helvetica,sans-serif;
- cursor:pointer
+/* The printed square choices remain on the untouched print spreads.
+   The on-screen MCQ presents only its real radio controls. */
+body.auto-mark-ready .viewer .am-paper-choices,
+body.auto-mark-ready .viewer .am-paper-choice-break{display:none!important}
+body.auto-mark-ready .viewer .am-choice-group{
+ display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;
+ padding:0;margin:0;border:0
 }
-body.auto-mark-ready .viewer .am-option input{width:18px;height:18px;flex:0 0 auto;accent-color:#222}
+body.auto-mark-ready .viewer .am-choice-group legend{
+ display:block;box-sizing:border-box;max-width:100%;margin:0 0 7px;padding:0
+}
+body.auto-mark-ready .viewer .am-choice-options{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ align-items:stretch;gap:8px;width:100%;min-width:0;max-width:100%
+}
+body.auto-mark-ready .viewer .am-option{
+ box-sizing:border-box;display:flex;align-items:center;gap:9px;min-width:0;
+ width:100%;min-height:48px;padding:10px 12px;
+ border:1px solid #b5b5b5;border-radius:6px;
+ background:#fff;color:#222;font:650 15px/1.35 Arial,Helvetica,sans-serif;
+ overflow-wrap:anywhere;white-space:normal;cursor:pointer
+}
+body.auto-mark-ready .viewer .am-option:has(input:checked){border-color:#333;background:#f3f3f3}
+body.auto-mark-ready .viewer .am-option input{width:20px;height:20px;flex:0 0 20px;margin:0;accent-color:#222}
 body.auto-mark-ready .viewer .am-answer-input:focus-visible,
 body.auto-mark-ready .viewer .am-option:focus-within,
 body.auto-mark-ready .viewer .am-check-button:focus-visible{outline:3px solid #edae3c;outline-offset:2px}
@@ -51,8 +66,10 @@ body.auto-mark-ready .viewer .am-model-content{padding:2px 15px 15px;border-top:
 body.auto-mark-ready .viewer .exit>.choice{display:none}
 @media screen and (max-width:700px){
  body.auto-mark-ready .viewer .am-check-panel{padding:11px}
- body.auto-mark-ready .viewer .am-option{min-width:0;flex:1 1 90px}
+ body.auto-mark-ready .viewer .am-choice-options{grid-template-columns:minmax(0,1fr)}
+ body.auto-mark-ready .viewer .am-option{min-width:0}
 }
 @media print{
  .am-answer-fields,.am-reflection,.am-check-panel,.am-check-result,.am-overview,.am-model-answers{display:none!important}
+ .am-paper-choices,.am-paper-choice-break{display:initial!important}
 }
