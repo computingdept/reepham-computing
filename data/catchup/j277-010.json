@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "id": "j277-010",
+  "title": "CPU Architecture, Registers and Fetch–Execute Cycle",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall two useful ideas from earlier lessons.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Which technology is found in a USB flash drive?",
+          "options": [
+            "Solid-state",
+            "Magnetic platter",
+            "Optical disc",
+            "CPU register"
+          ],
+          "answer": "Solid-state",
+          "feedback": "Flash drives use solid-state memory without moving read/write heads."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Why might compressing a file make it faster to transfer?",
+          "options": [
+            "Less data needs sending",
+            "The file becomes encrypted",
+            "More pixels are added",
+            "Network cable speed doubles"
+          ],
+          "answer": "Less data needs sending",
+          "feedback": "A smaller file generally involves fewer bits being transmitted."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the essential ideas and worked example before checking your understanding.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "CPU roles",
+          "text": "The Control Unit coordinates operations and decodes instructions; the ALU performs arithmetic and logical operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Registers",
+          "text": "PC: next instruction address; MAR: address being accessed; MDR: transferred data/instruction; ACC: calculation result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Kitchen memory aid",
+          "text": "PC = recipe bookmark; MAR = shelf location; MDR = ingredient fetched; ACC = mixing bowl for results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Instruction cycle",
+          "text": "Fetch the instruction, decode it and execute it; then repeat. Cache keeps frequently used data and instructions close to the CPU."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · CPU Architecture, Registers and Fetch–Execute Cycle",
+          "layout": "flow",
+          "items": [
+            [
+              "Fetch",
+              "Get next instruction"
+            ],
+            [
+              "Decode",
+              "Interpret instruction"
+            ],
+            [
+              "Execute",
+              "Perform operation"
+            ]
+          ],
+          "caption": "During a fetch the PC supplies the next address; MAR receives the access address and MDR receives the transferred instruction."
+        },
+        {
+          "type": "example",
+          "title": "Worked model · Explain a fetch using the PC, MAR, MDR and the Control Unit.",
+          "text": "The PC identifies the address of the next instruction. The address is copied to MAR. The requested instruction transfers from memory into MDR. The PC updates to reference the next instruction in sequence. The Control Unit decodes the fetched instruction; it can then be executed, possibly using the ALU."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "MAR — Stores the address of a memory location being accessed.",
+            "MDR — Stores data/instructions being transferred.",
+            "PC — Stores address of the next instruction.",
+            "ACC — Stores results of calculations."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which CPU component performs arithmetic and logic?",
+          "options": [
+            "ALU",
+            "Control Unit",
+            "ROM",
+            "PC register"
+          ],
+          "answer": "ALU",
+          "feedback": "The Arithmetic Logic Unit performs these operations."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which register normally stores the address of the next instruction?",
+          "options": [
+            "MDR",
+            "PC",
+            "Accumulator",
+            "MAR"
+          ],
+          "answer": "PC",
+          "feedback": "The Program Counter identifies where to fetch the next instruction."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "What does the MDR hold?",
+          "options": [
+            "Current memory address",
+            "Data or an instruction being transferred",
+            "Only a CPU temperature",
+            "The next instruction address"
+          ],
+          "answer": "Data or an instruction being transferred",
+          "feedback": "The Memory Data Register holds data/instructions transferred to or from memory."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, reorder and apply what you have learnt.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "The address and the data being transferred are held in different registers."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match the register to its main job.",
+          "pairs": [
+            [
+              "PC",
+              "Next instruction address"
+            ],
+            [
+              "MAR",
+              "Address being accessed"
+            ],
+            [
+              "MDR",
+              "Data being transferred"
+            ]
+          ],
+          "feedback": "PC, MAR and MDR have distinct roles in fetching."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put the three phases of the CPU instruction cycle in order.",
+          "items": [
+            "Execute the operation",
+            "Fetch the instruction",
+            "Decode its meaning"
+          ],
+          "answer": [
+            "Fetch the instruction",
+            "Decode its meaning",
+            "Execute the operation"
+          ],
+          "feedback": "Fetch → Decode → Execute."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which register is often used to hold an ALU calculation result?",
+          "options": [
+            "ACC",
+            "MAR",
+            "PC",
+            "MDR"
+          ],
+          "answer": "ACC",
+          "feedback": "The accumulator may hold the result of an ALU calculation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "What does the Control Unit primarily do?",
+          "options": [
+            "Decode and coordinate instructions",
+            "Perform every arithmetic sum",
+            "Store archives permanently",
+            "Output images to screen directly"
+          ],
+          "answer": "Decode and coordinate instructions",
+          "feedback": "The Control Unit coordinates CPU actions and decodes instructions."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and explain one key idea in writing.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "a = 7",
+            "b = 5",
+            "print(a + b)"
+          ],
+          "caption": "Predict the output. Change b to 9. State which CPU component performs arithmetic."
+        },
+        {
+          "type": "prompt",
+          "text": "Explain the role of the Program Counter when fetching an instruction. [2 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The code adds a = 7 and b = 5. What does it print?",
+          "answer": "12",
+          "feedback": "7 + 5 = 12."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "If b changes to 9, what does it print?",
+          "answer": "16",
+          "feedback": "7 + 9 = 16."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Which register stores the address of the memory location being accessed?",
+          "options": [
+            "MAR",
+            "MDR",
+            "ACC",
+            "PC"
+          ],
+          "answer": "MAR",
+          "feedback": "The Memory Address Register contains the accessed address."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain the role of the Program Counter when fetching an instruction. [2 marks]",
+        "model": "PC stores address of next instruction [1], providing the location to fetch next [1].",
+        "checklist": [
+          "I stated how the Control Unit decodes and coordinates processing.",
+          "I explained that the ALU performs the addition.",
+          "I mentioned that the accumulator can hold a result."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete the final check and review your score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "The ALU performs arithmetic and logical operations.",
+          "answer": "true",
+          "feedback": "The Arithmetic Logic Unit is responsible for such operations."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "The MDR is the register that identifies the next instruction address.",
+          "answer": "false",
+          "feedback": "The PC has that role; MDR holds transferred data/instructions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Fetch, decode and execute are stages of CPU instruction processing.",
+          "answer": "true",
+          "feedback": "The CPU repeatedly carries out the instruction cycle."
+        }
+      ]
+    }
+  ]
+}
