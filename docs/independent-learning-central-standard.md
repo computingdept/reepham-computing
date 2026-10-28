@@ -20,6 +20,14 @@ The print booklet prepares students to recognise familiar **classroom signals**.
 - Keep the signage concise and repeat it beside each relevant activity. In B&W, the phase and routine wording must remain readable without colours.
 - **Quality assurance:** visually compare the print tiles with the blue/green tiles shown in the current live lesson, check every page for overflow, and do not call a PDF published until its final exported version has been checked.
 
+## Master booklet template and content sources (Lesson 002 pilot)
+
+The reusable four-page HTML authoring skeleton is `docs/independent-booklet-master-template.html`. It uses the existing **shared** `assets/independent-lesson-base.css`, `assets/independent-print.css` and navigation assets; never create separate per-lesson styles. Each lesson supplies only its subject knowledge, diagrams, activities and answer keys. Lesson 002 `independent.html` is the first follow-on pilot using the standard two-tile blue/green phase/routine signs from Lesson 001.
+
+For every new PDF/print booklet: verify the original `lessons/j277/lesson-NNN/index.html`, then the correct **published or source** OCR J277 revision guide, and include a short source/coverage check. For Lesson 002, sources are the actual interactive Binary Addition and Shifts lesson, and the Paper 1 V4 revision guide section 1.2.4, pages **93 (binary addition and overflow)** and **94 (logical shifts)**. Retain original steps and teacher-modelled answers, but provide independent paper instructions and space for working. Do not label the draft PDF a live published PDF until binary files have been published and checked.
+
+The prototype colour PDF was exported separately for visual review; the repository's live Print mode continues to be generated from `independent.html` by the shared print CSS/JS. Before distributing, compare the exported PDF against the master HTML print view, then review the folded A3 imposition. Only make B&W and final A3 versions after the colour master has passed visual and content review.
+
 ## Shared files and order
 
 1. `assets/independent-lesson-base.css` — typography, layout, writing areas and small-screen responsive styles.
