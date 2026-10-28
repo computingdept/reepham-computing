@@ -16,6 +16,7 @@ The print booklet prepares students to recognise familiar **classroom signals**.
 - **Blue phase labels:** Do Now, Objectives, New Learning, I Do, We Do, You Do, Questioning, Exit Questioning as appropriate.
 - **Green routine labels:** Silent Working, Listening, Quiet Working, Silence as appropriate.
 - Use the exact *current desktop lesson's* blue/green tile colours, centred bold text and borders from `assets/h446-lesson/lesson-base.css`; use the relevant stage and routine labels from `signalMap` in `assets/h446-lesson/lesson.js`. Do not copy its response tile onto the printed booklet.
+- For **print**, the signals are intentionally **small, left-aligned labels** (approximately 47 mm wide × 8 mm high each, 8.2 pt bold text): prominent enough for recognition, quiet enough to leave the learning and writing space dominant. Preserve the established blue/green colours, and use one shared stylesheet rule, not per-lesson overrides.
 - **Code First** remains first inside J277 **You Do**, using Predict → Write → Test → Improve where relevant. Present independent booklet activities as writing on paper, not requiring a whiteboard, partner or internet.
 - Keep the signage concise and repeat it beside each relevant activity. In B&W, the phase and routine wording must remain readable without colours.
 - **Quality assurance:** visually compare the print tiles with the blue/green tiles shown in the current live lesson, check every page for overflow, and do not call a PDF published until its final exported version has been checked.
