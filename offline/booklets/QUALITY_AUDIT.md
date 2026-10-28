@@ -1,0 +1,485 @@
+# J277 / H446 offline booklet improvement audit
+
+**Automated audit only. All PDF drafts still need teacher content and print approval.**
+
+Lessons inspected: **464** (J277 164, H446 300).
+Priorities: P0 17; P1 434; P2 13.
+
+## Ranked recurring problems
+
+1. **diagram or image not embedded** — 442 lesson(s)
+2. **revision guide not cross checked** — 192 lesson(s)
+3. **source or model answer missing** — 17 lesson(s)
+4. **missing answer placeholder in pdf** — 17 lesson(s)
+5. **staff only assessment** — 17 lesson(s)
+6. **source explanation condensed** — 15 lesson(s)
+7. **long booklet print review** — 14 lesson(s)
+8. **code first unverified** — 10 lesson(s)
+9. **existing html requires print and content review** — 4 lesson(s)
+10. **teacher dependent activity** — 3 lesson(s)
+11. **generator or html static failure** — 3 lesson(s)
+
+## P0 — correct or defer before approval
+
+- **H446-006** Floating-point addition: source_or_model_answer_missing, diagram_or_image_not_embedded, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-007** Floating-point subtraction: source_or_model_answer_missing, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers, exit_ticket_and_answer
+- **H446-008** Character sets: ASCII & Unicode: source_or_model_answer_missing, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers
+- **H446-017** Arrays in C#: source_or_model_answer_missing, diagram_or_image_not_embedded, revision_guide_not_cross_checked, long_booklet_print_review, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements; 10 A4 pages
+- **H446-019** Linked lists with arrays and pointers: source_or_model_answer_missing, diagram_or_image_not_embedded, teacher_dependent_activity, source_explanation_condensed, revision_guide_not_cross_checked, long_booklet_print_review, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements; 10 A4 pages
+- **H446-025** Binary Search — From Trace Table to Working Code: source_or_model_answer_missing, teacher_dependent_activity, source_explanation_condensed, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers, exit_ticket_and_answer
+- **H446-035** Synoptic Revision 2 — Final Test Preparation: source_or_model_answer_missing, source_explanation_condensed, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: exit_ticket_and_answer
+- **H446-036** Synoptic Test: source_or_model_answer_missing, staff_only_assessment, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: four_do_now_questions, four_do_now_model_answers, at_least_three_vocabulary_terms, exit_ticket_and_answer
+- **H446-037** Synoptic Test Feedback: source_or_model_answer_missing, staff_only_assessment, missing_answer_placeholder_in_pdf; evidence: four_do_now_questions, four_do_now_model_answers, exit_ticket_and_answer
+- **H446-038** Programming Techniques · Sequence and Selection: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-039** Programming Techniques · Iteration and Tracing: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-040** Programming Techniques · Functions and Procedures: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-041** Programming Techniques · Scope and Lifetime: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-042** Programming Techniques · Value and Reference: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-043** Programming Techniques · Modular Design and IDE Debugging: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-044** Data Structures · Classes and Objects in C#: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+- **H446-045** Data Structures · Constructors and Encapsulation: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
+
+## P1 — visual/independence and formatting review
+
+- **H446-013**: diagram_or_image_not_embedded, teacher_dependent_activity
+- **H446-014**: diagram_or_image_not_embedded, source_explanation_condensed, long_booklet_print_review
+- **H446-015**: diagram_or_image_not_embedded, source_explanation_condensed, long_booklet_print_review
+- **H446-016**: diagram_or_image_not_embedded, long_booklet_print_review
+- **H446-020**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-021**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **H446-022**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-023**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked, long_booklet_print_review
+- **H446-026**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked, long_booklet_print_review
+- **H446-027**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **H446-028**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-029**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-030**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-031**: diagram_or_image_not_embedded, source_explanation_condensed, revision_guide_not_cross_checked
+- **H446-032**: diagram_or_image_not_embedded
+- **H446-033**: diagram_or_image_not_embedded
+- **H446-034**: diagram_or_image_not_embedded
+- **H446-046**: diagram_or_image_not_embedded
+- **H446-047**: diagram_or_image_not_embedded
+- **H446-048**: diagram_or_image_not_embedded
+- **H446-049**: diagram_or_image_not_embedded
+- **H446-050**: diagram_or_image_not_embedded
+- **H446-051**: diagram_or_image_not_embedded
+- **H446-052**: diagram_or_image_not_embedded
+- **H446-053**: diagram_or_image_not_embedded
+- **H446-054**: diagram_or_image_not_embedded
+- **H446-055**: diagram_or_image_not_embedded
+- **H446-056**: diagram_or_image_not_embedded
+- **H446-057**: diagram_or_image_not_embedded
+- **H446-058**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-059**: diagram_or_image_not_embedded
+- **H446-060**: diagram_or_image_not_embedded
+- **H446-061**: diagram_or_image_not_embedded
+- **H446-062**: diagram_or_image_not_embedded
+- **H446-063**: diagram_or_image_not_embedded
+- **H446-064**: diagram_or_image_not_embedded
+- **H446-065**: diagram_or_image_not_embedded
+- **H446-066**: diagram_or_image_not_embedded
+- **H446-067**: diagram_or_image_not_embedded
+- **H446-068**: diagram_or_image_not_embedded
+- **H446-069**: diagram_or_image_not_embedded
+- **H446-070**: diagram_or_image_not_embedded
+- **H446-071**: diagram_or_image_not_embedded
+- **H446-072**: diagram_or_image_not_embedded
+- **H446-073**: diagram_or_image_not_embedded
+- **H446-074**: diagram_or_image_not_embedded
+- **H446-075**: diagram_or_image_not_embedded
+- **H446-076**: diagram_or_image_not_embedded
+- **H446-077**: diagram_or_image_not_embedded
+- **H446-078**: diagram_or_image_not_embedded
+- **H446-079**: diagram_or_image_not_embedded
+- **H446-080**: diagram_or_image_not_embedded
+- **H446-081**: diagram_or_image_not_embedded
+- **H446-082**: diagram_or_image_not_embedded
+- **H446-083**: diagram_or_image_not_embedded
+- **H446-084**: diagram_or_image_not_embedded
+- **H446-085**: diagram_or_image_not_embedded
+- **H446-086**: diagram_or_image_not_embedded
+- **H446-087**: diagram_or_image_not_embedded
+- **H446-088**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-089**: diagram_or_image_not_embedded
+- **H446-090**: diagram_or_image_not_embedded
+- **H446-091**: diagram_or_image_not_embedded
+- **H446-092**: diagram_or_image_not_embedded
+- **H446-093**: diagram_or_image_not_embedded
+- **H446-094**: diagram_or_image_not_embedded
+- **H446-095**: diagram_or_image_not_embedded
+- **H446-096**: diagram_or_image_not_embedded
+- **H446-097**: diagram_or_image_not_embedded
+- **H446-098**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-099**: diagram_or_image_not_embedded
+- **H446-100**: diagram_or_image_not_embedded
+- **H446-101**: diagram_or_image_not_embedded
+- **H446-102**: diagram_or_image_not_embedded
+- **H446-103**: diagram_or_image_not_embedded
+- **H446-104**: diagram_or_image_not_embedded
+- **H446-105**: diagram_or_image_not_embedded
+- **H446-106**: diagram_or_image_not_embedded
+- **H446-107**: diagram_or_image_not_embedded
+- **H446-108**: diagram_or_image_not_embedded
+- **H446-109**: diagram_or_image_not_embedded
+- **H446-110**: diagram_or_image_not_embedded
+- **H446-111**: diagram_or_image_not_embedded
+- **H446-112**: diagram_or_image_not_embedded
+- **H446-113**: diagram_or_image_not_embedded
+- **H446-114**: diagram_or_image_not_embedded
+- **H446-115**: diagram_or_image_not_embedded
+- **H446-116**: diagram_or_image_not_embedded
+- **H446-117**: diagram_or_image_not_embedded
+- **H446-118**: diagram_or_image_not_embedded
+- **H446-119**: diagram_or_image_not_embedded
+- **H446-120**: diagram_or_image_not_embedded
+- **H446-121**: diagram_or_image_not_embedded
+- **H446-122**: diagram_or_image_not_embedded
+- **H446-123**: diagram_or_image_not_embedded
+- **H446-124**: diagram_or_image_not_embedded
+- **H446-125**: diagram_or_image_not_embedded
+- **H446-126**: diagram_or_image_not_embedded
+- **H446-127**: diagram_or_image_not_embedded
+- **H446-128**: diagram_or_image_not_embedded
+- **H446-129**: diagram_or_image_not_embedded
+- **H446-130**: diagram_or_image_not_embedded
+- **H446-131**: diagram_or_image_not_embedded
+- **H446-132**: diagram_or_image_not_embedded
+- **H446-133**: diagram_or_image_not_embedded
+- **H446-134**: diagram_or_image_not_embedded
+- **H446-135**: diagram_or_image_not_embedded
+- **H446-136**: diagram_or_image_not_embedded
+- **H446-137**: diagram_or_image_not_embedded
+- **H446-138**: diagram_or_image_not_embedded
+- **H446-139**: diagram_or_image_not_embedded
+- **H446-140**: diagram_or_image_not_embedded
+- **H446-141**: diagram_or_image_not_embedded
+- **H446-142**: diagram_or_image_not_embedded
+- **H446-143**: diagram_or_image_not_embedded
+- **H446-144**: diagram_or_image_not_embedded
+- **H446-145**: diagram_or_image_not_embedded
+- **H446-146**: diagram_or_image_not_embedded
+- **H446-147**: diagram_or_image_not_embedded
+- **H446-148**: diagram_or_image_not_embedded
+- **H446-149**: diagram_or_image_not_embedded
+- **H446-150**: diagram_or_image_not_embedded
+- **H446-151**: diagram_or_image_not_embedded
+- **H446-152**: diagram_or_image_not_embedded
+- **H446-153**: diagram_or_image_not_embedded
+- **H446-154**: diagram_or_image_not_embedded
+- **H446-155**: diagram_or_image_not_embedded
+- **H446-156**: diagram_or_image_not_embedded
+- **H446-157**: diagram_or_image_not_embedded
+- **H446-158**: diagram_or_image_not_embedded
+- **H446-159**: diagram_or_image_not_embedded
+- **H446-160**: diagram_or_image_not_embedded
+- **H446-181**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **H446-182**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **H446-183**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **H446-184**: diagram_or_image_not_embedded
+- **H446-185**: diagram_or_image_not_embedded
+- **H446-186**: diagram_or_image_not_embedded
+- **H446-187**: diagram_or_image_not_embedded
+- **H446-188**: diagram_or_image_not_embedded
+- **H446-189**: diagram_or_image_not_embedded
+- **H446-190**: diagram_or_image_not_embedded
+- **H446-191**: diagram_or_image_not_embedded
+- **H446-192**: diagram_or_image_not_embedded
+- **H446-193**: diagram_or_image_not_embedded
+- **H446-194**: diagram_or_image_not_embedded
+- **H446-195**: diagram_or_image_not_embedded
+- **H446-196**: diagram_or_image_not_embedded
+- **H446-197**: diagram_or_image_not_embedded
+- **H446-198**: diagram_or_image_not_embedded
+- **H446-199**: diagram_or_image_not_embedded
+- **H446-200**: diagram_or_image_not_embedded
+- **H446-201**: diagram_or_image_not_embedded
+- **H446-202**: diagram_or_image_not_embedded
+- **H446-203**: diagram_or_image_not_embedded
+- **H446-204**: diagram_or_image_not_embedded
+- **H446-205**: diagram_or_image_not_embedded
+- **H446-206**: diagram_or_image_not_embedded
+- **H446-207**: diagram_or_image_not_embedded
+- **H446-208**: diagram_or_image_not_embedded
+- **H446-209**: diagram_or_image_not_embedded
+- **H446-210**: diagram_or_image_not_embedded
+- **H446-211**: diagram_or_image_not_embedded
+- **H446-212**: diagram_or_image_not_embedded
+- **H446-213**: diagram_or_image_not_embedded
+- **H446-214**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-215**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-216**: diagram_or_image_not_embedded
+- **H446-217**: diagram_or_image_not_embedded
+- **H446-218**: diagram_or_image_not_embedded
+- **H446-219**: diagram_or_image_not_embedded
+- **H446-220**: diagram_or_image_not_embedded
+- **H446-221**: diagram_or_image_not_embedded
+- **H446-222**: diagram_or_image_not_embedded
+- **H446-223**: diagram_or_image_not_embedded
+- **H446-224**: diagram_or_image_not_embedded
+- **H446-225**: diagram_or_image_not_embedded
+- **H446-226**: diagram_or_image_not_embedded
+- **H446-227**: diagram_or_image_not_embedded
+- **H446-228**: diagram_or_image_not_embedded
+- **H446-229**: diagram_or_image_not_embedded
+- **H446-230**: diagram_or_image_not_embedded
+- **H446-231**: diagram_or_image_not_embedded
+- **H446-232**: diagram_or_image_not_embedded
+- **H446-233**: diagram_or_image_not_embedded
+- **H446-234**: diagram_or_image_not_embedded
+- **H446-235**: diagram_or_image_not_embedded
+- **H446-236**: diagram_or_image_not_embedded
+- **H446-237**: diagram_or_image_not_embedded
+- **H446-238**: diagram_or_image_not_embedded
+- **H446-239**: diagram_or_image_not_embedded
+- **H446-240**: diagram_or_image_not_embedded
+- **H446-241**: diagram_or_image_not_embedded
+- **H446-242**: diagram_or_image_not_embedded
+- **H446-243**: diagram_or_image_not_embedded
+- **H446-244**: diagram_or_image_not_embedded
+- **H446-245**: diagram_or_image_not_embedded
+- **H446-246**: diagram_or_image_not_embedded
+- **H446-247**: diagram_or_image_not_embedded
+- **H446-248**: diagram_or_image_not_embedded
+- **H446-249**: diagram_or_image_not_embedded
+- **H446-250**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-251**: diagram_or_image_not_embedded
+- **H446-252**: diagram_or_image_not_embedded
+- **H446-253**: diagram_or_image_not_embedded
+- **H446-254**: diagram_or_image_not_embedded
+- **H446-255**: diagram_or_image_not_embedded
+- **H446-256**: diagram_or_image_not_embedded
+- **H446-257**: diagram_or_image_not_embedded
+- **H446-258**: diagram_or_image_not_embedded
+- **H446-259**: diagram_or_image_not_embedded
+- **H446-260**: diagram_or_image_not_embedded
+- **H446-261**: diagram_or_image_not_embedded
+- **H446-262**: diagram_or_image_not_embedded
+- **H446-263**: diagram_or_image_not_embedded
+- **H446-264**: diagram_or_image_not_embedded
+- **H446-265**: diagram_or_image_not_embedded
+- **H446-266**: diagram_or_image_not_embedded
+- **H446-267**: diagram_or_image_not_embedded
+- **H446-268**: diagram_or_image_not_embedded
+- **H446-269**: diagram_or_image_not_embedded
+- **H446-270**: diagram_or_image_not_embedded
+- **H446-271**: diagram_or_image_not_embedded
+- **H446-272**: diagram_or_image_not_embedded
+- **H446-273**: diagram_or_image_not_embedded
+- **H446-274**: diagram_or_image_not_embedded
+- **H446-275**: diagram_or_image_not_embedded
+- **H446-276**: diagram_or_image_not_embedded
+- **H446-277**: diagram_or_image_not_embedded
+- **H446-278**: diagram_or_image_not_embedded
+- **H446-279**: diagram_or_image_not_embedded
+- **H446-280**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-281**: diagram_or_image_not_embedded
+- **H446-282**: diagram_or_image_not_embedded
+- **H446-283**: diagram_or_image_not_embedded
+- **H446-284**: diagram_or_image_not_embedded
+- **H446-285**: diagram_or_image_not_embedded
+- **H446-286**: diagram_or_image_not_embedded
+- **H446-287**: diagram_or_image_not_embedded
+- **H446-288**: diagram_or_image_not_embedded
+- **H446-289**: diagram_or_image_not_embedded
+- **H446-290**: diagram_or_image_not_embedded
+- **H446-291**: diagram_or_image_not_embedded
+- **H446-292**: diagram_or_image_not_embedded
+- **H446-293**: diagram_or_image_not_embedded
+- **H446-294**: diagram_or_image_not_embedded
+- **H446-295**: diagram_or_image_not_embedded
+- **H446-297**: diagram_or_image_not_embedded
+- **H446-298**: diagram_or_image_not_embedded
+- **H446-299**: diagram_or_image_not_embedded
+- **H446-300**: diagram_or_image_not_embedded
+- **H446-301**: diagram_or_image_not_embedded
+- **H446-302**: diagram_or_image_not_embedded
+- **H446-303**: diagram_or_image_not_embedded
+- **H446-304**: diagram_or_image_not_embedded
+- **H446-305**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-306**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-307**: diagram_or_image_not_embedded
+- **H446-308**: staff_only_assessment, diagram_or_image_not_embedded
+- **H446-309**: diagram_or_image_not_embedded
+- **H446-310**: diagram_or_image_not_embedded
+- **H446-311**: diagram_or_image_not_embedded
+- **H446-312**: diagram_or_image_not_embedded
+- **H446-313**: diagram_or_image_not_embedded
+- **H446-314**: diagram_or_image_not_embedded
+- **H446-315**: diagram_or_image_not_embedded
+- **H446-316**: diagram_or_image_not_embedded
+- **H446-317**: diagram_or_image_not_embedded
+- **H446-318**: diagram_or_image_not_embedded
+- **H446-319**: diagram_or_image_not_embedded
+- **H446-320**: diagram_or_image_not_embedded
+- **J277-001**: generator_or_html_static_failure, existing_html_requires_print_and_content_review
+- **J277-003**: generator_or_html_static_failure, existing_html_requires_print_and_content_review
+- **J277-004**: generator_or_html_static_failure, existing_html_requires_print_and_content_review
+- **J277-005**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-006**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-007**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-008**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-009**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-010**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-011**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-012**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-013**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-014**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-015**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-016**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-017**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-018**: diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-019**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-020**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-021**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-022**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-023**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-024**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-025**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-026**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-027**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-028**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-029**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-030**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-031**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-032**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-033**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-034**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-035**: staff_only_assessment, diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked, long_booklet_print_review
+- **J277-036**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-037**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-038**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-039**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-040**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-041**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-042**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-043**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-044**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-045**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-046**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-047**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-048**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-049**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-050**: staff_only_assessment, diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked, long_booklet_print_review
+- **J277-051**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-052**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-053**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-054**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-055**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-056**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-057**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-058**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-059**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-060**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-061**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-062**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-063**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-064**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-065**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-066**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-067**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-068**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-069**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-070**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-071**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-072**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-073**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-074**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-075**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-076**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-077**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-078**: diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-079**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-080**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-081**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-082**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-083**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-084**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-085**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-086**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-087**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-088**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-089**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-090**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-091**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-092**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-093**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-094**: staff_only_assessment, diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-095**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-096**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-097**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-098**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-099**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-100**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-101**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-102**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-103**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-104**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-105**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-106**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-107**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-108**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-109**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-110**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-111**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-112**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-113**: diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-114**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-115**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-116**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-117**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-118**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-119**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-120**: staff_only_assessment, diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-121**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-122**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-123**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-124**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-125**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-126**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-127**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-128**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-129**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-130**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-131**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-132**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-133**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-134**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-135**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-136**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-137**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-138**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-139**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-140**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-141**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-142**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-143**: staff_only_assessment, diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-144**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-145**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-146**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-147**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-148**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-149**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-150**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-151**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-152**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-153**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-154**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-155**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-156**: diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-157**: diagram_or_image_not_embedded, code_first_unverified, revision_guide_not_cross_checked
+- **J277-158**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-159**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-160**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-161**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-162**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-163**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+- **J277-164**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
+
+## Morning review order
+
+1. J277 Lesson 002 (approved layout reference): verify A4/A3 overflow and working space.
+2. J277 Lesson 005 and H446 Lesson 001: compare every stage with original Teach and revision guide.
+3. One H446 diagram-heavy lesson, one programming/code lesson and one extended-answer lesson.
+4. Review P0 answer/source failures first, then central SVG and teacher-dependency patterns.
+5. Do not mark any draft approved based solely on this automated report.
