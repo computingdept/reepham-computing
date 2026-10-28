@@ -59,7 +59,7 @@ def existing_record(course, number, route):
         "warnings": ["Static HTML checks only; print and content QA still required"],
         "priority": "P0" if number <= 4 else "P2",
         "a4_pages": 0, "a3_spreads": 0,
-        "a4_pdf": "", "a3_pdf": "",
+        "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "",
         "independent_html": "/" + str(independent.relative_to(ROOT)),
         "visual_count": 0,
     }
@@ -72,10 +72,16 @@ def generate_one(course, number, route, donow, code_master, out, large=False, sk
         stem += "_LARGE_PRINT"
     folder = out / course
     folder.mkdir(parents=True, exist_ok=True)
-    a4 = folder / (stem + "_A4.pdf")
-    a3 = folder / (stem + "_A3_Booklet.pdf")
-    pages = build_a4(a4, lesson, large=large)
-    spreads = impose_a3(a4, a3) if not skip_a3 else 0
+    outputs = {}
+    for mode in ("bw", "colour"):
+        a4 = folder / (stem + f"_{mode.upper()}_A4.pdf")
+        a3 = folder / (stem + f"_{mode.upper()}_A3_Booklet.pdf")
+        pages = build_a4(a4, lesson, large=large, mode=mode)
+        spreads = impose_a3(a4, a3) if not skip_a3 else 0
+        outputs[mode] = (pages, spreads, a4, a3)
+    pages, spreads, a4, a3 = outputs["bw"]
+    if outputs["colour"][0] != pages:
+        raise RuntimeError("Colour/B&W page counts differ")
     warnings = list(dict.fromkeys(lesson.warnings))
     if pages > 4:
         warnings.append(f"Expanded to {pages} A4 pages to preserve legibility and writing space")
@@ -91,6 +97,8 @@ def generate_one(course, number, route, donow, code_master, out, large=False, sk
         "a4_pages": pages, "a3_spreads": spreads,
         "a4_pdf": str(a4.relative_to(out)),
         "a3_pdf": str(a3.relative_to(out)) if spreads else "",
+        "colour_a4_pdf": str(outputs["colour"][2].relative_to(out)),
+        "colour_a3_pdf": str(outputs["colour"][3].relative_to(out)) if spreads else "",
         "independent_html": "",
         "visual_count": lesson.visual_count,
     }
@@ -110,7 +118,7 @@ def save_reports(out, records, mode):
         }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     columns = [
         "course", "lesson", "label", "title", "spec", "teach_url", "status",
-        "priority", "a4_pages", "a3_spreads", "a4_pdf", "a3_pdf",
+        "priority", "a4_pages", "a3_spreads", "a4_pdf", "a3_pdf", "colour_a4_pdf", "colour_a3_pdf",
         "independent_html", "sources", "missing_data", "failed_checks", "warnings",
         "visual_count",
     ]
@@ -136,11 +144,11 @@ def save_reports(out, records, mode):
         "## Verified outputs",
         "",
         f"- Hub-linked lessons processed: **{len(records)}** (J277 {by_course['j277']}; H446 {by_course['h446']}).",
-        f"- A4 draft PDFs actually created: **{len(made)}**; total A4 pages: **{total_pages}**.",
-        f"- A3 imposed draft PDFs actually created: **{sum(bool(r['a3_pdf']) for r in records)}**.",
+        f"- A4 draft PDFs actually created: **{2*len(made)}** (B&W and colour); total pages across both editions: **{2*total_pages}**.",
+        f"- A3 imposed draft PDFs actually created: **{2*sum(bool(r['a3_pdf']) for r in records)}** (B&W and colour).",
         f"- Existing J277 HTML drafts audited without replacing: **{sum(bool(r['independent_html']) for r in records)}**.",
         f"- Lessons with missing grounded content or model answers: **{len(missing)}**.",
-        f"- Generation/static-check failures: **{len(failures)}**.",
+        f"- Generation failures: **{sum(r['status']=='generation_failed' for r in records)}**; existing HTML static-check findings: **{len(failures)-sum(r['status']=='generation_failed' for r in records)}**.",
         "",
         "## Status breakdown",
         "",
@@ -189,8 +197,8 @@ def save_reports(out, records, mode):
         "",
     ]
     (out / "SUMMARY.md").write_text("\n".join(lines), encoding="utf-8")
-    return {"total": len(records), "pdfs": len(made), "failures": len(failures),
-            "missing": len(missing), "a3": sum(bool(r["a3_pdf"]) for r in records)}
+    return {"total": len(records), "pdfs": 2*len(made), "failures": len(failures),
+            "missing": len(missing), "a3": 2*sum(bool(r["a3_pdf"]) for r in records)}
 
 
 def main():
@@ -233,7 +241,7 @@ def main():
                     "sources": [route], "status": "generation_failed",
                     "missing_data": [], "failed_checks": [f"{type(exc).__name__}: {str(exc)[:300]}"],
                     "warnings": [], "priority": "P0", "a4_pages": 0, "a3_spreads": 0,
-                    "a4_pdf": "", "a3_pdf": "", "independent_html": "", "visual_count": 0,
+                    "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "", "independent_html": "", "visual_count": 0,
                 })
     result = save_reports(out, records, "smoke" if args.smoke else "batch")
     print(json.dumps(result, indent=2), flush=True)
