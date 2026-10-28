@@ -1,0 +1,12 @@
+/* Shared four-A4-page booklet: two A3 landscape printing spreads.
+   All four source pages stay readable on screen; print clones are reordered 4–1 / 2–3. */
+@media print{
+@page{size:A3 landscape;margin:0}
+html,body{margin:0!important;padding:0!important;background:white!important}
+.screen-toolbar,.instructions,.viewer{display:none!important}
+.print-spreads{display:block!important}
+.spread{display:flex!important;flex-direction:row;width:420mm;height:297mm;break-after:page;page-break-after:always;overflow:hidden}
+.spread:last-child{break-after:auto;page-break-after:auto}
+.spread .page{width:210mm;height:297mm;box-shadow:none!important;flex:0 0 210mm;break-inside:avoid;page-break-inside:avoid}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
