@@ -2099,3 +2099,11 @@ if(/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)){
   j277Cycle.defer=true;
   document.body.appendChild(j277Cycle);
 }
+
+/* One centrally maintained lesson-to-booklet route. The resources module
+   inserts a link only for lessons with a published independent booklet. */
+if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}\//i.test(location.pathname)){
+  const resources=document.createElement('script');
+  resources.src='../../../assets/h446-lesson/lesson-resources.js?v=20261028-lesson004';
+  document.body.appendChild(resources);
+}
