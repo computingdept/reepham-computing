@@ -220,3 +220,66 @@ body.independent-paged .viewer .page .online-exit input{
   white-space:nowrap;
 }
 @media print{.page .online-exit{display:none!important}}
+
+
+/* Print response spaces: independent lesson 003
+   Keep these out of online view, where editable inputs are supplied by JS.
+   Explicit border rules print even when background graphics are disabled. */
+.print-writing,.print-short-answer{display:none}
+@media print{
+  body.independent-paged .print-spreads .print-writing,
+  body.independent-paged .print-spreads .print-short-answer{
+    display:flex!important;
+    box-sizing:border-box;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  body.independent-paged .print-spreads .print-writing{
+    flex-direction:column;
+    margin:1mm 0 2mm;
+    width:100%;
+  }
+  body.independent-paged .print-spreads .print-rule{
+    display:block;
+    flex:none;
+    box-sizing:border-box;
+    height:5.6mm;
+    min-height:5.6mm;
+    border-bottom:0.28mm solid #989898;
+  }
+  body.independent-paged .print-spreads .print-short-answer{
+    display:flex!important;
+    align-items:center;
+    gap:2mm;
+    margin:1.2mm 0 1mm;
+    font-size:9pt;
+  }
+  body.independent-paged .print-spreads .print-answer-label{
+    display:inline-block;
+    font-weight:700;
+  }
+  body.independent-paged .print-spreads .print-answer-box{
+    display:inline-block;
+    width:37mm;
+    height:7mm;
+    border:0.3mm solid #666;
+    border-radius:1mm;
+    background:white;
+  }
+  /* These older vocabulary writing rules were hidden globally in
+     independent-paged mode; restore them in the printable clone. */
+  body.independent-paged .print-spreads .page .write-line{
+    display:block!important;
+    height:4.6mm;
+    margin:0 0 0.5mm;
+    border-bottom:0.25mm solid #aaa;
+  }
+  /* Page 3 contains Code First, three conversions and explanation tasks.
+     Keep rules legible without wasting the limited A4-side space. */
+  body.independent-paged .print-spreads .page[data-page="3"] .q{
+    margin:2.2mm 0 2.7mm;
+  }
+  body.independent-paged .print-spreads .page[data-page="3"] .heading{
+    margin:2.5mm 0 1.5mm;
+  }
+}
