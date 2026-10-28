@@ -221,7 +221,7 @@
 <link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
 <link rel="stylesheet" href="assets/hub-monochrome.css?v=20261028-card-open1">
-<script src="assets/hub-navigation.js?v=20261028-card-open1"></script>
+<script src="assets/hub-navigation.js?v=20261028-booklet-draft1"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
 </head>
 <body class="course-hub course-compact course-inline-nav" data-year="12">
 <header class="topbar">
@@ -463,10 +463,15 @@ function renderLessons(){
       const href=liveMap[x];
       if(!staffPreview&&year!==13&&!href)continue;
       const specKey=lessonSpecification(x);
+      const publishedDraft=window.OfflineBooklets?.get('h446',x)||null;
       grid.append(Navigation.createTile({
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
+        learnHref:publishedDraft?.learn_colour||null,
+        printHref:publishedDraft?.print_bw||null,
+        learnLabel:publishedDraft?'Learn draft':'Learn',
+        printLabel:publishedDraft?'Print draft':'Print',
         color:curriculumColour(specKey),
         specPoint:specKey,
         specRaw:specKey
@@ -479,6 +484,7 @@ function renderLessons(){
   document.getElementById('lessonCount').textContent=year===13?'140 ready lessons': '160 ready lessons · 20 protected NEA periods';
 }
 
+window.addEventListener('offline-booklets-loaded',renderLessons);
 applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',online:'revisionhub',guides:'booklet'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script>
 <script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
