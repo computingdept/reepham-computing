@@ -143,6 +143,8 @@
         exitAction.append(exitButton,exitStatus);
         exitRows[2].after(exitAction);
       }
+      const improve=[...check.querySelectorAll(':scope > .heading')].find(x=>/Correct.*return/i.test(x.textContent));
+      if(improve)reply(improve.nextElementSibling,'improve','What I corrected and why',true);
       const controls=el('div','lesson-check-controls');
       const btn=el('button','', 'Check my three conversions');
       btn.type='button';
