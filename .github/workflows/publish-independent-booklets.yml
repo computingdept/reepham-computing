@@ -65,6 +65,28 @@ jobs:
           print('Priority counts:',audit['priority_counts'])
           PY
 
+      - name: Verify every published staff-index and hub PDF link
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          base=Path('offline/booklets')
+          catalogue=json.loads((base/'catalogue.json').read_text())
+          entries=[e for course in catalogue['lessons'].values() for e in course.values()]
+          expected=len(entries)*4
+          assert (base/'REVIEW_INDEX.html').is_file(), 'Staff review index missing'
+          soup=BeautifulSoup((base/'REVIEW_INDEX.html').read_text(),'html.parser')
+          links=[a.get('href') for a in soup.select('a[href]') if a.get('href','').lower().endswith('.pdf')]
+          missing=[link for link in links if not (base/link).is_file()]
+          assert len(links)==expected, f'Expected {expected} PDF links, found {len(links)}'
+          assert not missing, f'Broken review index links: {missing[:10]}'
+          for entry in entries:
+              for field in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(entry[field]).is_file(), entry[field]
+          print('Verified',len(entries),'draft lessons and',expected,'hosted PDF links')
+          PY
+
       - name: Commit public draft PDFs and machine-readable catalogue
         run: |
           git config user.name 'github-actions[bot]'
