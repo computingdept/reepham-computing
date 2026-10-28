@@ -1,0 +1,24 @@
+name: Verify independent booklets on live prototype
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-offline-booklets-live.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Check real public J277/H446 PDF and hub URLs
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Wait for GitHub Pages and verify live PDF bytes
+        run: python tools/independent_booklets/verify_live.py
