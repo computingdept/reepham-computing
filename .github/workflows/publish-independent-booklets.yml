@@ -96,8 +96,19 @@ jobs:
             echo 'No publication changes'
           else
             git commit -m 'Publish verified unapproved J277/H446 booklet drafts and audit catalogue'
-            git pull --rebase origin main
-            git push origin HEAD:main
+            # Other prototype work may update main while PDFs are rendering.
+            # Retry fast-forward publication without overwriting their changes.
+            pushed=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then
+                pushed=1
+                break
+              fi
+              echo "Concurrent main update; retrying publication ($attempt/8)"
+              sleep 3
+            done
+            test "$pushed" -eq 1 || { echo 'Deferred: main advanced during all publication attempts'; exit 1; }
           fi
 
       - name: Summarise actual publication
