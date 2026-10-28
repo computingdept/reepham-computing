@@ -1,7 +1,7 @@
 /* Central Learning Hub lesson navigation: shared across KS3, J277 and H446.
    Course pages provide lesson numbers, titles, routes and specification colours.
    Full lesson / Catch up are direct links; Print offers its format choice.
-   Number and title identify the lesson and do not duplicate the Full lesson link. */
+   The title and number open the full lesson; a one-resource card needs no duplicate footer. */
 (function(){
   'use strict';
   const selector='.central-lesson[data-menu-open="true"]';
@@ -118,8 +118,9 @@
     const teach=typeof o.openHref==='string'&&o.openHref.trim()?o.openHref:null;
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
     const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
+    const primaryOnly=Boolean(teach&&!catchup&&!print);
     const entry=document.createElement('article');
-    entry.className='lesson-entry lesson-choice central-lesson'+(teach?'':' is-planned');
+    entry.className='lesson-entry lesson-choice central-lesson'+(teach?'':' is-planned')+(primaryOnly?' lesson-primary-only':'');
     if(number.toLowerCase()==='welcome')entry.classList.add('lesson-choice-welcome');
     entry.dataset.menuOpen='false';
     entry.dataset.hasTeach=String(Boolean(teach));
@@ -131,10 +132,15 @@
       entry.classList.add('has-spec-point');
       entry.style.setProperty('--spec-mark-colour',spec.colour);
     }
-    // Lesson identity is information, not a second link to the same resource.
-    const tile=document.createElement('div');
+    // Main lesson card always opens the full lesson, across all three hubs.
+    const tile=document.createElement(teach?'a':'div');
     tile.className='lesson-tile-open'+(teach?'':' lesson-tile-unavailable');
-    if(!teach)tile.title='Not yet published';
+    if(teach){
+      tile.href=teach;
+      tile.setAttribute('aria-label','Open full lesson '+number+(title?': '+title:''));
+    }else{
+      tile.title='Not yet published';
+    }
     const num=document.createElement('span');
     num.className='lesson-tile-number';
     num.textContent=number;
@@ -143,6 +149,12 @@
     shortTitle.textContent=title;
     shortTitle.title=title;
     tile.append(num,shortTitle);
+    if(primaryOnly){
+      const hint=document.createElement('span');
+      hint.className='lesson-primary-hint';
+      hint.textContent='Open full lesson ↗';
+      tile.append(hint);
+    }
     entry.append(tile);
     if(spec){
       const code=document.createElement('span');
@@ -155,6 +167,9 @@
       line.setAttribute('aria-hidden','true');
       entry.append(line);
     }
+    // H446/KS3 full-lesson-only cards use the entire top area as the action.
+    // Do not show an extra Full lesson footer linking to the same destination.
+    if(primaryOnly)return entry;
     const count=Number(Boolean(teach))+Number(Boolean(catchup))+Number(Boolean(print));
     if(!count){
       const status=document.createElement('div');
