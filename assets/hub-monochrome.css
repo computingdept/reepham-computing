@@ -1492,3 +1492,89 @@ body.course-hub .lesson-mobile-options .lesson-print-variants .scenario-copy{
     transition:none;
   }
 }
+
+/* Hub primary navigation: Full lesson / Catch up / Print, 2026-10-28. */
+/* Give navigation actions the full single-click prominence, while the number
+   and topic remain informational. No changes are made inside lesson pages. */
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson{
+  height:190px;
+  min-height:190px;
+  max-height:190px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-tile-open,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.has-spec-point>.lesson-tile-open{
+  cursor:default;
+  padding:11px 9px 8px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-tile-open:hover{
+  background:#fff;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-direct-actions{
+  flex-basis:64px;
+  min-height:64px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-direct-action,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-options-toggle{
+  height:64px;
+  min-height:64px;
+  gap:4px;
+  padding:8px 2px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-action-full-lesson{
+  color:#15251d;
+  background:#f6f8f6;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions .lesson-direct-label{
+  white-space:normal;
+  text-align:center;
+  overflow-wrap:normal;
+  word-break:normal;
+  font-size:11.5px;
+  font-weight:720;
+  line-height:1.2;
+  max-width:100%;
+  min-height:0;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-action-status{
+  flex-basis:64px;
+  min-height:64px;
+}
+@media(max-width:1050px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+@media(max-width:800px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:550px),(pointer:coarse) and (max-width:700px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson{
+    height:198px;min-height:198px;max-height:198px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions{
+    min-height:68px;flex-basis:68px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-direct-action,
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-options-toggle{
+    height:68px;min-height:68px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-action-status{
+    flex-basis:68px;min-height:68px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-direct-action,
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-direct-actions>.lesson-options-toggle{
+    transition:none;
+  }
+}
