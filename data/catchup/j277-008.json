@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "id": "j277-008",
+  "title": "Primary Storage: RAM, ROM and Cache",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall two useful ideas from earlier lessons.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Why is lossless compression suitable for program source code?",
+          "options": [
+            "Exact original can be restored",
+            "It deletes unneeded lines",
+            "It always has zero file size",
+            "It changes variables safely"
+          ],
+          "answer": "Exact original can be restored",
+          "feedback": "Code must be recovered exactly to preserve its instructions."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "An image is 40 × 20 pixels at 4 bits per pixel. What is its raw size in bytes?",
+          "answer": "400",
+          "feedback": "40 × 20 × 4 = 3,200 bits; ÷ 8 = 400 bytes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the essential ideas and worked example before checking your understanding.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Why is memory needed?",
+          "text": "Running programs need fast access to instructions and working data. Primary storage supports the CPU while programs run."
+        },
+        {
+          "type": "paragraph",
+          "title": "RAM",
+          "text": "Random Access Memory stores programs and data currently in use. It is volatile, so its contents are lost when power is removed."
+        },
+        {
+          "type": "paragraph",
+          "title": "ROM",
+          "text": "Read Only Memory is non-volatile and commonly stores firmware or start-up instructions."
+        },
+        {
+          "type": "paragraph",
+          "title": "Cache",
+          "text": "CPU cache is small, very fast memory close to the processor holding frequently used data and instructions, reducing access time."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Primary Storage: RAM, ROM and Cache",
+          "layout": "cards",
+          "items": [
+            [
+              "RAM",
+              "Volatile working memory"
+            ],
+            [
+              "ROM",
+              "Non-volatile firmware"
+            ],
+            [
+              "Cache",
+              "Small, very fast CPU memory"
+            ]
+          ],
+          "caption": "Different memory types serve different roles; saved files also need secondary storage."
+        },
+        {
+          "type": "example",
+          "title": "Worked model · A laptop starts, opens a game, saves a level, then powers off. Explain what each type of memory does.",
+          "text": "Non-volatile ROM/firmware supplies start-up instructions. The active operating system and game data are loaded into RAM from secondary storage. The processor can access frequently needed data faster from cache. Saving writes the level to non-volatile secondary storage; RAM contents are lost at power-off."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "RAM — Volatile working memory for programs and data in use.",
+            "ROM — Non-volatile memory typically containing firmware.",
+            "cache — Small, very fast memory used by the CPU.",
+            "volatile — Loses stored contents when power is removed."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which main memory is volatile?",
+          "options": [
+            "RAM",
+            "ROM",
+            "Optical disc",
+            "Solid-state secondary storage"
+          ],
+          "answer": "RAM",
+          "feedback": "RAM generally loses contents without power."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which type usually holds firmware or startup instructions?",
+          "options": [
+            "RAM",
+            "ROM",
+            "An HDD's moving head",
+            "Cache only"
+          ],
+          "answer": "ROM",
+          "feedback": "Non-volatile ROM or firmware storage holds start-up instructions."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Why is CPU cache useful?",
+          "options": [
+            "Stores backups for months",
+            "Provides faster access to frequently used data",
+            "Permanently replaces ROM",
+            "Makes a disk optical"
+          ],
+          "answer": "Provides faster access to frequently used data",
+          "feedback": "Cache is small and fast, reducing slower RAM accesses."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, reorder and apply what you have learnt.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Consider power loss and what each type is designed to hold."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match the memory type to its main role.",
+          "pairs": [
+            [
+              "RAM",
+              "Working programs and data"
+            ],
+            [
+              "ROM",
+              "Persistent firmware"
+            ],
+            [
+              "cache",
+              "Frequently used CPU data"
+            ]
+          ],
+          "feedback": "RAM is volatile working memory; ROM persists; cache speeds frequently needed access."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put a simple power-on and use sequence in order.",
+          "items": [
+            "CPU uses RAM and cache while work runs",
+            "Device reads start-up firmware",
+            "Program loads into working RAM"
+          ],
+          "answer": [
+            "Device reads start-up firmware",
+            "Program loads into working RAM",
+            "CPU uses RAM and cache while work runs"
+          ],
+          "feedback": "Boot firmware helps start the system, then working programs use RAM and cache."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which type loses stored information when power is removed?",
+          "options": [
+            "ROM",
+            "RAM",
+            "An SSD",
+            "An optical disc"
+          ],
+          "answer": "RAM",
+          "feedback": "Volatile RAM cannot normally retain its contents without electricity."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Where are unsaved changes to an open document generally held?",
+          "options": [
+            "In working RAM",
+            "In ROM firmware",
+            "On an optical read-only disc",
+            "Only in the CPU clock"
+          ],
+          "answer": "In working RAM",
+          "feedback": "Active data may be in RAM until explicitly saved to non-volatile storage."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and explain one key idea in writing.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "score = 10",
+            "score = 15",
+            "print(score)"
+          ],
+          "caption": "Predict the displayed number. Change the second assignment to 20. Explain why this is a model of changing working data, not a simulation of ROM."
+        },
+        {
+          "type": "prompt",
+          "text": "Explain the purpose of cache memory. [2 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The starter program sets score = 10, then score = 15, then prints score. What is output?",
+          "answer": "15",
+          "feedback": "The second assignment replaces the working value with 15."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "If the second assignment becomes score = 20, what is output?",
+          "answer": "20",
+          "feedback": "The last assignment sets score to 20."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Why might cache make a running program faster?",
+          "options": [
+            "It holds frequently used data near the CPU",
+            "It keeps files when power is lost",
+            "It changes binary to hexadecimal",
+            "It is larger than secondary storage"
+          ],
+          "answer": "It holds frequently used data near the CPU",
+          "feedback": "Cache reduces access latency for frequently used values and instructions."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain the purpose of cache memory. [2 marks]",
+        "model": "Holds frequently used instructions or data near the CPU [1], enabling faster access than repeatedly fetching from RAM [1].",
+        "checklist": [
+          "I explained where saved work persists.",
+          "I explained that RAM is volatile working memory.",
+          "I linked loss of unsaved edits to power loss."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete the final check and review your score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "RAM normally loses its data after the computer is switched off.",
+          "answer": "true",
+          "feedback": "RAM is volatile main memory."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "ROM is typically volatile and must be rewritten at every start.",
+          "answer": "false",
+          "feedback": "ROM/non-volatile firmware persists without power."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "CPU cache usually holds frequently needed data and instructions for faster access.",
+          "answer": "true",
+          "feedback": "Cache is small and fast, close to the CPU."
+        }
+      ]
+    }
+  ]
+}
