@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "id": "j277-015",
+  "title": "Bubble Sort and Insertion Sort",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve two ideas from earlier learning.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Does linear search require a sorted list?",
+          "options": [
+            "No",
+            "Yes, ascending",
+            "Yes, descending",
+            "Only if stored in RAM"
+          ],
+          "answer": "No",
+          "feedback": "A linear search simply scans items in sequence."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "What happens when the CPU executes an instruction?",
+          "options": [
+            "The specified operation is carried out",
+            "The instruction is permanently archived",
+            "The keyboard must always be read",
+            "The CPU stops indefinitely"
+          ],
+          "answer": "The specified operation is carried out",
+          "feedback": "The execute stage carries out the decoded operation."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the key concepts, visual model and worked explanation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Bubble sort",
+          "text": "Compare adjacent values and swap those in the wrong order; repeat passes until no swaps are needed."
+        },
+        {
+          "type": "paragraph",
+          "title": "After each pass",
+          "text": "For ascending bubble sort, the largest remaining value moves towards the end on each full pass."
+        },
+        {
+          "type": "paragraph",
+          "title": "Insertion sort",
+          "text": "Treat the first item as a sorted section; take the next key item and insert it into the correct place."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep a trace",
+          "text": "Show each swap or insertion rather than jumping straight to the final sorted result."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Bubble Sort and Insertion Sort",
+          "layout": "flow",
+          "items": [
+            [
+              "Compare",
+              "Adjacent items"
+            ],
+            [
+              "Swap",
+              "If out of order"
+            ],
+            [
+              "Repeat",
+              "Until sorted"
+            ]
+          ],
+          "caption": "Insertion sort is different: it inserts each next key into the correctly positioned place of the growing sorted section."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · Show one full bubble-sort pass through [5, 1, 4, 2].",
+          "text": "Compare 5 and 1: swap → [1, 5, 4, 2]. Compare 5 and 4: swap → [1, 4, 5, 2]. Compare 5 and 2: swap → [1, 4, 2, 5]. End of first pass: 5 has reached its final position. More passes are needed to sort the remaining values."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "bubble sort — Repeatedly compares and swaps adjacent out-of-order values.",
+            "insertion sort — Inserts each next item into a growing sorted section.",
+            "pass — One traversal of adjacent values in a sort.",
+            "key — Current value being inserted into a sorted section."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "What does bubble sort compare?",
+          "options": [
+            "Neighbouring values",
+            "Only the first and last values",
+            "File sizes only",
+            "Values at random indexes"
+          ],
+          "answer": "Neighbouring values",
+          "feedback": "Adjacent out-of-order values are swapped."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "What does insertion sort build as it runs?",
+          "options": [
+            "A growing sorted section",
+            "A randomised section",
+            "A separate empty file",
+            "A cache register only"
+          ],
+          "answer": "A growing sorted section",
+          "feedback": "It inserts the next item into an already sorted section."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "For ascending bubble sort, what generally moves to the end after a full pass?",
+          "options": [
+            "The largest remaining value",
+            "The smallest remaining value",
+            "The first index",
+            "Any value chosen at random"
+          ],
+          "answer": "The largest remaining value",
+          "feedback": "Adjacent swaps push a large value toward the end of the unsorted portion."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match and reorder before applying the method yourself.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Trace each adjacent swap in order, then check the evolving sorted portion."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each sorting term to its description.",
+          "pairs": [
+            [
+              "bubble sort",
+              "Swap adjacent out-of-order items"
+            ],
+            [
+              "insertion sort",
+              "Insert a key into sorted part"
+            ],
+            [
+              "pass",
+              "One traversal of comparisons"
+            ]
+          ],
+          "feedback": "Bubble sorts by passes; insertion grows its sorted section."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Order the changes in one bubble-sort pass of [5,1,4,2].",
+          "items": [
+            "[1,4,2,5]",
+            "[1,5,4,2]",
+            "[1,4,5,2]"
+          ],
+          "answer": [
+            "[1,5,4,2]",
+            "[1,4,5,2]",
+            "[1,4,2,5]"
+          ],
+          "feedback": "Swap 5 with 1, then 4, then 2, moving 5 to the end."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "One bubble-sort pass on [4,2,3] needs how many swaps to reach [2,3,4]?",
+          "answer": "2",
+          "feedback": "Swap 4/2 and then 4/3: two swaps."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Insertion sort has [2,6] sorted and must insert 5. Where does it go?",
+          "options": [
+            "Between 2 and 6",
+            "Before 2",
+            "After 6",
+            "It cannot be inserted"
+          ],
+          "answer": "Between 2 and 6",
+          "feedback": "Insertion puts the key in its ordered position."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Predict the Code First result and write one exam-style answer.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "a = 4",
+            "b = 2",
+            "if a > b then",
+            "    temp = a",
+            "    a = b",
+            "    b = temp",
+            "endif",
+            "print(a)"
+          ],
+          "caption": "Predict the printed file size. Change a to 1. Explain how comparing file sizes helps calculate total storage requirements."
+        },
+        {
+          "type": "prompt",
+          "text": "Show one bubble-sort pass on [3, 1, 2], giving the array after each swap. [3 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The code starts a = 4, b = 2, swaps when a > b and prints a. What is printed?",
+          "answer": "2",
+          "feedback": "The values swap; a becomes 2."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "If a starts at 1 and b stays 2, what does it print?",
+          "answer": "1",
+          "feedback": "No swap is needed because 1 is less than 2."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "What is the insertion-sort result of [4,1,3]?",
+          "options": [
+            "[1,3,4]",
+            "[3,1,4]",
+            "[4,3,1]",
+            "[1,4,3]"
+          ],
+          "answer": "[1,3,4]",
+          "feedback": "Insert 1 before 4, then 3 between 1 and 4."
+        }
+      ],
+      "writing": {
+        "prompt": "Show one bubble-sort pass on [3, 1, 2], giving the array after each swap. [3 marks]",
+        "model": "[1, 3, 2] [1]; [1, 2, 3] [1]; largest item reaches end [1].",
+        "checklist": [
+          "I explained the initial sorted section.",
+          "I traced inserting the next key correctly.",
+          "I gave the final ordered list."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Check your understanding and review your mastery result.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Bubble sort may require several passes to sort a list.",
+          "answer": "true",
+          "feedback": "One pass moves one large value into place, but others may remain unordered."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Insertion sort compares only adjacent pairs and repeats full bubble passes.",
+          "answer": "false",
+          "feedback": "Insertion takes the next key and places it into the sorted section."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "A temporary variable can prevent losing a value when swapping two variables.",
+          "answer": "true",
+          "feedback": "The temporary value holds one original value while the other is overwritten."
+        }
+      ]
+    }
+  ]
+}
