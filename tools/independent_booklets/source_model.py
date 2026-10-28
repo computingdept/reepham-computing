@@ -286,10 +286,12 @@ def h446_source(number: int) -> Lesson:
         question_nodes = soup.select("#you-do article.exam-card")
     for node in question_nodes:
         prompt = node.select_one(".youdo-question-prompt") or node
-        qparts = blocks(prompt, limit=0)
-        # Do not print a revealed model answer inside the question.
-        if prompt is node and node.select_one(".youdo-solution"):
-            qparts = [p for p in qparts if "MODEL ANSWER" not in p.upper()]
+        # Some lessons put a hidden solution INSIDE the question article.
+        # Remove it from a cloned prompt before extracting student text.
+        prompt_copy = BeautifulSoup(str(prompt), "html.parser")
+        for hidden_solution in prompt_copy.select(".youdo-solution, .answer-reveal, .answer-content"):
+            hidden_solution.decompose()
+        qparts = blocks(prompt_copy, limit=0)
         q = "\n".join(qparts)
         sol = node.select_one(".youdo-solution")
         answer = "\n".join(blocks(sol)) if sol else ""
