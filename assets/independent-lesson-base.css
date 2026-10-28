@@ -127,3 +127,14 @@ body[data-mode="bw"] .page.selfmark-page .selfmark-row{background:transparent;bo
 .page .pen-instruction .pen-label-green{color:#176b42;margin-left:10px}
 .page .pen-instruction .pen-rule-text{color:#35434b}
 @media(max-width:700px){.viewer .page .lesson-identity{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px}.viewer .page .pen-instruction .pen-label-green{margin-left:0}}
+
+/* Shared pen routine icons: clear even without coloured ink/printing.
+   Black-pen icon is a nib; Green-pen icon has a check-mark. */
+.page .pen-instruction{display:flex;align-items:center;flex-wrap:wrap;gap:5px 16px;margin:4px 0 7px;font-size:8pt;line-height:1.3}
+.page .pen-routine-item{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.page .pen-symbol{width:14px;height:14px;min-width:14px;display:inline-block;flex:0 0 14px}
+.page .pen-symbol-write,.page .pen-label-black{color:#17232a}
+.page .pen-symbol-mark,.page .pen-label-green{color:#176b42}
+.page .pen-routine-item .pen-label-green{margin-left:0}
+body[data-mode="bw"] .page .pen-symbol-mark,body[data-mode="bw"] .page .pen-label-green{color:#17232a}
+@media(max-width:700px){.viewer .page .pen-instruction{gap:5px 12px}.viewer .page .pen-routine-item{white-space:normal}}
