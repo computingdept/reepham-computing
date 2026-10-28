@@ -1,0 +1,146 @@
+/* Shared independent lesson content presentation: J277 reference exemplar.
+   The same HTML content is used for screen and the existing booklet spreads.
+   Signs reuse the actual classroom sign art, not replacement decorations. */
+body.independent-paged .lesson-routines,
+.lesson-routines{
+  display:flex;align-items:stretch;flex-wrap:wrap;gap:7px;margin:5px 0 10px;
+}
+.lesson-routines .routine-cue{
+  box-sizing:border-box;display:flex;align-items:center;gap:6px;
+  padding:5px 8px;border:1px solid var(--routine-stroke);
+  border-radius:7px;background:var(--routine-tint);color:#222;
+  font:700 11px/1.2 Arial,Helvetica,sans-serif;
+}
+.lesson-routines .routine-cue[data-family="phase"]{
+  --routine-stroke:#5b92bf;--routine-tint:#ecf4fc;
+}
+.lesson-routines .routine-cue[data-family="behaviour"]{
+  --routine-stroke:#62a077;--routine-tint:#eaf5ee;
+}
+.lesson-routines .routine-cue[data-family="response"]{
+  --routine-stroke:#d99b59;--routine-tint:#fff2e5;
+}
+.lesson-routines .routine-cue img{
+  display:block;width:31px;height:30px;object-fit:contain;flex:none;
+}
+.lesson-routines .routine-cue span{display:block;max-width:115px}
+.page .guide-example{
+  border:1px solid #bbcbbb;border-radius:7px;background:#fff;
+  padding:8px 10px;margin:6px 0 8px;
+}
+.page .guide-example p{margin:3px 0}
+.page .guide-example .guide-eyebrow{
+  font-size:9pt;font-weight:800;color:#333;
+}
+.page .nibble-model{
+  display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:7px 0;
+}
+.page .nibble-part{
+  border:1px solid #b9c8cb;border-radius:5px;background:#f5f9fc;
+  padding:6px 8px;text-align:center;
+}
+.page .nibble-part b{
+  display:block;font:800 13pt/1.15 Consolas,monospace;letter-spacing:2px;
+}
+.page .nibble-part small{display:block;margin-top:3px;font-size:9pt}
+.page .rgb-model{
+  display:flex;align-items:stretch;gap:5px;margin:6px 0;
+}
+.page .rgb-model .channel{
+  flex:1;min-width:0;box-sizing:border-box;border:1px solid #aaa;
+  border-radius:5px;padding:6px 4px;text-align:center;
+  font-size:9pt;background:white;
+}
+.page .rgb-model strong{display:block;font:800 12pt/1.2 Consolas,monospace}
+.page .rgb-model .channel:nth-child(2){border-color:#55935e;background:#eaf6eb}
+.page .guide-source{
+  font-size:8pt;line-height:1.3;color:#475d58;margin:4px 0 7px;
+}
+body[data-mode="bw"] .lesson-routines .routine-cue{
+  --routine-stroke:#444!important;--routine-tint:#fff!important;
+}
+body[data-mode="bw"] .lesson-routines .routine-cue img{filter:grayscale(1)}
+body[data-mode="bw"] .page .nibble-part,
+body[data-mode="bw"] .page .rgb-model .channel{background:#fff;color:#111;border-color:#777}
+.page .online-reply{display:none}
+body.independent-paged .page .online-reply{
+  display:flex;flex-direction:column;gap:4px;margin:6px 0 8px;
+}
+body.independent-paged .page .online-reply label{
+  font:700 12px/1.3 Arial,Helvetica,sans-serif;color:#333;
+}
+body.independent-paged .page .online-reply input,
+body.independent-paged .page .online-reply textarea{
+  box-sizing:border-box;width:100%;max-width:100%;
+  min-height:42px;padding:9px 10px;border:1px solid #999;border-radius:6px;
+  color:#161616;background:#fff;font:500 16px/1.35 Arial,sans-serif;
+}
+body.independent-paged .page .online-reply textarea{resize:vertical;min-height:65px}
+body.independent-paged .page .write-line{display:none}
+body.independent-paged .page .info.lesson-answer-key{
+  border:1px solid #bbb;background:#fff;color:#222;
+}
+body.independent-paged .page .lesson-answer-key details{
+  border-bottom:1px solid #ddd;padding:7px 3px;
+}
+body.independent-paged .page .lesson-answer-key details:last-child{border-bottom:0}
+body.independent-paged .page .lesson-answer-key summary{
+  padding:5px 2px;font-weight:700;cursor:pointer;
+}
+body.independent-paged .page .lesson-check-controls{
+  margin:12px 0;padding:10px 12px;border:1px solid #ccc;border-radius:7px;
+  background:#fff;
+}
+body.independent-paged .page .lesson-check-controls button{
+  min-height:42px;padding:8px 12px;border:1px solid #555;border-radius:6px;
+  background:#fff;color:#222;font:750 13px Arial,sans-serif;cursor:pointer;
+}
+body.independent-paged .page .lesson-check-result{
+  margin-top:8px;font-size:13px;line-height:1.45;
+}
+body.independent-paged .page .lesson-check-result p{margin:5px 0}
+body.independent-paged .page .lesson-check-result .positive{
+  border-left:3px solid #3d875a;padding-left:9px;
+}
+body.independent-paged .page .lesson-check-result .retry{
+  border-left:3px solid #b38640;padding-left:9px;
+}
+body.independent-paged .page .lesson-check-result:empty{display:none}
+body.independent-paged .page .exit-choice{
+  display:inline-flex;gap:5px;align-items:center;font-size:13px;
+}
+body.independent-paged .page .exit-choice input{width:18px;height:18px}
+body.independent-paged .page .print-only{display:none}
+body.independent-paged .page h2,
+body.independent-paged .page h3{color:#222}
+body.independent-paged .page .heading{
+  border-left-width:4px;padding-left:9px;
+}
+@media screen and (max-width:700px){
+  body.independent-paged .page .lesson-routines{gap:5px}
+  body.independent-paged .page .routine-cue{padding:5px;gap:5px;font-size:10px}
+  body.independent-paged .page .routine-cue img{width:26px;height:28px}
+  body.independent-paged .page .nibble-part b{font-size:11pt}
+}
+@media print{
+  .lesson-routines{gap:4px;margin:2px 0 5px}
+  .lesson-routines .routine-cue{padding:2px 5px;gap:3px;font-size:7.7pt;border-radius:3px}
+  .lesson-routines .routine-cue img{width:22px;height:20px}
+  .page .guide-example{padding:4px 7px;margin:4px 0}
+  .page .guide-example p{margin:2px 0}
+  .page .nibble-model{margin:4px 0}
+  .page .nibble-part{padding:3px 5px}
+  .page .nibble-part b{font-size:10pt}
+  .page .nibble-part small{font-size:8pt}
+  .page .rgb-model{margin:3px 0}
+  .page .rgb-model .channel{padding:3px 4px;font-size:8pt}
+  .page .rgb-model strong{font-size:10pt}
+  .page .guide-source{font-size:7.6pt}
+  .page .online-reply,.page .lesson-check-controls,.page .lesson-check-result{display:none!important}
+  .page .print-only{display:initial}
+  .page .q{margin:4px 0 6px}
+  .page .heading{margin:7px 0 5px}
+  .page .small,.page p{line-height:1.25}
+  body[data-mode="bw"] .lesson-routines .routine-cue{border-color:#444!important;background:white!important}
+  body[data-mode="bw"] .lesson-routines img{filter:grayscale(1)}
+}
