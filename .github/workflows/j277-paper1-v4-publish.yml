@@ -1,0 +1,77 @@
+name: Publish J277 Paper 1 V4 (scoped atomic release)
+
+on:
+  push:
+    branches:
+      - review/j277-paper1-v3-20261028
+    paths:
+      - .github/workflows/j277-paper1-v4-publish.yml
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: j277-paper1-v4-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.repository == 'computingdept/reepham-computing'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout review branch with original V3 source PDFs
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: PDF dependencies
+        run: python -m pip install --disable-pip-version-check 'pymupdf==1.26.7' 'Pillow==12.3.0'
+      - name: Validate source PDF hashes and prepare workspace
+        run: |
+          mkdir -p .build/j277
+          cp review/j277-paper1-v3-20261028/verified/J277_Paper_1_DIGITAL_STUDENT_REVIEW_V3_UNPUBLISHED.pdf .build/j277/
+          cp review/j277-paper1-v3-20261028/verified/J277_Paper1_Print_V3.pdf .build/j277/
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          base=Path('.build/j277')
+          data=json.loads(Path('review/j277-paper1-v3-20261028/manifest.json').read_text())
+          for filename,want in [(data['digital_pdf']['file'],data['digital_pdf']['sha256']),(data['print_pdf']['file'],data['print_pdf']['sha256'])]:
+              assert hashlib.sha256((base/filename).read_bytes()).hexdigest()==want,filename
+          print('PASS: both verified V3 PDF inputs match original hashes')
+          PY
+      - name: Build corrected digital and print V4 PDF editions
+        env:
+          J277_PDF_ROOT: ${{ github.workspace }}/.build/j277
+        run: python tools/revision/build_j277_paper1_v4.py
+      - name: Prepare clean main worktree
+        run: |
+          git fetch origin main
+          git worktree add -b j277-paper1-v4-publishing .publish origin/main
+      - name: Validate and stage coordinated Paper 1 replacement
+        run: python tools/revision/release_j277_paper1_v4.py .build/j277 .publish
+      - name: Ensure no unintended files have changed
+        run: |
+          cd .publish
+          git add j277-hub.html revision/j277/guides/skill-index.json revision/j277/guides/guide-links.js revision/j277/guides/J277_Paper_1_Revision_Guide_AP1_Aligned.pdf revision/j277/guides/J277_Paper_1_Revision_Guide_Print_V4.pdf revision/j277/guides/paper1-v4-release.json
+          git diff --cached --name-only
+          test "$(git diff --cached --name-only | wc -l)" -eq 6
+          git diff --cached --quiet && exit 1 || true
+      - name: Publish one atomic commit to main
+        run: |
+          cd .publish
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Publish J277 Paper 1 V4 291-page colour and print guides with 33 MCQ page remaps"
+          git push origin HEAD:main
+      - name: Request a GitHub Pages rebuild when branch deployment is configured
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "Pages build API not enabled; check the configured Pages deployment."
