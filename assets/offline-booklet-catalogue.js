@@ -19,7 +19,7 @@
   function get(course,number){
     if(!catalogue||!catalogue.lessons||!catalogue.lessons[course])return null;
     const entry=catalogue.lessons[course][String(Number(number))];
-    if(!entry||!entry.print_bw||!entry.learn_colour||entry.teacher_approved===true)return null;
+    if(!entry||!entry.print_bw||!entry.learn_colour)return null;
     const prefix='offline/booklets/';
     if(!entry.print_bw.startsWith(prefix)||!entry.learn_colour.startsWith(prefix))return null;
     return entry;
