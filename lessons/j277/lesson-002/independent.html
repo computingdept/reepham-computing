@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="OCR J277 Lesson 002: a complete independent, printable Binary Addition and Shifts lesson.">
+<title>Independent Lesson 002 · Binary Addition and Shifts · RHS Computing</title>
+<link rel="alternate" type="application/json" href="../../../data/lesson-resources.json">
+<link rel="stylesheet" href="../../../assets/independent-lesson-base.css?v=20261028-central1">
+<link rel="stylesheet" href="../../../assets/independent-print.css?v=20261028-central1">
+<link rel="stylesheet" href="../../../assets/independent-navigation.css?v=20261028-independent1">
+<link rel="stylesheet" href="../../../assets/independent-learning-exemplar.css?v=20261028-writing-1">
+</head>
+<body data-mode="bw" data-lesson="j277-002">
+<nav class="screen-toolbar" aria-label="Independent lesson resources">
+  <strong>RHS Computing · Independent Lesson 002</strong>
+  <a href="index.html#do-now">Interactive lesson</a>
+  <a href="?version=bw" id="bw-option">Black &amp; white</a>
+  <a href="?version=colour" id="colour-option">Colour</a>
+  <button class="primary" type="button">Print A3 booklet / Save PDF</button>
+</nav>
+<div class="instructions">
+<h1>Binary Addition and Shifts — independent lesson</h1>
+<p><strong>Learn · Think · Write · Correct.</strong> Read each page in order. No internet, computer or teacher support is needed once printed.</p>
+<p><strong>Print:</strong> choose black &amp; white or colour, then print A3 landscape, double-sided, <strong>flip on short edge</strong>, at 100% size and fold. Select “Save as PDF” to keep a copy instead. Two A3 sides become four A4 pages.</p>
+</div>
+<div class="viewer" id="viewer"><section class="page" data-page="1"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 002</span></header><main class="tight">
+<h2>Binary Addition and Shifts</h2>
+<div class="lesson-routines" role="group" aria-label="Classroom routine signs"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/DoNow_CodingIcon.png" alt="Do Now" width="160" height="82"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/SilentWorking_CodingIcon.png" alt="Silent Working" width="160" height="82"></div>
+<p class="small faint">START · Retrieve what you learnt in Lesson 001. Do not look at the answers until page 4.</p>
+<p class="small"><strong>Name</strong> <span class="line"></span> <strong>Class / Date</strong> <span class="line"></span></p>
+<div class="heading">Do Now · Four retrieval questions</div>
+<div class="q"><b>1 · Previous lesson.</b> Convert <strong>00101101</strong> from binary to denary. Show the place values.</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="q"><b>2 · Multiple choice.</b> Why do computers use binary?<br>□ A · Ten states per bit &nbsp; □ B · Two states are reliable<br>□ C · No codes are needed &nbsp; □ D · Only numbers are stored</div>
+<div class="q"><b>3 · Earlier learning.</b> Convert denary <strong>150</strong> into eight-bit unsigned binary.</div><span class="write-line" aria-hidden="true"></span>
+<div class="q"><b>4 · Challenge.</b> Using eight unsigned bits, explain why the highest value is <strong>255</strong>, not 256.</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="heading green">Today's objectives</div>
+<p>Add two <span class="term">unsigned</span> eight-bit binary numbers, show each <span class="term">carry</span>, identify <span class="term">overflow</span>, and complete simple <span class="term">logical shifts</span>.</p>
+<div class="heading green">Key Vocabulary · Read</div>
+<div class="vocab-grid">
+  <div class="entry"><strong class="term">bit</strong><br>One binary digit: 0 or 1.</div>
+  <div class="entry"><strong class="term">carry</strong><br>A value passed into the next column on the left.</div>
+  <div class="entry"><strong class="term">unsigned</strong><br>A number representation with no negative values.</div>
+  <div class="entry"><strong class="term">overflow</strong><br>A result too large for the number of available bits.</div>
+</div>
+<div class="hair"></div>
+<p class="small"><strong>Retrieve:</strong> cover the definitions above. Write the meaning of each term.</p>
+<div class="two-col">
+ <div><strong>carry</strong><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span><strong>overflow</strong><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span></div>
+ <div><strong>bit</strong><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span><strong>unsigned</strong><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span></div>
+</div>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>1 / 4</span></footer></section><section class="page" data-page="2"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 002</span></header><main class="tight">
+<h2>Learn &amp; follow</h2>
+<div class="lesson-routines" role="group" aria-label="Classroom routine signs"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/IDo_CodingIcon.png" alt="I Do" width="160" height="82"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/Listening_CodingIcon.png" alt="Listening" width="160" height="82"></div>
+<p class="small faint">NEW LEARNING → I DO → WE DO · Read the examples and show your working.</p>
+<div class="heading">New Learning · Four binary addition rules</div>
+<div class="two-col">
+ <div class="info"><strong>0 + 0 = 0</strong><br><strong>0 + 1 = 1</strong><br><span class="small">No carry is needed.</span></div>
+ <div class="info"><strong>1 + 1 = 10₂</strong><br><strong>1 + 1 + 1 = 11₂</strong><br><span class="small">Carry 1 into the next column.</span></div>
+</div>
+<p>Work from <strong>right to left</strong>, just as with denary addition. For each column, write the right-hand bit and carry any extra 1 left.</p>
+<div class="info"><strong>VISUAL MODEL · EIGHT BIT POSITIONS</strong>
+<div class="bits" aria-label="Binary 00101101 with place values 128, 64, 32, 16, 8, 4, 2 and 1"><span class="bit"><em>128</em><strong>0</strong></span><span class="bit"><em>64</em><strong>0</strong></span><span class="bit one"><em>32</em><strong>1</strong></span><span class="bit"><em>16</em><strong>0</strong></span><span class="bit one"><em>8</em><strong>1</strong></span><span class="bit one"><em>4</em><strong>1</strong></span><span class="bit"><em>2</em><strong>0</strong></span><span class="bit one"><em>1</em><strong>1</strong></span></div>
+<p class="small">00101101 has value 32 + 8 + 4 + 1 = <strong>45</strong>. Bits have different place values.</p></div>
+<div class="heading green">I Do · Worked binary addition</div>
+<p><strong>Problem:</strong> Add <strong>00101101</strong> (45) and <strong>00010111</strong> (23).</p>
+<div class="code" role="img" aria-label="Column addition: 00101101 plus 00010111 equals 01000100">  00101101<br>+ 00010111<br>──────────<br>  01000100</div>
+<p class="small"><strong>Step 1:</strong> rightmost column is 1 + 1 = 10₂. Write 0; carry 1.<br><strong>Step 2:</strong> continue left, including the carry.<br><strong>Step 3:</strong> check: 45 + 23 = 68 = <strong>01000100</strong>. No overflow.</p>
+<div class="heading">Overflow and logical shifts</div>
+<p><strong>Overflow:</strong> unsigned eight-bit numbers run from 0 to 255. For example, <strong>255 + 1 = 256</strong> requires a ninth bit.</p>
+<p><strong>Shift left two:</strong> 00010110 → <strong>01011000</strong> (22 → 88).<br><strong>Shift right one:</strong> 00101000 → <strong>00010100</strong> (40 → 20).</p>
+<p class="small">A logical shift fills empty positions with zeros. Bits shifted off the end are <strong>discarded</strong>.</p>
+<div class="heading green">We Do · Think, calculate, check later</div>
+<p><strong>1.</strong> Add 00001101 + 00000111. Show the carry; give the denary result.</p><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<p><strong>2.</strong> Shift 00101000 one place right. Give the eight-bit binary and denary results.</p><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>2 / 4</span></footer></section><section class="page" data-page="3"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 002</span></header><main class="tight">
+<h2>Think &amp; write</h2>
+<div class="lesson-routines" role="group" aria-label="Classroom routine signs"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/YouDo_CodingIcon.png" alt="You Do" width="160" height="82"><img class="lesson-routine-sign" src="../../../lessons/h446/lesson-001/assets/QuietWorking_CodingIcon.png" alt="Quiet Working" width="160" height="82"></div>
+<p class="small faint">YOU DO · Work independently. Predict → Write → Test → Improve. Complete it on paper if no device is available.</p>
+<div class="heading green">Code First · Predict the output</div>
+<p><strong>Predict:</strong> What number will this one-line program display?</p>
+<div class="code">print(11 + 6)</div><span class="write-line" aria-hidden="true"></span>
+<p><strong>Write:</strong> Write a one-line <code>print(...)</code> instruction to add 13 and 7.</p><span class="write-line" aria-hidden="true"></span>
+<p><strong>Test:</strong> Trace the calculation, or run it in ERL if you have a device. Write the output.</p><span class="write-line" aria-hidden="true"></span>
+<p><strong>Improve:</strong> Change your instruction so it adds 38 and 27 instead. What is the new output?</p><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="heading green">You Do · Exam-style practice</div>
+<div class="q"><b>1 · Binary addition.</b> Add <strong>00001011 + 00000110</strong>. Show any carry and give the eight-bit result.</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="q"><b>2 · Binary addition.</b> Add <strong>00110101 + 00010110</strong>. Show the carries.</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="q"><b>3 · Overflow challenge.</b> Calculate <strong>11110000 + 00100000</strong>. State whether overflow occurs and <strong>explain why</strong>.</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="q"><b>4 · Logical shift.</b> Shift <strong>00001011</strong> two places left. Write the eight-bit result and denary value. [3 marks]</div><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<div class="heading green">Thinking · Explain</div>
+<p>Why does a left shift <strong>not always</strong> act like multiplication when an eight-bit result loses bits?</p><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<p class="small faint">Finish all questions before checking your answers on page 4.</p>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>3 / 4</span></footer></section><section class="page" data-page="4"><header><span><span class="cs">CS</span> RHS COMPUTING / OCR J277 / YEAR 10</span><span>LESSON 002</span></header><main class="tight">
+<h2>Check &amp; improve</h2>
+<p class="small faint">Complete the Exit Ticket before uncovering the model answers. Tick corrections you make.</p>
+<div class="heading">Exit Ticket · True / False</div>
+<div class="exit"><span>1. In binary, 1 + 1 gives 10₂.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>2. All unsigned eight-bit sums fit into eight bits.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="exit"><span>3. A logical right shift fills empty positions on the left with zeros.</span><span class="choice">T □ &nbsp; F □</span></div>
+<div class="heading green">Do Now · Model answers</div>
+<p class="answer"><strong>1.</strong> 00101101 = 32 + 8 + 4 + 1 = <strong>45</strong>.</p>
+<p class="answer"><strong>2.</strong> B: circuits can reliably distinguish two states, represented as 0 and 1.</p>
+<p class="answer"><strong>3.</strong> 150 = 128 + 16 + 4 + 2 → <strong>10010110</strong>.</p>
+<p class="answer"><strong>4.</strong> The eight place values sum to 255; 2⁸ = 256 patterns, including zero, so unsigned values run from <strong>0 to 255</strong>.</p>
+<div class="heading green">We Do · Model answers</div>
+<p class="answer"><strong>1.</strong> 00001101 (13) + 00000111 (7) = <strong>00010100 (20)</strong>.</p>
+<p class="answer"><strong>2.</strong> 00101000 (40) shifted right one = <strong>00010100 (20)</strong>. A zero enters on the left.</p>
+<div class="heading green">Code First · Model answers</div>
+<p class="answer"><strong>Predict:</strong> <strong>17</strong>. <strong>Write:</strong> <code>print(13 + 7)</code>. <strong>Test:</strong> <strong>20</strong>. <strong>Improve:</strong> <code>print(38 + 27)</code> outputs <strong>65</strong>.</p>
+<div class="heading green">You Do · Model answers</div>
+<p class="answer"><strong>1.</strong> 00001011 (11) + 00000110 (6) = <strong>00010001 (17)</strong>.</p>
+<p class="answer"><strong>2.</strong> 00110101 (53) + 00010110 (22) = <strong>01001011 (75)</strong>.</p>
+<p class="answer"><strong>3.</strong> 11110000 (240) + 00100000 (32) = <strong>1 00010000 (272)</strong>. Overflow: 272 cannot fit in eight unsigned bits. The eight-bit pattern alone would be 00010000.</p>
+<p class="answer"><strong>4.</strong> 00001011 (11) shifted left twice = <strong>00101100 (44)</strong>.</p>
+<p class="answer"><strong>Thinking:</strong> bits that leave the left edge are discarded, so information can be lost and the eight-bit result need not equal the full multiplication result.</p>
+<p class="answer"><strong>Exit:</strong> 1 True (carry 1); 2 False (overflow); 3 True (zero fill).</p>
+<div class="heading">Correct &amp; return to learning</div>
+<p class="small">Rewrite one corrected answer and explain what changed.</p><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span><span class="write-line" aria-hidden="true"></span>
+<p class="small">Confidence: □ Secure &nbsp;&nbsp; □ Nearly there &nbsp;&nbsp; □ I need help</p>
+</main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>4 / 4</span></footer></section></div>
+<div class="print-spreads" aria-hidden="true" id="spreads"></div>
+<script src="../../../assets/independent-print.js?v=20261028-central1"></script>
+<script src="../../../assets/independent-navigation.js?v=20261028-independent1"></script>
+
+</body>
+</html>
