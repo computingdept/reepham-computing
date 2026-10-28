@@ -9,17 +9,16 @@ Each `lessons/<course>/lesson-NNN/independent.html` owns lesson-specific prompts
 
 The current four-page pattern is **Start → Learn → Practise → Check & improve**. Give each page a `class="page"` and `data-page="1"` to `"4"`, inside `#viewer`. The `#spreads` container stays empty in the HTML; shared JavaScript assembles the print spreads.
 
-## Classroom signage is a learning objective, not decoration (mandatory)
+## Classroom signage reinforces classroom readiness (mandatory)
 
-A printed independent booklet must prepare pupils to recognise and respond to the **same classroom signs** they encounter in the teacher-led interactive lesson. Do not replace that teaching purpose with generic headings or decorative icons. Show the relevant sign **beside the actual task**, and use a concise visual key near the beginning of a booklet rather than lengthy explanations on every page.
+The print booklet prepares students to recognise familiar **classroom signals**. On paper, deliberately use **only two tiles** beside the relevant task: a blue **learning-phase** sign and a green **working-routine** sign. No orange/pink response tile, no icon glyphs or obsolete PNG logos. **Do not change the three-tile signage in the original interactive teacher-led lesson.**
 
-- **Blue lesson-phase signs:** Do Now, I Do, We Do, You Do, Exit Questioning/Exit Ticket. Stage titles are not enough: preserve the visual sign language.
-- **Green working-routine signs:** Silent Working (e.g. Do Now), Listening (I Do/model), Quiet Working/Silence (independent response). Use only where the activity warrants the routine.
-- **Orange response signs:** MWBs, Cold Calling, Choral Response, Turn & Talk when they truly correspond to the classroom routine. In an independent printed booklet, adapt a whiteboard response to the provided answer spaces, rather than assuming the pupil has a board or partner.
-- **Code First** is the first part of J277 **You Do**, not a new phase; maintain Predict → Write → Test → Improve where relevant, and do not add unrelated orange signage to Code First.
-- Keep the three classroom signal tiles **visually consistent with the CURRENT desktop interactive lesson**: plain blue **phase**, green **working routine**, and orange **response** rectangles containing centred bold labels and **no pictograms**. The labels and stage/routine/response combinations come from `signalMap` in `assets/h446-lesson/lesson.js`; the actual tile background, border and text colours come from `.signal-phase`, `.signal-routine`, and `.signal-response` in `assets/h446-lesson/lesson-base.css`. Mobile mini SVGs and legacy PNGs are **not the desktop signs** and must not be substituted in printed booklets. In B&W, tile labels and borders must remain recognisable without colour.
-- **Why:** repeated exposure in the printed, independent and live modes helps pupils, especially those who have missed lessons or need predictable routines, interpret the classroom signals quickly. Do not add text explaining the strategy to pupils; make the cues obvious and habitual.
-- QA: compare the booklet with a screenshot of the current lesson's **plain text-only** classroom tiles. Check the same three labels and exactly matching phase/routine/response colours, borders and ordering. No extra glyphs. Verify all four pages and both PDF print modes before final publication.
+- **Blue phase labels:** Do Now, Objectives, New Learning, I Do, We Do, You Do, Questioning, Exit Questioning as appropriate.
+- **Green routine labels:** Silent Working, Listening, Quiet Working, Silence as appropriate.
+- Use the exact *current desktop lesson's* blue/green tile colours, centred bold text and borders from `assets/h446-lesson/lesson-base.css`; use the relevant stage and routine labels from `signalMap` in `assets/h446-lesson/lesson.js`. Do not copy its response tile onto the printed booklet.
+- **Code First** remains first inside J277 **You Do**, using Predict → Write → Test → Improve where relevant. Present independent booklet activities as writing on paper, not requiring a whiteboard, partner or internet.
+- Keep the signage concise and repeat it beside each relevant activity. In B&W, the phase and routine wording must remain readable without colours.
+- **Quality assurance:** visually compare the print tiles with the blue/green tiles shown in the current live lesson, check every page for overflow, and do not call a PDF published until its final exported version has been checked.
 
 ## Shared files and order
 
