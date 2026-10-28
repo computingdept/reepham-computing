@@ -49,17 +49,17 @@ The independent on-screen version may opt into `assets/independent-auto-mark.js`
 - **Do not add this module to the original teacher-led lesson.** Keep that lesson's content, classroom cues, phase progression and reveals unchanged.
 - Test correct/incorrect answers, keyboard use, mobile, the written-reasoning fallback and printed page pairs before scaling the pilot.
 
-## Separate short Catch-up / Learn mode · 80% mastery pilot
+## Separate short Catch-up / Learn mode · 80% mastery model
 
-**Lesson 004** now has three distinct student destinations:
-- **Teach**: existing `lessons/j277/lesson-004/index.html`, unchanged.
-- **Learn**: new `lessons/j277/lesson-004/learn.html`, about 12 minutes, five short stages (Remember, Learn, Practise, Apply, Check).
-- **Print**: existing `lessons/j277/lesson-004/independent.html`, unchanged A3 booklet.
+**J277 Lessons 001–005** each have three independently maintained types of resource, where published:
+- **Teach**: original `lessons/j277/lesson-NNN/index.html`, never rewritten as part of catch-up work.
+- **Learn**: `lessons/j277/lesson-NNN/learn.html`, about 12 minutes, five stages (Remember, Learn, Practise, Apply, Check), sharing the same engine and CSS.
+- **Print**: existing `lessons/j277/lesson-NNN/independent.html` A3 booklet for 001–004. **Lesson 005 has no print booklet yet: never show a dead Print link.**
 
-The hub uses shared `assets/hub-navigation.js` with an optional `printHref` only for the tri-modal pilot. Other lessons continue using their current routes until fully adapted. The catch-up version uses centrally maintained `assets/catchup-lesson.js`, `assets/catchup-lesson.css`, and lesson data `data/catchup/j277-004.json`. Do not duplicate layouts or assessment logic in each lesson.
+The hub uses `assets/hub-navigation.js` with a per-tile optional `printHref`; `j277-hub.html` owns the published route registry. The catch-up version uses central `assets/catchup-lesson.js`, `assets/catchup-lesson.css` and separate, course-specific JSON content in `data/catchup/j277-NNN.json`. No duplicated per-lesson assessment code. Shared visual models for nibbles and bitmap pixels live in the central engine and stylesheet.
 
 **Mastery contract:**
-- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Lesson 004 has 15 questions, so at least 12 must be correct.
+- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Each published Learn lesson 001–005 has 15 questions, so at least 12 must be correct.
 - Students must attempt and check every objective question to be marked as mastered; **unlimited retries**. Changing an answer invalidates its earlier checked result. Never block opening another lesson.
 - Auto-check number entry, MCQs, true/false, matching and reordering. Ordering works by drag and drop on mouse and by explicit up/down buttons for touch, keyboard and accessibility.
 - One extended written question is self-reviewed using a model answer and checklist; do not pretend a free-text matcher reliably grades nuanced exam responses.
