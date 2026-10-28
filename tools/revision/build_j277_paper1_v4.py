@@ -272,5 +272,5 @@ for filename,outname in FILES:
     reports.append({'name':outname,'pages':len(check),'bookmarks':len(check.get_toc()),'links':sum(len(p.get_links()) for p in check),'bytes':os.stat(out).st_size,'sha256':hashlib.sha256(open(out,'rb').read()).hexdigest(),'edited_text_blocks':nrep,'diagram_pages':[33,71,166]})
     check.close()
     print('CREATED',outname,'size',reports[-1]['bytes'],'text blocks',nrep, flush=True)
-json.dump(reports,open('/mnt/data/j277_v4_generation_report.json','w'),indent=2)
+json.dump(reports,open(os.path.join(ROOT,'j277_v4_generation_report.json'),'w'),indent=2)
 print(json.dumps(reports,indent=2))
