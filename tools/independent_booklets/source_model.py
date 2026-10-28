@@ -335,7 +335,8 @@ def h446_source(number: int) -> Lesson:
             stages = answers.select(".answer-stage")
             found = []
             for stage in stages:
-                solution = stage.select_one(".answer-solution") or stage.select_one(".solution-card")
+                solution = (stage.select_one(".answer-solution") or stage.select_one(".solution-card")
+                            or stage.select_one(".answer-card"))
                 found.append("\n".join(blocks(solution)) if solution else "")
             if len(found) == len(lesson.you_do) and all(found):
                 lesson.you_do = [(q, a or found[i]) for i, (q, a) in enumerate(lesson.you_do)]
