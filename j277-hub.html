@@ -168,7 +168,7 @@
 .pilot-resource-actions a{font-size:12px;color:#164b3c;text-decoration:underline;text-underline-offset:2px}
 .mobile-sheet-actions .mobile-sheet-independent:not([hidden]){display:block;flex:1 1 100%;text-align:center;background:#f3f8f5;border:1px solid #b4cfc0;color:#164c3d;border-radius:8px;padding:11px;text-decoration:none}
 </style><link rel="stylesheet" href="assets/hub-monochrome.css?v=20261028-card-open1">
-<script src="assets/hub-navigation.js?v=20261028-card-open1"></script>
+<script src="assets/hub-navigation.js?v=20261028-booklet-draft1"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
 </head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
@@ -384,11 +384,14 @@ function renderLessons(){
       const info=lessonInfo(x);
       const independent=year===10?openLessonResource(x):null;
       const catchup=year===10?(catchupResourceRoutes[x]||null):null;
+      const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
-        learnHref:catchup||(independent?independent.replace('version=bw','version=colour'):null),
-        printHref:catchup?independent:null,
+        learnHref:catchup||(independent?independent.replace('version=bw','version=colour'):(publishedDraft?.learn_colour||null)),
+        printHref:independent||(publishedDraft?.print_bw||null),
+        learnLabel:catchup?'Learn':(publishedDraft?'Learn draft':'Learn'),
+        printLabel:!independent&&publishedDraft?'Print draft':'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
         specPoint:consolidationLessons.has(x)?'Synoptic':(info[1].match(/[12]\.\d+(?:\.\d+)?/)||[])[0],
         specRaw:info[1]
@@ -400,6 +403,7 @@ function renderLessons(){
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons';
   document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
+window.addEventListener('offline-booklets-loaded',renderLessons);
 applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',revisionhub:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
 </script><script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
 </body></html>
