@@ -66,6 +66,19 @@
     const index=([Number(match[2]),Number(match[3]||0)].reduce((a,v)=>a*7+v,0))%variants.length;
     return {label:canonical+(multiple?' +':''),colour:variants[index],full:source};
   }
+
+  /* Short menu heading from existing lesson metadata, never an extra topic list.
+     Prefer a clear one- or two-word subject over a clipped full objective. */
+  function conciseTopic(title){
+    const full=String(title||'').replace(/\s+/g,' ').trim();
+    if(!full)return 'Lesson';
+    const main=full.split(/\s*[:–—]\s*|\s+-\s+/)[0].trim();
+    const words=main.split(/\s+/).filter(Boolean);
+    if(words.length<=2)return main;
+    if(/^year\s+\d+$/i.test(words.slice(0,2).join(' ')))return 'Lesson';
+    if(/^(and|or|of|to|the|in|on|for|with|&)$/i.test(words[1]))return words[0].replace(/[,;]$/,'');
+    return words.slice(0,2).join(' ').replace(/[,;]$/,'');
+  }
   function createTile(options){
     const o=options||{};
     const number=String(o.number||'');
@@ -124,6 +137,13 @@
     const menuId='hub-options-'+Math.random().toString(36).slice(2,10);
     menu.id=menuId;
     button.setAttribute('aria-controls',menuId);
+    const heading=document.createElement('div');
+    heading.className='lesson-popup-heading';
+    heading.setAttribute('role','heading');
+    heading.setAttribute('aria-level','3');
+    heading.textContent=number+' · '+conciseTopic(title);
+    heading.title=title;
+    menu.append(heading);
     routes.forEach(function(item){menu.append(action(item[0],item[1],item[2]));});
     function setOpen(state){
       if(state)closeAll(entry);
