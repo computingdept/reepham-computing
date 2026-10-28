@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "id": "j277-002",
+  "title": "Binary Addition and Shifts",
+  "year": 10,
+  "estimated_minutes": 12,
+  "pass_percent": 80,
+  "intro": "Catch up with the essential learning in about 10–15 minutes. Complete five short steps and check your answers as you go.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall two facts from binary and denary.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "number",
+          "prompt": "Convert binary 00101101 to denary.",
+          "answer": "45",
+          "feedback": "32 + 8 + 4 + 1 = 45."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Why can computers use binary reliably?",
+          "options": [
+            "It has ten symbols",
+            "Electronic circuits distinguish two states",
+            "It stores only whole numbers",
+            "Every value fits in eight bits"
+          ],
+          "answer": "Electronic circuits distinguish two states",
+          "feedback": "Circuits can represent two states as 0 and 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Understand addition, carry, overflow and logical shifts.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Binary addition and carries",
+          "text": "Add each column from right to left. 0 + 0 = 0; 0 + 1 = 1; 1 + 0 = 1; 1 + 1 = 10₂ (write 0, carry 1). If a carry makes three ones, 1 + 1 + 1 = 11₂ (write 1, carry 1)."
+        },
+        {
+          "type": "example",
+          "title": "Worked addition",
+          "text": "00101101 (45) + 00010111 (23) = 01000100 (68). Start at the right-hand bits and show any carries."
+        },
+        {
+          "type": "paragraph",
+          "title": "Unsigned overflow",
+          "text": "Eight unsigned bits represent 0–255. A true sum beyond 255 needs a ninth bit. For example 11111111 + 00000001 = 1 00000000 (256): the eight stored bits are 00000000 and the extra carry shows overflow."
+        },
+        {
+          "type": "paragraph",
+          "title": "Logical shifts",
+          "text": "A logical left shift moves bits left and inserts zeros on the right; right shifts insert zeros on the left. Discard any bit shifted outside the eight positions. Example: 00010110 << 2 = 01011000 (22 to 88). A logical right shift of 00101000 by one gives 00010100 (40 to 20)."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "Most significant bit (MSB) is the leftmost, weight 128.",
+            "Least significant bit (LSB) is the rightmost, weight 1.",
+            "Shifting left usually doubles the value per place, but bits can be lost."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "What happens when you add binary 1 + 1?",
+          "options": [
+            "Write 0, carry 1",
+            "Write 1, no carry",
+            "Write 1, carry 1",
+            "Write 0, no carry"
+          ],
+          "answer": "Write 0, carry 1",
+          "feedback": "1 + 1 = 10₂: zero in this column, one carried."
+        },
+        {
+          "id": "l2",
+          "kind": "number",
+          "prompt": "What is the greatest unsigned eight-bit denary value?",
+          "answer": "255",
+          "feedback": "The range is 0 to 255."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "In a logical right shift, what fills empty left-hand positions?",
+          "options": [
+            "Ones",
+            "Zeros",
+            "The original leftmost bit",
+            "Letters"
+          ],
+          "answer": "Zeros",
+          "feedback": "Logical shifts fill the new empty bit positions with 0."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Apply rules and organise the method.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Keep eight bits for eight-bit answers. If a ninth bit is required, explain overflow."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each addition case with its result.",
+          "pairs": [
+            [
+              "0 + 1",
+              "Write 1, no carry"
+            ],
+            [
+              "1 + 1",
+              "Write 0, carry 1"
+            ],
+            [
+              "1 + 1 + carry 1",
+              "Write 1, carry 1"
+            ]
+          ],
+          "feedback": "Binary 10₂ is two; binary 11₂ is three."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put the binary addition method in order.",
+          "items": [
+            "Check whether a ninth bit is needed",
+            "Begin with the rightmost bit",
+            "Add each column and carry to the left"
+          ],
+          "answer": [
+            "Begin with the rightmost bit",
+            "Add each column and carry to the left",
+            "Check whether a ninth bit is needed"
+          ],
+          "feedback": "Add right to left, carrying when needed, then check overflow."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "Convert the binary sum 00001101 + 00000111 to denary.",
+          "answer": "20",
+          "feedback": "13 + 7 = 20 (binary 00010100)."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "Perform logical right shift of 00101000 by one place. Give the denary result.",
+          "answer": "20",
+          "feedback": "00101000 is 40; the new pattern 00010100 is 20."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Use Code First and explain overflow.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "print(11 + 6)"
+          ],
+          "caption": "Predict the number. Change it to add 38 and 27 and check the output."
+        },
+        {
+          "type": "prompt",
+          "text": "Written question: Explain why adding 11110000 and 00100000 causes unsigned eight-bit overflow, and state the full sum and stored eight bits."
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "What number does print(11 + 6) display?",
+          "answer": "17",
+          "feedback": "11 + 6 = 17."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "What is 38 + 27 in denary?",
+          "answer": "65",
+          "feedback": "The answer is 65 (binary 01000001)."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "Calculate the true denary value of 11110000 + 00100000.",
+          "answer": "272",
+          "feedback": "240 + 32 = 272, which needs nine bits."
+        }
+      ],
+      "writing": {
+        "prompt": "Write two or three sentences explaining the overflow and the bits retained.",
+        "model": "11110000 is 240 and 00100000 is 32, so the true sum is 272. An unsigned eight-bit value can only represent 0–255, so the ninth carry bit overflows. The full binary sum is 1 00010000 and the eight stored bits alone are 00010000.",
+        "checklist": [
+          "I calculated the true sum of 272.",
+          "I explained why 272 exceeds the unsigned eight-bit maximum of 255.",
+          "I identified the ninth carry and the retained eight bits 00010000."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Finish with three quick checks.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "In eight-bit addition, a carry past the leftmost column shows overflow.",
+          "answer": "true",
+          "feedback": "True: an extra ninth bit means the full result cannot fit."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Logical left shifting always doubles the full value without any loss.",
+          "answer": "false",
+          "feedback": "False: bits shifted outside the eight positions are discarded."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "The least significant bit of an unsigned eight-bit number has weight 1.",
+          "answer": "true",
+          "feedback": "True: the rightmost bit is worth one."
+        }
+      ]
+    }
+  ]
+}
