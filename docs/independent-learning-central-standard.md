@@ -9,17 +9,28 @@ Each `lessons/<course>/lesson-NNN/independent.html` owns lesson-specific prompts
 
 The current four-page pattern is **Start → Learn → Practise → Check & improve**. Give each page a `class="page"` and `data-page="1"` to `"4"`, inside `#viewer`. The `#spreads` container stays empty in the HTML; shared JavaScript assembles the print spreads.
 
-## Classroom signage reinforces classroom readiness (mandatory)
+## Classroom readiness: signs in the footer, not in the learning area (mandatory)
 
-The print booklet prepares students to recognise familiar **classroom signals**. On paper, deliberately use **only two tiles** beside the relevant task: a blue **learning-phase** sign and a green **working-routine** sign. No orange/pink response tile, no icon glyphs or obsolete PNG logos. **Do not change the three-tile signage in the original interactive teacher-led lesson.**
+Independent print booklets must **not** repeat large Do Now / Silent Working / I Do / We Do blue-and-green tiles above the activities. Keep the main page for explanations, modelled examples, student questions and working space. Use simple text headings where a phase boundary is needed.
 
-- **Blue phase labels:** Do Now, Objectives, New Learning, I Do, We Do, You Do, Questioning, Exit Questioning as appropriate.
-- **Green routine labels:** Silent Working, Listening, Quiet Working, Silence as appropriate.
-- Use the exact *current desktop lesson's* blue/green tile colours, centred bold text and borders from `assets/h446-lesson/lesson-base.css`; use the relevant stage and routine labels from `signalMap` in `assets/h446-lesson/lesson.js`. Do not copy its response tile onto the printed booklet.
-- For **print**, the signals are intentionally **small, left-aligned labels** (approximately 47 mm wide × 8 mm high each, 8.2 pt bold text): prominent enough for recognition, quiet enough to leave the learning and writing space dominant. Preserve the established blue/green colours, and use one shared stylesheet rule, not per-lesson overrides.
-- **Code First** remains first inside J277 **You Do**, using Predict → Write → Test → Improve where relevant. Present independent booklet activities as writing on paper, not requiring a whiteboard, partner or internet.
-- Keep the signage concise and repeat it beside each relevant activity. In B&W, the phase and routine wording must remain readable without colours.
-- **Quality assurance:** visually compare the print tiles with the blue/green tiles shown in the current live lesson, check every page for overflow, and do not call a PDF published until its final exported version has been checked.
+Use a **quiet, consistent learning-journey footer on every A4 page**, in this order:
+
+| Independent stage | Familiar blue lesson-phase sign | Familiar green routine / action |
+| --- | --- | --- |
+| Recall | Do Now | Silent Working |
+| Learn | I Do | Listening |
+| Think | We Do | Quiet Working |
+| Write | You Do | Quiet Working |
+| Correct | Exit Questioning | Green pen (tick and correct) |
+
+Render each stage as a small group with a concise stage name plus the original-style **blue and green rounded tiles**, retaining centred text and the exact existing lesson's colour palette from `assets/h446-lesson/lesson-base.css`. No orange/pink response tiles or extra pictograms. Highlight the stage(s) relevant to that paper page (Lesson 002: page 1 Recall; page 2 Learn and Think; page 3 Write; page 4 Correct). All five stages remain visible so the journey becomes familiar to students.
+
+- Leave the teacher-led interactive lesson and its three-sign system unchanged. Only the independent print/worksheet experience uses this footer.
+- **Code First** remains the beginning of J277 You Do, with Predict → Write → Test → Improve where relevant.
+- The footer is secondary and should not displace any lesson content. Reserve sufficient bottom space so the self-mark and correction areas don't overlap it.
+- In monochrome, both signs retain their labels, borders and legible greyscale fills.
+- Source: `docs/independent-booklet-master-template.html`; shared layout in `assets/independent-lesson-base.css`, under `.booklet-journey-footer`. Pilot: `lessons/j277/lesson-002/independent.html`.
+- **Quality assurance:** visually inspect all four pages, including double-sided A3 imposition, before publishing the final PDF.
 
 ## Master booklet template and content sources (Lesson 002 pilot)
 
