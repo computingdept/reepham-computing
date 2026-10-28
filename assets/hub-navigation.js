@@ -118,6 +118,8 @@
     const teach=typeof o.openHref==='string'&&o.openHref.trim()?o.openHref:null;
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
     const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
+    const learnLabel=typeof o.learnLabel==='string'&&o.learnLabel.trim()?o.learnLabel:'Learn';
+    const printLabel=typeof o.printLabel==='string'&&o.printLabel.trim()?o.printLabel:'Print';
     const primaryOnly=Boolean(teach&&!catchup&&!print);
     const entry=document.createElement('article');
     entry.className='lesson-entry lesson-choice central-lesson'+(teach?'':' is-planned')+(primaryOnly?' lesson-primary-only':'');
@@ -200,12 +202,12 @@
       return el;
     }
     if(teach)actions.append(makeAction('Full lesson','Full lesson',teach));
-    if(catchup)actions.append(makeAction('Catch up','Catch up',catchup));
+    if(catchup)actions.append(makeAction(learnLabel,'Learn',catchup));
     if(print){
       if(!/(?:[?&])version=bw(?:&|$)/.test(print)){
-        actions.append(makeAction('Print','Print',print));
+        actions.append(makeAction(printLabel,'Print',print));
       }else{
-        const button=makeAction('Print','Print',null);
+        const button=makeAction(printLabel,'Print',null);
         button.classList.add('lesson-options-toggle');
         button.setAttribute('aria-expanded','false');
         const menu=document.createElement('div');
@@ -373,7 +375,7 @@
     items.replaceChildren();
     const options=[
       [teach,'▣','Full lesson','Full teacher-led lesson, also available to revisit'],
-      [learn,'◇','Catch up','10–15 min · self-marking'],
+      [learn,'◇','Learn','Independent learning · self-marking or draft PDF'],
       [print,'▤','Print','Paper worksheet · B&W or colour']
     ];
     options.forEach(function(option){
