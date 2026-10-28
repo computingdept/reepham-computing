@@ -113,3 +113,17 @@ body[data-mode="bw"] .page.selfmark-page .selfmark-row{background:transparent;bo
 
 /* Keep the compact two signs within a narrow mobile viewport. */
 @media(max-width:440px){.viewer .page .classroom-signs{grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,96mm);gap:6px}}
+
+
+/* Booklet identification + pen routine are shared across subjects.
+   Instruction is printed as one compact line, never as coloured callout cards. */
+.page[data-page="1"] h2{font-size:14.2pt;line-height:1.16;margin:7px 0 8px}
+.page .lesson-identity{display:grid;grid-template-columns:1.4fr .85fr .83fr .74fr 1.1fr;gap:9px;margin:5px 0 6px;align-items:baseline}
+.page .lesson-id-field{display:flex;align-items:baseline;gap:5px;min-width:0;font-size:8.1pt;font-weight:700}
+.page .lesson-id-field .entry-line{flex:1;min-width:0;border-bottom:1px solid #9bad9e;height:13px}
+.page .pen-instruction{display:flex;align-items:center;flex-wrap:wrap;gap:2px 8px;font-size:8pt;line-height:1.3;margin:4px 0 7px}
+.page .pen-instruction strong{font-weight:800;white-space:nowrap}
+.page .pen-instruction .pen-label-black{color:#17232a}
+.page .pen-instruction .pen-label-green{color:#176b42;margin-left:10px}
+.page .pen-instruction .pen-rule-text{color:#35434b}
+@media(max-width:700px){.viewer .page .lesson-identity{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px}.viewer .page .pen-instruction .pen-label-green{margin-left:0}}
