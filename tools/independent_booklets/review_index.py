@@ -23,6 +23,8 @@ def build_review_index(out: Path, records: list[dict]):
         notes = " · ".join(warnings[:2] + r.get("missing_data", [])[:2] + r.get("failed_checks", [])[:2])
         def link(field, label):
             target = r.get(field, "")
+            if field == "independent_html" and target.startswith("/"):
+                target = "https://rhsccs.org" + target
             return f'<a href="{h(target)}" target="_blank" rel="noopener">{h(label)}</a>' if target else ""
         links = " ".join(filter(None, [
             link("a4_pdf", "B&W A4"), link("colour_a4_pdf", "Colour A4"),
