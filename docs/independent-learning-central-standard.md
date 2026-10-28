@@ -51,15 +51,15 @@ The independent on-screen version may opt into `assets/independent-auto-mark.js`
 
 ## Separate short Catch-up / Learn mode · 80% mastery model
 
-**J277 Lessons 001–015** now have separate Teach and Learn experiences. Print is opt-in only where published:
+**J277 Lessons 001–030** now have separate Teach and Learn experiences. Print is opt-in only where published:
 - **Teach**: original `lessons/j277/lesson-NNN/index.html`, never rewritten as part of catch-up work.
 - **Learn**: `lessons/j277/lesson-NNN/learn.html`, about 12–15 minutes, five stages (Remember, Learn, Practise, Apply, Check), sharing the same engine and CSS.
-- **Print**: existing `lessons/j277/lesson-NNN/independent.html` A3 booklet for 001–004. **Lessons 005–015 have no print booklets yet: never show dead Print links.**
+- **Print**: existing `lessons/j277/lesson-NNN/independent.html` A3 booklet for 001–004. **Lessons 005–030 have no print booklets yet: never show dead Print links.**
 
 The hub uses `assets/hub-navigation.js` with a per-tile optional `printHref`; `j277-hub.html` owns the published route registry. The catch-up version uses central `assets/catchup-lesson.js`, `assets/catchup-lesson.css` and separate, course-specific JSON content in `data/catchup/j277-NNN.json`. No duplicated per-lesson assessment code. Shared visual models for nibbles, bitmap pixels, and accessible process/comparison diagrams live in the central engine and stylesheet.
 
 **Mastery contract:**
-- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Each published Learn lesson 001–015 has 15 questions, so at least 12 must be correct.
+- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Each published Learn lesson 001–030 has 15 questions, so at least 12 must be correct.
 - Students must attempt and check every objective question to be marked as mastered; **unlimited retries**. Changing an answer invalidates its earlier checked result. Never block opening another lesson.
 - Auto-check number entry, MCQs, true/false, matching and reordering. Ordering works by drag and drop on mouse and by explicit up/down buttons for touch, keyboard and accessibility.
 - One extended written question is self-reviewed using a model answer and checklist; do not pretend a free-text matcher reliably grades nuanced exam responses.
@@ -74,6 +74,16 @@ New, curriculum-aligned `learn.html` pages and `data/catchup/j277-NNN.json` ques
 Each new page has 15 objective questions (number, choice, true/false, matching and ordering), five stages and a written answer for model-led self-review. All 150 correct-answer inputs and 150 deliberately incorrect inputs were tested against the actual central marker; 300/300 test cases behaved as expected. Static audits also checked the 12/15 pass threshold, matching keys, order permutations, hub routes, required assets, no inline CSS/JS, and no unavailable Print links.
 
 **Verification limit:** passing static tests does not substitute for checking published pages visually on desktop and mobile, nor completing actual browser sessions through all five stages. New pages should be spot-tested before pupil release.
+
+## Lessons 016–030 rollout check (28 October 2026)
+
+New `learn.html` pages and their curriculum-specific `data/catchup/j277-NNN.json` answer sets have been committed for Lessons 016–030. The existing teacher-led `index.html` pages and published independent print booklets were not modified. The central J277 hub and `data/lesson-resources.json` now register Learn for Lessons 001–030, and Print only for Lessons 001–004.
+
+All fifteen new configurations contain 5 stages, 15 objective questions each, and one longer answer with model-guided self-review. They reuse central `assets/catchup-lesson.js` and `assets/catchup-lesson.css`, preserving 80% mastery (12/15), unlimited retries and non-blocking navigation.
+
+**Automated validation:** all 225 correct-answer inputs and 225 deliberately incorrect responses (number, single-select choice, true/false, matching, and reorder) were run through the actual central answer-checking functions. **450/450 behaved as expected.** Additional static checks found 15 questions and a written self-review activity in each lesson, valid option sets and keys, no duplicated question IDs and a passing-score threshold of 12.
+
+**Still to do before pupil release:** visually inspect live page rendering and navigation on mobile and desktop; run real user-interaction tests for matching, drag-and-drop/tap reorder, input changes, answer checking, local progress saving and final results. Source-level testing alone does not certify these behaviours in a browser.
 
 ## Ongoing rule
 
