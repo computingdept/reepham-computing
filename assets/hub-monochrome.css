@@ -1157,3 +1157,99 @@ body.course-hub .lesson-mobile-panel .scenario-symbol{
   body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson:hover,
   body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson:focus-within{transform:none}
 }
+
+/* Repair lesson card content clipping after nav polish — 2026-10-28. */
+/* hub.css defines .lesson-grid span {min-height:48px}; that inherited
+   minimum forced the number AND title to each occupy 48px inside fixed
+   121px cards. Reset these spans explicitly, and give subjects room. */
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:11px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson{
+  height:150px;
+  min-height:150px;
+  max-height:150px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-tile-open,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.has-spec-point>.lesson-tile-open{
+  flex:1 1 auto;
+  min-height:0;
+  padding:9px 9px 7px;
+  gap:6px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-tile-number,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.has-spec-point .lesson-tile-number{
+  box-sizing:border-box;
+  display:block;
+  flex:0 0 auto;
+  min-height:0;
+  max-height:none;
+  height:auto;
+  font-size:21px;
+  line-height:1.12;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-tile-title,
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.has-spec-point .lesson-tile-title{
+  box-sizing:border-box;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  flex:0 1 auto;
+  min-height:0;
+  height:auto;
+  max-height:45px;
+  padding:0;
+  margin:0;
+  white-space:normal;
+  overflow:hidden;
+  overflow-wrap:break-word;
+  text-overflow:clip;
+  font-size:12px;
+  line-height:1.25;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-spec-code{
+  flex:0 0 15px;
+  min-height:15px;
+  max-height:15px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-spec-line{
+  flex:0 0 3px;
+  min-height:3px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-options-toggle{
+  flex:0 0 auto;
+  min-height:39px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.is-planned>.lesson-tile-open{
+  padding-bottom:6px;
+}
+@media(max-width:1050px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr));
+  }
+}
+@media(max-width:850px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+@media(max-width:700px),(pointer:coarse){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:9px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson{
+    height:158px;
+    min-height:158px;
+    max-height:158px;
+  }
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson>.lesson-options-toggle{
+    min-height:44px;
+  }
+}
+@media(max-width:480px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
