@@ -1,0 +1,215 @@
+/* Shared navigation only for independent printable learning resources.
+   Print remains the existing A3 landscape, two-spread booklet layout. */
+body.independent-paged{
+  background:#fff;
+  color:#202020;
+}
+body.independent-paged .screen-toolbar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px 12px;
+  padding:8px max(12px,calc((100% - 940px)/2));
+  border-bottom:1px solid #dedede;
+  background:#fff;
+  box-shadow:none;
+}
+body.independent-paged .screen-toolbar .independent-name{
+  flex:1 1 180px;
+  min-width:0;
+  margin:0;
+  color:#202020;
+  font-size:14px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+  letter-spacing:0;
+}
+body.independent-paged .screen-toolbar .independent-back,
+body.independent-paged .screen-toolbar .independent-print{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  min-height:40px;
+  padding:7px 11px;
+  border:1px solid #c7c7c7;
+  border-radius:6px;
+  background:#fff;
+  color:#222;
+  font:700 13px/1.25 Arial,Helvetica,sans-serif;
+  white-space:nowrap;
+  text-decoration:none;
+  cursor:pointer;
+}
+body.independent-paged .screen-toolbar .independent-print{
+  border-color:#333;
+  font-weight:800;
+}
+body.independent-paged .screen-toolbar .independent-display{
+  position:relative;
+  z-index:7;
+}
+body.independent-paged .screen-toolbar .independent-display summary{
+  display:flex;
+  align-items:center;
+  min-height:40px;
+  padding:7px 9px;
+  border:1px solid #dedede;
+  border-radius:6px;
+  cursor:pointer;
+  color:#444;
+  background:#fff;
+  font:600 12px/1.25 Arial,Helvetica,sans-serif;
+}
+body.independent-paged .screen-toolbar .independent-display-choices{
+  display:flex;
+  position:absolute;
+  z-index:8;
+  right:0;
+  top:calc(100% + 4px);
+  flex-direction:column;
+  width:155px;
+  padding:5px;
+  border:1px solid #c9c9c9;
+  border-radius:7px;
+  box-shadow:0 6px 18px #00000016;
+  background:#fff;
+}
+body.independent-paged .screen-toolbar .independent-display-choices a{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  border:0;
+  background:#fff;
+  min-height:38px;
+  padding:8px 10px;
+  font-size:12px;
+}
+body.independent-paged .screen-toolbar .independent-display-choices a[aria-current="page"]{
+  background:#f1f1f1;
+  box-shadow:none;
+  text-decoration:underline;
+}
+body.independent-paged .independent-guidance{
+  max-width:850px;
+  margin:9px auto 4px;
+  padding:0 12px;
+  font:600 12px/1.4 Arial,Helvetica,sans-serif;
+  color:#555;
+}
+body.independent-paged .independent-guidance>summary{
+  width:max-content;
+  max-width:100%;
+  padding:6px 8px;
+  border-radius:5px;
+  cursor:pointer;
+}
+body.independent-paged .independent-guidance .instructions{
+  margin:5px 0 10px;
+  padding:12px 14px;
+  background:#fff;
+  border:1px solid #e2e2e2;
+  box-shadow:none;
+}
+body.independent-paged .independent-progress{
+  width:min(850px,calc(100% - 24px));
+  margin:8px auto 13px;
+  padding:0;
+  scroll-margin-top:90px;
+}
+body.independent-paged .independent-progress .independent-step-count{
+  display:block;
+  font:700 12px/1.4 Arial,Helvetica,sans-serif;
+  color:#555;
+  margin-bottom:6px;
+}
+body.independent-paged .independent-step-list{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+body.independent-paged .independent-step{
+  min-width:0;
+  padding:7px 4px 6px;
+  border-top:3px solid #dedede;
+  color:#666;
+  font:600 11px/1.2 Arial,Helvetica,sans-serif;
+  text-align:center;
+  overflow-wrap:break-word;
+}
+body.independent-paged .independent-step.is-current{
+  border-top-color:#343434;
+  color:#222;
+  font-weight:800;
+}
+body.independent-paged #viewer > .page[hidden]{
+  display:none!important;
+}
+body.independent-paged .viewer{
+  gap:0;
+  padding-bottom:10px;
+}
+body.independent-paged .independent-stepnav{
+  box-sizing:border-box;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  width:min(850px,calc(100% - 24px));
+  margin:4px auto 30px;
+  padding:12px 0 0;
+  border-top:1px solid #dedede;
+}
+body.independent-paged .independent-stepnav button{
+  min-height:42px;
+  padding:8px 14px;
+  border:1px solid #c9c9c9;
+  border-radius:6px;
+  background:#fff;
+  color:#222;
+  font:750 13px/1.3 Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+body.independent-paged .independent-stepnav button.independent-next{
+  border-color:#333;
+}
+body.independent-paged .independent-stepnav button:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+}
+body.independent-paged .independent-page-indicator{
+  color:#666;
+  font:700 12px Arial,Helvetica,sans-serif;
+  white-space:nowrap;
+}
+body.independent-paged :is(a,button,summary):focus-visible,
+body.independent-paged #viewer .page :focus-visible{
+  outline:3px solid #222;
+  outline-offset:3px;
+}
+@media(max-width:700px){
+  body.independent-paged .screen-toolbar{gap:7px;padding:7px 9px}
+  body.independent-paged .screen-toolbar .independent-name{
+    order:-1;
+    flex:1 0 100%;
+    font-size:13px;
+  }
+  body.independent-paged .screen-toolbar .independent-back,
+  body.independent-paged .screen-toolbar .independent-print{
+    min-height:42px;
+    padding:7px 9px;
+  }
+  body.independent-paged .screen-toolbar .independent-print{margin-left:auto}
+  body.independent-paged .screen-toolbar .independent-display{order:3}
+  body.independent-paged .independent-step{font-size:10px;padding:7px 2px}
+  body.independent-paged .independent-progress{scroll-margin-top:140px}
+}
+@media print{
+  body.independent-paged .independent-progress,
+  body.independent-paged .independent-stepnav,
+  body.independent-paged .independent-guidance{display:none!important}
+  /* Original page clones in .print-spreads are deliberately unaffected. */
+}
