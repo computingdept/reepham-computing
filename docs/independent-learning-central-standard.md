@@ -9,28 +9,23 @@ Each `lessons/<course>/lesson-NNN/independent.html` owns lesson-specific prompts
 
 The current four-page pattern is **Start → Learn → Practise → Check & improve**. Give each page a `class="page"` and `data-page="1"` to `"4"`, inside `#viewer`. The `#spreads` container stays empty in the HTML; shared JavaScript assembles the print spreads.
 
-## Classroom readiness: signs in the footer, not in the learning area (mandatory)
+## Independent booklet header/footer architecture (approved Lesson 002 pilot)
 
-Independent print booklets must **not** repeat large Do Now / Silent Working / I Do / We Do blue-and-green tiles above the activities. Keep the main page for explanations, modelled examples, student questions and working space. Use simple text headings where a phase boundary is needed.
+Use **one small two-row header on every page**. Row 1: RHS COMPUTING / OCR J277 / Paper / specification point on the left, LESSON NNN on the right. Row 2: small pen SVG + **BLACK PEN · Complete your answers**, and a different pen-with-tick SVG + **GREEN PEN · Tick and correct**. Both labels and icons remain intelligible in greyscale. Keep Name / Class / Date / Time / Teacher on page 1 only, immediately below the title; don't repeat pen instructions or sign tiles in the main learning content.
 
-Use a **quiet, consistent learning-journey footer on every A4 page**, in this order:
+Use a **slim, fixed learning-purpose footer on all four A4 pages**, with five familiar stages and explicit child-friendly purposes:
 
-| Independent stage | Familiar blue lesson-phase sign | Familiar green routine / action |
-| --- | --- | --- |
-| Recall | Do Now | Silent Working |
-| Learn | I Do | Listening |
-| Think | We Do | Quiet Working |
-| Write | You Do | Quiet Working |
-| Correct | Exit Questioning | Green pen (tick and correct) |
+| Footer phase | Purpose |
+| --- | --- |
+| **Do Now** | Recall previous learning |
+| **I Do** | Read new knowledge |
+| **We Do** | Practise with guidance |
+| **You Do** | Work independently |
+| **Review & Improve** | Check my understanding |
 
-Render each stage as a small group with a concise stage name plus the original-style **blue and green rounded tiles**, retaining centred text and the exact existing lesson's colour palette from `assets/h446-lesson/lesson-base.css`. No orange/pink response tiles or extra pictograms. Highlight the stage(s) relevant to that paper page (Lesson 002: page 1 Recall; page 2 Learn and Think; page 3 Write; page 4 Correct). All five stages remain visible so the journey becomes familiar to students.
+Each stage has a modest, rounded, pale-blue phase tile and its purpose in ordinary text beneath it. The current stage(s) receive a slightly stronger blue highlight. Lesson 002 highlights page 1 Do Now, page 2 I Do and We Do, page 3 You Do, page 4 Review & Improve. **No separate green/orange routine signs in the content**; do not confuse this print-only footer with the three-tile teacher-led interactive signage. The actual classroom Teach lessons remain unchanged.
 
-- Leave the teacher-led interactive lesson and its three-sign system unchanged. Only the independent print/worksheet experience uses this footer.
-- **Code First** remains the beginning of J277 You Do, with Predict → Write → Test → Improve where relevant.
-- The footer is secondary and should not displace any lesson content. Reserve sufficient bottom space so the self-mark and correction areas don't overlap it.
-- In monochrome, both signs retain their labels, borders and legible greyscale fills.
-- Source: `docs/independent-booklet-master-template.html`; shared layout in `assets/independent-lesson-base.css`, under `.booklet-journey-footer`. Pilot: `lessons/j277/lesson-002/independent.html`.
-- **Quality assurance:** visually inspect all four pages, including double-sided A3 imposition, before publishing the final PDF.
+The content remains lesson-specific and sourced from both the original classroom lesson and revision guide; shared geometry and typography live in `assets/independent-lesson-base.css`. The source skeleton is `docs/independent-booklet-master-template.html` and the pilot lesson is `lessons/j277/lesson-002/independent.html`. Check the colour PDF visually across all pages and then check the black-and-white and folded A3 versions before publication.
 
 ## Master booklet template and content sources (Lesson 002 pilot)
 
