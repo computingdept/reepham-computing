@@ -29,6 +29,12 @@ For every new PDF/print booklet: verify the original `lessons/j277/lesson-NNN/in
 
 The prototype colour PDF was exported separately for visual review; the repository's live Print mode continues to be generated from `independent.html` by the shared print CSS/JS. Before distributing, compare the exported PDF against the master HTML print view, then review the folded A3 imposition. Only make B&W and final A3 versions after the colour master has passed visual and content review.
 
+## Black-pen response and green-pen correction convention
+
+Students **write all their work in a black pen**, including the Exit Ticket, then **use a green pen to tick correct responses and write corrections** after reviewing the answer key. Print this as one compact shared routine on the first page and repeat the marking instruction briefly on the self-mark page. Use two small inline vector/ SVG signs: plain pen for `BLACK PEN · Write your answers`, and pen with a distinct **tick** for `GREEN PEN · Tick and correct`. Avoid large callout boxes, coloured banners and unnecessary duplication.
+
+**B&W printing:** Both pen icons may render grey/black because the labels are literal. That is intentional: the words specify the ink students should physically use, not the printer colour. The marked pen has a different pictogram (a tick), so recognition does not rely on colour. The central web layout uses `assets/independent-lesson-base.css` and the reusable HTML master; the A4 PDF can use equivalent vector shapes. Check a greyscale output before publishing.
+
 ## Self-mark page reading order (mandatory, Lesson 002 correction)
 
 The **final page is one continuous, full-width column**. Students read **top → bottom**, never alternate across columns. Order: 1 Do Now → 2 We Do → 3 Code First → 4 You Do → 5 Exit Ticket answers. Present each as **question number · short correct answer · optional one-line reason · empty tick square**. Keep answers in the exact question order and allow space at the end to correct a mistake.
