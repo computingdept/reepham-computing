@@ -152,6 +152,10 @@
       const reset=()=>{
         status.replaceChildren();
         check.textContent='Check my answers';
+        // An edited answer invalidates its previous score immediately.
+        questionEls.forEach(({question})=>question.fields.forEach((_,i)=>
+          grades.delete(question.key+'-'+i)));
+        updateOverview();
       };
       questionEls.forEach(entry=>entry.controls.forEach(control=>control.listen(reset)));
       check.addEventListener('click',()=>{
