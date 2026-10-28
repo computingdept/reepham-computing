@@ -1,0 +1,34 @@
+name: J277 Paper 1 V3 browser viewport review
+on:
+  push:
+    branches:
+      - review/j277-paper1-v3-20261028
+    paths:
+      - 'tools/revision/j277_paper1_pdf_browser_qa.cjs'
+      - '.github/workflows/j277-paper1-v3-browser-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install chromium and Playwright
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test full PDF serving and phone/classroom viewer geometry
+        run: node tools/revision/j277_paper1_pdf_browser_qa.cjs
+      - name: Capture browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-paper1-v3-phone-and-tv-browser-check
+          path: |
+            review/j277-paper1-v3-20261028/verified/browser-*.png
+            review/j277-paper1-v3-20261028/verified/BROWSER_EMULATION_QA.json
