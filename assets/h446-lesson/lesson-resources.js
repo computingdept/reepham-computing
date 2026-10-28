@@ -6,6 +6,9 @@
   if(!match)return;
   const routeKey=match[1].toLowerCase()+'-'+match[2];
   const booklets={
+    'j277-001':'independent.html?version=bw',
+    'j277-002':'independent.html?version=bw',
+    'j277-003':'independent.html?version=bw',
     'j277-004':'independent.html?version=bw'
   };
   const href=booklets[routeKey];
