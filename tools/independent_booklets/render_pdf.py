@@ -149,7 +149,7 @@ def header_footer(canvas, doc, lesson, phase):
     canvas.setFillColor(GREEN)
     canvas.drawString(37, h-27, f"RHS COMPUTING  /  OCR {lesson.course.upper()}  /  {lesson.spec or 'SPEC TO CHECK'}")
     canvas.setFillColor(GREY)
-    canvas.drawRightString(w-37, h-27, f"LESSON {lesson.number:03d}   ·   DRAFT")
+    canvas.drawRightString(w-37, h-27, f"LESSON {lesson.number:03d}   ·   " + ("STAFF ONLY" if lesson.is_assessment else "DRAFT"))
     canvas.line(37, h-34, w-37, h-34)
     # Two different pictograms: writing pen and pen with a tick. Never rely on colour alone.
     canvas.setStrokeColor(INK)
@@ -237,6 +237,8 @@ def build_a4(path: Path, lesson, large=False, mode="colour"):
     # PAGE GROUP 1 — RETRIEVAL
     story.append(p(f"LESSON {lesson.number:03d} · {lesson.title}", st["title"]))
     story.append(p("Name: _____________________   Class: __________   Date: __________", st["small"]))
+    if lesson.is_assessment:
+        story.append(p("ASSESSMENT / TEST SOURCE · STAFF COPY ONLY. Do not issue a booklet containing model answers to pupils.", st["h2"]))
     story.append(p("Work through the pages in order. Answer in BLACK PEN first. Check in GREEN PEN only after the Exit Ticket.", st["body"]))
     story.append(p("Do Now · Recall previous learning", st["h1"]))
     for i, (prompt, _) in enumerate(lesson.do_now, 1):
