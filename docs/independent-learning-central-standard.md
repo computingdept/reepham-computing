@@ -7,11 +7,11 @@
 
 Each `lessons/<course>/lesson-NNN/independent.html` owns lesson-specific prompts, diagrams, vocabulary, worked examples, answer spaces and self-marking content. Do not copy CSS, JavaScript or event handlers into the lesson HTML.
 
-The current four-page pattern is **Start → Learn → Practise → Check & improve**. Give each page a `class="page"` and `data-page="1"` to `"4"`, inside `#viewer`. The `#spreads` container stays empty in the HTML; shared JavaScript assembles the print spreads.
+The current standard four-page arrangement is **Recall → Learn and guided practice → Independent practice and Exit Ticket → Review & Improve**. Give each page a `class="page"` and `data-page="1"` to `"4"`, inside `#viewer`. The `#spreads` container stays empty in the HTML; shared JavaScript assembles the print spreads.
 
 ## Independent booklet header/footer architecture (approved Lesson 002 pilot)
 
-Use **one small two-row header on every page**. Row 1: RHS COMPUTING / OCR J277 / Paper / specification point on the left, LESSON NNN on the right. Row 2: small pen SVG + **BLACK PEN · Answer all questions first.**, and a different pen-with-tick SVG + **GREEN PEN · Then check: tick correct answers; rewrite mistakes.**. Both labels and icons remain intelligible in greyscale. Keep Name / Class / Date / Time / Teacher on page 1 only, immediately below the title; don't repeat pen instructions or sign tiles in the main learning content.
+Use **one small two-row header on every page**. Row 1: RHS COMPUTING / OCR J277 / Paper / specification point on the left, LESSON NNN on the right. Row 2: small pen SVG + **BLACK PEN · Answer all questions first.**, and a different pen-with-tick SVG + **GREEN PEN · Then: tick correct answers; rewrite mistakes.**. Both labels and icons remain intelligible in greyscale. Keep Name / Class / Date / Time / Teacher on page 1 only, immediately below the title; don't repeat pen instructions or sign tiles in the main learning content.
 
 Use a **slim, fixed learning-purpose footer on all four A4 pages**, with five familiar stages and explicit child-friendly purposes:
 
@@ -32,25 +32,50 @@ The content remains lesson-specific and sourced from both the original classroom
 
 ## Master booklet template and content sources (Lesson 002 pilot)
 
-The reusable four-page HTML authoring skeleton is `docs/independent-booklet-master-template.html`. It uses the existing **shared** `assets/independent-lesson-base.css`, `assets/independent-print.css` and navigation assets; never create separate per-lesson styles. Each lesson supplies only its subject knowledge, diagrams, activities and answer keys. Lesson 002 `independent.html` is the first follow-on pilot using the standard two-tile blue/green phase/routine signs from Lesson 001.
+The reusable four-page HTML authoring skeleton is `docs/independent-booklet-master-template.html`. It uses the existing **shared** `assets/independent-lesson-base.css`, `assets/independent-print.css` and navigation assets; never create separate per-lesson styles. Each lesson supplies only its subject knowledge, diagrams, activities and answer keys. Lesson 002 `independent.html` is the worked pilot using the footer-only learning-purpose stages; large classroom signs are not repeated within independent worksheet content.
 
 For every new PDF/print booklet: verify the original `lessons/j277/lesson-NNN/index.html`, then the correct **published or source** OCR J277 revision guide, and include a short source/coverage check. For Lesson 002, sources are the actual interactive Binary Addition and Shifts lesson, and the Paper 1 V4 revision guide section 1.2.4, pages **93 (binary addition and overflow)** and **94 (logical shifts)**. Retain original steps and teacher-modelled answers, but provide independent paper instructions and space for working. Do not label the draft PDF a live published PDF until binary files have been published and checked.
 
 The prototype colour PDF was exported separately for visual review; the repository's live Print mode continues to be generated from `independent.html` by the shared print CSS/JS. Before distributing, compare the exported PDF against the master HTML print view, then review the folded A3 imposition. Only make B&W and final A3 versions after the colour master has passed visual and content review.
 
-## Black-pen response and green-pen correction convention
+## Independent booklet accessibility: non-negotiable defaults
 
-Students **write all their work in a black pen**, including the Exit Ticket, then **use a green pen to tick correct responses and write corrections** after reviewing the answer key. Print this as one compact shared routine on the first page and repeat the marking instruction briefly on the self-mark page. Use two small inline vector/ SVG signs: plain pen for `BLACK PEN · Write your answers`, and pen with a distinct **tick** for `GREEN PEN · Tick and correct`. Avoid large callout boxes, coloured banners and unnecessary duplication.
+The standard edition must be usable by students working without an adult, including those with SEND. **Make the main edition accessible first**; an optional alternate version is extra support, not an excuse for an inaccessible standard. Do not alter the original teacher-led Teach lesson when updating this print model.
 
-**B&W printing:** Both pen icons may render grey/black because the labels are literal. That is intentional: the words specify the ink students should physically use, not the printer colour. The marked pen has a different pictogram (a tick), so recognition does not rely on colour. The central web layout uses `assets/independent-lesson-base.css` and the reusable HTML master; the A4 PDF can use equivalent vector shapes. Check a greyscale output before publishing.
+**Keep directions predictable and explicit.** Each activity should say what the learner does, where to write and what happens next. Use ordinary words and positive commands rather than unexplained abstractions (e.g. "Show your working" rather than "Demonstrate your methodology"). The consistent page roles are: page 1 retrieval and vocabulary; page 2 new knowledge and guided examples; page 3 independent work plus Exit Ticket; page 4 model answers followed by a fresh reattempt. If the content cannot remain clear within four pages, allow additional pages; don't shrink text or compress writing lines to defend the page count.
 
-## Self-mark page reading order (mandatory, Lesson 002 correction)
+**Black/green pen routine:** Use compact, identifiable pen and pen-with-tick SVGs in the **two-row header on every page**, with this exact chronological wording:
+- **BLACK PEN — Answer all questions first.**
+- **GREEN PEN — Then: tick correct answers; rewrite mistakes.**
 
-The **final page is one continuous, full-width column**. Students read **top → bottom**, never alternate across columns. Order: 1 Do Now → 2 We Do → 3 Code First → 4 You Do → 5 Exit Ticket answers. Present each as **question number · short correct answer · optional one-line reason · empty tick square**. Keep answers in the exact question order and allow space at the end to correct a mistake.
+The **Exit Ticket is answered in black** before any model answers are shown. On page 4, explicitly tell students to switch to green, compare their answers with the models, tick what is correct and reattempt what they got wrong. Do not add a second pen strip within the learning area. These words, distinct silhouettes and written sequence must remain intelligible in monochrome; colour alone must not convey meaning.
 
-Use thin horizontal separators and plain white paper; **no coloured or grey filled answer cards**, decorative boxes, or Unicode square-glyph placeholders. Use bordered checkbox elements/CSS in the web-print template and vector outline squares in the PDF generator so the rendering is stable in different readers. Keep the student instructions as three short steps: check the number, read the answer, tick or correct. On mobile, use that same single reading order. Only expand explanations where students need them; do not crowd the page.
+**Visual, cognitive and reading access:**
+- Use a plain, familiar sans-serif and clear contrast. Design for approximately **12 pt student-facing body text and comfortable line spacing** where possible; smaller metadata/footer text may be secondary, but crucial instructions must not depend on tiny print. Inspect the final PDF at **100% A4 print size**, not only a zoomed preview. If the content does not fit, prioritise reading and writing space over decorative elements.
+- Keep activity instructions short, one action per clause or step. Separate a worked model from practice; label its steps and show the method, not only the result.
+- Use **semantic, aligned working grids** when they meaningfully reduce processing load. For binary addition, align eight bit columns and a separate overflow/ninth-bit position; model carry values correctly and include the filled-in model first. For logical shifts, use **BEFORE → MOVE → AFTER**, identify the zero-fill side and show lost bits where relevant.
+- Use adequate ruled space for the type of answer expected; a multi-step calculation or explanation requires more space than a one-word or multiple-choice answer. Offer a suitable digital response or additional page when handwriting is a barrier.
+- Keep the five phase-and-purpose footer labels predictable and secondary: Do Now (Recall previous learning), I Do (Read new knowledge), We Do (Practise with guidance), You Do (Work independently), Review & Improve (Check my understanding). Highlight the relevant phase without relying on colour alone.
+- No extra coloured response signs, decorative logos, thick shaded cards, unfamiliar fonts or irrelevant pictograms. Yellow keyword highlighting may be used sparingly as a cue, not as the only way to identify important information.
 
-The central HTML CSS implementation is in `assets/independent-lesson-base.css` under `.selfmark-page`. The reusable HTML skeleton is `docs/independent-booklet-master-template.html`. The current Lesson 002 `independent.html` demonstrates the one-column layout; the four-page PDF prototype was independently rendered and visually inspected. This improvement must be used for subsequent booklets and retrofitted to Lesson 001 before final release.
+**Self-mark and correction page:**
+- Put the **Exit Ticket at the end of the independent tasks**, before pupils can see the solutions (normally page 3).
+- Page 4 is a **single continuous top-to-bottom answer list**. Label groups with the **original page + activity** (e.g. `Page 2 · We Do`) and list `Q number → correct answer → short worked explanation if needed → empty outlined tick box`. Do not put answers in two columns, filled cards or ahead of the original questions.
+- Finish with **Try the question again**. Tell students: choose one question you got wrong; if all correct, choose the hardest; **copy the full original question** (at least two ruled lines) and **write a complete new answer in green pen**, showing working where needed (at least four ruled lines). Avoid duplicated section/question-number fields and vague reflection boxes.
+
+**Accessible PDF/export acceptance:** The user-facing PDF must have selectable text, clean extraction order, no duplicate invisible header/footer layers, legible diagrams and meaningful alternative text/accessible reading order in the digital source. Set language metadata where possible; a selectable-text PDF is **not** automatically a properly tagged/PDF-UA accessible file. When a fully tagged/accessible PDF is needed, verify actual tags, logical structure and screen-reader reading order separately rather than claiming certification.
+
+## Optional larger-print edition (design rule; not yet published)
+
+Where a pupil needs larger print, provide a **parallel, same-content edition** from the **same underlying lesson**, not a simplified SEND worksheet. Aim for around **14 pt body text**, wider spacing and genuinely larger writing areas, with the **same questions, worked examples, order, icons and learning-purpose footer**. Page count may grow (e.g. from four to eight A4 sides, as content requires). Prefer controlled extra pages over scaling a crowded four-page layout, or printing A4 pages onto A3 without reflow. Support text selection/read-aloud and a typed-answer route where possible.
+
+**Implementation contract:** maintain a shared rendering/export option in central print assets; do not fork individual lesson content or embed per-lesson CSS. This is an **approved requirement**, not a claim that an eight-page edition or a PDF/UA export is available today. Only advertise a large-print button once that output is implemented and tested.
+
+## Quality-assurance gate for each new independent booklet
+
+Before pupil release: (1) check against the actual Teach lesson and the current relevant revision guide; (2) confirm four retrieval questions reuse prior knowledge; (3) proofread all arithmetic, carry rows, worked answers and Code First outputs; (4) check the original question/answer pairing and stage labels; (5) print-check every page at 100% A4 in colour and greyscale, with no clipped writing lines or footer collision; (6) check navigation and responsive page behaviour on phone and desktop; (7) inspect text extraction/read order and document any PDF tagging limitation; (8) test an unprompted student reading the instructions, finding the right worked model and correcting an answer.
+
+Use the central HTML master at `docs/independent-booklet-master-template.html`, styling in `assets/independent-lesson-base.css`, printing in `assets/independent-print.css`, and Lesson 002 as the content-rich worked pilot. Keep all original interactive classroom lessons unchanged.
 
 ## Shared files and order
 
@@ -131,12 +156,3 @@ All fifteen new configurations contain 5 stages, 15 objective questions each, an
 ## Ongoing rule
 
 Fix shared functionality in shared assets, not by copying styles and scripts into individual lesson files. Content changes remain lesson-scoped. Scope new behaviour to a cohort or explicit feature flag until visually checked on both TV/desktop and phone and in print.
-
-**Accessibility refinements from Lesson 002 (required wherever relevant):**
-- Keep written directions in chronological order: use BLACK PEN for all original answers, then change to GREEN PEN only after the independent questions and Exit Ticket are finished. Clearly explain on the answer page how to tick correct answers and rewrite mistakes.
-- Model the actual reasoning: binary addition needs a **correct carry row** and aligned eight-bit columns, with a visibly separate ninth-bit/overflow column in student grids. Align bits vertically rather than asking students to infer place values from ruled lines.
-- For logical shifts, show **BEFORE → MOVE → AFTER**, with the zero-fill side identified. Make diagrams readable without relying on colour.
-- Put the three-question Exit Ticket **before** model answers (normally at the end of page 3); use page 4 only for looking up answers, explanations and a full fresh reattempt.
-- Label each answer group with its **source page and stage**, and include a short worked method when a single-number answer would not show how to improve.
-- Do not hide duplicate layers of text in PDF exports. Produce one clean pass, set the document language where supported, and verify extracted text order. Explicitly distinguish a selectable-text PDF from a fully tagged/PDF-UA accessible PDF.
-- Give a genuine grid or other structured support where it improves students' independence, but do not add decorative colours, unrelated logos or extra response signs.
