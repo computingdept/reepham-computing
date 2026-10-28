@@ -17,12 +17,31 @@ import json
 from pathlib import Path
 import re
 import traceback
+import signal
+import time
 
 from source_model import ROOT, hub_map, j277_source, h446_source
 from render_pdf import build_a4, impose_a3
 from review_index import build_review_index
 
 SMOKE = {"j277": {5, 19, 96, 164}, "h446": {1, 25, 181, 200, 320}}
+
+
+def lesson_timebox_expired(signum, frame):
+    raise TimeoutError("Five-minute per-lesson generation limit exceeded; deferred for diagnosis")
+
+
+def classify_generation_failure(exc):
+    name = type(exc).__name__
+    if isinstance(exc, TimeoutError):
+        return "five_minute_timebox_exceeded"
+    if isinstance(exc, FileNotFoundError):
+        return "missing_source_file"
+    if name == "LayoutError" or "flowable" in str(exc).lower():
+        return "pdf_layout_overflow"
+    if isinstance(exc, (ValueError, KeyError)):
+        return "source_data_or_pdf_validation"
+    return "generation_exception"
 
 
 def status_for(lesson):
@@ -124,7 +143,7 @@ def save_reports(out, records, mode):
         "course", "lesson", "label", "title", "spec", "teach_url", "status",
         "priority", "a4_pages", "a3_spreads", "a4_pdf", "a3_pdf", "colour_a4_pdf", "colour_a3_pdf",
         "independent_html", "sources", "missing_data", "failed_checks", "warnings",
-        "visual_count", "is_assessment",
+        "visual_count", "is_assessment", "root_cause", "time_seconds", "next_action",
     ]
     with (out / "manifest.csv").open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=columns)
@@ -233,9 +252,14 @@ def main():
             if args.limit and done >= args.limit:
                 break
             done += 1
+            started = time.monotonic()
+            previous_handler = signal.getsignal(signal.SIGALRM)
+            signal.signal(signal.SIGALRM, lesson_timebox_expired)
+            signal.alarm(300)
             try:
                 r = generate_one(course, number, route, donow, code_master, out,
                                  large=args.large_print, skip_a3=args.skip_a3)
+                r['time_seconds'] = round(time.monotonic()-started, 2)
                 records.append(r)
                 print(f"OK {r['label']}: {r['a4_pages']} A4 pages, {r['a3_spreads']} A3 spreads; {r['status']}", flush=True)
             except Exception as exc:
@@ -246,9 +270,15 @@ def main():
                     "spec": "", "teach_url": "/" + route,
                     "sources": [route], "status": "generation_failed",
                     "missing_data": [], "failed_checks": [f"{type(exc).__name__}: {str(exc)[:300]}"],
-                    "warnings": [], "priority": "P0", "a4_pages": 0, "a3_spreads": 0,
+                    "warnings": [], "priority": "P0", "root_cause": classify_generation_failure(exc),
+                    "time_seconds": round(time.monotonic()-started, 2),
+                    "next_action": "Diagnose source or shared renderer; defer and continue",
+                    "a4_pages": 0, "a3_spreads": 0,
                     "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "", "independent_html": "", "visual_count": 0, "is_assessment": False,
                 })
+            finally:
+                signal.alarm(0)
+                signal.signal(signal.SIGALRM, previous_handler)
     result = save_reports(out, records, "smoke" if args.smoke else "batch")
     print(json.dumps(result, indent=2), flush=True)
     if args.fail_on_errors and result["failures"]:
