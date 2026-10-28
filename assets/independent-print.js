@@ -14,6 +14,10 @@
     pair.forEach(function(i){spread.appendChild(pages[i].cloneNode(true));});
     spreads.appendChild(spread);
   });
+  // Standalone print control is retained when the enhanced navigation fails.
+  // When navigation loads, it replaces this control with its own print button.
+  var originalPrint=document.querySelector('.screen-toolbar button.primary');
+  if(originalPrint)originalPrint.addEventListener('click',function(){window.print();});
   // Print lesson is a direct action. Keep the normal Print button as a fallback.
   if(params.get('print')==='1'){
     window.addEventListener('load',function(){
