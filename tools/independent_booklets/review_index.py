@@ -84,7 +84,7 @@ your own review on this device; it does not publish or approve a lesson.</p></di
 <option value="checked">Reviewed locally</option>
 <option value="incomplete">Incomplete source / failed checks</option>
 <option value="visual">Visual / independence review</option>
-<option value="ready">Ready for teacher audit</option></select></label>
+<option value="ready">Ready for teacher audit</option><option value="assessment">Assessment — staff only</option></select></label>
 <button id="export" type="button">Export my review log CSV</button>
 <a href="SUMMARY.md">Read summary</a><a href="manifest.csv">Full audit CSV</a>
 </div>
@@ -113,7 +113,8 @@ your own review on this device; it does not publish or approve a lesson.</p></di
       const okText=item.dataset.search.includes(query);
       const okFilter=mode==='all'||(mode==='checked'&&checked)||(mode==='unchecked'&&!checked)||
         (mode==='incomplete'&&/incomplete|failed|needs_audit/.test(status))||
-        (mode==='visual'&&status.includes('visual'))||(mode==='ready'&&status.includes('ready_for_teacher'));
+        (mode==='visual'&&status.includes('visual'))||(mode==='ready'&&status.includes('ready_for_teacher'))||
+        (mode==='assessment'&&status.includes('assessment_staff_only'));
       item.hidden=!(okText&&okFilter);if(!item.hidden)shown++;
     }
     summary.textContent=shown+' of '+items.length+' lessons shown · '+
