@@ -51,21 +51,29 @@ The independent on-screen version may opt into `assets/independent-auto-mark.js`
 
 ## Separate short Catch-up / Learn mode · 80% mastery model
 
-**J277 Lessons 001–005** each have three independently maintained types of resource, where published:
+**J277 Lessons 001–015** now have separate Teach and Learn experiences. Print is opt-in only where published:
 - **Teach**: original `lessons/j277/lesson-NNN/index.html`, never rewritten as part of catch-up work.
-- **Learn**: `lessons/j277/lesson-NNN/learn.html`, about 12 minutes, five stages (Remember, Learn, Practise, Apply, Check), sharing the same engine and CSS.
-- **Print**: existing `lessons/j277/lesson-NNN/independent.html` A3 booklet for 001–004. **Lesson 005 has no print booklet yet: never show a dead Print link.**
+- **Learn**: `lessons/j277/lesson-NNN/learn.html`, about 12–15 minutes, five stages (Remember, Learn, Practise, Apply, Check), sharing the same engine and CSS.
+- **Print**: existing `lessons/j277/lesson-NNN/independent.html` A3 booklet for 001–004. **Lessons 005–015 have no print booklets yet: never show dead Print links.**
 
-The hub uses `assets/hub-navigation.js` with a per-tile optional `printHref`; `j277-hub.html` owns the published route registry. The catch-up version uses central `assets/catchup-lesson.js`, `assets/catchup-lesson.css` and separate, course-specific JSON content in `data/catchup/j277-NNN.json`. No duplicated per-lesson assessment code. Shared visual models for nibbles and bitmap pixels live in the central engine and stylesheet.
+The hub uses `assets/hub-navigation.js` with a per-tile optional `printHref`; `j277-hub.html` owns the published route registry. The catch-up version uses central `assets/catchup-lesson.js`, `assets/catchup-lesson.css` and separate, course-specific JSON content in `data/catchup/j277-NNN.json`. No duplicated per-lesson assessment code. Shared visual models for nibbles, bitmap pixels, and accessible process/comparison diagrams live in the central engine and stylesheet.
 
 **Mastery contract:**
-- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Each published Learn lesson 001–005 has 15 questions, so at least 12 must be correct.
+- 80% is required to show mastery. Count every objectively marked question equally; round the minimum number correct **up**. Each published Learn lesson 001–015 has 15 questions, so at least 12 must be correct.
 - Students must attempt and check every objective question to be marked as mastered; **unlimited retries**. Changing an answer invalidates its earlier checked result. Never block opening another lesson.
 - Auto-check number entry, MCQs, true/false, matching and reordering. Ordering works by drag and drop on mouse and by explicit up/down buttons for touch, keyboard and accessibility.
 - One extended written question is self-reviewed using a model answer and checklist; do not pretend a free-text matcher reliably grades nuanced exam responses.
 - A small browser-local saved state lets the student resume on that device. No names, accounts, student records or submission to a server are required.
 - The short path must retain all **essential taught concepts**, not every classroom explanation, question or repetition. Printed and classroom resources must remain independently usable.
 - Visual and touch testing at mobile and desktop widths, and a complete user walkthrough of correct/wrong/retry cases, are required before promoting this pilot across the curriculum.
+
+## Lessons 006–015 rollout check (28 October 2026)
+
+New, curriculum-aligned `learn.html` pages and `data/catchup/j277-NNN.json` question content are published for Lessons 006–015. These reuse the same central `catchup-lesson.js` and `catchup-lesson.css`. The existing teacher-led `index.html` files and current print booklets were not edited.
+
+Each new page has 15 objective questions (number, choice, true/false, matching and ordering), five stages and a written answer for model-led self-review. All 150 correct-answer inputs and 150 deliberately incorrect inputs were tested against the actual central marker; 300/300 test cases behaved as expected. Static audits also checked the 12/15 pass threshold, matching keys, order permutations, hub routes, required assets, no inline CSS/JS, and no unavailable Print links.
+
+**Verification limit:** passing static tests does not substitute for checking published pages visually on desktop and mobile, nor completing actual browser sessions through all five stages. New pages should be spot-tested before pupil release.
 
 ## Ongoing rule
 
