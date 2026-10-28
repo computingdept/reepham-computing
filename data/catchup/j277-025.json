@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "id": "j277-025",
+  "title": "Network Topologies",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Short 80% mastery catch-up with unlimited retries.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall earlier learning.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Why is a thermostat controller an embedded system?",
+          "options": [
+            "It has a specific task",
+            "It runs any desktop app",
+            "It always needs Wi-Fi",
+            "It always has a screen"
+          ],
+          "answer": "It has a specific task",
+          "feedback": "A — It has a specific task"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Which network topology links devices through a central switch?",
+          "options": [
+            "Star",
+            "Full mesh",
+            "Optical storage",
+            "Cloud"
+          ],
+          "answer": "Star",
+          "feedback": "Star endpoints use a central network device."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the essential ideas.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Topology describes connections",
+          "text": "A network topology shows how computers and connection devices link together."
+        },
+        {
+          "type": "paragraph",
+          "title": "Star topology",
+          "text": "Each endpoint connects to a central device such as a switch. Easier to add/manage devices, but the central device is a point of failure."
+        },
+        {
+          "type": "paragraph",
+          "title": "Mesh topology",
+          "text": "Devices can connect to multiple others. Alternative paths make the system resilient if one link fails, but more connections increase cost and complexity."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare in context",
+          "text": "For a small school LAN, a star can be practical. A high-availability network may use mesh routes; explain what happens when a link or central device fails."
+        },
+        {
+          "type": "diagram",
+          "title": "Concept model",
+          "layout": "flow",
+          "items": [
+            [
+              "Star",
+              "Central switch"
+            ],
+            [
+              "Mesh",
+              "Alternative paths"
+            ],
+            [
+              "Compare",
+              "Cost and reliability"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "Worked example",
+          "text": "All classroom devices connect to one central switch. New devices can be connected easily [1], making the network straightforward to manage [1]. The switch is a single point of failure [1], so its failure can interrupt communication for connected devices [1]. Give advantage plus linked benefit and disadvantage plus linked effect."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "Topology — Arrangement of network devices and links.",
+            "Star topology — Endpoints connect to a central switch or hub.",
+            "Mesh topology — Devices connect via multiple paths between nodes.",
+            "Fault tolerance — Ability to continue working after some faults.",
+            "Central switch — Network device that connects and forwards data to LAN devices.",
+            "Redundancy — Extra paths that can be used if a path fails."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which term means: Arrangement of network devices and links.",
+          "options": [
+            "Topology",
+            "Star topology",
+            "Mesh topology",
+            "Fault tolerance"
+          ],
+          "answer": "Topology",
+          "feedback": "Topology: Arrangement of network devices and links."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which term means: Endpoints connect to a central switch or hub.",
+          "options": [
+            "Star topology",
+            "Topology",
+            "Mesh topology",
+            "Fault tolerance"
+          ],
+          "answer": "Star topology",
+          "feedback": "Star topology: Endpoints connect to a central switch or hub."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which term means: Devices connect via multiple paths between nodes.",
+          "options": [
+            "Mesh topology",
+            "Topology",
+            "Star topology",
+            "Fault tolerance"
+          ],
+          "answer": "Mesh topology",
+          "feedback": "Mesh topology: Devices connect via multiple paths between nodes."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, order and choose.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match key terms to definitions.",
+          "pairs": [
+            [
+              "Topology",
+              "Arrangement of network devices and links."
+            ],
+            [
+              "Star topology",
+              "Endpoints connect to a central switch or hub."
+            ],
+            [
+              "Mesh topology",
+              "Devices connect via multiple paths between nodes."
+            ]
+          ],
+          "feedback": "Compare each term with its description."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Arrange the steps logically.",
+          "items": [
+            "Choose a topology for the situation",
+            "Identify cost and resilience requirements",
+            "Compare central failure with alternative paths"
+          ],
+          "answer": [
+            "Identify cost and resilience requirements",
+            "Compare central failure with alternative paths",
+            "Choose a topology for the situation"
+          ],
+          "feedback": "Begin with the requirement or input."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "What is the result if a central switch fails in a simple star?",
+          "options": [
+            "Connected devices lose communications via it",
+            "Only one unrelated cable fails",
+            "It automatically becomes a mesh",
+            "Everyone gains speed"
+          ],
+          "answer": "Connected devices lose communications via it",
+          "feedback": "The central device is a common failure point."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "How can a mesh be fault tolerant?",
+          "options": [
+            "Other links may still provide a route",
+            "There is only one path",
+            "No equipment is used",
+            "Every attack is stopped"
+          ],
+          "answer": "Other links may still provide a route",
+          "feedback": "Redundant links may bypass a failed path."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Complete Code First and reflect.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "devices = 4",
+            "links = devices * (devices - 1) / 2",
+            "print(links)"
+          ],
+          "caption": "Predict the number of links. Change devices to 5. Add print(\"Links counted\") after displaying the value."
+        },
+        {
+          "type": "prompt",
+          "text": "A cinema uses a star network to connect ticket kiosks and staff computers. The central switch stops working. Explain the effect and suggest one precaution. [4 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "A full mesh with four devices has how many links?",
+          "answer": "6",
+          "feedback": "4×3÷2 = 6."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "A full mesh with five devices has how many links?",
+          "answer": "10",
+          "feedback": "5×4÷2 = 10."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Which is usually simpler for a classroom wired LAN?",
+          "options": [
+            "Star connected to a switch",
+            "Full mesh between every workstation",
+            "No connections",
+            "A single point-to-point link for every workstation"
+          ],
+          "answer": "Star connected to a switch",
+          "feedback": "A star typically uses fewer links."
+        }
+      ],
+      "writing": {
+        "prompt": "A cinema uses a star network to connect ticket kiosks and staff computers. The central switch stops working. Explain the effect and suggest one precaution. [4 marks]",
+        "model": "The central switch connects the kiosks/computers [1], so its failure can interrupt network communication [1]. A spare or quickly replaceable switch, or a resilient design, can reduce the problem [1] by restoring service/reducing downtime [1].",
+        "checklist": [
+          "I answered the question fully.",
+          "I used suitable computing terms.",
+          "I compared with the model and improved my answer."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Finish and check mastery.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A star topology normally has a central network device.",
+          "answer": "true",
+          "feedback": "Endpoints connect to the central device."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "A full mesh always needs fewer connections than a star.",
+          "answer": "false",
+          "feedback": "A mesh generally has more connections."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Mesh topology generally provides alternative links that can improve fault tolerance.",
+          "answer": "true",
+          "feedback": "Review the explanation."
+        }
+      ]
+    }
+  ]
+}
