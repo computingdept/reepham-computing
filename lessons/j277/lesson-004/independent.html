@@ -6,85 +6,8 @@
 <meta name="description" content="OCR J277 Lesson 004: a complete independent, printable Characters, ASCII, Unicode and Data Units lesson.">
 <title>Independent Lesson 004 · Characters, ASCII, Unicode and Data Units · RHS Computing</title>
 <link rel="alternate" type="application/json" href="../../../data/lesson-resources.json">
-<style>
-:root{font-family:Arial,Helvetica,sans-serif;color:#132823;background:#eff3f0;font-synthesis:none}
-*{box-sizing:border-box}
-body{margin:0}
-a{color:inherit}
-.screen-toolbar{position:sticky;top:0;background:#fff;border-bottom:1px solid #bacfc3;z-index:5;padding:11px max(14px,calc((100% - 940px)/2));display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:0 3px 12px #0001}
-.screen-toolbar strong{margin-right:auto;font-size:14px;letter-spacing:-.2px}
-.screen-toolbar a,.screen-toolbar button{font:600 13px Arial,sans-serif;text-decoration:none;border:1px solid #a7beb1;background:white;border-radius:7px;min-height:38px;padding:10px 12px;cursor:pointer}
-.screen-toolbar button.primary{background:#064839;color:white;border-color:#064839}
-.screen-toolbar a[aria-current="page"]{border-color:#064839;box-shadow:inset 0 0 0 1px #064839}
-.instructions{max-width:850px;margin:20px auto;padding:16px 19px;background:#fff;border:1px solid #d0ddd6;border-radius:12px;font-size:14px;line-height:1.5}
-.instructions h1{font-size:20px;margin:0 0 6px}
-.instructions p{margin:5px 0}
-.viewer{display:flex;flex-direction:column;gap:20px;align-items:center;padding:0 12px 30px}
-.page{width:210mm;height:297mm;overflow:hidden;flex:none;background:white;box-shadow:0 8px 26px #08251e1b; padding:12mm 12mm 10mm;display:flex;flex-direction:column;position:relative;font-size:11pt;line-height:1.35}
-.page h2{font-size:16pt;margin:12px 0 7px;color:#104d43}
-.page h3{font-size:11.8pt;margin:9px 0 6px;color:#104d43}
-.page p{margin:4px 0 8px}
-.page .small{font-size:9.1pt}
-.page .faint{color:#4d625a}
-.page header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #bdcfc6;padding-bottom:7px;font-size:8.2pt;font-weight:700;letter-spacing:.3px}
-.page header .cs{display:inline-block;background:#075043;color:white;padding:7px 8px;border-radius:5px;margin-right:7px}
-.page footer{position:absolute;bottom:8mm;left:12mm;right:12mm;border-top:1px solid #c6d6ce;padding-top:5px;font-size:7.8pt;color:#456159;display:flex;justify-content:space-between}
-.page main{flex:1;min-height:0}
-.section{margin-top:9px}
-.heading{font-weight:700;border-left:4px solid #2c739c;padding-left:8px;margin:10px 0 7px;font-size:13pt}
-.heading.green{border-color:#177755}.heading.orange{border-color:#a86429}
-.info{border:1px solid #cee0d4;background:#f5faf7;border-radius:6px;padding:8px 10px;margin:6px 0 9px}
-.term{font-weight:700;position:relative;background:linear-gradient(178deg,transparent 8%,#fff1aa 8%,#fff1aa 92%,transparent 92%);padding:0 3px}
-.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 15px}
-.vocab-grid .entry{font-size:9.4pt}
-.line{display:inline-block;border-bottom:1px solid #8fa79a;height:14px;min-width:80px;vertical-align:bottom}
-.write-line{display:block;border-bottom:1px solid #9bad9e;height:19px;margin:2px 0 6px}
-.q{margin:8px 0 10px}.q b{color:#235f86}
-.bits{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;margin:7px 0}
-.bit{border:1px solid #9cb8aa;border-radius:3px;text-align:center;padding:5px 0 6px;font-size:10pt;background:#f8fbf9}
-.bit em{display:block;font-style:normal;font-size:9pt;color:#2e604e;border-bottom:1px solid #d6e0db;margin:0 4px 4px;padding-bottom:3px}
-.bit strong{font-size:14pt}
-.bit.one{background:#e8f5eb;border-color:#2b8b60}
-.code{background:#f3f6f4;border-left:3px solid #497f66;border-radius:4px;padding:7px 10px;font:700 11pt Consolas,monospace;margin:7px 0}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.hair{border-top:1px solid #cbd8d1;margin:10px 0 7px}
-.spacer{height:8px}
-.tight .q{margin:4px 0 6px}
-.tight .write-line{height:15px;margin:1px 0 5px}
-.answer{font-size:9.4pt;margin:4px 0}
-.answer strong{color:#13563f}
-.exit{display:flex;gap:8px;justify-content:space-between;font-size:9.4pt;margin:7px 0}
-.choice{white-space:nowrap}
-.print-spreads{display:none}
-body[data-mode="bw"] .page{color:#111}
-body[data-mode="bw"] .page h2,body[data-mode="bw"] .page h3{color:#111}
-body[data-mode="bw"] .term{background:none;padding:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-body[data-mode="bw"] .page .cs{color:#111;background:white;border:1px solid #777}
-body[data-mode="bw"] .heading,body[data-mode="bw"] .heading.green,body[data-mode="bw"] .heading.orange{border-color:#222}
-body[data-mode="bw"] .info,body[data-mode="bw"] .code,body[data-mode="bw"] .bit,body[data-mode="bw"] .bit.one{background:white;border-color:#aaa}
-body[data-mode="bw"] .bit em{color:#111}
-body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
-@media(max-width:700px){
-.screen-toolbar{position:static}.screen-toolbar strong{width:100%;margin:0}.instructions{margin:10px 12px}.instructions h1{font-size:18px}
-.viewer{overflow-x:visible;display:flex;flex-direction:column;gap:12px;padding:0 10px 20px}
-.viewer .page{width:100%;height:auto;min-height:0;overflow:visible;max-width:none;padding:20px 16px 40px;margin:0 auto;box-shadow:0 2px 12px #0001;font-size:10.5pt}
-.viewer .page footer{bottom:10px;left:16px;right:16px}
-.viewer .page h2{font-size:19px}
-.viewer .bits{gap:2px}.viewer .bit{padding:4px 0;font-size:8pt}
-.viewer .bit em{font-size:8pt;margin:0 1px 3px}.viewer .bit strong{font-size:11pt}
-.viewer .vocab-grid{gap:7px}.viewer .write-line{height:20px}
-}
-@media print{
-@page{size:A3 landscape;margin:0}
-html,body{margin:0!important;padding:0!important;background:white!important}
-.screen-toolbar,.instructions,.viewer{display:none!important}
-.print-spreads{display:block!important}
-.spread{display:flex!important;flex-direction:row;width:420mm;height:297mm;break-after:page;page-break-after:always;overflow:hidden}
-.spread:last-child{break-after:auto;page-break-after:auto}
-.spread .page{width:210mm;height:297mm;box-shadow:none!important;flex:0 0 210mm;break-inside:avoid;page-break-inside:avoid}
-*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
-</style>
+<link rel="stylesheet" href="../../../assets/independent-lesson-base.css?v=20261028-central1">
+<link rel="stylesheet" href="../../../assets/independent-print.css?v=20261028-central1">
 <link rel="stylesheet" href="../../../assets/independent-navigation.css?v=20261028-independent1">
 <link rel="stylesheet" href="../../../assets/independent-learning-exemplar.css?v=20261028-writing-1">
 </head>
@@ -198,28 +121,7 @@ html,body{margin:0!important;padding:0!important;background:white!important}
 <p class="small">Confidence: □ Secure &nbsp;&nbsp; □ Nearly there &nbsp;&nbsp; □ I need help</p>
 </main><footer><span>LEARN · THINK · WRITE · CORRECT / NO INTERNET REQUIRED</span><span>4 / 4</span></footer></section></div>
 <div class="print-spreads" aria-hidden="true" id="spreads"></div>
-<script>
-(function(){
-  var params=new URLSearchParams(location.search);
-  var mode=params.get('version')==='colour'?'colour':'bw';
-  document.body.dataset.mode=mode;
-  document.getElementById('bw-option').setAttribute('aria-current',mode==='bw'?'page':'false');
-  document.getElementById('colour-option').setAttribute('aria-current',mode==='colour'?'page':'false');
-  var pages=Array.from(document.querySelectorAll('#viewer .page'));
-  var spreads=document.getElementById('spreads');
-  [[3,0],[1,2]].forEach(function(pair){
-    var spread=document.createElement('div');spread.className='spread';
-    pair.forEach(function(i){spread.appendChild(pages[i].cloneNode(true));});
-    spreads.appendChild(spread);
-  });
-  // Print lesson is a direct action. Keep the normal Print button as a fallback.
-  if(params.get('print')==='1'){
-    window.addEventListener('load',function(){
-      window.requestAnimationFrame(function(){window.print();});
-    },{once:true});
-  }
-})();
-</script>
+<script src="../../../assets/independent-print.js?v=20261028-central1"></script>
 <script src="../../../assets/independent-navigation.js?v=20261028-independent1"></script>
 
 </body>
