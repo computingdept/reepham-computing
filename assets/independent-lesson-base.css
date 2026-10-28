@@ -71,15 +71,15 @@ body[data-mode="bw"] .q b,body[data-mode="bw"] .answer strong{color:#111}
 
 
 /* Reproduce CURRENT desktop classroom signals, not legacy PNG or mobile mini SVG.
-   Text-only blue/green/orange tiles are the student's exact familiar signs.
+   For paper, display the blue phase and green working-routine signs only.
    Texts follow signalMap in lesson.js; colours follow lesson-base.css. */
-.page .classroom-signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 6px}
+.page .classroom-signs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px auto 6px;max-width:80%}
 .page .classroom-signal{display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;min-height:27px;border:1.5px solid;border-radius:4px;padding:3px 6px;font-size:9.1pt;font-weight:700;line-height:1.1}
 .page .classroom-signal svg{width:21px;height:21px;min-width:21px;display:block}
 .page .classroom-signal span{overflow-wrap:anywhere}
 .page .classroom-signal-phase{background:#c1e5f5;border-color:#7aabce;color:#0a3258}
 .page .classroom-signal-routine{background:#d9f2d0;border-color:#629264;color:#0b4314}
-.page .classroom-signal-response{background:#fbe3d6;border-color:#c5967d;color:#702c07}
+/* Response signs intentionally omitted from independent print. */
 .page[data-page="2"] .classroom-signs{margin:7px 0 4px}
 .page[data-page="3"] .classroom-signs{margin:5px 0}
 body[data-mode="bw"] .page .classroom-signal{filter:grayscale(1)}
