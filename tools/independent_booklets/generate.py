@@ -20,6 +20,7 @@ import traceback
 
 from source_model import ROOT, hub_map, j277_source, h446_source
 from render_pdf import build_a4, impose_a3
+from review_index import build_review_index
 
 SMOKE = {"j277": {5, 19, 96, 164}, "h446": {1, 25, 181, 200, 320}}
 
@@ -197,6 +198,7 @@ def save_reports(out, records, mode):
         "",
     ]
     (out / "SUMMARY.md").write_text("\n".join(lines), encoding="utf-8")
+    build_review_index(out, records)
     return {"total": len(records), "pdfs": 2*len(made), "failures": len(failures),
             "missing": len(missing), "a3": 2*sum(bool(r["a3_pdf"]) for r in records)}
 
