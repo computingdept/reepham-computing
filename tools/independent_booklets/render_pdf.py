@@ -168,7 +168,8 @@ def header_footer(canvas, doc, lesson, phase):
     canvas.setFont(BOLD, 8.6)
     canvas.drawString(357, h-47, "GREEN PEN")
     canvas.setFont(FONT, 7.5)
-    canvas.drawString(419, h-47, "Then: tick and rewrite mistakes.")
+    canvas.drawString(419, h-44, "Then: tick correct answers;")
+    canvas.drawString(419, h-54, "rewrite mistakes.")
     canvas.setStrokeColor(RULE)
     canvas.line(37, h-62, w-37, h-62)
 
@@ -177,7 +178,7 @@ def header_footer(canvas, doc, lesson, phase):
         ("I Do", "Read new knowledge", "learn"),
         ("We Do", "Practise with guidance", "learn"),
         ("You Do", "Work independently", "practice"),
-        ("Review & Improve", "Check understanding", "review"),
+        ("Review & Improve", "Check my understanding", "review"),
     ]
     left, right = 37, w-37
     tile_w = (right-left)/5
@@ -237,6 +238,7 @@ def build_a4(path: Path, lesson, large=False, mode="colour"):
     # PAGE GROUP 1 — RETRIEVAL
     story.append(p(f"LESSON {lesson.number:03d} · {lesson.title}", st["title"]))
     story.append(p("Name: _____________________   Class: __________   Date: __________", st["small"]))
+    story.append(p("Time: __________   Teacher: __________________________", st["small"]))
     if lesson.is_assessment:
         story.append(p("ASSESSMENT / TEST SOURCE · STAFF COPY ONLY. Do not issue a booklet containing model answers to pupils.", st["h2"]))
     story.append(p("Work through the pages in order. Answer in BLACK PEN first. Check in GREEN PEN only after the Exit Ticket.", st["body"]))
