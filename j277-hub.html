@@ -315,10 +315,14 @@ const independentResourceRoutes = {
   3:'lessons/j277/lesson-003/independent.html?version=bw',
   4:'lessons/j277/lesson-004/independent.html?version=bw'
 };
-/* Short, auto-marked catch-up is piloted separately from the printable booklet.
-   Only lesson 004 has all three live destinations so far. */
+/* Short self-marking catch-up lessons are distinct from full Teach and Print.
+   Add each route only after its curriculum content and checks are published. */
 const catchupResourceRoutes = {
-  4:'lessons/j277/lesson-004/learn.html'
+  1:'lessons/j277/lesson-001/learn.html',
+  2:'lessons/j277/lesson-002/learn.html',
+  3:'lessons/j277/lesson-003/learn.html',
+  4:'lessons/j277/lesson-004/learn.html',
+  5:'lessons/j277/lesson-005/learn.html'
 };
 function openLessonResource(n){return independentResourceRoutes[n] || null;}
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
