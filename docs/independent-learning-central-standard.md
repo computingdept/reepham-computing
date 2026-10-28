@@ -25,6 +25,9 @@ Use a **slim, fixed learning-purpose footer on all four A4 pages**, with five fa
 
 Each stage has a modest, rounded, pale-blue phase tile and its purpose in ordinary text beneath it. The current stage(s) receive a slightly stronger blue highlight. Lesson 002 highlights page 1 Do Now, page 2 I Do and We Do, page 3 You Do, page 4 Review & Improve. **No separate green/orange routine signs in the content**; do not confuse this print-only footer with the three-tile teacher-led interactive signage. The actual classroom Teach lessons remain unchanged.
 
+
+**Final self-mark correction (mandatory):** replace vague "Improve one answer / My corrected answer" language with a clearly scaffolded **Correct and explain** task. Tell pupils to choose a question they got wrong or found difficult (if all correct, choose the hardest); identify both the **section** and **question number**, since question numbers repeat; write the full correct answer and any working in green pen; then state what they changed or learned. Reserve **at least three ruled lines for the corrected answer plus one reflection line**. Remove optional "Next" menus that shrink the writable area. Keep this prompt on the final check page only, not in main learning tasks.
+
 The content remains lesson-specific and sourced from both the original classroom lesson and revision guide; shared geometry and typography live in `assets/independent-lesson-base.css`. The source skeleton is `docs/independent-booklet-master-template.html` and the pilot lesson is `lessons/j277/lesson-002/independent.html`. Check the colour PDF visually across all pages and then check the black-and-white and folded A3 versions before publication.
 
 ## Master booklet template and content sources (Lesson 002 pilot)
