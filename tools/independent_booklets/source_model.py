@@ -47,6 +47,7 @@ class Lesson:
     warnings: list[str] = field(default_factory=list)
     missing: list[str] = field(default_factory=list)
     visual_count: int = 0
+    is_assessment: bool = False
 
     @property
     def label(self):
@@ -129,6 +130,9 @@ def j277_source(number: int, donow: dict, code_master: dict) -> Lesson:
     lesson.source(source)
     data = json.loads(source.read_text(encoding="utf-8"))[f"{number:03d}"]
     lesson.title = clean(data.get("t")) or f"Lesson {number:03d}"
+    lesson.is_assessment = bool(data.get("isAssessment"))
+    if lesson.is_assessment:
+        lesson.warnings.append("ASSESSMENT: teacher-only draft; do not distribute model answers with a pupil paper")
     lesson.spec = clean(data.get("s"))
     lesson.source(JROOT / f"lesson-{number:03d}" / "index.html")
 
@@ -211,6 +215,9 @@ def h446_source(number: int) -> Lesson:
         lesson.title = re.sub(r"^Lesson\s+\d+\s*[·:—-]\s*", "", raw)
         lesson.title = re.sub(r"\s*[·:—-]\s*Ready.*$", "", lesson.title, flags=re.I)
     lesson.title = lesson.title or f"Lesson {number:03d}"
+    lesson.is_assessment = bool(re.search(r"\b(?:synoptic test|assessment|mock examination|test feedback)\b", lesson.title, re.I))
+    if lesson.is_assessment:
+        lesson.warnings.append("ASSESSMENT/FEEDBACK: teacher-only source; not an independent pupil booklet")
     footer = soup.select_one(".lesson-footer")
     info = clean(footer.get_text(" ", strip=True)) if footer else ""
     meta = soup.select_one('meta[name="description"]')
