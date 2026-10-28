@@ -304,7 +304,7 @@ def h446_source(number: int) -> Lesson:
             for detail in node.select("details"):
                 summary = detail.select_one("summary")
                 heading = clean(summary.get_text(" ", strip=True)) if summary else ""
-                if not re.search(r"\\b(?:model answer|reveal.*answer|solution)\\b", heading, re.I):
+                if not re.search(r"\b(?:model answer|reveal.*answer|solution)\b", heading, re.I):
                     continue
                 answer_copy = BeautifulSoup(str(detail), "html.parser")
                 for heading_node in answer_copy.select("summary"):
@@ -318,7 +318,7 @@ def h446_source(number: int) -> Lesson:
         for detail in prompt_copy.select("details"):
             summary = detail.select_one("summary")
             heading = clean(summary.get_text(" ", strip=True)) if summary else ""
-            if re.search(r"\\b(?:model answer|reveal.*answer|solution)\\b", heading, re.I):
+            if re.search(r"\b(?:model answer|reveal.*answer|solution)\b", heading, re.I):
                 detail.decompose()
         qparts = blocks(prompt_copy, limit=0)
         q = "\n".join(qparts)
