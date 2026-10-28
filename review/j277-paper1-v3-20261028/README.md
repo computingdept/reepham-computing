@@ -1,34 +1,28 @@
-# J277 Paper 1 — V3 review only (not live)
+# J277 Paper 1 V3 — verified review copies (NOT LIVE)
 
-This is a **separate review branch**. It does **not** change the public Learning Hub, the current 94-page Paper 1 guide, the 97-page Paper 2 guide, or the 61 MCQ feedback mappings.
+**Uploaded and verified: 28 October 2026.** The automatic workflow [passed](https://github.com/computingdept/reepham-computing/actions/runs/40668010768).
 
-## Upload three files here
+The review files are in [verified/](verified/):
 
-Open the `incoming/` folder in **this branch**. Choose **Add file → Upload files**, and upload these three files together:
+- [Colour digital student edition — 291 pages](verified/J277_Paper_1_DIGITAL_STUDENT_REVIEW_V3_UNPUBLISHED.pdf)
+- [Greyscale printer edition — 291 pages](verified/J277_Paper1_Print_V3.pdf)
+- [Machine verification report](verified/REVIEW_VERIFICATION.json)
 
-1. `J277_Paper_1_DIGITAL_STUDENT_REVIEW_V3_UNPUBLISHED.pdf.part01` — 16.0 MB
-2. `J277_Paper_1_DIGITAL_STUDENT_REVIEW_V3_UNPUBLISHED.pdf.part02` — 14.8 MB
-3. `J277_Paper_1_PRINT_STUDENT_REVIEW_V3_UNPUBLISHED.pdf` — 18.5 MB
+The colour edition was reassembled byte-for-byte from the two uploaded parts. The greyscale edition was uploaded under the short filename `J277_Paper1_Print_V3.pdf` and matches the recorded original SHA-256. Temporary source parts have been removed.
 
-The digital source is split **without recompression** because GitHub's web upload limit is 25 MB per file. All three upload files are under that limit.
+## Verified automatically
 
-Do not rename the parts; **commit to this review branch, not `main`**.
+- SHA-256 hashes and exact byte counts match both source V3 PDFs.
+- Both editions contain 291 pages, 103 bookmarks and 20 PDF navigation links.
+- Extracted text is identical across the colour and print editions.
+- Each of the 33 *proposed* Paper 1 MCQ destinations points to non-empty content.
+- The currently published Paper 1 is still **94 pages**, and Paper 2 **97 pages**; none of the 61 live skill IDs or page destinations has changed.
 
-## What happens automatically
+## Still needed before live publication
 
-The review-only GitHub Actions workflow verifies every source file's **size and SHA-256**, rejoins the two digital parts into the **byte-for-byte original 291-page V3 digital PDF**, and confirms:
+1. Line-by-line technical content and model-answer sign-off.
+2. Test loading the full digital PDF on a real smartphone.
+3. Review a printed greyscale sample of dense images and tables.
+4. Make the deliberate live deployment: final PDF + all 33 new Paper 1 feedback page targets + regenerated `guide-links.js`, followed by the mobile/TV revision regression.
 
-- 291 pages in both editions
-- 103 bookmarks, 20 PDF navigation links, identical selectable text
-- all 33 proposed Paper 1 MCQ destinations point to populated candidate pages
-- the current live 61-skill index is still unchanged
-
-Once checks pass, the workflow places the two full PDFs and a JSON verification report into `verified/` **on this review branch only**. It removes the temporary upload parts. If a file is missing or has the wrong checksum, it does not publish the PDFs.
-
-The proposal for the **33 future** PDF page destinations is tracked in `revision/j277/guides/candidate-paper1-page-map-20261028.json`.
-
-## Still blocked before a live release
-
-Full technical/mark-scheme sign-off, an actual mobile loading test, and a representative physical black-and-white print review.
-
-**Never merge this branch directly into `main`**. A later controlled release must coordinate the final PDF, all 33 changed Paper 1 page destinations, the generated link resolver, and the complete mobile/TV student-journey regression.
+**Do not merge this review branch directly into `main`**: review files must not accidentally replace the live guide. This is only a staging area.
