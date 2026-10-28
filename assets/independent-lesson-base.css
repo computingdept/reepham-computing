@@ -207,3 +207,50 @@ body[data-mode="bw"] .page .booklet-header-pens .pen-label-green,body[data-mode=
 .page.selfmark-page .selfmark-copy-question .selfmark-fix-step{font-size:7.9pt;margin:2px 0 4px;line-height:1.16}
 .page.selfmark-page .selfmark-copy-question .selfmark-fix-answer-label{font-size:8pt;margin:5px 0 2px;line-height:1.15}
 .page.selfmark-page .selfmark-copy-question .write-line{display:block;height:17px;margin:0 0 2px}
+
+/* Shared independent-booklet scaffolds: meaningful cell alignment, not decoration.
+   Semantic table has 8 actual bit columns plus an optional overflow/ninth column. */
+.page .binary-column-grid{width:100%;table-layout:fixed;border-collapse:collapse;margin:5px 0 8px;font-size:8.9pt;line-height:1.1;color:#1e2f35}
+.page .binary-column-grid tr{height:5.4mm}
+.page .binary-column-grid th{width:24mm;white-space:nowrap;padding:3px 4px;font-weight:750;text-align:left;font-size:7.5pt}
+.page .binary-column-grid td{text-align:center;border:1px solid #c7d3d5;padding:2px 1px;font-family:Arial,Helvetica,sans-serif;font-weight:750;font-size:9.5pt}
+.page .binary-column-grid th{border:1px solid #c7d3d5}
+.page .binary-column-grid tr.carry{background:#f3f9f1}
+.page .binary-column-grid tr.result{background:#e1f2fa}
+.page .binary-column-grid td.binary-overflow{width:12mm;font-size:6pt;font-weight:550;color:#52656d}
+.page .binary-column-grid tr:not(.result) .binary-overflow{color:transparent}
+.page .binary-column-grid.is-model td{font-weight:800}
+.page .binary-shift-model{margin:5px 0 6px;display:flex;flex-direction:column;gap:3px}
+.page .binary-shift-row{display:grid;grid-template-columns:30mm minmax(0,1fr);border:1px solid #c7d3d5;min-height:10mm;align-items:center;background:#f5f8f8}
+.page .binary-shift-row.is-after{background:#f1f8ef}
+.page .binary-shift-row>strong{font-size:8pt;padding:4px 7px;white-space:nowrap}
+.page .binary-shift-row code{font-size:12pt;font-weight:800;letter-spacing:.38em;line-height:1.2;text-align:center;white-space:nowrap;padding:3px;font-family:Consolas,'DejaVu Sans Mono',monospace}
+.page .binary-shift-arrow{display:flex;align-items:center;justify-content:center;gap:10px;min-height:7mm;font-size:8pt}
+.page .binary-shift-arrow>span{font-size:16pt;color:#3b79a1;font-weight:800}
+.page .binary-shift-arrow>strong{font-size:8pt;color:#183a43}
+.page .exit-ticket-on-page3{margin-top:6px}
+.page .exit-ticket-on-page3 .heading{margin:7px 0 4px;font-size:10pt}
+.page .exit-ticket-on-page3 .selfmark-exit{margin:0}
+.page .exit-ticket-on-page3 .exit{padding:3px 0;font-size:8.1pt;min-height:6.3mm}
+.page .exit-ticket-on-page3 .selfmark-tf-choice{font-size:7.9pt}
+.page .exit-ticket-on-page3 .selfmark-tf-box{width:10px;height:10px}
+.page .booklet-header-pens{column-gap:3mm}
+.page .booklet-header-pens .pen-routine-item{font-size:7.05pt}
+.page .booklet-header-pens .pen-rule-text{font-size:7.0pt}
+.page .booklet-header-pens .pen-routine-item:last-child .pen-rule-text{font-size:6.6pt}
+.page .booklet-header-pens .pen-routine-item strong{font-size:7.15pt}
+.page[data-page="3"] .binary-column-grid{margin:3px 0 5px}
+.page[data-page="3"] .binary-column-grid tr{height:4.2mm}
+.page[data-page="3"] .binary-column-grid th{font-size:6.9pt;padding:2px 3px}
+.page[data-page="3"] .binary-column-grid td{font-size:8.6pt;padding:1px}
+.page.selfmark-page .selfmark-fix-explicit .write-line{height:15px}
+@media(max-width:700px){
+ .viewer .page .binary-shift-row code{letter-spacing:.12em;font-size:9.5pt}
+ .viewer .page .binary-column-grid{font-size:8pt}
+ .viewer .page .binary-column-grid th{width:18mm;font-size:6.5pt}
+ .viewer .page .binary-column-grid td.binary-overflow{width:8mm;font-size:5.6pt}
+ .viewer .page .booklet-header-pens .pen-routine-item:last-child .pen-rule-text{font-size:6.7pt}
+}
+body[data-mode="bw"] .page .binary-column-grid tr.carry{background:#f2f2f2}
+body[data-mode="bw"] .page .binary-column-grid tr.result{background:#e9e9e9}
+body[data-mode="bw"] .page .binary-shift-row.is-after{background:#f5f5f5}
