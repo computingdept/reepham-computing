@@ -61,6 +61,42 @@
     }else if(block.type==='code'){
       const pre=$('pre','catchup-code',block.lines.join('\n'));
       section.append(pre,$('p','subtle',block.caption));
+    }else if(block.type==='nibbles'){
+      // Shared bit-group visual: no custom graphics in individual lesson files.
+      const bits=String(block.binary||'').replace(/[^01]/g,'');
+      if(bits.length===8){
+        const grid=$('div','catchup-nibbles');
+        for(let offset=0;offset<8;offset+=4){
+          const group=$('div','catchup-nibble');
+          const nibble=bits.slice(offset,offset+4);
+          const values=$('div','catchup-nibble-bits');
+          nibble.split('').forEach((bit,i)=>{
+            const cell=$('div','catchup-nibble-bit');
+            cell.append($('span','',String([8,4,2,1][i])),$('strong','',bit));
+            values.append(cell);
+          });
+          group.append(values,$('div','catchup-nibble-value',nibble+' → '+(offset===0?block.left:block.right)));
+          grid.append(group);
+        }
+        section.append(grid);
+      }
+      if(block.caption)section.append($('p','subtle',block.caption));
+    }else if(block.type==='pixelgrid'){
+      // A tiny true pixel-grid diagram. Max 100 cells to keep DOM work bounded.
+      const width=Math.min(10,Math.max(1,Number(block.width)||8));
+      const height=Math.min(10,Math.max(1,Number(block.height)||8));
+      const grid=$('div','catchup-pixel-grid');
+      grid.style.gridTemplateColumns='repeat('+width+',minmax(0,1fr))';
+      for(let i=0;i<width*height;i++){
+        const pixel=$('span','catchup-pixel');
+        pixel.classList.add('catchup-pixel-shade-'+((i%width+Math.floor(i/width))%4));
+        pixel.setAttribute('aria-hidden','true');
+        grid.append(pixel);
+      }
+      grid.setAttribute('role','img');
+      grid.setAttribute('aria-label',width+' by '+height+' bitmap with '+(width*height)+' pixels and '+Number(block.colourDepth)+' bits per pixel');
+      section.append(grid);
+      if(block.caption)section.append($('p','subtle',block.caption));
     }
     return section;
   }
