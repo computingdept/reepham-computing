@@ -8,6 +8,7 @@ revision guides are not touched.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import shutil
 from collections import Counter
@@ -15,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import fitz
+from review_index import build_review_index
 
 PDF_KEYS = ("a4_pdf", "colour_a4_pdf", "a3_pdf", "colour_a3_pdf")
 
@@ -48,6 +50,7 @@ def publish(source: Path, destination: Path) -> dict:
                  "generated_utc": datetime.now(timezone.utc).isoformat(),
                  "lessons": {"j277": {}, "h446": {}}}
     audit = []
+    published_records = []
     counts = Counter()
     for record in manifest["records"]:
         course, number = record["course"], int(record["lesson"])
@@ -88,6 +91,7 @@ def publish(source: Path, destination: Path) -> dict:
             shutil.copy2(src, target)
             paths[key] = "offline/booklets/" + relative.as_posix()
             counts["pdf_files"] += 1
+        published_records.append(record)
         catalogue["lessons"][course][str(number)] = {
             "title": record.get("title", ""),
             "status": record.get("status", ""),
@@ -132,6 +136,16 @@ def publish(source: Path, destination: Path) -> dict:
                "7. Compare with the actual OCR revision guide; referenced is not cross-checked.",
                "8. Do not promote DRAFT to approved until lesson-by-lesson sign-off."]
     (destination / "AUDIT.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+    (destination / "SUMMARY.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+    if published_records:
+        columns = list(published_records[0].keys())
+        with (destination / "manifest.csv").open("w", newline="", encoding="utf-8-sig") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
+            writer.writeheader()
+            for item in published_records:
+                writer.writerow({k: json.dumps(v, ensure_ascii=False) if isinstance(v, list) else v
+                                 for k, v in item.items()})
+        build_review_index(destination, published_records)
     return dict(counts)
 
 
