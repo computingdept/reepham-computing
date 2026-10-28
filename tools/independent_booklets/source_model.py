@@ -293,15 +293,35 @@ def h446_source(number: int) -> Lesson:
         question_nodes = soup.select("#you-do article.exam-card")
     for node in question_nodes:
         prompt = node.select_one(".youdo-question-prompt") or node
-        # Some lessons put a hidden solution INSIDE the question article.
-        # Remove it from a cloned prompt before extracting student text.
+        # Some newer lessons place the correct answer inside a <details>
+        # reveal, rather than a .youdo-solution. Never leak that answer into
+        # the pupil-facing question before the Exit Ticket.
+        answer = ""
+        sol = node.select_one(".youdo-solution")
+        if sol:
+            answer = "\n".join(blocks(sol))
+        if not answer:
+            for detail in node.select("details"):
+                summary = detail.select_one("summary")
+                heading = clean(summary.get_text(" ", strip=True)) if summary else ""
+                if not re.search(r"\\b(?:model answer|reveal.*answer|solution)\\b", heading, re.I):
+                    continue
+                answer_copy = BeautifulSoup(str(detail), "html.parser")
+                for heading_node in answer_copy.select("summary"):
+                    heading_node.decompose()
+                answer = "\n".join(blocks(answer_copy))
+                if answer:
+                    break
         prompt_copy = BeautifulSoup(str(prompt), "html.parser")
         for hidden_solution in prompt_copy.select(".youdo-solution, .answer-reveal, .answer-content"):
             hidden_solution.decompose()
+        for detail in prompt_copy.select("details"):
+            summary = detail.select_one("summary")
+            heading = clean(summary.get_text(" ", strip=True)) if summary else ""
+            if re.search(r"\\b(?:model answer|reveal.*answer|solution)\\b", heading, re.I):
+                detail.decompose()
         qparts = blocks(prompt_copy, limit=0)
         q = "\n".join(qparts)
-        sol = node.select_one(".youdo-solution")
-        answer = "\n".join(blocks(sol)) if sol else ""
         if q:
             lesson.you_do.append((q, answer))
         if re.search(r"teacher approval|teacher check|\.NET Fiddle|Turn & Talk|mini-whiteboard", q, re.I):
