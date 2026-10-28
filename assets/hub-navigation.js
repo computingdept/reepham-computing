@@ -4,7 +4,23 @@
 (function(){
   'use strict';
   const selector='.central-lesson[data-menu-open="true"]';
+  let mobileDialog=null;
+  let mobileTrigger=null;
+  function isMobile(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches;}
+  function hideMobile(restoreFocus){
+    if(!mobileDialog||mobileDialog.hidden)return;
+    mobileDialog.hidden=true;
+    document.body.classList.remove('lesson-mobile-open');
+    const previous=mobileTrigger;
+    mobileTrigger=null;
+    if(previous){
+      previous.setAttribute('aria-expanded','false');
+      if(previous.dataset.desktopMenuId)previous.setAttribute('aria-controls',previous.dataset.desktopMenuId);
+      if(restoreFocus&&previous.isConnected)previous.focus({preventScroll:true});
+    }
+  }
   function closeAll(except){
+    if(mobileTrigger&&(!except||!except.contains(mobileTrigger)))hideMobile(false);
     document.querySelectorAll(selector).forEach(function(entry){
       if(entry===except)return;
       entry.dataset.menuOpen='false';
@@ -84,13 +100,16 @@
     const number=String(o.number||'');
     const title=String(o.title||'');
     const routes=[
-      ['Open lesson','▣',o.openHref],
+      ['Teach lesson','▣',o.openHref],
       ['Learn independently','◇',o.learnHref],
       ['Print lesson','▤',o.printHref]
     ].filter(function(item){return typeof item[2]==='string' && item[2].trim().length>0;});
     const entry=document.createElement('article');
     entry.className='lesson-entry lesson-choice central-lesson'+(o.openHref?'':' is-planned');
     entry.dataset.menuOpen='false';
+    entry.dataset.hasTeach=String(Boolean(o.openHref));
+    entry.dataset.hasLearn=String(Boolean(o.learnHref));
+    entry.dataset.hasPrint=String(Boolean(o.printHref));
     if(o.color)entry.style.setProperty('--spec-colour',o.color);
     const spec=specMarker(o.specPoint,o.specRaw);
     if(spec){
@@ -137,6 +156,7 @@
     const menuId='hub-options-'+Math.random().toString(36).slice(2,10);
     menu.id=menuId;
     button.setAttribute('aria-controls',menuId);
+    button.dataset.desktopMenuId=menuId;
     const heading=document.createElement('div');
     heading.className='lesson-popup-heading';
     heading.setAttribute('role','heading');
@@ -144,7 +164,23 @@
     heading.textContent=number+' · '+conciseTopic(title);
     heading.title=title;
     menu.append(heading);
-    routes.forEach(function(item){menu.append(action(item[0],item[1],item[2]));});
+    routes.forEach(function(item){
+      if(item[0]==='Print lesson'&&/(?:[?&])version=bw(?:&|$)/.test(item[2])){
+        const group=document.createElement('div');
+        group.className='lesson-print-group';
+        const label=document.createElement('div');
+        label.className='lesson-print-heading';
+        label.textContent='▤  Print lesson';
+        const variants=document.createElement('div');
+        variants.className='lesson-print-variants';
+        variants.append(action('Black & white','',item[2]));
+        variants.append(action('Colour','',item[2].replace(/([?&])version=bw(?=&|$)/,'$1version=colour')));
+        group.append(label,variants);
+        menu.append(group);
+      }else{
+        menu.append(action(item[0],item[1],item[2]));
+      }
+    });
     function setOpen(state){
       if(state)closeAll(entry);
       entry.dataset.menuOpen=String(state);
@@ -156,13 +192,13 @@
       setOpen(entry.dataset.menuOpen!=='true');
     });
     button.addEventListener('pointerenter',function(event){
-      if(event.pointerType==='mouse')setOpen(true);
+      if(event.pointerType==='mouse'&&!isMobile())setOpen(true);
     });
     entry.addEventListener('pointerleave',function(event){
-      if(event.pointerType==='mouse')setOpen(false);
+      if(event.pointerType==='mouse'&&!isMobile())setOpen(false);
     });
     entry.addEventListener('focusout',function(event){
-      if(!entry.contains(event.relatedTarget))setOpen(false);
+      if(!isMobile()&&!entry.contains(event.relatedTarget))setOpen(false);
     });
     entry.append(button,menu);
     return entry;
@@ -183,6 +219,140 @@
   window.addEventListener('resize',function(){
     document.querySelectorAll(selector).forEach(position);
   });
+
+
+  /* The same central actions become a bottom panel on touch/small screens.
+     No second resource map or separate lesson page is needed. */
+  function ensureMobileDialog(){
+    if(mobileDialog)return mobileDialog;
+    const shade=document.createElement('div');
+    shade.className='lesson-mobile-overlay';
+    shade.hidden=true;
+    const panel=document.createElement('section');
+    panel.className='lesson-mobile-panel';
+    panel.id='lesson-mobile-panel';
+    panel.setAttribute('role','dialog');
+    panel.setAttribute('aria-modal','true');
+    panel.setAttribute('aria-label','Lesson options');
+    panel.setAttribute('tabindex','-1');
+    const toolbar=document.createElement('div');
+    toolbar.className='lesson-mobile-toolbar';
+    const label=document.createElement('strong');
+    label.textContent='Choose a lesson resource';
+    const close=document.createElement('button');
+    close.type='button';
+    close.className='lesson-mobile-close';
+    close.setAttribute('aria-label','Close lesson options');
+    close.textContent='×';
+    close.addEventListener('click',function(){hideMobile(true);});
+    toolbar.append(label,close);
+    const content=document.createElement('div');
+    content.className='lesson-mobile-options';
+    panel.append(toolbar,content);
+    shade.append(panel);
+    shade.addEventListener('click',function(event){
+      if(event.target===shade)hideMobile(true);
+    });
+    document.body.append(shade);
+    mobileDialog=shade;
+    return shade;
+  }
+  document.addEventListener('click',function(event){
+    const button=event.target.closest('.central-lesson > .lesson-options-toggle');
+    if(!button||!isMobile())return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const dialog=ensureMobileDialog();
+    if(mobileTrigger===button&&!dialog.hidden){hideMobile(true);return;}
+    closeAll();
+    const entry=button.closest('.central-lesson');
+    const menu=entry&&entry.querySelector('.lesson-scenarios');
+    if(!menu)return;
+    const content=dialog.querySelector('.lesson-mobile-options');
+    content.replaceChildren(...Array.from(menu.children,child=>child.cloneNode(true)));
+    mobileTrigger=button;
+    button.setAttribute('aria-expanded','true');
+    button.setAttribute('aria-controls','lesson-mobile-panel');
+    dialog.hidden=false;
+    document.body.classList.add('lesson-mobile-open');
+    const focusTarget=content.querySelector('a')||dialog.querySelector('.lesson-mobile-close');
+    focusTarget.focus({preventScroll:true});
+  },true);
+  document.addEventListener('keydown',function(event){
+    if(!mobileDialog||mobileDialog.hidden)return;
+    if(event.key==='Escape'){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      hideMobile(true);
+    }else if(event.key==='Tab'){
+      const focusables=Array.from(mobileDialog.querySelectorAll('button,a[href]'));
+      if(!focusables.length)return;
+      const first=focusables[0],last=focusables[focusables.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    }
+  },true);
+  window.addEventListener('resize',function(){
+    if(mobileTrigger&&!isMobile())hideMobile(false);
+  });
+
+  /* Resource key is injected once per hub and rebuilt when year changes.
+     A Teach-only course does not misleadingly advertise Learn or Print. */
+  function syncUsageKey(terms){
+    const lessons=terms.closest('#lessons');
+    if(!lessons)return;
+    const entries=Array.from(terms.querySelectorAll('.central-lesson'));
+    const teach=entries.some(entry=>entry.dataset.hasTeach==='true');
+    const learn=entries.some(entry=>entry.dataset.hasLearn==='true');
+    const print=entries.some(entry=>entry.dataset.hasPrint==='true');
+    let key=lessons.querySelector('.lesson-usage-key');
+    if(!learn&&!print){
+      if(key)key.remove();
+      return;
+    }
+    if(!key){
+      key=document.createElement('details');
+      key.className='lesson-usage-key';
+      key.open=true;
+      const summary=document.createElement('summary');
+      summary.textContent='How to use a lesson';
+      const items=document.createElement('div');
+      items.className='lesson-usage-items';
+      key.append(summary,items);
+      terms.before(key);
+    }
+    const items=key.querySelector('.lesson-usage-items');
+    items.replaceChildren();
+    const options=[
+      [teach,'▣','Teach','Full classroom lesson'],
+      [learn,'◇','Learn','Short self-marking lesson'],
+      [print,'▤','Print','Paper worksheet · B&W or colour']
+    ];
+    options.forEach(function(option){
+      if(!option[0])return;
+      const item=document.createElement('div');
+      item.className='lesson-usage-item';
+      const symbol=document.createElement('span');
+      symbol.className='lesson-usage-icon';
+      symbol.textContent=option[1];
+      symbol.setAttribute('aria-hidden','true');
+      const text=document.createElement('span');
+      const name=document.createElement('strong');
+      name.textContent=option[2];
+      const description=document.createElement('small');
+      description.textContent=option[3];
+      text.append(name,description);
+      item.append(symbol,text);
+      items.append(item);
+    });
+  }
+  function watchUsageKey(terms){
+    if(terms.dataset.usageKeyObserved)return;
+    terms.dataset.usageKeyObserved='true';
+    const observer=new MutationObserver(function(){syncUsageKey(terms);});
+    observer.observe(terms,{childList:true});
+    syncUsageKey(terms);
+  }
 
   /* Legacy KS3 year pages still have their own booklet/revision tabs.
      Replace only their generated/static lesson tiles with the same shared UI. */
@@ -250,6 +420,7 @@
     const key=lessons?.querySelector('.year-tools > .course-key');
     const terms=lessons?.querySelector('#terms');
     if(!topline||!resources||!year||!key||!terms)return;
+    watchUsageKey(terms);
     const yearAnchor=document.createComment('Original year selector position');
     const keyAnchor=document.createComment('Original colour key position');
     year.before(yearAnchor);
