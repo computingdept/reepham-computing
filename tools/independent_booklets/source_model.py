@@ -66,6 +66,8 @@ class Lesson:
             (bool(self.guided), "we_do_guided_practice"),
             (bool(self.you_do), "you_do_questions"),
             (bool(self.you_do) and all(q and a for q, a in self.you_do), "you_do_model_answers"),
+            (not any(re.search(r"Reveal model answer|ANSWER & MARKING GUIDE", q, re.I)
+                     for q, _ in self.you_do), "you_do_hidden_answer_not_leaked"),
             (bool(self.exit_question and self.exit_answer), "exit_ticket_and_answer"),
         ]
         if self.course == "j277":
