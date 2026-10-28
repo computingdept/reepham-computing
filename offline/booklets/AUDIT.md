@@ -5,32 +5,22 @@ No original Teach lessons or revision guides are changed.
 
 ## Verified copy results
 
-- deferred: 36
-- h446_published_draft: 273
+- deferred: 26
+- h446_published_draft: 283
 - j277_published_draft: 155
-- needs_diagram_audit: 416
+- needs_diagram_audit: 425
 - needs_independence_audit: 1
-- pdf_files: 1712
+- pdf_files: 1752
 
 ## Deferred lessons
 
-- H446 006: missing_source_or_model_answer
 - H446 007: missing_source_or_model_answer
-- H446 008: missing_source_or_model_answer
 - H446 017: missing_source_or_model_answer
 - H446 019: missing_source_or_model_answer
 - H446 025: missing_source_or_model_answer
 - H446 035: missing_source_or_model_answer
 - H446 036: staff_only_assessment
 - H446 037: staff_only_assessment
-- H446 038: missing_source_or_model_answer
-- H446 039: missing_source_or_model_answer
-- H446 040: missing_source_or_model_answer
-- H446 041: missing_source_or_model_answer
-- H446 042: missing_source_or_model_answer
-- H446 043: missing_source_or_model_answer
-- H446 044: missing_source_or_model_answer
-- H446 045: missing_source_or_model_answer
 - H446 058: staff_only_assessment
 - H446 088: staff_only_assessment
 - H446 098: staff_only_assessment

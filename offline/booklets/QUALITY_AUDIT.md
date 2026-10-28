@@ -3,44 +3,35 @@
 **Automated audit only. All PDF drafts still need teacher content and print approval.**
 
 Lessons inspected: **464** (J277 164, H446 300).
-Priorities: P0 17; P1 434; P2 13.
+Priorities: P0 7; P1 443; P2 14.
 
 ## Ranked recurring problems
 
 1. **diagram or image not embedded** — 442 lesson(s)
 2. **revision guide not cross checked** — 192 lesson(s)
-3. **source or model answer missing** — 17 lesson(s)
-4. **missing answer placeholder in pdf** — 17 lesson(s)
-5. **staff only assessment** — 17 lesson(s)
-6. **source explanation condensed** — 15 lesson(s)
-7. **long booklet print review** — 14 lesson(s)
-8. **code first unverified** — 10 lesson(s)
+3. **staff only assessment** — 17 lesson(s)
+4. **source explanation condensed** — 15 lesson(s)
+5. **long booklet print review** — 14 lesson(s)
+6. **code first unverified** — 10 lesson(s)
+7. **source or model answer missing** — 7 lesson(s)
+8. **missing answer placeholder in pdf** — 7 lesson(s)
 9. **existing html requires print and content review** — 4 lesson(s)
 10. **teacher dependent activity** — 3 lesson(s)
 11. **generator or html static failure** — 3 lesson(s)
 
 ## P0 — correct or defer before approval
 
-- **H446-006** Floating-point addition: source_or_model_answer_missing, diagram_or_image_not_embedded, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-007** Floating-point subtraction: source_or_model_answer_missing, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers, exit_ticket_and_answer
-- **H446-008** Character sets: ASCII & Unicode: source_or_model_answer_missing, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers
+- **H446-007** Floating-point subtraction: source_or_model_answer_missing, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: exit_ticket_and_answer
 - **H446-017** Arrays in C#: source_or_model_answer_missing, diagram_or_image_not_embedded, revision_guide_not_cross_checked, long_booklet_print_review, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements; 10 A4 pages
 - **H446-019** Linked lists with arrays and pointers: source_or_model_answer_missing, diagram_or_image_not_embedded, teacher_dependent_activity, source_explanation_condensed, revision_guide_not_cross_checked, long_booklet_print_review, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements; 10 A4 pages
 - **H446-025** Binary Search — From Trace Table to Working Code: source_or_model_answer_missing, teacher_dependent_activity, source_explanation_condensed, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers, exit_ticket_and_answer
 - **H446-035** Synoptic Revision 2 — Final Test Preparation: source_or_model_answer_missing, source_explanation_condensed, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: exit_ticket_and_answer
 - **H446-036** Synoptic Test: source_or_model_answer_missing, staff_only_assessment, revision_guide_not_cross_checked, missing_answer_placeholder_in_pdf; evidence: four_do_now_questions, four_do_now_model_answers, at_least_three_vocabulary_terms, exit_ticket_and_answer
 - **H446-037** Synoptic Test Feedback: source_or_model_answer_missing, staff_only_assessment, missing_answer_placeholder_in_pdf; evidence: four_do_now_questions, four_do_now_model_answers, exit_ticket_and_answer
-- **H446-038** Programming Techniques · Sequence and Selection: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-039** Programming Techniques · Iteration and Tracing: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-040** Programming Techniques · Functions and Procedures: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-041** Programming Techniques · Scope and Lifetime: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-042** Programming Techniques · Value and Reference: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-043** Programming Techniques · Modular Design and IDE Debugging: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-044** Data Structures · Classes and Objects in C#: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
-- **H446-045** Data Structures · Constructors and Encapsulation: source_or_model_answer_missing, diagram_or_image_not_embedded, missing_answer_placeholder_in_pdf; evidence: you_do_model_answers; 1 original visual elements
 
 ## P1 — visual/independence and formatting review
 
+- **H446-006**: diagram_or_image_not_embedded, revision_guide_not_cross_checked
 - **H446-013**: diagram_or_image_not_embedded, teacher_dependent_activity
 - **H446-014**: diagram_or_image_not_embedded, source_explanation_condensed, long_booklet_print_review
 - **H446-015**: diagram_or_image_not_embedded, source_explanation_condensed, long_booklet_print_review
@@ -58,6 +49,14 @@ Priorities: P0 17; P1 434; P2 13.
 - **H446-032**: diagram_or_image_not_embedded
 - **H446-033**: diagram_or_image_not_embedded
 - **H446-034**: diagram_or_image_not_embedded
+- **H446-038**: diagram_or_image_not_embedded
+- **H446-039**: diagram_or_image_not_embedded
+- **H446-040**: diagram_or_image_not_embedded
+- **H446-041**: diagram_or_image_not_embedded
+- **H446-042**: diagram_or_image_not_embedded
+- **H446-043**: diagram_or_image_not_embedded
+- **H446-044**: diagram_or_image_not_embedded
+- **H446-045**: diagram_or_image_not_embedded
 - **H446-046**: diagram_or_image_not_embedded
 - **H446-047**: diagram_or_image_not_embedded
 - **H446-048**: diagram_or_image_not_embedded
