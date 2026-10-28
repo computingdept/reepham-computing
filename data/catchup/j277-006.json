@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "id": "j277-006",
+  "title": "Sound, Sampling, Bit Depth and File Sizes",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Recall two useful ideas from earlier lessons.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "What is image metadata?",
+          "options": [
+            "Extra information about an image",
+            "Another pixel's colour",
+            "The image's width alone",
+            "A sample of sound"
+          ],
+          "answer": "Extra information about an image",
+          "feedback": "Image metadata can include details such as resolution and date."
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "A character code uses exactly 6 bits. How many possible code patterns are there?",
+          "answer": "64",
+          "feedback": "2⁶ = 64 patterns."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the essential ideas and worked example before checking your understanding.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Analogue versus digital",
+          "text": "Real sound is continuous. To digitise it, a computer samples the wave at regular intervals and stores measurements as binary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Sample rate",
+          "text": "Sample rate is the number of samples measured per second, in hertz (Hz). More samples can capture more detail."
+        },
+        {
+          "type": "paragraph",
+          "title": "Bit depth",
+          "text": "Bit depth is the number of bits available for each sample's amplitude; more bits allow finer amplitude representation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Raw mono sound",
+          "text": "Raw bits = sample rate × seconds × bit depth. Divide by eight for bytes. Channels, headers and compression can change real file size."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · Sound, Sampling, Bit Depth and File Sizes",
+          "layout": "flow",
+          "items": [
+            [
+              "Analogue wave",
+              "Continuous sound"
+            ],
+            [
+              "Sample",
+              "Read amplitude regularly"
+            ],
+            [
+              "Binary values",
+              "Encode sampled levels"
+            ]
+          ],
+          "caption": "Sample rate controls how often measurements are taken; bit depth controls their precision."
+        },
+        {
+          "type": "example",
+          "title": "Worked model · A mono clip uses 10 samples per second, lasts 5 seconds and uses 8 bits per sample. Find the raw size.",
+          "text": "Write the formula: rate × duration × bit depth. 10 samples/s × 5 seconds = 50 samples. 50 × 8 = 400 bits. 400 ÷ 8 = 50 bytes (raw, mono, uncompressed)."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "analogue — A continuously varying signal.",
+            "sample rate — Number of samples taken per second.",
+            "bit depth — Number of bits representing each sample.",
+            "duration — Length of the sound recording in seconds."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "What does sample rate measure?",
+          "options": [
+            "Bits in every sample",
+            "Samples taken per second",
+            "Total recording duration",
+            "The number of audio channels"
+          ],
+          "answer": "Samples taken per second",
+          "feedback": "Sample rate is the count of sound samples per second (Hz)."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "What does bit depth control in sampled sound?",
+          "options": [
+            "Number of amplitude levels",
+            "Duration in seconds",
+            "Number of seconds per sample",
+            "The microphone's physical size"
+          ],
+          "answer": "Number of amplitude levels",
+          "feedback": "Bit depth controls how many discrete amplitude values one sample can represent."
+        },
+        {
+          "id": "l3",
+          "kind": "number",
+          "prompt": "A 20 Hz mono recording lasts 10 seconds. How many samples are taken?",
+          "answer": "200",
+          "feedback": "20 samples each second × 10 seconds = 200."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match, reorder and apply what you have learnt.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Multiply rate × duration × bit depth for raw bits; divide by 8 for bytes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match each sound term to its meaning.",
+          "pairs": [
+            [
+              "analogue",
+              "Continuous signal"
+            ],
+            [
+              "sample rate",
+              "Samples per second"
+            ],
+            [
+              "bit depth",
+              "Bits per sample"
+            ]
+          ],
+          "feedback": "An analogue signal varies continuously; sample rate and bit depth describe different sampling properties."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put digital audio conversion steps in order.",
+          "items": [
+            "Represent each measured value using bits",
+            "Measure the wave at regular times",
+            "Store the resulting binary samples"
+          ],
+          "answer": [
+            "Measure the wave at regular times",
+            "Represent each measured value using bits",
+            "Store the resulting binary samples"
+          ],
+          "feedback": "Sample regularly, encode each sampled value, then store digital data."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "A mono clip uses 20 samples/second for 10 seconds at 8 bits per sample. How many bits?",
+          "answer": "1600",
+          "feedback": "20 × 10 × 8 = 1,600 raw bits."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "Convert 1,600 bits to bytes.",
+          "answer": "200",
+          "feedback": "1,600 ÷ 8 = 200 bytes."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Code First and explain one key idea in writing.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "rate = 20",
+            "seconds = 4",
+            "depth = 8",
+            "print(rate * seconds * depth)"
+          ],
+          "caption": "Predict the bit count. Change seconds to 5. Write one print statement to convert bits into bytes."
+        },
+        {
+          "type": "prompt",
+          "text": "Explain how increasing bit depth affects sound quality and raw file size. [3 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The starter code uses rate 20, seconds 4 and depth 8. What is printed?",
+          "answer": "640",
+          "feedback": "20 × 4 × 8 = 640 bits."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "After changing seconds to 5, how many bits does it print?",
+          "answer": "800",
+          "feedback": "20 × 5 × 8 = 800 bits."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "A mono recording at 1,000 Hz for 4 seconds at 8 bits per sample takes how many raw bytes?",
+          "answer": "4000",
+          "feedback": "1,000 × 4 × 8 ÷ 8 = 4,000 bytes."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain how increasing bit depth affects sound quality and raw file size. [3 marks]",
+        "model": "More bits represent each sample [1], allowing more accurate representation of amplitude [1], but increasing raw file size [1].",
+        "checklist": [
+          "I explained that more bits allow more accurate amplitude levels.",
+          "I stated that higher bit depth increases uncompressed raw storage.",
+          "I linked the statement to a clear example or reason."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Complete the final check and review your score.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "An analogue sound wave is continuous.",
+          "answer": "true",
+          "feedback": "An analogue sound signal varies continuously."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Bit depth specifies the number of samples taken every second.",
+          "answer": "false",
+          "feedback": "Sample rate counts samples per second; bit depth is bits per sample."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Doubling the duration doubles uncompressed mono audio size if rate and bit depth stay fixed.",
+          "answer": "true",
+          "feedback": "The raw bit formula includes duration as a multiplier."
+        }
+      ]
+    }
+  ]
+}
