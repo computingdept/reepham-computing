@@ -1,6 +1,7 @@
 /* Central Learning Hub lesson navigation: shared across KS3, J277 and H446.
    Course pages provide lesson numbers, titles, routes and specification colours.
-   The card and its Teach/Catch up links are direct; Print offers format choice. */
+   Full lesson / Catch up are direct links; Print offers its format choice.
+   Number and title identify the lesson and do not duplicate the Full lesson link. */
 (function(){
   'use strict';
   const selector='.central-lesson[data-menu-open="true"]';
@@ -47,7 +48,7 @@
   /* Local stroke icons for hub navigation only: no fonts, network or lesson assets. */
   function navIcon(name){
     const shapes={
-      Teach:'<rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+      'Full lesson':'<path d="M12 7c-2.3-1.8-5.3-2.2-9-1v13c3.7-1.1 6.7-.8 9 1 2.3-1.8 5.3-2.1 9-1V6c-3.7-1.2-6.7-.8-9 1Z"/><path d="M12 7v13"/>',
       Learn:'<rect x="4" y="3" width="16" height="13" rx="2"/><path d="M2 20h20M7 16l-1 4M17 16l1 4"/>',
       'Catch up':'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
       Print:'<path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/>'
@@ -62,7 +63,7 @@
     const symbol=document.createElement('span');
     symbol.className='scenario-symbol';
     symbol.setAttribute('aria-hidden','true');
-    const kind=label==='Teach lesson'?'Teach':label==='Learn independently'?'Learn':label==='Print lesson'?'Print':'';
+    const kind=label==='Full lesson'?'Full lesson':label==='Learn independently'?'Learn':label==='Print lesson'?'Print':'';
     symbol.innerHTML=navIcon(kind);
     if(!kind)symbol.hidden=true;
     const name=document.createElement('span');
@@ -109,7 +110,7 @@
     return words.slice(0,2).join(' ').replace(/[,;]$/,'');
   }
   /* Three visible, direct lesson actions. A menu is needed only to choose
-     a print format; it is never used to reach Teach or Catch up. */
+     a print format; it is never used to reach Full lesson or Catch up. */
   function createTile(options){
     const o=options||{};
     const number=String(o.number||'');
@@ -130,10 +131,10 @@
       entry.classList.add('has-spec-point');
       entry.style.setProperty('--spec-mark-colour',spec.colour);
     }
-    const tile=document.createElement(teach?'a':'div');
+    // Lesson identity is information, not a second link to the same resource.
+    const tile=document.createElement('div');
     tile.className='lesson-tile-open'+(teach?'':' lesson-tile-unavailable');
-    if(teach)tile.href=teach;
-    tile.setAttribute('aria-label',(teach?'Open classroom lesson ':'Lesson ')+number+(title?': '+title:'')+(teach?'':' — not published'));
+    if(!teach)tile.title='Not yet published';
     const num=document.createElement('span');
     num.className='lesson-tile-number';
     num.textContent=number;
@@ -183,7 +184,7 @@
       el.append(graphic,copy);
       return el;
     }
-    if(teach)actions.append(makeAction('Teach','Teach',teach));
+    if(teach)actions.append(makeAction('Full lesson','Full lesson',teach));
     if(catchup)actions.append(makeAction('Catch up','Catch up',catchup));
     if(print){
       if(!/(?:[?&])version=bw(?:&|$)/.test(print)){
@@ -329,7 +330,7 @@
   });
 
   /* Resource key is injected once per hub and rebuilt when year changes.
-     A Teach-only course does not misleadingly advertise Learn or Print. */
+     A Full-lesson-only course does not advertise unavailable Catch up or Print. */
   function syncUsageKey(terms){
     const lessons=terms.closest('#lessons');
     if(!lessons)return;
@@ -356,7 +357,7 @@
     const items=key.querySelector('.lesson-usage-items');
     items.replaceChildren();
     const options=[
-      [teach,'▣','Teach','Full classroom lesson'],
+      [teach,'▣','Full lesson','Full teacher-led lesson, also available to revisit'],
       [learn,'◇','Catch up','10–15 min · self-marking'],
       [print,'▤','Print','Paper worksheet · B&W or colour']
     ];
