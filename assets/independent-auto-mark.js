@@ -34,6 +34,23 @@
       sibling=sibling.nextElementSibling;
     }
   }
+  // Hide legacy paper-only choice squares after enhancing the on-screen MCQ.
+  // The print spreads are cloned before this runs, so printed choices stay intact.
+  function hidePaperChoiceText(target){
+    if(!target.matches('.q')||target.querySelector('.am-paper-choices'))return;
+    const breaks=[...target.children].filter(node=>node.tagName==='BR');
+    if(!breaks.length)return;
+    const br=breaks[breaks.length-1];
+    const paper=element('span','am-paper-choices');
+    let current=br.nextSibling;
+    while(current){
+      const next=current.nextSibling;
+      paper.append(current);
+      current=next;
+    }
+    br.after(paper);
+    br.classList.add('am-paper-choice-break');
+  }
   function fieldUI(question,field,n,id){
     const box=element('div','am-field');
     const label=element('label','am-field-label',field.label||question.label||'Your answer');
@@ -42,7 +59,8 @@
       const choices=field.type==='truefalse'?['True','False']:(field.options||[]);
       const group=element('fieldset','am-choice-group');
       const legend=element('legend','am-field-label',field.label||question.label||'Select an answer');
-      group.append(legend);
+      const grid=element('div','am-choice-options');
+      group.append(legend,grid);
       choices.forEach((option,i)=>{
         const optionLabel=element('label','am-option');
         const radio=element('input');
@@ -50,7 +68,7 @@
         radio.name=name;
         radio.value=field.type==='truefalse'?option.toLowerCase():option;
         optionLabel.append(radio,document.createTextNode(option));
-        group.append(optionLabel);
+        grid.append(optionLabel);
       });
       box.append(group);
       return {box,value:()=>group.querySelector('input:checked')?.value||'',listen:fn=>group.addEventListener('change',fn)};
@@ -126,6 +144,7 @@
         const target=page.querySelector('[data-mark-key="'+question.key+'"]');
         if(!target){console.warn('Marking target not found:',question.key);continue;}
         const fields=element('div','am-answer-fields');
+        if(question.fields.some(field=>field.type==='choice'))hidePaperChoiceText(target);
         const controls=question.fields.map((field,n)=>fieldUI(question,field,n,'am-'+question.key));
         controls.forEach(control=>fields.append(control.box));
         insertAfterTarget(target,fields);
