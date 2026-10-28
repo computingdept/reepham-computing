@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "id": "j277-011",
+  "title": "CPU Performance: Clock Speed, Cache and Cores",
+  "year": 10,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "A short, self-paced catch-up covering the essential lesson ideas. Check every question, then correct anything missed.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Remember",
+      "minutes": 1,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Retrieve two ideas from earlier learning.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "What does the MAR store?",
+          "options": [
+            "Address of the location being accessed",
+            "Instructions currently decoded",
+            "The number of CPU cores",
+            "The result of every calculation"
+          ],
+          "answer": "Address of the location being accessed",
+          "feedback": "The Memory Address Register identifies which location is being accessed."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Which kind of memory holds programs and data currently in use?",
+          "options": [
+            "Primary memory",
+            "Optical archive only",
+            "Network cabling",
+            "Printer memory only"
+          ],
+          "answer": "Primary memory",
+          "feedback": "RAM provides working memory for programs and data in use."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "Learn",
+      "minutes": 4,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "Read the key concepts, visual model and worked explanation.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Clock speed",
+          "text": "Clock speed is measured in Hz: clock cycles per second. One cycle does not necessarily equal one instruction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Cache size",
+          "text": "Cache stores frequently needed information closer to the CPU, reducing time spent accessing RAM."
+        },
+        {
+          "type": "paragraph",
+          "title": "Core count",
+          "text": "Multiple cores enable more work in parallel when software supports simultaneous tasks."
+        },
+        {
+          "type": "paragraph",
+          "title": "Overall comparison",
+          "text": "Architecture and task type also affect performance; do not infer an absolute winner from one specification."
+        },
+        {
+          "type": "diagram",
+          "title": "Visual model · CPU Performance: Clock Speed, Cache and Cores",
+          "layout": "cards",
+          "items": [
+            [
+              "Clock speed",
+              "Cycles/second"
+            ],
+            [
+              "Cache",
+              "Fast local data"
+            ],
+            [
+              "Cores",
+              "Parallel workload capacity"
+            ]
+          ],
+          "caption": "The software workload and processor architecture also matter."
+        },
+        {
+          "type": "example",
+          "title": "Worked example · Compare CPU A (2 GHz, 4 cores, 4 MB cache) with B (3 GHz, 2 cores, 8 MB cache). Which is faster?",
+          "text": "CPU B has the higher clock speed. CPU A has more cores, which can help with suitably parallel work. CPU B has more cache, potentially reducing RAM access. Explain that workload and architecture determine real performance. Conclude neither is automatically fastest for every task."
+        },
+        {
+          "type": "facts",
+          "items": [
+            "clock speed — Number of CPU clock cycles per second.",
+            "cache — Small, fast memory holding frequently used information.",
+            "core — CPU processing unit able to execute instructions.",
+            "parallel processing — Running work simultaneously using multiple processing units."
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "What does CPU clock speed measure?",
+          "options": [
+            "Cycles per second",
+            "Instructions per core guaranteed",
+            "Amount of disk space",
+            "Bytes transferred per print job"
+          ],
+          "answer": "Cycles per second",
+          "feedback": "Clock speed is measured in hertz, with 1 GHz meaning one billion cycles per second."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Why might more CPU cores improve performance?",
+          "options": [
+            "They can run tasks in parallel when software supports it",
+            "They always double clock speed",
+            "They increase ROM capacity",
+            "They guarantee faster single-threaded code"
+          ],
+          "answer": "They can run tasks in parallel when software supports it",
+          "feedback": "Parallel workloads may use more cores, unlike a single-threaded task."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "How does CPU cache help?",
+          "options": [
+            "Fast access to frequently used data",
+            "It saves files after power-off",
+            "It replaces the monitor",
+            "It increases the number of HDD platters"
+          ],
+          "answer": "Fast access to frequently used data",
+          "feedback": "Cache reduces time spent waiting for slower RAM accesses."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "Practise",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Match and reorder before applying the method yourself.",
+      "blocks": [
+        {
+          "type": "hint",
+          "text": "Check the units of the given values. GHz counts billions of cycles in one second."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "match",
+          "prompt": "Match the CPU characteristic to its meaning.",
+          "pairs": [
+            [
+              "clock speed",
+              "Clock cycles per second"
+            ],
+            [
+              "cache",
+              "Fast nearby memory"
+            ],
+            [
+              "cores",
+              "Parallel processing units"
+            ]
+          ],
+          "feedback": "Clock speed, cache and core count influence performance differently."
+        },
+        {
+          "id": "p2",
+          "kind": "order",
+          "prompt": "Put a sensible CPU comparison method in order.",
+          "items": [
+            "Explain which CPU fits the task",
+            "Identify the software workload",
+            "Compare cores, clock speed and cache"
+          ],
+          "answer": [
+            "Identify the software workload",
+            "Compare cores, clock speed and cache",
+            "Explain which CPU fits the task"
+          ],
+          "feedback": "CPU performance depends on workload and architecture, not one number."
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "How many billions of cycles does a 3 GHz CPU have in 2 seconds?",
+          "answer": "6",
+          "feedback": "3 × 2 = 6 billion clock cycles."
+        },
+        {
+          "id": "p4",
+          "kind": "number",
+          "prompt": "A CPU with 3 GHz clock speed runs for 4 seconds. How many billions of cycles?",
+          "answer": "12",
+          "feedback": "3 × 4 = 12 billion cycles."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "Apply",
+      "minutes": 4,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "Predict the Code First result and write one exam-style answer.",
+      "blocks": [
+        {
+          "type": "code",
+          "title": "Code First · Predict → Write → Test → Improve",
+          "lines": [
+            "clockGHz = 3",
+            "seconds = 2",
+            "print(clockGHz * seconds)"
+          ],
+          "caption": "Predict the number of billion cycles. Change seconds to four. Explain why cycle count is not the number of executed instructions."
+        },
+        {
+          "type": "prompt",
+          "text": "Explain how a larger cache may improve performance. [2 marks]"
+        }
+      ],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "The code prints clockGHz * seconds with 3 and 2. What prints?",
+          "answer": "6",
+          "feedback": "3 × 2 = 6 billions of cycles."
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "After seconds changes from 2 to 4, what prints?",
+          "answer": "12",
+          "feedback": "3 × 4 = 12."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Why doesn't 3 GHz guarantee three billion instructions executed per second?",
+          "options": [
+            "Instructions can take differing numbers of cycles",
+            "Clock cycles never affect speed",
+            "GHz measures the hard-disk size",
+            "Every CPU always has one core"
+          ],
+          "answer": "Instructions can take differing numbers of cycles",
+          "feedback": "Clock cycles are not identical to executed instructions."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain how a larger cache may improve performance. [2 marks]",
+        "model": "Holds frequently used data/instructions near CPU [1], reducing slower RAM accesses [1].",
+        "checklist": [
+          "I explained how multiple cores can provide parallel processing.",
+          "I explained why a single-threaded task may not benefit.",
+          "I mentioned other factors such as cache, clock speed or architecture."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "minutes": 2,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Check your understanding and review your mastery result.",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A faster clock speed means more cycles per second.",
+          "answer": "true",
+          "feedback": "Hertz expresses cycles per second."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Twice as many cores guarantees twice the speed for every single-threaded task.",
+          "answer": "false",
+          "feedback": "Parallel tasks benefit from cores; single-threaded work may not."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "A larger cache may reduce slower accesses to RAM.",
+          "answer": "true",
+          "feedback": "Cache keeps frequently requested data close to the CPU."
+        }
+      ]
+    }
+  ]
+}
