@@ -26,6 +26,8 @@ SMOKE = {"j277": {5, 19, 96, 164}, "h446": {1, 25, 181, 200, 320}}
 
 
 def status_for(lesson):
+    if lesson.is_assessment:
+        return "assessment_staff_only"
     if lesson.missing:
         return "draft_incomplete_source_review"
     if lesson.visual_count or any("teacher-dependent" in w for w in lesson.warnings):
@@ -62,7 +64,7 @@ def existing_record(course, number, route):
         "a4_pages": 0, "a3_spreads": 0,
         "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "",
         "independent_html": "/" + str(independent.relative_to(ROOT)),
-        "visual_count": 0,
+        "visual_count": 0, "is_assessment": False,
     }
 
 
@@ -102,6 +104,7 @@ def generate_one(course, number, route, donow, code_master, out, large=False, sk
         "colour_a3_pdf": str(outputs["colour"][3].relative_to(out)) if spreads else "",
         "independent_html": "",
         "visual_count": lesson.visual_count,
+        "is_assessment": lesson.is_assessment,
     }
     return record
 
@@ -121,7 +124,7 @@ def save_reports(out, records, mode):
         "course", "lesson", "label", "title", "spec", "teach_url", "status",
         "priority", "a4_pages", "a3_spreads", "a4_pdf", "a3_pdf", "colour_a4_pdf", "colour_a3_pdf",
         "independent_html", "sources", "missing_data", "failed_checks", "warnings",
-        "visual_count",
+        "visual_count", "is_assessment",
     ]
     with (out / "manifest.csv").open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=columns)
@@ -149,6 +152,7 @@ def save_reports(out, records, mode):
         f"- A3 imposed draft PDFs actually created: **{2*sum(bool(r['a3_pdf']) for r in records)}** (B&W and colour).",
         f"- Existing J277 HTML drafts audited without replacing: **{sum(bool(r['independent_html']) for r in records)}**.",
         f"- Lessons with missing grounded content or model answers: **{len(missing)}**.",
+        f"- Assessment/feedback lessons kept STAFF ONLY: **{sum(r.get('is_assessment') for r in records)}**.",
         f"- Generation failures: **{sum(r['status']=='generation_failed' for r in records)}**; existing HTML static-check findings: **{len(failures)-sum(r['status']=='generation_failed' for r in records)}**.",
         "",
         "## Status breakdown",
@@ -243,7 +247,7 @@ def main():
                     "sources": [route], "status": "generation_failed",
                     "missing_data": [], "failed_checks": [f"{type(exc).__name__}: {str(exc)[:300]}"],
                     "warnings": [], "priority": "P0", "a4_pages": 0, "a3_spreads": 0,
-                    "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "", "independent_html": "", "visual_count": 0,
+                    "a4_pdf": "", "a3_pdf": "", "colour_a4_pdf": "", "colour_a3_pdf": "", "independent_html": "", "visual_count": 0, "is_assessment": False,
                 })
     result = save_reports(out, records, "smoke" if args.smoke else "batch")
     print(json.dumps(result, indent=2), flush=True)
