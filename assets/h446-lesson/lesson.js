@@ -2104,6 +2104,6 @@ if(/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)){
    inserts a link only for lessons with a published independent booklet. */
 if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}\//i.test(location.pathname)){
   const resources=document.createElement('script');
-  resources.src='../../../assets/h446-lesson/lesson-resources.js?v=20261028-lesson004';
+  resources.src='../../../assets/h446-lesson/lesson-resources.js?v=20261028-j277-001-004';
   document.body.appendChild(resources);
 }
