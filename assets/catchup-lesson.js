@@ -108,7 +108,7 @@
     nav.append(previous,next);
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
-      if(step===cfg.stages.length-1)window.location.assign('index.html#do-now');
+      if(step===cfg.stages.length-1)window.location.assign('../../../j277-hub.html?year='+cfg.year+'#lessons');
       else go(step+1,true);
     });
     function setResponse(id,value){
@@ -332,7 +332,7 @@
         if(i===step)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
       });
       previous.disabled=step===0;
-      next.textContent=step===cfg.stages.length-1?'Open teacher lesson':'Next →';
+      next.textContent=step===cfg.stages.length-1?'Finish → Lessons':'Next →';
     }
     function go(index,focus){
       step=Math.max(0,Math.min(cfg.stages.length-1,index));
