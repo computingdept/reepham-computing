@@ -138,3 +138,21 @@ body[data-mode="bw"] .page.selfmark-page .selfmark-row{background:transparent;bo
 .page .pen-routine-item .pen-label-green{margin-left:0}
 body[data-mode="bw"] .page .pen-symbol-mark,body[data-mode="bw"] .page .pen-label-green{color:#17232a}
 @media(max-width:700px){.viewer .page .pen-instruction{gap:5px 12px}.viewer .page .pen-routine-item{white-space:normal}}
+
+/* Independent booklets: the classroom signalling lives in a quiet FOOTER.
+   The teaching activities have plain headings and space to work.
+   Tile fills and text use the current desktop lesson's real blue/green palette. */
+.page .booklet-activity-title{font-size:9.6pt;font-weight:800;line-height:1.2;margin:7px 0 6px;color:#173747}
+.page .booklet-journey-footer{display:flex;align-items:flex-end;gap:6px;bottom:7mm;left:12mm;right:12mm;min-height:15mm;padding:5px 0 0;border-top:1px solid #c6d6ce;letter-spacing:normal}
+.page .booklet-journey{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;align-items:end}
+.page .booklet-journey-stage{display:flex;align-items:center;flex-direction:column;gap:1px;min-width:0;text-align:center;opacity:.62}
+.page .booklet-journey-stage.is-active{opacity:1}
+.page .booklet-journey-word{font-size:7pt;font-weight:750;line-height:1.05}
+.page .booklet-journey-phase{min-width:0;width:94%;max-width:29mm;min-height:5.5mm;display:flex;align-items:center;justify-content:center;font-size:6.4pt;font-weight:750;line-height:1.08;padding:2px 3px;border:1px solid #7aabce;border-radius:3px;background:#c1e5f5;color:#0a3258}
+.page .booklet-journey-routine{font-size:5.9pt;line-height:1.1;color:#0b4314;white-space:normal}
+.page .booklet-journey-stage.is-active .booklet-journey-phase{border-width:1.5px}
+.page .booklet-page-number{font-size:7pt;white-space:nowrap;line-height:1;align-self:flex-end;color:#456159}
+.page:has(.booklet-journey-footer) main{padding-bottom:17mm}
+body[data-mode="bw"] .page .booklet-journey-phase{background:#eee;border-color:#888;color:#111}
+body[data-mode="bw"] .page .booklet-journey-routine{color:#333}
+@media(max-width:700px){.viewer .page .booklet-journey-footer{position:static;margin-top:12px;min-height:0}.viewer .page:has(.booklet-journey-footer) main{padding-bottom:0}.viewer .page .booklet-journey{gap:2px}.viewer .page .booklet-journey-word{font-size:6.8pt}.viewer .page .booklet-journey-phase{font-size:6pt;padding:2px 1px}.viewer .page .booklet-journey-routine{font-size:5.6pt}}
