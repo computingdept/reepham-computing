@@ -11,7 +11,7 @@ The current four-page pattern is **Start → Learn → Practise → Check & impr
 
 ## Independent booklet header/footer architecture (approved Lesson 002 pilot)
 
-Use **one small two-row header on every page**. Row 1: RHS COMPUTING / OCR J277 / Paper / specification point on the left, LESSON NNN on the right. Row 2: small pen SVG + **BLACK PEN · Complete your answers**, and a different pen-with-tick SVG + **GREEN PEN · Tick and correct**. Both labels and icons remain intelligible in greyscale. Keep Name / Class / Date / Time / Teacher on page 1 only, immediately below the title; don't repeat pen instructions or sign tiles in the main learning content.
+Use **one small two-row header on every page**. Row 1: RHS COMPUTING / OCR J277 / Paper / specification point on the left, LESSON NNN on the right. Row 2: small pen SVG + **BLACK PEN · Answer all questions first.**, and a different pen-with-tick SVG + **GREEN PEN · Then check: tick correct answers; rewrite mistakes.**. Both labels and icons remain intelligible in greyscale. Keep Name / Class / Date / Time / Teacher on page 1 only, immediately below the title; don't repeat pen instructions or sign tiles in the main learning content.
 
 Use a **slim, fixed learning-purpose footer on all four A4 pages**, with five familiar stages and explicit child-friendly purposes:
 
@@ -131,3 +131,12 @@ All fifteen new configurations contain 5 stages, 15 objective questions each, an
 ## Ongoing rule
 
 Fix shared functionality in shared assets, not by copying styles and scripts into individual lesson files. Content changes remain lesson-scoped. Scope new behaviour to a cohort or explicit feature flag until visually checked on both TV/desktop and phone and in print.
+
+**Accessibility refinements from Lesson 002 (required wherever relevant):**
+- Keep written directions in chronological order: use BLACK PEN for all original answers, then change to GREEN PEN only after the independent questions and Exit Ticket are finished. Clearly explain on the answer page how to tick correct answers and rewrite mistakes.
+- Model the actual reasoning: binary addition needs a **correct carry row** and aligned eight-bit columns, with a visibly separate ninth-bit/overflow column in student grids. Align bits vertically rather than asking students to infer place values from ruled lines.
+- For logical shifts, show **BEFORE → MOVE → AFTER**, with the zero-fill side identified. Make diagrams readable without relying on colour.
+- Put the three-question Exit Ticket **before** model answers (normally at the end of page 3); use page 4 only for looking up answers, explanations and a full fresh reattempt.
+- Label each answer group with its **source page and stage**, and include a short worked method when a single-number answer would not show how to improve.
+- Do not hide duplicate layers of text in PDF exports. Produce one clean pass, set the document language where supported, and verify extracted text order. Explicitly distinguish a selectable-text PDF from a fully tagged/PDF-UA accessible PDF.
+- Give a genuine grid or other structured support where it improves students' independence, but do not add decorative colours, unrelated logos or extra response signs.
