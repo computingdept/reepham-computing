@@ -92,8 +92,9 @@ for n in range(16, 26):
         else:
             renderer = (ROOT / "tools/revision/build_j277_remaining_gold.py").read_text(encoding="utf-8")
             stage = renderer.split("def fourth(p,n,d,issues):", 1)[1].split("def validate(", 1)[0]
-            copies = int(re.search(r"rule\(p,722,(\d+)\)", stage).group(1))
-            rewrites = int(re.search(r"rule\(p,759,(\d+)\)", stage).group(1))
+            counts = re.findall(r"rule\(p,\d+,(\d+)(?:,step=\d+)?\)", stage)
+            copies = int(counts[-2]) if len(counts) >= 2 else 0
+            rewrites = int(counts[-1]) if len(counts) >= 2 else 0
         if copies < 2 or rewrites < 4:
             checks.append("correction space below 2+4 lines")
         # Six-mark exam responses must have appropriate space, or an
