@@ -137,6 +137,19 @@ def first(p,n,d,issues):
     P.t(p,"Write one key term and its meaning in your own words:",45,659,8.3,True)
     rule(p,682,4,step=20)
 
+# Compact only the eight *extra* teaching-bank additions (not the four core
+# New Learning steps). Each summary was checked against its actual source note.
+SUPPLEMENTARY_BRIEFS={
+ 26:"Ethernet is wired. Wi-Fi is wireless and mobile, but may suffer interference. Bluetooth suits short-range links. Compare speed and range.",
+ 29:"Protocol layers separate jobs through agreed interfaces, making changes and troubleshooting easier. OCR J277 does not require all TCP/IP layer names.",
+ 34:"Physical security uses locked rooms and controlled entry to reduce theft or tampering. Combine this with digital protection such as passwords.",
+ 48:"Structure diagrams show decomposition and subproblem hierarchy, such as Quiz > Play > Input/Scoring. Flowcharts show the order of decisions.",
+ 52:"A constant stays fixed (MAX_CLASS_SIZE=30); a variable may change. Integer=whole number; real=fraction; character=one; string=several.",
+ 54:"Boolean values are true or false, not text strings. Comparisons such as score>=50 also yield Boolean results and combine with AND/OR/NOT.",
+ 70:"Local variables/constants belong to local scope; global ones have wider scope. Too much mutable global state makes bugs harder to trace.",
+ 71:"A function can receive an array argument, process it and return a result. Input and return are separate; the caller must use the result."
+}
+
 def second(p,n,d,issues):
     P.t(p,"Learn and practise",45,76,15.2,True)
     sec(p,"New learning - Key ideas",100)
@@ -146,6 +159,11 @@ def second(p,n,d,issues):
         y=119+i*rowstep
         G.card(p,45,y-12,501,rowstep-2,WHITE)
         textblock(p,title,52,y,140,rowstep-5,8.0,7.05,True,issues,"concept title "+str(i+1))
+        if i==4 and n in SUPPLEMENTARY_BRIEFS:
+            original=description
+            description=SUPPLEMENTARY_BRIEFS[n]
+            issues.append({"type":"pedagogical-review","stage":"supplementary addition condensed",
+                           "original":original,"printed":description})
         textblock(p,description,198,y,335,rowstep-2,7.65,6.85,False,issues,"concept "+str(i+1))
     if len(d["c"])>5:issues.append({"type":"content-overflow","stage":"more than five New Learning steps","count":len(d["c"])-5})
     sec(p,"I Do - One worked example",260)
