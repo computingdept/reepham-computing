@@ -15,6 +15,15 @@ const base="http://127.0.0.1:8765";
         const page=await context.newPage();
         await page.goto(base+"/"+course+"-hub.html#booklet",{waitUntil:"networkidle"});
         await page.locator('[data-tab="booklet"]').click();
+        if(course==="j277"){
+          const yearSwitch=page.locator(".year-switch");
+          assert.equal(await yearSwitch.isVisible(),false,"J277 Guides must hide year selector");
+          await page.locator('[data-tab="revisionhub"]').click();
+          assert.equal(await yearSwitch.isVisible(),false,"J277 Practice must hide year selector");
+          await page.locator('[data-tab="lessons"]').click();
+          assert.equal(await yearSwitch.isVisible(),true,"J277 Lessons must retain year selector");
+          await page.locator('[data-tab="booklet"]').click();
+        }
         const result=await page.evaluate((course)=>{
           const panel=document.querySelector("#booklet");
           const cards=[...panel.querySelectorAll(".h446-guide-card")];
