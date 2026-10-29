@@ -6,10 +6,10 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 
 - **planned:** 144
 - **generated:** 144
-- **automated checks passed:** 130
-- **needs review:** 14
+- **automated checks passed:** 138
+- **needs review:** 6
 - **failed:** 0
-- **issues by type:** {'content-overflow': 8, 'source-mismatch': 4, 'assessment': 5}
+- **issues by type:** {'source-mismatch': 4, 'assessment': 5}
 
 ## Lessons
 
@@ -20,15 +20,15 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 023 | Network Hardware | 10 | automated-checks-passed |  |
 | 024 | The Internet, DNS and Cloud Storage | 10 | automated-checks-passed |  |
 | 025 | Network Topologies | 10 | automated-checks-passed |  |
-| 026 | Wired and Wireless Networks | 10 | needs-review | concept 5 |
+| 026 | Wired and Wireless Networks | 10 | automated-checks-passed |  |
 | 027 | IP and MAC Addresses | 10 | automated-checks-passed |  |
 | 028 | Common Network Protocols | 10 | automated-checks-passed |  |
-| 029 | Standards and Protocols | 10 | needs-review | concept 5 |
+| 029 | Standards and Protocols | 10 | automated-checks-passed |  |
 | 030 | Malware and Social Engineering | 10 | automated-checks-passed |  |
 | 031 | Network Attacks | 10 | automated-checks-passed |  |
 | 032 | Firewalls and Network Security | 10 | automated-checks-passed |  |
 | 033 | Passwords, Encryption and Penetration Testing | 10 | automated-checks-passed |  |
-| 034 | Network Security Scenarios | 10 | needs-review | concept 5 |
+| 034 | Network Security Scenarios | 10 | automated-checks-passed |  |
 | 035 | Autumn 2 Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
 | 036 | Assessment Feedback and Reteaching | 10 | automated-checks-passed |  |
 | 037 | Operating Systems: Interfaces and Memory | 10 | automated-checks-passed |  |
@@ -42,13 +42,13 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 045 | Abstraction and Decomposition | 10 | automated-checks-passed |  |
 | 046 | Algorithmic Thinking | 10 | automated-checks-passed |  |
 | 047 | Inputs, Processes and Outputs | 10 | automated-checks-passed |  |
-| 048 | Flowcharts and Algorithm Design | 10 | needs-review | concept 5 |
+| 048 | Flowcharts and Algorithm Design | 10 | automated-checks-passed |  |
 | 049 | Pseudocode and Trace Tables | 10 | automated-checks-passed |  |
 | 050 | Spring 1 Review and Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
 | 051 | Sequence, Input and Output | 10 | automated-checks-passed |  |
-| 052 | Variables, Assignment and Data Types | 10 | needs-review | concept 5 |
+| 052 | Variables, Assignment and Data Types | 10 | automated-checks-passed |  |
 | 053 | Arithmetic, Comparison and Casting | 10 | automated-checks-passed |  |
-| 054 | Boolean Conditions in Code | 10 | needs-review | concept 5 |
+| 054 | Boolean Conditions in Code | 10 | automated-checks-passed |  |
 | 055 | Selection: IF Statements | 10 | automated-checks-passed |  |
 | 056 | Selection: ELSE and Nested Conditions | 10 | automated-checks-passed |  |
 | 057 | Iteration: FOR Loops | 10 | automated-checks-passed |  |
@@ -64,8 +64,8 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 067 | Two-Dimensional Arrays | 10 | automated-checks-passed |  |
 | 068 | Records and Structured Data | 10 | automated-checks-passed |  |
 | 069 | Functions and Return Values | 10 | automated-checks-passed |  |
-| 070 | Procedures and Variable Scope | 10 | needs-review | concept 5 |
-| 071 | Subprograms and Arrays | 10 | needs-review | concept 5 |
+| 070 | Procedures and Variable Scope | 10 | automated-checks-passed |  |
+| 071 | Subprograms and Arrays | 10 | automated-checks-passed |  |
 | 072 | File Handling | 10 | automated-checks-passed |  |
 | 073 | SQL: SELECT, FROM and WHERE | 10 | automated-checks-passed |  |
 | 074 | Random Number Generation | 10 | automated-checks-passed |  |
