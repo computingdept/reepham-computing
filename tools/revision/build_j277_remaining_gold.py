@@ -434,8 +434,24 @@ def validate(file,n,d,issues):
             if re.sub(r"\s+"," ",normal(item[0].split("\n\nSource:")[0])).strip() not in re.sub(r"\s+"," ",normal(texts[2])).strip():
                 issues.append({"type":"source-mismatch","stage":"exam","question":i+2})
         if d.get("isAssessment"):
-            issues.append({"type":"assessment","stage":"separate assessment paper required",
-                           "href":d.get("assessmentHref")})
+            paper=f"lessons/j277/lesson-{n:03d}/assessment.html"
+            if not (ROOT/paper).exists():
+                issues.append({"type":"source-mismatch","stage":"assessment paper missing",
+                               "href":paper})
+            else:
+                # The 4-page booklet is an optional revision companion, NOT
+                # a substitute for an independently printable exam paper.
+                if n in (120,143):
+                    assessment=ROOT/f"lessons/j277/assessment-{n}.json"
+                    scheme=ROOT/f"lessons/j277/assessment-{n}-scheme.json"
+                    assert assessment.is_file() and scheme.is_file(),(n,"assessment dataset missing")
+                    raw=json.loads(assessment.read_text(encoding="utf8"))
+                    marks=sum(part["marks"] for sec in raw["sections"]
+                              for q in sec["questions"] for part in q["parts"])
+                    assert marks==int(raw["marks"] if "marks" in raw else raw["totalMarks"]),(n,"assessment mark total")
+                issues.append({"type":"assessment","stage":"separate assessment paper required",
+                               "href":paper,
+                               "note":"Full question paper is available separately; 4-page booklet is a revision companion."})
         # Lists commonly contain null slots; only actual mandated visuals
         # are exceptions. Do not flag 67 Year 11 lessons for null placeholders.
         required=[v for v in (d.get("requiredVisuals") or []) if isinstance(v,dict) and v.get("required")]
