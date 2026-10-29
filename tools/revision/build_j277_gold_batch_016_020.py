@@ -552,9 +552,12 @@ def validate(path,n,d):
             assert norm(exam_question(q)) in norm(texts[2]),(n,"question",q)
         assert "Try the question again" in texts[3] and "Self-mark" in texts[3]
         if n<=18:
-            assert norm(d["k"]["q"]) in norm(texts[2]),(n,"Code First task differs from lesson")
-            for prompt in d["k"]["p"]:
-                assert norm(prompt) in norm(texts[2]),(n,"Code First step absent",prompt)
+            # The classroom uses the central Code First master when present.
+            # Do not demand superseded JSON prompts in those lessons.
+            assert norm(d["k"]["q"]) in norm(texts[2]),(n,"Live Code First task absent")
+            if not d.get("print_code_master"):
+                for prompt in d["k"]["p"]:
+                    assert norm(prompt) in norm(texts[2]),(n,"Code First step absent",prompt)
             for question,answer in d["w"][:3]:
                 assert norm(question) in norm(texts[1]),(n,"We Do activity absent",question)
                 assert norm(answer) in norm(texts[3]),(n,"We Do model absent",answer)
