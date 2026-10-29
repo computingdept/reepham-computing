@@ -215,3 +215,5 @@ def build(n):
  print("PASS",n,out.stat().st_size)
 if __name__=="__main__":
  for n in (3,4,5):build(n)
+
+# Publication trigger: approved small-batch PDF generation and link validation.
