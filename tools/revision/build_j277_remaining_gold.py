@@ -140,12 +140,14 @@ def first(p,n,d,issues):
 def second(p,n,d,issues):
     P.t(p,"Learn and practise",45,76,15.2,True)
     sec(p,"New learning - Key ideas",100)
-    for i,(title,description) in enumerate(d["c"][:4]):
-        y=119+i*33
-        G.card(p,45,y-12,501,31,WHITE)
-        textblock(p,title,52,y,140,20,8.0,7.1,True,issues,"concept title "+str(i+1))
-        textblock(p,description,198,y,335,22,7.7,7.05,False,issues,"concept "+str(i+1))
-    if len(d["c"])>4:issues.append({"type":"pedagogical-review","stage":"extra New Learning steps","count":len(d["c"])-4})
+    concepts=d["c"][:5]
+    rowstep=27 if len(concepts)==5 else 33
+    for i,(title,description) in enumerate(concepts):
+        y=119+i*rowstep
+        G.card(p,45,y-12,501,rowstep-2,WHITE)
+        textblock(p,title,52,y,140,rowstep-5,8.0,7.05,True,issues,"concept title "+str(i+1))
+        textblock(p,description,198,y,335,rowstep-2,7.65,6.85,False,issues,"concept "+str(i+1))
+    if len(d["c"])>5:issues.append({"type":"content-overflow","stage":"more than five New Learning steps","count":len(d["c"])-5})
     sec(p,"I Do - One worked example",260)
     question=d["m"].get("q") or d["m"].get("title") or d["t"]
     textblock(p,question,45,282,498,37,8.15,7.05,True,issues,"i-do-question")
@@ -180,12 +182,13 @@ def second(p,n,d,issues):
 def third(p,n,d,issues):
     P.t(p,"Think and write",45,76,15.2,True)
     sec(p,"Code First - Predict > Write > Test > Improve",101)
-    G.card(p,45,129,501,157,WHITE)
+    G.card(p,45,129,501,166,WHITE)
     k=d["printCode"]
     textblock(p,"YOUR TASK: "+k["q"],54,147,483,31,8.15,7.05,True,issues,"code-task")
-    textblock(p,k["code"],55,182,479,91,7.8,6.9,False,issues,"code-first")
+    textblock(p,k["code"],55,182,479,104,7.7,6.85,False,issues,"code-first")
     P.t(p,"BLACK PEN: predict or complete the code; test, then improve.",45,298,8.0)
     rule(p,320,2,step=16)
+    P.t(p,"For extended answers, continue on lined paper if needed.",45,352,7.6)
     sec(p,"You Do - Independent exam questions",364)
     slots=[(385,461),(474,568),(582,656)]
     for i,item in enumerate(d["e"][:3]):
@@ -231,7 +234,7 @@ def fourth(p,n,d,issues):
     P.t(p,"Code First - Model",309,143,9.4,True)
     k=d["printCode"]
     textblock(p,k["model"],310,166,227,128,7.45,6.7,False,issues,"code-answer")
-    if k["expected"]:textblock(p,"Output: "+k["expected"],310,302,221,23,7.7,6.9,True,issues,"code-output")
+    if k["expected"]:textblock(p,"Output: "+k["expected"],310,297,221,37,7.5,6.65,True,issues,"code-output")
     sec(p,"We Do - Check the model",342)
     answers=[]
     for item in d["w"][:3]:
@@ -322,7 +325,8 @@ def main():
             # don't imply a missing question or broken PDF. The printed item
             # is still explicitly provisional until inspected before teaching.
             blockers={"source-mismatch","content-overflow","generation-failure","assessment"}
-            grade="needs-review" if any(e["type"] in blockers for e in issues) else "automated-checks-passed"
+            critical_visual=any(e.get("stage")=="source-required SVGs" for e in issues)
+            grade="needs-review" if critical_visual or any(e["type"] in blockers for e in issues) else "automated-checks-passed"
             allissues.update(item["type"] for item in issues)
             manifest["editions"][str(n)]={"title":d["t"],"spec":d["s"],
                 "year":11 if n>=96 else 10,"state":grade,"pages":4,
