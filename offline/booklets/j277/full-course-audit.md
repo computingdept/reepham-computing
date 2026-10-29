@@ -6,85 +6,85 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 
 - **planned:** 144
 - **generated:** 144
-- **automated checks passed:** 139
-- **needs review:** 5
+- **automated checks passed:** 131
+- **needs review:** 13
 - **failed:** 0
-- **issues by type:** {'pedagogical-review': 77, 'source-mismatch': 3, 'assessment': 5}
+- **issues by type:** {'content-overflow': 8, 'source-mismatch': 3, 'assessment': 5}
 
 ## Lessons
 
 | Lesson | Topic | Year | State | Flags |
 |---|---|---|---|---|
-| 021 | LANs, WANs and Network Performance | 10 | automated-checks-passed | 6-mark writing space |
-| 022 | Client–Server and Peer-to-Peer Networks | 10 | automated-checks-passed | 6-mark writing space |
-| 023 | Network Hardware | 10 | automated-checks-passed | 6-mark writing space |
-| 024 | The Internet, DNS and Cloud Storage | 10 | automated-checks-passed | 6-mark writing space |
-| 025 | Network Topologies | 10 | automated-checks-passed | 6-mark writing space |
-| 026 | Wired and Wireless Networks | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 027 | IP and MAC Addresses | 10 | automated-checks-passed | 6-mark writing space |
-| 028 | Common Network Protocols | 10 | automated-checks-passed | 6-mark writing space |
-| 029 | Standards and Protocols | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 030 | Malware and Social Engineering | 10 | automated-checks-passed | 6-mark writing space |
-| 031 | Network Attacks | 10 | automated-checks-passed | 6-mark writing space |
-| 032 | Firewalls and Network Security | 10 | automated-checks-passed | 6-mark writing space |
-| 033 | Passwords, Encryption and Penetration Testing | 10 | automated-checks-passed | 6-mark writing space |
-| 034 | Network Security Scenarios | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 035 | Autumn 2 Assessment | 10 | needs-review | 6-mark writing space, you-do-count, separate assessment paper required |
-| 036 | Assessment Feedback and Reteaching | 10 | automated-checks-passed | 6-mark writing space |
-| 037 | Operating Systems: Interfaces and Memory | 10 | automated-checks-passed | 6-mark writing space |
-| 038 | Operating Systems: Files and Devices | 10 | automated-checks-passed | 6-mark writing space |
-| 039 | Utility Software | 10 | automated-checks-passed | 6-mark writing space |
-| 040 | Ethical and Social Impacts | 10 | automated-checks-passed | 6-mark writing space |
-| 041 | Data Protection Act 2018 | 10 | automated-checks-passed | 6-mark writing space |
-| 042 | Computer Misuse Act 1990 | 10 | automated-checks-passed | 6-mark writing space |
-| 043 | Copyright and Software Licences | 10 | automated-checks-passed | 6-mark writing space |
-| 044 | Evaluating Technology Impacts | 10 | automated-checks-passed | 6-mark writing space |
-| 045 | Abstraction and Decomposition | 10 | automated-checks-passed | 6-mark writing space |
-| 046 | Algorithmic Thinking | 10 | automated-checks-passed | 6-mark writing space |
-| 047 | Inputs, Processes and Outputs | 10 | automated-checks-passed | 6-mark writing space |
-| 048 | Flowcharts and Algorithm Design | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 049 | Pseudocode and Trace Tables | 10 | automated-checks-passed | 6-mark writing space |
+| 021 | LANs, WANs and Network Performance | 10 | automated-checks-passed |  |
+| 022 | Client–Server and Peer-to-Peer Networks | 10 | automated-checks-passed |  |
+| 023 | Network Hardware | 10 | automated-checks-passed |  |
+| 024 | The Internet, DNS and Cloud Storage | 10 | automated-checks-passed |  |
+| 025 | Network Topologies | 10 | automated-checks-passed |  |
+| 026 | Wired and Wireless Networks | 10 | needs-review | concept 5 |
+| 027 | IP and MAC Addresses | 10 | automated-checks-passed |  |
+| 028 | Common Network Protocols | 10 | automated-checks-passed |  |
+| 029 | Standards and Protocols | 10 | needs-review | concept 5 |
+| 030 | Malware and Social Engineering | 10 | automated-checks-passed |  |
+| 031 | Network Attacks | 10 | automated-checks-passed |  |
+| 032 | Firewalls and Network Security | 10 | automated-checks-passed |  |
+| 033 | Passwords, Encryption and Penetration Testing | 10 | automated-checks-passed |  |
+| 034 | Network Security Scenarios | 10 | needs-review | concept 5 |
+| 035 | Autumn 2 Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
+| 036 | Assessment Feedback and Reteaching | 10 | automated-checks-passed |  |
+| 037 | Operating Systems: Interfaces and Memory | 10 | automated-checks-passed |  |
+| 038 | Operating Systems: Files and Devices | 10 | automated-checks-passed |  |
+| 039 | Utility Software | 10 | automated-checks-passed |  |
+| 040 | Ethical and Social Impacts | 10 | automated-checks-passed |  |
+| 041 | Data Protection Act 2018 | 10 | automated-checks-passed |  |
+| 042 | Computer Misuse Act 1990 | 10 | automated-checks-passed |  |
+| 043 | Copyright and Software Licences | 10 | automated-checks-passed |  |
+| 044 | Evaluating Technology Impacts | 10 | automated-checks-passed |  |
+| 045 | Abstraction and Decomposition | 10 | automated-checks-passed |  |
+| 046 | Algorithmic Thinking | 10 | automated-checks-passed |  |
+| 047 | Inputs, Processes and Outputs | 10 | automated-checks-passed |  |
+| 048 | Flowcharts and Algorithm Design | 10 | needs-review | concept 5 |
+| 049 | Pseudocode and Trace Tables | 10 | automated-checks-passed |  |
 | 050 | Spring 1 Review and Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
-| 051 | Sequence, Input and Output | 10 | automated-checks-passed | 6-mark writing space |
-| 052 | Variables, Assignment and Data Types | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 053 | Arithmetic, Comparison and Casting | 10 | automated-checks-passed | 6-mark writing space |
-| 054 | Boolean Conditions in Code | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 055 | Selection: IF Statements | 10 | automated-checks-passed | 6-mark writing space |
-| 056 | Selection: ELSE and Nested Conditions | 10 | automated-checks-passed | 6-mark writing space |
-| 057 | Iteration: FOR Loops | 10 | automated-checks-passed | 6-mark writing space |
-| 058 | Iteration: WHILE Loops | 10 | automated-checks-passed | 6-mark writing space |
-| 059 | Tracing Programming Constructs | 10 | automated-checks-passed | 6-mark writing space |
-| 060 | Combining Programming Constructs | 10 | automated-checks-passed | 6-mark writing space |
-| 061 | Debugging and Nested Constructs | 10 | automated-checks-passed | 6-mark writing space |
-| 062 | Programming Challenge and Review | 10 | automated-checks-passed | 6-mark writing space |
-| 063 | Strings: Concatenation and Slicing | 10 | automated-checks-passed | 6-mark writing space |
-| 064 | Strings and Input Checking | 10 | automated-checks-passed | 6-mark writing space |
-| 065 | One-Dimensional Arrays | 10 | automated-checks-passed | 6-mark writing space |
-| 066 | Array Traversal and Updates | 10 | automated-checks-passed | 6-mark writing space |
-| 067 | Two-Dimensional Arrays | 10 | automated-checks-passed | 6-mark writing space |
-| 068 | Records and Structured Data | 10 | automated-checks-passed | 6-mark writing space |
-| 069 | Functions and Return Values | 10 | automated-checks-passed | 6-mark writing space |
-| 070 | Procedures and Variable Scope | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 071 | Subprograms and Arrays | 10 | automated-checks-passed | supplementary addition condensed, 6-mark writing space |
-| 072 | File Handling | 10 | automated-checks-passed | 6-mark writing space |
-| 073 | SQL: SELECT, FROM and WHERE | 10 | automated-checks-passed | 6-mark writing space |
-| 074 | Random Number Generation | 10 | automated-checks-passed | 6-mark writing space |
-| 075 | Validation and Authentication | 10 | automated-checks-passed | 6-mark writing space |
-| 076 | Defensive Design and Maintainability | 10 | automated-checks-passed | 6-mark writing space |
-| 077 | Testing: Normal, Boundary and Invalid Data | 10 | automated-checks-passed | 6-mark writing space |
-| 078 | Practical Programming Project | 10 | automated-checks-passed | 6-mark writing space |
-| 079 | Project Review and Assessment Feedback | 10 | automated-checks-passed | 6-mark writing space |
-| 080 | Trace Tables and Algorithm Refinement | 10 | automated-checks-passed | 6-mark writing space |
-| 081 | Syntax and Logic Errors | 10 | automated-checks-passed | 6-mark writing space |
-| 082 | Linear Search | 10 | automated-checks-passed | 6-mark writing space |
-| 083 | Binary Search | 10 | automated-checks-passed | 6-mark writing space |
-| 084 | Bubble Sort | 10 | automated-checks-passed | 6-mark writing space |
-| 085 | Insertion Sort | 10 | automated-checks-passed | 6-mark writing space |
-| 086 | Merge Sort | 10 | automated-checks-passed | 6-mark writing space |
-| 087 | Searching and Sorting Exam Practice | 10 | automated-checks-passed | 6-mark writing space |
-| 088 | Logic Gates: AND, OR and NOT | 10 | automated-checks-passed | 6-mark writing space |
-| 089 | Truth Tables | 10 | automated-checks-passed | 6-mark writing space |
-| 090 | Combining Boolean Logic | 10 | automated-checks-passed | 6-mark writing space |
+| 051 | Sequence, Input and Output | 10 | automated-checks-passed |  |
+| 052 | Variables, Assignment and Data Types | 10 | needs-review | concept 5 |
+| 053 | Arithmetic, Comparison and Casting | 10 | automated-checks-passed |  |
+| 054 | Boolean Conditions in Code | 10 | needs-review | concept 5 |
+| 055 | Selection: IF Statements | 10 | automated-checks-passed |  |
+| 056 | Selection: ELSE and Nested Conditions | 10 | automated-checks-passed |  |
+| 057 | Iteration: FOR Loops | 10 | automated-checks-passed |  |
+| 058 | Iteration: WHILE Loops | 10 | automated-checks-passed |  |
+| 059 | Tracing Programming Constructs | 10 | automated-checks-passed |  |
+| 060 | Combining Programming Constructs | 10 | automated-checks-passed |  |
+| 061 | Debugging and Nested Constructs | 10 | automated-checks-passed |  |
+| 062 | Programming Challenge and Review | 10 | automated-checks-passed |  |
+| 063 | Strings: Concatenation and Slicing | 10 | automated-checks-passed |  |
+| 064 | Strings and Input Checking | 10 | automated-checks-passed |  |
+| 065 | One-Dimensional Arrays | 10 | automated-checks-passed |  |
+| 066 | Array Traversal and Updates | 10 | automated-checks-passed |  |
+| 067 | Two-Dimensional Arrays | 10 | automated-checks-passed |  |
+| 068 | Records and Structured Data | 10 | automated-checks-passed |  |
+| 069 | Functions and Return Values | 10 | automated-checks-passed |  |
+| 070 | Procedures and Variable Scope | 10 | needs-review | concept 5 |
+| 071 | Subprograms and Arrays | 10 | needs-review | concept 5 |
+| 072 | File Handling | 10 | automated-checks-passed |  |
+| 073 | SQL: SELECT, FROM and WHERE | 10 | automated-checks-passed |  |
+| 074 | Random Number Generation | 10 | automated-checks-passed |  |
+| 075 | Validation and Authentication | 10 | automated-checks-passed |  |
+| 076 | Defensive Design and Maintainability | 10 | automated-checks-passed |  |
+| 077 | Testing: Normal, Boundary and Invalid Data | 10 | automated-checks-passed |  |
+| 078 | Practical Programming Project | 10 | automated-checks-passed |  |
+| 079 | Project Review and Assessment Feedback | 10 | automated-checks-passed |  |
+| 080 | Trace Tables and Algorithm Refinement | 10 | automated-checks-passed |  |
+| 081 | Syntax and Logic Errors | 10 | automated-checks-passed |  |
+| 082 | Linear Search | 10 | automated-checks-passed |  |
+| 083 | Binary Search | 10 | automated-checks-passed |  |
+| 084 | Bubble Sort | 10 | automated-checks-passed |  |
+| 085 | Insertion Sort | 10 | automated-checks-passed |  |
+| 086 | Merge Sort | 10 | automated-checks-passed |  |
+| 087 | Searching and Sorting Exam Practice | 10 | automated-checks-passed |  |
+| 088 | Logic Gates: AND, OR and NOT | 10 | automated-checks-passed |  |
+| 089 | Truth Tables | 10 | automated-checks-passed |  |
+| 090 | Combining Boolean Logic | 10 | automated-checks-passed |  |
 | 091 | High-Level and Low-Level Languages | 10 | automated-checks-passed |  |
 | 092 | Compilers and Interpreters | 10 | automated-checks-passed |  |
 | 093 | Integrated Development Environments | 10 | automated-checks-passed |  |
