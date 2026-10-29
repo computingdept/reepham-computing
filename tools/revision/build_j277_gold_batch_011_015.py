@@ -137,25 +137,36 @@ def diagram(p, n):
         t(p, "IPO: 60 km, 30 km/h  ->  60 / 30  ->  2 hours", 57, 391,9.1,True)
         t(p, "IPO supports decomposition; it does not replace ordered steps.",57,409,8.0)
     elif n == 13:
-        # Explicit shape-based flowchart: start, I/O, decision and branches.
-        p.draw_oval(fitz.Rect(57,326,119,361),color=BLUE,fill=WHITE)
-        t(p,"Start",75,347,8.5,True)
-        line_arrow(p,119,344,139,344)
-        B.box(p,140,326,97,35,WHITE,BLUE)
-        t(p,"Input mark",153,347,8.5,True)
-        line_arrow(p,237,344,256,344)
-        p.draw_polyline([(296,314),(337,344),(296,375),(255,344),(296,314)],
-                        color=BLUE,fill=WHITE,width=1.2)
-        t(p,"mark >= 50?",271,346,7.8,True)
-        line_arrow(p,337,338,371,338)
-        B.box(p,373,316,102,30,WHITE,EDGE)
-        t(p,"Print Pass",390,335,8.1,True)
-        line_arrow(p,338,357,372,376)
-        B.box(p,373,361,102,31,WHITE,EDGE)
-        t(p,"Try again",390,381,8.1,True)
-        t(p,"True",345,331,7.0)
-        t(p,"False",345,372,7.0)
-        t(p,"Sequence follows arrows; the diamond chooses a branch.",57,410,8.0)
+        # Correct OCR shape conventions and complete, joined True/False paths.
+        t(p,"Pass/fail: 52 follows Yes -> Pass",57,310,8.5,True)
+        p.draw_oval(fitz.Rect(53,336,101,363),color=BLUE,fill=WHITE,width=1.25)
+        t(p,"Start",63,352,7.8,True)
+        line_arrow(p,101,349,120,349)
+        p.draw_polyline([(132,335),(197,335),(185,363),(120,363),(132,335)],
+                        color=BLUE,fill=WHITE,width=1.25)
+        t(p,"Input mark",132,353,7.4,True)
+        line_arrow(p,197,349,214,349)
+        p.draw_polyline([(262,313),(309,349),(262,385),(215,349),(262,313)],
+                        color=BLUE,fill=WHITE,width=1.25)
+        t(p,"mark >= 50?",237,352,7.5,True)
+        p.draw_polyline([(351,305),(423,305),(412,333),(340,333),(351,305)],
+                        color=BLUE,fill=WHITE,width=1.25)
+        t(p,"Print Pass",353,323,7.5,True)
+        p.draw_polyline([(351,371),(423,371),(412,399),(340,399),(351,371)],
+                        color=BLUE,fill=WHITE,width=1.25)
+        t(p,"Try again",352,388,7.5,True)
+        line_arrow(p,290,327,340,319)
+        line_arrow(p,290,371,340,385)
+        t(p,"Yes",313,317,7.3,True)
+        t(p,"No",314,378,7.3,True)
+        p.draw_line((422,319),(454,319),color=BLUE,width=1.1)
+        p.draw_line((454,319),(454,352),color=BLUE,width=1.1)
+        p.draw_line((422,385),(454,385),color=BLUE,width=1.1)
+        p.draw_line((454,385),(454,352),color=BLUE,width=1.1)
+        p.draw_oval(fitz.Rect(475,338,532,366),color=BLUE,fill=WHITE,width=1.25)
+        line_arrow(p,454,352,475,352)
+        t(p,"End",491,355,7.8,True)
+        t(p,"Start / End = oval; Input / Output = parallelogram.",57,411,7.8)
     elif n == 14:
         t(p,"Linear search for target 8: unsorted data is fine",57,312,9.0,True)
         values = [3, 9, 1, 8, 5]
@@ -178,14 +189,45 @@ def diagram(p, n):
         raise AssertionError(n)
 
 
+
+def print_flowchart_symbol_key(p):
+    """A visually taught OCR flowchart key before the complete model."""
+    symbols = [
+        ("Terminator - Start / End", "oval"),
+        ("Input / Output - read or display data", "io"),
+        ("Process - calculation or assignment", "rectangle"),
+        ("Decision - a Yes/No condition", "diamond"),
+    ]
+    for i,(label,kind) in enumerate(symbols):
+        y=132+i*39
+        B.box(p,45,y-14,501,37,WHITE,EDGE,.65)
+        if kind=="oval":
+            p.draw_oval(fitz.Rect(64,y-7,127,y+16),color=BLUE,fill=WHITE,width=1.2)
+            t(p,"Start",78,y+7,7.9,True)
+        elif kind=="io":
+            p.draw_polyline([(75,y-7),(133,y-7),(121,y+16),(63,y+16),(75,y-7)],
+                            color=BLUE,fill=WHITE,width=1.2)
+            t(p,"Input",87,y+7,7.5,True)
+        elif kind=="rectangle":
+            B.box(p,64,y-7,63,23,WHITE,BLUE,1.2)
+            t(p,"x = x+1",73,y+7,7.4,True)
+        else:
+            p.draw_polyline([(96,y-10),(133,y+5),(96,y+20),(59,y+5),(96,y-10)],
+                            color=BLUE,fill=WHITE,width=1.2)
+            t(p,"?",92,y+8,7.8,True)
+        t(p,label,151,y+7,8.4,True)
+
 def page_two(p, n, d, paper, guide_page):
     t(p, "Learn and practise",45,76,15.2,True)
     sec(p, "New learning - " + d["s"],103)
-    for i, (name, desc) in enumerate(d["c"][:4]):
-        y=133+i*38
-        B.box(p, 45, y-13, 501, 35, WHITE, EDGE, .65)
-        t(p,name,52,y,8.3,True)
-        t(p,desc,180,y,7.8,maxw=351)
+    if n==13:
+        print_flowchart_symbol_key(p)
+    else:
+        for i, (name, desc) in enumerate(d["c"][:4]):
+            y=133+i*38
+            B.box(p, 45, y-13, 501, 35, WHITE, EDGE, .65)
+            t(p,name,52,y,8.3,True)
+            t(p,desc,180,y,7.8,maxw=351)
     diagram(p,n)
     sec(p,"I Do - Worked example",444)
     t(p,d["m"]["q"],45,464,8.25,True,maxw=490)
