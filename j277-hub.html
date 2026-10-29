@@ -386,14 +386,17 @@ function renderLessons(){
       const independent=year===10?openLessonResource(x):null;
       const catchup=year===10?(catchupResourceRoutes[x]||null):null;
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
+      // Lesson 002 pilot: the approved four-page PDF opens directly from Print.
+      // Shared hub-navigation.js already handles a single PDF without a format menu.
+      const pilotPrintPdf=year===10&&x===2?'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf':null;
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
         // Interactive Catch up takes priority. Otherwise show the independent
         // draft booklet explicitly as Catch up draft, not as a finished quiz.
         learnHref:catchup||(publishedDraft?.learn_colour||null),
-        printHref:independent||(publishedDraft?.print_bw||null),
-        printColourHref:independent?independent.replace('version=bw','version=colour'):(publishedDraft?.learn_colour||null),
+        printHref:pilotPrintPdf||independent||(publishedDraft?.print_bw||null),
+        printColourHref:pilotPrintPdf?null:(independent?independent.replace('version=bw','version=colour'):(publishedDraft?.learn_colour||null)),
         learnLabel:catchup?'Catch up':(publishedDraft?'Catch up draft':'Catch up'),
         printLabel:!independent&&publishedDraft?'Print draft':'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
