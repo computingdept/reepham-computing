@@ -256,7 +256,8 @@ def p1(p,n,d):
 
 def diagram(p,n):
     """Custom topic illustrations; vector artwork stays sharp in B&W print."""
-    G.card(p,45,298,501,119,PALE)
+    if n!=19:
+        G.card(p,45,298,501,119,PALE)
     if n==16:
         t(p,"ARRAY ELEMENTS - INDEX AND VALUE ARE DIFFERENT",57,316,8.7,True)
         for i,v in enumerate([4,7,9]):
@@ -284,17 +285,17 @@ def diagram(p,n):
             t(p,sub,x+8,369,7.6)
         t(p,"For calculations: formula -> working -> unit.",57,408,8.4,True)
     elif n==19:
-        # I Do must show the same A/B values as the interactive lesson.
-        # C/D belongs to the later We Do and is deliberately a new example.
-        t(p,"I DO - COMPARE CPU A AND CPU B",57,316,8.8,True)
+        # This I Do is the live A/B source; do NOT borrow the C/D We Do.
+        G.card(p,45,238,501,107,PALE)
+        t(p,"I DO - CPU A VERSUS CPU B",57,255,9.0,True)
         for i,(name,clock,cores,cache) in enumerate([
            ("CPU A","3.2 GHz","2 cores","4 MB cache"),
            ("CPU B","2.8 GHz","4 cores","8 MB cache")]):
-            x=61+245*i;B.box(p,x,328,230,60,WHITE,EDGE)
-            t(p,name,x+9,343,9.3,True)
-            t(p,clock+"  |  "+cores,x+9,363,8.2)
-            t(p,cache,x+9,380,8.2,True)
-        t(p,"CPU B has more cores/cache. CPU A has higher clock speed.",57,406,8.0)
+            x=61+245*i;B.box(p,x,265,230,57,WHITE,EDGE)
+            t(p,name,x+9,279,9.3,True)
+            t(p,clock+"  |  "+cores,x+9,296,8.2)
+            t(p,cache,x+9,312,8.2,True)
+        t(p,"B: more cores and cache. A: higher clock speed.",57,338,8.0)
     elif n==20:
         t(p,"EMBEDDED CONTROLLER: INPUT -> PROCESS -> OUTPUT",57,316,8.5,True)
         for i,(label,detail) in enumerate([("INPUT","Water sensor"),
@@ -308,6 +309,38 @@ def diagram(p,n):
     else:raise AssertionError(n)
 
 def p2(p,n,d):
+    if n==19:
+        # Four-page Lesson 002 template retained. Reflow the lesson-specific
+        # content so all three real We Do questions have writing space.
+        t(p,"Learn and practise",45,76,15.2,True)
+        sec(p,"New learning - Four key ideas",103)
+        for i,(term,expl) in enumerate(CONCEPTS[n]):
+            y=127+i*29
+            B.box(p,45,y-12,501,26,WHITE,EDGE,.65)
+            t(p,term,53,y,8.3,True)
+            render_wrap(p,expl,195,y,338,7.75,10.2,limit=y+10)
+        diagram(p,n)
+        sec(p,"I Do - Explain TWO reasons (4 marks)",361)
+        render_wrap(p,d["m"]["q"],45,382,492,8.35,11.1,True,limit=409)
+        # Same four steps / assessment logic as the live interactive lesson.
+        steps=[
+            "Compare: A has higher clock speed (3.2 vs 2.8 GHz). B has more cores and cache.",
+            "CORES [1]: CPU B has 4 cores versus 2 [1]. More tasks can run concurrently [1].",
+            "CACHE [1]: CPU B has 8 MB versus 4 MB [1]. This can reduce slower RAM access [1].",
+            "CHECK: Each reason needs a difference AND an effect (2 + 2 marks). Workload matters."
+        ]
+        for i,step in enumerate(steps):
+            render_wrap(p,f"{i+1}. {step}",49,418+i*28,483,8.05,10.8,limit=418+i*28+17)
+        sec(p,"We Do - Three guided questions",544)
+        t(p,"BLACK PEN: Use the I Do model; show the link to performance.",45,558,7.85)
+        t(p,"1. CPU C: 3.6 GHz, 2 cores, 4 MB. CPU D: 3.0 GHz, 6 cores, 12 MB.",45,575,8.2)
+        t(p,"   Explain TWO reasons CPU D may suit multitasking. [4 marks]",45,588,8.2)
+        rules(p,599,3,step=15)
+        t(p,"2. CPU E: 3 GHz; CPU F: 2 GHz. Which has higher clock speed? Explain. [2]",45,652,8.0)
+        rules(p,662,2,step=16)
+        t(p,"3. Cache increases from 2 MB to 8 MB. Explain the benefit. [2 marks]",45,710,8.0)
+        rules(p,721,3,step=16)
+        return
     t(p,"Learn and practise",45,76,15.2,True)
     sec(p,"New learning - Four key ideas",103)
     for i,(term,expl) in enumerate(CONCEPTS[n]):
@@ -412,8 +445,19 @@ def p4(p,n,d):
             y=175+(i-1)*46
             render_wrap(p,str(i)+". "+line,315,y,223,7.75,10.2,limit=y+31)
             tick(p,534,y-8)
-    sec(p,"We Do - Check the model",337)
-    render_wrap(p,GUIDED[n][1],45,362,488,7.8,10.4,limit=409)
+    if n==19:
+        sec(p,"We Do - Three model answers",337)
+        # All three model answers retain the OCR mark allocation.
+        guided_answers=[
+            "1. D has 6 vs 2 cores [1], allowing parallel tasks [1]; 12 vs 4 MB cache [1], reducing RAM access [1].",
+            "2. E has 3 vs 2 GHz [1], so more clock cycles may process instructions faster [1].",
+            "3. 8 MB holds more frequently used data/instructions [1], reducing slow RAM access [1]."
+        ]
+        for i,answer in enumerate(guided_answers):
+            render_wrap(p,answer,48,356+i*22,491,7.55,10.2,limit=356+i*22)
+    else:
+        sec(p,"We Do - Check the model",337)
+        render_wrap(p,GUIDED[n][1],45,362,488,7.8,10.4,limit=409)
     sec(p,"Exit Ticket - Check",416)
     outcome=["TRUE" if z[1] else "FALSE" for z in
              [(d["x"][0],bool(d["x"][1]))]+EXITS[n]]
@@ -473,6 +517,22 @@ def validate(path,n,d):
                 for expected in ["CPU A","3.2 GHz","2 cores","4 MB cache",
                                  "CPU B","2.8 GHz","4 cores","8 MB cache"]:
                     assert expected in model,(n,"I Do CPU diagram mismatch",expected)
+                for expected in ["CPU C","CPU D","CPU E","CPU F",
+                                 "Cache increases from 2 MB to 8 MB",
+                                 "4 marks","2 marks"]:
+                    assert expected in model,(n,"missing online We Do activity",expected)
+                answer_page=test[3].get_text()
+                for expected in ["We Do - Three model answers","1. D has 6 vs 2 cores",
+                                 "2. E has 3 vs 2 GHz",
+                                 "3. 8 MB holds more frequently used data"]:
+                    assert expected in answer_page,(n,"missing guided model",expected)
+                page=test[1]
+                for block in page.get_text("dict")["blocks"]:
+                    if block["type"]!=0:continue
+                    for line in block.get("lines",[]):
+                        for span in line.get("spans",[]):
+                            if span["text"].startswith(("1. CPU C:","2. CPU E:","3. Cache increases")):
+                                assert 565<span["bbox"][1]<755,(n,"We Do line outside intended area",span["text"])
             cm=d.get("print_code_master")
             if cm:
                 text3=test[2].get_text()
