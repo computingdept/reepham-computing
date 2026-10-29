@@ -1625,3 +1625,16 @@ body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .
     max-height:166px;
   }
 }
+
+/* 20261029-stable-primary: keep a single primary lesson link regardless
+   of whether future Catch up or Print resources are added. */
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson.lesson-primary-only {
+  height:190px;min-height:190px;max-height:190px;
+}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson.lesson-primary-only > .lesson-tile-open {border-radius:12px}
+body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .central-lesson .lesson-direct-actions > :last-child {border-right:0}
+@media(max-width:550px),(pointer:coarse) and (max-width:700px){
+  body:is(.course-hub,.central-legacy-hub) #lessons .lesson-grid .lesson-entry.central-lesson.lesson-primary-only{
+    height:198px;min-height:198px;max-height:198px;
+  }
+}
