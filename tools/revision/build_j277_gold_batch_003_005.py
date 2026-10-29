@@ -244,4 +244,4 @@ def build(n):
 if __name__=="__main__":
  for n in (3,4,5):build(n)
 
-# Publication trigger: approved small-batch PDF generation and link validation.
+# Publication trigger: footer-only behaviour-box correction for lessons 003-005.
