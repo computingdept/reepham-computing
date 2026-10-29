@@ -1,0 +1,22 @@
+name: J277 Paper 2 V3 release gate
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "revision/j277/guides/**"
+      - "j277-hub.html"
+      - "review/j277-paper2-v3-20261028/**"
+      - "tools/revision/check_j277_paper2_v3_release.py"
+      - ".github/workflows/j277-paper2-v3-release-check.yml"
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pymupdf
+      - name: Verify both PDF assets and every MCQ destination
+        run: python tools/revision/check_j277_paper2_v3_release.py
