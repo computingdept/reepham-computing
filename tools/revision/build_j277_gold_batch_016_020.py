@@ -399,11 +399,17 @@ def p4(p,n,d):
         t(p,"Q"+str(i),49,y,7.8,True)
         render_wrap(p,answer,70,y,215,7.5,9.2,limit=y+36)
         tick(p,285,y-8)
-    t(p,"Code First - Answers",315,149,9.4,True)
-    for i,line in enumerate(CODE_ANS[n],1):
-        y=175+(i-1)*46
-        render_wrap(p,str(i)+". "+line,315,y,223,7.75,10.2,limit=y+31)
-        tick(p,534,y-8)
+    t(p,"Code First - Model",315,149,9.4,True)
+    if n>=17 and d.get("print_code_master"):
+        cm=d["print_code_master"]
+        render_wrap(p,cm["model"],315,175,223,7.8,10.3,limit=271)
+        render_wrap(p,"EXPECTED: "+cm["expected"],315,280,221,8.2,10.5,True,limit=305)
+        tick(p,534,306)
+    else:
+        for i,line in enumerate(CODE_ANS[n],1):
+            y=175+(i-1)*46
+            render_wrap(p,str(i)+". "+line,315,y,223,7.75,10.2,limit=y+31)
+            tick(p,534,y-8)
     sec(p,"We Do - Check the model",337)
     render_wrap(p,GUIDED[n][1],45,362,488,7.8,10.4,limit=409)
     sec(p,"Exit Ticket - Check",416)
@@ -414,7 +420,7 @@ def p4(p,n,d):
     sec(p,"You Do - Self-mark",488)
     for i,a in enumerate(ANSWER[n],1):
         y=512+(i-1)*45
-        t(p,"Q"+str(i),50,y,7.8,True)
+        t(p,"Q"+str(i+1 if n>=17 else i),50,y,7.8,True)
         render_wrap(p,a,79,y,457,8.0,10.3,limit=y+39)
         tick(p,535,y-8)
     sec(p,"Try the question again",641)
@@ -448,6 +454,25 @@ def validate(path,n,d):
             assert norm(exam_question(q)) in norm(texts[2]),(n,"question",q)
         assert "Try the question again" in texts[3] and "Self-mark" in texts[3]
         assert path.stat().st_size>30000
+    # A PDF that simply has four pages is NOT necessarily equivalent to
+    # the live classroom lesson or visually safe to print.
+    if n>=17:
+        with fitz.open(path) as test:
+            for page in test:
+                assert not any("pp." in block[4] and block[1]<54
+                               for block in page.get_text("blocks") if len(block)>4),(n,"header overlay")
+            text1=test[0].get_text()
+            for item in d["print_retrieval"]:
+                assert plain(item["question"]) in plain(text1),(n,"missing live Do Now",item["question"])
+            for option in d["print_retrieval"][1]["options"]:
+                assert option in text1,(n,"missing MCQ choice",option)
+            cm=d.get("print_code_master")
+            if cm:
+                text3=test[2].get_text()
+                assert cm["task"] in text3,(n,"Code First task differs from live lesson")
+                for line in cm["starter"].splitlines():
+                    assert line.strip() in text3,(n,"Code First starter missing",line)
+                assert cm["expected"] in test[3].get_text(),(n,"Code First model missing")
     print("PASS",n,"4 pages",path.stat().st_size,"bytes")
 
 def build(n):
