@@ -6,10 +6,10 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 
 - **planned:** 144
 - **generated:** 144
-- **automated checks passed:** 128
-- **needs review:** 16
+- **automated checks passed:** 139
+- **needs review:** 5
 - **failed:** 0
-- **issues by type:** {'pedagogical-review': 88, 'source-mismatch': 3, 'assessment': 5}
+- **issues by type:** {'pedagogical-review': 77, 'source-mismatch': 3, 'assessment': 5}
 
 ## Lessons
 
@@ -94,25 +94,25 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 097 | Virtual Memory | 11 | automated-checks-passed |  |
 | 098 | Secondary Storage | 11 | automated-checks-passed |  |
 | 099 | Storage Units and Conversions | 11 | automated-checks-passed |  |
-| 100 | Binary and Denary | 11 | needs-review | source-required SVGs |
-| 101 | Binary Addition and Shifts | 11 | needs-review | source-required SVGs |
-| 102 | Hexadecimal | 11 | needs-review | source-required SVGs |
+| 100 | Binary and Denary | 11 | automated-checks-passed |  |
+| 101 | Binary Addition and Shifts | 11 | automated-checks-passed |  |
+| 102 | Hexadecimal | 11 | automated-checks-passed |  |
 | 103 | Characters and Images | 11 | automated-checks-passed |  |
 | 104 | Sound and Compression | 11 | automated-checks-passed |  |
 | 105 | Abstraction and Decomposition | 11 | automated-checks-passed |  |
 | 106 | Algorithm Design and Flowcharts | 11 | automated-checks-passed |  |
 | 107 | Trace Tables | 11 | automated-checks-passed |  |
-| 108 | Linear Search | 11 | needs-review | source-required SVGs |
-| 109 | Binary Search | 11 | needs-review | source-required SVGs |
-| 110 | Bubble Sort | 11 | needs-review | source-required SVGs |
-| 111 | Insertion Sort | 11 | needs-review | source-required SVGs |
-| 112 | Merge Sort | 11 | needs-review | source-required SVGs |
+| 108 | Linear Search | 11 | automated-checks-passed |  |
+| 109 | Binary Search | 11 | automated-checks-passed |  |
+| 110 | Bubble Sort | 11 | automated-checks-passed |  |
+| 111 | Insertion Sort | 11 | automated-checks-passed |  |
+| 112 | Merge Sort | 11 | automated-checks-passed |  |
 | 113 | Comparing Algorithms and Consolidation | 11 | automated-checks-passed |  |
 | 114 | String Manipulation | 11 | automated-checks-passed |  |
-| 115 | Two-Dimensional Arrays and Records | 11 | needs-review | source-required SVGs |
+| 115 | Two-Dimensional Arrays and Records | 11 | automated-checks-passed |  |
 | 116 | Parameters, Return Values and Scope | 11 | automated-checks-passed |  |
 | 117 | File Handling | 11 | automated-checks-passed |  |
-| 118 | SQL Queries | 11 | needs-review | source-required SVGs |
+| 118 | SQL Queries | 11 | automated-checks-passed |  |
 | 119 | Random Numbers and Combined Constructs | 11 | automated-checks-passed |  |
 | 120 | Autumn Assessment (AP1) | 11 | needs-review | separate assessment paper required |
 | 121 | Assessment Feedback and Corrections | 11 | automated-checks-passed |  |
@@ -124,7 +124,7 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 127 | CPU Performance and Embedded Systems | 11 | automated-checks-passed |  |
 | 128 | Programming: Arrays and Iteration Practice | 11 | automated-checks-passed |  |
 | 129 | Programming: Subprograms and Parameters | 11 | automated-checks-passed |  |
-| 130 | Programming: Files, SQL and Strings | 11 | needs-review | source-required SVGs |
+| 130 | Programming: Files, SQL and Strings | 11 | automated-checks-passed |  |
 | 131 | Programming: Unseen Problems and Debugging | 11 | automated-checks-passed |  |
 | 132 | Mixed Paper 1 and Paper 2 Retrieval | 11 | automated-checks-passed |  |
 | 133 | LANs, WANs and Network Models | 11 | automated-checks-passed |  |
