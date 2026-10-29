@@ -52,7 +52,7 @@ jobs:
                       assert 'Review & Improve' in txt
               assert additions[n-16] in source
           hub.write_text(source, encoding='utf-8')
-          assert source.count('printHref:approvedPdf||draftPdf,')==1
+          assert source.count('printHref:approvedPdf,')==1 and 'Print draft' not in source
           print('PASS 016-020 PDF + direct one-click Print route validation')
           PY
       - name: Commit only verified PDFs and J277 hub Print links
