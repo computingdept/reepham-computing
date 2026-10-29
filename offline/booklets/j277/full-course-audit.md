@@ -6,10 +6,10 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 
 - **planned:** 144
 - **generated:** 144
-- **automated checks passed:** 131
-- **needs review:** 13
+- **automated checks passed:** 130
+- **needs review:** 14
 - **failed:** 0
-- **issues by type:** {'content-overflow': 8, 'source-mismatch': 3, 'assessment': 5}
+- **issues by type:** {'content-overflow': 8, 'source-mismatch': 4, 'assessment': 5}
 
 ## Lessons
 
@@ -151,7 +151,7 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 154 | Paper 1: Networks and Security | 11 | automated-checks-passed |  |
 | 155 | Paper 1: Software, Impacts and Legislation | 11 | automated-checks-passed |  |
 | 156 | Timed Paper 1 Practice | 11 | automated-checks-passed |  |
-| 157 | Timed Paper 2 Practice | 11 | automated-checks-passed |  |
+| 157 | Timed Paper 2 Practice | 11 | needs-review | you-do-model |
 | 158 | Paper 1: Weakest Topics | 11 | automated-checks-passed |  |
 | 159 | Paper 2: Searching and Sorting | 11 | automated-checks-passed |  |
 | 160 | Paper 2: Programming Fundamentals | 11 | automated-checks-passed |  |
