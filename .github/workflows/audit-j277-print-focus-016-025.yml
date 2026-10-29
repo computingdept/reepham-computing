@@ -1,0 +1,30 @@
+name: J277 016-025 independent print source and space audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/audit_j277_print_focus_016_025.py'
+      - '.github/workflows/audit-j277-print-focus-016-025.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-016-025:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF inspection library
+        run: python -m pip install pymupdf==1.26.4
+      - name: Compare 10 PDFs to final lesson data and writing-space rule
+        run: python tools/revision/audit_j277_print_focus_016_025.py
+      - name: Save teacher-review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-print-016-025-machine-audit
+          path: offline/booklets/j277/focus-016-025-machine-audit.md
+          if-no-files-found: warn
