@@ -388,7 +388,11 @@ function renderLessons(){
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
       // Lesson 002 pilot: the approved four-page PDF opens directly from Print.
       // Shared hub-navigation.js already handles a single PDF without a format menu.
-      const pilotPrintPdf=year===10&&x===2?'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf':null;
+      const approvedPrintPdfRoutes={
+        1:'offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf',
+        2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf'
+      };
+      const pilotPrintPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
