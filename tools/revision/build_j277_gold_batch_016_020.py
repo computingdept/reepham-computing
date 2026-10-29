@@ -284,15 +284,17 @@ def diagram(p,n):
             t(p,sub,x+8,369,7.6)
         t(p,"For calculations: formula -> working -> unit.",57,408,8.4,True)
     elif n==19:
-        t(p,"COMPARE THE SPECS, THEN EXPLAIN THE WORKLOAD",57,316,8.8,True)
+        # I Do must show the same A/B values as the interactive lesson.
+        # C/D belongs to the later We Do and is deliberately a new example.
+        t(p,"I DO - COMPARE CPU A AND CPU B",57,316,8.8,True)
         for i,(name,clock,cores,cache) in enumerate([
-           ("CPU C","3.6 GHz","2 cores","4 MB cache"),
-           ("CPU D","3.0 GHz","6 cores","12 MB cache")]):
+           ("CPU A","3.2 GHz","2 cores","4 MB cache"),
+           ("CPU B","2.8 GHz","4 cores","8 MB cache")]):
             x=61+245*i;B.box(p,x,328,230,60,WHITE,EDGE)
             t(p,name,x+9,343,9.3,True)
             t(p,clock+"  |  "+cores,x+9,363,8.2)
             t(p,cache,x+9,380,8.2,True)
-        t(p,"CPU D may suit several concurrent programs; no blanket winner.",57,406,8.0)
+        t(p,"CPU B has more cores/cache. CPU A has higher clock speed.",57,406,8.0)
     elif n==20:
         t(p,"EMBEDDED CONTROLLER: INPUT -> PROCESS -> OUTPUT",57,316,8.5,True)
         for i,(label,detail) in enumerate([("INPUT","Water sensor"),
@@ -466,6 +468,11 @@ def validate(path,n,d):
                 assert re.sub(r"\s+"," ",plain(item["question"])).strip() in re.sub(r"\s+"," ",plain(text1)).strip(),(n,"missing live Do Now",item["question"])
             for option in d["print_retrieval"][1]["options"]:
                 assert option in text1,(n,"missing MCQ choice",option)
+            if n==19:
+                model=test[1].get_text()
+                for expected in ["CPU A","3.2 GHz","2 cores","4 MB cache",
+                                 "CPU B","2.8 GHz","4 cores","8 MB cache"]:
+                    assert expected in model,(n,"I Do CPU diagram mismatch",expected)
             cm=d.get("print_code_master")
             if cm:
                 text3=test[2].get_text()
