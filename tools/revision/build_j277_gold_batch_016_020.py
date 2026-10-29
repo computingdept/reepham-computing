@@ -436,7 +436,7 @@ def p3(p,n,d):
     for i,(raw,_) in enumerate(d["e"]):
         val=exam_question(raw)
         slot=slots[i]
-        qn=i+2 if n>=17 else i+1
+        qn=i+2
         final=render_wrap(p,f"Q{qn}. "+val,45,y,494,8.4,11.4,limit=y+slot-38)
         line_y=max(y+30,final+5)
         target_lines=4 if ("[6 marks]" in val) else (3 if i==2 else 2)
@@ -513,14 +513,14 @@ def p4(p,n,d):
     sec(p,"You Do - Self-mark",488)
     for i,a in enumerate(ANSWER[n],1):
         y=512+(i-1)*45
-        t(p,"Q"+str(i+1 if n>=17 else i),50,y,7.8,True)
+        t(p,"Q"+str(i+1),50,y,7.8,True)
         render_wrap(p,a,79,y,457,8.0,10.3,limit=y+39)
         tick(p,535,y-8)
     sec(p,"Try the question again",641)
     t(p,"1. Copy the FULL question you got wrong (or found hardest):",45,661,8.0,True)
     rules(p,679,2,step=18)
     t(p,"2. In GREEN PEN, write a NEW answer. Include working if needed:",45,719,7.95,True)
-    rules(p,737,3,step=19)
+    rules(p,734,4,step=15)
 
 def validate(path,n,d):
     with fitz.open(path) as pdf:
