@@ -37,7 +37,7 @@ jobs:
                 near=[(round(r.y0,1),s[:90]) for r,s in left if r.y0>710]
                 over=[(r,s) for r,s in rects if r.y1>785 or r.x1>565]
                 print(f'GEOMETRY {n:03d}/{pn+1}: visible blocks {len(left)}, lines after 710pt={near}, overflowing={[(str(r),s[:50]) for r,s in over]}')
-                if n in [2,17] or (n in [19,20] and pn in [0,2]):
+                if n in [2,18] or (n in [19,20] and pn in [0,2]):
                   pix=page.get_pixmap(matrix=fitz.Matrix(.78,.78),alpha=False)
                   im=Image.open(io.BytesIO(pix.tobytes('png'))).convert('RGB')
                   if im.width>465: im.thumbnail((465,660))
