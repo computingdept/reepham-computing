@@ -1,0 +1,161 @@
+# J277 remaining print booklets: automated build audit
+
+Gold Standard describes the **four-page Lesson 002 layout**, not teacher approval. A listed PDF still needs a short professional review before teaching.
+
+## Summary
+
+- **planned:** 144
+- **generated:** 144
+- **automated checks passed:** 0
+- **needs review:** 144
+- **failed:** 0
+- **issues by type:** {'pedagogical-review': 145, 'source-mismatch': 51, 'assessment': 5, 'content-overflow': 9}
+
+## Lessons
+
+| Lesson | Topic | Year | State | Flags |
+|---|---|---|---|---|
+| 021 | LANs, WANs and Network Performance | 10 | needs-review | 6-mark writing space, exam, exam |
+| 022 | Client–Server and Peer-to-Peer Networks | 10 | needs-review | 6-mark writing space, exam, exam |
+| 023 | Network Hardware | 10 | needs-review | 6-mark writing space, exam, exam |
+| 024 | The Internet, DNS and Cloud Storage | 10 | needs-review | 6-mark writing space, exam, exam |
+| 025 | Network Topologies | 10 | needs-review | 6-mark writing space, exam |
+| 026 | Wired and Wireless Networks | 10 | needs-review | extra New Learning steps, 6-mark writing space, exam |
+| 027 | IP and MAC Addresses | 10 | needs-review | 6-mark writing space, exam |
+| 028 | Common Network Protocols | 10 | needs-review | 6-mark writing space, exam |
+| 029 | Standards and Protocols | 10 | needs-review | extra New Learning steps, 6-mark writing space, exam |
+| 030 | Malware and Social Engineering | 10 | needs-review | 6-mark writing space, exam |
+| 031 | Network Attacks | 10 | needs-review | 6-mark writing space, exam |
+| 032 | Firewalls and Network Security | 10 | needs-review | 6-mark writing space, exam |
+| 033 | Passwords, Encryption and Penetration Testing | 10 | needs-review | 6-mark writing space, exam |
+| 034 | Network Security Scenarios | 10 | needs-review | extra New Learning steps, 6-mark writing space |
+| 035 | Autumn 2 Assessment | 10 | needs-review | 6-mark writing space, you-do-count, exam, separate assessment paper required |
+| 036 | Assessment Feedback and Reteaching | 10 | needs-review | 6-mark writing space, exam, exam |
+| 037 | Operating Systems: Interfaces and Memory | 10 | needs-review | concept 4, 6-mark writing space, exam |
+| 038 | Operating Systems: Files and Devices | 10 | needs-review | 6-mark writing space, exam |
+| 039 | Utility Software | 10 | needs-review | 6-mark writing space |
+| 040 | Ethical and Social Impacts | 10 | needs-review | concept 2, 6-mark writing space |
+| 041 | Data Protection Act 2018 | 10 | needs-review | 6-mark writing space, exam |
+| 042 | Computer Misuse Act 1990 | 10 | needs-review | 6-mark writing space, exam, exam |
+| 043 | Copyright and Software Licences | 10 | needs-review | concept 3, 6-mark writing space |
+| 044 | Evaluating Technology Impacts | 10 | needs-review | 6-mark writing space, exam |
+| 045 | Abstraction and Decomposition | 10 | needs-review | 6-mark writing space |
+| 046 | Algorithmic Thinking | 10 | needs-review | 6-mark writing space |
+| 047 | Inputs, Processes and Outputs | 10 | needs-review | 6-mark writing space |
+| 048 | Flowcharts and Algorithm Design | 10 | needs-review | extra New Learning steps, 6-mark writing space |
+| 049 | Pseudocode and Trace Tables | 10 | needs-review | 6-mark writing space, exam |
+| 050 | Spring 1 Review and Assessment | 10 | needs-review | you-do-count, exam, exam, separate assessment paper required |
+| 051 | Sequence, Input and Output | 10 | needs-review | 6-mark writing space |
+| 052 | Variables, Assignment and Data Types | 10 | needs-review | extra New Learning steps, 6-mark writing space |
+| 053 | Arithmetic, Comparison and Casting | 10 | needs-review | extra New Learning steps, 6-mark writing space, exam |
+| 054 | Boolean Conditions in Code | 10 | needs-review | extra New Learning steps, 6-mark writing space |
+| 055 | Selection: IF Statements | 10 | needs-review | 6-mark writing space |
+| 056 | Selection: ELSE and Nested Conditions | 10 | needs-review | 6-mark writing space, exam |
+| 057 | Iteration: FOR Loops | 10 | needs-review | 6-mark writing space, code-output |
+| 058 | Iteration: WHILE Loops | 10 | needs-review | 6-mark writing space |
+| 059 | Tracing Programming Constructs | 10 | needs-review | 6-mark writing space |
+| 060 | Combining Programming Constructs | 10 | needs-review | 6-mark writing space |
+| 061 | Debugging and Nested Constructs | 10 | needs-review | 6-mark writing space |
+| 062 | Programming Challenge and Review | 10 | needs-review | 6-mark writing space |
+| 063 | Strings: Concatenation and Slicing | 10 | needs-review | 6-mark writing space |
+| 064 | Strings and Input Checking | 10 | needs-review | 6-mark writing space |
+| 065 | One-Dimensional Arrays | 10 | needs-review | 6-mark writing space |
+| 066 | Array Traversal and Updates | 10 | needs-review | 6-mark writing space |
+| 067 | Two-Dimensional Arrays | 10 | needs-review | 6-mark writing space |
+| 068 | Records and Structured Data | 10 | needs-review | 6-mark writing space |
+| 069 | Functions and Return Values | 10 | needs-review | 6-mark writing space |
+| 070 | Procedures and Variable Scope | 10 | needs-review | extra New Learning steps, 6-mark writing space |
+| 071 | Subprograms and Arrays | 10 | needs-review | extra New Learning steps, code-first, 6-mark writing space, Code First |
+| 072 | File Handling | 10 | needs-review | 6-mark writing space |
+| 073 | SQL: SELECT, FROM and WHERE | 10 | needs-review | 6-mark writing space |
+| 074 | Random Number Generation | 10 | needs-review | 6-mark writing space |
+| 075 | Validation and Authentication | 10 | needs-review | 6-mark writing space |
+| 076 | Defensive Design and Maintainability | 10 | needs-review | 6-mark writing space |
+| 077 | Testing: Normal, Boundary and Invalid Data | 10 | needs-review | 6-mark writing space |
+| 078 | Practical Programming Project | 10 | needs-review | 6-mark writing space |
+| 079 | Project Review and Assessment Feedback | 10 | needs-review | 6-mark writing space |
+| 080 | Trace Tables and Algorithm Refinement | 10 | needs-review | 6-mark writing space |
+| 081 | Syntax and Logic Errors | 10 | needs-review | 6-mark writing space, exam |
+| 082 | Linear Search | 10 | needs-review | 6-mark writing space, exam |
+| 083 | Binary Search | 10 | needs-review | 6-mark writing space, exam |
+| 084 | Bubble Sort | 10 | needs-review | code-first, 6-mark writing space, code-output, Code First |
+| 085 | Insertion Sort | 10 | needs-review | 6-mark writing space |
+| 086 | Merge Sort | 10 | needs-review | 6-mark writing space |
+| 087 | Searching and Sorting Exam Practice | 10 | needs-review | 6-mark writing space, exam |
+| 088 | Logic Gates: AND, OR and NOT | 10 | needs-review | 6-mark writing space |
+| 089 | Truth Tables | 10 | needs-review | 6-mark writing space, code-output |
+| 090 | Combining Boolean Logic | 10 | needs-review | 6-mark writing space |
+| 091 | High-Level and Low-Level Languages | 10 | needs-review | exam, exam, exam |
+| 092 | Compilers and Interpreters | 10 | needs-review | exam, exam, exam |
+| 093 | Integrated Development Environments | 10 | needs-review | exam, exam, exam |
+| 094 | Full-Course Synoptic Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
+| 095 | Year 10 Review and Year 11 Bridge | 10 | needs-review | exam |
+| 096 | Primary Storage: RAM, ROM and Cache | 11 | needs-review | source-required SVGs |
+| 097 | Virtual Memory | 11 | needs-review | source-required SVGs |
+| 098 | Secondary Storage | 11 | needs-review | source-required SVGs |
+| 099 | Storage Units and Conversions | 11 | needs-review | source-required SVGs |
+| 100 | Binary and Denary | 11 | needs-review | source-required SVGs |
+| 101 | Binary Addition and Shifts | 11 | needs-review | source-required SVGs |
+| 102 | Hexadecimal | 11 | needs-review | source-required SVGs |
+| 103 | Characters and Images | 11 | needs-review | source-required SVGs |
+| 104 | Sound and Compression | 11 | needs-review | source-required SVGs |
+| 105 | Abstraction and Decomposition | 11 | needs-review | source-required SVGs |
+| 106 | Algorithm Design and Flowcharts | 11 | needs-review | source-required SVGs |
+| 107 | Trace Tables | 11 | needs-review | source-required SVGs |
+| 108 | Linear Search | 11 | needs-review | source-required SVGs |
+| 109 | Binary Search | 11 | needs-review | source-required SVGs |
+| 110 | Bubble Sort | 11 | needs-review | source-required SVGs |
+| 111 | Insertion Sort | 11 | needs-review | source-required SVGs |
+| 112 | Merge Sort | 11 | needs-review | source-required SVGs |
+| 113 | Comparing Algorithms and Consolidation | 11 | needs-review | source-required SVGs |
+| 114 | String Manipulation | 11 | needs-review | source-required SVGs |
+| 115 | Two-Dimensional Arrays and Records | 11 | needs-review | source-required SVGs |
+| 116 | Parameters, Return Values and Scope | 11 | needs-review | source-required SVGs |
+| 117 | File Handling | 11 | needs-review | code-output, exam, source-required SVGs |
+| 118 | SQL Queries | 11 | needs-review | source-required SVGs |
+| 119 | Random Numbers and Combined Constructs | 11 | needs-review | source-required SVGs |
+| 120 | Autumn Assessment (AP1) | 11 | needs-review | separate assessment paper required |
+| 121 | Assessment Feedback and Corrections | 11 | needs-review | source-required SVGs |
+| 122 | Validation and Authentication | 11 | needs-review | source-required SVGs |
+| 123 | Defensive Design | 11 | needs-review | source-required SVGs |
+| 124 | Testing and Test Data | 11 | needs-review | source-required SVGs |
+| 125 | Debugging Syntax and Logic Errors | 11 | needs-review | source-required SVGs |
+| 126 | CPU Architecture and the Fetch-Execute Cycle | 11 | needs-review | source-required SVGs |
+| 127 | CPU Performance and Embedded Systems | 11 | needs-review | source-required SVGs |
+| 128 | Programming: Arrays and Iteration Practice | 11 | needs-review | source-required SVGs |
+| 129 | Programming: Subprograms and Parameters | 11 | needs-review | source-required SVGs |
+| 130 | Programming: Files, SQL and Strings | 11 | needs-review | source-required SVGs |
+| 131 | Programming: Unseen Problems and Debugging | 11 | needs-review | source-required SVGs |
+| 132 | Mixed Paper 1 and Paper 2 Retrieval | 11 | needs-review | source-required SVGs |
+| 133 | LANs, WANs and Network Models | 11 | needs-review | source-required SVGs |
+| 134 | Network Hardware and Topologies | 11 | needs-review | source-required SVGs |
+| 135 | Network Protocols and Layers | 11 | needs-review | source-required SVGs |
+| 136 | Network Performance | 11 | needs-review | source-required SVGs |
+| 137 | Network Threats | 11 | needs-review | source-required SVGs |
+| 138 | Preventing Network Attacks | 11 | needs-review | source-required SVGs |
+| 139 | Operating Systems | 11 | needs-review | source-required SVGs |
+| 140 | Utility Software | 11 | needs-review | source-required SVGs |
+| 141 | Ethical, Cultural and Environmental Impacts | 11 | needs-review | source-required SVGs |
+| 142 | Legislation and Copyright | 11 | needs-review | source-required SVGs |
+| 143 | Spring Assessment (AP2) | 11 | needs-review | separate assessment paper required |
+| 144 | Assessment Feedback and Target Setting | 11 | needs-review | source-required SVGs |
+| 145 | Boolean Logic: AND, OR and NOT | 11 | needs-review | source-required SVGs |
+| 146 | Truth Tables and Combined Logic | 11 | needs-review | source-required SVGs |
+| 147 | Programming Languages and Translators | 11 | needs-review | source-required SVGs |
+| 148 | Integrated Development Environments | 11 | needs-review | source-required SVGs |
+| 149 | Algorithms: Examination Techniques | 11 | needs-review | source-required SVGs |
+| 150 | Paper 2: Writing Code from a Scenario | 11 | needs-review | source-required SVGs |
+| 151 | Paper 2: Validation, Testing and Debugging | 11 | needs-review | source-required SVGs |
+| 152 | Paper 1: CPU, Memory and Storage | 11 | needs-review | source-required SVGs |
+| 153 | Paper 1: Data Representation | 11 | needs-review | source-required SVGs |
+| 154 | Paper 1: Networks and Security | 11 | needs-review | source-required SVGs |
+| 155 | Paper 1: Software, Impacts and Legislation | 11 | needs-review | source-required SVGs |
+| 156 | Timed Paper 1 Practice | 11 | needs-review | source-required SVGs |
+| 157 | Timed Paper 2 Practice | 11 | needs-review | source-required SVGs |
+| 158 | Paper 1: Weakest Topics | 11 | needs-review | source-required SVGs |
+| 159 | Paper 2: Searching and Sorting | 11 | needs-review | source-required SVGs |
+| 160 | Paper 2: Programming Fundamentals | 11 | needs-review | source-required SVGs |
+| 161 | Paper 1: Calculations and Extended Answers | 11 | needs-review | source-required SVGs |
+| 162 | Paper 2: Unseen Code and Debugging | 11 | needs-review | source-required SVGs |
+| 163 | Final Targeted Revision | 11 | needs-review | source-required SVGs |
+| 164 | Final GCSE Computer Science Consolidation | 11 | needs-review | source-required SVGs |

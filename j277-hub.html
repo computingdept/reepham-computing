@@ -460,7 +460,8 @@ const approvedPrintPdfRoutes={
   17:'offline/booklets/j277/J277_Lesson_017_Gold_Standard_4_Page.pdf',
   18:'offline/booklets/j277/J277_Lesson_018_Gold_Standard_4_Page.pdf',
   19:'offline/booklets/j277/J277_Lesson_019_Gold_Standard_4_Page.pdf',
-  20:'offline/booklets/j277/J277_Lesson_020_Gold_Standard_4_Page.pdf'
+  20:'offline/booklets/j277/J277_Lesson_020_Gold_Standard_4_Page.pdf',
+
 };
 /* Short self-marking catch-up lessons are distinct from full Teach and Print.
    Add each route only after its curriculum content and checks are published. */
@@ -530,7 +531,7 @@ function renderLessons(){
       const info=lessonInfo(x);
       const catchup=year===10?(catchupResourceRoutes[x]||null):null;
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
-      const approvedPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;
+      const approvedPdf=approvedPrintPdfRoutes[x]||null;
       // Student Print is only offered when its approved four-page PDF exists.
       // Old catalogue drafts are archived; never offer them as Print actions.
       grid.append(Navigation.createTile({
