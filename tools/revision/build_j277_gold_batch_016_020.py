@@ -217,10 +217,31 @@ def p1(p,n,d):
         t(p,label,x,99,8,True);B.line(p,x+len(label)*5+6,99,x+w)
     sec(p,"Do Now - Four retrieval questions",124)
     t(p,"BLACK PEN: Answer all four before turning to the answers.",45,145,8.1)
-    for i,(question,_) in enumerate(d["r"]):
-        y=164+i*61
-        final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.5,11.0,limit=y+44)
-        rules(p,max(y+28,final+1),2,step=15)
+    # Four retrieval questions from the actual lesson. The online Q2 is MCQ.
+    if n==16:
+        # Previously approved teaching content and spacing.
+        for i,(question,_) in enumerate(d["r"]):
+            y=164+i*61
+            final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.5,11.0,limit=y+44)
+            rules(p,max(y+28,final+1),2,step=15)
+    else:
+        y=162
+        for i,(question,_) in enumerate(d["r"]):
+            final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.3,10.5,limit=y+44)
+            if i==1:
+                opts=d["print_retrieval"][i]["options"]
+                for k,opt in enumerate(opts):
+                    x=49+(k%2)*256
+                    oy=final+2+(k//2)*12.5
+                    render_wrap(p,"ABCD"[k]+") "+opt,x,oy,237,7.85,9.3,limit=oy+10)
+                line_y=final+30
+                rules(p,line_y,1,step=14.5)
+                y=line_y+24
+            else:
+                line_y=final+4
+                rules(p,line_y,2,step=14.5)
+                y=line_y+42
+        assert y<418,(n,"Do Now needs a compact line layout",y)
     sec(p,"Today's objectives",418)
     G.card(p,45,439,501,54,PALE)
     render_wrap(p," ".join(d["o"][:2]),54,457,477,8.6,11.0,limit=484)
