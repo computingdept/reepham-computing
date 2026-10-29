@@ -448,6 +448,40 @@ def validate(file,n,d,issues):
         for i,item in enumerate(d["e"][:3]):
             if re.sub(r"\s+"," ",normal(item[0].split("\n\nSource:")[0])).strip() not in re.sub(r"\s+"," ",normal(texts[2])).strip():
                 issues.append({"type":"source-mismatch","stage":"exam","question":i+2})
+        # Contract with the real interactive lesson, including the final
+        # Do Now/Code First banks used by the classroom renderer. A PDF must
+        # contain ALL activities and their model answers, not merely Q1.
+        def present(value, text):
+            return re.sub(r"\s+", " ", normal(value)).strip() in re.sub(
+                r"\s+", " ", normal(text))
+        for i,item in enumerate(d["printDoNow"],1):
+            if not present(item["question"],texts[0]):
+                issues.append({"type":"source-mismatch","stage":"do-now-question",
+                               "question":i})
+            if not present(item["answer"],texts[3]):
+                issues.append({"type":"source-mismatch","stage":"do-now-answer",
+                               "question":i})
+        for i,item in enumerate(d["w"][:3],1):
+            question=item[1] if len(item)>=3 else item[0]
+            answer=item[2] if len(item)>=3 else item[1]
+            if not present(question,texts[1]):
+                issues.append({"type":"source-mismatch","stage":"we-do-question",
+                               "question":i})
+            if not present(answer,texts[3]):
+                issues.append({"type":"source-mismatch","stage":"we-do-answer",
+                               "question":i})
+        for i,item in enumerate(d["e"][:3],2):
+            question=item[0].split("\n\nSource:")[0].strip()
+            if not present(question,texts[2]):
+                issues.append({"type":"source-mismatch","stage":"you-do-question",
+                               "question":i})
+            if not present(item[1],texts[3]):
+                issues.append({"type":"source-mismatch","stage":"you-do-model",
+                               "question":i})
+        if not present(d["x"][0],texts[2]):
+            issues.append({"type":"source-mismatch","stage":"exit-source"})
+        if "Copy the FULL question" not in texts[3] or "GREEN PEN" not in texts[3]:
+            issues.append({"type":"source-mismatch","stage":"green-pen-retry"})
         if d.get("isAssessment"):
             paper=f"lessons/j277/lesson-{n:03d}/assessment.html"
             if not (ROOT/paper).exists():
