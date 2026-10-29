@@ -1,0 +1,81 @@
+name: Publish J277 gold print batch Lessons 003-005
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_gold_batch_003_005.zlib.b64'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixed PDF layout engine
+        run: python -m pip install pymupdf==1.26.4
+      - name: Restore and validate reproducible plain-text builder
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64, zlib, hashlib
+          packed=Path('tools/revision/build_j277_gold_batch_003_005.zlib.b64')
+          assert packed.is_file(), 'Missing builder package'
+          code=zlib.decompress(base64.b64decode(''.join(packed.read_text().split())))
+          assert hashlib.sha256(code).hexdigest()=='54ec34df6664048ac6e952f83481f74e56a7c990c59601be274077f65e41b2b6'
+          Path('tools/revision/build_j277_gold_batch_003_005.py').write_bytes(code)
+          print('PASS: reproducible script checksum verified')
+          PY
+      - name: Generate exactly three four-page PDFs
+        run: python tools/revision/build_j277_gold_batch_003_005.py
+      - name: Validate PDF structure and activate direct Print links
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz
+          from pathlib import Path
+          root=Path('offline/booklets/j277')
+          for n in [3,4,5]:
+              path=root/f'J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'
+              assert path.is_file() and path.stat().st_size>40000
+              with fitz.open(path) as doc:
+                  assert len(doc)==4, (n,len(doc))
+                  text='\n'.join(page.get_text() for page in doc)
+                  assert all(round(p.rect.width)==595 and round(p.rect.height)==842 for p in doc)
+                  for term in (f'LESSON {n:03d}','BLACK PEN','GREEN PEN','Code First','Try the question again'):
+                      assert term in text, (n,term)
+          hub=Path('j277-hub.html')
+          s=hub.read_text(encoding='utf-8')
+          old="        2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf'"
+          extra="        2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf',\n        3:'offline/booklets/j277/J277_Lesson_003_Gold_Standard_4_Page.pdf',\n        4:'offline/booklets/j277/J277_Lesson_004_Gold_Standard_4_Page.pdf',\n        5:'offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf'"
+          if "J277_Lesson_005_Gold_Standard_4_Page.pdf" in s:
+              print('Hub already linked to all new PDFs')
+          else:
+              assert s.count(old)==1, 'Hub route map differs; refuse to guess'
+              s=s.replace(old,extra)
+              assert s.count("printHref:pilotPrintPdf||independent||")==1
+              hub.write_text(s,encoding='utf-8')
+          print('PASS: 003-005 valid and linked, 001/002 routes preserved')
+          PY
+      - name: Commit only approved PDF batch, builder and J277 hub route
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- tools/revision/build_j277_gold_batch_003_005.py
+          git add -- offline/booklets/j277/J277_Lesson_003_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_004_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf
+          git add -- j277-hub.html
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish gold four-page J277 print booklets 003-005 with direct hub links'
+            git push origin HEAD:main
+          fi
