@@ -195,7 +195,7 @@ def header(p,n,d,note):
     t(p,note,407,43,7.2)
 
 def p1(p,n,d):
-    render_wrap(p,d["t"],45,76,501,13.7,16,True,92)
+    render_wrap(p,d["t"],45,76,501,15.1,17,True,92)
     for label,x,w in [("Name",45,125),("Class",194,72),("Date",300,69),
                       ("Time",403,64),("Teacher",490,76)]:
         t(p,label,x,99,8,True);B.line(p,x+len(label)*5+6,99,x+w)
@@ -203,17 +203,17 @@ def p1(p,n,d):
     t(p,"BLACK PEN: Answer all four before turning to the answers.",45,145,8.1)
     for i,(question,_) in enumerate(d["r"]):
         y=164+i*61
-        final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.05,10.5,limit=y+44)
+        final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.5,11.0,limit=y+44)
         rules(p,max(y+28,final+1),1,step=15)
     sec(p,"Today's objectives",418)
     G.card(p,45,439,501,54,PALE)
-    render_wrap(p," ".join(d["o"][:2]),54,457,477,8.15,10.9,limit=484)
+    render_wrap(p," ".join(d["o"][:2]),54,457,477,8.6,11.0,limit=484)
     sec(p,"Key vocabulary - Read, cover, recall",516)
     for i,(term,meaning) in enumerate(d["v"][:4]):
         x=45+(i%2)*257;y=538+(i//2)*51
         G.card(p,x,y,245,47,WHITE)
-        render_wrap(p,term,x+8,y+14,230,8.3,10,True,limit=y+22)
-        render_wrap(p,meaning,x+8,y+28,230,7.5,9.5,limit=y+46)
+        render_wrap(p,term,x+8,y+14,230,8.6,10,True,limit=y+22)
+        render_wrap(p,meaning,x+8,y+28,230,7.8,9.5,limit=y+46)
     t(p,"Write one definition in your own words:",45,657,8.5,True)
     rules(p,676,4,step=20)
 
@@ -278,14 +278,14 @@ def p2(p,n,d):
         render_wrap(p,expl,195,y,338,7.75,10.2,limit=y+13)
     diagram(p,n)
     sec(p,"I Do - Worked example",439)
-    render_wrap(p,d["m"]["q"],45,459,490,8.05,11.0,True,limit=486)
+    render_wrap(p,d["m"]["q"],45,459,490,8.45,11.6,True,limit=486)
     y=506
     for i,step in enumerate(WORKED[n],1):
-        final=render_wrap(p,str(i)+". "+step,49,y,487,7.8,10.7,limit=y+22)
+        final=render_wrap(p,str(i)+". "+step,49,y,487,8.0,10.8,limit=y+22)
         y=max(y+25,final+3)
     assert y<653,(n,"worked model overruns",y)
     sec(p,"We Do - Guided practice",657)
-    final=render_wrap(p,GUIDED[n][0],45,680,495,8.0,11,limit=723)
+    final=render_wrap(p,GUIDED[n][0],45,680,495,8.45,11,limit=723)
     t(p,"BLACK PEN - complete your explanation:",45,max(718,final+5),7.9,True)
     rules(p,746,2,step=18)
 
@@ -306,12 +306,32 @@ def p3(p,n,d):
         y=267+(i-1)*29
         render_wrap(p,str(i)+". "+prompt,45,y,493,8.0,10.5,limit=y+13)
         rules(p,y+14,1,step=16)
-    sec(p,"You Do - Independent exam questions",371)
+    sec(p,"You Do - Independent exam questions",363)
+    # Match approved Lesson 015 typography, but vary ruled writing space by
+    # the actual length and marks of each question. A six-marker needs more
+    # than the two tiny lines from the original 016-020 generator.
+    slots={
+        16:(75,80,111), 17:(75,85,106), 18:(78,83,105),
+        19:(75,91,100), 20:(74,90,102),
+    }[n]
+    y=387
     for i,(raw,_) in enumerate(d["e"]):
-        y=392+i*91
         val=exam_question(raw)
-        final=render_wrap(p,f"Q{i+1}. "+val,45,y,494,7.95,10.7,limit=y+55)
-        rules(p,max(y+52,final+3),2,step=13)
+        slot=slots[i]
+        final=render_wrap(p,f"Q{i+1}. "+val,45,y,494,8.4,11.4,limit=y+slot-38)
+        line_y=max(y+30,final+5)
+        target_lines=4 if ("[6 marks]" in val) else (3 if i==2 else 2)
+        actual_lines=0
+        for k in range(target_lines):
+            yy=line_y+17*k
+            if yy>=y+slot-8:break
+            B.line(p,45,yy,546)
+            actual_lines+=1
+        assert actual_lines >= 2,(n,i,"insufficient writing space")
+        if "[6 marks]" in val:
+            assert actual_lines >= 3,(n,i,"six-mark response space")
+        y+=slot
+    assert y<=663,(n,"questions overlap Exit Ticket")
     sec(p,"Exit Ticket - True or False?",673)
     t(p,"Answer before checking Page 4.",45,695,8.0)
     checks=[(d["x"][0],bool(d["x"][1]))]+EXITS[n]
@@ -330,12 +350,12 @@ def p4(p,n,d):
     for i,(_,answer) in enumerate(d["r"],1):
         y=157+(i-1)*45
         t(p,"Q"+str(i),49,y,7.8,True)
-        render_wrap(p,answer,70,y,215,7.0,9.0,limit=y+36)
+        render_wrap(p,answer,70,y,215,7.5,9.2,limit=y+36)
         tick(p,285,y-8)
     t(p,"Code First - Answers",315,149,9.4,True)
     for i,line in enumerate(CODE_ANS[n],1):
         y=175+(i-1)*46
-        render_wrap(p,str(i)+". "+line,315,y,223,7.45,10.0,limit=y+31)
+        render_wrap(p,str(i)+". "+line,315,y,223,7.75,10.2,limit=y+31)
         tick(p,534,y-8)
     sec(p,"We Do - Check the model",337)
     render_wrap(p,GUIDED[n][1],45,362,488,7.8,10.4,limit=409)
@@ -348,7 +368,7 @@ def p4(p,n,d):
     for i,a in enumerate(ANSWER[n],1):
         y=512+(i-1)*45
         t(p,"Q"+str(i),50,y,7.8,True)
-        render_wrap(p,a,79,y,457,7.7,10.0,limit=y+39)
+        render_wrap(p,a,79,y,457,8.0,10.3,limit=y+39)
         tick(p,535,y-8)
     sec(p,"Try the question again",641)
     t(p,"1. Copy the FULL question you got wrong (or found hardest):",45,661,8.0,True)
