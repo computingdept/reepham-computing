@@ -1,50 +1,13 @@
 /* Central Learning Hub lesson navigation: shared across KS3, J277 and H446.
    Course pages provide lesson numbers, titles, routes and specification colours.
-   Full lesson / Catch up are direct links; Print offers its format choice.
+   Full lesson / Catch up / Print are direct links, without print-format menus.
    The title and number open the full lesson; a one-resource card needs no duplicate footer. */
 (function(){
   'use strict';
-  const selector='.central-lesson[data-menu-open="true"]';
-  let mobileDialog=null;
-  let mobileTrigger=null;
-  function isMobile(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches;}
-  function hideMobile(restoreFocus){
-    if(!mobileDialog||mobileDialog.hidden)return;
-    mobileDialog.hidden=true;
-    document.body.classList.remove('lesson-mobile-open');
-    const previous=mobileTrigger;
-    mobileTrigger=null;
-    if(previous){
-      previous.setAttribute('aria-expanded','false');
-      if(previous.dataset.desktopMenuId)previous.setAttribute('aria-controls',previous.dataset.desktopMenuId);
-      if(restoreFocus&&previous.isConnected)previous.focus({preventScroll:true});
-    }
-  }
-  function closeAll(except){
-    if(mobileTrigger&&(!except||!except.contains(mobileTrigger)))hideMobile(false);
-    document.querySelectorAll(selector).forEach(function(entry){
-      if(entry===except)return;
-      entry.dataset.menuOpen='false';
-      const button=entry.querySelector('.lesson-options-toggle');
-      if(button)button.setAttribute('aria-expanded','false');
-    });
-  }
-  function position(entry){
-    if(entry.dataset.menuOpen!=='true')return;
-    const menu=entry.querySelector('.lesson-scenarios');
-    if(!menu)return;
-    menu.style.left='0px';
-    menu.style.top='100%';
-    menu.style.bottom='auto';
-    const anchor=entry.getBoundingClientRect();
-    const rect=menu.getBoundingClientRect();
-    const x=Math.max(12,Math.min(anchor.left,window.innerWidth-12-rect.width));
-    menu.style.left=Math.round(x-anchor.left)+'px';
-    if(window.innerHeight-anchor.bottom<rect.height+12 && anchor.top>rect.height+12){
-      menu.style.top='auto';
-      menu.style.bottom='100%';
-    }
-  }
+  // Public compatibility: hub renderers call closeAll() before replacing lesson cards.
+  // With direct navigation there are no menus to close.
+  function closeAll(){}
+
   /* Local stroke icons for hub navigation only: no fonts, network or lesson assets. */
   function navIcon(name){
     if(name==='Catch up draft')name='Catch up';
@@ -57,23 +20,6 @@
     const shape=shapes[name];
     return shape?'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+shape+'</svg>':'';
   }
-  function action(label,icon,href){
-    const link=document.createElement('a');
-    link.className='lesson-scenario-action';
-    link.href=href;
-    const symbol=document.createElement('span');
-    symbol.className='scenario-symbol';
-    symbol.setAttribute('aria-hidden','true');
-    const kind=label==='Full lesson'?'Full lesson':label==='Learn independently'?'Learn':label==='Print lesson'?'Print':'';
-    symbol.innerHTML=navIcon(kind);
-    if(!kind)symbol.hidden=true;
-    const name=document.createElement('span');
-    name.className='scenario-copy';
-    name.textContent=label;
-    link.append(symbol,name);
-    return link;
-  }
-
   /* Specification-point identification: blue family for Paper 1,
      warm brown for Paper 2, grey for synoptic and muted green for NEA. */
   function specMarker(code,raw){
@@ -98,20 +44,8 @@
     return {label:canonical+(multiple?' +':''),colour:variants[index],full:source};
   }
 
-  /* Short menu heading from existing lesson metadata, never an extra topic list.
-     Prefer a clear one- or two-word subject over a clipped full objective. */
-  function conciseTopic(title){
-    const full=String(title||'').replace(/\s+/g,' ').trim();
-    if(!full)return 'Lesson';
-    const main=full.split(/\s*[:–—]\s*|\s+-\s+/)[0].trim();
-    const words=main.split(/\s+/).filter(Boolean);
-    if(words.length<=2)return main;
-    if(/^year\s+\d+$/i.test(words.slice(0,2).join(' ')))return 'Lesson';
-    if(/^(and|or|of|to|the|in|on|for|with|&)$/i.test(words[1]))return words[0].replace(/[,;]$/,'');
-    return words.slice(0,2).join(' ').replace(/[,;]$/,'');
-  }
-  /* Three visible, direct lesson actions. A menu is needed only to choose
-     a print format; it is never used to reach Full lesson or Catch up. */
+  /* One-click lesson actions: Full lesson, Catch up, and Print. Any legacy
+     secondary print routes supplied by course hubs are intentionally ignored. */
   function createTile(options){
     const o=options||{};
     const number=String(o.number||'');
@@ -119,7 +53,6 @@
     const teach=typeof o.openHref==='string'&&o.openHref.trim()?o.openHref:null;
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
     const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
-    const printColour=typeof o.printColourHref==='string'&&o.printColourHref.trim()?o.printColourHref:null;
     // Limit copy to the two approved labels, including for older hub data.
     const learnLabel=/(?:^|\s)draft\b/i.test(String(o.learnLabel||''))?'Catch up draft':'Catch up';
     const printLabel=typeof o.printLabel==='string'&&o.printLabel.trim()?o.printLabel:'Print';
@@ -207,149 +140,10 @@
     }
     // Main card already opens the full lesson; never repeat its link below.
     if(catchup)actions.append(makeAction(learnLabel,'Catch up',catchup));
-    if(print){
-      if(!printColour&&!/(?:[?&])version=bw(?:&|$)/.test(print)){
-        actions.append(makeAction(printLabel,'Print',print));
-      }else{
-        const button=makeAction(printLabel,'Print',null);
-        button.classList.add('lesson-options-toggle');
-        button.setAttribute('aria-expanded','false');
-        const menu=document.createElement('div');
-        menu.className='lesson-scenarios';
-        menu.setAttribute('role','group');
-        menu.setAttribute('aria-label','Print formats for lesson '+number);
-        const menuId='hub-print-'+number.replace(/[^a-zA-Z0-9]/g,'');
-        menu.id=menuId;
-        button.setAttribute('aria-controls',menuId);
-        button.dataset.desktopMenuId=menuId;
-        const heading=document.createElement('div');
-        heading.className='lesson-popup-heading';
-        heading.textContent='Print · '+number;
-        menu.append(heading);
-        const variants=document.createElement('div');
-        variants.className='lesson-print-variants';
-        variants.append(action('Black & white','',print));
-        variants.append(action('Colour','',printColour||print.replace(/([?&])version=bw(?=&|$)/,'$1version=colour')));
-        menu.append(variants);
-        function setOpen(open){
-          if(open)closeAll(entry);
-          entry.dataset.menuOpen=String(open);
-          button.setAttribute('aria-expanded',String(open));
-          if(open)requestAnimationFrame(function(){position(entry);});
-        }
-        button.addEventListener('click',function(event){
-          event.stopPropagation();
-          setOpen(entry.dataset.menuOpen!=='true');
-        });
-        entry.addEventListener('pointerleave',function(event){
-          if(event.pointerType==='mouse'&&!isMobile())setOpen(false);
-        });
-        entry.addEventListener('focusout',function(event){
-          if(!isMobile()&&!entry.contains(event.relatedTarget))setOpen(false);
-        });
-        actions.append(button);
-        entry.append(actions,menu);
-        return entry;
-      }
-    }
+    if(print)actions.append(makeAction(printLabel,'Print',print));
     entry.append(actions);
     return entry;
   }
-  document.addEventListener('pointerdown',function(event){
-    // Do not dismiss the mobile sheet on pointerdown: links need the subsequent click.
-    if(mobileDialog&&!mobileDialog.hidden&&mobileDialog.contains(event.target))return;
-    if(!event.target.closest('.central-lesson'))closeAll();
-  });
-  document.addEventListener('keydown',function(event){
-    if(event.key==='Escape'){
-      const current=document.querySelector(selector);
-      if(current){
-        const button=current.querySelector('.lesson-options-toggle');
-        closeAll();
-        if(button)button.focus({preventScroll:true});
-      }
-    }
-  });
-  window.addEventListener('resize',function(){
-    document.querySelectorAll(selector).forEach(position);
-  });
-
-
-  /* The same central actions become a bottom panel on touch/small screens.
-     No second resource map or separate lesson page is needed. */
-  function ensureMobileDialog(){
-    if(mobileDialog)return mobileDialog;
-    const shade=document.createElement('div');
-    shade.className='lesson-mobile-overlay';
-    shade.hidden=true;
-    const panel=document.createElement('section');
-    panel.className='lesson-mobile-panel';
-    panel.id='lesson-mobile-panel';
-    panel.setAttribute('role','dialog');
-    panel.setAttribute('aria-modal','true');
-    panel.setAttribute('aria-label','Choose print format');
-    panel.setAttribute('tabindex','-1');
-    const toolbar=document.createElement('div');
-    toolbar.className='lesson-mobile-toolbar';
-    const label=document.createElement('strong');
-    label.textContent='Print lesson';
-    const close=document.createElement('button');
-    close.type='button';
-    close.className='lesson-mobile-close';
-    close.setAttribute('aria-label','Close lesson options');
-    close.textContent='×';
-    close.addEventListener('click',function(){hideMobile(true);});
-    toolbar.append(label,close);
-    const content=document.createElement('div');
-    content.className='lesson-mobile-options';
-    panel.append(toolbar,content);
-    shade.append(panel);
-    shade.addEventListener('click',function(event){
-      if(event.target===shade)hideMobile(true);
-    });
-    document.body.append(shade);
-    mobileDialog=shade;
-    return shade;
-  }
-  document.addEventListener('click',function(event){
-    const button=event.target.closest('.central-lesson .lesson-direct-actions > .lesson-options-toggle');
-    if(!button||!isMobile())return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const dialog=ensureMobileDialog();
-    if(mobileTrigger===button&&!dialog.hidden){hideMobile(true);return;}
-    closeAll();
-    const entry=button.closest('.central-lesson');
-    const menu=entry&&entry.querySelector('.lesson-scenarios');
-    if(!menu)return;
-    const content=dialog.querySelector('.lesson-mobile-options');
-    content.replaceChildren(...Array.from(menu.children,child=>child.cloneNode(true)));
-    mobileTrigger=button;
-    button.setAttribute('aria-expanded','true');
-    button.setAttribute('aria-controls','lesson-mobile-panel');
-    dialog.hidden=false;
-    document.body.classList.add('lesson-mobile-open');
-    const focusTarget=content.querySelector('a')||dialog.querySelector('.lesson-mobile-close');
-    focusTarget.focus({preventScroll:true});
-  },true);
-  document.addEventListener('keydown',function(event){
-    if(!mobileDialog||mobileDialog.hidden)return;
-    if(event.key==='Escape'){
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      hideMobile(true);
-    }else if(event.key==='Tab'){
-      const focusables=Array.from(mobileDialog.querySelectorAll('button,a[href]'));
-      if(!focusables.length)return;
-      const first=focusables[0],last=focusables[focusables.length-1];
-      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
-    }
-  },true);
-  window.addEventListener('resize',function(){
-    if(mobileTrigger&&!isMobile())hideMobile(false);
-  });
-
   /* Resource key is injected once per hub and rebuilt when year changes.
      A Full-lesson-only course does not advertise unavailable Catch up or Print. */
   function syncUsageKey(terms){
@@ -382,7 +176,7 @@
       [teach,'▣','Full lesson','Full teacher-led lesson, also available to revisit'],
       [learn,'◇','Catch up','Short interactive lesson · self-marking'],
       [learnDraft,'◇','Catch up draft','Independent booklet · draft, not yet approved'],
-      [print,'▤','Print','Paper worksheet · B&W or colour']
+      [print,'▤','Print','Open the printable lesson resource']
     ];
     options.forEach(function(option){
       if(!option[0])return;
