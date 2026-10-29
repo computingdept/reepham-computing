@@ -53,8 +53,21 @@ jobs:
                     '1. D has 6 vs 2 cores', '2. E has 3 vs 2 GHz',
                     '3. 8 MB holds more frequently used data'])
                   print('PASS 019 Page 4: 3 guided marking models')
+                if n==20 and pn==1:
+                  body=page.get_text()
+                  for needed in ['WASHING-MACHINE CONTROLLER','Water-level sensor',
+                                 'Thermostat','Pedestrian crossing','Fitness tracker',
+                                 'low power','limited interface']:
+                    assert needed.lower() in body.lower(),needed
+                  print('PASS 020 Page 2: full I Do and three We Do scenarios')
+                if n==20 and pn==3:
+                  body=page.get_text()
+                  for needed in ['We Do - Three model answers','1. Thermostat:',
+                                 '2. Crossing:','3. Tracker:']:
+                    assert needed in body,needed
+                  print('PASS 020 Page 4: 3 guided marking models')
                 print(f'GEOMETRY {n:03d}/{pn+1}: visible blocks {len(left)}, lines after 710pt={near}, overflowing={[(str(r),s[:50]) for r,s in over]}')
-                if n in [2,19] or (n in [20] and pn in [0,2]):
+                if n in [2,20] or (n in [19] and pn in [0,2]):
                   pix=page.get_pixmap(matrix=fitz.Matrix(.78,.78),alpha=False)
                   im=Image.open(io.BytesIO(pix.tobytes('png'))).convert('RGB')
                   if im.width>465: im.thumbnail((465,660))
