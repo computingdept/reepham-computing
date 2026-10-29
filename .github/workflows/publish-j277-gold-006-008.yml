@@ -50,9 +50,9 @@ jobs:
           source=hub.read_text(encoding='utf-8')
           old="        5:'offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf'"
           new=old+""",
-        6:'offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf',
-        7:'offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf',
-        8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'"""
+          6:'offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf',
+          7:'offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf',
+          8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'"""
           if "J277_Lesson_008_Gold_Standard_4_Page.pdf" not in source:
               assert source.count(old)==1, 'Hub mapping differs - refusing unsafe update'
               source=source.replace(old,new)
