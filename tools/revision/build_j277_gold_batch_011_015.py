@@ -276,7 +276,7 @@ def validate(path,n,d):
                 if block["type"]!=0:continue
                 box=fitz.Rect(block["bbox"])
                 assert box.x0 >= 0 and box.x1<=595.8 and box.y0>=0 and box.y1<=842.8,(n,i,"overflow",box)
-        norm = lambda value: re.sub(r"\\s+", " ", value).strip()
+        norm = lambda value: re.sub(r"\s+", " ", value).strip()
         assert norm(d["t"]) in norm(sections[0]),(n,"title")
         for q,_ in d["r"]: assert norm(q) in norm(sections[0]),(n,"Do Now missing",q)
         for token in ["I Do","We Do","New learning"]:assert token in sections[1],(n,token)
