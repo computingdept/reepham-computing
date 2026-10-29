@@ -260,7 +260,11 @@ def build(n):
   fills=[drawing.get("fill") for page in r for drawing in page.get_drawings()]
   def has_colour(target):
    return any(fill and len(fill)==3 and all(abs(a-b)<.035 for a,b in zip(fill,target)) for fill in fills)
-  assert has_colour(BLUE) and has_colour(GREEN) and has_colour(ORANGE), "Missing phase/routine colours"
+  present={"blue":has_colour(BLUE),"green":has_colour(GREEN),"orange":has_colour(ORANGE)}
+  if not all(present.values()):
+   print("PDF DRAWING COLOURS",n,present,
+         sorted({tuple(round(v,2) for v in fill) for fill in fills if fill})[:80],flush=True)
+  assert all(present.values()), "Missing phase/routine colours: "+str(present)
   whole="\n".join(p.get_text() for p in r)
   assert all(word in whole for word in ("Do Now","Code First","You Do","Try the question again"))
  print("PASS",n,out.stat().st_size)
