@@ -161,6 +161,10 @@
 
 /* All lesson tile and Options styling is now owned by assets/hub-monochrome.css. */
 
+/* On desktop the year switch is reparented into the shared course header.
+   Only Lessons differs by year. Guides and Practice apply to both year groups. */
+body.course-hub.course-inline-nav.desktop-nav-merged:not([data-j277-tab="lessons"]) .course-topline > .year-switch{display:none}
+
 /* J277 revision guide dashboard: compact desktop, large accessible mobile links.
    Scoped to #booklet to preserve online lessons, H446 and revision practice. */
 #booklet .j277-guide-grid{
@@ -492,7 +496,7 @@ const catchupResourceRoutes = {
   29:'lessons/j277/lesson-029/learn.html',
   30:'lessons/j277/lesson-030/learn.html'
 };
-function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
+function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];document.body.dataset.j277Tab=t.dataset.tab;tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
 
