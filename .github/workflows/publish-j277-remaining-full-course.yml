@@ -54,18 +54,28 @@ jobs:
               passing.append((int(key),str(path)))
           print('VALIDATED=',len(passing),'FLAGGED=',info['summary']['needs_review'],
                 'FAILED=',info['summary']['failed'])
+          import re
           hub=Path('j277-hub.html')
           src=hub.read_text(encoding='utf8')
-          anchor="  20:'offline/booklets/j277/J277_Lesson_020_Gold_Standard_4_Page.pdf'"
-          assert src.count(anchor)==1, 'Unexpected approved Print map anchor'
-          addition="\n"+",\n".join("  "+str(n)+":'"+path+"'" for n,path in passing)
-          if addition:
-            # Keep all existing approved routes and avoid editing classroom or revision pages.
-            src=src.replace(anchor,anchor+","+addition,1)
+          # Rebuild this local route table idempotently. Keep approved 001-020
+          # unchanged; list only new editions that passed automated checks.
+          begin=src.index('const approvedPrintPdfRoutes={')
+          finish=src.index('};',begin)+2
+          table=src[begin:finish]
+          oldroutes={}
+          for match in re.finditer(r"(?m)^\s*(\d+):'([^']+)'",table):
+            oldroutes[int(match.group(1))]=match.group(2)
+          assert all(i in oldroutes for i in range(1,21)),'Baseline 001-020 missing'
+          verified={n:path for n,path in passing}
+          routes={**{n:oldroutes[n] for n in range(1,21)},**verified}
+          lines=[f"  {n}:'{routes[n]}'" for n in sorted(routes)]
+          src=src[:begin]+"const approvedPrintPdfRoutes={\n"+",\n".join(lines)+"\n};"+src[finish:]
           old='const approvedPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;'
           new='const approvedPdf=approvedPrintPdfRoutes[x]||null;'
-          assert src.count(old)==1,'Expected the previously year-10-only Print route'
-          src=src.replace(old,new,1)
+          if old in src:
+            assert src.count(old)==1
+            src=src.replace(old,new,1)
+          assert src.count(new)==1
           assert 'printHref:approvedPdf,' in src
           assert 'Print draft' not in src
           hub.write_text(src,encoding='utf8')
