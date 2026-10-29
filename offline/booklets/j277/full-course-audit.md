@@ -159,3 +159,13 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 162 | Paper 2: Unseen Code and Debugging | 11 | automated-checks-passed |  |
 | 163 | Final Targeted Revision | 11 | automated-checks-passed |  |
 | 164 | Final GCSE Computer Science Consolidation | 11 | automated-checks-passed |  |
+
+## Assessment papers (separate from four-page companions)
+
+These are full assessment papers, not ordinary four-page independent lesson booklets. Review the question paper and its marking guidance before administering an assessment.
+
+- **Lesson 035 — Autumn 2 Assessment:** [Open the assessment question paper](https://rhsccs.org/lessons/j277/lesson-035/assessment.html)
+- **Lesson 050 — Spring 1 Review and Assessment:** [Open the assessment question paper](https://rhsccs.org/lessons/j277/lesson-050/assessment.html)
+- **Lesson 094 — Full-Course Synoptic Assessment:** [Open the assessment question paper](https://rhsccs.org/lessons/j277/lesson-094/assessment.html)
+- **Lesson 120 — Autumn Assessment (AP1):** [Open the assessment question paper](https://rhsccs.org/lessons/j277/lesson-120/assessment.html)
+- **Lesson 143 — Spring Assessment (AP2):** [Open the assessment question paper](https://rhsccs.org/lessons/j277/lesson-143/assessment.html)
