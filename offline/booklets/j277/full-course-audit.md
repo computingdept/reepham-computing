@@ -6,10 +6,10 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 
 - **planned:** 144
 - **generated:** 144
-- **automated checks passed:** 131
-- **needs review:** 13
+- **automated checks passed:** 120
+- **needs review:** 24
 - **failed:** 0
-- **issues by type:** {'pedagogical-review': 89, 'source-mismatch': 5, 'assessment': 5, 'content-overflow': 9}
+- **issues by type:** {'pedagogical-review': 80, 'content-overflow': 8, 'source-mismatch': 3, 'assessment': 5}
 
 ## Lessons
 
@@ -20,38 +20,38 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 023 | Network Hardware | 10 | automated-checks-passed | 6-mark writing space |
 | 024 | The Internet, DNS and Cloud Storage | 10 | automated-checks-passed | 6-mark writing space |
 | 025 | Network Topologies | 10 | automated-checks-passed | 6-mark writing space |
-| 026 | Wired and Wireless Networks | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
+| 026 | Wired and Wireless Networks | 10 | needs-review | concept 5, 6-mark writing space |
 | 027 | IP and MAC Addresses | 10 | automated-checks-passed | 6-mark writing space |
 | 028 | Common Network Protocols | 10 | automated-checks-passed | 6-mark writing space |
-| 029 | Standards and Protocols | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
+| 029 | Standards and Protocols | 10 | needs-review | concept 5, 6-mark writing space |
 | 030 | Malware and Social Engineering | 10 | automated-checks-passed | 6-mark writing space |
 | 031 | Network Attacks | 10 | automated-checks-passed | 6-mark writing space |
 | 032 | Firewalls and Network Security | 10 | automated-checks-passed | 6-mark writing space |
 | 033 | Passwords, Encryption and Penetration Testing | 10 | automated-checks-passed | 6-mark writing space |
-| 034 | Network Security Scenarios | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
+| 034 | Network Security Scenarios | 10 | needs-review | concept 5, 6-mark writing space |
 | 035 | Autumn 2 Assessment | 10 | needs-review | 6-mark writing space, you-do-count, separate assessment paper required |
 | 036 | Assessment Feedback and Reteaching | 10 | automated-checks-passed | 6-mark writing space |
-| 037 | Operating Systems: Interfaces and Memory | 10 | needs-review | concept 4, 6-mark writing space |
+| 037 | Operating Systems: Interfaces and Memory | 10 | automated-checks-passed | 6-mark writing space |
 | 038 | Operating Systems: Files and Devices | 10 | automated-checks-passed | 6-mark writing space |
 | 039 | Utility Software | 10 | automated-checks-passed | 6-mark writing space |
-| 040 | Ethical and Social Impacts | 10 | needs-review | concept 2, 6-mark writing space |
+| 040 | Ethical and Social Impacts | 10 | automated-checks-passed | 6-mark writing space |
 | 041 | Data Protection Act 2018 | 10 | automated-checks-passed | 6-mark writing space |
 | 042 | Computer Misuse Act 1990 | 10 | automated-checks-passed | 6-mark writing space |
-| 043 | Copyright and Software Licences | 10 | needs-review | concept 3, 6-mark writing space |
+| 043 | Copyright and Software Licences | 10 | automated-checks-passed | 6-mark writing space |
 | 044 | Evaluating Technology Impacts | 10 | automated-checks-passed | 6-mark writing space |
 | 045 | Abstraction and Decomposition | 10 | automated-checks-passed | 6-mark writing space |
 | 046 | Algorithmic Thinking | 10 | automated-checks-passed | 6-mark writing space |
 | 047 | Inputs, Processes and Outputs | 10 | automated-checks-passed | 6-mark writing space |
-| 048 | Flowcharts and Algorithm Design | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
+| 048 | Flowcharts and Algorithm Design | 10 | needs-review | concept 5, 6-mark writing space |
 | 049 | Pseudocode and Trace Tables | 10 | automated-checks-passed | 6-mark writing space |
 | 050 | Spring 1 Review and Assessment | 10 | needs-review | you-do-count, separate assessment paper required |
 | 051 | Sequence, Input and Output | 10 | automated-checks-passed | 6-mark writing space |
-| 052 | Variables, Assignment and Data Types | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
-| 053 | Arithmetic, Comparison and Casting | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
-| 054 | Boolean Conditions in Code | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
+| 052 | Variables, Assignment and Data Types | 10 | needs-review | concept 5, 6-mark writing space |
+| 053 | Arithmetic, Comparison and Casting | 10 | automated-checks-passed | 6-mark writing space |
+| 054 | Boolean Conditions in Code | 10 | needs-review | concept 5, 6-mark writing space |
 | 055 | Selection: IF Statements | 10 | automated-checks-passed | 6-mark writing space |
 | 056 | Selection: ELSE and Nested Conditions | 10 | automated-checks-passed | 6-mark writing space |
-| 057 | Iteration: FOR Loops | 10 | needs-review | 6-mark writing space, code-output |
+| 057 | Iteration: FOR Loops | 10 | automated-checks-passed | 6-mark writing space |
 | 058 | Iteration: WHILE Loops | 10 | automated-checks-passed | 6-mark writing space |
 | 059 | Tracing Programming Constructs | 10 | automated-checks-passed | 6-mark writing space |
 | 060 | Combining Programming Constructs | 10 | automated-checks-passed | 6-mark writing space |
@@ -64,8 +64,8 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 067 | Two-Dimensional Arrays | 10 | automated-checks-passed | 6-mark writing space |
 | 068 | Records and Structured Data | 10 | automated-checks-passed | 6-mark writing space |
 | 069 | Functions and Return Values | 10 | automated-checks-passed | 6-mark writing space |
-| 070 | Procedures and Variable Scope | 10 | automated-checks-passed | extra New Learning steps, 6-mark writing space |
-| 071 | Subprograms and Arrays | 10 | needs-review | extra New Learning steps, code-first, 6-mark writing space, Code First |
+| 070 | Procedures and Variable Scope | 10 | needs-review | concept 5, 6-mark writing space |
+| 071 | Subprograms and Arrays | 10 | needs-review | concept 5, 6-mark writing space |
 | 072 | File Handling | 10 | automated-checks-passed | 6-mark writing space |
 | 073 | SQL: SELECT, FROM and WHERE | 10 | automated-checks-passed | 6-mark writing space |
 | 074 | Random Number Generation | 10 | automated-checks-passed | 6-mark writing space |
@@ -78,12 +78,12 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 081 | Syntax and Logic Errors | 10 | automated-checks-passed | 6-mark writing space |
 | 082 | Linear Search | 10 | automated-checks-passed | 6-mark writing space |
 | 083 | Binary Search | 10 | automated-checks-passed | 6-mark writing space |
-| 084 | Bubble Sort | 10 | needs-review | code-first, 6-mark writing space, code-output, Code First |
+| 084 | Bubble Sort | 10 | automated-checks-passed | 6-mark writing space |
 | 085 | Insertion Sort | 10 | automated-checks-passed | 6-mark writing space |
 | 086 | Merge Sort | 10 | automated-checks-passed | 6-mark writing space |
 | 087 | Searching and Sorting Exam Practice | 10 | automated-checks-passed | 6-mark writing space |
 | 088 | Logic Gates: AND, OR and NOT | 10 | automated-checks-passed | 6-mark writing space |
-| 089 | Truth Tables | 10 | needs-review | 6-mark writing space, code-output |
+| 089 | Truth Tables | 10 | automated-checks-passed | 6-mark writing space |
 | 090 | Combining Boolean Logic | 10 | automated-checks-passed | 6-mark writing space |
 | 091 | High-Level and Low-Level Languages | 10 | automated-checks-passed |  |
 | 092 | Compilers and Interpreters | 10 | automated-checks-passed |  |
@@ -94,25 +94,25 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 097 | Virtual Memory | 11 | automated-checks-passed |  |
 | 098 | Secondary Storage | 11 | automated-checks-passed |  |
 | 099 | Storage Units and Conversions | 11 | automated-checks-passed |  |
-| 100 | Binary and Denary | 11 | automated-checks-passed | source-required SVGs |
-| 101 | Binary Addition and Shifts | 11 | automated-checks-passed | source-required SVGs |
-| 102 | Hexadecimal | 11 | automated-checks-passed | source-required SVGs |
+| 100 | Binary and Denary | 11 | needs-review | source-required SVGs |
+| 101 | Binary Addition and Shifts | 11 | needs-review | source-required SVGs |
+| 102 | Hexadecimal | 11 | needs-review | source-required SVGs |
 | 103 | Characters and Images | 11 | automated-checks-passed |  |
 | 104 | Sound and Compression | 11 | automated-checks-passed |  |
 | 105 | Abstraction and Decomposition | 11 | automated-checks-passed |  |
 | 106 | Algorithm Design and Flowcharts | 11 | automated-checks-passed |  |
 | 107 | Trace Tables | 11 | automated-checks-passed |  |
-| 108 | Linear Search | 11 | automated-checks-passed | source-required SVGs |
-| 109 | Binary Search | 11 | automated-checks-passed | source-required SVGs |
-| 110 | Bubble Sort | 11 | automated-checks-passed | source-required SVGs |
-| 111 | Insertion Sort | 11 | automated-checks-passed | source-required SVGs |
-| 112 | Merge Sort | 11 | automated-checks-passed | source-required SVGs |
+| 108 | Linear Search | 11 | needs-review | source-required SVGs |
+| 109 | Binary Search | 11 | needs-review | source-required SVGs |
+| 110 | Bubble Sort | 11 | needs-review | source-required SVGs |
+| 111 | Insertion Sort | 11 | needs-review | source-required SVGs |
+| 112 | Merge Sort | 11 | needs-review | source-required SVGs |
 | 113 | Comparing Algorithms and Consolidation | 11 | automated-checks-passed |  |
 | 114 | String Manipulation | 11 | automated-checks-passed |  |
-| 115 | Two-Dimensional Arrays and Records | 11 | automated-checks-passed | source-required SVGs |
+| 115 | Two-Dimensional Arrays and Records | 11 | needs-review | source-required SVGs |
 | 116 | Parameters, Return Values and Scope | 11 | automated-checks-passed |  |
-| 117 | File Handling | 11 | needs-review | code-output |
-| 118 | SQL Queries | 11 | automated-checks-passed | source-required SVGs |
+| 117 | File Handling | 11 | automated-checks-passed |  |
+| 118 | SQL Queries | 11 | needs-review | source-required SVGs |
 | 119 | Random Numbers and Combined Constructs | 11 | automated-checks-passed |  |
 | 120 | Autumn Assessment (AP1) | 11 | needs-review | separate assessment paper required |
 | 121 | Assessment Feedback and Corrections | 11 | automated-checks-passed |  |
@@ -124,7 +124,7 @@ Gold Standard describes the **four-page Lesson 002 layout**, not teacher approva
 | 127 | CPU Performance and Embedded Systems | 11 | automated-checks-passed |  |
 | 128 | Programming: Arrays and Iteration Practice | 11 | automated-checks-passed |  |
 | 129 | Programming: Subprograms and Parameters | 11 | automated-checks-passed |  |
-| 130 | Programming: Files, SQL and Strings | 11 | automated-checks-passed | source-required SVGs |
+| 130 | Programming: Files, SQL and Strings | 11 | needs-review | source-required SVGs |
 | 131 | Programming: Unseen Problems and Debugging | 11 | automated-checks-passed |  |
 | 132 | Mixed Paper 1 and Paper 2 Retrieval | 11 | automated-checks-passed |  |
 | 133 | LANs, WANs and Network Models | 11 | automated-checks-passed |  |
