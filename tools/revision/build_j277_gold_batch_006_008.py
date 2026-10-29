@@ -51,6 +51,8 @@ D={
  guided="Match each task: a running app, start-up firmware and frequently used CPU data.")
 }
 
+# Shared classroom palette; writing areas are white for economical printing.
+WHITE = B.WHITE
 BLUE = (.20, .44, .72)
 BLUE_LIGHT = (.91, .95, .99)
 GREEN = (.18, .52, .34)
