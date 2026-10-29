@@ -5,6 +5,7 @@ Teaching sequence and task answers derive from lessons/j277/autumn1-009-013.json
 Visual explanations follow the published Paper 1 V4 guide (secondary storage,
 the FDE cycle, four registers and the kitchen memory aid).
 Reuse the approved Lesson 002 PDF header, five-stage footer, pen rules and layout.
+Classroom behaviour/response badges must not be duplicated in the page body.
 DO NOT modify classroom lessons, Catch up or revision guides.
 """
 from pathlib import Path
@@ -223,10 +224,9 @@ def build(n):
   for term in ["Do Now","Code First","You Do","Try the question again",
                d["title"],"Review & Improve"]:
    assert term in joined,(n,term)
-  colours=[c for p in test for item in p.get_drawings()
-           for c in (item.get("fill"),item.get("color")) if c and len(c)==3]
-  for label,wanted in [("phase",BLUE),("routine",GREEN),("response",ORANGE)]:
-   assert any(all(abs(a-b)<.035 for a,b in zip(actual,wanted)) for actual in colours),(n,label)
+  body_words = {w[4].upper() for page in test for w in page.get_text("words")
+                if 54 <= w[1] < 780}
+  assert not body_words.intersection({"SILENT","LISTEN","MWBS","THUMBS"}), (n, body_words)
  print("PASS gold PDF",n,outfile.stat().st_size,"bytes")
 if __name__=="__main__":
  for n in (9,10):build(n)

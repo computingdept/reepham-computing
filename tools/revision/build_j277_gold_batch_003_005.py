@@ -57,35 +57,13 @@ EDGE = (.76, .81, .85)
 def t(p,s,x,y,size=8.7,bold=False,maxw=None): return B.text(p,s,x,y,size,bold,maxw)
 
 def sec(p,s,y):
-    # Phase is identified by a blue marker, never a solid green heading.
-    # Answer/feedback sections use green to identify correction, not teaching.
+    """Print headings are simple; behaviour and response boxes are not repeated in the page body."""
     feedback = ("Answers" in s or "Self-mark" in s
                 or s.startswith("Try the question again"))
     marker = GREEN if feedback else BLUE
     B.box(p,45,y-9,3,15,marker)
     t(p,s,54,y+1,10.4,True)
-    # Classroom routine / response badge on the same line as the phase.
-    if s.startswith("Do Now") and not feedback:
-        routine,kind="SILENT", "green"
-    elif s.startswith("I Do"):
-        routine,kind="LISTEN", "green"
-    elif s.startswith("We Do"):
-        routine,kind="MWBs", "orange"
-    elif s.startswith("Code First"):
-        routine,kind="MWBs", "orange"
-    elif s.startswith("You Do") and not feedback:
-        routine,kind="SILENT", "green"
-    elif s.startswith("Exit Ticket"):
-        routine,kind="THUMBS", "orange"
-    elif feedback:
-        routine,kind="GREEN PEN", "green"
-    else:
-        return
-    accent = GREEN if kind=="green" else ORANGE
-    tint = GREEN_LIGHT if kind=="green" else ORANGE_LIGHT
-    x,w=462,84
-    B.box(p,x,y-10,w,18,tint,accent,.75)
-    p.insert_text((x+8,y+2.5),routine,fontsize=7.8,fontname="hebo",color=accent)
+
 
 def rules(p,y,n=2,step=17): B.rules(p,y,n,step)
 def tick(p,x,y): B.tick(p,x,y)
@@ -256,14 +234,10 @@ def build(n):
    assert "LESSON %03d"%n in txt and "BLACK PEN" in txt and "GREEN PEN" in txt
    assert "Review & Improve" in txt
    assert round(p.rect.width)==595 and round(p.rect.height)==842
-  # Verify all three teaching/routine/response colours render on every booklet.
-  drawings=[drawing for page in r for drawing in page.get_drawings()]
-  # Phase bars are solid fills; response badges use orange borders, so test both.
-  colours=[c for drawing in drawings for c in (drawing.get("fill"),drawing.get("color")) if c]
-  def has_colour(target):
-   return any(len(colour)==3 and all(abs(a-b)<.035 for a,b in zip(colour,target)) for colour in colours)
-  present={"blue":has_colour(BLUE),"green":has_colour(GREEN),"orange":has_colour(ORANGE)}
-  assert all(present.values()), "Missing phase/routine colours: "+str(present)
+  # Routine/response behaviour boxes are only for classroom delivery, not these print pages.
+  body_words = {w[4].upper() for page in r for w in page.get_text("words")
+                if 54 <= w[1] < 780}
+  assert not body_words.intersection({"SILENT","LISTEN","MWBS","THUMBS"}), (n, body_words)
   whole="\n".join(p.get_text() for p in r)
   assert all(word in whole for word in ("Do Now","Code First","You Do","Try the question again"))
  print("PASS",n,out.stat().st_size)
