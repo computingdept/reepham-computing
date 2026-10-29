@@ -393,10 +393,13 @@ def p2(p,n,d):
         final=render_wrap(p,str(i)+". "+step,49,y,487,8.0,10.8,limit=y+22)
         y=max(y+25,final+3)
     assert y<653,(n,"worked model overruns",y)
-    sec(p,"We Do - Guided practice",657)
-    final=render_wrap(p,GUIDED[n][0],45,680,495,8.45,11,limit=723)
-    t(p,"BLACK PEN - complete your explanation:",45,max(718,final+5),7.9,True)
-    rules(p,746,2,step=18)
+    # 016-018: print all three actual classroom We Do questions with
+    # independent writing space; never replace them with one generic task.
+    sec(p,"We Do - Three guided questions",624)
+    for i,item in enumerate(d["w"][:3]):
+        y=646+i*46
+        render_wrap(p,str(i+1)+". "+item[0],45,y,493,8.0,10.4,limit=y+13)
+        rules(p,y+19,2,step=13)
 
 def exam_question(q):
     # Source attributions are metadata; keep the full question and marks.
@@ -410,7 +413,7 @@ def p3(p,n,d):
     if n>=17 and d.get("print_code_master"):
         render_wrap(p,"YOUR TASK: "+d["k"]["q"],55,150,480,8.0,10.4,True,limit=170)
     else:
-        t(p,"Read the OCR Exam Reference Language code before testing it.",55,150,7.8)
+        render_wrap(p,"YOUR TASK: "+d["k"]["q"],55,150,480,8.0,10.4,True,limit=170)
     code=d["k"]["code"].splitlines()
     assert len(code)<=9,(n,"Code First more than 9 lines")
     for i,line in enumerate(code):
@@ -420,7 +423,7 @@ def p3(p,n,d):
         t(p,"TEST by tracing. IMPROVE by checking the full model on Page 4.",45,284,7.9)
         rules(p,309,2,step=20)
     else:
-        for i,prompt in enumerate(CODE_TASKS[n],1):
+        for i,prompt in enumerate(d["k"]["p"],1):
             y=267+(i-1)*29
             render_wrap(p,str(i)+". "+prompt,45,y,493,8.0,10.5,limit=y+13)
             rules(p,y+14,1,step=16)
@@ -503,8 +506,10 @@ def p4(p,n,d):
         for i,answer in enumerate(guided_answers):
             render_wrap(p,answer,48,356+i*22,491,7.55,10.2,limit=356+i*22)
     else:
-        sec(p,"We Do - Check the model",337)
-        render_wrap(p,GUIDED[n][1],45,362,488,7.8,10.4,limit=409)
+        sec(p,"We Do - Three model answers",337)
+        for i,item in enumerate(d["w"][:3]):
+            y=356+i*21
+            render_wrap(p,str(i+1)+". "+item[1],45,y,491,7.6,10.1,limit=y+14)
     sec(p,"Exit Ticket - Check",416)
     outcome=["TRUE" if z[1] else "FALSE" for z in
              [(d["x"][0],bool(d["x"][1]))]+EXITS[n]]
