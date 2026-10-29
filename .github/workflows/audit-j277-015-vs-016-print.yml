@@ -1,0 +1,48 @@
+name: Inspect J277 approved PDF print visual parity
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-j277-015-vs-016-print.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pymupdf==1.26.4 Pillow==11.3.0
+      - name: Log a compact visual comparison and print-region geometry for review
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz,base64,io
+          from PIL import Image
+          for n in [15,16,17,18,19,20]:
+            filename=f'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'
+            with fitz.open(filename) as doc:
+              for pn,page in enumerate(doc):
+                rects=[]
+                for b in page.get_text('dict')['blocks']:
+                  if b['type']!=0: continue
+                  rs=fitz.Rect(b['bbox'])
+                  words=' '.join(span['text'] for line in b.get('lines',[]) for span in line.get('spans',[]))
+                  rects.append((rs,words))
+                left=[(r,s) for r,s in rects if r.y0>53 and r.y0<782]
+                near=[(round(r.y0,1),s[:90]) for r,s in left if r.y0>710]
+                over=[(r,s) for r,s in rects if r.y1>785 or r.x1>565]
+                print(f'GEOMETRY {n:03d}/{pn+1}: visible blocks {len(left)}, lines after 710pt={near}, overflowing={[(str(r),s[:50]) for r,s in over]}')
+                if n in [15,16] or (n in [19,20] and pn in [0,2]):
+                  pix=page.get_pixmap(matrix=fitz.Matrix(.78,.78),alpha=False)
+                  im=Image.open(io.BytesIO(pix.tobytes('png'))).convert('RGB')
+                  if im.width>465: im.thumbnail((465,660))
+                  bio=io.BytesIO()
+                  im.save(bio,format='JPEG',quality=67,optimize=True)
+                  data=base64.b64encode(bio.getvalue()).decode()
+                  print(f'PREVIEW_JPEG:{n:03d}:{pn+1}:{data}')
+          PY
