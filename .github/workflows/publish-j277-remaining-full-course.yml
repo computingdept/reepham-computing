@@ -1,0 +1,111 @@
+name: Generate and audit remaining J277 four-page print lessons
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_remaining_gold.py'
+      - '.github/workflows/publish-j277-remaining-full-course.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-j277-remaining-full-course
+  cancel-in-progress: false
+jobs:
+  build-audit-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned print engine
+        run: python -m pip install pymupdf==1.26.4
+      - name: Generate all remaining J277 four-page draft booklets and exception report
+        run: python tools/revision/build_j277_remaining_gold.py --start 21 --end 164
+      - name: Publish only auto-validated Print links and write overview
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          folder=Path('offline/booklets/j277')
+          info=json.loads((folder/'full-course-audit.json').read_text(encoding='utf8'))
+          entries=info['editions']
+          assert len(entries)==144
+          assert info['summary']['planned']==144
+          passing=[]
+          for key,item in entries.items():
+            if item['state']=='failed':
+              continue
+            path=Path(item['pdf'])
+            assert path.is_file(),(key,'PDF missing')
+            with fitz.open(path) as doc:
+              assert len(doc)==4,(key,'not four pages')
+              for page in doc:
+                text=page.get_text()
+                assert 'BLACK PEN' in text and 'GREEN PEN' in text
+                assert 'Review & Improve' in text
+            if item['state']=='automated-checks-passed':
+              passing.append((int(key),str(path)))
+          print('VALIDATED=',len(passing),'FLAGGED=',info['summary']['needs_review'],
+                'FAILED=',info['summary']['failed'])
+          hub=Path('j277-hub.html')
+          src=hub.read_text(encoding='utf8')
+          anchor="  20:'offline/booklets/j277/J277_Lesson_020_Gold_Standard_4_Page.pdf'"
+          assert src.count(anchor)==1, 'Unexpected approved Print map anchor'
+          addition="\n"+",\n".join("  "+str(n)+":'"+path+"'" for n,path in passing)
+          if addition:
+            # Keep all existing approved routes and avoid editing classroom or revision pages.
+            src=src.replace(anchor,anchor+","+addition,1)
+          old='const approvedPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;'
+          new='const approvedPdf=approvedPrintPdfRoutes[x]||null;'
+          assert src.count(old)==1,'Expected the previously year-10-only Print route'
+          src=src.replace(old,new,1)
+          assert 'printHref:approvedPdf,' in src
+          assert 'Print draft' not in src
+          hub.write_text(src,encoding='utf8')
+          review=folder/'full-course-audit.md'
+          with review.open('w',encoding='utf8') as o:
+            o.write('# J277 remaining print booklets: automated build audit\n\n')
+            o.write('Gold Standard describes the **four-page Lesson 002 layout**, not teacher approval. ')
+            o.write('A listed PDF still needs a short professional review before teaching.\n\n')
+            o.write('## Summary\n\n')
+            for k,v in info['summary'].items():
+              o.write('- **'+k.replace('_',' ')+':** '+str(v)+'\n')
+            o.write('\n## Lessons\n\n')
+            o.write('| Lesson | Topic | Year | State | Flags |\n|---|---|---|---|---|\n')
+            for n in range(21,165):
+              x=entries[str(n)]
+              flags=', '.join(e.get('stage',e.get('type','')) for e in x.get('issues',[])[:4])
+              o.write(f"| {n:03d} | {str(x.get('title','')).replace('|','/')} | {x.get('year','-')} | {x['state']} | {flags.replace('|','/')} |\n")
+          print('PASS 4-page PDF validation and approved-only Print linking')
+          PY
+      - name: Commit generated booklets, manifest and safe hub links
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- j277-hub.html offline/booklets/j277/full-course-audit.json offline/booklets/j277/full-course-audit.md
+          git add -- 'offline/booklets/j277/J277_Lesson_*.pdf'
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Produce J277 021-164 printable lesson collection with exception audit'
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD:main; then
+                echo 'Published bulk J277 printable collection'
+                break
+              fi
+              if [ "$attempt" -eq 4 ]; then
+                echo 'Concurrent update prevented safe publication' >&2
+                exit 1
+              fi
+              git fetch origin main
+              git rebase origin/main
+            done
+          fi
