@@ -93,17 +93,18 @@ jobs:
               x=entries[str(n)]
               flags=', '.join(e.get('stage',e.get('type','')) for e in x.get('issues',[])[:4])
               o.write(f"| {n:03d} | {str(x.get('title','')).replace('|','/')} | {x.get('year','-')} | {x['state']} | {flags.replace('|','/')} |\n")
-          o.write('\n## Assessment papers (separate from four-page companions)\n\n')
-          o.write('These are full assessment papers, not ordinary four-page independent lesson booklets. ')
-          o.write('Review the question paper and its marking guidance before administering an assessment.\n\n')
-          for n in [35,50,94,120,143]:
-            entry=entries[str(n)]
-            papers=[v for v in entry.get('issues',[]) if v.get('type')=='assessment']
-            assert len(papers)==1 and papers[0].get('href'),(n,'missing assessment link')
-            link=papers[0]['href']
-            assert Path(link).exists(),(n,'assessment link points to missing file')
-            o.write(f'- **Lesson {n:03d} — {entry["title"]}:** ')
-            o.write(f'[Open the assessment question paper](https://rhsccs.org/{link})\n')
+          with review.open('a',encoding='utf8') as o:
+            o.write('\n## Assessment papers (separate from four-page companions)\n\n')
+            o.write('These are full assessment papers, not ordinary four-page independent lesson booklets. ')
+            o.write('Review the question paper and its marking guidance before administering an assessment.\n\n')
+            for n in [35,50,94,120,143]:
+              entry=entries[str(n)]
+              papers=[v for v in entry.get('issues',[]) if v.get('type')=='assessment']
+              assert len(papers)==1 and papers[0].get('href'),(n,'missing assessment link')
+              link=papers[0]['href']
+              assert Path(link).exists(),(n,'assessment link points to missing file')
+              o.write(f'- **Lesson {n:03d} — {entry["title"]}:** ')
+              o.write(f'[Open the assessment question paper](https://rhsccs.org/{link})\n')
           print('PASS 4-page PDF validation and approved-only Print linking')
           PY
       - name: Commit generated booklets, manifest and safe hub links
