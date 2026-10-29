@@ -392,20 +392,20 @@ def fourth(p,n,d,issues):
         for i,a in enumerate(answers):
             textblock(p,str(i+1)+". "+a,48,362+i*h,488,h-3,7.5,6.7,False,issues,"we-do-answer-"+str(i+1))
             P.tick(p,534,360+i*h)
-    sec(p,"Exit Ticket - Check",471)
+    sec(p,"Exit Ticket - Check",466)
     truth=["TRUE" if z[1] else "FALSE" for z in d["printExits"]]
-    P.t(p,"  ".join(str(i+1)+". "+v for i,v in enumerate(truth)),48,491,8.0,True)
-    sec(p,"You Do - Self-mark",510)
+    P.t(p,"  ".join(str(i+1)+". "+v for i,v in enumerate(truth)),48,485,8.0,True)
+    sec(p,"You Do - Self-mark",498)
     for i,item in enumerate(d["e"][:3]):
-        y=531+i*49
+        y=518+i*44
         P.t(p,"Q"+str(i+2),48,y,8.0,True)
-        textblock(p,item[1],78,y,456,44,7.6,6.7,False,issues,"exam-answer-"+str(i+2))
+        textblock(p,item[1],78,y,456,41,7.6,6.7,False,issues,"exam-answer-"+str(i+2))
         P.tick(p,535,y-8)
-    sec(p,"Try the question again",685)
-    P.t(p,"1. Copy the FULL question you found most difficult:",45,704,7.9,True)
-    rule(p,722,1)
-    P.t(p,"2. In GREEN PEN, write a complete new answer:",45,741,7.9,True)
-    rule(p,759,1)
+    sec(p,"Try the question again",657)
+    P.t(p,"1. Copy the FULL question you found most difficult:",45,674,7.9,True)
+    rule(p,688,2,step=14)
+    P.t(p,"2. In GREEN PEN, write a complete new answer:",45,720,7.9,True)
+    rule(p,737,4,step=14)
 
 def validate(file,n,d,issues):
     with fitz.open(file) as pdf:
