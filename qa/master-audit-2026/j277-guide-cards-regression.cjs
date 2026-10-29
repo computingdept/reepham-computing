@@ -25,12 +25,13 @@ const base="http://127.0.0.1:8765";
             return Object.fromEntries(props.map(k=>[k,css.getPropertyValue(k).trim()]));
           }
           function assertPresent(el,name){if(!el)throw Error("Missing element: "+name)}
-          const grid=panel.querySelector(".cards.h446-guides");
+          const grid=panel.querySelector(course==="j277"?".j277-guide-grid":".cards.h446-guides");
           assertPresent(grid,"two-column guide grid");
           return {
             panelVisible:getComputedStyle(panel).display!=="none",
             header:panel.querySelector(".summary h2")?.textContent.trim(),
             count:cards.length,
+            unitLinks:[...panel.querySelectorAll(".j277-unit-link")].map(a=>({href:a.getAttribute("href"),blank:a.target==="_blank",label:a.textContent.trim()})),
             gridCols:getComputedStyle(grid).gridTemplateColumns.split(" ").length,
             titles:cards.map(el=>el.querySelector("h3")?.textContent.trim()),
             accent:cards.map(el=>getComputedStyle(el).borderTopColor),
@@ -67,8 +68,15 @@ const base="http://127.0.0.1:8765";
         assert.equal(result.gridCols,viewport.width<=700?1:2,course+" column count");
         assert.deepEqual(result.titles,["Computer Systems","Algorithms and Programming"]);
         assert.ok(result.cards.every(c=>c.icon),course+" missing guide icon");
-        const expectedActions=course==="j277"?[2,3]:[2,2];
-        assert.ok(result.cards.every((c,i)=>c.links.length===expectedActions[i]&&c.links[0].blank&&c.links.slice(1).every(link=>link.download)),course+" wrong Read/Download/Print actions");
+        assert.ok(result.cards.every(c=>c.links.length===2&&c.links[0].blank),course+" wrong guide action count");
+        if(course==="j277"){
+          assert.ok(result.cards.every(c=>c.links[1].blank&&!c.links[1].download), "J277 Print must open the print-ready PDF in a new tab");
+          assert.equal(result.unitLinks.length,11,"J277 must show 11 whole-row unit links");
+          assert.equal(new Set(result.unitLinks.map(x=>x.href)).size,11,"Unit PDF URLs must be unique");
+          assert.ok(result.unitLinks.every(x=>x.blank&&x.href.endsWith(".pdf?v=V4-2026-10-28")||x.blank&&x.href.endsWith(".pdf?v=V3-2026-10-28")),"Unit PDFs must open in a new tab");
+        }else{
+          assert.ok(result.cards.every(c=>c.links[1].download),"H446 existing Download behaviour changed unexpectedly");
+        }
         assert.equal(result.screenWidth<=result.viewportWidth,true,course+" horizontal screen overflow");
         for(const card of result.cards){
           assert.ok(card.rect.x>=0 && card.rect.x+card.rect.w<=viewport.width+1,course+" card clipped");
@@ -76,7 +84,7 @@ const base="http://127.0.0.1:8765";
         if(course==="j277"){
           const expectedFiles=[
             ["J277_Paper_1_Revision_Guide_AP1_Aligned.pdf","J277_Paper_1_Revision_Guide_Print_V4.pdf"],
-            ["J277_Paper_2_Revision_Guide_V3.pdf","J277_Paper_2_Revision_Guide_V3.pdf","J277_Paper_2_Revision_Guide_Print_V3.pdf"]
+            ["J277_Paper_2_Revision_Guide_V3.pdf","J277_Paper_2_Revision_Guide_Print_V3.pdf"]
           ];
           for(const [i,expected] of expectedFiles.entries()){
             const links=result.cards[i].links;
@@ -86,6 +94,12 @@ const base="http://127.0.0.1:8765";
               assert.equal(response.status(),200,"PDF not available on site: "+filename);
               assert.match(response.headers()["content-type"],/application\/pdf/);
             }
+          }
+          for(const link of result.unitLinks){
+            const relative=link.href.replace(/^revision\//,"/revision/");
+            const response=await context.request.head(base+relative.split("?")[0]);
+            assert.equal(response.status(),200,"Unit PDF not available: "+relative);
+            assert.match(response.headers()["content-type"],/application\/pdf/);
           }
         }
         await page.screenshot({path:"/tmp/j277-guide-layout/"+course+"-"+viewport.name+".png",fullPage:false});
