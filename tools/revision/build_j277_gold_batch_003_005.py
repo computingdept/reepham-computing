@@ -257,13 +257,12 @@ def build(n):
    assert "Review & Improve" in txt
    assert round(p.rect.width)==595 and round(p.rect.height)==842
   # Verify all three teaching/routine/response colours render on every booklet.
-  fills=[drawing.get("fill") for page in r for drawing in page.get_drawings()]
+  drawings=[drawing for page in r for drawing in page.get_drawings()]
+  # Phase bars are solid fills; response badges use orange borders, so test both.
+  colours=[c for drawing in drawings for c in (drawing.get("fill"),drawing.get("color")) if c]
   def has_colour(target):
-   return any(fill and len(fill)==3 and all(abs(a-b)<.035 for a,b in zip(fill,target)) for fill in fills)
+   return any(len(colour)==3 and all(abs(a-b)<.035 for a,b in zip(colour,target)) for colour in colours)
   present={"blue":has_colour(BLUE),"green":has_colour(GREEN),"orange":has_colour(ORANGE)}
-  if not all(present.values()):
-   print("PDF DRAWING COLOURS",n,present,
-         sorted({tuple(round(v,2) for v in fill) for fill in fills if fill})[:80],flush=True)
   assert all(present.values()), "Missing phase/routine colours: "+str(present)
   whole="\n".join(p.get_text() for p in r)
   assert all(word in whole for word in ("Do Now","Code First","You Do","Try the question again"))
