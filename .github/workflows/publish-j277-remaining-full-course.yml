@@ -127,7 +127,18 @@ jobs:
                 echo 'Concurrent update prevented safe publication' >&2
                 exit 1
               fi
+              # PDF assets are binary: rebasing colliding generated PDFs
+              # cannot merge safely. Rebase the staged generated OUTPUTS on
+              # the current main commit, without touching source lessons.
               git fetch origin main
-              git rebase origin/main
+              git reset --mixed origin/main
+              git add -- j277-hub.html offline/booklets/j277/full-course-audit.json offline/booklets/j277/full-course-audit.md
+              git add -- 'offline/booklets/j277/J277_Lesson_*.pdf'
+              git diff --cached --check
+              if git diff --cached --quiet; then
+                echo 'Current main already contains these generated files'
+                exit 0
+              fi
+              git commit -m 'Produce J277 021-164 printable lesson collection with exception audit'
             done
           fi
