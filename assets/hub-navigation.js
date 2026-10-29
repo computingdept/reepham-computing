@@ -118,7 +118,8 @@
     const teach=typeof o.openHref==='string'&&o.openHref.trim()?o.openHref:null;
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
     const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
-    const learnLabel=typeof o.learnLabel==='string'&&o.learnLabel.trim()?o.learnLabel:'Learn';
+    const printColour=typeof o.printColourHref==='string'&&o.printColourHref.trim()?o.printColourHref:null;
+    const learnLabel=typeof o.learnLabel==='string'&&o.learnLabel.trim()?o.learnLabel:'Catch up';
     const printLabel=typeof o.printLabel==='string'&&o.printLabel.trim()?o.printLabel:'Print';
     const primaryOnly=Boolean(teach&&!catchup&&!print);
     const entry=document.createElement('article');
@@ -172,7 +173,7 @@
     // H446/KS3 full-lesson-only cards use the entire top area as the action.
     // Do not show an extra Full lesson footer linking to the same destination.
     if(primaryOnly)return entry;
-    const count=Number(Boolean(teach))+Number(Boolean(catchup))+Number(Boolean(print));
+    const count=Number(Boolean(catchup))+Number(Boolean(print));
     if(!count){
       const status=document.createElement('div');
       status.className='lesson-action-status';
@@ -201,10 +202,10 @@
       el.append(graphic,copy);
       return el;
     }
-    if(teach)actions.append(makeAction('Full lesson','Full lesson',teach));
+    // Main card already opens the full lesson; never repeat its link below.
     if(catchup)actions.append(makeAction(learnLabel,'Learn',catchup));
     if(print){
-      if(!/(?:[?&])version=bw(?:&|$)/.test(print)){
+      if(!printColour&&!/(?:[?&])version=bw(?:&|$)/.test(print)){
         actions.append(makeAction(printLabel,'Print',print));
       }else{
         const button=makeAction(printLabel,'Print',null);
@@ -225,7 +226,7 @@
         const variants=document.createElement('div');
         variants.className='lesson-print-variants';
         variants.append(action('Black & white','',print));
-        variants.append(action('Colour','',print.replace(/([?&])version=bw(?=&|$)/,'$1version=colour')));
+        variants.append(action('Colour','',printColour||print.replace(/([?&])version=bw(?=&|$)/,'$1version=colour')));
         menu.append(variants);
         function setOpen(open){
           if(open)closeAll(entry);
