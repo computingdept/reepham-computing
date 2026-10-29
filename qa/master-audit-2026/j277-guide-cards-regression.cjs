@@ -15,7 +15,7 @@ const base="http://127.0.0.1:8765";
         const page=await context.newPage();
         await page.goto(base+"/"+course+"-hub.html#booklet",{waitUntil:"networkidle"});
         await page.locator('[data-tab="booklet"]').click();
-        const result=await page.evaluate(()=>{
+        const result=await page.evaluate((course)=>{
           const panel=document.querySelector("#booklet");
           const cards=[...panel.querySelectorAll(".h446-guide-card")];
           function style(selector,props){
@@ -62,7 +62,7 @@ const base="http://127.0.0.1:8765";
             screenWidth:document.documentElement.scrollWidth,
             viewportWidth:innerWidth
           };
-        });
+        },course);
         assert.equal(result.panelVisible,true,course+" revision guide panel not visible");
         assert.equal(result.count,2,course+" expected two cards");
         assert.equal(result.gridCols,viewport.width<=700?1:2,course+" column count");
