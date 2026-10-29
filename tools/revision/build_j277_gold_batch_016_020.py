@@ -204,7 +204,7 @@ def p1(p,n,d):
     for i,(question,_) in enumerate(d["r"]):
         y=164+i*61
         final=render_wrap(p,f"{i+1}. {question}",45,y,494,8.5,11.0,limit=y+44)
-        rules(p,max(y+28,final+1),1,step=15)
+        rules(p,max(y+28,final+1),2,step=15)
     sec(p,"Today's objectives",418)
     G.card(p,45,439,501,54,PALE)
     render_wrap(p," ".join(d["o"][:2]),54,457,477,8.6,11.0,limit=484)
@@ -296,7 +296,8 @@ def exam_question(q):
 def p3(p,n,d):
     t(p,"Think and write",45,76,15.2,True)
     sec(p,"Code First - Predict > Write > Test > Improve",103)
-    B.box(p,45,134,501,111,PALE,EDGE,.75)
+    # Lesson 002 uses a white, high-contrast working surface rather than a large colour fill.
+    B.box(p,45,134,501,111,WHITE,EDGE,.75)
     t(p,"Read the OCR Exam Reference Language code before testing it.",55,150,7.8)
     code=d["k"]["code"].splitlines()
     assert len(code)<=9,(n,"Code First more than 9 lines")
@@ -307,7 +308,7 @@ def p3(p,n,d):
         render_wrap(p,str(i)+". "+prompt,45,y,493,8.0,10.5,limit=y+13)
         rules(p,y+14,1,step=16)
     sec(p,"You Do - Independent exam questions",363)
-    # Match approved Lesson 015 typography, but vary ruled writing space by
+    # Follow the approved Lesson 002 typography; vary ruled space by
     # the actual length and marks of each question. A six-marker needs more
     # than the two tiny lines from the original 016-020 generator.
     slots={
@@ -374,7 +375,7 @@ def p4(p,n,d):
     t(p,"1. Copy the FULL question you got wrong (or found hardest):",45,661,8.0,True)
     rules(p,679,2,step=18)
     t(p,"2. In GREEN PEN, write a NEW answer. Include working if needed:",45,719,7.95,True)
-    rules(p,737,2,step=20)
+    rules(p,737,3,step=19)
 
 def validate(path,n,d):
     with fitz.open(path) as pdf:
