@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'tools/revision/build_j277_gold_batch_003_005.zlib.b64'
+      - 'tools/revision/build_j277_gold_batch_003_005.py'
   workflow_dispatch:
 permissions:
   contents: write
@@ -20,19 +20,6 @@ jobs:
           python-version: '3.11'
       - name: Install fixed PDF layout engine
         run: python -m pip install pymupdf==1.26.4
-      - name: Restore and validate reproducible plain-text builder
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import base64, zlib, hashlib
-          packed=Path('tools/revision/build_j277_gold_batch_003_005.zlib.b64')
-          assert packed.is_file(), 'Missing builder package'
-          code=zlib.decompress(base64.b64decode(''.join(packed.read_text().split())))
-          assert hashlib.sha256(code).hexdigest()=='54ec34df6664048ac6e952f83481f74e56a7c990c59601be274077f65e41b2b6'
-          Path('tools/revision/build_j277_gold_batch_003_005.py').write_bytes(code)
-          print('PASS: reproducible script checksum verified')
-          PY
       - name: Generate exactly three four-page PDFs
         run: python tools/revision/build_j277_gold_batch_003_005.py
       - name: Validate PDF structure and activate direct Print links
