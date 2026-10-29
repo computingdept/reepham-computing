@@ -67,18 +67,25 @@ const base="http://127.0.0.1:8765";
         assert.equal(result.gridCols,viewport.width<=700?1:2,course+" column count");
         assert.deepEqual(result.titles,["Computer Systems","Algorithms and Programming"]);
         assert.ok(result.cards.every(c=>c.icon),course+" missing guide icon");
-        assert.ok(result.cards.every(c=>c.links.length===2&&c.links[0].blank&&c.links[1].download),course+" wrong read/download actions");
+        const expectedActions=course==="j277"?[2,3]:[2,2];
+        assert.ok(result.cards.every((c,i)=>c.links.length===expectedActions[i]&&c.links[0].blank&&c.links.slice(1).every(link=>link.download)),course+" wrong Read/Download/Print actions");
         assert.equal(result.screenWidth<=result.viewportWidth,true,course+" horizontal screen overflow");
         for(const card of result.cards){
           assert.ok(card.rect.x>=0 && card.rect.x+card.rect.w<=viewport.width+1,course+" card clipped");
         }
         if(course==="j277"){
-          for(const [i,filename] of ["J277_Paper_1_Revision_Guide_AP1_Aligned.pdf","J277_Paper_2_Revision_Guide_AP1_Aligned.pdf"].entries()){
+          const expectedFiles=[
+            ["J277_Paper_1_Revision_Guide_AP1_Aligned.pdf","J277_Paper_1_Revision_Guide_Print_V4.pdf"],
+            ["J277_Paper_2_Revision_Guide_V3.pdf","J277_Paper_2_Revision_Guide_V3.pdf","J277_Paper_2_Revision_Guide_Print_V3.pdf"]
+          ];
+          for(const [i,expected] of expectedFiles.entries()){
             const links=result.cards[i].links;
-            assert.ok(links.every(link=>link.href.includes(filename)),course+" PDF href mismatch");
-            const response=await context.request.head(base+"/revision/j277/guides/"+filename);
-            assert.equal(response.status(),200,"PDF not available on site");
-            assert.match(response.headers()["content-type"],/application\/pdf/);
+            for(const [j,filename] of expected.entries()){
+              assert.ok(links[j].href.includes(filename),course+" PDF href mismatch for action "+j);
+              const response=await context.request.head(base+"/revision/j277/guides/"+filename);
+              assert.equal(response.status(),200,"PDF not available on site: "+filename);
+              assert.match(response.headers()["content-type"],/application\/pdf/);
+            }
           }
         }
         await page.screenshot({path:"/tmp/j277-guide-layout/"+course+"-"+viewport.name+".png",fullPage:false});
