@@ -155,21 +155,27 @@ def second(p,n,d,issues):
     sec(p,"New learning - Key ideas",100)
     concepts=d["c"][:5]
     rowstep=27 if len(concepts)==5 else 33
+    # Long fifth explanations come from the classroom's central teaching bank.
+    # Expand that ONE concept cell; do not abbreviate or reduce the font.
+    extended_fifth=(len(concepts)==5 and len(str(concepts[4][1]))>190)
     for i,(title,description) in enumerate(concepts):
         y=119+i*rowstep
-        G.card(p,45,y-12,501,rowstep-2,WHITE)
-        textblock(p,title,52,y,140,rowstep-5,8.0,7.05,True,issues,"concept title "+str(i+1))
+        height=47 if extended_fifth and i==4 else rowstep-2
+        G.card(p,45,y-12,501,height,WHITE)
+        textblock(p,title,52,y,140,31 if extended_fifth and i==4 else rowstep-5,
+                  8.0,7.05,True,issues,"concept title "+str(i+1))
         # Keep the original classroom explanation: never substitute a manually shortened summary.
-        textblock(p,description,198,y,335,rowstep-2,7.65,6.85,False,issues,"concept "+str(i+1))
+        textblock(p,description,198,y,335,45 if extended_fifth and i==4 else rowstep-2,
+                  7.65,6.85,False,issues,"concept "+str(i+1))
     if len(d["c"])>5:issues.append({"type":"content-overflow","stage":"more than five New Learning steps","count":len(d["c"])-5})
-    sec(p,"I Do - One worked example",260)
+    sec(p,"I Do - One worked example",273 if extended_fifth else 260)
     question=d["m"].get("q") or d["m"].get("title") or d["t"]
-    textblock(p,question,45,282,498,37,8.15,7.05,True,issues,"i-do-question")
+    textblock(p,question,45,295 if extended_fifth else 282,498,37,8.15,7.05,True,issues,"i-do-question")
     steps=d["m"].get("st",[])
     if len(steps)>5:issues.append({"type":"content-overflow","stage":"more than 5 I Do steps","count":len(steps)})
     steps=steps[:5]
     if steps:
-        y=334
+        y=345 if extended_fifth else 334
         budget=(448-y)/len(steps)
         for i,step in enumerate(steps):
             textblock(p,str(i+1)+". "+step,49,y+i*budget,493,budget-4,
