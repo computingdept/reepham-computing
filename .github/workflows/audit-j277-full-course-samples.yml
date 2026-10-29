@@ -1,0 +1,57 @@
+name: J277 full-course representative PDF visual audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-j277-full-course-samples.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pymupdf==1.26.4 Pillow==11.3.0
+      - name: Render sample pages and inspect body text collisions
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64,io,json
+          from pathlib import Path
+          import fitz
+          from PIL import Image
+          audit=json.loads(Path('offline/booklets/j277/full-course-audit.json').read_text(encoding='utf8'))
+          for n in [2,21,29,45,57,84,96,105,128,151,164]:
+            path=Path(f'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf')
+            with fitz.open(path) as pdf:
+              print(f'LESSON {n:03d} state={audit["editions"].get(str(n),{}).get("state","baseline")} pages={len(pdf)}')
+              assert len(pdf)==4
+              for pi,page in enumerate(pdf):
+                spans=[]
+                for b in page.get_text('dict')['blocks']:
+                  if b['type']!=0:continue
+                  for ln in b.get('lines',[]):
+                    for s in ln.get('spans',[]):
+                      if not s['text'].strip():continue
+                      rect=fitz.Rect(s['bbox'])
+                      if rect.y0>=55 and rect.y1<785:spans.append((rect,s['text']))
+                crosses=[]
+                for i,(a,ta) in enumerate(spans):
+                  for b,tb in spans[i+1:]:
+                    inter=a & b
+                    if not inter.is_empty and inter.width>2 and inter.height>2:
+                      crosses.append((ta[:40],tb[:40],round(inter.width,1),round(inter.height,1)))
+                print(f'COLLISIONS {n:03d}/{pi+1} count={len(crosses)} examples={crosses[:4]}')
+                if n in [2,21,57,96,105,151,164] and pi in ([1,2,3] if n!=2 else [1]):
+                  pix=page.get_pixmap(matrix=fitz.Matrix(.83,.83),alpha=False)
+                  im=Image.open(io.BytesIO(pix.tobytes('png'))).convert('RGB')
+                  im.thumbnail((480,690))
+                  buf=io.BytesIO()
+                  im.save(buf,format='JPEG',quality=66,optimize=True)
+                  print(f'PREVIEW_JPEG:{n:03d}:{pi+1}:'+base64.b64encode(buf.getvalue()).decode('ascii'))
+          PY
