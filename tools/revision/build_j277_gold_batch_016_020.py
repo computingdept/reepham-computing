@@ -185,6 +185,21 @@ def topic(n):
         assert ix["skills"][skill]["paper"]==paper
         assert ix["skills"][skill]["spec"] in d["s"] or n==16
         if n>=19:assert n in ix["skills"][skill]["lessons"]
+    # The classroom renderer replaces legacy JSON retrieval and Code First
+    # with central banks. Match its final on-screen content in print.
+    # Lesson 016 was approved separately; leave its teaching content intact.
+    if n>=17:
+        bank=json.loads((ROOT/"lessons/j277/donow-bank-20261020.json").read_text(encoding="utf8"))
+        qs=bank["lessons"][f"{n:03d}"]["questions"]
+        assert len(qs)==4 and len(qs[1]["options"])==4
+        d["r"]=[(q["question"],q["answer"]) for q in qs]
+        d["print_retrieval"]=qs
+        code_bank=json.loads((ROOT/"lessons/j277/code-first-master-20261021.json").read_text(encoding="utf8"))
+        cm=code_bank["lessons"].get(f"{n:03d}")
+        if cm:
+            d["print_code_master"]=cm
+            d["k"]={**d["k"],"q":cm["task"],"code":cm["starter"],
+                     "a":"MODEL "+cm["language"]+"\n"+cm["model"]+"\nEXPECTED RESULT: "+cm["expected"]}
     return d,note
 
 def header(p,n,d,note):
@@ -192,7 +207,8 @@ def header(p,n,d,note):
     p.add_redact_annot(fitz.Rect(40,13,468,33),fill=WHITE)
     p.apply_redactions(images=0,graphics=0,text=0)
     t(p,"RHS COMPUTING / OCR J277 / "+d["s"],45,26,7.7,True)
-    t(p,note,407,43,7.2)
+    # Lesson 002 master has GREEN PEN instructions through y=45.
+    # Do not add a guide reference in that space.
 
 def p1(p,n,d):
     render_wrap(p,d["t"],45,76,501,15.1,17,True,92)
