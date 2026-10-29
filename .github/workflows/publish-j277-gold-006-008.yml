@@ -1,0 +1,76 @@
+name: Publish J277 gold print batch Lessons 006-008
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_gold_batch_006_008.py'
+      - '.github/workflows/publish-j277-gold-006-008.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned PDF renderer
+        run: python -m pip install pymupdf==1.26.4
+      - name: Generate approved four-page colour-coded print PDFs
+        run: python tools/revision/build_j277_gold_batch_006_008.py
+      - name: Check booklet content, structure, and direct Print navigation
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz
+          from pathlib import Path
+          root=Path('offline/booklets/j277')
+          titles={
+            6:'Sound, Sampling and File Sizes',
+            7:'Compression and Storage Calculations',
+            8:'Primary Storage: RAM, ROM and Cache'
+          }
+          for n,title in titles.items():
+              pdf=root/f'J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'
+              assert pdf.is_file() and pdf.stat().st_size>30000, n
+              with fitz.open(pdf) as doc:
+                  assert len(doc)==4, (n,len(doc))
+                  for page in doc:
+                      assert round(page.rect.width)==595 and round(page.rect.height)==842
+                  text='\n'.join(p.get_text() for p in doc)
+                  for term in (f'LESSON {n:03d}',title,'BLACK PEN','GREEN PEN',
+                               'Do Now','Code First','You Do','Try the question again'):
+                      assert term in text,(n,term)
+          hub=Path('j277-hub.html')
+          source=hub.read_text(encoding='utf-8')
+          old="        5:'offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf'"
+          new=old+""",
+        6:'offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf',
+        7:'offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf',
+        8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'"""
+          if "J277_Lesson_008_Gold_Standard_4_Page.pdf" not in source:
+              assert source.count(old)==1, 'Hub mapping differs - refusing unsafe update'
+              source=source.replace(old,new)
+              assert source.count("printHref:pilotPrintPdf||independent||")==1
+              hub.write_text(source,encoding='utf-8')
+          print('PASS: J277 006-008 PDFs and one-click Print links ready')
+          PY
+      - name: Commit generated PDFs and only their J277 hub links
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf
+          git add -- j277-hub.html
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish approved four-page J277 print booklets 006-008 with direct hub links'
+            git push origin HEAD:main
+          fi
