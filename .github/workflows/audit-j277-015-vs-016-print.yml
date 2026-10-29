@@ -36,6 +36,23 @@ jobs:
                 left=[(r,s) for r,s in rects if r.y0>53 and r.y0<782]
                 near=[(round(r.y0,1),s[:90]) for r,s in left if r.y0>710]
                 over=[(r,s) for r,s in rects if r.y1>785 or r.x1>565]
+                # Latest Lesson 019: ensure three distinct guided prompts and
+                # all corresponding model-answer marks are actually rendered.
+                if n==19 and pn==1:
+                  body=page.get_text()
+                  assert all(v in body for v in [
+                    'CPU C: 3.6 GHz', 'CPU D: 3.0 GHz',
+                    'CPU E: 3 GHz', 'CPU F: 2 GHz',
+                    'Cache increases from 2 MB to 8 MB',
+                    'CORES [1]', 'CACHE [1]'])
+                  print('PASS 019 Page 2: complete I Do and 3 guided questions')
+                if n==19 and pn==3:
+                  body=page.get_text()
+                  assert all(v in body for v in [
+                    'We Do - Three model answers',
+                    '1. D has 6 vs 2 cores', '2. E has 3 vs 2 GHz',
+                    '3. 8 MB holds more frequently used data'])
+                  print('PASS 019 Page 4: 3 guided marking models')
                 print(f'GEOMETRY {n:03d}/{pn+1}: visible blocks {len(left)}, lines after 710pt={near}, overflowing={[(str(r),s[:50]) for r,s in over]}')
                 if n in [2,19] or (n in [20] and pn in [0,2]):
                   pix=page.get_pixmap(matrix=fitz.Matrix(.78,.78),alpha=False)
