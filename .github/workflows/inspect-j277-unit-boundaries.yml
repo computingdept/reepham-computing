@@ -26,5 +26,6 @@ jobs:
           git add review/j277-unit-navigation/guide-outline.json
           if ! git diff --cached --quiet; then
             git commit -m "Audit J277 unit PDF section boundaries [skip ci]"
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
