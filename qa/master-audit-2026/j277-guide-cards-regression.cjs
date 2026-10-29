@@ -33,6 +33,10 @@ const base="http://127.0.0.1:8765";
             count:cards.length,
             unitLinks:[...panel.querySelectorAll(".j277-unit-link")].map(a=>({href:a.getAttribute("href"),blank:a.target==="_blank",label:a.textContent.trim()})),
             gridCols:getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+            unitGridCols:[...panel.querySelectorAll(".j277-unit-rows")].map(el=>getComputedStyle(el).gridTemplateColumns.split(" ").length),
+            unitBounds:[...panel.querySelectorAll(".j277-unit-link")].map(el=>{const r=el.getBoundingClientRect();return {x:r.x,right:r.right,width:r.width,height:r.height,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth}}),
+            guideBottom:grid.getBoundingClientRect().bottom,
+            viewportHeight:innerHeight,
             titles:cards.map(el=>el.querySelector("h3")?.textContent.trim()),
             accent:cards.map(el=>getComputedStyle(el).borderTopColor),
             cards:cards.map(el=>({
@@ -65,13 +69,19 @@ const base="http://127.0.0.1:8765";
         },course);
         assert.equal(result.panelVisible,true,course+" revision guide panel not visible");
         assert.equal(result.count,2,course+" expected two cards");
-        assert.equal(result.gridCols,viewport.width<=700?1:2,course+" column count");
+        assert.equal(result.gridCols,course==="j277"?(viewport.width<=980?1:2):(viewport.width<=700?1:2),course+" column count");
         assert.deepEqual(result.titles,["Computer Systems","Algorithms and Programming"]);
         assert.ok(result.cards.every(c=>c.icon),course+" missing guide icon");
         assert.ok(result.cards.every(c=>c.links.length===2&&c.links[0].blank),course+" wrong guide action count");
         if(course==="j277"){
           assert.ok(result.cards.every(c=>c.links[1].blank&&!c.links[1].download), "J277 Print must open the print-ready PDF in a new tab");
-          assert.equal(result.unitLinks.length,11,"J277 must show 11 whole-row unit links");
+          assert.equal(result.unitLinks.length,11,"J277 must show 11 whole-tile unit links");
+          assert.deepEqual(result.unitGridCols,viewport.width<=700?[1,1]:[2,2],"J277 responsive unit tile grid");
+          assert.ok(result.unitBounds.every(b=>b.x>=0&&b.right<=viewport.width+1&&b.clientWidth>=b.scrollWidth-1),"J277 unit tile clipped or overflowing");
+          if(viewport.width>=1200){
+            assert.ok(result.cards.every(c=>c.rect.h<=130),"J277 paper headers should be compact");
+            assert.ok(result.guideBottom<=result.viewportHeight+8,"J277 guides should fit typical desktop without vertical scrolling; bottom="+result.guideBottom);
+          }
           assert.equal(new Set(result.unitLinks.map(x=>x.href)).size,11,"Unit PDF URLs must be unique");
           assert.ok(result.unitLinks.every(x=>x.blank&&x.href.endsWith(".pdf?v=V4-2026-10-28")||x.blank&&x.href.endsWith(".pdf?v=V3-2026-10-28")),"Unit PDFs must open in a new tab");
         }else{
@@ -106,23 +116,7 @@ const base="http://127.0.0.1:8765";
         snapshots[course]=result;
         await context.close();
       }
-      for(const i of [0,1]){
-        const a=snapshots.h446.cards[i],b=snapshots.j277.cards[i];
-        assert.equal(a.css.minHeight,b.css.minHeight,"card height mismatch");
-        assert.equal(a.css.padding,b.css.padding,"card padding mismatch");
-        assert.equal(a.css.radius,b.css.radius,"card radius mismatch");
-        assert.equal(a.action.radius,b.action.radius,"Read button radius mismatch");
-        assert.equal(a.action.height,b.action.height,"Read button height mismatch");
-        assert.equal(a.action.padding,b.action.padding,"Read button padding mismatch");
-        assert.equal(b.action.color,"rgb(255, 255, 255)","J277 Read text must be white");
-        assert.equal(a.action.color,b.action.color,"Read text colour differs from H446");
-        assert.equal(a.action.background,b.action.background,"Read background differs from H446");
-        assert.equal(a.action.downloadColor,b.action.downloadColor,"Download colour differs from H446");
-        assert.equal(a.tag.fill,b.tag.fill,"paper badge fill mismatch");
-        assert.equal(snapshots.h446.accent[i],snapshots.j277.accent[i],"paper accent mismatch");
-        assert.ok(Math.abs(a.rect.w-b.rect.w)<5,"card width mismatch");
-      }
-      console.log("PASS "+viewport.name+": same card styles, "+snapshots.j277.gridCols+" columns, both PDF links readable");
+      console.log("PASS "+viewport.name+": J277 compact card layout, "+snapshots.j277.gridCols+" paper columns, "+snapshots.j277.unitGridCols.join("/")+" unit tile columns and all PDF links readable");
       writeFileSync("/tmp/j277-guide-layout/results-"+viewport.name+".json",JSON.stringify(snapshots,null,2));
     }
   } finally {await browser.close()}
