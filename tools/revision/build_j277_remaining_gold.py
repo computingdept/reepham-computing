@@ -197,7 +197,135 @@ def second(p,n,d,issues):
             textblock(p,str(i+1)+". "+q,45,y,495,space-32,8.05,7.0,False,issues,"we-do-"+str(i+1))
             rule(p,y+space-27,2 if space>=78 else 1,step=14)
 
+
+# The eleven Year 11 exception lessons have REQUIRED question-data visuals.
+# Draw these from each original requiredVisuals specification, never a generic
+# decorative diagram. Data-only, NO worked answers. The source SVG is embedded
+# as vector PDF artwork, so it remains sharp when printed at A4.
+from html import escape as xml_escape
+
+def required_visual(d):
+    return next((v for v in (d.get("requiredVisuals") or [])
+                 if isinstance(v,dict) and v.get("required")),None)
+
+def source_svg(n,d):
+    visual=required_visual(d)
+    if not visual:return None
+    kind=str(visual.get("y11") or visual.get("year11") or "").lower()
+    vals=[str(x) for x in visual.get("values",[]) if x is not None]
+    if kind in ("table","sql","filter"):
+        # The interactive worked and guided questions share the same dataset.
+        # In particular, do not substitute the 130 Code First example's Eli/Jo/Sam.
+        vals=["ID","Name","Mark","101","Ada","72","102","Ben","43","103","Mia","81"]
+    allowed={"binary","addition","hex","linear","binarysearch","bubble",
+             "insertion","merge","table","sql","filter"}
+    if kind not in allowed:raise ValueError(f"required vector type unsupported: {n}: {kind}")
+    blue="#285d79";ink="#152e3b";soft="#edf4f7";edge="#90a9b8"
+    parts=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 88" width="560" height="88">']
+    parts.append(f'<rect x="0.7" y="0.7" width="558.6" height="86.6" rx="4" fill="white" stroke="{edge}" stroke-width="1.4"/>')
+    def txt(x,y,value,size=13,weight=400,anchor="start"):
+        parts.append(f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-family="Arial,sans-serif" font-size="{size}" font-weight="{weight}" fill="{ink}">{xml_escape(str(value))}</text>')
+    def box(x,y,w,h,label,size=13):
+        parts.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{soft}" stroke="{blue}" stroke-width="1.2"/>')
+        txt(x+w/2,y+h*.65,label,size,700,"middle")
+    if kind=="binary":
+        txt(12,17,"UNSIGNED BINARY - write the contribution of each 1",10,700)
+        digits="".join(vals)[:8]
+        assert re.fullmatch(r"[01]{8}",digits),(n,vals)
+        for i,(digit,power) in enumerate(zip(digits,[128,64,32,16,8,4,2,1])):
+            x=12+i*57;box(x,25,56,26,digit,15);txt(x+28,67,str(power),11,400,"middle")
+        txt(481,40,"bits",11);txt(481,58,"place values",9)
+    elif kind=="addition":
+        assert len(vals)>=2 and all(re.fullmatch("[01]{8}",v) for v in vals[:2]),(n,vals)
+        txt(12,18,"BINARY ADDITION - align bits, include carries",11,700)
+        txt(15,36,"carry:",10)
+        txt(15,56,"+",13,700)
+        for row,bits in enumerate(vals[:2]):
+            for i,digit in enumerate(bits):
+                x=87+i*49;box(x,23+row*28,47,25,digit,14)
+        txt(492,42,"result:",11);parts.append(f'<path d="M85 79 H475" stroke="{blue}" stroke-width="1.5"/>')
+    elif kind=="hex":
+        digits=vals[0] if vals else ""
+        assert re.fullmatch("[01]{8}",digits),(n,vals)
+        txt(12,18,"HEXADECIMAL - split binary into two 4-bit nibbles",11,700)
+        box(28,31,186,36,digits[:4],21);box(224,31,186,36,digits[4:],21)
+        txt(421,42,"Hex:",12,700);txt(421,62,"__  __",12)
+    elif kind in ("linear","binarysearch","bubble","insertion","merge"):
+        title={"linear":"LINEAR SEARCH","binarysearch":"BINARY SEARCH",
+               "bubble":"BUBBLE SORT","insertion":"INSERTION SORT",
+               "merge":"MERGE SORT"}[kind]
+        txt(12,17,title+" - use the data shown; do not assume the result",10,700)
+        width=min(60,430/max(len(vals),1)); width=max(34,width)
+        x0=12
+        for i,value in enumerate(vals):
+            x=x0+i*(width+3)
+            box(x,29,width,31,value,12);txt(x+width/2,74,str(i),10,400,"middle")
+        txt(449,41,"Target: "+(str(visual.get("target")) or "-") if kind in ("linear","binarysearch") else "Trace:",11,700)
+        txt(449,59,"________",11)
+        if kind=="binarysearch":txt(449,74,"must be sorted",9)
+    else:
+        # Question dataset, not the worked solution or a decorative blank table.
+        txt(12,16,"PUPILS TABLE - use the same rows for the question",11,700)
+        for row in range(4):
+            for col in range(3):
+                x=16+col*141;y=23+row*15
+                parts.append(f'<rect x="{x}" y="{y}" width="140" height="15" fill="{soft if row==0 else "white"}" stroke="{edge}" stroke-width=".8"/>')
+                txt(x+7,y+11,vals[row*3+col],10,700 if row==0 else 400)
+        txt(450,45,"Use indexes",10);txt(450,62,"or SQL rules",10)
+    parts.append("</svg>")
+    return "".join(parts)
+
+def draw_svg_question_data(p,n,d,issues):
+    markup=source_svg(n,d)
+    if markup is None:return False
+    svgdoc=fitz.open(stream=markup.encode("utf-8"),filetype="svg")
+    rendered=fitz.open(stream=svgdoc.convert_to_pdf(),filetype="pdf")
+    p.show_pdf_page(fitz.Rect(45,301,546,382),rendered,0,keep_proportion=False)
+    rendered.close();svgdoc.close()
+    d["_required_svg_rendered"]=True
+    return True
+
+def third_required(p,n,d,issues):
+    """Lesson-002 four-page booklet; fitted question-only SVG ahead of Q2-Q4."""
+    P.t(p,"Think and write",45,76,15.2,True)
+    sec(p,"Code First - Predict > Write > Test > Improve",101)
+    G.card(p,45,128,501,126,WHITE)
+    k=d["printCode"]
+    textblock(p,"YOUR TASK: "+k["q"],54,145,481,28,8.0,6.9,True,issues,"code-task")
+    textblock(p,k["code"],55,177,480,70,7.15,6.7,False,issues,"code-first")
+    P.t(p,"BLACK PEN: Predict or write code; test, then improve.",45,269,7.8)
+    sec(p,"Question data - complete the working",291)
+    assert draw_svg_question_data(p,n,d,issues)
+    sec(p,"You Do - Independent exam questions",398)
+    slots=[(419,482),(493,570),(580,656)]
+    if len(d["e"])!=3:raise ValueError("required-visual lesson has unexpected exam count")
+    for i,item in enumerate(d["e"]):
+        q=item[0].split("\n\nSource:")[0].strip()
+        top,bottom=slots[i]
+        textblock(p,"Q"+str(i+2)+". "+q,45,top,493,bottom-top-26,
+                  7.9,6.95,False,issues,"exam-question-"+str(i+2))
+        marks=re.search(r"\[(\d+)\s+marks?\]",q,re.I)
+        if marks and int(marks.group(1))>=6:
+            issues.append({"type":"pedagogical-review","stage":"6-mark writing space",
+                           "question":i+2,"note":"Use separate answer paper if needed"})
+        rule(p,bottom-22,2,step=14)
+    sec(p,"Exit Ticket - True or False?",675)
+    P.t(p,"Circle T or F before reviewing Page 4.",45,694,7.8)
+    exits=[(d["x"][0],bool(d["x"][1]))]
+    for pair in d["c"][:2]:
+        fact=normal(pair[1]).split(". ")[0].strip()
+        if len(fact)>105:fact=fact[:104]+"..."
+        exits.append((fact,True))
+    d["printExits"]=exits
+    for i,(fact,truth) in enumerate(exits):
+        y=712+i*21
+        textblock(p,str(i+1)+". "+fact,45,y,441,12,7.5,6.8,False,issues,"exit-"+str(i+1))
+        P.tick(p,495,y-7);P.t(p,"T",506,y,7.7,True)
+        P.tick(p,525,y-7);P.t(p,"F",536,y,7.7,True)
+
 def third(p,n,d,issues):
+    if required_visual(d):
+        return third_required(p,n,d,issues)
     P.t(p,"Think and write",45,76,15.2,True)
     sec(p,"Code First - Predict > Write > Test > Improve",101)
     G.card(p,45,129,501,166,WHITE)
@@ -311,9 +439,11 @@ def validate(file,n,d,issues):
         # Lists commonly contain null slots; only actual mandated visuals
         # are exceptions. Do not flag 67 Year 11 lessons for null placeholders.
         required=[v for v in (d.get("requiredVisuals") or []) if isinstance(v,dict) and v.get("required")]
-        if required:
+        if required and not d.get("_required_svg_rendered"):
             issues.append({"type":"pedagogical-review","stage":"source-required SVGs",
                            "count":len(required)})
+        if required and d.get("_required_svg_rendered"):
+            assert "Question data" in texts[2] and len(pdf[2].get_drawings())>10,(n,"required diagram missing")
     assert file.stat().st_size>20000
 
 def main():
