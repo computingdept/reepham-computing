@@ -26,7 +26,7 @@ jobs:
           import fitz
           from PIL import Image
           audit=json.loads(Path('offline/booklets/j277/full-course-audit.json').read_text(encoding='utf8'))
-          for n in [2,21,29,45,57,84,96,105,128,151,164]:
+          for n in [2,100,101,102,108,109,110,111,112,115,118,130]:
             path=Path(f'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf')
             with fitz.open(path) as pdf:
               print(f'LESSON {n:03d} state={audit["editions"].get(str(n),{}).get("state","baseline")} pages={len(pdf)}')
@@ -47,7 +47,19 @@ jobs:
                     if not inter.is_empty and inter.width>2 and inter.height>2:
                       crosses.append((ta[:40],tb[:40],round(inter.width,1),round(inter.height,1)))
                 print(f'COLLISIONS {n:03d}/{pi+1} count={len(crosses)} examples={crosses[:4]}')
-                if n in [2,21,57,96,105,151,164] and pi in ([1,2,3] if n!=2 else [1]):
+                if n!=2 and pi==2:
+                  from pathlib import Path
+                  source=Path(f'lessons/j277/autumn2-{n:03d}.json')
+                  original=json.loads(source.read_text(encoding='utf8'))[f'{n:03d}']
+                  required=[v for v in original.get('requiredVisuals',[]) if isinstance(v,dict) and v.get('required')]
+                  assert len(required)==1
+                  assert 'Question data' in page.get_text() and len(page.get_drawings())>10,(n,'missing vector diagram')
+                  # Print the source data alongside the diagram to make it
+                  # possible to manually verify no data/answers were substituted.
+                  print(f'SOURCE-DATA {n:03d} kind={required[0].get("y11") or required[0].get("year11")} values={required[0].get("values")}')
+                  print(f'PASS SOURCE-SPEC VECTOR {n:03d}')
+
+                if (n in [100,101,109,112,118,130] and pi==2) or (n==2 and pi==2):
                   pix=page.get_pixmap(matrix=fitz.Matrix(.83,.83),alpha=False)
                   im=Image.open(io.BytesIO(pix.tobytes('png'))).convert('RGB')
                   im.thumbnail((480,690))
