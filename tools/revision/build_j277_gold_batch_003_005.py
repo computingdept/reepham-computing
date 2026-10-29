@@ -41,11 +41,57 @@ D={
  exitans=["True","True if dimensions do not change","False: metadata is extra"],
  guided="10 x 6 pixels at 4 bits each: find pixels, bits and bytes.")
 }
-def t(p,s,x,y,size=8.7,bold=False,maxw=None):return B.text(p,s,x,y,size,bold,maxw)
-def sec(p,s,y): B.section(p,s,y)
+# Central, reusable print palette (matching the classroom icon language).
+# Blue = learning phase; green = working/checking routine;
+# orange = active response routine. Writing spaces stay white.
+WHITE = B.WHITE
+BLUE = (.20, .44, .72)
+BLUE_LIGHT = (.91, .95, .99)
+GREEN = (.18, .52, .34)
+GREEN_LIGHT = (.92, .97, .93)
+ORANGE = (.77, .39, .10)
+ORANGE_LIGHT = (1.0, .95, .88)
+NEUTRAL = (.98, .985, .99)
+EDGE = (.76, .81, .85)
+
+def t(p,s,x,y,size=8.7,bold=False,maxw=None): return B.text(p,s,x,y,size,bold,maxw)
+
+def sec(p,s,y):
+    # Phase is identified by a blue marker, never a solid green heading.
+    # Answer/feedback sections use green to identify correction, not teaching.
+    feedback = ("Answers" in s or "Self-mark" in s
+                or s.startswith("Try the question again"))
+    marker = GREEN if feedback else BLUE
+    B.box(p,45,y-9,3,15,marker)
+    t(p,s,54,y+1,10.4,True)
+    # Classroom routine / response badge on the same line as the phase.
+    if s.startswith("Do Now") and not feedback:
+        routine,kind="SILENT", "green"
+    elif s.startswith("I Do"):
+        routine,kind="LISTEN", "green"
+    elif s.startswith("We Do"):
+        routine,kind="MWBs", "orange"
+    elif s.startswith("Code First"):
+        routine,kind="MWBs", "orange"
+    elif s.startswith("You Do") and not feedback:
+        routine,kind="SILENT", "green"
+    elif s.startswith("Exit Ticket"):
+        routine,kind="THUMBS", "orange"
+    elif feedback:
+        routine,kind="GREEN PEN", "green"
+    else:
+        return
+    accent = GREEN if kind=="green" else ORANGE
+    tint = GREEN_LIGHT if kind=="green" else ORANGE_LIGHT
+    x,w=462,84
+    B.box(p,x,y-10,w,18,tint,accent,.75)
+    p.insert_text((x+8,y+2.5),routine,fontsize=7.8,fontname="hebo",color=accent)
+
 def rules(p,y,n=2,step=17): B.rules(p,y,n,step)
 def tick(p,x,y): B.tick(p,x,y)
-def card(p,x,y,w,h,shade=B.PALE): B.panel(p,x,y,w,h,shade)
+def card(p,x,y,w,h,shade=WHITE):
+    # White or lightly tinted surfaces, not the former blanket pale-green fill.
+    B.panel(p,x,y,w,h,shade,EDGE)
 def header(p,n):
  p.add_redact_annot(fitz.Rect(40,54,573,782),fill=B.WHITE)
  p.add_redact_annot(fitz.Rect(488,16,574,32),fill=B.WHITE)
@@ -62,12 +108,12 @@ def p1(p,d):
   t(p,str(i+1)+". "+q,45,y,8.7,maxw=493)
   rules(p,y+22,2 if i>=2 else 1)
   y+=57
- sec(p,"Today's objectives",420);card(p,45,442,501,48)
+ sec(p,"Today's objectives",420);card(p,45,442,501,48,BLUE_LIGHT)
  t(p,d["goal"],54,463,8.6,maxw=482)
  sec(p,"Key vocabulary - Read, cover, recall",518)
  for i,(term,definition) in enumerate(d["vocab"]):
   x=45+(i%2)*257;y=540+(i//2)*49
-  card(p,x,y,245,43,B.TINT)
+  card(p,x,y,245,43,WHITE)
   t(p,term,x+8,y+15,8.8,True)
   t(p,definition,x+8,y+29,7.7,maxw=230)
  t(p,"Write one definition in your own words:",45,656,8.8,True)
@@ -79,12 +125,12 @@ def p2(p,n,d):
   t(p,"Hexadecimal uses 0-9 and A-F. A=10, B=11, C=12, D=13, E=14, F=15.",45,127,8.7)
   t(p,"A byte becomes two nibbles. Each nibble uses the 8, 4, 2, 1 values.",45,145,8.5)
   for i,(bits,value) in enumerate([("1111","F"),("1110","E")]):
-   x=45+i*256;card(p,x,168,245,69,B.TINT)
+   x=45+i*256;card(p,x,168,245,69,BLUE_LIGHT)
    t(p,"Nibble "+str(i+1),x+10,186,8.5,True)
    t(p,bits+"  =  "+value,x+10,220,12,True)
   t(p,"11111110 becomes FE. Hex is shorter to read; bits are unchanged.",45,260,8.8)
   sec(p,"Revision-guide example - RGB colour #00FF00",290)
-  for i,(lab,val,col) in enumerate([("RED","00",B.PALE),("GREEN","FF",(.65,.89,.70)),("BLUE","00",B.PALE)]):
+  for i,(lab,val,col) in enumerate([("RED","00",WHITE),("GREEN","FF",(.75,.91,.78)),("BLUE","00",WHITE)]):
    x=45+i*169;card(p,x,310,157,55,col);t(p,lab,x+9,329,8.5,True);t(p,val,x+106,348,11,True)
   sec(p,"I Do - Convert binary to hex",398)
   t(p,"11000111 = 1100 | 0111. Use 8,4,2,1 within each nibble.",45,424,8.8)
@@ -100,17 +146,17 @@ def p2(p,n,d):
   sec(p,"New learning - From character to binary",103)
   t(p,"A character set maps a written character to a code, represented in bits.",45,128,8.7)
   for i,(head,val) in enumerate([("Character","A"),("ASCII code","65"),("8-bit binary","01000001")]):
-   x=45+i*170;card(p,x,153,161,63,B.TINT if i%2==0 else B.PALE)
+   x=45+i*170;card(p,x,153,161,63,BLUE_LIGHT if i%2==0 else WHITE)
    t(p,head,x+10,172,8.1,True);t(p,val,x+10,200,11.5,True)
   t(p,"B is code 66 (01000010); codes follow an ordered sequence.",45,238,8.7)
   sec(p,"ASCII versus Unicode",274)
-  card(p,45,296,245,79,B.TINT);card(p,302,296,244,79)
+  card(p,45,296,245,79,BLUE_LIGHT);card(p,302,296,244,79,WHITE)
   t(p,"ASCII",57,314,9.2,True);t(p,"A smaller character repertoire",57,339,8.5)
   t(p,"Unicode",315,314,9.2,True);t(p,"Supports many languages and scripts",315,339,8.3)
   t(p,"Unicode encodings may use different numbers of bytes per character.",45,400,8.6)
   sec(p,"I Do - Worked calculation",445)
   t(p,"12 characters use 8 bits each. Find the raw data size.",45,469,8.7)
-  card(p,45,487,501,50)
+  card(p,45,487,501,50,BLUE_LIGHT)
   t(p,"12 x 8 = 96 bits;   96 / 8 = 12 bytes.",55,514,9.6,True)
   sec(p,"We Do - Guided practice",565)
   t(p,d["guided"],45,590,8.8)
@@ -121,7 +167,7 @@ def p2(p,n,d):
  else:
   sec(p,"New learning - Pixels, resolution and depth",103)
   t(p,"A bitmap is a grid of pixels. Resolution is width x height in pixels.",45,128,8.5)
-  cols=[(.85,.94,.91),(.68,.85,.89),(.43,.68,.67),(.24,.51,.49)]
+  cols=[(.90,.95,.99),(.70,.83,.94),(.45,.65,.83),(.25,.44,.66)]
   for row in range(8):
    for col in range(8):
     B.box(p,52+17*col,155+17*row,17,17,cols[(row//2+col//2)%4],B.EDGE,.4)
@@ -132,7 +178,7 @@ def p2(p,n,d):
   t(p,"means more raw image data.",225,273,8.5)
   sec(p,"I Do - Raw bitmap file-size method",322)
   t(p,"Paper 1 guide example: 8 x 8 bitmap, 2-bit colour depth.",45,349,8.7)
-  card(p,45,364,501,91)
+  card(p,45,364,501,91,BLUE_LIGHT)
   t(p,"WIDTH x HEIGHT x COLOUR DEPTH = BITS",55,386,9.6,True)
   t(p,"8 x 8 = 64 pixels;  64 x 2 = 128 bits.",55,411,9.0)
   t(p,"128 / 8 = 16 bytes (uncompressed pixel data only).",55,437,9,True)
@@ -150,7 +196,7 @@ def p3(p,n,d):
  if n==3: code=["value = 6 * 16 + 2","print(value)"]
  elif n==4:code=["characterCode = 65","print(characterCode)"]
  else:code=["width = 10    height = 8    depth = 4","print(width * height * depth)"]
- card(p,45,143,501,56)
+ card(p,45,143,501,56,ORANGE_LIGHT)
  for i,s in enumerate(code):t(p,s,56,163+19*i,9.2,True)
  for i,q in enumerate(d["code"]):
   y=218+46*i;t(p,q,45,y,8.55,maxw=495);rules(p,y+17,1)
@@ -210,6 +256,11 @@ def build(n):
    assert "LESSON %03d"%n in txt and "BLACK PEN" in txt and "GREEN PEN" in txt
    assert "Review & Improve" in txt
    assert round(p.rect.width)==595 and round(p.rect.height)==842
+  # Verify all three teaching/routine/response colours render on every booklet.
+  fills=[drawing.get("fill") for page in r for drawing in page.get_drawings()]
+  def has_colour(target):
+   return any(fill and len(fill)==3 and all(abs(a-b)<.035 for a,b in zip(fill,target)) for fill in fills)
+  assert has_colour(BLUE) and has_colour(GREEN) and has_colour(ORANGE), "Missing phase/routine colours"
   whole="\n".join(p.get_text() for p in r)
   assert all(word in whole for word in ("Do Now","Code First","You Do","Try the question again"))
  print("PASS",n,out.stat().st_size)
