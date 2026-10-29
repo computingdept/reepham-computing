@@ -1,0 +1,60 @@
+name: Publish approved J277 Lesson 001 four-page PDF
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_lesson001_gold_pdf.py'
+      - '.github/workflows/publish-j277-lesson001-gold-booklet.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixed PDF layout engine
+        run: python -m pip install pymupdf==1.26.4
+      - name: Generate from Lesson 002 approved layout and verify four pages
+        run: python tools/revision/build_j277_lesson001_gold_pdf.py
+      - name: Activate only Lesson 001 direct Print PDF link
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import fitz
+          pdf=Path('offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf')
+          assert pdf.is_file() and pdf.stat().st_size>20000
+          with fitz.open(pdf) as doc:
+              assert len(doc)==4
+              for page in doc:
+                  assert round(page.rect.width)==595 and round(page.rect.height)==842
+          path=Path('j277-hub.html')
+          source=path.read_text(encoding='utf-8')
+          old="const pilotPrintPdf=year===10&&x===2?'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf':null;"
+          new=("const approvedPrintPdfRoutes={\n"
+               "        1:'offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf',\n"
+               "        2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf'\n"
+               "      };\n"
+               "      const pilotPrintPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;")
+          assert source.count(old)==1,'Unexpected J277 hub; refusing unsafe replacement'
+          assert source.count('printHref:pilotPrintPdf||independent||')==1
+          path.write_text(source.replace(old,new),encoding='utf-8')
+          print('PASS: J277 001 and 002 Print both open the approved PDF directly')
+          PY
+      - name: Commit verified PDF and Lesson 001 hub link together
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf j277-hub.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish J277 Lesson 001 approved four-page PDF with direct Print link'
+            git push origin HEAD:main
+          fi
