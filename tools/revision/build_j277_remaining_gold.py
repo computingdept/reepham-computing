@@ -29,7 +29,7 @@ RULE=B.RULE
 EXCEPTION_TAGS={"assessment","content-overflow","source-mismatch","non-printable-code"}
 
 def normal(s):
-    return P.plain(str(s)).replace("•","-").replace("’","'")
+    return P.plain(str(s)).replace("•","-").replace("’","'").replace("−","-")
 def lines_for(s,width,sz=7.8,bold=False):
     font="hebo" if bold else "helv"
     lines=[]
