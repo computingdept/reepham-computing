@@ -336,19 +336,31 @@ def third(p,n,d,issues):
     rule(p,320,2,step=16)
     P.t(p,"For extended answers, continue on lined paper if needed.",45,352,7.6)
     sec(p,"You Do - Independent exam questions",364)
-    slots=[(385,461),(474,568),(582,656)]
+    # Preserve the actual three lesson exam questions.  Reserve at least four
+    # ruled lines for a six-marker rather than treating two lines as a pass.
+    # Reflow the first two shorter tasks to free an expanded Q4 slot.
+    slots=[(385,448),(459,537),(548,663)] if any(
+        re.search(r"\[6\s+marks?\]",item[0],re.I) for item in d["e"][:3]
+    ) else [(385,461),(474,568),(582,656)]
     for i,item in enumerate(d["e"][:3]):
         q=item[0].split("\n\nSource:")[0].strip()
         top,bottom=slots[i]
-        # Code First is Q1, three exam questions are Q2-Q4.
-        available=bottom-top
-        textblock(p,"Q"+str(i+2)+". "+q,45,top,493,available-25,
-                  8.0,6.95,False,issues,"exam-question-"+str(i+2))
         marks=re.search(r"\[(\d+)\s+marks?\]",q,re.I)
-        if marks and int(marks.group(1))>=6:
-            issues.append({"type":"pedagogical-review","stage":"6-mark writing space","question":i+2,
-                           "note":"Use separate answer paper if needed"})
-        rule(p,bottom-23,2,step=15)
+        six=bool(marks and int(marks.group(1))>=6)
+        line_count=4 if six else 2
+        line_gap=14
+        # The question must end before the first writing line.
+        rule_start=bottom-(line_count*line_gap+9)
+        height=rule_start-top-6
+        if height<19:
+            issues.append({"type":"content-overflow","stage":"exam-space-"+str(i+2),
+                           "detail":"insufficient space for source question and handwriting"})
+        textblock(p,"Q"+str(i+2)+". "+q,45,top,493,max(15,height),
+                  8.0,6.95,False,issues,"exam-question-"+str(i+2))
+        rule(p,rule_start,line_count,step=line_gap)
+        if six and line_count < 4:
+            issues.append({"type":"content-overflow","stage":"6-mark answer space",
+                           "question":i+2})
     if len(d["e"])!=3:
         issues.append({"type":"source-mismatch","stage":"you-do-count","count":len(d["e"])})
     sec(p,"Exit Ticket - True or False?",675)
