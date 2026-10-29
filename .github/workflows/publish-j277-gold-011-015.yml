@@ -1,0 +1,85 @@
+name: Publish J277 gold print batch Lessons 011-015
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_gold_batch_011_015.py'
+      - '.github/workflows/publish-j277-gold-011-015.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-j277-gold-011-015
+  cancel-in-progress: false
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned PDF generation and validation engine
+        run: python -m pip install pymupdf==1.26.4
+      - name: Generate and validate five source-grounded four-page booklets
+        run: python tools/revision/build_j277_gold_batch_011_015.py
+      - name: Link only verified PDFs in the existing one-click Print navigation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import fitz
+          hub=Path('j277-hub.html')
+          source=hub.read_text(encoding='utf-8')
+          anchor="  10:'offline/booklets/j277/J277_Lesson_010_Gold_Standard_4_Page.pdf'"
+          additions=[f"  {n}:'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'" for n in range(11,16)]
+          if not all(item in source for item in additions):
+              assert source.count(anchor)==1, 'Print mapping changed; refusing unsafe update'
+              assert not any(item in source for item in additions), 'Partially updated Print map; investigate'
+              source=source.replace(anchor, anchor+',\n'+',\n'.join(additions))
+          for n in range(11,16):
+              f=Path(f'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf')
+              assert f.is_file() and f.stat().st_size > 32000
+              with fitz.open(f) as pdf:
+                  assert len(pdf)==4
+                  for page in pdf:
+                      txt=page.get_text()
+                      assert f'LESSON {n:03d}' in txt
+                      assert 'BLACK PEN' in txt and 'GREEN PEN' in txt
+                      assert 'Review & Improve' in txt
+              assert additions[n-11] in source
+          hub.write_text(source, encoding='utf-8')
+          assert source.count('printHref:approvedPdf||draftPdf,')==1
+          print('PASS 011-015 PDF + direct one-click Print route validation')
+          PY
+      - name: Commit only verified PDFs and J277 hub Print links
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- offline/booklets/j277/J277_Lesson_011_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_012_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_013_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_014_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_015_Gold_Standard_4_Page.pdf
+          git add -- j277-hub.html
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish J277 gold four-page printable booklets 011-015'
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD:main; then
+                echo "Successfully published batch 011-015"
+                break
+              fi
+              if [ "$attempt" -eq 4 ]; then
+                echo "Concurrent update prevented safe publication" >&2
+                exit 1
+              fi
+              git fetch origin main
+              git rebase origin/main
+            done
+          fi
