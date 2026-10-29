@@ -335,15 +335,23 @@ def p3(p,n,d):
     sec(p,"Code First - Predict > Write > Test > Improve",103)
     # Lesson 002 uses a white, high-contrast working surface rather than a large colour fill.
     B.box(p,45,134,501,111,WHITE,EDGE,.75)
-    t(p,"Read the OCR Exam Reference Language code before testing it.",55,150,7.8)
+    if n>=17 and d.get("print_code_master"):
+        render_wrap(p,"YOUR TASK: "+d["k"]["q"],55,150,480,8.0,10.4,True,limit=170)
+    else:
+        t(p,"Read the OCR Exam Reference Language code before testing it.",55,150,7.8)
     code=d["k"]["code"].splitlines()
     assert len(code)<=9,(n,"Code First more than 9 lines")
     for i,line in enumerate(code):
         render_wrap(p,line.replace("    ","  "),58,166+i*10.8,471,7.9,10.1,limit=239)
-    for i,prompt in enumerate(CODE_TASKS[n],1):
-        y=267+(i-1)*29
-        render_wrap(p,str(i)+". "+prompt,45,y,493,8.0,10.5,limit=y+13)
-        rules(p,y+14,1,step=16)
+    if n>=17 and d.get("print_code_master"):
+        render_wrap(p,"BLACK PEN: complete the ONE short task on paper first.",45,259,493,8.4,10.6,True,limit=276)
+        t(p,"TEST by tracing. IMPROVE by checking the full model on Page 4.",45,284,7.9)
+        rules(p,309,2,step=20)
+    else:
+        for i,prompt in enumerate(CODE_TASKS[n],1):
+            y=267+(i-1)*29
+            render_wrap(p,str(i)+". "+prompt,45,y,493,8.0,10.5,limit=y+13)
+            rules(p,y+14,1,step=16)
     sec(p,"You Do - Independent exam questions",363)
     # Follow the approved Lesson 002 typography; vary ruled space by
     # the actual length and marks of each question. A six-marker needs more
@@ -356,7 +364,8 @@ def p3(p,n,d):
     for i,(raw,_) in enumerate(d["e"]):
         val=exam_question(raw)
         slot=slots[i]
-        final=render_wrap(p,f"Q{i+1}. "+val,45,y,494,8.4,11.4,limit=y+slot-38)
+        qn=i+2 if n>=17 else i+1
+        final=render_wrap(p,f"Q{qn}. "+val,45,y,494,8.4,11.4,limit=y+slot-38)
         line_y=max(y+30,final+5)
         target_lines=4 if ("[6 marks]" in val) else (3 if i==2 else 2)
         actual_lines=0
