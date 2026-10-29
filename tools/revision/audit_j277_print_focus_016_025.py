@@ -44,7 +44,7 @@ def horizontal_rules(page, start, end):
 report = ["# J277 PDF 016-025 – repeatable source and writing-space check", "",
           "Automated structural check. NOT teacher approval. The committed "
           "four-page PDFs remain review editions.", "",
-          "| Lesson | Pages | Retrieval | Code First | You Do questions | Final correction lines | Release gate |",
+          "| Lesson | Pages | Retrieval | Code First | You Do questions | Generator correction lines (not visually verified) | Release gate |",
           "|---|---:|---|---|---|---|---|"]
 failures = []
 for n in range(16, 26):
@@ -79,17 +79,21 @@ for n in range(16, 26):
                 qpresent += 1
         if qpresent != 3:
             failures.append(f"{n:03d}: {qpresent}/3 source You Do questions present")
-        # These rules are drawn by the actual PDF, not guessed from the name.
-        # The top-of-page answer review concludes before the correction stage.
-        correction_ys = horizontal_rules(pdf[3], 645, 789)
-        # Page-4 copy/answer section is headed at y≈640 for 016-020,
-        # and at y≈685 for 021-025. Restrict to their known response regions.
+        # Read the source's deliberate ruled-line calls. PDF vector shapes can
+        # include covered-up lines inherited from the Lesson 002 master; simply
+        # counting page.get_drawings() would overstate visible writing space.
         if n <= 20:
-            copies = len([y for y in correction_ys if 676 <= y < 717])
-            rewrites = len([y for y in correction_ys if 735 <= y < 789])
+            renderer = (ROOT / "tools/revision/build_j277_gold_batch_016_020.py").read_text(encoding="utf-8")
+            stage = renderer.split("def p4(p,n,d):", 1)[1].split("def validate(", 1)[0]
+            # These are source-declared counts, not a substitute for print inspection.
+            counts = re.findall(r"rules\\(p,\\d+,(\\d+),step=\\d+\\)", stage)
+            copies = int(counts[0]) if counts else 0
+            rewrites = int(counts[-1]) if len(counts) >= 2 else 0
         else:
-            copies = len([y for y in correction_ys if 715 <= y < 740])
-            rewrites = len([y for y in correction_ys if 742 <= y < 789])
+            renderer = (ROOT / "tools/revision/build_j277_remaining_gold.py").read_text(encoding="utf-8")
+            stage = renderer.split("def fourth(p,n,d,issues):", 1)[1].split("def validate(", 1)[0]
+            copies = int(re.search(r"rule\\(p,722,(\\d+)\\)", stage).group(1))
+            rewrites = int(re.search(r"rule\\(p,759,(\\d+)\\)", stage).group(1))
         if copies < 2 or rewrites < 4:
             checks.append("correction space below 2+4 lines")
         # Six-mark exam responses must have appropriate space, or an
