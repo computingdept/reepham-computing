@@ -159,18 +159,14 @@ def second(p,n,d,issues):
         y=119+i*rowstep
         G.card(p,45,y-12,501,rowstep-2,WHITE)
         textblock(p,title,52,y,140,rowstep-5,8.0,7.05,True,issues,"concept title "+str(i+1))
-        if i==4 and n in SUPPLEMENTARY_BRIEFS:
-            original=description
-            description=SUPPLEMENTARY_BRIEFS[n]
-            issues.append({"type":"pedagogical-review","stage":"supplementary addition condensed",
-                           "original":original,"printed":description})
+        # Keep the original classroom explanation: never substitute a manually shortened summary.
         textblock(p,description,198,y,335,rowstep-2,7.65,6.85,False,issues,"concept "+str(i+1))
     if len(d["c"])>5:issues.append({"type":"content-overflow","stage":"more than five New Learning steps","count":len(d["c"])-5})
     sec(p,"I Do - One worked example",260)
     question=d["m"].get("q") or d["m"].get("title") or d["t"]
     textblock(p,question,45,282,498,37,8.15,7.05,True,issues,"i-do-question")
     steps=d["m"].get("st",[])
-    if len(steps)>5:issues.append({"type":"pedagogical-review","stage":"more than 5 I Do steps","count":len(steps)})
+    if len(steps)>5:issues.append({"type":"content-overflow","stage":"more than 5 I Do steps","count":len(steps)})
     steps=steps[:5]
     if steps:
         y=334
@@ -297,18 +293,25 @@ def third_required(p,n,d,issues):
     sec(p,"Question data - complete the working",291)
     assert draw_svg_question_data(p,n,d,issues)
     sec(p,"You Do - Independent exam questions",398)
-    slots=[(419,482),(493,570),(580,656)]
+    # Keep the source-required diagram. Adapt the exam boxes to reserve
+    # four actual writing lines for an extended (6-mark) answer.
+    extended=any(re.search(r"\[6\s+marks?\]",v[0],re.I) for v in d["e"])
+    slots=[(419,476),(485,551),(560,662)] if extended else [
+        (419,482),(493,570),(580,656)]
     if len(d["e"])!=3:raise ValueError("required-visual lesson has unexpected exam count")
     for i,item in enumerate(d["e"]):
         q=item[0].split("\n\nSource:")[0].strip()
         top,bottom=slots[i]
-        textblock(p,"Q"+str(i+2)+". "+q,45,top,493,bottom-top-26,
+        match=re.search(r"\[(\d+)\s+marks?\]",q,re.I)
+        six=bool(match and int(match.group(1))>=6)
+        count=4 if six else 2
+        start=bottom-(count*14+9)
+        height=start-top-6
+        if height<19:issues.append({"type":"content-overflow","stage":"exam-writing-space",
+                                    "question":i+2})
+        textblock(p,"Q"+str(i+2)+". "+q,45,top,493,max(15,height),
                   7.9,6.95,False,issues,"exam-question-"+str(i+2))
-        marks=re.search(r"\[(\d+)\s+marks?\]",q,re.I)
-        if marks and int(marks.group(1))>=6:
-            issues.append({"type":"pedagogical-review","stage":"6-mark writing space",
-                           "question":i+2,"note":"Use separate answer paper if needed"})
-        rule(p,bottom-22,2,step=14)
+        rule(p,start,count,step=14)
     sec(p,"Exit Ticket - True or False?",675)
     P.t(p,"Circle T or F before reviewing Page 4.",45,694,7.8)
     exits=[(d["x"][0],bool(d["x"][1]))]
