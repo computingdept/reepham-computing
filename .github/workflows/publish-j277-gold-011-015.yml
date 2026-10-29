@@ -24,6 +24,27 @@ jobs:
           python-version: '3.11'
       - name: Install pinned PDF generation and validation engine
         run: python -m pip install pymupdf==1.26.4
+      - name: Verify online Lesson 013 SVG JavaScript and accessible teaching sequence
+        shell: bash
+        run: |
+          node --check lessons/j277/autumn1-rebuilt.js
+          node --check lessons/j277/h446-adapter.js
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('lessons/j277/autumn1-009-013.json').read_text(encoding='utf-8'))['013']
+          js=Path('lessons/j277/autumn1-rebuilt.js').read_text(encoding='utf-8')
+          assert d['vis']=='flowchart'
+          assert d['c'][0][0]=='Flowchart symbols'
+          assert 'correctFlowchartSvg(phase)' in js
+          assert 'if(kind==="flowchart") return correctFlowchartSvg(phase)' in js
+          for shape in ['ellipse', 'polygon', 'rect', 'marker-end']:
+              assert shape in js
+          assert 'both outputs' in d['m']['st'][3].lower()
+          assert 'two output parallelograms' in d['w'][0][0]
+          assert '20261029-flowchart013-svg' in Path('lessons/j277/lesson-013/index.html').read_text(encoding='utf-8')
+          print('PASS J277 013 SVG, correct symbol introduction, model and guided practice')
+          PY
       - name: Generate and validate five source-grounded four-page booklets
         run: python tools/revision/build_j277_gold_batch_011_015.py
       - name: Link only verified PDFs in the existing one-click Print navigation
