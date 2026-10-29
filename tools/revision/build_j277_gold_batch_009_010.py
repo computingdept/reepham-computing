@@ -6,6 +6,7 @@ Visual explanations follow the published Paper 1 V4 guide (secondary storage,
 the FDE cycle, four registers and the kitchen memory aid).
 Reuse the approved Lesson 002 PDF header, five-stage footer, pen rules and layout.
 Classroom behaviour/response badges must not be duplicated in the page body.
+This PDF publication is refreshed after the 003-008 batches to avoid overlapping GitHub pushes.
 DO NOT modify classroom lessons, Catch up or revision guides.
 """
 from pathlib import Path
