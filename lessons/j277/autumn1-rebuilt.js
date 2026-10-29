@@ -14,6 +14,49 @@
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const line=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#428063" stroke-width="3" fill="none" stroke-linecap="round"/>`;
  
+ function correctFlowchartSvg(phase){
+  // J277 013: purpose-built, semantically correct, accessible SVG diagrams.
+  // Terminator = oval, input/output = parallelogram, process = rectangle,
+  // decision = diamond. Never depict an input or output in a rounded card.
+  const outline="#245e82", text="#153f56", pale="#eef7fd", white="#fff";
+  const txt=(x,y,content,size=14,weight=700,anchor="middle")=>'<text x="'+x+'" y="'+y+'" fill="'+text+'" font-size="'+size+'" font-weight="'+weight+'" text-anchor="'+anchor+'" font-family="Arial,sans-serif">'+escape(content)+'</text>';
+  const oval=(x,y,w,h)=>'<ellipse cx="'+(x+w/2)+'" cy="'+(y+h/2)+'" rx="'+(w/2)+'" ry="'+(h/2)+'" fill="'+white+'" stroke="'+outline+'" stroke-width="2.3"/>';
+  const box=(x,y,w,h)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+white+'" stroke="'+outline+'" stroke-width="2.3"/>';
+  const io=(x,y,w,h)=>'<polygon points="'+(x+13)+','+y+' '+(x+w)+','+y+' '+(x+w-13)+','+(y+h)+' '+x+','+(y+h)+'" fill="'+white+'" stroke="'+outline+'" stroke-width="2.3"/>';
+  const diamond=(cx,cy,rx,ry)=>'<polygon points="'+cx+','+(cy-ry)+' '+(cx+rx)+','+cy+' '+cx+','+(cy+ry)+' '+(cx-rx)+','+cy+'" fill="'+white+'" stroke="'+outline+'" stroke-width="2.3"/>';
+  if(phase==="reference"){
+   return svgScene("Four standard flowchart symbols: oval for Start and End; parallelogram for Input and Output; rectangle for Process; diamond for Decision",
+    oval(26,33,105,40)+txt(78,59,"START / END",12)+txt(153,49,"Terminator: where",16,700,"start")+txt(153,70,"an algorithm starts or ends",14,400,"start")+
+    io(307,33,102,40)+txt(358,58,"INPUT",14)+txt(425,49,"Input / Output:",15,700,"start")+txt(425,70,"read or show data",13,400,"start")+
+    box(26,113,105,42)+txt(78,139,"total = 7",13)+txt(153,130,"Process: a calculation",16,700,"start")+txt(153,150,"or assignment",14,400,"start")+
+    diamond(360,136,45,34)+txt(360,140,"x > 5?",12)+txt(425,130,"Decision:",15,700,"start")+txt(425,149,"test a condition",14,400,"start")+
+    '<path d="M24 192 H533" stroke="#c5d5e0" stroke-width="1.5"/>'+
+    txt(280,214,"Follow arrows. Label the decision branches Yes and No.",15,700));
+  }
+  const guided=phase==="guided", arrowId="j277-flow-arrow-"+phase;
+  const arrows='<defs><marker id="'+arrowId+'" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="'+outline+'"/></marker></defs>';
+  const route=d=>'<path d="'+d+'" stroke="'+outline+'" stroke-width="2.3" fill="none" marker-end="url(#'+arrowId+')"/>';
+  const yes=guided?"________":"Print Pass",no=guided?"________":"Print Try again";
+  const condition=guided?"age >= 18?":"mark >= 50?";
+  return svgScene(
+    guided?"Partly completed age-check flowchart: fill in the two output parallelograms and trace both branches to End":
+           "Complete pass or fail algorithm: correct Start, Input, Decision, Yes and No Output, and End flowchart symbols",
+    arrows+
+    oval(15,97,69,38)+txt(49,121,"Start",13)+
+    io(107,96,108,40)+txt(160,121,guided?"Input age":"Input mark",13)+
+    diamond(281,116,55,54)+txt(281,120,condition,12)+
+    io(367,54,116,39)+txt(425,78,yes,guided?16:13)+
+    io(367,145,116,39)+txt(425,169,no,guided?16:12)+
+    oval(499,97,57,39)+txt(527,121,"End",13)+
+    route("M84 116 H106")+route("M215 116 H225")+
+    route("M309 89 L366 74")+route("M309 143 L366 163")+
+    route("M480 74 H492 V116 H499")+
+    route("M480 164 H492 V116 H499")+
+    txt(337,74,"Yes",14)+txt(337,163,"No",14)+
+    txt(280,217,guided?"Your turn: label the outputs and explain which branch age 18 follows.":
+                           "52 follows Yes: Print Pass. Both branches finish at End.",14,700));
+ }
+
  function guideMatchedDiagram(kind,phase){
   const card=(x,y,w,h,label,fill="#e4f2e9",font=18)=>pill(x,y,w,h,label,fill,font);
   const bar=(label,expression,result)=>{
@@ -68,16 +111,7 @@
       note(phase==="guided"?28:32,174,phase==="guided"?"Quantity, price":"Distance, speed",16)+note(phase==="guided"?220:235,174,phase==="guided"?"Multiply":"Divide",17)+note(phase==="guided"?419:421,174,phase==="guided"?"Cost":"Hours",18)+
       note(phase==="guided"?88:80,211,phase==="guided"?"Ignore the plate colour":"Ignore the car colour",17));
   }
-  if(kind==="flowchart"){
-    return svgScene("Input leads to a decision diamond and distinct true and false branches",
-      pill(18,93,122,63,"INPUT","#e0eef9",21)+
-      '<path d="M230 58 L308 125 L230 192 L152 125 Z" stroke="#926424" fill="#fff0d1" stroke-width="2.5"/>'+
-      '<text x="230" y="130" text-anchor="middle" fill="#234d3d" font-size="17" font-weight="700">CONDITION</text>'+
-      pill(380,28,158,62,"TRUE output","#e4f2e9",18)+
-      pill(380,158,158,62,"FALSE output","#f5e6e1",18)+
-      '<path d="M140 125 H152 M308 107 L380 60 M308 143 L380 188" stroke="#28775d" fill="none" stroke-width="3"/>'+
-      note(320,62,"Yes",15)+note(320,184,"No",15));
-  }
+  if(kind==="flowchart") return correctFlowchartSvg(phase);
   if(kind==="linear-search"){
     const values=phase==="guided"?[7,2,6,4]:[3,9,1,8,5],target=phase==="guided"?6:8,match=phase==="guided"?-1:3;
     const start=values.length===4?83:27,width=values.length===4?96:92,gap=10;
