@@ -23,7 +23,7 @@ def norm(value):
                  ("–", "-"), ("—", "-"), ("×", " x "), ("÷", " / "),
                  ("≥", ">="), ("≤", "<=")]:
         s = s.replace(a,b)
-    return re.sub(r"\\s+", " ", s).strip().lower()
+    return re.sub(r"\s+", " ", s).strip().lower()
 
 def lesson(n):
     path = BASE / ("autumn1-014-018.json" if n <= 18 else f"autumn2-{n:03d}.json")
@@ -74,7 +74,7 @@ for n in range(16, 26):
             checks.append("Code First source task differs or is omitted")
         qpresent = 0
         for q, answer in d["e"][:3]:
-            q = q.split("\\n\\nSource:")[0].strip()
+            q = q.split("\n\nSource:")[0].strip()
             if norm(q) in norm(p[2]):
                 qpresent += 1
         if qpresent != 3:
@@ -94,7 +94,7 @@ for n in range(16, 26):
             checks.append("correction space below 2+4 lines")
         # Six-mark exam responses must have appropriate space, or an
         # explicitly supplied separate writing insert.
-        if any(re.search(r"\\[6\\s+marks?\\]", item[0], re.I) for item in d["e"]):
+        if any(re.search(r"\[6\s+marks?\]", item[0], re.I) for item in d["e"]):
             checks.append("6-mark exam answer space requires physical sign-off")
         if n == 18:
             checks.append("AP1 review: check separate assessment paper")
@@ -114,10 +114,10 @@ report += ["", "This is not a visual or classroom-ready endorsement.",
            "The teacher must inspect each finished PDF at 100% A4 size and "
            "verify the revision guide, diagrams, worked answers and writing space."]
 out = ROOT / "offline/booklets/j277/focus-016-025-machine-audit.md"
-out.write_text("\\n".join(report)+"\\n", encoding="utf-8")
+out.write_text("\n".join(report)+"\n", encoding="utf-8")
 print(f"REPORT: {out.relative_to(ROOT)}")
 if os.environ.get("GITHUB_STEP_SUMMARY"):
     with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
-        f.write("\\n".join(report) + "\\n")
+        f.write("\n".join(report) + "\n")
 if failures:
     raise SystemExit("Hard source/page mismatch: " + "; ".join(failures))
