@@ -1,33 +1,25 @@
-# OCR J277 revision guides
+# OCR J277 revision guides — current published editions
 
-## Student edition source PDFs
+**Status (29 October 2026):** Paper 1 V4 and Paper 2 V3 are on `main`, with student-facing Read/Download and printer-friendly links in `j277-hub.html`. These are versioned guides, not sources to be silently rebuilt or replaced.
 
-These are the two original, verified files held in the teacher's ChatGPT Library:
+| Paper | Colour / Read / Download | Printer-friendly | Pages |
+| --- | --- | --- | --- |
+| Paper 1 V4 | `J277_Paper_1_Revision_Guide_AP1_Aligned.pdf` (V4 content; historic filename retained) | `J277_Paper_1_Revision_Guide_Print_V4.pdf` | 291 |
+| Paper 2 V3 | `J277_Paper_2_Revision_Guide_V3.pdf` | `J277_Paper_2_Revision_Guide_Print_V3.pdf` | 193 |
 
-- `J277_Paper_1_Revision_Guide_AP1_Aligned.pdf` — 94 pages; 9,700,116 bytes
-- `J277_Paper_2_Revision_Guide_AP1_Aligned.pdf` — 97 pages; 10,699,995 bytes
+The former 97-page `J277_Paper_2_Revision_Guide_AP1_Aligned.pdf` remains in the repository as an **archived previous edition**; student hub links now target V3. Do not infer the live edition from the existence of older filenames.
 
-The PDFs have not yet been copied into this GitHub folder. **Do not enable student links before both are present.**
+## Release validation and responsibilities
 
-### Publish the source PDFs
+- Paper 2 V3 publication was validated in PR #2 by `.github/workflows/j277-paper2-v3-release-check.yml`: both 193-page PDF hashes, 73 bookmarks, 12 links, all 28 mapped practice/answer pairs, generated JS, the hub, and unchanged Paper 1.
+- The original one-time "publish PDF guides after upload" automation was designed for the **obsolete 94-page Paper 1 / 97-page Paper 2** source edition. It must **not** be rerun on the current V4/V3 editions; it has been retired.
+- `qa/master-audit-2026/j277-guide-cards-regression.cjs` checks the shared desktop/phone layout, Paper 1's two actions, Paper 2's Read/Download/**Print** actions and actual PDF paths.
+- Structural validation does not replace **teacher approval of subject explanations, examples and model answers**. After future releases, check the live student site, mobile download and a physical print sample.
 
-Using the GitHub web UI, open this `revision/j277/guides/` folder, select **Add file → Upload files**, and upload both original PDFs under the exact names above in one commit to `main`.
+## Stable quiz links and future updates
 
-The workflow `.github/workflows/publish-j277-pdf-guides.yml` detects the uploads and automatically:
-
-1. Confirms both files have valid PDF headers and 94/97 pages.
-2. Verifies the existing skill-to-page references stay within those page counts.
-3. Replaces the J277 hub's `Revision Booklet coming soon` panel with separate Paper 1 and Paper 2 **Read / Download** cards.
-4. Enables guide-page links in the under-80% interactive revision feedback, without changing the MCQs, marking, thresholds, lessons or student progress.
-5. Regenerates `guide-links.js`, verifies its stable skill IDs, and commits the coordinated activation.
-
-If either PDF is missing or fails validation, the workflow publishes **nothing**, leaving current links and saved results untouched.
-
-## Stable quiz links
-
-- `skill-index.json` is the sole editable source mapping J277 skill IDs to OCR specification points, lesson IDs and PDF page numbers.
-- `guide-links.js` is generated. Do not manually edit it or put page numbers into MCQ banks.
-- When an edition changes, update page mappings in `skill-index.json`; run `python3 tools/revision/build_j277_guide_links.py` and `python3 tools/revision/build_j277_guide_links.py --check`.
-- Students see lesson, worked-example and guide-page links on the below-80% feedback screen, matching H446. An unpublished guide intentionally shows a non-clickable page reference.
-
-The PDF source files themselves must not be replaced with a recreated or raster-only copy: they are the audited, selectable-text originals.
+- `skill-index.json` is the sole editable source mapping all **61 J277 skill IDs** to OCR specification points, lessons, editions and guide pages (**33 Paper 1 / 28 Paper 2**).
+- `guide-links.js` is **generated**. Do not hand-edit it or embed page numbers inside MCQ banks.
+- On future editions, update the matching guide metadata and all affected page mappings in `skill-index.json`; run `python3 tools/revision/build_j277_guide_links.py` and `python3 tools/revision/build_j277_guide_links.py --check`.
+- Release through a branch, stage only required content and versioned PDF assets, run relevant technical and visual regression checks, obtain subject-owner review, then merge to `main`. Never update the hub links before matching PDFs exist.
+- The PDF originals contain selectable text; do not replace them with raster-only reproductions.
