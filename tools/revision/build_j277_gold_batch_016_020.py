@@ -256,7 +256,7 @@ def p1(p,n,d):
 
 def diagram(p,n):
     """Custom topic illustrations; vector artwork stays sharp in B&W print."""
-    if n!=19:
+    if n not in (19,20):
         G.card(p,45,298,501,119,PALE)
     if n==16:
         t(p,"ARRAY ELEMENTS - INDEX AND VALUE ARE DIFFERENT",57,316,8.7,True)
@@ -297,18 +297,55 @@ def diagram(p,n):
             t(p,cache,x+9,312,8.2,True)
         t(p,"B: more cores and cache. A: higher clock speed.",57,338,8.0)
     elif n==20:
-        t(p,"EMBEDDED CONTROLLER: INPUT -> PROCESS -> OUTPUT",57,316,8.5,True)
-        for i,(label,detail) in enumerate([("INPUT","Water sensor"),
-                ("PROCESS","Wash program"),("OUTPUT","Drum motor")]):
-            x=59+i*165;B.box(p,x,333,151,57,WHITE,EDGE,1)
-            t(p,label,x+8,350,8.8,True)
-            t(p,detail,x+8,373,8.3)
+        # All three boxes are PDF vector shapes, sharp in black-and-white.
+        # I Do keeps the real washing-machine scenario: input / controller / output.
+        G.card(p,45,222,501,101,PALE)
+        t(p,"I DO - WASHING-MACHINE CONTROLLER",57,238,8.8,True)
+        for i,(label,detail) in enumerate([("INPUT","Water-level sensor"),
+                 ("PROCESS","Wash controller"),("OUTPUT","Drum motor")]):
+            x=59+i*165
+            B.box(p,x,249,151,48,WHITE,EDGE,1.0)
+            t(p,label,x+8,264,8.5,True)
+            t(p,detail,x+8,283,8.0)
             if i<2:
-                p.draw_line((x+152,357),(x+163,357),color=BLUE,width=1.6)
-        t(p,"The controller is built into a larger washing machine.",57,407,8.4)
+                p.draw_line((x+151,272),(x+163,272),color=BLUE,width=1.6)
+        t(p,"A dedicated controller is built into a larger washing machine.",57,313,7.9)
     else:raise AssertionError(n)
 
 def p2(p,n,d):
+    if n==20:
+        # Three *different* real classroom We Do tasks, rather than repeating
+        # the first one, while preserving the approved Lesson 002 4-page master.
+        t(p,"Learn and practise",45,76,15.2,True)
+        sec(p,"New learning - Four key ideas",103)
+        for i,(term,expl) in enumerate(CONCEPTS[n]):
+            y=127+i*28
+            B.box(p,45,y-12,501,25,WHITE,EDGE,.65)
+            t(p,term,53,y,8.2,True)
+            render_wrap(p,expl,195,y,338,7.7,10.0,limit=y+9)
+        diagram(p,n)
+        sec(p,"I Do - Embedded washing machine (4 marks)",335)
+        render_wrap(p,d["m"]["q"],45,353,492,8.15,10.75,True,limit=377)
+        steps=[
+            "1. JOB: the controller performs the washing-cycle task.",
+            "2. EMBEDDED [2]: built into a larger device [1]; designed for a dedicated job [1].",
+            "3. INPUT [1]: water-level (or temperature) sensor sends a reading.",
+            "4. OUTPUT [1]: controller switches the drum motor on/off. Total = 4 marks."
+        ]
+        for i,step in enumerate(steps):
+            render_wrap(p,step,49,395+i*23,485,7.95,10.2,limit=395+i*23+12)
+        sec(p,"We Do - Three guided questions (4 marks each)",493)
+        t(p,"BLACK PEN: identify the device / purpose / input / output.",45,512,8.0)
+        q1="1. Thermostat: why is the heating controller embedded? Identify its sensor input and output. [4]"
+        render_wrap(p,q1,45,532,490,8.2,10.5,limit=548)
+        rules(p,555,3,step=15)
+        q2="2. Pedestrian crossing: explain the controller's dedicated job, push-button input and signal-light output. [4]"
+        render_wrap(p,q2,45,612,490,8.1,10.4,limit=630)
+        rules(p,634,3,step=15)
+        q3="3. Fitness tracker: explain why low power and a limited interface suit a battery-powered device. [4]"
+        render_wrap(p,q3,45,690,490,8.1,10.4,limit=708)
+        rules(p,714,3,step=17)
+        return
     if n==19:
         # Four-page Lesson 002 template retained. Reflow the lesson-specific
         # content so all three real We Do questions have writing space.
@@ -445,7 +482,17 @@ def p4(p,n,d):
             y=175+(i-1)*46
             render_wrap(p,str(i)+". "+line,315,y,223,7.75,10.2,limit=y+31)
             tick(p,534,y-8)
-    if n==19:
+    if n==20:
+        sec(p,"We Do - Three model answers",337)
+        # The [1] mark labels match each four-mark online classroom model.
+        guided_answers=[
+            "1. Thermostat: built into heating system [1]; dedicated heat control [1]; temperature sensor input [1]; switches heating output [1].",
+            "2. Crossing: built into crossing [1]; dedicated signals [1]; push-button input [1]; red/green lights output [1].",
+            "3. Tracker: low power [1] for longer battery life [1]; limited interface [1] is enough for short readings [1]."
+        ]
+        for i,answer in enumerate(guided_answers):
+            render_wrap(p,answer,48,351+i*23,491,7.55,10.2,limit=351+i*23+12)
+    elif n==19:
         sec(p,"We Do - Three model answers",337)
         # All three model answers retain the OCR mark allocation.
         guided_answers=[
@@ -512,6 +559,19 @@ def validate(path,n,d):
                 assert re.sub(r"\s+"," ",plain(item["question"])).strip() in re.sub(r"\s+"," ",plain(text1)).strip(),(n,"missing live Do Now",item["question"])
             for option in d["print_retrieval"][1]["options"]:
                 assert option in text1,(n,"missing MCQ choice",option)
+            if n==20:
+                model=test[1].get_text()
+                # Distinct from the I Do: all three classroom We Do tasks
+                # must be present and sourced to their own scenario.
+                for expected in ["WASHING-MACHINE CONTROLLER","Water-level sensor",
+                                 "Wash controller","Drum motor","Thermostat",
+                                 "Pedestrian crossing","Fitness tracker",
+                                 "low power","limited interface"]:
+                    assert expected.lower() in model.lower(),(n,"missing real teaching example",expected)
+                review=test[3].get_text()
+                for expected in ["We Do - Three model answers","1. Thermostat:",
+                                 "2. Crossing:","3. Tracker:"]:
+                    assert expected in review,(n,"missing guided four-mark answer",expected)
             if n==19:
                 model=test[1].get_text()
                 for expected in ["CPU A","3.2 GHz","2 cores","4 MB cache",
