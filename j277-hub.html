@@ -527,16 +527,17 @@ function renderLessons(){
       const catchup=year===10?(catchupResourceRoutes[x]||null):null;
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
       const approvedPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;
-      const draftPdf=publishedDraft?.print_bw?.endsWith('.pdf')?publishedDraft.print_bw:null;
+      // Student Print is only offered when its approved four-page PDF exists.
+      // Old catalogue drafts are archived; never offer them as Print actions.
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
         // Interactive Catch up takes priority. Otherwise show the independent
         // draft booklet explicitly as Catch up draft, not as a finished quiz.
         learnHref:catchup||(publishedDraft?.learn_colour||null),
-        printHref:approvedPdf||draftPdf,
+        printHref:approvedPdf,
         learnLabel:catchup?'Catch up':(publishedDraft?'Catch up draft':'Catch up'),
-        printLabel:!approvedPdf&&draftPdf?'Print draft':'Print',
+        printLabel:'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
         specPoint:consolidationLessons.has(x)?'Synoptic':(info[1].match(/[12]\.\d+(?:\.\d+)?/)||[])[0],
         specRaw:info[1]
