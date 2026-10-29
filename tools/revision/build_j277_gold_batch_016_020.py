@@ -463,7 +463,7 @@ def validate(path,n,d):
                                for block in page.get_text("blocks") if len(block)>4),(n,"header overlay")
             text1=test[0].get_text()
             for item in d["print_retrieval"]:
-                assert plain(item["question"]) in plain(text1),(n,"missing live Do Now",item["question"])
+                assert re.sub(r"\s+"," ",plain(item["question"])).strip() in re.sub(r"\s+"," ",plain(text1)).strip(),(n,"missing live Do Now",item["question"])
             for option in d["print_retrieval"][1]["options"]:
                 assert option in text1,(n,"missing MCQ choice",option)
             cm=d.get("print_code_master")
