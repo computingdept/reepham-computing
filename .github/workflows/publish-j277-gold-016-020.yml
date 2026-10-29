@@ -34,7 +34,7 @@ jobs:
           import fitz
           hub=Path('j277-hub.html')
           source=hub.read_text(encoding='utf-8')
-          anchor="  15:'offline/booklets/j277/J277_Lesson_020_Gold_Standard_4_Page.pdf'"
+          anchor="  15:'offline/booklets/j277/J277_Lesson_015_Gold_Standard_4_Page.pdf'"
           additions=[f"  {n}:'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'" for n in range(16,21)]
           if not all(item in source for item in additions):
               assert source.count(anchor)==1, 'Print mapping changed; refusing unsafe update'
