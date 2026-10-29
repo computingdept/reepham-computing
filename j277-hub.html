@@ -309,12 +309,17 @@ const year11Journeys=[
 ];
 const pad=n=>String(n).padStart(3,'0');
 
-/* A single, visible navigation pattern replaces the mobile-only lesson sheet. */
-const independentResourceRoutes = {
-  1:'lessons/j277/lesson-001/independent.html?version=bw',
-  2:'lessons/j277/lesson-002/independent.html?version=bw',
-  3:'lessons/j277/lesson-003/independent.html?version=bw',
-  4:'lessons/j277/lesson-004/independent.html?version=bw'
+/* The central hub Print action always opens a PDF, never an HTML booklet.
+   Approved editions take priority; other lessons use published PDF catalogue entries only. */
+const approvedPrintPdfRoutes={
+  1:'offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf',
+  2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf',
+  3:'offline/booklets/j277/J277_Lesson_003_Gold_Standard_4_Page.pdf',
+  4:'offline/booklets/j277/J277_Lesson_004_Gold_Standard_4_Page.pdf',
+  5:'offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf',
+  6:'offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf',
+  7:'offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf',
+  8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'
 };
 /* Short self-marking catch-up lessons are distinct from full Teach and Print.
    Add each route only after its curriculum content and checks are published. */
@@ -350,7 +355,6 @@ const catchupResourceRoutes = {
   29:'lessons/j277/lesson-029/learn.html',
   30:'lessons/j277/lesson-030/learn.html'
 };
-function openLessonResource(n){return independentResourceRoutes[n] || null;}
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
@@ -383,32 +387,19 @@ function renderLessons(){
     for(let x=n;x<=end;x++){
       const live=liveMap[x];
       const info=lessonInfo(x);
-      const independent=year===10?openLessonResource(x):null;
       const catchup=year===10?(catchupResourceRoutes[x]||null):null;
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
-      // Lesson 002 pilot: the approved four-page PDF opens directly from Print.
-      // Shared hub-navigation.js already handles a single PDF without a format menu.
-      const approvedPrintPdfRoutes={
-        1:'offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf',
-        2:'offline/booklets/j277/J277_Lesson_002_Gold_Standard_4_Page.pdf',
-        3:'offline/booklets/j277/J277_Lesson_003_Gold_Standard_4_Page.pdf',
-        4:'offline/booklets/j277/J277_Lesson_004_Gold_Standard_4_Page.pdf',
-        5:'offline/booklets/j277/J277_Lesson_005_Gold_Standard_4_Page.pdf',
-        6:'offline/booklets/j277/J277_Lesson_006_Gold_Standard_4_Page.pdf',
-        7:'offline/booklets/j277/J277_Lesson_007_Gold_Standard_4_Page.pdf',
-        8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'
-      };
-      const pilotPrintPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;
+      const approvedPdf=year===10?(approvedPrintPdfRoutes[x]||null):null;
+      const draftPdf=publishedDraft?.print_bw?.endsWith('.pdf')?publishedDraft.print_bw:null;
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
         // Interactive Catch up takes priority. Otherwise show the independent
         // draft booklet explicitly as Catch up draft, not as a finished quiz.
         learnHref:catchup||(publishedDraft?.learn_colour||null),
-        printHref:pilotPrintPdf||independent||(publishedDraft?.print_bw||null),
-        printColourHref:pilotPrintPdf?null:(independent?independent.replace('version=bw','version=colour'):(publishedDraft?.learn_colour||null)),
+        printHref:approvedPdf||draftPdf,
         learnLabel:catchup?'Catch up':(publishedDraft?'Catch up draft':'Catch up'),
-        printLabel:!independent&&publishedDraft?'Print draft':'Print',
+        printLabel:!approvedPdf&&draftPdf?'Print draft':'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
         specPoint:consolidationLessons.has(x)?'Synoptic':(info[1].match(/[12]\.\d+(?:\.\d+)?/)||[])[0],
         specRaw:info[1]
