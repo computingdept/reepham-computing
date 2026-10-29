@@ -47,6 +47,7 @@
   }
   /* Local stroke icons for hub navigation only: no fonts, network or lesson assets. */
   function navIcon(name){
+    if(name==='Catch up draft')name='Catch up';
     const shapes={
       'Full lesson':'<path d="M12 7c-2.3-1.8-5.3-2.2-9-1v13c3.7-1.1 6.7-.8 9 1 2.3-1.8 5.3-2.1 9-1V6c-3.7-1.2-6.7-.8-9 1Z"/><path d="M12 7v13"/>',
       Learn:'<rect x="4" y="3" width="16" height="13" rx="2"/><path d="M2 20h20M7 16l-1 4M17 16l1 4"/>',
@@ -119,7 +120,8 @@
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
     const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
     const printColour=typeof o.printColourHref==='string'&&o.printColourHref.trim()?o.printColourHref:null;
-    const learnLabel=typeof o.learnLabel==='string'&&o.learnLabel.trim()?o.learnLabel:'Catch up';
+    // Limit copy to the two approved labels, including for older hub data.
+    const learnLabel=/(?:^|\s)draft\b/i.test(String(o.learnLabel||''))?'Catch up draft':'Catch up';
     const printLabel=typeof o.printLabel==='string'&&o.printLabel.trim()?o.printLabel:'Print';
     const primaryOnly=Boolean(teach&&!catchup&&!print);
     const entry=document.createElement('article');
@@ -128,6 +130,7 @@
     entry.dataset.menuOpen='false';
     entry.dataset.hasTeach=String(Boolean(teach));
     entry.dataset.hasLearn=String(Boolean(catchup));
+    entry.dataset.learnStatus=catchup&&learnLabel==='Catch up draft'?'draft':'ready';
     entry.dataset.hasPrint=String(Boolean(print));
     if(o.color)entry.style.setProperty('--spec-colour',o.color);
     const spec=specMarker(o.specPoint,o.specRaw);
@@ -203,7 +206,7 @@
       return el;
     }
     // Main card already opens the full lesson; never repeat its link below.
-    if(catchup)actions.append(makeAction(learnLabel,'Learn',catchup));
+    if(catchup)actions.append(makeAction(learnLabel,'Catch up',catchup));
     if(print){
       if(!printColour&&!/(?:[?&])version=bw(?:&|$)/.test(print)){
         actions.append(makeAction(printLabel,'Print',print));
@@ -354,10 +357,11 @@
     if(!lessons)return;
     const entries=Array.from(terms.querySelectorAll('.central-lesson'));
     const teach=entries.some(entry=>entry.dataset.hasTeach==='true');
-    const learn=entries.some(entry=>entry.dataset.hasLearn==='true');
+    const learn=entries.some(entry=>entry.dataset.hasLearn==='true'&&entry.dataset.learnStatus!=='draft');
+    const learnDraft=entries.some(entry=>entry.dataset.hasLearn==='true'&&entry.dataset.learnStatus==='draft');
     const print=entries.some(entry=>entry.dataset.hasPrint==='true');
     let key=lessons.querySelector('.lesson-usage-key');
-    if(!learn&&!print){
+    if(!learn&&!learnDraft&&!print){
       if(key)key.remove();
       return;
     }
@@ -376,7 +380,8 @@
     items.replaceChildren();
     const options=[
       [teach,'▣','Full lesson','Full teacher-led lesson, also available to revisit'],
-      [learn,'◇','Learn','Independent learning · self-marking or draft PDF'],
+      [learn,'◇','Catch up','Short interactive lesson · self-marking'],
+      [learnDraft,'◇','Catch up draft','Independent booklet · draft, not yet approved'],
       [print,'▤','Print','Paper worksheet · B&W or colour']
     ];
     options.forEach(function(option){
