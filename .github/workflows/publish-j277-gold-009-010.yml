@@ -1,0 +1,81 @@
+name: Publish J277 gold print batch Lessons 009-010
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/revision/build_j277_gold_batch_009_010.py'
+      - '.github/workflows/publish-j277-gold-009-010.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned four-page PDF renderer
+        run: python -m pip install pymupdf==1.26.4
+      - name: Build four-page PDFs from approved Lesson 002 master
+        run: python tools/revision/build_j277_gold_batch_009_010.py
+      - name: Verify PDF structure, coverage and prepare direct hub links
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz
+          from pathlib import Path
+          titles={9:'Secondary Storage and Device Choice',
+                  10:'CPU Architecture, Registers and FDE'}
+          root=Path('offline/booklets/j277')
+          for n,title in titles.items():
+              pdf=root/f'J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'
+              assert pdf.is_file() and pdf.stat().st_size>35000, (n,'missing/too small')
+              with fitz.open(pdf) as doc:
+                  assert len(doc)==4,(n,len(doc))
+                  for i,page in enumerate(doc,1):
+                      assert round(page.rect.width)==595 and round(page.rect.height)==842, (n,i,'not A4')
+                      txt=page.get_text()
+                      for term in (f'LESSON {n:03d}','BLACK PEN','GREEN PEN'):
+                          assert term in txt,(n,i,term)
+                      for block in page.get_text('dict')['blocks']:
+                          if block.get('type')!=0:continue
+                          bounds=fitz.Rect(block['bbox'])
+                          assert bounds.x0>=-0.5 and bounds.x1<=596 and bounds.y0>=-0.5 and bounds.y1<=843,(n,i,bounds)
+                  alltext='\n'.join(p.get_text() for p in doc)
+                  for term in ('Do Now','Code First','You Do','Try the question again',title):
+                      assert term in alltext,(n,term)
+          hub=Path('j277-hub.html')
+          src=hub.read_text(encoding='utf-8')
+          assert src.count('printHref:approvedPdf||draftPdf,')==1
+          assert 'independentResourceRoutes' not in src, 'Old HTML Print fallbacks were restored'
+          anchor="  8:'offline/booklets/j277/J277_Lesson_008_Gold_Standard_4_Page.pdf'"
+          next9="  9:'offline/booklets/j277/J277_Lesson_009_Gold_Standard_4_Page.pdf'"
+          next10="  10:'offline/booklets/j277/J277_Lesson_010_Gold_Standard_4_Page.pdf'"
+          if next9 not in src and next10 not in src:
+              assert src.count(anchor)==1,'Unsafe hub state: Lesson 008 anchor changed'
+              src=src.replace(anchor,anchor+',\n'+next9+',\n'+next10)
+              hub.write_text(src,encoding='utf-8')
+          else:
+              assert src.count(next9)==1 and src.count(next10)==1, 'Partial hub state'
+          for n in titles:
+              assert f"{n}:'offline/booklets/j277/J277_Lesson_{n:03d}_Gold_Standard_4_Page.pdf'" in src
+          print('PASS: both four-page PDFs, all pen routines, no HTML Print fallback, direct links')
+          PY
+      - name: Commit only verified PDFs and direct J277 Print links
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- offline/booklets/j277/J277_Lesson_009_Gold_Standard_4_Page.pdf
+          git add -- offline/booklets/j277/J277_Lesson_010_Gold_Standard_4_Page.pdf
+          git add -- j277-hub.html
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish J277 Lesson 009-010 four-page gold PDFs with direct Print links'
+            git push origin HEAD:main
+          fi
