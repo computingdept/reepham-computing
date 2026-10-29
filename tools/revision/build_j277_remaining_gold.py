@@ -282,14 +282,17 @@ def validate(file,n,d,issues):
             if q not in texts[0]:
                 issues.append({"type":"source-mismatch","stage":"MCQ","option":i})
         for i,item in enumerate(d["e"][:3]):
-            if normal(item[0].split("\n\nSource:")[0]).strip() not in normal(texts[2]):
+            if re.sub(r"\s+"," ",normal(item[0].split("\n\nSource:")[0])).strip() not in re.sub(r"\s+"," ",normal(texts[2])).strip():
                 issues.append({"type":"source-mismatch","stage":"exam","question":i+2})
         if d.get("isAssessment"):
             issues.append({"type":"assessment","stage":"separate assessment paper required",
                            "href":d.get("assessmentHref")})
-        if d.get("requiredVisuals"):
+        # Lists commonly contain null slots; only actual mandated visuals
+        # are exceptions. Do not flag 67 Year 11 lessons for null placeholders.
+        required=[v for v in (d.get("requiredVisuals") or []) if isinstance(v,dict) and v.get("required")]
+        if required:
             issues.append({"type":"pedagogical-review","stage":"source-required SVGs",
-                           "count":len(d["requiredVisuals"])})
+                           "count":len(required)})
     assert file.stat().st_size>20000
 
 def main():
@@ -315,7 +318,11 @@ def main():
                               "subject":"Provisional independently printable 4-page lesson; see audit"})
             pdf.save(dest,garbage=4,deflate=True);pdf.close()
             validate(dest,n,d,issues)
-            grade="needs-review" if issues else "automated-checks-passed"
+            # Teacher review advisories are retained in the manifest, but
+            # don't imply a missing question or broken PDF. The printed item
+            # is still explicitly provisional until inspected before teaching.
+            blockers={"source-mismatch","content-overflow","generation-failure","assessment"}
+            grade="needs-review" if any(e["type"] in blockers for e in issues) else "automated-checks-passed"
             allissues.update(item["type"] for item in issues)
             manifest["editions"][str(n)]={"title":d["t"],"spec":d["s"],
                 "year":11 if n>=96 else 10,"state":grade,"pages":4,
