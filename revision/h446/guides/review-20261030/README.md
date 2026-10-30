@@ -77,6 +77,18 @@ The draft now maps **108 skills to 96 active key destinations**: **73 reused old
 
 **191 other legacy keys remain unresolved.** The review-file checker is intentionally fail-closed if question-bank fields or the current map change; it also supports `--pdf ... --require-pdf` for full binary-hash and page tests. These are **structural tests, not a content or teacher-approval audit**. No live code was changed. `main` and rhsccs.org remain unchanged.
 
+## Latest working PDF: V4.2 — 396 pages (local review copy, not uploaded)
+
+A **four-page glossary-preservation supplement** has been appended to V4.1 to restore terminology from the final 15 pages added to the published 264-page guide. All 392 earlier pages remain in place, including their question/answer separation.
+
+- **Review PDF to upload:** `H446_Paper1_Review_v4_2_396pages_Glossary_Restored.pdf`
+- **SHA-256:** `e663c6e3e7a7ccb08a1a73dfbd763b4ae530f78c8881e7c21378e6d52b9b1672`
+- [V4.2 changes and checks](V4_2_LEGACY_GLOSSARY_RESTORATION_2026-10-30.md)
+- [Provisional mapping for 15 final source additions](V4_2_LAST_15_STABLE_KEY_CROSSWALK_REVIEW.csv)
+- **Important:** The GitHub review folder's uploaded PDF is still the **337-page v1**. The 396-page file has been generated for review in ChatGPT and requires an explicit binary upload to GitHub.
+
+The **264-page source-by-source preservation comparison is still incomplete**, and none of the 264 legacy page keys have been approved for live re-mapping. **Publication remains on hold.**
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
