@@ -107,7 +107,7 @@
         {type:'prompt',title:'Code First · predict, write, test, improve',text:clean(lesson.k.q)},
         {type:'code',title:'OCR exam reference language',lines:String(code).split('\n'),caption:'Predict what this code does before looking at the answer.'},
         {type:'facts',title:'Try these steps',items:(lesson.k.p||[]).map(clean)},
-        {type:'paragraph',title:'Code First · model answer (check afterwards)',text:clean(lesson.k.a)}
+        {type:'model',title:'Code First · check your prediction',text:clean(lesson.k.a)}
       ],
       questions:applyQuestions,
       writing:{prompt:clean(writingPair[0]),model:clean(writingPair[1]),checklist:['Answer every part of the question.','Use the correct Computing terminology.','Compare with the model, then improve your response.']}
