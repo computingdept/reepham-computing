@@ -15,6 +15,16 @@ This branch is a staging area for the 337-page visual-revision master assembled 
 - **Content:** Text of all 337 pages matches the original assembled 337-page master; 100 bookmarks and 89 links are retained.
 - **Note:** This re-exported/downloadable copy has a different binary file hash from the original master, while its extracted text and navigation counts match. This is a review copy, not a teacher-approved publication.
 
+## Next review PDF: corrections v2 — upload pending
+
+A corrected **337-page v2 PDF** has been generated in the ChatGPT conversation. It restores memory fragmentation and optical mark recognition in **eight existing pages**, adds practice/marking points, and preserves all 100 bookmarks and 89 links. It has **not** replaced the v1 PDF in this GitHub branch.
+
+- **File to upload:** `H446_Paper1_Review_337_pages_Corrections_v2.pdf`
+- **SHA-256:** `b264409263a09691f9bf5d017603661585693d79b3c0836ab62a935c93eef06c`
+- **Review notes:** [CORRECTIONS_V2_2026-10-30.md](CORRECTIONS_V2_2026-10-30.md)
+
+The first-pass audit used an archived 249-page guide. The present **264-page published PDF still requires a complete content comparison** before the student website can be updated.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
