@@ -280,7 +280,7 @@ body.course-hub.course-inline-nav.desktop-nav-merged:not([data-j277-tab="lessons
 </style><link rel="stylesheet" href="/revision/shared/revision-ui.css?v=20261026-desktop-grid-6"><link id="synergyHubPreviewCSS" rel="stylesheet" href="/assets/synergy-hub-preview.css?v=20261026-pilot1" media="not all">
 <script>if(new URLSearchParams(location.search).get('theme')!=='classic'){document.documentElement.classList.add('synergy-hub-preview');document.getElementById('synergyHubPreviewCSS').media='all';}</script>
 <link rel="stylesheet" href="assets/hub-monochrome.css?v=20261029-catchup-labels1">
-<script src="assets/hub-navigation.js?v=20261029-direct-print1"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
+<script src="assets/hub-navigation.js?v=20261030-j277-links2"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
 </head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand" href="/" aria-label="Learning Hub home"><div class="mark">CS</div><div class="brand-copy"><strong>REEPHAM HIGH SCHOOL &amp; COLLEGE</strong><span>COMPUTING</span></div></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
@@ -475,6 +475,7 @@ const approvedPrintPdfRoutes={
   32:'offline/booklets/j277/J277_Lesson_032_Gold_Standard_4_Page.pdf',
   33:'offline/booklets/j277/J277_Lesson_033_Gold_Standard_4_Page.pdf',
   34:'offline/booklets/j277/J277_Lesson_034_Gold_Standard_4_Page.pdf',
+  35:'offline/booklets/j277/J277_Lesson_035_Gold_Standard_4_Page.pdf',
   36:'offline/booklets/j277/J277_Lesson_036_Gold_Standard_4_Page.pdf',
   37:'offline/booklets/j277/J277_Lesson_037_Gold_Standard_4_Page.pdf',
   38:'offline/booklets/j277/J277_Lesson_038_Gold_Standard_4_Page.pdf',
@@ -489,6 +490,7 @@ const approvedPrintPdfRoutes={
   47:'offline/booklets/j277/J277_Lesson_047_Gold_Standard_4_Page.pdf',
   48:'offline/booklets/j277/J277_Lesson_048_Gold_Standard_4_Page.pdf',
   49:'offline/booklets/j277/J277_Lesson_049_Gold_Standard_4_Page.pdf',
+  50:'offline/booklets/j277/J277_Lesson_050_Gold_Standard_4_Page.pdf',
   51:'offline/booklets/j277/J277_Lesson_051_Gold_Standard_4_Page.pdf',
   52:'offline/booklets/j277/J277_Lesson_052_Gold_Standard_4_Page.pdf',
   53:'offline/booklets/j277/J277_Lesson_053_Gold_Standard_4_Page.pdf',
@@ -532,6 +534,7 @@ const approvedPrintPdfRoutes={
   91:'offline/booklets/j277/J277_Lesson_091_Gold_Standard_4_Page.pdf',
   92:'offline/booklets/j277/J277_Lesson_092_Gold_Standard_4_Page.pdf',
   93:'offline/booklets/j277/J277_Lesson_093_Gold_Standard_4_Page.pdf',
+  94:'offline/booklets/j277/J277_Lesson_094_Gold_Standard_4_Page.pdf',
   95:'offline/booklets/j277/J277_Lesson_095_Gold_Standard_4_Page.pdf',
   96:'offline/booklets/j277/J277_Lesson_096_Gold_Standard_4_Page.pdf',
   97:'offline/booklets/j277/J277_Lesson_097_Gold_Standard_4_Page.pdf',
@@ -557,6 +560,7 @@ const approvedPrintPdfRoutes={
   117:'offline/booklets/j277/J277_Lesson_117_Gold_Standard_4_Page.pdf',
   118:'offline/booklets/j277/J277_Lesson_118_Gold_Standard_4_Page.pdf',
   119:'offline/booklets/j277/J277_Lesson_119_Gold_Standard_4_Page.pdf',
+  120:'offline/booklets/j277/J277_Lesson_120_Gold_Standard_4_Page.pdf',
   121:'offline/booklets/j277/J277_Lesson_121_Gold_Standard_4_Page.pdf',
   122:'offline/booklets/j277/J277_Lesson_122_Gold_Standard_4_Page.pdf',
   123:'offline/booklets/j277/J277_Lesson_123_Gold_Standard_4_Page.pdf',
@@ -579,6 +583,7 @@ const approvedPrintPdfRoutes={
   140:'offline/booklets/j277/J277_Lesson_140_Gold_Standard_4_Page.pdf',
   141:'offline/booklets/j277/J277_Lesson_141_Gold_Standard_4_Page.pdf',
   142:'offline/booklets/j277/J277_Lesson_142_Gold_Standard_4_Page.pdf',
+  143:'offline/booklets/j277/J277_Lesson_143_Gold_Standard_4_Page.pdf',
   144:'offline/booklets/j277/J277_Lesson_144_Gold_Standard_4_Page.pdf',
   145:'offline/booklets/j277/J277_Lesson_145_Gold_Standard_4_Page.pdf',
   146:'offline/booklets/j277/J277_Lesson_146_Gold_Standard_4_Page.pdf',
@@ -601,40 +606,9 @@ const approvedPrintPdfRoutes={
   163:'offline/booklets/j277/J277_Lesson_163_Gold_Standard_4_Page.pdf',
   164:'offline/booklets/j277/J277_Lesson_164_Gold_Standard_4_Page.pdf'
 };
-/* Short self-marking catch-up lessons are distinct from full Teach and Print.
-   Add each route only after its curriculum content and checks are published. */
-const catchupResourceRoutes = {
-  1:'lessons/j277/lesson-001/learn.html',
-  2:'lessons/j277/lesson-002/learn.html',
-  3:'lessons/j277/lesson-003/learn.html',
-  4:'lessons/j277/lesson-004/learn.html',
-  5:'lessons/j277/lesson-005/learn.html',
-  6:'lessons/j277/lesson-006/learn.html',
-  7:'lessons/j277/lesson-007/learn.html',
-  8:'lessons/j277/lesson-008/learn.html',
-  9:'lessons/j277/lesson-009/learn.html',
-  10:'lessons/j277/lesson-010/learn.html',
-  11:'lessons/j277/lesson-011/learn.html',
-  12:'lessons/j277/lesson-012/learn.html',
-  13:'lessons/j277/lesson-013/learn.html',
-  14:'lessons/j277/lesson-014/learn.html',
-  15:'lessons/j277/lesson-015/learn.html',
-  16:'lessons/j277/lesson-016/learn.html',
-  17:'lessons/j277/lesson-017/learn.html',
-  18:'lessons/j277/lesson-018/learn.html',
-  19:'lessons/j277/lesson-019/learn.html',
-  20:'lessons/j277/lesson-020/learn.html',
-  21:'lessons/j277/lesson-021/learn.html',
-  22:'lessons/j277/lesson-022/learn.html',
-  23:'lessons/j277/lesson-023/learn.html',
-  24:'lessons/j277/lesson-024/learn.html',
-  25:'lessons/j277/lesson-025/learn.html',
-  26:'lessons/j277/lesson-026/learn.html',
-  27:'lessons/j277/lesson-027/learn.html',
-  28:'lessons/j277/lesson-028/learn.html',
-  29:'lessons/j277/lesson-029/learn.html',
-  30:'lessons/j277/lesson-030/learn.html'
-};
+/* J277 Catch Up always opens the interactive lesson, never the legacy PDF draft. */
+const catchupResourceRoute=number=>number>=1&&number<=164
+  ?'lessons/j277/lesson-'+pad(number)+'/learn.html':null;
 function openTab(name){const t=tabs.find(x=>x.dataset.tab===name)||tabs[0];document.body.dataset.j277Tab=t.dataset.tab;tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));panels.forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));}
 tabs.forEach(t=>t.addEventListener('click',()=>{openTab(t.dataset.tab);history.replaceState(null,'','#'+t.dataset.tab)}));
 yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.year)===year)));yearButtons.forEach(b=>b.addEventListener('click',()=>{year=Number(b.dataset.year);yearButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyYearTheme();updateYearNavigation();renderLessons();}));
@@ -667,19 +641,17 @@ function renderLessons(){
     for(let x=n;x<=end;x++){
       const live=liveMap[x];
       const info=lessonInfo(x);
-      const catchup=catchupResourceRoutes[x]||(x>=31&&x<=164?'lessons/j277/lesson-'+pad(x)+'/learn.html':null);
-      const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
+      const catchup=catchupResourceRoute(x);
+      
       const approvedPdf=approvedPrintPdfRoutes[x]||null;
-      // Student Print is only offered when its approved four-page PDF exists.
-      // Old catalogue drafts are archived; never offer them as Print actions.
+      // Print opens one of the 164 verified four-page A4 PDFs, never the old draft variants.
       grid.append(Navigation.createTile({
         number:pad(x),title:info[0],
         openHref:live?live+'#do-now':null,
-        // Interactive Catch up takes priority. Otherwise show the independent
-        // draft booklet explicitly as Catch up draft, not as a finished quiz.
-        learnHref:catchup||(publishedDraft?.learn_colour||null),
+        // The J277 Catch up destination is always the current interactive learning page.
+        learnHref:catchup,
         printHref:approvedPdf,
-        learnLabel:catchup?(x<=30?'Catch up':'Catch up draft'):(publishedDraft?'Catch up draft':'Catch up'),
+        learnLabel:'Catch up',
         printLabel:'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
         specPoint:consolidationLessons.has(x)?'Synoptic':(info[1].match(/[12]\.\d+(?:\.\d+)?/)||[])[0],

@@ -121,7 +121,7 @@
     return {
       schema_version:1,id:'j277-'+n,title:clean(lesson.t||entry.questions[0].lesson_title),
       year:lesson.year11?11:10,estimated_minutes:18,pass_percent:80,
-      intro:'Independent Catch Up based on the classroom lesson. Draft questions are awaiting teacher approval.',
+      intro:'Independent Catch Up based on the classroom lesson. Check your understanding and improve your answers.',
       draft:true,
       stages:[stageDoNow,stageI,stageWe,stageYou,{
         label:'Review & Improve',minutes:2,lead:'Review your answers, correct misconceptions and check the learning score.',
