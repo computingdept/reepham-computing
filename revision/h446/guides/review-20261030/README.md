@@ -58,6 +58,15 @@ All **108** skill-level Paper 1 page references from five live question banks re
 
 **No live files changed; quiz-link remapping and full content parity remain HOLD.**
 
+## 108 quiz destinations mapped for review (not live)
+
+The proposed V4.1 map now covers **all 108 Paper 1 quiz skills** with in-range teaching-page targets. It identifies **15 shared stable keys** whose skills need different destinations; these should be split deliberately at release rather than globally remapped.
+
+- [Proposed page for each of 108 skills (CSV)](V4_1_PROPOSED_108_SKILL_DESTINATIONS.csv)
+- [Review report and safe migration plan](V4_1_108_SKILL_LINK_REVIEW_REPORT.md)
+
+No quiz banks, generated links, guide PDF, or student site have been changed. Full preservation audit against the **current 264-page binary** is still outstanding.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
