@@ -57,12 +57,13 @@ a:focus-visible{outline:3px solid #c18b35;outline-offset:3px}
 <div class="index-actions" id="actions"></div></div><span class="hero-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
 </section>
 <div class="index-layout"><nav class="index-card index-nav" aria-label="This unit's contents"><h2>Contents</h2><ul id="contents"></ul><p class="small" style="margin-top:16px">Select a topic to find its specification checklist below.</p></nav>
-<div class="index-card"><h2>Topics to revise</h2><p>Use this index to plan a manageable section of revision. The full paper PDF retains its own clickable chapter contents and worked answers.</p><ol class="topic-list" id="topics"></ol><div class="index-note">The index organises the existing published guide; it is not a separate unit PDF. Topic practice is linked above where available.</div><nav class="unit-links" id="unit-links" aria-label="Previous and next units"></nav></div></div>
+<div class="index-card"><h2>Topics to revise</h2><p>Use this index to plan a manageable section of revision. The full paper PDF retains its own clickable chapter contents and worked answers.</p><ol class="topic-list" id="topics"></ol><div class="index-note">The unit PDF contains the original chapter pages, including worked examples and answers, plus clickable local contents. The complete paper guide includes cross-unit appendices and more exam practice.</div><nav class="unit-links" id="unit-links" aria-label="Previous and next units"></nav></div></div>
 </main>
 <script>
 'use strict';
 const paper1='/revision/h446/guides/H446_Paper_1_FINAL_Student_Revision_Guide.pdf?v=2026-10-30-final';
 const paper2='/revision/h446/guides/H446_Paper_2_FINAL_Student_Revision_Guide.pdf?v=2026-10-30-final';
+const unitPdfs={"1.1":"H446_Unit_1-1_Processors_IO_and_Storage.pdf","1.2":"H446_Unit_1-2_Software_and_Development.pdf","1.3":"H446_Unit_1-3_Exchanging_Data.pdf","1.4":"H446_Unit_1-4_Data_Types_Structures_and_Boolean_Algebra.pdf","1.5":"H446_Unit_1-5_Legal_Moral_and_Ethical_Issues.pdf","2.1":"H446_Unit_2-1_Computational_Thinking.pdf","2.2.1":"H446_Unit_2-2-1_Programming_Techniques.pdf","2.2.2":"H446_Unit_2-2-2_Computational_Methods.pdf","2.3":"H446_Unit_2-3_Algorithms.pdf"};
 const units=[
 {id:'1.1',paper:1,title:'Processors, input/output and storage',intro:'Processor design, performance, memory and storage choices.',quiz:'/revision/h446/section-1-1/index.html#1.1',topics:[
 ['1.1.1','Structure and function of the processor','CPU registers, the fetch-decode-execute cycle, performance and pipelining.'],
@@ -129,8 +130,11 @@ E('crumb').textContent=unit.id;
 E('paper-label').textContent='OCR H446 / Paper '+unit.paper+' / Unit '+unit.id;
 E('unit-heading').textContent=unit.title;
 E('intro').textContent=unit.intro;
-E('actions').append(a('Read complete Paper '+unit.paper+' guide',guide,'index-action primary'),a('Practise this unit',unit.quiz,'index-action'),a('All guides','/h446-hub.html#booklet','index-action'));
-E('actions').firstChild.target='_blank';E('actions').firstChild.rel='noopener';
+const chapter='/revision/h446/guides/units/'+unitPdfs[unit.id]+'?v=2026-10-30-units';
+const read=a('Read unit PDF',chapter,'index-action primary');read.target='_blank';read.rel='noopener';
+const download=a('Download unit PDF',chapter,'index-action');download.setAttribute('download','');
+const full=a('Complete Paper '+unit.paper+' guide',guide,'index-action');full.target='_blank';full.rel='noopener';
+E('actions').append(read,download,a('Practise this unit',unit.quiz,'index-action'),full);
 unit.topics.forEach((t,i)=>{const id='topic-'+(i+1);const item=make('li');item.append(a(t[0]+' · '+t[1],'#'+id,''));E('contents').append(item);
 const li=make('li','topic-item');li.id=id;const head=make('div','topic-head');head.append(make('span','topic-code',t[0]),make('h3','',t[1]));li.append(head,make('p','',t[2]));E('topics').append(li);});
 const inPaper=units.filter(x=>x.paper===unit.paper),idx=inPaper.findIndex(x=>x.id===unit.id);
