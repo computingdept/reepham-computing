@@ -199,3 +199,47 @@ body{
   #new-learning .nl-reference p,
   #new-learning .nl-reference li{font-size:18px;line-height:1.4}
 }
+
+/* Text hierarchy v3: consistent emphasis in existing two-column teaching phases.
+   Keep deliberate marked keywords, code, answer panels and phase interactions.
+   Do not make entire instructional paragraphs look like headings. */
+#new-learning .nl-explanation :is(.nl-stage,.nl-card) :is(p,li),
+#i-do .ido-method .ido-step :is(p,li),
+#we-do .wedo-practice .wedo-step :is(p,li),
+#new-learning .nl-reference :is(p,li),
+#i-do .ido-reference :is(p,li),
+#we-do .wedo-reference :is(p,li){
+  font-weight:500;
+}
+#new-learning :is(.nl-reference,.nl-explanation) h2,
+#i-do :is(.ido-reference,.ido-method) h2,
+#we-do :is(.wedo-reference,.wedo-practice) h2,
+#i-do .ido-method .ido-step h2,
+#we-do .wedo-practice .wedo-step h2{
+  font-weight:700;
+}
+#new-learning :is(.nl-reference,.nl-explanation) :is(p,li) strong,
+#i-do :is(.ido-reference,.ido-method) :is(p,li) strong,
+#we-do :is(.wedo-reference,.wedo-practice) :is(p,li) strong{
+  font-weight:700;
+}
+#new-learning :is(.nl-reference,.nl-explanation) .nl-stage-label,
+#i-do :is(.ido-reference,.ido-method) .ido-step-label,
+#we-do :is(.wedo-reference,.wedo-practice) .wedo-step-label,
+#new-learning :is(.nl-reference,.nl-explanation) .phase-tag,
+#i-do :is(.ido-reference,.ido-method) .phase-tag,
+#we-do :is(.wedo-reference,.wedo-practice) .phase-tag{
+  font-weight:650;
+  letter-spacing:.05em;
+}
+#new-learning :is(.nl-reference,.nl-explanation) :is(.nl-key,.key-result),
+#i-do :is(.ido-reference,.ido-method) .key-result,
+#we-do :is(.wedo-reference,.wedo-practice) .key-result{
+  font-weight:750;
+}
+/* Highlighting signals a keyword, not a larger change of font weight. */
+#new-learning :is(.nl-reference,.nl-explanation) mark.rhsc-keyword,
+#i-do :is(.ido-reference,.ido-method) mark.rhsc-keyword,
+#we-do :is(.wedo-reference,.wedo-practice) mark.rhsc-keyword{
+  font-weight:700;
+}
