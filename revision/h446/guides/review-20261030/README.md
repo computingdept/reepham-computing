@@ -34,6 +34,16 @@ Five full-page visual explanations have been recreated from the archived guide a
 - **SHA-256:** `1c3361137b9b88a73c4f90ebc8b73087ff8df58505535c10abfa8c6483f4fe45`
 - **Live site:** unchanged; release still **HOLD**.
 
+## Appendix coverage improvements v4 — 392-page PDF review copy available in ChatGPT
+
+The Appendix 5d/5f audit has been applied in a **new, separate 392-page teacher-review PDF**. The first 342 pages remain at their original page positions, followed by 50 pages of OCR-specific SQL, HTML, CSS, JavaScript, Boolean, ERD, LMC and OOP practice.
+
+- [Full changes, verification and page map](APPENDIX_EXPANSION_V4_2026-10-30.md)
+- **File to upload on this branch:** `H446_Paper1_Appendix_Complete_Review_v4_392_pages.pdf`
+- **SHA-256:** `690fb110a186af49bdc54d56d5b26fc9e40c1a90a45d71f7b40e76371e13360b`
+- The PDF currently in GitHub remains the **337-page v1**: v4 has **not** been uploaded there.
+- **Release: HOLD** until 264-page content parity, old-to-new stable quiz links and teacher verification are complete.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
