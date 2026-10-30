@@ -4,14 +4,16 @@
 
 This branch is a staging area for the 337-page visual-revision master assembled on **30 October 2026**. It does not replace the student guide or change the hub, lessons, guide-links.js, or revision quizzes.
 
-## Expected PDF upload
+## Uploaded PDF — verified 30 October 2026
 
-- **File:** `H446_Paper1_Visual_Revision_MASTER_337pp_TEACHER_REVIEW.pdf`
-- **Destination:** `revision/h446/guides/review-20261030/`
-- **Expected length:** 337 A4 pages
-- **File size:** 1,246,450 bytes
-- **SHA-256:** `b11228253a6ad1ef66046c3fd39281f065845b967b61d5c715d515fc086b2e13`
-- **IMPORTANT:** The PDF **has not yet been attached to this GitHub branch**. The source file currently exists as an artifact in the ChatGPT conversation; a binary upload is required before GitHub can preview it.
+- **File:** [H446_Paper1_Review_337_pages.pdf](H446_Paper1_Review_337_pages.pdf)
+- **Location:** `revision/h446/guides/review-20261030/`
+- **Length:** 337 A4 pages
+- **Uploaded size:** 1,271,443 bytes
+- **SHA-256:** `0761c29ddb6f307df9197e0e76bac8c3c7b156768b9108a1742ae897966a2955`
+- **Git blob SHA-1:** `1efb4d8f54da07c54d80f6ff8bffbe35919aabec` (matches GitHub file metadata)
+- **Content:** Text of all 337 pages matches the original assembled 337-page master; 100 bookmarks and 89 links are retained.
+- **Note:** This re-exported/downloadable copy has a different binary file hash from the original master, while its extracted text and navigation counts match. This is a review copy, not a teacher-approved publication.
 
 ## Contents
 
@@ -33,7 +35,7 @@ There are three pages of global navigation, 79 four-page learning cycles, 100 bo
 - [x] Selectable text present on each page
 - [x] PDF bookmarks and internal link targets checked
 - [x] No exactly duplicated text pages
-- [ ] Binary PDF uploaded and its SHA-256 verified
+- [x] Binary PDF uploaded and Git blob hash verified
 - [ ] Page-by-page content comparison with the current **264-page published H446 guide**
 - [ ] Validate diagrams, technical explanations and exam answers against OCR H446 and existing lessons
 - [ ] Validate legacy recall appendix against the latest 264-page guide
