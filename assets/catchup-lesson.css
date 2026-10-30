@@ -128,5 +128,27 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
  .catchup-order button{min-width:40px;min-height:42px}
  .catchup-question{padding:11px}
 }
+
+/* J277 Catch Up: identical five learning purposes to approved printable footer.
+   Informational, not another navigation system. No sticky elements. */
+.catchup-purpose-footer{margin-top:24px;padding:13px 0 0;border-top:1px solid #c7d3d5}
+.catchup-purpose-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.catchup-purpose-stage{display:flex;flex-direction:column;align-items:center;min-width:0;gap:5px;text-align:center;opacity:.72}
+.catchup-purpose-stage.is-active{opacity:1}
+.catchup-purpose-title{display:flex;align-items:center;justify-content:center;width:100%;min-height:38px;padding:6px 3px;background:#f4f9fb;border:1px solid #c4d7e0;border-radius:5px;color:#0a3258;font-weight:800;font-size:12px;line-height:1.15;overflow-wrap:break-word}
+.catchup-purpose-stage.is-active .catchup-purpose-title{background:#c1e5f5;border:2px solid #527fa2;padding:5px 2px}
+.catchup-purpose-description{display:block;font-size:11px;line-height:1.3;color:#53626c;overflow-wrap:break-word}
+.catchup-purpose-stage.is-active .catchup-purpose-description{color:#183a43;font-weight:800}
+.catchup-purpose-current{display:none}
+@media(max-width:620px){
+  .catchup-purpose-footer{margin-top:18px;padding-top:11px}
+  .catchup-purpose-stages{gap:4px}
+  .catchup-purpose-title{min-height:42px;font-size:10px;padding:5px 1px;overflow-wrap:anywhere}
+  .catchup-purpose-stage.is-active .catchup-purpose-title{padding:4px 0}
+  .catchup-purpose-description{display:none}
+  .catchup-purpose-current{display:block;margin:9px 0 0;text-align:center;font-size:13px;font-weight:750;color:#183a43}
+}
+@media(max-width:350px){.catchup-purpose-stages{gap:2px}.catchup-purpose-title{font-size:9.5px}}
+
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 @media print{.catchup-top,.catchup-progress,.catchup-actions,.catchup-nav{display:none!important}.catchup-card{box-shadow:none}}
