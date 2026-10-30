@@ -79,10 +79,11 @@
       return;
     }
     const lesson=path.match(/\/lessons\/(j277|h446)\/lesson-(\d{3})\//);
+    const welcome=/\/lessons\/j277\/J277Welcome\.html$/i.test(path);
     const ks3=path.match(/\/lessons\/year([789])\//);
-    if(lesson||ks3){
-      const course=lesson?lesson[1]:'ks3';
-      const year=lesson?yearFromLesson(course,Number(lesson[2])):Number(ks3[1]);
+    if(lesson||ks3||welcome){
+      const course=welcome?'j277':lesson?lesson[1]:'ks3';
+      const year=welcome?10:lesson?yearFromLesson(course,Number(lesson[2])):Number(ks3[1]);
       const link=hubHref(course,year,'lessons');
       const label='Year '+year+(course==='ks3'?' Computing lessons':' lessons');
       const existing=document.querySelector('.navwrap a.course-back, .lesson-header-links a.course-back');
@@ -104,10 +105,13 @@
       }
       return;
     }
-    if(path.endsWith('/year8-computing.html')||path.endsWith('/year8-revision-ap3.html')){
-      const section=path.endsWith('year8-computing.html')?'booklet':'revisionhub';
+    const ks3Legacy=path.match(/\/year([789])-computing\.html$/);
+    const oldRevision=path.endsWith('/year8-revision-ap3.html');
+    if(ks3Legacy||oldRevision){
+      const year=ks3Legacy?Number(ks3Legacy[1]):8;
+      const section=oldRevision?'revisionhub':year===8?'booklet':'lessons';
       const existing=document.querySelector('a.back');
-      if(existing)pair(existing,hubHref('ks3',8,section),'Year 8 '+(section==='booklet'?'booklet':'practice'));
+      if(existing)pair(existing,hubHref('ks3',year,section),'Year '+year+' '+(section==='booklet'?'booklet':section==='revisionhub'?'practice':'Computing lessons'));
       return;
     }
   }
