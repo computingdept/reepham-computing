@@ -2044,7 +2044,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261030-visual1">${lessonStyles}</head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261030-readable2">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.

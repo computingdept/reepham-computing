@@ -307,7 +307,7 @@
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261030-visual1">${lessonStyles}</head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261030-readable2">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
