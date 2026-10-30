@@ -5,8 +5,8 @@
 **Current GitHub review PDF:** still the 337-page v1.
 
 - New length: **392 A4 pages**: 342 preserved from v3 + 2 appendix introduction/index pages + 48 new teaching/practice pages.
-- SHA-256: `5eee6b7ff7b4a33218752595559feb55cffb37bdb8d4487b8cb696baa478380f`
-- Size: **1,454,791 bytes**
+- SHA-256: `690fb110a186af49bdc54d56d5b26fc9e40c1a90a45d71f7b40e76371e13360b`
+- Size: **1,455,412 bytes**
 - 120 PDF bookmarks, 164 internal links; all destinations checked.
 - Existing 342 page numbers were **not moved**.
 - 12 cycles with separately numbered Understand / Model / Try / Check pages, containing 36 original exam-style questions and their 36 indicative answers.
@@ -35,7 +35,7 @@ Clickable chapter links are provided from original pages 2, 84, 88, 114, 126, 13
 
 - [x] Exactly 392 A4 pages, all original 342 pages preserved.
 - [x] 120 bookmarks and 164 internal links, no invalid target pages.
-- [x] 12 four-phase cycles, 3 questions and 3 separate answer blocks each.
+- [x] 12 four-phase cycles, 3 questions and 3 separate answer blocks each. The JavaScript introduction also includes three explicit OCR output forms: HTML element update, document.write and alert.
 - [x] All new text stays inside the safe page margins.
 - [x] Sample pages rendered visually, including the new contents, SQL, HTML, ERD, LMC and OOP.
 - [ ] Teacher approval of technical accuracy, OCR 5f diagram conventions and accessibility.
