@@ -44,6 +44,12 @@ The Appendix 5d/5f audit has been applied in a **new, separate 392-page teacher-
 - The PDF currently in GitHub remains the **337-page v1**: v4 has **not** been uploaded there.
 - **Release: HOLD** until 264-page content parity, old-to-new stable quiz links and teacher verification are complete.
 
+## Appendix technical QA v4.1 — 392-page review PDF
+
+The latest **392-page** appendix-corrected review copy is `H446_Paper1_Appendix_Review_v4_1_392_pages.pdf` (SHA-256 `e351cc1c7b0a6b49ca0cbaf82eb06624b08dd36d685bbfb2c5f789f54575986d`). It corrects the SQL marking example, JavaScript form invocation and LMC mailbox naming. The PDF is available in the ChatGPT conversation **but has not been uploaded to this GitHub branch**.
+
+[Read the v4.1 technical QA report](APPENDIX_TECHNICAL_QA_V4_1_2026-10-30.md). The **release hold remains** until direct comparison with the 264-page published guide, mapping verification and teacher sign-off are complete.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
