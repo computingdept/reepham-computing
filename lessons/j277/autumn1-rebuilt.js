@@ -277,7 +277,7 @@
    
    </div></div></div></article>`;
   const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original OCR J277-style teaching question; not an official past-paper original. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related Paper 1 practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related marking guidance ↗</a>`:""}</p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · OCR J277 STYLE</span><h3>Exam practice</h3><div class="question-text"><p>${escape(question)}</p>${i===0?`<p class="source-note">Original OCR J277-style teaching question; not an official past-paper original. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related Paper 1 practice ↗</a>`:""}</p>`:""}</div></article>`);
   return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${exams}</div></div></section>`;
  }
  function vocabulary(lesson){
