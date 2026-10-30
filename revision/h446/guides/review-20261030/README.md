@@ -25,6 +25,15 @@ A corrected **337-page v2 PDF** has been generated in the ChatGPT conversation. 
 
 The first-pass audit used an archived 249-page guide. The present **264-page published PDF still requires a complete content comparison** before the student website can be updated.
 
+## Visual restoration v3 — new 342-page review PDF pending GitHub upload
+
+Five full-page visual explanations have been recreated from the archived guide and linked from the appropriate 1.1 learning cycles. The corrected 337-page v2 remains at the same page positions; five pages have been appended (338–342). **The uploaded GitHub PDF is still the 337-page v1.**
+
+- [Read the v3 contents and verification report](VISUAL_MEMORY_BRIDGES_V3_2026-10-30.md)
+- **File to upload:** `H446_Paper1_Review_342_pages_Visual_Bridges_v3.pdf`
+- **SHA-256:** `1c3361137b9b88a73c4f90ebc8b73087ff8df58505535c10abfa8c6483f4fe45`
+- **Live site:** unchanged; release still **HOLD**.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
