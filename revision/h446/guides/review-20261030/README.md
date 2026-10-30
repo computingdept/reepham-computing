@@ -50,6 +50,14 @@ The latest **392-page** appendix-corrected review copy is `H446_Paper1_Appendix_
 
 [Read the v4.1 technical QA report](APPENDIX_TECHNICAL_QA_V4_1_2026-10-30.md). The **release hold remains** until direct comparison with the 264-page published guide, mapping verification and teacher sign-off are complete.
 
+## Live quiz-reference audit — checked against main
+
+All **108** skill-level Paper 1 page references from five live question banks resolve to valid stable keys in the current 264-page map. They use **73** distinct keys, with **25 keys shared by multiple skills**. Some sharing needs separating for the 392-page guide, particularly SQL joins vs SQL modifications and CSS vs JavaScript.
+
+[Read the quiz-link integrity results and proposed split-key strategy](LIVE_QUIZ_LINK_INTEGRITY_AND_SPLIT_PLAN_2026-10-30.md).
+
+**No live files changed; quiz-link remapping and full content parity remain HOLD.**
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
