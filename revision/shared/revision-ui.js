@@ -143,3 +143,13 @@
   observer.observe(grid,{childList:true});
   queueMicrotask(enhanceDirectory);
 })();
+
+
+/* One shared, presentation-only website navigation. Safe when other systems also load it. */
+(function(){
+  if(document.querySelector('script[data-rhsc-site-nav]'))return;
+  const script=document.createElement('script');
+  script.src='/assets/site-nav.js?v=20261030-nav1';
+  script.dataset.rhscSiteNav='1';
+  document.head.appendChild(script);
+})();
