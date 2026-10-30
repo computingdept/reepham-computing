@@ -67,6 +67,16 @@ The proposed V4.1 map now covers **all 108 Paper 1 quiz skills** with in-range t
 
 No quiz banks, generated links, guide PDF, or student site have been changed. Full preservation audit against the **current 264-page binary** is still outstanding.
 
+## V4.1 staged key-split migration (review-only)
+
+The draft now maps **108 skills to 96 active key destinations**: **73 reused old keys plus 23 new split keys**. Its internal consistency checks pass, and **83 distinct proposed PDF pages** have been checked in the exact 392-page V4.1 file: all contain text, are within bounds and do not land on the self-marking/answer pages.
+
+- [Draft skill/key migration JSON](V4_1_STAGED_SKILL_KEY_MIGRATION.json)
+- [Read-only validation script](validate_staged_skill_map.py)
+- [Full 108-skill destination CSV](V4_1_PROPOSED_108_SKILL_DESTINATIONS.csv)
+
+**191 other legacy keys remain unresolved.** The review-file checker is intentionally fail-closed if question-bank fields or the current map change; it also supports `--pdf ... --require-pdf` for full binary-hash and page tests. These are **structural tests, not a content or teacher-approval audit**. No live code was changed. `main` and rhsccs.org remain unchanged.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
