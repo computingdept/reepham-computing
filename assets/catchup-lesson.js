@@ -228,7 +228,11 @@
       const yes=correct(q,current);
       const panel=$('div','catchup-feedback '+(yes?'correct':'review'));
       panel.append($('strong','',!did?'Answer needed':yes?'Correct':'Check and try again'));
-      panel.append($('p','',!did?'Choose or enter an answer, then check again.':q.feedback));
+      if(!did)panel.append($('p','','Choose or enter an answer, then check again.'));
+      else{
+        if(q.id.startsWith('dn')&&!yes)panel.append($('p','','Correct answer: '+q.answer));
+        panel.append($('p','',q.feedback));
+      }
       return panel;
     }
     function renderQuestion(q,index){
@@ -355,6 +359,9 @@
       const panel=$('section','catchup-result');
       panel.append($('h3','', 'Your catch-up result'));
       panel.append($('strong','',result.scored+' / '+all.length+' · '+result.pct+'%'));
+      const retrieval=cfg.stages[0].questions;
+      const retrievalCorrect=retrieval.filter(q=>state.checked[q.id]&&correct(q,read(q,state))).length;
+      panel.append($('p','', 'Do Now retrieval: '+retrievalCorrect+' / 4 (separate from the mastery score).'));
       let message;
       if(result.mastered)message='Mastery achieved: you reached at least '+cfg.pass_percent+'% and attempted and checked every question.';
       else if(result.checked<all.length)message='Attempt and check all '+all.length+' questions to finish. You can revisit any step.';
@@ -400,8 +407,10 @@
       function stageStatus(){
         const marked=info.questions.filter(q=>state.checked[q.id]&&attempted(q,read(q,state))).length;
         const good=info.questions.filter(q=>state.checked[q.id]&&correct(q,read(q,state))).length;
+        if(step===0)check.disabled=info.questions.some(q=>!attempted(q,read(q,state)));
         status.textContent=marked
           ?good+' / '+info.questions.length+' correct on '+(step===0?'Do Now':'this step')+' · '+marked+' attempted and checked.'+(step===0?' Retrieval is separate from the 80% mastery score.':'')
+          :step===0?'Answer all four Do Now questions, then select Check these answers.'
           :'Answer the questions, then select Check these answers.';
       }
       resetFeedback=()=>{
