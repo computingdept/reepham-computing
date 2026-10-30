@@ -1,0 +1,40 @@
+/* RHSC shared website navigation. Icon-only and scoped: does not style teaching phases. */
+.rhsc-site-nav{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0}
+.rhsc-site-nav-button,
+a.rhsc-site-nav-button,
+.course-hub .topbar a.rhsc-site-nav-button{
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 44px;width:44px;height:44px;min-height:44px;
+  padding:0!important;margin:0!important;box-sizing:border-box;
+  border:0!important;border-radius:8px;background:transparent!important;
+  color:#68766f!important;text-decoration:none!important;
+  font-size:0!important;line-height:1!important;
+}
+.rhsc-site-nav-button svg{display:block;width:18px;height:18px;flex:0 0 auto;pointer-events:none}
+.rhsc-site-nav-button:hover{background:#eff3f0!important;color:#21493b!important}
+.rhsc-site-nav-button:focus-visible{outline:3px solid #d59c32!important;outline-offset:1px}
+.navwrap > .rhsc-site-nav{width:100%;padding:2px 4px;border-bottom:1px solid var(--line,#dce5df)}
+.navwrap .lesson-header-links > .rhsc-site-nav{width:auto;padding:1px 4px}
+.navwrap .lesson-header-links{min-width:0}
+.navwrap .lesson-header-links .rhsc-site-nav .course-back{
+  display:inline-flex;flex:0 0 44px;width:44px;
+  border:0!important;background:transparent!important;
+}
+.navwrap .lesson-header-links > .lesson-resource-link{min-width:0}
+@media(max-width:700px){
+  .navwrap > .rhsc-site-nav{width:auto;padding:0 3px;border-right:1px solid var(--line,#dce5df);border-bottom:0}
+  .navwrap > .rhsc-site-nav .course-back{border-right:0!important}
+  .navwrap .lesson-header-links > .rhsc-site-nav{flex:0 0 auto}
+  .navwrap .lesson-header-links > .lesson-resource-link{flex:1 1 auto}
+}
+.catchup-top-inner .rhsc-site-nav{gap:2px}
+.catchup-top .rhsc-site-nav a.rhsc-site-nav-button{padding:0!important;border:0!important;background:transparent!important}
+.practice-nav .rhsc-site-nav{gap:2px;flex:0 0 auto}
+.practice-nav .rhsc-site-nav a.rhsc-site-nav-button{padding:0!important;border:0!important}
+.course-hub .topbar > a.rhsc-site-nav-button{flex:0 0 44px}
+.topbar > .rhsc-site-nav{flex:0 0 auto;gap:2px}
+@media(max-width:700px){
+  .topbar:has(> .rhsc-site-nav) > span:not(#screen-meta){display:none}
+  .topbar:has(> .rhsc-site-nav){gap:6px;padding-left:7px;padding-right:7px}
+}
+@media print{.rhsc-site-nav,.rhsc-site-nav-button{display:none!important}}
