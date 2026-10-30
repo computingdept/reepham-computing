@@ -46,6 +46,11 @@
     if(block.title)section.append($('h3','',block.title));
     if(block.type==='paragraph'||block.type==='example'||block.type==='hint'||block.type==='prompt'){
       section.append($('p','',block.text));
+    }else if(block.type==='model'){
+      const details=$('details','catchup-model');
+      details.append($('summary','',block.title||'Reveal model answer'));
+      details.append($('p','',block.text));
+      section.append(details);
     }else if(block.type==='facts'){
       const list=$('ul','catchup-facts');
       block.items.forEach(item=>list.append($('li','',item)));
