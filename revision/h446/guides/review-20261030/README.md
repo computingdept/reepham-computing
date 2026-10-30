@@ -89,6 +89,14 @@ A **four-page glossary-preservation supplement** has been appended to V4.1 to re
 
 The **264-page source-by-source preservation comparison is still incomplete**, and none of the 264 legacy page keys have been approved for live re-mapping. **Publication remains on hold.**
 
+## Both actual published source PDFs obtained — 30 October 2026
+
+The user uploaded the **current 264-page Paper 1 and 179-page Paper 2 PDFs**. Their Git blob hashes match the files on `main`. The earlier *source-unavailable* blocker has therefore been resolved. A direct preservation scan found original Paper 1 ethics/SQL practice and Paper 2 C# examples/recall that are not reproduced in the expanded teaching PDFs, even though related topics are taught.
+
+[View the source-verified, two-paper preservation audit](BOTH_PAPERS_DIRECT_SOURCE_PRESERVATION_AUDIT_2026-10-30.md).
+
+**Release still HOLD:** content reconciliation, teacher checking and 264/179 stable page-key verification are outstanding. Earlier audit notes stating the current source PDF was unavailable are superseded by this update. No live files were changed.
+
 ## Contents
 
 | Topic | Master PDF pages | Pages |
