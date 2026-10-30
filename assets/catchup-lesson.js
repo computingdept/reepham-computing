@@ -123,10 +123,28 @@
     if(!app||!configUrl)return;
     let cfg;
     try{
-      const res=await fetch(configUrl,{cache:'no-store'});
-      if(!res.ok)throw Error('Lesson content unavailable');
-      cfg=await res.json();
+      if(configUrl==='auto'){
+        if(!window.J277CatchupBuilder)throw Error('Catch Up lesson source unavailable');
+        const match=location.pathname.match(/lesson-(\d{3})\//);
+        if(!match)throw Error('Unknown J277 lesson number');
+        cfg=await window.J277CatchupBuilder.build(match[1]);
+      }else{
+        const res=await fetch(configUrl,{cache:'no-store'});
+        if(!res.ok)throw Error('Lesson content unavailable');
+        cfg=await res.json();
+      }
       if(!Array.isArray(cfg.stages)||cfg.stages.length!==5)throw Error('Invalid lesson stages');
+      // The independent route and the classroom share their four Do Now stems.
+      if(configUrl!=='auto'){
+        const bankRes=await fetch('../../../data/catchup/j277-donow-mcq-20261030.json',{cache:'no-store'});
+        if(!bankRes.ok)throw Error('Do Now MCQ source missing');
+        const bank=await bankRes.json();
+        const lessonNo=(cfg.id.match(/\d{3}/)||[])[0];
+        const questions=bank.lessons[lessonNo];
+        if(!questions||questions.length!==4)throw Error('Incomplete lesson-matched Do Now');
+        cfg.stages[0].questions=questions;
+      }
+      ['Do Now','I Do','We Do','You Do','Review & Improve'].forEach((name,i)=>cfg.stages[i].label=name);
       const ids=cfg.stages.flatMap(s=>s.questions.map(q=>q.id));
       if(ids.length!==new Set(ids).size)throw Error('Duplicate question IDs');
     }catch(e){
@@ -134,7 +152,9 @@
       console.error(e);
       return;
     }
-    const all=cfg.stages.flatMap(stage=>stage.questions);
+    // Do Now is retrieval and receives its own /4 score; mastery measures the
+    // 13 objective questions in I Do, We Do, You Do and Review & Improve.
+    const all=cfg.stages.slice(1).flatMap(stage=>stage.questions);
     const threshold=Math.ceil(all.length*Number(cfg.pass_percent)/100);
     const state=load(cfg.id);
     all.forEach(q=>q._state=state);
@@ -376,7 +396,7 @@
         const marked=info.questions.filter(q=>state.checked[q.id]&&attempted(q,read(q,state))).length;
         const good=info.questions.filter(q=>state.checked[q.id]&&correct(q,read(q,state))).length;
         status.textContent=marked
-          ?good+' / '+info.questions.length+' correct on this step · '+marked+' attempted and checked.'
+          ?good+' / '+info.questions.length+' correct on '+(step===0?'Do Now':'this step')+' · '+marked+' attempted and checked.'+(step===0?' Retrieval is separate from the 80% mastery score.':'')
           :'Answer the questions, then select Check these answers.';
       }
       resetFeedback=()=>{
