@@ -1680,7 +1680,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      </article>`
     : "";
   const paper=lesson.s.startsWith("1.1")?["qp11","ms11"]:lesson.s.startsWith("1.2")?["qp12","ms12"]:null;
-  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2+(lesson.priorExam?1:0)} · OCR J277 STYLE</span><h3>Exam practice</h3>${lesson.year11&&lesson.requiredVisuals?.[i]?.required?diagram(lesson.requiredVisuals[i]):""}<div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a> · <a href="${PMT[paper[1]]}" target="_blank" rel="noopener">related answers ↗</a>`:""}</p>`:""}</div></article>`);
+  const exams=arr(lesson.e,([question],i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2+(lesson.priorExam?1:0)} · OCR J277 STYLE</span><h3>Exam practice</h3>${lesson.year11&&lesson.requiredVisuals?.[i]?.required?diagram(lesson.requiredVisuals[i]):""}<div class="question-text"><p>${examWords(lesson,question)}</p>${i===0?`<p class="source-note">Practice question · source shown above. ${paper?`<a href="${PMT[paper[0]]}" target="_blank" rel="noopener">Related topic practice ↗</a>`:""}</p>`:""}</div></article>`);
   const extensions=lesson.year11&&lesson.challenge?
     ["stretch","mastery"].map((level,i)=>{
       const c=lesson.challenge[level],kind=i?"MASTERY · INDEPENDENT DESIGN":"STRETCH · ADAPT THE CODE";
