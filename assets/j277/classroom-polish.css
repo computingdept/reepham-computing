@@ -1,0 +1,116 @@
+/* J277 classroom visual polish — 30 October 2026
+   CSS-only. No phase, gesture, reveal, navigation or lesson content changes.
+   Deliberately does not modify the shared H446 CSS.
+   The legacy lesson Print shortcut is redundant: Print lives on the J277 hub. */
+
+:root{
+  --paper:#f5f7f6;
+  --line:#d7e1dc;
+  --radius:13px;
+  --shadow:0 5px 18px rgba(17,49,37,.055);
+}
+
+/* Remove obsolete legacy classroom shortcuts, not the hub's Print action. */
+body .navwrap .lesson-resource-link,
+body .navwrap .lesson-resource-print,
+body .mobile-lesson-status .lesson-resource-print{
+  display:none!important;
+}
+
+/* Navigation chrome: quieter colour, stronger active-state hierarchy. */
+.navwrap{
+  background:#fff;
+  box-shadow:2px 0 14px rgba(24,48,39,.035);
+}
+.course-back{
+  color:#526a60;
+  letter-spacing:.005em;
+  transition:background-color .15s ease,color .15s ease;
+}
+.phase-nav button{
+  font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+  font-weight:700;
+  letter-spacing:.002em;
+  margin-right:6px;
+  border-radius:0 8px 8px 0;
+  transition:background-color .15s ease,color .15s ease;
+}
+.phase-nav button:hover{
+  background:#f0f5f2;
+}
+.phase-nav button.active{
+  background:#e8f3ec;
+  color:#144a35;
+  box-shadow:inset 0 0 0 1px rgba(40,115,78,.07);
+}
+.nav-tools .control-btn{
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(16,94,59,.12);
+}
+.nav-tools .back-btn{
+  border-radius:10px;
+  box-shadow:none;
+}
+#page-count{
+  font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+  font-weight:650;
+  font-variant-numeric:tabular-nums;
+}
+
+/* Refinements only: keep all authored grids, heights, font sizes and working space. */
+section.page h1,
+section.page h2,
+section.page h3{
+  letter-spacing:-.015em;
+  text-wrap:pretty;
+}
+:is(.prompt-panel,.method-panel,.classroom-panel,.wedo-question,
+    .wedo-response,.exam-card,.nl-reference,.nl-explanation,
+    .ido-reference,.ido-method,.wedo-reference,.wedo-practice){
+  border-color:var(--line);
+  box-shadow:var(--shadow);
+}
+.phase-tag,
+.eyebrow{
+  letter-spacing:.055em;
+}
+
+/* Keep the compact phone phase header and swipe interactions untouched. */
+@media(max-width:900px){
+  .phase-nav button{
+    margin-right:0;
+    border-radius:8px 8px 0 0;
+  }
+}
+@media(max-width:700px){
+  .navwrap{
+    box-shadow:0 2px 9px rgba(24,48,39,.055);
+  }
+  .course-back{
+    letter-spacing:0;
+  }
+  .mobile-lesson-status{
+    background:#fff;
+  }
+}
+
+/* Lesson 113 is a standalone 47-screen presentation. Keep its layout intact. */
+.topbar{
+  box-shadow:0 2px 10px rgba(24,48,39,.055);
+}
+.footer{
+  box-shadow:0 -2px 10px rgba(24,48,39,.04);
+}
+.footer button{
+  font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+  transition:background-color .15s ease,color .15s ease;
+}
+.lesson-frame{
+  box-shadow:var(--shadow);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .course-back,.phase-nav button,.footer button{
+    transition:none;
+  }
+}
