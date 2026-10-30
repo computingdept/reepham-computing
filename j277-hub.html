@@ -667,7 +667,7 @@ function renderLessons(){
     for(let x=n;x<=end;x++){
       const live=liveMap[x];
       const info=lessonInfo(x);
-      const catchup=year===10?(catchupResourceRoutes[x]||null):null;
+      const catchup=catchupResourceRoutes[x]||(x>=31&&x<=164?'lessons/j277/lesson-'+pad(x)+'/learn.html':null);
       const publishedDraft=window.OfflineBooklets?.get('j277',x)||null;
       const approvedPdf=approvedPrintPdfRoutes[x]||null;
       // Student Print is only offered when its approved four-page PDF exists.
@@ -679,7 +679,7 @@ function renderLessons(){
         // draft booklet explicitly as Catch up draft, not as a finished quiz.
         learnHref:catchup||(publishedDraft?.learn_colour||null),
         printHref:approvedPdf,
-        learnLabel:catchup?'Catch up':(publishedDraft?'Catch up draft':'Catch up'),
+        learnLabel:catchup?(x<=30?'Catch up':'Catch up draft'):(publishedDraft?'Catch up draft':'Catch up'),
         printLabel:'Print',
         color:specPalette[sectionForLesson(x)]||assessmentColour,
         specPoint:consolidationLessons.has(x)?'Synoptic':(info[1].match(/[12]\.\d+(?:\.\d+)?/)||[])[0],
