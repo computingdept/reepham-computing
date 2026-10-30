@@ -637,6 +637,12 @@ function resetPhaseState(id){
     }
     page.dataset.answerMode='false';
     page.dataset.answerIndex='0';
+    // J277 safeguard: returning to You Do must never carry over visible
+    // self-marking panels from an earlier visit to the same phase.
+    // Keep H446 and the established review navigation untouched.
+    if(/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)){
+      page.querySelectorAll('.youdo-solution').forEach(answer=>{answer.hidden=true;});
+    }
     if(isH446RichReview(page)){
       prepareH446RichReview(page);
       showH446RichReview(page,false);
@@ -967,7 +973,9 @@ function updateControl(){
         }else if(page.dataset.youDoMode==='coding'){
           label=start<maxStart?'Next challenges →':'Continue → Key Vocabulary';
         }else{
-          label=start<maxStart?'Next questions →':'Continue → Key Vocabulary';
+          label=start<maxStart?'Next questions →':
+            /^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)
+              ?'Begin self-marking →':'Continue → Key Vocabulary';
         }
       }else{
         const stages=[...page.querySelectorAll('.youdo-stage')];
