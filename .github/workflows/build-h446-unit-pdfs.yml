@@ -1,0 +1,43 @@
+name: Build H446 unit revision PDFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_h446_unit_pdfs.py'
+      - '.github/workflows/build-h446-unit-pdfs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h446-unit-pdfs
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF library
+        run: python -m pip install 'pymupdf==1.26.4'
+      - name: Extract and validate all nine unit PDFs
+        run: python scripts/build_h446_unit_pdfs.py
+      - name: Commit verified chapter PDFs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revision/h446/guides/units/H446_Unit_*.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish nine verified H446 unit PDFs"
+            git push
+          else
+            echo "All chapter PDFs already up to date"
+          fi
