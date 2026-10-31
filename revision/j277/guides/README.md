@@ -18,7 +18,7 @@ The former 97-page `J277_Paper_2_Revision_Guide_AP1_Aligned.pdf` remains in the 
 
 ## Stable quiz links and future updates
 
-- `skill-index.json` is the sole editable source mapping all **61 J277 skill IDs** to OCR specification points, lessons, editions and guide pages (**33 Paper 1 / 28 Paper 2**).
+- `skill-index.json` is the sole editable source mapping all **69 J277 skill IDs** to OCR specification points, lessons, editions and guide pages (**36 Paper 1 / 33 Paper 2**).
 - `guide-links.js` is **generated**. Do not hand-edit it or embed page numbers inside MCQ banks.
 - On future editions, update the matching guide metadata and all affected page mappings in `skill-index.json`; run `python3 tools/revision/build_j277_guide_links.py` and `python3 tools/revision/build_j277_guide_links.py --check`.
 - Release through a branch, stage only required content and versioned PDF assets, run relevant technical and visual regression checks, obtain subject-owner review, then merge to `main`. Never update the hub links before matching PDFs exist.
