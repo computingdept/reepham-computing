@@ -143,6 +143,158 @@ const SKILLS = [
     ]
   },
   {
+    "id": "15-rights",
+    "section": "1.5",
+    "spec": "1.5.1(a)",
+    "title": "Data principles, individual rights and controls",
+    "lessons": [
+      157
+    ],
+    "page": 208,
+    "questions": [
+      {
+        "id": "15-rights-1",
+        "prompt": "A newsletter signup requests names, email addresses and shoe sizes. Which change most directly applies data minimisation?",
+        "answer": "Remove shoe size because it is unnecessary for the newsletter",
+        "options": [
+          "Remove shoe size because it is unnecessary for the newsletter",
+          "Encrypt the unnecessary shoe sizes",
+          "Keep the records indefinitely",
+          "Publish the form without any explanation"
+        ],
+        "explanation": "Minimisation is about collecting only needed fields; encryption protects data retained for a legitimate purpose.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-2",
+        "prompt": "A club collected addresses for delivery updates and now wants to use them for unrelated advertising. Which principle requires it to review that new purpose?",
+        "answer": "Purpose limitation",
+        "options": [
+          "Purpose limitation",
+          "Data availability",
+          "Bitwise integrity",
+          "CPU scheduling"
+        ],
+        "explanation": "Personal information should be used for specified purposes; an unrelated purpose needs proper assessment and lawful handling.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-3",
+        "prompt": "A parent asks an organisation what personal data it holds about them. Which individual right is most directly relevant?",
+        "answer": "Right of access",
+        "options": [
+          "Right of access",
+          "Right to rectification",
+          "Right to object",
+          "Right to data portability"
+        ],
+        "explanation": "An access request concerns obtaining personal data and information about its processing.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-4",
+        "prompt": "A club has recorded a member's email address incorrectly. Which right most directly enables the person to request correction?",
+        "answer": "Right to rectification",
+        "options": [
+          "Right to rectification",
+          "Right to access",
+          "Right to object",
+          "Right to portability"
+        ],
+        "explanation": "Rectification concerns inaccurate personal data.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-5",
+        "prompt": "An individual asks for all personal records to be deleted. Which response is legally more accurate?",
+        "answer": "Assess whether erasure applies and whether exceptions justify keeping some data",
+        "options": [
+          "Assess whether erasure applies and whether exceptions justify keeping some data",
+          "Delete everything immediately in every case",
+          "Refuse every deletion request automatically",
+          "Keep the data only because it has been encrypted"
+        ],
+        "explanation": "Erasure is not an unconditional right in every circumstance; applicable grounds and exceptions matter.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-6",
+        "prompt": "A school retains old mailing-list details with no remaining purpose. Which principle is most directly relevant?",
+        "answer": "Storage limitation",
+        "options": [
+          "Storage limitation",
+          "Network neutrality",
+          "Function cohesion",
+          "Selection control"
+        ],
+        "explanation": "Identifiable data should not be kept for longer than justified by the purpose and applicable obligations.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-7",
+        "prompt": "An organisation tells members what it collects, why, who receives it and how long it is kept. Which principle is being demonstrated most directly?",
+        "answer": "Transparency",
+        "options": [
+          "Transparency",
+          "Pipelining",
+          "Load balancing",
+          "Encapsulation"
+        ],
+        "explanation": "Providing clear information helps people understand how their data is processed.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-8",
+        "prompt": "Which measure most directly addresses unauthorised staff viewing of membership records?",
+        "answer": "Role-based access controls",
+        "options": [
+          "Role-based access controls",
+          "Collecting additional identifiers",
+          "Increasing browser cache",
+          "Removing all record validation"
+        ],
+        "explanation": "Permissions limit access to staff whose roles require the data.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-9",
+        "prompt": "An encrypted database contains far more personal information than a service needs. Which conclusion is most accurate?",
+        "answer": "Encryption does not remove the duty to minimise collection",
+        "options": [
+          "Encryption does not remove the duty to minimise collection",
+          "Encryption makes every collection lawful",
+          "Security and minimisation mean exactly the same thing",
+          "Encryption removes all individual rights"
+        ],
+        "explanation": "Security protects stored data; minimisation independently limits unnecessary collection.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      },
+      {
+        "id": "15-rights-10",
+        "prompt": "Which evidence most directly demonstrates accountability for personal-data handling?",
+        "answer": "Documented lawful purposes, retention rules and access reviews",
+        "options": [
+          "Documented lawful purposes, retention rules and access reviews",
+          "An undocumented assumption of consent",
+          "A password shared across all staff",
+          "Collecting all available fields"
+        ],
+        "explanation": "Accountability requires organisations to demonstrate compliance through documented decisions and safeguards.",
+        "skill": "Data principles, individual rights and controls",
+        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
+      }
+    ]
+  },
+  {
     "id": "15-misuse",
     "section": "1.5",
     "spec": "1.5.1(b)",
@@ -2342,157 +2494,5 @@ const SKILLS = [
       "prompt": "A dashboard adds icons but removes all text labels to save space. Write a conditional judgement about cultural accessibility.",
       "model": "Icons can help users scan information, but their meanings may be unfamiliar or culturally variable. Removing labels could exclude people even if the screen looks cleaner. I would test the design with affected users and retain concise accessible explanations rather than assume symbols are universally understood."
     }
-  },
-  {
-    "id": "15-rights",
-    "section": "1.5",
-    "spec": "1.5.1(a)",
-    "title": "Data principles, individual rights and controls",
-    "lessons": [
-      157
-    ],
-    "page": 208,
-    "questions": [
-      {
-        "id": "15-rights-1",
-        "prompt": "A newsletter signup requests names, email addresses and shoe sizes. Which change most directly applies data minimisation?",
-        "answer": "Remove shoe size because it is unnecessary for the newsletter",
-        "options": [
-          "Remove shoe size because it is unnecessary for the newsletter",
-          "Encrypt the unnecessary shoe sizes",
-          "Keep the records indefinitely",
-          "Publish the form without any explanation"
-        ],
-        "explanation": "Minimisation is about collecting only needed fields; encryption protects data retained for a legitimate purpose.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-2",
-        "prompt": "A club collected addresses for delivery updates and now wants to use them for unrelated advertising. Which principle requires it to review that new purpose?",
-        "answer": "Purpose limitation",
-        "options": [
-          "Purpose limitation",
-          "Data availability",
-          "Bitwise integrity",
-          "CPU scheduling"
-        ],
-        "explanation": "Personal information should be used for specified purposes; an unrelated purpose needs proper assessment and lawful handling.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-3",
-        "prompt": "A parent asks an organisation what personal data it holds about them. Which individual right is most directly relevant?",
-        "answer": "Right of access",
-        "options": [
-          "Right of access",
-          "Right to rectification",
-          "Right to object",
-          "Right to data portability"
-        ],
-        "explanation": "An access request concerns obtaining personal data and information about its processing.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-4",
-        "prompt": "A club has recorded a member's email address incorrectly. Which right most directly enables the person to request correction?",
-        "answer": "Right to rectification",
-        "options": [
-          "Right to rectification",
-          "Right to access",
-          "Right to object",
-          "Right to portability"
-        ],
-        "explanation": "Rectification concerns inaccurate personal data.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-5",
-        "prompt": "An individual asks for all personal records to be deleted. Which response is legally more accurate?",
-        "answer": "Assess whether erasure applies and whether exceptions justify keeping some data",
-        "options": [
-          "Assess whether erasure applies and whether exceptions justify keeping some data",
-          "Delete everything immediately in every case",
-          "Refuse every deletion request automatically",
-          "Keep the data only because it has been encrypted"
-        ],
-        "explanation": "Erasure is not an unconditional right in every circumstance; applicable grounds and exceptions matter.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-6",
-        "prompt": "A school retains old mailing-list details with no remaining purpose. Which principle is most directly relevant?",
-        "answer": "Storage limitation",
-        "options": [
-          "Storage limitation",
-          "Network neutrality",
-          "Function cohesion",
-          "Selection control"
-        ],
-        "explanation": "Identifiable data should not be kept for longer than justified by the purpose and applicable obligations.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-7",
-        "prompt": "An organisation tells members what it collects, why, who receives it and how long it is kept. Which principle is being demonstrated most directly?",
-        "answer": "Transparency",
-        "options": [
-          "Transparency",
-          "Pipelining",
-          "Load balancing",
-          "Encapsulation"
-        ],
-        "explanation": "Providing clear information helps people understand how their data is processed.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-8",
-        "prompt": "Which measure most directly addresses unauthorised staff viewing of membership records?",
-        "answer": "Role-based access controls",
-        "options": [
-          "Role-based access controls",
-          "Collecting additional identifiers",
-          "Increasing browser cache",
-          "Removing all record validation"
-        ],
-        "explanation": "Permissions limit access to staff whose roles require the data.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-9",
-        "prompt": "An encrypted database contains far more personal information than a service needs. Which conclusion is most accurate?",
-        "answer": "Encryption does not remove the duty to minimise collection",
-        "options": [
-          "Encryption does not remove the duty to minimise collection",
-          "Encryption makes every collection lawful",
-          "Security and minimisation mean exactly the same thing",
-          "Encryption removes all individual rights"
-        ],
-        "explanation": "Security protects stored data; minimisation independently limits unnecessary collection.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      },
-      {
-        "id": "15-rights-10",
-        "prompt": "Which evidence most directly demonstrates accountability for personal-data handling?",
-        "answer": "Documented lawful purposes, retention rules and access reviews",
-        "options": [
-          "Documented lawful purposes, retention rules and access reviews",
-          "An undocumented assumption of consent",
-          "A password shared across all staff",
-          "Collecting all available fields"
-        ],
-        "explanation": "Accountability requires organisations to demonstrate compliance through documented decisions and safeguards.",
-        "skill": "Data principles, individual rights and controls",
-        "source": "H446 final Paper 1 guide, data principles, rights and controls (pages 278–281)"
-      }
-    ]
   }
 ];
