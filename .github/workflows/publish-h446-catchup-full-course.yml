@@ -59,8 +59,8 @@ jobs:
               assert 'assets/catchup-lesson.js' in text,p
           # Pedagogical/provenance checks: 294 new Do Now sections must match
           # the classroom lesson's four retrieval stems and model answers.
-          # 036/037 have no conventional retrieval; 058 contains a documented
-          # source typo and uses the intended BST question recovered from HTML.
+          # 036/037 have no conventional retrieval; 20 source lessons have a
+          # malformed Q4 and use the intended question recovered from HTML.
           import importlib.util
           from bs4 import BeautifulSoup
           spec=importlib.util.spec_from_file_location(
@@ -79,7 +79,7 @@ jobs:
               assert '14 of 17 correct' in (pages/f'lesson-{p}'/'learn.html').read_text(encoding='utf-8'),p
               truth=tuple(q['answer'] for q in cfg['stages'][4]['questions'])
               factual_patterns.add(truth)
-              if n not in (36,37,58):
+              if n not in (36,37) and n not in builder.SOURCE_RETRIEVAL_CORRECTIONS:
                   source=(pages/f'lesson-{p}'/'index.html').read_text(encoding='utf-8')
                   original=builder.donow_of(BeautifulSoup(source,'html.parser'))
                   assert len(original)==4,p
@@ -91,7 +91,9 @@ jobs:
                                  for q in cfg['stages'][3]['questions']),p
           assert len(factual_patterns)>2, 'Predictable True/False answer key'
           assert len(report['protected_assessment_lesson_ids'])==len(builder.PROTECTED_ASSESSMENTS)
-          assert next(x for x in report['records'] if x['id']=='058')['retrieval_source_correction']
+          assert len(report['reconstructed_retrieval_lesson_ids'])==len(builder.SOURCE_RETRIEVAL_CORRECTIONS)==20
+          assert all(next(x for x in report['records'] if x['id']==f'{n:03d}')['retrieval_source_correction']
+                     for n in builder.SOURCE_RETRIEVAL_CORRECTIONS)
           print('PASS: 294 Do Now sources, assessment protection, varied review keys and accurate mastery labels')
           assert 'x<=320' in hub and 'x<=160' in hub
           print('PASS: all 300 H446 Catch-Up JSON and HTML routes, 80% mastery and question correctness structure')
