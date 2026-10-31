@@ -767,5 +767,614 @@ const SKILLS = [
         "skill": "Thinking concurrently"
       }
     ]
+  },
+  {
+    "id": "21-assumptions",
+    "section": "2.1",
+    "spec": "2.1.1(c,d)",
+    "title": "Abstraction: assumptions and model validity",
+    "lessons": [
+      59,
+      60
+    ],
+    "page": 111,
+    "questions": [
+      {
+        "id": "21-assumptions-1",
+        "prompt": "A route model assumes every train runs exactly on schedule. Which real event most directly tests that assumption?",
+        "answer": "A significant train delay",
+        "options": [
+          "A significant train delay",
+          "A change in station wall colour",
+          "A new poster design",
+          "A new logo font"
+        ],
+        "explanation": "Unexpected delays challenge the assumed journey times, whereas decoration does not affect that model's objective.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-2",
+        "prompt": "A model gives correct results for typical journeys but is wrong when a lift is closed. What is the strongest conclusion?",
+        "answer": "The model may omit a constraint needed for accessible routes",
+        "options": [
+          "The model may omit a constraint needed for accessible routes",
+          "The model must represent every station's appearance",
+          "All abstraction is invalid",
+          "The journey-time weights are automatically wrong"
+        ],
+        "explanation": "The model must retain accessibility constraints when its purpose includes accessible routing.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-3",
+        "prompt": "A library reminder model uses due date and whether a book is returned. Which additional field matters when renewals are allowed?",
+        "answer": "The revised due date",
+        "options": [
+          "The revised due date",
+          "Cover colour",
+          "Shelf paint",
+          "Book jacket font"
+        ],
+        "explanation": "A renewal changes whether the loan is overdue, so the revised date affects the output.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-4",
+        "prompt": "Which test best validates an abstract model of overdue notices?",
+        "answer": "Compare predicted notices with real boundary and exception cases",
+        "options": [
+          "Compare predicted notices with real boundary and exception cases",
+          "Check that the diagram uses attractive colours",
+          "Count the number of variable names",
+          "Assume a normal case proves correctness"
+        ],
+        "explanation": "Model validation checks its predictions against realistic and boundary cases.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-5",
+        "prompt": "A map removes platform-accessibility information. When should that detail be restored?",
+        "answer": "When the task requires a step-free route",
+        "options": [
+          "When the task requires a step-free route",
+          "Whenever a map is displayed in colour",
+          "Only when every journey is the same length",
+          "Only if the station names are abbreviated"
+        ],
+        "explanation": "Relevance is defined by the task's constraints, not a fixed list of details to discard.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-6",
+        "prompt": "A sales model assumes a product's price never changes, but the shop runs timed discounts. What is most likely wrong?",
+        "answer": "The assumption can give incorrect totals at discount times",
+        "options": [
+          "The assumption can give incorrect totals at discount times",
+          "The model has too many input variables",
+          "Every discounted sale must be excluded",
+          "The model's output must be a text string"
+        ],
+        "explanation": "If price depends on time, omitting time or the applicable price can make results incorrect.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-7",
+        "prompt": "Which is a useful assumption to state when comparing two algorithms on the same workload?",
+        "answer": "Both receive the same input data under comparable conditions",
+        "options": [
+          "Both receive the same input data under comparable conditions",
+          "One algorithm may have less data without reporting it",
+          "Clock speed cannot affect execution time",
+          "Memory requirements never matter"
+        ],
+        "explanation": "A fair comparison needs comparable workloads and a declared measurement setup.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-8",
+        "prompt": "A model's objective changes from shortest distance to shortest journey time. Which data probably becomes necessary?",
+        "answer": "Travel-time costs for each usable connection",
+        "options": [
+          "Travel-time costs for each usable connection",
+          "The alphabetic order of station names",
+          "The physical colour of route lines",
+          "A different font for distances"
+        ],
+        "explanation": "The objective defines the edge weight; distance alone may not determine time.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-9",
+        "prompt": "An abstraction excludes a rare exception that changes the required output. What should the developer do?",
+        "answer": "Revise the model and test the exception",
+        "options": [
+          "Revise the model and test the exception",
+          "Keep the model unchanged because the case is rare",
+          "Add unrelated detail to every record",
+          "Replace validation with a simpler diagram"
+        ],
+        "explanation": "Relevant exceptions must be included or handled explicitly for correctness.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      },
+      {
+        "id": "21-assumptions-10",
+        "prompt": "A library-notice model works for returned books but incorrectly notifies loans returned just before closing. Which is the best first investigation?",
+        "answer": "Check how return times and overdue boundaries are represented",
+        "options": [
+          "Check how return times and overdue boundaries are represented",
+          "Remove borrower identifiers",
+          "Increase the screen resolution",
+          "Sort the books by colour"
+        ],
+        "explanation": "The output depends on return timing and boundary policy; inspect those assumptions first.",
+        "skill": "Abstraction: assumptions and model validity",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 12–15"
+      }
+    ]
+  },
+  {
+    "id": "21-caching",
+    "section": "2.1",
+    "spec": "2.1.2(c)",
+    "title": "Thinking ahead: caching",
+    "lessons": [
+      61
+    ],
+    "page": 112,
+    "questions": [
+      {
+        "id": "21-caching-1",
+        "prompt": "A computed result is reused for the same valid inputs. What is the main potential benefit of caching it?",
+        "answer": "Avoiding repeated expensive computation",
+        "options": [
+          "Avoiding repeated expensive computation",
+          "Making the algorithm always correct",
+          "Reducing every output's size",
+          "Removing the need for invalidation"
+        ],
+        "explanation": "A cache trades storage and maintenance for less repeated processing.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-2",
+        "prompt": "A timetable is updated but cached journey times remain unchanged. What problem occurs?",
+        "answer": "Stale cached data",
+        "options": [
+          "Stale cached data",
+          "A guaranteed cache hit with correct data",
+          "A stack overflow caused by a cache",
+          "An improved accuracy guarantee"
+        ],
+        "explanation": "Cached values can become out of date when their sources change.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-3",
+        "prompt": "Which situation is most likely to benefit from caching?",
+        "answer": "An expensive result requested repeatedly with unchanged inputs",
+        "options": [
+          "An expensive result requested repeatedly with unchanged inputs",
+          "A one-off calculation never reused",
+          "A result that changes on every read",
+          "Data that must never be stored"
+        ],
+        "explanation": "Repeated use of a stable expensive result makes the saved computation valuable.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-4",
+        "prompt": "A cache returns the stored result for a matching request. What is this called?",
+        "answer": "Cache hit",
+        "options": [
+          "Cache hit",
+          "Cache miss",
+          "Cache invalidation",
+          "Cache eviction"
+        ],
+        "explanation": "A hit means a suitable stored result was found.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-5",
+        "prompt": "A requested result is not in the cache. What is the normal next step?",
+        "answer": "Compute or fetch the result before optionally storing it",
+        "options": [
+          "Compute or fetch the result before optionally storing it",
+          "Return an unrelated stored value",
+          "Assume the result must be zero",
+          "Mark all other entries invalid"
+        ],
+        "explanation": "A cache miss requires a valid fallback before the new result can be cached.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-6",
+        "prompt": "A cache stores a price quote keyed only by product ID even though price depends on delivery region. What is the flaw?",
+        "answer": "The key omits an input that changes the result",
+        "options": [
+          "The key omits an input that changes the result",
+          "The key is too long",
+          "The price should never be cached",
+          "The algorithm uses a number rather than text"
+        ],
+        "explanation": "Cache keys must distinguish inputs on which the output depends.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-7",
+        "prompt": "What is a realistic drawback of caching a very large number of rarely reused results?",
+        "answer": "Additional memory usage with little time saved",
+        "options": [
+          "Additional memory usage with little time saved",
+          "Automatic elimination of memory use",
+          "Guaranteed improvement for every request",
+          "Loss of all ability to calculate new values"
+        ],
+        "explanation": "Cache entries consume resources and are not always worth keeping.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-8",
+        "prompt": "A school website caches a revision-page list but the list changes when a new unit is published. What is an appropriate design decision?",
+        "answer": "Invalidate or refresh the cache when the list changes",
+        "options": [
+          "Invalidate or refresh the cache when the list changes",
+          "Keep old entries indefinitely",
+          "Stop checking the source permanently",
+          "Treat stale entries as the only truth"
+        ],
+        "explanation": "Cache invalidation keeps the stored view consistent with the underlying data.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-9",
+        "prompt": "What can happen if two different requests mistakenly use the same cache key?",
+        "answer": "An incorrect result can be returned for one request",
+        "options": [
+          "An incorrect result can be returned for one request",
+          "The result must become faster and correct",
+          "The cache automatically distinguishes requests",
+          "Both inputs become identical"
+        ],
+        "explanation": "A key collision at the application level can reuse data from the wrong request.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      },
+      {
+        "id": "21-caching-10",
+        "prompt": "When is caching less appropriate?",
+        "answer": "When results change continually and validity cannot be checked cheaply",
+        "options": [
+          "When results change continually and validity cannot be checked cheaply",
+          "When results are costly and repeat often",
+          "When unchanged inputs yield identical outputs",
+          "When a bounded cache fits available memory"
+        ],
+        "explanation": "Frequent change can create invalidation costs and make cached values unreliable.",
+        "skill": "Thinking ahead: caching",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 20–23"
+      }
+    ]
+  },
+  {
+    "id": "21-reuse",
+    "section": "2.1",
+    "spec": "2.1.2(d)",
+    "title": "Thinking ahead: reusable components",
+    "lessons": [
+      61
+    ],
+    "page": 112,
+    "questions": [
+      {
+        "id": "21-reuse-1",
+        "prompt": "Two applications need the same tested postcode-validation rule. What is a good design choice?",
+        "answer": "Provide a reusable validation component with a clear interface",
+        "options": [
+          "Provide a reusable validation component with a clear interface",
+          "Duplicate separate untested rules in every screen",
+          "Store rules only in interface colours",
+          "Remove all input checks"
+        ],
+        "explanation": "Reuse avoids needless duplication and allows consistent correction.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-2",
+        "prompt": "Before using an existing payment component, what should be checked?",
+        "answer": "Its inputs, outputs, behaviour and compatibility with the new system",
+        "options": [
+          "Its inputs, outputs, behaviour and compatibility with the new system",
+          "Its logo colour alone",
+          "Only its filename length",
+          "Whether its source has the fewest lines"
+        ],
+        "explanation": "An interface contract and compatibility are essential for safe reuse.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-3",
+        "prompt": "What is a potential maintenance advantage of using one shared calculation function?",
+        "answer": "One tested fix can benefit every caller",
+        "options": [
+          "One tested fix can benefit every caller",
+          "Every caller becomes independent of updates",
+          "All callers receive identical inputs automatically",
+          "Functions no longer need tests"
+        ],
+        "explanation": "Sharing a component reduces duplicated fixes, subject to regression testing.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-4",
+        "prompt": "What is a useful precondition for a function that calculates an average by dividing by a list length?",
+        "answer": "The list is nonempty",
+        "options": [
+          "The list is nonempty",
+          "The list is sorted alphabetically",
+          "The output is always an integer",
+          "The list contains only unique values"
+        ],
+        "explanation": "An empty list leads to division by zero unless handled separately.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-5",
+        "prompt": "What does an interface describe for a reusable function?",
+        "answer": "How callers supply inputs and receive results",
+        "options": [
+          "How callers supply inputs and receive results",
+          "Only how its code is indented",
+          "The colour used for its icon",
+          "The order in which the code was written"
+        ],
+        "explanation": "An interface is the contract between the component and its callers.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-6",
+        "prompt": "A reused routine silently changes a global variable that callers depend on. What risk does this create?",
+        "answer": "Unexpected side effects in other parts of the system",
+        "options": [
+          "Unexpected side effects in other parts of the system",
+          "Guaranteed stronger modularity",
+          "Elimination of testing",
+          "Automatic isolation of all state"
+        ],
+        "explanation": "Hidden mutation makes component behaviour harder to predict and reuse.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-7",
+        "prompt": "A shared component gets a new version that changes its argument order. What should the team test?",
+        "answer": "Every caller's compatibility with the changed interface",
+        "options": [
+          "Every caller's compatibility with the changed interface",
+          "Only the component's header colour",
+          "Only how many functions are in the file",
+          "Nothing because reuse guarantees compatibility"
+        ],
+        "explanation": "Breaking interface changes can affect every calling program.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-8",
+        "prompt": "Which design most directly supports reuse of a search routine?",
+        "answer": "Accept the dataset and target as parameters",
+        "options": [
+          "Accept the dataset and target as parameters",
+          "Hard-code one school's pupil list",
+          "Read an unnamed global list only",
+          "Return the same fixed index for every search"
+        ],
+        "explanation": "Parameterisation avoids tying the component to one fixed dataset.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-9",
+        "prompt": "Why is a reusable component still tested in a new application?",
+        "answer": "Integration assumptions and edge cases may differ from earlier uses",
+        "options": [
+          "Integration assumptions and edge cases may differ from earlier uses",
+          "Reuse always introduces a new syntax error",
+          "Its old tests are necessarily false",
+          "Testing only matters for new code"
+        ],
+        "explanation": "A previously tested component can fail if new callers violate assumptions.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      },
+      {
+        "id": "21-reuse-10",
+        "prompt": "A library function performs input validation and also updates a public web page unexpectedly. What would improve its reusability?",
+        "answer": "Separate validation from unrelated display effects",
+        "options": [
+          "Separate validation from unrelated display effects",
+          "Add more unrelated display updates",
+          "Hide the extra effect from documentation",
+          "Make every caller use the same page"
+        ],
+        "explanation": "A component with one focused responsibility and explicit effects is easier to reuse.",
+        "skill": "Thinking ahead: reusable components",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 24–27"
+      }
+    ]
+  },
+  {
+    "id": "21-tradeoffs",
+    "section": "2.1",
+    "spec": "2.1.5(b)",
+    "title": "Thinking concurrently: trade-offs",
+    "lessons": [
+      64
+    ],
+    "page": 101,
+    "questions": [
+      {
+        "id": "21-tradeoffs-1",
+        "prompt": "Two independent tasks take 3 and 5 seconds. Under ideal parallel execution on separate resources with no overhead, how long until both finish?",
+        "answer": "5 seconds",
+        "options": [
+          "5 seconds",
+          "8 seconds",
+          "3 seconds",
+          "15 seconds"
+        ],
+        "explanation": "Both start together and completion is determined by the slower task.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-2",
+        "prompt": "Two tasks both update the same shared total without synchronisation. What can happen?",
+        "answer": "A race condition causes a lost update",
+        "options": [
+          "A race condition causes a lost update",
+          "The sum is guaranteed correct",
+          "Both writes automatically become atomic",
+          "Concurrency removes shared-state risks"
+        ],
+        "explanation": "Interleaved reads and writes can overwrite a prior update.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-3",
+        "prompt": "Why can splitting a tiny calculation into several threads make it slower?",
+        "answer": "Thread creation and coordination may outweigh useful parallel work",
+        "options": [
+          "Thread creation and coordination may outweigh useful parallel work",
+          "Parallel work always has zero overhead",
+          "Threads remove every serial operation",
+          "The CPU performs no context switching"
+        ],
+        "explanation": "Coordination overhead can exceed the saved calculation time.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-4",
+        "prompt": "Task C requires the results of independent tasks A and B. Which schedule preserves dependencies?",
+        "answer": "Run A and B concurrently, then C after both finish",
+        "options": [
+          "Run A and B concurrently, then C after both finish",
+          "Start C before A and B produce results",
+          "Run C instead of A and B",
+          "Force A to read C's missing result"
+        ],
+        "explanation": "C cannot run correctly until its required inputs from both tasks exist.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-5",
+        "prompt": "A shared printer can serve only one print job at a time. What limits the gain from concurrent requests?",
+        "answer": "Contention for the single printer resource",
+        "options": [
+          "Contention for the single printer resource",
+          "A lack of independent input files",
+          "The presence of different filenames",
+          "The keyboard layout"
+        ],
+        "explanation": "Concurrent submission does not make a single exclusive printer process multiple jobs simultaneously.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-6",
+        "prompt": "Two tasks each wait permanently for a resource held by the other. What condition is this?",
+        "answer": "Deadlock",
+        "options": [
+          "Deadlock",
+          "Cache hit",
+          "Normalisation",
+          "Pipelining"
+        ],
+        "explanation": "Circular waiting can stop both tasks progressing.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-7",
+        "prompt": "An algorithm has one long stage that must run sequentially. Why is speed-up from extra cores limited?",
+        "answer": "The sequential stage still takes time and cannot be parallelised",
+        "options": [
+          "The sequential stage still takes time and cannot be parallelised",
+          "All stages automatically run twice",
+          "Extra cores guarantee a linear speed-up",
+          "Memory use becomes exactly zero"
+        ],
+        "explanation": "A serial portion sets a lower bound on total runtime.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-8",
+        "prompt": "Two workers need to change one shared counter correctly. What is a typical safeguard?",
+        "answer": "Coordinate access with an appropriate lock or atomic operation",
+        "options": [
+          "Coordinate access with an appropriate lock or atomic operation",
+          "Remove all checks and read it concurrently",
+          "Use two unrelated counters without combining them",
+          "Replace the count with a fixed value"
+        ],
+        "explanation": "Protecting read-modify-write operations prevents lost updates.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-9",
+        "prompt": "A concurrent design is slower than a sequential version on small inputs but faster on large inputs. What is the best explanation?",
+        "answer": "Coordination overhead matters more on small workloads",
+        "options": [
+          "Coordination overhead matters more on small workloads",
+          "Parallelism is always incorrect on small workloads",
+          "The time complexity of both becomes constant",
+          "Every large input must be cached"
+        ],
+        "explanation": "Startup and synchronisation costs can dominate small workloads.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      },
+      {
+        "id": "21-tradeoffs-10",
+        "prompt": "Tasks A and B take 4 and 7 seconds in parallel, then dependent task C takes 2 seconds. With ideal resources and no overhead, what is the total?",
+        "answer": "9 seconds",
+        "options": [
+          "9 seconds",
+          "13 seconds",
+          "7 seconds",
+          "6 seconds"
+        ],
+        "explanation": "A and B finish after 7 seconds; C starts then and takes another 2.",
+        "skill": "Thinking concurrently: trade-offs",
+        "source": "H446 final Paper 2, 2.1 learning-cycle pages 40–43"
+      }
+    ]
   }
 ];
