@@ -417,6 +417,164 @@ const SKILLS=[
     ]
   },
   {
+    "id": "22-code-traces",
+    "section": "2.2",
+    "spec": "2.2.1",
+    "title": "Programming constructs: predict the output",
+    "questions": [
+      {
+        "id": "22-code-traces-1",
+        "prompt": "What is printed?",
+        "answer": "8",
+        "options": [
+          "8",
+          "5",
+          "6",
+          "13"
+        ],
+        "explanation": "5 is increased by 3 before printing.",
+        "skill": "Programming constructs: predict the output",
+        "code": "x = 5\nx = x + 3\nprint(x)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-2",
+        "prompt": "What is printed?",
+        "answer": "Pass",
+        "options": [
+          "Pass",
+          "Fail",
+          "70",
+          "Nothing"
+        ],
+        "explanation": "The >= comparison includes the boundary value 70.",
+        "skill": "Programming constructs: predict the output",
+        "code": "mark = 70\nif mark >= 70 then\n  print(\"Pass\")\nelse\n  print(\"Fail\")\nendif",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-3",
+        "prompt": "How many times does the loop execute its body?",
+        "answer": "4",
+        "options": [
+          "4",
+          "3",
+          "5",
+          "0"
+        ],
+        "explanation": "The loop visits values 1,2,3,4 inclusive.",
+        "skill": "Programming constructs: predict the output",
+        "code": "count = 0\nfor i = 1 to 4\n  count = count + 1\nnext i",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-4",
+        "prompt": "What is the value of total after the loop?",
+        "answer": "10",
+        "options": [
+          "10",
+          "6",
+          "4",
+          "12"
+        ],
+        "explanation": "The loop adds 1+2+3+4.",
+        "skill": "Programming constructs: predict the output",
+        "code": "total = 0\nfor n = 1 to 4\n  total = total + n\nnext n",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-5",
+        "prompt": "What is printed?",
+        "answer": "0",
+        "options": [
+          "0",
+          "1",
+          "3",
+          "No output"
+        ],
+        "explanation": "The WHILE condition is false from the start, so count stays 0.",
+        "skill": "Programming constructs: predict the output",
+        "code": "count = 0\nwhile count > 3\n  count = count + 1\nendwhile\nprint(count)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-6",
+        "prompt": "What is printed?",
+        "answer": "7",
+        "options": [
+          "7",
+          "5",
+          "9",
+          "4"
+        ],
+        "explanation": "Starting from 3, two increments of 2 give 7.",
+        "skill": "Programming constructs: predict the output",
+        "code": "x = 3\nfor i = 1 to 2\n  x = x + 2\nnext i\nprint(x)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-7",
+        "prompt": "Which message is printed?",
+        "answer": "Teen",
+        "options": [
+          "Teen",
+          "Adult",
+          "Child",
+          "No output"
+        ],
+        "explanation": "Age 15 is not at least 18, but it is at least 13.",
+        "skill": "Programming constructs: predict the output",
+        "code": "age = 15\nif age >= 18 then\n  print(\"Adult\")\nelseif age >= 13 then\n  print(\"Teen\")\nelse\n  print(\"Child\")\nendif",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-8",
+        "prompt": "What is printed?",
+        "answer": "3",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "explanation": "6 DIV 2 gives the integer quotient 3.",
+        "skill": "Programming constructs: predict the output",
+        "code": "print(6 DIV 2)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-9",
+        "prompt": "What is printed?",
+        "answer": "2",
+        "options": [
+          "2",
+          "5",
+          "3",
+          "0"
+        ],
+        "explanation": "17 MOD 5 is the remainder 2.",
+        "skill": "Programming constructs: predict the output",
+        "code": "print(17 MOD 5)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-code-traces-10",
+        "prompt": "What is printed?",
+        "answer": "4",
+        "options": [
+          "4",
+          "3",
+          "5",
+          "6"
+        ],
+        "explanation": "The loop increments x from 1 until x reaches 4; then x < 4 is false.",
+        "skill": "Programming constructs: predict the output",
+        "code": "x = 1\nwhile x < 4\n  x = x + 1\nendwhile\nprint(x)",
+        "language": "OCR Exam Reference Language"
+      }
+    ]
+  },
+  {
     "id": "22-operators",
     "section": "2.2",
     "spec": "2.2.1",
@@ -831,6 +989,162 @@ const SKILLS=[
     ]
   },
   {
+    "id": "22-string-slicing",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "String slicing and OCR ERL operations",
+    "questions": [
+      {
+        "id": "22-string-slicing-1",
+        "prompt": "What does the OCR ERL expression return?",
+        "answer": "Comp",
+        "options": [
+          "Comp",
+          "Compute",
+          "uter",
+          "ompu"
+        ],
+        "explanation": ".left(4) returns the first four characters.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Computer\"\nprint(word.left(4))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-2",
+        "prompt": "What does the OCR ERL expression return?",
+        "answer": "ter",
+        "options": [
+          "ter",
+          "uter",
+          "put",
+          "Compute"
+        ],
+        "explanation": ".right(3) returns the final three characters.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Computer\"\nprint(word.right(3))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-3",
+        "prompt": "What is printed?",
+        "answer": "put",
+        "options": [
+          "put",
+          "mpu",
+          "ute",
+          "Comp"
+        ],
+        "explanation": ".substring(3,3) starts at zero-based index 3 and returns three characters.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Computer\"\nprint(word.substring(3,3))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-4",
+        "prompt": "What is printed?",
+        "answer": "8",
+        "options": [
+          "8",
+          "7",
+          "9",
+          "4"
+        ],
+        "explanation": "There are eight characters in Computer.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Computer\"\nprint(word.length)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-5",
+        "prompt": "What is printed?",
+        "answer": "SunDay",
+        "options": [
+          "SunDay",
+          "Sunday",
+          "Sun Day",
+          "SunD"
+        ],
+        "explanation": "Concatenation joins the two strings with no extra space.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "print(\"Sun\" + \"Day\")",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-6",
+        "prompt": "What is printed?",
+        "answer": "SCIENCE",
+        "options": [
+          "SCIENCE",
+          "Science",
+          "science",
+          "SCI"
+        ],
+        "explanation": ".upper changes all letters to uppercase.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Science\"\nprint(word.upper)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-7",
+        "prompt": "What is printed?",
+        "answer": "science",
+        "options": [
+          "science",
+          "Science",
+          "SCIENCE",
+          "sci"
+        ],
+        "explanation": ".lower changes all letters to lowercase.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"SCIENCE\"\nprint(word.lower)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-8",
+        "prompt": "What does this expression return?",
+        "answer": "Exam",
+        "options": [
+          "Exam",
+          "Exams",
+          "xam",
+          "Exa"
+        ],
+        "explanation": "The substring starts at index 0 and contains four characters.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Exams\"\nprint(word.substring(0,4))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-string-slicing-9",
+        "prompt": "Which expression extracts the last two characters of word in OCR ERL?",
+        "answer": "word.right(2)",
+        "options": [
+          "word.right(2)",
+          "word.left(2)",
+          "word.substring(2,0)",
+          "word.length(2)"
+        ],
+        "explanation": "right(2) selects the final two characters, regardless of word length.",
+        "skill": "String slicing and OCR ERL operations"
+      },
+      {
+        "id": "22-string-slicing-10",
+        "prompt": "What is printed?",
+        "answer": "Cup",
+        "options": [
+          "Cup",
+          "Up",
+          "CUP",
+          "CupUp"
+        ],
+        "explanation": "The first character, C, is joined to the final two characters, up.",
+        "skill": "String slicing and OCR ERL operations",
+        "code": "word = \"Computer\"\nprint(word.left(1) + word.right(2))",
+        "language": "OCR Exam Reference Language"
+      }
+    ]
+  },
+  {
     "id": "22-array1",
     "section": "2.2",
     "spec": "2.2.3",
@@ -1241,6 +1555,154 @@ const SKILLS=[
         ],
         "explanation": "Small reusable units are easier to understand and test.",
         "skill": "Procedures, functions and parameters"
+      }
+    ]
+  },
+  {
+    "id": "22-array-parameters",
+    "section": "2.2",
+    "spec": "2.2.3",
+    "title": "Subprograms, arrays and local variables",
+    "questions": [
+      {
+        "id": "22-array-parameters-1",
+        "prompt": "What is printed when the function is called?",
+        "answer": "9",
+        "options": [
+          "9",
+          "3",
+          "6",
+          "12"
+        ],
+        "explanation": "The function returns the square of its input, 3×3.",
+        "skill": "Subprograms, arrays and local variables",
+        "code": "function square(n)\n  return n * n\nendfunction\nprint(square(3))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-array-parameters-2",
+        "prompt": "In a function, what is a local variable?",
+        "answer": "A variable accessible inside its own subprogram",
+        "options": [
+          "A variable accessible inside its own subprogram",
+          "A value every program can change from anywhere",
+          "A variable stored only in a file",
+          "An argument passed to every subprogram automatically"
+        ],
+        "explanation": "Local scope limits access to the subprogram's local context.",
+        "skill": "Subprograms, arrays and local variables"
+      },
+      {
+        "id": "22-array-parameters-3",
+        "prompt": "What is printed?",
+        "answer": "5",
+        "options": [
+          "5",
+          "9",
+          "4",
+          "14"
+        ],
+        "explanation": "The procedure receives n as a parameter and prints n+4.",
+        "skill": "Subprograms, arrays and local variables",
+        "code": "procedure show(n)\n  print(n + 4)\nendprocedure\nshow(1)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-array-parameters-4",
+        "prompt": "A function processes a fixed-length integer array. What is a suitable parameter?",
+        "answer": "The integer array to be processed",
+        "options": [
+          "The integer array to be processed",
+          "The function's source-code filename",
+          "The screen's background colour",
+          "Only a separate integer constant"
+        ],
+        "explanation": "Passing the array makes the function reusable with different datasets.",
+        "skill": "Subprograms, arrays and local variables"
+      },
+      {
+        "id": "22-array-parameters-5",
+        "prompt": "A function returns a new list of filtered values. Why return that array?",
+        "answer": "The caller can use the filtered results",
+        "options": [
+          "The caller can use the filtered results",
+          "Returning an array automatically deletes the input",
+          "Array results cannot be stored",
+          "The caller must ignore all function results"
+        ],
+        "explanation": "The returned collection provides the new computed result for the calling code.",
+        "skill": "Subprograms, arrays and local variables"
+      },
+      {
+        "id": "22-array-parameters-6",
+        "prompt": "What is printed?",
+        "answer": "6",
+        "options": [
+          "6",
+          "3",
+          "4",
+          "9"
+        ],
+        "explanation": "The function adds the two input parameters and returns 6.",
+        "skill": "Subprograms, arrays and local variables",
+        "code": "function add(a,b)\n  return a+b\nendfunction\nprint(add(2,4))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-array-parameters-7",
+        "prompt": "Which of these is a sensible reason to pass a 1D array into a function?",
+        "answer": "To process values without hard-coding one dataset",
+        "options": [
+          "To process values without hard-coding one dataset",
+          "To make the function require no inputs",
+          "To guarantee every array contains the same values",
+          "To remove the need for a return statement in every function"
+        ],
+        "explanation": "The parameter supplies the actual array at each call.",
+        "skill": "Subprograms, arrays and local variables"
+      },
+      {
+        "id": "22-array-parameters-8",
+        "prompt": "What value is printed by this function?",
+        "answer": "3",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "5"
+        ],
+        "explanation": "The parameter receives the array and the loop counts three entries. The length is three.",
+        "skill": "Subprograms, arrays and local variables",
+        "code": "function countItems(values)\n  return values.length\nendfunction\narray nums = [5, 8, 2]\nprint(countItems(nums))",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-array-parameters-9",
+        "prompt": "What is printed?",
+        "answer": "10",
+        "options": [
+          "10",
+          "5",
+          "15",
+          "0"
+        ],
+        "explanation": "The procedure prints the value it receives; the caller supplies 10.",
+        "skill": "Subprograms, arrays and local variables",
+        "code": "procedure display(value)\n  print(value)\nendprocedure\nx = 10\ndisplay(x)",
+        "language": "OCR Exam Reference Language"
+      },
+      {
+        "id": "22-array-parameters-10",
+        "prompt": "What is a potential risk of relying on global variables inside many subprograms?",
+        "answer": "Changes in one subprogram can affect another unexpectedly",
+        "options": [
+          "Changes in one subprogram can affect another unexpectedly",
+          "Every function becomes easier to test in isolation",
+          "Subprograms can no longer accept parameters",
+          "Global variables automatically prevent data corruption"
+        ],
+        "explanation": "Shared global state increases coupling and hidden side effects.",
+        "skill": "Subprograms, arrays and local variables"
       }
     ]
   },
