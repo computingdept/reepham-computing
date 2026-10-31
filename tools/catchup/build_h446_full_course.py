@@ -367,13 +367,13 @@ def generate(n, template):
     # Recover the teacher-authored fourth challenge from the answer field in
     # the known malformed source lessons. A teacher should verify the repair.
     corrected_source=False
-    if n in SOURCE_RETRIEVAL_CORRECTIONS and re.fullmatch(r"\\d{2,3}", d[3][0]):
+    if n in SOURCE_RETRIEVAL_CORRECTIONS and re.fullmatch(r"\d{2,3}", d[3][0]):
         if not d[3][1].endswith("?") and not any(x in d[3][1].lower() for x in ("give", "show", "simplify", "outputs", "location", "traversal", "value")):
             raise ValueError(f"{number}: source question no longer looks like an intended challenge")
         d[3]=(d[3][1], SOURCE_RETRIEVAL_CORRECTIONS[n],
               "Worked response reconstructed from the challenge question because the classroom model is malformed; teacher review pending.")
         corrected_source=True
-    if any(len(q.strip())<8 or re.fullmatch(r"\\d{1,4}",q.strip()) for q,_,_ in d):
+    if any(len(q.strip())<8 or re.fullmatch(r"\d{1,4}",q.strip()) for q,_,_ in d):
         raise ValueError(f"{number}: suspicious short/number-only Do Now prompt")
 
     words=vocab_of(soup)
