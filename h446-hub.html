@@ -488,10 +488,9 @@ function renderLessons(){
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
-        // H446 has no short interactive Catch up routes yet. Independent
-        // draft booklets are available as Catch up draft until approved.
-        learnHref:publishedDraft?.learn_colour||null,
-        learnLabel:publishedDraft?'Catch up draft':'Catch up',
+        // First H446 interactive catch-up batch uses the shared J277 engine.
+        learnHref:x>=1&&x<=3?'lessons/h446/lesson-'+pad(x)+'/learn.html':publishedDraft?.learn_colour||null,
+        learnLabel:x>=1&&x<=3?'Catch up':publishedDraft?'Catch up draft':'Catch up',
         printHref:publishedDraft?.print_bw||null,
         printColourHref:publishedDraft?.learn_colour||null,
         printLabel:publishedDraft?'Print draft':'Print',

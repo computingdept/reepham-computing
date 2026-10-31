@@ -140,7 +140,7 @@
       }
       if(!Array.isArray(cfg.stages)||cfg.stages.length!==5)throw Error('Invalid lesson stages');
       // The independent route and the classroom share their four Do Now stems.
-      if(configUrl!=='auto'){
+      if(configUrl!=='auto'&&cfg.course!=='h446'){
         const bankRes=await fetch('../../../data/catchup/j277-donow-mcq-20261030.json',{cache:'no-store'});
         if(!bankRes.ok)throw Error('Do Now MCQ source missing');
         const bank=await bankRes.json();
@@ -206,7 +206,7 @@
     purposeFooter.append(purposeList,purposeCurrent);
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
-      if(step===cfg.stages.length-1)window.location.assign('../../../j277-hub.html?year='+cfg.year+'#lessons');
+      if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
       else go(step+1,true);
     });
     function setResponse(id,value){

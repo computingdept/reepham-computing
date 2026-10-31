@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "id": "h446-002",
+  "course": "h446",
+  "title": "Signed integers & binary arithmetic",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose types for a passenger count and whether a door is open.",
+          "answer": "Integer and Boolean",
+          "feedback": "Count: whole number; open: logical state.",
+          "options": [
+            "Integer and Boolean",
+            "Real and string",
+            "Boolean and integer"
+          ]
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Why use a string for room identifier 0037?",
+          "answer": "It retains leading zeros",
+          "feedback": "An identifier is not an arithmetic quantity.",
+          "options": [
+            "It retains leading zeros",
+            "It makes addition easier",
+            "It only stores numbers"
+          ]
+        },
+        {
+          "id": "r3",
+          "kind": "number",
+          "prompt": "Convert unsigned 10100110 to denary.",
+          "answer": "166",
+          "feedback": "128 + 32 + 4 + 2 = 166."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Which correctly encodes 200 and explains why 300 cannot fit in an unsigned byte?",
+          "answer": "11001000; maximum 255",
+          "feedback": "200 = 128 + 64 + 8; 300 needs nine bits.",
+          "options": [
+            "11001000; maximum 255",
+            "11001000; maximum 256",
+            "10101000; maximum 511"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify the representation",
+          "text": "In sign magnitude the first bit is the sign: 0 positive, 1 negative. The other seven bits give the magnitude. Its eight-bit range is −127 to +127, with two zero patterns."
+        },
+        {
+          "type": "paragraph",
+          "title": "Two’s complement",
+          "text": "Eight-bit weights are −128, 64, 32, 16, 8, 4, 2, 1. The range is −128 to +127. For −13: start 00001101, invert to 11110010, add 1 to obtain 11110011. Sign magnitude −13 is 10001101."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add and subtract",
+          "text": "Add with carries; keep eight result bits. To subtract B from A, add the two’s complement of B. 12 − 19: 00001100 + 11101101 = 11111001, representing −7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check overflow",
+          "text": "100 + 40 gives stored bits 10001100. The true total 140 exceeds +127, so signed overflow occurs. A carry out alone does not establish signed overflow."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Interpret 10000101 as sign magnitude.",
+          "answer": "−5",
+          "feedback": "Sign 1 means negative; magnitude 0000101 is 5.",
+          "options": [
+            "−5",
+            "−123",
+            "133"
+          ]
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Interpret 11111011 as two’s complement.",
+          "answer": "−5",
+          "feedback": "−128 + 64 + 32 + 16 + 8 + 2 + 1 = −5.",
+          "options": [
+            "−5",
+            "251",
+            "−123"
+          ]
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Choose the eight-bit two’s-complement range.",
+          "answer": "−128 to +127",
+          "feedback": "The first bit has weight −128.",
+          "options": [
+            "−128 to +127",
+            "−127 to +127",
+            "0 to 255"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Use the method",
+          "text": "Refer to the worked explanation above. Work out each answer before checking the feedback."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Choose −37 in eight-bit sign magnitude.",
+          "answer": "10100101",
+          "feedback": "37 = 00100101; set the sign bit.",
+          "options": [
+            "10100101",
+            "11011011",
+            "00100101"
+          ]
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Choose −37 in eight-bit two’s complement.",
+          "answer": "11011011",
+          "feedback": "Invert 00100101 to 11011010, then add 1.",
+          "options": [
+            "11011011",
+            "10100101",
+            "11011010"
+          ]
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Interpret 10010110 as two’s complement.",
+          "answer": "−106",
+          "feedback": "−128 + 16 + 4 + 2 = −106.",
+          "options": [
+            "−106",
+            "−22",
+            "150"
+          ]
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Add 23 and 19: select the stored byte.",
+          "answer": "00101010",
+          "feedback": "23 + 19 = 42, within the signed range.",
+          "options": [
+            "00101010",
+            "00100110",
+            "10101010"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the eight-bit result of 18 − 29.",
+          "answer": "11110101",
+          "feedback": "−29 = 11100011; add 00010010 to obtain −11.",
+          "options": [
+            "11110101",
+            "00001011",
+            "11110100"
+          ]
+        },
+        {
+          "id": "a2",
+          "kind": "number",
+          "prompt": "What is the mathematical total of 01110000 and 00100000?",
+          "answer": "144",
+          "feedback": "112 + 32 = 144."
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "Minimum two’s-complement width to represent +144?",
+          "answer": "9",
+          "feedback": "Eight signed bits reach 127; nine reach 255."
+        }
+      ],
+      "writing": {
+        "prompt": "Explain why adding 01110000 and 00100000 causes eight-bit signed overflow. Give the stored result and the minimum width for the correct value.",
+        "model": "112 + 32 = 144. The stored byte is 10010000, which represents −112 in eight-bit two’s complement. The correct result exceeds the maximum +127, so signed overflow occurs. Nine signed bits have range −256 to +255 and can represent 144.",
+        "checklist": [
+          "I gave 144 and stored bits 10010000.",
+          "I compared the true total with +127.",
+          "I justified nine signed bits."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Sign magnitude has two representations of zero.",
+          "answer": "true",
+          "feedback": "The sign bit can be 0 or 1 with zero magnitude."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Any carry out proves signed overflow.",
+          "answer": "false",
+          "feedback": "Check the signed range; carry out alone is insufficient."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Two positive signed inputs can overflow to a negative stored result.",
+          "answer": "true",
+          "feedback": "For example 112 + 32 in eight bits."
+        }
+      ]
+    }
+  ]
+}

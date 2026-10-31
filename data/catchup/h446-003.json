@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "id": "h446-003",
+  "course": "h446",
+  "title": "Hexadecimal, shifts & masks",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Which type stores whether a sensor is active?",
+          "answer": "Boolean: True or False",
+          "feedback": "A logical state is Boolean.",
+          "options": [
+            "Boolean: True or False",
+            "Integer: 0 to 255",
+            "Character: any letter"
+          ]
+        },
+        {
+          "id": "r2",
+          "kind": "number",
+          "prompt": "Convert unsigned 01011010 to denary.",
+          "answer": "90",
+          "feedback": "64 + 16 + 8 + 2 = 90."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose −18 in sign magnitude, then two’s complement.",
+          "answer": "10010010 and 11101110",
+          "feedback": "Start +18 = 00010010; set sign or invert and add 1.",
+          "options": [
+            "10010010 and 11101110",
+            "11101110 and 10010010",
+            "00010010 and 11101101"
+          ]
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Add signed 01110000 and 00100000. Which is correct?",
+          "answer": "10010000; signed overflow",
+          "feedback": "112 + 32 = 144 exceeds +127.",
+          "options": [
+            "10010000; signed overflow",
+            "10010000; no overflow",
+            "01010000; no overflow"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Convert using nibbles",
+          "text": "Hexadecimal is base 16: A–F represent 10–15. One hex digit represents four bits. 173 ÷ 16 = 10 remainder 13, so 173 = AD = 1010 1101 in binary. Hex is shorter to read; it does not reduce stored bits."
+        },
+        {
+          "type": "paragraph",
+          "title": "Logical shifts",
+          "text": "Fill vacated positions with zeros and discard bits leaving the fixed width. Left k places multiplies an unsigned value by 2ᵏ only if no significant bits are lost. Right k places divides by 2ᵏ and discards the remainder. 45 >> 2 gives 11."
+        },
+        {
+          "type": "paragraph",
+          "title": "Masks",
+          "text": "AND: 1 preserves, 0 clears. OR: 1 sets, 0 preserves. XOR: 1 toggles, 0 preserves. Number bits 7 to 0 from left to right. 10100101 AND 00001111 = 00000101."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "How many bits does one hexadecimal digit represent?",
+          "answer": "4",
+          "feedback": "Four bits give 16 patterns."
+        },
+        {
+          "id": "l2",
+          "kind": "number",
+          "prompt": "Convert AD hexadecimal to denary.",
+          "answer": "173",
+          "feedback": "10 × 16 + 13 = 173."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which operation toggles selected bits?",
+          "answer": "XOR",
+          "feedback": "A mask bit of 1 flips the corresponding bit.",
+          "options": [
+            "AND",
+            "OR",
+            "XOR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Use the method",
+          "text": "Refer to the worked explanation above. Work out each answer before checking the feedback."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Choose the hexadecimal form of 11100101.",
+          "answer": "E5",
+          "feedback": "1110 is E; 0101 is 5.",
+          "options": [
+            "E5",
+            "5E",
+            "F5"
+          ]
+        },
+        {
+          "id": "p2",
+          "kind": "number",
+          "prompt": "Convert 3A7 hexadecimal to denary.",
+          "answer": "935",
+          "feedback": "3 × 256 + 10 × 16 + 7 = 935."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Logically shift 00110100 two places right.",
+          "answer": "00001101",
+          "feedback": "Zeros enter on the left; result is 13.",
+          "options": [
+            "00001101",
+            "11010000",
+            "00011010"
+          ]
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Choose 10100101 AND 00001111.",
+          "answer": "00000101",
+          "feedback": "Keep the low nibble and clear the high nibble.",
+          "options": [
+            "00000101",
+            "10101111",
+            "10101010"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Logically shift 10100001 one place left in eight bits.",
+          "answer": "01000010",
+          "feedback": "The leftmost 1 is discarded; stored value is 66.",
+          "options": [
+            "01000010",
+            "101000010",
+            "11010000"
+          ]
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose an operation and mask to set bits 3 and 0, preserving all others.",
+          "answer": "OR 00001001",
+          "feedback": "OR guarantees the selected bits become 1.",
+          "options": [
+            "OR 00001001",
+            "AND 00001001",
+            "XOR 00001001"
+          ]
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose an operation and mask to clear bits 7 and 6, preserving all others.",
+          "answer": "AND 00111111",
+          "feedback": "Mask zeros clear the two high bits; ones preserve the rest.",
+          "options": [
+            "AND 00111111",
+            "OR 00111111",
+            "AND 11000000"
+          ]
+        }
+      ],
+      "writing": {
+        "prompt": "Explain why an eight-bit logical left shift of 10100001 does not double its stored unsigned value. Give the original value, stored result and general condition for doubling.",
+        "model": "10100001 represents 161. A one-place left shift gives stored byte 01000010, representing 66. The leading 1 is discarded because only eight bits are retained; 322 cannot fit. A logical left shift doubles an unsigned value only when no significant bit is lost.",
+        "checklist": [
+          "I gave 161 and 01000010 = 66.",
+          "I explained the discarded leading 1.",
+          "I stated the no-significant-bit-loss condition."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Hexadecimal reduces the number of bits needed to store the same value.",
+          "answer": "false",
+          "feedback": "It shortens the written representation only."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "A logical right shift inserts zeros on the left.",
+          "answer": "true",
+          "feedback": "This is a logical shift, not sign extension."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "XOR with a mask bit of 1 always sets the data bit to 1.",
+          "answer": "false",
+          "feedback": "XOR toggles: 1 becomes 0 and 0 becomes 1."
+        }
+      ]
+    }
+  ]
+}
