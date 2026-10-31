@@ -567,6 +567,164 @@ const SKILLS=[
     ]
   },
   {
+    "id": "21-nested",
+    "section": "2.1",
+    "spec": "2.1.2",
+    "title": "Nested selection and iteration: code tracing",
+    "questions": [
+      {
+        "id": "21-nested-1",
+        "prompt": "What is printed?",
+        "answer": "High",
+        "options": [
+          "High",
+          "Pass",
+          "Low",
+          "Nothing"
+        ],
+        "explanation": "Both conditions are true, so the nested branch prints High.",
+        "code": "mark = 75\nif mark >= 40 then\n  if mark >= 70 then\n    print(\"High\")\n  else\n    print(\"Pass\")\n  endif\nelse\n  print(\"Low\")\nendif",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-2",
+        "prompt": "What is printed when mark is 55?",
+        "answer": "Pass",
+        "options": [
+          "Pass",
+          "High",
+          "Low",
+          "Nothing"
+        ],
+        "explanation": "55 passes the outer condition but fails the nested >=70 condition.",
+        "code": "mark = 55\nif mark >= 40 then\n  if mark >= 70 then\n    print(\"High\")\n  else\n    print(\"Pass\")\n  endif\nelse\n  print(\"Low\")\nendif",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-3",
+        "prompt": "How many times is print(\"*\") executed?",
+        "answer": "6",
+        "options": [
+          "6",
+          "2",
+          "3",
+          "5"
+        ],
+        "explanation": "There are 2 outer iterations and 3 inner iterations, so 2 × 3 = 6.",
+        "code": "for row = 1 to 2\n  for col = 1 to 3\n    print(\"*\")\n  next col\nnext row",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-4",
+        "prompt": "What is the final value of total?",
+        "answer": "12",
+        "options": [
+          "12",
+          "6",
+          "9",
+          "18"
+        ],
+        "explanation": "The inner loop adds 2 on three iterations, and the outer loop repeats twice: 2×3×2=12.",
+        "code": "total = 0\nfor a = 1 to 2\n  for b = 1 to 3\n    total = total + 2\n  next b\nnext a",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-5",
+        "prompt": "How many values are printed?",
+        "answer": "2",
+        "options": [
+          "2",
+          "1",
+          "3",
+          "4"
+        ],
+        "explanation": "Only i=2 and i=4 are even numbers in the inclusive loop.",
+        "code": "for i = 1 to 4\n  if i MOD 2 == 0 then\n    print(i)\n  endif\nnext i",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-6",
+        "prompt": "What is printed?",
+        "answer": "Inside",
+        "options": [
+          "Inside",
+          "Outside",
+          "Neither",
+          "Both"
+        ],
+        "explanation": "The outer IF is true and the inner IF tests 3<5, which is also true.",
+        "code": "x = 3\nif x > 0 then\n  if x < 5 then\n    print(\"Inside\")\n  else\n    print(\"Outside\")\n  endif\nendif",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-7",
+        "prompt": "What is the final value of count?",
+        "answer": "3",
+        "options": [
+          "3",
+          "0",
+          "2",
+          "6"
+        ],
+        "explanation": "For a=1, two inner iterations satisfy b>=a; for a=2, only b=2 qualifies.",
+        "code": "count = 0\nfor a = 1 to 2\n  for b = 1 to 2\n    if b >= a then\n      count = count + 1\n    endif\n  next b\nnext a",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-8",
+        "prompt": "Which is the final output?",
+        "answer": "4",
+        "options": [
+          "4",
+          "2",
+          "6",
+          "8"
+        ],
+        "explanation": "The loop executes four times, but the IF counts only values greater than 2.",
+        "code": "count = 0\nfor i = 1 to 4\n  if i > 2 then\n    count = count + 2\n  endif\nnext i\nprint(count)",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-9",
+        "prompt": "What is printed?",
+        "answer": "Done",
+        "options": [
+          "Done",
+          "Still waiting",
+          "Both messages",
+          "Nothing"
+        ],
+        "explanation": "The nested loop stops at x=3; only after it terminates does the final print run.",
+        "code": "x = 1\nwhile x < 3\n  x = x + 1\nendwhile\nif x == 3 then\n  print(\"Done\")\nelse\n  print(\"Still waiting\")\nendif",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      },
+      {
+        "id": "21-nested-10",
+        "prompt": "What is the final value of total?",
+        "answer": "4",
+        "options": [
+          "4",
+          "2",
+          "3",
+          "6"
+        ],
+        "explanation": "For i=1, j=1 adds one. For i=2, j=1 adds one and j=2 adds two: total four.",
+        "code": "total = 0\nfor i = 1 to 2\n  for j = 1 to i\n    total = total + j\n  next j\nnext i\nprint(total)",
+        "language": "OCR Exam Reference Language",
+        "skill": "Nested selection and iteration: code tracing"
+      }
+    ]
+  },
+  {
     "id": "21-linear",
     "section": "2.1",
     "spec": "2.1.3",
