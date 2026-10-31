@@ -555,6 +555,144 @@ const SKILLS=[
     ]
   },
   {
+    "id": "12-text-size",
+    "section": "1.2",
+    "spec": "1.2.3",
+    "title": "Text storage calculations",
+    "questions": [
+      {
+        "id": "12-text-size-1",
+        "prompt": "A text file stores 20 characters using 8 bits per character. Ignoring metadata, what is its size?",
+        "answer": "20 bytes",
+        "options": [
+          "20 bytes",
+          "160 bytes",
+          "8 bytes",
+          "2 bytes"
+        ],
+        "explanation": "20 × 8 = 160 bits, which is 20 bytes.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-2",
+        "prompt": "A 60-character text stores each character in one byte. What is its raw size?",
+        "answer": "60 bytes",
+        "options": [
+          "60 bytes",
+          "60 bits",
+          "480 bytes",
+          "7.5 bytes"
+        ],
+        "explanation": "One byte per character means 60 characters require 60 bytes.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-3",
+        "prompt": "A text stores 100 characters using 16 bits per character. Ignoring metadata, how many bytes?",
+        "answer": "200 bytes",
+        "options": [
+          "200 bytes",
+          "100 bytes",
+          "1600 bytes",
+          "50 bytes"
+        ],
+        "explanation": "100 × 16 = 1600 bits, and 1600 ÷ 8 = 200 bytes.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-4",
+        "prompt": "A 10-character text uses 8 bits per character. How many bits are stored?",
+        "answer": "80 bits",
+        "options": [
+          "80 bits",
+          "10 bits",
+          "8 bits",
+          "800 bits"
+        ],
+        "explanation": "10 characters times 8 bits each gives 80 bits.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-5",
+        "prompt": "Two files each contain the same 40 characters, but one uses 16 bits per character and the other 8. Which statement is true, ignoring metadata?",
+        "answer": "The 16-bit representation uses twice as many bits",
+        "options": [
+          "The 16-bit representation uses twice as many bits",
+          "The 8-bit representation uses twice as many bits",
+          "Both representations use the same number of bits",
+          "The 16-bit representation always fits in one byte"
+        ],
+        "explanation": "Doubling bits per character doubles raw data size at fixed character count.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-6",
+        "prompt": "A 25-character text uses 8 bits per character. How many bytes are needed, without metadata?",
+        "answer": "25 bytes",
+        "options": [
+          "25 bytes",
+          "200 bytes",
+          "4 bytes",
+          "2 bytes"
+        ],
+        "explanation": "25 × 8 bits gives 200 bits or 25 bytes.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-7",
+        "prompt": "A 50-character text needs 800 bits. How many bits per character is that?",
+        "answer": "16",
+        "options": [
+          "16",
+          "8",
+          "32",
+          "50"
+        ],
+        "explanation": "800 bits divided by 50 characters gives 16 bits per character.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-8",
+        "prompt": "A text file has 2,000 characters at 8 bits each. Using 1 KB = 1,000 bytes, how large is its raw data?",
+        "answer": "2 KB",
+        "options": [
+          "2 KB",
+          "16 KB",
+          "200 KB",
+          "0.25 KB"
+        ],
+        "explanation": "2,000 characters need 2,000 bytes, which is 2 KB with the stated conversion.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-9",
+        "prompt": "What three values are sufficient to calculate raw text-file size when each character uses a fixed number of bits?",
+        "answer": "Character count, bits per character and bits per byte",
+        "options": [
+          "Character count, bits per character and bits per byte",
+          "Image height, colour depth and width",
+          "Sample rate, duration and bit depth",
+          "Pixel count, display size and microphone volume"
+        ],
+        "explanation": "Multiply the character count by bits per character, then divide by 8 for bytes.",
+        "skill": "Text storage calculations"
+      },
+      {
+        "id": "12-text-size-10",
+        "prompt": "A document has 120 characters stored using 8 bits each. What is its raw size in bits?",
+        "answer": "960 bits",
+        "options": [
+          "960 bits",
+          "120 bits",
+          "15 bits",
+          "8 bits"
+        ],
+        "explanation": "120 × 8 = 960 bits.",
+        "skill": "Text storage calculations"
+      }
+    ]
+  },
+  {
     "id": "12-binary",
     "section": "1.2",
     "spec": "1.2.4",
@@ -1383,6 +1521,144 @@ const SKILLS=[
     ]
   },
   {
+    "id": "12-image-quality",
+    "section": "1.2",
+    "spec": "1.2.4",
+    "title": "Bitmap image representation and quality",
+    "questions": [
+      {
+        "id": "12-image-quality-1",
+        "prompt": "What does image resolution describe?",
+        "answer": "The number of pixels used to represent an image",
+        "options": [
+          "The number of pixels used to represent an image",
+          "The number of bits in one sound sample",
+          "The speed at which a file is downloaded",
+          "The number of characters in a text file"
+        ],
+        "explanation": "Image resolution specifies pixel dimensions, for example 800 by 600.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-2",
+        "prompt": "What does colour depth describe in a bitmap?",
+        "answer": "The number of bits used to represent each pixel",
+        "options": [
+          "The number of bits used to represent each pixel",
+          "The number of rows in the image",
+          "The refresh frequency of the monitor",
+          "The number of bits per audio sample"
+        ],
+        "explanation": "Colour depth determines how many colour values each pixel can represent.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-3",
+        "prompt": "How many different colours can a single pixel have at a depth of 4 bits?",
+        "answer": "16",
+        "options": [
+          "16",
+          "4",
+          "8",
+          "32"
+        ],
+        "explanation": "Four binary bits give 2^4 = 16 possible values.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-4",
+        "prompt": "If a bitmap's width doubles and its height is unchanged, what happens to its uncompressed pixel-data size at the same colour depth?",
+        "answer": "It doubles",
+        "options": [
+          "It doubles",
+          "It halves",
+          "It stays the same",
+          "It quadruples"
+        ],
+        "explanation": "There are twice as many pixels and the same bits per pixel.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-5",
+        "prompt": "A bitmap is enlarged on screen without adding new source pixels. What visible effect may occur?",
+        "answer": "Individual pixels become more noticeable",
+        "options": [
+          "Individual pixels become more noticeable",
+          "Its original resolution automatically increases",
+          "Its bit depth automatically doubles",
+          "Its storage size must become smaller"
+        ],
+        "explanation": "Displaying existing pixels over a larger area can make the image appear pixelated.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-6",
+        "prompt": "Which change permits a bitmap to store more distinct colours at each pixel?",
+        "answer": "Increase colour depth",
+        "options": [
+          "Increase colour depth",
+          "Decrease image width",
+          "Decrease sampling frequency",
+          "Use a shorter filename"
+        ],
+        "explanation": "Increasing bits per pixel increases the number of representable colours.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-7",
+        "prompt": "A bitmap's width and height both double at the same colour depth. How does raw pixel storage change?",
+        "answer": "It becomes four times as large",
+        "options": [
+          "It becomes four times as large",
+          "It doubles",
+          "It stays the same",
+          "It becomes eight times as large"
+        ],
+        "explanation": "Doubling each dimension quadruples the number of pixels.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-8",
+        "prompt": "An 8-bit colour depth allows at most how many distinct pixel values?",
+        "answer": "256",
+        "options": [
+          "256",
+          "8",
+          "128",
+          "512"
+        ],
+        "explanation": "Eight bits represent 2^8 = 256 possible values.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-9",
+        "prompt": "Which information must be known to calculate the raw pixel-data size of an uncompressed bitmap?",
+        "answer": "Width, height and colour depth",
+        "options": [
+          "Width, height and colour depth",
+          "Width, audio sample rate and file name",
+          "Screen brightness, bit rate and compression ratio",
+          "Only the file extension"
+        ],
+        "explanation": "Pixels are width times height, and each pixel uses a number of bits given by colour depth.",
+        "skill": "Bitmap image representation and quality"
+      },
+      {
+        "id": "12-image-quality-10",
+        "prompt": "When converting a bitmap from 24-bit to 8-bit colour depth, with the same dimensions and no compression, what is the trade-off?",
+        "answer": "Lower raw storage and fewer representable colours",
+        "options": [
+          "Lower raw storage and fewer representable colours",
+          "Higher raw storage and more representable colours",
+          "Unchanged raw storage and more colours",
+          "Lossless conversion of every possible 24-bit colour"
+        ],
+        "explanation": "The number of bits per pixel falls, reducing storage and the available colour values.",
+        "skill": "Bitmap image representation and quality"
+      }
+    ]
+  },
+  {
     "id": "12-sound",
     "section": "1.2",
     "spec": "1.2.4",
@@ -1517,6 +1793,144 @@ const SKILLS=[
         "explanation": "2000 × 2 × 8 = 32000 bits. Divide by 8 to obtain 4000 bytes.",
         "id": "12-sound-10",
         "skill": "Sound sampling and file sizes"
+      }
+    ]
+  },
+  {
+    "id": "12-sound-quality",
+    "section": "1.2",
+    "spec": "1.2.4",
+    "title": "Digital sound representation and quality",
+    "questions": [
+      {
+        "id": "12-sound-quality-1",
+        "prompt": "What is sampling in digital audio?",
+        "answer": "Measuring the sound waveform at regular time intervals",
+        "options": [
+          "Measuring the sound waveform at regular time intervals",
+          "Counting pixels across a picture",
+          "Replacing text with hexadecimal",
+          "Compressing a file into a ZIP archive"
+        ],
+        "explanation": "A digital recording samples an analogue waveform repeatedly over time.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-2",
+        "prompt": "What does sample rate measure?",
+        "answer": "How many samples are taken per second",
+        "options": [
+          "How many samples are taken per second",
+          "How many bits are in each sample",
+          "The number of audio channels in a cable",
+          "How many seconds the file takes to copy"
+        ],
+        "explanation": "Sample rate is measured in samples per second or hertz.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-3",
+        "prompt": "What does bit depth represent for an audio sample?",
+        "answer": "How many binary bits are available for its amplitude value",
+        "options": [
+          "How many binary bits are available for its amplitude value",
+          "The duration of the recording",
+          "How many times sound is replayed",
+          "The audio file's pixel dimensions"
+        ],
+        "explanation": "Bit depth limits the number of distinct amplitude values in a digital sample.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-4",
+        "prompt": "What usually happens to uncompressed audio storage if sample rate doubles, with other factors unchanged?",
+        "answer": "The amount of data doubles",
+        "options": [
+          "The amount of data doubles",
+          "The amount of data halves",
+          "The number of samples stays the same",
+          "The bit depth becomes zero"
+        ],
+        "explanation": "Twice as many samples per second means twice as many sample values are stored.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-5",
+        "prompt": "How can increasing bit depth improve a digital sound recording?",
+        "answer": "It allows more finely graded amplitude values",
+        "options": [
+          "It allows more finely graded amplitude values",
+          "It automatically increases the recording duration",
+          "It raises the display resolution",
+          "It deletes quiet sounds entirely"
+        ],
+        "explanation": "More bits per sample increase the number of possible quantised amplitudes.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-6",
+        "prompt": "What is the most likely quality problem when sample rate is too low for the sound being captured?",
+        "answer": "Some rapid waveform changes may be lost or misrepresented",
+        "options": [
+          "Some rapid waveform changes may be lost or misrepresented",
+          "The recording becomes a bitmap",
+          "It gains perfect detail at all frequencies",
+          "The recording stops having a duration"
+        ],
+        "explanation": "An insufficient sample rate cannot accurately capture all changes in the waveform.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-7",
+        "prompt": "A mono recording uses 8 bits per sample. If its bit depth increases to 16 bits, what happens to raw storage at the same sample rate and duration?",
+        "answer": "It doubles",
+        "options": [
+          "It doubles",
+          "It halves",
+          "It stays unchanged",
+          "It increases sixteen-fold"
+        ],
+        "explanation": "Sixteen bits uses twice the storage of eight bits for every sample.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-8",
+        "prompt": "What is analogue-to-digital conversion used for in sound recording?",
+        "answer": "Representing a continuous sound signal as discrete digital values",
+        "options": [
+          "Representing a continuous sound signal as discrete digital values",
+          "Converting a sound file into a text document",
+          "Increasing monitor resolution",
+          "Choosing the correct storage device"
+        ],
+        "explanation": "The microphone signal is sampled and quantised for digital storage.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-9",
+        "prompt": "Which combination generally produces the larger uncompressed mono file for the same duration?",
+        "answer": "Higher sample rate and higher bit depth",
+        "options": [
+          "Higher sample rate and higher bit depth",
+          "Lower sample rate and lower bit depth",
+          "Lower sample rate at unchanged bit depth",
+          "Shorter recording at unchanged settings"
+        ],
+        "explanation": "The number of stored bits depends on sampling rate, duration and bit depth.",
+        "skill": "Digital sound representation and quality"
+      },
+      {
+        "id": "12-sound-quality-10",
+        "prompt": "Why is a small audio file not necessarily higher quality than a larger one?",
+        "answer": "It may use fewer samples, lower bit depth or lossy compression",
+        "options": [
+          "It may use fewer samples, lower bit depth or lossy compression",
+          "Smaller files always contain more detail",
+          "File size determines the microphone's colour",
+          "A lower bit depth always preserves more amplitudes"
+        ],
+        "explanation": "Size alone does not establish fidelity; the sampling and compression settings matter.",
+        "skill": "Digital sound representation and quality"
       }
     ]
   },
