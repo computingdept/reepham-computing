@@ -24,11 +24,11 @@
       ],
       [
         "In this example",
-        "A school attendance award uses elseif; An ELSEIF tests another condition after an earlier branch did not match."
+        "An IF/ELSEIF/ELSE chain checks conditions from top to bottom, and only the first matching branch runs. For mark = 74, mark >= 80 is false but mark >= 60 is true: Silver is the only output."
       ],
       [
         "Follow the effect",
-        "An IF statement can be placed inside another to check a second condition. Explain how this changes the eventual program result."
+        "Nested selection places an IF inside another IF. First run the outer decision; the inner test is checked only when execution enters its branch."
       ],
       [
         "Check understanding",
@@ -88,88 +88,88 @@
       "foot": "Model the method before revealing steps"
     },
     "m": {
-      "title": "Modelled example · school attendance award",
-      "q": "A school attendance award is being written. Explain how else and elseif are used to make the program work. [4 marks]",
+      "title": "Worked trace · grade boundaries",
+      "q": "A program awards Gold for mark >= 80, Silver for 60–79 and Bronze otherwise. Trace marks 74 and 85, explaining why only one message prints. [4 marks]",
       "headings": [
-        "Identify the task",
-        "Explain ELSE",
-        "Explain ELSEIF",
-        "Check the marks"
+        "Test highest boundary",
+        "Trace 74",
+        "Trace 85",
+        "Explain the chain"
       ],
       "st": [
-        "We are designing a school attendance award. Identify which data and decisions are essential.",
-        "ELSE [1] — An ELSE branch runs when its IF condition is false. [1].",
-        "ELSEIF [1] — An ELSEIF tests another condition after an earlier branch did not match. [1].",
-        "Two linked points for each technique give four mark points."
+        "Test IF mark >= 80 before ELSEIF mark >= 60.",
+        "74 fails the first test and passes the second, so prints Silver. [2]",
+        "85 passes the first test, so prints Gold and skips the remaining branches. [1]",
+        "Only the first matching IF/ELSEIF/ELSE branch executes. [1]"
       ]
     },
     "w": [
       [
-        "In a online shop discount levels, explain how else helps the program. [2 marks]",
-        "ELSE [1] — An ELSE branch runs when its IF condition is false. [1]."
+        "An online shop prints Free delivery if total >= 30 and Delivery charged otherwise. Trace total = 24. [2 marks]",
+        "24 >= 30 is false [1]; ELSE runs and prints Delivery charged [1]."
       ],
       [
-        "For a theme park eligibility, explain why elseif matters. [2 marks]",
-        "ELSEIF [1] — An ELSEIF tests another condition after an earlier branch did not match. [1]."
+        "A ride prints Adult for age >= 18, Teen for age >= 13, and Child otherwise. Trace age = 15. [2 marks]",
+        "15 fails >= 18 and satisfies >= 13 [1], so Teen prints [1]."
       ],
       [
-        "When designing a competition medal bands, explain how nested selection and mutually exclusive branches should be used. [4 marks]",
-        "Nested selection [1] — An IF statement can be placed inside another to check a second condition. [1]. Mutually exclusive branches [1] — Only one matching route of an IF/ELSEIF/ELSE chain runs. [1]."
+        "A nested IF first checks mark >= 40. If true it checks mark >= 80 to print Gold or Pass; if false it prints Retry. Trace marks 90 and 25 and explain the nesting. [4 marks]",
+        "90 prints Gold [1]; 25 prints Retry [1]. The inner >=80 test is reached only if >=40 is true [1], so a failed mark does not enter that branch [1]."
       ]
     ],
     "wSteps": [
       [
         [
-          "Your turn · plan",
-          "Identify the technique in the online shop discount levels example."
+          "Plan",
+          "Compare total to 30."
         ],
         [
-          "Step 1 · identify",
-          "ELSE [1]"
+          "Test",
+          "24 >= 30 is false [1]."
         ],
         [
-          "Step 2 · explain",
-          "An ELSE branch runs when its IF condition is false. [1]"
+          "Branch",
+          "ELSE prints Delivery charged [1]."
         ],
         [
-          "Check the marks",
-          "ELSE [1] — An ELSE branch runs when its IF condition is false. [1]."
+          "Answer",
+          "False comparison [1], output Delivery charged [1]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Identify the technique in the theme park eligibility example."
+          "Plan",
+          "Check higher age threshold first."
         ],
         [
-          "Step 1 · identify",
-          "ELSEIF [1]"
+          "First IF",
+          "15 >= 18 is false."
         ],
         [
-          "Step 2 · explain",
-          "An ELSEIF tests another condition after an earlier branch did not match. [1]"
+          "ELSEIF",
+          "15 >= 13 is true: output Teen [2]."
         ],
         [
-          "Check the marks",
-          "ELSEIF [1] — An ELSEIF tests another condition after an earlier branch did not match. [1]."
+          "Answer",
+          "Second test matches [1], prints Teen [1]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Identify the technique in the competition medal bands example."
+          "Plan",
+          "Follow the outer decision first."
         ],
         [
-          "Step 1 · identify",
-          "Nested selection [1]"
+          "90",
+          "90 passes both tests; Gold prints [1]."
         ],
         [
-          "Step 2 · explain",
-          "An IF statement can be placed inside another to check a second condition. [1]"
+          "25",
+          "25 fails >= 40; Retry prints [1]."
         ],
         [
-          "Check the marks",
-          "Nested selection [1] — An IF statement can be placed inside another to check a second condition. [1]. Mutually exclusive branches [1] — Only one matching route of an IF/ELSEIF/ELSE chain runs. [1]."
+          "Answer",
+          "Gold and Retry [2]; inner test only reached after outer Yes [2]."
         ]
       ]
     ],
@@ -222,16 +222,16 @@
     },
     "e": [
       [
-        "State two programming terms or techniques relevant to this lesson. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
-        "ELSE [1]; Nested selection [1]."
+        "IF mark >= 80 prints Gold; ELSEIF mark >= 60 prints Silver; ELSE prints Bronze. What happens for mark = 74? [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "The mark fails >=80 but meets >=60 [1], so Silver is printed [1]."
       ],
       [
-        "A cafeteria age prices needs to work correctly. Explain how elseif and nested selection would help. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
-        "ELSEIF [1] — An ELSEIF tests another condition after an earlier branch did not match. [1]. Nested selection [1] — An IF statement can be placed inside another to check a second condition. [1]."
+        "Write an IF/ELSEIF/ELSE structure assigning a ticket price: £4 if age < 12, £7 if 12–17, otherwise £10. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "IF age < 12 THEN price = 4 [1]; ELSEIF age < 18 THEN price = 7 [1]; ELSE price = 10 [1]; ENDIF [1]."
       ],
       [
-        "A pupil is programming a parking charge levels. Explain the roles of else, nested selection and mutually exclusive branches in their solution. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
-        "ELSE [1] — An ELSE branch runs when its IF condition is false. [1]. Nested selection [1] — An IF statement can be placed inside another to check a second condition. [1]. Mutually exclusive branches [1] — Only one matching route of an IF/ELSEIF/ELSE chain runs. [1]."
+        "Write nested IF pseudocode: mark < 40 prints Retry; a pass of 40–79 prints Pass; 80+ prints Gold. Explain why only one output is produced. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past-paper question.",
+        "Outer IF mark >= 40 [1]; nested IF mark >= 80 [1]; inner true prints Gold [1]; inner ELSE prints Pass [1]; outer ELSE prints Retry [1]; only the reached branch prints for each input [1]."
       ]
     ],
     "v": [
@@ -261,8 +261,8 @@
       ]
     ],
     "x": [
-      "An ELSE branch runs when its IF condition is false.",
-      true
+      "For mark 85, an ordered IF/ELSEIF/ELSE chain printing Gold at 80 and Silver at 60 prints both Gold and Silver.",
+      false
     ],
     "r": [
       [
