@@ -2486,5 +2486,164 @@ const SKILLS = [
         "skill": "A* search"
       }
     ]
+  },
+  {
+    "id": "23-synoptic",
+    "section": "2.3",
+    "spec": "2.3.1(a–f)",
+    "title": "Synoptic algorithm selection and justification",
+    "lessons": [
+      72,
+      73,
+      74,
+      75,
+      76,
+      79,
+      84
+    ],
+    "page": 146,
+    "questions": [
+      {
+        "id": "23-synoptic-1",
+        "prompt": "A program searches an unsorted list once, without any need to retain a sorted copy. Which choice avoids unnecessary preparation?",
+        "answer": "Linear search, because it does not require sorting",
+        "options": [
+          "Linear search, because it does not require sorting",
+          "Binary search directly on the unsorted list",
+          "Merge sort followed by no search",
+          "Dijkstra's algorithm over the list"
+        ],
+        "explanation": "Binary search requires a sorted search order; linear search can inspect the unsorted items directly.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-2",
+        "prompt": "A small list is already nearly sorted and extra memory should be minimal. Which sort is a sensible first choice?",
+        "answer": "Insertion sort",
+        "options": [
+          "Insertion sort",
+          "Merge sort with an extra array",
+          "A* search",
+          "Binary search"
+        ],
+        "explanation": "Insertion sort performs well on nearly sorted data and needs only constant auxiliary space.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-3",
+        "prompt": "A large collection must be sorted stably with a predictable O(n log n) worst-case time, and an O(n) buffer is acceptable. Which algorithm fits?",
+        "answer": "Merge sort",
+        "options": [
+          "Merge sort",
+          "Selection sort",
+          "Bubble sort",
+          "Unbalanced BST insertion without rebalancing"
+        ],
+        "explanation": "A standard array merge sort is stable with O(n log n) worst-case time using an auxiliary buffer.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-4",
+        "prompt": "A large sorted array is queried repeatedly without being modified. Which search has O(log n) worst-case comparisons?",
+        "answer": "Binary search",
+        "options": [
+          "Binary search",
+          "Linear search",
+          "Bubble sort",
+          "Breadth-first tree traversal"
+        ],
+        "explanation": "Binary search halves a sorted search interval; linear search may examine all n elements.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-5",
+        "prompt": "A graph has non-negative edge costs. You need shortest paths from a start vertex and have no useful goal heuristic. Which standard algorithm is appropriate?",
+        "answer": "Dijkstra's algorithm",
+        "options": [
+          "Dijkstra's algorithm",
+          "Binary search",
+          "Depth-first traversal alone",
+          "Insertion sort"
+        ],
+        "explanation": "Dijkstra systematically relaxes distances and finds shortest paths when edge costs are non-negative.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-6",
+        "prompt": "A* is used to find an optimal route. What property is required of an admissible heuristic?",
+        "answer": "It never overestimates the remaining optimal cost",
+        "options": [
+          "It never overestimates the remaining optimal cost",
+          "It always equals the true remaining cost",
+          "It may always overestimate if it runs faster",
+          "It must use the number of vertices as the cost"
+        ],
+        "explanation": "Admissibility gives a lower bound on remaining route cost, supporting optimality under the appropriate A* implementation.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-7",
+        "prompt": "An unweighted graph is searched for a route with the fewest edges. Which strategy finds a shortest path in edge count?",
+        "answer": "Breadth-first search",
+        "options": [
+          "Breadth-first search",
+          "Depth-first search without further checks",
+          "Quicksort",
+          "A single in-order traversal"
+        ],
+        "explanation": "Breadth-first search explores by increasing number of edges from the start.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-8",
+        "prompt": "A tree must be evaluated so that each child subtree is processed before its parent. Which traversal matches this requirement?",
+        "answer": "Post-order depth-first traversal",
+        "options": [
+          "Post-order depth-first traversal",
+          "Pre-order depth-first traversal",
+          "Level-order breadth-first traversal",
+          "Binary search of sorted values"
+        ],
+        "explanation": "Post-order visits children before the current node.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      },
+      {
+        "id": "23-synoptic-9",
+        "prompt": "What is printed and what is the time complexity of this loop for n input values?",
+        "answer": "2 and O(n)",
+        "options": [
+          "2 and O(n)",
+          "2 and O(log n)",
+          "1 and O(n)",
+          "3 and O(n²)"
+        ],
+        "explanation": "Two values meet >= 7. A single loop scans n entries, doing constant work each time.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223",
+        "code": "values = [4, 7, 7, 2]\ncount = 0\nfor each value in values\n  if value >= 7 then count = count + 1\nnext value\nprint(count)"
+      },
+      {
+        "id": "23-synoptic-10",
+        "prompt": "One correct sort runs in O(n log n) time but needs O(n) extra space; another runs in O(n²) time with O(1) extra space. What is a justified selection method?",
+        "answer": "Compare expected input sizes, runtime and available memory",
+        "options": [
+          "Compare expected input sizes, runtime and available memory",
+          "Always choose the one using least memory",
+          "Always choose the asymptotically faster one, regardless of memory",
+          "Choose whichever has the shorter source code"
+        ],
+        "explanation": "Algorithm suitability depends on realistic constraints, not only one complexity measure.",
+        "skill": "Synoptic algorithm selection and justification",
+        "source": "H446 final Paper 2, synoptic algorithm decisions, pages 220–223"
+      }
+    ]
   }
 ];
