@@ -3696,6 +3696,161 @@ const SKILLS = [
     ]
   },
   {
+    "id": "13-css-appendix",
+    "section": "1.3",
+    "spec": "1.3.4(a)",
+    "title": "OCR Appendix 5d: CSS properties",
+    "lessons": [
+      151
+    ],
+    "page": 123,
+    "questions": [
+      {
+        "id": "13-css-appendix-1",
+        "prompt": "Which OCR-listed CSS property sets an element's background colour?",
+        "answer": "background-color",
+        "options": [
+          "background-color",
+          "color",
+          "border-color",
+          "font-family"
+        ],
+        "explanation": "background-color fills the background; color sets foreground text colour.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-2",
+        "prompt": "Which CSS property sets the colour of an element's border?",
+        "answer": "border-color",
+        "options": [
+          "border-color",
+          "background-color",
+          "border-style",
+          "color"
+        ],
+        "explanation": "border-color changes the border's colour, not its thickness or style.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-3",
+        "prompt": "Which CSS property chooses whether a border is solid, dashed or dotted?",
+        "answer": "border-style",
+        "options": [
+          "border-style",
+          "border-width",
+          "border-color",
+          "font-family"
+        ],
+        "explanation": "border-style selects the border line pattern.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-4",
+        "prompt": "Which CSS property specifies the thickness of a border?",
+        "answer": "border-width",
+        "options": [
+          "border-width",
+          "border-style",
+          "width",
+          "height"
+        ],
+        "explanation": "border-width controls the border thickness; width controls the element's content width.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-5",
+        "prompt": "Which OCR-listed property specifies the typeface?",
+        "answer": "font-family",
+        "options": [
+          "font-family",
+          "font-size",
+          "color",
+          "border-style"
+        ],
+        "explanation": "font-family selects fonts such as Arial and serif fallbacks.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-6",
+        "prompt": "Which property sets the element's width to 300 pixels?",
+        "answer": "width",
+        "options": [
+          "width",
+          "height",
+          "border-width",
+          "font-size"
+        ],
+        "explanation": "width: 300px controls the horizontal dimension.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-7",
+        "prompt": "Which property sets the element's height to 40 pixels?",
+        "answer": "height",
+        "options": [
+          "height",
+          "width",
+          "font-size",
+          "border-width"
+        ],
+        "explanation": "height: 40px controls the vertical dimension.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
+      },
+      {
+        "id": "13-css-appendix-8",
+        "prompt": "What colours does this CSS give the paragraph's text and background?",
+        "answer": "Blue text on a yellow background",
+        "options": [
+          "Blue text on a yellow background",
+          "Yellow text on a blue background",
+          "Blue text on a blue background",
+          "Yellow text on a yellow background"
+        ],
+        "explanation": "color sets text to blue; background-color sets the background to yellow.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
+        "code": "p { color: blue; background-color: yellow; }"
+      },
+      {
+        "id": "13-css-appendix-9",
+        "prompt": "Which element is styled by the ID selector in the CSS?",
+        "answer": "The heading whose id is menu",
+        "options": [
+          "The heading whose id is menu",
+          "Every paragraph with class notice",
+          "Every heading on the page",
+          "Every element with class menu"
+        ],
+        "explanation": "#menu selects the single element with id=\"menu\".",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
+        "code": "<h1 id=\"menu\">Notice</h1>\n<p class=\"notice\">Hello</p>\n#menu { color: red; }"
+      },
+      {
+        "id": "13-css-appendix-10",
+        "prompt": "The same paragraph has an external class rule and an inline style declaration for color. Which text colour is used?",
+        "answer": "Blue, from the inline declaration",
+        "options": [
+          "Blue, from the inline declaration",
+          "Red, from the external class rule",
+          "Black, the browser default",
+          "Green, from the border declaration"
+        ],
+        "explanation": "A normal inline declaration has higher precedence than a normal external class rule.",
+        "skill": "OCR Appendix 5d: CSS properties",
+        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
+        "code": "/* external stylesheet */\n.notice { color: red; }\n/* HTML */\n<p class=\"notice\" style=\"color: blue;\">Alert</p>"
+      }
+    ]
+  },
+  {
     "id": "13-javascript",
     "section": "1.3",
     "spec": "1.3.4(a)",
@@ -3846,6 +4001,167 @@ const SKILLS = [
         ],
         "explanation": "The trusted server must check permissions and validate submitted data because a client can be altered or bypassed.",
         "skill": "JavaScript and page behaviour"
+      }
+    ]
+  },
+  {
+    "id": "13-js-form",
+    "section": "1.3",
+    "spec": "1.3.4(a)",
+    "title": "OCR Appendix 5d: JavaScript forms and output",
+    "lessons": [
+      152
+    ],
+    "page": 123,
+    "questions": [
+      {
+        "id": "13-js-form-1",
+        "prompt": "For a text input whose current value is 75, what does accessing its .value property return?",
+        "answer": "The text string \"75\"",
+        "options": [
+          "The text string \"75\"",
+          "The number 75",
+          "The Boolean value true",
+          "The element's id"
+        ],
+        "explanation": "A text input's value is a string until code converts it.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "<input type=\"text\" id=\"mark\" value=\"75\">\nlet value = document.getElementById(\"mark\").value;"
+      },
+      {
+        "id": "13-js-form-2",
+        "prompt": "What numeric result is stored in total?",
+        "answer": "9",
+        "options": [
+          "9",
+          "72",
+          "\"72\"",
+          "5"
+        ],
+        "explanation": "Number converts the text \"7\" to numeric 7 before adding 2.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "let total = Number(\"7\") + 2;"
+      },
+      {
+        "id": "13-js-form-3",
+        "prompt": "What text will be placed in the result paragraph when the input is 70?",
+        "answer": "Distinction",
+        "options": [
+          "Distinction",
+          "Keep practising",
+          "70",
+          "Ready"
+        ],
+        "explanation": "70 meets the inclusive >= 70 test, so the first branch sets the paragraph text.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
+      },
+      {
+        "id": "13-js-form-4",
+        "prompt": "What text will be placed in the result paragraph for input 69?",
+        "answer": "Keep practising",
+        "options": [
+          "Keep practising",
+          "Distinction",
+          "69",
+          "Ready"
+        ],
+        "explanation": "69 is below the threshold, so the else branch changes the displayed text.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
+      },
+      {
+        "id": "13-js-form-5",
+        "prompt": "What does return false do in this form handler?",
+        "answer": "Prevent the form's usual submission/navigation",
+        "options": [
+          "Prevent the form's usual submission/navigation",
+          "Clear the text input",
+          "Force the condition to be false",
+          "Delete the HTML form"
+        ],
+        "explanation": "After checkMark() runs, returning false stops the default submit action.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "<form onsubmit=\"checkMark(); return false;\">"
+      },
+      {
+        "id": "13-js-form-6",
+        "prompt": "What does this statement change if an element with id result exists?",
+        "answer": "The text shown inside the existing result element",
+        "options": [
+          "The text shown inside the existing result element",
+          "The input's current value",
+          "The element's HTML id",
+          "The address of the web page"
+        ],
+        "explanation": "textContent assigns the element's text content rather than changing its id or the input value.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "document.getElementById(\"result\").textContent = \"Ready\";"
+      },
+      {
+        "id": "13-js-form-7",
+        "prompt": "Which output mechanism shows a browser dialog rather than writing text into the page?",
+        "answer": "alert(\"Ready\")",
+        "options": [
+          "alert(\"Ready\")",
+          "document.write(\"Ready\")",
+          "result.textContent = \"Ready\"",
+          "console.log(\"Ready\")"
+        ],
+        "explanation": "alert displays a browser dialog; the others write to the document, an element or the console.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)"
+      },
+      {
+        "id": "13-js-form-8",
+        "prompt": "What value does checkMark compare with 80?",
+        "answer": "The numeric value read from the mark field",
+        "options": [
+          "The numeric value read from the mark field",
+          "The literal word mark",
+          "The submit button's text",
+          "The form's action URL"
+        ],
+        "explanation": "getElementById locates the mark input; .value reads its text; Number converts it.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "let m = Number(document.getElementById(\"mark\").value);\nif (m >= 80) alert(\"Pass\");"
+      },
+      {
+        "id": "13-js-form-9",
+        "prompt": "In this example, which attribute makes the input addressable by getElementById(\"mark\")?",
+        "answer": "id=\"mark\"",
+        "options": [
+          "id=\"mark\"",
+          "name=\"mark\"",
+          "type=\"text\"",
+          "value=\"75\""
+        ],
+        "explanation": "getElementById searches the id attribute. name has a different role in submitted form data.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "<input type=\"text\" id=\"mark\" name=\"mark\" value=\"75\">"
+      },
+      {
+        "id": "13-js-form-10",
+        "prompt": "What normally happens when a user activates this submit button inside the form?",
+        "answer": "The form's submit handler runs",
+        "options": [
+          "The form's submit handler runs",
+          "All fields become numbers",
+          "The button changes to a text field",
+          "The browser ignores the form"
+        ],
+        "explanation": "The submit control triggers submission; an onsubmit handler can process values and stop the usual navigation.",
+        "skill": "OCR Appendix 5d: JavaScript forms and output",
+        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
+        "code": "<form onsubmit=\"checkMark(); return false;\">\n<input type=\"submit\" value=\"Check\">\n</form>"
       }
     ]
   },
@@ -4273,322 +4589,6 @@ const SKILLS = [
         ],
         "explanation": "The service can apply the same trusted rules to submissions from different clients, provided it is implemented correctly.",
         "skill": "Client-side and server-side processing"
-      }
-    ]
-  },
-  {
-    "id": "13-css-appendix",
-    "section": "1.3",
-    "spec": "1.3.4(a)",
-    "title": "OCR Appendix 5d: CSS properties",
-    "lessons": [
-      151
-    ],
-    "page": 123,
-    "questions": [
-      {
-        "id": "13-css-appendix-1",
-        "prompt": "Which OCR-listed CSS property sets an element's background colour?",
-        "answer": "background-color",
-        "options": [
-          "background-color",
-          "color",
-          "border-color",
-          "font-family"
-        ],
-        "explanation": "background-color fills the background; color sets foreground text colour.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-2",
-        "prompt": "Which CSS property sets the colour of an element's border?",
-        "answer": "border-color",
-        "options": [
-          "border-color",
-          "background-color",
-          "border-style",
-          "color"
-        ],
-        "explanation": "border-color changes the border's colour, not its thickness or style.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-3",
-        "prompt": "Which CSS property chooses whether a border is solid, dashed or dotted?",
-        "answer": "border-style",
-        "options": [
-          "border-style",
-          "border-width",
-          "border-color",
-          "font-family"
-        ],
-        "explanation": "border-style selects the border line pattern.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-4",
-        "prompt": "Which CSS property specifies the thickness of a border?",
-        "answer": "border-width",
-        "options": [
-          "border-width",
-          "border-style",
-          "width",
-          "height"
-        ],
-        "explanation": "border-width controls the border thickness; width controls the element's content width.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-5",
-        "prompt": "Which OCR-listed property specifies the typeface?",
-        "answer": "font-family",
-        "options": [
-          "font-family",
-          "font-size",
-          "color",
-          "border-style"
-        ],
-        "explanation": "font-family selects fonts such as Arial and serif fallbacks.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-6",
-        "prompt": "Which property sets the element's width to 300 pixels?",
-        "answer": "width",
-        "options": [
-          "width",
-          "height",
-          "border-width",
-          "font-size"
-        ],
-        "explanation": "width: 300px controls the horizontal dimension.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-7",
-        "prompt": "Which property sets the element's height to 40 pixels?",
-        "answer": "height",
-        "options": [
-          "height",
-          "width",
-          "font-size",
-          "border-width"
-        ],
-        "explanation": "height: 40px controls the vertical dimension.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)"
-      },
-      {
-        "id": "13-css-appendix-8",
-        "prompt": "What colours does this CSS give the paragraph's text and background?",
-        "answer": "Blue text on a yellow background",
-        "options": [
-          "Blue text on a yellow background",
-          "Yellow text on a blue background",
-          "Blue text on a blue background",
-          "Yellow text on a yellow background"
-        ],
-        "explanation": "color sets text to blue; background-color sets the background to yellow.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
-        "code": "p { color: blue; background-color: yellow; }"
-      },
-      {
-        "id": "13-css-appendix-9",
-        "prompt": "Which element is styled by the ID selector in the CSS?",
-        "answer": "The heading whose id is menu",
-        "options": [
-          "The heading whose id is menu",
-          "Every paragraph with class notice",
-          "Every heading on the page",
-          "Every element with class menu"
-        ],
-        "explanation": "#menu selects the single element with id=\"menu\".",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
-        "code": "<h1 id=\"menu\">Notice</h1>\n<p class=\"notice\">Hello</p>\n#menu { color: red; }"
-      },
-      {
-        "id": "13-css-appendix-10",
-        "prompt": "The same paragraph has an external class rule and an inline style declaration for color. Which text colour is used?",
-        "answer": "Blue, from the inline declaration",
-        "options": [
-          "Blue, from the inline declaration",
-          "Red, from the external class rule",
-          "Black, the browser default",
-          "Green, from the border declaration"
-        ],
-        "explanation": "A normal inline declaration has higher precedence than a normal external class rule.",
-        "skill": "OCR Appendix 5d: CSS properties",
-        "source": "Final H446 Paper 1, OCR Appendix 5d CSS cycle (pages 365–368)",
-        "code": "/* external stylesheet */\n.notice { color: red; }\n/* HTML */\n<p class=\"notice\" style=\"color: blue;\">Alert</p>"
-      }
-    ]
-  },
-  {
-    "id": "13-js-form",
-    "section": "1.3",
-    "spec": "1.3.4(a)",
-    "title": "OCR Appendix 5d: JavaScript forms and output",
-    "lessons": [
-      152
-    ],
-    "page": 123,
-    "questions": [
-      {
-        "id": "13-js-form-1",
-        "prompt": "For a text input whose current value is 75, what does accessing its .value property return?",
-        "answer": "The text string \"75\"",
-        "options": [
-          "The text string \"75\"",
-          "The number 75",
-          "The Boolean value true",
-          "The element's id"
-        ],
-        "explanation": "A text input's value is a string until code converts it.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "<input type=\"text\" id=\"mark\" value=\"75\">\nlet value = document.getElementById(\"mark\").value;"
-      },
-      {
-        "id": "13-js-form-2",
-        "prompt": "What numeric result is stored in total?",
-        "answer": "9",
-        "options": [
-          "9",
-          "72",
-          "\"72\"",
-          "5"
-        ],
-        "explanation": "Number converts the text \"7\" to numeric 7 before adding 2.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let total = Number(\"7\") + 2;"
-      },
-      {
-        "id": "13-js-form-3",
-        "prompt": "What text will be placed in the result paragraph when the input is 70?",
-        "answer": "Distinction",
-        "options": [
-          "Distinction",
-          "Keep practising",
-          "70",
-          "Ready"
-        ],
-        "explanation": "70 meets the inclusive >= 70 test, so the first branch sets the paragraph text.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
-      },
-      {
-        "id": "13-js-form-4",
-        "prompt": "What text will be placed in the result paragraph for input 69?",
-        "answer": "Keep practising",
-        "options": [
-          "Keep practising",
-          "Distinction",
-          "69",
-          "Ready"
-        ],
-        "explanation": "69 is below the threshold, so the else branch changes the displayed text.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
-      },
-      {
-        "id": "13-js-form-5",
-        "prompt": "What does return false do in this form handler?",
-        "answer": "Prevent the form's usual submission/navigation",
-        "options": [
-          "Prevent the form's usual submission/navigation",
-          "Clear the text input",
-          "Force the condition to be false",
-          "Delete the HTML form"
-        ],
-        "explanation": "After checkMark() runs, returning false stops the default submit action.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "<form onsubmit=\"checkMark(); return false;\">"
-      },
-      {
-        "id": "13-js-form-6",
-        "prompt": "What does this statement change if an element with id result exists?",
-        "answer": "The text shown inside the existing result element",
-        "options": [
-          "The text shown inside the existing result element",
-          "The input's current value",
-          "The element's HTML id",
-          "The address of the web page"
-        ],
-        "explanation": "textContent assigns the element's text content rather than changing its id or the input value.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "document.getElementById(\"result\").textContent = \"Ready\";"
-      },
-      {
-        "id": "13-js-form-7",
-        "prompt": "Which output mechanism shows a browser dialog rather than writing text into the page?",
-        "answer": "alert(\"Ready\")",
-        "options": [
-          "alert(\"Ready\")",
-          "document.write(\"Ready\")",
-          "result.textContent = \"Ready\"",
-          "console.log(\"Ready\")"
-        ],
-        "explanation": "alert displays a browser dialog; the others write to the document, an element or the console.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)"
-      },
-      {
-        "id": "13-js-form-8",
-        "prompt": "What value does checkMark compare with 80?",
-        "answer": "The numeric value read from the mark field",
-        "options": [
-          "The numeric value read from the mark field",
-          "The literal word mark",
-          "The submit button's text",
-          "The form's action URL"
-        ],
-        "explanation": "getElementById locates the mark input; .value reads its text; Number converts it.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let m = Number(document.getElementById(\"mark\").value);\nif (m >= 80) alert(\"Pass\");"
-      },
-      {
-        "id": "13-js-form-9",
-        "prompt": "In this example, which attribute makes the input addressable by getElementById(\"mark\")?",
-        "answer": "id=\"mark\"",
-        "options": [
-          "id=\"mark\"",
-          "name=\"mark\"",
-          "type=\"text\"",
-          "value=\"75\""
-        ],
-        "explanation": "getElementById searches the id attribute. name has a different role in submitted form data.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "<input type=\"text\" id=\"mark\" name=\"mark\" value=\"75\">"
-      },
-      {
-        "id": "13-js-form-10",
-        "prompt": "What normally happens when a user activates this submit button inside the form?",
-        "answer": "The form's submit handler runs",
-        "options": [
-          "The form's submit handler runs",
-          "All fields become numbers",
-          "The button changes to a text field",
-          "The browser ignores the form"
-        ],
-        "explanation": "The submit control triggers submission; an onsubmit handler can process values and stop the usual navigation.",
-        "skill": "OCR Appendix 5d: JavaScript forms and output",
-        "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "<form onsubmit=\"checkMark(); return false;\">\n<input type=\"submit\" value=\"Check\">\n</form>"
       }
     ]
   }
