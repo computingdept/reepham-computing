@@ -100,7 +100,9 @@
       const parent=document.querySelector('header.practice-nav');
       if(parent){
         const existing=parent.querySelector(':scope > a[href]');
-        const group=pair(existing,hubHref(course,year,'revisionhub'),course.toUpperCase()+' '+(course==='j277'?'Year '+year:'Year '+year)+' practice');
+        const back=new URL(hubHref(course,year,'revisionhub'),location.origin);
+        if(new URLSearchParams(location.search).get('theme')==='synergy')back.searchParams.set('theme','synergy');
+        const group=pair(existing,back.pathname+back.search+back.hash,course.toUpperCase()+' '+(course==='j277'?'Year '+year:'Year '+year)+' practice');
         if(!existing&&group)parent.insertBefore(group,parent.firstChild);
       }
       return;
