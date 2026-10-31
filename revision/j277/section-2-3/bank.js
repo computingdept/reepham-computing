@@ -279,6 +279,144 @@ const SKILLS=[
     ]
   },
   {
+    "id": "23-testing-types",
+    "section": "2.3",
+    "spec": "2.3.2",
+    "title": "Test plans: invalid, erroneous and iterative testing",
+    "questions": [
+      {
+        "id": "23-testing-types-1",
+        "prompt": "An age field accepts integers from 11 to 18 inclusive. Which example is invalid rather than erroneous?",
+        "answer": "19",
+        "options": [
+          "19",
+          "\"sixteen\"",
+          "TRUE",
+          "\"eleven\""
+        ],
+        "explanation": "19 has the right data type but falls outside the permitted range.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-2",
+        "prompt": "An age field requires an integer. Which test input is erroneous because it has the wrong data type?",
+        "answer": "\"sixteen\"",
+        "options": [
+          "\"sixteen\"",
+          "10",
+          "19",
+          "18"
+        ],
+        "explanation": "A text word cannot be processed as the required integer, unlike numeric but out-of-range entries.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-3",
+        "prompt": "A score input accepts integer values from 0 to 100. Which pair tests the two valid boundaries?",
+        "answer": "0 and 100",
+        "options": [
+          "0 and 100",
+          "-1 and 101",
+          "1 and 99",
+          "0 and 101"
+        ],
+        "explanation": "Boundary values are the permitted endpoints 0 and 100.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-4",
+        "prompt": "Which pair consists of invalid integer values just outside a 0–100 inclusive range?",
+        "answer": "-1 and 101",
+        "options": [
+          "-1 and 101",
+          "0 and 100",
+          "1 and 99",
+          "\"zero\" and \"hundred\""
+        ],
+        "explanation": "Both are integers of the correct type but violate the allowed range.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-5",
+        "prompt": "A test plan contains input 18, expected Accept, actual Reject. What should the result be marked?",
+        "answer": "Fail",
+        "options": [
+          "Fail",
+          "Pass",
+          "Not tested",
+          "Skipped because it is a boundary"
+        ],
+        "explanation": "The actual output differs from the expected result.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-6",
+        "prompt": "What is iterative testing?",
+        "answer": "Testing and refining a program throughout its development",
+        "options": [
+          "Testing and refining a program throughout its development",
+          "Testing only once after a final release",
+          "Checking that the code has comments",
+          "Testing without comparing expected and actual outputs"
+        ],
+        "explanation": "Iterative testing occurs during development and helps correct issues as they are found.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-7",
+        "prompt": "What is final or terminal testing?",
+        "answer": "Testing the completed program against its requirements",
+        "options": [
+          "Testing the completed program against its requirements",
+          "Testing only during the first design meeting",
+          "Deleting all test cases after editing",
+          "Choosing source-code indentation"
+        ],
+        "explanation": "Final testing checks the completed system after development.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-8",
+        "prompt": "A function requires a Boolean TRUE/FALSE input. Which value is erroneous if the type is strictly enforced?",
+        "answer": "\"maybe\"",
+        "options": [
+          "\"maybe\"",
+          "TRUE",
+          "FALSE",
+          "A Boolean value produced by a comparison"
+        ],
+        "explanation": "A text string is the wrong data type for a strict Boolean input.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-9",
+        "prompt": "Why include the expected result in a test plan before running the program?",
+        "answer": "It gives an independent value to compare with actual output",
+        "options": [
+          "It gives an independent value to compare with actual output",
+          "It ensures every program always passes",
+          "It automatically corrects all errors",
+          "It removes the need for boundary cases"
+        ],
+        "explanation": "The expected outcome provides a basis for an objective pass/fail decision.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      },
+      {
+        "id": "23-testing-types-10",
+        "prompt": "After a bug at the maximum permitted age is fixed, what should the developer do?",
+        "answer": "Repeat the failed boundary test and relevant other tests",
+        "options": [
+          "Repeat the failed boundary test and relevant other tests",
+          "Delete the failed test from the plan",
+          "Test only an unrelated screen",
+          "Assume the entire program is now correct"
+        ],
+        "explanation": "Retesting verifies the fix, while other cases check for unintended consequences.",
+        "skill": "Test plans: invalid, erroneous and iterative testing"
+      }
+    ]
+  },
+  {
     "id": "23-errors",
     "section": "2.3",
     "spec": "2.3.2",
