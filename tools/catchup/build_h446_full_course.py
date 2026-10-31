@@ -147,6 +147,10 @@ def learning_blocks(soup, title):
             p = [txt(node, 480)]
         if h and p:
             blocks.append({"type": "paragraph", "title": "Worked example · " + h, "text": compact(" ".join(p), 510)})
+    glossary = vocab_of(soup)
+    if glossary:
+        items = [compact(term + " — " + definition, 290) for term,definition in glossary[:6]]
+        blocks.insert(0, {"type":"facts","title":"Key vocabulary","items":items})
     return blocks[:6]
 
 def guided_blocks(soup):
@@ -172,19 +176,20 @@ def apply_of(soup):
         # Keep source teacher-supplied response in feedback; shorten display choice.
         prompt = txt(stem, 360)
         solution = txt(sol, 630)
-        solution = re.sub(r"^(MARK SCHEME|MODEL ANSWER|MARKING POINTS AND WORKED ANSWER|WORKED ANSWER|REVEAL ANSWER)\s*[+:]?\s*", "", solution, flags=re.I)
+        solution = re.sub(r"^(?:(?:MARK SCHEME|MARKING POINTS)(?:\s*/\s*(?:WORKED ANSWER|MODEL ANSWER))?|MODEL ANSWER|WORKED ANSWER|REVEAL ANSWER)\s*[+:]?\s*", "", solution, flags=re.I)
         if prompt and solution: found.append((prompt, solution))
     return found[:5]
 
 def fallback_pairs(soup):
     pairs = []
-    for n in soup.select("#we-do .wedo-example, #i-do .ido-example"):
+    for n in list(soup.select("#we-do .wedo-example")) + list(soup.select("#i-do .ido-example")):
         ref = n.select_one(".wedo-reference, .ido-reference")
         if ref:
             h = txt(ref.find(["h2","h3"]), 150)
             p = txt(ref.find("p"), 220)
             label = compact(h+" "+p, 340)
-            solution = n.select_one(".wedo-step[hidden], .ido-step[hidden]")
+            steps = n.select(".wedo-step, .ido-step")
+            solution = steps[-1] if steps else None
             if solution:
                 answer = txt(solution, 450)
                 if label and answer: pairs.append((label, answer))
@@ -210,6 +215,7 @@ def generate(n, template):
         raw = txt(soup.title, 140)
         title = re.sub(r"^.*Lesson\s+\d{3}\s*[·:–-]\s*","",raw,flags=re.I).replace(" · Ready","")
     if not title: raise ValueError(f"{number}: no lesson title")
+    title = re.sub(r"^(?:Year (?:12|13) )?Lesson\s+\d{3}\s*[·:–-]\s*", "", title, flags=re.I)
     d = donow_of(soup)
     substituted = False
     if len(d)!=4:
@@ -309,6 +315,18 @@ def generate(n, template):
     }
     if n in (36,37):
         cfg["intro"]="Independent synoptic revision and reflection. This is not the classroom assessment or personalised marked-test feedback."
+        if n==36:
+            cfg["stages"][3]["writing"]={
+                "prompt":"Describe a practical three-step plan for checking your understanding before the synoptic test, without using the actual test questions.",
+                "model":"Choose a topic from the published revision guide, practise a short example independently and mark it against a model. Revisit any incorrect method, show working and retry a different question.",
+                "checklist":["I named a specific revision target.","I included independent practice and marking.","I explained how I will check improvement."]
+            }
+        else:
+            cfg["stages"][3]["writing"]={
+                "prompt":"Using your own marked work when available, explain how to correct and reattempt one answer without simply copying the mark scheme.",
+                "model":"Identify the command word and the specific missing point, correct the method using the mark scheme or revision guide, cover the answer, then retry the question from memory. If no marked work is available, select a prior practice question instead.",
+                "checklist":["I identified what the question requires.","I explained the correction rather than copying.","I included an independent reattempt."]
+            }
     assert len(cfg["stages"])==5
     assert len(cfg["stages"][0]["questions"])==4
     assert [len(s["questions"]) for s in cfg["stages"]]==[4,3,4,3,3]
