@@ -17,6 +17,32 @@ CONTENT = ROOT / "data" / "catchup"
 PROTECTED_ASSESSMENTS = {
     36, 58, 88, 98, 214, 243, 247, 250, 280, 304, 305, 306, 308
 }
+SOURCE_RETRIEVAL_CORRECTIONS = {
+    46: "At the next rising edge Q becomes 1, because the flip-flop captures D at the active clock edge.",
+    47: "There are 12 elements. The final valid index is (3,2), using zero-based (row,column) indexing.",
+    48: "No. Q remains 0 until the next active clock edge, when it captures D=1.",
+    49: "The remaining stack, bottom to top, is A, D. Popping removed C and then B.",
+    50: "B, C, D from front to back. Dequeue removes A, and D joins the rear.",
+    51: "HEAD → 5 → 7 → 9 → NULL.",
+    52: "15 becomes the left child of 18, because 15 > 10 and 15 < 18.",
+    53: "A, B, C, D. From A, visit alphabetical neighbours B then C; B discovers D.",
+    54: "Keys 9 and 16 collide in bucket 2; key 22 hashes to bucket 1.",
+    55: "Pop outputs 2 (LIFO). Dequeue outputs 4 (FIFO).",
+    56: "The inorder traversal is 5, 7, 10, 15 (left, root, right).",
+    57: "Six values; the last valid zero-based index is [2,1].",
+    58: "Node 5 becomes the right child of node 3: 5 is less than 8 but greater than 3.",
+    59: "The first midpoint is index 2, holding 6, so the target is found immediately at index 2.",
+    60: "Q becomes 0 immediately after the next rising edge, capturing D=0.",
+    61: "The resulting array is [2,7,5,7], since a[1] becomes 2+5.",
+    62: "The popped value is 5, and the top of the final stack is 8.",
+    63: "A ∧ (B ∨ ¬B) = A ∧ 1 = A, using distributivity and the complement law.",
+    64: "Q becomes 1 on the next rising clock edge because D=1.",
+    65: "The inspected midpoint indexes are 3 then 5: values 8 then 12, so index 5 is found.",
+}
+# Some classroom Do Now Q4 entries were malformed: their prompt is only a
+# previous-lesson number, and the intended question was mistakenly stored
+# in the MODEL ANSWER field. The repairs are accurate worked responses but
+# explicitly require teacher approval; source classroom HTML stays untouched.
 # Public catch-up must not reproduce questions and marking schemes from live tests.
 FIRST = 7
 IDS = list(range(7, 161)) + list(range(181, 321))
@@ -338,14 +364,14 @@ def generate(n, template):
         d = donow_of(prior)
         substituted=True
     if len(d)!=4: raise ValueError(f"{number}: no valid four-question retrieval")
-    # Classroom 058 has an evident source typo: Q4 is literally "022" while
-    # the intended BST question appears in the answer position. Correct only
-    # the Catch-Up extraction, document the exception, do not alter lesson HTML.
+    # Recover the teacher-authored fourth challenge from the answer field in
+    # the known malformed source lessons. A teacher should verify the repair.
     corrected_source=False
-    if n == 58 and d[3][0] == "022" and "BST root8" in d[3][1]:
-        d[3]=(d[3][1],
-              "The node 5 is inserted as the right child of node 3.",
-              "Since 5 < 8 go left from the root; since 5 > 3 go right.")
+    if n in SOURCE_RETRIEVAL_CORRECTIONS and re.fullmatch(r"\\d{2,3}", d[3][0]):
+        if not d[3][1].endswith("?") and not any(x in d[3][1] for x in ("Give", "show", "Simplify", "outputs", "location", "traversal", "value")):
+            raise ValueError(f"{number}: source question no longer looks like an intended challenge")
+        d[3]=(d[3][1], SOURCE_RETRIEVAL_CORRECTIONS[n],
+              "Worked response reconstructed from the challenge question because the classroom model is malformed; teacher review pending.")
         corrected_source=True
     if any(len(q.strip())<8 or re.fullmatch(r"\\d{1,4}",q.strip()) for q,_,_ in d):
         raise ValueError(f"{number}: suspicious short/number-only Do Now prompt")
@@ -519,6 +545,7 @@ def main():
         "new_expected":len(IDS), "new_generated":len(records),
         "failed":failures,"records":records,
         "protected_assessment_lesson_ids":[f"{n:03d}" for n in sorted(PROTECTED_ASSESSMENTS)],
+        "reconstructed_retrieval_lesson_ids":[f"{n:03d}" for n in sorted(SOURCE_RETRIEVAL_CORRECTIONS)],
         "limitations":["MCQ distractors and written-answer phrasing require teacher review; deterministic validation cannot certify pedagogy.",
                        "Mastery scores are browser-local, not centrally persisted."]
     }
