@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "2D array — An array with two indexes.",
+            "row — A horizontal line of values.",
+            "column — A vertical line of values.",
+            "index — A zero-based position.",
+            "dimension — One direction of an array.",
+            "nested loop — A loop inside another loop."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Notice the repeated statements",
           "text": "Look at the three explicit row-printing instructions. The operation is the same; only the row index changes: 0, 1, 2 ."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · From three statements to one loop, then two",
           "text": "We will improve yesterday's program without changing what it displays. 1 | 2 | 3 4 | 5 | 6 7 | 8 | 9"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Start with the old solution",
-          "text": "Console.WriteLine(board[0,0] + \" | \" + board[0,1] + \" | \" + board[0,2]); Console.WriteLine(board[1,0] + \" | \" + board[1,1] + \" | \" + board[1,2]); Console.WriteLine(board[2,0] + \" | \" + board[2,1] + \" | \" + board[2,2]); It works. But it repeats the same pattern three times."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: From three statements to one loop, then two We will improve yesterday's program without changing what it displays.",
-          "answer": "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
-          "options": [
-            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
-            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
-            "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2)."
-          ],
-          "feedback": "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change inside the loop."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Identify the pattern The original problem stays visible as we improve the code.",
           "answer": "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
           "options": [
+            "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row.",
             "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
-            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
             "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
           ],
           "feedback": "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2)."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Introduce a row loop The original problem stays visible as we improve the code.",
           "answer": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
           "options": [
-            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
+            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
             "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
-            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
+            "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row."
           ],
           "feedback": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Notice the columns The original problem stays visible as we improve the code.",
+          "answer": "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row.",
+          "options": [
+            "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
+            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
+            "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row."
+          ],
+          "feedback": "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Introduce a row loop The original problem stays visible as we improve the code.",
-        "model": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
+        "prompt": "Write an exam-style response in your own words. Notice the columns The original problem stays visible as we improve the code.",
+        "model": "CHECK What did we discover? for (int col = 0; col < board.GetLength(1); col++) The inner loop visits the columns across a single row.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

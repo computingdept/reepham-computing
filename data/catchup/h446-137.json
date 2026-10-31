@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-137",
   "course": "h446",
-  "title": "Lesson 137 · Third Normal Form: Removing Transitive Dependencies",
+  "title": "Third Normal Form: Removing Transitive Dependencies",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "3NF — No transitive dependency of non-prime attributes on candidate keys.",
+            "transitive dependency — An attribute depends on a key indirectly through another non-key attribute.",
+            "functional dependency — Value of one attribute determines another.",
+            "update anomaly — Duplicate facts can disagree after an edit."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Check 2NF first",
           "text": "Remove repeating groups and partial dependencies."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · DeptID determines name",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Split Department",
-          "text": "EmpID identifies employee. DeptName depends on DeptID, not directly on EmpID, producing a transitive dependency. Split Employee(EmpID PK,EmpName,DeptID FK) and Department(DeptID PK,DeptName)."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define transitive dependency and give a practical example. [6]",
-          "answer": "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+          "answer": "Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
           "options": [
-            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
-            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
-            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
+            "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+            "Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
           ],
-          "feedback": "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3]."
+          "feedback": "Indirect key→non-key→other non-key chain [3], suitable accurate example [3]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Normalise Device(DeviceID,RoomID,RoomName) to 3NF, assuming RoomID determines RoomName. [6]",
-          "answer": "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+          "answer": "Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
           "options": [
-            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
-            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
-            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+            "Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+            "Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
           ],
-          "feedback": "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
+          "feedback": "Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why normalisation can reduce anomalies but may require additional joins. [8]",
-          "answer": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+          "answer": "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
           "options": [
-            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
-            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
-            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+            "Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+            "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
           ],
-          "feedback": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+          "feedback": "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why normalisation can reduce anomalies but may require additional joins. [8]",
-        "model": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+        "model": "Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

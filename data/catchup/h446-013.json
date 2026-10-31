@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "sequence — Instructions that run in a specified order.",
+            "statement — One instruction in a program.",
+            "output — Information shown by the program.",
+            "2D array — Values stored using two indexes.",
+            "row — A horizontal line of values.",
+            "column — A vertical line of values."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Start with sequence",
           "text": "Write the five lines in the left panel into a C# console program. Run it. There are no loops ; each statement executes in order."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Make the board display before improving it",
           "text": "Start with separate instructions; then make the output read from array values. 1 | 2 | 3 --+---+-- 4 | 5 | 6 --+---+-- 7 | 8 | 9"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Create a working output",
-          "text": "Run these instructions in order. The result is a 3×3 numbered board. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"--+---+--\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"--+---+--\"); Console.WriteLine(\"7 | 8 | 9\");"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Make the board display before improving it Start with separate instructions; then make the output read from array values.",
-          "answer": "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");",
-          "options": [
-            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
-            "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
-            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
-          ],
-          "feedback": "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Display three rows Without loops, write three C# statements that print 1 | 2 | 3, then 4 | 5 | 6, then 7 | 8 | 9.",
           "answer": "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
           "options": [
             "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
-            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
-            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
+            "CHECK Why it works board[1,1] = \"X\"; No other cell changes.",
+            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
           ],
           "feedback": "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Find the square With zero-based indexes, what is the row/column index of the centre square (5)?",
           "answer": "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
           "options": [
+            "CHECK Why it works board[1,1] = \"X\"; No other cell changes.",
             "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
-            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");",
             "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
           ],
           "feedback": "CHECK Why it works The centre square is row 1, column 1. board[1,1]"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Change the stored data After declaring a 3×3 string array, write one assignment that places X in the centre.",
+          "answer": "CHECK Why it works board[1,1] = \"X\"; No other cell changes.",
+          "options": [
+            "CHECK Why it works board[1,1] = \"X\"; No other cell changes.",
+            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
+            "CHECK Why it works The centre square is row 1, column 1. board[1,1]"
+          ],
+          "feedback": "CHECK Why it works board[1,1] = \"X\"; No other cell changes."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Find the square With zero-based indexes, what is the row/column index of the centre square (5)?",
-        "model": "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+        "prompt": "Write an exam-style response in your own words. Change the stored data After declaring a 3×3 string array, write one assignment that places X in the centre.",
+        "model": "CHECK Why it works board[1,1] = \"X\"; No other cell changes.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

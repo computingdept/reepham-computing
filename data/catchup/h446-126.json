@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-126",
   "course": "h446",
-  "title": "Lesson 126 · Addressing Modes: Immediate, Direct, Indirect and Indexed",
+  "title": "Addressing Modes: Immediate, Direct, Indirect and Indexed",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "immediate — Operand is a literal value.",
+            "direct — Operand gives the memory location holding a value.",
+            "indirect — Operand points to a location holding the effective address.",
+            "indexed — Base address plus index gives effective address."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Immediate versus direct",
           "text": "LOAD #12 uses literal 12; LOAD 12 uses contents of memory[12]."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · 12 reads memory[12]=40",
           "text": "Explain the intermediate result or decision."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · @12 follows pointer to 7",
-          "text": "Using illustrative assembler conventions: immediate gives 12; direct reads 40; indirect follows memory[12]=40 then loads memory[40]=7."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define immediate and direct addressing with one example each. [6]",
-          "answer": "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+          "answer": "Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
           "options": [
-            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
-            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
-            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
+            "Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+            "Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+            "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
           ],
-          "feedback": "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
+          "feedback": "Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Memory[15]=29 and memory[29]=6. Give values loaded by direct LOAD 15 and indirect LOAD @15. [6]",
-          "answer": "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+          "answer": "Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
           "options": [
-            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
-            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
-            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
+            "Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+            "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+            "Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
           ],
-          "feedback": "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
+          "feedback": "Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain indexed addressing for an array at base 50 with index 4 and discuss why this is not simply LMC LDA notation. [8]",
-          "answer": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+          "answer": "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
           "options": [
-            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
-            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
-            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
+            "Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+            "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+            "Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
           ],
-          "feedback": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
+          "feedback": "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain indexed addressing for an array at base 50 with index 4 and discuss why this is not simply LMC LDA notation. [8]",
-        "model": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+        "model": "Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

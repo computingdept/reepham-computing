@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "linked list — A structure where each item contains data and a link to another item.",
+            "pointer — A value identifying the location of another item.",
+            "start pointer — The index of the first item in the list.",
+            "next pointer — The index of the next item.",
+            "null — A marker meaning no next item.",
+            "traverse — Visit each item by following links."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Start pointer",
           "text": "The first logical item is stored at index 2, not necessarily index 0."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Traverse Alex → Ben → Cara → Daisy",
           "text": "using System; public class Program { public static void Main() { string[] data = {\"Ben\", \"Daisy\", \"Alex\", \"Cara\"}; int[] next = {3, -1, 0, 1}; int start = 2; int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; } } }"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Use the start pointer",
-          "text": "current = 2 data[2] = \"Alex\""
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Traverse Alex → Ben → Cara → Daisy",
-          "answer": "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\"",
-          "options": [
-            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
-            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
-            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
-          ],
-          "feedback": "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Access the second linked-list item OCR asks how the second item is reached using pointer values.",
           "answer": "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
           "options": [
             "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
-            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
-            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
+            "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
+            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
           ],
           "feedback": "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Traverse Use the start pointer and follow next until -1.",
           "answer": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
           "options": [
+            "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
             "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
-            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\"",
             "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
           ],
           "feedback": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Insert at front newIndex is an unused array slot. Change the links, then traverse again.",
+          "answer": "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
+          "options": [
+            "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
+            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
+            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }"
+          ],
+          "feedback": "CHECK Fill the same code next[newIndex] = start; start = newIndex;"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Traverse Use the start pointer and follow next until -1.",
-        "model": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+        "prompt": "Write an exam-style response in your own words. Insert at front newIndex is an unused array slot. Change the links, then traverse again.",
+        "model": "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

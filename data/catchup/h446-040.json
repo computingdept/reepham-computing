@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "function — Returns a result",
+            "procedure — Subroutine that does not return a result",
+            "parameter — Named input to a subroutine",
+            "argument — Value passed in a call",
+            "return — Sends a value to the caller"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "The argument is copied into a local parameter. return sends a computed value to the caller; it does not itself print the value."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Return a computed value static int Double(int value) { return value * 2; } int result = Double(6); Console.WriteLine(result);",
-          "answer": "STEP 2 Calculate and return value*2 evaluates to 12. return 12 ends this call and supplies that integer to the caller.",
-          "options": [
-            "MODEL ANSWER Check your thinking 7.",
-            "MODEL ANSWER Check your thinking No: void has no return value.",
-            "STEP 2 Calculate and return value*2 evaluates to 12. return 12 ends this call and supplies that integer to the caller."
-          ],
-          "feedback": "STEP 2 Calculate and return value*2 evaluates to 12. return 12 ends this call and supplies that integer to the caller."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 A function adds a and b; what is Add(3, 4)?",
           "answer": "MODEL ANSWER Check your thinking 7.",
           "options": [
             "MODEL ANSWER Check your thinking No: void has no return value.",
-            "MODEL ANSWER Check your thinking 7.",
-            "STEP 2 Calculate and return value*2 evaluates to 12. return 12 ends this call and supplies that integer to the caller."
+            "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment.",
+            "MODEL ANSWER Check your thinking 7."
           ],
           "feedback": "MODEL ANSWER Check your thinking 7."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 A void method prints a greeting. Does it return a string?",
           "answer": "MODEL ANSWER Check your thinking No: void has no return value.",
           "options": [
+            "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment.",
             "MODEL ANSWER Check your thinking No: void has no return value.",
-            "STEP 2 Calculate and return value*2 evaluates to 12. return 12 ends this call and supplies that integer to the caller.",
             "MODEL ANSWER Check your thinking 7."
           ],
           "feedback": "MODEL ANSWER Check your thinking No: void has no return value."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Return a computed value static int Double(int value) { return value * 2; } int result = Double(6); Console.WriteLine(result);",
+          "answer": "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment.",
+          "options": [
+            "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment.",
+            "MODEL ANSWER Check your thinking 7.",
+            "MODEL ANSWER Check your thinking No: void has no return value."
+          ],
+          "feedback": "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 A void method prints a greeting. Does it return a string?",
-        "model": "MODEL ANSWER Check your thinking No: void has no return value.",
+        "prompt": "Write an exam-style response in your own words. Return a computed value static int Double(int value) { return value * 2; } int result = Double(6); Console.WriteLine(result);",
+        "model": "STEP 3 Use the returned value The assignment stores 12 in result; Console.WriteLine(result) prints it. A void procedure can print, but supplies no value for this assignment.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

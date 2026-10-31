@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "D-type flip-flop — A circuit that stores one bit.",
+            "D input — The data value presented to the flip-flop.",
+            "clock — A timing signal.",
+            "trigger — The clock event that causes sampling.",
+            "Q output — The currently stored bit.",
+            "state — The remembered 0 or 1."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Why do we need flip-flops?",
           "text": "Logic gates calculate; a flip-flop remembers. Registers must hold values even when other inputs change."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Model when Q changes — and when it holds",
           "text": "Q initially stores 1 . Follow CLK first, then D, then Q. Watch what happens at a falling edge, when D changes alone, and at each rising edge."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Identify which edges count",
-          "text": "Point to CLK: ↑ is LOW → HIGH and samples D. ↓ is HIGH → LOW and does not update Q. Find all three ↑ edges before reading D."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Model when Q changes — and when it holds Q initially stores 1 . Follow CLK first, then D, then Q. Watch what happens at a falling edge, when D changes alone, and at each rising edge.",
-          "answer": "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves.",
+          "prompt": "Choose the response that best addresses this independent task: Trace four rising clock edges Q initially stores 1. Predict its value at each rising edge (↑).",
+          "answer": "CHECK · EDGE 4 D = 1 → Q = 1 Q becomes 1. Record row 4 and review the complete waveform.",
           "options": [
-            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
-            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
-            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+            "THE RULE Sample on ↑, hold otherwise A rising clock edge makes Q copy D. Q visibly changes only if the sampled D differs from its stored value. A falling edge or a change in D alone never updates this rising-edge-triggered flip-flop.",
+            "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit.",
+            "CHECK · EDGE 4 D = 1 → Q = 1 Q becomes 1. Record row 4 and review the complete waveform."
           ],
-          "feedback": "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+          "feedback": "CHECK · EDGE 4 D = 1 → Q = 1 Q becomes 1. Record row 4 and review the complete waveform."
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace four rising clock edges Q initially stores 1. Predict its value at each rising edge (↑).",
-          "answer": "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
+          "prompt": "Choose the response that best addresses this independent task: Rising edge or falling edge? Q starts at 0 . Follow the signals left to right. Which events can update Q?",
+          "answer": "THE RULE Sample on ↑, hold otherwise A rising clock edge makes Q copy D. Q visibly changes only if the sampled D differs from its stored value. A falling edge or a change in D alone never updates this rising-edge-triggered flip-flop.",
           "options": [
-            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
-            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
-            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+            "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit.",
+            "THE RULE Sample on ↑, hold otherwise A rising clock edge makes Q copy D. Q visibly changes only if the sampled D differs from its stored value. A falling edge or a change in D alone never updates this rising-edge-triggered flip-flop.",
+            "CHECK · EDGE 4 D = 1 → Q = 1 Q becomes 1. Record row 4 and review the complete waveform."
           ],
-          "feedback": "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1."
+          "feedback": "THE RULE Sample on ↑, hold otherwise A rising clock edge makes Q copy D. Q visibly changes only if the sampled D differs from its stored value. A falling edge or a change in D alone never updates this rising-edge-triggered flip-flop."
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Rising edge or falling edge? Q starts at 0 . Follow the signals left to right. Which events can update Q?",
-          "answer": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+          "prompt": "Choose the response that best addresses this independent task: Does Q follow D? Q initially stores 1; CLK remains LOW even though D changes.",
+          "answer": "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit.",
           "options": [
-            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
-            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves.",
-            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1."
+            "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit.",
+            "CHECK · EDGE 4 D = 1 → Q = 1 Q becomes 1. Record row 4 and review the complete waveform.",
+            "THE RULE Sample on ↑, hold otherwise A rising clock edge makes Q copy D. Q visibly changes only if the sampled D differs from its stored value. A falling edge or a change in D alone never updates this rising-edge-triggered flip-flop."
           ],
-          "feedback": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1."
+          "feedback": "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Rising edge or falling edge? Q starts at 0 . Follow the signals left to right. Which events can update Q?",
-        "model": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+        "prompt": "Write an exam-style response in your own words. Does Q follow D? Q initially stores 1; CLK remains LOW even though D changes.",
+        "model": "CHECK Q remains 1 There is no rising clock edge. D changes, but Q retains the previously stored bit.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

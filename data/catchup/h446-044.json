@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "class — Blueprint for objects",
+            "object — An instance of a class",
+            "field — Data associated with an object",
+            "method — Behaviour in a class",
+            "instance — One created object"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Class ≠ instance",
           "text": "A class defines the fields and behaviour available to each object. new Student() constructs an instance; a separate new creates another independent object."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: One class, two independent objects",
-          "answer": "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
-          "options": [
-            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
-            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
-            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second ."
-          ],
-          "feedback": "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Different class, different data What are first.Value and second.Value ?",
           "answer": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
           "options": [
+            "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
             "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
-            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
             "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
           ],
           "feedback": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second ."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Change the receiver Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies.",
           "answer": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
           "options": [
-            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
+            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
             "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
-            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
+            "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another."
           ],
           "feedback": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: One class, two independent objects",
+          "answer": "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
+          "options": [
+            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
+            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
+            "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another."
+          ],
+          "feedback": "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Change the receiver Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies.",
-        "model": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
+        "prompt": "Write an exam-style response in your own words. One class, two independent objects",
+        "model": "STEP 3 Predict, then check the output The output is 2,0 . A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

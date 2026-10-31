@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Boolean — A value with two states.",
+            "AND — True only if all required inputs are true.",
+            "OR — True if at least one input is true.",
+            "NOT — Reverses a Boolean value.",
+            "XOR (⊻) — True when inputs differ.",
+            "logic gate — A circuit implementing a Boolean operation."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "AND — both inputs must be 1",
           "text": "A gate takes an input (or inputs) and produces one output, Q . For AND, both inputs must be 1. Example: 1 AND 0 = 0; 1 AND 1 = 1."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Secure door access",
           "text": "A secure door unlocks when a valid card OR a correct PIN is used, but only when the building is open and lockdown is not active. A = valid card B = correct PIN C = building open D = lockdown Method: output → options → requirements → exceptions → expression, then circuit."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · What switches ON?",
-          "text": "Q = door unlocks Start with the result the question is asking us to control."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Secure door access A secure door unlocks when a valid card OR a correct PIN is used, but only when the building is open and lockdown is not active.",
-          "answer": "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
-          "options": [
-            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
-            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
-            "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1"
-          ],
-          "feedback": "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Successful login A login succeeds only when the user ID is valid AND the password is correct .",
           "answer": "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
           "options": [
+            "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND",
             "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
-            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
             "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
           ],
           "feedback": "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Two test switches A test lamp lights when exactly one of switches A and B is ON, but not both .",
           "answer": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
           "options": [
-            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
+            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
             "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
-            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
+            "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND"
           ],
           "feedback": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Library printer The printer runs if a staff job OR a pupil job is waiting, but only if there is NOT a paper jam .",
+          "answer": "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND",
+          "options": [
+            "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
+            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
+            "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND"
+          ],
+          "feedback": "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Two test switches A test lamp lights when exactly one of switches A and B is ON, but not both .",
-        "model": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
+        "prompt": "Write an exam-style response in your own words. Library printer The printer runs if a staff job OR a pupil job is waiting, but only if there is NOT a paper jam .",
+        "model": "CHECK · EXPRESSION → CIRCUIT OR, NOT, then AND Q = (A ∨ B) ∧ ¬C Two options → OR. Jam absent → NOT C. Both conditions → final AND. A B C Q OR NOT AND Options OR → final AND; jam NOT → final AND",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

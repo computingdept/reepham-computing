@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Statements executed in order. — Statements executed in order.",
+            "Branching with if/else. — Branching with if/else.",
+            "Repeating statements with a loop. — Repeating statements with a loop.",
+            "Checking input meets defined rules. — Checking input meets defined rules.",
+            "Indexed fixed-size collection, possibly multidimensional. — Indexed fixed-size collection, possibly multidimensional.",
+            "Named fields grouped as a single item. — Named fields grouped as a single item."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "What must a login program do?",
           "text": "Read two inputs, decide whether both match the demonstration account, and show a clear result. Design the sequence before typing code."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Model the first three lines — not the finished program",
           "text": "Start in a blank .NET Fiddle console project. Predict what each statement does."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Create a console program",
-          "text": "using System; Console.Write(\"Username: \"); string username = Console.ReadLine() ?? \"\";"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Model the first three lines — not the finished program Start in a blank .NET Fiddle console project. Predict what each statement does.",
-          "answer": "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
-          "options": [
-            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
-            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
-            "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }"
-          ],
-          "feedback": "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Build the condition What Boolean operator makes BOTH checks compulsory?",
           "answer": "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
           "options": [
+            "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer.",
             "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
-            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
             "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
           ],
           "feedback": "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Handle repeated attempts How could you allow at most three attempts?",
           "answer": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
           "options": [
-            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
+            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
             "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
-            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
+            "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer."
           ],
           "feedback": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: MCQ quality check A student writes: 'Which structure is best?' Why is this too vague?",
+          "answer": "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer.",
+          "options": [
+            "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
+            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
+            "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer."
+          ],
+          "feedback": "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Handle repeated attempts How could you allow at most three attempts?",
-        "model": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
+        "prompt": "Write an exam-style response in your own words. MCQ quality check A student writes: 'Which structure is best?' Why is this too vague?",
+        "model": "CHECK · MODEL RESPONSE MCQ quality check Specify the operation, such as key-based lookup, FIFO removal or index access, so there is one defensible correct answer.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

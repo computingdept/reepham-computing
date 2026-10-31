@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-140",
   "course": "h446",
-  "title": "Lesson 140 · Referential Integrity, Indexing and Keys",
+  "title": "Referential Integrity, Indexing and Keys",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "referential integrity — Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+            "index — Auxiliary structure helping the DBMS find rows efficiently.",
+            "primary key — Unique identifier of each record.",
+            "foreign key — Attribute referencing another relation."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Link the records",
           "text": "Order.CustomerID references Customer.CustomerID."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Order requests ID 12",
           "text": "Explain the change using correct technical terms."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Reject orphan reference",
-          "text": "The DBMS rejects the foreign key value 12, unless a matching Customer row is created or the reference is changed. Policies for deleting parent rows may RESTRICT, CASCADE or SET NULL, where permitted and configured."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain referential integrity using Borrower and Loan with a suitable example. [6]",
-          "answer": "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+          "answer": "Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
           "options": [
-            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
-            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
-            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
+            "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+            "Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
           ],
-          "feedback": "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2]."
+          "feedback": "Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Identify two benefits and one cost of indexing a frequently searched field. [6]",
-          "answer": "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+          "answer": "Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
           "options": [
-            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
-            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
-            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+            "Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+            "Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
           ],
-          "feedback": "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
+          "feedback": "Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A library deletes Borrower ID 8 while Loan rows refer to 8. Compare RESTRICT and CASCADE and justify a safe policy. [8]",
-          "answer": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+          "answer": "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
           "options": [
-            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
-            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
-            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+            "Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+            "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
           ],
-          "feedback": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+          "feedback": "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A library deletes Borrower ID 8 while Loan rows refer to 8. Compare RESTRICT and CASCADE and justify a safe policy. [8]",
-        "model": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+        "model": "RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

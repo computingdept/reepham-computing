@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "A table using a hash function to locate data from a key. — A table using a hash function to locate data from a key.",
+            "A repeatable mapping from key to bucket index. — A repeatable mapping from key to bucket index.",
+            "A location in the hash table. — A location in the hash table.",
+            "Two keys map to the same bucket. — Two keys map to the same bucket.",
+            "Resolve collisions by checking successive buckets. — Resolve collisions by checking successive buckets.",
+            "The value used to look up an entry. — The value used to look up an entry."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "The problem: more than one user",
           "text": "A single username comparison is not scalable. We need a way to store and find many usernames."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build a real hash-table index",
           "text": "Create the bucket array manually: the hash function is visible, not hidden inside Dictionary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Create the buckets",
-          "text": "const int SIZE = 7; string?[] usernames = new string?[SIZE];"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build a real hash-table index Create the bucket array manually: the hash function is visible, not hidden inside Dictionary.",
-          "answer": "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
-          "options": [
-            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
-            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
-            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…"
-          ],
-          "feedback": "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Insert with linear probing What happens when a bucket is already occupied?",
           "answer": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
           "options": [
-            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
             "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
-            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+            "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket."
           ],
           "feedback": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Search using the same probing sequence How can we find a name after a collision?",
           "answer": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
           "options": [
             "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
-            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
-            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }"
+            "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…"
           ],
           "feedback": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Predict a collision With table size 7, why do 'ab' and 'ba' choose the same initial index?",
+          "answer": "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
+          "options": [
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+            "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Search using the same probing sequence How can we find a name after a collision?",
-        "model": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }",
+        "prompt": "Write an exam-style response in your own words. Predict a collision With table size 7, why do 'ab' and 'ba' choose the same initial index?",
+        "model": "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

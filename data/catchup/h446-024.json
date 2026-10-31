@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "LIFO — Last In, First Out.",
+            "FIFO — First In, First Out.",
+            "pointer — A value identifying another array location.",
+            "record — Related fields describing one item.",
+            "tuple — A fixed grouping of values.",
+            "BST — Binary search tree."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Stack wording",
           "text": "OCR questions often test both the operation and the consequence."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Turn understanding into a 2-mark comparison",
           "text": "OCR June 2023 asks for one difference between a stack and a queue. weak: \"they remove differently\" precise: stack = LIFO queue = FIFO"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Name stack rule",
-          "text": "Stack removes the most recently added item first."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Turn understanding into a 2-mark comparison OCR June 2023 asks for one difference between a stack and a queue.",
-          "answer": "STEP 2 · IDENTIFY Name queue rule Queue removes the earliest added item first.",
-          "options": [
-            "STEP 2 · IDENTIFY Name queue rule Queue removes the earliest added item first.",
-            "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink.",
-            "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change."
-          ],
-          "feedback": "STEP 2 · IDENTIFY Name queue rule Queue removes the earliest added item first."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Array vs list Give one clear difference.",
           "answer": "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink.",
           "options": [
-            "STEP 2 · IDENTIFY Name queue rule Queue removes the earliest added item first.",
+            "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink.",
             "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change.",
-            "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink."
+            "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item."
           ],
           "feedback": "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Tuple vs list State one difference.",
           "answer": "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change.",
           "options": [
             "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink.",
-            "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change.",
-            "STEP 2 · IDENTIFY Name queue rule Queue removes the earliest added item first."
+            "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item.",
+            "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change."
           ],
           "feedback": "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Linked-list pointer Explain how to reach the second item.",
+          "answer": "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item.",
+          "options": [
+            "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change.",
+            "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item.",
+            "CHECK Improve the answer An array has a fixed size once created, whereas a list can grow or shrink."
+          ],
+          "feedback": "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Tuple vs list State one difference.",
-        "model": "CHECK Improve the answer A tuple is fixed / cannot be changed in the same way, whereas a list is mutable and can change.",
+        "prompt": "Write an exam-style response in your own words. Linked-list pointer Explain how to reach the second item.",
+        "model": "CHECK Improve the answer Use the start pointer to locate the first item, read its next pointer, then use that pointer value as the index of the second item.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "sequence — Instructions run in order",
+            "selection — A conditional branch",
+            "Boolean — True or false expression",
+            "condition — A logical test",
+            "trace — Follow state changes"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "Sequence changes score before selection tests it. The condition is true at exactly 10 because >= includes the boundary."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Follow the order of execution int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");",
-          "answer": "STEP 2 Evaluate the condition Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state.",
-          "options": [
-            "MODEL ANSWER Check your thinking False; else branch executes.",
-            "STEP 2 Evaluate the condition Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state.",
-            "MODEL ANSWER Check your thinking Yes: 12 > 10."
-          ],
-          "feedback": "STEP 2 Evaluate the condition Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 value = 3; value *= 4; is value > 10?",
           "answer": "MODEL ANSWER Check your thinking Yes: 12 > 10.",
           "options": [
+            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
             "MODEL ANSWER Check your thinking Yes: 12 > 10.",
-            "STEP 2 Evaluate the condition Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state.",
             "MODEL ANSWER Check your thinking False; else branch executes."
           ],
           "feedback": "MODEL ANSWER Check your thinking Yes: 12 > 10."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 A user enters age 16. Test age >= 18.",
           "answer": "MODEL ANSWER Check your thinking False; else branch executes.",
           "options": [
-            "STEP 2 Evaluate the condition Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state.",
+            "MODEL ANSWER Check your thinking False; else branch executes.",
             "MODEL ANSWER Check your thinking Yes: 12 > 10.",
-            "MODEL ANSWER Check your thinking False; else branch executes."
+            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
           ],
           "feedback": "MODEL ANSWER Check your thinking False; else branch executes."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Follow the order of execution int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");",
+          "answer": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
+          "options": [
+            "MODEL ANSWER Check your thinking Yes: 12 > 10.",
+            "MODEL ANSWER Check your thinking False; else branch executes.",
+            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
+          ],
+          "feedback": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 A user enters age 16. Test age >= 18.",
-        "model": "MODEL ANSWER Check your thinking False; else branch executes.",
+        "prompt": "Write an exam-style response in your own words. Follow the order of execution int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");",
+        "model": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

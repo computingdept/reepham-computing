@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-136",
   "course": "h446",
-  "title": "Lesson 136 · Normalisation: First and Second Normal Form",
+  "title": "Normalisation: First and Second Normal Form",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "1NF — Attributes hold atomic values and rows can be uniquely identified.",
+            "2NF — In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+            "partial dependency — Non-key field depends on a subset of a composite key.",
+            "anomaly — Insertion, update or deletion causes undesirable effects."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Make fields atomic",
           "text": "Replace 'Maths, Art' in one cell with separate enrolment records."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Names partly depend on key",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Split Student and Course",
-          "text": "StudentName depends only on StudentID; CourseName only on CourseID. Split into Student(StudentID PK,StudentName), Course(CourseID PK,CourseName), Enrolment(StudentID FK,CourseID FK,Grade) with composite PK."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain atomicity in 1NF and correct a cell containing 'Red, Blue, Green'. [6]",
-          "answer": "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
+          "answer": "Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
           "options": [
-            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
-            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
-            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+            "Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+            "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
           ],
-          "feedback": "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+          "feedback": "Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain partial dependency using OrderID+ProductID key and ProductDescription. [6]",
-          "answer": "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+          "answer": "Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
           "options": [
-            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
-            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
-            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+            "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+            "Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
           ],
-          "feedback": "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
+          "feedback": "Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Convert StudentID,ClubID,StudentName,ClubName,JoinDate with composite key to 2NF. [8]",
-          "answer": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+          "answer": "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
           "options": [
-            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
-            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
-            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
+            "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
+            "Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
           ],
-          "feedback": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2]."
+          "feedback": "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Convert StudentID,ClubID,StudentName,ClubName,JoinDate with composite key to 2NF. [8]",
-        "model": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+        "model": "Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

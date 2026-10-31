@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-083",
   "course": "h446",
-  "title": "Lesson 083 · Dijkstra: Shortest Paths with Non-negative Weights",
+  "title": "Dijkstra: Shortest Paths with Non-negative Weights",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Dijkstra — Non-negative weighted shortest paths.",
+            "tentative distance — Current best-known route cost.",
+            "relaxation — Replace distance if improved.",
+            "predecessor — Previous vertex on best path."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Observe",
           "text": "Dijkstra maintains tentative shortest distances from a start vertex. All edge weights must be non-negative."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Improve the tentative route",
           "text": "Q=3 is the smallest unsettled distance. Via Q→R, the candidate is 3+2=5 . This beats R=8, so update R=5 and predecessor R←Q. Settled now: P,Q."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Reconstruct the actual path",
-          "text": "R=5 is next, and is the target. Follow predecessor pointers R←Q←P ; reverse to obtain P→Q→R , total cost 5 . No vertex with a larger tentative distance was prematurely finalised."
         }
       ],
       "questions": [

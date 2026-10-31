@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Scope — The part of a program in which a variable can be accessed.",
+            "Local variable — A variable visible only within the method or block where it is declared.",
+            "Global variable — A variable that can be accessed from multiple parts of a program.",
+            "Parameter — The named input in a method definition.",
+            "Argument — The actual value or variable supplied in a method call.",
+            "Pass by value — Passing a copy so changes inside the method do not change the original variable."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Scope controls where a variable can be used",
           "text": "A local variable is declared inside a method or block and can only be used within that scope. For this course, we use a class-level static field to demonstrate the OCR idea of a global variable that can be accessed by multiple methods."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Why doesn't the original value change?",
           "text": "Predict the value of score after the method call."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Start in Main",
-          "text": "int score = 10; The variable score belongs to Main() and currently stores 10."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Why doesn't the original value change? Predict the value of score after the method call.",
-          "answer": "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
-          "options": [
-            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
-            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
-            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x ."
-          ],
-          "feedback": "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Identify the scope Which variable can be accessed by multiple methods? Which is local to AddOne() ?",
           "answer": "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
           "options": [
-            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
+            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
             "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
-            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
+            "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable."
           ],
           "feedback": "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Predict pass-by-value What is output?",
           "answer": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
           "options": [
             "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
-            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
-            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10."
+            "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable.",
+            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x ."
           ],
           "feedback": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x ."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Make the change persist Modify the previous example so x becomes 10 after the call.",
+          "answer": "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable.",
+          "options": [
+            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+            "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable.",
+            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
+          ],
+          "feedback": "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Predict pass-by-value What is output?",
-        "model": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+        "prompt": "Write an exam-style response in your own words. Make the change persist Modify the previous example so x becomes 10 after the call.",
+        "model": "CHECK Where must ref appear? Method parameter ref int number Method call DoubleValue(ref x); Using ref in both places lets the method change the original variable.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

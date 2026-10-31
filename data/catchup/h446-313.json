@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "ACC — Accumulator register.",
+            "FCFS — First Come First Served.",
+            "SJF — Shortest Job First.",
+            "pipeline — Overlap instruction stages."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Understand",
           "text": "Trace the LMC accumulator and mailbox separately: INP overwrites ACC, while STA copies to storage."
@@ -219,42 +229,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Using LMC code above, trace ACC after each input, LDA, SUB and OUT. [6]",
-          "answer": "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
+          "answer": "ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
           "options": [
-            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
-            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
-            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+            "FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+            "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
           ],
-          "feedback": "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+          "feedback": "ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Processes A (burst 4), B (burst 2) and C (burst 1) all arrive at t=0. For FCFS, use the stated arrival-list order A, B, C to break ties; for non-preemptive SJF choose the shortest available job. Compare execution orders and mean waiting times. [6]",
-          "answer": "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+          "answer": "FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
           "options": [
-            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
-            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
-            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+            "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+            "ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
           ],
-          "feedback": "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
+          "feedback": "FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate clock speed, cache and pipelining for a task with heavy memory latency and branches. [6]",
-          "answer": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+          "answer": "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
           "options": [
-            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
-            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
-            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
+            "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
+            "FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
           ],
-          "feedback": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1]."
+          "feedback": "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate clock speed, cache and pipelining for a task with heavy memory latency and branches. [6]",
-        "model": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+        "model": "Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

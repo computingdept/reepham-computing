@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "by value — Copies a value to a parameter",
+            "ref — Allows changes to caller variable",
+            "reference — Identifies an object",
+            "argument — Value provided to a call",
+            "mutation — Change to a value or object"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "An int parameter normally receives a copied number. A Box parameter normally receives a copied reference to the same object. ref instead aliases the caller variable, allowing that variable to be reassigned."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
-          "answer": "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
-          "options": [
-            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
-            "MODEL ANSWER Check your thinking 5.",
-            "MODEL ANSWER Check your thinking No; the reference is copied."
-          ],
-          "feedback": "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 If a method takes ref int n and adds 2, starting 3, what is the caller value?",
           "answer": "MODEL ANSWER Check your thinking 5.",
           "options": [
-            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
+            "MODEL ANSWER Check your thinking 5.",
             "MODEL ANSWER Check your thinking No; the reference is copied.",
-            "MODEL ANSWER Check your thinking 5."
+            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged."
           ],
           "feedback": "MODEL ANSWER Check your thinking 5."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 Does passing a reference-type object by value copy the object itself?",
           "answer": "MODEL ANSWER Check your thinking No; the reference is copied.",
           "options": [
             "MODEL ANSWER Check your thinking 5.",
-            "MODEL ANSWER Check your thinking No; the reference is copied.",
-            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
+            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
+            "MODEL ANSWER Check your thinking No; the reference is copied."
           ],
           "feedback": "MODEL ANSWER Check your thinking No; the reference is copied."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
+          "answer": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
+          "options": [
+            "MODEL ANSWER Check your thinking No; the reference is copied.",
+            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
+            "MODEL ANSWER Check your thinking 5."
+          ],
+          "feedback": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 Does passing a reference-type object by value copy the object itself?",
-        "model": "MODEL ANSWER Check your thinking No; the reference is copied.",
+        "prompt": "Write an exam-style response in your own words. Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
+        "model": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

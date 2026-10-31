@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Karnaugh map — A grid used to simplify the outputs from a truth table.",
+            "Group — Adjacent 1s circled as one rectangular region.",
+            "Adjacent — Cells next to each other horizontally or vertically.",
+            "Simplify — Express the same output with fewer Boolean variables.",
+            "Gray code — An ordering in which neighbouring labels differ by one bit."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Map the truth-table outputs",
           "text": "For each combination of A and B, find the same output Q in the map. The grid moves outputs; it does not change them."
@@ -97,11 +108,6 @@
           "type": "paragraph",
           "title": "Worked example · How does this four-square map simplify?",
           "text": "Use the Boolean input labels and large output values to group the 1s and derive Q."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Read the input combinations",
-          "text": "Only the two bottom cells contain 1. They represent A=1, B=0 and A=1, B=1 ."
         }
       ],
       "questions": [
@@ -233,43 +239,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: How does this four-square map simplify? Use the Boolean input labels and large output values to group the 1s and derive Q.",
-          "answer": "STEP 2 · CIRCLE Circle the adjacent 1s Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 ¬A ∧ ¬B 0 ¬A ∧ B 0 A ∧ ¬B 1 A ∧ B 1 One group contains both 1s. Both outputs are 1 and the squares share an edge.",
+          "prompt": "Choose the response that best addresses this independent task: Circle a vertical pair Two 1s lie in the same column.",
+          "answer": "CHECK · EXPRESSION 6. Explain the result Q = B . Keep B because it is always 1; remove A because it changes.",
           "options": [
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 0 1 0 1 Group(s) highlighted. They form one vertical group of two.",
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair.",
-            "STEP 2 · CIRCLE Circle the adjacent 1s Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 ¬A ∧ ¬B 0 ¬A ∧ B 0 A ∧ ¬B 1 A ∧ B 1 One group contains both 1s. Both outputs are 1 and the squares share an edge."
+            "CHECK · EXPRESSION 6. Explain the result Q = ¬A . Keep NOT A; remove changing B.",
+            "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them.",
+            "CHECK · EXPRESSION 6. Explain the result Q = B . Keep B because it is always 1; remove A because it changes."
           ],
-          "feedback": "STEP 2 · CIRCLE Circle the adjacent 1s Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 ¬A ∧ ¬B 0 ¬A ∧ B 0 A ∧ ¬B 1 A ∧ B 1 One group contains both 1s. Both outputs are 1 and the squares share an edge."
+          "feedback": "CHECK · EXPRESSION 6. Explain the result Q = B . Keep B because it is always 1; remove A because it changes."
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Circle a vertical pair Two 1s lie in the same column.",
-          "answer": "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 0 1 0 1 Group(s) highlighted. They form one vertical group of two.",
+          "prompt": "Choose the response that best addresses this independent task: Circle a horizontal pair Two 1s lie in the same row.",
+          "answer": "CHECK · EXPRESSION 6. Explain the result Q = ¬A . Keep NOT A; remove changing B.",
           "options": [
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair.",
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 0 1 0 1 Group(s) highlighted. They form one vertical group of two.",
-            "STEP 2 · CIRCLE Circle the adjacent 1s Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 ¬A ∧ ¬B 0 ¬A ∧ B 0 A ∧ ¬B 1 A ∧ B 1 One group contains both 1s. Both outputs are 1 and the squares share an edge."
+            "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them.",
+            "CHECK · EXPRESSION 6. Explain the result Q = ¬A . Keep NOT A; remove changing B.",
+            "CHECK · EXPRESSION 6. Explain the result Q = B . Keep B because it is always 1; remove A because it changes."
           ],
-          "feedback": "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 0 1 0 1 Group(s) highlighted. They form one vertical group of two."
+          "feedback": "CHECK · EXPRESSION 6. Explain the result Q = ¬A . Keep NOT A; remove changing B."
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Circle a horizontal pair Two 1s lie in the same row.",
-          "answer": "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair.",
+          "prompt": "Choose the response that best addresses this independent task: Find two useful pairs All three 1s must be covered.",
+          "answer": "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them.",
           "options": [
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair.",
-            "STEP 2 · CIRCLE Circle the adjacent 1s Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 ¬A ∧ ¬B 0 ¬A ∧ B 0 A ∧ ¬B 1 A ∧ B 1 One group contains both 1s. Both outputs are 1 and the squares share an edge.",
-            "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 0 1 0 1 Group(s) highlighted. They form one vertical group of two."
+            "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them.",
+            "CHECK · EXPRESSION 6. Explain the result Q = B . Keep B because it is always 1; remove A because it changes.",
+            "CHECK · EXPRESSION 6. Explain the result Q = ¬A . Keep NOT A; remove changing B."
           ],
-          "feedback": "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair."
+          "feedback": "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Circle a horizontal pair Two 1s lie in the same row.",
-        "model": "CHECK · GROUP 2. Verify the grouping Karnaugh map: A rows, B columns B columns A rows 0 1 0 1 1 1 0 0 Group(s) highlighted. The top row contains the pair.",
+        "prompt": "Write an exam-style response in your own words. Find two useful pairs All three 1s must be covered.",
+        "model": "CHECK · EXPRESSION 6. Explain the result Q = A ∨ B . Two pairs give two terms; OR joins them.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

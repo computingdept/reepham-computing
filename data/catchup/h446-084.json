@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-084",
   "course": "h446",
-  "title": "Lesson 084 · A* Search: g, h and f Scores",
+  "title": "A* Search: g, h and f Scores",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "A* — Heuristic-guided shortest-path search.",
+            "g(n) — Cost so far from start.",
+            "h(n) — Estimated cost to goal.",
+            "f(n) — g(n)+h(n) priority."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Observe",
           "text": "A* orders candidate states using f(n)=g(n)+h(n), where g is known cost from the start and h estimates remaining cost to the goal."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Improve the path to R",
           "text": "Via Q→R, new g(R)=3+2=5 , which improves the existing 8. Thus f(R)=5+0=5 , and predecessor R becomes Q. OPEN now contains R with the improved values."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Confirm the path and heuristic meaning",
-          "text": "Select goal R from OPEN, then reconstruct R←Q←P to obtain P→Q→R , cost 5 . The supplied heuristics do not overestimate remaining true cost; the next lesson can explore what happens when this fails."
         }
       ],
       "questions": [

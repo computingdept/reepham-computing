@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-144",
   "course": "h446",
-  "title": "Lesson 144 · DNS and IP Routing: From Name to Destination",
+  "title": "DNS and IP Routing: From Name to Destination",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "DNS — Hierarchical name-resolution system.",
+            "IP address — Network-layer address used to route packets.",
+            "resolver — Client/service that queries DNS and caches answers.",
+            "router — Forwards IP packets towards destination networks."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Resolve hostname",
           "text": "Browser requests address for a website name through DNS."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · DNS returns an IP address",
           "text": "Explain the change using correct technical terms."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Connect to web server",
-          "text": "DNS maps the hostname to relevant resource records such as an A/AAAA address. DNS does not directly transmit the web page. Browser makes a separate connection to the chosen server address and requests content, often over HTTPS."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain how DNS helps a user retrieve a website by name. [6]",
-          "answer": "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+          "answer": "Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
           "options": [
-            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
-            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
-            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
+            "Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+            "DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+            "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
           ],
-          "feedback": "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
+          "feedback": "Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Differentiate DNS name resolution from IP packet routing. [6]",
-          "answer": "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+          "answer": "DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
           "options": [
-            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
-            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
-            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
+            "Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+            "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+            "DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
           ],
-          "feedback": "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
+          "feedback": "DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A school website moves servers but some users reach the old address. Explain cached DNS and propose sensible checks. [8]",
-          "answer": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+          "answer": "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
           "options": [
-            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
-            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
-            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
+            "DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+            "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+            "Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
           ],
-          "feedback": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
+          "feedback": "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A school website moves servers but some users reach the old address. Explain cached DNS and propose sensible checks. [8]",
-        "model": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+        "model": "Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "efficient group — A group of 1, 2, 4, 8 or 16 neighbouring 1s.",
+            "overlap — The same 1 can appear in two different groups.",
+            "wraparound — The left/right edges touch, and the top/bottom edges touch.",
+            "literal — An input letter, such as A, or its NOT, ¬A.",
+            "product term — An expression made with AND, such as A ∧ B.",
+            "simplified expression — The same output with fewer variables or gate inputs."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Find the 1s",
           "text": "Look at the 2×2 map on the left. Three squares contain 1 . We need to cover them in groups of neighbouring 1s. Use rectangles containing 1, 2, 4, 8 or 16 cells. Include only 1s, and choose the largest useful groups. Diagonal cells are not neighbours."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · How do two groups become a circuit?",
           "text": "Rows A; columns BC in Gray-code order."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Find the two pairs of 1s",
-          "text": "Follow the same coloured groups on the map on the left. Each pair becomes one term."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: How do two groups become a circuit? Rows A; columns BC in Gray-code order.",
-          "answer": "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
+          "prompt": "Choose the response that best addresses this independent task: Find one pair",
+          "answer": "CHECK · EXPLAIN 4. Why is this correct? A stays 1, C stays 1; B changes. Q = A ∧ C . Use an AND gate.",
           "options": [
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
-            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11."
+            "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate.",
+            "CHECK · EXPLAIN 4. Why is this correct? A stays 1, C stays 1; B changes. Q = A ∧ C . Use an AND gate.",
+            "CHECK · EXPLAIN 4. Why is this correct? The terms are ¬A and B. Q = ¬A ∨ B . Use NOT A, then OR with B."
           ],
-          "feedback": "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C"
+          "feedback": "CHECK · EXPLAIN 4. Why is this correct? A stays 1, C stays 1; B changes. Q = A ∧ C . Use an AND gate."
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Find one pair",
-          "answer": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
+          "prompt": "Choose the response that best addresses this independent task: Let two groups share a 1",
+          "answer": "CHECK · EXPLAIN 4. Why is this correct? The terms are ¬A and B. Q = ¬A ∨ B . Use NOT A, then OR with B.",
           "options": [
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
-            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+            "CHECK · EXPLAIN 4. Why is this correct? The terms are ¬A and B. Q = ¬A ∨ B . Use NOT A, then OR with B.",
+            "CHECK · EXPLAIN 4. Why is this correct? A stays 1, C stays 1; B changes. Q = A ∧ C . Use an AND gate.",
+            "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate."
           ],
-          "feedback": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11."
+          "feedback": "CHECK · EXPLAIN 4. Why is this correct? The terms are ¬A and B. Q = ¬A ∨ B . Use NOT A, then OR with B."
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Let two groups share a 1",
-          "answer": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
+          "prompt": "Choose the response that best addresses this independent task: Remember the outside edges touch",
+          "answer": "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate.",
           "options": [
-            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
-            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+            "CHECK · EXPLAIN 4. Why is this correct? A stays 1, C stays 1; B changes. Q = A ∧ C . Use an AND gate.",
+            "CHECK · EXPLAIN 4. Why is this correct? The terms are ¬A and B. Q = ¬A ∨ B . Use NOT A, then OR with B.",
+            "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate."
           ],
-          "feedback": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+          "feedback": "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Let two groups share a 1",
-        "model": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
+        "prompt": "Write an exam-style response in your own words. Remember the outside edges touch",
+        "model": "CHECK · EXPLAIN 4. Why is this correct? C stays 0; A and B change. Q = ¬C . Use a NOT gate.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

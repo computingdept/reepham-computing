@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-138",
   "course": "h446",
-  "title": "Lesson 138 · SQL SELECT, Filtering, Sorting and JOIN",
+  "title": "SQL SELECT, Filtering, Sorting and JOIN",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "SELECT — Returns specified columns/expressions.",
+            "WHERE — Filters rows according to a condition.",
+            "ORDER BY — Sorts returned rows by chosen column/expression.",
+            "JOIN — Combines rows from related tables using a join condition."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Choose projection",
           "text": "SELECT chooses columns from a named relation."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Select OrderID, Total",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Sort DESC 120,75",
-          "text": "SELECT OrderID, Total FROM Orders WHERE Total > 50 ORDER BY Total DESC; returns orders with 120 then 75, excluding 25."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Write SQL listing Title and Price from Book where Price<10, sorted ascending by Price. [6]",
-          "answer": "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+          "answer": "SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
           "options": [
-            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
-            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
-            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
+            "SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+            "Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+            "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
           ],
-          "feedback": "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
+          "feedback": "SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain the role of the ON clause in an INNER JOIN between Borrower and Loan. [6]",
-          "answer": "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+          "answer": "Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
           "options": [
-            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
-            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
-            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
+            "SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+            "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+            "Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
           ],
-          "feedback": "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
+          "feedback": "Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Write an INNER JOIN query listing Student.Name and Course.Title using Student, Enrolment and Course. [8]",
-          "answer": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+          "answer": "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
           "options": [
-            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
-            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
-            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
+            "Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+            "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+            "SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
           ],
-          "feedback": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
+          "feedback": "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Write an INNER JOIN query listing Student.Name and Course.Title using Student, Enrolment and Course. [8]",
-        "model": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+        "model": "SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

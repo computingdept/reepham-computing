@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "hash table — A structure using a hash function to choose storage location.",
+            "key — The value supplied to the hash function.",
+            "hash function — A deterministic calculation producing an index.",
+            "bucket — A hash-table storage location.",
+            "collision — Two keys map to the same bucket.",
+            "chaining — Keep multiple colliding values in one bucket."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Create fixed buckets",
           "text": "Each row is a bucket with three available collision slots."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Add 12, 17 and 22",
           "text": "All three keys hash to bucket 2. 12 % 5 = 2 17 % 5 = 2 22 % 5 = 2"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · 12",
-          "text": "table[2,0] = 12 count[2] = 1"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Add 12, 17 and 22 All three keys hash to bucket 2.",
-          "answer": "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
-          "options": [
-            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
-            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
-            "CHECK Complete the same calculation 37 MOD 10 = 7"
-          ],
-          "feedback": "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Calculate hash Table size 10; key 37.",
           "answer": "CHECK Complete the same calculation 37 MOD 10 = 7",
           "options": [
+            "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17",
             "CHECK Complete the same calculation 37 MOD 10 = 7",
-            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
             "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
           ],
           "feedback": "CHECK Complete the same calculation 37 MOD 10 = 7"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Add key Use bucket and count arrays.",
           "answer": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
           "options": [
-            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
+            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
             "CHECK Complete the same calculation 37 MOD 10 = 7",
-            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
+            "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17"
           ],
           "feedback": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Collision 12 and 17 both map to bucket 2.",
+          "answer": "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17",
+          "options": [
+            "CHECK Complete the same calculation 37 MOD 10 = 7",
+            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
+            "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17"
+          ],
+          "feedback": "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Add key Use bucket and count arrays.",
-        "model": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
+        "prompt": "Write an exam-style response in your own words. Collision 12 and 17 both map to bucket 2.",
+        "model": "CHECK Complete the bucket bucket 2: column 0 = 12 column 1 = 17",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "constructor — Initialises a new object",
+            "encapsulation — Controls access to internal state",
+            "private — Accessible only within its containing type",
+            "public — Accessible from other code",
+            "validation — Checks input meets rules"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Protect the object invariant",
           "text": "The constructor refuses a negative opening balance before storing it. The field is private, so outside code must use approved public methods instead of bypassing validation."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Construct a valid account; control updates",
-          "answer": "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
-          "options": [
-            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
-          ],
-          "feedback": "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Trace a different validated account Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2); . What does current.GetBalance() give afterwards if the exception is caught by the caller?",
           "answer": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
           "options": [
-            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
             "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private ."
           ],
           "feedback": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
           "answer": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
           "options": [
             "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
-            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
           ],
           "feedback": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Construct a valid account; control updates",
+          "answer": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
+          "options": [
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+          ],
+          "feedback": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private ."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
-        "model": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+        "prompt": "Write an exam-style response in your own words. Construct a valid account; control updates",
+        "model": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

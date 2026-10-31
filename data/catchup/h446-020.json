@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "stack — A LIFO data structure.",
+            "queue — A FIFO data structure.",
+            "LIFO — Last In, First Out.",
+            "FIFO — First In, First Out.",
+            "push — Add to the top of a stack.",
+            "pop — Remove from the top of a stack."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Stack array",
           "text": "-1 means the stack is empty."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Trace a stack",
           "text": "Push 8, push 7, then process an add operation. C# pointer connection: int[] stack = new int[5]; int top = -1; top++; stack[top] = 8; top++; stack[top] = 7; int first = stack[top]; top--; int second = stack[top]; top--; top++; stack[top] = first + second; push 8 push 7 pop → 7 pop → 8 push 15"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Store 8",
-          "text": "top = 0 stack[0] = 8"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace a stack Push 8, push 7, then process an add operation.",
-          "answer": "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
-          "options": [
-            "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
-            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
-            "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]"
-          ],
-          "feedback": "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Trace a stack OCR uses a calculator-style stack with push/pop operations.",
           "answer": "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
           "options": [
+            "CHECK Fill the same code top = top + 1; stack[top] = value;",
             "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
-            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
             "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
           ],
           "feedback": "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Stack vs queue Describe one difference.",
           "answer": "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
           "options": [
-            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
+            "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
             "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
-            "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
+            "CHECK Fill the same code top = top + 1; stack[top] = value;"
           ],
           "feedback": "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Push code Complete array-based push.",
+          "answer": "CHECK Fill the same code top = top + 1; stack[top] = value;",
+          "options": [
+            "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
+            "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
+            "CHECK Fill the same code top = top + 1; stack[top] = value;"
+          ],
+          "feedback": "CHECK Fill the same code top = top + 1; stack[top] = value;"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Stack vs queue Describe one difference.",
-        "model": "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
+        "prompt": "Write an exam-style response in your own words. Push code Complete array-based push.",
+        "model": "CHECK Fill the same code top = top + 1; stack[top] = value;",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

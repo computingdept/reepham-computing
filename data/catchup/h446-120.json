@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-120",
   "course": "h446",
-  "title": "Lesson 120 · Following Algorithms and Building Trace Tables",
+  "title": "Following Algorithms and Building Trace Tables",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "trace table — Record of algorithm state as steps execute.",
+            "iteration — Repeated execution of instructions.",
+            "dry run — Manual simulation of algorithm.",
+            "boundary test — Test at edge of valid input domain."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Identify state",
           "text": "Find variables, data structures, conditions and inputs."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Spot the stopping condition",
           "text": "n == 0 is the base case : return 0 immediately. Otherwise SumTo(n - 1) invokes the same method with a smaller argument. Assume n is non-negative."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Trace calls before returns",
-          "text": "SumTo(3) waits for SumTo(2) , then SumTo(1) , then SumTo(0) . The first three calls remain active until the base case returns."
         }
       ],
       "questions": [
@@ -234,42 +239,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace count ← 0; FOR i = 1 TO 5: IF i MOD 2=1 THEN count←count+1; NEXT; OUTPUT count. [6]",
-          "answer": "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+          "answer": "Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
           "options": [
-            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
-            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
-            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
+            "Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+            "Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+            "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
           ],
-          "feedback": "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
+          "feedback": "Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why initialising max ← 0 can cause a fault when finding the maximum of negative values. [6]",
-          "answer": "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+          "answer": "Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
           "options": [
-            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
-            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
-            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
+            "Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+            "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+            "Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
           ],
-          "feedback": "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
+          "feedback": "Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Trace recursive SumTo(4) using the method shown, name its base case and explain one difference from an iterative solution. [8]",
-          "answer": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+          "answer": "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
           "options": [
-            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
-            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
-            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
+            "Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+            "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+            "Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
           ],
-          "feedback": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
+          "feedback": "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Trace recursive SumTo(4) using the method shown, name its base case and explain one difference from an iterative solution. [8]",
-        "model": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+        "model": "Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

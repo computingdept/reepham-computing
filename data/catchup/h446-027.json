@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "De Morgan — Rules for negating AND/OR groups.",
+            "distribution — Expanding/factoring Boolean expressions.",
+            "association — Regrouping repeated same operations.",
+            "commutation — Changing order.",
+            "double negation — Two NOT operations cancel.",
+            "simplify — Produce an equivalent expression with less complexity."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "De Morgan",
           "text": "The operator inside the brackets swaps as each term is negated."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Simplify ¬(A ∧ B)",
           "text": "Apply one named rule. ¬(A ∧ B)"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Outer NOT over AND",
-          "text": "Use De Morgan's Law."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Simplify ¬(A ∧ B) Apply one named rule.",
-          "answer": "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
-          "options": [
-            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
-            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
-            "CHECK Complete the same expression ¬(¬B) = B"
-          ],
-          "feedback": "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: De Morgan Simplify ¬A ∨ ¬B using the relevant De Morgan form.",
           "answer": "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
           "options": [
-            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
+            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
             "CHECK Complete the same expression ¬(¬B) = B",
-            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)"
+            "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)"
           ],
           "feedback": "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Double negation Simplify ¬(¬B).",
           "answer": "CHECK Complete the same expression ¬(¬B) = B",
           "options": [
             "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
-            "CHECK Complete the same expression ¬(¬B) = B",
-            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B"
+            "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)",
+            "CHECK Complete the same expression ¬(¬B) = B"
           ],
           "feedback": "CHECK Complete the same expression ¬(¬B) = B"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Distribution Simplify (A ∨ B) ∧ (A ∨ C).",
+          "answer": "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)",
+          "options": [
+            "CHECK Complete the same expression ¬(¬B) = B",
+            "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)",
+            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)"
+          ],
+          "feedback": "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Double negation Simplify ¬(¬B).",
-        "model": "CHECK Complete the same expression ¬(¬B) = B",
+        "prompt": "Write an exam-style response in your own words. Distribution Simplify (A ∨ B) ∧ (A ∨ C).",
+        "model": "CHECK Complete the same expression (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

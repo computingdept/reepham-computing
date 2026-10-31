@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "tree — A hierarchical structure of nodes.",
+            "root — The top node.",
+            "parent — A node with child nodes.",
+            "child — A node directly below a parent.",
+            "leaf — A node with no children.",
+            "binary tree — A tree with at most two children per node."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "BST ordering",
           "text": "Each comparison chooses the next branch."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Search for 30",
           "text": "Use the array pointers rather than scanning every row. C# search example (paste into .NET Fiddle) using System; public class Program { public static void Main() { int[] data = { 40, 20, 60, 10, 30 }; int[] left = { 1, 3, -1, -1, -1 }; int[] right = { 2, 4, -1, -1, -1 }; int root = 0; int target = 30; int current = root; while (current != -1 && data[current] != target) {…"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · At index 0",
-          "text": "30 < 40 current = left[0] current = 1"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Search for 30 Use the array pointers rather than scanning every row.",
-          "answer": "STEP 2 · COMPARE At index 1 30 > 20 current = right[1] current = 4",
-          "options": [
-            "CHECK Complete one row index 0: Sligo left = 1 right = 3",
-            "CHECK Complete the same row index 2: Cork left = null right = null",
-            "STEP 2 · COMPARE At index 1 30 > 20 current = right[1] current = 4"
-          ],
-          "feedback": "STEP 2 · COMPARE At index 1 30 > 20 current = right[1] current = 4"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Represent a BST in a 2D pointer table OCR uses columns Left / Data / Right.",
           "answer": "CHECK Complete one row index 0: Sligo left = 1 right = 3",
           "options": [
             "CHECK Complete the same row index 2: Cork left = null right = null",
-            "CHECK Complete one row index 0: Sligo left = 1 right = 3",
-            "STEP 2 · COMPARE At index 1 30 > 20 current = right[1] current = 4"
+            "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found",
+            "CHECK Complete one row index 0: Sligo left = 1 right = 3"
           ],
           "feedback": "CHECK Complete one row index 0: Sligo left = 1 right = 3"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Leaf nodes Cork is a leaf in the OCR tree.",
           "answer": "CHECK Complete the same row index 2: Cork left = null right = null",
           "options": [
+            "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found",
             "CHECK Complete the same row index 2: Cork left = null right = null",
-            "STEP 2 · COMPARE At index 1 30 > 20 current = right[1] current = 4",
             "CHECK Complete one row index 0: Sligo left = 1 right = 3"
           ],
           "feedback": "CHECK Complete the same row index 2: Cork left = null right = null"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Search path Search 50 in 40,20,60,50.",
+          "answer": "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found",
+          "options": [
+            "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found",
+            "CHECK Complete one row index 0: Sligo left = 1 right = 3",
+            "CHECK Complete the same row index 2: Cork left = null right = null"
+          ],
+          "feedback": "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Leaf nodes Cork is a leaf in the OCR tree.",
-        "model": "CHECK Complete the same row index 2: Cork left = null right = null",
+        "prompt": "Write an exam-style response in your own words. Search path Search 50 in 40,20,60,50.",
+        "model": "CHECK Complete the path 50 > 40 → right 50 < 60 → left data = 50 → found",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

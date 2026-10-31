@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-133",
   "course": "h446",
-  "title": "Lesson 133 · Hashing for Integrity, Passwords and Data Lookup",
+  "title": "Hashing for Integrity, Passwords and Data Lookup",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "hash function — Maps input data to a fixed-size or bounded-size result.",
+            "digest — Output of a cryptographic hash function.",
+            "collision — Two distinct inputs produce the same hash result.",
+            "salt — Random value combined with a password before secure password hashing."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Compute a digest",
           "text": "A cryptographic hash produces a reproducible fingerprint of file content."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Calculate downloaded hash",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Compare exact digests",
-          "text": "Calculate SHA-256 digest of received file and compare with the digest from a trusted source. If different, file changed or was corrupted. If equal, this strongly supports matching content, assuming trusted digest and secure algorithm; it does not by itself prove publisher…"
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 State three different uses of hashing with one correct explanation each. [6]",
-          "answer": "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
+          "answer": "File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
           "options": [
-            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
-            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
-            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+            "Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+            "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
           ],
-          "feedback": "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+          "feedback": "File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain what a hash collision is and why it matters. [6]",
-          "answer": "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+          "answer": "Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
           "options": [
-            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
-            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
-            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+            "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+            "File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
           ],
-          "feedback": "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
+          "feedback": "Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate the claim 'a hash can decrypt a password and proves a file came from its claimed author'. [8]",
-          "answer": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+          "answer": "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
           "options": [
-            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
-            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
-            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
+            "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
+            "Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
           ],
-          "feedback": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2]."
+          "feedback": "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate the claim 'a hash can decrypt a password and proves a file came from its claimed author'. [8]",
-        "model": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+        "model": "Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-141",
   "course": "h446",
-  "title": "Lesson 141 · ACID Transactions, Locking and Redundancy",
+  "title": "ACID Transactions, Locking and Redundancy",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "transaction — Group of DB operations treated as one unit of work.",
+            "ACID — Atomicity, Consistency, Isolation, Durability.",
+            "record locking — Restricting conflicting access while data is being changed.",
+            "redundancy — Duplicated resources/data for resilience, distinct from backup."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Begin transaction",
           "text": "Move £20: subtract account A and add account B."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Crash before adding to B",
           "text": "Explain the change using correct technical terms."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Rollback both changes",
-          "text": "Atomicity means the transfer is all-or-nothing. A DBMS transaction can roll back partial changes. Consistency checks valid constraints; isolation keeps concurrent transfers safe; durability preserves committed transfers."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Expand ACID and explain atomicity and durability. [6]",
-          "answer": "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+          "answer": "A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
           "options": [
-            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
-            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
-            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
+            "A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+            "Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+            "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
           ],
-          "feedback": "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
+          "feedback": "A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why two concurrent users editing one record can cause a lost update. [6]",
-          "answer": "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+          "answer": "Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
           "options": [
-            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
-            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
-            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
+            "A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+            "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+            "Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
           ],
-          "feedback": "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
+          "feedback": "Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate replication, RAID and backups for database resilience. [8]",
-          "answer": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+          "answer": "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
           "options": [
-            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
-            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
-            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
+            "Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+            "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+            "A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
           ],
-          "feedback": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
+          "feedback": "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate replication, RAID and backups for database resilience. [8]",
-        "model": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+        "model": "Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

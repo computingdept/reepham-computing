@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Negation — Changing the sign of a value; in two’s complement, invert and add 1.",
+            "Cancellation — When subtracting similar values produces a much smaller result.",
+            "Guard bits — Extra low-order working bits retained during calculation.",
+            "Arithmetic right shift — A right shift that repeats the sign bit.",
+            "Renormalisation — Restoring a normalised mantissa while adjusting the exponent to preserve value.",
+            "Underflow — When a nonzero normalised result needs an exponent below the format’s minimum."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Align before subtracting",
           "text": "Choose a common exponent and use arithmetic right shifts to align the mantissas. Keep any low-order guard bits needed for an exact working result."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Subtract 1.5 from 5",
           "text": "Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Rewrite subtraction as addition of the negative value and give the final answer in normalised floating-point form."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Use common exponent 3",
-          "text": "Align both mantissas using sign-preserving right shifts. A: 0010100 B: 0000110"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Subtract 1.5 from 5 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Rewrite subtraction as addition of the negative value and give the final answer in normalised floating-point form.",
-          "answer": "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent.",
-          "options": [
-            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
-            "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
-            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
-          ],
-          "feedback": "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: 2. Negative difference: 1.5 − 5 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
           "answer": "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
           "options": [
             "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
-            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
-            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
+            "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5",
+            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
           ],
           "feedback": "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: 3. Subtract a negative: 5 − (−1.5) Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
           "answer": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
           "options": [
+            "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5",
             "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
-            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent.",
             "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
           ],
           "feedback": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 4. Cancellation: 6.5 − 6 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
+          "answer": "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5",
+          "options": [
+            "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5",
+            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
+            "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5"
+          ],
+          "feedback": "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. 3. Subtract a negative: 5 − (−1.5) Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
-        "model": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+        "prompt": "Write an exam-style response in your own words. 4. Cancellation: 6.5 − 6 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
+        "model": "CHECK Build the answer Method Align to exponent 3; subtract by adding two’s complement Working 0011010 + 1101000 = 0000010 Final answer 010000 0000 = 0.5",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

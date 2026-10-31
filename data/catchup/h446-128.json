@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-128",
   "course": "h446",
-  "title": "Lesson 128 · Run-Length Encoding: Encoding and Decoding",
+  "title": "Run-Length Encoding: Encoding and Decoding",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "RLE — Encodes consecutive equal symbols as a symbol and count.",
+            "run — A consecutive sequence of identical symbols.",
+            "overhead — Extra data required by an encoding scheme.",
+            "lossless — Decoding reproduces the original exactly."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Identify runs",
           "text": "Group identical adjacent symbols, not identical symbols separated by others."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · (5,A)(2,B)(3,C)",
           "text": "Explain the intermediate result or decision."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Decode original",
-          "text": "AAAAA =5A, BB=2B, CCC=3C. Encoded result (5,A)(2,B)(3,C); decoded data restores AAAAABBCCC exactly."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Apply RLE to AAAABBBCCAAAA using count-symbol pairs. [6]",
-          "answer": "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+          "answer": "(4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
           "options": [
-            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
-            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
-            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
+            "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+            "(4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
           ],
-          "feedback": "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output."
+          "feedback": "(4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Decode (3,X)(1,Y)(2,X) and explain why runs must retain order. [5]",
-          "answer": "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+          "answer": "XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
           "options": [
-            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
-            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
-            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+            "XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+            "(4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
           ],
-          "feedback": "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
+          "feedback": "XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A bitmap row has 40 alternating pixels. Explain why RLE might increase file size and identify a better-suited pattern. [8]",
-          "answer": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+          "answer": "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
           "options": [
-            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
-            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
-            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+            "(4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+            "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
           ],
-          "feedback": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+          "feedback": "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A bitmap row has 40 alternating pixels. Explain why RLE might increase file size and identify a better-suited pattern. [8]",
-        "model": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+        "model": "40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "half adder — A circuit adding two input bits.",
+            "full adder — A circuit adding two bits plus a carry-in.",
+            "Sum — The result bit for the current column.",
+            "Carry — A bit passed to the next column.",
+            "carry-in — Carry arriving from the previous lower bit.",
+            "carry-out — Carry passed to the next higher bit."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Start with binary addition",
           "text": "One binary column can produce a sum bit and a carry bit."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Model 1 + 1 with a half adder",
           "text": "We have just learned XOR and AND. Now model the output when A = 1 and B = 1. 1 + 1 = 10₂"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Rightmost result bit",
-          "text": "Sum = 0"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Model 1 + 1 with a half adder We have just learned XOR and AND. Now model the output when A = 1 and B = 1.",
-          "answer": "STEP 2 · CARRY Next column Carry = 1",
-          "options": [
-            "STEP 2 · CARRY Next column Carry = 1",
-            "CHECK Complete the same formulae S = A XOR B C = A AND B",
-            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1"
-          ],
-          "feedback": "STEP 2 · CARRY Next column Carry = 1"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Half-adder expressions OCR asks for S and C.",
           "answer": "CHECK Complete the same formulae S = A XOR B C = A AND B",
           "options": [
-            "STEP 2 · CARRY Next column Carry = 1",
+            "CHECK Complete the same formulae S = A XOR B C = A AND B",
             "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
-            "CHECK Complete the same formulae S = A XOR B C = A AND B"
+            "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder."
           ],
           "feedback": "CHECK Complete the same formulae S = A XOR B C = A AND B"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Half-adder truth table Complete the four outputs.",
           "answer": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
           "options": [
             "CHECK Complete the same formulae S = A XOR B C = A AND B",
-            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
-            "STEP 2 · CARRY Next column Carry = 1"
+            "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder.",
+            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1"
           ],
           "feedback": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: From half to full adder Trace the two XOR gates, then the two AND gates feeding OR.",
+          "answer": "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder.",
+          "options": [
+            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+            "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder.",
+            "CHECK Complete the same formulae S = A XOR B C = A AND B"
+          ],
+          "feedback": "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Half-adder truth table Complete the four outputs.",
-        "model": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+        "prompt": "Write an exam-style response in your own words. From half to full adder Trace the two XOR gates, then the two AND gates feeding OR.",
+        "model": "CHECK Improve the same explanation Two half adders plus an OR gate can form a full adder.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

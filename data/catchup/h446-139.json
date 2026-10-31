@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-139",
   "course": "h446",
-  "title": "Lesson 139 · SQL INSERT, UPDATE and DELETE Safely",
+  "title": "SQL INSERT, UPDATE and DELETE Safely",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "INSERT — Adds new rows.",
+            "UPDATE — Changes values in existing rows.",
+            "DELETE — Removes matching rows.",
+            "WHERE — Restricts affected rows; omission can affect every row."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Create rows",
           "text": "INSERT INTO Table(columns) VALUES(...)."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · UPDATE Stock = 3",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · WHERE BookID = 8",
-          "text": "UPDATE Book SET Stock = 3 WHERE BookID = 8; Before running, SELECT the matching row. Without WHERE, the stock column of all books would be changed."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Write SQL inserting StudentID 22 and Name 'Kai' into Student. [4]",
-          "answer": "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
+          "answer": "INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
           "options": [
-            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
-            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
-            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+            "UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+            "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
           ],
-          "feedback": "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+          "feedback": "INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 A teacher must change a single pupil's YearGroup to 13. Explain a safe SQL statement. [6]",
-          "answer": "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+          "answer": "UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
           "options": [
-            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
-            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
-            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+            "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+            "INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
           ],
-          "feedback": "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
+          "feedback": "UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain risks in DELETE FROM Booking; and suggest protections in a relational production database. [8]",
-          "answer": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+          "answer": "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
           "options": [
-            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
-            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
-            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
+            "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
+            "UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
           ],
-          "feedback": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2]."
+          "feedback": "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain risks in DELETE FROM Booking; and suggest protections in a relational production database. [8]",
-        "model": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+        "model": "Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

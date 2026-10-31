@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Array — A fixed collection of elements accessed using indexes.",
+            "Element — One stored value inside an array.",
+            "Index — The position number used to access an array element.",
+            "Dimension — One direction or level used to locate an element.",
+            "[] — C# syntax for an array with one dimension.",
+            "[,] — C# syntax for an array with two dimensions."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "1D · one index",
           "text": "Indexes start at 0, so students[2] is Charlie ."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build studentResults",
           "text": "Store each student's name and score in a 2D array, then display every row. Amelia 72 Ben 65 Charlie 81"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Rows are students · columns are fields",
-          "text": "row 0 → Amelia | 72 row 1 → Ben | 65 row 2 → Charlie| 81 We need 3 rows and 2 columns."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build studentResults Store each student's name and score in a 2D array, then display every row.",
-          "answer": "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
-          "options": [
-            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
-            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
-            "CHECK Read the array Index 2 Value Charlie Length 4"
-          ],
-          "feedback": "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Read an indexed value What is stored at index 2, and how many elements are in the array?",
           "answer": "CHECK Read the array Index 2 Value Charlie Length 4",
           "options": [
+            "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]",
             "CHECK Read the array Index 2 Value Charlie Length 4",
-            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
             "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
           ],
           "feedback": "CHECK Read the array Index 2 Value Charlie Length 4"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Read row and column Find studentResults[2,1] and the two dimension lengths.",
           "answer": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
           "options": [
-            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
+            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
             "CHECK Read the array Index 2 Value Charlie Length 4",
-            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
+            "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]"
           ],
           "feedback": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Find the address The value 57 is in layer 1. What complete array reference accesses it?",
+          "answer": "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]",
+          "options": [
+            "CHECK Read the array Index 2 Value Charlie Length 4",
+            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
+            "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]"
+          ],
+          "feedback": "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Read row and column Find studentResults[2,1] and the two dimension lengths.",
-        "model": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
+        "prompt": "Write an exam-style response in your own words. Find the address The value 57 is in layer 1. What complete array reference accesses it?",
+        "model": "CHECK Locate 57 Layer 1 Row 1 Column 2 Array reference scores[1,1,2]",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

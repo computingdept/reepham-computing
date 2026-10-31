@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Confirm data meets input rules. — Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice. — A repeated key that must not be inserted twice.",
+            "Check a value at a limit, such as a full table. — Check a value at a limit, such as a full table.",
+            "Use invalid inputs to check handling. — Use invalid inputs to check handling.",
+            "Search sequential buckets for an available place. — Search sequential buckets for an available place.",
+            "Check whether supplied credentials should grant access. — Check whether supplied credentials should grant access."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Your goal: a reliable demonstration system",
           "text": "Students will join registration and lookup so the program recognises existing usernames, refuses duplicates and performs login checks."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Model validation before registration",
           "text": "Add one small safeguard at a time rather than copying a completed login system."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Check blank input",
-          "text": "Console.Write(\"New username: \"); string username = (Console.ReadLine() ?? \"\").Trim(); if (username.Length == 0) { Console.WriteLine(\"Username required\"); }"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Model validation before registration Add one small safeguard at a time rather than copying a completed login system.",
-          "answer": "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing.",
-          "options": [
-            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
-            "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
-            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
-          ],
-          "feedback": "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Protect against duplicates Which checks must happen before insertion?",
           "answer": "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
           "options": [
             "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
-            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
-            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
+            "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup.",
+            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
           ],
           "feedback": "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Test a collision How do we prove the collision handler works?",
           "answer": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
           "options": [
+            "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup.",
             "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
-            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing.",
             "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
           ],
           "feedback": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build a synoptic MCQ Which structure supports FIFO processing? Provide three plausible alternatives and justify the correct response.",
+          "answer": "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup.",
+          "options": [
+            "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup.",
+            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
+            "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both."
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Test a collision How do we prove the collision handler works?",
-        "model": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+        "prompt": "Write an exam-style response in your own words. Build a synoptic MCQ Which structure supports FIFO processing? Provide three plausible alternatives and justify the correct response.",
+        "model": "CHECK · MODEL RESPONSE Build a synoptic MCQ Queue is correct. A stack is LIFO; a binary search tree organises ordered keys; a hash table is optimised for key-based lookup.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

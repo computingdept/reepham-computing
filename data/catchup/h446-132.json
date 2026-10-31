@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-132",
   "course": "h446",
-  "title": "Lesson 132 · Hybrid Encryption: Protecting a Connection",
+  "title": "Hybrid Encryption: Protecting a Connection",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "session key — Temporary symmetric key for a connection/session.",
+            "hybrid encryption — Combines asymmetric key establishment with symmetric data encryption.",
+            "certificate — Credential binding identity to a public key, subject to trust validation.",
+            "confidentiality — Preventing unauthorised reading of information."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Authenticate and agree",
           "text": "Client validates server identity and securely establishes shared key material."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Derive symmetric traffic key",
           "text": "Explain the intermediate result or decision."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Encrypt application data",
-          "text": "Modern secure connections typically authenticate with public-key credentials, establish shared session keys (often via ephemeral key agreement) and use efficient symmetric encryption for bulk traffic. Identity checks guard against impostors."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Describe why hybrid cryptography uses asymmetric and symmetric methods together. [6]",
-          "answer": "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+          "answer": "Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
           "options": [
-            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
-            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
-            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
+            "Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+            "Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+            "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
           ],
-          "feedback": "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
+          "feedback": "Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain what a session key is and why it is not the same as a website's public key. [6]",
-          "answer": "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+          "answer": "Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
           "options": [
-            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
-            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
-            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
+            "Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+            "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+            "Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
           ],
-          "feedback": "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
+          "feedback": "Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate the assertion 'the padlock means any entered data are safe'. [8]",
-          "answer": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+          "answer": "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
           "options": [
-            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
-            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
-            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
+            "Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+            "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+            "Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
           ],
-          "feedback": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
+          "feedback": "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate the assertion 'the padlock means any entered data are safe'. [8]",
-        "model": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+        "model": "Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

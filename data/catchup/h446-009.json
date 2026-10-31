@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Sequence — Instructions executed in their stated order.",
+            "Branching / selection — Choosing a route through a program according to a condition.",
+            "Boolean expression — An expression that evaluates to true or false.",
+            "Condition — The test inside an if statement.",
+            "Relational operators — They compare values.",
+            "Logical operators — They represent AND, OR and NOT."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Sequence = instructions in order",
           "text": "Sequence is the normal top-to-bottom execution of statements. Each statement happens after the previous one unless another construct changes the flow."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build a result checker",
           "text": "Ask the user for a score and output: Use the same class-and- Main structure as the student C# guide."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Use the standard .NET Fiddle structure",
-          "text": "using System; public class Program { public static void Main() { // code goes here } } Main program instructions belong inside Main() ."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build a result checker Ask the user for a score and output:",
-          "answer": "STEP 2 · INPUT & PARSE Read the score as an integer Console.Write(\"Enter score: \"); int score = int.Parse(Console.ReadLine()); Console.ReadLine() gives us text; int.Parse(...) converts it to a whole number.",
-          "options": [
-            "STEP 2 · INPUT & PARSE Read the score as an integer Console.Write(\"Enter score: \"); int score = int.Parse(Console.ReadLine()); Console.ReadLine() gives us text; int.Parse(...) converts it to a whole number.",
-            "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…",
-            "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch."
-          ],
-          "feedback": "STEP 2 · INPUT & PARSE Read the score as an integer Console.Write(\"Enter score: \"); int score = int.Parse(Console.ReadLine()); Console.ReadLine() gives us text; int.Parse(...) converts it to a whole number."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Even or odd Ask for a whole number. Output Even when the remainder after division by 2 is zero; otherwise output Odd .",
           "answer": "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…",
           "options": [
-            "STEP 2 · INPUT & PARSE Read the score as an integer Console.Write(\"Enter score: \"); int score = int.Parse(Console.ReadLine()); Console.ReadLine() gives us text; int.Parse(...) converts it to a whole number.",
+            "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…",
             "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch.",
-            "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…"
+            "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)"
           ],
           "feedback": "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even / Odd C# % is the remainder operator; it matches OCR MOD ."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Three temperature bands Output Hot for 25+, Mild for 15–24, otherwise Cold .",
           "answer": "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch.",
           "options": [
             "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…",
-            "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch.",
-            "STEP 2 · INPUT & PARSE Read the score as an integer Console.Write(\"Enter score: \"); int score = int.Parse(Console.ReadLine()); Console.ReadLine() gives us text; int.Parse(...) converts it to a whole number."
+            "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)",
+            "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch."
           ],
           "feedback": "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Age range using AND Output Teen ticket only when the age is from 12 to 17 inclusive.",
+          "answer": "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)",
+          "options": [
+            "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch.",
+            "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)",
+            "CHECK Build the missing decision Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); if (number % 2 == 0) { Console.WriteLine(\"Even\"); } else { Console.WriteLine(\"Odd\"); } Condition number % 2 == 0 Two outputs Even…"
+          ],
+          "feedback": "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Three temperature bands Output Hot for 25+, Mild for 15–24, otherwise Cold .",
-        "model": "CHECK Which condition comes first? First test temperature >= 25 Second test temperature >= 15 Else Cold Test the highest threshold first so 25+ is not caught by the 15+ branch.",
+        "prompt": "Write an exam-style response in your own words. Age range using AND Output Teen ticket only when the age is from 12 to 17 inclusive.",
+        "model": "CHECK Write one Boolean condition Lower bound age >= 12 Upper bound age <= 17 Join with && if (age >= 12 && age <= 17)",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

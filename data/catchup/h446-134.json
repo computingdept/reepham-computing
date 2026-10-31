@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-134",
   "course": "h446",
-  "title": "Lesson 134 · Database Foundations: Flat Files, Tables and Keys",
+  "title": "Database Foundations: Flat Files, Tables and Keys",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "record — A row representing one entity instance.",
+            "primary key — Unique, non-null identifier for a table row.",
+            "foreign key — Column referencing a key in another table.",
+            "flat file — Data kept in one simple table or file without relational links."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Single flat file",
           "text": "Duplicating pupil details on each enrolment creates repetition."
@@ -97,11 +107,6 @@
           "type": "paragraph",
           "title": "Worked example · Bookings refer to PupilID 7",
           "text": "Explain why this intermediate stage is necessary."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Change name once",
-          "text": "Pupil(PupilID PK, Name) and Booking(BookingID PK, PupilID FK, ClubID FK) separate data. A pupil name is held once and each booking refers to the pupil by ID, reducing update anomalies."
         }
       ],
       "questions": [
@@ -229,42 +234,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define primary key and foreign key using pupil/club tables. [6]",
-          "answer": "/ WORKED ANSWER Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
+          "answer": "Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
           "options": [
-            "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
-            "/ WORKED ANSWER Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
-            "/ WORKED ANSWER Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2]."
+            "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
+            "Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
+            "Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2]."
           ],
-          "feedback": "/ WORKED ANSWER Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2]."
+          "feedback": "Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain two problems with keeping pupil contact details on every booking row. [6]",
-          "answer": "/ WORKED ANSWER Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
+          "answer": "Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
           "options": [
-            "/ WORKED ANSWER Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
-            "/ WORKED ANSWER Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
-            "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
+            "Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
+            "Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
+            "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
           ],
-          "feedback": "/ WORKED ANSWER Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2]."
+          "feedback": "Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Design a relational structure for Customers placing multiple Orders, showing suitable PKs and FK. [8]",
-          "answer": "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
+          "answer": "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
           "options": [
-            "/ WORKED ANSWER Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
-            "/ WORKED ANSWER Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
-            "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
+            "Unique PK [2], FK references primary/candidate key in another table [2], valid specific column examples [2].",
+            "Duplication wastes storage [2], inconsistent updates [2], insert/delete anomalies [2].",
+            "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
           ],
-          "feedback": "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
+          "feedback": "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Design a relational structure for Customers placing multiple Orders, showing suitable PKs and FK. [8]",
-        "model": "/ WORKED ANSWER Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
+        "model": "Customer(CustomerID PK,...)[2], Order(OrderID PK,...)[2], Order.CustomerID FK[2], accurate one-to-many/benefits [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

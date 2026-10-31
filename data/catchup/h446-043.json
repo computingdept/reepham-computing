@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "modularity — Divide code into independent components",
+            "breakpoint — Pause in the debugger",
+            "step into — Enter a method while debugging",
+            "watch — Monitor expression/variable",
+            "testability — Ease of checking behaviour"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "Break on the array access, Step Into Sum and watch i, marks.Length and total. Diagnose the failing state before editing the loop condition."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
-          "answer": "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails.",
-          "options": [
-            "MODEL ANSWER Check your thinking Not all code paths return a value.",
-            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
-            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
-          ],
-          "feedback": "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 A method has no return despite return type int. What is wrong?",
           "answer": "MODEL ANSWER Check your thinking Not all code paths return a value.",
           "options": [
             "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
-            "MODEL ANSWER Check your thinking Not all code paths return a value.",
-            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
+            "MODEL ANSWER Check your thinking Not all code paths return a value."
           ],
           "feedback": "MODEL ANSWER Check your thinking Not all code paths return a value."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 Why step into a function in a debugger?",
           "answer": "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
           "options": [
+            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
             "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
-            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails.",
             "MODEL ANSWER Check your thinking Not all code paths return a value."
           ],
           "feedback": "MODEL ANSWER Check your thinking To inspect statements inside the called method."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
+          "answer": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
+          "options": [
+            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
+            "MODEL ANSWER Check your thinking Not all code paths return a value.",
+            "MODEL ANSWER Check your thinking To inspect statements inside the called method."
+          ],
+          "feedback": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 Why step into a function in a debugger?",
-        "model": "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+        "prompt": "Write an exam-style response in your own words. Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
+        "model": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "array — Fixed-length zero-indexed sequence.",
+            "byVal — Pass a value/copy.",
+            "byRef — Pass a reference to original.",
+            "readLine — Read the next file line."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Use exact indexing",
           "text": "OCR arrays use zero-based indexing; the number in array declaration is the number of elements."
@@ -219,42 +229,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q1/3 Trace the OCR reference-language array below. State the output and explain why accessing a[3] would be invalid. [5] array a[3] a[0] = 4 a[1] = 8 a[2] = 12 print(a[2])",
-          "answer": "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+          "answer": "Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
           "options": [
-            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
-            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
-            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
+            "Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+            "Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()",
+            "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
           ],
-          "feedback": "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
+          "feedback": "Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q2/3 Write OCR exam reference language to read and print every line of the file scores.txt, and then close it. [7]",
-          "answer": "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
+          "answer": "Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()",
           "options": [
-            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
-            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
-            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…"
+            "Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+            "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+            "Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()"
           ],
-          "feedback": "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()"
+          "feedback": "Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()"
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q3/3 Compare procedure addTwo(x:byVal) with addTwo(x:byRef), each executing x=x+2, for caller n=5. [6]",
-          "answer": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+          "answer": "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
           "options": [
-            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
-            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
-            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
+            "Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()",
+            "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+            "Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
           ],
-          "feedback": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
+          "feedback": "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. PRACTICE · Q3/3 Compare procedure addTwo(x:byVal) with addTwo(x:byRef), each executing x=x+2, for caller n=5. [6]",
-        "model": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+        "model": "byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

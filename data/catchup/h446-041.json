@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "scope — Where a name is accessible",
+            "local — Declared in a limited scope",
+            "class field — Variable belonging to a class/object",
+            "shadowing — Inner name hides an outer name",
+            "lifetime — Period a value exists"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "The class field and method-local variable are different storage locations. C# allows a local to hide a field; this does not permit redeclaring any local in a nested block."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Spot two variables with one name class Program { static int score = 10; static void Main() { int score = 3; System.Console.WriteLine(score); System.Console.WriteLine(Program.score); } }",
-          "answer": "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
-          "options": [
-            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
-            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
-            "MODEL ANSWER Check your thinking The parameter n with value 4."
-          ],
-          "feedback": "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 A parameter n is set to 4. What is visible inside the function?",
           "answer": "MODEL ANSWER Check your thinking The parameter n with value 4.",
           "options": [
+            "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state.",
             "MODEL ANSWER Check your thinking The parameter n with value 4.",
-            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
             "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
           ],
           "feedback": "MODEL ANSWER Check your thinking The parameter n with value 4."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 Why avoid excessive global state?",
           "answer": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
           "options": [
-            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
+            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
             "MODEL ANSWER Check your thinking The parameter n with value 4.",
-            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
+            "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state."
           ],
           "feedback": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Spot two variables with one name class Program { static int score = 10; static void Main() { int score = 3; System.Console.WriteLine(score); System.Console.WriteLine(Program.score); } }",
+          "answer": "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state.",
+          "options": [
+            "MODEL ANSWER Check your thinking The parameter n with value 4.",
+            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
+            "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state."
+          ],
+          "feedback": "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 Why avoid excessive global state?",
-        "model": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
+        "prompt": "Write an exam-style response in your own words. Spot two variables with one name class Program { static int score = 10; static void Main() { int score = 3; System.Console.WriteLine(score); System.Console.WriteLine(Program.score); } }",
+        "model": "STEP 3 Explain the output and scope The output is 3 then 10. Another method cannot directly access Main's local score. Restricting scope reduces unintended changes to shared state.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

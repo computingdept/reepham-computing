@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "graph — Vertices connected by edges.",
+            "vertex — A point/node in a graph.",
+            "edge — A connection between vertices.",
+            "directed — Edges have a direction.",
+            "undirected — Edges work both ways.",
+            "adjacency matrix — A 2D array storing graph connections."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Create",
           "text": "Three vertices (A, B and C) produce a 3 by 3 matrix: one row and one column per vertex. The four-vertex 4×4 example comes later in You Do."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build A—B—C",
           "text": "Represent a simple undirected graph. A = 0 B = 1 C = 2"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Make matrix",
-          "text": "int[,] graph = new int[3,3];"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build A—B—C Represent a simple undirected graph.",
-          "answer": "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
-          "options": [
-            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
-            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
-            "CHECK Fill the same code graph[1,3] = 1;"
-          ],
-          "feedback": "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Add undirected edge Add edge 0—2.",
           "answer": "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
           "options": [
-            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
+            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
             "CHECK Fill the same code graph[1,3] = 1;",
-            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;"
+            "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;"
           ],
           "feedback": "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Add directed edge Add only 1→3.",
           "answer": "CHECK Fill the same code graph[1,3] = 1;",
           "options": [
             "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
-            "CHECK Fill the same code graph[1,3] = 1;",
-            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;"
+            "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;",
+            "CHECK Fill the same code graph[1,3] = 1;"
           ],
           "feedback": "CHECK Fill the same code graph[1,3] = 1;"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Remove undirected edge Remove 0—2.",
+          "answer": "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;",
+          "options": [
+            "CHECK Fill the same code graph[1,3] = 1;",
+            "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;",
+            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;"
+          ],
+          "feedback": "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Add directed edge Add only 1→3.",
-        "model": "CHECK Fill the same code graph[1,3] = 1;",
+        "prompt": "Write an exam-style response in your own words. Remove undirected edge Remove 0—2.",
+        "model": "CHECK Fill the same code graph[0,2] = 0; graph[2,0] = 0;",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

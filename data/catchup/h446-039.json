@@ -74,6 +74,17 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "iteration — Repetition of statements",
+            "accumulator — Running total",
+            "counter — Tracks repetitions",
+            "condition — Controls loop continuation",
+            "termination — The loop ends"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Explain the important decision",
           "text": "Initialise the accumulator once. Each iteration changes total; i++ then advances the counter. Test i <= 3 before every pass."
@@ -223,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
-          "answer": "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
-          "options": [
-            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
-            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
-            "MODEL ANSWER Check your thinking 5."
-          ],
-          "feedback": "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 1 for i = 0 to 3 exclusive, how many iterations?",
           "answer": "MODEL ANSWER Check your thinking 3: i=0,1,2.",
           "options": [
-            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
+            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
             "MODEL ANSWER Check your thinking 5.",
-            "MODEL ANSWER Check your thinking 3: i=0,1,2."
+            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once."
           ],
           "feedback": "MODEL ANSWER Check your thinking 3: i=0,1,2."
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Problem 2 while (x < 5) x++; starting x=3: final x?",
           "answer": "MODEL ANSWER Check your thinking 5.",
           "options": [
             "MODEL ANSWER Check your thinking 3: i=0,1,2.",
-            "MODEL ANSWER Check your thinking 5.",
-            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
+            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
+            "MODEL ANSWER Check your thinking 5."
           ],
           "feedback": "MODEL ANSWER Check your thinking 5."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
+          "answer": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
+          "options": [
+            "MODEL ANSWER Check your thinking 5.",
+            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
+            "MODEL ANSWER Check your thinking 3: i=0,1,2."
+          ],
+          "feedback": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Problem 2 while (x < 5) x++; starting x=3: final x?",
-        "model": "MODEL ANSWER Check your thinking 5.",
+        "prompt": "Write an exam-style response in your own words. Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
+        "model": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

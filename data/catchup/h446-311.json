@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "run — Consecutive equal-value group.",
+            "invariant — Property maintained across iterations.",
+            "edge case — Boundary or unusual input.",
+            "distinct — Different values irrespective of position."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Understand",
           "text": "A run is a maximal group of equal consecutive values, not a unique value across the whole array."
@@ -219,42 +229,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace CountRuns for [3,3,4,4,3,5,5]. State where runs increment. [6]",
-          "answer": "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+          "answer": "Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
           "options": [
-            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
-            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
-            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…"
+            "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+            "Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the…"
           ],
-          "feedback": "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1]."
+          "feedback": "Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Write a valid C# CountRuns(int[] a) returning runs and handling empty input. [8]",
-          "answer": "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
+          "answer": "Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the…",
           "options": [
-            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
-            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
-            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+            "Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the…",
+            "Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
           ],
-          "feedback": "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the result [1]. Equivalent correct C# earns the same marks. static int CountRuns(int[] a) { if (a.Length == 0) return 0; int runs = 1; for (int i = 1; i < a.Length; i++) { if (a[i] != a[i - 1]) runs++; } return runs; }"
+          "feedback": "Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the result [1]. Equivalent correct C# earns the same marks. static int CountRuns(int[] a) { if (a.Length == 0) return 0; int runs = 1; for (int i = 1; i < a.Length; i++) { if (a[i] != a[i - 1]) runs++; } return runs; }"
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 For [1,2,1], compare runs and distinct counts, and assess time/extra-space complexity of CountRuns. [6]",
-          "answer": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+          "answer": "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
           "options": [
-            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
-            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
-            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+            "Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the…",
+            "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
           ],
-          "feedback": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+          "feedback": "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 For [1,2,1], compare runs and distinct counts, and assess time/extra-space complexity of CountRuns. [6]",
-        "model": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+        "model": "Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

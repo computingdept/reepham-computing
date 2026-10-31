@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Character set — A collection of characters with assigned codes.",
+            "Code point — A numeric identifier assigned to a character in Unicode.",
+            "Encoding — Rules for representing character codes as bytes.",
+            "ASCII — A standard seven-bit character code with 128 possible values.",
+            "Unicode — A standard assigning codes to characters from many writing systems and symbols.",
+            "UTF-8 — A Unicode encoding using one to four bytes per code point."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Characters need agreed codes",
           "text": "A character set defines characters and their assigned numeric codes. An encoding specifies how those codes are represented as bytes."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Encode the text “AB”",
           "text": "Use standard ASCII, then show each character in an 8-bit byte."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Start with the character codes",
-          "text": "A = 65 B = 66 ASCII assigns a numeric code to each character."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Encode the text “AB” Use standard ASCII, then show each character in an 8-bit byte.",
-          "answer": "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
-          "options": [
-            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
-            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
-            "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111"
-          ],
-          "feedback": "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: 2. Character versus quantity Use the I Do method and build the answer before checking.",
           "answer": "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
           "options": [
+            "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret…",
             "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
-            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
             "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
           ],
           "feedback": "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: 3. Use a code range Use the I Do method and build the answer before checking.",
           "answer": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
           "options": [
-            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
+            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
             "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
-            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
+            "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret…"
           ],
           "feedback": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 4. Choose an encoding Use the I Do method and build the answer before checking.",
+          "answer": "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret…",
+          "options": [
+            "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
+            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
+            "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret…"
+          ],
+          "feedback": "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret the bytes using the same encoding."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. 3. Use a code range Use the I Do method and build the answer before checking.",
-        "model": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
+        "prompt": "Write an exam-style response in your own words. 4. Choose an encoding Use the I Do method and build the answer before checking.",
+        "model": "CHECK Build the answer Method Choose an encoding that supports the required characters Working ASCII cannot represent English, Greek and Chinese together Final answer Use Unicode; UTF-8 is a suitable encoding Both ends must interpret the bytes using the same encoding.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

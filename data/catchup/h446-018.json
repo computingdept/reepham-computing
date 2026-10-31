@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "record — A collection of related fields describing one item.",
+            "field — One named piece of data inside a record.",
+            "list — A variable-size ordered collection.",
+            "tuple — A small fixed grouping of values.",
+            "index — The position of an item in an ordered structure.",
+            "Add() — A list operation that appends an item."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Records group fields",
           "text": "A record represents one entity using several related fields. In C#, this positional record creates a named Student type with properties. Those properties use init, so use a with expression to create an updated copy."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build and use a C# record",
           "text": "Define a reusable student record, access its properties, then create an updated copy. using System; public record Student(string Name, int CandidateNumber, int Score); public class Program { public static void Main() { Student pupil = new Student(\"Amelia\", 1037, 72); Console.WriteLine(pupil.Name); Console.WriteLine(pupil.Score); // Create a copy with an updated…"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Declare the record type",
-          "text": "public record Student(string Name, int CandidateNumber, int Score);"
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build and use a C# record Define a reusable student record, access its properties, then create an updated copy.",
-          "answer": "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
-          "options": [
-            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
-            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
-            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);"
-          ],
-          "feedback": "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);"
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: List operations Complete code that adds Daisy then removes Ben.",
           "answer": "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
           "options": [
-            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
+            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
             "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
-            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");"
+            "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List"
           ],
           "feedback": "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Tuple access A tuple stores a student's name and score.",
           "answer": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
           "options": [
             "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
-            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
-            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);"
+            "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List",
+            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);"
           ],
           "feedback": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Choose a structure A playlist must grow and shrink while the program is running.",
+          "answer": "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List",
+          "options": [
+            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+            "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List",
+            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");"
+          ],
+          "feedback": "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Tuple access A tuple stores a student's name and score.",
-        "model": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+        "prompt": "Write an exam-style response in your own words. Choose a structure A playlist must grow and shrink while the program is running.",
+        "model": "CHECK Complete the decision Need ordered items Need add/remove Size changes Best structure = List",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

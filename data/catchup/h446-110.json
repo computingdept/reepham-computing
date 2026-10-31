@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-110",
   "course": "h446",
-  "title": "Lesson 110 · Round Robin and Multilevel Feedback Queues",
+  "title": "Round Robin and Multilevel Feedback Queues",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -73,6 +73,16 @@
       "sign": "IDo_CodingIcon.png",
       "lead": "I Do",
       "blocks": [
+        {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "time quantum — Maximum continuous CPU interval per RR turn.",
+            "round robin — Preemptive cyclic scheduling.",
+            "context switch — Saving/restoring CPU state when changing process.",
+            "MLFQ — Multilevel feedback queue scheduling."
+          ]
+        },
         {
           "type": "paragraph",
           "title": "Round robin",
@@ -219,42 +229,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Describe the round-robin algorithm, including the purpose of the time quantum. [6]",
-          "answer": "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+          "answer": "FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
           "options": [
-            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
-            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
-            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
+            "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+            "FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
           ],
-          "feedback": "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2]."
+          "feedback": "FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 RR quantum 2: A burst 3, B burst 4, both arrive 0. Produce a Gantt timeline. [6]",
-          "answer": "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+          "answer": "A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
           "options": [
-            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
-            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
-            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+            "A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+            "FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
           ],
-          "feedback": "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
+          "feedback": "A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain how MLFQ responds to CPU-bound and interactive tasks and evaluate a very short quantum. [8]",
-          "answer": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+          "answer": "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
           "options": [
-            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
-            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
-            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+            "FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+            "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
           ],
-          "feedback": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+          "feedback": "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain how MLFQ responds to CPU-bound and interactive tasks and evaluate a very short quantum. [8]",
-        "model": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+        "model": "Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

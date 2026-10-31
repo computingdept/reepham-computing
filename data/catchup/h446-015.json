@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "2D array — An array organised using rows and columns.",
+            "Row — The horizontal index in a 2D array.",
+            "Column — The vertical index in a 2D array.",
+            "Nested loop — A loop inside another loop.",
+            "Validation — Checking input or a move against rules before accepting it.",
+            "Game loop — The repeated structure that runs turns until the game finishes."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Map 1–9 into row/column",
           "text": "Integer division finds the row; MOD finds the column. The picture highlights move 8: row 2, column 1. Inside MakeMove(), check the 1–9 range before using these indexes."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Turn move 8 into a board position",
           "text": "Convert the player's 1–9 choice into zero-based indexes. move = 8"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Subtract 1",
-          "text": "move - 1 = 7 Board indexes begin at 0."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Turn move 8 into a board position Convert the player's 1–9 choice into zero-based indexes.",
-          "answer": "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
-          "options": [
-            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
-            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
-            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }"
-          ],
-          "feedback": "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Map a move Move 6 is chosen.",
           "answer": "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
           "options": [
-            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
+            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
             "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
-            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
+            "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }"
           ],
           "feedback": "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Validate range Reject choices outside 1–9.",
           "answer": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
           "options": [
             "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
-            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
-            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder."
+            "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }",
+            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }"
           ],
           "feedback": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Reject occupied square The target may already contain X or O.",
+          "answer": "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }",
+          "options": [
+            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+            "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }",
+            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
+          ],
+          "feedback": "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Validate range Reject choices outside 1–9.",
-        "model": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+        "prompt": "Write an exam-style response in your own words. Reject occupied square The target may already contain X or O.",
+        "model": "CHECK Fill the same condition if (board[row,col] == \"X\" || board[row,col] == \"O\") { return false; }",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

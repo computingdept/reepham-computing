@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-125",
   "course": "h446",
-  "title": "Lesson 125 · Assembly Language and the Little Man Computer",
+  "title": "Assembly Language and the Little Man Computer",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -73,6 +73,16 @@
       "sign": "IDo_CodingIcon.png",
       "lead": "I Do",
       "blocks": [
+        {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "LMC — Educational model of a stored-program accumulator computer.",
+            "accumulator — Register holding current working data and arithmetic results.",
+            "program counter — Register holding address of the next instruction to fetch.",
+            "mnemonic — Symbolic name representing a machine instruction."
+          ]
+        },
         {
           "type": "paragraph",
           "title": "Mailboxes",
@@ -219,42 +229,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain what the PC, accumulator and memory mailboxes represent in LMC. [6]",
-          "answer": "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+          "answer": "PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
           "options": [
-            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…",
-            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
-            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
+            "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2].",
+            "PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
           ],
-          "feedback": "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2]."
+          "feedback": "PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Trace INP; STA 30; LDA 30; ADD 31; OUT; HLT, with input 5 and mailbox 31 containing 3. [6]",
-          "answer": "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+          "answer": "ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
           "options": [
-            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
-            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
-            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…"
+            "ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+            "PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2]."
           ],
-          "feedback": "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
+          "feedback": "ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Write LMC instructions to read an integer and output it, using a BRZ branch when zero. Explain how you would test both paths. [8]",
-          "answer": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…",
+          "answer": "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2].",
           "options": [
-            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
-            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
-            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…"
+            "PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+            "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2]."
           ],
-          "feedback": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2]."
+          "feedback": "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Write LMC instructions to read an integer and output it, using a BRZ branch when zero. Explain how you would test both paths. [8]",
-        "model": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2].",
+        "model": "One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

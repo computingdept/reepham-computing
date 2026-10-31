@@ -74,6 +74,16 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Identify — Locate incorrect condition or state update",
+            "Model — Model a correct trace table",
+            "Apply — Test new data, including missing target",
+            "Evaluate — Explain time and memory consequences"
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Identify",
           "text": "Locate incorrect condition or state update"
@@ -214,42 +224,42 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace binary search for 4 in [2,4,6,8,10], giving bounds/midpoints. [6]",
-          "answer": "/ MODEL ANSWER mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1].",
+          "answer": "mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1].",
           "options": [
-            "/ MODEL ANSWER Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
-            "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
-            "/ MODEL ANSWER mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
+            "Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
+            "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
+            "mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
           ],
-          "feedback": "/ MODEL ANSWER mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
+          "feedback": "mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Trace recursive SumTo(4), including base0 and return values. [6]",
-          "answer": "/ MODEL ANSWER Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
+          "answer": "Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
           "options": [
-            "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
-            "/ MODEL ANSWER Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
-            "/ MODEL ANSWER mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
+            "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
+            "Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3].",
+            "mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1]."
           ],
-          "feedback": "/ MODEL ANSWER Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3]."
+          "feedback": "Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3]."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Compare bubble and merge sort worst-case time/extra space; choose for million values with sufficient memory. [6]",
-          "answer": "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
+          "answer": "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
           "options": [
-            "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
-            "/ MODEL ANSWER mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1].",
-            "/ MODEL ANSWER Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3]."
+            "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
+            "mid2→6 [2], high1 [1], mid0→2 [1], low1 then mid1→4 [1], return index1 [1].",
+            "Calls 4,3,2,1,0 [3], returns 0,1,3,6,10 [3]."
           ],
-          "feedback": "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1]."
+          "feedback": "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1]."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Compare bubble and merge sort worst-case time/extra space; choose for million values with sufficient memory. [6]",
-        "model": "/ MODEL ANSWER Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
+        "model": "Bubble O(n²) [1] and O(1) extra [1]; merge O(n log n) [1] and O(n) extra [1]; merge scales better [1] with available memory [1].",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

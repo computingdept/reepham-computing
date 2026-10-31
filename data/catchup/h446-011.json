@@ -74,6 +74,18 @@
       "lead": "I Do",
       "blocks": [
         {
+          "type": "facts",
+          "title": "Key vocabulary",
+          "items": [
+            "Modularity — Breaking a program into smaller, separate components.",
+            "Subroutine — A named block of code that can be called to perform a task.",
+            "Method — The C# term used for the functions and procedures in this lesson.",
+            "Function — A subroutine that returns a value.",
+            "Procedure — A subroutine that does not return a value.",
+            "Return value — The data sent back from a function to its caller."
+          ]
+        },
+        {
           "type": "paragraph",
           "title": "Modularity breaks a problem into parts",
           "text": "A large program is easier to understand when separate jobs are placed in separate subroutines."
@@ -97,11 +109,6 @@
           "type": "paragraph",
           "title": "Worked example · Build an IsEven function",
           "text": "Create a function that accepts a whole number and returns true when it is even. The result is data, so this should be a function ."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Choose the return type",
-          "text": "public static bool IsEven(int number) { } The result is true/false, so the return type is bool ."
         }
       ],
       "questions": [
@@ -233,43 +240,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Build an IsEven function Create a function that accepts a whole number and returns true when it is even.",
-          "answer": "STEP 2 · RETURN THE RESULT Use the remainder test public static bool IsEven(int number) { return number % 2 == 0; } The Boolean expression itself already produces true or false .",
-          "options": [
-            "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;",
-            "STEP 2 · RETURN THE RESULT Use the remainder test public static bool IsEven(int number) { return number % 2 == 0; } The Boolean expression itself already produces true or false .",
-            "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");"
-          ],
-          "feedback": "STEP 2 · RETURN THE RESULT Use the remainder test public static bool IsEven(int number) { return number % 2 == 0; } The Boolean expression itself already produces true or false ."
-        },
-        {
-          "id": "a2",
-          "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Greeting procedure Create a method called Greeting that receives a name and displays Hello name .",
           "answer": "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");",
           "options": [
+            "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed.",
             "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");",
-            "STEP 2 · RETURN THE RESULT Use the remainder test public static bool IsEven(int number) { return number % 2 == 0; } The Boolean expression itself already produces true or false .",
             "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;"
           ],
           "feedback": "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");"
         },
         {
-          "id": "a3",
+          "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Square function Create a method that receives an integer and returns its square.",
           "answer": "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;",
           "options": [
-            "STEP 2 · RETURN THE RESULT Use the remainder test public static bool IsEven(int number) { return number % 2 == 0; } The Boolean expression itself already produces true or false .",
+            "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;",
             "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");",
-            "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;"
+            "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed."
           ],
           "feedback": "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Refactor repeated code A program prints the same separator in several places:",
+          "answer": "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed.",
+          "options": [
+            "CHECK Function or procedure? Return type void Parameter type string Call Greeting(\"Hamish\");",
+            "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;",
+            "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed."
+          ],
+          "feedback": "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed."
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Square function Create a method that receives an integer and returns its square.",
-        "model": "CHECK Complete the method public static int Square(int number) { return number * number; } Return type int Return expression return number * number;",
+        "prompt": "Write an exam-style response in your own words. Refactor repeated code A program prints the same separator in several places:",
+        "model": "CHECK Design the module Name ShowLine Return type void Why useful? Reuse one method wherever the separator is needed.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",
