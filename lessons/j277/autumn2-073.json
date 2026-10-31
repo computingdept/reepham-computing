@@ -17,19 +17,19 @@
     "c": [
       [
         "SELECT",
-        "Specifies columns required from a database table. In the school club database, identify where this technique applies."
+        "SELECT names the fields to retrieve. SELECT Name returns pupil names, not all columns."
       ],
       [
         "FROM",
-        "Identifies the database table from which records are selected. In the library books database, identify where this technique applies."
+        "FROM identifies the table, for example FROM Pupils. Read the given table and field names carefully."
       ],
       [
         "WHERE",
-        "Filters records using a condition. In the sports team records, identify where this technique applies."
+        "WHERE selects only the rows that satisfy its condition, for example WHERE Year = 10. A pupil in Year 11 does not match."
       ],
       [
         "SQL query",
-        "SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. In the museum member list, identify where this technique applies."
+        "For Pupils rows (101,Ada,10), (102,Ben,11), (103,Mia,10), SELECT Name FROM Pupils WHERE Year = 10 returns Ada and Mia. Writing SQL as text in OCR ERL does not execute it against a database."
       ]
     ],
     "visuals": [
@@ -85,33 +85,33 @@
       "foot": "Follow the detailed example"
     },
     "m": {
-      "title": "Model · school club database",
-      "q": "A school club database uses select and from. Explain what each contributes. [4 marks]",
+      "title": "Worked SQL query · pupil table",
+      "q": "Pupils table (ID, Name, Year) contains (101,Ada,10), (102,Ben,11), (103,Mia,10). Write SQL to retrieve names of Year 10 pupils and give the result. [4 marks]",
       "headings": [
-        "Read the question",
-        "Model the first feature",
-        "Model the second feature",
-        "Check the marks"
+        "Select field",
+        "Choose table",
+        "Filter records",
+        "State result"
       ],
       "st": [
-        "Identify the program's purpose and the pieces of data needed.",
-        "SELECT [1]; Specifies columns required from a database table. [1].",
-        "FROM [1]; Identifies the database table from which records are selected. [1].",
-        "Each feature needs a correct technical fact plus an explanation."
+        "SELECT Name requests the Name field. [1]",
+        "FROM Pupils selects the correct table. [1]",
+        "WHERE Year = 10 excludes Ben's Year 11 record. [1]",
+        "Full query: SELECT Name FROM Pupils WHERE Year = 10; returned names are Ada and Mia. [1]"
       ]
     },
     "w": [
       [
-        "A library books database needs select. Explain the purpose. [2 marks]",
-        "SELECT [1]; Specifies columns required from a database table. [1]."
+        "A Books table has fields Title and Genre. Write a query returning every book's Title. [2 marks]",
+        "SELECT Title [1] FROM Books [1]. A WHERE condition is unnecessary."
       ],
       [
-        "Explain from for a sports team records. [2 marks]",
-        "FROM [1]; Identifies the database table from which records are selected. [1]."
+        "A Teams table has fields Name and House. Write SQL returning Name where House is 'Red'. [2 marks]",
+        "SELECT Name FROM Teams [1] WHERE House = 'Red' [1]."
       ],
       [
-        "When programming a museum member list, explain why where and sql query matter. [4 marks]",
-        "WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+        "Members has fields Name and Paid, with rows (Ada,Yes), (Ben,No), (Mia,Yes). Write SQL to return names with Paid = 'Yes'; state the results. [4 marks]",
+        "SELECT Name [1] FROM Members [1] WHERE Paid = 'Yes' [1]; Ada and Mia are returned [1]."
       ]
     ],
     "wTitles": [
@@ -122,56 +122,56 @@
     "wSteps": [
       [
         [
-          "Your turn · plan",
-          "Find the relevant operation or concept."
+          "Plan",
+          "Choose only the required column."
         ],
         [
-          "Step 1 · identify",
-          "SELECT [1]"
+          "SELECT",
+          "SELECT Title [1]."
         ],
         [
-          "Step 2 · explain",
-          "Specifies columns required from a database table. [1]"
+          "FROM",
+          "FROM Books [1]."
         ],
         [
-          "Check the marks",
-          "SELECT [1]; Specifies columns required from a database table. [1]."
+          "Answer",
+          "SELECT Title FROM Books [2]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Find the relevant operation or concept."
+          "Plan",
+          "Select names, then filter by House."
         ],
         [
-          "Step 1 · identify",
-          "FROM [1]"
+          "SELECT/FROM",
+          "SELECT Name FROM Teams [1]."
         ],
         [
-          "Step 2 · explain",
-          "Identifies the database table from which records are selected. [1]"
+          "WHERE",
+          "WHERE House = 'Red' [1]."
         ],
         [
-          "Check the marks",
-          "FROM [1]; Identifies the database table from which records are selected. [1]."
+          "Answer",
+          "SELECT Name FROM Teams WHERE House = 'Red' [2]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Find the relevant operation or concept."
+          "Plan",
+          "Find the records where Paid is Yes."
         ],
         [
-          "Step 1 · identify",
-          "WHERE [1]"
+          "Select",
+          "SELECT Name FROM Members [2]."
         ],
         [
-          "Step 2 · explain",
-          "Filters records using a condition. [1]"
+          "Filter",
+          "WHERE Paid = 'Yes' [1]."
         ],
         [
-          "Check the marks",
-          "WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+          "Answer",
+          "Ada and Mia are returned [1]."
         ]
       ]
     ],
@@ -208,27 +208,27 @@
       }
     ],
     "k": {
-      "q": "Trace this OCR ERL program; predict the output and change it.",
+      "q": "The OCR ERL program PRINTS a SQL query as text; it does not run that query against a database. Predict and improve the statement.",
       "code": "query = \"SELECT Name FROM Pupils WHERE Year = 10\"\nprint(query)",
       "p": [
-        "Predict the exact output.",
-        "Change Year = 10 to Year = 11.",
-        "Write a separate SQL query selecting Title FROM Books WHERE Available = true."
+        "Predict exactly which SQL text the program prints.",
+        "Change Year = 10 to Year = 11; predict the new printed text.",
+        "Write the separate SQL statement SELECT Title FROM Books WHERE Genre = 'Science'; explain what a database would return."
       ],
-      "a": "Original output: SELECT Name FROM Pupils WHERE Year = 10.\nAfter the changes: Updated printed SQL ends Year = 11. Example second query: SELECT Title FROM Books WHERE Available = true. The OCR ERL program prints a query; a database system would execute it.\nSQL is displayed as text; it is not executed by OCR ERL."
+      "a": "Original printed string: SELECT Name FROM Pupils WHERE Year = 10. Changed string: SELECT Name FROM Pupils WHERE Year = 11. A valid new SQL statement is SELECT Title FROM Books WHERE Genre = 'Science'. A database engine would return matching Title values; this OCR ERL program only prints the text."
     },
     "e": [
       [
-        "State TWO relevant ideas or operations from this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "SELECT [1]; FROM [1]."
+        "Books has columns Title, Author and Genre. Write a query returning the Title from every row. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "SELECT Title [1] FROM Books [1]."
       ],
       [
-        "Explain from and where in a café inventory. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "FROM [1]; Identifies the database table from which records are selected. [1]. WHERE [1]; Filters records using a condition. [1]."
+        "A Products table stores Name, Price and InStock. Write SQL to retrieve Name for records where Price is below 5. Explain the filter. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "SELECT Name [1] FROM Products [1] WHERE Price < 5 [1]; only rows with a Price less than 5 match [1]."
       ],
       [
-        "A programmer makes a school house records. Explain the roles of select, where and sql query. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "SELECT [1]; Specifies columns required from a database table. [1]. WHERE [1]; Filters records using a condition. [1]. SQL query [1]; SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows. [1]."
+        "Clubs contains (Name, Year) rows (Chess,10), (Drama,11), (Coding,10). Write SQL retrieving names of Year 10 clubs. Explain SELECT, FROM and WHERE and state the result. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "SELECT Name FROM Clubs WHERE Year = 10 [3: one each for SELECT Name, FROM Clubs, WHERE Year = 10]; SELECT chooses Name [1]; FROM identifies Clubs [1]; WHERE selects Year 10, so results are Chess and Coding [1]."
       ]
     ],
     "v": [
@@ -246,7 +246,7 @@
       ],
       [
         "SQL query",
-        "SELECT Name FROM Pupils WHERE Year = 10 retrieves relevant names from matching rows."
+        "A statement such as SELECT Name FROM Pupils WHERE Year = 10 which returns selected fields from matching rows."
       ],
       [
         "Algorithm",
@@ -258,7 +258,7 @@
       ]
     ],
     "x": [
-      "The SQL SELECT clause specifies which columns are retrieved from a database table.",
+      "Writing a SQL SELECT statement into a string and printing it is not the same as executing it against a database.",
       true
     ],
     "r": [

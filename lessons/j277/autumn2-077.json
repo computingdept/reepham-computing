@@ -10,26 +10,26 @@
       "Iterative and final testing"
     ],
     "o": [
-      "Choose suitable data and explain iterative and final testing.",
-      "Apply this to another software scenario.",
-      "Use test evidence to identify or improve an answer."
+      "Choose normal and boundary tests for a specified allowed input range.",
+      "Distinguish invalid values from erroneous data types.",
+      "Predict expected test results and identify iterative and final testing."
     ],
     "c": [
       [
         "Normal test data",
-        "Representative valid inputs normally expected during use. Consider this in a test a marks form."
+        "Normal test data is an ordinary valid input, such as mark 50 in an integer mark range 0–100."
       ],
       [
         "Boundary test data",
-        "Values at, immediately below and immediately above an allowed limit. Consider this in a ticket quantity checker."
+        "Boundary tests cover limits and adjacent values. For range 0–100 inclusive, 0 and 100 are valid; -1 and 101 are outside the range."
       ],
       [
-        "Invalid or erroneous",
-        "Inputs rejected by the required rules, including out-of-range or wrong-format data. Consider this in a age-restricted service."
+        "Invalid versus erroneous",
+        "Invalid data has the correct type but an unacceptable value, e.g. integer 101 where 0–100 is required. Erroneous data has the wrong type, e.g. the text 'hello' in an integer mark field."
       ],
       [
         "Iterative and final testing",
-        "Iterative testing runs during development; terminal testing checks the finished solution. Consider this in a sports score input."
+        "Iterative testing happens during development and after changes. Final (terminal) testing checks the completed solution. Each test case needs an input, expected result and actual result."
       ]
     ],
     "visuals": [
@@ -85,33 +85,33 @@
       "foot": "Model the method before independent practice"
     },
     "m": {
-      "title": "Model · test a marks form",
-      "q": "A test a marks form needs normal test data and boundary test data. Explain why. [4 marks]",
+      "title": "Worked test plan · mark 0–100",
+      "q": "A form accepts integer marks 0–100 inclusive. Give one normal input, two valid boundary inputs, one invalid integer and one erroneous input, with expected outcomes. [5 marks]",
       "headings": [
-        "Identify the task",
-        "Explain the first point",
-        "Explain the second point",
-        "Check all four marks"
+        "Normal",
+        "Two boundaries",
+        "Invalid integer",
+        "Erroneous type"
       ],
       "st": [
-        "Identify the inputs, constraints and expected result.",
-        "Normal test data [1]; Representative valid inputs normally expected during use. [1].",
-        "Boundary test data [1]; Values at, immediately below and immediately above an allowed limit. [1].",
-        "Give a specific point and a linked reason for each feature."
+        "Normal: 50 is an ordinary integer value and should be Accepted. [1]",
+        "Boundaries: 0 and 100 are valid and must both be Accepted. [2]",
+        "Invalid: 101 is an integer but out of range; the program should Reject it. [1]",
+        "Erroneous: 'hello' has the wrong type; the program should report a type error or ask again before comparing numbers. [1]"
       ]
     },
     "w": [
       [
-        "In a ticket quantity checker, explain the purpose of normal test data. [2 marks]",
-        "Normal test data [1]; Representative valid inputs normally expected during use. [1]."
+        "A ticket program accepts integer quantities from 1 to 20. Give one normal test value and its expected result. [2 marks]",
+        "10 is typical normal data [1] and should be Accepted [1]."
       ],
       [
-        "A age-restricted service needs boundary test data. Explain its role. [2 marks]",
-        "Boundary test data [1]; Values at, immediately below and immediately above an allowed limit. [1]."
+        "An age program accepts integers from 11 to 18 inclusive. Give both valid boundaries and one adjacent invalid integer. [2 marks]",
+        "Valid boundaries: 11 and 18 [1]; invalid integer: 10 or 19 [1]."
       ],
       [
-        "A sports score input uses invalid or erroneous and iterative and final testing. Explain both. [4 marks]",
-        "Invalid or erroneous [1]; Inputs rejected by the required rules, including out-of-range or wrong-format data. [1]. Iterative and final testing [1]; Iterative testing runs during development; terminal testing checks the finished solution. [1]."
+        "A sports score must be an integer 0–100. Classify 120 and 'ten', give their outcomes, and explain when iterative testing happens. [4 marks]",
+        "120 is invalid (out-of-range integer), so reject [1]; 'ten' is erroneous text, so report a type error or re-prompt [1]; iterative testing occurs as parts are developed [1] and after changes to check fixes [1]."
       ]
     ],
     "wTitles": [
@@ -154,56 +154,56 @@
     "wSteps": [
       [
         [
-          "Your turn · plan",
-          "Match the problem to the stated technique."
+          "Plan",
+          "Choose a typical valid quantity."
         ],
         [
-          "Step 1 · identify",
-          "Normal test data [1]"
+          "Test",
+          "10 is normal integer data [1]."
         ],
         [
-          "Step 2 · explain",
-          "Representative valid inputs normally expected during use. [1]"
+          "Expected",
+          "Accepted [1]."
         ],
         [
-          "Check the marks",
-          "Normal test data [1]; Representative valid inputs normally expected during use. [1]."
+          "Answer",
+          "10 is normal and should be Accepted [2]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Match the problem to the stated technique."
+          "Plan",
+          "Identify inclusive limits."
         ],
         [
-          "Step 1 · identify",
-          "Boundary test data [1]"
+          "Boundary",
+          "11 and 18 are valid [1]."
         ],
         [
-          "Step 2 · explain",
-          "Values at, immediately below and immediately above an allowed limit. [1]"
+          "Outside",
+          "10 or 19 is an invalid integer [1]."
         ],
         [
-          "Check the marks",
-          "Boundary test data [1]; Values at, immediately below and immediately above an allowed limit. [1]."
+          "Answer",
+          "11,18 boundaries [1]; 10 or 19 invalid [1]."
         ]
       ],
       [
         [
-          "Your turn · plan",
-          "Match the problem to the stated technique."
+          "Plan",
+          "Compare wrong value with wrong type."
         ],
         [
-          "Step 1 · identify",
-          "Invalid or erroneous [1]"
+          "Classify",
+          "120 invalid; 'ten' erroneous [2]."
         ],
         [
-          "Step 2 · explain",
-          "Inputs rejected by the required rules, including out-of-range or wrong-format data. [1]"
+          "Test phase",
+          "Iterative testing takes place during development and after changes [2]."
         ],
         [
-          "Check the marks",
-          "Invalid or erroneous [1]; Inputs rejected by the required rules, including out-of-range or wrong-format data. [1]. Iterative and final testing [1]; Iterative testing runs during development; terminal testing checks the finished solution. [1]."
+          "Answer",
+          "Reject 120 [1]; type-error/re-prompt 'ten' [1]; iterative testing in development and after changes [2]."
         ]
       ]
     ],
@@ -211,54 +211,54 @@
       "q": "Trace the OCR ERL program, test a new input and improve the code.",
       "code": "mark = 100\nif mark >= 0 AND mark <= 100 then\n    print(\"Accepted\")\nelse\n    print(\"Rejected\")\nendif",
       "p": [
-        "Predict the exact initial output.",
-        "Test -1, 0, 1, 99, 100, 101; record each expected output.",
-        "Test a normal value 50 and explain its purpose."
+        "Predict the initial output when mark is 100.",
+        "Run valid and invalid integers -1, 0, 50, 100 and 101; list their expected outputs.",
+        "Explain why 'hello' is ERRONEOUS, not an invalid integer. Do not pass text into numeric comparisons without validating type first."
       ],
-      "a": "Original output: Accepted.\nUpdated tests: -1 and 101: Rejected. 0, 1, 50, 99, 100: Accepted.\nWrite the expected and actual output separately."
+      "a": "100 is Accepted. -1 and 101 are Rejected; 0, 50 and 100 are Accepted. 'hello' is a string instead of an integer: check its type at input and report a clear error or re-prompt before numeric comparisons."
     },
     "e": [
       [
-        "State TWO concepts relevant to this topic. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "Normal test data [1]; Invalid or erroneous [1]."
+        "For a program accepting integer marks 0–100, classify input 101 and input 'hello'. [2 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "101 is invalid: an integer but outside the permitted range [1]. 'hello' is erroneous: a string where an integer is required [1]."
       ],
       [
-        "Explain how boundary test data and invalid or erroneous help in a club attendance tool. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "Boundary test data [1]; Values at, immediately below and immediately above an allowed limit. [1]. Invalid or erroneous [1]; Inputs rejected by the required rules, including out-of-range or wrong-format data. [1]."
+        "A club accepts integer attendance 1–30. Give two valid boundary values, one invalid integer and one erroneous input, with expected outcomes. [4 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "1 and 30 are valid boundaries (both Accepted) [2]; integer 0 or 31 is invalid (Rejected) [1]; text 'thirty' is erroneous (type error/re-prompt) [1]."
       ],
       [
-        "Explain the roles of normal test data, invalid or erroneous and iterative and final testing in a online purchase form. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
-        "Normal test data [1]; Representative valid inputs normally expected during use. [1]. Invalid or erroneous [1]; Inputs rejected by the required rules, including out-of-range or wrong-format data. [1]. Iterative and final testing [1]; Iterative testing runs during development; terminal testing checks the finished solution. [1]."
+        "A form accepts integer quantities 1–20 inclusive. Give six test cases: one normal, two valid boundaries, one invalid below, one invalid above and one erroneous type. State each expected result. [6 marks]\n\nSource: Original OCR J277-style teaching question; not an official past paper.",
+        "Normal 10 → Accepted [1]; boundaries 1 → Accepted and 20 → Accepted [2]; invalid 0 → Rejected and 21 → Rejected [2]; erroneous 'ten' → type error/re-prompt [1]."
       ]
     ],
     "v": [
       [
         "Normal test data",
-        "Representative valid inputs normally expected during use."
+        "A typical valid input."
       ],
       [
         "Boundary test data",
-        "Values at, immediately below and immediately above an allowed limit."
+        "Input at, just below or just above an allowed limit."
       ],
       [
-        "Invalid or erroneous",
-        "Inputs rejected by the required rules, including out-of-range or wrong-format data."
+        "Invalid data",
+        "Correct type, unacceptable value, such as integer 101 outside range 0–100."
       ],
       [
-        "Iterative and final testing",
-        "Iterative testing runs during development; terminal testing checks the finished solution."
+        "Erroneous data",
+        "Wrong type, such as text when an integer is required."
       ],
       [
-        "Test case",
-        "An input and expected outcome used to check correctness."
+        "Iterative testing",
+        "Testing individual program parts during development and after changes."
       ],
       [
-        "Bug",
-        "A defect in the program."
+        "Final testing",
+        "Testing the completed solution against its requirements."
       ]
     ],
     "x": [
-      "Normal test data contains valid inputs that are typically expected during use.",
+      "Text 'hello' supplied to an integer-only input is erroneous test data rather than a valid integer.",
       true
     ],
     "r": [
