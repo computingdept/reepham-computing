@@ -89,18 +89,18 @@
     },
     "m": {
       "title": "Trace two branches",
-      "q": "A flowchart checks if a mark is at least 5. If true it prints 'Pass'; otherwise it prints 'Try again'. Explain which branch is followed for 7 and 3. [4 marks]",
+      "q": "Design a flowchart which inputs mark, tests mark >= 5, and outputs Pass or Try again. Trace values 7 and 3. [4 marks]",
       "headings": [
-        "Read the test",
-        "Trace mark 7",
-        "Trace mark 3",
-        "Check four points"
+        "Input and decision",
+        "Both branches",
+        "Trace 7",
+        "Trace 3"
       ],
       "st": [
-        "The diamond checks mark >= 5. Only one branch is followed per test.",
-        "7 >= 5 is true [1], so the Yes branch prints Pass [1].",
-        "3 >= 5 is false [1], so the No branch prints Try again [1].",
-        "Check both comparisons and the different outputs; avoid running both branches for one input."
+        "Start → Input mark (parallelogram) → mark >= 5? (diamond). [1]",
+        "Label Yes → Output Pass and No → Output Try again; connect both to End. [1]",
+        "With 7 the decision is true, so follow Yes to Pass. [1]",
+        "With 3 it is false, so follow No to Try again. [1]"
       ]
     },
     "w": [
@@ -109,8 +109,8 @@
         "12 > 10 is true [1], follows Yes and prints High [1]. 8 > 10 is false [1], follows No and prints Low [1]."
       ],
       [
-        "A lunch-order flowchart repeats a question after an invalid choice. Explain why an arrow loops back to the input. [4 marks]",
-        "Invalid choice follows the No route [1] and causes another input request [1]. The return arrow rechecks the new choice [1] until it is valid [1]."
+        "A lunch-order flowchart accepts only A or B. Trace inputs C then A, explaining the return arrow. [4 marks]",
+        "C fails the valid-choice test [1]; No loops back to Input [1]. A then passes [1]; Yes continues to End [1]."
       ],
       [
         "A flowchart uses a rectangle 'total = a + b' then a parallelogram 'Display total'. Explain both symbols. [4 marks]",
@@ -176,19 +176,19 @@
       [
         [
           "Your turn · plan",
-          "Look for the invalid-input branch."
+          "Check whether each input is A or B."
         ],
         [
-          "Step 1 · identify",
-          "No branch requests another value [2]."
+          "Step 1 · C",
+          "C is invalid; No goes back to Input [2]."
         ],
         [
-          "Step 2 · explain",
-          "Return arrow repeats checking until valid [2]."
+          "Step 2 · A",
+          "A is valid; Yes continues [2]."
         ],
         [
           "Check the marks",
-          "Invalid follows No [1], retries [1], loops back [1], tests a new value [1]."
+          "C invalid [1], repeat input [1], A valid [1], continue [1]."
         ]
       ],
       [
@@ -222,8 +222,8 @@
     },
     "e": [
       [
-        "State which flowchart shape represents a decision. [1 mark]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
-        "A diamond [1]."
+        "Name the flowchart shape used to test mark >= 5, and name the two outgoing branch labels. [2 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
+        "A decision diamond [1] with Yes and No (or True and False) branches [1]."
       ],
       [
         "A flowchart checks if a customer is at least 16 years old before printing Eligible. Explain what happens for 18 and 14. [4 marks]\n\nSource: Original J277-style teaching question, not an official OCR past paper.",
@@ -288,7 +288,7 @@
       ]
     ],
     "x": [
-      "A flowchart's decision diamond can direct execution down one of two branches.",
+      "A flowchart decision selects a branch; a return arrow is necessary if an invalid value must be entered again.",
       true
     ],
     "r": [
