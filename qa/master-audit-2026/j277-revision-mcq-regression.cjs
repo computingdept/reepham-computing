@@ -285,7 +285,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     try{
      const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
      assert(resp?.status()===200,view+' '+id+' HTTP 200',resp?.status());
-     const expectedCount={'1-1':5,'1-2':12,'1-3':7,'1-4':3,'1-5':3,'1-6':3,'2-1':9,'2-2':12,'2-3':3,'2-4':2,'2-5':2}[id];
+     const expectedCount={'1-1':5,'1-2':15,'1-3':7,'1-4':3,'1-5':3,'1-6':3,'2-1':10,'2-2':15,'2-3':4,'2-4':2,'2-5':2}[id];
      assert((await page.locator('#topic-grid .topic').count())===expectedCount,view+' '+id+' small skills');
      const bank=await page.evaluate(()=>({skills:SKILLS.map(s=>({id:s.id,title:s.title,count:s.questions.length,valid:s.questions.every(q=>q.options.length===4&&q.options.includes(q.answer)&&new Set(q.options).size===4)})),section:J277_SECTION.code,links:SKILLS.map(s=>({id:s.id,mapped:!!window.J277_RESOURCE_INDEX.skills[s.id],lessons:window.J277_RESOURCE_INDEX.skills[s.id]?.lessons||[],guide:window.J277_RESOURCE_INDEX.pageLabel(s.id)}))}));
      assert(bank.section===id.replace('-','.'),view+' '+id+' correct section',bank.section);
