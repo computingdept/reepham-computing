@@ -158,6 +158,161 @@ const SKILLS = [
     "page": 12
   },
   {
+    "id": "221-loops",
+    "section": "2.2.1",
+    "spec": "2.2.1(a)",
+    "title": "Iteration: loop bounds, guards and termination",
+    "lessons": [
+      66
+    ],
+    "page": 12,
+    "questions": [
+      {
+        "id": "221-loops-1",
+        "prompt": "A WHILE condition is false before the loop starts. How many times does its body execute?",
+        "answer": "Zero times",
+        "options": [
+          "Zero times",
+          "Once",
+          "Twice",
+          "At least once"
+        ],
+        "explanation": "A WHILE loop tests its condition before entering its body.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-2",
+        "prompt": "Which iteration structure always executes its body at least once before checking the stopping condition?",
+        "answer": "REPEAT ... UNTIL",
+        "options": [
+          "REPEAT ... UNTIL",
+          "WHILE ... ENDWHILE",
+          "FOR with zero iterations",
+          "An IF statement"
+        ],
+        "explanation": "REPEAT ... UNTIL checks after running its body.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-3",
+        "prompt": "A list has n elements and uses zero-based indices. Which loop bound visits each element once without overstepping?",
+        "answer": "0 through n - 1 inclusive",
+        "options": [
+          "0 through n - 1 inclusive",
+          "0 through n inclusive",
+          "1 through n inclusive",
+          "1 through n - 1 inclusive"
+        ],
+        "explanation": "There are n indices from 0 to n-1; index n would be out of bounds.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-4",
+        "prompt": "What value is printed by this loop?",
+        "answer": "4",
+        "options": [
+          "4",
+          "3",
+          "5",
+          "0"
+        ],
+        "explanation": "The values 0,1,2,3 each increment the counter once.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
+        "code": "count = 0\nfor i = 0 to 3\n  count = count + 1\nnext i\nprint(count)"
+      },
+      {
+        "id": "221-loops-5",
+        "prompt": "Which change ensures that this loop eventually terminates for an initial x of 3?",
+        "answer": "Decrease x in the body",
+        "options": [
+          "Decrease x in the body",
+          "Keep x unchanged",
+          "Increase x by one in the body",
+          "Reset x to 3 each iteration"
+        ],
+        "explanation": "Decrementing x eventually makes x > 0 false.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
+        "code": "x = 3\nwhile x > 0\n  print(x)\n  // add one update\nendwhile"
+      },
+      {
+        "id": "221-loops-6",
+        "prompt": "A password must be requested at least once, then requested again while it remains invalid. Which loop structure suits this requirement?",
+        "answer": "A post-test REPEAT loop",
+        "options": [
+          "A post-test REPEAT loop",
+          "A pre-test WHILE loop that may skip the prompt",
+          "A single IF without repetition",
+          "A FOR loop fixed at zero iterations"
+        ],
+        "explanation": "The requirement explicitly guarantees one prompt, so a post-test loop is appropriate.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-7",
+        "prompt": "What is wrong with using i <= length for a zero-indexed array of length elements?",
+        "answer": "It attempts to access index length, which is outside the array",
+        "options": [
+          "It attempts to access index length, which is outside the array",
+          "It skips index zero",
+          "It makes the array one-indexed",
+          "It guarantees only length - 1 iterations"
+        ],
+        "explanation": "The last valid zero-based index is length-1.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-8",
+        "prompt": "A sensor can return positive or negative values; -1 alone is the end sentinel. What condition should a pre-test WHILE loop use after the first input?",
+        "answer": "reading != -1",
+        "options": [
+          "reading != -1",
+          "reading == -1",
+          "reading > -1 only",
+          "reading == 0"
+        ],
+        "explanation": "The loop continues while the reading is not the sentinel.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-9",
+        "prompt": "A loop computes an average total/count. What must be checked before this division?",
+        "answer": "That count is greater than zero",
+        "options": [
+          "That count is greater than zero",
+          "That total is larger than count",
+          "That the array is sorted",
+          "That the loop used a FOR instead of WHILE"
+        ],
+        "explanation": "Division by zero must be avoided, including when there were no valid readings.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
+      },
+      {
+        "id": "221-loops-10",
+        "prompt": "What is printed after this loop?",
+        "answer": "3",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "5"
+        ],
+        "explanation": "Starting at 1, the loop visits i=1,2,3 then ends when i becomes 4.",
+        "skill": "Iteration: loop bounds, guards and termination",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
+        "code": "count = 0\nfor i = 1 to 3\n  count = count + 1\nnext i\nprint(count)"
+      }
+    ]
+  },
+  {
     "id": "221-b",
     "section": "2.2.1",
     "spec": "2.2.1(b)",
@@ -615,6 +770,163 @@ const SKILLS = [
     "page": 26
   },
   {
+    "id": "221-parameters",
+    "section": "2.2.1",
+    "spec": "2.2.1(d)",
+    "title": "Parameter passing: value and reference",
+    "lessons": [
+      68
+    ],
+    "page": 26,
+    "questions": [
+      {
+        "id": "221-parameters-1",
+        "prompt": "What is printed when the procedure receives an integer by value?",
+        "answer": "4",
+        "options": [
+          "4",
+          "7",
+          "3",
+          "0"
+        ],
+        "explanation": "Changing the copied parameter does not change the caller's integer variable.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
+        "code": "procedure inc(n:byVal)\n  n = n + 3\nendprocedure\nx = 4\ninc(x)\nprint(x)"
+      },
+      {
+        "id": "221-parameters-2",
+        "prompt": "What is printed when the procedure receives the integer by reference?",
+        "answer": "7",
+        "options": [
+          "7",
+          "4",
+          "3",
+          "0"
+        ],
+        "explanation": "The procedure updates the caller's variable through the reference parameter.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
+        "code": "procedure inc(n:byRef)\n  n = n + 3\nendprocedure\nx = 4\ninc(x)\nprint(x)"
+      },
+      {
+        "id": "221-parameters-3",
+        "prompt": "Which C# call correctly supplies x to a parameter declared with ref?",
+        "answer": "Increase(ref x)",
+        "options": [
+          "Increase(ref x)",
+          "Increase(x)",
+          "Increase(out x)",
+          "Increase(ref 4)"
+        ],
+        "explanation": "C# requires ref on the argument when the corresponding parameter is declared ref.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
+      },
+      {
+        "id": "221-parameters-4",
+        "prompt": "What value is printed by this C# example?",
+        "answer": "5",
+        "options": [
+          "5",
+          "4",
+          "1",
+          "0"
+        ],
+        "explanation": "The ref parameter refers to x, so incrementing it updates the caller.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
+        "code": "static void Increase(ref int n) { n++; }\nint x = 4;\nIncrease(ref x);\nConsole.WriteLine(x);"
+      },
+      {
+        "id": "221-parameters-5",
+        "prompt": "A function must not change its caller's integer variable. Which passing method is more appropriate?",
+        "answer": "Pass by value",
+        "options": [
+          "Pass by value",
+          "Pass by reference",
+          "Make every variable global",
+          "Use two aliases for the same variable"
+        ],
+        "explanation": "A value parameter can be changed locally without changing the caller's integer.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
+      },
+      {
+        "id": "221-parameters-6",
+        "prompt": "A routine receives the same caller variable in two by-reference parameters. What is a potential risk?",
+        "answer": "Aliasing can cause unexpected interactions between updates",
+        "options": [
+          "Aliasing can cause unexpected interactions between updates",
+          "The two references always hold independent copies",
+          "The variable can no longer be read",
+          "The routine is forced to return two values"
+        ],
+        "explanation": "Two references may refer to the same storage, so changing one affects the value seen through the other.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
+      },
+      {
+        "id": "221-parameters-7",
+        "prompt": "In C#, an array reference is passed by value, and the method changes array[0]. What does the caller observe?",
+        "answer": "The first element is updated in the same array",
+        "options": [
+          "The first element is updated in the same array",
+          "The array is always copied automatically",
+          "The caller's array must remain unchanged",
+          "The method changes the array length instead"
+        ],
+        "explanation": "A copied reference still points to the same array object; mutating an element is visible to the caller.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
+        "code": "static void Edit(int[] a) { a[0] = 9; }\nint[] data = {2, 3};\nEdit(data);\nConsole.WriteLine(data[0]);"
+      },
+      {
+        "id": "221-parameters-8",
+        "prompt": "In C#, a reference to an array is passed by value and reassigned inside a method. What happens to the caller's array reference?",
+        "answer": "It still points to the original array",
+        "options": [
+          "It still points to the original array",
+          "It now points to the new array",
+          "It becomes a null reference automatically",
+          "The original array is deleted"
+        ],
+        "explanation": "Reassigning the local reference variable does not reassign the caller's variable.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
+        "code": "static void Replace(int[] a) { a = new int[] {9}; }\nint[] data = {2};\nReplace(data);"
+      },
+      {
+        "id": "221-parameters-9",
+        "prompt": "Why might a developer avoid a by-reference parameter for a calculation that only needs to produce one result?",
+        "answer": "A return value makes the data flow clearer and avoids hidden mutation",
+        "options": [
+          "A return value makes the data flow clearer and avoids hidden mutation",
+          "By-reference parameters cannot hold integers",
+          "A function cannot return an integer",
+          "By-reference passing always saves more memory"
+        ],
+        "explanation": "Returning an explicit result can be easier to reason about than changing caller state.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
+      },
+      {
+        "id": "221-parameters-10",
+        "prompt": "A procedure modifies a parameter by reference, but its caller expected no changes to the argument. What contract problem exists?",
+        "answer": "The procedure's side effect was not communicated or expected",
+        "options": [
+          "The procedure's side effect was not communicated or expected",
+          "Passing by reference guarantees no side effects",
+          "The procedure must have been a function",
+          "The argument can only have been a constant"
+        ],
+        "explanation": "Callers need to understand whether a routine may modify its arguments.",
+        "skill": "Parameter passing: value and reference",
+        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
+      }
+    ]
+  },
+  {
     "id": "221-e",
     "section": "2.2.1",
     "spec": "2.2.1(e)",
@@ -905,317 +1217,5 @@ const SKILLS = [
       }
     ],
     "page": 39
-  },
-  {
-    "id": "221-loops",
-    "section": "2.2.1",
-    "spec": "2.2.1(a)",
-    "title": "Iteration: loop bounds, guards and termination",
-    "lessons": [
-      66
-    ],
-    "page": 12,
-    "questions": [
-      {
-        "id": "221-loops-1",
-        "prompt": "A WHILE condition is false before the loop starts. How many times does its body execute?",
-        "answer": "Zero times",
-        "options": [
-          "Zero times",
-          "Once",
-          "Twice",
-          "At least once"
-        ],
-        "explanation": "A WHILE loop tests its condition before entering its body.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-2",
-        "prompt": "Which iteration structure always executes its body at least once before checking the stopping condition?",
-        "answer": "REPEAT ... UNTIL",
-        "options": [
-          "REPEAT ... UNTIL",
-          "WHILE ... ENDWHILE",
-          "FOR with zero iterations",
-          "An IF statement"
-        ],
-        "explanation": "REPEAT ... UNTIL checks after running its body.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-3",
-        "prompt": "A list has n elements and uses zero-based indices. Which loop bound visits each element once without overstepping?",
-        "answer": "0 through n - 1 inclusive",
-        "options": [
-          "0 through n - 1 inclusive",
-          "0 through n inclusive",
-          "1 through n inclusive",
-          "1 through n - 1 inclusive"
-        ],
-        "explanation": "There are n indices from 0 to n-1; index n would be out of bounds.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-4",
-        "prompt": "What value is printed by this loop?",
-        "answer": "4",
-        "options": [
-          "4",
-          "3",
-          "5",
-          "0"
-        ],
-        "explanation": "The values 0,1,2,3 each increment the counter once.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
-        "code": "count = 0\nfor i = 0 to 3\n  count = count + 1\nnext i\nprint(count)"
-      },
-      {
-        "id": "221-loops-5",
-        "prompt": "Which change ensures that this loop eventually terminates for an initial x of 3?",
-        "answer": "Decrease x in the body",
-        "options": [
-          "Decrease x in the body",
-          "Keep x unchanged",
-          "Increase x by one in the body",
-          "Reset x to 3 each iteration"
-        ],
-        "explanation": "Decrementing x eventually makes x > 0 false.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
-        "code": "x = 3\nwhile x > 0\n  print(x)\n  // add one update\nendwhile"
-      },
-      {
-        "id": "221-loops-6",
-        "prompt": "A password must be requested at least once, then requested again while it remains invalid. Which loop structure suits this requirement?",
-        "answer": "A post-test REPEAT loop",
-        "options": [
-          "A post-test REPEAT loop",
-          "A pre-test WHILE loop that may skip the prompt",
-          "A single IF without repetition",
-          "A FOR loop fixed at zero iterations"
-        ],
-        "explanation": "The requirement explicitly guarantees one prompt, so a post-test loop is appropriate.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-7",
-        "prompt": "What is wrong with using i <= length for a zero-indexed array of length elements?",
-        "answer": "It attempts to access index length, which is outside the array",
-        "options": [
-          "It attempts to access index length, which is outside the array",
-          "It skips index zero",
-          "It makes the array one-indexed",
-          "It guarantees only length - 1 iterations"
-        ],
-        "explanation": "The last valid zero-based index is length-1.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-8",
-        "prompt": "A sensor can return positive or negative values; -1 alone is the end sentinel. What condition should a pre-test WHILE loop use after the first input?",
-        "answer": "reading != -1",
-        "options": [
-          "reading != -1",
-          "reading == -1",
-          "reading > -1 only",
-          "reading == 0"
-        ],
-        "explanation": "The loop continues while the reading is not the sentinel.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-9",
-        "prompt": "A loop computes an average total/count. What must be checked before this division?",
-        "answer": "That count is greater than zero",
-        "options": [
-          "That count is greater than zero",
-          "That total is larger than count",
-          "That the array is sorted",
-          "That the loop used a FOR instead of WHILE"
-        ],
-        "explanation": "Division by zero must be avoided, including when there were no valid readings.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57"
-      },
-      {
-        "id": "221-loops-10",
-        "prompt": "What is printed after this loop?",
-        "answer": "3",
-        "options": [
-          "3",
-          "2",
-          "4",
-          "5"
-        ],
-        "explanation": "Starting at 1, the loop visits i=1,2,3 then ends when i becomes 4.",
-        "skill": "Iteration: loop bounds, guards and termination",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 54–57",
-        "code": "count = 0\nfor i = 1 to 3\n  count = count + 1\nnext i\nprint(count)"
-      }
-    ]
-  },
-  {
-    "id": "221-parameters",
-    "section": "2.2.1",
-    "spec": "2.2.1(d)",
-    "title": "Parameter passing: value and reference",
-    "lessons": [
-      68
-    ],
-    "page": 26,
-    "questions": [
-      {
-        "id": "221-parameters-1",
-        "prompt": "What is printed when the procedure receives an integer by value?",
-        "answer": "4",
-        "options": [
-          "4",
-          "7",
-          "3",
-          "0"
-        ],
-        "explanation": "Changing the copied parameter does not change the caller's integer variable.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
-        "code": "procedure inc(n:byVal)\n  n = n + 3\nendprocedure\nx = 4\ninc(x)\nprint(x)"
-      },
-      {
-        "id": "221-parameters-2",
-        "prompt": "What is printed when the procedure receives the integer by reference?",
-        "answer": "7",
-        "options": [
-          "7",
-          "4",
-          "3",
-          "0"
-        ],
-        "explanation": "The procedure updates the caller's variable through the reference parameter.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
-        "code": "procedure inc(n:byRef)\n  n = n + 3\nendprocedure\nx = 4\ninc(x)\nprint(x)"
-      },
-      {
-        "id": "221-parameters-3",
-        "prompt": "Which C# call correctly supplies x to a parameter declared with ref?",
-        "answer": "Increase(ref x)",
-        "options": [
-          "Increase(ref x)",
-          "Increase(x)",
-          "Increase(out x)",
-          "Increase(ref 4)"
-        ],
-        "explanation": "C# requires ref on the argument when the corresponding parameter is declared ref.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
-      },
-      {
-        "id": "221-parameters-4",
-        "prompt": "What value is printed by this C# example?",
-        "answer": "5",
-        "options": [
-          "5",
-          "4",
-          "1",
-          "0"
-        ],
-        "explanation": "The ref parameter refers to x, so incrementing it updates the caller.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
-        "code": "static void Increase(ref int n) { n++; }\nint x = 4;\nIncrease(ref x);\nConsole.WriteLine(x);"
-      },
-      {
-        "id": "221-parameters-5",
-        "prompt": "A function must not change its caller's integer variable. Which passing method is more appropriate?",
-        "answer": "Pass by value",
-        "options": [
-          "Pass by value",
-          "Pass by reference",
-          "Make every variable global",
-          "Use two aliases for the same variable"
-        ],
-        "explanation": "A value parameter can be changed locally without changing the caller's integer.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
-      },
-      {
-        "id": "221-parameters-6",
-        "prompt": "A routine receives the same caller variable in two by-reference parameters. What is a potential risk?",
-        "answer": "Aliasing can cause unexpected interactions between updates",
-        "options": [
-          "Aliasing can cause unexpected interactions between updates",
-          "The two references always hold independent copies",
-          "The variable can no longer be read",
-          "The routine is forced to return two values"
-        ],
-        "explanation": "Two references may refer to the same storage, so changing one affects the value seen through the other.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
-      },
-      {
-        "id": "221-parameters-7",
-        "prompt": "In C#, an array reference is passed by value, and the method changes array[0]. What does the caller observe?",
-        "answer": "The first element is updated in the same array",
-        "options": [
-          "The first element is updated in the same array",
-          "The array is always copied automatically",
-          "The caller's array must remain unchanged",
-          "The method changes the array length instead"
-        ],
-        "explanation": "A copied reference still points to the same array object; mutating an element is visible to the caller.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
-        "code": "static void Edit(int[] a) { a[0] = 9; }\nint[] data = {2, 3};\nEdit(data);\nConsole.WriteLine(data[0]);"
-      },
-      {
-        "id": "221-parameters-8",
-        "prompt": "In C#, a reference to an array is passed by value and reassigned inside a method. What happens to the caller's array reference?",
-        "answer": "It still points to the original array",
-        "options": [
-          "It still points to the original array",
-          "It now points to the new array",
-          "It becomes a null reference automatically",
-          "The original array is deleted"
-        ],
-        "explanation": "Reassigning the local reference variable does not reassign the caller's variable.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73",
-        "code": "static void Replace(int[] a) { a = new int[] {9}; }\nint[] data = {2};\nReplace(data);"
-      },
-      {
-        "id": "221-parameters-9",
-        "prompt": "Why might a developer avoid a by-reference parameter for a calculation that only needs to produce one result?",
-        "answer": "A return value makes the data flow clearer and avoids hidden mutation",
-        "options": [
-          "A return value makes the data flow clearer and avoids hidden mutation",
-          "By-reference parameters cannot hold integers",
-          "A function cannot return an integer",
-          "By-reference passing always saves more memory"
-        ],
-        "explanation": "Returning an explicit result can be easier to reason about than changing caller state.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
-      },
-      {
-        "id": "221-parameters-10",
-        "prompt": "A procedure modifies a parameter by reference, but its caller expected no changes to the argument. What contract problem exists?",
-        "answer": "The procedure's side effect was not communicated or expected",
-        "options": [
-          "The procedure's side effect was not communicated or expected",
-          "Passing by reference guarantees no side effects",
-          "The procedure must have been a function",
-          "The argument can only have been a constant"
-        ],
-        "explanation": "Callers need to understand whether a routine may modify its arguments.",
-        "skill": "Parameter passing: value and reference",
-        "source": "Final H446 Paper 2 guide, section 2.2.1, learning cycle 70–73"
-      }
-    ]
   }
 ];
