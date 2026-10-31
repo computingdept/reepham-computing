@@ -14,6 +14,10 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[2]
 LESSONS = ROOT / "lessons" / "h446"
 CONTENT = ROOT / "data" / "catchup"
+PROTECTED_ASSESSMENTS = {
+    36, 58, 88, 98, 214, 243, 247, 250, 280, 304, 305, 306, 308
+}
+# Public catch-up must not reproduce questions and marking schemes from live tests.
 FIRST = 7
 IDS = list(range(7, 161)) + list(range(181, 321))
 SIGN = {
@@ -76,6 +80,71 @@ def mcq(qid, prompt, answer, feedback, wrong, seed):
         "feedback": compact(feedback, 680) or answer
     }
 
+def retrieval_mcq(qid, prompt, answer, explanation, seed):
+    """Keep the exact classroom retrieval question and model answer, avoiding
+    the old 'Choose the model answer' prefix and unrelated distractors.
+    """
+    answer = compact(answer)
+    feedback = "Model answer: " + answer
+    if explanation and explanation.casefold() != answer.casefold():
+        feedback += " Explanation: " + explanation
+    if re.fullmatch(r"\d+(?:\.\d+)?", answer):
+        return {"id":qid, "kind":"number", "prompt":prompt,
+                "answer":answer, "feedback":feedback}
+    alternatives = []
+    def add(candidate):
+        candidate = compact(candidate)
+        if candidate != answer and candidate not in alternatives:
+            alternatives.append(candidate)
+    bits = list(re.finditer(r"(?<![A-Za-z0-9])[01]{4,}(?![A-Za-z0-9])", answer))
+    if bits:
+        match = bits[-1]
+        token = match.group()
+        for pos in (len(token)-1, max(0, len(token)-2)):
+            wrong = token[:pos] + ("0" if token[pos] == "1" else "1") + token[pos+1:]
+            add(answer[:match.start()] + wrong + answer[match.end():])
+    else:
+        number = re.search(r"(?<![A-Za-z0-9])\d+(?:\.\d+)?(?![A-Za-z0-9])", answer)
+        if number:
+            from decimal import Decimal
+            raw = number.group()
+            amount = Decimal(raw)
+            for alt in ((amount*2, amount/2) if "." in raw else (amount+1, amount-1)):
+                add(answer[:number.start()] + format(alt, "f") + answer[number.end():])
+    misconceptions = [
+        ("last in, first out", "first in, first out"),
+        ("first in, first out", "last in, first out"),
+        ("LIFO", "FIFO"), ("FIFO", "LIFO"),
+        ("sorted", "unsorted"), ("same", "different"),
+        ("different", "same"), ("before", "after"),
+        ("after", "before"), ("left", "right"), ("right", "left"),
+        ("high", "low"), ("low", "high"),
+        ("increases", "decreases"), ("decreases", "increases"),
+        ("greater", "smaller"), ("smaller", "greater"),
+        ("AND", "OR"), ("OR", "AND"), ("not", "always"),
+        ("preserve", "discard"), ("leading", "trailing"),
+        ("identifier", "number"), ("return", "print"),
+        ("true", "false"), ("false", "true"), ("must", "need not"),
+        ("can", "cannot"), ("is", "is not"), ("are", "are not"),
+    ]
+    for source, wrong in misconceptions:
+        if len(alternatives) >= 2: break
+        match = re.search(r"\b"+re.escape(source)+r"\b",answer,flags=re.I)
+        if match:
+            add(answer[:match.start()] + wrong + answer[match.end():])
+    if len(alternatives) < 2:
+        # The fallback is flagged for pedagogical review; never use unrelated
+        # answers from other retrieval questions as distractors.
+        add("There is not enough information to determine the result.")
+        add("This result cannot be obtained using the stated method.")
+    options = [answer]+alternatives[:2]
+    shift = seed%3
+    options = options[shift:]+options[:shift]
+    assert len(set(options))==len(options)==3
+    return {"id":qid,"kind":"choice","prompt":prompt,
+            "answer":answer,"options":options,"feedback":feedback}
+
+
 def vocab_of(soup):
     found = []
     for n in soup.select("#overview .vocab-tip, #overview .objective-vocab-stage"):
@@ -118,12 +187,14 @@ def donow_of(soup):
     answer_nodes = sec.select(".donow-review-answer")
     items = []
     for q, a in zip(question_nodes[:4], answer_nodes[:4]):
-        prompt = txt(q.find("p") or q, 380)
-        answer_node = a.select_one(".review-answer") or a.find("p") or a
-        ans = txt(answer_node, 220)
-        explanation = txt(a.select_one(".review-explain"), 420)
+        prompt = txt(q.find("p") or q)
+        # Some model solutions use <pre> for binary working. Keep the model,
+        # not merely the following explanatory paragraph.
+        answer_node = a.select_one(".review-answer") or a.find("pre") or a
+        ans = txt(answer_node)
+        explanation = txt(a.select_one(".review-explain"))
         if not ans:
-            ans = txt(a, 220)
+            ans = txt(a)
         if prompt and ans:
             items.append((prompt, ans, explanation or ans))
     return items
@@ -244,6 +315,9 @@ def generate(n, template):
         # meaningful headings and explanations from their learning stages.
         raise ValueError(f"{number}: fewer than 3 source-derived terms/explanations")
     tasks=apply_of(soup)
+    if n in PROTECTED_ASSESSMENTS:
+        tasks=[("Identify the taught term for this definition: "+definition, term)
+               for term,definition in words[:3]]
     if n in (36, 37):
         # Do not reveal live synoptic assessment answers or invent cohort data.
         # These are source-grounded vocabulary/review questions, not the test.
@@ -254,11 +328,12 @@ def generate(n, template):
     if len(tasks)<3:
         raise ValueError(f"{number}: fewer than 3 source tasks with models")
 
-    all_ans=[x[1] for x in d]
     retrieve=[
-        mcq("r"+str(i+1),"Choose the model answer: "+q,a,ex,[v for v in all_ans if v!=a],n+i)
+        retrieval_mcq("r"+str(i+1),q,a,ex,n+i)
         for i,(q,a,ex) in enumerate(d)
     ]
+    assert [x["prompt"] for x in retrieve] == [q for q,_,_ in d], number
+    assert [x["answer"] for x in retrieve] == [a for _,a,_ in d], number
     defs=[b for _,b in words]
     terms=[a for a,_ in words]
     understand=[]
@@ -284,8 +359,12 @@ def generate(n, template):
     check=[]
     for i in range(3):
         term,definition=words[(i+1)%len(words)]
-        mismatch=words[(i+3)%len(words)][1]
-        truthful=i!=1
+        mismatch=next((d2 for term2,d2 in words
+                       if term2.casefold()!=term.casefold()
+                       and d2.casefold()!=definition.casefold()), None)
+        if mismatch is None:
+            raise ValueError(f"{number}: no distinct false definition")
+        truthful=((n*7+i*11)%5) in (0,2,3)
         statement= f"{term} means: {definition if truthful else mismatch}"
         check.append({"id":"c"+str(i+1),"kind":"truefalse",
             "prompt":compact(statement, 390),"answer":"true" if truthful else "false",
@@ -313,6 +392,21 @@ def generate(n, template):
             stage("check",3,[],check)
         ]
     }
+    if n in PROTECTED_ASSESSMENTS:
+        cfg["intro"]="Independent prior-topic revision only. This activity does not reproduce classroom assessment questions or marking schemes."
+        cfg["stages"][1]["blocks"]=[
+            {"type":"facts", "title":"Previously taught terminology",
+             "items":[compact(term+" — "+definition) for term,definition in words[:6]]}
+        ]
+        cfg["stages"][2]["blocks"]=[
+            {"type":"paragraph", "title":"Guided recall",
+             "text":"Read the terminology, cover the definitions and explain each term before attempting the review questions. Refer to the separate revision guide for worked examples."}
+        ]
+        cfg["stages"][3]["writing"]={
+            "prompt":"Choose a topic from an earlier classroom lesson. Explain a correct method, then plan how to check your reasoning without referring to a live assessment paper.",
+            "model":"Name the topic, outline the method with precise terminology, test it on an independent example, compare with a previously taught model and correct any errors.",
+            "checklist":["I identified the earlier topic.","I explained an independent method.","I described how to check and improve it."]
+        }
     if n in (36,37):
         cfg["intro"]="Independent synoptic revision and reflection. This is not the classroom assessment or personalised marked-test feedback."
         if n==36:
@@ -347,11 +441,12 @@ def generate(n, template):
                 assert len(set(q["options"]))==3
     page=template.replace("lesson-006","lesson-"+number).replace("h446-006","h446-"+number).replace("Lesson 006","Lesson "+number)
     page=page.replace("Floating-point addition",title).replace("Year 12","Year "+str(cfg["year"])).replace("year=12","year="+str(cfg["year"]))
-    page=page.replace("11 of 13 correct","11 of 13 correct")
+    page=page.replace("11 of 13 correct","14 of 17 correct")
     assert f'data/catchup/h446-{number}.json' in page
     assert f"Lesson {number}" in page and "catchup-lesson.js" in page
     assert 'href="index.html#do-now"' in page
     return cfg,page, {"id":number, "title":title, "year":cfg["year"], "retrieval_reused":substituted,
+                      "assessment_questions_protected":n in PROTECTED_ASSESSMENTS,
                       "vocabulary_source_count":len(words), "application_source_count":len(tasks),
                       "objective_question_count":13, "status":"generated; automated checks passed; teacher review pending"}
 
@@ -375,6 +470,7 @@ def main():
         "existing_approved_examples":"001-006 preserved unchanged",
         "new_expected":len(IDS), "new_generated":len(records),
         "failed":failures,"records":records,
+        "protected_assessment_lesson_ids":[f"{n:03d}" for n in sorted(PROTECTED_ASSESSMENTS)],
         "limitations":["MCQ distractors and written-answer phrasing require teacher review; deterministic validation cannot certify pedagogy.",
                        "Mastery scores are browser-local, not centrally persisted."]
     }
