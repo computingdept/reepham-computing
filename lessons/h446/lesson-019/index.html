@@ -109,51 +109,42 @@ start = newIndex;</pre></div></div></article><article class="wedo-example" hidde
 
 <section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="3"><div class="youdo-deck"><div class="youdo-rolling">
 
-<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · ADD</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Start here: add one item</h3><div class="question-text"><p>Copy this starting code into .NET Fiddle. Add <code>"Daisy"</code> to the list, then display the list again.</p><pre class="arithmetic" style="max-height:34vh;overflow:auto;">using System;
-using System.Collections.Generic;
-
+<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · HEAD</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Identify the first logical item</h3><div class="question-text"><p>Run the starter. State the start index and first item. Explain why index 0 is not necessarily the head.</p><pre class="arithmetic" style="max-height:34vh;overflow:auto;">using System;
 public class Program
 {
     public static void Main()
     {
-        List&lt;string&gt; students = new List&lt;string&gt;();
-
-        students.Add("Alex");
-        students.Add("Ben");
-        students.Add("Cara");
-
-        Console.WriteLine("Students:");
-
-        foreach (string student in students)
-        {
-            Console.WriteLine(student);
-        }
+        string[] data = {"Ben", "Daisy", "Alex", "Cara", "", ""};
+        int[] next = {3, -1, 0, 1, -1, -1};
+        int start = 2; // slots 4 and 5 are unused
+        Console.WriteLine(data[start]);
     }
-}</pre></div><div class="success-check">Daisy appears as a fourth item when the program runs.</div></article>
+}</pre></div><div class="success-check">The item printed is selected by start, not by the physical array order.</div></article>
 
-<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · INPUT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Add a name entered by the user</h3><div class="question-text"><p>Ask the user to enter a student name. Store the input, use <code>Add()</code> to put it in the list, then display the updated list.</p></div><div class="success-check">Any name typed by the user is added and displayed.</div></article>
+<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 2 · TRACE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Follow the next pointers</h3><div class="question-text"><p>Use the unchanged starter. Write the sequence of indexes and names visited from start until -1.</p></div><div class="success-check">Every next pointer is followed once; stop before accessing data[-1].</div></article>
 
-<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 3 · INDEX</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Display one item</h3><div class="question-text"><p>Display only the <strong>second</strong> student using the list index.</p><pre class="arithmetic">students[1]</pre></div><div class="success-check">Only the second item is output.</div></article>
+<article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 3 · TRAVERSE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Write the traversal loop</h3><div class="question-text"><p>Replace the final print with a loop. Initialise current from start; output data[current]; follow next[current] until -1.</p><pre class="arithmetic">current = start;
+while (current != -1) { /* output, then follow link */ }</pre></div><div class="success-check">Each reachable item appears once, in logical list order.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · COUNT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Count the items</h3><div class="question-text"><p>Display how many students are currently stored in the list.</p><pre class="arithmetic">students.Count</pre></div><div class="success-check">The program outputs the correct number of items.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 4 · COUNT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Count reachable nodes</h3><div class="question-text"><p>Add a counter to your traversal. Count reachable nodes, not data.Length, which includes unused capacity.</p><pre class="arithmetic">int count = 0;
+// increment once per reachable node</pre></div><div class="success-check">Unused slots are excluded from the count.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 5 · INSERT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Insert without replacing</h3><div class="question-text"><p>Insert <code>"Elliot"</code> at index <code>1</code> without replacing the item already there.</p><pre class="arithmetic">students.Insert(1, "Elliot");</pre></div><div class="success-check">Elliot becomes the second item and the other items remain.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 5 · INSERT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Insert after the head</h3><div class="question-text"><p>Reset to the starter. Put Elliot in spare slot 4 and insert it immediately after Alex. Preserve the successor link before changing next[start].</p><pre class="arithmetic">// First preserve the old successor in next[4].
+// Then reconnect the predecessor.</pre></div><div class="success-check">Alex is followed by Elliot, then the original remaining list; no node is lost.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 6 · REMOVE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove by value</h3><div class="question-text"><p>Remove <code>"Ben"</code> from the list, then display the updated list.</p><pre class="arithmetic">students.Remove("Ben");</pre></div><div class="success-check">Ben no longer appears in the output.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 6 · HEAD INSERT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Insert a new first node</h3><div class="question-text"><p>Reset to the starter. Store Zoe in unused slot 4. Link it to the old head, then update start. Traverse to verify.</p><pre class="arithmetic">// New node -&gt; old head; then move start.</pre></div><div class="success-check">The old first node and its successors remain reachable.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 7 · REMOVE AT</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove by position</h3><div class="question-text"><p>Ask the user for an index, convert the input to an integer, then remove the item stored at that position.</p><pre class="arithmetic">students.RemoveAt(index);</pre></div><div class="success-check">The selected list item is removed and the program still runs.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 7 · BYPASS</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove the second node</h3><div class="question-text"><p>Reset to the starter. Bypass the second logical node by changing the head node's next pointer. Do not shift any data values.</p><pre class="arithmetic">// Check the successor exists before bypassing it.</pre></div><div class="success-check">Only the intended node is omitted; the rest remain in the original order.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 8 · SEARCH</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Search the list</h3><div class="question-text"><p>Ask for a name. Output <code>"Found"</code> if it exists and <code>"Not found"</code> otherwise.</p><pre class="arithmetic">students.Contains(name)</pre></div><div class="success-check">Both the found and not-found cases work.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 8 · DELETE HEAD</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Remove the first node safely</h3><div class="question-text"><p>Reset to the starter. If the list is nonempty, move start to next[start]. Explain what happens for a one-node list.</p><pre class="arithmetic">if (start != -1) { /* update head */ }</pre></div><div class="success-check">Deleting the last node leaves start=-1; never index an empty list.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 9 · FOR LOOP</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Number the output</h3><div class="question-text"><p>Replace the <code>foreach</code> loop with a <code>for</code> loop. Number each student starting from 1.</p><pre class="arithmetic">1. Alex
-2. Ben
-3. Cara</pre></div><div class="success-check">Every item is shown with a human-friendly number.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 9 · SEARCH</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Search by following links</h3><div class="question-text"><p>Reset to the starter. Search for a name using current and next pointers. Report its array index or -1; test a present and absent name.</p><pre class="arithmetic">// Follow links, not current++.</pre></div><div class="success-check">The search stops on a match or at -1 and ignores unused slots.</div></article>
 
-<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 10 · CHALLENGE</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Build a list manager</h3><div class="question-text"><p>Create a repeating menu:</p><pre class="arithmetic">1. Add student
-2. Remove student
-3. Search for student
-4. Display all students
-5. Exit</pre><p>The program should keep running until the user chooses <code>5</code>.</p></div><div class="success-check">All five options work and the menu repeats until Exit is chosen.</div></article>
+<article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT 10 · TEST</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Combine, test and explain</h3><div class="question-text"><p>Combine traversal, insertion and deletion using the pointer arrays. Record expected and actual outputs for the tests below.</p><pre class="arithmetic">Empty list: start=-1
+One node: next[start]=-1
+Insert into a spare slot
+Delete head and middle nodes
+Reject insertion if no slot is free</pre><p>Use -1 only as the null marker. Reuse a removed slot only after marking it free in your chosen allocation scheme.</p></div><div class="success-check">All tests preserve the remaining chain; changing a known link is O(1), but finding it may take O(n).</div></article>
 
 </div><div class="youdo-window-progress">Challenges 1–3 of 10</div></div></section>
 

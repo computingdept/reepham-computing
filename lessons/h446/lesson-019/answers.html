@@ -27,26 +27,32 @@ main.answer-stage-wrap{height:100vh;margin:0;max-width:none;padding:72px 3vw 76p
 <header class="answer-toolbar">
   <a href="index.html#you-do">← Return to You Do</a>
   <span class="answer-title">LESSON 019 · LINKED LISTS WITH ARRAYS AND POINTERS · SOLUTIONS</span>
-  <span class="answer-counter" id="answer-counter">Solution 1 of 4</span>
+  <span class="answer-counter" id="answer-counter">Solution 1 of 10</span>
 </header>
 
-<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 · CREATE</span><h2>Build a linked list in arrays</h2><pre class="solution-code">string[] data = { "Ben", "Daisy", "Alex" };
-int[] next = { 1, -1, 0 };
-int start = 2;</pre><p><strong>Check:</strong> Following pointers outputs the intended order, not array order.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 · TRAVERSE</span><h2>Output every linked item</h2><pre class="solution-code">int current = start;
+<main class="answer-stage-wrap"><section class="answer-stage"><article class="solution-card"><span class="phase-tag">INDEPENDENT 1 OF 10</span><h2>Identify the first logical item</h2><pre class="solution-code">start = 2
+data[start] = "Alex"</pre><p>start identifies the first logical node. Physical slot 0 holds Ben, but the head can be elsewhere.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 2 OF 10</span><h2>Follow the next pointers</h2><pre class="solution-code">2 → 0 → 3 → 1 → -1
+Alex → Ben → Cara → Daisy</pre><p>The -1 value is a null marker, never a valid array index.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 OF 10</span><h2>Write the traversal loop</h2><pre class="solution-code">int current = start;
 while (current != -1)
 {
     Console.WriteLine(data[current]);
     current = next[current];
-}</pre><p><strong>Check:</strong> Every logical item is output once.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 3 · ADD</span><h2>Insert a new first item</h2><pre class="solution-code">data[3] = "Finn";
-next[3] = start;
-start = 3;</pre><p><strong>Check:</strong> The previous first item is still reachable.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 · REMOVE</span><h2>Remove the second logical item</h2><pre class="solution-code">next[start] = next[next[start]];
-
-int current = start;
-while (current != -1)
-{
-    Console.WriteLine(data[current]);
-    current = next[current];
-}</pre><p><strong>Check:</strong> The list remains connected and the removed item is not visited.</p></article></section></main>
+}</pre><p>The pointer chooses the next logical node; current++ would follow physical slots instead.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 4 OF 10</span><h2>Count reachable nodes</h2><pre class="solution-code">int count=0, current=start;
+while(current!=-1) { count++; current=next[current]; }
+Console.WriteLine(count); // 4</pre><p>The arrays have six slots, but only four are in the original chain.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 5 OF 10</span><h2>Insert after the head</h2><pre class="solution-code">data[4] = "Elliot";
+next[4] = next[start]; // preserve Ben at index 0
+next[start] = 4;</pre><p>New indexes: 2→4→0→3→1. Names: Alex→Elliot→Ben→Cara→Daisy. Slot 4 must be unused before insertion.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 6 OF 10</span><h2>Insert a new first node</h2><pre class="solution-code">data[4] = "Zoe";
+next[4] = start;
+start = 4;</pre><p>On a fresh starter, indexes become 4→2→0→3→1: Zoe→Alex→Ben→Cara→Daisy. Link to the old head before replacing start.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 7 OF 10</span><h2>Remove the second node</h2><pre class="solution-code">if (start != -1 &amp;&amp; next[start] != -1)
+    next[start] = next[next[start]];</pre><p>On a fresh starter, bypass Ben at index0. Remaining indexes 2→3→1: Alex→Cara→Daisy. The data values are not shifted.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 8 OF 10</span><h2>Remove the first node safely</h2><pre class="solution-code">if (start != -1) start = next[start];</pre><p>On a fresh starter, new start=0 and the order is Ben→Cara→Daisy. For one node, its next is -1, so start becomes -1. An empty list remains empty without an invalid access.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 9 OF 10</span><h2>Search by following links</h2><pre class="solution-code">int current=start;
+while(current!=-1 &amp;&amp; data[current]!=name)
+    current=next[current];
+Console.WriteLine(current); // matching index or -1</pre><p>With a fresh starter: Cara returns 3; an absent name returns -1. Test -1 before accessing data[current]; short-circuit AND prevents invalid indexing.</p></article></section><section class="answer-stage" hidden><article class="solution-card"><span class="phase-tag">INDEPENDENT 10 OF 10</span><h2>Combine, test and explain</h2><pre class="solution-code">Reset before each independent test:
+start=-1 → traversal outputs nothing
+one reachable node → delete head leaves -1
+insert Elliot after Alex → Alex,Elliot,Ben,Cara,Daisy
+delete Ben → Alex,Cara,Daisy
+no unused slot → reject insertion without changing links</pre><p>Record the actual results as well as expected results. Reaching an arbitrary predecessor can take O(n); reconnecting a known link is O(1). A removed slot becomes reusable only when the chosen free-slot allocation scheme records it.</p></article></section></main>
 
 <div class="answer-controls">
   <button type="button" id="previous-answer" disabled>← Previous solution</button>
