@@ -421,6 +421,184 @@ const SKILLS=[
     ]
   },
   {
+    "id": "21-flowchart-reading",
+    "section": "2.1",
+    "spec": "2.1.2",
+    "title": "Read and trace complete flowcharts",
+    "questions": [
+      {
+        "id": "21-flowchart-reading-1",
+        "prompt": "For input n = 10, what does this flowchart output?",
+        "answer": "High",
+        "options": [
+          "High",
+          "Low",
+          "10",
+          "Nothing"
+        ],
+        "explanation": "The decision n >= 10 is true, so follow Yes to the output High.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-selection-grade.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-2",
+        "prompt": "For input n = 7, what is the output?",
+        "answer": "Low",
+        "options": [
+          "Low",
+          "High",
+          "7",
+          "No output"
+        ],
+        "explanation": "7 is less than 10, so the No branch outputs Low.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-selection-grade.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-3",
+        "prompt": "The flowchart receives a = 4 and b = 7. What value is output?",
+        "answer": "11",
+        "options": [
+          "11",
+          "47",
+          "3",
+          "7"
+        ],
+        "explanation": "The process adds the two input values, 4 + 7 = 11, before outputting total.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-sequence.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-4",
+        "prompt": "For input a = -2 and b = 5, what is output?",
+        "answer": "3",
+        "options": [
+          "3",
+          "-7",
+          "7",
+          "-3"
+        ],
+        "explanation": "The process calculates -2 + 5 = 3.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-sequence.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-5",
+        "prompt": "What does the counter-loop flowchart output?",
+        "answer": "10",
+        "options": [
+          "10",
+          "4",
+          "6",
+          "15"
+        ],
+        "explanation": "It adds 1 + 2 + 3 + 4 before the decision becomes false.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-6",
+        "prompt": "How many times is total = total + count carried out?",
+        "answer": "4",
+        "options": [
+          "4",
+          "3",
+          "5",
+          "1"
+        ],
+        "explanation": "The Yes branch is taken for count values 1, 2, 3 and 4.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-7",
+        "prompt": "If the decision were changed to count < 4, what total would be output?",
+        "answer": "6",
+        "options": [
+          "6",
+          "10",
+          "4",
+          "3"
+        ],
+        "explanation": "The body would run for count 1, 2 and 3 only; the sum is 6.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-8",
+        "prompt": "For input n = 7, what does the flowchart output?",
+        "answer": "Odd",
+        "options": [
+          "Odd",
+          "Even",
+          "7",
+          "Nothing"
+        ],
+        "explanation": "7 MOD 2 is 1, so the decision is false and the No branch outputs Odd.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-9",
+        "prompt": "For input n = 0, what does the flowchart output?",
+        "answer": "Even",
+        "options": [
+          "Even",
+          "Odd",
+          "0",
+          "Nothing"
+        ],
+        "explanation": "0 MOD 2 is 0, so the Yes branch outputs Even.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      },
+      {
+        "id": "21-flowchart-reading-10",
+        "prompt": "If the decision were changed to n MOD 2 != 0 and n were 7, what would the output be?",
+        "answer": "Even",
+        "options": [
+          "Even",
+          "Odd",
+          "7",
+          "Nothing"
+        ],
+        "explanation": "For 7 the changed condition is true; the flowchart's Yes branch is still labelled Even, illustrating a logic error.",
+        "diagram": {
+          "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
+          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+        },
+        "skill": "Read and trace complete flowcharts"
+      }
+    ]
+  },
+  {
     "id": "21-tracing",
     "section": "2.1",
     "spec": "2.1.2",
