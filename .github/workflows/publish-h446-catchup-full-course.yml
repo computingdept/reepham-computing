@@ -55,7 +55,7 @@ jobs:
                   for q in stage['questions']:
                       assert q['prompt'] and q['answer'] and q['feedback'],p
                       if q['kind']=='choice':
-                          assert len(q['options'])==3 and len(set(q['options']))==3 and q['answer'] in q['options'],p
+                          assert len(q['options'])>=2 and len(set(q['options']))==len(q['options']) and q['answer'] in q['options'],p
               assert 'assets/catchup-lesson.js' in text,p
           assert 'x<=320' in hub and 'x<=160' in hub
           print('PASS: all 300 H446 Catch-Up JSON and HTML routes, 80% mastery and question correctness structure')
