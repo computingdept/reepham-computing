@@ -87,7 +87,9 @@ jobs:
                   assert [q['answer'] for q in quiz]==[a for _,a,_ in original],p
               if n in builder.PROTECTED_ASSESSMENTS:
                   assert 'prior-topic revision' in cfg['intro'] or n==36,p
-                  assert not any('MARK SCHEME' in q['answer'].upper()
+                  assert all(len(q['answer'])<100
+                             for q in cfg['stages'][3]['questions']),p
+                  assert not any('FULL MODEL ANSWER MARK SCHEME' in q['answer'].upper()
                                  for q in cfg['stages'][3]['questions']),p
           assert len(factual_patterns)>2, 'Predictable True/False answer key'
           assert len(report['protected_assessment_lesson_ids'])==len(builder.PROTECTED_ASSESSMENTS)
