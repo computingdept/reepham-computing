@@ -57,6 +57,42 @@ jobs:
                       if q['kind']=='choice':
                           assert len(q['options'])>=2 and len(set(q['options']))==len(q['options']) and q['answer'] in q['options'],p
               assert 'assets/catchup-lesson.js' in text,p
+          # Pedagogical/provenance checks: 294 new Do Now sections must match
+          # the classroom lesson's four retrieval stems and model answers.
+          # 036/037 have no conventional retrieval; 058 contains a documented
+          # source typo and uses the intended BST question recovered from HTML.
+          import importlib.util
+          from bs4 import BeautifulSoup
+          spec=importlib.util.spec_from_file_location(
+              'h446_catchup_builder','tools/catchup/build_h446_full_course.py')
+          builder=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(builder)
+          factual_patterns=set()
+          for n in builder.IDS:
+              p=f'{n:03d}'
+              cfg=json.loads((data/f'h446-{p}.json').read_text(encoding='utf-8'))
+              quiz=cfg['stages'][0]['questions']
+              assert all(not q['prompt'].startswith('Choose the model answer: ')
+                         for q in quiz),p
+              assert all(len(q['prompt'])>=8 for q in quiz),p
+              assert all(q['kind'] in ('number','choice') for q in quiz),p
+              assert '14 of 17 correct' in (pages/f'lesson-{p}'/'learn.html').read_text(encoding='utf-8'),p
+              truth=tuple(q['answer'] for q in cfg['stages'][4]['questions'])
+              factual_patterns.add(truth)
+              if n not in (36,37,58):
+                  source=(pages/f'lesson-{p}'/'index.html').read_text(encoding='utf-8')
+                  original=builder.donow_of(BeautifulSoup(source,'html.parser'))
+                  assert len(original)==4,p
+                  assert [q['prompt'] for q in quiz]==[q for q,_,_ in original],p
+                  assert [q['answer'] for q in quiz]==[a for _,a,_ in original],p
+              if n in builder.PROTECTED_ASSESSMENTS:
+                  assert 'prior-topic revision' in cfg['intro'] or n==36,p
+                  assert not any('MARK SCHEME' in q['answer'].upper()
+                                 for q in cfg['stages'][3]['questions']),p
+          assert len(factual_patterns)>2, 'Predictable True/False answer key'
+          assert len(report['protected_assessment_lesson_ids'])==len(builder.PROTECTED_ASSESSMENTS)
+          assert next(x for x in report['records'] if x['id']=='058')['retrieval_source_correction']
+          print('PASS: 294 Do Now sources, assessment protection, varied review keys and accurate mastery labels')
           assert 'x<=320' in hub and 'x<=160' in hub
           print('PASS: all 300 H446 Catch-Up JSON and HTML routes, 80% mastery and question correctness structure')
           PY
