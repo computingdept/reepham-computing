@@ -316,6 +316,10 @@ def generate(n, template):
     if n in (36,37):
         cfg["intro"]="Independent synoptic revision and reflection. This is not the classroom assessment or personalised marked-test feedback."
         if n==36:
+            cfg["stages"][1]["blocks"].insert(0, {
+                "type":"facts", "title":"Synoptic knowledge check",
+                "items":[compact(term+" — "+definition,290) for term,definition in words[:6]]
+            })
             cfg["stages"][3]["writing"]={
                 "prompt":"Describe a practical three-step plan for checking your understanding before the synoptic test, without using the actual test questions.",
                 "model":"Choose a topic from the published revision guide, practise a short example independently and mark it against a model. Revisit any incorrect method, show working and retry a different question.",
