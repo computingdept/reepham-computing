@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-303",
+  "course": "h446",
+  "title": "Appendix 5d OCR notation challenge",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can OCR array[5] access index4 but not index5?",
+          "answer": "Five items are indexed 0–4.",
+          "options": [
+            "Five items are indexed 0–4.",
+            "Parameter passing allowing modification of caller's underlying variable.",
+            "Next line of text from a file."
+          ],
+          "feedback": "Five items are indexed 0–4."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is byRef?",
+          "answer": "Parameter passing allowing modification of caller's underlying variable.",
+          "options": [
+            "Five items are indexed 0–4.",
+            "Next line of text from a file.",
+            "Parameter passing allowing modification of caller's underlying variable."
+          ],
+          "feedback": "Parameter passing allowing modification of caller's underlying variable."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does readLine return?",
+          "answer": "Next line of text from a file.",
+          "options": [
+            "Parameter passing allowing modification of caller's underlying variable.",
+            "Next line of text from a file.",
+            "Five items are indexed 0–4."
+          ],
+          "feedback": "Next line of text from a file."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In C# array [2,3,5,7], what is a[2] and total sum?",
+          "answer": "a[2]=5; total=17.",
+          "options": [
+            "a[2]=5; total=17.",
+            "Five items are indexed 0–4.",
+            "Parameter passing allowing modification of caller's underlying variable."
+          ],
+          "feedback": "a[2]=5; total=17."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Use exact indexing",
+          "text": "OCR arrays use zero-based indexing; the number in array declaration is the number of elements."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace subroutines and parameters",
+          "text": "A procedure does not produce a return value; a function returns a result. byVal passes a copy; byRef allows the original parameter to change."
+        },
+        {
+          "type": "paragraph",
+          "title": "Read file operations",
+          "text": "openRead, readLine, endOfFile and close follow the OCR Appendix 5d conventions. Always close an opened file."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Array declaration creates three positions: indexes 0,1,2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check reasoning",
+          "text": "scores[1] holds 4, so output is 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'array'?",
+          "answer": "Fixed-length zero-indexed sequence.",
+          "options": [
+            "Pass a value/copy.",
+            "Pass a reference to original.",
+            "Fixed-length zero-indexed sequence."
+          ],
+          "feedback": "array — Fixed-length zero-indexed sequence."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'byVal'?",
+          "answer": "Pass a value/copy.",
+          "options": [
+            "Pass a reference to original.",
+            "Pass a value/copy.",
+            "Fixed-length zero-indexed sequence."
+          ],
+          "feedback": "byVal — Pass a value/copy."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'byRef'?",
+          "answer": "Pass a reference to original.",
+          "options": [
+            "Pass a reference to original.",
+            "Fixed-length zero-indexed sequence.",
+            "Pass a value/copy."
+          ],
+          "feedback": "byRef — Pass a reference to original."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The parameter is passed by reference, so assignment to x changes the caller's n."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check reasoning",
+          "text": "After addOne(n), n=7 and print displays 7."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Read the next file line.",
+          "answer": "readLine",
+          "options": [
+            "readLine",
+            "array",
+            "byVal"
+          ],
+          "feedback": "readLine — Read the next file line."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Fixed-length zero-indexed sequence.",
+          "answer": "array",
+          "options": [
+            "byVal",
+            "byRef",
+            "array"
+          ],
+          "feedback": "array — Fixed-length zero-indexed sequence."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pass a value/copy.",
+          "answer": "byVal",
+          "options": [
+            "byRef",
+            "byVal",
+            "array"
+          ],
+          "feedback": "byVal — Pass a value/copy."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pass a reference to original.",
+          "answer": "byRef",
+          "options": [
+            "byRef",
+            "array",
+            "byVal"
+          ],
+          "feedback": "byRef — Pass a reference to original."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q1/3 Trace the OCR reference-language array below. State the output and explain why accessing a[3] would be invalid. [5] array a[3] a[0] = 4 a[1] = 8 a[2] = 12 print(a[2])",
+          "answer": "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+          "options": [
+            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
+            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
+          ],
+          "feedback": "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q2/3 Write OCR exam reference language to read and print every line of the file scores.txt, and then close it. [7]",
+          "answer": "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
+          "options": [
+            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1].",
+            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…"
+          ],
+          "feedback": "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine()) endwhile f.close()"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: PRACTICE · Q3/3 Compare procedure addTwo(x:byVal) with addTwo(x:byRef), each executing x=x+2, for caller n=5. [6]",
+          "answer": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+          "options": [
+            "/ MODEL ANSWER Marking: openRead with the correct filename [2]; loop until endOfFile() [2]; readLine() and print each line [2]; close the loop and file [1]. f = openRead(\"scores.txt\") while NOT f.endOfFile() print(f.readLine())…",
+            "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+            "/ MODEL ANSWER Outputs 12 [2]; valid indexes are 0, 1 and 2 [2]; a[3] is out of range [1]."
+          ],
+          "feedback": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. PRACTICE · Q3/3 Compare procedure addTwo(x:byVal) with addTwo(x:byRef), each executing x=x+2, for caller n=5. [6]",
+        "model": "/ MODEL ANSWER byVal called with n=5 uses copy and n remains5 [3]; byRef updates n to7 [3].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "byVal means: Pass a value/copy.",
+          "answer": "true",
+          "feedback": "byVal — Pass a value/copy."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "byRef means: Fixed-length zero-indexed sequence.",
+          "answer": "false",
+          "feedback": "byRef — Pass a reference to original."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "readLine means: Read the next file line.",
+          "answer": "true",
+          "feedback": "readLine — Read the next file line."
+        }
+      ]
+    }
+  ]
+}

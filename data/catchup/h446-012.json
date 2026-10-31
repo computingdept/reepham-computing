@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-012",
+  "course": "h446",
+  "title": "Scope & parameter passing in C#",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between a C# function and a procedure-style method?",
+          "answer": "A function returns a value . A procedure-style method uses void and does not return a value.",
+          "options": [
+            "A function returns a value . A procedure-style method uses void and does not return a value.",
+            "do...while",
+            "It compares two values for equality ."
+          ],
+          "feedback": "A function returns a value . A procedure-style method uses void and does not return a value."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which C# loop always executes its body at least once?",
+          "answer": "do...while",
+          "options": [
+            "A function returns a value . A procedure-style method uses void and does not return a value.",
+            "It compares two values for equality .",
+            "do...while"
+          ],
+          "feedback": "Its condition is checked after the body has run."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does == do in a C# condition?",
+          "answer": "It compares two values for equality .",
+          "options": [
+            "do...while",
+            "It compares two values for equality .",
+            "A function returns a value . A procedure-style method uses void and does not return a value."
+          ],
+          "feedback": "= assigns; == compares."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In Triple(7) , identify the argument. In Triple(int number) , identify the parameter.",
+          "answer": "Argument = 7 · parameter = number",
+          "options": [
+            "Argument = 7 · parameter = number",
+            "A function returns a value . A procedure-style method uses void and does not return a value.",
+            "do...while"
+          ],
+          "feedback": "The argument is the actual value supplied; the parameter is the named input in the method definition."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Scope controls where a variable can be used",
+          "text": "A local variable is declared inside a method or block and can only be used within that scope. For this course, we use a class-level static field to demonstrate the OCR idea of a global variable that can be accessed by multiple methods."
+        },
+        {
+          "type": "paragraph",
+          "title": "Parameters are local to the method",
+          "text": "A parameter receives data when a method is called and behaves as a local variable inside that method. number exists within Triple . The value supplied in the call is the argument."
+        },
+        {
+          "type": "paragraph",
+          "title": "By value = the method receives a copy",
+          "text": "Changing number changes only the method's local copy. The original variable in Main() is unchanged."
+        },
+        {
+          "type": "paragraph",
+          "title": "ref gives access to the original variable",
+          "text": "Write ref in both places: in the method parameter and in the method call."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Why doesn't the original value change?",
+          "text": "Predict the value of score after the method call."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Start in Main",
+          "text": "int score = 10; The variable score belongs to Main() and currently stores 10."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Scope'?",
+          "answer": "The part of a program in which a variable can be accessed.",
+          "options": [
+            "A variable visible only within the method or block where it is declared.",
+            "A variable that can be accessed from multiple parts of a program.",
+            "The part of a program in which a variable can be accessed."
+          ],
+          "feedback": "Scope — The part of a program in which a variable can be accessed."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Local variable'?",
+          "answer": "A variable visible only within the method or block where it is declared.",
+          "options": [
+            "A variable that can be accessed from multiple parts of a program.",
+            "A variable visible only within the method or block where it is declared.",
+            "The part of a program in which a variable can be accessed."
+          ],
+          "feedback": "Local variable — A variable visible only within the method or block where it is declared."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Global variable'?",
+          "answer": "A variable that can be accessed from multiple parts of a program.",
+          "options": [
+            "A variable that can be accessed from multiple parts of a program.",
+            "The part of a program in which a variable can be accessed.",
+            "A variable visible only within the method or block where it is declared."
+          ],
+          "feedback": "Global variable — A variable that can be accessed from multiple parts of a program."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify the scope",
+          "text": "public static int total = 0; public static void AddOne() { int amount = 1; total = total + amount; } Which variable can be accessed by multiple methods? Which is local to AddOne() ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Classify each variable",
+          "text": "YOUR TURN Classify each variable total ? amount ? Why? ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Classify each variable",
+          "text": "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
+        },
+        {
+          "type": "paragraph",
+          "title": "Predict pass-by-value",
+          "text": "int x = 5; DoubleValue(x); Console.WriteLine(x); public static void DoubleValue(int number) { number = number * 2; } What is output?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The named input in a method definition.",
+          "answer": "Parameter",
+          "options": [
+            "Parameter",
+            "Scope",
+            "Local variable"
+          ],
+          "feedback": "Parameter — The named input in a method definition."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The actual value or variable supplied in a method call.",
+          "answer": "Argument",
+          "options": [
+            "Scope",
+            "Local variable",
+            "Argument"
+          ],
+          "feedback": "Argument — The actual value or variable supplied in a method call."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Passing a copy so changes inside the method do not change the original variable.",
+          "answer": "Pass by value",
+          "options": [
+            "Local variable",
+            "Pass by value",
+            "Scope"
+          ],
+          "feedback": "Pass by value — Passing a copy so changes inside the method do not change the original variable."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Passing access to the original variable so changes can persist after the method returns.",
+          "answer": "Pass by reference",
+          "options": [
+            "Pass by reference",
+            "Scope",
+            "Local variable"
+          ],
+          "feedback": "Pass by reference — Passing access to the original variable so changes can persist after the method returns."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Why doesn't the original value change? Predict the value of score after the method call.",
+          "answer": "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
+          "options": [
+            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
+            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
+            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x ."
+          ],
+          "feedback": "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Identify the scope Which variable can be accessed by multiple methods? Which is local to AddOne() ?",
+          "answer": "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
+          "options": [
+            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10.",
+            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
+          ],
+          "feedback": "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Predict pass-by-value What is output?",
+          "answer": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+          "options": [
+            "CHECK Classify each variable total Class-level / global amount Local to AddOne() Why? total can be accessed by multiple methods; amount exists only inside AddOne()",
+            "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+            "STEP 2 · PASS BY VALUE The method receives a copy public static void ChangeByValue(int number) { number = 100; } The parameter number is a separate local variable initialised with the value 10."
+          ],
+          "feedback": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x ."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Predict pass-by-value What is output?",
+        "model": "CHECK Track the two variables x before 5 number inside 10 x after 5 number is a local copy, so changing it does not change x .",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Local variable means: A variable visible only within the method or block where it is declared.",
+          "answer": "true",
+          "feedback": "Local variable — A variable visible only within the method or block where it is declared."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Global variable means: The actual value or variable supplied in a method call.",
+          "answer": "false",
+          "feedback": "Global variable — A variable that can be accessed from multiple parts of a program."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Parameter means: The named input in a method definition.",
+          "answer": "true",
+          "feedback": "Parameter — The named input in a method definition."
+        }
+      ]
+    }
+  ]
+}

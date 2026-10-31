@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-187",
+  "course": "h446",
+  "title": "Linear search: trace and code",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What property must both inputs satisfy before a standard merge step?",
+          "answer": "Each input run must already be sorted.",
+          "options": [
+            "The value being inserted into the sorted prefix.",
+            "4. Indexes are 0 through 4.",
+            "Each input run must already be sorted."
+          ],
+          "feedback": "Each input run must already be sorted."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the key represent in insertion sort?",
+          "answer": "The value being inserted into the sorted prefix.",
+          "options": [
+            "4. Indexes are 0 through 4.",
+            "The value being inserted into the sorted prefix.",
+            "Each input run must already be sorted."
+          ],
+          "feedback": "The value being inserted into the sorted prefix."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the last index of a 5-element C# array?",
+          "answer": "4. Indexes are 0 through 4.",
+          "options": [
+            "4. Indexes are 0 through 4.",
+            "Each input run must already be sorted.",
+            "The value being inserted into the sorted prefix."
+          ],
+          "feedback": "4. Indexes are 0 through 4."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A loop checks a[0], a[1], a[2] then returns. How many comparisons were made?",
+          "answer": "3 comparisons.",
+          "options": [
+            "Each input run must already be sorted.",
+            "The value being inserted into the sorted prefix.",
+            "3 comparisons."
+          ],
+          "feedback": "3 comparisons."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Begin at index zero",
+          "text": "Linear search examines one value at a time, in order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stop at the first match",
+          "text": "When a[i] equals target, return i immediately."
+        },
+        {
+          "type": "paragraph",
+          "title": "No match",
+          "text": "After scanning every element, return -1; no ordering assumption is needed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Write visited indexes before identifying the match."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model solution",
+          "text": "Visit 0 (6), 1 (11), 2 (16). Return index 2 after three comparisons."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'target'?",
+          "answer": "Value the search seeks.",
+          "options": [
+            "Special result such as -1 meaning not found.",
+            "Value the search seeks.",
+            "Zero-based position of an array element."
+          ],
+          "feedback": "target — Value the search seeks."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'index'?",
+          "answer": "Zero-based position of an array element.",
+          "options": [
+            "Zero-based position of an array element.",
+            "Value the search seeks.",
+            "Special result such as -1 meaning not found."
+          ],
+          "feedback": "index — Zero-based position of an array element."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'sentinel'?",
+          "answer": "Special result such as -1 meaning not found.",
+          "options": [
+            "Value the search seeks.",
+            "Zero-based position of an array element.",
+            "Special result such as -1 meaning not found."
+          ],
+          "feedback": "sentinel — Special result such as -1 meaning not found."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Which indexes will be visited?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model solution",
+          "text": "0, 1, 2, 3. Return index 3 after four comparisons."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Leave the function as soon as a match is found.",
+          "answer": "early return",
+          "options": [
+            "target",
+            "index",
+            "early return"
+          ],
+          "feedback": "early return — Leave the function as soon as a match is found."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Search may inspect every item as input grows.",
+          "answer": "O(n)",
+          "options": [
+            "index",
+            "O(n)",
+            "target"
+          ],
+          "feedback": "O(n) — Search may inspect every item as input grows."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value the search seeks.",
+          "answer": "target",
+          "options": [
+            "target",
+            "index",
+            "sentinel"
+          ],
+          "feedback": "target — Value the search seeks."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Zero-based position of an array element.",
+          "answer": "index",
+          "options": [
+            "target",
+            "sentinel",
+            "index"
+          ],
+          "feedback": "index — Zero-based position of an array element."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Search for 7 in [4,7,9,12]. Give index and comparison count.",
+          "answer": "Index 1, after two comparisons.",
+          "options": [
+            "Return -1 after all four comparisons.",
+            "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.",
+            "Index 1, after two comparisons."
+          ],
+          "feedback": "Index 1, after two comparisons."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Search for 5 in [3,8,11,16]. Give return value and count.",
+          "answer": "Return -1 after all four comparisons.",
+          "options": [
+            "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.",
+            "Return -1 after all four comparisons.",
+            "Index 1, after two comparisons."
+          ],
+          "feedback": "Return -1 after all four comparisons."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Modify the function to count comparisons without returning early; explain the output for a 5-element array.",
+          "answer": "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.",
+          "options": [
+            "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.",
+            "Index 1, after two comparisons.",
+            "Return -1 after all four comparisons."
+          ],
+          "feedback": "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Modify the function to count comparisons without returning early; explain the output for a 5-element array.",
+        "model": "Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "index means: Zero-based position of an array element.",
+          "answer": "true",
+          "feedback": "index — Zero-based position of an array element."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "sentinel means: Search may inspect every item as input grows.",
+          "answer": "false",
+          "feedback": "sentinel — Special result such as -1 meaning not found."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "early return means: Leave the function as soon as a match is found.",
+          "answer": "true",
+          "feedback": "early return — Leave the function as soon as a match is found."
+        }
+      ]
+    }
+  ]
+}

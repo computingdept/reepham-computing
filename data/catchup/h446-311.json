@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-311",
+  "course": "h446",
+  "title": "Unfamiliar programming challenges",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a loop invariant?",
+          "answer": "A property true before and after each completed iteration.",
+          "options": [
+            "Otherwise a[0] could be invalid and initial count wrong.",
+            "A property true before and after each completed iteration.",
+            "Runs count contiguous groups; distinct counts globally unique values."
+          ],
+          "feedback": "A property true before and after each completed iteration."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What distinguishes a run from a distinct value?",
+          "answer": "Runs count contiguous groups; distinct counts globally unique values.",
+          "options": [
+            "Runs count contiguous groups; distinct counts globally unique values.",
+            "A property true before and after each completed iteration.",
+            "Otherwise a[0] could be invalid and initial count wrong."
+          ],
+          "feedback": "Runs count contiguous groups; distinct counts globally unique values."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why handle empty arrays explicitly?",
+          "answer": "Otherwise a[0] could be invalid and initial count wrong.",
+          "options": [
+            "A property true before and after each completed iteration.",
+            "Runs count contiguous groups; distinct counts globally unique values.",
+            "Otherwise a[0] could be invalid and initial count wrong."
+          ],
+          "feedback": "Otherwise a[0] could be invalid and initial count wrong."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For a=[1,1,2,1], give count of distinct values and runs.",
+          "answer": "Distinct values 2; runs 3 ([1,1],[2],[1]).",
+          "options": [
+            "Runs count contiguous groups; distinct counts globally unique values.",
+            "Distinct values 2; runs 3 ([1,1],[2],[1]).",
+            "A property true before and after each completed iteration."
+          ],
+          "feedback": "Distinct values 2; runs 3 ([1,1],[2],[1])."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "A run is a maximal group of equal consecutive values, not a unique value across the whole array."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Maintain invariant: after index i, the count equals the number of runs in the processed prefix."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Handle empty input and test all-equal, alternating and separated-repeat arrays."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Consecutive repeated fives belong to the same second run."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "Explain the reason for the result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'run'?",
+          "answer": "Consecutive equal-value group.",
+          "options": [
+            "Consecutive equal-value group.",
+            "Property maintained across iterations.",
+            "Boundary or unusual input."
+          ],
+          "feedback": "run — Consecutive equal-value group."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'invariant'?",
+          "answer": "Property maintained across iterations.",
+          "options": [
+            "Consecutive equal-value group.",
+            "Boundary or unusual input.",
+            "Property maintained across iterations."
+          ],
+          "feedback": "invariant — Property maintained across iterations."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'edge case'?",
+          "answer": "Boundary or unusual input.",
+          "options": [
+            "Property maintained across iterations.",
+            "Boundary or unusual input.",
+            "Consecutive equal-value group."
+          ],
+          "feedback": "edge case — Boundary or unusual input."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "There are four runs but only two distinct values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Explain the reason for the result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Different values irrespective of position.",
+          "answer": "distinct",
+          "options": [
+            "invariant",
+            "distinct",
+            "run"
+          ],
+          "feedback": "distinct — Different values irrespective of position."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Consecutive equal-value group.",
+          "answer": "run",
+          "options": [
+            "run",
+            "invariant",
+            "edge case"
+          ],
+          "feedback": "run — Consecutive equal-value group."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Property maintained across iterations.",
+          "answer": "invariant",
+          "options": [
+            "run",
+            "edge case",
+            "invariant"
+          ],
+          "feedback": "invariant — Property maintained across iterations."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Boundary or unusual input.",
+          "answer": "edge case",
+          "options": [
+            "invariant",
+            "edge case",
+            "run"
+          ],
+          "feedback": "edge case — Boundary or unusual input."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace CountRuns for [3,3,4,4,3,5,5]. State where runs increment. [6]",
+          "answer": "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+          "options": [
+            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…"
+          ],
+          "feedback": "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Write a valid C# CountRuns(int[] a) returning runs and handling empty input. [8]",
+          "answer": "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
+          "options": [
+            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
+            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]; return the result [1]. Equivalent correct C# earns the same marks. static int CountRuns(int[] a) { if (a.Length == 0) return 0; int runs = 1; for (int i = 1; i < a.Length; i++) { if (a[i] != a[i - 1]) runs++; } return runs; }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 For [1,2,1], compare runs and distinct counts, and assess time/extra-space complexity of CountRuns. [6]",
+          "answer": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+          "options": [
+            "/ WORKED ANSWER Start runs1 [1]; change to4 makes2 [2]; change to3 makes3 [1]; change to5 makes4 [1]; return4 [1].",
+            "/ WORKED ANSWER Mark scheme [8]: an int-returning method accepting int[] [1]; detect an empty array and return 0 [2]; initialise the run count to 1 [1]; loop from index 1 [1]; compare neighbouring values [1]; increment on change [1]…",
+            "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 For [1,2,1], compare runs and distinct counts, and assess time/extra-space complexity of CountRuns. [6]",
+        "model": "/ WORKED ANSWER Runs3 [1], distinct2 [1]; adjacency explains difference [1]; O(n) time [2]; O(1) auxiliary storage [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "invariant means: Property maintained across iterations.",
+          "answer": "true",
+          "feedback": "invariant — Property maintained across iterations."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "edge case means: Consecutive equal-value group.",
+          "answer": "false",
+          "feedback": "edge case — Boundary or unusual input."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "distinct means: Different values irrespective of position.",
+          "answer": "true",
+          "feedback": "distinct — Different values irrespective of position."
+        }
+      ]
+    }
+  ]
+}

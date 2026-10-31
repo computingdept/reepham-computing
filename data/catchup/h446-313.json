@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-313",
+  "course": "h446",
+  "title": "Processors, scheduling and LMC practice",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does LMC STA do?",
+          "answer": "Copies ACC contents to the specified mailbox.",
+          "options": [
+            "Address of the memory location being accessed.",
+            "Maximum CPU slice before RR rescheduling.",
+            "Copies ACC contents to the specified mailbox."
+          ],
+          "feedback": "Copies ACC contents to the specified mailbox."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the role of MAR?",
+          "answer": "Address of the memory location being accessed.",
+          "options": [
+            "Maximum CPU slice before RR rescheduling.",
+            "Address of the memory location being accessed.",
+            "Copies ACC contents to the specified mailbox."
+          ],
+          "feedback": "Address of the memory location being accessed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a time quantum?",
+          "answer": "Maximum CPU slice before RR rescheduling.",
+          "options": [
+            "Maximum CPU slice before RR rescheduling.",
+            "Copies ACC contents to the specified mailbox.",
+            "Address of the memory location being accessed."
+          ],
+          "feedback": "Maximum CPU slice before RR rescheduling."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Full adder 1+1+0: sum and carry bits?",
+          "answer": "10₂: sum0, carry1.",
+          "options": [
+            "Copies ACC contents to the specified mailbox.",
+            "Address of the memory location being accessed.",
+            "10₂: sum0, carry1."
+          ],
+          "feedback": "10₂: sum0, carry1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Trace the LMC accumulator and mailbox separately: INP overwrites ACC, while STA copies to storage."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Schedule independent CPU jobs with an explicit arrival/time rule and label every Gantt boundary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Distinguish processor speed, memory cache and interrupt/OS services when explaining performance."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "PC holds address of next instruction, not the instruction contents."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "Explain the reason for the result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'ACC'?",
+          "answer": "Accumulator register.",
+          "options": [
+            "Shortest Job First.",
+            "Accumulator register.",
+            "First Come First Served."
+          ],
+          "feedback": "ACC — Accumulator register."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'FCFS'?",
+          "answer": "First Come First Served.",
+          "options": [
+            "First Come First Served.",
+            "Accumulator register.",
+            "Shortest Job First."
+          ],
+          "feedback": "FCFS — First Come First Served."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'SJF'?",
+          "answer": "Shortest Job First.",
+          "options": [
+            "Accumulator register.",
+            "First Come First Served.",
+            "Shortest Job First."
+          ],
+          "feedback": "SJF — Shortest Job First."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Arrival-order service makes B wait three CPU units."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Explain the reason for the result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Overlap instruction stages.",
+          "answer": "pipeline",
+          "options": [
+            "ACC",
+            "FCFS",
+            "pipeline"
+          ],
+          "feedback": "pipeline — Overlap instruction stages."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Accumulator register.",
+          "answer": "ACC",
+          "options": [
+            "SJF",
+            "ACC",
+            "FCFS"
+          ],
+          "feedback": "ACC — Accumulator register."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First Come First Served.",
+          "answer": "FCFS",
+          "options": [
+            "FCFS",
+            "ACC",
+            "SJF"
+          ],
+          "feedback": "FCFS — First Come First Served."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Shortest Job First.",
+          "answer": "SJF",
+          "options": [
+            "ACC",
+            "FCFS",
+            "SJF"
+          ],
+          "feedback": "SJF — Shortest Job First."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Using LMC code above, trace ACC after each input, LDA, SUB and OUT. [6]",
+          "answer": "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
+          "options": [
+            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+          ],
+          "feedback": "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Processes A (burst 4), B (burst 2) and C (burst 1) all arrive at t=0. For FCFS, use the stated arrival-list order A, B, C to break ties; for non-preemptive SJF choose the shortest available job. Compare execution orders and mean waiting times. [6]",
+          "answer": "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+          "options": [
+            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3].",
+            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1]."
+          ],
+          "feedback": "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate clock speed, cache and pipelining for a task with heavy memory latency and branches. [6]",
+          "answer": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+          "options": [
+            "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+            "/ WORKED ANSWER ACC4 [1], A4 [1], ACC2 [1], B2 [1], LDA A→4 [1], SUB B→2 and OUT2 [1].",
+            "/ WORKED ANSWER FCFS A,B,C waits 0,4,6 mean10/3 [3]; SJF C,B,A waits 0,1,3 mean4/3 [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate clock speed, cache and pipelining for a task with heavy memory latency and branches. [6]",
+        "model": "/ WORKED ANSWER Clock frequency matters [1], cache misses stall [1], cache may reduce latency [1], pipeline overlaps stages [1], branches can flush/stall [1], performance depends on bottlenecks [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "FCFS means: First Come First Served.",
+          "answer": "true",
+          "feedback": "FCFS — First Come First Served."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "SJF means: Accumulator register.",
+          "answer": "false",
+          "feedback": "SJF — Shortest Job First."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "pipeline means: Overlap instruction stages.",
+          "answer": "true",
+          "feedback": "pipeline — Overlap instruction stages."
+        }
+      ]
+    }
+  ]
+}

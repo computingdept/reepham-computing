@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-020",
+  "course": "h446",
+  "title": "Stacks and queues with arrays",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does scores[2] access in a C# array?",
+          "answer": "The third element, because array indexing starts at zero.",
+          "options": [
+            "The location or index of the first node in the logical sequence.",
+            "The third element, because array indexing starts at zero.",
+            "An array has a fixed length after creation; a List<T> can grow and shrink."
+          ],
+          "feedback": "The third element, because array indexing starts at zero."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between an array and a List<T> in C#?",
+          "answer": "An array has a fixed length after creation; a List<T> can grow and shrink.",
+          "options": [
+            "An array has a fixed length after creation; a List<T> can grow and shrink.",
+            "The third element, because array indexing starts at zero.",
+            "The location or index of the first node in the logical sequence."
+          ],
+          "feedback": "An array has a fixed length after creation; a List<T> can grow and shrink."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the start pointer identify in a linked list?",
+          "answer": "The location or index of the first node in the logical sequence.",
+          "options": [
+            "The third element, because array indexing starts at zero.",
+            "An array has a fixed length after creation; a List<T> can grow and shrink.",
+            "The location or index of the first node in the logical sequence."
+          ],
+          "feedback": "The location or index of the first node in the logical sequence."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For data = [10, 20, 30, 40], next = [2, -1, 1, 0] and start = 3, list the data values visited in order by following next pointers until -1.",
+          "answer": "40 → 10 → 30 → 20, then -1 ends the traversal.",
+          "options": [
+            "An array has a fixed length after creation; a List<T> can grow and shrink.",
+            "40 → 10 → 30 → 20, then -1 ends the traversal.",
+            "The third element, because array indexing starts at zero."
+          ],
+          "feedback": "40 → 10 → 30 → 20, then -1 ends the traversal."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Stack array",
+          "text": "-1 means the stack is empty."
+        },
+        {
+          "type": "paragraph",
+          "title": "Push and pop",
+          "text": "Before push, reject top==stack.Length-1 (full); before pop, reject top==-1 (empty). Push then increments top; pop reads then decrements it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Queue array",
+          "text": "rear tracks the newest item and front tracks the oldest."
+        },
+        {
+          "type": "paragraph",
+          "title": "Enqueue and dequeue",
+          "text": "This linear queue uses rear as the last occupied index. Reject enqueue when rear==queue.Length-1 and dequeue when front>rear. Freed earlier slots are not reused; a circular queue later adds wraparound."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace a stack",
+          "text": "Push 8, push 7, then process an add operation. C# pointer connection: int[] stack = new int[5]; int top = -1; top++; stack[top] = 8; top++; stack[top] = 7; int first = stack[top]; top--; int second = stack[top]; top--; top++; stack[top] = first + second; push 8 push 7 pop → 7 pop → 8 push 15"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Store 8",
+          "text": "top = 0 stack[0] = 8"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'stack'?",
+          "answer": "A LIFO data structure.",
+          "options": [
+            "A LIFO data structure.",
+            "A FIFO data structure.",
+            "Last In, First Out."
+          ],
+          "feedback": "stack — A LIFO data structure."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'queue'?",
+          "answer": "A FIFO data structure.",
+          "options": [
+            "A LIFO data structure.",
+            "Last In, First Out.",
+            "A FIFO data structure."
+          ],
+          "feedback": "queue — A FIFO data structure."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'LIFO'?",
+          "answer": "Last In, First Out.",
+          "options": [
+            "A FIFO data structure.",
+            "Last In, First Out.",
+            "A LIFO data structure."
+          ],
+          "feedback": "LIFO — Last In, First Out."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace a stack",
+          "text": "OCR uses a calculator-style stack with push/pop operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same state",
+          "text": "Start: empty push 8 → [8] push 7 → [?] A: pop two, add, push → [?]"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same state",
+          "text": "Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]"
+        },
+        {
+          "type": "paragraph",
+          "title": "Stack vs queue",
+          "text": "Describe one difference."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First In, First Out.",
+          "answer": "FIFO",
+          "options": [
+            "queue",
+            "FIFO",
+            "stack"
+          ],
+          "feedback": "FIFO — First In, First Out."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add to the top of a stack.",
+          "answer": "push",
+          "options": [
+            "push",
+            "stack",
+            "queue"
+          ],
+          "feedback": "push — Add to the top of a stack."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Remove from the top of a stack.",
+          "answer": "pop",
+          "options": [
+            "stack",
+            "queue",
+            "pop"
+          ],
+          "feedback": "pop — Remove from the top of a stack."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add at the rear of a queue.",
+          "answer": "enqueue",
+          "options": [
+            "queue",
+            "enqueue",
+            "stack"
+          ],
+          "feedback": "enqueue — Add at the rear of a queue."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace a stack Push 8, push 7, then process an add operation.",
+          "answer": "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
+          "options": [
+            "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
+            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
+            "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]"
+          ],
+          "feedback": "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace a stack OCR uses a calculator-style stack with push/pop operations.",
+          "answer": "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
+          "options": [
+            "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
+            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
+            "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
+          ],
+          "feedback": "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stack vs queue Describe one difference.",
+          "answer": "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
+          "options": [
+            "STEP 2 · PUSH Store 7 top = 1 stack[1] = 7",
+            "CHECK Complete the same state Start: empty push 8 → [8] push 7 → [8, 7] A: pop two, add, push → [15]",
+            "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
+          ],
+          "feedback": "CHECK Complete the comparison Stack = LIFO Queue = FIFO"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stack vs queue Describe one difference.",
+        "model": "CHECK Complete the comparison Stack = LIFO Queue = FIFO",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "queue means: A FIFO data structure.",
+          "answer": "true",
+          "feedback": "queue — A FIFO data structure."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "LIFO means: Add to the top of a stack.",
+          "answer": "false",
+          "feedback": "LIFO — Last In, First Out."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "FIFO means: First In, First Out.",
+          "answer": "true",
+          "feedback": "FIFO — First In, First Out."
+        }
+      ]
+    }
+  ]
+}

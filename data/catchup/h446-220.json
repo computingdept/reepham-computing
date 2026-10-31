@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-220",
+  "course": "h446",
+  "title": "A*: heuristic search I",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why are predecessors recorded when a distance improves?",
+          "answer": "They allow reconstruction of the actual shortest route.",
+          "options": [
+            "No. Its shortest-path guarantee requires non-negative weights.",
+            "7.",
+            "They allow reconstruction of the actual shortest route."
+          ],
+          "feedback": "They allow reconstruction of the actual shortest route."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Can Dijkstra assume negative edge weights are safe?",
+          "answer": "No. Its shortest-path guarantee requires non-negative weights.",
+          "options": [
+            "7.",
+            "No. Its shortest-path guarantee requires non-negative weights.",
+            "They allow reconstruction of the actual shortest route."
+          ],
+          "feedback": "No. Its shortest-path guarantee requires non-negative weights."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is 2+3+2?",
+          "answer": "7.",
+          "options": [
+            "7.",
+            "They allow reconstruction of the actual shortest route.",
+            "No. Its shortest-path guarantee requires non-negative weights."
+          ],
+          "feedback": "7."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Starting S=0, edge S–A=4, then A–G=2. What is the S→A→G path cost?",
+          "answer": "6.",
+          "options": [
+            "They allow reconstruction of the actual shortest route.",
+            "No. Its shortest-path guarantee requires non-negative weights.",
+            "6."
+          ],
+          "feedback": "6."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "g, h and f have different meanings",
+          "text": "g is distance already travelled; h estimates the remaining distance; f=g+h is the estimated total."
+        },
+        {
+          "type": "paragraph",
+          "title": "Start with a frontier",
+          "text": "From S, A gets g2,h3,f5, while B gets g6,h1,f7. Choose A, not simply the smallest h."
+        },
+        {
+          "type": "paragraph",
+          "title": "Improve a discovered route",
+          "text": "From A, B improves to g4,h1,f5. From B, G improves to g6,h0,f6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stop on the selected goal",
+          "text": "When G is selected from the frontier, reconstruct S→A→B→G with total cost 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the next state",
+          "text": "From P, Q has g3+h3=f6, R has g6+h2=f8. Choose Q."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Update the table",
+          "text": "Through Q, R improves to g4,h2,f6; G gets g11."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'g(n)'?",
+          "answer": "Known best cost from the start to vertex n.",
+          "options": [
+            "Combined score g(n)+h(n).",
+            "Known best cost from the start to vertex n.",
+            "Estimated cost from vertex n to the goal."
+          ],
+          "feedback": "g(n) — Known best cost from the start to vertex n."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'h(n)'?",
+          "answer": "Estimated cost from vertex n to the goal.",
+          "options": [
+            "Estimated cost from vertex n to the goal.",
+            "Known best cost from the start to vertex n.",
+            "Combined score g(n)+h(n)."
+          ],
+          "feedback": "h(n) — Estimated cost from vertex n to the goal."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'f(n)'?",
+          "answer": "Combined score g(n)+h(n).",
+          "options": [
+            "Known best cost from the start to vertex n.",
+            "Estimated cost from vertex n to the goal.",
+            "Combined score g(n)+h(n)."
+          ],
+          "feedback": "f(n) — Combined score g(n)+h(n)."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next state",
+          "text": "From M, choose N because f(N)=2+3=5 < f(O)=5+1=6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "From N, O improves to g4,h1,f5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "From O, G improves to g6,h0,f6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "Select G and reconstruct M→N→O→G, total cost 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Discovered vertices awaiting expansion.",
+          "answer": "frontier / open set",
+          "options": [
+            "g(n)",
+            "h(n)",
+            "frontier / open set"
+          ],
+          "feedback": "frontier / open set — Discovered vertices awaiting expansion."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An estimate that never exceeds the true cheapest remaining cost.",
+          "answer": "admissible heuristic",
+          "options": [
+            "h(n)",
+            "admissible heuristic",
+            "g(n)"
+          ],
+          "feedback": "admissible heuristic — An estimate that never exceeds the true cheapest remaining cost."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Known best cost from the start to vertex n.",
+          "answer": "g(n)",
+          "options": [
+            "g(n)",
+            "h(n)",
+            "f(n)"
+          ],
+          "feedback": "g(n) — Known best cost from the start to vertex n."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Estimated cost from vertex n to the goal.",
+          "answer": "h(n)",
+          "options": [
+            "g(n)",
+            "f(n)",
+            "h(n)"
+          ],
+          "feedback": "h(n) — Estimated cost from vertex n to the goal."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 A node has g=7 and h=3. Give f and define each value.",
+          "answer": "[4] f=10 [1]; g is known travel cost so far [1]; h is estimated remaining cost [1]; f is estimated total [1].",
+          "options": [
+            "[6] From S, A has g2,h2,f4 [2]; B has g5,h1,f6 [2]. Expanding A improves B to g3,f4 [1]; route S→A→B→G total 5 [1].",
+            "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to…",
+            "[4] f=10 [1]; g is known travel cost so far [1]; h is estimated remaining cost [1]; f is estimated total [1]."
+          ],
+          "feedback": "[4] f=10 [1]; g is known travel cost so far [1]; h is estimated remaining cost [1]; f is estimated total [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Graph edges S–A=2, S–B=5, A–B=1 and B–G=2. Heuristics: h(S)=4,h(A)=2,h(B)=1,h(G)=0. Calculate f for A and B when first found and state the optimal S→G route.",
+          "answer": "[6] From S, A has g2,h2,f4 [2]; B has g5,h1,f6 [2]. Expanding A improves B to g3,f4 [1]; route S→A→B→G total 5 [1].",
+          "options": [
+            "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to…",
+            "[6] From S, A has g2,h2,f4 [2]; B has g5,h1,f6 [2]. Expanding A improves B to g3,f4 [1]; route S→A→B→G total 5 [1].",
+            "[4] f=10 [1]; g is known travel cost so far [1]; h is estimated remaining cost [1]; f is estimated total [1]."
+          ],
+          "feedback": "[6] From S, A has g2,h2,f4 [2]; B has g5,h1,f6 [2]. Expanding A improves B to g3,f4 [1]; route S→A→B→G total 5 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Explain why admissibility matters. For the graph S–A=2, A–G=4 and S–G=10, what is the greatest admissible h(A), and why?",
+          "answer": "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to…",
+          "options": [
+            "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to…",
+            "[4] f=10 [1]; g is known travel cost so far [1]; h is estimated remaining cost [1]; f is estimated total [1].",
+            "[6] From S, A has g2,h2,f4 [2]; B has g5,h1,f6 [2]. Expanding A improves B to g3,f4 [1]; route S→A→B→G total 5 [1]."
+          ],
+          "feedback": "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to the optimal path being missed under early-goal termination [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Explain why admissibility matters. For the graph S–A=2, A–G=4 and S–G=10, what is the greatest admissible h(A), and why?",
+        "model": "[6] A heuristic is admissible when it never overestimates the true cheapest remaining cost [2]. From A the direct cheapest cost to G is 4 [2], so h(A) may be at most 4 [1] (assuming non-negative estimates); overestimating can lead to the optimal path being missed under early-goal termination [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "h(n) means: Estimated cost from vertex n to the goal.",
+          "answer": "true",
+          "feedback": "h(n) — Estimated cost from vertex n to the goal."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "f(n) means: An estimate that never exceeds the true cheapest remaining cost.",
+          "answer": "false",
+          "feedback": "f(n) — Combined score g(n)+h(n)."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "frontier / open set means: Discovered vertices awaiting expansion.",
+          "answer": "true",
+          "feedback": "frontier / open set — Discovered vertices awaiting expansion."
+        }
+      ]
+    }
+  ]
+}

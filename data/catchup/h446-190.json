@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-190",
+  "course": "h446",
+  "title": "Programming constructs and scope",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the approximate growth of a loop executed n times?",
+          "answer": "O(n).",
+          "options": [
+            "It must exclude mid and shrink the search interval.",
+            "false.",
+            "O(n)."
+          ],
+          "feedback": "O(n)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must binary search update low=mid+1 rather than low=mid in the greater-than case?",
+          "answer": "It must exclude mid and shrink the search interval.",
+          "options": [
+            "false.",
+            "It must exclude mid and shrink the search interval.",
+            "O(n)."
+          ],
+          "feedback": "It must exclude mid and shrink the search interval."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is true AND false?",
+          "answer": "false.",
+          "options": [
+            "false.",
+            "O(n).",
+            "It must exclude mid and shrink the search interval."
+          ],
+          "feedback": "false."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does int a=2; a=a+3; Console.WriteLine(a); output?",
+          "answer": "5.",
+          "options": [
+            "O(n).",
+            "It must exclude mid and shrink the search interval.",
+            "5."
+          ],
+          "feedback": "5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Three control structures",
+          "text": "Sequence runs in order; selection chooses a branch; iteration repeats instructions."
+        },
+        {
+          "type": "paragraph",
+          "title": "Where is a variable visible?",
+          "text": "A local declaration belongs to its block or method; a class-level field can be accessed by relevant class methods."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shadowing",
+          "text": "A local variable with the same name as a field can hide that field inside the method; trace precisely which one is printed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Which x is in scope at the print statement?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model solution",
+          "text": "The method-local x is 2 and shadows the field. The program prints 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'sequence'?",
+          "answer": "Operations execute in order.",
+          "options": [
+            "A block repeats while a condition permits.",
+            "Operations execute in order.",
+            "Execution chooses a branch according to a condition."
+          ],
+          "feedback": "sequence — Operations execute in order."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'selection'?",
+          "answer": "Execution chooses a branch according to a condition.",
+          "options": [
+            "Execution chooses a branch according to a condition.",
+            "Operations execute in order.",
+            "A block repeats while a condition permits."
+          ],
+          "feedback": "selection — Execution chooses a branch according to a condition."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'iteration'?",
+          "answer": "A block repeats while a condition permits.",
+          "options": [
+            "Operations execute in order.",
+            "Execution chooses a branch according to a condition.",
+            "A block repeats while a condition permits."
+          ],
+          "feedback": "iteration — A block repeats while a condition permits."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Which variable is modified?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model solution",
+          "text": "The class field is modified to 25, then 25 is printed."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Where a name can be accessed.",
+          "answer": "scope",
+          "options": [
+            "sequence",
+            "selection",
+            "scope"
+          ],
+          "feedback": "scope — Where a name can be accessed."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A local declaration hides another accessible name.",
+          "answer": "shadowing",
+          "options": [
+            "selection",
+            "shadowing",
+            "sequence"
+          ],
+          "feedback": "shadowing — A local declaration hides another accessible name."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operations execute in order.",
+          "answer": "sequence",
+          "options": [
+            "sequence",
+            "selection",
+            "iteration"
+          ],
+          "feedback": "sequence — Operations execute in order."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Execution chooses a branch according to a condition.",
+          "answer": "selection",
+          "options": [
+            "sequence",
+            "iteration",
+            "selection"
+          ],
+          "feedback": "selection — Execution chooses a branch according to a condition."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Class field level = 9; method declares int level = 4 and prints level. What appears?",
+          "answer": "4, because the local level shadows the field.",
+          "options": [
+            "3, because no local attempts was declared, so the class field is incremented.",
+            "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.",
+            "4, because the local level shadows the field."
+          ],
+          "feedback": "4, because the local level shadows the field."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Class field attempts = 2; method executes attempts++; then prints attempts. What appears?",
+          "answer": "3, because no local attempts was declared, so the class field is incremented.",
+          "options": [
+            "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.",
+            "3, because no local attempts was declared, so the class field is incremented.",
+            "4, because the local level shadows the field."
+          ],
+          "feedback": "3, because no local attempts was declared, so the class field is incremented."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Describe one risk of unnecessary global/class-level mutable variables.",
+          "answer": "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.",
+          "options": [
+            "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.",
+            "4, because the local level shadows the field.",
+            "3, because no local attempts was declared, so the class field is incremented."
+          ],
+          "feedback": "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Describe one risk of unnecessary global/class-level mutable variables.",
+        "model": "Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "selection means: Execution chooses a branch according to a condition.",
+          "answer": "true",
+          "feedback": "selection — Execution chooses a branch according to a condition."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "iteration means: A local declaration hides another accessible name.",
+          "answer": "false",
+          "feedback": "iteration — A block repeats while a condition permits."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "scope means: Where a name can be accessed.",
+          "answer": "true",
+          "feedback": "scope — Where a name can be accessed."
+        }
+      ]
+    }
+  ]
+}

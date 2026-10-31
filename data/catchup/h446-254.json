@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-254",
+  "course": "h446",
+  "title": "Von Neumann and Harvard architectures",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the ideal completion cycle for four independent instructions in a three-stage pipeline?",
+          "answer": "Cycle 6 (=4+3−1).",
+          "options": [
+            "The CU identifies and interprets the opcode/operands.",
+            "Cycle 6 (=4+3−1).",
+            "The instruction being transferred from memory."
+          ],
+          "feedback": "Cycle 6 (=4+3−1)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does MDR contain during an instruction fetch?",
+          "answer": "The instruction being transferred from memory.",
+          "options": [
+            "The instruction being transferred from memory.",
+            "Cycle 6 (=4+3−1).",
+            "The CU identifies and interprets the opcode/operands."
+          ],
+          "feedback": "The instruction being transferred from memory."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What happens in the Decode stage?",
+          "answer": "The CU identifies and interprets the opcode/operands.",
+          "options": [
+            "Cycle 6 (=4+3−1).",
+            "The instruction being transferred from memory.",
+            "The CU identifies and interprets the opcode/operands."
+          ],
+          "feedback": "The CU identifies and interprets the opcode/operands."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate Sum and Carry-out for a full adder with A=1, B=0, Carry-in=1. Explain in binary.",
+          "answer": "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1.",
+          "options": [
+            "The instruction being transferred from memory.",
+            "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1.",
+            "Cycle 6 (=4+3−1)."
+          ],
+          "feedback": "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Von Neumann organisation",
+          "text": "Instructions and data share the same address space and a pathway; access can compete for bandwidth."
+        },
+        {
+          "type": "paragraph",
+          "title": "Harvard organisation",
+          "text": "Instruction and data memories/address spaces are separate, allowing independent access paths."
+        },
+        {
+          "type": "paragraph",
+          "title": "Recognise contemporary designs",
+          "text": "Many processors have aspects of both, such as a unified main memory and separate instruction/data caches (modified Harvard)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The instruction fetch and data read may both need the same memory transfer pathway."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "The requests may have to be scheduled rather than served simultaneously; this is related to the Von Neumann bottleneck."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Von Neumann'?",
+          "answer": "Architecture with shared memory space for instructions and data.",
+          "options": [
+            "Architecture with shared memory space for instructions and data.",
+            "Architecture with separate program and data storage paths.",
+            "Limit caused by a shared resource or transfer path."
+          ],
+          "feedback": "Von Neumann — Architecture with shared memory space for instructions and data."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Harvard'?",
+          "answer": "Architecture with separate program and data storage paths.",
+          "options": [
+            "Architecture with shared memory space for instructions and data.",
+            "Limit caused by a shared resource or transfer path.",
+            "Architecture with separate program and data storage paths."
+          ],
+          "feedback": "Harvard — Architecture with separate program and data storage paths."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'bottleneck'?",
+          "answer": "Limit caused by a shared resource or transfer path.",
+          "options": [
+            "Architecture with separate program and data storage paths.",
+            "Limit caused by a shared resource or transfer path.",
+            "Architecture with shared memory space for instructions and data."
+          ],
+          "feedback": "bottleneck — Limit caused by a shared resource or transfer path."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Separate program and data memories indicate Harvard-style organisation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Independent transfer pathways can allow concurrent instruction fetch and data access, subject to the processor design."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Fast cache storing instructions.",
+          "answer": "instruction cache",
+          "options": [
+            "Harvard",
+            "instruction cache",
+            "Von Neumann"
+          ],
+          "feedback": "instruction cache — Fast cache storing instructions."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combines features of different architectural approaches.",
+          "answer": "hybrid architecture",
+          "options": [
+            "hybrid architecture",
+            "Von Neumann",
+            "Harvard"
+          ],
+          "feedback": "hybrid architecture — Combines features of different architectural approaches."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Architecture with shared memory space for instructions and data.",
+          "answer": "Von Neumann",
+          "options": [
+            "Harvard",
+            "bottleneck",
+            "Von Neumann"
+          ],
+          "feedback": "Von Neumann — Architecture with shared memory space for instructions and data."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Architecture with separate program and data storage paths.",
+          "answer": "Harvard",
+          "options": [
+            "bottleneck",
+            "Harvard",
+            "Von Neumann"
+          ],
+          "feedback": "Harvard — Architecture with separate program and data storage paths."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 State where instructions and data are stored in Von Neumann and Harvard architectures.",
+          "answer": "[4] Von Neumann uses a shared instruction/data memory space [2]; Harvard has separate instruction/data memories or address spaces [2].",
+          "options": [
+            "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1].",
+            "[4] Von Neumann uses a shared instruction/data memory space [2]; Harvard has separate instruction/data memories or address spaces [2].",
+            "[6] Shared transfer pathway [1] used for both instructions and data [1], which can cause contention [1]; Harvard uses independent paths [1], potentially overlapping transfers [1] although overall speed depends on implementation [1]."
+          ],
+          "feedback": "[4] Von Neumann uses a shared instruction/data memory space [2]; Harvard has separate instruction/data memories or address spaces [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 A CPU frequently fetches an instruction while reading data. Explain a potential Von Neumann limitation and Harvard advantage.",
+          "answer": "[6] Shared transfer pathway [1] used for both instructions and data [1], which can cause contention [1]; Harvard uses independent paths [1], potentially overlapping transfers [1] although overall speed depends on implementation [1].",
+          "options": [
+            "[6] Shared transfer pathway [1] used for both instructions and data [1], which can cause contention [1]; Harvard uses independent paths [1], potentially overlapping transfers [1] although overall speed depends on implementation [1].",
+            "[4] Von Neumann uses a shared instruction/data memory space [2]; Harvard has separate instruction/data memories or address spaces [2].",
+            "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1]."
+          ],
+          "feedback": "[6] Shared transfer pathway [1] used for both instructions and data [1], which can cause contention [1]; Harvard uses independent paths [1], potentially overlapping transfers [1] although overall speed depends on implementation [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A modern CPU uses unified main memory but separate L1 instruction and data caches. Explain why it cannot be described as a purely classical Harvard or purely classical Von Neumann design.",
+          "answer": "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1].",
+          "options": [
+            "[4] Von Neumann uses a shared instruction/data memory space [2]; Harvard has separate instruction/data memories or address spaces [2].",
+            "[6] Shared transfer pathway [1] used for both instructions and data [1], which can cause contention [1]; Harvard uses independent paths [1], potentially overlapping transfers [1] although overall speed depends on implementation [1].",
+            "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1]."
+          ],
+          "feedback": "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A modern CPU uses unified main memory but separate L1 instruction and data caches. Explain why it cannot be described as a purely classical Harvard or purely classical Von Neumann design.",
+        "model": "[6] Unified main memory is shared [1], a Von Neumann feature [1]; separate L1 caches [1] offer separate instruction/data access paths [1], a Harvard-like feature [1]; this is a hybrid or modified Harvard organisation [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Harvard means: Architecture with separate program and data storage paths.",
+          "answer": "true",
+          "feedback": "Harvard — Architecture with separate program and data storage paths."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "bottleneck means: Combines features of different architectural approaches.",
+          "answer": "false",
+          "feedback": "bottleneck — Limit caused by a shared resource or transfer path."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "instruction cache means: Fast cache storing instructions.",
+          "answer": "true",
+          "feedback": "instruction cache — Fast cache storing instructions."
+        }
+      ]
+    }
+  ]
+}

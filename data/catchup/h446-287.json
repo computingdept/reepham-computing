@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-287",
+  "course": "h446",
+  "title": "Run-length and dictionary coding",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define lossless compression.",
+          "answer": "Original can be reconstructed exactly.",
+          "options": [
+            "Extra metadata needed to represent/decode data.",
+            "Original can be reconstructed exactly.",
+            "Consecutive repeated instances of the same symbol."
+          ],
+          "feedback": "Original can be reconstructed exactly."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a run in RLE?",
+          "answer": "Consecutive repeated instances of the same symbol.",
+          "options": [
+            "Consecutive repeated instances of the same symbol.",
+            "Original can be reconstructed exactly.",
+            "Extra metadata needed to represent/decode data."
+          ],
+          "feedback": "Consecutive repeated instances of the same symbol."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a compression overhead?",
+          "answer": "Extra metadata needed to represent/decode data.",
+          "options": [
+            "Original can be reconstructed exactly.",
+            "Consecutive repeated instances of the same symbol.",
+            "Extra metadata needed to represent/decode data."
+          ],
+          "feedback": "Extra metadata needed to represent/decode data."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For array [2,3,4,5], double values at indexes 1 and 3. State final array and sum.",
+          "answer": "[2,6,4,10], sum 22; indexes are positions 1 and 3.",
+          "options": [
+            "Consecutive repeated instances of the same symbol.",
+            "[2,6,4,10], sum 22; indexes are positions 1 and 3.",
+            "Original can be reconstructed exactly."
+          ],
+          "feedback": "[2,6,4,10], sum 22; indexes are positions 1 and 3."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Run-length encoding replaces each maximal run of the same symbol with a value and count; it works best for long consecutive repetitions."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Dictionary coding replaces repeated strings with dictionary references; the decoder needs the same dictionary, transmitted or reconstructed according to the scheme."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Overhead matters. Alternating characters can make naive RLE larger; long repeated phrases can be valuable for dictionary coding."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Identify maximal consecutive runs: four B, two A and one C."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "Output each run as value/count and expand them back to verify exact reconstruction."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'RLE'?",
+          "answer": "Encode repeated runs with counts.",
+          "options": [
+            "Encode repeated runs with counts.",
+            "Maximal consecutive equal symbols.",
+            "Represent repeated strings by references."
+          ],
+          "feedback": "RLE — Encode repeated runs with counts."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'run'?",
+          "answer": "Maximal consecutive equal symbols.",
+          "options": [
+            "Encode repeated runs with counts.",
+            "Represent repeated strings by references.",
+            "Maximal consecutive equal symbols."
+          ],
+          "feedback": "run — Maximal consecutive equal symbols."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'dictionary coding'?",
+          "answer": "Represent repeated strings by references.",
+          "options": [
+            "Maximal consecutive equal symbols.",
+            "Represent repeated strings by references.",
+            "Encode repeated runs with counts."
+          ],
+          "feedback": "dictionary coding — Represent repeated strings by references."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Use dictionary reference 1 for each repeated word while preserving the space separator."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "Decoder reads both references with its matching dictionary and reconstructs the original phrase."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Mapping of codes to values/phrases.",
+          "answer": "dictionary",
+          "options": [
+            "run",
+            "dictionary",
+            "RLE"
+          ],
+          "feedback": "dictionary — Mapping of codes to values/phrases."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Metadata/structure required by encoding.",
+          "answer": "overhead",
+          "options": [
+            "overhead",
+            "RLE",
+            "run"
+          ],
+          "feedback": "overhead — Metadata/structure required by encoding."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Encode repeated runs with counts.",
+          "answer": "RLE",
+          "options": [
+            "run",
+            "dictionary coding",
+            "RLE"
+          ],
+          "feedback": "RLE — Encode repeated runs with counts."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maximal consecutive equal symbols.",
+          "answer": "run",
+          "options": [
+            "dictionary coding",
+            "run",
+            "RLE"
+          ],
+          "feedback": "run — Maximal consecutive equal symbols."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 RLE-encode AAAAABBCCCDDDD with counts. [4]",
+          "answer": "WORKED MODEL ANSWER (A,5) [1], (B,2) [1], (C,3) [1], (D,4) [1].",
+          "options": [
+            "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1].",
+            "WORKED MODEL ANSWER (A,5) [1], (B,2) [1], (C,3) [1], (D,4) [1].",
+            "WORKED MODEL ANSWER 0 [1], space [1], 1 [1], space [1], 0 [1]; decoder with same dictionary recovers exact phrase [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER (A,5) [1], (B,2) [1], (C,3) [1], (D,4) [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 With dictionary 0='HELLO',1='WORLD', encode 'HELLO WORLD HELLO' using references and separators. [6]",
+          "answer": "WORKED MODEL ANSWER 0 [1], space [1], 1 [1], space [1], 0 [1]; decoder with same dictionary recovers exact phrase [1].",
+          "options": [
+            "WORKED MODEL ANSWER 0 [1], space [1], 1 [1], space [1], 0 [1]; decoder with same dictionary recovers exact phrase [1].",
+            "WORKED MODEL ANSWER (A,5) [1], (B,2) [1], (C,3) [1], (D,4) [1].",
+            "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER 0 [1], space [1], 1 [1], space [1], 0 [1]; decoder with same dictionary recovers exact phrase [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why RLE can increase size for alternating data and why dictionary coding may help repeated long substrings. [6]",
+          "answer": "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1].",
+          "options": [
+            "WORKED MODEL ANSWER (A,5) [1], (B,2) [1], (C,3) [1], (D,4) [1].",
+            "WORKED MODEL ANSWER 0 [1], space [1], 1 [1], space [1], 0 [1]; decoder with same dictionary recovers exact phrase [1].",
+            "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why RLE can increase size for alternating data and why dictionary coding may help repeated long substrings. [6]",
+        "model": "WORKED MODEL ANSWER No long runs [1], counts add overhead [2]; repeated substrings dictionary references [2], dictionary itself costs space [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "run means: Maximal consecutive equal symbols.",
+          "answer": "true",
+          "feedback": "run — Maximal consecutive equal symbols."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "dictionary coding means: Metadata/structure required by encoding.",
+          "answer": "false",
+          "feedback": "dictionary coding — Represent repeated strings by references."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "dictionary means: Mapping of codes to values/phrases.",
+          "answer": "true",
+          "feedback": "dictionary — Mapping of codes to values/phrases."
+        }
+      ]
+    }
+  ]
+}

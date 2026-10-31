@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-230",
+  "course": "h446",
+  "title": "Programming paradigms: applied comparison",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does OOP differ from a procedural program?",
+          "answer": "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions.",
+          "options": [
+            "Through public methods/property logic defined by the class.",
+            "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions.",
+            "A variable accessible only within its declaration's scope."
+          ],
+          "feedback": "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a local variable mean?",
+          "answer": "A variable accessible only within its declaration's scope.",
+          "options": [
+            "A variable accessible only within its declaration's scope.",
+            "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions.",
+            "Through public methods/property logic defined by the class."
+          ],
+          "feedback": "A variable accessible only within its declaration's scope."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If a field is private-set, how can callers change it safely?",
+          "answer": "Through public methods/property logic defined by the class.",
+          "options": [
+            "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions.",
+            "A variable accessible only within its declaration's scope.",
+            "Through public methods/property logic defined by the class."
+          ],
+          "feedback": "Through public methods/property logic defined by the class."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why does `Deposit(balance,5);` not update the caller's int balance if only a return value is produced?",
+          "answer": "The return is discarded and a value-type parameter is a copy; the caller must assign the returned result.",
+          "options": [
+            "A variable accessible only within its declaration's scope.",
+            "The return is discarded and a value-type parameter is a copy; the caller must assign the returned result.",
+            "OOP groups state and behaviour into objects; procedural code is organised around procedures/functions."
+          ],
+          "feedback": "The return is discarded and a value-type parameter is a copy; the caller must assign the returned result."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Procedural state",
+          "text": "The caller passes an integer balance and explicitly stores the returned value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Object state",
+          "text": "Account object A stores Balance internally and Deposit changes that object's state."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate instances",
+          "text": "Account B stays at 20 when Account A changes to 15; the objects have independent state."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Account a's Balance becomes 12."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model response",
+          "text": "Account b remains at 20 because its state is separate."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'refactoring'?",
+          "answer": "Restructuring code while preserving expected behaviour.",
+          "options": [
+            "Restructuring code while preserving expected behaviour.",
+            "Controlled access to internal state.",
+            "Individual object created from a class."
+          ],
+          "feedback": "refactoring — Restructuring code while preserving expected behaviour."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'encapsulation'?",
+          "answer": "Controlled access to internal state.",
+          "options": [
+            "Restructuring code while preserving expected behaviour.",
+            "Individual object created from a class.",
+            "Controlled access to internal state."
+          ],
+          "feedback": "encapsulation — Controlled access to internal state."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'instance'?",
+          "answer": "Individual object created from a class.",
+          "options": [
+            "Controlled access to internal state.",
+            "Individual object created from a class.",
+            "Restructuring code while preserving expected behaviour."
+          ],
+          "feedback": "instance — Individual object created from a class."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Deposit computes and returns 10, but its result is ignored."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model response",
+          "text": "The caller's balance remains 7. Assign balance=Deposit(balance,3) to store 10."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Output returned to the caller.",
+          "answer": "return value",
+          "options": [
+            "encapsulation",
+            "return value",
+            "refactoring"
+          ],
+          "feedback": "return value — Output returned to the caller."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Observable change beyond a returned result.",
+          "answer": "side effect",
+          "options": [
+            "side effect",
+            "refactoring",
+            "encapsulation"
+          ],
+          "feedback": "side effect — Observable change beyond a returned result."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Restructuring code while preserving expected behaviour.",
+          "answer": "refactoring",
+          "options": [
+            "encapsulation",
+            "instance",
+            "refactoring"
+          ],
+          "feedback": "refactoring — Restructuring code while preserving expected behaviour."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Controlled access to internal state.",
+          "answer": "encapsulation",
+          "options": [
+            "instance",
+            "encapsulation",
+            "refactoring"
+          ],
+          "feedback": "encapsulation — Controlled access to internal state."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 Procedural AddFive(x) returns x+5. If caller x=2 discards the result, what is x?",
+          "answer": "[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1].",
+          "options": [
+            "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder…",
+            "[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1].",
+            "[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2]."
+          ],
+          "feedback": "[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Two objects have balances A=10, B=30. A.Deposit(7) and B.Deposit(2) run. Find both balances and describe why they differ.",
+          "answer": "[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2].",
+          "options": [
+            "[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2].",
+            "[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1].",
+            "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder…"
+          ],
+          "feedback": "[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Compare one maintenance advantage and one risk of procedural and OOP implementations for a library system.",
+          "answer": "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder…",
+          "options": [
+            "[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1].",
+            "[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2].",
+            "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder…"
+          ],
+          "feedback": "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder to follow [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Compare one maintenance advantage and one risk of procedural and OOP implementations for a library system.",
+        "model": "[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder to follow [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "encapsulation means: Controlled access to internal state.",
+          "answer": "true",
+          "feedback": "encapsulation — Controlled access to internal state."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "instance means: Observable change beyond a returned result.",
+          "answer": "false",
+          "feedback": "instance — Individual object created from a class."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "return value means: Output returned to the caller.",
+          "answer": "true",
+          "feedback": "return value — Output returned to the caller."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-274",
+  "course": "h446",
+  "title": "Compiler stages, linkers, loaders and libraries",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which program translates assembly mnemonics?",
+          "answer": "Assembler.",
+          "options": [
+            "Target/object code.",
+            "A system that executes/analyses source or intermediate operations at runtime.",
+            "Assembler."
+          ],
+          "feedback": "Assembler."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a compiler typically produce?",
+          "answer": "Target/object code.",
+          "options": [
+            "A system that executes/analyses source or intermediate operations at runtime.",
+            "Target/object code.",
+            "Assembler."
+          ],
+          "feedback": "Target/object code."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a runtime interpreter?",
+          "answer": "A system that executes/analyses source or intermediate operations at runtime.",
+          "options": [
+            "A system that executes/analyses source or intermediate operations at runtime.",
+            "Assembler.",
+            "Target/object code."
+          ],
+          "feedback": "A system that executes/analyses source or intermediate operations at runtime."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify ¬(A∨B) with De Morgan's law, then evaluate A=0,B=1.",
+          "answer": "¬A∧¬B; with A=0,B=1 gives 1∧0=0.",
+          "options": [
+            "Assembler.",
+            "Target/object code.",
+            "¬A∧¬B; with A=0,B=1 gives 1∧0=0."
+          ],
+          "feedback": "¬A∧¬B; with A=0,B=1 gives 1∧0=0."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Lexical analysis identifies tokens, while syntax analysis checks grammar and generates a parse structure."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Semantic analysis checks rules beyond grammar such as type compatibility or declared identifiers; optimisations can transform intermediate code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "A linker combines object files and resolves symbols/libraries; a loader places the executable into memory for execution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The lexer recognises tokens"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "parser checks that they form a valid assignment statement."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'lexer'?",
+          "answer": "Recognises source tokens.",
+          "options": [
+            "Checks program meaning and types.",
+            "Recognises source tokens.",
+            "Checks grammatical structure."
+          ],
+          "feedback": "lexer — Recognises source tokens."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'parser'?",
+          "answer": "Checks grammatical structure.",
+          "options": [
+            "Checks grammatical structure.",
+            "Recognises source tokens.",
+            "Checks program meaning and types."
+          ],
+          "feedback": "parser — Checks grammatical structure."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'semantic analysis'?",
+          "answer": "Checks program meaning and types.",
+          "options": [
+            "Recognises source tokens.",
+            "Checks grammatical structure.",
+            "Checks program meaning and types."
+          ],
+          "feedback": "semantic analysis — Checks program meaning and types."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The linker finds its definition in the module/library and fixes up the reference before execution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model answer",
+          "text": "Explain the reasoning and justify the output."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resolves symbols across modules.",
+          "answer": "linker",
+          "options": [
+            "lexer",
+            "parser",
+            "linker"
+          ],
+          "feedback": "linker — Resolves symbols across modules."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Places program in memory.",
+          "answer": "loader",
+          "options": [
+            "parser",
+            "loader",
+            "lexer"
+          ],
+          "feedback": "loader — Places program in memory."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Recognises source tokens.",
+          "answer": "lexer",
+          "options": [
+            "lexer",
+            "parser",
+            "semantic analysis"
+          ],
+          "feedback": "lexer — Recognises source tokens."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checks grammatical structure.",
+          "answer": "parser",
+          "options": [
+            "lexer",
+            "semantic analysis",
+            "parser"
+          ],
+          "feedback": "parser — Checks grammatical structure."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Distinguish lexical, syntax and semantic analysis. [6]",
+          "answer": "Tokens [2], grammar/parse [2], type/name and contextual rules [2].",
+          "options": [
+            "Generate target instructions [2]; resolve external references and combine object code/libraries [2]; place executable in memory and start [2].",
+            "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2].",
+            "Tokens [2], grammar/parse [2], type/name and contextual rules [2]."
+          ],
+          "feedback": "Tokens [2], grammar/parse [2], type/name and contextual rules [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Describe the roles of code generation, linking and loading. [6]",
+          "answer": "Generate target instructions [2]; resolve external references and combine object code/libraries [2]; place executable in memory and start [2].",
+          "options": [
+            "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2].",
+            "Generate target instructions [2]; resolve external references and combine object code/libraries [2]; place executable in memory and start [2].",
+            "Tokens [2], grammar/parse [2], type/name and contextual rules [2]."
+          ],
+          "feedback": "Generate target instructions [2]; resolve external references and combine object code/libraries [2]; place executable in memory and start [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 A source file has valid syntax but calls undefined MethodX(). Explain which analyses or stages may detect failure, and why. [6]",
+          "answer": "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2].",
+          "options": [
+            "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2].",
+            "Tokens [2], grammar/parse [2], type/name and contextual rules [2].",
+            "Generate target instructions [2]; resolve external references and combine object code/libraries [2]; place executable in memory and start [2]."
+          ],
+          "feedback": "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 A source file has valid syntax but calls undefined MethodX(). Explain which analyses or stages may detect failure, and why. [6]",
+        "model": "Lexing tokens valid [1]; parsing structure valid [1]; semantic name/symbol resolution can reject undefined identifier [2]; external symbol might instead fail during linking if declaration exists but definition missing [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "parser means: Checks grammatical structure.",
+          "answer": "true",
+          "feedback": "parser — Checks grammatical structure."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "semantic analysis means: Places program in memory.",
+          "answer": "false",
+          "feedback": "semantic analysis — Checks program meaning and types."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "linker means: Resolves symbols across modules.",
+          "answer": "true",
+          "feedback": "linker — Resolves symbols across modules."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-241",
+  "course": "h446",
+  "title": "Thinking procedurally: ordering subprocedures",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why does `age>12 && age<18` reject two valid ages for a range 12–18 inclusive?",
+          "answer": "Because strict comparisons exclude both 12 and 18.",
+          "options": [
+            "A named, reusable piece of a larger task.",
+            "The stored values of its properties or fields.",
+            "Because strict comparisons exclude both 12 and 18."
+          ],
+          "feedback": "Because strict comparisons exclude both 12 and 18."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a subprocedure?",
+          "answer": "A named, reusable piece of a larger task.",
+          "options": [
+            "The stored values of its properties or fields.",
+            "A named, reusable piece of a larger task.",
+            "Because strict comparisons exclude both 12 and 18."
+          ],
+          "feedback": "A named, reusable piece of a larger task."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an object's state?",
+          "answer": "The stored values of its properties or fields.",
+          "options": [
+            "The stored values of its properties or fields.",
+            "Because strict comparisons exclude both 12 and 18.",
+            "A named, reusable piece of a larger task."
+          ],
+          "feedback": "The stored values of its properties or fields."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why not send a success message before saving a transaction?",
+          "answer": "The save might fail even though the user has already been told it succeeded.",
+          "options": [
+            "Because strict comparisons exclude both 12 and 18.",
+            "A named, reusable piece of a larger task.",
+            "The save might fail even though the user has already been told it succeeded."
+          ],
+          "feedback": "The save might fail even though the user has already been told it succeeded."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Decompose the task",
+          "text": "Separate the problem into input validation, checking availability, updating the record and notifying the user."
+        },
+        {
+          "type": "paragraph",
+          "title": "Identify dependencies",
+          "text": "No booking should be saved until seats are available; no confirmation should be sent before a successful save."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make smaller operations reusable",
+          "text": "ValidateRequest and SendConfirmation can become independently testable subprocedures."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "First identify the account and create a single-use reset token."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Check the token before accepting a new password."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Save the change successfully before confirming to the user."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'decomposition'?",
+          "answer": "Split a problem into smaller operations.",
+          "options": [
+            "Stage that must precede another.",
+            "Split a problem into smaller operations.",
+            "Named step used within a larger solution."
+          ],
+          "feedback": "decomposition — Split a problem into smaller operations."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'subprocedure'?",
+          "answer": "Named step used within a larger solution.",
+          "options": [
+            "Named step used within a larger solution.",
+            "Split a problem into smaller operations.",
+            "Stage that must precede another."
+          ],
+          "feedback": "subprocedure — Named step used within a larger solution."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'dependency'?",
+          "answer": "Stage that must precede another.",
+          "options": [
+            "Split a problem into smaller operations.",
+            "Named step used within a larger solution.",
+            "Stage that must precede another."
+          ],
+          "feedback": "dependency — Stage that must precede another."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Identify the book and verify availability before trying to record a loan."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the reasoning",
+          "text": "Store the loan and change availability, then confirm only if those actions succeed."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Change the stored record or value.",
+          "answer": "state update",
+          "options": [
+            "decomposition",
+            "subprocedure",
+            "state update"
+          ],
+          "feedback": "state update — Change the stored record or value."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Coordinated operations that must succeed reliably.",
+          "answer": "transaction",
+          "options": [
+            "subprocedure",
+            "transaction",
+            "decomposition"
+          ],
+          "feedback": "transaction — Coordinated operations that must succeed reliably."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Split a problem into smaller operations.",
+          "answer": "decomposition",
+          "options": [
+            "decomposition",
+            "subprocedure",
+            "dependency"
+          ],
+          "feedback": "decomposition — Split a problem into smaller operations."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Named step used within a larger solution.",
+          "answer": "subprocedure",
+          "options": [
+            "decomposition",
+            "dependency",
+            "subprocedure"
+          ],
+          "feedback": "subprocedure — Named step used within a larger solution."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Order these steps for ticketing: record purchase, take request, check payment, issue ticket.",
+          "answer": "[4] Take request [1], check payment [1], record purchase [1], issue ticket [1].",
+          "options": [
+            "[6] ValidateInput [1], CheckRoomAvailable [1], SaveBooking [1], SendConfirmation [1]; check room before save [1], save before confirm [1].",
+            "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1].",
+            "[4] Take request [1], check payment [1], record purchase [1], issue ticket [1]."
+          ],
+          "feedback": "[4] Take request [1], check payment [1], record purchase [1], issue ticket [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Design four named subprocedures for booking a classroom and give two key ordering requirements.",
+          "answer": "[6] ValidateInput [1], CheckRoomAvailable [1], SaveBooking [1], SendConfirmation [1]; check room before save [1], save before confirm [1].",
+          "options": [
+            "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1].",
+            "[6] ValidateInput [1], CheckRoomAvailable [1], SaveBooking [1], SendConfirmation [1]; check room before save [1], save before confirm [1].",
+            "[4] Take request [1], check payment [1], record purchase [1], issue ticket [1]."
+          ],
+          "feedback": "[6] ValidateInput [1], CheckRoomAvailable [1], SaveBooking [1], SendConfirmation [1]; check room before save [1], save before confirm [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A booking code subtracts seats from a local int parameter but never updates the central system. Identify three problems and three remedies.",
+          "answer": "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1].",
+          "options": [
+            "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1].",
+            "[4] Take request [1], check payment [1], record purchase [1], issue ticket [1].",
+            "[6] ValidateInput [1], CheckRoomAvailable [1], SaveBooking [1], SendConfirmation [1]; check room before save [1], save before confirm [1]."
+          ],
+          "feedback": "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A booking code subtracts seats from a local int parameter but never updates the central system. Identify three problems and three remedies.",
+        "model": "[6] Parameter is a copy [1], central count unchanged [1], another user could book same seats [1]; update stored capacity [1], use an atomic save/check [1], confirm only after successful save [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "subprocedure means: Named step used within a larger solution.",
+          "answer": "true",
+          "feedback": "subprocedure — Named step used within a larger solution."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "dependency means: Coordinated operations that must succeed reliably.",
+          "answer": "false",
+          "feedback": "dependency — Stage that must precede another."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "state update means: Change the stored record or value.",
+          "answer": "true",
+          "feedback": "state update — Change the stored record or value."
+        }
+      ]
+    }
+  ]
+}

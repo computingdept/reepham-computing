@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-212",
+  "course": "h446",
+  "title": "Timed Paper 2 algorithms practice",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which structure retrieves the most recently added item first?",
+          "answer": "Stack (LIFO).",
+          "options": [
+            "All preceding values greater than the key.",
+            "Stack (LIFO).",
+            "The array must be sorted."
+          ],
+          "feedback": "Stack (LIFO)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the sorted-input precondition?",
+          "answer": "The array must be sorted.",
+          "options": [
+            "The array must be sorted.",
+            "Stack (LIFO).",
+            "All preceding values greater than the key."
+          ],
+          "feedback": "The array must be sorted."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What moves right as a key is inserted into a sorted prefix?",
+          "answer": "All preceding values greater than the key.",
+          "options": [
+            "Stack (LIFO).",
+            "The array must be sorted.",
+            "All preceding values greater than the key."
+          ],
+          "feedback": "All preceding values greater than the key."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are the worst-case time complexities of linear and binary searches?",
+          "answer": "Linear O(n); binary O(log n) for sorted input.",
+          "options": [
+            "The array must be sorted.",
+            "Linear O(n); binary O(log n) for sorted input.",
+            "Stack (LIFO)."
+          ],
+          "feedback": "Linear O(n); binary O(log n) for sorted input."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Read the task command",
+          "text": "A complete pass means all permitted adjacent comparisons for that pass, not just one swap."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace one pass",
+          "text": "[6,2,5,1] becomes [2,5,1,6] after comparing each pair."
+        },
+        {
+          "type": "paragraph",
+          "title": "Finish every pass",
+          "text": "Continue to [2,1,5,6], then [1,2,5,6]. A clear trace shows each pass."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Start [4,1,3] and compare 4 with 1: swap."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the method",
+          "text": "Now compare 4 with 3: swap, producing [1,3,4]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the method",
+          "text": "The pass is complete and the array is sorted."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'trace'?",
+          "answer": "Record an algorithm's changing state.",
+          "options": [
+            "Record an algorithm's changing state.",
+            "Part already in order during insertion sort.",
+            "Requirement, such as ordering, for an algorithm."
+          ],
+          "feedback": "trace — Record an algorithm's changing state."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'sorted prefix'?",
+          "answer": "Part already in order during insertion sort.",
+          "options": [
+            "Record an algorithm's changing state.",
+            "Requirement, such as ordering, for an algorithm.",
+            "Part already in order during insertion sort."
+          ],
+          "feedback": "sorted prefix — Part already in order during insertion sort."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Requirement, such as ordering, for an algorithm.",
+          "options": [
+            "Part already in order during insertion sort.",
+            "Requirement, such as ordering, for an algorithm.",
+            "Record an algorithm's changing state."
+          ],
+          "feedback": "precondition — Requirement, such as ordering, for an algorithm."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "7 swaps with 2 giving [2,7,6,3]; then 7 swaps with 6 giving [2,6,7,3]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the method",
+          "text": "Compare 7 with 3: swap to [2,6,3,7]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the method",
+          "text": "The complete first pass ends [2,6,3,7], not yet sorted."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Work grows by repeated halving.",
+          "answer": "O(log n)",
+          "options": [
+            "sorted prefix",
+            "O(log n)",
+            "trace"
+          ],
+          "feedback": "O(log n) — Work grows by repeated halving."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Extra storage required by an algorithm.",
+          "answer": "auxiliary space",
+          "options": [
+            "auxiliary space",
+            "trace",
+            "sorted prefix"
+          ],
+          "feedback": "auxiliary space — Extra storage required by an algorithm."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Record an algorithm's changing state.",
+          "answer": "trace",
+          "options": [
+            "sorted prefix",
+            "precondition",
+            "trace"
+          ],
+          "feedback": "trace — Record an algorithm's changing state."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Part already in order during insertion sort.",
+          "answer": "sorted prefix",
+          "options": [
+            "precondition",
+            "sorted prefix",
+            "trace"
+          ],
+          "feedback": "sorted prefix — Part already in order during insertion sort."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Timed Q1 · 8 marks · QUESTION 1 OF 3 An array contains [8,3,6,1]. Trace ascending insertion sort, giving the array after each outer-loop iteration and explaining how the key is positioned.",
+          "answer": "[8] After inserting key 3: [3,8,6,1] [2]; key 6: [3,6,8,1] [2]; key 1: [1,3,6,8] [2]; each key is inserted into the sorted prefix by shifting larger values right [2].",
+          "options": [
+            "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time…",
+            "[8] After inserting key 3: [3,8,6,1] [2]; key 6: [3,6,8,1] [2]; key 1: [1,3,6,8] [2]; each key is inserted into the sorted prefix by shifting larger values right [2].",
+            "[8] int low=0,high=a.Length-1 [2]; while(low<=high) [1]; mid=low+(high-low)/2 [1]; if(a[mid]==target)return mid [1]; if(a[mid]<target)low=mid+1; else high=mid-1 [2]; return -1 [1]. Input must be sorted."
+          ],
+          "feedback": "[8] After inserting key 3: [3,8,6,1] [2]; key 6: [3,6,8,1] [2]; key 1: [1,3,6,8] [2]; each key is inserted into the sorted prefix by shifting larger values right [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Timed Q2 · 8 marks · QUESTION 2 OF 3 Write a C# function BinarySearch(int[] a,int target) returning the first matching index it encounters, or −1. Include correct bounds and a sorted-input precondition.",
+          "answer": "[8] int low=0,high=a.Length-1 [2]; while(low<=high) [1]; mid=low+(high-low)/2 [1]; if(a[mid]==target)return mid [1]; if(a[mid]<target)low=mid+1; else high=mid-1 [2]; return -1 [1]. Input must be sorted.",
+          "options": [
+            "[8] int low=0,high=a.Length-1 [2]; while(low<=high) [1]; mid=low+(high-low)/2 [1]; if(a[mid]==target)return mid [1]; if(a[mid]<target)low=mid+1; else high=mid-1 [2]; return -1 [1]. Input must be sorted.",
+            "[8] After inserting key 3: [3,8,6,1] [2]; key 6: [3,6,8,1] [2]; key 1: [1,3,6,8] [2]; each key is inserted into the sorted prefix by shifting larger values right [2].",
+            "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time…"
+          ],
+          "feedback": "[8] int low=0,high=a.Length-1 [2]; while(low<=high) [1]; mid=low+(high-low)/2 [1]; if(a[mid]==target)return mid [1]; if(a[mid]<target)low=mid+1; else high=mid-1 [2]; return -1 [1]. Input must be sorted."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Timed Q3 · 8 marks · QUESTION 3 OF 3 Explain one advantage and one disadvantage of merge sort over bubble sort, including time complexity, and identify an input scenario for which linear search is more practical than binary search.",
+          "answer": "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time…",
+          "options": [
+            "[8] After inserting key 3: [3,8,6,1] [2]; key 6: [3,6,8,1] [2]; key 1: [1,3,6,8] [2]; each key is inserted into the sorted prefix by shifting larger values right [2].",
+            "[8] int low=0,high=a.Length-1 [2]; while(low<=high) [1]; mid=low+(high-low)/2 [1]; if(a[mid]==target)return mid [1]; if(a[mid]<target)low=mid+1; else high=mid-1 [2]; return -1 [1]. Input must be sorted.",
+            "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time…"
+          ],
+          "feedback": "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Timed Q3 · 8 marks · QUESTION 3 OF 3 Explain one advantage and one disadvantage of merge sort over bubble sort, including time complexity, and identify an input scenario for which linear search is more practical than binary search.",
+        "model": "[8] Merge sort O(n log n) worst case [2] versus bubble O(n²) [2]; merge sort typically needs O(n) extra array space [2]; linear search is suitable for a small unsorted collection where sorting before a single search would cost time [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "sorted prefix means: Part already in order during insertion sort.",
+          "answer": "true",
+          "feedback": "sorted prefix — Part already in order during insertion sort."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "precondition means: Extra storage required by an algorithm.",
+          "answer": "false",
+          "feedback": "precondition — Requirement, such as ordering, for an algorithm."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "O(log n) means: Work grows by repeated halving.",
+          "answer": "true",
+          "feedback": "O(log n) — Work grows by repeated halving."
+        }
+      ]
+    }
+  ]
+}

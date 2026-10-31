@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-033",
+  "course": "h446",
+  "title": "C# Login Project · Code a Hash Table",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A login check uses validUser && validPassword . What is the result when validUser is true and validPassword is false? Explain.",
+          "answer": "False. AND ( && ) is true only when both conditions are true.",
+          "options": [
+            "False. AND ( && ) is true only when both conditions are true.",
+            "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
+            "B, C, D. A leaves first because a queue is FIFO."
+          ],
+          "feedback": "False. AND ( && ) is true only when both conditions are true."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A D-type flip-flop currently stores Q = 1. D changes to 0 but there is no triggering clock edge. What is Q?",
+          "answer": "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
+          "options": [
+            "False. AND ( && ) is true only when both conditions are true.",
+            "B, C, D. A leaves first because a queue is FIFO.",
+            "Q remains 1. The input is sampled only when the triggering clock edge occurs."
+          ],
+          "feedback": "Q remains 1. The input is sampled only when the triggering clock edge occurs."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A queue receives A, B and C in that order. Remove one item, then enqueue D. List the remaining items from front to rear.",
+          "answer": "B, C, D. A leaves first because a queue is FIFO.",
+          "options": [
+            "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
+            "B, C, D. A leaves first because a queue is FIFO.",
+            "False. AND ( && ) is true only when both conditions are true."
+          ],
+          "feedback": "B, C, D. A leaves first because a queue is FIFO."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A five-bucket hash table uses h(k) = k MOD 5 with linear probing. Insert keys 7, 12 and 17 in that order into an empty table. State each final index.",
+          "answer": "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4.",
+          "options": [
+            "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4.",
+            "False. AND ( && ) is true only when both conditions are true.",
+            "Q remains 1. The input is sampled only when the triggering clock edge occurs."
+          ],
+          "feedback": "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "The problem: more than one user",
+          "text": "A single username comparison is not scalable. We need a way to store and find many usernames."
+        },
+        {
+          "type": "paragraph",
+          "title": "What is a hash function?",
+          "text": "Convert the username to a number, then use % tableSize to choose a bucket index. Our small function is deliberately simple for learning."
+        },
+        {
+          "type": "paragraph",
+          "title": "What if two names choose one bucket?",
+          "text": "That is a collision. Use linear probing: try the next bucket, wrapping to the beginning when necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Lookups must use the same rule",
+          "text": "Recalculate the starting bucket from the username, then probe through occupied buckets until the username or an empty bucket is found."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Build a real hash-table index",
+          "text": "Create the bucket array manually: the hash function is visible, not hidden inside Dictionary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Create the buckets",
+          "text": "const int SIZE = 7; string?[] usernames = new string?[SIZE];"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'A table using a hash function to locate data from a key.'?",
+          "answer": "A table using a hash function to locate data from a key.",
+          "options": [
+            "A repeatable mapping from key to bucket index.",
+            "A location in the hash table.",
+            "A table using a hash function to locate data from a key."
+          ],
+          "feedback": "A table using a hash function to locate data from a key. — A table using a hash function to locate data from a key."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'A repeatable mapping from key to bucket index.'?",
+          "answer": "A repeatable mapping from key to bucket index.",
+          "options": [
+            "A location in the hash table.",
+            "A repeatable mapping from key to bucket index.",
+            "A table using a hash function to locate data from a key."
+          ],
+          "feedback": "A repeatable mapping from key to bucket index. — A repeatable mapping from key to bucket index."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'A location in the hash table.'?",
+          "answer": "A location in the hash table.",
+          "options": [
+            "A location in the hash table.",
+            "A table using a hash function to locate data from a key.",
+            "A repeatable mapping from key to bucket index."
+          ],
+          "feedback": "A location in the hash table. — A location in the hash table."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Insert with linear probing",
+          "text": "What happens when a bucket is already occupied?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain your solution first",
+          "text": "What happens when a bucket is already occupied?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Insert with linear probing",
+          "text": "int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+        },
+        {
+          "type": "paragraph",
+          "title": "Search using the same probing sequence",
+          "text": "How can we find a name after a collision?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two keys map to the same bucket.",
+          "answer": "Two keys map to the same bucket.",
+          "options": [
+            "Two keys map to the same bucket.",
+            "A table using a hash function to locate data from a key.",
+            "A repeatable mapping from key to bucket index."
+          ],
+          "feedback": "Two keys map to the same bucket. — Two keys map to the same bucket."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resolve collisions by checking successive buckets.",
+          "answer": "Resolve collisions by checking successive buckets.",
+          "options": [
+            "A table using a hash function to locate data from a key.",
+            "A repeatable mapping from key to bucket index.",
+            "Resolve collisions by checking successive buckets."
+          ],
+          "feedback": "Resolve collisions by checking successive buckets. — Resolve collisions by checking successive buckets."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The value used to look up an entry.",
+          "answer": "The value used to look up an entry.",
+          "options": [
+            "A repeatable mapping from key to bucket index.",
+            "The value used to look up an entry.",
+            "A table using a hash function to locate data from a key."
+          ],
+          "feedback": "The value used to look up an entry. — The value used to look up an entry."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Find a stored item using its key.",
+          "answer": "Find a stored item using its key.",
+          "options": [
+            "Find a stored item using its key.",
+            "A table using a hash function to locate data from a key.",
+            "A repeatable mapping from key to bucket index."
+          ],
+          "feedback": "Find a stored item using its key. — Find a stored item using its key."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build a real hash-table index Create the bucket array manually: the hash function is visible, not hidden inside Dictionary.",
+          "answer": "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
+          "options": [
+            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…"
+          ],
+          "feedback": "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Insert with linear probing What happens when a bucket is already occupied?",
+          "answer": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+          "options": [
+            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Search using the same probing sequence How can we find a name after a collision?",
+          "answer": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+          "options": [
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+            "STEP 2 OF 3 Write the index function static int Hash(string key, int size) { int total = 0; foreach (char letter in key) total += (int)letter; return total % size; }"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Search using the same probing sequence How can we find a name after a collision?",
+        "model": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A repeatable mapping from key to bucket index. means: A repeatable mapping from key to bucket index.",
+          "answer": "true",
+          "feedback": "A repeatable mapping from key to bucket index. — A repeatable mapping from key to bucket index."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "A location in the hash table. means: Resolve collisions by checking successive buckets.",
+          "answer": "false",
+          "feedback": "A location in the hash table. — A location in the hash table."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Two keys map to the same bucket. means: Two keys map to the same bucket.",
+          "answer": "true",
+          "feedback": "Two keys map to the same bucket. — Two keys map to the same bucket."
+        }
+      ]
+    }
+  ]
+}

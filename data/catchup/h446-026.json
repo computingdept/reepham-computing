@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-026",
+  "course": "h446",
+  "title": "Boolean logic, gates and truth tables",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between a stack and a queue when removing items?",
+          "answer": "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO).",
+          "options": [
+            "18. C# arrays start at index 0.",
+            "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO).",
+            "The values must be sorted in the order expected by the search."
+          ],
+          "feedback": "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What must be true about an array before you use binary search?",
+          "answer": "The values must be sorted in the order expected by the search.",
+          "options": [
+            "The values must be sorted in the order expected by the search.",
+            "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO).",
+            "18. C# arrays start at index 0."
+          ],
+          "feedback": "The values must be sorted in the order expected by the search."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For int[] numbers = {5, 9, 14, 18, 23}; , what value is stored at zero-based index 3?",
+          "answer": "18. C# arrays start at index 0.",
+          "options": [
+            "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO).",
+            "The values must be sorted in the order expected by the search.",
+            "18. C# arrays start at index 0."
+          ],
+          "feedback": "18. C# arrays start at index 0."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A binary search looks for 23 in the sorted array [2, 7, 11, 16, 23, 31, 44] . Which zero-based indexes are checked, in order?",
+          "answer": "Indexes 3 → 5 → 4 (values 16 → 31 → 23). The search narrows the sorted range each time.",
+          "options": [
+            "The values must be sorted in the order expected by the search.",
+            "Indexes 3 → 5 → 4 (values 16 → 31 → 23). The search narrows the sorted range each time.",
+            "A stack removes the most recently added item (LIFO); a queue removes the earliest added item (FIFO)."
+          ],
+          "feedback": "Indexes 3 → 5 → 4 (values 16 → 31 → 23). The search narrows the sorted range each time."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "AND — both inputs must be 1",
+          "text": "A gate takes an input (or inputs) and produces one output, Q . For AND, both inputs must be 1. Example: 1 AND 0 = 0; 1 AND 1 = 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "OR — at least one input is 1",
+          "text": "Either input can turn Q on. Both can be on too. Example: 1 OR 0 = 1; 1 OR 1 = 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "NOT — reverse one input",
+          "text": "NOT has just one input . The small circle on the output is the inversion symbol. Example: NOT 1 = 0; NOT 0 = 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "XOR (⊻) — exactly one input is 1",
+          "text": "XOR is different from OR: when both inputs are 1, XOR gives 0. Notice the extra curved line at the input. Symbol: Q = A ⊻ B. Compare: 1 ∨ 1 = 1, but 1 ⊻ 1 = 0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Secure door access",
+          "text": "A secure door unlocks when a valid card OR a correct PIN is used, but only when the building is open and lockdown is not active. A = valid card B = correct PIN C = building open D = lockdown Method: output → options → requirements → exceptions → expression, then circuit."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · What switches ON?",
+          "text": "Q = door unlocks Start with the result the question is asking us to control."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Boolean'?",
+          "answer": "A value with two states.",
+          "options": [
+            "A value with two states.",
+            "True only if all required inputs are true.",
+            "True if at least one input is true."
+          ],
+          "feedback": "Boolean — A value with two states."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'AND'?",
+          "answer": "True only if all required inputs are true.",
+          "options": [
+            "A value with two states.",
+            "True if at least one input is true.",
+            "True only if all required inputs are true."
+          ],
+          "feedback": "AND — True only if all required inputs are true."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'OR'?",
+          "answer": "True if at least one input is true.",
+          "options": [
+            "True only if all required inputs are true.",
+            "True if at least one input is true.",
+            "A value with two states."
+          ],
+          "feedback": "OR — True if at least one input is true."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Successful login",
+          "text": "A login succeeds only when the user ID is valid AND the password is correct . A = valid user ID B = correct password Q = login succeeds Find the output, options, requirements and exceptions. Then write the expression and draw the gate."
+        },
+        {
+          "type": "paragraph",
+          "title": "Which gate?",
+          "text": "Are there any alternative routes? What must be true? Write Q, draw the gate and predict the truth-table outputs. A B | Q 0 0 | ? 0 1 | ? 1 0 | ? 1 1 | ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "AND: both required",
+          "text": "Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1"
+        },
+        {
+          "type": "paragraph",
+          "title": "Two test switches",
+          "text": "A test lamp lights when exactly one of switches A and B is ON, but not both . A = switch 1 on B = switch 2 on Q = lamp lights Compare this with a different instruction: “at least one switch is on”."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reverses a Boolean value.",
+          "answer": "NOT",
+          "options": [
+            "AND",
+            "NOT",
+            "Boolean"
+          ],
+          "feedback": "NOT — Reverses a Boolean value."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? True when inputs differ.",
+          "answer": "XOR (⊻)",
+          "options": [
+            "XOR (⊻)",
+            "Boolean",
+            "AND"
+          ],
+          "feedback": "XOR (⊻) — True when inputs differ."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A circuit implementing a Boolean operation.",
+          "answer": "logic gate",
+          "options": [
+            "Boolean",
+            "AND",
+            "logic gate"
+          ],
+          "feedback": "logic gate — A circuit implementing a Boolean operation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? All input combinations and resulting outputs.",
+          "answer": "truth table",
+          "options": [
+            "AND",
+            "truth table",
+            "Boolean"
+          ],
+          "feedback": "truth table — All input combinations and resulting outputs."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Secure door access A secure door unlocks when a valid card OR a correct PIN is used, but only when the building is open and lockdown is not active.",
+          "answer": "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
+          "options": [
+            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
+            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
+            "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1"
+          ],
+          "feedback": "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Successful login A login succeeds only when the user ID is valid AND the password is correct .",
+          "answer": "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
+          "options": [
+            "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
+            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
+            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
+          ],
+          "feedback": "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Two test switches A test lamp lights when exactly one of switches A and B is ON, but not both .",
+          "answer": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
+          "options": [
+            "STEP 2 OF 6 · FIND THE OPTIONS What are the alternatives? A ∨ B A card OR PIN works. OR (∨) means at least one; both can also be true. Do not write ⊻ here: XOR would wrongly stop access when both card and PIN are valid.",
+            "CHECK · SAME 5 STEPS AND: both required Q = A ∧ B Output: login. No OR options or NOT exception. AND joins two requirements. A B Q What is Q for each input pair? A B | Q 0 0 | 0 0 1 | 0 1 0 | 0 1 1 | 1",
+            "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
+          ],
+          "feedback": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Two test switches A test lamp lights when exactly one of switches A and B is ON, but not both .",
+        "model": "CHECK · WORD CLUES XOR (⊻) versus OR (∨) Exactly one → XOR: Q = A ⊻ B . At least one → OR: Q = A ∨ B (both allowed). A B Q XOR is 1 only when inputs differ A B | XOR | OR 0 0 | 0 | 0 0 1 | 1 | 1 1 0 | 1 | 1 1 1 | 0 | 1",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "AND means: True only if all required inputs are true.",
+          "answer": "true",
+          "feedback": "AND — True only if all required inputs are true."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "OR means: True when inputs differ.",
+          "answer": "false",
+          "feedback": "OR — True if at least one input is true."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "NOT means: Reverses a Boolean value.",
+          "answer": "true",
+          "feedback": "NOT — Reverses a Boolean value."
+        }
+      ]
+    }
+  ]
+}

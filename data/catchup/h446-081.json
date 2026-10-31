@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-081",
+  "course": "h446",
+  "title": "Lesson 081 · Merge Sort: Bottom-up Merge Tracing",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a sorted run?",
+          "answer": "Contiguous segment already in ascending order.",
+          "options": [
+            "Contiguous segment already in ascending order.",
+            "Inserts each next key into its sorted prefix.",
+            "Work scaling with n times log n."
+          ],
+          "feedback": "Contiguous segment already in ascending order."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does insertion sort work?",
+          "answer": "Inserts each next key into its sorted prefix.",
+          "options": [
+            "Contiguous segment already in ascending order.",
+            "Work scaling with n times log n.",
+            "Inserts each next key into its sorted prefix."
+          ],
+          "feedback": "Inserts each next key into its sorted prefix."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is O(n log n) complexity?",
+          "answer": "Work scaling with n times log n.",
+          "options": [
+            "Inserts each next key into its sorted prefix.",
+            "Work scaling with n times log n.",
+            "Contiguous segment already in ascending order."
+          ],
+          "feedback": "Work scaling with n times log n."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search sorted [1,3,5,7,9,11,13] for 11: show midpoint index sequence.",
+          "answer": "mid3=7 then mid5=11; return index5.",
+          "options": [
+            "mid3=7 then mid5=11; return index5.",
+            "Contiguous segment already in ascending order.",
+            "Inserts each next key into its sorted prefix."
+          ],
+          "feedback": "mid3=7 then mid5=11; return index5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Merge sort divides the input into smaller runs; merging two already sorted runs repeatedly selects the smallest available front value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "This bottom-up variant starts with single-item runs and doubles run width; it needs no recursive calls. The top-down variant recursively splits to length 0/1, then merges on return; Lesson 186 connects the two."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Worst-case time O(n log n); standard array merging uses O(n) extra space. Include comparisons, not just the final sorted sequence."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Method and result",
+          "text": "Pairs [3,8] and [1,6] → [3,8,1,6]; merge fronts → [1,3,6,8]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'merge sort'?",
+          "answer": "Sort by merging sorted runs.",
+          "options": [
+            "Consecutive already sorted segment.",
+            "Combine two sorted sequences.",
+            "Sort by merging sorted runs."
+          ],
+          "feedback": "merge sort — Sort by merging sorted runs."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'run'?",
+          "answer": "Consecutive already sorted segment.",
+          "options": [
+            "Combine two sorted sequences.",
+            "Consecutive already sorted segment.",
+            "Sort by merging sorted runs."
+          ],
+          "feedback": "run — Consecutive already sorted segment."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'merge'?",
+          "answer": "Combine two sorted sequences.",
+          "options": [
+            "Combine two sorted sequences.",
+            "Sort by merging sorted runs.",
+            "Consecutive already sorted segment."
+          ],
+          "feedback": "merge — Combine two sorted sequences."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Method and result",
+          "text": "Pair sort [2,5,4,7]; merge sorted runs → [2,4,5,7]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Extra memory beyond input.",
+          "answer": "auxiliary space",
+          "options": [
+            "auxiliary space",
+            "merge sort",
+            "run"
+          ],
+          "feedback": "auxiliary space — Extra memory beyond input."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Sort by merging sorted runs.",
+          "answer": "merge sort",
+          "options": [
+            "run",
+            "merge",
+            "merge sort"
+          ],
+          "feedback": "merge sort — Sort by merging sorted runs."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Consecutive already sorted segment.",
+          "answer": "run",
+          "options": [
+            "merge",
+            "run",
+            "merge sort"
+          ],
+          "feedback": "run — Consecutive already sorted segment."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combine two sorted sequences.",
+          "answer": "merge",
+          "options": [
+            "merge",
+            "merge sort",
+            "run"
+          ],
+          "feedback": "merge — Combine two sorted sequences."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Given [7,2,9,1], state array after width1 pair merges and final width2 merge. [6]",
+          "answer": "/ WORKING After width1 [2,7,1,9] [3]; after width2 [1,2,7,9] [3].",
+          "options": [
+            "/ WORKING After width1 [2,7,1,9] [3]; after width2 [1,2,7,9] [3].",
+            "/ WORKING Compare2/1 choose1 [2], compare2/9 choose2 [1], compare7/9 choose7 [1], append9 [1], result [1,2,7,9] [1].",
+            "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1]."
+          ],
+          "feedback": "/ WORKING After width1 [2,7,1,9] [3]; after width2 [1,2,7,9] [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Merge sorted runs [2,7] and [1,9] and list chosen values in order, with comparisons. [6]",
+          "answer": "/ WORKING Compare2/1 choose1 [2], compare2/9 choose2 [1], compare7/9 choose7 [1], append9 [1], result [1,2,7,9] [1].",
+          "options": [
+            "/ WORKING After width1 [2,7,1,9] [3]; after width2 [1,2,7,9] [3].",
+            "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1].",
+            "/ WORKING Compare2/1 choose1 [2], compare2/9 choose2 [1], compare7/9 choose7 [1], append9 [1], result [1,2,7,9] [1]."
+          ],
+          "feedback": "/ WORKING Compare2/1 choose1 [2], compare2/9 choose2 [1], compare7/9 choose7 [1], append9 [1], result [1,2,7,9] [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare bottom-up merge with insertion sort for large random data. Give worst time and auxiliary-space cost. [6]",
+          "answer": "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1].",
+          "options": [
+            "/ WORKING Compare2/1 choose1 [2], compare2/9 choose2 [1], compare7/9 choose7 [1], append9 [1], result [1,2,7,9] [1].",
+            "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1].",
+            "/ WORKING After width1 [2,7,1,9] [3]; after width2 [1,2,7,9] [3]."
+          ],
+          "feedback": "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare bottom-up merge with insertion sort for large random data. Give worst time and auxiliary-space cost. [6]",
+        "model": "/ WORKING Merge O(n log n) [2], typical O(n) extra [1]; insertion O(n²) worst [2], O(1) extra [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "run means: Consecutive already sorted segment.",
+          "answer": "true",
+          "feedback": "run — Consecutive already sorted segment."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "merge means: Sort by merging sorted runs.",
+          "answer": "false",
+          "feedback": "merge — Combine two sorted sequences."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "auxiliary space means: Extra memory beyond input.",
+          "answer": "true",
+          "feedback": "auxiliary space — Extra memory beyond input."
+        }
+      ]
+    }
+  ]
+}

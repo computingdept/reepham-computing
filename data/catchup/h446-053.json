@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-053",
+  "course": "h446",
+  "title": "Lesson 053 · Graphs: Adjacency Lists and Traversal",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, where are keys smaller than the parent?",
+          "answer": "In the left subtree.",
+          "options": [
+            "Each vertex's neighbouring vertices.",
+            "In the left subtree.",
+            "Node representing a point/entity."
+          ],
+          "feedback": "In the left subtree."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a graph vertex?",
+          "answer": "Node representing a point/entity.",
+          "options": [
+            "Node representing a point/entity.",
+            "In the left subtree.",
+            "Each vertex's neighbouring vertices."
+          ],
+          "feedback": "Node representing a point/entity."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an adjacency list store?",
+          "answer": "Each vertex's neighbouring vertices.",
+          "options": [
+            "In the left subtree.",
+            "Node representing a point/entity.",
+            "Each vertex's neighbouring vertices."
+          ],
+          "feedback": "Each vertex's neighbouring vertices."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 024",
+          "answer": "Graph edges A–B, A–C, B–D. BFS from A with alphabetical neighbours: order?",
+          "options": [
+            "Node representing a point/entity.",
+            "Graph edges A–B, A–C, B–D. BFS from A with alphabetical neighbours: order?",
+            "In the left subtree."
+          ],
+          "feedback": "Graph edges A–B, A–C, B–D. BFS from A with alphabetical neighbours: order?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Discover",
+          "text": "An adjacency list records each vertex and its neighbours. For undirected graphs, an edge is represented in both vertices' neighbour lists."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "For BFS, enqueue a starting vertex, mark it visited, and repeatedly dequeue and enqueue undiscovered neighbours."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Traversal order depends on neighbour ordering. A visited set prevents infinite revisiting when the graph contains cycles."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the trace",
+          "text": "With B before C, BFS visit order A,B,C,D. Each vertex is marked on enqueue."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'graph'?",
+          "answer": "Vertices linked by edges.",
+          "options": [
+            "Vertices linked by edges.",
+            "Neighbours indexed by vertex.",
+            "Breadth-first search using queue."
+          ],
+          "feedback": "graph — Vertices linked by edges."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'adjacency list'?",
+          "answer": "Neighbours indexed by vertex.",
+          "options": [
+            "Vertices linked by edges.",
+            "Breadth-first search using queue.",
+            "Neighbours indexed by vertex."
+          ],
+          "feedback": "adjacency list — Neighbours indexed by vertex."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'BFS'?",
+          "answer": "Breadth-first search using queue.",
+          "options": [
+            "Neighbours indexed by vertex.",
+            "Breadth-first search using queue.",
+            "Vertices linked by edges."
+          ],
+          "feedback": "BFS — Breadth-first search using queue."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the trace",
+          "text": "BFS visit order X,Y,Z,W. FIFO queue processes all distance-one vertices before W."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Vertices already discovered.",
+          "answer": "visited",
+          "options": [
+            "adjacency list",
+            "visited",
+            "graph"
+          ],
+          "feedback": "visited — Vertices already discovered."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Vertices linked by edges.",
+          "answer": "graph",
+          "options": [
+            "graph",
+            "adjacency list",
+            "BFS"
+          ],
+          "feedback": "graph — Vertices linked by edges."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Neighbours indexed by vertex.",
+          "answer": "adjacency list",
+          "options": [
+            "graph",
+            "BFS",
+            "adjacency list"
+          ],
+          "feedback": "adjacency list — Neighbours indexed by vertex."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Breadth-first search using queue.",
+          "answer": "BFS",
+          "options": [
+            "adjacency list",
+            "BFS",
+            "graph"
+          ],
+          "feedback": "BFS — Breadth-first search using queue."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Write adjacency lists for undirected edges A-B,A-C,B-D. [6]",
+          "answer": "WORKED MODEL ANSWER A:[B,C] [2], B:[A,D] [2], C:[A],D:[B] [2].",
+          "options": [
+            "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2].",
+            "WORKED MODEL ANSWER A:[B,C] [2], B:[A,D] [2], C:[A],D:[B] [2].",
+            "WORKED MODEL ANSWER Start [A] [1], after A [B,C] [2], after B [C,D] [2], visited contains A,B,C,D after discovered [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER A:[B,C] [2], B:[A,D] [2], C:[A],D:[B] [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2/3 Trace BFS from A in the lesson graph, recording the queue after expanding A and B. [6]",
+          "answer": "WORKED MODEL ANSWER Start [A] [1], after A [B,C] [2], after B [C,D] [2], visited contains A,B,C,D after discovered [1].",
+          "options": [
+            "WORKED MODEL ANSWER Start [A] [1], after A [B,C] [2], after B [C,D] [2], visited contains A,B,C,D after discovered [1].",
+            "WORKED MODEL ANSWER A:[B,C] [2], B:[A,D] [2], C:[A],D:[B] [2].",
+            "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Start [A] [1], after A [B,C] [2], after B [C,D] [2], visited contains A,B,C,D after discovered [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain why DFS can use a stack while BFS uses a queue and why cycles require visited tracking. [6]",
+          "answer": "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2].",
+          "options": [
+            "WORKED MODEL ANSWER A:[B,C] [2], B:[A,D] [2], C:[A],D:[B] [2].",
+            "WORKED MODEL ANSWER Start [A] [1], after A [B,C] [2], after B [C,D] [2], visited contains A,B,C,D after discovered [1].",
+            "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain why DFS can use a stack while BFS uses a queue and why cycles require visited tracking. [6]",
+        "model": "WORKED MODEL ANSWER DFS LIFO deep path [2], BFS FIFO frontier [2], visited prevents repeated processing/infinite revisits [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "adjacency list means: Neighbours indexed by vertex.",
+          "answer": "true",
+          "feedback": "adjacency list — Neighbours indexed by vertex."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "BFS means: Vertices linked by edges.",
+          "answer": "false",
+          "feedback": "BFS — Breadth-first search using queue."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "visited means: Vertices already discovered.",
+          "answer": "true",
+          "feedback": "visited — Vertices already discovered."
+        }
+      ]
+    }
+  ]
+}

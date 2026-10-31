@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-082",
+  "course": "h446",
+  "title": "Lesson 082 · Quicksort: Partition Around a Pivot",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is merge sort's combine step?",
+          "answer": "Merge two individually sorted runs.",
+          "options": [
+            "Selected value used to partition an array.",
+            "No; subarrays still need sorting.",
+            "Merge two individually sorted runs."
+          ],
+          "feedback": "Merge two individually sorted runs."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a pivot in quicksort?",
+          "answer": "Selected value used to partition an array.",
+          "options": [
+            "No; subarrays still need sorting.",
+            "Selected value used to partition an array.",
+            "Merge two individually sorted runs."
+          ],
+          "feedback": "Selected value used to partition an array."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Is a partitioned array necessarily fully sorted?",
+          "answer": "No; subarrays still need sorting.",
+          "options": [
+            "No; subarrays still need sorting.",
+            "Merge two individually sorted runs.",
+            "Selected value used to partition an array."
+          ],
+          "feedback": "No; subarrays still need sorting."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Swap values at indexes0 and2 in [4,1,7]. Give the resulting array.",
+          "answer": "[7,1,4].",
+          "options": [
+            "Merge two individually sorted runs.",
+            "Selected value used to partition an array.",
+            "[7,1,4]."
+          ],
+          "feedback": "[7,1,4]."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Partitioning reorders values around a chosen pivot so values to its left are no larger and those right are larger, for this partition rule."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "The pivot's final index is fixed after partition, but neither side is necessarily fully sorted; quicksort continues with the two subarrays."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Average and best-case time O(n log n), worst O(n²) with poor pivot choices; recursion consumes stack space depending on partition balance."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Method and result",
+          "text": "Lomuto partition moves 2 and 1 left, pivot3 to index2 → [2,1,3,6,5]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'quicksort'?",
+          "answer": "Recursive partition-based sorting.",
+          "options": [
+            "Place smaller/larger values around pivot.",
+            "Recursive partition-based sorting.",
+            "Value partitioning subarray."
+          ],
+          "feedback": "quicksort — Recursive partition-based sorting."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'pivot'?",
+          "answer": "Value partitioning subarray.",
+          "options": [
+            "Value partitioning subarray.",
+            "Recursive partition-based sorting.",
+            "Place smaller/larger values around pivot."
+          ],
+          "feedback": "pivot — Value partitioning subarray."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'partition'?",
+          "answer": "Place smaller/larger values around pivot.",
+          "options": [
+            "Recursive partition-based sorting.",
+            "Value partitioning subarray.",
+            "Place smaller/larger values around pivot."
+          ],
+          "feedback": "partition — Place smaller/larger values around pivot."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Method and result",
+          "text": "Smaller 3,2 move left; pivot5 at index2 → [3,2,5,8,6]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maximum growth for adverse input.",
+          "answer": "worst case",
+          "options": [
+            "quicksort",
+            "pivot",
+            "worst case"
+          ],
+          "feedback": "worst case — Maximum growth for adverse input."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Recursive partition-based sorting.",
+          "answer": "quicksort",
+          "options": [
+            "partition",
+            "quicksort",
+            "pivot"
+          ],
+          "feedback": "quicksort — Recursive partition-based sorting."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value partitioning subarray.",
+          "answer": "pivot",
+          "options": [
+            "pivot",
+            "quicksort",
+            "partition"
+          ],
+          "feedback": "pivot — Value partitioning subarray."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Place smaller/larger values around pivot.",
+          "answer": "partition",
+          "options": [
+            "quicksort",
+            "pivot",
+            "partition"
+          ],
+          "feedback": "partition — Place smaller/larger values around pivot."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Trace Lomuto pivot-last partition of [5,2,7,1,4] and give final pivot index. [6]",
+          "answer": "/ WORKING Moves2 then1 [2], partition [2,1,4,5,7] [3], pivot index2 [1].",
+          "options": [
+            "/ WORKING Left indexes0–1 [2], right3–4 [2], sorted result [1,2,4,5,7] [2].",
+            "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth.",
+            "/ WORKING Moves2 then1 [2], partition [2,1,4,5,7] [3], pivot index2 [1]."
+          ],
+          "feedback": "/ WORKING Moves2 then1 [2], partition [2,1,4,5,7] [3], pivot index2 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 After quicksort partition gives [2,1,4,5,7] with pivot4 at index2, state required recursive subranges and eventual sorted result. [6]",
+          "answer": "/ WORKING Left indexes0–1 [2], right3–4 [2], sorted result [1,2,4,5,7] [2].",
+          "options": [
+            "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth.",
+            "/ WORKING Left indexes0–1 [2], right3–4 [2], sorted result [1,2,4,5,7] [2].",
+            "/ WORKING Moves2 then1 [2], partition [2,1,4,5,7] [3], pivot index2 [1]."
+          ],
+          "feedback": "/ WORKING Left indexes0–1 [2], right3–4 [2], sorted result [1,2,4,5,7] [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain how pivot choice impacts quicksort worst-case time and recursive stack depth. [6]",
+          "answer": "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth.",
+          "options": [
+            "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth.",
+            "/ WORKING Moves2 then1 [2], partition [2,1,4,5,7] [3], pivot index2 [1].",
+            "/ WORKING Left indexes0–1 [2], right3–4 [2], sorted result [1,2,4,5,7] [2]."
+          ],
+          "feedback": "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain how pivot choice impacts quicksort worst-case time and recursive stack depth. [6]",
+        "model": "/ WORKING Unbalanced partitions n−1 and0 [2], O(n²) time [2], up to O(n) recursion depth [2]; balanced partitions tend O(log n) depth.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "pivot means: Value partitioning subarray.",
+          "answer": "true",
+          "feedback": "pivot — Value partitioning subarray."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "partition means: Recursive partition-based sorting.",
+          "answer": "false",
+          "feedback": "partition — Place smaller/larger values around pivot."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "worst case means: Maximum growth for adverse input.",
+          "answer": "true",
+          "feedback": "worst case — Maximum growth for adverse input."
+        }
+      ]
+    }
+  ]
+}

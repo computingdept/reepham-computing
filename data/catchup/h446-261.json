@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-261",
+  "course": "h446",
+  "title": "Assembly language and addressing modes",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which primary memory is normally volatile?",
+          "answer": "RAM.",
+          "options": [
+            "RAM.",
+            "Holding the address of memory being accessed.",
+            "The position of an element within an array."
+          ],
+          "feedback": "RAM."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the MAR used for?",
+          "answer": "Holding the address of memory being accessed.",
+          "options": [
+            "RAM.",
+            "The position of an element within an array.",
+            "Holding the address of memory being accessed."
+          ],
+          "feedback": "Holding the address of memory being accessed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an array index indicate?",
+          "answer": "The position of an element within an array.",
+          "options": [
+            "Holding the address of memory being accessed.",
+            "The position of an element within an array.",
+            "RAM."
+          ],
+          "feedback": "The position of an element within an array."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For int[] a={5,8,3,7}, give a[2], then execute a[1]=a[1]+a[2]. State the new array and total.",
+          "answer": "a[2]=3; a[1]=11; array [5,11,3,7], sum 26.",
+          "options": [
+            "a[2]=3; a[1]=11; array [5,11,3,7], sum 26.",
+            "RAM.",
+            "Holding the address of memory being accessed."
+          ],
+          "feedback": "a[2]=3; a[1]=11; array [5,11,3,7], sum 26."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Literal versus location",
+          "text": "Immediate addressing embeds a literal value; direct addressing points to the memory address holding a value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Follow a pointer for indirect",
+          "text": "M[21] contains 20, so an indirect read through address 21 accesses M[20]=7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Calculate indexed address",
+          "text": "Base 20 plus index X=2 gives effective address 22 and value 3. These operand formats are generic examples rather than LMC syntax."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Immediate is literal 6; direct gets 4 from memory address 30."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Indirect follows pointer 30 stored at 31 to value 4; indexed adds offset 2 to base 30 to read 9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'immediate'?",
+          "answer": "Operand value encoded as a literal.",
+          "options": [
+            "Memory address of data specified in instruction.",
+            "Specified memory holds a further effective address.",
+            "Operand value encoded as a literal."
+          ],
+          "feedback": "immediate — Operand value encoded as a literal."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'direct'?",
+          "answer": "Memory address of data specified in instruction.",
+          "options": [
+            "Specified memory holds a further effective address.",
+            "Memory address of data specified in instruction.",
+            "Operand value encoded as a literal."
+          ],
+          "feedback": "direct — Memory address of data specified in instruction."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'indirect'?",
+          "answer": "Specified memory holds a further effective address.",
+          "options": [
+            "Specified memory holds a further effective address.",
+            "Operand value encoded as a literal.",
+            "Memory address of data specified in instruction."
+          ],
+          "feedback": "indirect — Specified memory holds a further effective address."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Immediate returns 8; direct reads M[40]=12."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "M[41] points to address 42, so indirect reads 5. Indexed base 40+2 reads M[42]=5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Base address modified by index or displacement.",
+          "answer": "indexed",
+          "options": [
+            "indexed",
+            "immediate",
+            "direct"
+          ],
+          "feedback": "indexed — Base address modified by index or displacement."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Final memory location used for operand access.",
+          "answer": "effective address",
+          "options": [
+            "immediate",
+            "direct",
+            "effective address"
+          ],
+          "feedback": "effective address — Final memory location used for operand access."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operand value encoded as a literal.",
+          "answer": "immediate",
+          "options": [
+            "indirect",
+            "immediate",
+            "direct"
+          ],
+          "feedback": "immediate — Operand value encoded as a literal."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Memory address of data specified in instruction.",
+          "answer": "direct",
+          "options": [
+            "direct",
+            "immediate",
+            "indirect"
+          ],
+          "feedback": "direct — Memory address of data specified in instruction."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Define immediate, direct, indirect and indexed addressing.",
+          "answer": "[4] Immediate literal value in instruction [1]; direct location holds data [1]; indirect location holds another address [1]; indexed effective address is base+index [1].",
+          "options": [
+            "[4] Immediate literal value in instruction [1]; direct location holds data [1]; indirect location holds another address [1]; indexed effective address is base+index [1].",
+            "[6] Immediate=4 [1]; direct M[10]=3 [1]; indirect first reads M[11]=10 [1], then M[10]=3 [1]; indexed address 10+2=12 [1], contents 9 [1].",
+            "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1]."
+          ],
+          "feedback": "[4] Immediate literal value in instruction [1]; direct location holds data [1]; indirect location holds another address [1]; indexed effective address is base+index [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Given M[10]=3, M[11]=10, M[12]=9 and X=2, find #4, [10], [[11]] and [10+X], explaining both address calculations.",
+          "answer": "[6] Immediate=4 [1]; direct M[10]=3 [1]; indirect first reads M[11]=10 [1], then M[10]=3 [1]; indexed address 10+2=12 [1], contents 9 [1].",
+          "options": [
+            "[4] Immediate literal value in instruction [1]; direct location holds data [1]; indirect location holds another address [1]; indexed effective address is base+index [1].",
+            "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1].",
+            "[6] Immediate=4 [1]; direct M[10]=3 [1]; indirect first reads M[11]=10 [1], then M[10]=3 [1]; indexed address 10+2=12 [1], contents 9 [1]."
+          ],
+          "feedback": "[6] Immediate=4 [1]; direct M[10]=3 [1]; indirect first reads M[11]=10 [1], then M[10]=3 [1]; indexed address 10+2=12 [1], contents 9 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 An array of 16-bit values begins at byte address 100. Find byte address of array[3] and explain why base+3 would be wrong for byte-addressed memory.",
+          "answer": "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1].",
+          "options": [
+            "[6] Immediate=4 [1]; direct M[10]=3 [1]; indirect first reads M[11]=10 [1], then M[10]=3 [1]; indexed address 10+2=12 [1], contents 9 [1].",
+            "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1].",
+            "[4] Immediate literal value in instruction [1]; direct location holds data [1]; indirect location holds another address [1]; indexed effective address is base+index [1]."
+          ],
+          "feedback": "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 An array of 16-bit values begins at byte address 100. Find byte address of array[3] and explain why base+3 would be wrong for byte-addressed memory.",
+        "model": "[6] Array index 3 is fourth element [1]; each 16-bit element occupies 2 bytes [1]; displacement 3×2=6 bytes [2]; effective address 106 [1]; base+3 ignores element size [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "direct means: Memory address of data specified in instruction.",
+          "answer": "true",
+          "feedback": "direct — Memory address of data specified in instruction."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "indirect means: Final memory location used for operand access.",
+          "answer": "false",
+          "feedback": "indirect — Specified memory holds a further effective address."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "indexed means: Base address modified by index or displacement.",
+          "answer": "true",
+          "feedback": "indexed — Base address modified by index or displacement."
+        }
+      ]
+    }
+  ]
+}

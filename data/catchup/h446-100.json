@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-100",
+  "course": "h446",
+  "title": "Lesson 100 · GPUs: Parallel Work Beyond Graphics",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which processor is designed for throughput on massive parallel workloads?",
+          "answer": "GPU.",
+          "options": [
+            "Actually running independent work at same time.",
+            "A task needs another task's result.",
+            "GPU."
+          ],
+          "feedback": "GPU."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is parallelism?",
+          "answer": "Actually running independent work at same time.",
+          "options": [
+            "A task needs another task's result.",
+            "Actually running independent work at same time.",
+            "GPU."
+          ],
+          "feedback": "Actually running independent work at same time."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a data dependency?",
+          "answer": "A task needs another task's result.",
+          "options": [
+            "A task needs another task's result.",
+            "GPU.",
+            "Actually running independent work at same time."
+          ],
+          "feedback": "A task needs another task's result."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: An image array has 4 rows × 3 columns. How many pixels?",
+          "answer": "12.",
+          "options": [
+            "GPU.",
+            "Actually running independent work at same time.",
+            "12."
+          ],
+          "feedback": "12."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "GPUs provide many execution units designed for high-throughput parallel operations on large batches of data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Besides graphics, GPUs can accelerate machine learning, physical simulations, image processing and some scientific calculations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Transfers between memory/device, limited parallelism and divergent branching can outweigh GPU speedup on small or sequential tasks."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Follow the reasoning",
+          "text": "Each pixel can receive similar operation in parallel; many GPU threads process different positions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'GPU'?",
+          "answer": "Graphics Processing Unit.",
+          "options": [
+            "Total work per time.",
+            "Graphics Processing Unit.",
+            "Single instruction, multiple threads execution model."
+          ],
+          "feedback": "GPU — Graphics Processing Unit."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'SIMT'?",
+          "answer": "Single instruction, multiple threads execution model.",
+          "options": [
+            "Single instruction, multiple threads execution model.",
+            "Graphics Processing Unit.",
+            "Total work per time."
+          ],
+          "feedback": "SIMT — Single instruction, multiple threads execution model."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'throughput'?",
+          "answer": "Total work per time.",
+          "options": [
+            "Graphics Processing Unit.",
+            "Single instruction, multiple threads execution model.",
+            "Total work per time."
+          ],
+          "feedback": "throughput — Total work per time."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Follow the reasoning",
+          "text": "Not necessarily: dependence limits simultaneous work, and data-transfer overhead may dominate."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Threads follow differing control paths.",
+          "answer": "divergence",
+          "options": [
+            "GPU",
+            "SIMT",
+            "divergence"
+          ],
+          "feedback": "divergence — Threads follow differing control paths."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Graphics Processing Unit.",
+          "answer": "GPU",
+          "options": [
+            "throughput",
+            "GPU",
+            "SIMT"
+          ],
+          "feedback": "GPU — Graphics Processing Unit."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Single instruction, multiple threads execution model.",
+          "answer": "SIMT",
+          "options": [
+            "SIMT",
+            "GPU",
+            "throughput"
+          ],
+          "feedback": "SIMT — Single instruction, multiple threads execution model."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Total work per time.",
+          "answer": "throughput",
+          "options": [
+            "GPU",
+            "SIMT",
+            "throughput"
+          ],
+          "feedback": "throughput — Total work per time."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Explain two features that make a GPU useful for applying same filter to millions of pixels. [6]",
+          "answer": "/ WORKED METHOD Many parallel lanes/threads [2], pixels independent [2], throughput on similar operations [2].",
+          "options": [
+            "/ WORKED METHOD AI tensor/matrix workloads [3], scientific modelling independent calculations [3] or valid alternatives.",
+            "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2].",
+            "/ WORKED METHOD Many parallel lanes/threads [2], pixels independent [2], throughput on similar operations [2]."
+          ],
+          "feedback": "/ WORKED METHOD Many parallel lanes/threads [2], pixels independent [2], throughput on similar operations [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Give two non-graphics GPU applications and explain how parallelism helps. [6]",
+          "answer": "/ WORKED METHOD AI tensor/matrix workloads [3], scientific modelling independent calculations [3] or valid alternatives.",
+          "options": [
+            "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2].",
+            "/ WORKED METHOD AI tensor/matrix workloads [3], scientific modelling independent calculations [3] or valid alternatives.",
+            "/ WORKED METHOD Many parallel lanes/threads [2], pixels independent [2], throughput on similar operations [2]."
+          ],
+          "feedback": "/ WORKED METHOD AI tensor/matrix workloads [3], scientific modelling independent calculations [3] or valid alternatives."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Compare CPU and GPU for 12-item sequential task versus million-element independent matrix operations. [6]",
+          "answer": "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2].",
+          "options": [
+            "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2].",
+            "/ WORKED METHOD Many parallel lanes/threads [2], pixels independent [2], throughput on similar operations [2].",
+            "/ WORKED METHOD AI tensor/matrix workloads [3], scientific modelling independent calculations [3] or valid alternatives."
+          ],
+          "feedback": "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Compare CPU and GPU for 12-item sequential task versus million-element independent matrix operations. [6]",
+        "model": "/ WORKED METHOD Short sequential: CPU avoids transfer/parallel overhead [2], massive independent: GPU throughput [2], branches/memory/bandwidth caveats [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "SIMT means: Single instruction, multiple threads execution model.",
+          "answer": "true",
+          "feedback": "SIMT — Single instruction, multiple threads execution model."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "throughput means: Graphics Processing Unit.",
+          "answer": "false",
+          "feedback": "throughput — Total work per time."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "divergence means: Threads follow differing control paths.",
+          "answer": "true",
+          "feedback": "divergence — Threads follow differing control paths."
+        }
+      ]
+    }
+  ]
+}

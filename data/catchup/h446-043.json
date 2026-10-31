@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-043",
+  "course": "h446",
+  "title": "Programming Techniques · Modular Design and IDE Debugging",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does ref do in C#?",
+          "answer": "Allows access to and modification of caller variable",
+          "options": [
+            "Where a variable is accessible",
+            "No value",
+            "Allows access to and modification of caller variable"
+          ],
+          "feedback": "Allows access to and modification of caller variable"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is variable scope?",
+          "answer": "Where a variable is accessible",
+          "options": [
+            "No value",
+            "Where a variable is accessible",
+            "Allows access to and modification of caller variable"
+          ],
+          "feedback": "Where a variable is accessible"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a void method return?",
+          "answer": "No value",
+          "options": [
+            "No value",
+            "Allows access to and modification of caller variable",
+            "Where a variable is accessible"
+          ],
+          "feedback": "No value"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: State one advantage of a hash table.",
+          "answer": "Fast average access when well designed",
+          "options": [
+            "Allows access to and modification of caller variable",
+            "Where a variable is accessible",
+            "Fast average access when well designed"
+          ],
+          "feedback": "Fast average access when well designed"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the important decision",
+          "text": "Break on the array access, Step Into Sum and watch i, marks.Length and total. Diagnose the failing state before editing the loop condition."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace a method call",
+          "text": "static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Pause and inspect",
+          "text": "Call Sum with [4,6]. Step Into enters the method; Step Over a call would run it without following its internal statements. Watch total=0, Length=2 and i=0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Locate the first invalid access",
+          "text": "At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'modularity'?",
+          "answer": "Divide code into independent components",
+          "options": [
+            "Enter a method while debugging",
+            "Divide code into independent components",
+            "Pause in the debugger"
+          ],
+          "feedback": "modularity — Divide code into independent components"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'breakpoint'?",
+          "answer": "Pause in the debugger",
+          "options": [
+            "Pause in the debugger",
+            "Divide code into independent components",
+            "Enter a method while debugging"
+          ],
+          "feedback": "breakpoint — Pause in the debugger"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'step into'?",
+          "answer": "Enter a method while debugging",
+          "options": [
+            "Divide code into independent components",
+            "Pause in the debugger",
+            "Enter a method while debugging"
+          ],
+          "feedback": "step into — Enter a method while debugging"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Problem 1",
+          "text": "A method has no return despite return type int. What is wrong?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Discuss, then respond",
+          "text": "A method has no return despite return type int. What is wrong?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check your thinking",
+          "text": "Not all code paths return a value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Problem 2",
+          "text": "Why step into a function in a debugger?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Monitor expression/variable",
+          "answer": "watch",
+          "options": [
+            "modularity",
+            "breakpoint",
+            "watch"
+          ],
+          "feedback": "watch — Monitor expression/variable"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Ease of checking behaviour",
+          "answer": "testability",
+          "options": [
+            "breakpoint",
+            "testability",
+            "modularity"
+          ],
+          "feedback": "testability — Ease of checking behaviour"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Divide code into independent components",
+          "answer": "modularity",
+          "options": [
+            "modularity",
+            "breakpoint",
+            "step into"
+          ],
+          "feedback": "modularity — Divide code into independent components"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pause in the debugger",
+          "answer": "breakpoint",
+          "options": [
+            "modularity",
+            "step into",
+            "breakpoint"
+          ],
+          "feedback": "breakpoint — Pause in the debugger"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
+          "answer": "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails.",
+          "options": [
+            "MODEL ANSWER Check your thinking Not all code paths return a value.",
+            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+          ],
+          "feedback": "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 1 A method has no return despite return type int. What is wrong?",
+          "answer": "MODEL ANSWER Check your thinking Not all code paths return a value.",
+          "options": [
+            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+            "MODEL ANSWER Check your thinking Not all code paths return a value.",
+            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking Not all code paths return a value."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 2 Why step into a function in a debugger?",
+          "answer": "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+          "options": [
+            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+            "STEP 2 Locate the first invalid access At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails.",
+            "MODEL ANSWER Check your thinking Not all code paths return a value."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking To inspect statements inside the called method."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Problem 2 Why step into a function in a debugger?",
+        "model": "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "breakpoint means: Pause in the debugger",
+          "answer": "true",
+          "feedback": "breakpoint — Pause in the debugger"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "step into means: Ease of checking behaviour",
+          "answer": "false",
+          "feedback": "step into — Enter a method while debugging"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "watch means: Monitor expression/variable",
+          "answer": "true",
+          "feedback": "watch — Monitor expression/variable"
+        }
+      ]
+    }
+  ]
+}

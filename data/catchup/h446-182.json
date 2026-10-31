@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-182",
+  "course": "h446",
+  "title": "Recursion: call stack and tracing",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For Factorial(3), list the successive input values before any returns occur.",
+          "answer": "3, 2, 1, 0. Each call reduces n by one until the base case.",
+          "options": [
+            "Q. The topmost R is removed first.",
+            "3, 2, 1, 0. Each call reduces n by one until the base case.",
+            "A call transfers control into a function; return finishes that invocation and gives its result to the caller."
+          ],
+          "feedback": "3, 2, 1, 0. Each call reduces n by one until the base case."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between a function calling another function and returning a value to its caller?",
+          "answer": "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+          "options": [
+            "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+            "3, 2, 1, 0. Each call reduces n by one until the base case.",
+            "Q. The topmost R is removed first."
+          ],
+          "feedback": "A call transfers control into a function; return finishes that invocation and gives its result to the caller."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A stack contains bottom to top P, Q, R. After one pop, what is at the top?",
+          "answer": "Q. The topmost R is removed first.",
+          "options": [
+            "3, 2, 1, 0. Each call reduces n by one until the base case.",
+            "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+            "Q. The topmost R is removed first."
+          ],
+          "feedback": "Q. The topmost R is removed first."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A function Square(x) returns x*x. Find Square(2)+Square(3), showing both calls.",
+          "answer": "Square(2)=4 and Square(3)=9; the total is 13.",
+          "options": [
+            "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+            "Square(2)=4 and Square(3)=9; the total is 13.",
+            "3, 2, 1, 0. Each call reduces n by one until the base case."
+          ],
+          "feedback": "Square(2)=4 and Square(3)=9; the total is 13."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Build the stack",
+          "text": "SumTo(4) waits for SumTo(3), which waits for SumTo(2), which waits for SumTo(1)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate the local values",
+          "text": "Each stack frame holds its own n: 4, 3, 2 or 1. The values do not overwrite one another."
+        },
+        {
+          "type": "paragraph",
+          "title": "Unwind from the top",
+          "text": "SumTo(1) returns 1; SumTo(2) returns 3; SumTo(3) returns 6; SumTo(4) returns 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Draw the call-stack frames for SumTo(3). Which call returns first?",
+          "text": "return n + SumTo(n - 1);"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Push",
+          "text": "The frames are SumTo(3), SumTo(2), then SumTo(1), with SumTo(1) at the top."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Stop",
+          "text": "SumTo(1) is the base case; it returns 1 first."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'stack frame'?",
+          "answer": "An entry containing the state for one active function call.",
+          "options": [
+            "An entry containing the state for one active function call.",
+            "Return from calls in reverse order after a base case is reached.",
+            "A variable owned by a particular invocation."
+          ],
+          "feedback": "stack frame — An entry containing the state for one active function call."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'unwind'?",
+          "answer": "Return from calls in reverse order after a base case is reached.",
+          "options": [
+            "An entry containing the state for one active function call.",
+            "A variable owned by a particular invocation.",
+            "Return from calls in reverse order after a base case is reached."
+          ],
+          "feedback": "unwind — Return from calls in reverse order after a base case is reached."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'local variable'?",
+          "answer": "A variable owned by a particular invocation.",
+          "options": [
+            "Return from calls in reverse order after a base case is reached.",
+            "A variable owned by a particular invocation.",
+            "An entry containing the state for one active function call."
+          ],
+          "feedback": "local variable — A variable owned by a particular invocation."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Call sequence",
+          "text": "SumTo(5) → SumTo(4) → SumTo(3) → SumTo(2) → SumTo(1)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Top frame",
+          "text": "SumTo(1) is on top immediately before the first return."
+        },
+        {
+          "type": "paragraph",
+          "title": "Returns",
+          "text": "1, 3, 6, 10, 15. SumTo(5) returns 15."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Last-in, first-out storage for active calls.",
+          "answer": "call stack",
+          "options": [
+            "unwind",
+            "call stack",
+            "stack frame"
+          ],
+          "feedback": "call stack — Last-in, first-out storage for active calls."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A condition that ends recursion.",
+          "answer": "base case",
+          "options": [
+            "base case",
+            "stack frame",
+            "unwind"
+          ],
+          "feedback": "base case — A condition that ends recursion."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An entry containing the state for one active function call.",
+          "answer": "stack frame",
+          "options": [
+            "unwind",
+            "local variable",
+            "stack frame"
+          ],
+          "feedback": "stack frame — An entry containing the state for one active function call."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Return from calls in reverse order after a base case is reached.",
+          "answer": "unwind",
+          "options": [
+            "local variable",
+            "unwind",
+            "stack frame"
+          ],
+          "feedback": "unwind — Return from calls in reverse order after a base case is reached."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 List the call-stack frames from bottom to top for SumTo(4).",
+          "answer": "SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame.",
+          "options": [
+            "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums.",
+            "SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame.",
+            "1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21."
+          ],
+          "feedback": "SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 Trace the returned values for SumTo(6).",
+          "answer": "1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21.",
+          "options": [
+            "1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21.",
+            "SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame.",
+            "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums."
+          ],
+          "feedback": "1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 A pupil writes that SumTo(4) returns 4+3+2+1 before SumTo(1) has executed. Explain the order error.",
+          "answer": "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums.",
+          "options": [
+            "SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame.",
+            "1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21.",
+            "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums."
+          ],
+          "feedback": "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 A pupil writes that SumTo(4) returns 4+3+2+1 before SumTo(1) has executed. Explain the order error.",
+        "model": "The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "unwind means: Return from calls in reverse order after a base case is reached.",
+          "answer": "true",
+          "feedback": "unwind — Return from calls in reverse order after a base case is reached."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "local variable means: A condition that ends recursion.",
+          "answer": "false",
+          "feedback": "local variable — A variable owned by a particular invocation."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "call stack means: Last-in, first-out storage for active calls.",
+          "answer": "true",
+          "feedback": "call stack — Last-in, first-out storage for active calls."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-193",
+  "course": "h446",
+  "title": "Signed binary and shifts",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Does changing a by-value int parameter change the caller's int?",
+          "answer": "No. It is a copy.",
+          "options": [
+            "A result a function passes to its caller.",
+            "10.",
+            "No. It is a copy."
+          ],
+          "feedback": "No. It is a copy."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a return value?",
+          "answer": "A result a function passes to its caller.",
+          "options": [
+            "10.",
+            "A result a function passes to its caller.",
+            "No. It is a copy."
+          ],
+          "feedback": "A result a function passes to its caller."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert 00001010 from unsigned binary to decimal.",
+          "answer": "10.",
+          "options": [
+            "10.",
+            "No. It is a copy.",
+            "A result a function passes to its caller."
+          ],
+          "feedback": "10."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 00001111 + 00000001 using 8 bits.",
+          "answer": "00010000, decimal 16.",
+          "options": [
+            "No. It is a copy.",
+            "A result a function passes to its caller.",
+            "00010000, decimal 16."
+          ],
+          "feedback": "00010000, decimal 16."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "POSITIVE 13",
+          "text": "+13 written with 8 bits is 00001101."
+        },
+        {
+          "type": "paragraph",
+          "title": "INVERT BITS",
+          "text": "Invert each bit to make 11110010."
+        },
+        {
+          "type": "paragraph",
+          "title": "ADD ONE",
+          "text": "Add one to get 11110011, the 8-bit two's-complement representation of −13."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Write +9 in 8 bits and invert all the bits."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the result",
+          "text": "Add 1 to the inverted bits: 11110111 represents −9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'two's complement'?",
+          "answer": "Fixed-width signed binary representation.",
+          "options": [
+            "Shift with zero bits entering vacated positions.",
+            "Fixed-width signed binary representation.",
+            "Leftmost bit indicating sign in two's complement."
+          ],
+          "feedback": "two's complement — Fixed-width signed binary representation."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'sign bit'?",
+          "answer": "Leftmost bit indicating sign in two's complement.",
+          "options": [
+            "Leftmost bit indicating sign in two's complement.",
+            "Fixed-width signed binary representation.",
+            "Shift with zero bits entering vacated positions."
+          ],
+          "feedback": "sign bit — Leftmost bit indicating sign in two's complement."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'logical shift'?",
+          "answer": "Shift with zero bits entering vacated positions.",
+          "options": [
+            "Fixed-width signed binary representation.",
+            "Leftmost bit indicating sign in two's complement.",
+            "Shift with zero bits entering vacated positions."
+          ],
+          "feedback": "logical shift — Shift with zero bits entering vacated positions."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "+6 = 00000110. Invert to get 11111001."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the result",
+          "text": "Add 1: 11111010 is the representation of −6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Shift right while extending the sign bit.",
+          "answer": "arithmetic right shift",
+          "options": [
+            "two's complement",
+            "sign bit",
+            "arithmetic right shift"
+          ],
+          "feedback": "arithmetic right shift — Shift right while extending the sign bit."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Result cannot be represented in the available bit width.",
+          "answer": "overflow",
+          "options": [
+            "sign bit",
+            "overflow",
+            "two's complement"
+          ],
+          "feedback": "overflow — Result cannot be represented in the available bit width."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Fixed-width signed binary representation.",
+          "answer": "two's complement",
+          "options": [
+            "two's complement",
+            "sign bit",
+            "logical shift"
+          ],
+          "feedback": "two's complement — Fixed-width signed binary representation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Leftmost bit indicating sign in two's complement.",
+          "answer": "sign bit",
+          "options": [
+            "two's complement",
+            "logical shift",
+            "sign bit"
+          ],
+          "feedback": "sign bit — Leftmost bit indicating sign in two's complement."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Write −5 as 8-bit two's complement.",
+          "answer": "5=00000101; inverted=11111010; add 1=11111011.",
+          "options": [
+            "00011010, which is 26 (52 / 2).",
+            "11111010, representing −6. The sign bit 1 is copied into the new leftmost position.",
+            "5=00000101; inverted=11111010; add 1=11111011."
+          ],
+          "feedback": "5=00000101; inverted=11111010; add 1=11111011."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Unsigned 8-bit 00110100 is shifted logically right one place. Give the result and decimal value.",
+          "answer": "00011010, which is 26 (52 / 2).",
+          "options": [
+            "11111010, representing −6. The sign bit 1 is copied into the new leftmost position.",
+            "00011010, which is 26 (52 / 2).",
+            "5=00000101; inverted=11111010; add 1=11111011."
+          ],
+          "feedback": "00011010, which is 26 (52 / 2)."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 11110100 represents −12 in two's complement. Arithmetically shift right one place and explain the new left bit.",
+          "answer": "11111010, representing −6. The sign bit 1 is copied into the new leftmost position.",
+          "options": [
+            "11111010, representing −6. The sign bit 1 is copied into the new leftmost position.",
+            "5=00000101; inverted=11111010; add 1=11111011.",
+            "00011010, which is 26 (52 / 2)."
+          ],
+          "feedback": "11111010, representing −6. The sign bit 1 is copied into the new leftmost position."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 11110100 represents −12 in two's complement. Arithmetically shift right one place and explain the new left bit.",
+        "model": "11111010, representing −6. The sign bit 1 is copied into the new leftmost position.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "sign bit means: Leftmost bit indicating sign in two's complement.",
+          "answer": "true",
+          "feedback": "sign bit — Leftmost bit indicating sign in two's complement."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "logical shift means: Result cannot be represented in the available bit width.",
+          "answer": "false",
+          "feedback": "logical shift — Shift with zero bits entering vacated positions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "arithmetic right shift means: Shift right while extending the sign bit.",
+          "answer": "true",
+          "feedback": "arithmetic right shift — Shift right while extending the sign bit."
+        }
+      ]
+    }
+  ]
+}

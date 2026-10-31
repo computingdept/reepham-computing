@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-085",
+  "course": "h446",
+  "title": "Lesson 085 · Searching, Sorting and Pathfinding Comparison",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the sorted-input rule for binary search?",
+          "answer": "The input must be sorted.",
+          "options": [
+            "O(n log n).",
+            "f=g+h.",
+            "The input must be sorted."
+          ],
+          "feedback": "The input must be sorted."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: State merge sort's worst-time complexity.",
+          "answer": "O(n log n).",
+          "options": [
+            "f=g+h.",
+            "O(n log n).",
+            "The input must be sorted."
+          ],
+          "feedback": "O(n log n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: State f score in A*.",
+          "answer": "f=g+h.",
+          "options": [
+            "f=g+h.",
+            "The input must be sorted.",
+            "O(n log n)."
+          ],
+          "feedback": "f=g+h."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Push A,B,C onto a stack, Pop twice, then Push D. Give bottom-to-top order.",
+          "answer": "Pop removes C then B; the final stack is [A,D] bottom-to-top.",
+          "options": [
+            "The input must be sorted.",
+            "O(n log n).",
+            "Pop removes C then B; the final stack is [A,D] bottom-to-top."
+          ],
+          "feedback": "Pop removes C then B; the final stack is [A,D] bottom-to-top."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Start from the problem and input: searching, ordering and weighted paths are different problem classes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "A fastest method under one set of assumptions may be invalid or less suitable on another dataset; include preprocessing and memory costs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Choose using correctness, worst-case growth, memory, stability where relevant, and an independent trace on new values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Method and result",
+          "text": "Binary search O(log n) is valid because identifiers are sorted; if indexed dictionary is available, keyed lookup is another option."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'suitability'?",
+          "answer": "How well method fits input/task.",
+          "options": [
+            "Growth of time/space.",
+            "How well method fits input/task.",
+            "Requirement for correct use."
+          ],
+          "feedback": "suitability — How well method fits input/task."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Requirement for correct use.",
+          "options": [
+            "Requirement for correct use.",
+            "How well method fits input/task.",
+            "Growth of time/space."
+          ],
+          "feedback": "precondition — Requirement for correct use."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'complexity'?",
+          "answer": "Growth of time/space.",
+          "options": [
+            "How well method fits input/task.",
+            "Requirement for correct use.",
+            "Growth of time/space."
+          ],
+          "feedback": "complexity — Growth of time/space."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Method and result",
+          "text": "Dijkstra finds least-cost path with non-negative edge weights; do not confuse with array search."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Estimate guiding search.",
+          "answer": "heuristic",
+          "options": [
+            "suitability",
+            "precondition",
+            "heuristic"
+          ],
+          "feedback": "heuristic — Estimate guiding search."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? How well method fits input/task.",
+          "answer": "suitability",
+          "options": [
+            "complexity",
+            "suitability",
+            "precondition"
+          ],
+          "feedback": "suitability — How well method fits input/task."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Requirement for correct use.",
+          "answer": "precondition",
+          "options": [
+            "precondition",
+            "suitability",
+            "complexity"
+          ],
+          "feedback": "precondition — Requirement for correct use."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth of time/space.",
+          "answer": "complexity",
+          "options": [
+            "suitability",
+            "precondition",
+            "complexity"
+          ],
+          "feedback": "complexity — Growth of time/space."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Identify suitable algorithm for (a) unsorted match (b) sorted match (c) non-negative weighted shortest path. [6]",
+          "answer": "/ WORKING Linear [2], binary [2], Dijkstra [2] with correct contexts.",
+          "options": [
+            "/ WORKING Bubble O(n²), O(1) [2]; insertion O(n²),O(1) [2]; merge O(n log n),O(n) [2]; quick O(n²) worst, recursion stack depends on partitions [2].",
+            "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1].",
+            "/ WORKING Linear [2], binary [2], Dijkstra [2] with correct contexts."
+          ],
+          "feedback": "/ WORKING Linear [2], binary [2], Dijkstra [2] with correct contexts."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Compare bubble, insertion, merge and quick sort worst-case time and typical auxiliary memory. [8]",
+          "answer": "/ WORKING Bubble O(n²), O(1) [2]; insertion O(n²),O(1) [2]; merge O(n log n),O(n) [2]; quick O(n²) worst, recursion stack depends on partitions [2].",
+          "options": [
+            "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1].",
+            "/ WORKING Bubble O(n²), O(1) [2]; insertion O(n²),O(1) [2]; merge O(n log n),O(n) [2]; quick O(n²) worst, recursion stack depends on partitions [2].",
+            "/ WORKING Linear [2], binary [2], Dijkstra [2] with correct contexts."
+          ],
+          "feedback": "/ WORKING Bubble O(n²), O(1) [2]; insertion O(n²),O(1) [2]; merge O(n log n),O(n) [2]; quick O(n²) worst, recursion stack depends on partitions [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 A college searches a million unsorted attendance records once and later queries sorted year-group reports repeatedly. Evaluate algorithms/data processing choices. [6]",
+          "answer": "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1].",
+          "options": [
+            "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1].",
+            "/ WORKING Linear [2], binary [2], Dijkstra [2] with correct contexts.",
+            "/ WORKING Bubble O(n²), O(1) [2]; insertion O(n²),O(1) [2]; merge O(n log n),O(n) [2]; quick O(n²) worst, recursion stack depends on partitions [2]."
+          ],
+          "feedback": "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 A college searches a million unsorted attendance records once and later queries sorted year-group reports repeatedly. Evaluate algorithms/data processing choices. [6]",
+        "model": "/ WORKING One-off linear or indexed lookup on original unsorted input [2], sorting/indexing requires preprocessing [1], repeated sorted searches permit binary O(log n) [2], data changes may demand index maintenance [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "precondition means: Requirement for correct use.",
+          "answer": "true",
+          "feedback": "precondition — Requirement for correct use."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "complexity means: How well method fits input/task.",
+          "answer": "false",
+          "feedback": "complexity — Growth of time/space."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "heuristic means: Estimate guiding search.",
+          "answer": "true",
+          "feedback": "heuristic — Estimate guiding search."
+        }
+      ]
+    }
+  ]
+}

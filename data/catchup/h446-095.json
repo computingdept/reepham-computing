@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-095",
+  "course": "h446",
+  "title": "Lesson 095 · CPU Pipelining: Overlap and Hazards",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is pipeline throughput?",
+          "answer": "Rate of completed instructions.",
+          "options": [
+            "Cache.",
+            "Rate of completed instructions.",
+            "Dependency/resource/control issue that interrupts pipeline."
+          ],
+          "feedback": "Rate of completed instructions."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a hazard?",
+          "answer": "Dependency/resource/control issue that interrupts pipeline.",
+          "options": [
+            "Dependency/resource/control issue that interrupts pipeline.",
+            "Rate of completed instructions.",
+            "Cache."
+          ],
+          "feedback": "Dependency/resource/control issue that interrupts pipeline."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which CPU feature may reduce RAM accesses?",
+          "answer": "Cache.",
+          "options": [
+            "Rate of completed instructions.",
+            "Dependency/resource/control issue that interrupts pipeline.",
+            "Cache."
+          ],
+          "feedback": "Cache."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A D flip-flop has D=0 and Q=1 just before the active rising edge. What is Q after?",
+          "answer": "Q becomes0, sampled at the active edge.",
+          "options": [
+            "Dependency/resource/control issue that interrupts pipeline.",
+            "Q becomes0, sampled at the active edge.",
+            "Rate of completed instructions."
+          ],
+          "feedback": "Q becomes0, sampled at the active edge."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Pipelining splits instruction processing into stages; several instructions can occupy different stages during the same clock cycle."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "With four independent instructions and three one-cycle stages, ideal completion is 3+4−1=6 cycles; serial non-overlap takes 4×3=12."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Data dependencies, branching and resource conflicts can stall or flush a pipeline. Throughput benefits need ideal assumptions, not automatic latency reductions."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the mechanism",
+          "text": "2+3−1=4 cycles; serial baseline 2×3=6 cycles. The second task starts stage one while first advances to stage two."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'pipeline'?",
+          "answer": "Stages overlapping different instructions.",
+          "options": [
+            "Stages overlapping different instructions.",
+            "Completed work per time.",
+            "Dependency on unavailable result."
+          ],
+          "feedback": "pipeline — Stages overlapping different instructions."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'throughput'?",
+          "answer": "Completed work per time.",
+          "options": [
+            "Stages overlapping different instructions.",
+            "Dependency on unavailable result.",
+            "Completed work per time."
+          ],
+          "feedback": "throughput — Completed work per time."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'data hazard'?",
+          "answer": "Dependency on unavailable result.",
+          "options": [
+            "Completed work per time.",
+            "Dependency on unavailable result.",
+            "Stages overlapping different instructions."
+          ],
+          "feedback": "data hazard — Dependency on unavailable result."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the mechanism",
+          "text": "4+5−1=8 cycles, compared with 4×5=20 serial stage cycles. Assumes equal one-cycle stages, no resource conflicts or stalls."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branch uncertainty interrupting fetch.",
+          "answer": "control hazard",
+          "options": [
+            "throughput",
+            "control hazard",
+            "pipeline"
+          ],
+          "feedback": "control hazard — Branch uncertainty interrupting fetch."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Stages overlapping different instructions.",
+          "answer": "pipeline",
+          "options": [
+            "pipeline",
+            "throughput",
+            "data hazard"
+          ],
+          "feedback": "pipeline — Stages overlapping different instructions."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Completed work per time.",
+          "answer": "throughput",
+          "options": [
+            "pipeline",
+            "data hazard",
+            "throughput"
+          ],
+          "feedback": "throughput — Completed work per time."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Dependency on unavailable result.",
+          "answer": "data hazard",
+          "options": [
+            "throughput",
+            "data hazard",
+            "pipeline"
+          ],
+          "feedback": "data hazard — Dependency on unavailable result."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 Show cycles for I1-I3 in a 3-stage F-D-E pipeline, and finish cycle of I3. [6]",
+          "answer": "I1 F1 D2 E3 [2], I2 F2 D3 E4 [2], I3 F3 D4 E5 [2].",
+          "options": [
+            "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2].",
+            "I1 F1 D2 E3 [2], I2 F2 D3 E4 [2], I3 F3 D4 E5 [2].",
+            "Pipeline3+6−1=8 cycles [3], serial6×3=18 [2], equal stage/no stall assumption [1]."
+          ],
+          "feedback": "I1 F1 D2 E3 [2], I2 F2 D3 E4 [2], I3 F3 D4 E5 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2/3 Compute ideal pipeline versus serial completion for 6 instructions and 3 stages. [6]",
+          "answer": "Pipeline3+6−1=8 cycles [3], serial6×3=18 [2], equal stage/no stall assumption [1].",
+          "options": [
+            "Pipeline3+6−1=8 cycles [3], serial6×3=18 [2], equal stage/no stall assumption [1].",
+            "I1 F1 D2 E3 [2], I2 F2 D3 E4 [2], I3 F3 D4 E5 [2].",
+            "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2]."
+          ],
+          "feedback": "Pipeline3+6−1=8 cycles [3], serial6×3=18 [2], equal stage/no stall assumption [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Explain why branch and data hazards can reduce actual improvement, distinguishing latency and throughput. [6]",
+          "answer": "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2].",
+          "options": [
+            "I1 F1 D2 E3 [2], I2 F2 D3 E4 [2], I3 F3 D4 E5 [2].",
+            "Pipeline3+6−1=8 cycles [3], serial6×3=18 [2], equal stage/no stall assumption [1].",
+            "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2]."
+          ],
+          "feedback": "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Explain why branch and data hazards can reduce actual improvement, distinguishing latency and throughput. [6]",
+        "model": "Data dependency waiting [2], branches flush/stall [2], average throughput drops though per-instruction latency not necessarily improved [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "throughput means: Completed work per time.",
+          "answer": "true",
+          "feedback": "throughput — Completed work per time."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "data hazard means: Stages overlapping different instructions.",
+          "answer": "false",
+          "feedback": "data hazard — Dependency on unavailable result."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "control hazard means: Branch uncertainty interrupting fetch.",
+          "answer": "true",
+          "feedback": "control hazard — Branch uncertainty interrupting fetch."
+        }
+      ]
+    }
+  ]
+}

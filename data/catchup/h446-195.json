@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-195",
+  "course": "h446",
+  "title": "Floating-point arithmetic and precision",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Normalise positive 0.0100₂ × 2⁴.",
+          "answer": "0.1000₂ × 2³.",
+          "options": [
+            "0.1000₂ × 2³.",
+            "11111111.",
+            "8."
+          ],
+          "feedback": "0.1000₂ × 2³."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is −1 in 8-bit two's complement?",
+          "answer": "11111111.",
+          "options": [
+            "0.1000₂ × 2³.",
+            "8.",
+            "11111111."
+          ],
+          "feedback": "11111111."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 0.5 × 2⁴.",
+          "answer": "8.",
+          "options": [
+            "11111111.",
+            "8.",
+            "0.1000₂ × 2³."
+          ],
+          "feedback": "8."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate binary 0.1000₂ + 0.0100₂.",
+          "answer": "0.1100₂ = decimal 0.75.",
+          "options": [
+            "0.1100₂ = decimal 0.75.",
+            "0.1000₂ × 2³.",
+            "11111111."
+          ],
+          "feedback": "0.1100₂ = decimal 0.75."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Align exponents",
+          "text": "Before adding mantissas, both terms need the same power of two. Shift B right one place when raising its exponent by one."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add the mantissas",
+          "text": "0.1000₂ + 0.0100₂ = 0.1100₂; keep the common exponent 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check in decimal",
+          "text": "0.1100₂ × 2³ = 0.75 × 8 = 6, matching 4 + 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Align",
+          "text": "B=0.1000 × 2² becomes 0.0100 × 2³."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Subtract",
+          "text": "0.1100 − 0.0100 = 0.1000."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check",
+          "text": "0.1000₂ × 2³ = 4; this matches decimal 6 − 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'exponent alignment'?",
+          "answer": "Express operands using the same power of two.",
+          "options": [
+            "Choose a nearby representable value for an exact result.",
+            "Discard bits beyond the available precision.",
+            "Express operands using the same power of two."
+          ],
+          "feedback": "exponent alignment — Express operands using the same power of two."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'rounding'?",
+          "answer": "Choose a nearby representable value for an exact result.",
+          "options": [
+            "Discard bits beyond the available precision.",
+            "Choose a nearby representable value for an exact result.",
+            "Express operands using the same power of two."
+          ],
+          "feedback": "rounding — Choose a nearby representable value for an exact result."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'truncation'?",
+          "answer": "Discard bits beyond the available precision.",
+          "options": [
+            "Discard bits beyond the available precision.",
+            "Express operands using the same power of two.",
+            "Choose a nearby representable value for an exact result."
+          ],
+          "feedback": "truncation — Discard bits beyond the available precision."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Align",
+          "text": "Raise B's exponent 1→3 by shifting its mantissa right twice: 0.1000 becomes 0.0010."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add and check",
+          "text": "0.1010 + 0.0010 = 0.1100 × 2³ = decimal 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Numerical result exceeds the representable range.",
+          "answer": "overflow",
+          "options": [
+            "overflow",
+            "exponent alignment",
+            "rounding"
+          ],
+          "feedback": "overflow — Numerical result exceeds the representable range."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Significant binary information cannot be stored.",
+          "answer": "precision loss",
+          "options": [
+            "exponent alignment",
+            "rounding",
+            "precision loss"
+          ],
+          "feedback": "precision loss — Significant binary information cannot be stored."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Express operands using the same power of two.",
+          "answer": "exponent alignment",
+          "options": [
+            "truncation",
+            "exponent alignment",
+            "rounding"
+          ],
+          "feedback": "exponent alignment — Express operands using the same power of two."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Choose a nearby representable value for an exact result.",
+          "answer": "rounding",
+          "options": [
+            "rounding",
+            "exponent alignment",
+            "truncation"
+          ],
+          "feedback": "rounding — Choose a nearby representable value for an exact result."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Why must exponents be aligned before binary floating-point addition?",
+          "answer": "So corresponding mantissa bits represent the same place values.",
+          "options": [
+            "So corresponding mantissa bits represent the same place values.",
+            "Align B to 0.0100 × 2³. Subtract: 0.1010 − 0.0100 = 0.0110 × 2³. Shift left and decrease exponent: 0.1100 × 2² = 3. No shown bits are discarded.",
+            "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result."
+          ],
+          "feedback": "So corresponding mantissa bits represent the same place values."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Calculate and normalise 0.1010 × 2³ − 0.1000 × 2². Retain all shown mantissa bits during working.",
+          "answer": "Align B to 0.0100 × 2³. Subtract: 0.1010 − 0.0100 = 0.0110 × 2³. Shift left and decrease exponent: 0.1100 × 2² = 3. No shown bits are discarded.",
+          "options": [
+            "So corresponding mantissa bits represent the same place values.",
+            "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result.",
+            "Align B to 0.0100 × 2³. Subtract: 0.1010 − 0.0100 = 0.0110 × 2³. Shift left and decrease exponent: 0.1100 × 2² = 3. No shown bits are discarded."
+          ],
+          "feedback": "Align B to 0.0100 × 2³. Subtract: 0.1010 − 0.0100 = 0.0110 × 2³. Shift left and decrease exponent: 0.1100 × 2² = 3. No shown bits are discarded."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain how exponent alignment can lose precision when the mantissa has a fixed number of bits.",
+          "answer": "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result.",
+          "options": [
+            "Align B to 0.0100 × 2³. Subtract: 0.1010 − 0.0100 = 0.0110 × 2³. Shift left and decrease exponent: 0.1100 × 2² = 3. No shown bits are discarded.",
+            "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result.",
+            "So corresponding mantissa bits represent the same place values."
+          ],
+          "feedback": "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain how exponent alignment can lose precision when the mantissa has a fixed number of bits.",
+        "model": "Right-shifting may discard significant low-order bits. They cannot all be held in the available mantissa, so rounding or truncation can produce an inexact result.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "rounding means: Choose a nearby representable value for an exact result.",
+          "answer": "true",
+          "feedback": "rounding — Choose a nearby representable value for an exact result."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "truncation means: Significant binary information cannot be stored.",
+          "answer": "false",
+          "feedback": "truncation — Discard bits beyond the available precision."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "overflow means: Numerical result exceeds the representable range.",
+          "answer": "true",
+          "feedback": "overflow — Numerical result exceeds the representable range."
+        }
+      ]
+    }
+  ]
+}

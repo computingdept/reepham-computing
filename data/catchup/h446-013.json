@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-013",
+  "course": "h446",
+  "title": "Noughts & Crosses · Part 1 — Sequence before loops",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a zero-indexed C# array, which element does array[2] access?",
+          "answer": "The item at index 2 — the third item.",
+          "options": [
+            "A counter, condition and update.",
+            "The number of rows.",
+            "The item at index 2 — the third item."
+          ],
+          "feedback": "The item at index 2 — the third item."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Name the three parts of a C# for loop header used to visit every array element.",
+          "answer": "A counter, condition and update.",
+          "options": [
+            "The number of rows.",
+            "A counter, condition and update.",
+            "The item at index 2 — the third item."
+          ],
+          "feedback": "A counter, condition and update."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a C# 2D array organised as rows and columns, what does GetLength(0) return?",
+          "answer": "The number of rows.",
+          "options": [
+            "The number of rows.",
+            "The item at index 2 — the third item.",
+            "A counter, condition and update."
+          ],
+          "feedback": "The number of rows."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If a board has 3 rows and 3 columns, how many values does it contain?",
+          "answer": "9.",
+          "options": [
+            "The item at index 2 — the third item.",
+            "A counter, condition and update.",
+            "9."
+          ],
+          "feedback": "9."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with sequence",
+          "text": "Write the five lines in the left panel into a C# console program. Run it. There are no loops ; each statement executes in order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make one simple change",
+          "text": "Change the middle square 5 to X. Which exact line do you edit? This works — but changing the text every time a player moves is awkward."
+        },
+        {
+          "type": "paragraph",
+          "title": "Store the squares as data",
+          "text": "Put the nine square values into a 2D array. The first index chooses the row; the second chooses the column. Try board[1,1] = \"X\"; : the data changes without rewriting every display instruction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Display the data directly",
+          "text": "Write the first row explicitly using three array accesses. Then do the same for rows 1 and 2. Notice: almost the same code is needed for every row. We will use that repetition to discover loops in Lesson 014."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Make the board display before improving it",
+          "text": "Start with separate instructions; then make the output read from array values. 1 | 2 | 3 --+---+-- 4 | 5 | 6 --+---+-- 7 | 8 | 9"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Create a working output",
+          "text": "Run these instructions in order. The result is a 3×3 numbered board. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"--+---+--\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"--+---+--\"); Console.WriteLine(\"7 | 8 | 9\");"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'sequence'?",
+          "answer": "Instructions that run in a specified order.",
+          "options": [
+            "Information shown by the program.",
+            "Instructions that run in a specified order.",
+            "One instruction in a program."
+          ],
+          "feedback": "sequence — Instructions that run in a specified order."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'statement'?",
+          "answer": "One instruction in a program.",
+          "options": [
+            "One instruction in a program.",
+            "Instructions that run in a specified order.",
+            "Information shown by the program."
+          ],
+          "feedback": "statement — One instruction in a program."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'output'?",
+          "answer": "Information shown by the program.",
+          "options": [
+            "Instructions that run in a specified order.",
+            "One instruction in a program.",
+            "Information shown by the program."
+          ],
+          "feedback": "output — Information shown by the program."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Display three rows",
+          "text": "Without loops, write three C# statements that print 1 | 2 | 3, then 4 | 5 | 6, then 7 | 8 | 9."
+        },
+        {
+          "type": "paragraph",
+          "title": "Write or explain",
+          "text": "Without loops, write three C# statements that print 1 | 2 | 3, then 4 | 5 | 6, then 7 | 8 | 9."
+        },
+        {
+          "type": "paragraph",
+          "title": "Why it works",
+          "text": "Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
+        },
+        {
+          "type": "paragraph",
+          "title": "Find the square",
+          "text": "With zero-based indexes, what is the row/column index of the centre square (5)?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Values stored using two indexes.",
+          "answer": "2D array",
+          "options": [
+            "sequence",
+            "statement",
+            "2D array"
+          ],
+          "feedback": "2D array — Values stored using two indexes."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A horizontal line of values.",
+          "answer": "row",
+          "options": [
+            "statement",
+            "row",
+            "sequence"
+          ],
+          "feedback": "row — A horizontal line of values."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A vertical line of values.",
+          "answer": "column",
+          "options": [
+            "column",
+            "sequence",
+            "statement"
+          ],
+          "feedback": "column — A vertical line of values."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A zero-based position in an array.",
+          "answer": "index",
+          "options": [
+            "sequence",
+            "statement",
+            "index"
+          ],
+          "feedback": "index — A zero-based position in an array."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Make the board display before improving it Start with separate instructions; then make the output read from array values.",
+          "answer": "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");",
+          "options": [
+            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
+            "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
+          ],
+          "feedback": "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Display three rows Without loops, write three C# statements that print 1 | 2 | 3, then 4 | 5 | 6, then 7 | 8 | 9.",
+          "answer": "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
+          "options": [
+            "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");",
+            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");"
+          ],
+          "feedback": "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Find the square With zero-based indexes, what is the row/column index of the centre square (5)?",
+          "answer": "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+          "options": [
+            "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+            "STEP 2 · EDIT Change one square Change the centre of the printed board to X. This shows the limitation of storing positions inside string literals. Console.WriteLine(\"4 | X | 6\");",
+            "CHECK Why it works Use one Console.WriteLine() for each row. Console.WriteLine(\"1 | 2 | 3\"); Console.WriteLine(\"4 | 5 | 6\"); Console.WriteLine(\"7 | 8 | 9\");"
+          ],
+          "feedback": "CHECK Why it works The centre square is row 1, column 1. board[1,1]"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Find the square With zero-based indexes, what is the row/column index of the centre square (5)?",
+        "model": "CHECK Why it works The centre square is row 1, column 1. board[1,1]",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "statement means: One instruction in a program.",
+          "answer": "true",
+          "feedback": "statement — One instruction in a program."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "output means: A horizontal line of values.",
+          "answer": "false",
+          "feedback": "output — Information shown by the program."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "2D array means: Values stored using two indexes.",
+          "answer": "true",
+          "feedback": "2D array — Values stored using two indexes."
+        }
+      ]
+    }
+  ]
+}

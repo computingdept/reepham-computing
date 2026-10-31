@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-217",
+  "course": "h446",
+  "title": "Quicksort: tracing and implementation",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: After partitioning [8,1,7,3,6] around pivot 6, where is the pivot?",
+          "answer": "Index 2 in [1,3,6,8,7].",
+          "options": [
+            "To stop on empty or single-element partitions.",
+            "O(n log n).",
+            "Index 2 in [1,3,6,8,7]."
+          ],
+          "feedback": "Index 2 in [1,3,6,8,7]."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why does recursive quicksort need a base case?",
+          "answer": "To stop on empty or single-element partitions.",
+          "options": [
+            "O(n log n).",
+            "To stop on empty or single-element partitions.",
+            "Index 2 in [1,3,6,8,7]."
+          ],
+          "feedback": "To stop on empty or single-element partitions."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the worst-case time complexity of merge sort?",
+          "answer": "O(n log n).",
+          "options": [
+            "O(n log n).",
+            "Index 2 in [1,3,6,8,7].",
+            "To stop on empty or single-element partitions."
+          ],
+          "feedback": "O(n log n)."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If the pivot finishes at index 3, give left and right recursive bounds in an array 0..6.",
+          "answer": "Left 0..2, right 4..6; do not include pivot index 3 again.",
+          "options": [
+            "Index 2 in [1,3,6,8,7].",
+            "To stop on empty or single-element partitions.",
+            "Left 0..2, right 4..6; do not include pivot index 3 again."
+          ],
+          "feedback": "Left 0..2, right 4..6; do not include pivot index 3 again."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Stop small subarrays",
+          "text": "When low>=high there are zero or one elements to sort: return immediately."
+        },
+        {
+          "type": "paragraph",
+          "title": "Partition then divide",
+          "text": "Partition places the pivot at its final index p. Do not recursively include index p."
+        },
+        {
+          "type": "paragraph",
+          "title": "Sort two sides independently",
+          "text": "Call QuickSort on low..p−1 and p+1..high. The pivot itself stays fixed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the next state",
+          "text": "Partition around 3, moving 1 to the left and placing pivot 3 at index 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reveal and explain",
+          "text": "Left segment [1] is already sorted; sort only the right segment [7,5]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reveal and explain",
+          "text": "The right recursion produces [5,7]; final array [1,3,5,7]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'quicksort'?",
+          "answer": "Recursive sort using partitioning around a pivot.",
+          "options": [
+            "Final index occupied by the pivot.",
+            "Recursive sort using partitioning around a pivot.",
+            "Condition ending recursion."
+          ],
+          "feedback": "quicksort — Recursive sort using partitioning around a pivot."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'base case'?",
+          "answer": "Condition ending recursion.",
+          "options": [
+            "Condition ending recursion.",
+            "Recursive sort using partitioning around a pivot.",
+            "Final index occupied by the pivot."
+          ],
+          "feedback": "base case — Condition ending recursion."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'partition index'?",
+          "answer": "Final index occupied by the pivot.",
+          "options": [
+            "Recursive sort using partitioning around a pivot.",
+            "Condition ending recursion.",
+            "Final index occupied by the pivot."
+          ],
+          "feedback": "partition index — Final index occupied by the pivot."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next state",
+          "text": "Partition around pivot 4, producing [1,2,4,6,5]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "The left [1,2] is already sorted; the right [6,5] needs another partition."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "After sorting the right part, final array is [1,2,4,5,6]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input arrangement causing the most expensive run.",
+          "answer": "worst case",
+          "options": [
+            "quicksort",
+            "base case",
+            "worst case"
+          ],
+          "feedback": "worst case — Input arrangement causing the most expensive run."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Storage used for nested calls.",
+          "answer": "recursion stack",
+          "options": [
+            "base case",
+            "recursion stack",
+            "quicksort"
+          ],
+          "feedback": "recursion stack — Storage used for nested calls."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Recursive sort using partitioning around a pivot.",
+          "answer": "quicksort",
+          "options": [
+            "quicksort",
+            "base case",
+            "partition index"
+          ],
+          "feedback": "quicksort — Recursive sort using partitioning around a pivot."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Condition ending recursion.",
+          "answer": "base case",
+          "options": [
+            "quicksort",
+            "partition index",
+            "base case"
+          ],
+          "feedback": "base case — Condition ending recursion."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 Why is if(low>=high) return; required in a recursive C# quicksort?",
+          "answer": "[3] Prevents calls on empty [1] or single-element ranges [1], stopping recursion correctly [1].",
+          "options": [
+            "[6] Pivot=2 [1]; move 1 left [1] then place pivot to form [1,2,6,4] [2]; recursive right segment [6,4] sorts to [4,6] [1]; final [1,2,4,6] [1].",
+            "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still…",
+            "[3] Prevents calls on empty [1] or single-element ranges [1], stopping recursion correctly [1]."
+          ],
+          "feedback": "[3] Prevents calls on empty [1] or single-element ranges [1], stopping recursion correctly [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Use last-element Lomuto quicksort on [4,1,6,2]. Give the first partition and the final sorted array.",
+          "answer": "[6] Pivot=2 [1]; move 1 left [1] then place pivot to form [1,2,6,4] [2]; recursive right segment [6,4] sorts to [4,6] [1]; final [1,2,4,6] [1].",
+          "options": [
+            "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still…",
+            "[6] Pivot=2 [1]; move 1 left [1] then place pivot to form [1,2,6,4] [2]; recursive right segment [6,4] sorts to [4,6] [1]; final [1,2,4,6] [1].",
+            "[3] Prevents calls on empty [1] or single-element ranges [1], stopping recursion correctly [1]."
+          ],
+          "feedback": "[6] Pivot=2 [1]; move 1 left [1] then place pivot to form [1,2,6,4] [2]; recursive right segment [6,4] sorts to [4,6] [1]; final [1,2,4,6] [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Describe the average and worst-case time complexity of quicksort, why these can differ, and one implementation trade-off relative to merge sort.",
+          "answer": "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still…",
+          "options": [
+            "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still…",
+            "[3] Prevents calls on empty [1] or single-element ranges [1], stopping recursion correctly [1].",
+            "[6] Pivot=2 [1]; move 1 left [1] then place pivot to form [1,2,6,4] [2]; recursive right segment [6,4] sorts to [4,6] [1]; final [1,2,4,6] [1]."
+          ],
+          "feedback": "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still uses call-stack space [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Describe the average and worst-case time complexity of quicksort, why these can differ, and one implementation trade-off relative to merge sort.",
+        "model": "[6] Average O(n log n) [1] with balanced partitions [1]; worst O(n²) [1] with repeated unbalanced partitions [1]; in-place partitioning typically uses less additional array space than merge sort [1], though recursive quicksort still uses call-stack space [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "base case means: Condition ending recursion.",
+          "answer": "true",
+          "feedback": "base case — Condition ending recursion."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "partition index means: Storage used for nested calls.",
+          "answer": "false",
+          "feedback": "partition index — Final index occupied by the pivot."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "worst case means: Input arrangement causing the most expensive run.",
+          "answer": "true",
+          "feedback": "worst case — Input arrangement causing the most expensive run."
+        }
+      ]
+    }
+  ]
+}

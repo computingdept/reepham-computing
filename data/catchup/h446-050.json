@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-050",
+  "course": "h446",
+  "title": "Lesson 050 · Queue<T>: FIFO and Service Order",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is stack Pop order?",
+          "answer": "Last-in-first-out.",
+          "options": [
+            "Adds to rear of queue.",
+            "Last-in-first-out.",
+            "Read an end item without removal."
+          ],
+          "feedback": "Last-in-first-out."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is Peek?",
+          "answer": "Read an end item without removal.",
+          "options": [
+            "Read an end item without removal.",
+            "Last-in-first-out.",
+            "Adds to rear of queue."
+          ],
+          "feedback": "Read an end item without removal."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does Enqueue do?",
+          "answer": "Adds to rear of queue.",
+          "options": [
+            "Last-in-first-out.",
+            "Read an end item without removal.",
+            "Adds to rear of queue."
+          ],
+          "feedback": "Adds to rear of queue."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 021",
+          "answer": "Enqueue A,B,C. Dequeue once then Enqueue D. Give queue front-to-back.",
+          "options": [
+            "Read an end item without removal.",
+            "Enqueue A,B,C. Dequeue once then Enqueue D. Give queue front-to-back.",
+            "Last-in-first-out."
+          ],
+          "feedback": "Enqueue A,B,C. Dequeue once then Enqueue D. Give queue front-to-back."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "A queue is first-in, first-out (FIFO). Enqueue joins the rear; Dequeue removes from the front."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Queues are suitable for ordered service requests such as print jobs or breadth-first exploration, if the queueing policy is FIFO."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Peek does not remove. Guard Dequeue/Peek with Count>0. Queue<T> handles storage internally; an explicit circular array queue instead tracks front, rear and count and wraps indexes modulo capacity (revisited in Lesson 197)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace and justify",
+          "text": "Jo is served first; Kai remains at the front."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'FIFO'?",
+          "answer": "First In First Out.",
+          "options": [
+            "First In First Out.",
+            "Add at queue rear.",
+            "Remove from queue front."
+          ],
+          "feedback": "FIFO — First In First Out."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Enqueue'?",
+          "answer": "Add at queue rear.",
+          "options": [
+            "First In First Out.",
+            "Remove from queue front.",
+            "Add at queue rear."
+          ],
+          "feedback": "Enqueue — Add at queue rear."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Dequeue'?",
+          "answer": "Remove from queue front.",
+          "options": [
+            "Add at queue rear.",
+            "Remove from queue front.",
+            "First In First Out."
+          ],
+          "feedback": "Dequeue — Remove from queue front."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace and justify",
+          "text": "Dequeue returns 4 then 7. Remaining front-to-back [2,9]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Next item to be served.",
+          "answer": "front",
+          "options": [
+            "Enqueue",
+            "front",
+            "FIFO"
+          ],
+          "feedback": "front — Next item to be served."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First In First Out.",
+          "answer": "FIFO",
+          "options": [
+            "FIFO",
+            "Enqueue",
+            "Dequeue"
+          ],
+          "feedback": "FIFO — First In First Out."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add at queue rear.",
+          "answer": "Enqueue",
+          "options": [
+            "FIFO",
+            "Dequeue",
+            "Enqueue"
+          ],
+          "feedback": "Enqueue — Add at queue rear."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Remove from queue front.",
+          "answer": "Dequeue",
+          "options": [
+            "Enqueue",
+            "Dequeue",
+            "FIFO"
+          ],
+          "feedback": "Dequeue — Remove from queue front."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Queue A,B,C; Dequeue once, then Peek. State removed and front value. [6]",
+          "answer": "/ MARKS Dequeue A [2]; Peek B [2]; remaining front-to-back B,C [2].",
+          "options": [
+            "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1].",
+            "/ MARKS Dequeue A [2]; Peek B [2]; remaining front-to-back B,C [2].",
+            "/ MARKS var q=new Queue<int>(); [1]; Enqueue 2,4,6 [3]; if(q.Count>0) [1] q.Dequeue() [1]."
+          ],
+          "feedback": "/ MARKS Dequeue A [2]; Peek B [2]; remaining front-to-back B,C [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Write C# code to enqueue 2,4,6 into Queue<int>, then safely dequeue one. [6]",
+          "answer": "/ MARKS var q=new Queue<int>(); [1]; Enqueue 2,4,6 [3]; if(q.Count>0) [1] q.Dequeue() [1].",
+          "options": [
+            "/ MARKS var q=new Queue<int>(); [1]; Enqueue 2,4,6 [3]; if(q.Count>0) [1] q.Dequeue() [1].",
+            "/ MARKS Dequeue A [2]; Peek B [2]; remaining front-to-back B,C [2].",
+            "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1]."
+          ],
+          "feedback": "/ MARKS var q=new Queue<int>(); [1]; Enqueue 2,4,6 [3]; if(q.Count>0) [1] q.Dequeue() [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Compare Stack<T> and Queue<T> for DFS versus BFS on a graph, explaining removal order. [6]",
+          "answer": "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1].",
+          "options": [
+            "/ MARKS Dequeue A [2]; Peek B [2]; remaining front-to-back B,C [2].",
+            "/ MARKS var q=new Queue<int>(); [1]; Enqueue 2,4,6 [3]; if(q.Count>0) [1] q.Dequeue() [1].",
+            "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1]."
+          ],
+          "feedback": "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Compare Stack<T> and Queue<T> for DFS versus BFS on a graph, explaining removal order. [6]",
+        "model": "/ MARKS DFS can use stack LIFO [2] to explore most recently discovered branch [1]; BFS uses queue FIFO [2] to process older frontiers first [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Enqueue means: Add at queue rear.",
+          "answer": "true",
+          "feedback": "Enqueue — Add at queue rear."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Dequeue means: First In First Out.",
+          "answer": "false",
+          "feedback": "Dequeue — Remove from queue front."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "front means: Next item to be served.",
+          "answer": "true",
+          "feedback": "front — Next item to be served."
+        }
+      ]
+    }
+  ]
+}

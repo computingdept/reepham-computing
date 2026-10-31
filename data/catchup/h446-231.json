@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-231",
+  "course": "h446",
+  "title": "Scope, modularity and parameters",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If procedural Deposit(balance,5) returns a value that the caller ignores, does balance change?",
+          "answer": "No. The returned value is discarded.",
+          "options": [
+            "No. The returned value is discarded.",
+            "A variable declared inside a method or block, with restricted scope.",
+            "Using return."
+          ],
+          "feedback": "No. The returned value is discarded."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a local variable?",
+          "answer": "A variable declared inside a method or block, with restricted scope.",
+          "options": [
+            "No. The returned value is discarded.",
+            "Using return.",
+            "A variable declared inside a method or block, with restricted scope."
+          ],
+          "feedback": "A variable declared inside a method or block, with restricted scope."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does a value-returning function pass a result back?",
+          "answer": "Using return.",
+          "options": [
+            "A variable declared inside a method or block, with restricted scope.",
+            "Using return.",
+            "No. The returned value is discarded."
+          ],
+          "feedback": "Using return."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why might using ref unexpectedly make a method harder to debug?",
+          "answer": "The method can change a caller's variable as a side effect, even if there is no returned result.",
+          "options": [
+            "The method can change a caller's variable as a side effect, even if there is no returned result.",
+            "No. The returned value is discarded.",
+            "A variable declared inside a method or block, with restricted scope."
+          ],
+          "feedback": "The method can change a caller's variable as a side effect, even if there is no returned result."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Copying an integer",
+          "text": "Assignment b=a copies the integer 5, not a reference to a storage location."
+        },
+        {
+          "type": "paragraph",
+          "title": "Passing by reference",
+          "text": "Increase(ref a) gives parameter value an alias of a, so the caller a changes to 8."
+        },
+        {
+          "type": "paragraph",
+          "title": "Use modular methods",
+          "text": "A short reusable method has a clear input effect, can be tested, and reduces repeated code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The function parameter number receives a copy of 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "Inside the function number becomes 10; caller x remains 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "The parameter leaves scope at the end of the call."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'scope'?",
+          "answer": "Where a name can be accessed.",
+          "options": [
+            "Variable with block or method-level scope.",
+            "Variable accessible in a wider scope, subject to access rules.",
+            "Where a name can be accessed."
+          ],
+          "feedback": "scope — Where a name can be accessed."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'local'?",
+          "answer": "Variable with block or method-level scope.",
+          "options": [
+            "Variable accessible in a wider scope, subject to access rules.",
+            "Variable with block or method-level scope.",
+            "Where a name can be accessed."
+          ],
+          "feedback": "local — Variable with block or method-level scope."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'global/class-level'?",
+          "answer": "Variable accessible in a wider scope, subject to access rules.",
+          "options": [
+            "Variable accessible in a wider scope, subject to access rules.",
+            "Where a name can be accessed.",
+            "Variable with block or method-level scope."
+          ],
+          "feedback": "global/class-level — Variable accessible in a wider scope, subject to access rules."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The ref parameter number refers to y, not a fresh copy."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "Adding four changes caller y from 9 to 13."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pass a copy of the value.",
+          "answer": "by value",
+          "options": [
+            "by value",
+            "scope",
+            "local"
+          ],
+          "feedback": "by value — Pass a copy of the value."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pass an alias of the caller's variable.",
+          "answer": "by reference",
+          "options": [
+            "scope",
+            "local",
+            "by reference"
+          ],
+          "feedback": "by reference — Pass an alias of the caller's variable."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Where a name can be accessed.",
+          "answer": "scope",
+          "options": [
+            "global/class-level",
+            "scope",
+            "local"
+          ],
+          "feedback": "scope — Where a name can be accessed."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Variable with block or method-level scope.",
+          "answer": "local",
+          "options": [
+            "local",
+            "scope",
+            "global/class-level"
+          ],
+          "feedback": "local — Variable with block or method-level scope."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 Method AddTwo(int n) adds 2 to n. Caller x=7 is passed by value. What is x after the call?",
+          "answer": "[3] n is a copy of 7 [1], becomes 9 inside method [1], caller x remains 7 [1].",
+          "options": [
+            "[3] n is a copy of 7 [1], becomes 9 inside method [1], caller x remains 7 [1].",
+            "[6] procedure Swap(a:byRef, b:byRef) [1]; temp=a [1]; a=b [1]; b=temp [1]; caller variables must be updated rather than local copies [2].",
+            "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output…"
+          ],
+          "feedback": "[3] n is a copy of 7 [1], becomes 9 inside method [1], caller x remains 7 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Write an OCR-style subroutine Swap with two by-reference integer parameters and explain why by-reference is required.",
+          "answer": "[6] procedure Swap(a:byRef, b:byRef) [1]; temp=a [1]; a=b [1]; b=temp [1]; caller variables must be updated rather than local copies [2].",
+          "options": [
+            "[3] n is a copy of 7 [1], becomes 9 inside method [1], caller x remains 7 [1].",
+            "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output…",
+            "[6] procedure Swap(a:byRef, b:byRef) [1]; temp=a [1]; a=b [1]; b=temp [1]; caller variables must be updated rather than local copies [2]."
+          ],
+          "feedback": "[6] procedure Swap(a:byRef, b:byRef) [1]; temp=a [1]; a=b [1]; b=temp [1]; caller variables must be updated rather than local copies [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Compare `int result=Double(x);` with `Double(ref x);` as ways of updating a number. Give advantages of one method for a pure calculation.",
+          "answer": "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output…",
+          "options": [
+            "[6] procedure Swap(a:byRef, b:byRef) [1]; temp=a [1]; a=b [1]; b=temp [1]; caller variables must be updated rather than local copies [2].",
+            "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output…",
+            "[3] n is a copy of 7 [1], becomes 9 inside method [1], caller x remains 7 [1]."
+          ],
+          "feedback": "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output assertions [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Compare `int result=Double(x);` with `Double(ref x);` as ways of updating a number. Give advantages of one method for a pure calculation.",
+        "model": "[6] Return version computes a result [1] and caller controls assignment [1]; ref version can update x in place [1]; returning avoids hidden state changes [1], is easier to reason about [1] and can be tested using input/output assertions [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "local means: Variable with block or method-level scope.",
+          "answer": "true",
+          "feedback": "local — Variable with block or method-level scope."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "global/class-level means: Pass an alias of the caller's variable.",
+          "answer": "false",
+          "feedback": "global/class-level — Variable accessible in a wider scope, subject to access rules."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "by value means: Pass a copy of the value.",
+          "answer": "true",
+          "feedback": "by value — Pass a copy of the value."
+        }
+      ]
+    }
+  ]
+}

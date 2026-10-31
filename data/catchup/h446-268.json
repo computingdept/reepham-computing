@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-268",
+  "course": "h446",
+  "title": "Five process scheduling algorithms",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a Ready process?",
+          "answer": "Eligible for CPU time.",
+          "options": [
+            "Maximum CPU time per RR turn.",
+            "Saving and restoring execution context when changing process.",
+            "Eligible for CPU time."
+          ],
+          "feedback": "Eligible for CPU time."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a scheduling quantum?",
+          "answer": "Maximum CPU time per RR turn.",
+          "options": [
+            "Saving and restoring execution context when changing process.",
+            "Maximum CPU time per RR turn.",
+            "Eligible for CPU time."
+          ],
+          "feedback": "Maximum CPU time per RR turn."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a context switch?",
+          "answer": "Saving and restoring execution context when changing process.",
+          "options": [
+            "Saving and restoring execution context when changing process.",
+            "Eligible for CPU time.",
+            "Maximum CPU time per RR turn."
+          ],
+          "feedback": "Saving and restoring execution context when changing process."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Sorted [1,3,5,7,9,11,13,15,17], target 15. Trace midpoint indexes.",
+          "answer": "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7.",
+          "options": [
+            "Eligible for CPU time.",
+            "Maximum CPU time per RR turn.",
+            "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7."
+          ],
+          "feedback": "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "FCFS serves arrival order; SJF selects the shortest available complete job."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "SRT can preempt when a newly ready job has shorter remaining time; RR cycles by quantum."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Multilevel feedback queues adapt priority by task behaviour. Compare responsiveness, waits, starvation and context-switch overhead."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Shorter job B runs first"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "A waits two time units."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'FCFS'?",
+          "answer": "First Come First Served.",
+          "options": [
+            "Shortest Remaining Time.",
+            "First Come First Served.",
+            "Shortest Job First."
+          ],
+          "feedback": "FCFS — First Come First Served."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'SJF'?",
+          "answer": "Shortest Job First.",
+          "options": [
+            "Shortest Job First.",
+            "First Come First Served.",
+            "Shortest Remaining Time."
+          ],
+          "feedback": "SJF — Shortest Job First."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'SRT'?",
+          "answer": "Shortest Remaining Time.",
+          "options": [
+            "First Come First Served.",
+            "Shortest Job First.",
+            "Shortest Remaining Time."
+          ],
+          "feedback": "SRT — Shortest Remaining Time."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Arrival order A,B,C gives mean waiting (0+3+5)/3=8/3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "Explain why each value follows from the earlier step."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Round Robin.",
+          "answer": "RR",
+          "options": [
+            "FCFS",
+            "SJF",
+            "RR"
+          ],
+          "feedback": "RR — Round Robin."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Multilevel feedback queue.",
+          "answer": "MLFQ",
+          "options": [
+            "SJF",
+            "MLFQ",
+            "FCFS"
+          ],
+          "feedback": "MLFQ — Multilevel feedback queue."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First Come First Served.",
+          "answer": "FCFS",
+          "options": [
+            "FCFS",
+            "SJF",
+            "SRT"
+          ],
+          "feedback": "FCFS — First Come First Served."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Shortest Job First.",
+          "answer": "SJF",
+          "options": [
+            "FCFS",
+            "SRT",
+            "SJF"
+          ],
+          "feedback": "SJF — Shortest Job First."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Name FCFS,SJF,SRT,RR and multilevel feedback by defining feature. [5]",
+          "answer": "Arrival order [1]; shortest available non-preemptive job [1]; preemptive shortest remaining [1]; fixed time quanta [1]; adaptive multiple queues [1].",
+          "options": [
+            "FCFS A,B,C [1], waits 0,5,8 [1], mean13/3 [1]; SJF C,B,A [1], waits 0,1,4 [1], mean5/3 [1].",
+            "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1].",
+            "Arrival order [1]; shortest available non-preemptive job [1]; preemptive shortest remaining [1]; fixed time quanta [1]; adaptive multiple queues [1]."
+          ],
+          "feedback": "Arrival order [1]; shortest available non-preemptive job [1]; preemptive shortest remaining [1]; fixed time quanta [1]; adaptive multiple queues [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 A=5,B=3,C=1 all arrive at t=0. For FCFS, break ties in A, B, C order; for non-preemptive SJF, select the shortest available job. Compare the two orders and mean waiting times. [6]",
+          "answer": "FCFS A,B,C [1], waits 0,5,8 [1], mean13/3 [1]; SJF C,B,A [1], waits 0,1,4 [1], mean5/3 [1].",
+          "options": [
+            "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1].",
+            "FCFS A,B,C [1], waits 0,5,8 [1], mean13/3 [1]; SJF C,B,A [1], waits 0,1,4 [1], mean5/3 [1].",
+            "Arrival order [1]; shortest available non-preemptive job [1]; preemptive shortest remaining [1]; fixed time quanta [1]; adaptive multiple queues [1]."
+          ],
+          "feedback": "FCFS A,B,C [1], waits 0,5,8 [1], mean13/3 [1]; SJF C,B,A [1], waits 0,1,4 [1], mean5/3 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Using Round Robin with time quantum 2, processes A=4, B=3 and C=1 all arrive at t=0; take the initial queue order as A, B, C. Give all execution slices and one drawback of a short quantum. [6]",
+          "answer": "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1].",
+          "options": [
+            "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1].",
+            "Arrival order [1]; shortest available non-preemptive job [1]; preemptive shortest remaining [1]; fixed time quanta [1]; adaptive multiple queues [1].",
+            "FCFS A,B,C [1], waits 0,5,8 [1], mean13/3 [1]; SJF C,B,A [1], waits 0,1,4 [1], mean5/3 [1]."
+          ],
+          "feedback": "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Using Round Robin with time quantum 2, processes A=4, B=3 and C=1 all arrive at t=0; take the initial queue order as A, B, C. Give all execution slices and one drawback of a short quantum. [6]",
+        "model": "A0–2 [1], B2–4 [1], C4–5 [1], A5–7 [1], B7–8 [1]; small quantum adds context-switch overhead [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "SJF means: Shortest Job First.",
+          "answer": "true",
+          "feedback": "SJF — Shortest Job First."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "SRT means: Multilevel feedback queue.",
+          "answer": "false",
+          "feedback": "SRT — Shortest Remaining Time."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "RR means: Round Robin.",
+          "answer": "true",
+          "feedback": "RR — Round Robin."
+        }
+      ]
+    }
+  ]
+}

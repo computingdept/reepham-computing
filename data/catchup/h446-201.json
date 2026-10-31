@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-201",
+  "course": "h446",
+  "title": "Hash tables and collisions",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In an undirected graph, why does edge A–B appear in the adjacency list of both A and B?",
+          "answer": "Because traversal is permitted both ways.",
+          "options": [
+            "Because traversal is permitted both ways.",
+            "Left.",
+            "0, 1, 2, 3, 4."
+          ],
+          "feedback": "Because traversal is permitted both ways."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, 18 is smaller than root 25. Which direction do you move?",
+          "answer": "Left.",
+          "options": [
+            "Because traversal is permitted both ways.",
+            "0, 1, 2, 3, 4.",
+            "Left."
+          ],
+          "feedback": "Left."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are valid indexes of a five-element C# array?",
+          "answer": "0, 1, 2, 3, 4.",
+          "options": [
+            "Left.",
+            "0, 1, 2, 3, 4.",
+            "Because traversal is permitted both ways."
+          ],
+          "feedback": "0, 1, 2, 3, 4."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 17 MOD 6.",
+          "answer": "5, since 17 = 2×6 + 5.",
+          "options": [
+            "5, since 17 = 2×6 + 5.",
+            "Because traversal is permitted both ways.",
+            "Left."
+          ],
+          "feedback": "5, since 17 = 2×6 + 5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Calculate the index",
+          "text": "9 MOD 7 = 2, so put 9 into bucket 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Detect a collision",
+          "text": "16 MOD 7 is also 2. The bucket is occupied, so move to the next bucket, 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Probe until empty",
+          "text": "23 also hashes to 2; buckets 2 and 3 are full, so place it in 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict and explain",
+          "text": "Insert 6 at index 1, because 6 MOD 5 = 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check and extend",
+          "text": "11 collides at 1, so store it at 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check and extend",
+          "text": "16 collides at 1 and 2, so store it at 3."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash function'?",
+          "answer": "Maps a key to an initial bucket index.",
+          "options": [
+            "Two keys map to the same initial bucket.",
+            "Checks successive buckets, wrapping around when needed.",
+            "Maps a key to an initial bucket index."
+          ],
+          "feedback": "hash function — Maps a key to an initial bucket index."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'collision'?",
+          "answer": "Two keys map to the same initial bucket.",
+          "options": [
+            "Checks successive buckets, wrapping around when needed.",
+            "Two keys map to the same initial bucket.",
+            "Maps a key to an initial bucket index."
+          ],
+          "feedback": "collision — Two keys map to the same initial bucket."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'linear probing'?",
+          "answer": "Checks successive buckets, wrapping around when needed.",
+          "options": [
+            "Checks successive buckets, wrapping around when needed.",
+            "Maps a key to an initial bucket index.",
+            "Two keys map to the same initial bucket."
+          ],
+          "feedback": "linear probing — Checks successive buckets, wrapping around when needed."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict and explain",
+          "text": "8 goes into bucket 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check and extend",
+          "text": "13 collides at 3 and probes to 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check and extend",
+          "text": "18 collides at 3 and 4; linear probing wraps around to 0, which is empty, so 18 goes into bucket 0."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The proportion of occupied table buckets.",
+          "answer": "load factor",
+          "options": [
+            "load factor",
+            "hash function",
+            "collision"
+          ],
+          "feedback": "load factor — The proportion of occupied table buckets."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A sequence of occupied buckets increasing probe lengths.",
+          "answer": "clustering",
+          "options": [
+            "hash function",
+            "collision",
+            "clustering"
+          ],
+          "feedback": "clustering — A sequence of occupied buckets increasing probe lengths."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maps a key to an initial bucket index.",
+          "answer": "hash function",
+          "options": [
+            "linear probing",
+            "hash function",
+            "collision"
+          ],
+          "feedback": "hash function — Maps a key to an initial bucket index."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two keys map to the same initial bucket.",
+          "answer": "collision",
+          "options": [
+            "collision",
+            "hash function",
+            "linear probing"
+          ],
+          "feedback": "collision — Two keys map to the same initial bucket."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Using h(k)=k MOD 7, find the starting index for 24.",
+          "answer": "24 MOD 7 = 3.",
+          "options": [
+            "24 MOD 7 = 3.",
+            "All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1.",
+            "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion."
+          ],
+          "feedback": "24 MOD 7 = 3."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 Insert 4, 9, 14 into five empty buckets using h(k)=k MOD 5 and linear probing. Give final indexes.",
+          "answer": "All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1.",
+          "options": [
+            "24 MOD 7 = 3.",
+            "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion.",
+            "All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1."
+          ],
+          "feedback": "All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Explain the effect of a high load factor on linear probing.",
+          "answer": "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion.",
+          "options": [
+            "All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1.",
+            "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion.",
+            "24 MOD 7 = 3."
+          ],
+          "feedback": "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Explain the effect of a high load factor on linear probing.",
+        "model": "More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "collision means: Two keys map to the same initial bucket.",
+          "answer": "true",
+          "feedback": "collision — Two keys map to the same initial bucket."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "linear probing means: A sequence of occupied buckets increasing probe lengths.",
+          "answer": "false",
+          "feedback": "linear probing — Checks successive buckets, wrapping around when needed."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "load factor means: The proportion of occupied table buckets.",
+          "answer": "true",
+          "feedback": "load factor — The proportion of occupied table buckets."
+        }
+      ]
+    }
+  ]
+}

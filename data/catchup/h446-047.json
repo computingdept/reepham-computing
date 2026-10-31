@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-047",
+  "course": "h446",
+  "title": "Lesson 047 · Two- and Three-dimensional Arrays in C#",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does index 0 work in C# arrays?",
+          "answer": "It accesses the first position.",
+          "options": [
+            "A reference points to the object; the object holds state.",
+            "It accesses the first position.",
+            "A member exposing data through get/set accessors."
+          ],
+          "feedback": "It accesses the first position."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a property on a C# object?",
+          "answer": "A member exposing data through get/set accessors.",
+          "options": [
+            "A member exposing data through get/set accessors.",
+            "It accesses the first position.",
+            "A reference points to the object; the object holds state."
+          ],
+          "feedback": "A member exposing data through get/set accessors."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the distinction between an array reference and an object instance?",
+          "answer": "A reference points to the object; the object holds state.",
+          "options": [
+            "It accesses the first position.",
+            "A member exposing data through get/set accessors.",
+            "A reference points to the object; the object holds state."
+          ],
+          "feedback": "A reference points to the object; the object holds state."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 017",
+          "answer": "A zero-indexed 4×3 array has how many items and what last valid (row,column)?",
+          "options": [
+            "A member exposing data through get/set accessors.",
+            "A zero-indexed 4×3 array has how many items and what last valid (row,column)?",
+            "It accesses the first position."
+          ],
+          "feedback": "A zero-indexed 4×3 array has how many items and what last valid (row,column)?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "A rectangular C# 2D array uses [row,column]. Example seats has 2 rows and 3 columns."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A 3D array uses [layer,row,column]. new int[2,3,4] holds 24 integers; its last valid index is [1,2,3]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Each dimension starts at zero; distinguish [1,2,3] from a single flat offset and never exceed a dimension's length."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace and justify",
+          "text": "First row, third column gives 7. The column index 2 is valid because there are three columns."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'dimension'?",
+          "answer": "An indexing axis of an array.",
+          "options": [
+            "An indexing axis of an array.",
+            "First index in 2D example.",
+            "Second index in 2D example."
+          ],
+          "feedback": "dimension — An indexing axis of an array."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'row'?",
+          "answer": "First index in 2D example.",
+          "options": [
+            "An indexing axis of an array.",
+            "Second index in 2D example.",
+            "First index in 2D example."
+          ],
+          "feedback": "row — First index in 2D example."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'column'?",
+          "answer": "Second index in 2D example.",
+          "options": [
+            "First index in 2D example.",
+            "Second index in 2D example.",
+            "An indexing axis of an array."
+          ],
+          "feedback": "column — Second index in 2D example."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace and justify",
+          "text": "Output 14: second layer, first row, third column. Six values per layer, twelve total."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? 3D grid element.",
+          "answer": "voxel",
+          "options": [
+            "row",
+            "voxel",
+            "dimension"
+          ],
+          "feedback": "voxel — 3D grid element."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An indexing axis of an array.",
+          "answer": "dimension",
+          "options": [
+            "dimension",
+            "row",
+            "column"
+          ],
+          "feedback": "dimension — An indexing axis of an array."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First index in 2D example.",
+          "answer": "row",
+          "options": [
+            "dimension",
+            "column",
+            "row"
+          ],
+          "feedback": "row — First index in 2D example."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Second index in 2D example.",
+          "answer": "column",
+          "options": [
+            "row",
+            "column",
+            "dimension"
+          ],
+          "feedback": "column — Second index in 2D example."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Find a[1,1] in {{2,4,6},{8,10,12}} and show indexes. [4]",
+          "answer": "/ MARKS 10 [2]; second row (1), second column (1) [2].",
+          "options": [
+            "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1).",
+            "/ MARKS 10 [2]; second row (1), second column (1) [2].",
+            "/ MARKS 2×3×4=24 [3], last triple [1,2,3] [3]."
+          ],
+          "feedback": "/ MARKS 10 [2]; second row (1), second column (1) [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 A 3D array has sizes [2,3,4]. Calculate items and last index triple. [6]",
+          "answer": "/ MARKS 2×3×4=24 [3], last triple [1,2,3] [3].",
+          "options": [
+            "/ MARKS 2×3×4=24 [3], last triple [1,2,3] [3].",
+            "/ MARKS 10 [2]; second row (1), second column (1) [2].",
+            "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1)."
+          ],
+          "feedback": "/ MARKS 2×3×4=24 [3], last triple [1,2,3] [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Write two nested C# loops that print all values in int[,] a of 3 rows and 2 columns, explaining order. [6]",
+          "answer": "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1).",
+          "options": [
+            "/ MARKS 10 [2]; second row (1), second column (1) [2].",
+            "/ MARKS 2×3×4=24 [3], last triple [1,2,3] [3].",
+            "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1)."
+          ],
+          "feedback": "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1)."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Write two nested C# loops that print all values in int[,] a of 3 rows and 2 columns, explaining order. [6]",
+        "model": "/ MARKS for(int r=0;r<3;r++) [2] for(int c=0;c<2;c++) [2] Console.WriteLine(a[r,c]); [2]. Row-major traversal visits (0,0)..(2,1).",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "row means: First index in 2D example.",
+          "answer": "true",
+          "feedback": "row — First index in 2D example."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "column means: An indexing axis of an array.",
+          "answer": "false",
+          "feedback": "column — Second index in 2D example."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "voxel means: 3D grid element.",
+          "answer": "true",
+          "feedback": "voxel — 3D grid element."
+        }
+      ]
+    }
+  ]
+}

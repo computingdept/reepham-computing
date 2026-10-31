@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-232",
+  "course": "h446",
+  "title": "OCR pseudocode, files and IDEs",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If y=4 is passed by ref and a method adds 5, what is y after the call?",
+          "answer": "9.",
+          "options": [
+            "Pauses execution at a specified line.",
+            "A Boolean test evaluated before each iteration.",
+            "9."
+          ],
+          "feedback": "9."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a breakpoint do?",
+          "answer": "Pauses execution at a specified line.",
+          "options": [
+            "A Boolean test evaluated before each iteration.",
+            "Pauses execution at a specified line.",
+            "9."
+          ],
+          "feedback": "Pauses execution at a specified line."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which condition controls a while loop?",
+          "answer": "A Boolean test evaluated before each iteration.",
+          "options": [
+            "A Boolean test evaluated before each iteration.",
+            "9.",
+            "Pauses execution at a specified line."
+          ],
+          "feedback": "A Boolean test evaluated before each iteration."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If a file has two lines and each readLine reads one line, how many calls read the whole file?",
+          "answer": "Two calls, assuming both lines are read and no additional data.",
+          "options": [
+            "9.",
+            "Pauses execution at a specified line.",
+            "Two calls, assuming both lines are read and no additional data."
+          ],
+          "feedback": "Two calls, assuming both lines are read and no additional data."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Open the resource",
+          "text": "openRead returns a file object for reading; it does not overwrite the file."
+        },
+        {
+          "type": "paragraph",
+          "title": "Read until EOF",
+          "text": "endOfFile() is false while another line remains. readLine() retrieves one line and moves the file position."
+        },
+        {
+          "type": "paragraph",
+          "title": "Close the file",
+          "text": "After the final line, endOfFile() is true, so the loop stops and the file is closed. For writing use openWrite , writeLine , then close() ; unlike reading, opening for writing overwrites any existing file contents ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The first call returns Apple and advances the file position."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "The next call returns Pear; variable a stays Apple."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "close releases the file resource; Plum has not been read."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'openRead'?",
+          "answer": "Open a file for reading using OCR A Level pseudocode.",
+          "options": [
+            "Test whether no unread lines remain.",
+            "Open a file for reading using OCR A Level pseudocode.",
+            "Read the next line from an open file."
+          ],
+          "feedback": "openRead — Open a file for reading using OCR A Level pseudocode."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'readLine'?",
+          "answer": "Read the next line from an open file.",
+          "options": [
+            "Read the next line from an open file.",
+            "Open a file for reading using OCR A Level pseudocode.",
+            "Test whether no unread lines remain."
+          ],
+          "feedback": "readLine — Read the next line from an open file."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'endOfFile'?",
+          "answer": "Test whether no unread lines remain.",
+          "options": [
+            "Open a file for reading using OCR A Level pseudocode.",
+            "Read the next line from an open file.",
+            "Test whether no unread lines remain."
+          ],
+          "feedback": "endOfFile — Test whether no unread lines remain."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The loop prints York from the first readLine call."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "Then it prints Bath from the second call. At EOF the loop condition becomes false, so it stops after two reads."
+        },
+        {
+          "type": "paragraph",
+          "title": "List the final file lines",
+          "text": "Predict the order of the two lines stored by the code and name the method that releases the file."
+        },
+        {
+          "type": "paragraph",
+          "title": "Two lines, then close",
+          "text": "The file contains START and DONE on separate lines. close() finishes and releases the file."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Open for writing; existing file contents are replaced.",
+          "answer": "openWrite",
+          "options": [
+            "openRead",
+            "readLine",
+            "openWrite"
+          ],
+          "feedback": "openWrite — Open for writing; existing file contents are replaced."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Release an opened file resource.",
+          "answer": "close",
+          "options": [
+            "readLine",
+            "close",
+            "openRead"
+          ],
+          "feedback": "close — Release an opened file resource."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Open a file for reading using OCR A Level pseudocode.",
+          "answer": "openRead",
+          "options": [
+            "openRead",
+            "readLine",
+            "endOfFile"
+          ],
+          "feedback": "openRead — Open a file for reading using OCR A Level pseudocode."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Read the next line from an open file.",
+          "answer": "readLine",
+          "options": [
+            "openRead",
+            "endOfFile",
+            "readLine"
+          ],
+          "feedback": "readLine — Read the next line from an open file."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 An OCR pseudocode file contains Cat, Dog, Fox on separate lines. What do the first two readLine() calls return?",
+          "answer": "[4] First returns Cat [2]; second returns Dog [2]. Fox remains unread.",
+          "options": [
+            "[6] f=openRead(\"words.txt\") [1]; while NOT f.endOfFile() [2]; print(f.readLine()) [2]; endwhile, f.close() [1].",
+            "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF…",
+            "[4] First returns Cat [2]; second returns Dog [2]. Fox remains unread."
+          ],
+          "feedback": "[4] First returns Cat [2]; second returns Dog [2]. Fox remains unread."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Write OCR A Level pseudocode to open words.txt, display each line and close the file.",
+          "answer": "[6] f=openRead(\"words.txt\") [1]; while NOT f.endOfFile() [2]; print(f.readLine()) [2]; endwhile, f.close() [1].",
+          "options": [
+            "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF…",
+            "[6] f=openRead(\"words.txt\") [1]; while NOT f.endOfFile() [2]; print(f.readLine()) [2]; endwhile, f.close() [1].",
+            "[4] First returns Cat [2]; second returns Dog [2]. Fox remains unread."
+          ],
+          "feedback": "[6] f=openRead(\"words.txt\") [1]; while NOT f.endOfFile() [2]; print(f.readLine()) [2]; endwhile, f.close() [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 8 marks · QUESTION 3 OF 3 Explain why openWrite is unsuitable for reading an existing file. Write OCR pseudocode that replaces events.txt with one line HELLO, and identify a debugging step if a reading loop omits its last record.",
+          "answer": "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF…",
+          "options": [
+            "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF…",
+            "[4] First returns Cat [2]; second returns Dog [2]. Fox remains unread.",
+            "[6] f=openRead(\"words.txt\") [1]; while NOT f.endOfFile() [2]; print(f.readLine()) [2]; endwhile, f.close() [1]."
+          ],
+          "feedback": "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF condition/readLine position [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 8 marks · QUESTION 3 OF 3 Explain why openWrite is unsuitable for reading an existing file. Write OCR pseudocode that replaces events.txt with one line HELLO, and identify a debugging step if a reading loop omits its last record.",
+        "model": "[8] openWrite replaces contents rather than reading [2]; use openRead for existing data [1]; f=openWrite(\"events.txt\") [1], f.writeLine(\"HELLO\") [1], f.close() [1]; breakpoint/step through final loop iteration [1]; inspect EOF condition/readLine position [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "readLine means: Read the next line from an open file.",
+          "answer": "true",
+          "feedback": "readLine — Read the next line from an open file."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "endOfFile means: Release an opened file resource.",
+          "answer": "false",
+          "feedback": "endOfFile — Test whether no unread lines remain."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "openWrite means: Open for writing; existing file contents are replaced.",
+          "answer": "true",
+          "feedback": "openWrite — Open for writing; existing file contents are replaced."
+        }
+      ]
+    }
+  ]
+}

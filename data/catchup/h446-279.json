@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-279",
+  "course": "h446",
+  "title": "SQL INSERT, DELETE, DROP and LIKE",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a primary key enforce?",
+          "answer": "Uniqueness of row identifier.",
+          "options": [
+            "Uniqueness of row identifier.",
+            "Return all columns.",
+            "Links a row to a related key."
+          ],
+          "feedback": "Uniqueness of row identifier."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does SELECT * mean?",
+          "answer": "Return all columns.",
+          "options": [
+            "Uniqueness of row identifier.",
+            "Links a row to a related key.",
+            "Return all columns."
+          ],
+          "feedback": "Return all columns."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a foreign key used for?",
+          "answer": "Links a row to a related key.",
+          "options": [
+            "Return all columns.",
+            "Links a row to a related key.",
+            "Uniqueness of row identifier."
+          ],
+          "feedback": "Links a row to a related key."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify A ∨ (¬A ∧ B) using a Boolean identity.",
+          "answer": "A∨(¬A∧B)=(A∨¬A)∧(A∨B)=1∧(A∨B)=A∨B.",
+          "options": [
+            "A∨(¬A∧B)=(A∨¬A)∧(A∨B)=1∧(A∨B)=A∨B.",
+            "Uniqueness of row identifier.",
+            "Return all columns."
+          ],
+          "feedback": "A∨(¬A∧B)=(A∨¬A)∧(A∨B)=1∧(A∨B)=A∨B."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "INSERT adds a row; DELETE removes records matching a WHERE predicate. Omitting WHERE can delete every row."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "DROP TABLE removes the table itself, not just one record. It is a destructive schema operation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "LIKE uses % for any number of characters and _ for a single character in standard SQL. SELECT * means all columns, a different use of *."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "DELETE with a key-based WHERE targets that record"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the answer",
+          "text": "DROP TABLE would remove the entire table."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'INSERT'?",
+          "answer": "Add records.",
+          "options": [
+            "Remove matching records.",
+            "Remove table definition/data.",
+            "Add records."
+          ],
+          "feedback": "INSERT — Add records."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'DELETE'?",
+          "answer": "Remove matching records.",
+          "options": [
+            "Remove table definition/data.",
+            "Remove matching records.",
+            "Add records."
+          ],
+          "feedback": "DELETE — Remove matching records."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'DROP TABLE'?",
+          "answer": "Remove table definition/data.",
+          "options": [
+            "Remove table definition/data.",
+            "Add records.",
+            "Remove matching records."
+          ],
+          "feedback": "DROP TABLE — Remove table definition/data."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Jo, John and Joanne match"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the answer",
+          "text": "a name not starting Jo does not. The % wildcard may match zero or more characters."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pattern matching.",
+          "answer": "LIKE",
+          "options": [
+            "LIKE",
+            "INSERT",
+            "DELETE"
+          ],
+          "feedback": "LIKE — Pattern matching."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Zero or more characters in LIKE.",
+          "answer": "%",
+          "options": [
+            "INSERT",
+            "DELETE",
+            "%"
+          ],
+          "feedback": "% — Zero or more characters in LIKE."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add records.",
+          "answer": "INSERT",
+          "options": [
+            "DROP TABLE",
+            "INSERT",
+            "DELETE"
+          ],
+          "feedback": "INSERT — Add records."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Remove matching records.",
+          "answer": "DELETE",
+          "options": [
+            "DELETE",
+            "INSERT",
+            "DROP TABLE"
+          ],
+          "feedback": "DELETE — Remove matching records."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Give correct SQL to add a row (7,'Elena') to Student(ID,Name). [4]",
+          "answer": "INSERT INTO Student [1] (ID,Name) [1] VALUES (7,'Elena') [2];",
+          "options": [
+            "INSERT INTO Student [1] (ID,Name) [1] VALUES (7,'Elena') [2];",
+            "Without WHERE all rows removed [2]; DELETE FROM Student [1] WHERE ID=7 [2]; check key/transaction/backups first [1].",
+            "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2]."
+          ],
+          "feedback": "INSERT INTO Student [1] (ID,Name) [1] VALUES (7,'Elena') [2];"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Explain DELETE FROM Student without WHERE, and write a safer deletion for ID=7. [6]",
+          "answer": "Without WHERE all rows removed [2]; DELETE FROM Student [1] WHERE ID=7 [2]; check key/transaction/backups first [1].",
+          "options": [
+            "INSERT INTO Student [1] (ID,Name) [1] VALUES (7,'Elena') [2];",
+            "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2].",
+            "Without WHERE all rows removed [2]; DELETE FROM Student [1] WHERE ID=7 [2]; check key/transaction/backups first [1]."
+          ],
+          "feedback": "Without WHERE all rows removed [2]; DELETE FROM Student [1] WHERE ID=7 [2]; check key/transaction/backups first [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Explain difference between SELECT *, LIKE 'A%' and DROP TABLE. Give a use and consequence of each. [6]",
+          "answer": "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2].",
+          "options": [
+            "Without WHERE all rows removed [2]; DELETE FROM Student [1] WHERE ID=7 [2]; check key/transaction/backups first [1].",
+            "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2].",
+            "INSERT INTO Student [1] (ID,Name) [1] VALUES (7,'Elena') [2];"
+          ],
+          "feedback": "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Explain difference between SELECT *, LIKE 'A%' and DROP TABLE. Give a use and consequence of each. [6]",
+        "model": "SELECT * returns all columns [2]; LIKE A% filters strings starting A [2]; DROP TABLE removes table structure and data [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "DELETE means: Remove matching records.",
+          "answer": "true",
+          "feedback": "DELETE — Remove matching records."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "DROP TABLE means: Zero or more characters in LIKE.",
+          "answer": "false",
+          "feedback": "DROP TABLE — Remove table definition/data."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "LIKE means: Pattern matching.",
+          "answer": "true",
+          "feedback": "LIKE — Pattern matching."
+        }
+      ]
+    }
+  ]
+}

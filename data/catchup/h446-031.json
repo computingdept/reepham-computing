@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-031",
+  "course": "h446",
+  "title": "D-type flip-flops",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A half adder receives A = 1 and B = 0. Calculate Sum and Carry. Explain which logic operation produces each output.",
+          "answer": "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
+          "options": [
+            "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
+            "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
+          ],
+          "feedback": "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Apply De Morgan’s law to simplify ¬(A ∨ B).",
+          "answer": "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
+          "options": [
+            "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
+            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
+          ],
+          "feedback": "¬A ∧ ¬B. Negate both inputs and change OR to AND."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Insert 40, 20, 60, 30 into an empty binary search tree. State the parent of 30 and whether 30 is its left or right child.",
+          "answer": "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+          "options": [
+            "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
+            "¬A ∧ ¬B. Negate both inputs and change OR to AND."
+          ],
+          "feedback": "30 is the right child of 20: 30 is less than 40, but greater than 20."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A = 0.1100₂ × 2³ and B = 0.0100₂ × 2³. Calculate A − B, showing the mantissa calculation and decimal result.",
+          "answer": "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀.",
+          "options": [
+            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
+            "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
+            "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀."
+          ],
+          "feedback": "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Why do we need flip-flops?",
+          "text": "Logic gates calculate; a flip-flop remembers. Registers must hold values even when other inputs change."
+        },
+        {
+          "type": "paragraph",
+          "title": "Meet the D-type flip-flop",
+          "text": "D is the data input. Q is the stored output. CLK determines when Q can update."
+        },
+        {
+          "type": "paragraph",
+          "title": "Supermarket door analogy",
+          "text": "D can change before the sample. Q only stores the new value at CLK ↑."
+        },
+        {
+          "type": "paragraph",
+          "title": "Digital watch: divide by two",
+          "text": "NOT Q fed into D causes Q to toggle at each rising edge."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model when Q changes — and when it holds",
+          "text": "Q initially stores 1 . Follow CLK first, then D, then Q. Watch what happens at a falling edge, when D changes alone, and at each rising edge."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Identify which edges count",
+          "text": "Point to CLK: ↑ is LOW → HIGH and samples D. ↓ is HIGH → LOW and does not update Q. Find all three ↑ edges before reading D."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'D-type flip-flop'?",
+          "answer": "A circuit that stores one bit.",
+          "options": [
+            "A timing signal.",
+            "A circuit that stores one bit.",
+            "The data value presented to the flip-flop."
+          ],
+          "feedback": "D-type flip-flop — A circuit that stores one bit."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'D input'?",
+          "answer": "The data value presented to the flip-flop.",
+          "options": [
+            "The data value presented to the flip-flop.",
+            "A circuit that stores one bit.",
+            "A timing signal."
+          ],
+          "feedback": "D input — The data value presented to the flip-flop."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'clock'?",
+          "answer": "A timing signal.",
+          "options": [
+            "A circuit that stores one bit.",
+            "The data value presented to the flip-flop.",
+            "A timing signal."
+          ],
+          "feedback": "clock — A timing signal."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace four rising clock edges",
+          "text": "Q initially stores 1. Predict its value at each rising edge (↑)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Predict edge 1",
+          "text": "Find D at ↑1. What should Q store next?"
+        },
+        {
+          "type": "paragraph",
+          "title": "D = 0 → Q = 0",
+          "text": "Q changes from 1 to 0. Complete row 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "D = 1 → Q = 1",
+          "text": "Q updates from D at ↑2. Complete row 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The clock event that causes sampling.",
+          "answer": "trigger",
+          "options": [
+            "D-type flip-flop",
+            "D input",
+            "trigger"
+          ],
+          "feedback": "trigger — The clock event that causes sampling."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The currently stored bit.",
+          "answer": "Q output",
+          "options": [
+            "D input",
+            "Q output",
+            "D-type flip-flop"
+          ],
+          "feedback": "Q output — The currently stored bit."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The remembered 0 or 1.",
+          "answer": "state",
+          "options": [
+            "state",
+            "D-type flip-flop",
+            "D input"
+          ],
+          "feedback": "state — The remembered 0 or 1."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A transition in the clock signal.",
+          "answer": "edge",
+          "options": [
+            "D-type flip-flop",
+            "D input",
+            "edge"
+          ],
+          "feedback": "edge — A transition in the clock signal."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Model when Q changes — and when it holds Q initially stores 1 . Follow CLK first, then D, then Q. Watch what happens at a falling edge, when D changes alone, and at each rising edge.",
+          "answer": "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves.",
+          "options": [
+            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
+            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+          ],
+          "feedback": "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace four rising clock edges Q initially stores 1. Predict its value at each rising edge (↑).",
+          "answer": "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
+          "options": [
+            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1.",
+            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves."
+          ],
+          "feedback": "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Rising edge or falling edge? Q starts at 0 . Follow the signals left to right. Which events can update Q?",
+          "answer": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+          "options": [
+            "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+            "STEP 2 OF 5 · EDGE 1 ↑1: Q changes from 1 to 0 CLK rises. Read D = 0. Q was 1, so copying 0 causes a visible change. On the following falling edge Q holds 0, even though CLK moves.",
+            "CHECK · EDGE 1 D = 0 → Q = 0 Q changes from 1 to 0. Complete row 1."
+          ],
+          "feedback": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Rising edge or falling edge? Q starts at 0 . Follow the signals left to right. Which events can update Q?",
+        "model": "CHECK · A AND B A holds; B changes A: D changes to 1, but CLK remains 0, so Q stays 0. B: CLK rises from 0 to 1, so Q copies D = 1 and changes to 1.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "D input means: The data value presented to the flip-flop.",
+          "answer": "true",
+          "feedback": "D input — The data value presented to the flip-flop."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "clock means: The currently stored bit.",
+          "answer": "false",
+          "feedback": "clock — A timing signal."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "trigger means: The clock event that causes sampling.",
+          "answer": "true",
+          "feedback": "trigger — The clock event that causes sampling."
+        }
+      ]
+    }
+  ]
+}

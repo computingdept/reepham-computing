@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-021",
+  "course": "h446",
+  "title": "Graphs: directed and undirected",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which structure is LIFO?",
+          "answer": "A stack.",
+          "options": [
+            "A stack.",
+            "A queue.",
+            "The array index of another item."
+          ],
+          "feedback": "A stack."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which structure is FIFO?",
+          "answer": "A queue.",
+          "options": [
+            "A stack.",
+            "The array index of another item.",
+            "A queue."
+          ],
+          "feedback": "A queue."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In an array-based linked list, what does the next pointer store?",
+          "answer": "The array index of another item.",
+          "options": [
+            "A queue.",
+            "The array index of another item.",
+            "A stack."
+          ],
+          "feedback": "The array index of another item."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In an undirected graph, if A is connected to B, is B also connected to A?",
+          "answer": "Yes.",
+          "options": [
+            "Yes.",
+            "A stack.",
+            "A queue."
+          ],
+          "feedback": "Yes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Create",
+          "text": "Three vertices (A, B and C) produce a 3 by 3 matrix: one row and one column per vertex. The four-vertex 4×4 example comes later in You Do."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add undirected edge",
+          "text": "The matrix is symmetrical for an undirected connection."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add directed edge",
+          "text": "Only A→B is stored."
+        },
+        {
+          "type": "paragraph",
+          "title": "Remove and inspect",
+          "text": "Clearing removes an edge; scanning a row finds neighbours."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Build A—B—C",
+          "text": "Represent a simple undirected graph. A = 0 B = 1 C = 2"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Make matrix",
+          "text": "int[,] graph = new int[3,3];"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'graph'?",
+          "answer": "Vertices connected by edges.",
+          "options": [
+            "A point/node in a graph.",
+            "A connection between vertices.",
+            "Vertices connected by edges."
+          ],
+          "feedback": "graph — Vertices connected by edges."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'vertex'?",
+          "answer": "A point/node in a graph.",
+          "options": [
+            "A connection between vertices.",
+            "A point/node in a graph.",
+            "Vertices connected by edges."
+          ],
+          "feedback": "vertex — A point/node in a graph."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'edge'?",
+          "answer": "A connection between vertices.",
+          "options": [
+            "A connection between vertices.",
+            "Vertices connected by edges.",
+            "A point/node in a graph."
+          ],
+          "feedback": "edge — A connection between vertices."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Add undirected edge",
+          "text": "Add edge 0—2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Fill the same code",
+          "text": "graph[0,2] = ?; graph[2,0] = ?;"
+        },
+        {
+          "type": "paragraph",
+          "title": "Fill the same code",
+          "text": "graph[0,2] = 1; graph[2,0] = 1;"
+        },
+        {
+          "type": "paragraph",
+          "title": "Add directed edge",
+          "text": "Add only 1→3."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Edges have a direction.",
+          "answer": "directed",
+          "options": [
+            "directed",
+            "graph",
+            "vertex"
+          ],
+          "feedback": "directed — Edges have a direction."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Edges work both ways.",
+          "answer": "undirected",
+          "options": [
+            "graph",
+            "vertex",
+            "undirected"
+          ],
+          "feedback": "undirected — Edges work both ways."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A 2D array storing graph connections.",
+          "answer": "adjacency matrix",
+          "options": [
+            "vertex",
+            "adjacency matrix",
+            "graph"
+          ],
+          "feedback": "adjacency matrix — A 2D array storing graph connections."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A directly connected vertex.",
+          "answer": "neighbour",
+          "options": [
+            "neighbour",
+            "graph",
+            "vertex"
+          ],
+          "feedback": "neighbour — A directly connected vertex."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build A—B—C Represent a simple undirected graph.",
+          "answer": "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
+          "options": [
+            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
+            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
+            "CHECK Fill the same code graph[1,3] = 1;"
+          ],
+          "feedback": "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Add undirected edge Add edge 0—2.",
+          "answer": "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
+          "options": [
+            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;",
+            "CHECK Fill the same code graph[1,3] = 1;",
+            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;"
+          ],
+          "feedback": "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Add directed edge Add only 1→3.",
+          "answer": "CHECK Fill the same code graph[1,3] = 1;",
+          "options": [
+            "CHECK Fill the same code graph[0,2] = 1; graph[2,0] = 1;",
+            "CHECK Fill the same code graph[1,3] = 1;",
+            "STEP 2 · ADD A—B graph[0,1] = 1; graph[1,0] = 1;"
+          ],
+          "feedback": "CHECK Fill the same code graph[1,3] = 1;"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Add directed edge Add only 1→3.",
+        "model": "CHECK Fill the same code graph[1,3] = 1;",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "vertex means: A point/node in a graph.",
+          "answer": "true",
+          "feedback": "vertex — A point/node in a graph."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "edge means: Edges work both ways.",
+          "answer": "false",
+          "feedback": "edge — A connection between vertices."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "directed means: Edges have a direction.",
+          "answer": "true",
+          "feedback": "directed — Edges have a direction."
+        }
+      ]
+    }
+  ]
+}

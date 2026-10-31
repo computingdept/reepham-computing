@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-131",
+  "course": "h446",
+  "title": "Lesson 131 · Asymmetric Encryption and Public-Key Use",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the principal challenge of symmetric encryption between distant users?",
+          "answer": "Securely sharing and managing the secret key.",
+          "options": [
+            "Sum 0, carry-out 1.",
+            "Securely sharing and managing the secret key.",
+            "An input used by a subroutine."
+          ],
+          "feedback": "Securely sharing and managing the secret key."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a function parameter?",
+          "answer": "An input used by a subroutine.",
+          "options": [
+            "An input used by a subroutine.",
+            "Securely sharing and managing the secret key.",
+            "Sum 0, carry-out 1."
+          ],
+          "feedback": "An input used by a subroutine."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the binary result of 1 + 1 in a full adder with carry-in 0?",
+          "answer": "Sum 0, carry-out 1.",
+          "options": [
+            "Securely sharing and managing the secret key.",
+            "An input used by a subroutine.",
+            "Sum 0, carry-out 1."
+          ],
+          "feedback": "Sum 0, carry-out 1."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits are in three bytes?",
+          "answer": "24.",
+          "options": [
+            "An input used by a subroutine.",
+            "24.",
+            "Securely sharing and managing the secret key."
+          ],
+          "feedback": "24."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Generate key pair",
+          "text": "Public key can be shared; private key remains secret."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encrypt to recipient",
+          "text": "A message encrypted with recipient public key is decrypted by recipient private key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Sign and verify",
+          "text": "Signature created with private key is verified using corresponding public key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Bob shares public key",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Alice encrypts for Bob",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Bob uses private key",
+          "text": "Alice encrypts a suitably sized message or session key using Bob's public key. Bob decrypts using his matching private key. Alice never requires Bob's private key."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'public key'?",
+          "answer": "A key that can be distributed openly.",
+          "options": [
+            "A key that can be distributed openly.",
+            "A matching secret key kept by its owner.",
+            "Uses a related public/private key pair."
+          ],
+          "feedback": "public key — A key that can be distributed openly."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'private key'?",
+          "answer": "A matching secret key kept by its owner.",
+          "options": [
+            "A key that can be distributed openly.",
+            "Uses a related public/private key pair.",
+            "A matching secret key kept by its owner."
+          ],
+          "feedback": "private key — A matching secret key kept by its owner."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'asymmetric encryption'?",
+          "answer": "Uses a related public/private key pair.",
+          "options": [
+            "A matching secret key kept by its owner.",
+            "Uses a related public/private key pair.",
+            "A key that can be distributed openly."
+          ],
+          "feedback": "asymmetric encryption — Uses a related public/private key pair."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Publisher signs privately",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Distribute signed file",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Verify with public key",
+          "text": "The publisher creates the digital signature with its private key. Users verify it with the public key obtained through a trusted route; this supports authenticity and integrity, not secrecy of the update."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Cryptographic evidence of origin and integrity with private-key signing.",
+          "answer": "digital signature",
+          "options": [
+            "private key",
+            "digital signature",
+            "public key"
+          ],
+          "feedback": "digital signature — Cryptographic evidence of origin and integrity with private-key signing."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A key that can be distributed openly.",
+          "answer": "public key",
+          "options": [
+            "public key",
+            "private key",
+            "asymmetric encryption"
+          ],
+          "feedback": "public key — A key that can be distributed openly."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A matching secret key kept by its owner.",
+          "answer": "private key",
+          "options": [
+            "public key",
+            "asymmetric encryption",
+            "private key"
+          ],
+          "feedback": "private key — A matching secret key kept by its owner."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Uses a related public/private key pair.",
+          "answer": "asymmetric encryption",
+          "options": [
+            "private key",
+            "asymmetric encryption",
+            "public key"
+          ],
+          "feedback": "asymmetric encryption — Uses a related public/private key pair."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain the difference between public and private keys and how they support confidentiality. [6]",
+          "answer": "/ WORKED ANSWER Public key distributed [2], private key secret [2], public encrypt/private decrypt for recipient [2].",
+          "options": [
+            "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2].",
+            "/ WORKED ANSWER Public key distributed [2], private key secret [2], public encrypt/private decrypt for recipient [2].",
+            "/ WORKED ANSWER Signer signs using private key [2], verifier uses trusted public key [2], checks authenticity/integrity [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Public key distributed [2], private key secret [2], public encrypt/private decrypt for recipient [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Outline how a digitally signed download is verified. [6]",
+          "answer": "/ WORKED ANSWER Signer signs using private key [2], verifier uses trusted public key [2], checks authenticity/integrity [2].",
+          "options": [
+            "/ WORKED ANSWER Signer signs using private key [2], verifier uses trusted public key [2], checks authenticity/integrity [2].",
+            "/ WORKED ANSWER Public key distributed [2], private key secret [2], public encrypt/private decrypt for recipient [2].",
+            "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Signer signs using private key [2], verifier uses trusted public key [2], checks authenticity/integrity [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Compare asymmetric and symmetric approaches for sending a large encrypted video file. [8]",
+          "answer": "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2].",
+          "options": [
+            "/ WORKED ANSWER Public key distributed [2], private key secret [2], public encrypt/private decrypt for recipient [2].",
+            "/ WORKED ANSWER Signer signs using private key [2], verifier uses trusted public key [2], checks authenticity/integrity [2].",
+            "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Compare asymmetric and symmetric approaches for sending a large encrypted video file. [8]",
+        "model": "/ WORKED ANSWER Symmetric efficient for bulk [2], asymmetric useful for secure session-key exchange [2], hybrid approach [2], key identity/trust and limitations [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "private key means: A matching secret key kept by its owner.",
+          "answer": "true",
+          "feedback": "private key — A matching secret key kept by its owner."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "asymmetric encryption means: A key that can be distributed openly.",
+          "answer": "false",
+          "feedback": "asymmetric encryption — Uses a related public/private key pair."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "digital signature means: Cryptographic evidence of origin and integrity with private-key signing.",
+          "answer": "true",
+          "feedback": "digital signature — Cryptographic evidence of origin and integrity with private-key signing."
+        }
+      ]
+    }
+  ]
+}

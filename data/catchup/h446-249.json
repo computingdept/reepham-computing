@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-249",
+  "course": "h446",
+  "title": "Introduction to time and space complexity",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What makes a binary search trace convincing?",
+          "answer": "Showing low, high, mid, comparisons and any bound updates.",
+          "options": [
+            "Showing low, high, mid, comparisons and any bound updates.",
+            "O(n log n).",
+            "n values; storing it needs O(n) space."
+          ],
+          "feedback": "Showing low, high, mid, comparisons and any bound updates."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is its typical average time complexity?",
+          "answer": "O(n log n).",
+          "options": [
+            "Showing low, high, mid, comparisons and any bound updates.",
+            "n values; storing it needs O(n) space.",
+            "O(n log n)."
+          ],
+          "feedback": "O(n log n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many values are in an int array of length n?",
+          "answer": "n values; storing it needs O(n) space.",
+          "options": [
+            "O(n log n).",
+            "n values; storing it needs O(n) space.",
+            "Showing low, high, mid, comparisons and any bound updates."
+          ],
+          "feedback": "n values; storing it needs O(n) space."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Apply an eight-bit left shift by two to 00010110₂ and bitwise AND to 00110110₂ with 00001111₂. Give both results in binary.",
+          "answer": "Left shift 00010110 << 2 = 01011000 (eight-bit, zero-filled). AND 00110110 ∧ 00001111 = 00000110.",
+          "options": [
+            "Left shift 00010110 << 2 = 01011000 (eight-bit, zero-filled). AND 00110110 ∧ 00001111 = 00000110.",
+            "Showing low, high, mid, comparisons and any bound updates.",
+            "O(n log n)."
+          ],
+          "feedback": "Left shift 00010110 << 2 = 01011000 (eight-bit, zero-filled). AND 00110110 ∧ 00001111 = 00000110."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Analyse the loops",
+          "text": "One full loop runs n iterations; a pair of n-sized nested loops performs n² inner iterations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate time and space",
+          "text": "Big O time counts growth of work; auxiliary space measures extra storage beyond the original input."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare feasible scales",
+          "text": "At n=16, exponential growth can be dramatically more expensive than linear growth. Big O omits constants and measured run time."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "One scan has eight iterations, giving linear growth O(n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the answer",
+          "text": "Nested loops perform 8×8=64 inner iterations, giving quadratic growth O(n²)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'time complexity'?",
+          "answer": "Asymptotic growth in algorithm work.",
+          "options": [
+            "Extra memory used by an algorithm.",
+            "Upper asymptotic bound commonly used to classify growth.",
+            "Asymptotic growth in algorithm work."
+          ],
+          "feedback": "time complexity — Asymptotic growth in algorithm work."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'auxiliary space'?",
+          "answer": "Extra memory used by an algorithm.",
+          "options": [
+            "Upper asymptotic bound commonly used to classify growth.",
+            "Extra memory used by an algorithm.",
+            "Asymptotic growth in algorithm work."
+          ],
+          "feedback": "auxiliary space — Extra memory used by an algorithm."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Big O'?",
+          "answer": "Upper asymptotic bound commonly used to classify growth.",
+          "options": [
+            "Upper asymptotic bound commonly used to classify growth.",
+            "Asymptotic growth in algorithm work.",
+            "Extra memory used by an algorithm."
+          ],
+          "feedback": "Big O — Upper asymptotic bound commonly used to classify growth."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The linear count doubles from 8 to 16."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the answer",
+          "text": "Quadratic count rises from 64 to 256, multiplying by four; this difference grows with n."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth proportional to n².",
+          "answer": "quadratic",
+          "options": [
+            "quadratic",
+            "time complexity",
+            "auxiliary space"
+          ],
+          "feedback": "quadratic — Growth proportional to n²."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth such as 2ⁿ.",
+          "answer": "exponential",
+          "options": [
+            "time complexity",
+            "auxiliary space",
+            "exponential"
+          ],
+          "feedback": "exponential — Growth such as 2ⁿ."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Asymptotic growth in algorithm work.",
+          "answer": "time complexity",
+          "options": [
+            "Big O",
+            "time complexity",
+            "auxiliary space"
+          ],
+          "feedback": "time complexity — Asymptotic growth in algorithm work."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Extra memory used by an algorithm.",
+          "answer": "auxiliary space",
+          "options": [
+            "auxiliary space",
+            "time complexity",
+            "Big O"
+          ],
+          "feedback": "auxiliary space — Extra memory used by an algorithm."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 State the Big O of (a) constant assignment, (b) one n-element loop, (c) two full nested n-loops and (d) repeatedly halving an interval.",
+          "answer": "[4] O(1) [1], O(n) [1], O(n²) [1], O(log n) [1].",
+          "options": [
+            "[4] O(1) [1], O(n) [1], O(n²) [1], O(log n) [1].",
+            "[6] Each of n elements read and written [2], so O(n) time [1]; allocates n extra positions [2], so O(n) auxiliary space [1].",
+            "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1]."
+          ],
+          "feedback": "[4] O(1) [1], O(n) [1], O(n²) [1], O(log n) [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 A program copies an n-element array into a new n-element array. Give its time and auxiliary-space complexity and justify both.",
+          "answer": "[6] Each of n elements read and written [2], so O(n) time [1]; allocates n extra positions [2], so O(n) auxiliary space [1].",
+          "options": [
+            "[4] O(1) [1], O(n) [1], O(n²) [1], O(log n) [1].",
+            "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1].",
+            "[6] Each of n elements read and written [2], so O(n) time [1]; allocates n extra positions [2], so O(n) auxiliary space [1]."
+          ],
+          "feedback": "[6] Each of n elements read and written [2], so O(n) time [1]; allocates n extra positions [2], so O(n) auxiliary space [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A method uses an in-place O(n²) sort and another uses merge sort with O(n log n) time and O(n) auxiliary space. Explain one situation favouring each.",
+          "answer": "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1].",
+          "options": [
+            "[6] Each of n elements read and written [2], so O(n) time [1]; allocates n extra positions [2], so O(n) auxiliary space [1].",
+            "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1].",
+            "[4] O(1) [1], O(n) [1], O(n²) [1], O(log n) [1]."
+          ],
+          "feedback": "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A method uses an in-place O(n²) sort and another uses merge sort with O(n log n) time and O(n) auxiliary space. Explain one situation favouring each.",
+        "model": "[6] Merge sort can scale better to large n [2]; O(n log n) vs O(n²) [1]; in-place sort can suit small data or tight memory [1]; typically O(1) auxiliary space for in-place quadratic sorting [1]; compare time-space trade-off [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "auxiliary space means: Extra memory used by an algorithm.",
+          "answer": "true",
+          "feedback": "auxiliary space — Extra memory used by an algorithm."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Big O means: Growth such as 2ⁿ.",
+          "answer": "false",
+          "feedback": "Big O — Upper asymptotic bound commonly used to classify growth."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "quadratic means: Growth proportional to n².",
+          "answer": "true",
+          "feedback": "quadratic — Growth proportional to n²."
+        }
+      ]
+    }
+  ]
+}

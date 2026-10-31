@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-210",
+  "course": "h446",
+  "title": "Debugging and error correction",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Write −1 in 8-bit two's complement.",
+          "answer": "11111111.",
+          "options": [
+            "11111111.",
+            "3.",
+            "Sorted input."
+          ],
+          "feedback": "11111111."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the last index in a four-item array?",
+          "answer": "3.",
+          "options": [
+            "11111111.",
+            "Sorted input.",
+            "3."
+          ],
+          "feedback": "3."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What precondition does binary search need?",
+          "answer": "Sorted input.",
+          "options": [
+            "3.",
+            "Sorted input.",
+            "11111111."
+          ],
+          "feedback": "Sorted input."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What happens if code reads a[3] from a three-element C# array?",
+          "answer": "An IndexOutOfRangeException.",
+          "options": [
+            "An IndexOutOfRangeException.",
+            "11111111.",
+            "3."
+          ],
+          "feedback": "An IndexOutOfRangeException."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check valid indexes",
+          "text": "A three-element array has valid indexes 0, 1 and 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Follow the condition",
+          "text": "When i is 3, i<=a.Length remains true and attempts to read a[3], causing an exception."
+        },
+        {
+          "type": "paragraph",
+          "title": "Fix and retest",
+          "text": "Use i<a.Length, which stops before i becomes an invalid index."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "The array's valid indexes are 0 and 1, not 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Use i < values.Length and the total is 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'off-by-one error'?",
+          "answer": "Loop repeats once too many or few times.",
+          "options": [
+            "Runtime failure or signal raised by an invalid operation.",
+            "Record changing execution state.",
+            "Loop repeats once too many or few times."
+          ],
+          "feedback": "off-by-one error — Loop repeats once too many or few times."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'exception'?",
+          "answer": "Runtime failure or signal raised by an invalid operation.",
+          "options": [
+            "Record changing execution state.",
+            "Runtime failure or signal raised by an invalid operation.",
+            "Loop repeats once too many or few times."
+          ],
+          "feedback": "exception — Runtime failure or signal raised by an invalid operation."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'trace'?",
+          "answer": "Record changing execution state.",
+          "options": [
+            "Record changing execution state.",
+            "Loop repeats once too many or few times.",
+            "Runtime failure or signal raised by an invalid operation."
+          ],
+          "feedback": "trace — Record changing execution state."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "With low=3 and high=4, midpoint remains 3 and low=mid fails to shrink the interval."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Use low=mid+1 to exclude the checked midpoint and guarantee progress."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input requirement an algorithm assumes.",
+          "answer": "precondition",
+          "options": [
+            "precondition",
+            "off-by-one error",
+            "exception"
+          ],
+          "feedback": "precondition — Input requirement an algorithm assumes."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An algorithm eventually ends.",
+          "answer": "termination",
+          "options": [
+            "off-by-one error",
+            "exception",
+            "termination"
+          ],
+          "feedback": "termination — An algorithm eventually ends."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Loop repeats once too many or few times.",
+          "answer": "off-by-one error",
+          "options": [
+            "trace",
+            "off-by-one error",
+            "exception"
+          ],
+          "feedback": "off-by-one error — Loop repeats once too many or few times."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Runtime failure or signal raised by an invalid operation.",
+          "answer": "exception",
+          "options": [
+            "exception",
+            "off-by-one error",
+            "trace"
+          ],
+          "feedback": "exception — Runtime failure or signal raised by an invalid operation."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Fix the loop condition i<=a.Length when visiting every array item.",
+          "answer": "Change to i<a.Length.",
+          "options": [
+            "Change to i<a.Length.",
+            "Set high=mid-1 to remove the checked midpoint.",
+            "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled."
+          ],
+          "feedback": "Change to i<a.Length."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 When a[mid]>target, what should binary search do to high?",
+          "answer": "Set high=mid-1 to remove the checked midpoint.",
+          "options": [
+            "Change to i<a.Length.",
+            "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled.",
+            "Set high=mid-1 to remove the checked midpoint."
+          ],
+          "feedback": "Set high=mid-1 to remove the checked midpoint."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Choose normal, boundary and erroneous indexes when a method accepts only indexes 0–4.",
+          "answer": "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled.",
+          "options": [
+            "Set high=mid-1 to remove the checked midpoint.",
+            "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled.",
+            "Change to i<a.Length."
+          ],
+          "feedback": "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Choose normal, boundary and erroneous indexes when a method accepts only indexes 0–4.",
+        "model": "Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "exception means: Runtime failure or signal raised by an invalid operation.",
+          "answer": "true",
+          "feedback": "exception — Runtime failure or signal raised by an invalid operation."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "trace means: An algorithm eventually ends.",
+          "answer": "false",
+          "feedback": "trace — Record changing execution state."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "precondition means: Input requirement an algorithm assumes.",
+          "answer": "true",
+          "feedback": "precondition — Input requirement an algorithm assumes."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-111",
+  "course": "h446",
+  "title": "Lesson 111 · OS Types, Boot Firmware, Drivers and VMs",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In round robin, what happens when a running process's quantum expires but it is unfinished?",
+          "answer": "It returns to the ready queue (subject to scheduler rules).",
+          "options": [
+            "It returns to the ready queue (subject to scheduler rules).",
+            "B, because a stack is LIFO.",
+            "It discards half the search space using an ordering comparison."
+          ],
+          "feedback": "It returns to the ready queue (subject to scheduler rules)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: After pushing A then B onto a stack, which is popped first?",
+          "answer": "B, because a stack is LIFO.",
+          "options": [
+            "It returns to the ready queue (subject to scheduler rules).",
+            "It discards half the search space using an ordering comparison.",
+            "B, because a stack is LIFO."
+          ],
+          "feedback": "B, because a stack is LIFO."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must a binary search operate on ordered data?",
+          "answer": "It discards half the search space using an ordering comparison.",
+          "options": [
+            "B, because a stack is LIFO.",
+            "It discards half the search space using an ordering comparison.",
+            "It returns to the ready queue (subject to scheduler rules)."
+          ],
+          "feedback": "It discards half the search space using an ordering comparison."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: An OR gate has inputs 0 and 1. What is the output?",
+          "answer": "1.",
+          "options": [
+            "1.",
+            "It returns to the ready queue (subject to scheduler rules).",
+            "B, because a stack is LIFO."
+          ],
+          "feedback": "1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Match OS to use",
+          "text": "Embedded/real-time emphasise constraints; multi-user and distributed coordinate shared work."
+        },
+        {
+          "type": "paragraph",
+          "title": "Boot and control",
+          "text": "BIOS/UEFI firmware begins startup; drivers provide hardware-specific access."
+        },
+        {
+          "type": "paragraph",
+          "title": "Virtualise",
+          "text": "A hypervisor runs guest OSs; a language VM executes intermediate code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "A hard real-time operating system is suited because missing a deadline is unacceptable; deterministic scheduling/latency matters more than high average throughput. An embedded implementation may also apply. Check: link each claim to the scenario and use precise OCR terminology."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'real-time OS'?",
+          "answer": "System where meeting time constraints is essential.",
+          "options": [
+            "Platform firmware that begins boot preparation.",
+            "Manages virtual machines running guest OSs.",
+            "System where meeting time constraints is essential."
+          ],
+          "feedback": "real-time OS — System where meeting time constraints is essential."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'BIOS/UEFI'?",
+          "answer": "Platform firmware that begins boot preparation.",
+          "options": [
+            "Manages virtual machines running guest OSs.",
+            "Platform firmware that begins boot preparation.",
+            "System where meeting time constraints is essential."
+          ],
+          "feedback": "BIOS/UEFI — Platform firmware that begins boot preparation."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'hypervisor'?",
+          "answer": "Manages virtual machines running guest OSs.",
+          "options": [
+            "Manages virtual machines running guest OSs.",
+            "System where meeting time constraints is essential.",
+            "Platform firmware that begins boot preparation."
+          ],
+          "feedback": "hypervisor — Manages virtual machines running guest OSs."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must we decide?",
+          "text": "Identify the inputs, relevant facts and exact output or judgement required."
+        },
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Use the middle stage of the visual to follow the process and state each intermediate result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shared worked answer",
+          "text": "Use a VM with a hypervisor to run Linux as a guest OS, while a printer driver exposes the printer to the host OS or guest when assigned. Boot firmware starts hardware initialisation before the main OS loads."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Hardware-specific interface supplied to an OS.",
+          "answer": "device driver",
+          "options": [
+            "device driver",
+            "real-time OS",
+            "BIOS/UEFI"
+          ],
+          "feedback": "device driver — Hardware-specific interface supplied to an OS."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? System where meeting time constraints is essential.",
+          "answer": "real-time OS",
+          "options": [
+            "BIOS/UEFI",
+            "hypervisor",
+            "real-time OS"
+          ],
+          "feedback": "real-time OS — System where meeting time constraints is essential."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Platform firmware that begins boot preparation.",
+          "answer": "BIOS/UEFI",
+          "options": [
+            "hypervisor",
+            "BIOS/UEFI",
+            "real-time OS"
+          ],
+          "feedback": "BIOS/UEFI — Platform firmware that begins boot preparation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Manages virtual machines running guest OSs.",
+          "answer": "hypervisor",
+          "options": [
+            "hypervisor",
+            "real-time OS",
+            "BIOS/UEFI"
+          ],
+          "feedback": "hypervisor — Manages virtual machines running guest OSs."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain two differences between multi-user and multitasking operating systems, giving examples. [6]",
+          "answer": "/ WORKED ANSWER Multi-user supports separate simultaneous user sessions/accounts [3]; multitasking enables several processes to share CPU execution [3]; a system may do both.",
+          "options": [
+            "/ WORKED ANSWER Multi-user supports separate simultaneous user sessions/accounts [3]; multitasking enables several processes to share CPU execution [3]; a system may do both.",
+            "/ WORKED ANSWER Firmware initialises/checks hardware and begins booting [3]; device driver supplies OS-to-peripheral interface [3].",
+            "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Multi-user supports separate simultaneous user sessions/accounts [3]; multitasking enables several processes to share CPU execution [3]; a system may do both."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Describe the roles of BIOS/UEFI firmware and a device driver during startup and use. [6]",
+          "answer": "/ WORKED ANSWER Firmware initialises/checks hardware and begins booting [3]; device driver supplies OS-to-peripheral interface [3].",
+          "options": [
+            "/ WORKED ANSWER Multi-user supports separate simultaneous user sessions/accounts [3]; multitasking enables several processes to share CPU execution [3]; a system may do both.",
+            "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2].",
+            "/ WORKED ANSWER Firmware initialises/checks hardware and begins booting [3]; device driver supplies OS-to-peripheral interface [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Firmware initialises/checks hardware and begins booting [3]; device driver supplies OS-to-peripheral interface [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Compare a hypervisor virtual machine with a bytecode virtual machine and explain a real-time deadline. [8]",
+          "answer": "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2].",
+          "options": [
+            "/ WORKED ANSWER Firmware initialises/checks hardware and begins booting [3]; device driver supplies OS-to-peripheral interface [3].",
+            "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2].",
+            "/ WORKED ANSWER Multi-user supports separate simultaneous user sessions/accounts [3]; multitasking enables several processes to share CPU execution [3]; a system may do both."
+          ],
+          "feedback": "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Compare a hypervisor virtual machine with a bytecode virtual machine and explain a real-time deadline. [8]",
+        "model": "/ WORKED ANSWER Hypervisor hosts virtualised OS/hardware [2]; bytecode VM executes intermediate instructions [2]; deadline determines correctness for hard real-time tasks [2]; appropriate context/trade-off [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "BIOS/UEFI means: Platform firmware that begins boot preparation.",
+          "answer": "true",
+          "feedback": "BIOS/UEFI — Platform firmware that begins boot preparation."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "hypervisor means: System where meeting time constraints is essential.",
+          "answer": "false",
+          "feedback": "hypervisor — Manages virtual machines running guest OSs."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "device driver means: Hardware-specific interface supplied to an OS.",
+          "answer": "true",
+          "feedback": "device driver — Hardware-specific interface supplied to an OS."
+        }
+      ]
+    }
+  ]
+}

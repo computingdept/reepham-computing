@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-197",
+  "course": "h446",
+  "title": "Stacks and queues",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a[1] for int[] a={6,9,3}?",
+          "answer": "9.",
+          "options": [
+            "4.",
+            "9.",
+            "11111111."
+          ],
+          "feedback": "9."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is −1 in 8-bit two's complement?",
+          "answer": "11111111.",
+          "options": [
+            "11111111.",
+            "9.",
+            "4."
+          ],
+          "feedback": "11111111."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A loop running from 0 to 3 inclusive executes how many times?",
+          "answer": "4.",
+          "options": [
+            "9.",
+            "11111111.",
+            "4."
+          ],
+          "feedback": "4."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Push 2, push 5, pop once: which value is removed?",
+          "answer": "5, the last item pushed.",
+          "options": [
+            "11111111.",
+            "5, the last item pushed.",
+            "9."
+          ],
+          "feedback": "5, the last item pushed."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Push",
+          "text": "Adding an item puts it on top of a stack."
+        },
+        {
+          "type": "paragraph",
+          "title": "Pop",
+          "text": "Removing an item takes the most recently pushed item: 7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Contrast with a queue",
+          "text": "A queue removes the oldest item instead (FIFO); it is suited to arrival-order processing."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "The newest value 5 is on top, so Pop removes 5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Confirm and explain",
+          "text": "The stack remains [3,8] from bottom to top."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'stack'?",
+          "answer": "LIFO abstract data type.",
+          "options": [
+            "LIFO abstract data type.",
+            "Add an item onto a stack.",
+            "Remove the top stack item."
+          ],
+          "feedback": "stack — LIFO abstract data type."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'push'?",
+          "answer": "Add an item onto a stack.",
+          "options": [
+            "LIFO abstract data type.",
+            "Remove the top stack item.",
+            "Add an item onto a stack."
+          ],
+          "feedback": "push — Add an item onto a stack."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pop'?",
+          "answer": "Remove the top stack item.",
+          "options": [
+            "Add an item onto a stack.",
+            "Remove the top stack item.",
+            "LIFO abstract data type."
+          ],
+          "feedback": "pop — Remove the top stack item."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "After A,B,C: front=0, rear=0, count=3. The queue is full even though front==rear. rear means next free slot here, unlike Lesson 020."
+        },
+        {
+          "type": "paragraph",
+          "title": "Confirm and explain",
+          "text": "Remove A: front=1, count=2. Insert D at slot0: rear=1, count=3. Physical D,B,C differs from logical B,C,D; modulo reuses the freed slot."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? FIFO abstract data type.",
+          "answer": "queue",
+          "options": [
+            "push",
+            "queue",
+            "stack"
+          ],
+          "feedback": "queue — FIFO abstract data type."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Remove the front queue item.",
+          "answer": "dequeue",
+          "options": [
+            "dequeue",
+            "stack",
+            "push"
+          ],
+          "feedback": "dequeue — Remove the front queue item."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? LIFO abstract data type.",
+          "answer": "stack",
+          "options": [
+            "push",
+            "pop",
+            "stack"
+          ],
+          "feedback": "stack — LIFO abstract data type."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add an item onto a stack.",
+          "answer": "push",
+          "options": [
+            "pop",
+            "push",
+            "stack"
+          ],
+          "feedback": "push — Add an item onto a stack."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Push A, B, C onto a stack then Pop twice. What remains?",
+          "answer": "A remains. The pops remove C then B.",
+          "options": [
+            "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first.",
+            "A remains. The pops remove C then B.",
+            "Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3."
+          ],
+          "feedback": "A remains. The pops remove C then B."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 A circular array queue has capacity 3. Starting empty, enqueue 10,20,30; dequeue once; enqueue 40. State physical slots, front/rear/count and logical order. Use rear as the next free slot.",
+          "answer": "Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3.",
+          "options": [
+            "Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3.",
+            "A remains. The pops remove C then B.",
+            "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first."
+          ],
+          "feedback": "Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain why an undo history usually uses a stack rather than a queue.",
+          "answer": "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first.",
+          "options": [
+            "A remains. The pops remove C then B.",
+            "Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3.",
+            "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first."
+          ],
+          "feedback": "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain why an undo history usually uses a stack rather than a queue.",
+        "model": "The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "push means: Add an item onto a stack.",
+          "answer": "true",
+          "feedback": "push — Add an item onto a stack."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pop means: Remove the front queue item.",
+          "answer": "false",
+          "feedback": "pop — Remove the top stack item."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "queue means: FIFO abstract data type.",
+          "answer": "true",
+          "feedback": "queue — FIFO abstract data type."
+        }
+      ]
+    }
+  ]
+}

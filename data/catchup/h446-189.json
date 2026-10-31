@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-189",
+  "course": "h446",
+  "title": "Search and sort: comparisons and Big O",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What property does binary search need that linear search does not?",
+          "answer": "Sorted input.",
+          "options": [
+            "Sorted input.",
+            "O(n log n).",
+            "5 times."
+          ],
+          "feedback": "Sorted input."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What time complexity is typical of merge sort?",
+          "answer": "O(n log n).",
+          "options": [
+            "Sorted input.",
+            "5 times.",
+            "O(n log n)."
+          ],
+          "feedback": "O(n log n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For n=5, how many times does a single for-loop from 0 to n-1 run?",
+          "answer": "5 times.",
+          "options": [
+            "O(n log n).",
+            "5 times.",
+            "Sorted input."
+          ],
+          "feedback": "5 times."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A nested loop runs 4 times outside and 4 times inside. How many inner operations occur?",
+          "answer": "16 operations.",
+          "options": [
+            "16 operations.",
+            "Sorted input.",
+            "O(n log n)."
+          ],
+          "feedback": "16 operations."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Count what grows",
+          "text": "Big O describes how work increases with input size, not the exact milliseconds on one computer."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare search",
+          "text": "Linear search can take n checks; binary search on sorted input roughly halves the remaining candidates each step."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare sorting",
+          "text": "A simple nested comparison loop can be O(n²), whereas merge sort is O(n log n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Assume one successful or unsuccessful lookup in sorted data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model solution",
+          "text": "Linear search can inspect all 16 elements; binary search checks at most 5 midpoints using this inclusive implementation."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'time complexity'?",
+          "answer": "How an algorithm's work grows with input size.",
+          "options": [
+            "Work proportional to input count.",
+            "Work proportional to the number of halvings.",
+            "How an algorithm's work grows with input size."
+          ],
+          "feedback": "time complexity — How an algorithm's work grows with input size."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(n)'?",
+          "answer": "Work proportional to input count.",
+          "options": [
+            "Work proportional to the number of halvings.",
+            "Work proportional to input count.",
+            "How an algorithm's work grows with input size."
+          ],
+          "feedback": "O(n) — Work proportional to input count."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(log n)'?",
+          "answer": "Work proportional to the number of halvings.",
+          "options": [
+            "Work proportional to the number of halvings.",
+            "How an algorithm's work grows with input size.",
+            "Work proportional to input count."
+          ],
+          "feedback": "O(log n) — Work proportional to the number of halvings."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "What happens when you double 32 to 64?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model solution",
+          "text": "Linear worst case = 64 comparisons; binary worst case at most 7. Binary grows much more slowly."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Quadratic growth, often nested loops.",
+          "answer": "O(n²)",
+          "options": [
+            "O(n²)",
+            "time complexity",
+            "O(n)"
+          ],
+          "feedback": "O(n²) — Quadratic growth, often nested loops."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A benefit balanced against another cost.",
+          "answer": "trade-off",
+          "options": [
+            "time complexity",
+            "O(n)",
+            "trade-off"
+          ],
+          "feedback": "trade-off — A benefit balanced against another cost."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? How an algorithm's work grows with input size.",
+          "answer": "time complexity",
+          "options": [
+            "O(log n)",
+            "time complexity",
+            "O(n)"
+          ],
+          "feedback": "time complexity — How an algorithm's work grows with input size."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Work proportional to input count.",
+          "answer": "O(n)",
+          "options": [
+            "O(n)",
+            "time complexity",
+            "O(log n)"
+          ],
+          "feedback": "O(n) — Work proportional to input count."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Name the complexity of a single loop visiting n values.",
+          "answer": "O(n).",
+          "options": [
+            "O(n).",
+            "Linear up to 128 checks; binary up to 8 checks with a standard midpoint search.",
+            "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan."
+          ],
+          "feedback": "O(n)."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 An array has 128 ordered items. Compare linear and binary worst-case checks.",
+          "answer": "Linear up to 128 checks; binary up to 8 checks with a standard midpoint search.",
+          "options": [
+            "O(n).",
+            "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan.",
+            "Linear up to 128 checks; binary up to 8 checks with a standard midpoint search."
+          ],
+          "feedback": "Linear up to 128 checks; binary up to 8 checks with a standard midpoint search."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Is binary search always better than linear search? Give one counterexample.",
+          "answer": "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan.",
+          "options": [
+            "Linear up to 128 checks; binary up to 8 checks with a standard midpoint search.",
+            "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan.",
+            "O(n)."
+          ],
+          "feedback": "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Is binary search always better than linear search? Give one counterexample.",
+        "model": "No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "O(n) means: Work proportional to input count.",
+          "answer": "true",
+          "feedback": "O(n) — Work proportional to input count."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "O(log n) means: A benefit balanced against another cost.",
+          "answer": "false",
+          "feedback": "O(log n) — Work proportional to the number of halvings."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "O(n²) means: Quadratic growth, often nested loops.",
+          "answer": "true",
+          "feedback": "O(n²) — Quadratic growth, often nested loops."
+        }
+      ]
+    }
+  ]
+}

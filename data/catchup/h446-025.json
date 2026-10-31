@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-025",
+  "course": "h446",
+  "title": "Binary Search — From Trace Table to Working Code",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What index identifies the first element of a C# array?",
+          "answer": "0 — C# arrays are zero indexed.",
+          "options": [
+            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
+            "18 — the fourth item has index 3.",
+            "0 — C# arrays are zero indexed."
+          ],
+          "feedback": "0 — C# arrays are zero indexed."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does a linear search differ from a binary search?",
+          "answer": "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
+          "options": [
+            "18 — the fourth item has index 3.",
+            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
+            "0 — C# arrays are zero indexed."
+          ],
+          "feedback": "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Given int[] numbers = {3, 7, 12, 18, 24}; what is numbers[3]?",
+          "answer": "18 — the fourth item has index 3.",
+          "options": [
+            "18 — the fourth item has index 3.",
+            "0 — C# arrays are zero indexed.",
+            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range."
+          ],
+          "feedback": "18 — the fourth item has index 3."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can binary search miss a target that exists in an unsorted array?",
+          "answer": "Because comparisons rely on sorted order to discard one half safely.",
+          "options": [
+            "0 — C# arrays are zero indexed.",
+            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
+            "Because comparisons rely on sorted order to discard one half safely."
+          ],
+          "feedback": "Because comparisons rely on sorted order to discard one half safely."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with valid bounds",
+          "text": "The last index is 7, not 8. Array length is not a valid index."
+        },
+        {
+          "type": "paragraph",
+          "title": "Find the midpoint",
+          "text": "Integer division gives index 3. Compare its value (18) with target (31)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Discard half",
+          "text": "All positions through index 3 are too small. Keep only 4–7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stop when found or exhausted",
+          "text": "If low becomes greater than high, return -1. Never assume the target exists."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Write a function that returns the target’s index",
+          "text": "Your task: Create BinarySearch , a C# function that takes a sorted integer array and a target integer . It must return the array index (position) where the target is found, or -1 when the target is absent. int[] numbers = {3, 7, 12, 18, 24, 31, 45, 60}; Syntax: int = integer · [] = array · numbers = name · { } = values. Question: The array holds 8 values. Why is the final index 7 ? Example: Search for 31 → return 5 (its index, not its value). Search for 13 → return -1 (not found)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Declare an integer array",
+          "text": "int[] numbers = {3, 7, 12, 18, 24, 31, 45, 60}; int = integer; [] = an array; numbers = its name; { } = the values; ; = end of the statement. The first index is 0."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'sorted array'?",
+          "answer": "Values arranged in order, so comparisons can eliminate ranges.",
+          "options": [
+            "The middle index of the current candidate range.",
+            "Values arranged in order, so comparisons can eliminate ranges.",
+            "The value the algorithm is trying to locate."
+          ],
+          "feedback": "sorted array — Values arranged in order, so comparisons can eliminate ranges."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'target'?",
+          "answer": "The value the algorithm is trying to locate.",
+          "options": [
+            "The value the algorithm is trying to locate.",
+            "Values arranged in order, so comparisons can eliminate ranges.",
+            "The middle index of the current candidate range."
+          ],
+          "feedback": "target — The value the algorithm is trying to locate."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'midpoint'?",
+          "answer": "The middle index of the current candidate range.",
+          "options": [
+            "Values arranged in order, so comparisons can eliminate ranges.",
+            "The value the algorithm is trying to locate.",
+            "The middle index of the current candidate range."
+          ],
+          "feedback": "midpoint — The middle index of the current candidate range."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace the search for 13",
+          "text": "Task: Trace BinarySearch(data, 13) . At each iteration record low , high , mid and data[mid] . Return the index, or -1 if absent."
+        },
+        {
+          "type": "paragraph",
+          "title": "Understand the task",
+          "text": "We have a sorted array. Search for the value 13. If it is present, return its index; otherwise return -1. Which value are we searching for? What result should our function return if it is absent?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Answer and explanation",
+          "text": "target = 13. Return -1 if 13 does not appear."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace the search for 13",
+          "text": "Task: Trace BinarySearch(data, 13) . At each iteration record low , high , mid and data[mid] . Return the index, or -1 if absent."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The first index still under consideration.",
+          "answer": "lower bound",
+          "options": [
+            "sorted array",
+            "target",
+            "lower bound"
+          ],
+          "feedback": "lower bound — The first index still under consideration."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The last index still under consideration.",
+          "answer": "upper bound",
+          "options": [
+            "target",
+            "upper bound",
+            "sorted array"
+          ],
+          "feedback": "upper bound — The last index still under consideration."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? One execution of the loop body.",
+          "answer": "iteration",
+          "options": [
+            "iteration",
+            "sorted array",
+            "target"
+          ],
+          "feedback": "iteration — One execution of the loop body."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? How work grows with the number of input items.",
+          "answer": "time complexity",
+          "options": [
+            "sorted array",
+            "target",
+            "time complexity"
+          ],
+          "feedback": "time complexity — How work grows with the number of input items."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Write a function that returns the target’s index Your task: Create BinarySearch , a C# function that takes a sorted integer array and a target integer . It must return the array index (position) where the target is found, or -1 when the target is absent.",
+          "answer": "STEP 2 OF 8 Choose a target int target = 31; int declares an integer variable. The value 31 is what we want to find. This is not its index.",
+          "options": [
+            "CHECK Answer and explanation target = 13. Return -1 if 13 does not appear.",
+            "CHECK Answer and explanation low = 0, high = 7.",
+            "STEP 2 OF 8 Choose a target int target = 31; int declares an integer variable. The value 31 is what we want to find. This is not its index."
+          ],
+          "feedback": "STEP 2 OF 8 Choose a target int target = 31; int declares an integer variable. The value 31 is what we want to find. This is not its index."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace the search for 13 Task: Trace BinarySearch(data, 13) . At each iteration record low , high , mid and data[mid] . Return the index, or -1 if absent.",
+          "answer": "CHECK Answer and explanation target = 13. Return -1 if 13 does not appear.",
+          "options": [
+            "CHECK Answer and explanation low = 0, high = 7.",
+            "CHECK Answer and explanation target = 13. Return -1 if 13 does not appear.",
+            "STEP 2 OF 8 Choose a target int target = 31; int declares an integer variable. The value 31 is what we want to find. This is not its index."
+          ],
+          "feedback": "CHECK Answer and explanation target = 13. Return -1 if 13 does not appear."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace the search for 13 Task: Trace BinarySearch(data, 13) . At each iteration record low , high , mid and data[mid] . Return the index, or -1 if absent.",
+          "answer": "CHECK Answer and explanation low = 0, high = 7.",
+          "options": [
+            "CHECK Answer and explanation low = 0, high = 7.",
+            "STEP 2 OF 8 Choose a target int target = 31; int declares an integer variable. The value 31 is what we want to find. This is not its index.",
+            "CHECK Answer and explanation target = 13. Return -1 if 13 does not appear."
+          ],
+          "feedback": "CHECK Answer and explanation low = 0, high = 7."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Trace the search for 13 Task: Trace BinarySearch(data, 13) . At each iteration record low , high , mid and data[mid] . Return the index, or -1 if absent.",
+        "model": "CHECK Answer and explanation low = 0, high = 7.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "target means: The value the algorithm is trying to locate.",
+          "answer": "true",
+          "feedback": "target — The value the algorithm is trying to locate."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "midpoint means: The last index still under consideration.",
+          "answer": "false",
+          "feedback": "midpoint — The middle index of the current candidate range."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "lower bound means: The first index still under consideration.",
+          "answer": "true",
+          "feedback": "lower bound — The first index still under consideration."
+        }
+      ]
+    }
+  ]
+}

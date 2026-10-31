@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-120",
+  "course": "h446",
+  "title": "Lesson 120 · Following Algorithms and Building Trace Tables",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What drives decisions in spiral development?",
+          "answer": "Identification, assessment and mitigation of risk.",
+          "options": [
+            "Identification, assessment and mitigation of risk.",
+            "Its element locations can be calculated from base address and index.",
+            "Sum 0 and carry-out 1."
+          ],
+          "feedback": "Identification, assessment and mitigation of risk."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can an array provide direct indexed access?",
+          "answer": "Its element locations can be calculated from base address and index.",
+          "options": [
+            "Identification, assessment and mitigation of risk.",
+            "Sum 0 and carry-out 1.",
+            "Its element locations can be calculated from base address and index."
+          ],
+          "feedback": "Its element locations can be calculated from base address and index."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A full adder receives A=1, B=1 and carry-in=0. What are sum and carry-out?",
+          "answer": "Sum 0 and carry-out 1.",
+          "options": [
+            "Its element locations can be calculated from base address and index.",
+            "Sum 0 and carry-out 1.",
+            "Identification, assessment and mitigation of risk."
+          ],
+          "feedback": "Sum 0 and carry-out 1."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For the binary value 1010, what is its decimal value?",
+          "answer": "10.",
+          "options": [
+            "10.",
+            "Identification, assessment and mitigation of risk.",
+            "Its element locations can be calculated from base address and index."
+          ],
+          "feedback": "10."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify state",
+          "text": "Find variables, data structures, conditions and inputs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace each step",
+          "text": "Update a table when an assignment or state change occurs. For a recursive function, record each call , its argument and its eventual return value; unlike a loop, calls wait on the call stack."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check outcome",
+          "text": "Compare output against constraints and edge cases. Recursion must reach a base case that returns without another recursive call, or it cannot terminate safely."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "At n=1 total 0; n=2 total 2; n=3 total 2; n=4 total 6; output 6. Record n and total at each loop step. Check: link each claim to the scenario and use precise OCR terminology."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Spot the stopping condition",
+          "text": "n == 0 is the base case : return 0 immediately. Otherwise SumTo(n - 1) invokes the same method with a smaller argument. Assume n is non-negative."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace calls before returns",
+          "text": "SumTo(3) waits for SumTo(2) , then SumTo(1) , then SumTo(0) . The first three calls remain active until the base case returns."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'trace table'?",
+          "answer": "Record of algorithm state as steps execute.",
+          "options": [
+            "Repeated execution of instructions.",
+            "Manual simulation of algorithm.",
+            "Record of algorithm state as steps execute."
+          ],
+          "feedback": "trace table — Record of algorithm state as steps execute."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'iteration'?",
+          "answer": "Repeated execution of instructions.",
+          "options": [
+            "Manual simulation of algorithm.",
+            "Repeated execution of instructions.",
+            "Record of algorithm state as steps execute."
+          ],
+          "feedback": "iteration — Repeated execution of instructions."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'dry run'?",
+          "answer": "Manual simulation of algorithm.",
+          "options": [
+            "Manual simulation of algorithm.",
+            "Record of algorithm state as steps execute.",
+            "Repeated execution of instructions."
+          ],
+          "feedback": "dry run — Manual simulation of algorithm."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must we decide?",
+          "text": "Identify the inputs, relevant facts and exact output or judgement required."
+        },
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Use the middle stage of the visual to follow the process and state each intermediate result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shared worked answer",
+          "text": "Progress: initial 0; after 3 → 3; after 8 → 8; after 5 stays 8; final output 8. The initial zero fails if all values are negative; use first element instead."
+        },
+        {
+          "type": "paragraph",
+          "title": "Find the base case",
+          "text": "Which inputs return 1 immediately? What argument does Factorial(3) pass into its next call?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Test at edge of valid input domain.",
+          "answer": "boundary test",
+          "options": [
+            "boundary test",
+            "trace table",
+            "iteration"
+          ],
+          "feedback": "boundary test — Test at edge of valid input domain."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Record of algorithm state as steps execute.",
+          "answer": "trace table",
+          "options": [
+            "iteration",
+            "dry run",
+            "trace table"
+          ],
+          "feedback": "trace table — Record of algorithm state as steps execute."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeated execution of instructions.",
+          "answer": "iteration",
+          "options": [
+            "dry run",
+            "iteration",
+            "trace table"
+          ],
+          "feedback": "iteration — Repeated execution of instructions."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Manual simulation of algorithm.",
+          "answer": "dry run",
+          "options": [
+            "dry run",
+            "trace table",
+            "iteration"
+          ],
+          "feedback": "dry run — Manual simulation of algorithm."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace count ← 0; FOR i = 1 TO 5: IF i MOD 2=1 THEN count←count+1; NEXT; OUTPUT count. [6]",
+          "answer": "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+          "options": [
+            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why initialising max ← 0 can cause a fault when finding the maximum of negative values. [6]",
+          "answer": "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+          "options": [
+            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output.",
+            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Trace recursive SumTo(4) using the method shown, name its base case and explain one difference from an iterative solution. [8]",
+          "answer": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+          "options": [
+            "/ WORKED ANSWER Zero exceeds all negative inputs [2], result incorrectly remains 0 [2], initialise from first actual element and iterate remainder [2].",
+            "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+            "/ WORKED ANSWER Odd i values 1,3,5 cause increments; count progresses 1,2,3; output 3. Credit correctly labelled trace columns and output."
+          ],
+          "feedback": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Trace recursive SumTo(4) using the method shown, name its base case and explain one difference from an iterative solution. [8]",
+        "model": "/ WORKED ANSWER Correct descending call arguments 4,3,2,1,0 [2]; base case n=0 returns 0 [2]; unwinding returns 1,3,6,10 [2]; iteration uses a loop/running total rather than pending function calls [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "iteration means: Repeated execution of instructions.",
+          "answer": "true",
+          "feedback": "iteration — Repeated execution of instructions."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "dry run means: Record of algorithm state as steps execute.",
+          "answer": "false",
+          "feedback": "dry run — Manual simulation of algorithm."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "boundary test means: Test at edge of valid input domain.",
+          "answer": "true",
+          "feedback": "boundary test — Test at edge of valid input domain."
+        }
+      ]
+    }
+  ]
+}

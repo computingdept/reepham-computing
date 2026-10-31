@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-185",
+  "course": "h446",
+  "title": "Insertion sort: trace and implement",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is [5,2,4] after one complete ascending bubble-sort pass?",
+          "answer": "[2,4,5].",
+          "options": [
+            "LIFO: last in, first out.",
+            "[2,4,5].",
+            "3."
+          ],
+          "feedback": "[2,4,5]."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the value of i after i++ when i was 2?",
+          "answer": "3.",
+          "options": [
+            "3.",
+            "[2,4,5].",
+            "LIFO: last in, first out."
+          ],
+          "feedback": "3."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Is a stack FIFO or LIFO?",
+          "answer": "LIFO: last in, first out.",
+          "options": [
+            "[2,4,5].",
+            "3.",
+            "LIFO: last in, first out."
+          ],
+          "feedback": "LIFO: last in, first out."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What change makes bubble sort terminate early on sorted data?",
+          "answer": "Track whether any swap occurred; if none occurred during a complete pass, stop.",
+          "options": [
+            "3.",
+            "Track whether any swap occurred; if none occurred during a complete pass, stop.",
+            "[2,4,5]."
+          ],
+          "feedback": "Track whether any swap occurred; if none occurred during a complete pass, stop."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "One key at a time",
+          "text": "The prefix to the left of i is already sorted; take a[i] as the key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make room",
+          "text": "Shift larger values in the sorted prefix one position to the right."
+        },
+        {
+          "type": "paragraph",
+          "title": "Insert the key",
+          "text": "Place it at j+1; the sorted prefix grows by one element."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Identify the shifts needed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model solution",
+          "text": "Shift 8 then 4 to the right and insert 1 at index 0 → [1,4,8,6]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'key'?",
+          "answer": "Value being inserted into the sorted prefix.",
+          "options": [
+            "Value being inserted into the sorted prefix.",
+            "Initial segment already placed in order.",
+            "Move a value one index to create space."
+          ],
+          "feedback": "key — Value being inserted into the sorted prefix."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'sorted prefix'?",
+          "answer": "Initial segment already placed in order.",
+          "options": [
+            "Value being inserted into the sorted prefix.",
+            "Move a value one index to create space.",
+            "Initial segment already placed in order."
+          ],
+          "feedback": "sorted prefix — Initial segment already placed in order."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'shift'?",
+          "answer": "Move a value one index to create space.",
+          "options": [
+            "Initial segment already placed in order.",
+            "Move a value one index to create space.",
+            "Value being inserted into the sorted prefix."
+          ],
+          "feedback": "shift — Move a value one index to create space."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Which value must move first?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model solution",
+          "text": "9 moves one index right; 2 stays. Insert 5 at index 1 → [2,5,9,7]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Uses little additional data storage.",
+          "answer": "in-place",
+          "options": [
+            "sorted prefix",
+            "in-place",
+            "key"
+          ],
+          "feedback": "in-place — Uses little additional data storage."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Equal elements can preserve relative order.",
+          "answer": "stable",
+          "options": [
+            "stable",
+            "key",
+            "sorted prefix"
+          ],
+          "feedback": "stable — Equal elements can preserve relative order."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value being inserted into the sorted prefix.",
+          "answer": "key",
+          "options": [
+            "sorted prefix",
+            "shift",
+            "key"
+          ],
+          "feedback": "key — Value being inserted into the sorted prefix."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Initial segment already placed in order.",
+          "answer": "sorted prefix",
+          "options": [
+            "shift",
+            "sorted prefix",
+            "key"
+          ],
+          "feedback": "sorted prefix — Initial segment already placed in order."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Insert key 3 into [2,6,3,8], assuming [2,6] is sorted.",
+          "answer": "Shift 6, then insert 3 → [2,3,6,8].",
+          "options": [
+            "Few values need shifting, so its best-case time is O(n), though worst case is O(n²).",
+            "Shift 6, then insert 3 → [2,3,6,8].",
+            "After key 1 → [1,5,4]; after key 4 → [1,4,5]."
+          ],
+          "feedback": "Shift 6, then insert 3 → [2,3,6,8]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Trace insertion sort fully on [5,1,4].",
+          "answer": "After key 1 → [1,5,4]; after key 4 → [1,4,5].",
+          "options": [
+            "After key 1 → [1,5,4]; after key 4 → [1,4,5].",
+            "Shift 6, then insert 3 → [2,3,6,8].",
+            "Few values need shifting, so its best-case time is O(n), though worst case is O(n²)."
+          ],
+          "feedback": "After key 1 → [1,5,4]; after key 4 → [1,4,5]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain why insertion sort is efficient on almost-sorted input.",
+          "answer": "Few values need shifting, so its best-case time is O(n), though worst case is O(n²).",
+          "options": [
+            "Shift 6, then insert 3 → [2,3,6,8].",
+            "After key 1 → [1,5,4]; after key 4 → [1,4,5].",
+            "Few values need shifting, so its best-case time is O(n), though worst case is O(n²)."
+          ],
+          "feedback": "Few values need shifting, so its best-case time is O(n), though worst case is O(n²)."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain why insertion sort is efficient on almost-sorted input.",
+        "model": "Few values need shifting, so its best-case time is O(n), though worst case is O(n²).",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "sorted prefix means: Initial segment already placed in order.",
+          "answer": "true",
+          "feedback": "sorted prefix — Initial segment already placed in order."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "shift means: Equal elements can preserve relative order.",
+          "answer": "false",
+          "feedback": "shift — Move a value one index to create space."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "in-place means: Uses little additional data storage.",
+          "answer": "true",
+          "feedback": "in-place — Uses little additional data storage."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-239",
+  "course": "h446",
+  "title": "Thinking ahead: inputs, caching and reuse",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why omit cover colour from a simple book-loan model?",
+          "answer": "Cover colour does not determine availability.",
+          "options": [
+            "49.",
+            "Cover colour does not determine availability.",
+            "A function/procedure with a clear interface usable in multiple places."
+          ],
+          "feedback": "Cover colour does not determine availability."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a reusable subroutine?",
+          "answer": "A function/procedure with a clear interface usable in multiple places.",
+          "options": [
+            "A function/procedure with a clear interface usable in multiple places.",
+            "Cover colour does not determine availability.",
+            "49."
+          ],
+          "feedback": "A function/procedure with a clear interface usable in multiple places."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 7×7.",
+          "answer": "49.",
+          "options": [
+            "Cover colour does not determine availability.",
+            "A function/procedure with a clear interface usable in multiple places.",
+            "49."
+          ],
+          "feedback": "49."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is caching squares safer than caching changing attendance data?",
+          "answer": "Squares of the same integer do not change; attendance does.",
+          "options": [
+            "A function/procedure with a clear interface usable in multiple places.",
+            "Squares of the same integer do not change; attendance does.",
+            "Cover colour does not determine availability."
+          ],
+          "feedback": "Squares of the same integer do not change; attendance does."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Define the contract",
+          "text": "The input is an integer, and the output is its square; overflow is a possible precondition concern."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace repeated work",
+          "text": "First call for 5 calculates and caches 25; second returns the stored result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate caching",
+          "text": "Saves repeated calculation but costs memory. For changing data, cached values can become out of date."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The key A is already stored, so the lookup uses the cache."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "If pricing changes, the cached price must be updated or expired."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'input'?",
+          "answer": "Data passed into a computation.",
+          "options": [
+            "Data passed into a computation.",
+            "Result of a computation.",
+            "Condition required before a process can run correctly."
+          ],
+          "feedback": "input — Data passed into a computation."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'output'?",
+          "answer": "Result of a computation.",
+          "options": [
+            "Data passed into a computation.",
+            "Condition required before a process can run correctly.",
+            "Result of a computation."
+          ],
+          "feedback": "output — Result of a computation."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Condition required before a process can run correctly.",
+          "options": [
+            "Result of a computation.",
+            "Condition required before a process can run correctly.",
+            "Data passed into a computation."
+          ],
+          "feedback": "precondition — Condition required before a process can run correctly."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Using the old cached 12 gives a stale answer instead of the new total 15."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "Update or invalidate the cached value when attendance changes, or apply a suitable expiry policy."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Requested value found in storage.",
+          "answer": "cache hit",
+          "options": [
+            "output",
+            "cache hit",
+            "input"
+          ],
+          "feedback": "cache hit — Requested value found in storage."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Removing or refreshing outdated stored results.",
+          "answer": "cache invalidation",
+          "options": [
+            "cache invalidation",
+            "input",
+            "output"
+          ],
+          "feedback": "cache invalidation — Removing or refreshing outdated stored results."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Data passed into a computation.",
+          "answer": "input",
+          "options": [
+            "output",
+            "precondition",
+            "input"
+          ],
+          "feedback": "input — Data passed into a computation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Result of a computation.",
+          "answer": "output",
+          "options": [
+            "precondition",
+            "output",
+            "input"
+          ],
+          "feedback": "output — Result of a computation."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 For SquareCached(6), identify input, output and two preconditions or assumptions.",
+          "answer": "[4] Input 6 [1]; output 36 [1]; valid integer input [1], no overflow for chosen integer type [1].",
+          "options": [
+            "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1].",
+            "[4] Input 6 [1]; output 36 [1]; valid integer input [1], no overflow for chosen integer type [1].",
+            "[6] First misses [1], computes 49 [1], stores 7→49 [1]; second hits [1], returns 49 [1] without recomputing [1]."
+          ],
+          "feedback": "[4] Input 6 [1]; output 36 [1]; valid integer input [1], no overflow for chosen integer type [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Trace two calls of SquareCached(7) starting with an empty cache.",
+          "answer": "[6] First misses [1], computes 49 [1], stores 7→49 [1]; second hits [1], returns 49 [1] without recomputing [1].",
+          "options": [
+            "[6] First misses [1], computes 49 [1], stores 7→49 [1]; second hits [1], returns 49 [1] without recomputing [1].",
+            "[4] Input 6 [1]; output 36 [1]; valid integer input [1], no overflow for chosen integer type [1].",
+            "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1]."
+          ],
+          "feedback": "[6] First misses [1], computes 49 [1], stores 7→49 [1]; second hits [1], returns 49 [1] without recomputing [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Give three advantages/disadvantages of caching changing school data and a way to avoid stale values.",
+          "answer": "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1].",
+          "options": [
+            "[4] Input 6 [1]; output 36 [1]; valid integer input [1], no overflow for chosen integer type [1].",
+            "[6] First misses [1], computes 49 [1], stores 7→49 [1]; second hits [1], returns 49 [1] without recomputing [1].",
+            "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1]."
+          ],
+          "feedback": "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Give three advantages/disadvantages of caching changing school data and a way to avoid stale values.",
+        "model": "[6] Faster repeated lookups [1], reduced repeated database work [1], uses memory [1], can return stale information [1], stale data can cause incorrect decisions [1], update/invalidate or expire on change [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "output means: Result of a computation.",
+          "answer": "true",
+          "feedback": "output — Result of a computation."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "precondition means: Removing or refreshing outdated stored results.",
+          "answer": "false",
+          "feedback": "precondition — Condition required before a process can run correctly."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "cache hit means: Requested value found in storage.",
+          "answer": "true",
+          "feedback": "cache hit — Requested value found in storage."
+        }
+      ]
+    }
+  ]
+}

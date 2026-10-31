@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-256",
+  "course": "h446",
+  "title": "GPUs, multicore and parallel systems",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why doesn't a smaller assembly instruction count guarantee a faster program?",
+          "answer": "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
+          "options": [
+            "An execution unit capable of carrying out its own instruction stream.",
+            "4 minutes, ignoring overhead.",
+            "Different instructions have different costs, and decoding, caches and pipelining affect performance."
+          ],
+          "feedback": "Different instructions have different costs, and decoding, caches and pipelining affect performance."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a core?",
+          "answer": "An execution unit capable of carrying out its own instruction stream.",
+          "options": [
+            "4 minutes, ignoring overhead.",
+            "An execution unit capable of carrying out its own instruction stream.",
+            "Different instructions have different costs, and decoding, caches and pipelining affect performance."
+          ],
+          "feedback": "An execution unit capable of carrying out its own instruction stream."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Two independent tasks each take 4 minutes; what is ideal concurrent time?",
+          "answer": "4 minutes, ignoring overhead.",
+          "options": [
+            "4 minutes, ignoring overhead.",
+            "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
+            "An execution unit capable of carrying out its own instruction stream."
+          ],
+          "feedback": "4 minutes, ignoring overhead."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Given int[] a={1,2,3,4}, perform a[i]=a[i]*2 for even indexes 0 and 2 only. Give final array and its sum.",
+          "answer": "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements.",
+          "options": [
+            "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
+            "An execution unit capable of carrying out its own instruction stream.",
+            "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements."
+          ],
+          "feedback": "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "GPUs and data parallelism",
+          "text": "A GPU contains many execution resources suited to repeating similar calculations across graphics pixels or machine-learning tensors."
+        },
+        {
+          "type": "paragraph",
+          "title": "Multicore CPUs",
+          "text": "Multiple CPU cores can run independent threads/processes, enabling greater throughput when tasks can be parallelised."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate overhead",
+          "text": "Data transfers, branching, synchronisation and sequential tasks can reduce the ideal speedup. A GPU is not automatically best for every problem."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Divide 12 independent equal-sized tiles among four available cores."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "Each core processes three tiles, so ideal completion is around one quarter of serial time only if work and overhead allow."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'GPU'?",
+          "answer": "Processor designed for highly parallel workloads.",
+          "options": [
+            "Apply the same operation to many independent data elements.",
+            "Processor designed for highly parallel workloads.",
+            "CPU containing multiple execution cores."
+          ],
+          "feedback": "GPU — Processor designed for highly parallel workloads."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'multicore'?",
+          "answer": "CPU containing multiple execution cores.",
+          "options": [
+            "CPU containing multiple execution cores.",
+            "Processor designed for highly parallel workloads.",
+            "Apply the same operation to many independent data elements."
+          ],
+          "feedback": "multicore — CPU containing multiple execution cores."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'data parallelism'?",
+          "answer": "Apply the same operation to many independent data elements.",
+          "options": [
+            "Processor designed for highly parallel workloads.",
+            "CPU containing multiple execution cores.",
+            "Apply the same operation to many independent data elements."
+          ],
+          "feedback": "data parallelism — Apply the same operation to many independent data elements."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The blocks can be divided evenly into five independent groups."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Each core receives four blocks; coordination overhead and data movement may affect real runtime."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Volume of data transferred in a given time.",
+          "answer": "bandwidth",
+          "options": [
+            "GPU",
+            "multicore",
+            "bandwidth"
+          ],
+          "feedback": "bandwidth — Volume of data transferred in a given time."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Coordinating shared work and results.",
+          "answer": "synchronisation",
+          "options": [
+            "multicore",
+            "synchronisation",
+            "GPU"
+          ],
+          "feedback": "synchronisation — Coordinating shared work and results."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Processor designed for highly parallel workloads.",
+          "answer": "GPU",
+          "options": [
+            "GPU",
+            "multicore",
+            "data parallelism"
+          ],
+          "feedback": "GPU — Processor designed for highly parallel workloads."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? CPU containing multiple execution cores.",
+          "answer": "multicore",
+          "options": [
+            "GPU",
+            "data parallelism",
+            "multicore"
+          ],
+          "feedback": "multicore — CPU containing multiple execution cores."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Give two uses of GPUs, including one not based on graphics, and explain a common characteristic of both.",
+          "answer": "[4] Graphics/rasterisation [1]; large-scale matrix operations/AI [1]; many independent similar calculations [2].",
+          "options": [
+            "[6] 24/6=4 chunks per core [2]; serial work limits speedup [2]; synchronisation, memory-bandwidth or scheduling overhead [2].",
+            "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory…",
+            "[4] Graphics/rasterisation [1]; large-scale matrix operations/AI [1]; many independent similar calculations [2]."
+          ],
+          "feedback": "[4] Graphics/rasterisation [1]; large-scale matrix operations/AI [1]; many independent similar calculations [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 A task has 24 independent identical chunks and six CPU cores. Calculate ideal work per core and describe two constraints on real speedup.",
+          "answer": "[6] 24/6=4 chunks per core [2]; serial work limits speedup [2]; synchronisation, memory-bandwidth or scheduling overhead [2].",
+          "options": [
+            "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory…",
+            "[6] 24/6=4 chunks per core [2]; serial work limits speedup [2]; synchronisation, memory-bandwidth or scheduling overhead [2].",
+            "[4] Graphics/rasterisation [1]; large-scale matrix operations/AI [1]; many independent similar calculations [2]."
+          ],
+          "feedback": "[6] 24/6=4 chunks per core [2]; serial work limits speedup [2]; synchronisation, memory-bandwidth or scheduling overhead [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A video-editing workflow must first decode frames sequentially, then apply the same filter independently to each frame, before assembling output. Explain which parts suit GPU execution and why.",
+          "answer": "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory…",
+          "options": [
+            "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory…",
+            "[4] Graphics/rasterisation [1]; large-scale matrix operations/AI [1]; many independent similar calculations [2].",
+            "[6] 24/6=4 chunks per core [2]; serial work limits speedup [2]; synchronisation, memory-bandwidth or scheduling overhead [2]."
+          ],
+          "feedback": "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory bandwidth reduce ideal gains [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A video-editing workflow must first decode frames sequentially, then apply the same filter independently to each frame, before assembling output. Explain which parts suit GPU execution and why.",
+        "model": "[6] Independent per-frame filter calculations can be parallel [2]; GPU data-parallel execution benefits them [1]; decoding dependencies may constrain speedup [1]; assembly waits for processed frames [1]; host–GPU transfer and memory bandwidth reduce ideal gains [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "multicore means: CPU containing multiple execution cores.",
+          "answer": "true",
+          "feedback": "multicore — CPU containing multiple execution cores."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "data parallelism means: Coordinating shared work and results.",
+          "answer": "false",
+          "feedback": "data parallelism — Apply the same operation to many independent data elements."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "bandwidth means: Volume of data transferred in a given time.",
+          "answer": "true",
+          "feedback": "bandwidth — Volume of data transferred in a given time."
+        }
+      ]
+    }
+  ]
+}

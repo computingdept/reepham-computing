@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-042",
+  "course": "h446",
+  "title": "Programming Techniques · Value and Reference",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a local variable?",
+          "answer": "A name scoped to a function or block",
+          "options": [
+            "A name scoped to a function or block",
+            "To modularise and reuse logic",
+            "A running total"
+          ],
+          "feedback": "A name scoped to a function or block"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why use a method?",
+          "answer": "To modularise and reuse logic",
+          "options": [
+            "A name scoped to a function or block",
+            "A running total",
+            "To modularise and reuse logic"
+          ],
+          "feedback": "To modularise and reuse logic"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an accumulator store?",
+          "answer": "A running total",
+          "options": [
+            "To modularise and reuse logic",
+            "A running total",
+            "A name scoped to a function or block"
+          ],
+          "feedback": "A running total"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a hash collision?",
+          "answer": "Two keys produce the same location",
+          "options": [
+            "Two keys produce the same location",
+            "A name scoped to a function or block",
+            "To modularise and reuse logic"
+          ],
+          "feedback": "Two keys produce the same location"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the important decision",
+          "text": "An int parameter normally receives a copied number. A Box parameter normally receives a copied reference to the same object. ref instead aliases the caller variable, allowing that variable to be reassigned."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Compare changes to a copy and an object",
+          "text": "Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Copy an integer value",
+          "text": "Start x=5; CopyInt(x) changes only local n to 9. The caller x remains 5. This is pass-by-value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Copy a reference; mutate one object",
+          "text": "Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'by value'?",
+          "answer": "Copies a value to a parameter",
+          "options": [
+            "Allows changes to caller variable",
+            "Identifies an object",
+            "Copies a value to a parameter"
+          ],
+          "feedback": "by value — Copies a value to a parameter"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'ref'?",
+          "answer": "Allows changes to caller variable",
+          "options": [
+            "Identifies an object",
+            "Allows changes to caller variable",
+            "Copies a value to a parameter"
+          ],
+          "feedback": "ref — Allows changes to caller variable"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'reference'?",
+          "answer": "Identifies an object",
+          "options": [
+            "Identifies an object",
+            "Copies a value to a parameter",
+            "Allows changes to caller variable"
+          ],
+          "feedback": "reference — Identifies an object"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Problem 1",
+          "text": "If a method takes ref int n and adds 2, starting 3, what is the caller value?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Discuss, then respond",
+          "text": "If a method takes ref int n and adds 2, starting 3, what is the caller value?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check your thinking",
+          "text": "5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Problem 2",
+          "text": "Does passing a reference-type object by value copy the object itself?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value provided to a call",
+          "answer": "argument",
+          "options": [
+            "argument",
+            "by value",
+            "ref"
+          ],
+          "feedback": "argument — Value provided to a call"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Change to a value or object",
+          "answer": "mutation",
+          "options": [
+            "by value",
+            "ref",
+            "mutation"
+          ],
+          "feedback": "mutation — Change to a value or object"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Copies a value to a parameter",
+          "answer": "by value",
+          "options": [
+            "reference",
+            "by value",
+            "ref"
+          ],
+          "feedback": "by value — Copies a value to a parameter"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Allows changes to caller variable",
+          "answer": "ref",
+          "options": [
+            "ref",
+            "by value",
+            "reference"
+          ],
+          "feedback": "ref — Allows changes to caller variable"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
+          "answer": "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
+          "options": [
+            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
+            "MODEL ANSWER Check your thinking 5.",
+            "MODEL ANSWER Check your thinking No; the reference is copied."
+          ],
+          "feedback": "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 1 If a method takes ref int n and adds 2, starting 3, what is the caller value?",
+          "answer": "MODEL ANSWER Check your thinking 5.",
+          "options": [
+            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A.",
+            "MODEL ANSWER Check your thinking No; the reference is copied.",
+            "MODEL ANSWER Check your thinking 5."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking 5."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 2 Does passing a reference-type object by value copy the object itself?",
+          "answer": "MODEL ANSWER Check your thinking No; the reference is copied.",
+          "options": [
+            "MODEL ANSWER Check your thinking 5.",
+            "MODEL ANSWER Check your thinking No; the reference is copied.",
+            "STEP 2 Copy a reference; mutate one object Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking No; the reference is copied."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Problem 2 Does passing a reference-type object by value copy the object itself?",
+        "model": "MODEL ANSWER Check your thinking No; the reference is copied.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "ref means: Allows changes to caller variable",
+          "answer": "true",
+          "feedback": "ref — Allows changes to caller variable"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "reference means: Change to a value or object",
+          "answer": "false",
+          "feedback": "reference — Identifies an object"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "argument means: Value provided to a call",
+          "answer": "true",
+          "feedback": "argument — Value provided to a call"
+        }
+      ]
+    }
+  ]
+}

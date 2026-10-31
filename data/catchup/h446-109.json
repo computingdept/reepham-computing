@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-109",
+  "course": "h446",
+  "title": "Lesson 109 · CPU Scheduling: FCFS, SJF and SRT",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Name the routine executed when an interrupt is accepted.",
+          "answer": "Interrupt service routine (ISR).",
+          "options": [
+            "1.",
+            "X is removed; Y remains at the front.",
+            "Interrupt service routine (ISR)."
+          ],
+          "feedback": "Interrupt service routine (ISR)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: An OR gate has inputs 0 and 1. What is the output?",
+          "answer": "1.",
+          "options": [
+            "X is removed; Y remains at the front.",
+            "1.",
+            "Interrupt service routine (ISR)."
+          ],
+          "feedback": "1."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the effect of enqueue(X), enqueue(Y), dequeue() on an initially empty FIFO queue?",
+          "answer": "X is removed; Y remains at the front.",
+          "options": [
+            "X is removed; Y remains at the front.",
+            "Interrupt service routine (ISR).",
+            "1."
+          ],
+          "feedback": "X is removed; Y remains at the front."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the time complexity of sequential search in the worst case?",
+          "answer": "O(n).",
+          "options": [
+            "Interrupt service routine (ISR).",
+            "1.",
+            "O(n)."
+          ],
+          "feedback": "O(n)."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "FCFS",
+          "text": "First come, first served: non-preemptive queue in arrival order."
+        },
+        {
+          "type": "paragraph",
+          "title": "SJF",
+          "text": "Shortest job first: choose least burst time from ready jobs; non-preemptive."
+        },
+        {
+          "type": "paragraph",
+          "title": "SRT",
+          "text": "Shortest remaining time: preempt if a new job has a shorter remaining burst."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "Timeline P1 0–4, P2 4–6, P3 6–7. Waiting = start − arrival: P1 0, P2 3, P3 4. Average = 7/3 ≈ 2.33 units. Check: link each claim to the scenario and use precise OCR terminology."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'FCFS'?",
+          "answer": "Jobs run in first-arrival order.",
+          "options": [
+            "Preemptive shortest remaining time.",
+            "Jobs run in first-arrival order.",
+            "Selects the shortest estimated ready job."
+          ],
+          "feedback": "FCFS — Jobs run in first-arrival order."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'SJF'?",
+          "answer": "Selects the shortest estimated ready job.",
+          "options": [
+            "Selects the shortest estimated ready job.",
+            "Jobs run in first-arrival order.",
+            "Preemptive shortest remaining time."
+          ],
+          "feedback": "SJF — Selects the shortest estimated ready job."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'SRT'?",
+          "answer": "Preemptive shortest remaining time.",
+          "options": [
+            "Jobs run in first-arrival order.",
+            "Selects the shortest estimated ready job.",
+            "Preemptive shortest remaining time."
+          ],
+          "feedback": "SRT — Preemptive shortest remaining time."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must we decide?",
+          "text": "Identify the inputs, relevant facts and exact output or judgement required."
+        },
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Use the middle stage of the visual to follow the process and state each intermediate result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shared worked answer",
+          "text": "Order B 0–2, C 2–5, A 5–11. Waits B 0, C 2, A 5; mean 7/3 ≈ 2.33 units. SJF assumes burst-length estimates are available."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Time spent ready but not executing.",
+          "answer": "waiting time",
+          "options": [
+            "FCFS",
+            "SJF",
+            "waiting time"
+          ],
+          "feedback": "waiting time — Time spent ready but not executing."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Jobs run in first-arrival order.",
+          "answer": "FCFS",
+          "options": [
+            "SRT",
+            "FCFS",
+            "SJF"
+          ],
+          "feedback": "FCFS — Jobs run in first-arrival order."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Selects the shortest estimated ready job.",
+          "answer": "SJF",
+          "options": [
+            "SJF",
+            "FCFS",
+            "SRT"
+          ],
+          "feedback": "SJF — Selects the shortest estimated ready job."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Preemptive shortest remaining time.",
+          "answer": "SRT",
+          "options": [
+            "FCFS",
+            "SJF",
+            "SRT"
+          ],
+          "feedback": "SRT — Preemptive shortest remaining time."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Distinguish non-preemptive and preemptive scheduling and give an example of each. [6]",
+          "answer": "/ WORKED ANSWER Non-preemptive runs selected job until completion/block [2]; preemptive may interrupt running job [2]; correct algorithm examples [2].",
+          "options": [
+            "/ WORKED ANSWER A executes 0–3, wait 0; B 3–5, wait 2; C 5–9, wait 3. Two marks for correct timeline and four for wait calculations.",
+            "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2].",
+            "/ WORKED ANSWER Non-preemptive runs selected job until completion/block [2]; preemptive may interrupt running job [2]; correct algorithm examples [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Non-preemptive runs selected job until completion/block [2]; preemptive may interrupt running job [2]; correct algorithm examples [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 FCFS: A arrives 0/burst 3, B arrives 1/burst 2, C arrives 2/burst 4. Calculate each wait. [6]",
+          "answer": "/ WORKED ANSWER A executes 0–3, wait 0; B 3–5, wait 2; C 5–9, wait 3. Two marks for correct timeline and four for wait calculations.",
+          "options": [
+            "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2].",
+            "/ WORKED ANSWER A executes 0–3, wait 0; B 3–5, wait 2; C 5–9, wait 3. Two marks for correct timeline and four for wait calculations.",
+            "/ WORKED ANSWER Non-preemptive runs selected job until completion/block [2]; preemptive may interrupt running job [2]; correct algorithm examples [2]."
+          ],
+          "feedback": "/ WORKED ANSWER A executes 0–3, wait 0; B 3–5, wait 2; C 5–9, wait 3. Two marks for correct timeline and four for wait calculations."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 SRT: A arrives 0/burst 5, B arrives 1/burst 2. Show the timeline and explain preemption. [8]",
+          "answer": "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2].",
+          "options": [
+            "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2].",
+            "/ WORKED ANSWER Non-preemptive runs selected job until completion/block [2]; preemptive may interrupt running job [2]; correct algorithm examples [2].",
+            "/ WORKED ANSWER A executes 0–3, wait 0; B 3–5, wait 2; C 5–9, wait 3. Two marks for correct timeline and four for wait calculations."
+          ],
+          "feedback": "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 SRT: A arrives 0/burst 5, B arrives 1/burst 2. Show the timeline and explain preemption. [8]",
+        "model": "/ WORKED ANSWER A 0–1; B 1–3; A 3–7 [6]. At t1 A has 4 remaining but B needs only 2, so B preempts [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "SJF means: Selects the shortest estimated ready job.",
+          "answer": "true",
+          "feedback": "SJF — Selects the shortest estimated ready job."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "SRT means: Jobs run in first-arrival order.",
+          "answer": "false",
+          "feedback": "SRT — Preemptive shortest remaining time."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "waiting time means: Time spent ready but not executing.",
+          "answer": "true",
+          "feedback": "waiting time — Time spent ready but not executing."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-181",
+  "course": "h446",
+  "title": "Recursion: base cases and returns",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A C# function is declared int Double(int n). What does return n * 2; do when n is 4?",
+          "answer": "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
+          "options": [
+            "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
+            "C. A stack is last in, first out (LIFO).",
+            "It sends the value 8 back to the caller. A return statement also ends the current invocation."
+          ],
+          "feedback": "It sends the value 8 back to the caller. A return statement also ends the current invocation."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Starting total = 1, repeat total = total * i for i = 1, 2, 3. What is total after each iteration?",
+          "answer": "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
+          "options": [
+            "C. A stack is last in, first out (LIFO).",
+            "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
+            "It sends the value 8 back to the caller. A return statement also ends the current invocation."
+          ],
+          "feedback": "1, 2 and 6. Each iteration multiplies the previous total by the new i."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Values A, B and C are pushed onto a stack in that order. Which leaves first when popping?",
+          "answer": "C. A stack is last in, first out (LIFO).",
+          "options": [
+            "C. A stack is last in, first out (LIFO).",
+            "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
+            "1, 2 and 6. Each iteration multiplies the previous total by the new i."
+          ],
+          "feedback": "C. A stack is last in, first out (LIFO)."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A function AddTwo(x) returns x + 2. Calculate AddTwo(AddTwo(3)) and show the inner and outer calls.",
+          "answer": "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7.",
+          "options": [
+            "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
+            "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
+            "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7."
+          ],
+          "feedback": "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with a small input",
+          "text": "Factorial(4) calls Factorial(3); it cannot finish multiplying until the inner call returns."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reach the stopping rule",
+          "text": "Factorial(0) returns 1. It makes no further recursive call."
+        },
+        {
+          "type": "paragraph",
+          "title": "Return through the calls",
+          "text": "Factorial(1) = 1 × 1; Factorial(2) = 2 × 1; Factorial(3) = 3 × 2; Factorial(4) = 4 × 6 = 24."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace Factorial(3). Show each call and its return value.",
+          "text": "int Factorial(int n) { if (n == 0) return 1; return n * Factorial(n - 1); }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Calls",
+          "text": "3 → 2 → 1 → 0. The argument decreases by one each time."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Base case",
+          "text": "Factorial(0) returns 1. No more calls occur."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'recursion'?",
+          "answer": "A function calling itself to solve a smaller problem.",
+          "options": [
+            "A call to the same function with a smaller or simpler input.",
+            "A function calling itself to solve a smaller problem.",
+            "A condition that stops further recursive calls."
+          ],
+          "feedback": "recursion — A function calling itself to solve a smaller problem."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'base case'?",
+          "answer": "A condition that stops further recursive calls.",
+          "options": [
+            "A condition that stops further recursive calls.",
+            "A function calling itself to solve a smaller problem.",
+            "A call to the same function with a smaller or simpler input."
+          ],
+          "feedback": "base case — A condition that stops further recursive calls."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'recursive case'?",
+          "answer": "A call to the same function with a smaller or simpler input.",
+          "options": [
+            "A function calling itself to solve a smaller problem.",
+            "A condition that stops further recursive calls.",
+            "A call to the same function with a smaller or simpler input."
+          ],
+          "feedback": "recursive case — A call to the same function with a smaller or simpler input."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next call",
+          "text": "4 calls 3; 3 calls 2; 2 calls 1; 1 calls 0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Predict the first return",
+          "text": "Factorial(0) returns 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the return chain",
+          "text": "Factorial(1)=1, Factorial(2)=2, Factorial(3)=6, Factorial(4)=24."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Memory tracking active function calls and their local state.",
+          "answer": "call stack",
+          "options": [
+            "recursion",
+            "base case",
+            "call stack"
+          ],
+          "feedback": "call stack — Memory tracking active function calls and their local state."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The result passed back to a caller.",
+          "answer": "return value",
+          "options": [
+            "base case",
+            "return value",
+            "recursion"
+          ],
+          "feedback": "return value — The result passed back to a caller."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A function calling itself to solve a smaller problem.",
+          "answer": "recursion",
+          "options": [
+            "recursion",
+            "base case",
+            "recursive case"
+          ],
+          "feedback": "recursion — A function calling itself to solve a smaller problem."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A condition that stops further recursive calls.",
+          "answer": "base case",
+          "options": [
+            "recursion",
+            "recursive case",
+            "base case"
+          ],
+          "feedback": "base case — A condition that stops further recursive calls."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Complete the calls and returns for Factorial(2).",
+          "answer": "Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2.",
+          "options": [
+            "Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow).",
+            "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.",
+            "Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2."
+          ],
+          "feedback": "Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 What happens if Factorial has no base case? Explain using the call stack.",
+          "answer": "Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow).",
+          "options": [
+            "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.",
+            "Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow).",
+            "Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2."
+          ],
+          "feedback": "Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow)."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Modify Factorial to reject negative input; write the C# guard and explain the reason.",
+          "answer": "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.",
+          "options": [
+            "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.",
+            "Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2.",
+            "Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow)."
+          ],
+          "feedback": "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Modify Factorial to reject negative input; write the C# guard and explain the reason.",
+        "model": "Before the base case: if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "base case means: A condition that stops further recursive calls.",
+          "answer": "true",
+          "feedback": "base case — A condition that stops further recursive calls."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "recursive case means: The result passed back to a caller.",
+          "answer": "false",
+          "feedback": "recursive case — A call to the same function with a smaller or simpler input."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "call stack means: Memory tracking active function calls and their local state.",
+          "answer": "true",
+          "feedback": "call stack — Memory tracking active function calls and their local state."
+        }
+      ]
+    }
+  ]
+}

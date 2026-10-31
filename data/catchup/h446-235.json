@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-235",
+  "course": "h446",
+  "title": "Software development: practical testing",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a prototype?",
+          "answer": "An early model that users evaluate and refine.",
+          "options": [
+            "To catch regressions while new features are introduced.",
+            "Both conditions must be true.",
+            "An early model that users evaluate and refine."
+          ],
+          "feedback": "An early model that users evaluate and refine."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why might a tester run tests at each sprint?",
+          "answer": "To catch regressions while new features are introduced.",
+          "options": [
+            "Both conditions must be true.",
+            "To catch regressions while new features are introduced.",
+            "An early model that users evaluate and refine."
+          ],
+          "feedback": "To catch regressions while new features are introduced."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does AND require for a compound condition to be true?",
+          "answer": "Both conditions must be true.",
+          "options": [
+            "Both conditions must be true.",
+            "An early model that users evaluate and refine.",
+            "To catch regressions while new features are introduced."
+          ],
+          "feedback": "Both conditions must be true."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For valid ages 12–16 inclusive, which four values test either side of both boundaries?",
+          "answer": "11, 12, 16 and 17.",
+          "options": [
+            "An early model that users evaluate and refine.",
+            "To catch regressions while new features are introduced.",
+            "11, 12, 16 and 17."
+          ],
+          "feedback": "11, 12, 16 and 17."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "State the valid range",
+          "text": "The specification permits whole-number marks from 0 through 100 inclusive."
+        },
+        {
+          "type": "paragraph",
+          "title": "Choose targeted tests",
+          "text": "Normal value 50; valid boundaries 0 and 100; invalid just beyond boundaries −1 and 101."
+        },
+        {
+          "type": "paragraph",
+          "title": "Write expected results",
+          "text": "A useful test log records input, expected outcome and actual outcome; a mismatch is evidence of a fault."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Test just below and at the lower limit: 7 rejected, 8 accepted."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and explain",
+          "text": "Also test a normal 14, upper boundary 20, and 21 rejected."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'normal test'?",
+          "answer": "Typical valid input.",
+          "options": [
+            "Input outside permitted requirements.",
+            "Typical valid input.",
+            "Input at or near a valid limit."
+          ],
+          "feedback": "normal test — Typical valid input."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'boundary test'?",
+          "answer": "Input at or near a valid limit.",
+          "options": [
+            "Input at or near a valid limit.",
+            "Typical valid input.",
+            "Input outside permitted requirements."
+          ],
+          "feedback": "boundary test — Input at or near a valid limit."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'erroneous test'?",
+          "answer": "Input outside permitted requirements.",
+          "options": [
+            "Typical valid input.",
+            "Input at or near a valid limit.",
+            "Input outside permitted requirements."
+          ],
+          "feedback": "erroneous test — Input outside permitted requirements."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Lower boundary 1 is accepted while 0 is invalid."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and explain",
+          "text": "Upper boundary 30 is accepted while 31 is invalid; 16 is a representative normal value."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Predicted correct output for a test.",
+          "answer": "expected result",
+          "options": [
+            "normal test",
+            "boundary test",
+            "expected result"
+          ],
+          "feedback": "expected result — Predicted correct output for a test."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? New change breaks previously working behaviour.",
+          "answer": "regression",
+          "options": [
+            "boundary test",
+            "regression",
+            "normal test"
+          ],
+          "feedback": "regression — New change breaks previously working behaviour."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Typical valid input.",
+          "answer": "normal test",
+          "options": [
+            "normal test",
+            "boundary test",
+            "erroneous test"
+          ],
+          "feedback": "normal test — Typical valid input."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input at or near a valid limit.",
+          "answer": "boundary test",
+          "options": [
+            "normal test",
+            "erroneous test",
+            "boundary test"
+          ],
+          "feedback": "boundary test — Input at or near a valid limit."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 A whole-number temperature must be 10–40 inclusive. Give a normal, a lower-boundary, an upper-boundary and an erroneous test.",
+          "answer": "[4] Example 25 [1]; 10 [1]; 40 [1]; 9 (or 41) [1].",
+          "options": [
+            "[6] bool Valid(int x)=>x>=1&&x<=9; [2]. Test 0 false [1], 1 true [1], 9 true [1], 10 false [1].",
+            "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1].",
+            "[4] Example 25 [1]; 10 [1]; 40 [1]; 9 (or 41) [1]."
+          ],
+          "feedback": "[4] Example 25 [1]; 10 [1]; 40 [1]; 9 (or 41) [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Write C# to validate a score from 1 to 9 inclusive and give four expected-result test pairs.",
+          "answer": "[6] bool Valid(int x)=>x>=1&&x<=9; [2]. Test 0 false [1], 1 true [1], 9 true [1], 10 false [1].",
+          "options": [
+            "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1].",
+            "[6] bool Valid(int x)=>x>=1&&x<=9; [2]. Test 0 false [1], 1 true [1], 9 true [1], 10 false [1].",
+            "[4] Example 25 [1]; 10 [1]; 40 [1]; 9 (or 41) [1]."
+          ],
+          "feedback": "[6] bool Valid(int x)=>x>=1&&x<=9; [2]. Test 0 false [1], 1 true [1], 9 true [1], 10 false [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A developer tests values 20,30,40 for a permitted range 20–40. Explain why this is insufficient and propose a stronger suite.",
+          "answer": "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1].",
+          "options": [
+            "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1].",
+            "[4] Example 25 [1]; 10 [1]; 40 [1]; 9 (or 41) [1].",
+            "[6] bool Valid(int x)=>x>=1&&x<=9; [2]. Test 0 false [1], 1 true [1], 9 true [1], 10 false [1]."
+          ],
+          "feedback": "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A developer tests values 20,30,40 for a permitted range 20–40. Explain why this is insufficient and propose a stronger suite.",
+        "model": "[6] Existing tests include boundaries [2] but no immediately invalid values [1]; add 19 and 41 expected rejection [2], and a representative interior value such as 27 expected acceptance [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "boundary test means: Input at or near a valid limit.",
+          "answer": "true",
+          "feedback": "boundary test — Input at or near a valid limit."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "erroneous test means: New change breaks previously working behaviour.",
+          "answer": "false",
+          "feedback": "erroneous test — Input outside permitted requirements."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "expected result means: Predicted correct output for a test.",
+          "answer": "true",
+          "feedback": "expected result — Predicted correct output for a test."
+        }
+      ]
+    }
+  ]
+}

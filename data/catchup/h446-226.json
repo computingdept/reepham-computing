@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-226",
+  "course": "h446",
+  "title": "Tree traversal: post-order and breadth-first",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a constructor do?",
+          "answer": "Initialises an object when it is created.",
+          "options": [
+            "Left, root, right.",
+            "First In, First Out.",
+            "Initialises an object when it is created."
+          ],
+          "feedback": "Initialises an object when it is created."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is in-order traversal order?",
+          "answer": "Left, root, right.",
+          "options": [
+            "First In, First Out.",
+            "Left, root, right.",
+            "Initialises an object when it is created."
+          ],
+          "feedback": "Left, root, right."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does FIFO stand for?",
+          "answer": "First In, First Out.",
+          "options": [
+            "First In, First Out.",
+            "Initialises an object when it is created.",
+            "Left, root, right."
+          ],
+          "feedback": "First In, First Out."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A root R has only left child L. What is post-order?",
+          "answer": "L then R.",
+          "options": [
+            "Initialises an object when it is created.",
+            "Left, root, right.",
+            "L then R."
+          ],
+          "feedback": "L then R."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Depth-first post-order",
+          "text": "Visit an entire left subtree, then right subtree, and finally the current node."
+        },
+        {
+          "type": "paragraph",
+          "title": "Breadth-first level order",
+          "text": "Start with the root in a queue. Dequeue one node, visit it and enqueue each of its children."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare output",
+          "text": "Same structure yields different orders: 2,6,4,12,8 versus 8,4,12,2,6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "PostOrder(10) calls left(5), then left(2). At node2 both null-child calls return, so print2; return to node5 and print5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Return to10, traverse right child15 and print15, then print10. Output 2,5,15,10: the print follows both child calls. Node has Key, Left and Right fields."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'post-order'?",
+          "answer": "Traverse left, right, then root.",
+          "options": [
+            "First-in-first-out structure used by BFS.",
+            "Traverse left, right, then root.",
+            "Visit vertices level by level."
+          ],
+          "feedback": "post-order — Traverse left, right, then root."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'breadth-first'?",
+          "answer": "Visit vertices level by level.",
+          "options": [
+            "Visit vertices level by level.",
+            "Traverse left, right, then root.",
+            "First-in-first-out structure used by BFS."
+          ],
+          "feedback": "breadth-first — Visit vertices level by level."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'FIFO queue'?",
+          "answer": "First-in-first-out structure used by BFS.",
+          "options": [
+            "Traverse left, right, then root.",
+            "Visit vertices level by level.",
+            "First-in-first-out structure used by BFS."
+          ],
+          "feedback": "FIFO queue — First-in-first-out structure used by BFS."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Visit root 20, enqueue 10 and 30."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the reasoning",
+          "text": "Visit 10 and enqueue child 15, then visit 30; final 15 gives 20,10,30,15."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Node without children.",
+          "answer": "leaf",
+          "options": [
+            "post-order",
+            "breadth-first",
+            "leaf"
+          ],
+          "feedback": "leaf — Node without children."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Systematically visit each node in a structure.",
+          "answer": "traversal",
+          "options": [
+            "breadth-first",
+            "traversal",
+            "post-order"
+          ],
+          "feedback": "traversal — Systematically visit each node in a structure."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Traverse left, right, then root.",
+          "answer": "post-order",
+          "options": [
+            "post-order",
+            "breadth-first",
+            "FIFO queue"
+          ],
+          "feedback": "post-order — Traverse left, right, then root."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Visit vertices level by level.",
+          "answer": "breadth-first",
+          "options": [
+            "post-order",
+            "FIFO queue",
+            "breadth-first"
+          ],
+          "feedback": "breadth-first — Visit vertices level by level."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 A preorder routine prints node.Key, then traverses Left and Right (with a null guard). Move one statement to make it post-order. Give the result for root6 with children3 and9.",
+          "answer": "[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1].",
+          "options": [
+            "[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3].",
+            "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].",
+            "[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1]."
+          ],
+          "feedback": "[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 5 marks · QUESTION 2 OF 3 Tree root 12, left 5 with children 2 and 8, right 17. Give breadth-first and post-order traversals.",
+          "answer": "[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3].",
+          "options": [
+            "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].",
+            "[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3].",
+            "[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1]."
+          ],
+          "feedback": "[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Write pseudocode to traverse a binary tree breadth-first. Explain why a queue rather than a stack is used.",
+          "answer": "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].",
+          "options": [
+            "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].",
+            "[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1].",
+            "[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3]."
+          ],
+          "feedback": "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Write pseudocode to traverse a binary tree breadth-first. Explain why a queue rather than a stack is used.",
+        "model": "[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "breadth-first means: Visit vertices level by level.",
+          "answer": "true",
+          "feedback": "breadth-first — Visit vertices level by level."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "FIFO queue means: Systematically visit each node in a structure.",
+          "answer": "false",
+          "feedback": "FIFO queue — First-in-first-out structure used by BFS."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "leaf means: Node without children.",
+          "answer": "true",
+          "feedback": "leaf — Node without children."
+        }
+      ]
+    }
+  ]
+}

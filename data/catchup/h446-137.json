@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-137",
+  "course": "h446",
+  "title": "Lesson 137 · Third Normal Form: Removing Transitive Dependencies",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a partial functional dependency?",
+          "answer": "A non-key attribute depends on only part of a composite candidate key.",
+          "options": [
+            "Sum 0, carry 1.",
+            "A non-key attribute depends on only part of a composite candidate key.",
+            "Read-only memory."
+          ],
+          "feedback": "A non-key attribute depends on only part of a composite candidate key."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does ROM stand for?",
+          "answer": "Read-only memory.",
+          "options": [
+            "Read-only memory.",
+            "A non-key attribute depends on only part of a composite candidate key.",
+            "Sum 0, carry 1."
+          ],
+          "feedback": "Read-only memory."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are the outputs of a half adder when A=1 and B=1?",
+          "answer": "Sum 0, carry 1.",
+          "options": [
+            "A non-key attribute depends on only part of a composite candidate key.",
+            "Read-only memory.",
+            "Sum 0, carry 1."
+          ],
+          "feedback": "Sum 0, carry 1."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a composite key?",
+          "answer": "A key made from two or more attributes together.",
+          "options": [
+            "Read-only memory.",
+            "A key made from two or more attributes together.",
+            "A non-key attribute depends on only part of a composite candidate key."
+          ],
+          "feedback": "A key made from two or more attributes together."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check 2NF first",
+          "text": "Remove repeating groups and partial dependencies."
+        },
+        {
+          "type": "paragraph",
+          "title": "Detect indirect dependency",
+          "text": "EmployeeID → DeptID → DeptName; the name depends on department."
+        },
+        {
+          "type": "paragraph",
+          "title": "Decompose tables",
+          "text": "Create Department(DeptID,DeptName) linked from Employee."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · EmpID determines DeptID",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · DeptID determines name",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Split Department",
+          "text": "EmpID identifies employee. DeptName depends on DeptID, not directly on EmpID, producing a transitive dependency. Split Employee(EmpID PK,EmpName,DeptID FK) and Department(DeptID PK,DeptName)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches '3NF'?",
+          "answer": "No transitive dependency of non-prime attributes on candidate keys.",
+          "options": [
+            "No transitive dependency of non-prime attributes on candidate keys.",
+            "An attribute depends on a key indirectly through another non-key attribute.",
+            "Value of one attribute determines another."
+          ],
+          "feedback": "3NF — No transitive dependency of non-prime attributes on candidate keys."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'transitive dependency'?",
+          "answer": "An attribute depends on a key indirectly through another non-key attribute.",
+          "options": [
+            "No transitive dependency of non-prime attributes on candidate keys.",
+            "Value of one attribute determines another.",
+            "An attribute depends on a key indirectly through another non-key attribute."
+          ],
+          "feedback": "transitive dependency — An attribute depends on a key indirectly through another non-key attribute."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'functional dependency'?",
+          "answer": "Value of one attribute determines another.",
+          "options": [
+            "An attribute depends on a key indirectly through another non-key attribute.",
+            "Value of one attribute determines another.",
+            "No transitive dependency of non-prime attributes on candidate keys."
+          ],
+          "feedback": "functional dependency — Value of one attribute determines another."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Order identifies customer",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Customer identifies postcode",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Split or preserve snapshot",
+          "text": "Under the assumption CustomerID determines the customer's current postcode, there is an indirect dependency OrderID→CustomerID→CustomerPostcode. Store Customer(CustomerID PK,Postcode) and Order(OrderID PK,CustomerID FK). Historical shipping addresses may need separate, deliberate snapshots."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Duplicate facts can disagree after an edit.",
+          "answer": "update anomaly",
+          "options": [
+            "transitive dependency",
+            "update anomaly",
+            "3NF"
+          ],
+          "feedback": "update anomaly — Duplicate facts can disagree after an edit."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? No transitive dependency of non-prime attributes on candidate keys.",
+          "answer": "3NF",
+          "options": [
+            "3NF",
+            "transitive dependency",
+            "functional dependency"
+          ],
+          "feedback": "3NF — No transitive dependency of non-prime attributes on candidate keys."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An attribute depends on a key indirectly through another non-key attribute.",
+          "answer": "transitive dependency",
+          "options": [
+            "3NF",
+            "functional dependency",
+            "transitive dependency"
+          ],
+          "feedback": "transitive dependency — An attribute depends on a key indirectly through another non-key attribute."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value of one attribute determines another.",
+          "answer": "functional dependency",
+          "options": [
+            "transitive dependency",
+            "functional dependency",
+            "3NF"
+          ],
+          "feedback": "functional dependency — Value of one attribute determines another."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define transitive dependency and give a practical example. [6]",
+          "answer": "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+          "options": [
+            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Normalise Device(DeviceID,RoomID,RoomName) to 3NF, assuming RoomID determines RoomName. [6]",
+          "answer": "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+          "options": [
+            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why normalisation can reduce anomalies but may require additional joins. [8]",
+          "answer": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+          "options": [
+            "/ WORKED ANSWER Indirect key→non-key→other non-key chain [3], suitable accurate example [3].",
+            "/ WORKED ANSWER Device(DeviceID PK,RoomID FK) [3], Room(RoomID PK,RoomName) [3].",
+            "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why normalisation can reduce anomalies but may require additional joins. [8]",
+        "model": "/ WORKED ANSWER Avoid duplicate facts [2], update/insert/delete benefits [2], joins across tables [2], qualified performance and context [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "transitive dependency means: An attribute depends on a key indirectly through another non-key attribute.",
+          "answer": "true",
+          "feedback": "transitive dependency — An attribute depends on a key indirectly through another non-key attribute."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "functional dependency means: No transitive dependency of non-prime attributes on candidate keys.",
+          "answer": "false",
+          "feedback": "functional dependency — Value of one attribute determines another."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "update anomaly means: Duplicate facts can disagree after an edit.",
+          "answer": "true",
+          "feedback": "update anomaly — Duplicate facts can disagree after an edit."
+        }
+      ]
+    }
+  ]
+}

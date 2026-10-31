@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-145",
+  "course": "h446",
+  "title": "Lesson 145 · Packet Switching, Circuit Switching and Reliability",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the job of DNS?",
+          "answer": "Map names such as example.org to relevant resource records including IP addresses.",
+          "options": [
+            "Holding a CPU's working data/ALU results.",
+            "Binary search: O(log n) rather than O(n).",
+            "Map names such as example.org to relevant resource records including IP addresses."
+          ],
+          "feedback": "Map names such as example.org to relevant resource records including IP addresses."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the accumulator for?",
+          "answer": "Holding a CPU's working data/ALU results.",
+          "options": [
+            "Binary search: O(log n) rather than O(n).",
+            "Holding a CPU's working data/ALU results.",
+            "Map names such as example.org to relevant resource records including IP addresses."
+          ],
+          "feedback": "Holding a CPU's working data/ALU results."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which is faster in the worst case on sorted arrays, linear or binary search?",
+          "answer": "Binary search: O(log n) rather than O(n).",
+          "options": [
+            "Binary search: O(log n) rather than O(n).",
+            "Map names such as example.org to relevant resource records including IP addresses.",
+            "Holding a CPU's working data/ALU results."
+          ],
+          "feedback": "Binary search: O(log n) rather than O(n)."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which logic gate outputs 1 only when both inputs are 1?",
+          "answer": "AND.",
+          "options": [
+            "Map names such as example.org to relevant resource records including IP addresses.",
+            "Holding a CPU's working data/ALU results.",
+            "AND."
+          ],
+          "feedback": "AND."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Packetise data",
+          "text": "Large message split into addressed packets for shared links."
+        },
+        {
+          "type": "paragraph",
+          "title": "Route over network",
+          "text": "Packets share capacity and may arrive out of order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reassemble reliably",
+          "text": "TCP can reorder and retransmit data, while IP itself is best-effort."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Send packets 1,2,3",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Receive 2,1,3",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reorder 1,2,3",
+          "text": "Packets can follow different routes or encounter different queue delays. With a reliable transport such as TCP, sequence numbers permit correct reordering before delivery of the byte stream; missing data can be retransmitted."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'packet switching'?",
+          "answer": "Data divided into packets that may take different network routes.",
+          "options": [
+            "Delay experienced by data in transit.",
+            "Data divided into packets that may take different network routes.",
+            "A dedicated end-to-end circuit established before communication."
+          ],
+          "feedback": "packet switching — Data divided into packets that may take different network routes."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'circuit switching'?",
+          "answer": "A dedicated end-to-end circuit established before communication.",
+          "options": [
+            "A dedicated end-to-end circuit established before communication.",
+            "Data divided into packets that may take different network routes.",
+            "Delay experienced by data in transit."
+          ],
+          "feedback": "circuit switching — A dedicated end-to-end circuit established before communication."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'latency'?",
+          "answer": "Delay experienced by data in transit.",
+          "options": [
+            "Data divided into packets that may take different network routes.",
+            "A dedicated end-to-end circuit established before communication.",
+            "Delay experienced by data in transit."
+          ],
+          "feedback": "latency — Delay experienced by data in transit."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Reserve dedicated circuit",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Hold resources during call",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare shared packet links",
+          "text": "A circuit-switched system sets aside end-to-end resources while active; ordinary packet-switched IP shares links dynamically with others. Circuit switching offers predictable reserved capacity but can waste it during silence; packet switching adapts."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Sending data again when loss is detected by a reliable protocol.",
+          "answer": "retransmission",
+          "options": [
+            "packet switching",
+            "circuit switching",
+            "retransmission"
+          ],
+          "feedback": "retransmission — Sending data again when loss is detected by a reliable protocol."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Data divided into packets that may take different network routes.",
+          "answer": "packet switching",
+          "options": [
+            "latency",
+            "packet switching",
+            "circuit switching"
+          ],
+          "feedback": "packet switching — Data divided into packets that may take different network routes."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A dedicated end-to-end circuit established before communication.",
+          "answer": "circuit switching",
+          "options": [
+            "circuit switching",
+            "packet switching",
+            "latency"
+          ],
+          "feedback": "circuit switching — A dedicated end-to-end circuit established before communication."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Delay experienced by data in transit.",
+          "answer": "latency",
+          "options": [
+            "packet switching",
+            "circuit switching",
+            "latency"
+          ],
+          "feedback": "latency — Delay experienced by data in transit."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define packet switching and circuit switching, highlighting two differences. [6]",
+          "answer": "/ WORKED ANSWER Packets individually forwarded/shared links [3], circuit pre-establishes reserved route/capacity [3].",
+          "options": [
+            "/ WORKED ANSWER Different routes [2], variable congestion/queuing [2], sequence numbers and reliable transport reorder [2].",
+            "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2].",
+            "/ WORKED ANSWER Packets individually forwarded/shared links [3], circuit pre-establishes reserved route/capacity [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Packets individually forwarded/shared links [3], circuit pre-establishes reserved route/capacity [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why packets in a message may reach the destination out of order. [6]",
+          "answer": "/ WORKED ANSWER Different routes [2], variable congestion/queuing [2], sequence numbers and reliable transport reorder [2].",
+          "options": [
+            "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2].",
+            "/ WORKED ANSWER Different routes [2], variable congestion/queuing [2], sequence numbers and reliable transport reorder [2].",
+            "/ WORKED ANSWER Packets individually forwarded/shared links [3], circuit pre-establishes reserved route/capacity [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Different routes [2], variable congestion/queuing [2], sequence numbers and reliable transport reorder [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate packet switching versus circuit switching for video calls, including reliability and resource efficiency. [8]",
+          "answer": "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2].",
+          "options": [
+            "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2].",
+            "/ WORKED ANSWER Packets individually forwarded/shared links [3], circuit pre-establishes reserved route/capacity [3].",
+            "/ WORKED ANSWER Different routes [2], variable congestion/queuing [2], sequence numbers and reliable transport reorder [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate packet switching versus circuit switching for video calls, including reliability and resource efficiency. [8]",
+        "model": "/ WORKED ANSWER Shared capacity efficiency [2], delay/jitter concerns [2], circuit reservation benefits/costs [2], qualified judgement incl transport/QoS [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "circuit switching means: A dedicated end-to-end circuit established before communication.",
+          "answer": "true",
+          "feedback": "circuit switching — A dedicated end-to-end circuit established before communication."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "latency means: Data divided into packets that may take different network routes.",
+          "answer": "false",
+          "feedback": "latency — Delay experienced by data in transit."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "retransmission means: Sending data again when loss is detected by a reliable protocol.",
+          "answer": "true",
+          "feedback": "retransmission — Sending data again when loss is detected by a reliable protocol."
+        }
+      ]
+    }
+  ]
+}

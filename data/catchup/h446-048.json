@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-048",
+  "course": "h446",
+  "title": "Lesson 048 · C# List<T>: Add, Insert and Remove",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does Array.Length give?",
+          "answer": "Number of elements in the array.",
+          "options": [
+            "Number of elements in the array.",
+            "First item is at index zero.",
+            "Two references identify the same object."
+          ],
+          "feedback": "Number of elements in the array."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is zero-based indexing?",
+          "answer": "First item is at index zero.",
+          "options": [
+            "Number of elements in the array.",
+            "Two references identify the same object.",
+            "First item is at index zero."
+          ],
+          "feedback": "First item is at index zero."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is aliasing between references?",
+          "answer": "Two references identify the same object.",
+          "options": [
+            "First item is at index zero.",
+            "Two references identify the same object.",
+            "Number of elements in the array."
+          ],
+          "feedback": "Two references identify the same object."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 031",
+          "answer": "For a D flip-flop, D changes from 0 to 1 between active clock edges; Q was 0. Does Q change immediately? Why?",
+          "options": [
+            "For a D flip-flop, D changes from 0 to 1 between active clock edges; Q was 0. Does Q change immediately? Why?",
+            "Number of elements in the array.",
+            "First item is at index zero."
+          ],
+          "feedback": "For a D flip-flop, D changes from 0 to 1 between active clock edges; Q was 0. Does Q change immediately? Why?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "List<T> is a resizable sequence. Add appends; Insert inserts at a specified index and shifts following items."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "RemoveAt removes an item by index; Remove(value) removes the first matching value instead."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Unlike an array, List<T> changes Count as items are inserted/removed. An index must still be within the valid bounds."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace and justify",
+          "text": "After Insert: [1,2,5,7]; RemoveAt(3) removes 7; final [1,2,5]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'List<T>'?",
+          "answer": "Resizable generic sequence.",
+          "options": [
+            "Adds at a specified index.",
+            "Removes item by index.",
+            "Resizable generic sequence."
+          ],
+          "feedback": "List<T> — Resizable generic sequence."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Insert'?",
+          "answer": "Adds at a specified index.",
+          "options": [
+            "Removes item by index.",
+            "Adds at a specified index.",
+            "Resizable generic sequence."
+          ],
+          "feedback": "Insert — Adds at a specified index."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'RemoveAt'?",
+          "answer": "Removes item by index.",
+          "options": [
+            "Removes item by index.",
+            "Resizable generic sequence.",
+            "Adds at a specified index."
+          ],
+          "feedback": "RemoveAt — Removes item by index."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace and justify",
+          "text": "[3,9,12]. Add appends 12; Remove(6) removes matching value 6, unlike RemoveAt(6)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Number of items currently stored.",
+          "answer": "Count",
+          "options": [
+            "Count",
+            "List<T>",
+            "Insert"
+          ],
+          "feedback": "Count — Number of items currently stored."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resizable generic sequence.",
+          "answer": "List<T>",
+          "options": [
+            "Insert",
+            "RemoveAt",
+            "List<T>"
+          ],
+          "feedback": "List<T> — Resizable generic sequence."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Adds at a specified index.",
+          "answer": "Insert",
+          "options": [
+            "RemoveAt",
+            "Insert",
+            "List<T>"
+          ],
+          "feedback": "Insert — Adds at a specified index."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Removes item by index.",
+          "answer": "RemoveAt",
+          "options": [
+            "RemoveAt",
+            "List<T>",
+            "Insert"
+          ],
+          "feedback": "RemoveAt — Removes item by index."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Trace Insert(1,6) then RemoveAt(2) for [4,8,12]. [6]",
+          "answer": "/ MARKS [4,6,8,12] after Insert [3]; [4,6,12] after RemoveAt [3].",
+          "options": [
+            "/ MARKS [4,6,8,12] after Insert [3]; [4,6,12] after RemoveAt [3].",
+            "/ MARKS Remove(5) finds first value5 [2] → [2,5,9] [1]; RemoveAt(1) removes item at index1 [2] → [2,5,9] [1]. Same final list here but different selection rule.",
+            "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1]."
+          ],
+          "feedback": "/ MARKS [4,6,8,12] after Insert [3]; [4,6,12] after RemoveAt [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Explain the difference between Remove(5) and RemoveAt(1) for [2,5,5,9]. [6]",
+          "answer": "/ MARKS Remove(5) finds first value5 [2] → [2,5,9] [1]; RemoveAt(1) removes item at index1 [2] → [2,5,9] [1]. Same final list here but different selection rule.",
+          "options": [
+            "/ MARKS [4,6,8,12] after Insert [3]; [4,6,12] after RemoveAt [3].",
+            "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1].",
+            "/ MARKS Remove(5) finds first value5 [2] → [2,5,9] [1]; RemoveAt(1) removes item at index1 [2] → [2,5,9] [1]. Same final list here but different selection rule."
+          ],
+          "feedback": "/ MARKS Remove(5) finds first value5 [2] → [2,5,9] [1]; RemoveAt(1) removes item at index1 [2] → [2,5,9] [1]. Same final list here but different selection rule."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 For [1,2,3], write C# that inserts 0 at start, appends 4 and outputs Count; state why List<T> suits a growing collection. [6]",
+          "answer": "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1].",
+          "options": [
+            "/ MARKS Remove(5) finds first value5 [2] → [2,5,9] [1]; RemoveAt(1) removes item at index1 [2] → [2,5,9] [1]. Same final list here but different selection rule.",
+            "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1].",
+            "/ MARKS [4,6,8,12] after Insert [3]; [4,6,12] after RemoveAt [3]."
+          ],
+          "feedback": "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 For [1,2,3], write C# that inserts 0 at start, appends 4 and outputs Count; state why List<T> suits a growing collection. [6]",
+        "model": "/ MARKS list.Insert(0,0) [2]; list.Add(4) [2]; Count=5 [1]; dynamic size [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Insert means: Adds at a specified index.",
+          "answer": "true",
+          "feedback": "Insert — Adds at a specified index."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "RemoveAt means: Resizable generic sequence.",
+          "answer": "false",
+          "feedback": "RemoveAt — Removes item by index."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Count means: Number of items currently stored.",
+          "answer": "true",
+          "feedback": "Count — Number of items currently stored."
+        }
+      ]
+    }
+  ]
+}

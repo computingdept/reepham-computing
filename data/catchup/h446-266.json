@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-266",
+  "course": "h446",
+  "title": "Paging, segmentation and virtual memory",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is RAM used for?",
+          "answer": "Active program and data.",
+          "options": [
+            "Required page/data is not resident and must be loaded.",
+            "Active program and data.",
+            "Files hosted on network-accessible servers."
+          ],
+          "feedback": "Active program and data."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are remote virtual storage files?",
+          "answer": "Files hosted on network-accessible servers.",
+          "options": [
+            "Files hosted on network-accessible servers.",
+            "Active program and data.",
+            "Required page/data is not resident and must be loaded."
+          ],
+          "feedback": "Files hosted on network-accessible servers."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why might a process have to wait on memory I/O?",
+          "answer": "Required page/data is not resident and must be loaded.",
+          "options": [
+            "Active program and data.",
+            "Files hosted on network-accessible servers.",
+            "Required page/data is not resident and must be loaded."
+          ],
+          "feedback": "Required page/data is not resident and must be loaded."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A 4-row, 3-column zero-indexed array: give its final valid index pair and number of values.",
+          "answer": "Index (3,2), twelve values.",
+          "options": [
+            "Files hosted on network-accessible servers.",
+            "Index (3,2), twelve values.",
+            "Active program and data."
+          ],
+          "feedback": "Index (3,2), twelve values."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Pages and frames have equal fixed sizes; the page table maps virtual pages to physical frames."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Divide the virtual address by page size for the page number; use remainder as the offset."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A page fault requires a non-resident page to be loaded. Variable-sized segmentation has different fragmentation characteristics."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "520 div 128=4 remainder 8; frame 9 base=1152, plus 8 gives 1160."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'page'?",
+          "answer": "Virtual fixed-size memory block",
+          "options": [
+            "Virtual fixed-size memory block",
+            "Physical fixed-size RAM block",
+            "Page absent from RAM"
+          ],
+          "feedback": "page — Virtual fixed-size memory block"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'frame'?",
+          "answer": "Physical fixed-size RAM block",
+          "options": [
+            "Virtual fixed-size memory block",
+            "Page absent from RAM",
+            "Physical fixed-size RAM block"
+          ],
+          "feedback": "frame — Physical fixed-size RAM block"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'page fault'?",
+          "answer": "Page absent from RAM",
+          "options": [
+            "Physical fixed-size RAM block",
+            "Page absent from RAM",
+            "Virtual fixed-size memory block"
+          ],
+          "feedback": "page fault — Page absent from RAM"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "615 div 200=3 remainder 15. Page 3 maps to frame 7, hence physical address 1415."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Logical variable-length regions",
+          "answer": "segmentation",
+          "options": [
+            "frame",
+            "segmentation",
+            "page"
+          ],
+          "feedback": "segmentation — Logical variable-length regions"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Virtual fixed-size memory block",
+          "answer": "page",
+          "options": [
+            "page",
+            "frame",
+            "page fault"
+          ],
+          "feedback": "page — Virtual fixed-size memory block"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Physical fixed-size RAM block",
+          "answer": "frame",
+          "options": [
+            "page",
+            "page fault",
+            "frame"
+          ],
+          "feedback": "frame — Physical fixed-size RAM block"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Page absent from RAM",
+          "answer": "page fault",
+          "options": [
+            "frame",
+            "page fault",
+            "page"
+          ],
+          "feedback": "page fault — Page absent from RAM"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Define page, frame, page table and page fault. [4]",
+          "answer": "Virtual fixed block [1]; physical fixed block [1]; mapping [1]; access to absent page [1].",
+          "options": [
+            "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1].",
+            "Virtual fixed block [1]; physical fixed block [1]; mapping [1]; access to absent page [1].",
+            "Page=3 [1], offset 2 [2], frame base 1280 [2], final physical address 1282 [1]."
+          ],
+          "feedback": "Virtual fixed block [1]; physical fixed block [1]; mapping [1]; access to absent page [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Page size 256, VA 770, page 3 mapped to frame 5. Find physical address. [6]",
+          "answer": "Page=3 [1], offset 2 [2], frame base 1280 [2], final physical address 1282 [1].",
+          "options": [
+            "Page=3 [1], offset 2 [2], frame base 1280 [2], final physical address 1282 [1].",
+            "Virtual fixed block [1]; physical fixed block [1]; mapping [1]; access to absent page [1].",
+            "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1]."
+          ],
+          "feedback": "Page=3 [1], offset 2 [2], frame base 1280 [2], final physical address 1282 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Compare paging and segmentation and explain thrashing. [6]",
+          "answer": "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1].",
+          "options": [
+            "Virtual fixed block [1]; physical fixed block [1]; mapping [1]; access to absent page [1].",
+            "Page=3 [1], offset 2 [2], frame base 1280 [2], final physical address 1282 [1].",
+            "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1]."
+          ],
+          "feedback": "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Compare paging and segmentation and explain thrashing. [6]",
+        "model": "Fixed pages [1] internal fragmentation [1], variable segments [1] external fragmentation [1], frequent page faults [1] slow backing-store transfers [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "frame means: Physical fixed-size RAM block",
+          "answer": "true",
+          "feedback": "frame — Physical fixed-size RAM block"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "page fault means: Virtual fixed-size memory block",
+          "answer": "false",
+          "feedback": "page fault — Page absent from RAM"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "segmentation means: Logical variable-length regions",
+          "answer": "true",
+          "feedback": "segmentation — Logical variable-length regions"
+        }
+      ]
+    }
+  ]
+}

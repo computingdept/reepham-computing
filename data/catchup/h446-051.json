@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-051",
+  "course": "h446",
+  "title": "Lesson 051 · Linked Lists: Nodes and References",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does Queue<T> remove items?",
+          "answer": "First-in-first-out, from front.",
+          "options": [
+            "First-in-first-out, from front.",
+            "LIFO versus FIFO.",
+            "Value identifying an object instance."
+          ],
+          "feedback": "First-in-first-out, from front."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does a stack differ from a queue?",
+          "answer": "LIFO versus FIFO.",
+          "options": [
+            "First-in-first-out, from front.",
+            "Value identifying an object instance.",
+            "LIFO versus FIFO."
+          ],
+          "feedback": "LIFO versus FIFO."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an object reference?",
+          "answer": "Value identifying an object instance.",
+          "options": [
+            "LIFO versus FIFO.",
+            "Value identifying an object instance.",
+            "First-in-first-out, from front."
+          ],
+          "feedback": "Value identifying an object instance."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 019",
+          "answer": "A linked list has HEAD→5→9→NULL. Insert 7 between 5 and 9. Give new traversal.",
+          "options": [
+            "A linked list has HEAD→5→9→NULL. Insert 7 between 5 and 9. Give new traversal.",
+            "First-in-first-out, from front.",
+            "LIFO versus FIFO."
+          ],
+          "feedback": "A linked list has HEAD→5→9→NULL. Insert 7 between 5 and 9. Give new traversal."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Discover",
+          "text": "A linked-list node holds a value plus one or more links to neighbouring nodes, rather than occupying an indexed fixed-size array slot."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "C# LinkedList<T> is doubly linked: nodes expose Previous and Next; AddAfter inserts relative to an existing node."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "To insert B between A and C, change logical links to A↔B↔C. The operation differs from shifting array elements."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the trace",
+          "text": "New order A,X,B. The inserted node links between A and B."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'node'?",
+          "answer": "Value and link information.",
+          "options": [
+            "Reference to following node.",
+            "Reference to preceding node.",
+            "Value and link information."
+          ],
+          "feedback": "node — Value and link information."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Next'?",
+          "answer": "Reference to following node.",
+          "options": [
+            "Reference to preceding node.",
+            "Reference to following node.",
+            "Value and link information."
+          ],
+          "feedback": "Next — Reference to following node."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Previous'?",
+          "answer": "Reference to preceding node.",
+          "options": [
+            "Reference to preceding node.",
+            "Value and link information.",
+            "Reference to following node."
+          ],
+          "feedback": "Previous — Reference to preceding node."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the trace",
+          "text": "P,R remain. After deletion P and R are adjacent logical neighbours."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First list node.",
+          "answer": "head",
+          "options": [
+            "head",
+            "node",
+            "Next"
+          ],
+          "feedback": "head — First list node."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value and link information.",
+          "answer": "node",
+          "options": [
+            "Next",
+            "Previous",
+            "node"
+          ],
+          "feedback": "node — Value and link information."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reference to following node.",
+          "answer": "Next",
+          "options": [
+            "Previous",
+            "Next",
+            "node"
+          ],
+          "feedback": "Next — Reference to following node."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reference to preceding node.",
+          "answer": "Previous",
+          "options": [
+            "Previous",
+            "node",
+            "Next"
+          ],
+          "feedback": "Previous — Reference to preceding node."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Draw the logical next-links in HEAD→3→6→NULL after inserting 4 after 3. [6]",
+          "answer": "WORKED MODEL ANSWER 3.next becomes 4 [2], 4.next=6 [2], final HEAD→3→4→6→NULL [2].",
+          "options": [
+            "WORKED MODEL ANSWER 3.next becomes 4 [2], 4.next=6 [2], final HEAD→3→4→6→NULL [2].",
+            "WORKED MODEL ANSWER var l=new LinkedList<int>(); [1]; l.AddLast(2); l.AddLast(4); [2]; l.AddAfter(l.First!,3); [3].",
+            "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER 3.next becomes 4 [2], 4.next=6 [2], final HEAD→3→4→6→NULL [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2/3 Write C# using LinkedList<int> to create 2,4 then insert 3 between them. [6]",
+          "answer": "WORKED MODEL ANSWER var l=new LinkedList<int>(); [1]; l.AddLast(2); l.AddLast(4); [2]; l.AddAfter(l.First!,3); [3].",
+          "options": [
+            "WORKED MODEL ANSWER 3.next becomes 4 [2], 4.next=6 [2], final HEAD→3→4→6→NULL [2].",
+            "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1].",
+            "WORKED MODEL ANSWER var l=new LinkedList<int>(); [1]; l.AddLast(2); l.AddLast(4); [2]; l.AddAfter(l.First!,3); [3]."
+          ],
+          "feedback": "WORKED MODEL ANSWER var l=new LinkedList<int>(); [1]; l.AddLast(2); l.AddLast(4); [2]; l.AddAfter(l.First!,3); [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare middle insertion in linked list with a C# List<int>, including locating position and access. [6]",
+          "answer": "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1].",
+          "options": [
+            "WORKED MODEL ANSWER var l=new LinkedList<int>(); [1]; l.AddLast(2); l.AddLast(4); [2]; l.AddAfter(l.First!,3); [3].",
+            "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1].",
+            "WORKED MODEL ANSWER 3.next becomes 4 [2], 4.next=6 [2], final HEAD→3→4→6→NULL [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare middle insertion in linked list with a C# List<int>, including locating position and access. [6]",
+        "model": "WORKED MODEL ANSWER List indexed access O(1) [2], insertion shifts subsequent values O(n) [1]; linked-list insertion with node reference O(1) links [2], finding node may take O(n) [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Next means: Reference to following node.",
+          "answer": "true",
+          "feedback": "Next — Reference to following node."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Previous means: Value and link information.",
+          "answer": "false",
+          "feedback": "Previous — Reference to preceding node."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "head means: First list node.",
+          "answer": "true",
+          "feedback": "head — First list node."
+        }
+      ]
+    }
+  ]
+}

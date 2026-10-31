@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-133",
+  "course": "h446",
+  "title": "Lesson 133 · Hashing for Integrity, Passwords and Data Lookup",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does hybrid encryption usually protect bulk web traffic?",
+          "answer": "Use asymmetric establishment/authentication then symmetric traffic keys.",
+          "options": [
+            "Sum 0, carry 1.",
+            "O(log n) for sorted random-access data.",
+            "Use asymmetric establishment/authentication then symmetric traffic keys."
+          ],
+          "feedback": "Use asymmetric establishment/authentication then symmetric traffic keys."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are the outputs of a half adder when A=1 and B=1?",
+          "answer": "Sum 0, carry 1.",
+          "options": [
+            "O(log n) for sorted random-access data.",
+            "Sum 0, carry 1.",
+            "Use asymmetric establishment/authentication then symmetric traffic keys."
+          ],
+          "feedback": "Sum 0, carry 1."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In Big O notation, what is binary search worst-case complexity?",
+          "answer": "O(log n) for sorted random-access data.",
+          "options": [
+            "O(log n) for sorted random-access data.",
+            "Use asymmetric establishment/authentication then symmetric traffic keys.",
+            "Sum 0, carry 1."
+          ],
+          "feedback": "O(log n) for sorted random-access data."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does a linear search stop?",
+          "answer": "On a match or after examining all items.",
+          "options": [
+            "Use asymmetric establishment/authentication then symmetric traffic keys.",
+            "Sum 0, carry 1.",
+            "On a match or after examining all items."
+          ],
+          "feedback": "On a match or after examining all items."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Compute a digest",
+          "text": "A cryptographic hash produces a reproducible fingerprint of file content."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare for integrity",
+          "text": "A matching trusted digest makes accidental/tamper changes less likely."
+        },
+        {
+          "type": "paragraph",
+          "title": "Choose correct use",
+          "text": "Password hashing, integrity checking and hash-table indexing are different applications."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trusted published digest",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Calculate downloaded hash",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Compare exact digests",
+          "text": "Calculate SHA-256 digest of received file and compare with the digest from a trusted source. If different, file changed or was corrupted. If equal, this strongly supports matching content, assuming trusted digest and secure algorithm; it does not by itself prove publisher…"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash function'?",
+          "answer": "Maps input data to a fixed-size or bounded-size result.",
+          "options": [
+            "Two distinct inputs produce the same hash result.",
+            "Maps input data to a fixed-size or bounded-size result.",
+            "Output of a cryptographic hash function."
+          ],
+          "feedback": "hash function — Maps input data to a fixed-size or bounded-size result."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'digest'?",
+          "answer": "Output of a cryptographic hash function.",
+          "options": [
+            "Output of a cryptographic hash function.",
+            "Maps input data to a fixed-size or bounded-size result.",
+            "Two distinct inputs produce the same hash result."
+          ],
+          "feedback": "digest — Output of a cryptographic hash function."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'collision'?",
+          "answer": "Two distinct inputs produce the same hash result.",
+          "options": [
+            "Maps input data to a fixed-size or bounded-size result.",
+            "Output of a cryptographic hash function.",
+            "Two distinct inputs produce the same hash result."
+          ],
+          "feedback": "collision — Two distinct inputs produce the same hash result."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Choose random salt",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Derive slow password hash",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Store salt plus result",
+          "text": "Store unique salts and outputs from a slow password-hashing scheme such as Argon2id, not reversible encryption or a plain fast hash. On login, recompute using stored salt and compare securely."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Random value combined with a password before secure password hashing.",
+          "answer": "salt",
+          "options": [
+            "hash function",
+            "digest",
+            "salt"
+          ],
+          "feedback": "salt — Random value combined with a password before secure password hashing."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maps input data to a fixed-size or bounded-size result.",
+          "answer": "hash function",
+          "options": [
+            "collision",
+            "hash function",
+            "digest"
+          ],
+          "feedback": "hash function — Maps input data to a fixed-size or bounded-size result."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Output of a cryptographic hash function.",
+          "answer": "digest",
+          "options": [
+            "digest",
+            "hash function",
+            "collision"
+          ],
+          "feedback": "digest — Output of a cryptographic hash function."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two distinct inputs produce the same hash result.",
+          "answer": "collision",
+          "options": [
+            "hash function",
+            "digest",
+            "collision"
+          ],
+          "feedback": "collision — Two distinct inputs produce the same hash result."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 State three different uses of hashing with one correct explanation each. [6]",
+          "answer": "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
+          "options": [
+            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+          ],
+          "feedback": "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain what a hash collision is and why it matters. [6]",
+          "answer": "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+          "options": [
+            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2].",
+            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate the claim 'a hash can decrypt a password and proves a file came from its claimed author'. [8]",
+          "answer": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+          "options": [
+            "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+            "/ WORKED ANSWER File integrity checking [2], password verification [2], hash table key indexing/fast lookup [2].",
+            "/ WORKED ANSWER Distinct inputs can share a hash [2], finite output range implies possible collisions [2], robust use selects collision-resistant function/handles table collisions [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate the claim 'a hash can decrypt a password and proves a file came from its claimed author'. [8]",
+        "model": "/ WORKED ANSWER Hashing is one way not decryption [2], passwords use salting and suitable password KDF [2], digest comparison aids integrity [2], origin needs trusted channel/signature [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "digest means: Output of a cryptographic hash function.",
+          "answer": "true",
+          "feedback": "digest — Output of a cryptographic hash function."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "collision means: Maps input data to a fixed-size or bounded-size result.",
+          "answer": "false",
+          "feedback": "collision — Two distinct inputs produce the same hash result."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "salt means: Random value combined with a password before secure password hashing.",
+          "answer": "true",
+          "feedback": "salt — Random value combined with a password before secure password hashing."
+        }
+      ]
+    }
+  ]
+}

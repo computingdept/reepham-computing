@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-110",
+  "course": "h446",
+  "title": "Lesson 110 · Round Robin and Multilevel Feedback Queues",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which scheduler preempts a running task when a shorter one arrives?",
+          "answer": "Shortest remaining time (SRT).",
+          "options": [
+            "Sum 0 and carry-out 1.",
+            "Shortest remaining time (SRT).",
+            "Its element locations can be calculated from base address and index."
+          ],
+          "feedback": "Shortest remaining time (SRT)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can an array provide direct indexed access?",
+          "answer": "Its element locations can be calculated from base address and index.",
+          "options": [
+            "Its element locations can be calculated from base address and index.",
+            "Shortest remaining time (SRT).",
+            "Sum 0 and carry-out 1."
+          ],
+          "feedback": "Its element locations can be calculated from base address and index."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A full adder receives A=1, B=1 and carry-in=0. What are sum and carry-out?",
+          "answer": "Sum 0 and carry-out 1.",
+          "options": [
+            "Shortest remaining time (SRT).",
+            "Its element locations can be calculated from base address and index.",
+            "Sum 0 and carry-out 1."
+          ],
+          "feedback": "Sum 0 and carry-out 1."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For the binary value 1010, what is its decimal value?",
+          "answer": "10.",
+          "options": [
+            "Its element locations can be calculated from base address and index.",
+            "10.",
+            "Shortest remaining time (SRT)."
+          ],
+          "feedback": "10."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Round robin",
+          "text": "Ready processes receive a time quantum in cyclic order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Context switching",
+          "text": "Expired slices trigger a switch; very small slices create overhead."
+        },
+        {
+          "type": "paragraph",
+          "title": "MLFQ",
+          "text": "Queues with differing priorities/quanta adapt to process behaviour."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "P1 runs 0–2, P2 2–4, P1 4–6, P2 6–7 (finishes), P1 7–8 (finishes). Completion times: P2 7, P1 8. Check: link each claim to the scenario and use precise OCR terminology."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'time quantum'?",
+          "answer": "Maximum continuous CPU interval per RR turn.",
+          "options": [
+            "Maximum continuous CPU interval per RR turn.",
+            "Preemptive cyclic scheduling.",
+            "Saving/restoring CPU state when changing process."
+          ],
+          "feedback": "time quantum — Maximum continuous CPU interval per RR turn."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'round robin'?",
+          "answer": "Preemptive cyclic scheduling.",
+          "options": [
+            "Maximum continuous CPU interval per RR turn.",
+            "Saving/restoring CPU state when changing process.",
+            "Preemptive cyclic scheduling."
+          ],
+          "feedback": "round robin — Preemptive cyclic scheduling."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'context switch'?",
+          "answer": "Saving/restoring CPU state when changing process.",
+          "options": [
+            "Preemptive cyclic scheduling.",
+            "Saving/restoring CPU state when changing process.",
+            "Maximum continuous CPU interval per RR turn."
+          ],
+          "feedback": "context switch — Saving/restoring CPU state when changing process."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must we decide?",
+          "text": "Identify the inputs, relevant facts and exact output or judgement required."
+        },
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Use the middle stage of the visual to follow the process and state each intermediate result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shared worked answer",
+          "text": "A 0–3 (1 left), B 3–6 (2 left), A 6–7 finishes, B 7–9 finishes. Turnaround A 7 and B 9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Multilevel feedback queue scheduling.",
+          "answer": "MLFQ",
+          "options": [
+            "round robin",
+            "MLFQ",
+            "time quantum"
+          ],
+          "feedback": "MLFQ — Multilevel feedback queue scheduling."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maximum continuous CPU interval per RR turn.",
+          "answer": "time quantum",
+          "options": [
+            "time quantum",
+            "round robin",
+            "context switch"
+          ],
+          "feedback": "time quantum — Maximum continuous CPU interval per RR turn."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Preemptive cyclic scheduling.",
+          "answer": "round robin",
+          "options": [
+            "time quantum",
+            "context switch",
+            "round robin"
+          ],
+          "feedback": "round robin — Preemptive cyclic scheduling."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Saving/restoring CPU state when changing process.",
+          "answer": "context switch",
+          "options": [
+            "round robin",
+            "context switch",
+            "time quantum"
+          ],
+          "feedback": "context switch — Saving/restoring CPU state when changing process."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Describe the round-robin algorithm, including the purpose of the time quantum. [6]",
+          "answer": "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+          "options": [
+            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
+          ],
+          "feedback": "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 RR quantum 2: A burst 3, B burst 4, both arrive 0. Produce a Gantt timeline. [6]",
+          "answer": "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+          "options": [
+            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+          ],
+          "feedback": "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain how MLFQ responds to CPU-bound and interactive tasks and evaluate a very short quantum. [8]",
+          "answer": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+          "options": [
+            "/ WORKED ANSWER FIFO ready queue [2]; each process gets up to a fixed slice [2]; unfinished process goes to back, enabling responsiveness/fairness [2].",
+            "/ WORKED ANSWER A 0–2, B 2–4, A 4–5, B 5–7 [4]; A completes at 5, B at 7 [2].",
+            "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain how MLFQ responds to CPU-bound and interactive tasks and evaluate a very short quantum. [8]",
+        "model": "/ WORKED ANSWER Queues/priorities [2]; jobs move based on behaviour [2]; responsiveness for short/interactive bursts [2]; frequent context switching overhead and trade-offs [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "round robin means: Preemptive cyclic scheduling.",
+          "answer": "true",
+          "feedback": "round robin — Preemptive cyclic scheduling."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "context switch means: Maximum continuous CPU interval per RR turn.",
+          "answer": "false",
+          "feedback": "context switch — Saving/restoring CPU state when changing process."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "MLFQ means: Multilevel feedback queue scheduling.",
+          "answer": "true",
+          "feedback": "MLFQ — Multilevel feedback queue scheduling."
+        }
+      ]
+    }
+  ]
+}

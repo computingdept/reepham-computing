@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-083",
+  "course": "h446",
+  "title": "Lesson 083 · Dijkstra: Shortest Paths with Non-negative Weights",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does relaxation do?",
+          "answer": "Updates a tentative distance via a cheaper path.",
+          "options": [
+            "Non-negative edge weights.",
+            "Updates a tentative distance via a cheaper path.",
+            "Connection with a cost."
+          ],
+          "feedback": "Updates a tentative distance via a cheaper path."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a weighted edge?",
+          "answer": "Connection with a cost.",
+          "options": [
+            "Connection with a cost.",
+            "Updates a tentative distance via a cheaper path.",
+            "Non-negative edge weights."
+          ],
+          "feedback": "Connection with a cost."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What condition does standard Dijkstra require?",
+          "answer": "Non-negative edge weights.",
+          "options": [
+            "Updates a tentative distance via a cheaper path.",
+            "Connection with a cost.",
+            "Non-negative edge weights."
+          ],
+          "feedback": "Non-negative edge weights."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Undirected graph edges A–B, A–C, B–D. Give BFS order from A visiting B before C.",
+          "answer": "A,B,C,D.",
+          "options": [
+            "Connection with a cost.",
+            "A,B,C,D.",
+            "Updates a tentative distance via a cheaper path."
+          ],
+          "feedback": "A,B,C,D."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Dijkstra maintains tentative shortest distances from a start vertex. All edge weights must be non-negative."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Repeatedly finalise the unsettled node with smallest tentative distance, then relax outgoing edges to improve neighbour estimates."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Track predecessor nodes alongside distances to reconstruct the shortest route, not just its total cost."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Update neighbours",
+          "text": "Start with dist(P)=0 . Settle P (smallest unsettled value). Relax P→Q: Q=3 , predecessor Q←P. Relax P→R: R=8 , predecessor R←P. Remaining unsettled distances: Q=3, R=8."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Improve the tentative route",
+          "text": "Q=3 is the smallest unsettled distance. Via Q→R, the candidate is 3+2=5 . This beats R=8, so update R=5 and predecessor R←Q. Settled now: P,Q."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reconstruct the actual path",
+          "text": "R=5 is next, and is the target. Follow predecessor pointers R←Q←P ; reverse to obtain P→Q→R , total cost 5 . No vertex with a larger tentative distance was prematurely finalised."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Dijkstra'?",
+          "answer": "Non-negative weighted shortest paths.",
+          "options": [
+            "Non-negative weighted shortest paths.",
+            "Current best-known route cost.",
+            "Replace distance if improved."
+          ],
+          "feedback": "Dijkstra — Non-negative weighted shortest paths."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'tentative distance'?",
+          "answer": "Current best-known route cost.",
+          "options": [
+            "Non-negative weighted shortest paths.",
+            "Replace distance if improved.",
+            "Current best-known route cost."
+          ],
+          "feedback": "tentative distance — Current best-known route cost."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'relaxation'?",
+          "answer": "Replace distance if improved.",
+          "options": [
+            "Current best-known route cost.",
+            "Replace distance if improved.",
+            "Non-negative weighted shortest paths."
+          ],
+          "feedback": "relaxation — Replace distance if improved."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Settle X; calculate both tentative distances",
+          "text": "Start at X=0. Which neighbour gets distance 4? Which gets 10? Which unsettled vertex should Dijkstra select next?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Settle Y and relax Y→Z",
+          "text": "After X: Y=4 (predecessor X), Z=10 (predecessor X). Settle Y=4; candidate cost to Z is 4+3=7 , so improve Z to 7 with predecessor Y."
+        },
+        {
+          "type": "paragraph",
+          "title": "Finish with the path, not just the cost",
+          "text": "Settle Z=7. Predecessors: Z←Y←X . Reverse to X→Y→Z , total cost 7. The direct X→Z cost 10 is longer."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Previous vertex on best path.",
+          "answer": "predecessor",
+          "options": [
+            "tentative distance",
+            "predecessor",
+            "Dijkstra"
+          ],
+          "feedback": "predecessor — Previous vertex on best path."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Non-negative weighted shortest paths.",
+          "answer": "Dijkstra",
+          "options": [
+            "Dijkstra",
+            "tentative distance",
+            "relaxation"
+          ],
+          "feedback": "Dijkstra — Non-negative weighted shortest paths."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Current best-known route cost.",
+          "answer": "tentative distance",
+          "options": [
+            "Dijkstra",
+            "relaxation",
+            "tentative distance"
+          ],
+          "feedback": "tentative distance — Current best-known route cost."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Replace distance if improved.",
+          "answer": "relaxation",
+          "options": [
+            "tentative distance",
+            "relaxation",
+            "Dijkstra"
+          ],
+          "feedback": "relaxation — Replace distance if improved."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 From A in stated graph, give tentative distances after settling A and B. [6]",
+          "answer": "/ WORKING After A B2,C5,D∞ [3]; after B C3,D6 [3].",
+          "options": [
+            "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1].",
+            "/ WORKING After A B2,C5,D∞ [3]; after B C3,D6 [3].",
+            "/ WORKING C dist3 [1], relax C→D cost1 gives D4 [2], predecessors D←C←B←A [2], path cost4 [1]."
+          ],
+          "feedback": "/ WORKING After A B2,C5,D∞ [3]; after B C3,D6 [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Continue from C: give final shortest cost and predecessor chain for D. [6]",
+          "answer": "/ WORKING C dist3 [1], relax C→D cost1 gives D4 [2], predecessors D←C←B←A [2], path cost4 [1].",
+          "options": [
+            "/ WORKING C dist3 [1], relax C→D cost1 gives D4 [2], predecessors D←C←B←A [2], path cost4 [1].",
+            "/ WORKING After A B2,C5,D∞ [3]; after B C3,D6 [3].",
+            "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1]."
+          ],
+          "feedback": "/ WORKING C dist3 [1], relax C→D cost1 gives D4 [2], predecessors D←C←B←A [2], path cost4 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain why negative edge weights can invalidate Dijkstra's finalisation rule, using a counterexample. [6]",
+          "answer": "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1].",
+          "options": [
+            "/ WORKING After A B2,C5,D∞ [3]; after B C3,D6 [3].",
+            "/ WORKING C dist3 [1], relax C→D cost1 gives D4 [2], predecessors D←C←B←A [2], path cost4 [1].",
+            "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1]."
+          ],
+          "feedback": "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain why negative edge weights can invalidate Dijkstra's finalisation rule, using a counterexample. [6]",
+        "model": "/ WORKING Finalise an apparently shortest vertex [2], later negative edge can improve it [2], so settled assumption false [1], use suitable negative-weight method instead [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "tentative distance means: Current best-known route cost.",
+          "answer": "true",
+          "feedback": "tentative distance — Current best-known route cost."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "relaxation means: Non-negative weighted shortest paths.",
+          "answer": "false",
+          "feedback": "relaxation — Replace distance if improved."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "predecessor means: Previous vertex on best path.",
+          "answer": "true",
+          "feedback": "predecessor — Previous vertex on best path."
+        }
+      ]
+    }
+  ]
+}

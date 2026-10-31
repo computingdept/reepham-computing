@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-221",
+  "course": "h446",
+  "title": "A*: heuristic reliability and route evaluation",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate f when g=4 and h=3.",
+          "answer": "f=7.",
+          "options": [
+            "7.",
+            "f=7.",
+            "It lets us reconstruct the path by following predecessors backwards."
+          ],
+          "feedback": "f=7."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the role of a predecessor table?",
+          "answer": "It lets us reconstruct the path by following predecessors backwards.",
+          "options": [
+            "It lets us reconstruct the path by following predecessors backwards.",
+            "f=7.",
+            "7."
+          ],
+          "feedback": "It lets us reconstruct the path by following predecessors backwards."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If S–A=2 and A–G=5, what is this route's total cost?",
+          "answer": "7.",
+          "options": [
+            "f=7.",
+            "It lets us reconstruct the path by following predecessors backwards.",
+            "7."
+          ],
+          "feedback": "7."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: The true cheapest remaining cost from A is 4. Is h(A)=6 admissible?",
+          "answer": "No. It overestimates the true cost.",
+          "options": [
+            "It lets us reconstruct the path by following predecessors backwards.",
+            "No. It overestimates the true cost.",
+            "f=7."
+          ],
+          "feedback": "No. It overestimates the true cost."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find the real remaining cost",
+          "text": "From A, the cheapest route A→B→G costs 2+2=4. Therefore h(A)=3 is admissible, but h(A)=9 is not."
+        },
+        {
+          "type": "paragraph",
+          "title": "Safe estimates support optimal search",
+          "text": "With h(A)=3, A is expanded before B, improving the route to B and finally G at cost 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Watch the misleading estimate",
+          "text": "With h(A)=9, A has f=11; B has f=7 and leads to goal at cost 8."
+        },
+        {
+          "type": "paragraph",
+          "title": "Why the error matters",
+          "text": "A* that stops on the first goal removed from the open set can return this 8-cost path before exploring A, even though a 6-cost route exists."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the choice",
+          "text": "V has g1,h3,f4; W has g5,h1,f6. Expand V."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Review the choice",
+          "text": "V improves W to g3 and f4; expand W."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'admissible'?",
+          "answer": "Heuristic never overestimates the true cheapest remaining cost.",
+          "options": [
+            "Heuristic never overestimates the true cheapest remaining cost.",
+            "Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge.",
+            "A valid route whose cost is greater than the cheapest possible."
+          ],
+          "feedback": "admissible — Heuristic never overestimates the true cheapest remaining cost."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'consistent'?",
+          "answer": "Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge.",
+          "options": [
+            "Heuristic never overestimates the true cheapest remaining cost.",
+            "A valid route whose cost is greater than the cheapest possible.",
+            "Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge."
+          ],
+          "feedback": "consistent — Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'suboptimal'?",
+          "answer": "A valid route whose cost is greater than the cheapest possible.",
+          "options": [
+            "Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge.",
+            "A valid route whose cost is greater than the cheapest possible.",
+            "Heuristic never overestimates the true cheapest remaining cost."
+          ],
+          "feedback": "suboptimal — A valid route whose cost is greater than the cheapest possible."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the choice",
+          "text": "After M, O has f5+1=6; N has f2+7=9, so O is selected."
+        },
+        {
+          "type": "paragraph",
+          "title": "Review the choice",
+          "text": "O reaches G at g7,f7. G is selected before N, so the early-goal algorithm returns cost 7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Review the choice",
+          "text": "But M→N→O→G costs 2+2+2=6; the bad h(N)=7 overestimates N's true remaining cost 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Review the choice",
+          "text": "Using an admissible estimate such as h(N)=3 allows the cheaper path to be found."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Discovered vertices awaiting expansion.",
+          "answer": "frontier",
+          "options": [
+            "consistent",
+            "frontier",
+            "admissible"
+          ],
+          "feedback": "frontier — Discovered vertices awaiting expansion."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An estimated remaining cost used to guide search.",
+          "answer": "heuristic",
+          "options": [
+            "heuristic",
+            "admissible",
+            "consistent"
+          ],
+          "feedback": "heuristic — An estimated remaining cost used to guide search."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Heuristic never overestimates the true cheapest remaining cost.",
+          "answer": "admissible",
+          "options": [
+            "consistent",
+            "suboptimal",
+            "admissible"
+          ],
+          "feedback": "admissible — Heuristic never overestimates the true cheapest remaining cost."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge.",
+          "answer": "consistent",
+          "options": [
+            "suboptimal",
+            "consistent",
+            "admissible"
+          ],
+          "feedback": "consistent — Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · Q1/3 The true remaining distance from node A to goal G is 6. Decide whether h(A)=4 and h(A)=8 are admissible, with reasons.",
+          "answer": "[4] h(A)=4 is admissible [1] because it does not exceed 6 [1]; h(A)=8 is inadmissible [1] because it overestimates 6 [1].",
+          "options": [
+            "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually…",
+            "[4] h(A)=4 is admissible [1] because it does not exceed 6 [1]; h(A)=8 is inadmissible [1] because it overestimates 6 [1].",
+            "[6] Route S→A→B→G [2], cost 6 [1]; from A the true cheapest remaining cost is 4 [1], so h(A)=9 overestimates [1] and can delay expanding A while a more expensive goal route appears [1]."
+          ],
+          "feedback": "[4] h(A)=4 is admissible [1] because it does not exceed 6 [1]; h(A)=8 is inadmissible [1] because it overestimates 6 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · Q2/3 Edges S–A=2, S–B=6, A–B=2, B–G=2, A–G=8. Calculate the best S→G route and explain why h(A)=9 can mislead A*.",
+          "answer": "[6] Route S→A→B→G [2], cost 6 [1]; from A the true cheapest remaining cost is 4 [1], so h(A)=9 overestimates [1] and can delay expanding A while a more expensive goal route appears [1].",
+          "options": [
+            "[6] Route S→A→B→G [2], cost 6 [1]; from A the true cheapest remaining cost is 4 [1], so h(A)=9 overestimates [1] and can delay expanding A while a more expensive goal route appears [1].",
+            "[4] h(A)=4 is admissible [1] because it does not exceed 6 [1]; h(A)=8 is inadmissible [1] because it overestimates 6 [1].",
+            "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually…"
+          ],
+          "feedback": "[6] Route S→A→B→G [2], cost 6 [1]; from A the true cheapest remaining cost is 4 [1], so h(A)=9 overestimates [1] and can delay expanding A while a more expensive goal route appears [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · Q3/3 Compare Dijkstra's algorithm and A* in their selection rule, heuristic use and guarantee of shortest paths.",
+          "answer": "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually…",
+          "options": [
+            "[4] h(A)=4 is admissible [1] because it does not exceed 6 [1]; h(A)=8 is inadmissible [1] because it overestimates 6 [1].",
+            "[6] Route S→A→B→G [2], cost 6 [1]; from A the true cheapest remaining cost is 4 [1], so h(A)=9 overestimates [1] and can delay expanding A while a more expensive goal route appears [1].",
+            "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually…"
+          ],
+          "feedback": "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually consistency) to guarantee optimality [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · Q3/3 Compare Dijkstra's algorithm and A* in their selection rule, heuristic use and guarantee of shortest paths.",
+        "model": "[6] Dijkstra selects lowest tentative g [1] and does not need h [1]; A* selects lowest f=g+h [2]; Dijkstra needs non-negative edges [1]; A* requires suitable admissible heuristic (and appropriate closed-set handling, usually consistency) to guarantee optimality [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "consistent means: Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge.",
+          "answer": "true",
+          "feedback": "consistent — Heuristic obeys h(u) ≤ edge(u,v)+h(v) for every edge."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "suboptimal means: An estimated remaining cost used to guide search.",
+          "answer": "false",
+          "feedback": "suboptimal — A valid route whose cost is greater than the cheapest possible."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "frontier means: Discovered vertices awaiting expansion.",
+          "answer": "true",
+          "feedback": "frontier — Discovered vertices awaiting expansion."
+        }
+      ]
+    }
+  ]
+}

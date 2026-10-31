@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-068",
+  "course": "h446",
+  "title": "Lesson 068 · Backtracking: Choices, Dead Ends and Undo",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does divide and conquer do?",
+          "answer": "Breaks a task into smaller problems.",
+          "options": [
+            "To stop further calls at a terminal state.",
+            "Breaks a task into smaller problems.",
+            "A state unable to reach any valid solution."
+          ],
+          "feedback": "Breaks a task into smaller problems."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a dead end in a search?",
+          "answer": "A state unable to reach any valid solution.",
+          "options": [
+            "A state unable to reach any valid solution.",
+            "Breaks a task into smaller problems.",
+            "To stop further calls at a terminal state."
+          ],
+          "feedback": "A state unable to reach any valid solution."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must recursion have a base case?",
+          "answer": "To stop further calls at a terminal state.",
+          "options": [
+            "Breaks a task into smaller problems.",
+            "A state unable to reach any valid solution.",
+            "To stop further calls at a terminal state."
+          ],
+          "feedback": "To stop further calls at a terminal state."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Stack Push 2, Push 5, Pop, then Push 8: give popped item and remaining stack.",
+          "answer": "Popped 5; bottom-to-top [2,8].",
+          "options": [
+            "A state unable to reach any valid solution.",
+            "Popped 5; bottom-to-top [2,8].",
+            "Breaks a task into smaller problems."
+          ],
+          "feedback": "Popped 5; bottom-to-top [2,8]."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Define and predict",
+          "text": "Backtracking explores a choice, tests whether its state remains viable, then undoes the choice if it cannot lead to a solution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A search tree records choices and alternative branches. Pruning avoids expanding branches already proven invalid."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "A correct search needs a stopping condition. Pruning on sum>target only works when remaining numbers cannot reduce the sum (e.g. non-negative inputs)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Follow the reasoning",
+          "text": "Return from the failed choice of4 before excluding3. The state returns to [1], then choosing4 reaches5. Recursive local totals restore on return; mutable state needs an explicit undo."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'backtracking'?",
+          "answer": "Try and undo choices.",
+          "options": [
+            "Try and undo choices.",
+            "Branches of possible decisions.",
+            "Stop provably impossible branch."
+          ],
+          "feedback": "backtracking — Try and undo choices."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'search tree'?",
+          "answer": "Branches of possible decisions.",
+          "options": [
+            "Try and undo choices.",
+            "Stop provably impossible branch.",
+            "Branches of possible decisions."
+          ],
+          "feedback": "search tree — Branches of possible decisions."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pruning'?",
+          "answer": "Stop provably impossible branch.",
+          "options": [
+            "Branches of possible decisions.",
+            "Stop provably impossible branch.",
+            "Try and undo choices."
+          ],
+          "feedback": "pruning — Stop provably impossible branch."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Follow the reasoning",
+          "text": "The alternative branch 2+7 gives a valid solution."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Current partial solution data.",
+          "answer": "state",
+          "options": [
+            "search tree",
+            "state",
+            "backtracking"
+          ],
+          "feedback": "state — Current partial solution data."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Try and undo choices.",
+          "answer": "backtracking",
+          "options": [
+            "backtracking",
+            "search tree",
+            "pruning"
+          ],
+          "feedback": "backtracking — Try and undo choices."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branches of possible decisions.",
+          "answer": "search tree",
+          "options": [
+            "backtracking",
+            "pruning",
+            "search tree"
+          ],
+          "feedback": "search tree — Branches of possible decisions."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Stop provably impossible branch.",
+          "answer": "pruning",
+          "options": [
+            "search tree",
+            "pruning",
+            "backtracking"
+          ],
+          "feedback": "pruning — Stop provably impossible branch."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: START · 1 OF 3 Trace first failed and one successful branch for subset sum target6 from [2,3,4]. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD 2+3+4=9 [2] overshoots [1]; return from choosing4, then exclude3 [1]; choose4 with2 to reach6 [2].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2].",
+            "MARK-SCHEME POINTS AND METHOD 2+3+4=9 [2] overshoots [1]; return from choosing4, then exclude3 [1]; choose4 with2 to reach6 [2].",
+            "MARK-SCHEME POINTS AND METHOD Check sum==target success [2], end list failure [1], choose branch recurse [1], undo/exclude branch recurse [1], combine outcomes [1]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD 2+3+4=9 [2] overshoots [1]; return from choosing4, then exclude3 [1]; choose4 with2 to reach6 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLY · 2 OF 3 Explain a recursive backtracking design with choose/exclude and two stopping conditions. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD Check sum==target success [2], end list failure [1], choose branch recurse [1], undo/exclude branch recurse [1], combine outcomes [1].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD Check sum==target success [2], end list failure [1], choose branch recurse [1], undo/exclude branch recurse [1], combine outcomes [1].",
+            "MARK-SCHEME POINTS AND METHOD 2+3+4=9 [2] overshoots [1]; return from choosing4, then exclude3 [1]; choose4 with2 to reach6 [2].",
+            "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD Check sum==target success [2], end list failure [1], choose branch recurse [1], undo/exclude branch recurse [1], combine outcomes [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · 3 OF 3 Explain why pruning when sum>target may be invalid if negative integers occur; give counterexample. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD 2+3+4=9 [2] overshoots [1]; return from choosing4, then exclude3 [1]; choose4 with2 to reach6 [2].",
+            "MARK-SCHEME POINTS AND METHOD Check sum==target success [2], end list failure [1], choose branch recurse [1], undo/exclude branch recurse [1], combine outcomes [1].",
+            "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · 3 OF 3 Explain why pruning when sum>target may be invalid if negative integers occur; give counterexample. [6]",
+        "model": "MARK-SCHEME POINTS AND METHOD Negative later values can reduce sum [2]; e.g. target4, start6 then −2 [2]; pruning at6 loses valid solution [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "search tree means: Branches of possible decisions.",
+          "answer": "true",
+          "feedback": "search tree — Branches of possible decisions."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pruning means: Try and undo choices.",
+          "answer": "false",
+          "feedback": "pruning — Stop provably impossible branch."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "state means: Current partial solution data.",
+          "answer": "true",
+          "feedback": "state — Current partial solution data."
+        }
+      ]
+    }
+  ]
+}

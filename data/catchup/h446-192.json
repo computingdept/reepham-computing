@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-192",
+  "course": "h446",
+  "title": "byVal, byRef and modular programming",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does return do in a C# function?",
+          "answer": "Finishes the invocation and returns a result to its caller.",
+          "options": [
+            "Finishes the invocation and returns a result to its caller.",
+            "Not directly. It is outside the variable's scope.",
+            "9."
+          ],
+          "feedback": "Finishes the invocation and returns a result to its caller."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Can a method read a local variable declared inside another method?",
+          "answer": "Not directly. It is outside the variable's scope.",
+          "options": [
+            "Finishes the invocation and returns a result to its caller.",
+            "9.",
+            "Not directly. It is outside the variable's scope."
+          ],
+          "feedback": "Not directly. It is outside the variable's scope."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a[0] for int[] a={9,6,3}?",
+          "answer": "9.",
+          "options": [
+            "Not directly. It is outside the variable's scope.",
+            "9.",
+            "Finishes the invocation and returns a result to its caller."
+          ],
+          "feedback": "9."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If Double(n) returns 2*n, find Double(Double(3)).",
+          "answer": "Double(3)=6; Double(6)=12.",
+          "options": [
+            "Double(3)=6; Double(6)=12.",
+            "Finishes the invocation and returns a result to its caller.",
+            "Not directly. It is outside the variable's scope."
+          ],
+          "feedback": "Double(3)=6; Double(6)=12."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "CALLER",
+          "text": "The caller declares marks = 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "ALIAS",
+          "text": "ref makes score refer to the caller's marks rather than an independent copy."
+        },
+        {
+          "type": "paragraph",
+          "title": "AFTER",
+          "text": "Changing score therefore changes marks, which becomes 15."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "A new parameter value receives a copy of the integer 7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the result",
+          "text": "value becomes 11 inside AddFour, but x remains 7 after the call."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'by value'?",
+          "answer": "The subroutine receives a copy of the value.",
+          "options": [
+            "The parameter refers to the caller's variable.",
+            "Divide a program into smaller testable subroutines.",
+            "The subroutine receives a copy of the value."
+          ],
+          "feedback": "by value — The subroutine receives a copy of the value."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'by reference'?",
+          "answer": "The parameter refers to the caller's variable.",
+          "options": [
+            "Divide a program into smaller testable subroutines.",
+            "The parameter refers to the caller's variable.",
+            "The subroutine receives a copy of the value."
+          ],
+          "feedback": "by reference — The parameter refers to the caller's variable."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'modularity'?",
+          "answer": "Divide a program into smaller testable subroutines.",
+          "options": [
+            "Divide a program into smaller testable subroutines.",
+            "The subroutine receives a copy of the value.",
+            "The parameter refers to the caller's variable."
+          ],
+          "feedback": "modularity — Divide a program into smaller testable subroutines."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "y starts at 8 and is passed using ref."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the result",
+          "text": "n refers to y, so adding 3 makes y = 11."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? C# keyword enabling reference parameter passing.",
+          "answer": "ref",
+          "options": [
+            "ref",
+            "by value",
+            "by reference"
+          ],
+          "feedback": "ref — C# keyword enabling reference parameter passing."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A change to external program state.",
+          "answer": "side effect",
+          "options": [
+            "by value",
+            "by reference",
+            "side effect"
+          ],
+          "feedback": "side effect — A change to external program state."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The subroutine receives a copy of the value.",
+          "answer": "by value",
+          "options": [
+            "modularity",
+            "by value",
+            "by reference"
+          ],
+          "feedback": "by value — The subroutine receives a copy of the value."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The parameter refers to the caller's variable.",
+          "answer": "by reference",
+          "options": [
+            "by reference",
+            "by value",
+            "modularity"
+          ],
+          "feedback": "by reference — The parameter refers to the caller's variable."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 A method takes int number by value and adds 2. Caller x=5. What is x after the call?",
+          "answer": "5; only the parameter copy is updated.",
+          "options": [
+            "5; only the parameter copy is updated.",
+            "static void Double(ref int n) { n *= 2; } Call with Double(ref x);",
+            "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable."
+          ],
+          "feedback": "5; only the parameter copy is updated."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Write a C# procedure that doubles an integer passed by reference.",
+          "answer": "static void Double(ref int n) { n *= 2; } Call with Double(ref x);",
+          "options": [
+            "5; only the parameter copy is updated.",
+            "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable.",
+            "static void Double(ref int n) { n *= 2; } Call with Double(ref x);"
+          ],
+          "feedback": "static void Double(ref int n) { n *= 2; } Call with Double(ref x);"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain when returning a result is preferable to changing a ref parameter.",
+          "answer": "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable.",
+          "options": [
+            "static void Double(ref int n) { n *= 2; } Call with Double(ref x);",
+            "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable.",
+            "5; only the parameter copy is updated."
+          ],
+          "feedback": "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain when returning a result is preferable to changing a ref parameter.",
+        "model": "When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "by reference means: The parameter refers to the caller's variable.",
+          "answer": "true",
+          "feedback": "by reference — The parameter refers to the caller's variable."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "modularity means: A change to external program state.",
+          "answer": "false",
+          "feedback": "modularity — Divide a program into smaller testable subroutines."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "ref means: C# keyword enabling reference parameter passing.",
+          "answer": "true",
+          "feedback": "ref — C# keyword enabling reference parameter passing."
+        }
+      ]
+    }
+  ]
+}

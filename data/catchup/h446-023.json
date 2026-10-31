@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-023",
+  "course": "h446",
+  "title": "Hash tables with arrays",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a binary search tree, where are values smaller and larger than a node stored?",
+          "answer": "Smaller values go left and larger values go right.",
+          "options": [
+            "Two keys map to the same hash location.",
+            "Smaller values go left and larger values go right.",
+            "null / no child."
+          ],
+          "feedback": "Smaller values go left and larger values go right."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does -1 represent in our pointer arrays?",
+          "answer": "null / no child.",
+          "options": [
+            "null / no child.",
+            "Smaller values go left and larger values go right.",
+            "Two keys map to the same hash location."
+          ],
+          "feedback": "null / no child."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a collision in hashing?",
+          "answer": "Two keys map to the same hash location.",
+          "options": [
+            "Smaller values go left and larger values go right.",
+            "null / no child.",
+            "Two keys map to the same hash location."
+          ],
+          "feedback": "Two keys map to the same hash location."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For table size 5, what bucket does key 17 map to using key MOD 5?",
+          "answer": "2.",
+          "options": [
+            "null / no child.",
+            "2.",
+            "Smaller values go left and larger values go right."
+          ],
+          "feedback": "2."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Create fixed buckets",
+          "text": "Each row is a bucket with three available collision slots."
+        },
+        {
+          "type": "paragraph",
+          "title": "Hash",
+          "text": "The same key maps to the same row."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add",
+          "text": "A collision goes into the next free column in that bucket."
+        },
+        {
+          "type": "paragraph",
+          "title": "Search/remove",
+          "text": "Only the calculated bucket is searched. Removal can shift later bucket items left."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Add 12, 17 and 22",
+          "text": "All three keys hash to bucket 2. 12 % 5 = 2 17 % 5 = 2 22 % 5 = 2"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · 12",
+          "text": "table[2,0] = 12 count[2] = 1"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash table'?",
+          "answer": "A structure using a hash function to choose storage location.",
+          "options": [
+            "A structure using a hash function to choose storage location.",
+            "The value supplied to the hash function.",
+            "A deterministic calculation producing an index."
+          ],
+          "feedback": "hash table — A structure using a hash function to choose storage location."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'key'?",
+          "answer": "The value supplied to the hash function.",
+          "options": [
+            "A structure using a hash function to choose storage location.",
+            "A deterministic calculation producing an index.",
+            "The value supplied to the hash function."
+          ],
+          "feedback": "key — The value supplied to the hash function."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash function'?",
+          "answer": "A deterministic calculation producing an index.",
+          "options": [
+            "The value supplied to the hash function.",
+            "A deterministic calculation producing an index.",
+            "A structure using a hash function to choose storage location."
+          ],
+          "feedback": "hash function — A deterministic calculation producing an index."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Calculate hash",
+          "text": "Table size 10; key 37."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same calculation",
+          "text": "37 MOD 10 = ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same calculation",
+          "text": "37 MOD 10 = 7"
+        },
+        {
+          "type": "paragraph",
+          "title": "Add key",
+          "text": "Use bucket and count arrays."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A hash-table storage location.",
+          "answer": "bucket",
+          "options": [
+            "key",
+            "bucket",
+            "hash table"
+          ],
+          "feedback": "bucket — A hash-table storage location."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two keys map to the same bucket.",
+          "answer": "collision",
+          "options": [
+            "collision",
+            "hash table",
+            "key"
+          ],
+          "feedback": "collision — Two keys map to the same bucket."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Keep multiple colliding values in one bucket.",
+          "answer": "chaining",
+          "options": [
+            "hash table",
+            "key",
+            "chaining"
+          ],
+          "feedback": "chaining — Keep multiple colliding values in one bucket."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Search the calculated bucket for a key.",
+          "answer": "lookup",
+          "options": [
+            "key",
+            "lookup",
+            "hash table"
+          ],
+          "feedback": "lookup — Search the calculated bucket for a key."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Add 12, 17 and 22 All three keys hash to bucket 2.",
+          "answer": "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
+          "options": [
+            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
+            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
+            "CHECK Complete the same calculation 37 MOD 10 = 7"
+          ],
+          "feedback": "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Calculate hash Table size 10; key 37.",
+          "answer": "CHECK Complete the same calculation 37 MOD 10 = 7",
+          "options": [
+            "CHECK Complete the same calculation 37 MOD 10 = 7",
+            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
+            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
+          ],
+          "feedback": "CHECK Complete the same calculation 37 MOD 10 = 7"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Add key Use bucket and count arrays.",
+          "answer": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
+          "options": [
+            "STEP 2 · COLLISION 17 table[2,1] = 17 count[2] = 2",
+            "CHECK Complete the same calculation 37 MOD 10 = 7",
+            "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
+          ],
+          "feedback": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Add key Use bucket and count arrays.",
+        "model": "CHECK Fill the same code int bucket = key % 5; table[bucket, count[bucket]] = key; count[bucket]++;",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "key means: The value supplied to the hash function.",
+          "answer": "true",
+          "feedback": "key — The value supplied to the hash function."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "hash function means: Two keys map to the same bucket.",
+          "answer": "false",
+          "feedback": "hash function — A deterministic calculation producing an index."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "bucket means: A hash-table storage location.",
+          "answer": "true",
+          "feedback": "bucket — A hash-table storage location."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-130",
+  "course": "h446",
+  "title": "Lesson 130 · Symmetric Encryption: One Shared Secret",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the main role of a dictionary token in compression?",
+          "answer": "A shorter representation for a repeated substring.",
+          "options": [
+            "Linear/sequential search in the worst case.",
+            "The left subtree.",
+            "A shorter representation for a repeated substring."
+          ],
+          "feedback": "A shorter representation for a repeated substring."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is O(n) search complexity associated with?",
+          "answer": "Linear/sequential search in the worst case.",
+          "options": [
+            "The left subtree.",
+            "Linear/sequential search in the worst case.",
+            "A shorter representation for a repeated substring."
+          ],
+          "feedback": "Linear/sequential search in the worst case."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, which side holds a smaller value?",
+          "answer": "The left subtree.",
+          "options": [
+            "The left subtree.",
+            "A shorter representation for a repeated substring.",
+            "Linear/sequential search in the worst case."
+          ],
+          "feedback": "The left subtree."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a queue, what does FIFO stand for?",
+          "answer": "First in, first out.",
+          "options": [
+            "A shorter representation for a repeated substring.",
+            "Linear/sequential search in the worst case.",
+            "First in, first out."
+          ],
+          "feedback": "First in, first out."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start plaintext",
+          "text": "Sender has message and shared secret key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encrypt",
+          "text": "Algorithm combines plaintext and secret key into ciphertext."
+        },
+        {
+          "type": "paragraph",
+          "title": "Decrypt",
+          "text": "Recipient uses matching shared key to restore message."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Alice: message + key K",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Encrypted ciphertext",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Bob: decrypt with K",
+          "text": "A secure symmetric cipher transforms plaintext using key K. Bob decrypts with the same key; an interceptor without K should not recover plaintext feasibly. Security requires a strong cipher and protected key."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'plaintext'?",
+          "answer": "Readable original message.",
+          "options": [
+            "Same secret key is used for encryption and decryption.",
+            "Readable original message.",
+            "Encrypted output."
+          ],
+          "feedback": "plaintext — Readable original message."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'ciphertext'?",
+          "answer": "Encrypted output.",
+          "options": [
+            "Encrypted output.",
+            "Readable original message.",
+            "Same secret key is used for encryption and decryption."
+          ],
+          "feedback": "ciphertext — Encrypted output."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'symmetric key'?",
+          "answer": "Same secret key is used for encryption and decryption.",
+          "options": [
+            "Readable original message.",
+            "Encrypted output.",
+            "Same secret key is used for encryption and decryption."
+          ],
+          "feedback": "symmetric key — Same secret key is used for encryption and decryption."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Sensitive backup",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encrypt with shared key",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Protect key separately",
+          "text": "Symmetric algorithms are efficient for encrypting large files, but the encryption key must be stored and shared securely; encrypting a file is not by itself proof of who created it."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Securely sharing the secret with authorised parties.",
+          "answer": "key distribution",
+          "options": [
+            "plaintext",
+            "ciphertext",
+            "key distribution"
+          ],
+          "feedback": "key distribution — Securely sharing the secret with authorised parties."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Readable original message.",
+          "answer": "plaintext",
+          "options": [
+            "symmetric key",
+            "plaintext",
+            "ciphertext"
+          ],
+          "feedback": "plaintext — Readable original message."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Encrypted output.",
+          "answer": "ciphertext",
+          "options": [
+            "ciphertext",
+            "plaintext",
+            "symmetric key"
+          ],
+          "feedback": "ciphertext — Encrypted output."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Same secret key is used for encryption and decryption.",
+          "answer": "symmetric key",
+          "options": [
+            "plaintext",
+            "ciphertext",
+            "symmetric key"
+          ],
+          "feedback": "symmetric key — Same secret key is used for encryption and decryption."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Describe the roles of plaintext, key and ciphertext in symmetric encryption. [6]",
+          "answer": "/ WORKED ANSWER Readable input [2], secret key used by encrypt/decrypt [2], ciphertext unreadable without key [2].",
+          "options": [
+            "/ WORKED ANSWER Both need secret [2], secure initial transfer/storage [2], compromise exposes communications or data [2].",
+            "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2].",
+            "/ WORKED ANSWER Readable input [2], secret key used by encrypt/decrypt [2], ciphertext unreadable without key [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Readable input [2], secret key used by encrypt/decrypt [2], ciphertext unreadable without key [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain the main key-management challenge in sharing encrypted records between two offices. [6]",
+          "answer": "/ WORKED ANSWER Both need secret [2], secure initial transfer/storage [2], compromise exposes communications or data [2].",
+          "options": [
+            "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2].",
+            "/ WORKED ANSWER Both need secret [2], secure initial transfer/storage [2], compromise exposes communications or data [2].",
+            "/ WORKED ANSWER Readable input [2], secret key used by encrypt/decrypt [2], ciphertext unreadable without key [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Both need secret [2], secure initial transfer/storage [2], compromise exposes communications or data [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate symmetric encryption for a large school backup stored with a third-party provider. [8]",
+          "answer": "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2].",
+          "options": [
+            "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2].",
+            "/ WORKED ANSWER Readable input [2], secret key used by encrypt/decrypt [2], ciphertext unreadable without key [2].",
+            "/ WORKED ANSWER Both need secret [2], secure initial transfer/storage [2], compromise exposes communications or data [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate symmetric encryption for a large school backup stored with a third-party provider. [8]",
+        "model": "/ WORKED ANSWER Bulk speed [2], confidentiality [2], safe key management/recovery [2], practical limitations and conclusion [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "ciphertext means: Encrypted output.",
+          "answer": "true",
+          "feedback": "ciphertext — Encrypted output."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "symmetric key means: Readable original message.",
+          "answer": "false",
+          "feedback": "symmetric key — Same secret key is used for encryption and decryption."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "key distribution means: Securely sharing the secret with authorised parties.",
+          "answer": "true",
+          "feedback": "key distribution — Securely sharing the secret with authorised parties."
+        }
+      ]
+    }
+  ]
+}

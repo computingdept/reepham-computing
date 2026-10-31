@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-027",
+  "course": "h446",
+  "title": "Boolean algebra rules",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Normalise 0.0110 × 2⁴ using a two’s-complement mantissa. Give the new mantissa and exponent.",
+          "answer": "0.1100 × 2³ .",
+          "options": [
+            "0.1100 × 2³ .",
+            "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
+            "[3, 5, 2, 7] ."
+          ],
+          "feedback": "Shift the mantissa one place left and decrease the exponent by one to preserve the value. A normalised positive two’s-complement mantissa begins 01 ; a negative one begins 10 ."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A sorted array is [3, 8, 12, 19, 27, 35, 42] . When searching for 27 , which indexes are checked, in order?",
+          "answer": "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
+          "options": [
+            "0.1100 × 2³ .",
+            "[3, 5, 2, 7] .",
+            "Indexes 3 → 5 → 4 (values 19 → 35 → 27)."
+          ],
+          "feedback": "Binary search tests the middle index of the remaining sorted range, using zero-based indexing."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Show the array after one full left-to-right pass of ascending bubble sort on [7, 3, 5, 2] .",
+          "answer": "[3, 5, 2, 7] .",
+          "options": [
+            "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
+            "[3, 5, 2, 7] .",
+            "0.1100 × 2³ ."
+          ],
+          "feedback": "Compare adjacent values and swap when the left value is larger. The largest value, 7, moves to the end."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: An alarm sounds if the door is open AND the system is armed, OR if panic is pressed. Write Q using A, B and C.",
+          "answer": "Q = (A ∧ B) ∨ C .",
+          "options": [
+            "Q = (A ∧ B) ∨ C .",
+            "0.1100 × 2³ .",
+            "Indexes 3 → 5 → 4 (values 19 → 35 → 27)."
+          ],
+          "feedback": "A = door open, B = armed, C = panic pressed. Group door AND armed first; panic is an alternative trigger."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "De Morgan",
+          "text": "The operator inside the brackets swaps as each term is negated."
+        },
+        {
+          "type": "paragraph",
+          "title": "Double negation",
+          "text": "Two consecutive NOT operations cancel."
+        },
+        {
+          "type": "paragraph",
+          "title": "Distributive law",
+          "text": "A appears in both groups. Write it once outside the brackets, then join B and C with OR. The matching OR form is also useful: (A ∨ B) ∧ (A ∨ C) = A ∨ (B ∧ C)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Association + commutation",
+          "text": "These allow regrouping and reordering before other simplification."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Simplify ¬(A ∧ B)",
+          "text": "Apply one named rule. ¬(A ∧ B)"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Outer NOT over AND",
+          "text": "Use De Morgan's Law."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'De Morgan'?",
+          "answer": "Rules for negating AND/OR groups.",
+          "options": [
+            "Expanding/factoring Boolean expressions.",
+            "Regrouping repeated same operations.",
+            "Rules for negating AND/OR groups."
+          ],
+          "feedback": "De Morgan — Rules for negating AND/OR groups."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'distribution'?",
+          "answer": "Expanding/factoring Boolean expressions.",
+          "options": [
+            "Regrouping repeated same operations.",
+            "Expanding/factoring Boolean expressions.",
+            "Rules for negating AND/OR groups."
+          ],
+          "feedback": "distribution — Expanding/factoring Boolean expressions."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'association'?",
+          "answer": "Regrouping repeated same operations.",
+          "options": [
+            "Regrouping repeated same operations.",
+            "Rules for negating AND/OR groups.",
+            "Expanding/factoring Boolean expressions."
+          ],
+          "feedback": "association — Regrouping repeated same operations."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "De Morgan",
+          "text": "Simplify ¬A ∨ ¬B using the relevant De Morgan form."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same expression",
+          "text": "¬A ∨ ¬B = ¬(? ? ?)"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same expression",
+          "text": "¬A ∨ ¬B = ¬(A ∧ B)"
+        },
+        {
+          "type": "paragraph",
+          "title": "Double negation",
+          "text": "Simplify ¬(¬B)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Changing order.",
+          "answer": "commutation",
+          "options": [
+            "commutation",
+            "De Morgan",
+            "distribution"
+          ],
+          "feedback": "commutation — Changing order."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two NOT operations cancel.",
+          "answer": "double negation",
+          "options": [
+            "De Morgan",
+            "distribution",
+            "double negation"
+          ],
+          "feedback": "double negation — Two NOT operations cancel."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Produce an equivalent expression with less complexity.",
+          "answer": "simplify",
+          "options": [
+            "distribution",
+            "simplify",
+            "De Morgan"
+          ],
+          "feedback": "simplify — Produce an equivalent expression with less complexity."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Different form, same truth values.",
+          "answer": "equivalent",
+          "options": [
+            "equivalent",
+            "De Morgan",
+            "distribution"
+          ],
+          "feedback": "equivalent — Different form, same truth values."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Simplify ¬(A ∧ B) Apply one named rule.",
+          "answer": "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
+          "options": [
+            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
+            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
+            "CHECK Complete the same expression ¬(¬B) = B"
+          ],
+          "feedback": "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: De Morgan Simplify ¬A ∨ ¬B using the relevant De Morgan form.",
+          "answer": "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
+          "options": [
+            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B",
+            "CHECK Complete the same expression ¬(¬B) = B",
+            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)"
+          ],
+          "feedback": "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Double negation Simplify ¬(¬B).",
+          "answer": "CHECK Complete the same expression ¬(¬B) = B",
+          "options": [
+            "CHECK Complete the same expression ¬A ∨ ¬B = ¬(A ∧ B)",
+            "CHECK Complete the same expression ¬(¬B) = B",
+            "STEP 2 · NEGATE Negate each term A → ¬A B → ¬B"
+          ],
+          "feedback": "CHECK Complete the same expression ¬(¬B) = B"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Double negation Simplify ¬(¬B).",
+        "model": "CHECK Complete the same expression ¬(¬B) = B",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "distribution means: Expanding/factoring Boolean expressions.",
+          "answer": "true",
+          "feedback": "distribution — Expanding/factoring Boolean expressions."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "association means: Two NOT operations cancel.",
+          "answer": "false",
+          "feedback": "association — Regrouping repeated same operations."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "commutation means: Changing order.",
+          "answer": "true",
+          "feedback": "commutation — Changing order."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-244",
+  "course": "h446",
+  "title": "Thinking concurrently: independent tasks",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the MAR contain during a memory access?",
+          "answer": "The address of the memory location being accessed.",
+          "options": [
+            "Only when both operands are true.",
+            "Incremental working versions and repeated feedback.",
+            "The address of the memory location being accessed."
+          ],
+          "feedback": "The address of the memory location being accessed."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When is A AND B true?",
+          "answer": "Only when both operands are true.",
+          "options": [
+            "Incremental working versions and repeated feedback.",
+            "Only when both operands are true.",
+            "The address of the memory location being accessed."
+          ],
+          "feedback": "Only when both operands are true."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What distinguishes iterative development from a fixed sequence?",
+          "answer": "Incremental working versions and repeated feedback.",
+          "options": [
+            "Incremental working versions and repeated feedback.",
+            "The address of the memory location being accessed.",
+            "Only when both operands are true."
+          ],
+          "feedback": "Incremental working versions and repeated feedback."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Search for 13 in sorted indexes 0–14. Trace the midpoint indexes inspected by standard integer midpoint selection.",
+          "answer": "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13.",
+          "options": [
+            "The address of the memory location being accessed.",
+            "Only when both operands are true.",
+            "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13."
+          ],
+          "feedback": "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find tasks without dependencies",
+          "text": "Dataset download and image processing can operate concurrently if they use separate resources."
+        },
+        {
+          "type": "paragraph",
+          "title": "Respect the final dependency",
+          "text": "Report assembly cannot start until BOTH preparation tasks finish."
+        },
+        {
+          "type": "paragraph",
+          "title": "Calculate the ideal gain",
+          "text": "Sequential 9 minutes, parallel 6 minutes. Actual performance depends on scheduling and resource contention."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the method",
+          "text": "Add all durations for the sequential path: 10 minutes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check and explain",
+          "text": "Run independent checks together, wait 5 minutes, then publish in 2: total 7 minutes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'concurrency'?",
+          "answer": "Tasks making progress over overlapping intervals.",
+          "options": [
+            "Longest dependent chain determining ideal completion time.",
+            "Tasks making progress over overlapping intervals.",
+            "A task needs another result first."
+          ],
+          "feedback": "concurrency — Tasks making progress over overlapping intervals."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'dependency'?",
+          "answer": "A task needs another result first.",
+          "options": [
+            "A task needs another result first.",
+            "Tasks making progress over overlapping intervals.",
+            "Longest dependent chain determining ideal completion time."
+          ],
+          "feedback": "dependency — A task needs another result first."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'critical path'?",
+          "answer": "Longest dependent chain determining ideal completion time.",
+          "options": [
+            "Tasks making progress over overlapping intervals.",
+            "A task needs another result first.",
+            "Longest dependent chain determining ideal completion time."
+          ],
+          "feedback": "critical path — Longest dependent chain determining ideal completion time."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the method",
+          "text": "Images and CSS are independent preparation tasks; calculate 4+6+1=11 minutes sequentially."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check and explain",
+          "text": "Run both together; CSS sets the critical 6-minute time. Then deploy 1 minute: 7 minutes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Timing-dependent outcome caused by unsafe shared access.",
+          "answer": "race condition",
+          "options": [
+            "concurrency",
+            "dependency",
+            "race condition"
+          ],
+          "feedback": "race condition — Timing-dependent outcome caused by unsafe shared access."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Coordination of operations using shared state.",
+          "answer": "synchronisation",
+          "options": [
+            "dependency",
+            "synchronisation",
+            "concurrency"
+          ],
+          "feedback": "synchronisation — Coordination of operations using shared state."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Tasks making progress over overlapping intervals.",
+          "answer": "concurrency",
+          "options": [
+            "concurrency",
+            "dependency",
+            "critical path"
+          ],
+          "feedback": "concurrency — Tasks making progress over overlapping intervals."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A task needs another result first.",
+          "answer": "dependency",
+          "options": [
+            "concurrency",
+            "critical path",
+            "dependency"
+          ],
+          "feedback": "dependency — A task needs another result first."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Tasks A (3 min) and B (5 min) are independent, then final C (2 min). Find sequential and ideal parallel completion times.",
+          "answer": "FULL MODEL ANSWER [4] Sequential 3+5+2=10 minutes [2]. Parallel max(3,5)+2=7 minutes [2].",
+          "options": [
+            "FULL MODEL ANSWER [6] Both read £100 [1]; separate writes of £90 and £80 can leave £80 or £90 instead of £70 [2]. A lock around the whole read-modify-write, or a suitable atomic transaction, serialises the updates [2]; waiting can…",
+            "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1].",
+            "FULL MODEL ANSWER [4] Sequential 3+5+2=10 minutes [2]. Parallel max(3,5)+2=7 minutes [2]."
+          ],
+          "feedback": "FULL MODEL ANSWER [4] Sequential 3+5+2=10 minutes [2]. Parallel max(3,5)+2=7 minutes [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Two withdrawals of £10 and £20 both read the same initial £100 balance before either writes an update. Explain a possible lost update and propose a safeguard.",
+          "answer": "FULL MODEL ANSWER [6] Both read £100 [1]; separate writes of £90 and £80 can leave £80 or £90 instead of £70 [2]. A lock around the whole read-modify-write, or a suitable atomic transaction, serialises the updates [2]; waiting can…",
+          "options": [
+            "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1].",
+            "FULL MODEL ANSWER [6] Both read £100 [1]; separate writes of £90 and £80 can leave £80 or £90 instead of £70 [2]. A lock around the whole read-modify-write, or a suitable atomic transaction, serialises the updates [2]; waiting can…",
+            "FULL MODEL ANSWER [4] Sequential 3+5+2=10 minutes [2]. Parallel max(3,5)+2=7 minutes [2]."
+          ],
+          "feedback": "FULL MODEL ANSWER [6] Both read £100 [1]; separate writes of £90 and £80 can leave £80 or £90 instead of £70 [2]. A lock around the whole read-modify-write, or a suitable atomic transaction, serialises the updates [2]; waiting can reduce concurrency [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Four tasks: parse A=4 min, fetch B=6 min, validate C=2 min (requires A and B), publish D=1 min (requires C). Find shortest ideal time and explain two constraints.",
+          "answer": "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1].",
+          "options": [
+            "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1].",
+            "FULL MODEL ANSWER [4] Sequential 3+5+2=10 minutes [2]. Parallel max(3,5)+2=7 minutes [2].",
+            "FULL MODEL ANSWER [6] Both read £100 [1]; separate writes of £90 and £80 can leave £80 or £90 instead of £70 [2]. A lock around the whole read-modify-write, or a suitable atomic transaction, serialises the updates [2]; waiting can…"
+          ],
+          "feedback": "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Four tasks: parse A=4 min, fetch B=6 min, validate C=2 min (requires A and B), publish D=1 min (requires C). Find shortest ideal time and explain two constraints.",
+        "model": "FULL MODEL ANSWER [6] A and B overlap [1]; complete after max(4,6)=6 [1]; C then 2 gives 8 [1]; D then 1 gives 9 minutes [1]; overhead [1] and limited shared resources/communication [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "dependency means: A task needs another result first.",
+          "answer": "true",
+          "feedback": "dependency — A task needs another result first."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "critical path means: Coordination of operations using shared state.",
+          "answer": "false",
+          "feedback": "critical path — Longest dependent chain determining ideal completion time."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "race condition means: Timing-dependent outcome caused by unsafe shared access.",
+          "answer": "true",
+          "feedback": "race condition — Timing-dependent outcome caused by unsafe shared access."
+        }
+      ]
+    }
+  ]
+}

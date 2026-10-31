@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-135",
+  "course": "h446",
+  "title": "Lesson 135 · Entity Relationships: One-to-Many and Many-to-Many",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the role of a foreign key?",
+          "answer": "It references a candidate/primary key in a related table.",
+          "options": [
+            "It references a candidate/primary key in a related table.",
+            "O(log n) for sorted random-access data.",
+            "Read-only memory."
+          ],
+          "feedback": "It references a candidate/primary key in a related table."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In Big O notation, what is binary search worst-case complexity?",
+          "answer": "O(log n) for sorted random-access data.",
+          "options": [
+            "It references a candidate/primary key in a related table.",
+            "Read-only memory.",
+            "O(log n) for sorted random-access data."
+          ],
+          "feedback": "O(log n) for sorted random-access data."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does ROM stand for?",
+          "answer": "Read-only memory.",
+          "options": [
+            "O(log n) for sorted random-access data.",
+            "Read-only memory.",
+            "It references a candidate/primary key in a related table."
+          ],
+          "feedback": "Read-only memory."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which is removed first from a FIFO queue?",
+          "answer": "The longest-waiting item at the front.",
+          "options": [
+            "The longest-waiting item at the front.",
+            "It references a candidate/primary key in a related table.",
+            "O(log n) for sorted random-access data."
+          ],
+          "feedback": "The longest-waiting item at the front."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify entities",
+          "text": "Find objects with independent identity, not every noun."
+        },
+        {
+          "type": "paragraph",
+          "title": "Set cardinality",
+          "text": "One student takes many courses, and each course has many students."
+        },
+        {
+          "type": "paragraph",
+          "title": "Resolve M:N",
+          "text": "Add Enrolment table referencing StudentID and CourseID."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Student↔Course is M:N",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Create Enrolment bridge",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Two one-to-many links",
+          "text": "Student(StudentID PK) and Course(CourseID PK) form many-to-many. Resolve with Enrolment(StudentID FK, CourseID FK, EnrolledOn), with composite PK (StudentID, CourseID) if enrolment is unique per pair."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'entity'?",
+          "answer": "An identifiable class of thing stored in database.",
+          "options": [
+            "Association between entities.",
+            "How many related instances are possible.",
+            "An identifiable class of thing stored in database."
+          ],
+          "feedback": "entity — An identifiable class of thing stored in database."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'relationship'?",
+          "answer": "Association between entities.",
+          "options": [
+            "How many related instances are possible.",
+            "Association between entities.",
+            "An identifiable class of thing stored in database."
+          ],
+          "feedback": "relationship — Association between entities."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'cardinality'?",
+          "answer": "How many related instances are possible.",
+          "options": [
+            "How many related instances are possible.",
+            "An identifiable class of thing stored in database.",
+            "Association between entities."
+          ],
+          "feedback": "cardinality — How many related instances are possible."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "One Customer",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Many Orders",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "FK in Order table",
+          "text": "Customer 1:M Order. CustomerID PK in Customer; CustomerID FK in Order. OrderID serves as the Order PK. Optionality (must a customer have an order?) needs a business rule."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Table breaking a many-to-many relation into two one-to-many relations.",
+          "answer": "junction table",
+          "options": [
+            "junction table",
+            "entity",
+            "relationship"
+          ],
+          "feedback": "junction table — Table breaking a many-to-many relation into two one-to-many relations."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An identifiable class of thing stored in database.",
+          "answer": "entity",
+          "options": [
+            "relationship",
+            "cardinality",
+            "entity"
+          ],
+          "feedback": "entity — An identifiable class of thing stored in database."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Association between entities.",
+          "answer": "relationship",
+          "options": [
+            "cardinality",
+            "relationship",
+            "entity"
+          ],
+          "feedback": "relationship — Association between entities."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? How many related instances are possible.",
+          "answer": "cardinality",
+          "options": [
+            "cardinality",
+            "entity",
+            "relationship"
+          ],
+          "feedback": "cardinality — How many related instances are possible."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain the difference between one-to-many and many-to-many relations with examples. [6]",
+          "answer": "/ WORKED ANSWER 1:M definition/example [3], M:N definition/example [3].",
+          "options": [
+            "/ WORKED ANSWER 1:M definition/example [3], M:N definition/example [3].",
+            "/ WORKED ANSWER Author(PK) [2], Book(PK) [2], Authorship with two FKs/composite PK [2].",
+            "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2]."
+          ],
+          "feedback": "/ WORKED ANSWER 1:M definition/example [3], M:N definition/example [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Design tables for Author and Book when each book has multiple authors. [6]",
+          "answer": "/ WORKED ANSWER Author(PK) [2], Book(PK) [2], Authorship with two FKs/composite PK [2].",
+          "options": [
+            "/ WORKED ANSWER 1:M definition/example [3], M:N definition/example [3].",
+            "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2].",
+            "/ WORKED ANSWER Author(PK) [2], Book(PK) [2], Authorship with two FKs/composite PK [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Author(PK) [2], Book(PK) [2], Authorship with two FKs/composite PK [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate why a field containing comma-separated ClubIDs is poorer than a Membership junction table. [8]",
+          "answer": "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2].",
+          "options": [
+            "/ WORKED ANSWER Author(PK) [2], Book(PK) [2], Authorship with two FKs/composite PK [2].",
+            "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2].",
+            "/ WORKED ANSWER 1:M definition/example [3], M:N definition/example [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate why a field containing comma-separated ClubIDs is poorer than a Membership junction table. [8]",
+        "model": "/ WORKED ANSWER Atomicity/1NF problem [2], hard joins/search [2], integrity/update anomaly [2], junction table solution and cardinality [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "relationship means: Association between entities.",
+          "answer": "true",
+          "feedback": "relationship — Association between entities."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "cardinality means: An identifiable class of thing stored in database.",
+          "answer": "false",
+          "feedback": "cardinality — How many related instances are possible."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "junction table means: Table breaking a many-to-many relation into two one-to-many relations.",
+          "answer": "true",
+          "feedback": "junction table — Table breaking a many-to-many relation into two one-to-many relations."
+        }
+      ]
+    }
+  ]
+}

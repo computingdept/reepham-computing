@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-237",
+  "course": "h446",
+  "title": "Testing and program quality",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why should Largest() require a nonempty input array?",
+          "answer": "It reads a[0] as its starting value.",
+          "options": [
+            "It reads a[0] as its starting value.",
+            "Previously working functionality fails after a change.",
+            "Defines behaviour for objects of that class."
+          ],
+          "feedback": "It reads a[0] as its starting value."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a regression?",
+          "answer": "Previously working functionality fails after a change.",
+          "options": [
+            "It reads a[0] as its starting value.",
+            "Defines behaviour for objects of that class.",
+            "Previously working functionality fails after a change."
+          ],
+          "feedback": "Previously working functionality fails after a change."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a class method do?",
+          "answer": "Defines behaviour for objects of that class.",
+          "options": [
+            "Previously working functionality fails after a change.",
+            "Defines behaviour for objects of that class.",
+            "It reads a[0] as its starting value."
+          ],
+          "feedback": "Defines behaviour for objects of that class."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A date validator passes all unit tests but booking fails when writing to the database. What test is needed?",
+          "answer": "An integration test of the database interaction.",
+          "options": [
+            "An integration test of the database interaction.",
+            "It reads a[0] as its starting value.",
+            "Previously working functionality fails after a change."
+          ],
+          "feedback": "An integration test of the database interaction."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Test individual units",
+          "text": "Unit tests isolate one function or class method from the rest of the system."
+        },
+        {
+          "type": "paragraph",
+          "title": "Test connections and behaviour",
+          "text": "Integration tests interactions between modules; system tests the complete application."
+        },
+        {
+          "type": "paragraph",
+          "title": "Confirm intended outcome",
+          "text": "Acceptance testing checks whether the delivered application meets stakeholder requirements. Automated regression tests rerun after changes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "TotalCalculator already gives correct values; the failure appears when OrderService interacts with the database."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and explain",
+          "text": "Prioritise an integration test of saving, then a system-level end-to-end checkout test."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'unit testing'?",
+          "answer": "Test one module/function in isolation.",
+          "options": [
+            "Check interaction of components.",
+            "Test the entire application as a system.",
+            "Test one module/function in isolation."
+          ],
+          "feedback": "unit testing — Test one module/function in isolation."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'integration testing'?",
+          "answer": "Check interaction of components.",
+          "options": [
+            "Test the entire application as a system.",
+            "Check interaction of components.",
+            "Test one module/function in isolation."
+          ],
+          "feedback": "integration testing — Check interaction of components."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'system testing'?",
+          "answer": "Test the entire application as a system.",
+          "options": [
+            "Test the entire application as a system.",
+            "Test one module/function in isolation.",
+            "Check interaction of components."
+          ],
+          "feedback": "system testing — Test the entire application as a system."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The isolated search passes, so check the connection that maps returned IDs to displayed titles."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and explain",
+          "text": "An integration test can expose the mapping mismatch, while a system test checks the complete user-visible result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Check fitness for user/business requirements.",
+          "answer": "acceptance testing",
+          "options": [
+            "acceptance testing",
+            "unit testing",
+            "integration testing"
+          ],
+          "feedback": "acceptance testing — Check fitness for user/business requirements."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeat tests to catch defects after changes.",
+          "answer": "regression testing",
+          "options": [
+            "unit testing",
+            "integration testing",
+            "regression testing"
+          ],
+          "feedback": "regression testing — Repeat tests to catch defects after changes."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Test one module/function in isolation.",
+          "answer": "unit testing",
+          "options": [
+            "system testing",
+            "unit testing",
+            "integration testing"
+          ],
+          "feedback": "unit testing — Test one module/function in isolation."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Check interaction of components.",
+          "answer": "integration testing",
+          "options": [
+            "integration testing",
+            "unit testing",
+            "system testing"
+          ],
+          "feedback": "integration testing — Check interaction of components."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Match each: individual ValidDate function, database interaction, full website journey, client sign-off to the appropriate test level.",
+          "answer": "[4] Unit [1], integration [1], system [1], acceptance [1].",
+          "options": [
+            "[4] Unit [1], integration [1], system [1], acceptance [1].",
+            "[6] Reproduce failure [1]; inspect changed rule and expected behaviour [1]; step through registration [1]; correct fault [1]; rerun registration unit/integration tests [1]; rerun previous login tests for regression [1].",
+            "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1]."
+          ],
+          "feedback": "[4] Unit [1], integration [1], system [1], acceptance [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 A login test passes until a new password rule is introduced, after which registration fails. Explain a sensible debugging and testing workflow.",
+          "answer": "[6] Reproduce failure [1]; inspect changed rule and expected behaviour [1]; step through registration [1]; correct fault [1]; rerun registration unit/integration tests [1]; rerun previous login tests for regression [1].",
+          "options": [
+            "[4] Unit [1], integration [1], system [1], acceptance [1].",
+            "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1].",
+            "[6] Reproduce failure [1]; inspect changed rule and expected behaviour [1]; step through registration [1]; correct fault [1]; rerun registration unit/integration tests [1]; rerun previous login tests for regression [1]."
+          ],
+          "feedback": "[6] Reproduce failure [1]; inspect changed rule and expected behaviour [1]; step through registration [1]; correct fault [1]; rerun registration unit/integration tests [1]; rerun previous login tests for regression [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Why is 100% execution of code lines not equivalent to proving an application correct? Suggest three further forms of evidence.",
+          "answer": "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1].",
+          "options": [
+            "[6] Reproduce failure [1]; inspect changed rule and expected behaviour [1]; step through registration [1]; correct fault [1]; rerun registration unit/integration tests [1]; rerun previous login tests for regression [1].",
+            "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1].",
+            "[4] Unit [1], integration [1], system [1], acceptance [1]."
+          ],
+          "feedback": "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Why is 100% execution of code lines not equivalent to proving an application correct? Suggest three further forms of evidence.",
+        "model": "[6] Executing every line may not test all branches or input combinations [2]; use boundary and erroneous test cases [1], integration tests [1], realistic user acceptance scenarios [1] and regression tests after changes [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "integration testing means: Check interaction of components.",
+          "answer": "true",
+          "feedback": "integration testing — Check interaction of components."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "system testing means: Repeat tests to catch defects after changes.",
+          "answer": "false",
+          "feedback": "system testing — Test the entire application as a system."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "acceptance testing means: Check fitness for user/business requirements.",
+          "answer": "true",
+          "feedback": "acceptance testing — Check fitness for user/business requirements."
+        }
+      ]
+    }
+  ]
+}

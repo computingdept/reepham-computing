@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-064",
+  "course": "h446",
+  "title": "Lesson 064 · Thinking Concurrently: Independent Work",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a process dependency?",
+          "answer": "A task requires another task's result.",
+          "options": [
+            "Amount of completed work per unit time.",
+            "Result depends on unsafe timing/order of shared operations.",
+            "A task requires another task's result."
+          ],
+          "feedback": "A task requires another task's result."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is throughput?",
+          "answer": "Amount of completed work per unit time.",
+          "options": [
+            "Result depends on unsafe timing/order of shared operations.",
+            "Amount of completed work per unit time.",
+            "A task requires another task's result."
+          ],
+          "feedback": "Amount of completed work per unit time."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a race condition?",
+          "answer": "Result depends on unsafe timing/order of shared operations.",
+          "options": [
+            "Result depends on unsafe timing/order of shared operations.",
+            "A task requires another task's result.",
+            "Amount of completed work per unit time."
+          ],
+          "feedback": "Result depends on unsafe timing/order of shared operations."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 031",
+          "answer": "D flip-flop Q=0, D=1 before next rising edge: what becomes Q?",
+          "options": [
+            "A task requires another task's result.",
+            "Amount of completed work per unit time.",
+            "D flip-flop Q=0, D=1 before next rising edge: what becomes Q?"
+          ],
+          "feedback": "D flip-flop Q=0, D=1 before next rising edge: what becomes Q?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify",
+          "text": "Find tasks that do not depend on each other's intermediate results. Independent work can overlap."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model",
+          "text": "Distinguish concurrency (progress interleaved) from parallelism (truly simultaneous hardware execution)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Evaluate scheduling overhead and shared-resource/race risks, and explain why dependencies limit possible speedup."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the decision",
+          "text": "Only independent tasks can safely overlap without waiting for each other."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'concurrency'?",
+          "answer": "Multiple tasks make progress in overlapping period.",
+          "options": [
+            "Longest dependency chain.",
+            "Multiple tasks make progress in overlapping period.",
+            "Actual simultaneous execution."
+          ],
+          "feedback": "concurrency — Multiple tasks make progress in overlapping period."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'parallelism'?",
+          "answer": "Actual simultaneous execution.",
+          "options": [
+            "Actual simultaneous execution.",
+            "Multiple tasks make progress in overlapping period.",
+            "Longest dependency chain."
+          ],
+          "feedback": "parallelism — Actual simultaneous execution."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'critical path'?",
+          "answer": "Longest dependency chain.",
+          "options": [
+            "Multiple tasks make progress in overlapping period.",
+            "Actual simultaneous execution.",
+            "Longest dependency chain."
+          ],
+          "feedback": "critical path — Longest dependency chain."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the decision",
+          "text": "Extra processors do not remove logical dependency."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Incorrect timing-dependent shared state.",
+          "answer": "race condition",
+          "options": [
+            "concurrency",
+            "parallelism",
+            "race condition"
+          ],
+          "feedback": "race condition — Incorrect timing-dependent shared state."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Multiple tasks make progress in overlapping period.",
+          "answer": "concurrency",
+          "options": [
+            "critical path",
+            "concurrency",
+            "parallelism"
+          ],
+          "feedback": "concurrency — Multiple tasks make progress in overlapping period."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Actual simultaneous execution.",
+          "answer": "parallelism",
+          "options": [
+            "parallelism",
+            "concurrency",
+            "critical path"
+          ],
+          "feedback": "parallelism — Actual simultaneous execution."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Longest dependency chain.",
+          "answer": "critical path",
+          "options": [
+            "concurrency",
+            "parallelism",
+            "critical path"
+          ],
+          "feedback": "critical path — Longest dependency chain."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Independent jobs take 7s and 4s. Calculate sequential and ideal parallel completion times. [4]",
+          "answer": "Sequential 11s [2]; parallel max7,4=7s [2].",
+          "options": [
+            "Independent image load and help-page download [2]; validate/authorise then commit payment/order sequential [2], justify dependencies [2].",
+            "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2].",
+            "Sequential 11s [2]; parallel max7,4=7s [2]."
+          ],
+          "feedback": "Sequential 11s [2]; parallel max7,4=7s [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Give two potentially concurrent stages of a school app and two stages that must be sequential. [6]",
+          "answer": "Independent image load and help-page download [2]; validate/authorise then commit payment/order sequential [2], justify dependencies [2].",
+          "options": [
+            "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2].",
+            "Independent image load and help-page download [2]; validate/authorise then commit payment/order sequential [2], justify dependencies [2].",
+            "Sequential 11s [2]; parallel max7,4=7s [2]."
+          ],
+          "feedback": "Independent image load and help-page download [2]; validate/authorise then commit payment/order sequential [2], justify dependencies [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Two threads increment shared counter via read, add, write and occasionally lose updates. Explain race and one prevention. [6]",
+          "answer": "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2].",
+          "options": [
+            "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2].",
+            "Sequential 11s [2]; parallel max7,4=7s [2].",
+            "Independent image load and help-page download [2]; validate/authorise then commit payment/order sequential [2], justify dependencies [2]."
+          ],
+          "feedback": "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Two threads increment shared counter via read, add, write and occasionally lose updates. Explain race and one prevention. [6]",
+        "model": "Both read same old value [2], both write overlapping update [1], one increment lost [1], lock/atomic increment [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "parallelism means: Actual simultaneous execution.",
+          "answer": "true",
+          "feedback": "parallelism — Actual simultaneous execution."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "critical path means: Multiple tasks make progress in overlapping period.",
+          "answer": "false",
+          "feedback": "critical path — Longest dependency chain."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "race condition means: Incorrect timing-dependent shared state.",
+          "answer": "true",
+          "feedback": "race condition — Incorrect timing-dependent shared state."
+        }
+      ]
+    }
+  ]
+}

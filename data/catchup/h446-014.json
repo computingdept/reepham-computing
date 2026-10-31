@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-014",
+  "course": "h446",
+  "title": "Noughts & Crosses · Part 2 — Discover iteration",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a zero-indexed C# array, which element does array[2] access?",
+          "answer": "The item at index 2 — the third item.",
+          "options": [
+            "The number of rows.",
+            "The item at index 2 — the third item.",
+            "A counter, condition and update."
+          ],
+          "feedback": "The item at index 2 — the third item."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Name the three parts of a C# for loop header used to visit every array element.",
+          "answer": "A counter, condition and update.",
+          "options": [
+            "A counter, condition and update.",
+            "The item at index 2 — the third item.",
+            "The number of rows."
+          ],
+          "feedback": "A counter, condition and update."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a C# 2D array organised as rows and columns, what does GetLength(0) return?",
+          "answer": "The number of rows.",
+          "options": [
+            "The item at index 2 — the third item.",
+            "A counter, condition and update.",
+            "The number of rows."
+          ],
+          "feedback": "The number of rows."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If a board has 3 rows and 3 columns, how many values does it contain?",
+          "answer": "9.",
+          "options": [
+            "A counter, condition and update.",
+            "9.",
+            "The item at index 2 — the third item."
+          ],
+          "feedback": "9."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Notice the repeated statements",
+          "text": "Look at the three explicit row-printing instructions. The operation is the same; only the row index changes: 0, 1, 2 ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Replace the rows with one loop",
+          "text": "The first loop repeats the same row-print statement. row changes automatically; each repetition chooses a different row."
+        },
+        {
+          "type": "paragraph",
+          "title": "Spot the second repetition",
+          "text": "Inside each row, we still refer to columns 0, 1 and 2. A second loop can move across the columns of one row."
+        },
+        {
+          "type": "paragraph",
+          "title": "Put one loop inside the other",
+          "text": "Outer loop = down the rows. Inner loop = across the columns. This is called nested iteration ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · From three statements to one loop, then two",
+          "text": "We will improve yesterday's program without changing what it displays. 1 | 2 | 3 4 | 5 | 6 7 | 8 | 9"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Start with the old solution",
+          "text": "Console.WriteLine(board[0,0] + \" | \" + board[0,1] + \" | \" + board[0,2]); Console.WriteLine(board[1,0] + \" | \" + board[1,1] + \" | \" + board[1,2]); Console.WriteLine(board[2,0] + \" | \" + board[2,1] + \" | \" + board[2,2]); It works. But it repeats the same pattern three times."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches '2D array'?",
+          "answer": "An array with two indexes.",
+          "options": [
+            "An array with two indexes.",
+            "A horizontal line of values.",
+            "A vertical line of values."
+          ],
+          "feedback": "2D array — An array with two indexes."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'row'?",
+          "answer": "A horizontal line of values.",
+          "options": [
+            "An array with two indexes.",
+            "A vertical line of values.",
+            "A horizontal line of values."
+          ],
+          "feedback": "row — A horizontal line of values."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'column'?",
+          "answer": "A vertical line of values.",
+          "options": [
+            "A horizontal line of values.",
+            "A vertical line of values.",
+            "An array with two indexes."
+          ],
+          "feedback": "column — A vertical line of values."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify the pattern",
+          "text": "The original problem stays visible as we improve the code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Write or predict",
+          "text": "Study the original three row-print statements. Which part remains identical and which part changes? Console.WriteLine(board[0,0] + \" | \" + board[0,1] + \" | \" + board[0,2]); Console.WriteLine(board[1,0] + \" | \" + board[1,1] + \" | \" + board[1,2]); Console.WriteLine(board[2,0] + \" | \" + board[2,1] + \" | \" + board[2,2]);"
+        },
+        {
+          "type": "paragraph",
+          "title": "What did we discover?",
+          "text": "The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Introduce a row loop",
+          "text": "The original problem stays visible as we improve the code."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A zero-based position.",
+          "answer": "index",
+          "options": [
+            "row",
+            "index",
+            "2D array"
+          ],
+          "feedback": "index — A zero-based position."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? One direction of an array.",
+          "answer": "dimension",
+          "options": [
+            "dimension",
+            "2D array",
+            "row"
+          ],
+          "feedback": "dimension — One direction of an array."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A loop inside another loop.",
+          "answer": "nested loop",
+          "options": [
+            "2D array",
+            "row",
+            "nested loop"
+          ],
+          "feedback": "nested loop — A loop inside another loop."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Returns the size of one array dimension.",
+          "answer": "GetLength()",
+          "options": [
+            "row",
+            "GetLength()",
+            "2D array"
+          ],
+          "feedback": "GetLength() — Returns the size of one array dimension."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: From three statements to one loop, then two We will improve yesterday's program without changing what it displays.",
+          "answer": "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
+          "options": [
+            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
+            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
+            "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2)."
+          ],
+          "feedback": "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change inside the loop."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Identify the pattern The original problem stays visible as we improve the code.",
+          "answer": "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
+          "options": [
+            "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
+            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
+            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
+          ],
+          "feedback": "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2)."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Introduce a row loop The original problem stays visible as we improve the code.",
+          "answer": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
+          "options": [
+            "STEP 2 · ROWS Replace the three row statements for (int row = 0; row < board.GetLength(0); row++) { Console.WriteLine(board[row,0] + \" | \" + board[row,1] + \" | \" + board[row,2]); } Keep the row output the same but allow row to change…",
+            "CHECK What did we discover? The code prints three values separated by pipes on every row. Only the row index changes (0 → 1 → 2).",
+            "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
+          ],
+          "feedback": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Introduce a row loop The original problem stays visible as we improve the code.",
+        "model": "CHECK What did we discover? for (int row = 0; row < board.GetLength(0); row++) Using the row count is better than assuming every board has three rows.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "row means: A horizontal line of values.",
+          "answer": "true",
+          "feedback": "row — A horizontal line of values."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "column means: One direction of an array.",
+          "answer": "false",
+          "feedback": "column — A vertical line of values."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "index means: A zero-based position.",
+          "answer": "true",
+          "feedback": "index — A zero-based position."
+        }
+      ]
+    }
+  ]
+}

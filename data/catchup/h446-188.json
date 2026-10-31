@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-188",
+  "course": "h446",
+  "title": "Binary search: trace and code",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Does linear search require ordered input?",
+          "answer": "No. It scans sequentially and works on unsorted arrays.",
+          "options": [
+            "6.",
+            "No. It scans sequentially and works on unsorted arrays.",
+            "They must already be sorted."
+          ],
+          "feedback": "No. It scans sequentially and works on unsorted arrays."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What must be true of the two input runs when merging them?",
+          "answer": "They must already be sorted.",
+          "options": [
+            "They must already be sorted.",
+            "No. It scans sequentially and works on unsorted arrays.",
+            "6."
+          ],
+          "feedback": "They must already be sorted."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For seven elements, what is the last zero-based index?",
+          "answer": "6.",
+          "options": [
+            "No. It scans sequentially and works on unsorted arrays.",
+            "They must already be sorted.",
+            "6."
+          ],
+          "feedback": "6."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Find the integer midpoint of low=2 and high=8.",
+          "answer": "5: 2 + (8-2)/2 = 5.",
+          "options": [
+            "They must already be sorted.",
+            "5: 2 + (8-2)/2 = 5.",
+            "No. It scans sequentially and works on unsorted arrays."
+          ],
+          "feedback": "5: 2 + (8-2)/2 = 5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Sort before searching",
+          "text": "Binary search relies on a sorted array; otherwise discarding half may lose the target."
+        },
+        {
+          "type": "paragraph",
+          "title": "Inspect the middle",
+          "text": "Compare target to the midpoint and keep only the half that could contain it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stop correctly",
+          "text": "Return an index when found; return -1 if low becomes greater than high."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Use inclusive low and high indexes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model solution",
+          "text": "mid 3 → 15, so low=4; mid 5 → 23, so high=4; mid 4 → 19. Return 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Input assumption: the array is ordered.",
+          "options": [
+            "Input assumption: the array is ordered.",
+            "Lower inclusive search index.",
+            "Upper inclusive search index."
+          ],
+          "feedback": "precondition — Input assumption: the array is ordered."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'low'?",
+          "answer": "Lower inclusive search index.",
+          "options": [
+            "Input assumption: the array is ordered.",
+            "Upper inclusive search index.",
+            "Lower inclusive search index."
+          ],
+          "feedback": "low — Lower inclusive search index."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'high'?",
+          "answer": "Upper inclusive search index.",
+          "options": [
+            "Lower inclusive search index.",
+            "Upper inclusive search index.",
+            "Input assumption: the array is ordered."
+          ],
+          "feedback": "high — Upper inclusive search index."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Which midpoint is checked first?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model solution",
+          "text": "mid 4=18, then mid 1=4, then mid 2=9. Return index 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Index of the middle candidate.",
+          "answer": "mid",
+          "options": [
+            "low",
+            "mid",
+            "precondition"
+          ],
+          "feedback": "mid — Index of the middle candidate."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Search repeatedly halves the candidate set.",
+          "answer": "O(log n)",
+          "options": [
+            "O(log n)",
+            "precondition",
+            "low"
+          ],
+          "feedback": "O(log n) — Search repeatedly halves the candidate set."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input assumption: the array is ordered.",
+          "answer": "precondition",
+          "options": [
+            "low",
+            "high",
+            "precondition"
+          ],
+          "feedback": "precondition — Input assumption: the array is ordered."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Lower inclusive search index.",
+          "answer": "low",
+          "options": [
+            "high",
+            "low",
+            "precondition"
+          ],
+          "feedback": "low — Lower inclusive search index."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Search for 8 in [2,5,8,11,14]. List midpoint indexes.",
+          "answer": "mid=2, match at index 2 on the first comparison.",
+          "options": [
+            "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop.",
+            "mid=2, match at index 2 on the first comparison.",
+            "mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1."
+          ],
+          "feedback": "mid=2, match at index 2 on the first comparison."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Search for 13 in [2,4,6,8,10,12,14]. List indexes checked and final return.",
+          "answer": "mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1.",
+          "options": [
+            "mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1.",
+            "mid=2, match at index 2 on the first comparison.",
+            "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop."
+          ],
+          "feedback": "mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain why setting low = mid instead of mid + 1 can cause failure.",
+          "answer": "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop.",
+          "options": [
+            "mid=2, match at index 2 on the first comparison.",
+            "mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1.",
+            "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop."
+          ],
+          "feedback": "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain why setting low = mid instead of mid + 1 can cause failure.",
+        "model": "With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "low means: Lower inclusive search index.",
+          "answer": "true",
+          "feedback": "low — Lower inclusive search index."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "high means: Search repeatedly halves the candidate set.",
+          "answer": "false",
+          "feedback": "high — Upper inclusive search index."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "mid means: Index of the middle candidate.",
+          "answer": "true",
+          "feedback": "mid — Index of the middle candidate."
+        }
+      ]
+    }
+  ]
+}

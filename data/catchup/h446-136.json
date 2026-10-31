@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-136",
+  "course": "h446",
+  "title": "Lesson 136 · Normalisation: First and Second Normal Form",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What table resolves a many-to-many database relationship?",
+          "answer": "A junction/associative table.",
+          "options": [
+            "A key made from two or more attributes together.",
+            "On a match or after examining all items.",
+            "A junction/associative table."
+          ],
+          "feedback": "A junction/associative table."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a composite key?",
+          "answer": "A key made from two or more attributes together.",
+          "options": [
+            "On a match or after examining all items.",
+            "A key made from two or more attributes together.",
+            "A junction/associative table."
+          ],
+          "feedback": "A key made from two or more attributes together."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does a linear search stop?",
+          "answer": "On a match or after examining all items.",
+          "options": [
+            "On a match or after examining all items.",
+            "A junction/associative table.",
+            "A key made from two or more attributes together."
+          ],
+          "feedback": "On a match or after examining all items."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In Big O notation, what is binary search worst-case complexity?",
+          "answer": "O(log n) for sorted random-access data.",
+          "options": [
+            "A junction/associative table.",
+            "A key made from two or more attributes together.",
+            "O(log n) for sorted random-access data."
+          ],
+          "feedback": "O(log n) for sorted random-access data."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Make fields atomic",
+          "text": "Replace 'Maths, Art' in one cell with separate enrolment records."
+        },
+        {
+          "type": "paragraph",
+          "title": "Identify keys",
+          "text": "Check whether key is composite, such as StudentID+CourseID."
+        },
+        {
+          "type": "paragraph",
+          "title": "Remove partial dependencies",
+          "text": "Move StudentName to Student and CourseTitle to Course."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · StudentID+CourseID key",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Names partly depend on key",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Split Student and Course",
+          "text": "StudentName depends only on StudentID; CourseName only on CourseID. Split into Student(StudentID PK,StudentName), Course(CourseID PK,CourseName), Enrolment(StudentID FK,CourseID FK,Grade) with composite PK."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches '1NF'?",
+          "answer": "Attributes hold atomic values and rows can be uniquely identified.",
+          "options": [
+            "Non-key field depends on a subset of a composite key.",
+            "Attributes hold atomic values and rows can be uniquely identified.",
+            "In 1NF, no non-key attribute depends on only part of a composite candidate key."
+          ],
+          "feedback": "1NF — Attributes hold atomic values and rows can be uniquely identified."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches '2NF'?",
+          "answer": "In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+          "options": [
+            "In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+            "Attributes hold atomic values and rows can be uniquely identified.",
+            "Non-key field depends on a subset of a composite key."
+          ],
+          "feedback": "2NF — In 1NF, no non-key attribute depends on only part of a composite candidate key."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'partial dependency'?",
+          "answer": "Non-key field depends on a subset of a composite key.",
+          "options": [
+            "Attributes hold atomic values and rows can be uniquely identified.",
+            "In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+            "Non-key field depends on a subset of a composite key."
+          ],
+          "feedback": "partial dependency — Non-key field depends on a subset of a composite key."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Composite OrderID+ProductID",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "ProductName depends on ProductID",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Move name to Product",
+          "text": "ProductName depends on ProductID alone, not whole OrderID+ProductID key. Create Product(ProductID PK,ProductName) and retain OrderLine(OrderID,ProductID,Qty)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Insertion, update or deletion causes undesirable effects.",
+          "answer": "anomaly",
+          "options": [
+            "1NF",
+            "2NF",
+            "anomaly"
+          ],
+          "feedback": "anomaly — Insertion, update or deletion causes undesirable effects."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Attributes hold atomic values and rows can be uniquely identified.",
+          "answer": "1NF",
+          "options": [
+            "partial dependency",
+            "1NF",
+            "2NF"
+          ],
+          "feedback": "1NF — Attributes hold atomic values and rows can be uniquely identified."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+          "answer": "2NF",
+          "options": [
+            "2NF",
+            "1NF",
+            "partial dependency"
+          ],
+          "feedback": "2NF — In 1NF, no non-key attribute depends on only part of a composite candidate key."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Non-key field depends on a subset of a composite key.",
+          "answer": "partial dependency",
+          "options": [
+            "1NF",
+            "2NF",
+            "partial dependency"
+          ],
+          "feedback": "partial dependency — Non-key field depends on a subset of a composite key."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain atomicity in 1NF and correct a cell containing 'Red, Blue, Green'. [6]",
+          "answer": "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
+          "options": [
+            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain partial dependency using OrderID+ProductID key and ProductDescription. [6]",
+          "answer": "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+          "options": [
+            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2].",
+            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Convert StudentID,ClubID,StudentName,ClubName,JoinDate with composite key to 2NF. [8]",
+          "answer": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+          "options": [
+            "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+            "/ WORKED ANSWER Atomic field requirement [2], problem identified [2], separate rows or related table [2].",
+            "/ WORKED ANSWER Composite key identified [2], description depends on ProductID only [2], violates 2NF and should move [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Convert StudentID,ClubID,StudentName,ClubName,JoinDate with composite key to 2NF. [8]",
+        "model": "/ WORKED ANSWER Student table [2], Club table [2], Membership table with composite key/date [2], correct FK/dependency reasoning [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "2NF means: In 1NF, no non-key attribute depends on only part of a composite candidate key.",
+          "answer": "true",
+          "feedback": "2NF — In 1NF, no non-key attribute depends on only part of a composite candidate key."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "partial dependency means: Attributes hold atomic values and rows can be uniquely identified.",
+          "answer": "false",
+          "feedback": "partial dependency — Non-key field depends on a subset of a composite key."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "anomaly means: Insertion, update or deletion causes undesirable effects.",
+          "answer": "true",
+          "feedback": "anomaly — Insertion, update or deletion causes undesirable effects."
+        }
+      ]
+    }
+  ]
+}

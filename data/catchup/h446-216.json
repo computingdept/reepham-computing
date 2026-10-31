@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-216",
+  "course": "h446",
+  "title": "Quicksort: pivot and partition",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In bubble sort, which value reaches its final position at the end of pass one?",
+          "answer": "The largest value in the unsorted section.",
+          "options": [
+            "The largest value in the unsorted section.",
+            "A condition that stops recursive calls.",
+            "4; indexes begin at 0."
+          ],
+          "feedback": "The largest value in the unsorted section."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a base case?",
+          "answer": "A condition that stops recursive calls.",
+          "options": [
+            "The largest value in the unsorted section.",
+            "4; indexes begin at 0.",
+            "A condition that stops recursive calls."
+          ],
+          "feedback": "A condition that stops recursive calls."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which element is a[3] in [6,2,9,4,5]?",
+          "answer": "4; indexes begin at 0.",
+          "options": [
+            "A condition that stops recursive calls.",
+            "4; indexes begin at 0.",
+            "The largest value in the unsorted section."
+          ],
+          "feedback": "4; indexes begin at 0."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the result of 4 <= 6 and why?",
+          "answer": "True, because 4 is less than or equal to 6.",
+          "options": [
+            "True, because 4 is less than or equal to 6.",
+            "The largest value in the unsorted section.",
+            "A condition that stops recursive calls."
+          ],
+          "feedback": "True, because 4 is less than or equal to 6."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Pick a pivot",
+          "text": "Use the rightmost element, 6. A left boundary i tracks where the next small value belongs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Scan and move",
+          "text": "Only values less than or equal to 6 move left. We move 2, then 4, without sorting those two values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Place the pivot",
+          "text": "Swap 6 into index 2; elements to the left are <=6, and those to the right are >6. Each side still needs sorting."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the next state",
+          "text": "6 is larger than 5; 3 is smaller and swaps into the left boundary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reveal and explain",
+          "text": "8 is larger; 2 swaps to index 1, giving [3,2,8,6,5]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reveal and explain",
+          "text": "Swap pivot 5 with position 2: [3,2,5,6,8]. The two sides are not yet necessarily sorted."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'pivot'?",
+          "answer": "Element selected to split a quicksort partition.",
+          "options": [
+            "Rearrange values so smaller/equal values are on one side of the pivot.",
+            "A partition approach scanning left to right and placing the pivot last.",
+            "Element selected to split a quicksort partition."
+          ],
+          "feedback": "pivot — Element selected to split a quicksort partition."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'partition'?",
+          "answer": "Rearrange values so smaller/equal values are on one side of the pivot.",
+          "options": [
+            "A partition approach scanning left to right and placing the pivot last.",
+            "Rearrange values so smaller/equal values are on one side of the pivot.",
+            "Element selected to split a quicksort partition."
+          ],
+          "feedback": "partition — Rearrange values so smaller/equal values are on one side of the pivot."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Lomuto'?",
+          "answer": "A partition approach scanning left to right and placing the pivot last.",
+          "options": [
+            "A partition approach scanning left to right and placing the pivot last.",
+            "Element selected to split a quicksort partition.",
+            "Rearrange values so smaller/equal values are on one side of the pivot."
+          ],
+          "feedback": "Lomuto — A partition approach scanning left to right and placing the pivot last."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next state",
+          "text": "Compare 8 and 1 with pivot 6. Move 1 into index 0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "7 is too large, then 3 moves to index 1: [1,3,7,8,6]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "Put pivot at index 2: [1,3,6,8,7]. The right side [8,7] still needs sorting."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Zero-based position within the array.",
+          "answer": "index",
+          "options": [
+            "index",
+            "pivot",
+            "partition"
+          ],
+          "feedback": "index — Zero-based position within the array."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Solve smaller subproblems and combine results.",
+          "answer": "divide and conquer",
+          "options": [
+            "pivot",
+            "partition",
+            "divide and conquer"
+          ],
+          "feedback": "divide and conquer — Solve smaller subproblems and combine results."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Element selected to split a quicksort partition.",
+          "answer": "pivot",
+          "options": [
+            "Lomuto",
+            "pivot",
+            "partition"
+          ],
+          "feedback": "pivot — Element selected to split a quicksort partition."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Rearrange values so smaller/equal values are on one side of the pivot.",
+          "answer": "partition",
+          "options": [
+            "partition",
+            "pivot",
+            "Lomuto"
+          ],
+          "feedback": "partition — Rearrange values so smaller/equal values are on one side of the pivot."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 Partition [4,1,3] using the final value as pivot, with Lomuto partition. Give the result and pivot index.",
+          "answer": "[3] Pivot=3 [1]; move 1 left [1]; result [1,3,4] with pivot index 1 [1].",
+          "options": [
+            "[3] Pivot=3 [1]; move 1 left [1]; result [1,3,4] with pivot index 1 [1].",
+            "[5] Move 2: [2,9,5,1,6] [1]; move 5: [2,5,9,1,6] [1]; move 1: [2,5,1,9,6] [1]; pivot swap: [2,5,1,6,9] [1]; pivot index 3 [1].",
+            "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can…"
+          ],
+          "feedback": "[3] Pivot=3 [1]; move 1 left [1]; result [1,3,4] with pivot index 1 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 5 marks · QUESTION 2 OF 3 Partition [9,2,5,1,6] using the final pivot. Show the array after moving each qualifying value and after placing the pivot.",
+          "answer": "[5] Move 2: [2,9,5,1,6] [1]; move 5: [2,5,9,1,6] [1]; move 1: [2,5,1,9,6] [1]; pivot swap: [2,5,1,6,9] [1]; pivot index 3 [1].",
+          "options": [
+            "[3] Pivot=3 [1]; move 1 left [1]; result [1,3,4] with pivot index 1 [1].",
+            "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can…",
+            "[5] Move 2: [2,9,5,1,6] [1]; move 5: [2,5,9,1,6] [1]; move 1: [2,5,1,9,6] [1]; pivot swap: [2,5,1,6,9] [1]; pivot index 3 [1]."
+          ],
+          "feedback": "[5] Move 2: [2,9,5,1,6] [1]; move 5: [2,5,9,1,6] [1]; move 1: [2,5,1,9,6] [1]; pivot swap: [2,5,1,6,9] [1]; pivot index 3 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 4 marks · QUESTION 3 OF 3 Explain why choosing the last element as pivot can lead to O(n²) work on already sorted data, and suggest an improvement.",
+          "answer": "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can…",
+          "options": [
+            "[5] Move 2: [2,9,5,1,6] [1]; move 5: [2,5,9,1,6] [1]; move 1: [2,5,1,9,6] [1]; pivot swap: [2,5,1,6,9] [1]; pivot index 3 [1].",
+            "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can…",
+            "[3] Pivot=3 [1]; move 1 left [1]; result [1,3,4] with pivot index 1 [1]."
+          ],
+          "feedback": "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can reduce repeated poor pivots in practice [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 4 marks · QUESTION 3 OF 3 Explain why choosing the last element as pivot can lead to O(n²) work on already sorted data, and suggest an improvement.",
+        "model": "[4] An already sorted input can place each pivot at one extreme [1]; partitions become n−1 and 0 elements [1]; recursion depth can become O(n), while total comparisons become O(n²) [1]; randomised/median-of-three pivot selection can reduce repeated poor pivots in practice [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "partition means: Rearrange values so smaller/equal values are on one side of the pivot.",
+          "answer": "true",
+          "feedback": "partition — Rearrange values so smaller/equal values are on one side of the pivot."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Lomuto means: Solve smaller subproblems and combine results.",
+          "answer": "false",
+          "feedback": "Lomuto — A partition approach scanning left to right and placing the pivot last."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "index means: Zero-based position within the array.",
+          "answer": "true",
+          "feedback": "index — Zero-based position within the array."
+        }
+      ]
+    }
+  ]
+}

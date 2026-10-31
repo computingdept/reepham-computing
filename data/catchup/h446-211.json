@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-211",
+  "course": "h446",
+  "title": "Synoptic retrieval: data structures",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A three-element array is accessed at index 3. What happens?",
+          "answer": "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
+          "options": [
+            "O(n), as it may inspect every element.",
+            "C, because a stack is LIFO.",
+            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
+          ],
+          "feedback": "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the worst-case Big O of a sequential search?",
+          "answer": "O(n), as it may inspect every element.",
+          "options": [
+            "C, because a stack is LIFO.",
+            "O(n), as it may inspect every element.",
+            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
+          ],
+          "feedback": "O(n), as it may inspect every element."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Push A, B, C. Which pops first?",
+          "answer": "C, because a stack is LIFO.",
+          "options": [
+            "C, because a stack is LIFO.",
+            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
+            "O(n), as it may inspect every element."
+          ],
+          "feedback": "C, because a stack is LIFO."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In five buckets, h(k)=k MOD 5. Where does 12 start?",
+          "answer": "Bucket 2.",
+          "options": [
+            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
+            "O(n), as it may inspect every element.",
+            "Bucket 2."
+          ],
+          "feedback": "Bucket 2."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Retrieve operations",
+          "text": "A stack pops its newest item; a queue dequeues its oldest item."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace changing state",
+          "text": "After Push 3, Push 6, Pop, Push 9, the stack is [3,9]. After Enqueue A,B then Dequeue, the queue is [B]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply the BST rule",
+          "text": "Insert 40 first, 20 left, 60 right, then 30 as the right child of 20."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Start with [2,7]. The top of the stack is 7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the method",
+          "text": "Pop removes 7, leaving [2]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the method",
+          "text": "Push 5 gives [2,5]; the top is now 5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'LIFO'?",
+          "answer": "Last In, First Out.",
+          "options": [
+            "Reference to the first node in a linked list.",
+            "Last In, First Out.",
+            "First In, First Out."
+          ],
+          "feedback": "LIFO — Last In, First Out."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'FIFO'?",
+          "answer": "First In, First Out.",
+          "options": [
+            "First In, First Out.",
+            "Last In, First Out.",
+            "Reference to the first node in a linked list."
+          ],
+          "feedback": "FIFO — First In, First Out."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'head'?",
+          "answer": "Reference to the first node in a linked list.",
+          "options": [
+            "Last In, First Out.",
+            "First In, First Out.",
+            "Reference to the first node in a linked list."
+          ],
+          "feedback": "head — Reference to the first node in a linked list."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "After the two enqueues, the queue is [X,Y]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the method",
+          "text": "Dequeue removes X, leaving [Y]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the method",
+          "text": "Enqueue Z produces [Y,Z]. The next dequeue removes Y."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Binary search tree ordered by key comparisons.",
+          "answer": "BST",
+          "options": [
+            "LIFO",
+            "FIFO",
+            "BST"
+          ],
+          "feedback": "BST — Binary search tree ordered by key comparisons."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two hashed keys initially share a bucket.",
+          "answer": "collision",
+          "options": [
+            "FIFO",
+            "collision",
+            "LIFO"
+          ],
+          "feedback": "collision — Two hashed keys initially share a bucket."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Last In, First Out.",
+          "answer": "LIFO",
+          "options": [
+            "LIFO",
+            "FIFO",
+            "head"
+          ],
+          "feedback": "LIFO — Last In, First Out."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? First In, First Out.",
+          "answer": "FIFO",
+          "options": [
+            "LIFO",
+            "head",
+            "FIFO"
+          ],
+          "feedback": "FIFO — First In, First Out."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 A stack contains [4,9] bottom-to-top. Push 2, Pop, Pop. State both removed values and remaining stack.",
+          "answer": "[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1].",
+          "options": [
+            "[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1].",
+            "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].",
+            "[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1]."
+          ],
+          "feedback": "[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 4 marks · QUESTION 2 OF 3 A queue receives 5,8,3. It dequeues once then enqueues 2. Give the queue and explain why its next dequeue removes 8.",
+          "answer": "[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1].",
+          "options": [
+            "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].",
+            "[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1].",
+            "[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1]."
+          ],
+          "feedback": "[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Challenge · 6 marks · QUESTION 3 OF 3 Insert 40,20,60,10,30,25 into a BST. Give the parent of 25, state whether it is a left/right child, and explain what happens to worst-case height when inputs arrive sorted.",
+          "answer": "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].",
+          "options": [
+            "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].",
+            "[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1].",
+            "[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1]."
+          ],
+          "feedback": "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Challenge · 6 marks · QUESTION 3 OF 3 Insert 40,20,60,10,30,25 into a BST. Give the parent of 25, state whether it is a left/right child, and explain what happens to worst-case height when inputs arrive sorted.",
+        "model": "[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "FIFO means: First In, First Out.",
+          "answer": "true",
+          "feedback": "FIFO — First In, First Out."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "head means: Two hashed keys initially share a bucket.",
+          "answer": "false",
+          "feedback": "head — Reference to the first node in a linked list."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "BST means: Binary search tree ordered by key comparisons.",
+          "answer": "true",
+          "feedback": "BST — Binary search tree ordered by key comparisons."
+        }
+      ]
+    }
+  ]
+}

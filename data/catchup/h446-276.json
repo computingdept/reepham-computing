@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-276",
+  "course": "h446",
+  "title": "Entity relationship diagrams",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Where is a FK stored in a one-to-many relationship?",
+          "answer": "On the many side.",
+          "options": [
+            "On the many side.",
+            "Primary key.",
+            "Bridge/junction entity resolving many-to-many."
+          ],
+          "feedback": "On the many side."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does PK stand for?",
+          "answer": "Primary key.",
+          "options": [
+            "On the many side.",
+            "Bridge/junction entity resolving many-to-many.",
+            "Primary key."
+          ],
+          "feedback": "Primary key."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an associative entity?",
+          "answer": "Bridge/junction entity resolving many-to-many.",
+          "options": [
+            "Primary key.",
+            "Bridge/junction entity resolving many-to-many.",
+            "On the many side."
+          ],
+          "feedback": "Bridge/junction entity resolving many-to-many."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A BST root20 has left10 and right30; insert 25. Describe comparisons and placement.",
+          "answer": "25>20 right to30; 25<30 left child of30.",
+          "options": [
+            "25>20 right to30; 25<30 left child of30.",
+            "On the many side.",
+            "Primary key."
+          ],
+          "feedback": "25>20 right to30; 25<30 left child of30."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "ERDs model entities and relationship cardinalities before implementing tables."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "One-to-many relationships are typically represented with a foreign key on the many side."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Many-to-many relationships require an associative/junction table when translated into a relational schema, often with two foreign keys."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Each Book row stores one AuthorID"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "several books can refer to the same author."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'ERD'?",
+          "answer": "Entity relationship diagram.",
+          "options": [
+            "Number of related instances.",
+            "Table linking M:N records.",
+            "Entity relationship diagram."
+          ],
+          "feedback": "ERD — Entity relationship diagram."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'cardinality'?",
+          "answer": "Number of related instances.",
+          "options": [
+            "Table linking M:N records.",
+            "Number of related instances.",
+            "Entity relationship diagram."
+          ],
+          "feedback": "cardinality — Number of related instances."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'junction table'?",
+          "answer": "Table linking M:N records.",
+          "options": [
+            "Table linking M:N records.",
+            "Entity relationship diagram.",
+            "Number of related instances."
+          ],
+          "feedback": "junction table — Table linking M:N records."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Create Enrolment junction table"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model answer",
+          "text": "each enrolment references exactly one pupil and course."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? One entity instance can have several related rows.",
+          "answer": "one-to-many",
+          "options": [
+            "one-to-many",
+            "ERD",
+            "cardinality"
+          ],
+          "feedback": "one-to-many — One entity instance can have several related rows."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Entity relationship diagram.",
+          "answer": "ERD",
+          "options": [
+            "cardinality",
+            "junction table",
+            "ERD"
+          ],
+          "feedback": "ERD — Entity relationship diagram."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Number of related instances.",
+          "answer": "cardinality",
+          "options": [
+            "junction table",
+            "cardinality",
+            "ERD"
+          ],
+          "feedback": "cardinality — Number of related instances."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Table linking M:N records.",
+          "answer": "junction table",
+          "options": [
+            "junction table",
+            "ERD",
+            "cardinality"
+          ],
+          "feedback": "junction table — Table linking M:N records."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 State meanings of 1:1,1:M and M:N cardinalities. [3]",
+          "answer": "Exactly one to one [1], one related to many [1], many to many [1].",
+          "options": [
+            "Exactly one to one [1], one related to many [1], many to many [1].",
+            "Customer 1→many Order [2]; Customer.CustomerID PK [1]; Order.OrderID PK [1]; Order.CustomerID FK [2].",
+            "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1]."
+          ],
+          "feedback": "Exactly one to one [1], one related to many [1], many to many [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Draw/describe an ERD for Customer and Order with one customer placing many orders. Give foreign key. [6]",
+          "answer": "Customer 1→many Order [2]; Customer.CustomerID PK [1]; Order.OrderID PK [1]; Order.CustomerID FK [2].",
+          "options": [
+            "Exactly one to one [1], one related to many [1], many to many [1].",
+            "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1].",
+            "Customer 1→many Order [2]; Customer.CustomerID PK [1]; Order.OrderID PK [1]; Order.CustomerID FK [2]."
+          ],
+          "feedback": "Customer 1→many Order [2]; Customer.CustomerID PK [1]; Order.OrderID PK [1]; Order.CustomerID FK [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Resolve Student many-to-many Course into relational tables; describe keys and integrity. [6]",
+          "answer": "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1].",
+          "options": [
+            "Customer 1→many Order [2]; Customer.CustomerID PK [1]; Order.OrderID PK [1]; Order.CustomerID FK [2].",
+            "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1].",
+            "Exactly one to one [1], one related to many [1], many to many [1]."
+          ],
+          "feedback": "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Resolve Student many-to-many Course into relational tables; describe keys and integrity. [6]",
+        "model": "Student(PupilID PK) [1], Course(CourseID PK) [1], Enrolment junction [1] with PupilID and CourseID FKs [2], referential integrity prevents orphan enrolments [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "cardinality means: Number of related instances.",
+          "answer": "true",
+          "feedback": "cardinality — Number of related instances."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "junction table means: Entity relationship diagram.",
+          "answer": "false",
+          "feedback": "junction table — Table linking M:N records."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "one-to-many means: One entity instance can have several related rows.",
+          "answer": "true",
+          "feedback": "one-to-many — One entity instance can have several related rows."
+        }
+      ]
+    }
+  ]
+}

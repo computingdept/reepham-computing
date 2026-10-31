@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-186",
+  "course": "h446",
+  "title": "Merge sort: trace and implement",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In insertion sort, what happens to values greater than the key in the sorted prefix?",
+          "answer": "They shift one position right to make space.",
+          "options": [
+            "They shift one position right to make space.",
+            "[1,3,4].",
+            "4."
+          ],
+          "feedback": "They shift one position right to make space."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: After one ascending bubble-sort pass on [4,1,3], what remains?",
+          "answer": "[1,3,4].",
+          "options": [
+            "They shift one position right to make space.",
+            "4.",
+            "[1,3,4]."
+          ],
+          "feedback": "[1,3,4]."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the length of int[] a={8,5,2,1}?",
+          "answer": "4.",
+          "options": [
+            "[1,3,4].",
+            "4.",
+            "They shift one position right to make space."
+          ],
+          "feedback": "4."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is swapping not needed to place key 6 into already sorted [2,4,6,8]?",
+          "answer": "The input is already correctly ordered; comparisons find no element greater than the key.",
+          "options": [
+            "The input is already correctly ordered; comparisons find no element greater than the key.",
+            "They shift one position right to make space.",
+            "[1,3,4]."
+          ],
+          "feedback": "The input is already correctly ordered; comparisons find no element greater than the key."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with ordered runs",
+          "text": "At each merge stage, both input runs must already be sorted."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare front values",
+          "text": "Append the smaller current value, then advance that run's pointer."
+        },
+        {
+          "type": "paragraph",
+          "title": "Copy the remainder",
+          "text": "When a run finishes, copy the remainder. This code is the merge helper: top-down merge sort first recursively splits to length 0/1; bottom-up merge sort instead grows the run width."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Split until each call is trivial",
+          "text": "Split [8,3,5,2] into [8,3] and [5,2], then into [8],[3],[5],[2]. Each length-one call returns unchanged; an empty input also returns immediately."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Return through the merges",
+          "text": "Merge [8] with [3]→[3,8]; [5] with [2]→[2,5]. Merge fronts 2,3,5, then copy8: [2,3,5,8]. Each helper input is already sorted. The outline uses end-exclusive copyRange and the merge loop above."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'run'?",
+          "answer": "A consecutive sorted block.",
+          "options": [
+            "Combine sorted sequences while preserving order.",
+            "Position of the next candidate in a run.",
+            "A consecutive sorted block."
+          ],
+          "feedback": "run — A consecutive sorted block."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'merge'?",
+          "answer": "Combine sorted sequences while preserving order.",
+          "options": [
+            "Position of the next candidate in a run.",
+            "Combine sorted sequences while preserving order.",
+            "A consecutive sorted block."
+          ],
+          "feedback": "merge — Combine sorted sequences while preserving order."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pointer'?",
+          "answer": "Position of the next candidate in a run.",
+          "options": [
+            "Position of the next candidate in a run.",
+            "A consecutive sorted block.",
+            "Combine sorted sequences while preserving order."
+          ],
+          "feedback": "pointer — Position of the next candidate in a run."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the call and return order",
+          "text": "Pseudocode outline: MergeSort(a): if a.length <= 1: return a mid = a.length DIV 2 L = MergeSort(copyRange(a,0,mid)) R = MergeSort(copyRange(a,mid,a.length)) return MergeSorted(L,R)"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the complete trace",
+          "text": "Singletons return; merge [1,6] and [2,4]; final [1,2,4,6]. copyRange copies the stated slice, excluding stop; MergeSorted compares fronts and copies the remaining tail. These are defined helpers, not built-in OCR commands."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Build sorted runs iteratively from small to large.",
+          "answer": "bottom-up",
+          "options": [
+            "bottom-up",
+            "run",
+            "merge"
+          ],
+          "feedback": "bottom-up — Build sorted runs iteratively from small to large."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Common time bound for comparison-based merge sort.",
+          "answer": "O(n log n)",
+          "options": [
+            "run",
+            "merge",
+            "O(n log n)"
+          ],
+          "feedback": "O(n log n) — Common time bound for comparison-based merge sort."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A consecutive sorted block.",
+          "answer": "run",
+          "options": [
+            "pointer",
+            "run",
+            "merge"
+          ],
+          "feedback": "run — A consecutive sorted block."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combine sorted sequences while preserving order.",
+          "answer": "merge",
+          "options": [
+            "merge",
+            "run",
+            "pointer"
+          ],
+          "feedback": "merge — Combine sorted sequences while preserving order."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Merge [2,6] with [1,5].",
+          "answer": "[1,2,5,6].",
+          "options": [
+            "[1,2,5,6].",
+            "[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4].",
+            "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation."
+          ],
+          "feedback": "[1,2,5,6]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Recursively merge-sort [4,1,3,2]. Show both split levels, the base case and every merge on return.",
+          "answer": "[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4].",
+          "options": [
+            "[1,2,5,6].",
+            "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation.",
+            "[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4]."
+          ],
+          "feedback": "[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Explain the O(n log n) time complexity of merge sort.",
+          "answer": "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation.",
+          "options": [
+            "[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4].",
+            "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation.",
+            "[1,2,5,6]."
+          ],
+          "feedback": "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Explain the O(n log n) time complexity of merge sort.",
+        "model": "There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "merge means: Combine sorted sequences while preserving order.",
+          "answer": "true",
+          "feedback": "merge — Combine sorted sequences while preserving order."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pointer means: Common time bound for comparison-based merge sort.",
+          "answer": "false",
+          "feedback": "pointer — Position of the next candidate in a run."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "bottom-up means: Build sorted runs iteratively from small to large.",
+          "answer": "true",
+          "feedback": "bottom-up — Build sorted runs iteratively from small to large."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-252",
+  "course": "h446",
+  "title": "Fetch–decode–execute and buses",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which register holds the address accessed during a fetch?",
+          "answer": "MAR.",
+          "options": [
+            "MAR.",
+            "The current instruction that is being decoded or executed.",
+            "Addresses identifying the memory or device location."
+          ],
+          "feedback": "MAR."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the CIR hold?",
+          "answer": "The current instruction that is being decoded or executed.",
+          "options": [
+            "MAR.",
+            "Addresses identifying the memory or device location.",
+            "The current instruction that is being decoded or executed."
+          ],
+          "feedback": "The current instruction that is being decoded or executed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What kind of information travels along the address bus?",
+          "answer": "Addresses identifying the memory or device location.",
+          "options": [
+            "The current instruction that is being decoded or executed.",
+            "Addresses identifying the memory or device location.",
+            "MAR."
+          ],
+          "feedback": "Addresses identifying the memory or device location."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A rising-edge D flip-flop has Q=0. D changes to 1 between clock edges; the next rising edge occurs while D=1. State Q before and after that edge, and explain why.",
+          "answer": "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes.",
+          "options": [
+            "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes.",
+            "MAR.",
+            "The current instruction that is being decoded or executed."
+          ],
+          "feedback": "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Fetch uses the buses",
+          "text": "The address bus carries the address selected by MAR; memory returns instruction data on the data bus; control signals coordinate the transfer."
+        },
+        {
+          "type": "paragraph",
+          "title": "Decode interprets instruction",
+          "text": "The control unit examines CIR to decide which operation and operands are involved."
+        },
+        {
+          "type": "paragraph",
+          "title": "Execute changes state",
+          "text": "An instruction may update ACC or memory, or alter PC for a jump. Interrupt handling is coordinated at appropriate points and can temporarily redirect execution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "MAR identifies location 40; the address bus carries that location to memory, accompanied by a read control signal."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the answer",
+          "text": "The data bus transfers instruction content to MDR, then CIR; sequential PC becomes 41."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'fetch'?",
+          "answer": "Retrieve next instruction from memory.",
+          "options": [
+            "Interpret opcode and operands.",
+            "Perform the operation.",
+            "Retrieve next instruction from memory."
+          ],
+          "feedback": "fetch — Retrieve next instruction from memory."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'decode'?",
+          "answer": "Interpret opcode and operands.",
+          "options": [
+            "Perform the operation.",
+            "Interpret opcode and operands.",
+            "Retrieve next instruction from memory."
+          ],
+          "feedback": "decode — Interpret opcode and operands."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'execute'?",
+          "answer": "Perform the operation.",
+          "options": [
+            "Perform the operation.",
+            "Retrieve next instruction from memory.",
+            "Interpret opcode and operands."
+          ],
+          "feedback": "execute — Perform the operation."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The initial fetch advances PC from 81 to 82, as in a sequential instruction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the answer",
+          "text": "Executing the unconditional branch overwrites PC with target address 120. The next fetch occurs there, not at 82."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Transfers memory/device addresses.",
+          "answer": "address bus",
+          "options": [
+            "address bus",
+            "fetch",
+            "decode"
+          ],
+          "feedback": "address bus — Transfers memory/device addresses."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Transfers data and instructions.",
+          "answer": "data bus",
+          "options": [
+            "fetch",
+            "decode",
+            "data bus"
+          ],
+          "feedback": "data bus — Transfers data and instructions."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Transfers signals coordinating reads and writes.",
+          "answer": "control bus",
+          "options": [
+            "decode",
+            "control bus",
+            "fetch"
+          ],
+          "feedback": "control bus — Transfers signals coordinating reads and writes."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Retrieve next instruction from memory.",
+          "answer": "fetch",
+          "options": [
+            "fetch",
+            "decode",
+            "execute"
+          ],
+          "feedback": "fetch — Retrieve next instruction from memory."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 6 marks · QUESTION 1 OF 3 For each bus—address, data and control—state its main function and give one example of the information transported.",
+          "answer": "[6] Address bus identifies memory/device location [2]; data bus transports instruction/data contents [2]; control bus carries read/write/timing signals [2].",
+          "options": [
+            "[6] Address bus identifies memory/device location [2]; data bus transports instruction/data contents [2]; control bus carries read/write/timing signals [2].",
+            "[6] PC64→MAR64 [1], instruction memory→MDR [1], MDR→CIR [1], sequential PC→65 [1], decode JMP100 [1], execute branch sets PC=100 [1].",
+            "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1]."
+          ],
+          "feedback": "[6] Address bus identifies memory/device location [2]; data bus transports instruction/data contents [2]; control bus carries read/write/timing signals [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Trace a fetch starting PC=64, then explain what happens when CIR contains JMP 100.",
+          "answer": "[6] PC64→MAR64 [1], instruction memory→MDR [1], MDR→CIR [1], sequential PC→65 [1], decode JMP100 [1], execute branch sets PC=100 [1].",
+          "options": [
+            "[6] Address bus identifies memory/device location [2]; data bus transports instruction/data contents [2]; control bus carries read/write/timing signals [2].",
+            "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1].",
+            "[6] PC64→MAR64 [1], instruction memory→MDR [1], MDR→CIR [1], sequential PC→65 [1], decode JMP100 [1], execute branch sets PC=100 [1]."
+          ],
+          "feedback": "[6] PC64→MAR64 [1], instruction memory→MDR [1], MDR→CIR [1], sequential PC→65 [1], decode JMP100 [1], execute branch sets PC=100 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Compare what happens in the instruction cycle during a normal arithmetic instruction and while responding to an interrupt.",
+          "answer": "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1].",
+          "options": [
+            "[6] PC64→MAR64 [1], instruction memory→MDR [1], MDR→CIR [1], sequential PC→65 [1], decode JMP100 [1], execute branch sets PC=100 [1].",
+            "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1].",
+            "[6] Address bus identifies memory/device location [2]; data bus transports instruction/data contents [2]; control bus carries read/write/timing signals [2]."
+          ],
+          "feedback": "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Compare what happens in the instruction cycle during a normal arithmetic instruction and while responding to an interrupt.",
+        "model": "[6] Both use fetch/decode/execute [1]; arithmetic instruction may update ACC [1]; interrupt signals an event [1]; processor preserves enough execution state [1], transfers control to an ISR [1] and restores/resumes after service [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "decode means: Interpret opcode and operands.",
+          "answer": "true",
+          "feedback": "decode — Interpret opcode and operands."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "execute means: Transfers data and instructions.",
+          "answer": "false",
+          "feedback": "execute — Perform the operation."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "address bus means: Transfers memory/device addresses.",
+          "answer": "true",
+          "feedback": "address bus — Transfers memory/device addresses."
+        }
+      ]
+    }
+  ]
+}

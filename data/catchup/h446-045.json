@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-045",
+  "course": "h446",
+  "title": "Data Structures · Constructors and Encapsulation",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How do you create an object in C#?",
+          "answer": "Use new with a constructor",
+          "options": [
+            "Use new with a constructor",
+            "Value held separately per object",
+            "Reuse and maintainability"
+          ],
+          "feedback": "Use new with a constructor"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an instance field?",
+          "answer": "Value held separately per object",
+          "options": [
+            "Use new with a constructor",
+            "Reuse and maintainability",
+            "Value held separately per object"
+          ],
+          "feedback": "Value held separately per object"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does modularity improve?",
+          "answer": "Reuse and maintainability",
+          "options": [
+            "Value held separately per object",
+            "Reuse and maintainability",
+            "Use new with a constructor"
+          ],
+          "feedback": "Reuse and maintainability"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is LIFO?",
+          "answer": "Last in first out",
+          "options": [
+            "Last in first out",
+            "Use new with a constructor",
+            "Value held separately per object"
+          ],
+          "feedback": "Last in first out"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Protect the object invariant",
+          "text": "The constructor refuses a negative opening balance before storing it. The field is private, so outside code must use approved public methods instead of bypassing validation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Construct a valid account; control updates",
+          "text": "using System; Account savings = new Account(10); savings.Deposit(5); Console.WriteLine(savings.GetBalance()); class Account { private int balance; public Account(int opening) { if (opening < 0) throw new ArgumentOutOfRangeException(); balance = opening; } public int GetBalance()…"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Constructor sets the initial state",
+          "text": "new Account(10) invokes Account(int opening) . It checks 10 is non-negative, then stores 10 in the private field balance ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Method validates the proposed change",
+          "text": "savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'constructor'?",
+          "answer": "Initialises a new object",
+          "options": [
+            "Controls access to internal state",
+            "Accessible only within its containing type",
+            "Initialises a new object"
+          ],
+          "feedback": "constructor — Initialises a new object"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'encapsulation'?",
+          "answer": "Controls access to internal state",
+          "options": [
+            "Accessible only within its containing type",
+            "Controls access to internal state",
+            "Initialises a new object"
+          ],
+          "feedback": "encapsulation — Controls access to internal state"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'private'?",
+          "answer": "Accessible only within its containing type",
+          "options": [
+            "Accessible only within its containing type",
+            "Initialises a new object",
+            "Controls access to internal state"
+          ],
+          "feedback": "private — Accessible only within its containing type"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace a different validated account",
+          "text": "Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2); . What does current.GetBalance() give afterwards if the exception is caught by the caller?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Show the value after each operation",
+          "text": "What happens at construction, after the valid deposit, and at the attempted negative deposit?"
+        },
+        {
+          "type": "paragraph",
+          "title": "27; invalid deposit rejected",
+          "text": "Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Construct a different valid object",
+          "text": "A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Accessible from other code",
+          "answer": "public",
+          "options": [
+            "public",
+            "constructor",
+            "encapsulation"
+          ],
+          "feedback": "public — Accessible from other code"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checks input meets rules",
+          "answer": "validation",
+          "options": [
+            "constructor",
+            "encapsulation",
+            "validation"
+          ],
+          "feedback": "validation — Checks input meets rules"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Initialises a new object",
+          "answer": "constructor",
+          "options": [
+            "private",
+            "constructor",
+            "encapsulation"
+          ],
+          "feedback": "constructor — Initialises a new object"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Controls access to internal state",
+          "answer": "encapsulation",
+          "options": [
+            "encapsulation",
+            "constructor",
+            "private"
+          ],
+          "feedback": "encapsulation — Controls access to internal state"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Construct a valid account; control updates",
+          "answer": "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
+          "options": [
+            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
+          ],
+          "feedback": "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace a different validated account Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2); . What does current.GetBalance() give afterwards if the exception is caught by the caller?",
+          "answer": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
+          "options": [
+            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly.",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+          ],
+          "feedback": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
+          "answer": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+          "options": [
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+            "STEP 2 Method validates the proposed change savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
+          ],
+          "feedback": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
+        "model": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "encapsulation means: Controls access to internal state",
+          "answer": "true",
+          "feedback": "encapsulation — Controls access to internal state"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "private means: Checks input meets rules",
+          "answer": "false",
+          "feedback": "private — Accessible only within its containing type"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "public means: Accessible from other code",
+          "answer": "true",
+          "feedback": "public — Accessible from other code"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-044",
+  "course": "h446",
+  "title": "Data Structures · Classes and Objects in C#",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a method parameter?",
+          "answer": "Named input to a method",
+          "options": [
+            "FIFO versus LIFO",
+            "Named input to a method",
+            "A debugger stopping point"
+          ],
+          "feedback": "Named input to a method"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a breakpoint?",
+          "answer": "A debugger stopping point",
+          "options": [
+            "A debugger stopping point",
+            "Named input to a method",
+            "FIFO versus LIFO"
+          ],
+          "feedback": "A debugger stopping point"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does a queue differ from stack?",
+          "answer": "FIFO versus LIFO",
+          "options": [
+            "Named input to a method",
+            "A debugger stopping point",
+            "FIFO versus LIFO"
+          ],
+          "feedback": "FIFO versus LIFO"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: State the output of 1 AND 0.",
+          "answer": "0",
+          "options": [
+            "A debugger stopping point",
+            "0",
+            "Named input to a method"
+          ],
+          "feedback": "0"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Class ≠ instance",
+          "text": "A class defines the fields and behaviour available to each object. new Student() constructs an instance; a separate new creates another independent object."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · One class, two independent objects",
+          "text": "using System; Badge amber = new Badge(); Badge blue = new Badge(); amber.Add(2); Console.WriteLine(amber.Points + \",\" + blue.Points); class Badge { public int Points = 0; public void Add(int n) { Points += n; } }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Identify class, objects and members",
+          "text": "Badge is the class (blueprint). amber and blue are references to two objects . Each has its own Points field and can run the Add method."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace the state change",
+          "text": "new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'class'?",
+          "answer": "Blueprint for objects",
+          "options": [
+            "Blueprint for objects",
+            "An instance of a class",
+            "Data associated with an object"
+          ],
+          "feedback": "class — Blueprint for objects"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'object'?",
+          "answer": "An instance of a class",
+          "options": [
+            "Blueprint for objects",
+            "Data associated with an object",
+            "An instance of a class"
+          ],
+          "feedback": "object — An instance of a class"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'field'?",
+          "answer": "Data associated with an object",
+          "options": [
+            "An instance of a class",
+            "Data associated with an object",
+            "Blueprint for objects"
+          ],
+          "feedback": "field — Data associated with an object"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Different class, different data",
+          "text": "using System; Counter first = new Counter(); Counter second = new Counter(); first.Increase(); first.Increase(); Console.WriteLine(first.Value + \",\" + second.Value); class Counter { public int Value = 0; public void Increase() { Value++; } } What are first.Value and second.Value ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace both instances",
+          "text": "Start with separate fields: first = 0, second = 0. Track which object receives each method call before revealing the result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Independent state",
+          "text": "first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Change the receiver",
+          "text": "Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Behaviour in a class",
+          "answer": "method",
+          "options": [
+            "object",
+            "method",
+            "class"
+          ],
+          "feedback": "method — Behaviour in a class"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? One created object",
+          "answer": "instance",
+          "options": [
+            "instance",
+            "class",
+            "object"
+          ],
+          "feedback": "instance — One created object"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Blueprint for objects",
+          "answer": "class",
+          "options": [
+            "object",
+            "field",
+            "class"
+          ],
+          "feedback": "class — Blueprint for objects"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An instance of a class",
+          "answer": "object",
+          "options": [
+            "field",
+            "object",
+            "class"
+          ],
+          "feedback": "object — An instance of a class"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: One class, two independent objects",
+          "answer": "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
+          "options": [
+            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
+            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
+            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second ."
+          ],
+          "feedback": "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Different class, different data What are first.Value and second.Value ?",
+          "answer": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
+          "options": [
+            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
+            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
+            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
+          ],
+          "feedback": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second ."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Change the receiver Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies.",
+          "answer": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
+          "options": [
+            "STEP 2 Trace the state change new Badge() creates each object with Points = 0 . amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance.",
+            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0 . Both calls act on first ; they do not change second .",
+            "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
+          ],
+          "feedback": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Change the receiver Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies.",
+        "model": "MODEL ANSWER Targeted update first.Value = 2 ; second.Value = 1 . The variable second refers to the second created Counter instance.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "object means: An instance of a class",
+          "answer": "true",
+          "feedback": "object — An instance of a class"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "field means: One created object",
+          "answer": "false",
+          "feedback": "field — Data associated with an object"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "method means: Behaviour in a class",
+          "answer": "true",
+          "feedback": "method — Behaviour in a class"
+        }
+      ]
+    }
+  ]
+}

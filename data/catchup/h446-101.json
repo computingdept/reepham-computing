@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-101",
+  "course": "h446",
+  "title": "Lesson 101 · Multicore CPUs and Parallel Systems",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a core?",
+          "answer": "A CPU processing unit able to run a hardware thread or more, depending on design.",
+          "options": [
+            "Serial work limits parallel speedup.",
+            "A CPU processing unit able to run a hardware thread or more, depending on design.",
+            "Several tasks progress over overlapping time."
+          ],
+          "feedback": "A CPU processing unit able to run a hardware thread or more, depending on design."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define concurrency.",
+          "answer": "Several tasks progress over overlapping time.",
+          "options": [
+            "Several tasks progress over overlapping time.",
+            "A CPU processing unit able to run a hardware thread or more, depending on design.",
+            "Serial work limits parallel speedup."
+          ],
+          "feedback": "Several tasks progress over overlapping time."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does Amdahl's law illustrate?",
+          "answer": "Serial work limits parallel speedup.",
+          "options": [
+            "A CPU processing unit able to run a hardware thread or more, depending on design.",
+            "Several tasks progress over overlapping time.",
+            "Serial work limits parallel speedup."
+          ],
+          "feedback": "Serial work limits parallel speedup."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A 3×4 array of independent cells: how many cells?",
+          "answer": "12.",
+          "options": [
+            "Several tasks progress over overlapping time.",
+            "12.",
+            "A CPU processing unit able to run a hardware thread or more, depending on design."
+          ],
+          "feedback": "12."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "A multicore CPU integrates two or more processing cores, which can execute independent threads concurrently."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Parallel processing can reduce completion time when tasks can be divided; a serial dependency is a critical-path constraint."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Shared memory bandwidth, locking, thread scheduling and the serial proportion of a program limit speedup. More cores do not guarantee proportional gains."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the choice",
+          "text": "8 ÷ 2 = 4 equal-duration waves, versus 8 on one core."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'multicore'?",
+          "answer": "Processor with multiple CPU cores.",
+          "options": [
+            "Processor with multiple CPU cores.",
+            "Simultaneous processing of independent tasks.",
+            "Longest dependent chain."
+          ],
+          "feedback": "multicore — Processor with multiple CPU cores."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'parallelism'?",
+          "answer": "Simultaneous processing of independent tasks.",
+          "options": [
+            "Processor with multiple CPU cores.",
+            "Longest dependent chain.",
+            "Simultaneous processing of independent tasks."
+          ],
+          "feedback": "parallelism — Simultaneous processing of independent tasks."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'critical path'?",
+          "answer": "Longest dependent chain.",
+          "options": [
+            "Simultaneous processing of independent tasks.",
+            "Longest dependent chain.",
+            "Processor with multiple CPU cores."
+          ],
+          "feedback": "critical path — Longest dependent chain."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the choice",
+          "text": "12 ÷ 4 = 3 waves; shared-memory contention or scheduling overhead can extend time."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Speedup bounded by serial portion.",
+          "answer": "Amdahl's law",
+          "options": [
+            "parallelism",
+            "Amdahl's law",
+            "multicore"
+          ],
+          "feedback": "Amdahl's law — Speedup bounded by serial portion."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Processor with multiple CPU cores.",
+          "answer": "multicore",
+          "options": [
+            "multicore",
+            "parallelism",
+            "critical path"
+          ],
+          "feedback": "multicore — Processor with multiple CPU cores."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Simultaneous processing of independent tasks.",
+          "answer": "parallelism",
+          "options": [
+            "multicore",
+            "critical path",
+            "parallelism"
+          ],
+          "feedback": "parallelism — Simultaneous processing of independent tasks."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Longest dependent chain.",
+          "answer": "critical path",
+          "options": [
+            "parallelism",
+            "critical path",
+            "multicore"
+          ],
+          "feedback": "critical path — Longest dependent chain."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Twelve equal independent jobs run on three identical cores. Compare ideal waves with one core. [6]",
+          "answer": "/ WORKED ANSWER Three cores 12÷3=4 waves [3], one core12 waves [2], ideal threefold throughput gain [1].",
+          "options": [
+            "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1].",
+            "/ WORKED ANSWER Three cores 12÷3=4 waves [3], one core12 waves [2], ideal threefold throughput gain [1].",
+            "/ WORKED ANSWER Divide independent frames/tiles [2], throughput [2], serial dependencies [2], contention/overhead [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Three cores 12÷3=4 waves [3], one core12 waves [2], ideal threefold throughput gain [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain two benefits and two limitations of multicore processing for video rendering. [8]",
+          "answer": "/ WORKED ANSWER Divide independent frames/tiles [2], throughput [2], serial dependencies [2], contention/overhead [2].",
+          "options": [
+            "/ WORKED ANSWER Divide independent frames/tiles [2], throughput [2], serial dependencies [2], contention/overhead [2].",
+            "/ WORKED ANSWER Three cores 12÷3=4 waves [3], one core12 waves [2], ideal threefold throughput gain [1].",
+            "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Divide independent frames/tiles [2], throughput [2], serial dependencies [2], contention/overhead [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Half a program must run serially; other half parallelised perfectly across four cores. Compute ideal speedup and interpret. [6]",
+          "answer": "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1].",
+          "options": [
+            "/ WORKED ANSWER Three cores 12÷3=4 waves [3], one core12 waves [2], ideal threefold throughput gain [1].",
+            "/ WORKED ANSWER Divide independent frames/tiles [2], throughput [2], serial dependencies [2], contention/overhead [2].",
+            "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Half a program must run serially; other half parallelised perfectly across four cores. Compute ideal speedup and interpret. [6]",
+        "model": "/ WORKED ANSWER Normalised time 0.5+0.5/4=0.625 [3], speedup 1/0.625=1.6 [2], not fourfold due serial work [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "parallelism means: Simultaneous processing of independent tasks.",
+          "answer": "true",
+          "feedback": "parallelism — Simultaneous processing of independent tasks."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "critical path means: Processor with multiple CPU cores.",
+          "answer": "false",
+          "feedback": "critical path — Longest dependent chain."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Amdahl's law means: Speedup bounded by serial portion.",
+          "answer": "true",
+          "feedback": "Amdahl's law — Speedup bounded by serial portion."
+        }
+      ]
+    }
+  ]
+}

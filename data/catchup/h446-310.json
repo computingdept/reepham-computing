@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-310",
+  "course": "h446",
+  "title": "Recursion and algorithm tracing",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an activation record?",
+          "answer": "Saved data for an active function call.",
+          "options": [
+            "On return from the deeper call.",
+            "O(n) call stack.",
+            "Saved data for an active function call."
+          ],
+          "feedback": "Saved data for an active function call."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does code after recursive call execute?",
+          "answer": "On return from the deeper call.",
+          "options": [
+            "O(n) call stack.",
+            "On return from the deeper call.",
+            "Saved data for an active function call."
+          ],
+          "feedback": "On return from the deeper call."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is auxiliary stack space for depth n?",
+          "answer": "O(n) call stack.",
+          "options": [
+            "O(n) call stack.",
+            "Saved data for an active function call.",
+            "On return from the deeper call."
+          ],
+          "feedback": "O(n) call stack."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Search for 12 in [2,4,6,8,10,12,14]. Midpoint indexes?",
+          "answer": "3→5; index5 found.",
+          "options": [
+            "Saved data for an active function call.",
+            "On return from the deeper call.",
+            "3→5; index5 found."
+          ],
+          "feedback": "3→5; index5 found."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Trace recursive calls downward before calculating values on return."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Name the base case and variable that progresses toward it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Recursion depth consumes call-stack memory even when total time is linear."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the result",
+          "text": "Outputs 321 on descent. Nothing prints for n0."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'recursion'?",
+          "answer": "Subroutine calls itself.",
+          "options": [
+            "Active subroutine frames.",
+            "Subroutine calls itself.",
+            "Stops additional calls."
+          ],
+          "feedback": "recursion — Subroutine calls itself."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'base case'?",
+          "answer": "Stops additional calls.",
+          "options": [
+            "Stops additional calls.",
+            "Subroutine calls itself.",
+            "Active subroutine frames."
+          ],
+          "feedback": "base case — Stops additional calls."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'call stack'?",
+          "answer": "Active subroutine frames.",
+          "options": [
+            "Subroutine calls itself.",
+            "Stops additional calls.",
+            "Active subroutine frames."
+          ],
+          "feedback": "call stack — Active subroutine frames."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the result",
+          "text": "Outputs 123 on return as calls unwind."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Returning from nested calls.",
+          "answer": "unwinding",
+          "options": [
+            "recursion",
+            "base case",
+            "unwinding"
+          ],
+          "feedback": "unwinding — Returning from nested calls."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Subroutine calls itself.",
+          "answer": "recursion",
+          "options": [
+            "call stack",
+            "recursion",
+            "base case"
+          ],
+          "feedback": "recursion — Subroutine calls itself."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Stops additional calls.",
+          "answer": "base case",
+          "options": [
+            "base case",
+            "recursion",
+            "call stack"
+          ],
+          "feedback": "base case — Stops additional calls."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Active subroutine frames.",
+          "answer": "call stack",
+          "options": [
+            "recursion",
+            "base case",
+            "call stack"
+          ],
+          "feedback": "call stack — Active subroutine frames."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 · FOUNDATION Trace SumOdds(4), listing contributions and returned result. [6]",
+          "answer": "/ MARK SCHEME Calls 4,3,2,1,0 [2], contributions 0,3,0,1 [2], base0 [1], result4 [1].",
+          "options": [
+            "/ MARK SCHEME Print 4 [1],3 [1],2 [1],1 [1] on descent [1]; base0 prints nothing [1].",
+            "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1].",
+            "/ MARK SCHEME Calls 4,3,2,1,0 [2], contributions 0,3,0,1 [2], base0 [1], result4 [1]."
+          ],
+          "feedback": "/ MARK SCHEME Calls 4,3,2,1,0 [2], contributions 0,3,0,1 [2], base0 [1], result4 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 · CORE For F(n): if n=0 return, else print(n) then F(n-1), state F(4) output and why. [6]",
+          "answer": "/ MARK SCHEME Print 4 [1],3 [1],2 [1],1 [1] on descent [1]; base0 prints nothing [1].",
+          "options": [
+            "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1].",
+            "/ MARK SCHEME Print 4 [1],3 [1],2 [1],1 [1] on descent [1]; base0 prints nothing [1].",
+            "/ MARK SCHEME Calls 4,3,2,1,0 [2], contributions 0,3,0,1 [2], base0 [1], result4 [1]."
+          ],
+          "feedback": "/ MARK SCHEME Print 4 [1],3 [1],2 [1],1 [1] on descent [1]; base0 prints nothing [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 · CHALLENGE Write an iterative C# method to sum the positive odd integers up to n (n ≥ 0), matching SumOdds(n). Compare its time and auxiliary space with the recursive method. [6]",
+          "answer": "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1].",
+          "options": [
+            "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1].",
+            "/ MARK SCHEME Calls 4,3,2,1,0 [2], contributions 0,3,0,1 [2], base0 [1], result4 [1].",
+            "/ MARK SCHEME Print 4 [1],3 [1],2 [1],1 [1] on descent [1]; base0 prints nothing [1]."
+          ],
+          "feedback": "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 · CHALLENGE Write an iterative C# method to sum the positive odd integers up to n (n ≥ 0), matching SumOdds(n). Compare its time and auxiliary space with the recursive method. [6]",
+        "model": "/ MARK SCHEME Initialise sum=0 [1]; iterate odd values using for(int i=1;i<=n;i+=2) [2]; add each i to sum and return it [1]; both approaches take O(n) time [1]; iterative O(1) auxiliary memory versus O(n) recursive call stack [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "base case means: Stops additional calls.",
+          "answer": "true",
+          "feedback": "base case — Stops additional calls."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "call stack means: Subroutine calls itself.",
+          "answer": "false",
+          "feedback": "call stack — Active subroutine frames."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "unwinding means: Returning from nested calls.",
+          "answer": "true",
+          "feedback": "unwinding — Returning from nested calls."
+        }
+      ]
+    }
+  ]
+}

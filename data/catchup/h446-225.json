@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-225",
+  "course": "h446",
+  "title": "OOP: testing and debugging",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Insert 12 into a BST node 10 with empty right child. Where does it go?",
+          "answer": "As the right child of 10.",
+          "options": [
+            "As the right child of 10.",
+            "A value that identifies an object rather than copying the object itself.",
+            "A variable declared inside a method or block with limited scope."
+          ],
+          "feedback": "As the right child of 10."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a reference?",
+          "answer": "A value that identifies an object rather than copying the object itself.",
+          "options": [
+            "As the right child of 10.",
+            "A variable declared inside a method or block with limited scope.",
+            "A value that identifies an object rather than copying the object itself."
+          ],
+          "feedback": "A value that identifies an object rather than copying the object itself."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a local variable?",
+          "answer": "A variable declared inside a method or block with limited scope.",
+          "options": [
+            "A value that identifies an object rather than copying the object itself.",
+            "A variable declared inside a method or block with limited scope.",
+            "As the right child of 10."
+          ],
+          "feedback": "A variable declared inside a method or block with limited scope."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If an object's Balance=20 and Deposit(5) correctly adds five, what is Balance?",
+          "answer": "25.",
+          "options": [
+            "25.",
+            "As the right child of 10.",
+            "A value that identifies an object rather than copying the object itself."
+          ],
+          "feedback": "25."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Inspect class state",
+          "text": "The object has a Balance property initially set by its constructor."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace method inputs",
+          "text": "Deposit(5) passes amount=5. Since amount>0, Balance+=5 executes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Debug the outcome",
+          "text": "Expected Balance=25. If unchanged, check whether the code assigns to Balance or merely calculates a temporary value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The local newScore becomes 10, but the field Score remains 7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Replace the local-only calculation with Score += points;."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Retest: after AddPoints(3), Score should equal 10."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'encapsulation'?",
+          "answer": "Hide implementation details and control state through methods/properties.",
+          "options": [
+            "Initialises a new object.",
+            "Stores or exposes object state.",
+            "Hide implementation details and control state through methods/properties."
+          ],
+          "feedback": "encapsulation — Hide implementation details and control state through methods/properties."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'constructor'?",
+          "answer": "Initialises a new object.",
+          "options": [
+            "Stores or exposes object state.",
+            "Initialises a new object.",
+            "Hide implementation details and control state through methods/properties."
+          ],
+          "feedback": "constructor — Initialises a new object."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'field / property'?",
+          "answer": "Stores or exposes object state.",
+          "options": [
+            "Stores or exposes object state.",
+            "Hide implementation details and control state through methods/properties.",
+            "Initialises a new object."
+          ],
+          "feedback": "field / property — Stores or exposes object state."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Count + 1 does not assign a new value and is not a valid standalone statement in C#."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the reasoning",
+          "text": "Correct it to Count++; or Count += 1;. With Count=2, the resulting Count is 3."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Pauses execution at a selected code line.",
+          "answer": "breakpoint",
+          "options": [
+            "breakpoint",
+            "encapsulation",
+            "constructor"
+          ],
+          "feedback": "breakpoint — Pauses execution at a selected code line."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checks values at or just beyond a permitted limit.",
+          "answer": "boundary test",
+          "options": [
+            "encapsulation",
+            "constructor",
+            "boundary test"
+          ],
+          "feedback": "boundary test — Checks values at or just beyond a permitted limit."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Hide implementation details and control state through methods/properties.",
+          "answer": "encapsulation",
+          "options": [
+            "field / property",
+            "encapsulation",
+            "constructor"
+          ],
+          "feedback": "encapsulation — Hide implementation details and control state through methods/properties."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Initialises a new object.",
+          "answer": "constructor",
+          "options": [
+            "constructor",
+            "encapsulation",
+            "field / property"
+          ],
+          "feedback": "constructor — Initialises a new object."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 An object starts at Count=4 and runs Increment() which performs Count += 1. What is Count after three calls?",
+          "answer": "[4] 5 after first [1], 6 after second [1], 7 after third [1]; each call updates the same object's field [1].",
+          "options": [
+            "[4] 5 after first [1], 6 after second [1], 7 after third [1]; each call updates the same object's field [1].",
+            "[6] `int Age` declares a new local variable [2], shadowing rather than updating the member [1]; use `this.Age = age;` [2]; test SetAge(16) sets property to 16 [1].",
+            "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1]."
+          ],
+          "feedback": "[4] 5 after first [1], 6 after second [1], 7 after third [1]; each call updates the same object's field [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Correct `public void SetAge(int age) { int Age = age; }` where Age is an existing property. Explain why it fails.",
+          "answer": "[6] `int Age` declares a new local variable [2], shadowing rather than updating the member [1]; use `this.Age = age;` [2]; test SetAge(16) sets property to 16 [1].",
+          "options": [
+            "[4] 5 after first [1], 6 after second [1], 7 after third [1]; each call updates the same object's field [1].",
+            "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1].",
+            "[6] `int Age` declares a new local variable [2], shadowing rather than updating the member [1]; use `this.Age = age;` [2]; test SetAge(16) sets property to 16 [1]."
+          ],
+          "feedback": "[6] `int Age` declares a new local variable [2], shadowing rather than updating the member [1]; use `this.Age = age;` [2]; test SetAge(16) sets property to 16 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A BankAccount.Withdraw(amount) rejects only amounts <=0, but permits overdrafts. Add validation and give boundary tests for Balance=50.",
+          "answer": "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1].",
+          "options": [
+            "[6] `int Age` declares a new local variable [2], shadowing rather than updating the member [1]; use `this.Age = age;` [2]; test SetAge(16) sets property to 16 [1].",
+            "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1].",
+            "[4] 5 after first [1], 6 after second [1], 7 after third [1]; each call updates the same object's field [1]."
+          ],
+          "feedback": "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A BankAccount.Withdraw(amount) rejects only amounts <=0, but permits overdrafts. Add validation and give boundary tests for Balance=50.",
+        "model": "[6] Reject amount<=0 [1] and amount>Balance [1]; valid update Balance-=amount [1]. Boundary tests: Withdraw(50) gives 0 [1], Withdraw(51) is rejected [1], Withdraw(0) is rejected [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "constructor means: Initialises a new object.",
+          "answer": "true",
+          "feedback": "constructor — Initialises a new object."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "field / property means: Checks values at or just beyond a permitted limit.",
+          "answer": "false",
+          "feedback": "field / property — Stores or exposes object state."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "breakpoint means: Pauses execution at a selected code line.",
+          "answer": "true",
+          "feedback": "breakpoint — Pauses execution at a selected code line."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-144",
+  "course": "h446",
+  "title": "Lesson 144 · DNS and IP Routing: From Name to Destination",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which TCP/IP layer handles routing and IP addressing?",
+          "answer": "Internet layer.",
+          "options": [
+            "Internet layer.",
+            "Stack.",
+            "Tracking variable state changes as an algorithm runs."
+          ],
+          "feedback": "Internet layer."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What data structure uses LIFO?",
+          "answer": "Stack.",
+          "options": [
+            "Internet layer.",
+            "Tracking variable state changes as an algorithm runs.",
+            "Stack."
+          ],
+          "feedback": "Stack."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a trace table used for?",
+          "answer": "Tracking variable state changes as an algorithm runs.",
+          "options": [
+            "Stack.",
+            "Tracking variable state changes as an algorithm runs.",
+            "Internet layer."
+          ],
+          "feedback": "Tracking variable state changes as an algorithm runs."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits are in one byte?",
+          "answer": "Eight.",
+          "options": [
+            "Eight.",
+            "Internet layer.",
+            "Stack."
+          ],
+          "feedback": "Eight."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Resolve hostname",
+          "text": "Browser requests address for a website name through DNS."
+        },
+        {
+          "type": "paragraph",
+          "title": "Use IP destination",
+          "text": "Application connects to a resolved IP address and transport port."
+        },
+        {
+          "type": "paragraph",
+          "title": "Route across networks",
+          "text": "Routers forward packets hop by hop to the destination network."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Name example.org",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · DNS returns an IP address",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Connect to web server",
+          "text": "DNS maps the hostname to relevant resource records such as an A/AAAA address. DNS does not directly transmit the web page. Browser makes a separate connection to the chosen server address and requests content, often over HTTPS."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'DNS'?",
+          "answer": "Hierarchical name-resolution system.",
+          "options": [
+            "Network-layer address used to route packets.",
+            "Client/service that queries DNS and caches answers.",
+            "Hierarchical name-resolution system."
+          ],
+          "feedback": "DNS — Hierarchical name-resolution system."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'IP address'?",
+          "answer": "Network-layer address used to route packets.",
+          "options": [
+            "Client/service that queries DNS and caches answers.",
+            "Network-layer address used to route packets.",
+            "Hierarchical name-resolution system."
+          ],
+          "feedback": "IP address — Network-layer address used to route packets."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'resolver'?",
+          "answer": "Client/service that queries DNS and caches answers.",
+          "options": [
+            "Client/service that queries DNS and caches answers.",
+            "Hierarchical name-resolution system.",
+            "Network-layer address used to route packets."
+          ],
+          "feedback": "resolver — Client/service that queries DNS and caches answers."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Cached old address",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Server address changes",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Refresh after TTL",
+          "text": "The cached address may remain until its TTL expires; client may contact an outdated endpoint. The resolver can refresh after expiry. DNS propagation and authoritative changes do not guarantee immediate worldwide consistency."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Forwards IP packets towards destination networks.",
+          "answer": "router",
+          "options": [
+            "router",
+            "DNS",
+            "IP address"
+          ],
+          "feedback": "router — Forwards IP packets towards destination networks."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Hierarchical name-resolution system.",
+          "answer": "DNS",
+          "options": [
+            "IP address",
+            "resolver",
+            "DNS"
+          ],
+          "feedback": "DNS — Hierarchical name-resolution system."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Network-layer address used to route packets.",
+          "answer": "IP address",
+          "options": [
+            "resolver",
+            "IP address",
+            "DNS"
+          ],
+          "feedback": "IP address — Network-layer address used to route packets."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Client/service that queries DNS and caches answers.",
+          "answer": "resolver",
+          "options": [
+            "resolver",
+            "DNS",
+            "IP address"
+          ],
+          "feedback": "resolver — Client/service that queries DNS and caches answers."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain how DNS helps a user retrieve a website by name. [6]",
+          "answer": "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+          "options": [
+            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Differentiate DNS name resolution from IP packet routing. [6]",
+          "answer": "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+          "options": [
+            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2].",
+            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
+          ],
+          "feedback": "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A school website moves servers but some users reach the old address. Explain cached DNS and propose sensible checks. [8]",
+          "answer": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+          "options": [
+            "/ WORKED ANSWER DNS maps names/records [3], routers forward packets using IP destination/network information [3].",
+            "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+            "/ WORKED ANSWER Hostname lookup [2], address records returned/cached [2], browser uses IP to connect to server [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A school website moves servers but some users reach the old address. Explain cached DNS and propose sensible checks. [8]",
+        "model": "/ WORKED ANSWER Resolver caching [2], TTL expiry [2], changed authoritative record [2], client/network diagnostic tests [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "IP address means: Network-layer address used to route packets.",
+          "answer": "true",
+          "feedback": "IP address — Network-layer address used to route packets."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "resolver means: Hierarchical name-resolution system.",
+          "answer": "false",
+          "feedback": "resolver — Client/service that queries DNS and caches answers."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "router means: Forwards IP packets towards destination networks.",
+          "answer": "true",
+          "feedback": "router — Forwards IP packets towards destination networks."
+        }
+      ]
+    }
+  ]
+}

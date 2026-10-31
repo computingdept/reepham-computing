@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-128",
+  "course": "h446",
+  "title": "Lesson 128 · Run-Length Encoding: Encoding and Decoding",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When must lossless compression be used?",
+          "answer": "When exact reconstruction is necessary, such as executable code.",
+          "options": [
+            "An input used by a subroutine.",
+            "When exact reconstruction is necessary, such as executable code.",
+            "First in, first out."
+          ],
+          "feedback": "When exact reconstruction is necessary, such as executable code."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a queue, what does FIFO stand for?",
+          "answer": "First in, first out.",
+          "options": [
+            "First in, first out.",
+            "When exact reconstruction is necessary, such as executable code.",
+            "An input used by a subroutine."
+          ],
+          "feedback": "First in, first out."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a function parameter?",
+          "answer": "An input used by a subroutine.",
+          "options": [
+            "When exact reconstruction is necessary, such as executable code.",
+            "First in, first out.",
+            "An input used by a subroutine."
+          ],
+          "feedback": "An input used by a subroutine."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, which side holds a smaller value?",
+          "answer": "The left subtree.",
+          "options": [
+            "First in, first out.",
+            "The left subtree.",
+            "When exact reconstruction is necessary, such as executable code."
+          ],
+          "feedback": "The left subtree."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify runs",
+          "text": "Group identical adjacent symbols, not identical symbols separated by others."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encode",
+          "text": "Record every run as count and symbol consistently."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check cost",
+          "text": "Count storage using an explicit format, including counts and delimiters."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · AAAAA | BB | CCC",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · (5,A)(2,B)(3,C)",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Decode original",
+          "text": "AAAAA =5A, BB=2B, CCC=3C. Encoded result (5,A)(2,B)(3,C); decoded data restores AAAAABBCCC exactly."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'RLE'?",
+          "answer": "Encodes consecutive equal symbols as a symbol and count.",
+          "options": [
+            "Encodes consecutive equal symbols as a symbol and count.",
+            "A consecutive sequence of identical symbols.",
+            "Extra data required by an encoding scheme."
+          ],
+          "feedback": "RLE — Encodes consecutive equal symbols as a symbol and count."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'run'?",
+          "answer": "A consecutive sequence of identical symbols.",
+          "options": [
+            "Encodes consecutive equal symbols as a symbol and count.",
+            "Extra data required by an encoding scheme.",
+            "A consecutive sequence of identical symbols."
+          ],
+          "feedback": "run — A consecutive sequence of identical symbols."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'overhead'?",
+          "answer": "Extra data required by an encoding scheme.",
+          "options": [
+            "A consecutive sequence of identical symbols.",
+            "Extra data required by an encoding scheme.",
+            "Encodes consecutive equal symbols as a symbol and count."
+          ],
+          "feedback": "overhead — Extra data required by an encoding scheme."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "A B A B A B",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Six single runs",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encoded size increases",
+          "text": "Six runs of length 1 give (1,A)(1,B) repeated three times. A simple pair encoding uses 12 units for a 6-character input; RLE expands it, ignoring headers."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Decoding reproduces the original exactly.",
+          "answer": "lossless",
+          "options": [
+            "run",
+            "lossless",
+            "RLE"
+          ],
+          "feedback": "lossless — Decoding reproduces the original exactly."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Encodes consecutive equal symbols as a symbol and count.",
+          "answer": "RLE",
+          "options": [
+            "RLE",
+            "run",
+            "overhead"
+          ],
+          "feedback": "RLE — Encodes consecutive equal symbols as a symbol and count."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A consecutive sequence of identical symbols.",
+          "answer": "run",
+          "options": [
+            "RLE",
+            "overhead",
+            "run"
+          ],
+          "feedback": "run — A consecutive sequence of identical symbols."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Extra data required by an encoding scheme.",
+          "answer": "overhead",
+          "options": [
+            "run",
+            "overhead",
+            "RLE"
+          ],
+          "feedback": "overhead — Extra data required by an encoding scheme."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Apply RLE to AAAABBBCCAAAA using count-symbol pairs. [6]",
+          "answer": "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+          "options": [
+            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
+          ],
+          "feedback": "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Decode (3,X)(1,Y)(2,X) and explain why runs must retain order. [5]",
+          "answer": "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+          "options": [
+            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+          ],
+          "feedback": "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A bitmap row has 40 alternating pixels. Explain why RLE might increase file size and identify a better-suited pattern. [8]",
+          "answer": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+          "options": [
+            "/ WORKED ANSWER (4,A)(3,B)(2,C)(4,A); one mark per correct run/length and two for correct ordered output.",
+            "/ WORKED ANSWER XXXYXX [3]; order preserves original position, merging separated X runs changes sequence [2].",
+            "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+          ],
+          "feedback": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A bitmap row has 40 alternating pixels. Explain why RLE might increase file size and identify a better-suited pattern. [8]",
+        "model": "/ WORKED ANSWER 40 runs of length one [2], count overhead expands stream [2], long blocks of identical pixels compress well [2], quantified or contextual comparison [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "run means: A consecutive sequence of identical symbols.",
+          "answer": "true",
+          "feedback": "run — A consecutive sequence of identical symbols."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "overhead means: Encodes consecutive equal symbols as a symbol and count.",
+          "answer": "false",
+          "feedback": "overhead — Extra data required by an encoding scheme."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "lossless means: Decoding reproduces the original exactly.",
+          "answer": "true",
+          "feedback": "lossless — Decoding reproduces the original exactly."
+        }
+      ]
+    }
+  ]
+}

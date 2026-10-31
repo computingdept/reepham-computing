@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-057",
+  "course": "h446",
+  "title": "Lesson 057 · C# Data Structures Mini-project: Library Loans",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a constructor initialise?",
+          "answer": "New object's fields/properties.",
+          "options": [
+            "New object's fields/properties.",
+            "Removes/returns oldest enqueued item.",
+            "Names/labels can repeat; ID enables unambiguous lookup."
+          ],
+          "feedback": "New object's fields/properties."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does Queue<T>.Dequeue do?",
+          "answer": "Removes/returns oldest enqueued item.",
+          "options": [
+            "New object's fields/properties.",
+            "Names/labels can repeat; ID enables unambiguous lookup.",
+            "Removes/returns oldest enqueued item."
+          ],
+          "feedback": "Removes/returns oldest enqueued item."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why choose a unique ID for a record?",
+          "answer": "Names/labels can repeat; ID enables unambiguous lookup.",
+          "options": [
+            "Removes/returns oldest enqueued item.",
+            "Names/labels can repeat; ID enables unambiguous lookup.",
+            "New object's fields/properties."
+          ],
+          "feedback": "Names/labels can repeat; ID enables unambiguous lookup."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 017",
+          "answer": "A C# int[,] 3×2 array has how many values and last index pair?",
+          "options": [
+            "A C# int[,] 3×2 array has how many values and last index pair?",
+            "New object's fields/properties.",
+            "Removes/returns oldest enqueued item."
+          ],
+          "feedback": "A C# int[,] 3×2 array has how many values and last index pair?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Class Loan models a single loan request, containing a student and book title initialised in its constructor."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model",
+          "text": "Queue<Loan> stores objects in requested service order. Enqueue adds a new request and Dequeue retrieves oldest."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "For a more complete system, use a Dictionary keyed by unique loan ID, validation and tests; do not treat a name as necessarily unique. A queue exists only while the program keeps it in memory; a text file can persist loan records. In OCR examination pseudocode, openWrite plus writeLine writes a file (overwriting existing contents), while openRead plus readLine retrieves lines. Always close() the file."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Queue is FIFO, so the first enqueued request is processed first."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Why a file?",
+          "text": "Unlike the queue, the text file can hold a record across program runs. openWrite creates a write stream and replaces any existing contents of the target file; it is not an append operation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace the file contents",
+          "text": "First writeLine stores Ada,Holes , then the second stores Ben,Dune . They become two separate text lines. This is a simple illustrative format, not a robust CSV parser."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'model'?",
+          "answer": "Representation of a real-world concept.",
+          "options": [
+            "Initialises new object.",
+            "Generic FIFO collection.",
+            "Representation of a real-world concept."
+          ],
+          "feedback": "model — Representation of a real-world concept."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'constructor'?",
+          "answer": "Initialises new object.",
+          "options": [
+            "Generic FIFO collection.",
+            "Initialises new object.",
+            "Representation of a real-world concept."
+          ],
+          "feedback": "constructor — Initialises new object."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Queue<T>'?",
+          "answer": "Generic FIFO collection.",
+          "options": [
+            "Generic FIFO collection.",
+            "Representation of a real-world concept.",
+            "Initialises new object."
+          ],
+          "feedback": "Queue<T> — Generic FIFO collection."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A dictionary retrieves by key; it does not enforce FIFO service order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Predict what is printed",
+          "text": "Identify the role of endOfFile() and the effect of each readLine() call."
+        },
+        {
+          "type": "paragraph",
+          "title": "Follow two reads",
+          "text": "The first call prints Ada,Holes ; the second prints Ben,Dune . The file position advances after each read."
+        },
+        {
+          "type": "paragraph",
+          "title": "Stop safely",
+          "text": "Once no unread lines remain, endOfFile() is true, the loop stops, and f.close() releases the reader. This example reads text; it does not reconstruct Loan objects automatically."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checks input meets rules.",
+          "answer": "validation",
+          "options": [
+            "validation",
+            "model",
+            "constructor"
+          ],
+          "feedback": "validation — Checks input meets rules."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Representation of a real-world concept.",
+          "answer": "model",
+          "options": [
+            "constructor",
+            "Queue<T>",
+            "model"
+          ],
+          "feedback": "model — Representation of a real-world concept."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Initialises new object.",
+          "answer": "constructor",
+          "options": [
+            "Queue<T>",
+            "constructor",
+            "model"
+          ],
+          "feedback": "constructor — Initialises new object."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Generic FIFO collection.",
+          "answer": "Queue<T>",
+          "options": [
+            "Queue<T>",
+            "model",
+            "constructor"
+          ],
+          "feedback": "Queue<T> — Generic FIFO collection."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 Explain two reasons Loan is a class rather than separate parallel arrays for pupil and book. [4]",
+          "answer": "Related fields bundled [2]; object methods/encapsulation/maintainability [2].",
+          "options": [
+            "Related fields bundled [2]; object methods/encapsulation/maintainability [2].",
+            "Queue<Loan> q=new(); [2], two q.Enqueue(new Loan(...)) [4], if(q.Count>0) [1], Loan next=q.Dequeue() [1].",
+            "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2]."
+          ],
+          "feedback": "Related fields bundled [2]; object methods/encapsulation/maintainability [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2/3 Write C# creating a Queue<Loan>, enqueue two instances, then safely dequeue one using Count. [8]",
+          "answer": "Queue<Loan> q=new(); [2], two q.Enqueue(new Loan(...)) [4], if(q.Count>0) [1], Loan next=q.Dequeue() [1].",
+          "options": [
+            "Related fields bundled [2]; object methods/encapsulation/maintainability [2].",
+            "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2].",
+            "Queue<Loan> q=new(); [2], two q.Enqueue(new Loan(...)) [4], if(q.Count>0) [1], Loan next=q.Dequeue() [1]."
+          ],
+          "feedback": "Queue<Loan> q=new(); [2], two q.Enqueue(new Loan(...)) [4], if(q.Count>0) [1], Loan next=q.Dequeue() [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Outline how to prevent duplicate loan IDs and reject empty student names; then name the OCR file operations for writing one saved loan and reading a line back. [8]",
+          "answer": "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2].",
+          "options": [
+            "Queue<Loan> q=new(); [2], two q.Enqueue(new Loan(...)) [4], if(q.Count>0) [1], Loan next=q.Dequeue() [1].",
+            "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2].",
+            "Related fields bundled [2]; object methods/encapsulation/maintainability [2]."
+          ],
+          "feedback": "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Outline how to prevent duplicate loan IDs and reject empty student names; then name the OCR file operations for writing one saved loan and reading a line back. [8]",
+        "model": "Dictionary<int,Loan> keyed by unique ID, reject duplicate keys [2]; validate a nonempty student name [2]; openWrite + writeLine (+ close) to create/write saved text [2]; openRead + readLine (+ close) to retrieve text [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "constructor means: Initialises new object.",
+          "answer": "true",
+          "feedback": "constructor — Initialises new object."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Queue<T> means: Representation of a real-world concept.",
+          "answer": "false",
+          "feedback": "Queue<T> — Generic FIFO collection."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "validation means: Checks input meets rules.",
+          "answer": "true",
+          "feedback": "validation — Checks input meets rules."
+        }
+      ]
+    }
+  ]
+}

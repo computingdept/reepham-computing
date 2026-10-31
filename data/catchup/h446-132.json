@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-132",
+  "course": "h446",
+  "title": "Lesson 132 · Hybrid Encryption: Protecting a Connection",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which key verifies a signature produced using an owner's private key?",
+          "answer": "The corresponding trusted public key.",
+          "options": [
+            "The corresponding trusted public key.",
+            "RAM.",
+            "First in, first out."
+          ],
+          "feedback": "The corresponding trusted public key."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which memory is typically volatile: RAM or ROM?",
+          "answer": "RAM.",
+          "options": [
+            "The corresponding trusted public key.",
+            "First in, first out.",
+            "RAM."
+          ],
+          "feedback": "RAM."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a queue, what does FIFO stand for?",
+          "answer": "First in, first out.",
+          "options": [
+            "RAM.",
+            "First in, first out.",
+            "The corresponding trusted public key."
+          ],
+          "feedback": "First in, first out."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is O(n) search complexity associated with?",
+          "answer": "Linear/sequential search in the worst case.",
+          "options": [
+            "Linear/sequential search in the worst case.",
+            "The corresponding trusted public key.",
+            "RAM."
+          ],
+          "feedback": "Linear/sequential search in the worst case."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Authenticate and agree",
+          "text": "Client validates server identity and securely establishes shared key material."
+        },
+        {
+          "type": "paragraph",
+          "title": "Derive session key",
+          "text": "Both ends obtain secret symmetric traffic keys."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encrypt traffic",
+          "text": "Bulk application data travels encrypted under symmetric cipher."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check server certificate",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Derive symmetric traffic key",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Encrypt application data",
+          "text": "Modern secure connections typically authenticate with public-key credentials, establish shared session keys (often via ephemeral key agreement) and use efficient symmetric encryption for bulk traffic. Identity checks guard against impostors."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'session key'?",
+          "answer": "Temporary symmetric key for a connection/session.",
+          "options": [
+            "Combines asymmetric key establishment with symmetric data encryption.",
+            "Credential binding identity to a public key, subject to trust validation.",
+            "Temporary symmetric key for a connection/session."
+          ],
+          "feedback": "session key — Temporary symmetric key for a connection/session."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'hybrid encryption'?",
+          "answer": "Combines asymmetric key establishment with symmetric data encryption.",
+          "options": [
+            "Credential binding identity to a public key, subject to trust validation.",
+            "Combines asymmetric key establishment with symmetric data encryption.",
+            "Temporary symmetric key for a connection/session."
+          ],
+          "feedback": "hybrid encryption — Combines asymmetric key establishment with symmetric data encryption."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'certificate'?",
+          "answer": "Credential binding identity to a public key, subject to trust validation.",
+          "options": [
+            "Credential binding identity to a public key, subject to trust validation.",
+            "Temporary symmetric key for a connection/session.",
+            "Combines asymmetric key establishment with symmetric data encryption."
+          ],
+          "feedback": "certificate — Credential binding identity to a public key, subject to trust validation."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "HTTPS is encrypted",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check actual domain",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Assess site legitimacy",
+          "text": "No. HTTPS can establish an encrypted connection even with a harmful operator. Verify the domain and service, not just the presence of encrypted transport; a certificate proves control of an identity/domain to varying levels."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Preventing unauthorised reading of information.",
+          "answer": "confidentiality",
+          "options": [
+            "confidentiality",
+            "session key",
+            "hybrid encryption"
+          ],
+          "feedback": "confidentiality — Preventing unauthorised reading of information."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Temporary symmetric key for a connection/session.",
+          "answer": "session key",
+          "options": [
+            "hybrid encryption",
+            "certificate",
+            "session key"
+          ],
+          "feedback": "session key — Temporary symmetric key for a connection/session."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combines asymmetric key establishment with symmetric data encryption.",
+          "answer": "hybrid encryption",
+          "options": [
+            "certificate",
+            "hybrid encryption",
+            "session key"
+          ],
+          "feedback": "hybrid encryption — Combines asymmetric key establishment with symmetric data encryption."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Credential binding identity to a public key, subject to trust validation.",
+          "answer": "certificate",
+          "options": [
+            "certificate",
+            "session key",
+            "hybrid encryption"
+          ],
+          "feedback": "certificate — Credential binding identity to a public key, subject to trust validation."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Describe why hybrid cryptography uses asymmetric and symmetric methods together. [6]",
+          "answer": "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+          "options": [
+            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain what a session key is and why it is not the same as a website's public key. [6]",
+          "answer": "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+          "options": [
+            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3].",
+            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate the assertion 'the padlock means any entered data are safe'. [8]",
+          "answer": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+          "options": [
+            "/ WORKED ANSWER Temporary symmetric traffic key [2], derived/established for session [2], distinct from asymmetric identity/public-key material [2].",
+            "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+            "/ WORKED ANSWER Key establishment/authentication [3], efficient symmetric bulk encryption [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate the assertion 'the padlock means any entered data are safe'. [8]",
+        "model": "/ WORKED ANSWER Encrypted in transit [2], does not certify honesty/safety of destination [2], phishing/endpoint compromise possible [2], domain checks and practical conclusion [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "hybrid encryption means: Combines asymmetric key establishment with symmetric data encryption.",
+          "answer": "true",
+          "feedback": "hybrid encryption — Combines asymmetric key establishment with symmetric data encryption."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "certificate means: Temporary symmetric key for a connection/session.",
+          "answer": "false",
+          "feedback": "certificate — Credential binding identity to a public key, subject to trust validation."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "confidentiality means: Preventing unauthorised reading of information.",
+          "answer": "true",
+          "feedback": "confidentiality — Preventing unauthorised reading of information."
+        }
+      ]
+    }
+  ]
+}

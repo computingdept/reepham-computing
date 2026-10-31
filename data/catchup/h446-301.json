@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-301",
+  "course": "h446",
+  "title": "Advanced Big O and space complexity",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does O(log n) indicate?",
+          "answer": "Work growing logarithmically, as with repeated halving.",
+          "options": [
+            "Extra memory beyond input storage.",
+            "No. It classifies asymptotic growth.",
+            "Work growing logarithmically, as with repeated halving."
+          ],
+          "feedback": "Work growing logarithmically, as with repeated halving."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is auxiliary space?",
+          "answer": "Extra memory beyond input storage.",
+          "options": [
+            "No. It classifies asymptotic growth.",
+            "Extra memory beyond input storage.",
+            "Work growing logarithmically, as with repeated halving."
+          ],
+          "feedback": "Extra memory beyond input storage."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Is Big O an exact millisecond prediction?",
+          "answer": "No. It classifies asymptotic growth.",
+          "options": [
+            "No. It classifies asymptotic growth.",
+            "Work growing logarithmically, as with repeated halving.",
+            "Extra memory beyond input storage."
+          ],
+          "feedback": "No. It classifies asymptotic growth."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A sorted array of length64 is reduced by half after each unsuccessful search step. How many halvings reach length1?",
+          "answer": "Six: 64→32→16→8→4→2→1.",
+          "options": [
+            "Work growing logarithmically, as with repeated halving.",
+            "Extra memory beyond input storage.",
+            "Six: 64→32→16→8→4→2→1."
+          ],
+          "feedback": "Six: 64→32→16→8→4→2→1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify the dominant operation",
+          "text": "Single full loop grows O(n); two full nested n loops grow O(n²). Repeated halving grows O(log n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate time and space",
+          "text": "Counting two scalar variables uses O(1) auxiliary memory even if repeated n² times; copying n elements uses O(n) extra storage."
+        },
+        {
+          "type": "paragraph",
+          "title": "Interpret asymptotics",
+          "text": "Big O describes a bound on growth, not an exact runtime. Constants, cache effects and data size still matter."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Each element is visited once: time O(n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the method",
+          "text": "The only additional state is a scalar sum (apart from iterator control): auxiliary space O(1)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'asymptotic'?",
+          "answer": "Behaviour as input size grows.",
+          "options": [
+            "Storage additional to input.",
+            "Behaviour as input size grows.",
+            "Asymptotic upper bound."
+          ],
+          "feedback": "asymptotic — Behaviour as input size grows."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Big O'?",
+          "answer": "Asymptotic upper bound.",
+          "options": [
+            "Asymptotic upper bound.",
+            "Behaviour as input size grows.",
+            "Storage additional to input."
+          ],
+          "feedback": "Big O — Asymptotic upper bound."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'auxiliary space'?",
+          "answer": "Storage additional to input.",
+          "options": [
+            "Behaviour as input size grows.",
+            "Asymptotic upper bound.",
+            "Storage additional to input."
+          ],
+          "feedback": "auxiliary space — Storage additional to input."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Copy performs a constant amount of work n times, so time grows O(n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the method",
+          "text": "New array b stores n values, giving O(n) auxiliary memory."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth such as n².",
+          "answer": "polynomial",
+          "options": [
+            "asymptotic",
+            "Big O",
+            "polynomial"
+          ],
+          "feedback": "polynomial — Growth such as n²."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth such as 2ⁿ.",
+          "answer": "exponential",
+          "options": [
+            "Big O",
+            "exponential",
+            "asymptotic"
+          ],
+          "feedback": "exponential — Growth such as 2ⁿ."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Behaviour as input size grows.",
+          "answer": "asymptotic",
+          "options": [
+            "asymptotic",
+            "Big O",
+            "auxiliary space"
+          ],
+          "feedback": "asymptotic — Behaviour as input size grows."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Asymptotic upper bound.",
+          "answer": "Big O",
+          "options": [
+            "asymptotic",
+            "auxiliary space",
+            "Big O"
+          ],
+          "feedback": "Big O — Asymptotic upper bound."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Classify loops running once, n times, n² times and repeatedly halving n. [4]",
+          "answer": "AND MARKING POINTS O(1) [1], O(n) [1], O(n²) [1], O(log n) [1].",
+          "options": [
+            "AND MARKING POINTS Loop copies n elements [2], O(n) time [1]; new array size n [2], O(n) auxiliary space [1].",
+            "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1].",
+            "AND MARKING POINTS O(1) [1], O(n) [1], O(n²) [1], O(log n) [1]."
+          ],
+          "feedback": "AND MARKING POINTS O(1) [1], O(n) [1], O(n²) [1], O(log n) [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 A function makes a new copy of every one of n elements. Identify time and auxiliary space. [6]",
+          "answer": "AND MARKING POINTS Loop copies n elements [2], O(n) time [1]; new array size n [2], O(n) auxiliary space [1].",
+          "options": [
+            "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1].",
+            "AND MARKING POINTS Loop copies n elements [2], O(n) time [1]; new array size n [2], O(n) auxiliary space [1].",
+            "AND MARKING POINTS O(1) [1], O(n) [1], O(n²) [1], O(log n) [1]."
+          ],
+          "feedback": "AND MARKING POINTS Loop copies n elements [2], O(n) time [1]; new array size n [2], O(n) auxiliary space [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Compare bubble sort and merge sort at large n using time and space trade-offs. [6]",
+          "answer": "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1].",
+          "options": [
+            "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1].",
+            "AND MARKING POINTS O(1) [1], O(n) [1], O(n²) [1], O(log n) [1].",
+            "AND MARKING POINTS Loop copies n elements [2], O(n) time [1]; new array size n [2], O(n) auxiliary space [1]."
+          ],
+          "feedback": "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Compare bubble sort and merge sort at large n using time and space trade-offs. [6]",
+        "model": "AND MARKING POINTS Bubble O(n²) worst [2] and O(1) auxiliary in-place [1]; merge O(n log n) worst [2] but typically O(n) auxiliary storage [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Big O means: Asymptotic upper bound.",
+          "answer": "true",
+          "feedback": "Big O — Asymptotic upper bound."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "auxiliary space means: Growth such as 2ⁿ.",
+          "answer": "false",
+          "feedback": "auxiliary space — Storage additional to input."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "polynomial means: Growth such as n².",
+          "answer": "true",
+          "feedback": "polynomial — Growth such as n²."
+        }
+      ]
+    }
+  ]
+}

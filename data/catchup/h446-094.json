@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-094",
+  "course": "h446",
+  "title": "Lesson 094 · CPU Performance: Clock, Cores and Cache",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a cache hit?",
+          "answer": "Requested item found in cache.",
+          "options": [
+            "A unit of processor clock timing.",
+            "An independent CPU execution unit.",
+            "Requested item found in cache."
+          ],
+          "feedback": "Requested item found in cache."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a cycle?",
+          "answer": "A unit of processor clock timing.",
+          "options": [
+            "An independent CPU execution unit.",
+            "A unit of processor clock timing.",
+            "Requested item found in cache."
+          ],
+          "feedback": "A unit of processor clock timing."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a core?",
+          "answer": "An independent CPU execution unit.",
+          "options": [
+            "An independent CPU execution unit.",
+            "Requested item found in cache.",
+            "A unit of processor clock timing."
+          ],
+          "feedback": "An independent CPU execution unit."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A search space of 64 candidates is repeatedly halved to one. How many halvings?",
+          "answer": "64→32→16→8→4→2→1; six halvings.",
+          "options": [
+            "Requested item found in cache.",
+            "A unit of processor clock timing.",
+            "64→32→16→8→4→2→1; six halvings."
+          ],
+          "feedback": "64→32→16→8→4→2→1; six halvings."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Clock speed counts clock cycles per second; one cycle is not always one complete instruction. Frequency alone cannot predict program performance."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Multiple CPU cores improve performance most for work divided into independently executable threads; a strictly sequential task may gain little."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Cache is small, fast storage close to CPU. A cache hit avoids some slower RAM accesses; cache size, locality and hit rate influence results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the mechanism",
+          "text": "3 GHz offers 50% more cycles each second than2 GHz; this does not universally imply 50% faster program runtime. The comparison requires equal microarchitecture and workload assumptions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'GHz'?",
+          "answer": "Billions of cycles per second.",
+          "options": [
+            "Data found in CPU cache.",
+            "Billions of cycles per second.",
+            "CPU execution core."
+          ],
+          "feedback": "GHz — Billions of cycles per second."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'core'?",
+          "answer": "CPU execution core.",
+          "options": [
+            "CPU execution core.",
+            "Billions of cycles per second.",
+            "Data found in CPU cache."
+          ],
+          "feedback": "core — CPU execution core."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'cache hit'?",
+          "answer": "Data found in CPU cache.",
+          "options": [
+            "Billions of cycles per second.",
+            "CPU execution core.",
+            "Data found in CPU cache."
+          ],
+          "feedback": "cache hit — Data found in CPU cache."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the mechanism",
+          "text": "It may not be substantially faster from extra cores alone; only one thread is the bottleneck. Parallel benefits need tasks/threads that can run concurrently."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Instructions retired per cycle (workload dependent).",
+          "answer": "IPC",
+          "options": [
+            "GHz",
+            "core",
+            "IPC"
+          ],
+          "feedback": "IPC — Instructions retired per cycle (workload dependent)."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Billions of cycles per second.",
+          "answer": "GHz",
+          "options": [
+            "cache hit",
+            "GHz",
+            "core"
+          ],
+          "feedback": "GHz — Billions of cycles per second."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? CPU execution core.",
+          "answer": "core",
+          "options": [
+            "core",
+            "GHz",
+            "cache hit"
+          ],
+          "feedback": "core — CPU execution core."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Data found in CPU cache.",
+          "answer": "cache hit",
+          "options": [
+            "GHz",
+            "core",
+            "cache hit"
+          ],
+          "feedback": "cache hit — Data found in CPU cache."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 Explain effects of clock speed, number of cores and cache on performance. [6]",
+          "answer": "Clock affects cycles/sec [2], cores parallel tasks [2], cache reduces slower memory accesses [2].",
+          "options": [
+            "3/2=1.5 [2], Y50% more cycles/s [2], memory stalls/parallelisation or instruction mix [2].",
+            "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2].",
+            "Clock affects cycles/sec [2], cores parallel tasks [2], cache reduces slower memory accesses [2]."
+          ],
+          "feedback": "Clock affects cycles/sec [2], cores parallel tasks [2], cache reduces slower memory accesses [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2/3 CPU X 2GHz and Y 3GHz have identical IPC; compute ratio of cycles/sec and one reason runtime may differ from ratio. [6]",
+          "answer": "3/2=1.5 [2], Y50% more cycles/s [2], memory stalls/parallelisation or instruction mix [2].",
+          "options": [
+            "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2].",
+            "3/2=1.5 [2], Y50% more cycles/s [2], memory stalls/parallelisation or instruction mix [2].",
+            "Clock affects cycles/sec [2], cores parallel tasks [2], cache reduces slower memory accesses [2]."
+          ],
+          "feedback": "3/2=1.5 [2], Y50% more cycles/s [2], memory stalls/parallelisation or instruction mix [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Recommend improvements for school video rendering versus a sequential exam-marking script. Discuss CPU performance factors. [6]",
+          "answer": "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2].",
+          "options": [
+            "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2].",
+            "Clock affects cycles/sec [2], cores parallel tasks [2], cache reduces slower memory accesses [2].",
+            "3/2=1.5 [2], Y50% more cycles/s [2], memory stalls/parallelisation or instruction mix [2]."
+          ],
+          "feedback": "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Recommend improvements for school video rendering versus a sequential exam-marking script. Discuss CPU performance factors. [6]",
+        "model": "Rendering often exploits cores [2], sequential script needs stronger single-thread performance [2], cache/IPC/workload caveats [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "core means: CPU execution core.",
+          "answer": "true",
+          "feedback": "core — CPU execution core."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "cache hit means: Billions of cycles per second.",
+          "answer": "false",
+          "feedback": "cache hit — Data found in CPU cache."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "IPC means: Instructions retired per cycle (workload dependent).",
+          "answer": "true",
+          "feedback": "IPC — Instructions retired per cycle (workload dependent)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-285",
+  "course": "h446",
+  "title": "Network security, proxies and firewalls",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Can network packets travelling between the same two endpoints take different routes?",
+          "answer": "Yes, routing decisions and changing network conditions can lead to different paths.",
+          "options": [
+            "Yes, routing decisions and changing network conditions can lead to different paths.",
+            "A reliable, ordered byte stream between endpoints.",
+            "Deny; AND requires both conditions true."
+          ],
+          "feedback": "Yes, routing decisions and changing network conditions can lead to different paths."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the transport-layer role of TCP?",
+          "answer": "A reliable, ordered byte stream between endpoints.",
+          "options": [
+            "Yes, routing decisions and changing network conditions can lead to different paths.",
+            "Deny; AND requires both conditions true.",
+            "A reliable, ordered byte stream between endpoints."
+          ],
+          "feedback": "A reliable, ordered byte stream between endpoints."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a rule ‘allow if staff AND authenticated’ mean if authenticated is false?",
+          "answer": "Deny; AND requires both conditions true.",
+          "options": [
+            "A reliable, ordered byte stream between endpoints.",
+            "Deny; AND requires both conditions true.",
+            "Yes, routing decisions and changing network conditions can lead to different paths."
+          ],
+          "feedback": "Deny; AND requires both conditions true."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can an open port be useful but also increase risk?",
+          "answer": "It permits needed service connections, but exposes that service to network-originated attacks or probing.",
+          "options": [
+            "It permits needed service connections, but exposes that service to network-originated attacks or probing.",
+            "Yes, routing decisions and changing network conditions can lead to different paths.",
+            "A reliable, ordered byte stream between endpoints."
+          ],
+          "feedback": "It permits needed service connections, but exposes that service to network-originated attacks or probing."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check a firewall rule",
+          "text": "A firewall applies configured rules to traffic according to properties such as direction, source/destination, ports and state. A basic rule example can allow TCP port 443 but deny 22."
+        },
+        {
+          "type": "paragraph",
+          "title": "Different request, different decision",
+          "text": "A TCP connection to port 22 is denied by the illustrated policy. A firewall rule is not automatically a guarantee that the permitted service is safe."
+        },
+        {
+          "type": "paragraph",
+          "title": "A proxy is an intermediary",
+          "text": "A forward proxy makes requests on behalf of clients, potentially enforcing policy or caching suitable resources. HTTPS content remains encrypted unless a controlled interception mechanism is in place."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · 443",
+          "text": "An inbound TCP connection destined for port 443 matches the allow rule and is permitted."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · 22",
+          "text": "An inbound TCP connection destined for port 22 matches the deny rule and is blocked."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Scope",
+          "text": "An allow rule permits traffic; it does not prove that an application or connection is harmless."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'firewall'?",
+          "answer": "Security control that permits or blocks network traffic according to rules.",
+          "options": [
+            "Intermediary that makes requests on a client's behalf.",
+            "A condition and action defining whether traffic is permitted.",
+            "Security control that permits or blocks network traffic according to rules."
+          ],
+          "feedback": "firewall — Security control that permits or blocks network traffic according to rules."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'forward proxy'?",
+          "answer": "Intermediary that makes requests on a client's behalf.",
+          "options": [
+            "A condition and action defining whether traffic is permitted.",
+            "Intermediary that makes requests on a client's behalf.",
+            "Security control that permits or blocks network traffic according to rules."
+          ],
+          "feedback": "forward proxy — Intermediary that makes requests on a client's behalf."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'filter rule'?",
+          "answer": "A condition and action defining whether traffic is permitted.",
+          "options": [
+            "A condition and action defining whether traffic is permitted.",
+            "Security control that permits or blocks network traffic according to rules.",
+            "Intermediary that makes requests on a client's behalf."
+          ],
+          "feedback": "filter rule — A condition and action defining whether traffic is permitted."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Allowed resource",
+          "text": "The student's request reaches the proxy, which permits it and contacts the website; a suitable cached response may be used instead."
+        },
+        {
+          "type": "paragraph",
+          "title": "Blocked resource",
+          "text": "If the proxy's policy denies the destination, it does not forward the request to that site; the student receives a blocking response."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Stored copy of suitable data for reuse.",
+          "answer": "cache",
+          "options": [
+            "cache",
+            "firewall",
+            "forward proxy"
+          ],
+          "feedback": "cache — Stored copy of suitable data for reuse."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Use multiple complementary security controls rather than trusting one.",
+          "answer": "defence in depth",
+          "options": [
+            "firewall",
+            "forward proxy",
+            "defence in depth"
+          ],
+          "feedback": "defence in depth — Use multiple complementary security controls rather than trusting one."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Security control that permits or blocks network traffic according to rules.",
+          "answer": "firewall",
+          "options": [
+            "filter rule",
+            "firewall",
+            "forward proxy"
+          ],
+          "feedback": "firewall — Security control that permits or blocks network traffic according to rules."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Intermediary that makes requests on a client's behalf.",
+          "answer": "forward proxy",
+          "options": [
+            "forward proxy",
+            "firewall",
+            "filter rule"
+          ],
+          "feedback": "forward proxy — Intermediary that makes requests on a client's behalf."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 A firewall allows inbound TCP 443 but denies inbound TCP 22. Is an inbound connection to destination port 22 allowed? Explain. [2]",
+          "answer": "[2] No, the connection is blocked [1], because inbound TCP destination port 22 matches the deny rule [1].",
+          "options": [
+            "[2] No, the connection is blocked [1], because inbound TCP destination port 22 matches the deny rule [1].",
+            "[4] Accept any two appropriately explained functions. Examples: apply browsing rules [1] to deny disallowed destinations before contacting them [1]; cache suitable responses [1] to reduce repeat external downloads [1]; or log request…",
+            "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content…"
+          ],
+          "feedback": "[2] No, the connection is blocked [1], because inbound TCP destination port 22 matches the deny rule [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 Name and explain two different functions of a forward proxy in a school network. [4]",
+          "answer": "[4] Accept any two appropriately explained functions. Examples: apply browsing rules [1] to deny disallowed destinations before contacting them [1]; cache suitable responses [1] to reduce repeat external downloads [1]; or log request…",
+          "options": [
+            "[2] No, the connection is blocked [1], because inbound TCP destination port 22 matches the deny rule [1].",
+            "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content…",
+            "[4] Accept any two appropriately explained functions. Examples: apply browsing rules [1] to deny disallowed destinations before contacting them [1]; cache suitable responses [1] to reduce repeat external downloads [1]; or log request…"
+          ],
+          "feedback": "[4] Accept any two appropriately explained functions. Examples: apply browsing rules [1] to deny disallowed destinations before contacting them [1]; cache suitable responses [1] to reduce repeat external downloads [1]; or log request metadata [1] to support authorised monitoring or troubleshooting [1]. Maximum two functions × 2 marks."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Why is the claim ‘a firewall makes all allowed traffic safe’ incorrect? Explain two risks that can remain on allowed connections and identify two additional safeguards. [6]",
+          "answer": "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content…",
+          "options": [
+            "[4] Accept any two appropriately explained functions. Examples: apply browsing rules [1] to deny disallowed destinations before contacting them [1]; cache suitable responses [1] to reduce repeat external downloads [1]; or log request…",
+            "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content…",
+            "[2] No, the connection is blocked [1], because inbound TCP destination port 22 matches the deny rule [1]."
+          ],
+          "feedback": "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content [1], which may still reach a browser or user [1]. Identify two additional safeguards with purpose, e.g. patching to close known flaws [1] and strong authentication or monitoring to reduce misuse or detect incidents [1]. Credit other valid distinct risks and defences."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Why is the claim ‘a firewall makes all allowed traffic safe’ incorrect? Explain two risks that can remain on allowed connections and identify two additional safeguards. [6]",
+        "model": "[6] Allowed applications can contain exploitable vulnerabilities [1], with a relevant explanation such as an unpatched service being attacked on an allowed port [1]. Permitted traffic can also contain phishing or malicious content [1], which may still reach a browser or user [1]. Identify two additional safeguards with purpose, e.g. patching to close known flaws [1] and strong authentication or monitoring to reduce misuse or detect incidents [1]. Credit other valid distinct risks and defences.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "forward proxy means: Intermediary that makes requests on a client's behalf.",
+          "answer": "true",
+          "feedback": "forward proxy — Intermediary that makes requests on a client's behalf."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "filter rule means: Use multiple complementary security controls rather than trusting one.",
+          "answer": "false",
+          "feedback": "filter rule — A condition and action defining whether traffic is permitted."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "cache means: Stored copy of suitable data for reuse.",
+          "answer": "true",
+          "feedback": "cache — Stored copy of suitable data for reuse."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-029",
+  "course": "h446",
+  "title": "Karnaugh maps 2: simplify to gates",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a Karnaugh-map pair, A stays 0 and B changes between 0 and 1. What is the simplified term?",
+          "answer": "¬A",
+          "options": [
+            "24 values; GetLength(2) = 4",
+            "¬A",
+            "[3, 6, 2, 8]"
+          ],
+          "feedback": "A stays 0, so retain NOT A (¬A). B changes, so remove B."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Show the array after one complete left-to-right pass of ascending bubble sort on [8, 3, 6, 2] .",
+          "answer": "[3, 6, 2, 8]",
+          "options": [
+            "[3, 6, 2, 8]",
+            "¬A",
+            "24 values; GetLength(2) = 4"
+          ],
+          "feedback": "Swap 8 and 3 → [3, 8, 6, 2]; swap 8 and 6 → [3, 6, 8, 2]; swap 8 and 2 → [3, 6, 2, 8]. The largest value is now last."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: C#: int[,,] scores = new int[2, 3, 4]; How many values can it store? What does scores.GetLength(2) return?",
+          "answer": "24 values; GetLength(2) = 4",
+          "options": [
+            "¬A",
+            "[3, 6, 2, 8]",
+            "24 values; GetLength(2) = 4"
+          ],
+          "feedback": "2 layers × 3 rows × 4 columns = 24 values. Dimension 2 is the third dimension (columns)."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Add 01000000 0011 and 01000000 0010 . Format: 8-bit two’s-complement fractional mantissa + 4-bit two’s-complement exponent . Show exponent alignment and the final normalised result.",
+          "answer": "01100000 0011 (denary 6)",
+          "options": [
+            "[3, 6, 2, 8]",
+            "01100000 0011 (denary 6)",
+            "¬A"
+          ],
+          "feedback": "Align to exponent 3 by shifting the second mantissa right: 01000000 → 00100000. Add the mantissas: 01000000 + 00100000 = 01100000. The exponent remains 0011. This is normalised: 0.75 × 2³ = 6."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find the 1s",
+          "text": "Look at the 2×2 map on the left. Three squares contain 1 . We need to cover them in groups of neighbouring 1s. Use rectangles containing 1, 2, 4, 8 or 16 cells. Include only 1s, and choose the largest useful groups. Diagonal cells are not neighbours."
+        },
+        {
+          "type": "paragraph",
+          "title": "A square may belong to two groups",
+          "text": "This is overlap . It is allowed when it makes the expression simpler."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep the inputs that stay the same",
+          "text": "Bottom pair: A stays 1; B changes. Keep A. Right pair: B stays 1; A changes. Keep B."
+        },
+        {
+          "type": "paragraph",
+          "title": "The outside columns form one group",
+          "text": "BC runs 00, 01, 11, 10 . The first and last columns are neighbours: only B changes between 00 and 10 . Imagine rolling the map so its left and right edges meet. The four 1s make a 2 × 2 group ; the middle 0s are outside it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · How do two groups become a circuit?",
+          "text": "Rows A; columns BC in Gray-code order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Find the two pairs of 1s",
+          "text": "Follow the same coloured groups on the map on the left. Each pair becomes one term."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'efficient group'?",
+          "answer": "A group of 1, 2, 4, 8 or 16 neighbouring 1s.",
+          "options": [
+            "A group of 1, 2, 4, 8 or 16 neighbouring 1s.",
+            "The same 1 can appear in two different groups.",
+            "The left/right edges touch, and the top/bottom edges touch."
+          ],
+          "feedback": "efficient group — A group of 1, 2, 4, 8 or 16 neighbouring 1s."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'overlap'?",
+          "answer": "The same 1 can appear in two different groups.",
+          "options": [
+            "A group of 1, 2, 4, 8 or 16 neighbouring 1s.",
+            "The left/right edges touch, and the top/bottom edges touch.",
+            "The same 1 can appear in two different groups."
+          ],
+          "feedback": "overlap — The same 1 can appear in two different groups."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'wraparound'?",
+          "answer": "The left/right edges touch, and the top/bottom edges touch.",
+          "options": [
+            "The same 1 can appear in two different groups.",
+            "The left/right edges touch, and the top/bottom edges touch.",
+            "A group of 1, 2, 4, 8 or 16 neighbouring 1s."
+          ],
+          "feedback": "wraparound — The left/right edges touch, and the top/bottom edges touch."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find one pair",
+          "text": "WE DO 1 OF 4 · EASIER · ONE PAIR Find one pair Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Original map: no groups or answers shown. Example 1 of 4"
+        },
+        {
+          "type": "paragraph",
+          "title": "1. Find the 1s",
+          "text": "Circle the two 1s. Which two inputs always equal 1? Which input changes?"
+        },
+        {
+          "type": "paragraph",
+          "title": "2. Compare your circles",
+          "text": "The pair is on row A=1, across columns BC=01 and 11."
+        },
+        {
+          "type": "paragraph",
+          "title": "3. Simplify the group(s)",
+          "text": "Use the two unchanged inputs to make one Boolean term. Which gate joins them?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An input letter, such as A, or its NOT, ¬A.",
+          "answer": "literal",
+          "options": [
+            "overlap",
+            "literal",
+            "efficient group"
+          ],
+          "feedback": "literal — An input letter, such as A, or its NOT, ¬A."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? An expression made with AND, such as A ∧ B.",
+          "answer": "product term",
+          "options": [
+            "product term",
+            "efficient group",
+            "overlap"
+          ],
+          "feedback": "product term — An expression made with AND, such as A ∧ B."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The same output with fewer variables or gate inputs.",
+          "answer": "simplified expression",
+          "options": [
+            "efficient group",
+            "overlap",
+            "simplified expression"
+          ],
+          "feedback": "simplified expression — The same output with fewer variables or gate inputs."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two expressions that give the same output for every input.",
+          "answer": "equivalent",
+          "options": [
+            "overlap",
+            "equivalent",
+            "efficient group"
+          ],
+          "feedback": "equivalent — Two expressions that give the same output for every input."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: How do two groups become a circuit? Rows A; columns BC in Gray-code order.",
+          "answer": "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
+          "options": [
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
+            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11."
+          ],
+          "feedback": "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Find one pair",
+          "answer": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
+          "options": [
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
+            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+          ],
+          "feedback": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Let two groups share a 1",
+          "answer": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
+          "options": [
+            "STEP 2 · ORANGE PAIR Keep ¬A and C A = 0 in both squares, so write ¬A . C = 1 in both, so keep C . B changes , so remove B. First term: ¬A ∧ C",
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and BC columns BC columns A rows 00 01 11 10 0 1 0 0 0 0 0 1 1 0 Correct grouping shown. The pair is on row A=1, across columns BC=01 and 11.",
+            "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+          ],
+          "feedback": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Let two groups share a 1",
+        "model": "CHECK · GROUP 2. Compare your circles Karnaugh map A rows and B columns B columns A rows 0 1 0 1 1 1 0 1 Correct grouping shown. Top row and right column both contain a valid pair, sharing the top-right 1.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "overlap means: The same 1 can appear in two different groups.",
+          "answer": "true",
+          "feedback": "overlap — The same 1 can appear in two different groups."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "wraparound means: An expression made with AND, such as A ∧ B.",
+          "answer": "false",
+          "feedback": "wraparound — The left/right edges touch, and the top/bottom edges touch."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "literal means: An input letter, such as A, or its NOT, ¬A.",
+          "answer": "true",
+          "feedback": "literal — An input letter, such as A, or its NOT, ¬A."
+        }
+      ]
+    }
+  ]
+}

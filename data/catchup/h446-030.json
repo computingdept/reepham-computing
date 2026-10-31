@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-030",
+  "course": "h446",
+  "title": "Half adders and full adders",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When we group four neighbouring 1s on a Karnaugh map, what happens to the Boolean expression?",
+          "answer": "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same.",
+          "options": [
+            "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same.",
+            "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…",
+            "Insert the values in the order given . 40 becomes the root. 20 goes left of 40; 60 goes right of 40. 10 goes left of 20; 30 goes right of 20; 50 goes left of 60. Every smaller value goes to the left and every larger…"
+          ],
+          "feedback": "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Represent −13 using 8-bit sign and magnitude.",
+          "answer": "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…",
+          "options": [
+            "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same.",
+            "Insert the values in the order given . 40 becomes the root. 20 goes left of 40; 60 goes right of 40. 10 goes left of 20; 30 goes right of 20; 50 goes left of 60. Every smaller value goes to the left and every larger…",
+            "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…"
+          ],
+          "feedback": "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Insert 40, 20, 60, 10, 30, 50 into an empty binary search tree. Draw the resulting tree.",
+          "answer": "Insert the values in the order given . 40 becomes the root. 20 goes left of 40; 60 goes right of 40. 10 goes left of 20; 30 goes right of 20; 50 goes left of 60. Every smaller value goes to the left and every larger…",
+          "options": [
+            "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…",
+            "Insert the values in the order given . 40 becomes the root. 20 goes left of 40; 60 goes right of 40. 10 goes left of 20; 30 goes right of 20; 50 goes left of 60. Every smaller value goes to the left and every larger…",
+            "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same."
+          ],
+          "feedback": "Insert the values in the order given . 40 becomes the root. 20 goes left of 40; 60 goes right of 40. 10 goes left of 20; 30 goes right of 20; 50 goes left of 60. Every smaller value goes to the left and every larger…"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Using a 5-bit two’s complement mantissa and 4-bit two’s complement exponent, calculate A − B. Show exponent alignment and mantissa subtraction. A = 0.1100₂ × 2³; B = 0.1000₂ × 2².",
+          "answer": "Align exponents: B = 0.0100₂ × 2³. Subtract mantissas: 0.1100₂ − 0.0100₂ = 0.1000₂. Answer: 0.1000₂ × 2³ = 4.",
+          "options": [
+            "Align exponents: B = 0.0100₂ × 2³. Subtract mantissas: 0.1100₂ − 0.0100₂ = 0.1000₂. Answer: 0.1000₂ × 2³ = 4.",
+            "The Boolean expression becomes simpler. Variables that change within the group can be removed, leaving only variables that stay the same.",
+            "Step 1: 13 in binary is 1101. Step 2: pad the magnitude to seven bits: 0001101. Step 3: because the number is negative, put 1 in the sign bit. Answer: 1 | 0001101 = 10001101. This is sign and magnitude , not two’s…"
+          ],
+          "feedback": "Align exponents: B = 0.0100₂ × 2³. Subtract mantissas: 0.1100₂ − 0.0100₂ = 0.1000₂. Answer: 0.1000₂ × 2³ = 4."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with binary addition",
+          "text": "One binary column can produce a sum bit and a carry bit."
+        },
+        {
+          "type": "paragraph",
+          "title": "Meet the half adder",
+          "text": "A half adder adds two single-bit inputs: A and B."
+        },
+        {
+          "type": "paragraph",
+          "title": "Discover the two gates",
+          "text": "XOR calculates Sum; AND calculates Carry."
+        },
+        {
+          "type": "paragraph",
+          "title": "Build its truth table",
+          "text": "Test every possible pair of inputs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model 1 + 1 with a half adder",
+          "text": "We have just learned XOR and AND. Now model the output when A = 1 and B = 1. 1 + 1 = 10₂"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Rightmost result bit",
+          "text": "Sum = 0"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'half adder'?",
+          "answer": "A circuit adding two input bits.",
+          "options": [
+            "A circuit adding two bits plus a carry-in.",
+            "The result bit for the current column.",
+            "A circuit adding two input bits."
+          ],
+          "feedback": "half adder — A circuit adding two input bits."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'full adder'?",
+          "answer": "A circuit adding two bits plus a carry-in.",
+          "options": [
+            "The result bit for the current column.",
+            "A circuit adding two bits plus a carry-in.",
+            "A circuit adding two input bits."
+          ],
+          "feedback": "full adder — A circuit adding two bits plus a carry-in."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Sum'?",
+          "answer": "The result bit for the current column.",
+          "options": [
+            "The result bit for the current column.",
+            "A circuit adding two input bits.",
+            "A circuit adding two bits plus a carry-in."
+          ],
+          "feedback": "Sum — The result bit for the current column."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Half-adder expressions",
+          "text": "OCR asks for S and C."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same formulae",
+          "text": "S = A ? B C = A ? B"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same formulae",
+          "text": "S = A XOR B C = A AND B"
+        },
+        {
+          "type": "paragraph",
+          "title": "Half-adder truth table",
+          "text": "Complete the four outputs."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A bit passed to the next column.",
+          "answer": "Carry",
+          "options": [
+            "Carry",
+            "half adder",
+            "full adder"
+          ],
+          "feedback": "Carry — A bit passed to the next column."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Carry arriving from the previous lower bit.",
+          "answer": "carry-in",
+          "options": [
+            "half adder",
+            "full adder",
+            "carry-in"
+          ],
+          "feedback": "carry-in — Carry arriving from the previous lower bit."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Carry passed to the next higher bit.",
+          "answer": "carry-out",
+          "options": [
+            "full adder",
+            "carry-out",
+            "half adder"
+          ],
+          "feedback": "carry-out — Carry passed to the next higher bit."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? True when inputs differ.",
+          "answer": "XOR",
+          "options": [
+            "XOR",
+            "half adder",
+            "full adder"
+          ],
+          "feedback": "XOR — True when inputs differ."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Model 1 + 1 with a half adder We have just learned XOR and AND. Now model the output when A = 1 and B = 1.",
+          "answer": "STEP 2 · CARRY Next column Carry = 1",
+          "options": [
+            "STEP 2 · CARRY Next column Carry = 1",
+            "CHECK Complete the same formulae S = A XOR B C = A AND B",
+            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1"
+          ],
+          "feedback": "STEP 2 · CARRY Next column Carry = 1"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Half-adder expressions OCR asks for S and C.",
+          "answer": "CHECK Complete the same formulae S = A XOR B C = A AND B",
+          "options": [
+            "STEP 2 · CARRY Next column Carry = 1",
+            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+            "CHECK Complete the same formulae S = A XOR B C = A AND B"
+          ],
+          "feedback": "CHECK Complete the same formulae S = A XOR B C = A AND B"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Half-adder truth table Complete the four outputs.",
+          "answer": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+          "options": [
+            "CHECK Complete the same formulae S = A XOR B C = A AND B",
+            "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+            "STEP 2 · CARRY Next column Carry = 1"
+          ],
+          "feedback": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Half-adder truth table Complete the four outputs.",
+        "model": "CHECK Fill the same table A B | S C 0 0 | 0 0 0 1 | 1 0 1 0 | 1 0 1 1 | 0 1",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "full adder means: A circuit adding two bits plus a carry-in.",
+          "answer": "true",
+          "feedback": "full adder — A circuit adding two bits plus a carry-in."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Sum means: Carry arriving from the previous lower bit.",
+          "answer": "false",
+          "feedback": "Sum — The result bit for the current column."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Carry means: A bit passed to the next column.",
+          "answer": "true",
+          "feedback": "Carry — A bit passed to the next column."
+        }
+      ]
+    }
+  ]
+}

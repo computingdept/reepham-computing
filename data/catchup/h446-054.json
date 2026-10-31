@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-054",
+  "course": "h446",
+  "title": "Lesson 054 · Hash Tables and Dictionary<TKey,TValue>",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which data structure uses FIFO in BFS?",
+          "answer": "A queue.",
+          "options": [
+            "A queue.",
+            "Keys to associated values.",
+            "Different keys map to same hash location."
+          ],
+          "feedback": "A queue."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a dictionary map?",
+          "answer": "Keys to associated values.",
+          "options": [
+            "A queue.",
+            "Different keys map to same hash location.",
+            "Keys to associated values."
+          ],
+          "feedback": "Keys to associated values."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a collision in hashing?",
+          "answer": "Different keys map to same hash location.",
+          "options": [
+            "Keys to associated values.",
+            "Different keys map to same hash location.",
+            "A queue."
+          ],
+          "feedback": "Different keys map to same hash location."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 023",
+          "answer": "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?",
+          "options": [
+            "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?",
+            "A queue.",
+            "Keys to associated values."
+          ],
+          "feedback": "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Discover",
+          "text": "A hash function maps keys to hash values that guide placement/lookups. A collision occurs if distinct keys map to the same location/bucket."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "A .NET Dictionary<TKey,TValue> handles collision management internally; do not equate its actual buckets with simplistic modulo examples."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "To read a missing key safely, use TryGetValue. Hash-table operations are often expected O(1) but poor collisions can degrade performance."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the trace",
+          "text": "Both keys collide in bucket 2; a table must resolve collision by chaining or probing."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash function'?",
+          "answer": "Maps keys to hash values.",
+          "options": [
+            "Different keys share a target bucket.",
+            "Hash table storage location.",
+            "Maps keys to hash values."
+          ],
+          "feedback": "hash function — Maps keys to hash values."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'collision'?",
+          "answer": "Different keys share a target bucket.",
+          "options": [
+            "Hash table storage location.",
+            "Different keys share a target bucket.",
+            "Maps keys to hash values."
+          ],
+          "feedback": "collision — Different keys share a target bucket."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'bucket'?",
+          "answer": "Hash table storage location.",
+          "options": [
+            "Hash table storage location.",
+            "Maps keys to hash values.",
+            "Different keys share a target bucket."
+          ],
+          "feedback": "bucket — Hash table storage location."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the trace",
+          "text": "No collision: key 8 maps bucket 3, key11 maps bucket1."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Filled entries relative to capacity.",
+          "answer": "load factor",
+          "options": [
+            "load factor",
+            "hash function",
+            "collision"
+          ],
+          "feedback": "load factor — Filled entries relative to capacity."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maps keys to hash values.",
+          "answer": "hash function",
+          "options": [
+            "collision",
+            "bucket",
+            "hash function"
+          ],
+          "feedback": "hash function — Maps keys to hash values."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Different keys share a target bucket.",
+          "answer": "collision",
+          "options": [
+            "bucket",
+            "collision",
+            "hash function"
+          ],
+          "feedback": "collision — Different keys share a target bucket."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Hash table storage location.",
+          "answer": "bucket",
+          "options": [
+            "bucket",
+            "hash function",
+            "collision"
+          ],
+          "feedback": "bucket — Hash table storage location."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 With toy h(k)=k mod5, find buckets for keys 8,13,19. [6]",
+          "answer": "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
+          "options": [
+            "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+            "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2/3 Write C# Dictionary<string,int> code storing marks Ada80 and Ben65, then safely test whether Cleo exists. [6]",
+          "answer": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+          "options": [
+            "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
+            "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key."
+          ],
+          "feedback": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare chaining and linear probing for toy hash collisions, and state two performance concerns. [6]",
+          "answer": "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
+          "options": [
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+            "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
+            "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare chaining and linear probing for toy hash collisions, and state two performance concerns. [6]",
+        "model": "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "collision means: Different keys share a target bucket.",
+          "answer": "true",
+          "feedback": "collision — Different keys share a target bucket."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "bucket means: Maps keys to hash values.",
+          "answer": "false",
+          "feedback": "bucket — Hash table storage location."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "load factor means: Filled entries relative to capacity.",
+          "answer": "true",
+          "feedback": "load factor — Filled entries relative to capacity."
+        }
+      ]
+    }
+  ]
+}

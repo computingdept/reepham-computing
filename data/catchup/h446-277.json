@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-277",
+  "course": "h446",
+  "title": "Normalisation to 3NF and indexing",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a transitive dependency?",
+          "answer": "An attribute depends on key through another non-key attribute.",
+          "options": [
+            "Search speed on indexed fields.",
+            "Atomic fields and no repeating groups.",
+            "An attribute depends on key through another non-key attribute."
+          ],
+          "feedback": "An attribute depends on key through another non-key attribute."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an index help with?",
+          "answer": "Search speed on indexed fields.",
+          "options": [
+            "Atomic fields and no repeating groups.",
+            "Search speed on indexed fields.",
+            "An attribute depends on key through another non-key attribute."
+          ],
+          "feedback": "Search speed on indexed fields."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does 1NF require?",
+          "answer": "Atomic fields and no repeating groups.",
+          "options": [
+            "Atomic fields and no repeating groups.",
+            "An attribute depends on key through another non-key attribute.",
+            "Search speed on indexed fields."
+          ],
+          "feedback": "Atomic fields and no repeating groups."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify (A∧B)∨(A∧¬B), stating the Boolean law.",
+          "answer": "A∧(B∨¬B)=A∧1=A.",
+          "options": [
+            "An attribute depends on key through another non-key attribute.",
+            "Search speed on indexed fields.",
+            "A∧(B∨¬B)=A∧1=A."
+          ],
+          "feedback": "A∧(B∨¬B)=A∧1=A."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "1NF requires atomic values and no repeating groups in a record; 2NF removes dependencies on only part of a composite candidate key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "3NF eliminates inappropriate transitive dependencies among non-key facts, reducing repeated customer names across orders."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "An index accelerates some lookups but uses storage and may slow insert/update operations. Normalisation and indexing solve different problems."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Store customer name once in Customer and reference by CustomerID in Order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "Explain the reasoning and justify the output."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches '1NF'?",
+          "answer": "Atomic values/no repeating groups.",
+          "options": [
+            "No non-key transitive dependency violating key dependency.",
+            "Atomic values/no repeating groups.",
+            "No partial dependency on part of composite key."
+          ],
+          "feedback": "1NF — Atomic values/no repeating groups."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches '2NF'?",
+          "answer": "No partial dependency on part of composite key.",
+          "options": [
+            "No partial dependency on part of composite key.",
+            "Atomic values/no repeating groups.",
+            "No non-key transitive dependency violating key dependency."
+          ],
+          "feedback": "2NF — No partial dependency on part of composite key."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches '3NF'?",
+          "answer": "No non-key transitive dependency violating key dependency.",
+          "options": [
+            "Atomic values/no repeating groups.",
+            "No partial dependency on part of composite key.",
+            "No non-key transitive dependency violating key dependency."
+          ],
+          "feedback": "3NF — No non-key transitive dependency violating key dependency."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "ProductName depends on ProductID rather than the whole composite sales-line identifier, so separate it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model answer",
+          "text": "Explain the reasoning and justify the output."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Search structure over columns.",
+          "answer": "index",
+          "options": [
+            "1NF",
+            "2NF",
+            "index"
+          ],
+          "feedback": "index — Search structure over columns."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Atomic values/no repeating groups.",
+          "answer": "1NF",
+          "options": [
+            "3NF",
+            "1NF",
+            "2NF"
+          ],
+          "feedback": "1NF — Atomic values/no repeating groups."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? No partial dependency on part of composite key.",
+          "answer": "2NF",
+          "options": [
+            "2NF",
+            "1NF",
+            "3NF"
+          ],
+          "feedback": "2NF — No partial dependency on part of composite key."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? No non-key transitive dependency violating key dependency.",
+          "answer": "3NF",
+          "options": [
+            "1NF",
+            "2NF",
+            "3NF"
+          ],
+          "feedback": "3NF — No non-key transitive dependency violating key dependency."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 State 1NF,2NF,3NF in one sentence each. [6]",
+          "answer": "1NF atomic/no repeating groups [2]; 2NF removes partial dependencies on composite key [2]; 3NF removes problematic transitive dependencies [2].",
+          "options": [
+            "CustomerName repeated for one CustomerID [2]; Customer(CustomerID PK, CustomerName) [2]; Order(OrderID PK,CustomerID FK) [2].",
+            "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1].",
+            "1NF atomic/no repeating groups [2]; 2NF removes partial dependencies on composite key [2]; 3NF removes problematic transitive dependencies [2]."
+          ],
+          "feedback": "1NF atomic/no repeating groups [2]; 2NF removes partial dependencies on composite key [2]; 3NF removes problematic transitive dependencies [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Order(OrderID, CustomerID, CustomerName). Explain the redundancy and split into two tables. [6]",
+          "answer": "CustomerName repeated for one CustomerID [2]; Customer(CustomerID PK, CustomerName) [2]; Order(OrderID PK,CustomerID FK) [2].",
+          "options": [
+            "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1].",
+            "CustomerName repeated for one CustomerID [2]; Customer(CustomerID PK, CustomerName) [2]; Order(OrderID PK,CustomerID FK) [2].",
+            "1NF atomic/no repeating groups [2]; 2NF removes partial dependencies on composite key [2]; 3NF removes problematic transitive dependencies [2]."
+          ],
+          "feedback": "CustomerName repeated for one CustomerID [2]; Customer(CustomerID PK, CustomerName) [2]; Order(OrderID PK,CustomerID FK) [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Explain why an index on StudentName can speed SELECT but also incur costs. [6]",
+          "answer": "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1].",
+          "options": [
+            "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1].",
+            "1NF atomic/no repeating groups [2]; 2NF removes partial dependencies on composite key [2]; 3NF removes problematic transitive dependencies [2].",
+            "CustomerName repeated for one CustomerID [2]; Customer(CustomerID PK, CustomerName) [2]; Order(OrderID PK,CustomerID FK) [2]."
+          ],
+          "feedback": "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Explain why an index on StudentName can speed SELECT but also incur costs. [6]",
+        "model": "Index helps locate selected names [2], can reduce scanning [1]; index uses storage [1], maintenance on writes [1], duplicates may need extra row matching [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "2NF means: No partial dependency on part of composite key.",
+          "answer": "true",
+          "feedback": "2NF — No partial dependency on part of composite key."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "3NF means: Atomic values/no repeating groups.",
+          "answer": "false",
+          "feedback": "3NF — No non-key transitive dependency violating key dependency."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "index means: Search structure over columns.",
+          "answer": "true",
+          "feedback": "index — Search structure over columns."
+        }
+      ]
+    }
+  ]
+}

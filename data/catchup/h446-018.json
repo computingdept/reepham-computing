@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-018",
+  "course": "h446",
+  "title": "Records, lists and tuples",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does names[2] access in a 1D array?",
+          "answer": "The third element.",
+          "options": [
+            "The third element.",
+            "The size of dimension 1 — the number of columns.",
+            "An array."
+          ],
+          "feedback": "Array indexes start at 0."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a C# 2D array organised as rows and columns, which dimension does GetLength(1) measure?",
+          "answer": "The size of dimension 1 — the number of columns.",
+          "options": [
+            "The third element.",
+            "An array.",
+            "The size of dimension 1 — the number of columns."
+          ],
+          "feedback": "The size of dimension 1 — the number of columns."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which structure from last lesson has a fixed size once created?",
+          "answer": "An array.",
+          "options": [
+            "The size of dimension 1 — the number of columns.",
+            "An array.",
+            "The third element."
+          ],
+          "feedback": "An array."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why should a student's name, candidate number and score be stored as separate related fields rather than one primitive value?",
+          "answer": "The data item has several related fields that belong together.",
+          "options": [
+            "The data item has several related fields that belong together.",
+            "The third element.",
+            "The size of dimension 1 — the number of columns."
+          ],
+          "feedback": "The data item has several related fields that belong together."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Records group fields",
+          "text": "A record represents one entity using several related fields. In C#, this positional record creates a named Student type with properties. Those properties use init, so use a with expression to create an updated copy."
+        },
+        {
+          "type": "paragraph",
+          "title": "Lists can change size",
+          "text": "A list is ordered like an array, but its size can change while the program runs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Tuples group a few values",
+          "text": "A tuple groups values without declaring a reusable Student type. It is especially helpful when a method returns several results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Choose by behaviour",
+          "text": "The exam may ask why one structure suits a context better than another."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Build and use a C# record",
+          "text": "Define a reusable student record, access its properties, then create an updated copy. using System; public record Student(string Name, int CandidateNumber, int Score); public class Program { public static void Main() { Student pupil = new Student(\"Amelia\", 1037, 72); Console.WriteLine(pupil.Name); Console.WriteLine(pupil.Score); // Create a copy with an updated…"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Declare the record type",
+          "text": "public record Student(string Name, int CandidateNumber, int Score);"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'record'?",
+          "answer": "A collection of related fields describing one item.",
+          "options": [
+            "One named piece of data inside a record.",
+            "A variable-size ordered collection.",
+            "A collection of related fields describing one item."
+          ],
+          "feedback": "record — A collection of related fields describing one item."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'field'?",
+          "answer": "One named piece of data inside a record.",
+          "options": [
+            "A variable-size ordered collection.",
+            "One named piece of data inside a record.",
+            "A collection of related fields describing one item."
+          ],
+          "feedback": "field — One named piece of data inside a record."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'list'?",
+          "answer": "A variable-size ordered collection.",
+          "options": [
+            "A variable-size ordered collection.",
+            "A collection of related fields describing one item.",
+            "One named piece of data inside a record."
+          ],
+          "feedback": "list — A variable-size ordered collection."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "List operations",
+          "text": "Complete code that adds Daisy then removes Ben."
+        },
+        {
+          "type": "paragraph",
+          "title": "Fill the same code",
+          "text": "names.?(\"Daisy\"); names.?(\"Ben\");"
+        },
+        {
+          "type": "paragraph",
+          "title": "Fill the same code",
+          "text": "names.Add(\"Daisy\"); names.Remove(\"Ben\");"
+        },
+        {
+          "type": "paragraph",
+          "title": "Tuple access",
+          "text": "A tuple stores a student's name and score."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A small fixed grouping of values.",
+          "answer": "tuple",
+          "options": [
+            "tuple",
+            "record",
+            "field"
+          ],
+          "feedback": "tuple — A small fixed grouping of values."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The position of an item in an ordered structure.",
+          "answer": "index",
+          "options": [
+            "record",
+            "field",
+            "index"
+          ],
+          "feedback": "index — The position of an item in an ordered structure."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A list operation that appends an item.",
+          "answer": "Add()",
+          "options": [
+            "field",
+            "Add()",
+            "record"
+          ],
+          "feedback": "Add() — A list operation that appends an item."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A list operation that removes a matching item.",
+          "answer": "Remove()",
+          "options": [
+            "Remove()",
+            "record",
+            "field"
+          ],
+          "feedback": "Remove() — A list operation that removes a matching item."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build and use a C# record Define a reusable student record, access its properties, then create an updated copy.",
+          "answer": "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
+          "options": [
+            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
+            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
+            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);"
+          ],
+          "feedback": "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: List operations Complete code that adds Daisy then removes Ben.",
+          "answer": "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
+          "options": [
+            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);",
+            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");"
+          ],
+          "feedback": "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Tuple access A tuple stores a student's name and score.",
+          "answer": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+          "options": [
+            "CHECK Fill the same code names.Add(\"Daisy\"); names.Remove(\"Ben\");",
+            "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+            "STEP 2 · ADD Create a student Student pupil = new Student(\"Amelia\", 1037, 72);"
+          ],
+          "feedback": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Tuple access A tuple stores a student's name and score.",
+        "model": "CHECK Fill the same code var result = (Name: \"Amelia\", Score: 72); Console.WriteLine(result.Name); Console.WriteLine(result.Score);",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "field means: One named piece of data inside a record.",
+          "answer": "true",
+          "feedback": "field — One named piece of data inside a record."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "list means: The position of an item in an ordered structure.",
+          "answer": "false",
+          "feedback": "list — A variable-size ordered collection."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "tuple means: A small fixed grouping of values.",
+          "answer": "true",
+          "feedback": "tuple — A small fixed grouping of values."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-076",
+  "course": "h446",
+  "title": "Lesson 076 · Algorithm Choice: Time, Space and Preconditions",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What must binary search assume?",
+          "answer": "Data are sorted.",
+          "options": [
+            "Extra working memory beyond input storage.",
+            "A one-time sort has cost.",
+            "Data are sorted."
+          ],
+          "feedback": "Data are sorted."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define auxiliary space.",
+          "answer": "Extra working memory beyond input storage.",
+          "options": [
+            "A one-time sort has cost.",
+            "Extra working memory beyond input storage.",
+            "Data are sorted."
+          ],
+          "feedback": "Extra working memory beyond input storage."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can preprocessing change a choice?",
+          "answer": "A one-time sort has cost.",
+          "options": [
+            "A one-time sort has cost.",
+            "Data are sorted.",
+            "Extra working memory beyond input storage."
+          ],
+          "feedback": "A one-time sort has cost."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search in [1,3,5,7,9,11,13,15,17] for 15: give midpoint indexes.",
+          "answer": "mid4=9, mid6=13, mid7=15; return index7.",
+          "options": [
+            "Data are sorted.",
+            "Extra working memory beyond input storage.",
+            "mid4=9, mid6=13, mid7=15; return index7."
+          ],
+          "feedback": "mid4=9, mid6=13, mid7=15; return index7."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Choose an algorithm based on input properties, particularly whether data are already sorted."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Compare running time AND auxiliary memory: linear scan O(n) time, O(1) extra; iterative binary search O(log n), O(1) extra on sorted data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Sorting first takes time; consider that one-time cost and the number of future searches."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the working",
+          "text": "Linear search: inspect4 then7, returning index1."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Input requirement for correctness.",
+          "options": [
+            "Spread one-off cost across tasks.",
+            "Input requirement for correctness.",
+            "Preparing data before main operation."
+          ],
+          "feedback": "precondition — Input requirement for correctness."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'preprocessing'?",
+          "answer": "Preparing data before main operation.",
+          "options": [
+            "Preparing data before main operation.",
+            "Input requirement for correctness.",
+            "Spread one-off cost across tasks."
+          ],
+          "feedback": "preprocessing — Preparing data before main operation."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'amortise'?",
+          "answer": "Spread one-off cost across tasks.",
+          "options": [
+            "Input requirement for correctness.",
+            "Preparing data before main operation.",
+            "Spread one-off cost across tasks."
+          ],
+          "feedback": "amortise — Spread one-off cost across tasks."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check the working",
+          "text": "mid3=9, mid5=16, mid4=12, return index4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input requirement for correctness.",
+          "answer": "precondition",
+          "options": [
+            "preprocessing",
+            "amortise",
+            "precondition"
+          ],
+          "feedback": "precondition — Input requirement for correctness."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Preparing data before main operation.",
+          "answer": "preprocessing",
+          "options": [
+            "amortise",
+            "preprocessing",
+            "precondition"
+          ],
+          "feedback": "preprocessing — Preparing data before main operation."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Spread one-off cost across tasks.",
+          "answer": "amortise",
+          "options": [
+            "amortise",
+            "precondition",
+            "preprocessing"
+          ],
+          "feedback": "amortise — Spread one-off cost across tasks."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Input requirement for correctness.",
+          "answer": "precondition",
+          "options": [
+            "preprocessing",
+            "amortise",
+            "precondition"
+          ],
+          "feedback": "precondition — Input requirement for correctness."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Choose linear/binary for unsorted [8,2,5,9], target5. [4]",
+          "answer": "WORKED MODEL ANSWER Linear [2]; binary requires sorted data [2].",
+          "options": [
+            "WORKED MODEL ANSWER mid3=9 [2]; low4 mid5=16 [2]; high4 mid4=12, index4 [2].",
+            "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2].",
+            "WORKED MODEL ANSWER Linear [2]; binary requires sorted data [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Linear [2]; binary requires sorted data [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Trace binary search for 12 in [2,5,7,9,12,16,20]. [6]",
+          "answer": "WORKED MODEL ANSWER mid3=9 [2]; low4 mid5=16 [2]; high4 mid4=12, index4 [2].",
+          "options": [
+            "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2].",
+            "WORKED MODEL ANSWER mid3=9 [2]; low4 mid5=16 [2]; high4 mid4=12, index4 [2].",
+            "WORKED MODEL ANSWER Linear [2]; binary requires sorted data [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER mid3=9 [2]; low4 mid5=16 [2]; high4 mid4=12, index4 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare one search in short unsorted list versus many searches in large fixed dataset. [6]",
+          "answer": "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2].",
+          "options": [
+            "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2].",
+            "WORKED MODEL ANSWER Linear [2]; binary requires sorted data [2].",
+            "WORKED MODEL ANSWER mid3=9 [2]; low4 mid5=16 [2]; high4 mid4=12, index4 [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare one search in short unsorted list versus many searches in large fixed dataset. [6]",
+        "model": "WORKED MODEL ANSWER Linear single search avoids sort [2]; sort once O(n log n) [2], then binary O(log n) repeatedly [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "preprocessing means: Preparing data before main operation.",
+          "answer": "true",
+          "feedback": "preprocessing — Preparing data before main operation."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "amortise means: Preparing data before main operation.",
+          "answer": "false",
+          "feedback": "amortise — Spread one-off cost across tasks."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "precondition means: Input requirement for correctness.",
+          "answer": "true",
+          "feedback": "precondition — Input requirement for correctness."
+        }
+      ]
+    }
+  ]
+}

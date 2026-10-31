@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-267",
+  "course": "h446",
+  "title": "Interrupts and service routines",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define fetch-decode-execute.",
+          "answer": "Read, interpret, execute an instruction.",
+          "options": [
+            "Read, interpret, execute an instruction.",
+            "Unavailable I/O or required event.",
+            "Which Ready process receives CPU time."
+          ],
+          "feedback": "Read, interpret, execute an instruction."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What causes a process to enter Waiting?",
+          "answer": "Unavailable I/O or required event.",
+          "options": [
+            "Read, interpret, execute an instruction.",
+            "Which Ready process receives CPU time.",
+            "Unavailable I/O or required event."
+          ],
+          "feedback": "Unavailable I/O or required event."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an OS scheduler choose?",
+          "answer": "Which Ready process receives CPU time.",
+          "options": [
+            "Unavailable I/O or required event.",
+            "Which Ready process receives CPU time.",
+            "Read, interpret, execute an instruction."
+          ],
+          "feedback": "Which Ready process receives CPU time."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify (A∧B)∨(A∧¬B), showing factoring.",
+          "answer": "A∧(B∨¬B)=A∧1=A.",
+          "options": [
+            "A∧(B∨¬B)=A∧1=A.",
+            "Read, interpret, execute an instruction.",
+            "Unavailable I/O or required event."
+          ],
+          "feedback": "A∧(B∨¬B)=A∧1=A."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "An interrupt signals an event such as device completion to the processor."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "The CPU saves sufficient execution context before servicing the event."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "An ISR handles the interrupt, acknowledges it, then restores normal execution state."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The ISR processes keyboard input before restoring the prior program state."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'interrupt'?",
+          "answer": "CPU attention request",
+          "options": [
+            "Interrupt Service Routine",
+            "State for safe resume",
+            "CPU attention request"
+          ],
+          "feedback": "interrupt — CPU attention request"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'ISR'?",
+          "answer": "Interrupt Service Routine",
+          "options": [
+            "State for safe resume",
+            "Interrupt Service Routine",
+            "CPU attention request"
+          ],
+          "feedback": "ISR — Interrupt Service Routine"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'context'?",
+          "answer": "State for safe resume",
+          "options": [
+            "State for safe resume",
+            "CPU attention request",
+            "Interrupt Service Routine"
+          ],
+          "feedback": "context — State for safe resume"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The ISR can acknowledge completion and allow queued device work to proceed; the interrupted task resumes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeatedly checking event state",
+          "answer": "polling",
+          "options": [
+            "polling",
+            "interrupt",
+            "ISR"
+          ],
+          "feedback": "polling — Repeatedly checking event state"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? CPU attention request",
+          "answer": "interrupt",
+          "options": [
+            "ISR",
+            "context",
+            "interrupt"
+          ],
+          "feedback": "interrupt — CPU attention request"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Interrupt Service Routine",
+          "answer": "ISR",
+          "options": [
+            "context",
+            "ISR",
+            "interrupt"
+          ],
+          "feedback": "ISR — Interrupt Service Routine"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? State for safe resume",
+          "answer": "context",
+          "options": [
+            "context",
+            "interrupt",
+            "ISR"
+          ],
+          "feedback": "context — State for safe resume"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Define interrupt, ISR and one source of interrupts. [4]",
+          "answer": "Interrupt signals attention [1], ISR is code handling event [2], e.g. keyboard or timer [1].",
+          "options": [
+            "Interrupt signals attention [1], ISR is code handling event [2], e.g. keyboard or timer [1].",
+            "Interrupt arrives [1]; preserve PC/required registers [2]; ISR handles event [1]; restore [1]; correct original program continuation [1].",
+            "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1]."
+          ],
+          "feedback": "Interrupt signals attention [1], ISR is code handling event [2], e.g. keyboard or timer [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Why does CPU context need to be saved/restored around a device ISR? [6]",
+          "answer": "Interrupt arrives [1]; preserve PC/required registers [2]; ISR handles event [1]; restore [1]; correct original program continuation [1].",
+          "options": [
+            "Interrupt signals attention [1], ISR is code handling event [2], e.g. keyboard or timer [1].",
+            "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1].",
+            "Interrupt arrives [1]; preserve PC/required registers [2]; ISR handles event [1]; restore [1]; correct original program continuation [1]."
+          ],
+          "feedback": "Interrupt arrives [1]; preserve PC/required registers [2]; ISR handles event [1]; restore [1]; correct original program continuation [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Compare polling and interrupt-driven I/O for infrequent device input. [6]",
+          "answer": "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1].",
+          "options": [
+            "Interrupt arrives [1]; preserve PC/required registers [2]; ISR handles event [1]; restore [1]; correct original program continuation [1].",
+            "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1].",
+            "Interrupt signals attention [1], ISR is code handling event [2], e.g. keyboard or timer [1]."
+          ],
+          "feedback": "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Compare polling and interrupt-driven I/O for infrequent device input. [6]",
+        "model": "Polling repeatedly checks [2], wastes cycles [1]; interrupt-driven signals events [1], frees CPU for other work [1], adds ISR/context overhead [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "ISR means: Interrupt Service Routine",
+          "answer": "true",
+          "feedback": "ISR — Interrupt Service Routine"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "context means: CPU attention request",
+          "answer": "false",
+          "feedback": "context — State for safe resume"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "polling means: Repeatedly checking event state",
+          "answer": "true",
+          "feedback": "polling — Repeatedly checking event state"
+        }
+      ]
+    }
+  ]
+}

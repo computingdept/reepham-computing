@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-194",
+  "course": "h446",
+  "title": "Floating-point representation and normalisation",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Write −2 in 8-bit two's complement.",
+          "answer": "11111110.",
+          "options": [
+            "0.5.",
+            "11111110.",
+            "00010000."
+          ],
+          "feedback": "11111110."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is unsigned 00100000 after a logical right shift by one?",
+          "answer": "00010000.",
+          "options": [
+            "00010000.",
+            "11111110.",
+            "0.5."
+          ],
+          "feedback": "00010000."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert binary 0.1₂ to decimal.",
+          "answer": "0.5.",
+          "options": [
+            "11111110.",
+            "00010000.",
+            "0.5."
+          ],
+          "feedback": "0.5."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 0.5 × 2³.",
+          "answer": "4.",
+          "options": [
+            "00010000.",
+            "4.",
+            "11111110."
+          ],
+          "feedback": "4."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Why is 0.0110 not normalised?",
+          "text": "For a positive two's-complement fractional mantissa, a normalised value begins with 01, not 00."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shift and compensate",
+          "text": "Shift 0.0110 left one place to 0.1100. Decrease the exponent from 4 to 3 to compensate."
+        },
+        {
+          "type": "paragraph",
+          "title": "Verify the value",
+          "text": "0.0110₂ is 0.375; 0.375 × 16 = 6. 0.1100₂ is 0.75; 0.75 × 8 = 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · First shift",
+          "text": "0.0011 becomes 0.0110; reduce exponent 5 → 4. It still begins 00."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Second shift",
+          "text": "0.0110 becomes 0.1100; reduce exponent 4 → 3. The first two bits are now 01."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check",
+          "text": "Both represent 6 in decimal, so normalisation preserved the value."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'mantissa'?",
+          "answer": "The signed significant part of a floating-point number.",
+          "options": [
+            "The signed significant part of a floating-point number.",
+            "The power of two scaling the mantissa.",
+            "A two's-complement fractional mantissa with different first two bits."
+          ],
+          "feedback": "mantissa — The signed significant part of a floating-point number."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'exponent'?",
+          "answer": "The power of two scaling the mantissa.",
+          "options": [
+            "The signed significant part of a floating-point number.",
+            "A two's-complement fractional mantissa with different first two bits.",
+            "The power of two scaling the mantissa."
+          ],
+          "feedback": "exponent — The power of two scaling the mantissa."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'normalised'?",
+          "answer": "A two's-complement fractional mantissa with different first two bits.",
+          "options": [
+            "The power of two scaling the mantissa.",
+            "A two's-complement fractional mantissa with different first two bits.",
+            "The signed significant part of a floating-point number."
+          ],
+          "feedback": "normalised — A two's-complement fractional mantissa with different first two bits."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the shift",
+          "text": "Shift the mantissa left one position: 0.0101 → 0.1010."
+        },
+        {
+          "type": "paragraph",
+          "title": "Adjust and check",
+          "text": "Exponent decreases from 4 to 3. Both representations equal decimal 5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Number of significant bits represented.",
+          "answer": "precision",
+          "options": [
+            "exponent",
+            "precision",
+            "mantissa"
+          ],
+          "feedback": "precision — Number of significant bits represented."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Spread of magnitudes that can be represented.",
+          "answer": "range",
+          "options": [
+            "range",
+            "mantissa",
+            "exponent"
+          ],
+          "feedback": "range — Spread of magnitudes that can be represented."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The signed significant part of a floating-point number.",
+          "answer": "mantissa",
+          "options": [
+            "exponent",
+            "normalised",
+            "mantissa"
+          ],
+          "feedback": "mantissa — The signed significant part of a floating-point number."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The power of two scaling the mantissa.",
+          "answer": "exponent",
+          "options": [
+            "normalised",
+            "exponent",
+            "mantissa"
+          ],
+          "feedback": "exponent — The power of two scaling the mantissa."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Identify mantissa and exponent in 0.1100₂ × 2³.",
+          "answer": "Mantissa 0.1100₂; exponent 3.",
+          "options": [
+            "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value.",
+            "Mantissa 0.1100₂; exponent 3.",
+            "0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³."
+          ],
+          "feedback": "Mantissa 0.1100₂; exponent 3."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 Normalise positive 0.0010₂ × 2⁵.",
+          "answer": "0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³.",
+          "options": [
+            "0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³.",
+            "Mantissa 0.1100₂; exponent 3.",
+            "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value."
+          ],
+          "feedback": "0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Why can normalisation improve precision without increasing the number of mantissa bits?",
+          "answer": "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value.",
+          "options": [
+            "Mantissa 0.1100₂; exponent 3.",
+            "0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³.",
+            "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value."
+          ],
+          "feedback": "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Why can normalisation improve precision without increasing the number of mantissa bits?",
+        "model": "Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "exponent means: The power of two scaling the mantissa.",
+          "answer": "true",
+          "feedback": "exponent — The power of two scaling the mantissa."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "normalised means: Spread of magnitudes that can be represented.",
+          "answer": "false",
+          "feedback": "normalised — A two's-complement fractional mantissa with different first two bits."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "precision means: Number of significant bits represented.",
+          "answer": "true",
+          "feedback": "precision — Number of significant bits represented."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-253",
+  "course": "h446",
+  "title": "Clock speed, cache and pipelining",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the data bus transport during an instruction fetch?",
+          "answer": "The instruction's contents from memory towards the CPU.",
+          "options": [
+            "PC.",
+            "One operation cannot proceed until another result is ready.",
+            "The instruction's contents from memory towards the CPU."
+          ],
+          "feedback": "The instruction's contents from memory towards the CPU."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which register holds the address of the next instruction?",
+          "answer": "PC.",
+          "options": [
+            "One operation cannot proceed until another result is ready.",
+            "PC.",
+            "The instruction's contents from memory towards the CPU."
+          ],
+          "feedback": "PC."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a dependency between tasks?",
+          "answer": "One operation cannot proceed until another result is ready.",
+          "options": [
+            "One operation cannot proceed until another result is ready.",
+            "The instruction's contents from memory towards the CPU.",
+            "PC."
+          ],
+          "feedback": "One operation cannot proceed until another result is ready."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A rising-edge D flip-flop initially has Q=0. D changes 0→1 between edges, then 1→0 just before the next rising edge. What is Q immediately after that edge? Justify.",
+          "answer": "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored.",
+          "options": [
+            "The instruction's contents from memory towards the CPU.",
+            "PC.",
+            "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored."
+          ],
+          "feedback": "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Different performance factors",
+          "text": "Clock speed indicates cycles per second; multiple cores can execute independent work; cache reduces some slower-memory access."
+        },
+        {
+          "type": "paragraph",
+          "title": "Overlap pipeline stages",
+          "text": "Without overlap, three three-stage instructions need nine stage slots; an ideal pipeline finishes them by the fifth cycle."
+        },
+        {
+          "type": "paragraph",
+          "title": "Account for hazards",
+          "text": "Branches, data dependencies and waiting for memory may cause stalls or pipeline flushing; pipelining does not make every instruction individually three times faster."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Cycle 1 fetch I1. In cycle 2 decode I1 while fetching I2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "Cycle 3 executes I1 and decodes I2; I2 executes in cycle 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'clock speed'?",
+          "answer": "Number of processor clock cycles each second.",
+          "options": [
+            "Overlap stages of several instructions.",
+            "Number of processor clock cycles each second.",
+            "Small, fast memory that reduces some main-memory accesses."
+          ],
+          "feedback": "clock speed — Number of processor clock cycles each second."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'cache'?",
+          "answer": "Small, fast memory that reduces some main-memory accesses.",
+          "options": [
+            "Small, fast memory that reduces some main-memory accesses.",
+            "Number of processor clock cycles each second.",
+            "Overlap stages of several instructions."
+          ],
+          "feedback": "cache — Small, fast memory that reduces some main-memory accesses."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pipeline'?",
+          "answer": "Overlap stages of several instructions.",
+          "options": [
+            "Number of processor clock cycles each second.",
+            "Small, fast memory that reduces some main-memory accesses.",
+            "Overlap stages of several instructions."
+          ],
+          "feedback": "pipeline — Overlap stages of several instructions."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Begin a new fetch on each clock cycle, while older instructions advance to Decode or Execute."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Instruction four starts Fetch in cycle 4, Decodes in 5 and Executes in 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Dependency or uncertainty disrupting smooth pipelining.",
+          "answer": "hazard",
+          "options": [
+            "clock speed",
+            "cache",
+            "hazard"
+          ],
+          "feedback": "hazard — Dependency or uncertainty disrupting smooth pipelining."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Amount of work completed in a given time.",
+          "answer": "throughput",
+          "options": [
+            "cache",
+            "throughput",
+            "clock speed"
+          ],
+          "feedback": "throughput — Amount of work completed in a given time."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Number of processor clock cycles each second.",
+          "answer": "clock speed",
+          "options": [
+            "clock speed",
+            "cache",
+            "pipeline"
+          ],
+          "feedback": "clock speed — Number of processor clock cycles each second."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Small, fast memory that reduces some main-memory accesses.",
+          "answer": "cache",
+          "options": [
+            "clock speed",
+            "pipeline",
+            "cache"
+          ],
+          "feedback": "cache — Small, fast memory that reduces some main-memory accesses."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 State two processor performance factors and explain one way each might improve throughput.",
+          "answer": "[4] Higher clock rate may allow more cycles each second [2]; larger/faster cache can reduce average memory latency [2]; alternatively cores can run independent tasks.",
+          "options": [
+            "[6] C1 I1:F [1]; C2 I1:D, I2:F [1]; C3 I1:E, I2:D, I3:F [2]; C4 I2:E, I3:D [1]; C5 I3:E [1].",
+            "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1].",
+            "[4] Higher clock rate may allow more cycles each second [2]; larger/faster cache can reduce average memory latency [2]; alternatively cores can run independent tasks."
+          ],
+          "feedback": "[4] Higher clock rate may allow more cycles each second [2]; larger/faster cache can reduce average memory latency [2]; alternatively cores can run independent tasks."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 For a three-stage F–D–E pipeline with three independent instructions, write the stages occupied in cycles 1–5 and the completion cycle for I3.",
+          "answer": "[6] C1 I1:F [1]; C2 I1:D, I2:F [1]; C3 I1:E, I2:D, I3:F [2]; C4 I2:E, I3:D [1]; C5 I3:E [1].",
+          "options": [
+            "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1].",
+            "[6] C1 I1:F [1]; C2 I1:D, I2:F [1]; C3 I1:E, I2:D, I3:F [2]; C4 I2:E, I3:D [1]; C5 I3:E [1].",
+            "[4] Higher clock rate may allow more cycles each second [2]; larger/faster cache can reduce average memory latency [2]; alternatively cores can run independent tasks."
+          ],
+          "feedback": "[6] C1 I1:F [1]; C2 I1:D, I2:F [1]; C3 I1:E, I2:D, I3:F [2]; C4 I2:E, I3:D [1]; C5 I3:E [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Explain why doubling clock speed does not necessarily double an application's performance. Include one pipeline hazard.",
+          "answer": "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1].",
+          "options": [
+            "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1].",
+            "[4] Higher clock rate may allow more cycles each second [2]; larger/faster cache can reduce average memory latency [2]; alternatively cores can run independent tasks.",
+            "[6] C1 I1:F [1]; C2 I1:D, I2:F [1]; C3 I1:E, I2:D, I3:F [2]; C4 I2:E, I3:D [1]; C5 I3:E [1]."
+          ],
+          "feedback": "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Explain why doubling clock speed does not necessarily double an application's performance. Include one pipeline hazard.",
+        "model": "[6] Memory stalls/cache misses [1], non-parallel parts of software [1], instructions per cycle vary [1], branch hazards can flush a pipeline [1], data dependencies stall instructions [1]; measured speedup depends on the bottleneck [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "cache means: Small, fast memory that reduces some main-memory accesses.",
+          "answer": "true",
+          "feedback": "cache — Small, fast memory that reduces some main-memory accesses."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pipeline means: Amount of work completed in a given time.",
+          "answer": "false",
+          "feedback": "pipeline — Overlap stages of several instructions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "hazard means: Dependency or uncertainty disrupting smooth pipelining.",
+          "answer": "true",
+          "feedback": "hazard — Dependency or uncertainty disrupting smooth pipelining."
+        }
+      ]
+    }
+  ]
+}

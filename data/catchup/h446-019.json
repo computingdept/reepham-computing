@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-019",
+  "course": "h446",
+  "title": "Linked lists with arrays and pointers",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the main difference between an array and a list?",
+          "answer": "An array has a fixed size; a list can change size.",
+          "options": [
+            "The position used to access an array element.",
+            "There is no next item.",
+            "An array has a fixed size; a list can change size."
+          ],
+          "feedback": "An array has a fixed size; a list can change size."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In an array, what does an index identify?",
+          "answer": "The position used to access an array element.",
+          "options": [
+            "There is no next item.",
+            "The position used to access an array element.",
+            "An array has a fixed size; a list can change size."
+          ],
+          "feedback": "The position used to access an array element."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a linked list, what does null in a node's next pointer mean?",
+          "answer": "There is no next item.",
+          "options": [
+            "There is no next item.",
+            "An array has a fixed size; a list can change size.",
+            "The position used to access an array element."
+          ],
+          "feedback": "There is no next item."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If the first item is at index 4 and its next pointer is 1, where is the second item?",
+          "answer": "At index 1.",
+          "options": [
+            "An array has a fixed size; a list can change size.",
+            "The position used to access an array element.",
+            "At index 1."
+          ],
+          "feedback": "At index 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start pointer",
+          "text": "The first logical item is stored at index 2, not necessarily index 0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Follow next pointers",
+          "text": "Use -1 as null in code. Each pointer decides the next index."
+        },
+        {
+          "type": "paragraph",
+          "title": "Insert at the front",
+          "text": "The new item points to the old first item, then start changes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Remove after current",
+          "text": "The pointer bypasses one node. The array data itself does not need to shift."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Traverse Alex → Ben → Cara → Daisy",
+          "text": "using System; public class Program { public static void Main() { string[] data = {\"Ben\", \"Daisy\", \"Alex\", \"Cara\"}; int[] next = {3, -1, 0, 1}; int start = 2; int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; } } }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Use the start pointer",
+          "text": "current = 2 data[2] = \"Alex\""
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'linked list'?",
+          "answer": "A structure where each item contains data and a link to another item.",
+          "options": [
+            "The index of the first item in the list.",
+            "A structure where each item contains data and a link to another item.",
+            "A value identifying the location of another item."
+          ],
+          "feedback": "linked list — A structure where each item contains data and a link to another item."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'pointer'?",
+          "answer": "A value identifying the location of another item.",
+          "options": [
+            "A value identifying the location of another item.",
+            "A structure where each item contains data and a link to another item.",
+            "The index of the first item in the list."
+          ],
+          "feedback": "pointer — A value identifying the location of another item."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'start pointer'?",
+          "answer": "The index of the first item in the list.",
+          "options": [
+            "A structure where each item contains data and a link to another item.",
+            "A value identifying the location of another item.",
+            "The index of the first item in the list."
+          ],
+          "feedback": "start pointer — The index of the first item in the list."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Access the second linked-list item",
+          "text": "OCR asks how the second item is reached using pointer values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same trace",
+          "text": "firstIndex = start secondIndex = ? secondData = data[?]"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same trace",
+          "text": "firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
+        },
+        {
+          "type": "paragraph",
+          "title": "Traverse",
+          "text": "Use the start pointer and follow next until -1. string[] data = {\"Ben\", \"Daisy\", \"Alex\", \"Cara\"}; int[] next = {3, -1, 0, 1}; int start = 2;"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The index of the next item.",
+          "answer": "next pointer",
+          "options": [
+            "linked list",
+            "pointer",
+            "next pointer"
+          ],
+          "feedback": "next pointer — The index of the next item."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A marker meaning no next item.",
+          "answer": "null",
+          "options": [
+            "pointer",
+            "null",
+            "linked list"
+          ],
+          "feedback": "null — A marker meaning no next item."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Visit each item by following links.",
+          "answer": "traverse",
+          "options": [
+            "traverse",
+            "linked list",
+            "pointer"
+          ],
+          "feedback": "traverse — Visit each item by following links."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add an item and reconnect pointers.",
+          "answer": "insert",
+          "options": [
+            "linked list",
+            "pointer",
+            "insert"
+          ],
+          "feedback": "insert — Add an item and reconnect pointers."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Traverse Alex → Ben → Cara → Daisy",
+          "answer": "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\"",
+          "options": [
+            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
+            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
+          ],
+          "feedback": "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Access the second linked-list item OCR asks how the second item is reached using pointer values.",
+          "answer": "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
+          "options": [
+            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
+            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\""
+          ],
+          "feedback": "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Traverse Use the start pointer and follow next until -1.",
+          "answer": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+          "options": [
+            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+            "STEP 2 · FOLLOW Read next[2] next[2] = 0 current = 0 data[0] = \"Ben\"",
+            "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
+          ],
+          "feedback": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Traverse Use the start pointer and follow next until -1.",
+        "model": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "pointer means: A value identifying the location of another item.",
+          "answer": "true",
+          "feedback": "pointer — A value identifying the location of another item."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "start pointer means: A marker meaning no next item.",
+          "answer": "false",
+          "feedback": "start pointer — The index of the first item in the list."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "next pointer means: The index of the next item.",
+          "answer": "true",
+          "feedback": "next pointer — The index of the next item."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-084",
+  "course": "h446",
+  "title": "Lesson 084 · A* Search: g, h and f Scores",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is Dijkstra's tentative distance?",
+          "answer": "Known best route cost from source.",
+          "options": [
+            "Known best route cost from source.",
+            "g(n)+h(n).",
+            "Never overestimates true remaining cheapest cost."
+          ],
+          "feedback": "Known best route cost from source."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does f(n) equal in A*?",
+          "answer": "g(n)+h(n).",
+          "options": [
+            "Known best route cost from source.",
+            "Never overestimates true remaining cheapest cost.",
+            "g(n)+h(n)."
+          ],
+          "feedback": "g(n)+h(n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an admissible heuristic?",
+          "answer": "Never overestimates true remaining cheapest cost.",
+          "options": [
+            "g(n)+h(n).",
+            "Never overestimates true remaining cheapest cost.",
+            "Known best route cost from source."
+          ],
+          "feedback": "Never overestimates true remaining cheapest cost."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search target12 in sorted [2,4,6,8,10,12,14]. Show midpoint indexes.",
+          "answer": "mid3=8 then mid5=12; return index5.",
+          "options": [
+            "mid3=8 then mid5=12; return index5.",
+            "Known best route cost from source.",
+            "g(n)+h(n)."
+          ],
+          "feedback": "mid3=8 then mid5=12; return index5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "A* orders candidate states using f(n)=g(n)+h(n), where g is known cost from the start and h estimates remaining cost to the goal."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "A heuristic that never overestimates remaining true cost is admissible; with suitable search implementation/assumptions this supports optimality."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Track open candidates, their g/h/f and predecessors. An overestimating heuristic or incorrect update can make search miss the shortest path."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Calculate all frontier f-scores",
+          "text": "From P: Q has g=3,h=2,f=5 ; R has g=8,h=0,f=8 . Put both in OPEN. Choose Q next (smallest f), not simply the nearest-looking node."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Improve the path to R",
+          "text": "Via Q→R, new g(R)=3+2=5 , which improves the existing 8. Thus f(R)=5+0=5 , and predecessor R becomes Q. OPEN now contains R with the improved values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Confirm the path and heuristic meaning",
+          "text": "Select goal R from OPEN, then reconstruct R←Q←P to obtain P→Q→R , cost 5 . The supplied heuristics do not overestimate remaining true cost; the next lesson can explore what happens when this fails."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'A*'?",
+          "answer": "Heuristic-guided shortest-path search.",
+          "options": [
+            "Cost so far from start.",
+            "Estimated cost to goal.",
+            "Heuristic-guided shortest-path search."
+          ],
+          "feedback": "A* — Heuristic-guided shortest-path search."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'g(n)'?",
+          "answer": "Cost so far from start.",
+          "options": [
+            "Estimated cost to goal.",
+            "Cost so far from start.",
+            "Heuristic-guided shortest-path search."
+          ],
+          "feedback": "g(n) — Cost so far from start."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'h(n)'?",
+          "answer": "Estimated cost to goal.",
+          "options": [
+            "Estimated cost to goal.",
+            "Heuristic-guided shortest-path search.",
+            "Cost so far from start."
+          ],
+          "feedback": "h(n) — Estimated cost to goal."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Compute priorities and choose",
+          "text": "Calculate the two g/f pairs from the edges leaving X. State which candidate A* should expand next and why."
+        },
+        {
+          "type": "paragraph",
+          "title": "Expand Y",
+          "text": "Y has g=4,h=3,f=7 , Z has g=10,h=0,f=10 , so expand Y. Via Y→Z, candidate g is 4+3=7: improve Z from 10 to 7, with predecessor Z←Y."
+        },
+        {
+          "type": "paragraph",
+          "title": "Finish the trace",
+          "text": "Now Z has g=7,h=0,f=7 . Select it as the goal; predecessor chain Z←Y←X gives X→Y→Z , cost 7 . Distinguish the actual path cost g from estimated priority f."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? g(n)+h(n) priority.",
+          "answer": "f(n)",
+          "options": [
+            "f(n)",
+            "A*",
+            "g(n)"
+          ],
+          "feedback": "f(n) — g(n)+h(n) priority."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Heuristic-guided shortest-path search.",
+          "answer": "A*",
+          "options": [
+            "g(n)",
+            "h(n)",
+            "A*"
+          ],
+          "feedback": "A* — Heuristic-guided shortest-path search."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Cost so far from start.",
+          "answer": "g(n)",
+          "options": [
+            "h(n)",
+            "g(n)",
+            "A*"
+          ],
+          "feedback": "g(n) — Cost so far from start."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Estimated cost to goal.",
+          "answer": "h(n)",
+          "options": [
+            "h(n)",
+            "A*",
+            "g(n)"
+          ],
+          "feedback": "h(n) — Estimated cost to goal."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 After expanding A, calculate f for B and C using stated graph/heuristics. [6]",
+          "answer": "/ WORKING B g2 [1],h2 [1],f4 [1]; C g5 [1],h1 [1],f6 [1].",
+          "options": [
+            "/ WORKING B g2 [1],h2 [1],f4 [1]; C g5 [1],h1 [1],f6 [1].",
+            "/ WORKING C from5 to3 via B [2], D from6 to4 via C [2], A-B-C-D total4 [2].",
+            "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2]."
+          ],
+          "feedback": "/ WORKING B g2 [1],h2 [1],f4 [1]; C g5 [1],h1 [1],f6 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 After expanding B then C, show improvements to g(C) and g(D); state best path. [6]",
+          "answer": "/ WORKING C from5 to3 via B [2], D from6 to4 via C [2], A-B-C-D total4 [2].",
+          "options": [
+            "/ WORKING B g2 [1],h2 [1],f4 [1]; C g5 [1],h1 [1],f6 [1].",
+            "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2].",
+            "/ WORKING C from5 to3 via B [2], D from6 to4 via C [2], A-B-C-D total4 [2]."
+          ],
+          "feedback": "/ WORKING C from5 to3 via B [2], D from6 to4 via C [2], A-B-C-D total4 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare A* with Dijkstra when h=0 everywhere, and explain risk of overestimation. [6]",
+          "answer": "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2].",
+          "options": [
+            "/ WORKING C from5 to3 via B [2], D from6 to4 via C [2], A-B-C-D total4 [2].",
+            "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2].",
+            "/ WORKING B g2 [1],h2 [1],f4 [1]; C g5 [1],h1 [1],f6 [1]."
+          ],
+          "feedback": "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare A* with Dijkstra when h=0 everywhere, and explain risk of overestimation. [6]",
+        "model": "/ WORKING With h0, f=g [2], same priority basis as Dijkstra [2], overestimating h can prioritise unsuitable paths and undermine optimality [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "g(n) means: Cost so far from start.",
+          "answer": "true",
+          "feedback": "g(n) — Cost so far from start."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "h(n) means: Heuristic-guided shortest-path search.",
+          "answer": "false",
+          "feedback": "h(n) — Estimated cost to goal."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "f(n) means: g(n)+h(n) priority.",
+          "answer": "true",
+          "feedback": "f(n) — g(n)+h(n) priority."
+        }
+      ]
+    }
+  ]
+}

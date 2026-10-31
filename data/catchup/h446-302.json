@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-302",
+  "course": "h446",
+  "title": "Unfamiliar algorithm design and evaluation",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a precondition?",
+          "answer": "Requirement for an algorithm to work correctly.",
+          "options": [
+            "A property that stays true after each loop iteration.",
+            "Requirement for an algorithm to work correctly.",
+            "To expose faults on boundaries/unusual inputs."
+          ],
+          "feedback": "Requirement for an algorithm to work correctly."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why write edge-case tests?",
+          "answer": "To expose faults on boundaries/unusual inputs.",
+          "options": [
+            "To expose faults on boundaries/unusual inputs.",
+            "Requirement for an algorithm to work correctly.",
+            "A property that stays true after each loop iteration."
+          ],
+          "feedback": "To expose faults on boundaries/unusual inputs."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a loop invariant express?",
+          "answer": "A property that stays true after each loop iteration.",
+          "options": [
+            "Requirement for an algorithm to work correctly.",
+            "To expose faults on boundaries/unusual inputs.",
+            "A property that stays true after each loop iteration."
+          ],
+          "feedback": "A property that stays true after each loop iteration."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: C# array [4,1,4,2]: compute sum at indexes 0 and 2, and number of distinct values.",
+          "answer": "Indexes 0 and 2 sum8; distinct values {4,1,2} count3.",
+          "options": [
+            "To expose faults on boundaries/unusual inputs.",
+            "Indexes 0 and 2 sum8; distinct values {4,1,2} count3.",
+            "Requirement for an algorithm to work correctly."
+          ],
+          "feedback": "Indexes 0 and 2 sum8; distinct values {4,1,2} count3."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "State the precondition",
+          "text": "The input must be sorted; equal values then appear consecutively."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace the invariant",
+          "text": "Start with one distinct value for a nonempty array. Each change from previous value adds one."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate and test",
+          "text": "The algorithm scans once O(n) time, O(1) extra space; test empty, all equal and all distinct inputs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Duplicates do not increment the counter because each equals the preceding element."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the method",
+          "text": "Only changes to five and seven increment count; result is three distinct values."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'invariant'?",
+          "answer": "Condition maintained throughout a loop.",
+          "options": [
+            "Condition maintained throughout a loop.",
+            "Assumption required for correctness.",
+            "Tests around value/size limits."
+          ],
+          "feedback": "invariant — Condition maintained throughout a loop."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Assumption required for correctness.",
+          "options": [
+            "Condition maintained throughout a loop.",
+            "Tests around value/size limits.",
+            "Assumption required for correctness."
+          ],
+          "feedback": "precondition — Assumption required for correctness."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'boundary test'?",
+          "answer": "Tests around value/size limits.",
+          "options": [
+            "Assumption required for correctness.",
+            "Tests around value/size limits.",
+            "Condition maintained throughout a loop."
+          ],
+          "feedback": "boundary test — Tests around value/size limits."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Three initial ones produce one distinct group; 3 and 4 add two groups."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the method",
+          "text": "Test empty input and an all-equal array to confirm base conditions and comparisons."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth in work as input increases.",
+          "answer": "time complexity",
+          "options": [
+            "precondition",
+            "time complexity",
+            "invariant"
+          ],
+          "feedback": "time complexity — Growth in work as input increases."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Condition maintained throughout a loop.",
+          "answer": "invariant",
+          "options": [
+            "invariant",
+            "precondition",
+            "boundary test"
+          ],
+          "feedback": "invariant — Condition maintained throughout a loop."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Assumption required for correctness.",
+          "answer": "precondition",
+          "options": [
+            "invariant",
+            "boundary test",
+            "precondition"
+          ],
+          "feedback": "precondition — Assumption required for correctness."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Tests around value/size limits.",
+          "answer": "boundary test",
+          "options": [
+            "precondition",
+            "boundary test",
+            "invariant"
+          ],
+          "feedback": "boundary test — Tests around value/size limits."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Trace DistinctCount on [3,3,3,6,8,8]. Record count after each index. [6]",
+          "answer": "AND MARKING POINTS Start count1 [1]; i1 still1 [1]; i2 still1 [1]; i3→2 [1]; i4→3 [1]; i5 remains3 [1].",
+          "options": [
+            "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1].",
+            "AND MARKING POINTS Start count1 [1]; i1 still1 [1]; i2 still1 [1]; i3→2 [1]; i4→3 [1]; i5 remains3 [1].",
+            "AND MARKING POINTS Empty []→0 [2]; equal [5,5]→1 [2]; distinct [1,2,3]→3 [2]."
+          ],
+          "feedback": "AND MARKING POINTS Start count1 [1]; i1 still1 [1]; i2 still1 [1]; i3→2 [1]; i4→3 [1]; i5 remains3 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Describe a correct set of test cases for the algorithm and their expected outputs. [6]",
+          "answer": "AND MARKING POINTS Empty []→0 [2]; equal [5,5]→1 [2]; distinct [1,2,3]→3 [2].",
+          "options": [
+            "AND MARKING POINTS Empty []→0 [2]; equal [5,5]→1 [2]; distinct [1,2,3]→3 [2].",
+            "AND MARKING POINTS Start count1 [1]; i1 still1 [1]; i2 still1 [1]; i3→2 [1]; i4→3 [1]; i5 remains3 [1].",
+            "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1]."
+          ],
+          "feedback": "AND MARKING POINTS Empty []→0 [2]; equal [5,5]→1 [2]; distinct [1,2,3]→3 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why the algorithm may fail on unsorted [2,1,2]. Give a repair and complexity consequence. [6]",
+          "answer": "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1].",
+          "options": [
+            "AND MARKING POINTS Start count1 [1]; i1 still1 [1]; i2 still1 [1]; i3→2 [1]; i4→3 [1]; i5 remains3 [1].",
+            "AND MARKING POINTS Empty []→0 [2]; equal [5,5]→1 [2]; distinct [1,2,3]→3 [2].",
+            "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1]."
+          ],
+          "feedback": "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why the algorithm may fail on unsorted [2,1,2]. Give a repair and complexity consequence. [6]",
+        "model": "AND MARKING POINTS Algorithm counts transitions and reports3 rather than2 [2]; pre-sort then scan [2]; sorting adds typical O(n log n) time [1], or use set/hash with expected O(n) and space O(n) [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "precondition means: Assumption required for correctness.",
+          "answer": "true",
+          "feedback": "precondition — Assumption required for correctness."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "boundary test means: Condition maintained throughout a loop.",
+          "answer": "false",
+          "feedback": "boundary test — Tests around value/size limits."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "time complexity means: Growth in work as input increases.",
+          "answer": "true",
+          "feedback": "time complexity — Growth in work as input increases."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-147",
+  "course": "h446",
+  "title": "Lesson 147 · Firewalls, Proxies and Encryption: Layered Defence",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What attack floods a service with requests to reduce availability?",
+          "answer": "A denial-of-service attack, potentially distributed (DDoS).",
+          "options": [
+            "A denial-of-service attack, potentially distributed (DDoS).",
+            "Referencing a candidate key in another relation.",
+            "RAM."
+          ],
+          "feedback": "A denial-of-service attack, potentially distributed (DDoS)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a foreign key used for?",
+          "answer": "Referencing a candidate key in another relation.",
+          "options": [
+            "A denial-of-service attack, potentially distributed (DDoS).",
+            "RAM.",
+            "Referencing a candidate key in another relation."
+          ],
+          "feedback": "Referencing a candidate key in another relation."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which storage type is volatile?",
+          "answer": "RAM.",
+          "options": [
+            "Referencing a candidate key in another relation.",
+            "RAM.",
+            "A denial-of-service attack, potentially distributed (DDoS)."
+          ],
+          "feedback": "RAM."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which layer in TCP/IP handles IP routing?",
+          "answer": "The internet layer.",
+          "options": [
+            "The internet layer.",
+            "A denial-of-service attack, potentially distributed (DDoS).",
+            "Referencing a candidate key in another relation."
+          ],
+          "feedback": "The internet layer."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Filtering boundary",
+          "text": "Firewall applies rules to traffic entering or leaving a network."
+        },
+        {
+          "type": "paragraph",
+          "title": "Mediating requests",
+          "text": "Forward proxy can request resources on behalf of clients, cache and log access."
+        },
+        {
+          "type": "paragraph",
+          "title": "Protecting content",
+          "text": "TLS encrypts data in transit; authentication and patching address other risks."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Client web request",
+          "text": "Identify the facts and make an initial prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Proxy and firewall controls",
+          "text": "Explain the mechanism or trace the intermediate stage."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · HTTPS encrypted transfer",
+          "text": "A managed web proxy can filter/log permitted requests; a firewall can restrict traffic flows; HTTPS/TLS encrypts the connection so local eavesdroppers cannot read credentials. Policy, MFA and endpoint protection address further threats."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'firewall'?",
+          "answer": "Rule-based network traffic access control.",
+          "options": [
+            "Server that acts as intermediary for client requests.",
+            "Protocol protecting transport of application data.",
+            "Rule-based network traffic access control."
+          ],
+          "feedback": "firewall — Rule-based network traffic access control."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'proxy server'?",
+          "answer": "Server that acts as intermediary for client requests.",
+          "options": [
+            "Protocol protecting transport of application data.",
+            "Server that acts as intermediary for client requests.",
+            "Rule-based network traffic access control."
+          ],
+          "feedback": "proxy server — Server that acts as intermediary for client requests."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'TLS'?",
+          "answer": "Protocol protecting transport of application data.",
+          "options": [
+            "Protocol protecting transport of application data.",
+            "Rule-based network traffic access control.",
+            "Server that acts as intermediary for client requests."
+          ],
+          "feedback": "TLS — Protocol protecting transport of application data."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Traffic allowed on port 443",
+          "text": "Identify the facts and make an initial prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Malicious content reaches user",
+          "text": "Explain the mechanism or trace the intermediate stage."
+        },
+        {
+          "type": "paragraph",
+          "title": "Endpoint controls matter",
+          "text": "An allowed connection or email can carry malicious content. Endpoint malware detection, attachment scanning, patching, permissions and user training complement network filtering. A proxy may help inspect or block risky destinations."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Overlapping safeguards against different failures.",
+          "answer": "defence in depth",
+          "options": [
+            "defence in depth",
+            "firewall",
+            "proxy server"
+          ],
+          "feedback": "defence in depth — Overlapping safeguards against different failures."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Rule-based network traffic access control.",
+          "answer": "firewall",
+          "options": [
+            "proxy server",
+            "TLS",
+            "firewall"
+          ],
+          "feedback": "firewall — Rule-based network traffic access control."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Server that acts as intermediary for client requests.",
+          "answer": "proxy server",
+          "options": [
+            "TLS",
+            "proxy server",
+            "firewall"
+          ],
+          "feedback": "proxy server — Server that acts as intermediary for client requests."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Protocol protecting transport of application data.",
+          "answer": "TLS",
+          "options": [
+            "TLS",
+            "firewall",
+            "proxy server"
+          ],
+          "feedback": "TLS — Protocol protecting transport of application data."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 State functions of firewall, forward proxy and TLS, one network example each. [6]",
+          "answer": "/ WORKED ANSWER Firewall controls traffic according to rule/state [2]; proxy intermediates requests/cache/filter [2]; TLS protects communication in transit [2].",
+          "options": [
+            "/ WORKED ANSWER Firewall controls traffic according to rule/state [2]; proxy intermediates requests/cache/filter [2]; TLS protects communication in transit [2].",
+            "/ WORKED ANSWER Encryption protects data in transit [2]; a malicious website may still use encryption [2]; verify destination, credentials or content separately [2].",
+            "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each]."
+          ],
+          "feedback": "/ WORKED ANSWER Firewall controls traffic according to rule/state [2]; proxy intermediates requests/cache/filter [2]; TLS protects communication in transit [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why encrypted traffic is not the same as authenticated trustworthy content. [6]",
+          "answer": "/ WORKED ANSWER Encryption protects data in transit [2]; a malicious website may still use encryption [2]; verify destination, credentials or content separately [2].",
+          "options": [
+            "/ WORKED ANSWER Firewall controls traffic according to rule/state [2]; proxy intermediates requests/cache/filter [2]; TLS protects communication in transit [2].",
+            "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each].",
+            "/ WORKED ANSWER Encryption protects data in transit [2]; a malicious website may still use encryption [2]; verify destination, credentials or content separately [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Encryption protects data in transit [2]; a malicious website may still use encryption [2]; verify destination, credentials or content separately [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Recommend a layered defence for a sixth-form network with remote learners, justifying four different controls. [8]",
+          "answer": "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each].",
+          "options": [
+            "/ WORKED ANSWER Encryption protects data in transit [2]; a malicious website may still use encryption [2]; verify destination, credentials or content separately [2].",
+            "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each].",
+            "/ WORKED ANSWER Firewall controls traffic according to rule/state [2]; proxy intermediates requests/cache/filter [2]; TLS protects communication in transit [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Recommend a layered defence for a sixth-form network with remote learners, justifying four different controls. [8]",
+        "model": "/ WORKED ANSWER Credit four linked controls: firewall, proxy/web filtering, VPN or TLS, MFA, patching/endpoint protection, least privilege or monitoring [2 each].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "proxy server means: Server that acts as intermediary for client requests.",
+          "answer": "true",
+          "feedback": "proxy server — Server that acts as intermediary for client requests."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "TLS means: Rule-based network traffic access control.",
+          "answer": "false",
+          "feedback": "TLS — Protocol protecting transport of application data."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "defence in depth means: Overlapping safeguards against different failures.",
+          "answer": "true",
+          "feedback": "defence in depth — Overlapping safeguards against different failures."
+        }
+      ]
+    }
+  ]
+}

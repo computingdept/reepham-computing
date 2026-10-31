@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-007",
+  "course": "h446",
+  "title": "Floating-point subtraction",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must floating-point exponents match before the mantissas are added directly?",
+          "answer": "Because corresponding mantissa bit positions must represent the same scaled place values .",
+          "options": [
+            "0.1875",
+            "01101101₂",
+            "Because corresponding mantissa bit positions must represent the same scaled place values ."
+          ],
+          "feedback": "Aligning the exponents puts both operands on the same scale before the mantissas are added."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert 01100000 1110 to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.",
+          "answer": "0.1875",
+          "options": [
+            "01101101₂",
+            "0.1875",
+            "Because corresponding mantissa bit positions must represent the same scaled place values ."
+          ],
+          "feedback": "Mantissa 01100000 = 0.75 ; exponent 1110 = −2 ; 0.75 × 2⁻² = 0.75 ÷ 4 = 0.1875 ."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert 6D₁₆ to eight-bit binary.",
+          "answer": "01101101₂",
+          "options": [
+            "01101101₂",
+            "Because corresponding mantissa bit positions must represent the same scaled place values .",
+            "0.1875"
+          ],
+          "feedback": "6 → 0110 and D → 1101 ."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Use 8-bit two’s complement to calculate 18 − 29 . Show how subtraction becomes addition.",
+          "answer": "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 .",
+          "options": [
+            "Because corresponding mantissa bit positions must represent the same scaled place values .",
+            "0.1875",
+            "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 ."
+          ],
+          "feedback": "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 ."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Align before subtracting",
+          "text": "Choose a common exponent and use arithmetic right shifts to align the mantissas. Keep any low-order guard bits needed for an exact working result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Negate the second mantissa",
+          "text": "At the chosen working width, invert every bit of B’s aligned mantissa and add 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Add the aligned values",
+          "text": "Sign-extend both operands to the same working width, add them, and interpret the signed result using the common exponent."
+        },
+        {
+          "type": "paragraph",
+          "title": "Handle cancellation, zero and range",
+          "text": "A small difference may need left shifts and a reduced exponent to become normalised. Equal operands produce zero."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Subtract 1.5 from 5",
+          "text": "Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Rewrite subtraction as addition of the negative value and give the final answer in normalised floating-point form."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Use common exponent 3",
+          "text": "Align both mantissas using sign-preserving right shifts. A: 0010100 B: 0000110"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Negation'?",
+          "answer": "Changing the sign of a value; in two’s complement, invert and add 1.",
+          "options": [
+            "Extra low-order working bits retained during calculation.",
+            "Changing the sign of a value; in two’s complement, invert and add 1.",
+            "When subtracting similar values produces a much smaller result."
+          ],
+          "feedback": "Negation — Changing the sign of a value; in two’s complement, invert and add 1."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Cancellation'?",
+          "answer": "When subtracting similar values produces a much smaller result.",
+          "options": [
+            "When subtracting similar values produces a much smaller result.",
+            "Changing the sign of a value; in two’s complement, invert and add 1.",
+            "Extra low-order working bits retained during calculation."
+          ],
+          "feedback": "Cancellation — When subtracting similar values produces a much smaller result."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Guard bits'?",
+          "answer": "Extra low-order working bits retained during calculation.",
+          "options": [
+            "Changing the sign of a value; in two’s complement, invert and add 1.",
+            "When subtracting similar values produces a much smaller result.",
+            "Extra low-order working bits retained during calculation."
+          ],
+          "feedback": "Guard bits — Extra low-order working bits retained during calculation."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "2. Negative difference: 1.5 − 5",
+          "text": "Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking."
+        },
+        {
+          "type": "paragraph",
+          "title": "Build the answer",
+          "text": "YOUR TURN Build the answer Method ? Working ? Final answer ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Build the answer",
+          "text": "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
+        },
+        {
+          "type": "paragraph",
+          "title": "3. Subtract a negative: 5 − (−1.5)",
+          "text": "Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A right shift that repeats the sign bit.",
+          "answer": "Arithmetic right shift",
+          "options": [
+            "Negation",
+            "Cancellation",
+            "Arithmetic right shift"
+          ],
+          "feedback": "Arithmetic right shift — A right shift that repeats the sign bit."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Restoring a normalised mantissa while adjusting the exponent to preserve value.",
+          "answer": "Renormalisation",
+          "options": [
+            "Cancellation",
+            "Renormalisation",
+            "Negation"
+          ],
+          "feedback": "Renormalisation — Restoring a normalised mantissa while adjusting the exponent to preserve value."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? When a nonzero normalised result needs an exponent below the format’s minimum.",
+          "answer": "Underflow",
+          "options": [
+            "Underflow",
+            "Negation",
+            "Cancellation"
+          ],
+          "feedback": "Underflow — When a nonzero normalised result needs an exponent below the format’s minimum."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Changing the sign of a value; in two’s complement, invert and add 1.",
+          "answer": "Negation",
+          "options": [
+            "Cancellation",
+            "Guard bits",
+            "Negation"
+          ],
+          "feedback": "Negation — Changing the sign of a value; in two’s complement, invert and add 1."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Subtract 1.5 from 5 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Rewrite subtraction as addition of the negative value and give the final answer in normalised floating-point form.",
+          "answer": "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent.",
+          "options": [
+            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
+            "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
+          ],
+          "feedback": "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 2. Negative difference: 1.5 − 5 Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
+          "answer": "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
+          "options": [
+            "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5",
+            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent."
+          ],
+          "feedback": "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 3. Subtract a negative: 5 − (−1.5) Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
+          "answer": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+          "options": [
+            "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+            "STEP 2 · NEGATE B Invert and add 1 B: 0000110 invert → 1111001 add 1 → 1111010 Negate the aligned mantissa, not the exponent.",
+            "CHECK Build the answer Method Align to exponent 3; negate the second mantissa Working 0000110 + 1101100 = 1110010 Final answer 100100 0010 = −3.5"
+          ],
+          "feedback": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. 3. Subtract a negative: 5 − (−1.5) Use a six-bit two’s-complement mantissa and a four-bit two’s-complement exponent. Give the final answer in normalised floating-point form before checking.",
+        "model": "CHECK Build the answer Method Align to exponent 3; negate the negative second mantissa Working 0010100 + 0000110 = 0011010 Final answer 011010 0011 = 6.5",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Cancellation means: When subtracting similar values produces a much smaller result.",
+          "answer": "true",
+          "feedback": "Cancellation — When subtracting similar values produces a much smaller result."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Guard bits means: Restoring a normalised mantissa while adjusting the exponent to preserve value.",
+          "answer": "false",
+          "feedback": "Guard bits — Extra low-order working bits retained during calculation."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Arithmetic right shift means: A right shift that repeats the sign bit.",
+          "answer": "true",
+          "feedback": "Arithmetic right shift — A right shift that repeats the sign bit."
+        }
+      ]
+    }
+  ]
+}

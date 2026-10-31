@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-300",
+  "course": "h446",
+  "title": "Heuristics, modelling and pipelining",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a heuristic provide?",
+          "answer": "A rule-of-thumb estimate useful for choosing or ordering options.",
+          "options": [
+            "A rule-of-thumb estimate useful for choosing or ordering options.",
+            "Completed work per unit time.",
+            "Delay caused by unavailable stage/result or resource."
+          ],
+          "feedback": "A rule-of-thumb estimate useful for choosing or ordering options."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is throughput?",
+          "answer": "Completed work per unit time.",
+          "options": [
+            "A rule-of-thumb estimate useful for choosing or ordering options.",
+            "Delay caused by unavailable stage/result or resource.",
+            "Completed work per unit time."
+          ],
+          "feedback": "Completed work per unit time."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a pipeline stall?",
+          "answer": "Delay caused by unavailable stage/result or resource.",
+          "options": [
+            "Completed work per unit time.",
+            "Delay caused by unavailable stage/result or resource.",
+            "A rule-of-thumb estimate useful for choosing or ordering options."
+          ],
+          "feedback": "Delay caused by unavailable stage/result or resource."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search for 13 in indexes0–14 of [0,1,…,14]. List midpoint indexes.",
+          "answer": "mid7, then mid11, then mid13; found at 13.",
+          "options": [
+            "mid7, then mid11, then mid13; found at 13.",
+            "A rule-of-thumb estimate useful for choosing or ordering options.",
+            "Completed work per unit time."
+          ],
+          "feedback": "mid7, then mid11, then mid13; found at 13."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Define the heuristic",
+          "text": "A heuristic quickly estimates how promising a choice is; it is not automatically an exact solution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the trade-off",
+          "text": "Separate local edge cost, accumulated cost and estimated remaining cost before choosing a path."
+        },
+        {
+          "type": "paragraph",
+          "title": "Pipeline and performance models",
+          "text": "A pipeline can overlap independent stages, increasing throughput, but dependencies and resource constraints may cause stalls."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Calculate complete route costs, rather than deciding only from the first edge."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the method",
+          "text": "The via-C path is cheaper at six total units despite a larger first edge."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'heuristic'?",
+          "answer": "Estimate/rule guiding search.",
+          "options": [
+            "Simplification estimating resource use.",
+            "Overlap processing stages.",
+            "Estimate/rule guiding search."
+          ],
+          "feedback": "heuristic — Estimate/rule guiding search."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'performance model'?",
+          "answer": "Simplification estimating resource use.",
+          "options": [
+            "Overlap processing stages.",
+            "Simplification estimating resource use.",
+            "Estimate/rule guiding search."
+          ],
+          "feedback": "performance model — Simplification estimating resource use."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pipeline'?",
+          "answer": "Overlap processing stages.",
+          "options": [
+            "Overlap processing stages.",
+            "Estimate/rule guiding search.",
+            "Simplification estimating resource use."
+          ],
+          "feedback": "pipeline — Overlap processing stages."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Task one occupies S1 in cycle 1, with one new task entering each later cycle."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the method",
+          "text": "Task four completes stage S3 in cycle 6, assuming no stalls; it is not completed in cycle 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Delay in progress through stages.",
+          "answer": "stall",
+          "options": [
+            "stall",
+            "heuristic",
+            "performance model"
+          ],
+          "feedback": "stall — Delay in progress through stages."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Estimate/rule guiding search.",
+          "answer": "heuristic",
+          "options": [
+            "performance model",
+            "pipeline",
+            "heuristic"
+          ],
+          "feedback": "heuristic — Estimate/rule guiding search."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Simplification estimating resource use.",
+          "answer": "performance model",
+          "options": [
+            "pipeline",
+            "performance model",
+            "heuristic"
+          ],
+          "feedback": "performance model — Simplification estimating resource use."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Overlap processing stages.",
+          "answer": "pipeline",
+          "options": [
+            "pipeline",
+            "heuristic",
+            "performance model"
+          ],
+          "feedback": "pipeline — Overlap processing stages."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain why choosing the cheapest immediate edge is not guaranteed to produce a shortest path. [4]",
+          "answer": "AND MARKING POINTS Local choice ignores later costs [2]; example via B 2+8=10 vs C 5+1=6 [2].",
+          "options": [
+            "AND MARKING POINTS Local choice ignores later costs [2]; example via B 2+8=10 vs C 5+1=6 [2].",
+            "AND MARKING POINTS One starts each cycle [2], pipeline fill3 [1], last completes cycle3+5−1=7 [2], non-overlap=15 [1].",
+            "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare…"
+          ],
+          "feedback": "AND MARKING POINTS Local choice ignores later costs [2]; example via B 2+8=10 vs C 5+1=6 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Five independent jobs pass through 3 one-cycle stages. Give ideal completion cycle for all five and compare with non-overlapped 15 cycles. [6]",
+          "answer": "AND MARKING POINTS One starts each cycle [2], pipeline fill3 [1], last completes cycle3+5−1=7 [2], non-overlap=15 [1].",
+          "options": [
+            "AND MARKING POINTS Local choice ignores later costs [2]; example via B 2+8=10 vs C 5+1=6 [2].",
+            "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare…",
+            "AND MARKING POINTS One starts each cycle [2], pipeline fill3 [1], last completes cycle3+5−1=7 [2], non-overlap=15 [1]."
+          ],
+          "feedback": "AND MARKING POINTS One starts each cycle [2], pipeline fill3 [1], last completes cycle3+5−1=7 [2], non-overlap=15 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate using an A* heuristic and a computational performance model to plan emergency routes. [6]",
+          "answer": "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare…",
+          "options": [
+            "AND MARKING POINTS One starts each cycle [2], pipeline fill3 [1], last completes cycle3+5−1=7 [2], non-overlap=15 [1].",
+            "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare…",
+            "AND MARKING POINTS Local choice ignores later costs [2]; example via B 2+8=10 vs C 5+1=6 [2]."
+          ],
+          "feedback": "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare quality and computation time [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate using an A* heuristic and a computational performance model to plan emergency routes. [6]",
+        "model": "AND MARKING POINTS Heuristic can direct search [1], must not overestimate for optimality under appropriate assumptions [1]; live network weights may change [1]; model validation/data quality [1], congestion/resources [1], compare quality and computation time [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "performance model means: Simplification estimating resource use.",
+          "answer": "true",
+          "feedback": "performance model — Simplification estimating resource use."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pipeline means: Estimate/rule guiding search.",
+          "answer": "false",
+          "feedback": "pipeline — Overlap processing stages."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "stall means: Delay in progress through stages.",
+          "answer": "true",
+          "feedback": "stall — Delay in progress through stages."
+        }
+      ]
+    }
+  ]
+}

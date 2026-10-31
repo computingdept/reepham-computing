@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-289",
+  "course": "h446",
+  "title": "Hashing and applications",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the encryption key in symmetric encryption?",
+          "answer": "A shared secret used to encrypt and decrypt.",
+          "options": [
+            "Can be distributed for encryption or verification according to the scheme.",
+            "To protect its content from unintended readers.",
+            "A shared secret used to encrypt and decrypt."
+          ],
+          "feedback": "A shared secret used to encrypt and decrypt."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the role of a public key?",
+          "answer": "Can be distributed for encryption or verification according to the scheme.",
+          "options": [
+            "To protect its content from unintended readers.",
+            "Can be distributed for encryption or verification according to the scheme.",
+            "A shared secret used to encrypt and decrypt."
+          ],
+          "feedback": "Can be distributed for encryption or verification according to the scheme."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why encrypt a message in transit?",
+          "answer": "To protect its content from unintended readers.",
+          "options": [
+            "To protect its content from unintended readers.",
+            "A shared secret used to encrypt and decrypt.",
+            "Can be distributed for encryption or verification according to the scheme."
+          ],
+          "feedback": "To protect its content from unintended readers."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Compute 10110110₂ AND 00001111₂, then hexadecimal.",
+          "answer": "00000110₂=06₁₆; high four bits masked away.",
+          "options": [
+            "A shared secret used to encrypt and decrypt.",
+            "Can be distributed for encryption or verification according to the scheme.",
+            "00000110₂=06₁₆; high four bits masked away."
+          ],
+          "feedback": "00000110₂=06₁₆; high four bits masked away."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "A cryptographic hash transforms an arbitrary input into a fixed-size digest. It is designed to make reversing the digest infeasible, not impossible under all circumstances."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "A message digest supports integrity checking when the reference hash is trusted. Hash collisions can exist because outputs have finite length."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Passwords should be processed using a salted, purpose-built slow password-hashing scheme, not simply a fast general-purpose hash and never reversible encryption."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The file contents or expected reference differ: the integrity check fails."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Show method",
+          "text": "The mismatch does not by itself reveal whether alteration was accidental or malicious."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'hash'?",
+          "answer": "Fixed-size digest of arbitrary input.",
+          "options": [
+            "Random value mixed into password hashing.",
+            "Fixed-size digest of arbitrary input.",
+            "Two inputs producing the same digest."
+          ],
+          "feedback": "hash — Fixed-size digest of arbitrary input."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'collision'?",
+          "answer": "Two inputs producing the same digest.",
+          "options": [
+            "Two inputs producing the same digest.",
+            "Fixed-size digest of arbitrary input.",
+            "Random value mixed into password hashing."
+          ],
+          "feedback": "collision — Two inputs producing the same digest."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'salt'?",
+          "answer": "Random value mixed into password hashing.",
+          "options": [
+            "Fixed-size digest of arbitrary input.",
+            "Two inputs producing the same digest.",
+            "Random value mixed into password hashing."
+          ],
+          "feedback": "salt — Random value mixed into password hashing."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Different random salts make identical passwords produce different stored verifiers."
+        },
+        {
+          "type": "paragraph",
+          "title": "Show method",
+          "text": "A costly password KDF slows guessing; salt is generally stored beside the verifier and need not be secret."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Key/password derivation function.",
+          "answer": "KDF",
+          "options": [
+            "hash",
+            "collision",
+            "KDF"
+          ],
+          "feedback": "KDF — Key/password derivation function."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Confidence that data has not changed.",
+          "answer": "integrity",
+          "options": [
+            "collision",
+            "integrity",
+            "hash"
+          ],
+          "feedback": "integrity — Confidence that data has not changed."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Fixed-size digest of arbitrary input.",
+          "answer": "hash",
+          "options": [
+            "hash",
+            "collision",
+            "salt"
+          ],
+          "feedback": "hash — Fixed-size digest of arbitrary input."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Two inputs producing the same digest.",
+          "answer": "collision",
+          "options": [
+            "hash",
+            "salt",
+            "collision"
+          ],
+          "feedback": "collision — Two inputs producing the same digest."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Define cryptographic hashing and distinguish it from reversible encryption. [6]",
+          "answer": "Hash maps data to fixed-length digest [2], designed one-way [1]; encryption designed to recover plaintext with key [2]; hashes are not decrypted [1].",
+          "options": [
+            "Compute digest of downloaded bytes [2]; compare with trusted expected digest [2]; match is strong integrity evidence [1]; compromised reference cannot establish authenticity [1].",
+            "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1].",
+            "Hash maps data to fixed-length digest [2], designed one-way [1]; encryption designed to recover plaintext with key [2]; hashes are not decrypted [1]."
+          ],
+          "feedback": "Hash maps data to fixed-length digest [2], designed one-way [1]; encryption designed to recover plaintext with key [2]; hashes are not decrypted [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Explain how a trusted checksum helps verify a software download and give one limitation. [6]",
+          "answer": "Compute digest of downloaded bytes [2]; compare with trusted expected digest [2]; match is strong integrity evidence [1]; compromised reference cannot establish authenticity [1].",
+          "options": [
+            "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1].",
+            "Compute digest of downloaded bytes [2]; compare with trusted expected digest [2]; match is strong integrity evidence [1]; compromised reference cannot establish authenticity [1].",
+            "Hash maps data to fixed-length digest [2], designed one-way [1]; encryption designed to recover plaintext with key [2]; hashes are not decrypted [1]."
+          ],
+          "feedback": "Compute digest of downloaded bytes [2]; compare with trusted expected digest [2]; match is strong integrity evidence [1]; compromised reference cannot establish authenticity [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Explain salted password hashing and why storing raw passwords or just fast unsalted hashes is weaker. [6]",
+          "answer": "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1].",
+          "options": [
+            "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1].",
+            "Hash maps data to fixed-length digest [2], designed one-way [1]; encryption designed to recover plaintext with key [2]; hashes are not decrypted [1].",
+            "Compute digest of downloaded bytes [2]; compare with trusted expected digest [2]; match is strong integrity evidence [1]; compromised reference cannot establish authenticity [1]."
+          ],
+          "feedback": "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Explain salted password hashing and why storing raw passwords or just fast unsalted hashes is weaker. [6]",
+        "model": "Unique random salt per account [2], purpose-built slow KDF [2], prevents direct same-password verifier equality/precomputed attacks [1], raw or weak unsalted hashes expose credentials [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "collision means: Two inputs producing the same digest.",
+          "answer": "true",
+          "feedback": "collision — Two inputs producing the same digest."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "salt means: Confidence that data has not changed.",
+          "answer": "false",
+          "feedback": "salt — Random value mixed into password hashing."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "KDF means: Key/password derivation function.",
+          "answer": "true",
+          "feedback": "KDF — Key/password derivation function."
+        }
+      ]
+    }
+  ]
+}

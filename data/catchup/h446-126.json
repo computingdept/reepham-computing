@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-126",
+  "course": "h446",
+  "title": "Lesson 126 · Addressing Modes: Immediate, Direct, Indirect and Indexed",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which LMC instruction reads a mailbox value into the accumulator?",
+          "answer": "LDA (load).",
+          "options": [
+            "LDA (load).",
+            "The left subtree.",
+            "24."
+          ],
+          "feedback": "LDA (load)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, which side holds a smaller value?",
+          "answer": "The left subtree.",
+          "options": [
+            "LDA (load).",
+            "24.",
+            "The left subtree."
+          ],
+          "feedback": "The left subtree."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits are in three bytes?",
+          "answer": "24.",
+          "options": [
+            "The left subtree.",
+            "24.",
+            "LDA (load)."
+          ],
+          "feedback": "24."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a function parameter?",
+          "answer": "An input used by a subroutine.",
+          "options": [
+            "An input used by a subroutine.",
+            "LDA (load).",
+            "The left subtree."
+          ],
+          "feedback": "An input used by a subroutine."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Immediate versus direct",
+          "text": "LOAD #12 uses literal 12; LOAD 12 uses contents of memory[12]."
+        },
+        {
+          "type": "paragraph",
+          "title": "Indirect addressing",
+          "text": "LOAD @12 uses address stored in memory[12]; then loads data there."
+        },
+        {
+          "type": "paragraph",
+          "title": "Indexed addressing",
+          "text": "LOAD 20,X uses effective address 20+X; useful for array elements."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · #12 gives literal 12",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · 12 reads memory[12]=40",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · @12 follows pointer to 7",
+          "text": "Using illustrative assembler conventions: immediate gives 12; direct reads 40; indirect follows memory[12]=40 then loads memory[40]=7."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'immediate'?",
+          "answer": "Operand is a literal value.",
+          "options": [
+            "Operand gives the memory location holding a value.",
+            "Operand points to a location holding the effective address.",
+            "Operand is a literal value."
+          ],
+          "feedback": "immediate — Operand is a literal value."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'direct'?",
+          "answer": "Operand gives the memory location holding a value.",
+          "options": [
+            "Operand points to a location holding the effective address.",
+            "Operand gives the memory location holding a value.",
+            "Operand is a literal value."
+          ],
+          "feedback": "direct — Operand gives the memory location holding a value."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'indirect'?",
+          "answer": "Operand points to a location holding the effective address.",
+          "options": [
+            "Operand points to a location holding the effective address.",
+            "Operand is a literal value.",
+            "Operand gives the memory location holding a value."
+          ],
+          "feedback": "indirect — Operand points to a location holding the effective address."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Base 80, index 3",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Effective address 83",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Read memory[83]=19",
+          "text": "Effective address = 80+3=83. It loads 19. Indexed addressing avoids writing a new absolute address for each element."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Base address plus index gives effective address.",
+          "answer": "indexed",
+          "options": [
+            "indexed",
+            "immediate",
+            "direct"
+          ],
+          "feedback": "indexed — Base address plus index gives effective address."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operand is a literal value.",
+          "answer": "immediate",
+          "options": [
+            "direct",
+            "indirect",
+            "immediate"
+          ],
+          "feedback": "immediate — Operand is a literal value."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operand gives the memory location holding a value.",
+          "answer": "direct",
+          "options": [
+            "indirect",
+            "direct",
+            "immediate"
+          ],
+          "feedback": "direct — Operand gives the memory location holding a value."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operand points to a location holding the effective address.",
+          "answer": "indirect",
+          "options": [
+            "indirect",
+            "immediate",
+            "direct"
+          ],
+          "feedback": "indirect — Operand points to a location holding the effective address."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Define immediate and direct addressing with one example each. [6]",
+          "answer": "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+          "options": [
+            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Memory[15]=29 and memory[29]=6. Give values loaded by direct LOAD 15 and indirect LOAD @15. [6]",
+          "answer": "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+          "options": [
+            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2].",
+            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain indexed addressing for an array at base 50 with index 4 and discuss why this is not simply LMC LDA notation. [8]",
+          "answer": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+          "options": [
+            "/ WORKED ANSWER Direct =29 [3]. Indirect follows pointer 29, then loads 6 [3].",
+            "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+            "/ WORKED ANSWER Immediate uses supplied literal [2]; direct accesses memory at given address [2]; valid contrasting examples [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain indexed addressing for an array at base 50 with index 4 and discuss why this is not simply LMC LDA notation. [8]",
+        "model": "/ WORKED ANSWER Effective address base + offset =54 [3], retrieves element stored there [2], supports array traversal [1], standard LMC has a restricted instruction set and does not natively specify general indexed addressing [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "direct means: Operand gives the memory location holding a value.",
+          "answer": "true",
+          "feedback": "direct — Operand gives the memory location holding a value."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "indirect means: Operand is a literal value.",
+          "answer": "false",
+          "feedback": "indirect — Operand points to a location holding the effective address."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "indexed means: Base address plus index gives effective address.",
+          "answer": "true",
+          "feedback": "indexed — Base address plus index gives effective address."
+        }
+      ]
+    }
+  ]
+}

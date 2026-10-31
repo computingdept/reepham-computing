@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-218",
+  "course": "h446",
+  "title": "Dijkstra: shortest paths I",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why does quicksort exclude the pivot from its recursive calls?",
+          "answer": "The pivot is already in its final sorted position.",
+          "options": [
+            "0.",
+            "The pivot is already in its final sorted position.",
+            "A connection between vertices with an associated cost or distance."
+          ],
+          "feedback": "The pivot is already in its final sorted position."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define a weighted edge.",
+          "answer": "A connection between vertices with an associated cost or distance.",
+          "options": [
+            "A connection between vertices with an associated cost or distance.",
+            "The pivot is already in its final sorted position.",
+            "0."
+          ],
+          "feedback": "A connection between vertices with an associated cost or distance."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the first index of an array?",
+          "answer": "0.",
+          "options": [
+            "The pivot is already in its final sorted position.",
+            "A connection between vertices with an associated cost or distance.",
+            "0."
+          ],
+          "feedback": "0."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A–B costs 3 and B–C costs 5. What is cost of A→B→C?",
+          "answer": "8.",
+          "options": [
+            "A connection between vertices with an associated cost or distance.",
+            "8.",
+            "The pivot is already in its final sorted position."
+          ],
+          "feedback": "8."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Initialise from the start",
+          "text": "Distance(A)=0, all others infinity. Relax A's edges to set B=4 and C=2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Always choose smallest tentative distance",
+          "text": "C=2 settles before B=4. Through C, B improves to 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep updating neighbours",
+          "text": "Settling B changes D from 10 to 8; settling D changes E from 12 to 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reconstruct from predecessors",
+          "text": "E←D←B←C←A. Reverse these arrows for A→C→B→D→E, total distance 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the next state",
+          "text": "P gives tentative Q=3 and R=7."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reveal and explain",
+          "text": "Settle Q=3, improving R to 5 and discovering S=9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'tentative distance'?",
+          "answer": "Best known cost to an unsettled vertex.",
+          "options": [
+            "Best known cost to an unsettled vertex.",
+            "Vertex whose shortest distance has been finalised.",
+            "Improve a neighbour's distance via the current vertex."
+          ],
+          "feedback": "tentative distance — Best known cost to an unsettled vertex."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'settled'?",
+          "answer": "Vertex whose shortest distance has been finalised.",
+          "options": [
+            "Best known cost to an unsettled vertex.",
+            "Improve a neighbour's distance via the current vertex.",
+            "Vertex whose shortest distance has been finalised."
+          ],
+          "feedback": "settled — Vertex whose shortest distance has been finalised."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'relaxation'?",
+          "answer": "Improve a neighbour's distance via the current vertex.",
+          "options": [
+            "Vertex whose shortest distance has been finalised.",
+            "Improve a neighbour's distance via the current vertex.",
+            "Best known cost to an unsettled vertex."
+          ],
+          "feedback": "relaxation — Improve a neighbour's distance via the current vertex."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next state",
+          "text": "From M, set N=5 and O=2; O is the next vertex settled."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "From O, N improves from 5 to 3 and P gets a tentative 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reveal and explain",
+          "text": "From N, P improves to 6; P is next. Route M→O→N→P costs 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Previous vertex on the best-known route.",
+          "answer": "predecessor",
+          "options": [
+            "settled",
+            "predecessor",
+            "tentative distance"
+          ],
+          "feedback": "predecessor — Previous vertex on the best-known route."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Edge cost of zero or greater.",
+          "answer": "non-negative weight",
+          "options": [
+            "non-negative weight",
+            "tentative distance",
+            "settled"
+          ],
+          "feedback": "non-negative weight — Edge cost of zero or greater."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Best known cost to an unsettled vertex.",
+          "answer": "tentative distance",
+          "options": [
+            "settled",
+            "relaxation",
+            "tentative distance"
+          ],
+          "feedback": "tentative distance — Best known cost to an unsettled vertex."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Vertex whose shortest distance has been finalised.",
+          "answer": "settled",
+          "options": [
+            "relaxation",
+            "settled",
+            "tentative distance"
+          ],
+          "feedback": "settled — Vertex whose shortest distance has been finalised."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 A–B=4 and A–C=2. Starting Dijkstra at A, state the tentative distances of A, B and C after relaxing A's neighbours.",
+          "answer": "[3] A=0 [1], B=4 [1], C=2 [1]. C is chosen next.",
+          "options": [
+            "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the…",
+            "[3] A=0 [1], B=4 [1], C=2 [1]. C is chosen next.",
+            "[6] After S: A3, B7 [1]; settle A3 [1] improving B to5 and T to11 [2]; settle B5, T improves to7 [1]; route S→A→B→T, cost 7 [1]."
+          ],
+          "feedback": "[3] A=0 [1], B=4 [1], C=2 [1]. C is chosen next."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 On edges S–A=3, S–B=7, A–B=2, B–T=2 and A–T=8, find the shortest S→T path with full distance reasoning.",
+          "answer": "[6] After S: A3, B7 [1]; settle A3 [1] improving B to5 and T to11 [2]; settle B5, T improves to7 [1]; route S→A→B→T, cost 7 [1].",
+          "options": [
+            "[6] After S: A3, B7 [1]; settle A3 [1] improving B to5 and T to11 [2]; settle B5, T improves to7 [1]; route S→A→B→T, cost 7 [1].",
+            "[3] A=0 [1], B=4 [1], C=2 [1]. C is chosen next.",
+            "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the…"
+          ],
+          "feedback": "[6] After S: A3, B7 [1]; settle A3 [1] improving B to5 and T to11 [2]; settle B5, T improves to7 [1]; route S→A→B→T, cost 7 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 5 marks · QUESTION 3 OF 3 Explain why Dijkstra must not be relied upon when negative-weight edges are possible, and contrast tentative and settled distances.",
+          "answer": "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the…",
+          "options": [
+            "[3] A=0 [1], B=4 [1], C=2 [1]. C is chosen next.",
+            "[6] After S: A3, B7 [1]; settle A3 [1] improving B to5 and T to11 [2]; settle B5, T improves to7 [1]; route S→A→B→T, cost 7 [1].",
+            "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the…"
+          ],
+          "feedback": "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the precondition [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 5 marks · QUESTION 3 OF 3 Explain why Dijkstra must not be relied upon when negative-weight edges are possible, and contrast tentative and settled distances.",
+        "model": "[5] Dijkstra assumes non-negative edges [1], so no later path can improve a settled vertex [1]; a negative edge can invalidate that assumption [1]. Tentative distances can change [1], but settled distances are final under the precondition [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "settled means: Vertex whose shortest distance has been finalised.",
+          "answer": "true",
+          "feedback": "settled — Vertex whose shortest distance has been finalised."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "relaxation means: Edge cost of zero or greater.",
+          "answer": "false",
+          "feedback": "relaxation — Improve a neighbour's distance via the current vertex."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "predecessor means: Previous vertex on the best-known route.",
+          "answer": "true",
+          "feedback": "predecessor — Previous vertex on the best-known route."
+        }
+      ]
+    }
+  ]
+}

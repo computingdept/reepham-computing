@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-039",
+  "course": "h446",
+  "title": "Programming Techniques · Iteration and Tracing",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What prints after int x=2; x=x*3;?",
+          "answer": "6",
+          "options": [
+            "6",
+            "The oldest item",
+            "To avoid non-termination"
+          ],
+          "feedback": "6"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a queue remove first?",
+          "answer": "The oldest item",
+          "options": [
+            "6",
+            "To avoid non-termination",
+            "The oldest item"
+          ],
+          "feedback": "The oldest item"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why should loops have a stopping condition?",
+          "answer": "To avoid non-termination",
+          "options": [
+            "The oldest item",
+            "To avoid non-termination",
+            "6"
+          ],
+          "feedback": "To avoid non-termination"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is 0 XOR 1?",
+          "answer": "1",
+          "options": [
+            "1",
+            "6",
+            "The oldest item"
+          ],
+          "feedback": "1"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the important decision",
+          "text": "Initialise the accumulator once. Each iteration changes total; i++ then advances the counter. Test i <= 3 before every pass."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace an accumulator",
+          "text": "int total = 0; for (int i = 1; i <= 3; i++) total += i;"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Initialise and trace pass one",
+          "text": "Initially total=0 and i=1. The test 1<=3 is true; total becomes 1, then i becomes 2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace the remaining passes",
+          "text": "At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'iteration'?",
+          "answer": "Repetition of statements",
+          "options": [
+            "Running total",
+            "Tracks repetitions",
+            "Repetition of statements"
+          ],
+          "feedback": "iteration — Repetition of statements"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'accumulator'?",
+          "answer": "Running total",
+          "options": [
+            "Tracks repetitions",
+            "Running total",
+            "Repetition of statements"
+          ],
+          "feedback": "accumulator — Running total"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'counter'?",
+          "answer": "Tracks repetitions",
+          "options": [
+            "Tracks repetitions",
+            "Repetition of statements",
+            "Running total"
+          ],
+          "feedback": "counter — Tracks repetitions"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Problem 1",
+          "text": "for i = 0 to 3 exclusive, how many iterations?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Discuss, then respond",
+          "text": "for i = 0 to 3 exclusive, how many iterations?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check your thinking",
+          "text": "3: i=0,1,2."
+        },
+        {
+          "type": "paragraph",
+          "title": "Problem 2",
+          "text": "while (x < 5) x++; starting x=3: final x?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Controls loop continuation",
+          "answer": "condition",
+          "options": [
+            "condition",
+            "iteration",
+            "accumulator"
+          ],
+          "feedback": "condition — Controls loop continuation"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The loop ends",
+          "answer": "termination",
+          "options": [
+            "iteration",
+            "accumulator",
+            "termination"
+          ],
+          "feedback": "termination — The loop ends"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repetition of statements",
+          "answer": "iteration",
+          "options": [
+            "counter",
+            "iteration",
+            "accumulator"
+          ],
+          "feedback": "iteration — Repetition of statements"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Running total",
+          "answer": "accumulator",
+          "options": [
+            "accumulator",
+            "iteration",
+            "counter"
+          ],
+          "feedback": "accumulator — Running total"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
+          "answer": "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
+          "options": [
+            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
+            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
+            "MODEL ANSWER Check your thinking 5."
+          ],
+          "feedback": "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 1 for i = 0 to 3 exclusive, how many iterations?",
+          "answer": "MODEL ANSWER Check your thinking 3: i=0,1,2.",
+          "options": [
+            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4.",
+            "MODEL ANSWER Check your thinking 5.",
+            "MODEL ANSWER Check your thinking 3: i=0,1,2."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking 3: i=0,1,2."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 2 while (x < 5) x++; starting x=3: final x?",
+          "answer": "MODEL ANSWER Check your thinking 5.",
+          "options": [
+            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
+            "MODEL ANSWER Check your thinking 5.",
+            "STEP 2 Trace the remaining passes At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking 5."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Problem 2 while (x < 5) x++; starting x=3: final x?",
+        "model": "MODEL ANSWER Check your thinking 5.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "accumulator means: Running total",
+          "answer": "true",
+          "feedback": "accumulator — Running total"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "counter means: The loop ends",
+          "answer": "false",
+          "feedback": "counter — Tracks repetitions"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "condition means: Controls loop continuation",
+          "answer": "true",
+          "feedback": "condition — Controls loop continuation"
+        }
+      ]
+    }
+  ]
+}

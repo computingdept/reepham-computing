@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-010",
+  "course": "h446",
+  "title": "Iteration in C#",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between = and == in C#?",
+          "answer": "= assigns a value. == compares two values for equality.",
+          "options": [
+            "Unicode supports a much larger range of characters and writing systems.",
+            "5.5",
+            "= assigns a value. == compares two values for equality."
+          ],
+          "feedback": "= assigns a value. == compares two values for equality."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Give one reason Unicode may be chosen instead of standard ASCII.",
+          "answer": "Unicode supports a much larger range of characters and writing systems.",
+          "options": [
+            "5.5",
+            "Unicode supports a much larger range of characters and writing systems.",
+            "= assigns a value. == compares two values for equality."
+          ],
+          "feedback": "Unicode supports a much larger range of characters and writing systems."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert 01011000 0011 to denary using an 8-bit two’s-complement mantissa and a 4-bit two’s-complement exponent.",
+          "answer": "5.5",
+          "options": [
+            "5.5",
+            "= assigns a value. == compares two values for equality.",
+            "Unicode supports a much larger range of characters and writing systems."
+          ],
+          "feedback": "Mantissa 01011000 = 0.6875 ; exponent 0011 = 3 ; 0.6875 × 2³ = 5.5 ."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For mark = 85 , what does an if (mark >= 80) ... else if (mark >= 50) structure output, and why?",
+          "answer": "Distinction",
+          "options": [
+            "= assigns a value. == compares two values for equality.",
+            "Unicode supports a much larger range of characters and writing systems.",
+            "Distinction"
+          ],
+          "feedback": "Conditions are tested top to bottom. The first true branch runs, so the later branch is skipped."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Iteration repeats instructions",
+          "text": "Iteration means executing a block of instructions repeatedly. The loop needs a rule that determines whether another repetition happens."
+        },
+        {
+          "type": "paragraph",
+          "title": "for = count-controlled",
+          "text": "The header sets the counter, tests whether the loop continues, then changes the counter after each repetition."
+        },
+        {
+          "type": "paragraph",
+          "title": "while = test before repeating",
+          "text": "A while loop is useful when you do not know how many attempts will be needed. If the condition is false before the first test, the loop can execute zero times ."
+        },
+        {
+          "type": "paragraph",
+          "title": "do...while = run first, test after",
+          "text": "The body executes before the condition is checked, so it always runs at least once."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Build a times-table program",
+          "text": "Ask for a whole number and output its first five multiples. The number of repetitions is known, so use a for loop."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Read the number",
+          "text": "Console.Write(\"Number: \"); int number = int.Parse(Console.ReadLine()); This happens once before the repetition begins."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Iteration'?",
+          "answer": "Repeating a block of instructions.",
+          "options": [
+            "Repetition that continues according to a Boolean test.",
+            "Repeating a block of instructions.",
+            "Repetition where the number of repeats is known or controlled by a counter."
+          ],
+          "feedback": "Iteration — Repeating a block of instructions."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Count-controlled iteration'?",
+          "answer": "Repetition where the number of repeats is known or controlled by a counter.",
+          "options": [
+            "Repetition where the number of repeats is known or controlled by a counter.",
+            "Repeating a block of instructions.",
+            "Repetition that continues according to a Boolean test."
+          ],
+          "feedback": "Count-controlled iteration — Repetition where the number of repeats is known or controlled by a counter."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Condition-controlled iteration'?",
+          "answer": "Repetition that continues according to a Boolean test.",
+          "options": [
+            "Repeating a block of instructions.",
+            "Repetition where the number of repeats is known or controlled by a counter.",
+            "Repetition that continues according to a Boolean test."
+          ],
+          "feedback": "Condition-controlled iteration — Repetition that continues according to a Boolean test."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Output the squares 1² to 5²",
+          "text": "Use one for loop. Each repetition should output the square of the current counter."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the pattern",
+          "text": "for (int i = ?; i <= ?; i++) { Console.WriteLine(?); }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the pattern",
+          "text": "for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Validate 1 to 5",
+          "text": "Keep asking until the user enters a number from 1 to 5 inclusive."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A variable used to track the number of repetitions.",
+          "answer": "Counter",
+          "options": [
+            "Iteration",
+            "Count-controlled iteration",
+            "Counter"
+          ],
+          "feedback": "Counter — A variable used to track the number of repetitions."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A C# loop normally used when the number of repetitions is known.",
+          "answer": "for loop",
+          "options": [
+            "Count-controlled iteration",
+            "for loop",
+            "Iteration"
+          ],
+          "feedback": "for loop — A C# loop normally used when the number of repetitions is known."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A loop that tests its condition before each repetition.",
+          "answer": "while loop",
+          "options": [
+            "while loop",
+            "Iteration",
+            "Count-controlled iteration"
+          ],
+          "feedback": "while loop — A loop that tests its condition before each repetition."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A loop that executes its body before testing its condition.",
+          "answer": "do...while",
+          "options": [
+            "Iteration",
+            "Count-controlled iteration",
+            "do...while"
+          ],
+          "feedback": "do...while — A loop that executes its body before testing its condition."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build a times-table program Ask for a whole number and output its first five multiples.",
+          "answer": "STEP 2 · CONTROL THE LOOP Count from 1 to 5 for (int i = 1; i <= 5; i++) { // repeated instruction } i = 1 starts the counter; i <= 5 keeps the loop running; i++ adds 1 after each repetition.",
+          "options": [
+            "CHECK Complete the pattern for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); } Start 1 Stop 5 Square i * i",
+            "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5",
+            "STEP 2 · CONTROL THE LOOP Count from 1 to 5 for (int i = 1; i <= 5; i++) { // repeated instruction } i = 1 starts the counter; i <= 5 keeps the loop running; i++ adds 1 after each repetition."
+          ],
+          "feedback": "STEP 2 · CONTROL THE LOOP Count from 1 to 5 for (int i = 1; i <= 5; i++) { // repeated instruction } i = 1 starts the counter; i <= 5 keeps the loop running; i++ adds 1 after each repetition."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Output the squares 1² to 5² Use one for loop. Each repetition should output the square of the current counter.",
+          "answer": "CHECK Complete the pattern for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); } Start 1 Stop 5 Square i * i",
+          "options": [
+            "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5",
+            "CHECK Complete the pattern for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); } Start 1 Stop 5 Square i * i",
+            "STEP 2 · CONTROL THE LOOP Count from 1 to 5 for (int i = 1; i <= 5; i++) { // repeated instruction } i = 1 starts the counter; i <= 5 keeps the loop running; i++ adds 1 after each repetition."
+          ],
+          "feedback": "CHECK Complete the pattern for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); } Start 1 Stop 5 Square i * i"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Validate 1 to 5 Keep asking until the user enters a number from 1 to 5 inclusive.",
+          "answer": "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5",
+          "options": [
+            "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5",
+            "STEP 2 · CONTROL THE LOOP Count from 1 to 5 for (int i = 1; i <= 5; i++) { // repeated instruction } i = 1 starts the counter; i <= 5 keeps the loop running; i++ adds 1 after each repetition.",
+            "CHECK Complete the pattern for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); } Start 1 Stop 5 Square i * i"
+          ],
+          "feedback": "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Validate 1 to 5 Keep asking until the user enters a number from 1 to 5 inclusive.",
+        "model": "CHECK What controls the loop? Starting value valid = false while condition valid == false When true? Set valid = true when number is 1–5",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Count-controlled iteration means: Repetition where the number of repeats is known or controlled by a counter.",
+          "answer": "true",
+          "feedback": "Count-controlled iteration — Repetition where the number of repeats is known or controlled by a counter."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Condition-controlled iteration means: A C# loop normally used when the number of repetitions is known.",
+          "answer": "false",
+          "feedback": "Condition-controlled iteration — Repetition that continues according to a Boolean test."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Counter means: A variable used to track the number of repetitions.",
+          "answer": "true",
+          "feedback": "Counter — A variable used to track the number of repetitions."
+        }
+      ]
+    }
+  ]
+}

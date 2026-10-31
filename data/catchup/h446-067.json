@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-067",
+  "course": "h446",
+  "title": "Lesson 067 · Divide and Conquer: Splitting the Search",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is decomposition?",
+          "answer": "Breaking a task into smaller independent parts.",
+          "options": [
+            "Sorted elements.",
+            "Returns the smaller argument.",
+            "Breaking a task into smaller independent parts."
+          ],
+          "feedback": "Breaking a task into smaller independent parts."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which input assumption does binary search require?",
+          "answer": "Sorted elements.",
+          "options": [
+            "Returns the smaller argument.",
+            "Sorted elements.",
+            "Breaking a task into smaller independent parts."
+          ],
+          "feedback": "Sorted elements."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does Math.Min(a,b) behave?",
+          "answer": "Returns the smaller argument.",
+          "options": [
+            "Returns the smaller argument.",
+            "Breaking a task into smaller independent parts.",
+            "Sorted elements."
+          ],
+          "feedback": "Returns the smaller argument."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search [2,4,6,8,10,12,14] for 12: show low/high and midpoint indexes.",
+          "answer": "low0 high6 mid3=8, then low4 high6 mid5=12; found index5.",
+          "options": [
+            "Breaking a task into smaller independent parts.",
+            "Sorted elements.",
+            "low0 high6 mid3=8, then low4 high6 mid5=12; found index5."
+          ],
+          "feedback": "low0 high6 mid3=8, then low4 high6 mid5=12; found index5."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Define and predict",
+          "text": "Divide and conquer breaks a problem into smaller instances, solves them, and (where relevant) combines results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Binary search repeatedly discards half of a SORTED array. It is an example of reducing to one subproblem rather than solving both."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Merge sort divides into halves and combines them in sorted order. Dividing alone is not enough; correctness depends on valid preconditions and combining."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Follow the reasoning",
+          "text": "Each iteration narrows the candidate interval, and result is index 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'divide and conquer'?",
+          "answer": "Solve smaller subproblems and combine.",
+          "options": [
+            "Halving search on sorted data.",
+            "Solve smaller subproblems and combine.",
+            "Requirement for correctness."
+          ],
+          "feedback": "divide and conquer — Solve smaller subproblems and combine."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Requirement for correctness.",
+          "options": [
+            "Requirement for correctness.",
+            "Solve smaller subproblems and combine.",
+            "Halving search on sorted data."
+          ],
+          "feedback": "precondition — Requirement for correctness."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'binary search'?",
+          "answer": "Halving search on sorted data.",
+          "options": [
+            "Solve smaller subproblems and combine.",
+            "Requirement for correctness.",
+            "Halving search on sorted data."
+          ],
+          "feedback": "binary search — Halving search on sorted data."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Follow the reasoning",
+          "text": "The second comparison finds the target after removing upper half."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combine sorted partial results.",
+          "answer": "merge",
+          "options": [
+            "divide and conquer",
+            "precondition",
+            "merge"
+          ],
+          "feedback": "merge — Combine sorted partial results."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Solve smaller subproblems and combine.",
+          "answer": "divide and conquer",
+          "options": [
+            "binary search",
+            "divide and conquer",
+            "precondition"
+          ],
+          "feedback": "divide and conquer — Solve smaller subproblems and combine."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Requirement for correctness.",
+          "answer": "precondition",
+          "options": [
+            "precondition",
+            "divide and conquer",
+            "binary search"
+          ],
+          "feedback": "precondition — Requirement for correctness."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Halving search on sorted data.",
+          "answer": "binary search",
+          "options": [
+            "divide and conquer",
+            "precondition",
+            "binary search"
+          ],
+          "feedback": "binary search — Halving search on sorted data."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: START · 1 OF 3 For [1,4,7,10,13,16,19,22] trace middle indexes when target19. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD mid3=10 [2], low4 then mid5=16 [2], low6 mid6=19 [2].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD Split [7,2] and [9,1] [2], solve [2,7] and [1,9] [2], merge [1,2,7,9] [2].",
+            "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2].",
+            "MARK-SCHEME POINTS AND METHOD mid3=10 [2], low4 then mid5=16 [2], low6 mid6=19 [2]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD mid3=10 [2], low4 then mid5=16 [2], low6 mid6=19 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLY · 2 OF 3 Explain divide, solve and combine for merge sort on [7,2,9,1]. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD Split [7,2] and [9,1] [2], solve [2,7] and [1,9] [2], merge [1,2,7,9] [2].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2].",
+            "MARK-SCHEME POINTS AND METHOD Split [7,2] and [9,1] [2], solve [2,7] and [1,9] [2], merge [1,2,7,9] [2].",
+            "MARK-SCHEME POINTS AND METHOD mid3=10 [2], low4 then mid5=16 [2], low6 mid6=19 [2]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD Split [7,2] and [9,1] [2], solve [2,7] and [1,9] [2], merge [1,2,7,9] [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · 3 OF 3 Compare repeated halving with linear scan for sorted list of 1024 items, in terms of worst-case comparisons and preconditions. [6]",
+          "answer": "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2].",
+          "options": [
+            "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2].",
+            "MARK-SCHEME POINTS AND METHOD mid3=10 [2], low4 then mid5=16 [2], low6 mid6=19 [2].",
+            "MARK-SCHEME POINTS AND METHOD Split [7,2] and [9,1] [2], solve [2,7] and [1,9] [2], merge [1,2,7,9] [2]."
+          ],
+          "feedback": "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · 3 OF 3 Compare repeated halving with linear scan for sorted list of 1024 items, in terms of worst-case comparisons and preconditions. [6]",
+        "model": "MARK-SCHEME POINTS AND METHOD Linear O(n), up to1024 checks [2]; binary O(log n), at most ~11 candidate checks with conventional bounds [2]; sorted data required [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "precondition means: Requirement for correctness.",
+          "answer": "true",
+          "feedback": "precondition — Requirement for correctness."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "binary search means: Solve smaller subproblems and combine.",
+          "answer": "false",
+          "feedback": "binary search — Halving search on sorted data."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "merge means: Combine sorted partial results.",
+          "answer": "true",
+          "feedback": "merge — Combine sorted partial results."
+        }
+      ]
+    }
+  ]
+}

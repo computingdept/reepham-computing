@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-224",
+  "course": "h446",
+  "title": "Trees and binary search trees: implementation",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a null Next mean in a singly linked list?",
+          "answer": "It marks the end of the list.",
+          "options": [
+            "Create and return a new node at that null position.",
+            "It marks the end of the list.",
+            "Into the left subtree."
+          ],
+          "feedback": "It marks the end of the list."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, where does a smaller key go?",
+          "answer": "Into the left subtree.",
+          "options": [
+            "Into the left subtree.",
+            "It marks the end of the list.",
+            "Create and return a new node at that null position."
+          ],
+          "feedback": "Into the left subtree."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the base case of a recursive insertion reaching an empty child?",
+          "answer": "Create and return a new node at that null position.",
+          "options": [
+            "It marks the end of the list.",
+            "Into the left subtree.",
+            "Create and return a new node at that null position."
+          ],
+          "feedback": "Create and return a new node at that null position."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Insert 10,20,30 in that order into an empty unbalanced BST. What shape results?",
+          "answer": "A right-leaning chain 10→20→30.",
+          "options": [
+            "Into the left subtree.",
+            "A right-leaning chain 10→20→30.",
+            "It marks the end of the list."
+          ],
+          "feedback": "A right-leaning chain 10→20→30."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find the starting node",
+          "text": "The root is 40, so compare 25 with 40 and move left."
+        },
+        {
+          "type": "paragraph",
+          "title": "Repeat comparisons",
+          "text": "25>20 goes right to 30; 25<30 goes left."
+        },
+        {
+          "type": "paragraph",
+          "title": "Insert at a null child",
+          "text": "Create node 25 at the empty left-child position of 30. This implementation ignores duplicate keys: when key equals node.Key, neither subtree changes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Compare 12 with 20, then 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Insert 12 as the right child of 10, preserving the BST property."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'binary search tree'?",
+          "answer": "Binary tree in which lower keys occur to the left and higher to the right.",
+          "options": [
+            "Binary tree in which lower keys occur to the left and higher to the right.",
+            "Topmost tree node.",
+            "A node with no children."
+          ],
+          "feedback": "binary search tree — Binary tree in which lower keys occur to the left and higher to the right."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'root'?",
+          "answer": "Topmost tree node.",
+          "options": [
+            "Binary tree in which lower keys occur to the left and higher to the right.",
+            "A node with no children.",
+            "Topmost tree node."
+          ],
+          "feedback": "root — Topmost tree node."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'leaf'?",
+          "answer": "A node with no children.",
+          "options": [
+            "Topmost tree node.",
+            "A node with no children.",
+            "Binary tree in which lower keys occur to the left and higher to the right."
+          ],
+          "feedback": "leaf — A node with no children."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "35>25 leads right from the root."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the reasoning",
+          "text": "35<40 leads left, placing 35 as the left child of 40."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Visit left subtree, node, then right subtree.",
+          "answer": "in-order traversal",
+          "options": [
+            "root",
+            "in-order traversal",
+            "binary search tree"
+          ],
+          "feedback": "in-order traversal — Visit left subtree, node, then right subtree."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Next key in in-order sorted sequence.",
+          "answer": "successor",
+          "options": [
+            "successor",
+            "binary search tree",
+            "root"
+          ],
+          "feedback": "successor — Next key in in-order sorted sequence."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Binary tree in which lower keys occur to the left and higher to the right.",
+          "answer": "binary search tree",
+          "options": [
+            "root",
+            "leaf",
+            "binary search tree"
+          ],
+          "feedback": "binary search tree — Binary tree in which lower keys occur to the left and higher to the right."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Topmost tree node.",
+          "answer": "root",
+          "options": [
+            "leaf",
+            "root",
+            "binary search tree"
+          ],
+          "feedback": "root — Topmost tree node."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Insert 12 into BST root 15, left 9 and right 20. Identify its parent and position.",
+          "answer": "[4] 12<15 [1], moves left to 9 [1], 12>9 [1], so it is right child of 9 [1].",
+          "options": [
+            "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2].",
+            "[4] 12<15 [1], moves left to 9 [1], 12>9 [1], so it is right child of 9 [1].",
+            "[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4]."
+          ],
+          "feedback": "[4] 12<15 [1], moves left to 9 [1], 12>9 [1], so it is right child of 9 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Insert 50,30,70,20,40,35 into an empty BST. State parent and side of 35, and the in-order visit sequence.",
+          "answer": "[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4].",
+          "options": [
+            "[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4].",
+            "[4] 12<15 [1], moves left to 9 [1], 12>9 [1], so it is right child of 9 [1].",
+            "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2]."
+          ],
+          "feedback": "[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 In BST 40 with children 20 and 60, and 20 with children 10 and 30, delete leaf 10. Explain a second case in which deletion is more involved.",
+          "answer": "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2].",
+          "options": [
+            "[4] 12<15 [1], moves left to 9 [1], 12>9 [1], so it is right child of 9 [1].",
+            "[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4].",
+            "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2]."
+          ],
+          "feedback": "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 In BST 40 with children 20 and 60, and 20 with children 10 and 30, delete leaf 10. Explain a second case in which deletion is more involved.",
+        "model": "[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "root means: Topmost tree node.",
+          "answer": "true",
+          "feedback": "root — Topmost tree node."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "leaf means: Next key in in-order sorted sequence.",
+          "answer": "false",
+          "feedback": "leaf — A node with no children."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "in-order traversal means: Visit left subtree, node, then right subtree.",
+          "answer": "true",
+          "feedback": "in-order traversal — Visit left subtree, node, then right subtree."
+        }
+      ]
+    }
+  ]
+}

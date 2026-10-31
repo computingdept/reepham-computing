@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-288",
+  "course": "h446",
+  "title": "Symmetric and asymmetric encryption",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which technique protects data against casual interception?",
+          "answer": "Encryption.",
+          "options": [
+            "Encryption.",
+            "Acts as an intermediary for requests/responses.",
+            "Confidentiality prevents unauthorised reading; integrity detects unauthorised changes."
+          ],
+          "feedback": "Encryption."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a network proxy do?",
+          "answer": "Acts as an intermediary for requests/responses.",
+          "options": [
+            "Encryption.",
+            "Confidentiality prevents unauthorised reading; integrity detects unauthorised changes.",
+            "Acts as an intermediary for requests/responses."
+          ],
+          "feedback": "Acts as an intermediary for requests/responses."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between confidentiality and integrity?",
+          "answer": "Confidentiality prevents unauthorised reading; integrity detects unauthorised changes.",
+          "options": [
+            "Acts as an intermediary for requests/responses.",
+            "Confidentiality prevents unauthorised reading; integrity detects unauthorised changes.",
+            "Encryption."
+          ],
+          "feedback": "Confidentiality prevents unauthorised reading; integrity detects unauthorised changes."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Rising-edge D flip-flop Q=0, D=1 just before next edge. What happens to Q, and when?",
+          "answer": "Q changes to 1 on the next rising edge, not simply when D changes.",
+          "options": [
+            "Q changes to 1 on the next rising edge, not simply when D changes.",
+            "Encryption.",
+            "Acts as an intermediary for requests/responses."
+          ],
+          "feedback": "Q changes to 1 on the next rising edge, not simply when D changes."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Symmetric encryption uses the same secret key for encryption and decryption. The difficulty is sharing that key securely."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Asymmetric encryption uses a public/private key pair. Public-key encryption for confidentiality uses a recipient's public key to encrypt and their private key to decrypt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Real secure connections typically use a hybrid protocol: authenticated asymmetric cryptography to establish secrets, then efficient symmetric encryption of application data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Alice encrypts with the agreed secret K; an observer without K should not recover the plaintext."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Show method",
+          "text": "Bob uses the same secret K to decrypt, so key secrecy and its secure distribution matter."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'symmetric'?",
+          "answer": "Shared-secret encryption.",
+          "options": [
+            "Public/private-key cryptography.",
+            "Distributable key in a pair.",
+            "Shared-secret encryption."
+          ],
+          "feedback": "symmetric — Shared-secret encryption."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'asymmetric'?",
+          "answer": "Public/private-key cryptography.",
+          "options": [
+            "Distributable key in a pair.",
+            "Public/private-key cryptography.",
+            "Shared-secret encryption."
+          ],
+          "feedback": "asymmetric — Public/private-key cryptography."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'public key'?",
+          "answer": "Distributable key in a pair.",
+          "options": [
+            "Distributable key in a pair.",
+            "Shared-secret encryption.",
+            "Public/private-key cryptography."
+          ],
+          "feedback": "public key — Distributable key in a pair."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Alice encrypts to Bob's public key without needing to learn Bob's private key."
+        },
+        {
+          "type": "paragraph",
+          "title": "Show method",
+          "text": "Bob retains the private key and decrypts. The public key must be authenticated to prevent substitution."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Secret member of key pair.",
+          "answer": "private key",
+          "options": [
+            "private key",
+            "symmetric",
+            "asymmetric"
+          ],
+          "feedback": "private key — Secret member of key pair."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Protocol establishing secure authenticated channels.",
+          "answer": "TLS",
+          "options": [
+            "symmetric",
+            "asymmetric",
+            "TLS"
+          ],
+          "feedback": "TLS — Protocol establishing secure authenticated channels."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Shared-secret encryption.",
+          "answer": "symmetric",
+          "options": [
+            "public key",
+            "symmetric",
+            "asymmetric"
+          ],
+          "feedback": "symmetric — Shared-secret encryption."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Public/private-key cryptography.",
+          "answer": "asymmetric",
+          "options": [
+            "asymmetric",
+            "symmetric",
+            "public key"
+          ],
+          "feedback": "asymmetric — Public/private-key cryptography."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Describe symmetric and asymmetric key arrangements. [6]",
+          "answer": "Symmetric encrypt/decrypt use shared secret [2]; asymmetric uses public/private pair [2], encrypt to recipient's public key [1], private key decrypts [1].",
+          "options": [
+            "Symmetric encrypt/decrypt use shared secret [2]; asymmetric uses public/private pair [2], encrypt to recipient's public key [1], private key decrypts [1].",
+            "Server identity authenticated via certificate [2]; authenticated key agreement establishes session secret [2]; symmetric session encryption protects bulk traffic efficiently [2].",
+            "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2]."
+          ],
+          "feedback": "Symmetric encrypt/decrypt use shared secret [2]; asymmetric uses public/private pair [2], encrypt to recipient's public key [1], private key decrypts [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Explain how a secure website can combine asymmetric and symmetric methods. [6]",
+          "answer": "Server identity authenticated via certificate [2]; authenticated key agreement establishes session secret [2]; symmetric session encryption protects bulk traffic efficiently [2].",
+          "options": [
+            "Symmetric encrypt/decrypt use shared secret [2]; asymmetric uses public/private pair [2], encrypt to recipient's public key [1], private key decrypts [1].",
+            "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2].",
+            "Server identity authenticated via certificate [2]; authenticated key agreement establishes session secret [2]; symmetric session encryption protects bulk traffic efficiently [2]."
+          ],
+          "feedback": "Server identity authenticated via certificate [2]; authenticated key agreement establishes session secret [2]; symmetric session encryption protects bulk traffic efficiently [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Evaluate symmetric-only encryption for a school communicating with 200 external partners. [6]",
+          "answer": "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2].",
+          "options": [
+            "Server identity authenticated via certificate [2]; authenticated key agreement establishes session secret [2]; symmetric session encryption protects bulk traffic efficiently [2].",
+            "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2].",
+            "Symmetric encrypt/decrypt use shared secret [2]; asymmetric uses public/private pair [2], encrypt to recipient's public key [1], private key decrypts [1]."
+          ],
+          "feedback": "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Evaluate symmetric-only encryption for a school communicating with 200 external partners. [6]",
+        "model": "Fast for bulk data [1]; each shared secret needs secure exchange [2]; managing many unique shared keys is difficult [1]; asymmetric authenticated exchange/hybrid design improves distribution [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "asymmetric means: Public/private-key cryptography.",
+          "answer": "true",
+          "feedback": "asymmetric — Public/private-key cryptography."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "public key means: Protocol establishing secure authenticated channels.",
+          "answer": "false",
+          "feedback": "public key — Distributable key in a pair."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "private key means: Secret member of key pair.",
+          "answer": "true",
+          "feedback": "private key — Secret member of key pair."
+        }
+      ]
+    }
+  ]
+}

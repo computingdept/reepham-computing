@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-272",
+  "course": "h446",
+  "title": "Database and SQL retrieval challenge",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a primary key?",
+          "answer": "Uniquely identifies a row.",
+          "options": [
+            "Column referencing a key in a related table.",
+            "Uniquely identifies a row.",
+            "Matched records according to join condition."
+          ],
+          "feedback": "Uniquely identifies a row."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does INNER JOIN return?",
+          "answer": "Matched records according to join condition.",
+          "options": [
+            "Matched records according to join condition.",
+            "Uniquely identifies a row.",
+            "Column referencing a key in a related table."
+          ],
+          "feedback": "Matched records according to join condition."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a foreign key?",
+          "answer": "Column referencing a key in a related table.",
+          "options": [
+            "Uniquely identifies a row.",
+            "Matched records according to join condition.",
+            "Column referencing a key in a related table."
+          ],
+          "feedback": "Column referencing a key in a related table."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A 3×2 zero-indexed array: specify row index range, column range and cell count.",
+          "answer": "Rows 0–2, columns 0–1, total six cells.",
+          "options": [
+            "Matched records according to join condition.",
+            "Rows 0–2, columns 0–1, total six cells.",
+            "Uniquely identifies a row."
+          ],
+          "feedback": "Rows 0–2, columns 0–1, total six cells."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Use a primary key for each Student row and a matching foreign key in Score."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "INNER JOIN produces one result for each matching StudentID; Cleo has no matching Score and is absent."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "A WHERE clause can filter matched records; forgetting the join condition can produce unwanted combinations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Tutor 1 matches two class rows"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "Tutor 2 has no class and is excluded from INNER JOIN."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'primary key'?",
+          "answer": "Unique row identifier.",
+          "options": [
+            "Unique row identifier.",
+            "Related table key reference.",
+            "Returns matching joined rows."
+          ],
+          "feedback": "primary key — Unique row identifier."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'foreign key'?",
+          "answer": "Related table key reference.",
+          "options": [
+            "Unique row identifier.",
+            "Returns matching joined rows.",
+            "Related table key reference."
+          ],
+          "feedback": "foreign key — Related table key reference."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'INNER JOIN'?",
+          "answer": "Returns matching joined rows.",
+          "options": [
+            "Related table key reference.",
+            "Returns matching joined rows.",
+            "Unique row identifier."
+          ],
+          "feedback": "INNER JOIN — Returns matching joined rows."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "IDs 4 and 6 match"
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "ID5 is absent from joined result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Filters query results.",
+          "answer": "WHERE",
+          "options": [
+            "foreign key",
+            "WHERE",
+            "primary key"
+          ],
+          "feedback": "WHERE — Filters query results."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Unique row identifier.",
+          "answer": "primary key",
+          "options": [
+            "primary key",
+            "foreign key",
+            "INNER JOIN"
+          ],
+          "feedback": "primary key — Unique row identifier."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Related table key reference.",
+          "answer": "foreign key",
+          "options": [
+            "primary key",
+            "INNER JOIN",
+            "foreign key"
+          ],
+          "feedback": "foreign key — Related table key reference."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Returns matching joined rows.",
+          "answer": "INNER JOIN",
+          "options": [
+            "foreign key",
+            "INNER JOIN",
+            "primary key"
+          ],
+          "feedback": "INNER JOIN — Returns matching joined rows."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Define primary key, foreign key, INNER JOIN and WHERE. [4]",
+          "answer": "Unique ID [1], key reference [1], matching records [1], filtering predicate [1].",
+          "options": [
+            "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1].",
+            "Unique ID [1], key reference [1], matching records [1], filtering predicate [1].",
+            "SELECT Name,Mark [1] FROM Student [1] INNER JOIN Score [1] ON Student.StudentID=Score.StudentID [1]; Ada75 and Ben82 [2]."
+          ],
+          "feedback": "Unique ID [1], key reference [1], matching records [1], filtering predicate [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Write an INNER JOIN for Student and Score above selecting Name and Mark; give output. [6]",
+          "answer": "SELECT Name,Mark [1] FROM Student [1] INNER JOIN Score [1] ON Student.StudentID=Score.StudentID [1]; Ada75 and Ben82 [2].",
+          "options": [
+            "SELECT Name,Mark [1] FROM Student [1] INNER JOIN Score [1] ON Student.StudentID=Score.StudentID [1]; Ada75 and Ben82 [2].",
+            "Unique ID [1], key reference [1], matching records [1], filtering predicate [1].",
+            "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1]."
+          ],
+          "feedback": "SELECT Name,Mark [1] FROM Student [1] INNER JOIN Score [1] ON Student.StudentID=Score.StudentID [1]; Ada75 and Ben82 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Explain why omitting a join condition may produce misleading results. [6]",
+          "answer": "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1].",
+          "options": [
+            "Unique ID [1], key reference [1], matching records [1], filtering predicate [1].",
+            "SELECT Name,Mark [1] FROM Student [1] INNER JOIN Score [1] ON Student.StudentID=Score.StudentID [1]; Ada75 and Ben82 [2].",
+            "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1]."
+          ],
+          "feedback": "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Explain why omitting a join condition may produce misleading results. [6]",
+        "model": "Cartesian product [2], unconnected pairs [1], duplicated counts [1]; explicit join keys [1], check cardinality [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "foreign key means: Related table key reference.",
+          "answer": "true",
+          "feedback": "foreign key — Related table key reference."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "INNER JOIN means: Unique row identifier.",
+          "answer": "false",
+          "feedback": "INNER JOIN — Returns matching joined rows."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "WHERE means: Filters query results.",
+          "answer": "true",
+          "feedback": "WHERE — Filters query results."
+        }
+      ]
+    }
+  ]
+}

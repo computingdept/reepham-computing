@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-034",
+  "course": "h446",
+  "title": "C# Login Project · Complete and Test",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a seven-bucket hash table, a collision occurs at bucket 6. Which bucket is checked next by linear probing, and why?",
+          "answer": "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
+          "options": [
+            "False. The age test is true but hasPermission is false, so the AND expression is false.",
+            "It becomes the left child of the root’s right child.",
+            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
+          ],
+          "feedback": "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Predict the output of Console.WriteLine((age >= 16) && hasPermission); when age = 17 and hasPermission = false. Explain.",
+          "answer": "False. The age test is true but hasPermission is false, so the AND expression is false.",
+          "options": [
+            "It becomes the left child of the root’s right child.",
+            "False. The age test is true but hasPermission is false, so the AND expression is false.",
+            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
+          ],
+          "feedback": "False. The age test is true but hasPermission is false, so the AND expression is false."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a binary search tree, a new key is greater than the root but smaller than the root’s right child. Where will it go if that right child has no left child?",
+          "answer": "It becomes the left child of the root’s right child.",
+          "options": [
+            "It becomes the left child of the root’s right child.",
+            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
+            "False. The age test is true but hasPermission is false, so the AND expression is false."
+          ],
+          "feedback": "It becomes the left child of the root’s right child."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A print server must process jobs in the order submitted. Choose a suitable data structure and explain why a stack would be unsuitable.",
+          "answer": "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first.",
+          "options": [
+            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
+            "False. The age test is true but hasPermission is false, so the AND expression is false.",
+            "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first."
+          ],
+          "feedback": "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Your goal: a reliable demonstration system",
+          "text": "Students will join registration and lookup so the program recognises existing usernames, refuses duplicates and performs login checks."
+        },
+        {
+          "type": "paragraph",
+          "title": "Validation before storage",
+          "text": "Reject blank usernames, duplicates and registrations when all buckets are full. Show a meaningful reason rather than crashing."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate locating an account from checking a password",
+          "text": "First use the hash table to find the username. Then compare an invented classroom demo password. These are separate operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Design the test evidence",
+          "text": "Test normal, erroneous and boundary scenarios: new user, unknown user, duplicate username, collision, table full and maximum attempts."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model validation before registration",
+          "text": "Add one small safeguard at a time rather than copying a completed login system."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check blank input",
+          "text": "Console.Write(\"New username: \"); string username = (Console.ReadLine() ?? \"\").Trim(); if (username.Length == 0) { Console.WriteLine(\"Username required\"); }"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Confirm data meets input rules.'?",
+          "answer": "Confirm data meets input rules.",
+          "options": [
+            "Check a value at a limit, such as a full table.",
+            "Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice."
+          ],
+          "feedback": "Confirm data meets input rules. — Confirm data meets input rules."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'A repeated key that must not be inserted twice.'?",
+          "answer": "A repeated key that must not be inserted twice.",
+          "options": [
+            "A repeated key that must not be inserted twice.",
+            "Confirm data meets input rules.",
+            "Check a value at a limit, such as a full table."
+          ],
+          "feedback": "A repeated key that must not be inserted twice. — A repeated key that must not be inserted twice."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Check a value at a limit, such as a full table.'?",
+          "answer": "Check a value at a limit, such as a full table.",
+          "options": [
+            "Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice.",
+            "Check a value at a limit, such as a full table."
+          ],
+          "feedback": "Check a value at a limit, such as a full table. — Check a value at a limit, such as a full table."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Protect against duplicates",
+          "text": "Which checks must happen before insertion?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain your solution first",
+          "text": "Which checks must happen before insertion?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Protect against duplicates",
+          "text": "if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
+        },
+        {
+          "type": "paragraph",
+          "title": "Test a collision",
+          "text": "How do we prove the collision handler works?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Use invalid inputs to check handling.",
+          "answer": "Use invalid inputs to check handling.",
+          "options": [
+            "Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice.",
+            "Use invalid inputs to check handling."
+          ],
+          "feedback": "Use invalid inputs to check handling. — Use invalid inputs to check handling."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Search sequential buckets for an available place.",
+          "answer": "Search sequential buckets for an available place.",
+          "options": [
+            "A repeated key that must not be inserted twice.",
+            "Search sequential buckets for an available place.",
+            "Confirm data meets input rules."
+          ],
+          "feedback": "Search sequential buckets for an available place. — Search sequential buckets for an available place."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Check whether supplied credentials should grant access.",
+          "answer": "Check whether supplied credentials should grant access.",
+          "options": [
+            "Check whether supplied credentials should grant access.",
+            "Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice."
+          ],
+          "feedback": "Check whether supplied credentials should grant access. — Check whether supplied credentials should grant access."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combining knowledge from multiple specification areas.",
+          "answer": "Combining knowledge from multiple specification areas.",
+          "options": [
+            "Confirm data meets input rules.",
+            "A repeated key that must not be inserted twice.",
+            "Combining knowledge from multiple specification areas."
+          ],
+          "feedback": "Combining knowledge from multiple specification areas. — Combining knowledge from multiple specification areas."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Model validation before registration Add one small safeguard at a time rather than copying a completed login system.",
+          "answer": "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing.",
+          "options": [
+            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
+            "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
+          ],
+          "feedback": "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Protect against duplicates Which checks must happen before insertion?",
+          "answer": "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
+          "options": [
+            "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");",
+            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing."
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Test a collision How do we prove the collision handler works?",
+          "answer": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+          "options": [
+            "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+            "STEP 2 OF 3 Check whether the username exists Use the lookup function from Lesson 033. Do not register duplicates, including usernames moved by probing.",
+            "CHECK · MODEL RESPONSE Protect against duplicates if (username.Length == 0) Console.WriteLine(\"Username required\"); else if (FindUser(username) >= 0) Console.WriteLine(\"Username exists\"); else Console.WriteLine(\"Ready to register\");"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Test a collision How do we prove the collision handler works?",
+        "model": "CHECK · MODEL RESPONSE Test a collision Register 'ab' and 'ba'. Check both receive distinct buckets and FindUser locates both.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A repeated key that must not be inserted twice. means: A repeated key that must not be inserted twice.",
+          "answer": "true",
+          "feedback": "A repeated key that must not be inserted twice. — A repeated key that must not be inserted twice."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Check a value at a limit, such as a full table. means: Search sequential buckets for an available place.",
+          "answer": "false",
+          "feedback": "Check a value at a limit, such as a full table. — Check a value at a limit, such as a full table."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Use invalid inputs to check handling. means: Use invalid inputs to check handling.",
+          "answer": "true",
+          "feedback": "Use invalid inputs to check handling. — Use invalid inputs to check handling."
+        }
+      ]
+    }
+  ]
+}

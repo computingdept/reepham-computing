@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-008",
+  "course": "h446",
+  "title": "Character sets: ASCII & Unicode",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which data type should store a telephone number beginning with 0? Explain briefly.",
+          "answer": "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
+          "options": [
+            "00000101. The low four bits are preserved; the high four are cleared.",
+            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
+            "65; 01000001."
+          ],
+          "feedback": "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert 41₁₆ to denary and eight-bit binary.",
+          "answer": "65; 01000001.",
+          "options": [
+            "65; 01000001.",
+            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
+            "00000101. The low four bits are preserved; the high four are cleared."
+          ],
+          "feedback": "65; 01000001."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Apply AND 00001111 to 10100101. Explain which bits the mask preserves.",
+          "answer": "00000101. The low four bits are preserved; the high four are cleared.",
+          "options": [
+            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
+            "65; 01000001.",
+            "00000101. The low four bits are preserved; the high four are cleared."
+          ],
+          "feedback": "00000101. The low four bits are preserved; the high four are cleared."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In 6+4 two’s-complement floating-point format, subtract 010000 0010 from 011000 0010. Give a normalised result.",
+          "answer": "3 − 2 = 1 → 010000 0001.",
+          "options": [
+            "65; 01000001.",
+            "3 − 2 = 1 → 010000 0001.",
+            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic."
+          ],
+          "feedback": "3 − 2 = 1 → 010000 0001."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Characters need agreed codes",
+          "text": "A character set defines characters and their assigned numeric codes. An encoding specifies how those codes are represented as bytes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Standard ASCII is limited",
+          "text": "Seven bits provide 2⁷ = 128 codes for letters, digits, punctuation and control characters. Eight-bit extensions can provide 256 values, but different extensions may map the extra codes differently."
+        },
+        {
+          "type": "paragraph",
+          "title": "Unicode supports a much larger repertoire",
+          "text": "Unicode assigns code points to characters from many writing systems and symbols. Its first 128 code points match ASCII."
+        },
+        {
+          "type": "paragraph",
+          "title": "Use the encoding stated in storage questions",
+          "text": "Storage depends on the number of code points and the number of bytes used for each one. Do not assume every Unicode character uses the same width."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Encode the text “AB”",
+          "text": "Use standard ASCII, then show each character in an 8-bit byte."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Start with the character codes",
+          "text": "A = 65 B = 66 ASCII assigns a numeric code to each character."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Character set'?",
+          "answer": "A collection of characters with assigned codes.",
+          "options": [
+            "A collection of characters with assigned codes.",
+            "A numeric identifier assigned to a character in Unicode.",
+            "Rules for representing character codes as bytes."
+          ],
+          "feedback": "Character set — A collection of characters with assigned codes."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Code point'?",
+          "answer": "A numeric identifier assigned to a character in Unicode.",
+          "options": [
+            "A collection of characters with assigned codes.",
+            "Rules for representing character codes as bytes.",
+            "A numeric identifier assigned to a character in Unicode."
+          ],
+          "feedback": "Code point — A numeric identifier assigned to a character in Unicode."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Encoding'?",
+          "answer": "Rules for representing character codes as bytes.",
+          "options": [
+            "A numeric identifier assigned to a character in Unicode.",
+            "Rules for representing character codes as bytes.",
+            "A collection of characters with assigned codes."
+          ],
+          "feedback": "Encoding — Rules for representing character codes as bytes."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "2. Character versus quantity",
+          "text": "Use the I Do method and build the answer before checking."
+        },
+        {
+          "type": "paragraph",
+          "title": "Build the answer",
+          "text": "YOUR TURN Build the answer Method ? Working ? Final answer ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Build the answer",
+          "text": "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111"
+        },
+        {
+          "type": "paragraph",
+          "title": "3. Use a code range",
+          "text": "Use the I Do method and build the answer before checking."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A standard seven-bit character code with 128 possible values.",
+          "answer": "ASCII",
+          "options": [
+            "Code point",
+            "ASCII",
+            "Character set"
+          ],
+          "feedback": "ASCII — A standard seven-bit character code with 128 possible values."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A standard assigning codes to characters from many writing systems and symbols.",
+          "answer": "Unicode",
+          "options": [
+            "Unicode",
+            "Character set",
+            "Code point"
+          ],
+          "feedback": "Unicode — A standard assigning codes to characters from many writing systems and symbols."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A Unicode encoding using one to four bytes per code point.",
+          "answer": "UTF-8",
+          "options": [
+            "Character set",
+            "Code point",
+            "UTF-8"
+          ],
+          "feedback": "UTF-8 — A Unicode encoding using one to four bytes per code point."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A code used for a function such as line feed rather than a printed symbol.",
+          "answer": "Control character",
+          "options": [
+            "Code point",
+            "Control character",
+            "Character set"
+          ],
+          "feedback": "Control character — A code used for a function such as line feed rather than a printed symbol."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Encode the text “AB” Use standard ASCII, then show each character in an 8-bit byte.",
+          "answer": "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
+          "options": [
+            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
+            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
+            "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111"
+          ],
+          "feedback": "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 2. Character versus quantity Use the I Do method and build the answer before checking.",
+          "answer": "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
+          "options": [
+            "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
+            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
+            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
+          ],
+          "feedback": "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: 3. Use a code range Use the I Do method and build the answer before checking.",
+          "answer": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
+          "options": [
+            "STEP 2 · CONVERT TO BINARY Write the 7-bit ASCII values A = 1000001 B = 1000010",
+            "CHECK Build the answer Method Compare the character code with the numeric value Working Character '7': 48 + 7 = 55 Integer 7 = 7 Final answer 00110111 vs 00000111",
+            "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
+          ],
+          "feedback": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. 3. Use a code range Use the I Do method and build the answer before checking.",
+        "model": "CHECK Build the answer Method Check the ASCII range with AND Working 65 ≤ code ≤ 90 Final answer code >= 65 && code <= 90 For lowercase c : 97 + 2 = 99; uppercase C = 99 − 32 = 67.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Code point means: A numeric identifier assigned to a character in Unicode.",
+          "answer": "true",
+          "feedback": "Code point — A numeric identifier assigned to a character in Unicode."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Encoding means: A standard assigning codes to characters from many writing systems and symbols.",
+          "answer": "false",
+          "feedback": "Encoding — Rules for representing character codes as bytes."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "ASCII means: A standard seven-bit character code with 128 possible values.",
+          "answer": "true",
+          "feedback": "ASCII — A standard seven-bit character code with 128 possible values."
+        }
+      ]
+    }
+  ]
+}

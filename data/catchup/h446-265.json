@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-265",
+  "course": "h446",
+  "title": "Operating systems and assembly challenge",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which OS component queues print requests?",
+          "answer": "A print spooler.",
+          "options": [
+            "Replaces ACC with supplied input.",
+            "Blocked until an event such as I/O completes.",
+            "A print spooler."
+          ],
+          "feedback": "A print spooler."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does LMC INP do to ACC?",
+          "answer": "Replaces ACC with supplied input.",
+          "options": [
+            "Blocked until an event such as I/O completes.",
+            "Replaces ACC with supplied input.",
+            "A print spooler."
+          ],
+          "feedback": "Replaces ACC with supplied input."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does Waiting mean?",
+          "answer": "Blocked until an event such as I/O completes.",
+          "options": [
+            "Blocked until an event such as I/O completes.",
+            "A print spooler.",
+            "Replaces ACC with supplied input."
+          ],
+          "feedback": "Blocked until an event such as I/O completes."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Rising-edge D flip-flop has Q=1 and D=0 immediately before the active edge. What is Q after?",
+          "answer": "Q=0; it samples D at the clock edge.",
+          "options": [
+            "A print spooler.",
+            "Replaces ACC with supplied input.",
+            "Q=0; it samples D at the clock edge."
+          ],
+          "feedback": "Q=0; it samples D at the clock edge."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "LMC INP overwrites the accumulator; STA saves the value to a mailbox."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Processes change between Ready, Running and Waiting as the OS schedules and responds to I/O."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Spooling enables multiple programs to submit print jobs without monopolising the printer."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "INP sets ACC=8; STA X writes 8 to mailbox X; the ACC remains 8. HLT ends the program."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'ACC'?",
+          "answer": "Accumulator",
+          "options": [
+            "Using CPU",
+            "Accumulator",
+            "Eligible for CPU"
+          ],
+          "feedback": "ACC — Accumulator"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Ready'?",
+          "answer": "Eligible for CPU",
+          "options": [
+            "Eligible for CPU",
+            "Accumulator",
+            "Using CPU"
+          ],
+          "feedback": "Ready — Eligible for CPU"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Running'?",
+          "answer": "Using CPU",
+          "options": [
+            "Accumulator",
+            "Eligible for CPU",
+            "Using CPU"
+          ],
+          "feedback": "Running — Using CPU"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The process waits for disk completion, then becomes Ready for selection by the scheduler."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Blocked on event",
+          "answer": "Waiting",
+          "options": [
+            "ACC",
+            "Ready",
+            "Waiting"
+          ],
+          "feedback": "Waiting — Blocked on event"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Accumulator",
+          "answer": "ACC",
+          "options": [
+            "Running",
+            "ACC",
+            "Ready"
+          ],
+          "feedback": "ACC — Accumulator"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Eligible for CPU",
+          "answer": "Ready",
+          "options": [
+            "Ready",
+            "ACC",
+            "Running"
+          ],
+          "feedback": "Ready — Eligible for CPU"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Using CPU",
+          "answer": "Running",
+          "options": [
+            "ACC",
+            "Ready",
+            "Running"
+          ],
+          "feedback": "Running — Using CPU"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 State ACC and X after input 8 followed by INP; STA X. [4]",
+          "answer": "ACC=8 after INP [2]; X becomes 8 after STA [1]; ACC remains 8 [1].",
+          "options": [
+            "Ready waits CPU [1], Running executes [1], I/O request [1] causes Waiting [1], I/O completion [1] returns Ready [1].",
+            "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1].",
+            "ACC=8 after INP [2]; X becomes 8 after STA [1]; ACC remains 8 [1]."
+          ],
+          "feedback": "ACC=8 after INP [2]; X becomes 8 after STA [1]; ACC remains 8 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Describe Ready, Running, Waiting and return to Ready during a disk read. [6]",
+          "answer": "Ready waits CPU [1], Running executes [1], I/O request [1] causes Waiting [1], I/O completion [1] returns Ready [1].",
+          "options": [
+            "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1].",
+            "Ready waits CPU [1], Running executes [1], I/O request [1] causes Waiting [1], I/O completion [1] returns Ready [1].",
+            "ACC=8 after INP [2]; X becomes 8 after STA [1]; ACC remains 8 [1]."
+          ],
+          "feedback": "Ready waits CPU [1], Running executes [1], I/O request [1] causes Waiting [1], I/O completion [1] returns Ready [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Describe OS file access, I/O process state and spooling when an app prints saved data. [6]",
+          "answer": "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1].",
+          "options": [
+            "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1].",
+            "ACC=8 after INP [2]; X becomes 8 after STA [1]; ACC remains 8 [1].",
+            "Ready waits CPU [1], Running executes [1], I/O request [1] causes Waiting [1], I/O completion [1] returns Ready [1]."
+          ],
+          "feedback": "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Describe OS file access, I/O process state and spooling when an app prints saved data. [6]",
+        "model": "OS file lookup [1], permission [1], driver [1], possible Waiting [1], spool queue [1], scheduled printer completion [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Ready means: Eligible for CPU",
+          "answer": "true",
+          "feedback": "Ready — Eligible for CPU"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Running means: Accumulator",
+          "answer": "false",
+          "feedback": "Running — Using CPU"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Waiting means: Blocked on event",
+          "answer": "true",
+          "feedback": "Waiting — Blocked on event"
+        }
+      ]
+    }
+  ]
+}

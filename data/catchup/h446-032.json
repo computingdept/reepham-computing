@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-032",
+  "course": "h446",
+  "title": "C# Login Project · Start from Scratch",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A rising-edge-triggered D-type flip-flop has Q = 0 and D = 1. What happens to Q when the next rising edge occurs?",
+          "answer": "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
+          "options": [
+            "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop.",
+            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
+            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed."
+          ],
+          "feedback": "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why do we group neighbouring 1s together on a Karnaugh map?",
+          "answer": "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+          "options": [
+            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
+            "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
+          ],
+          "feedback": "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Push A, then B, then C onto an empty stack. Pop once and then push D. Which item is at the top, and what is the remaining stack from top to bottom?",
+          "answer": "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop.",
+          "options": [
+            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
+            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+            "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
+          ],
+          "feedback": "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Using 8-bit two’s complement, write −13 and explain why simply putting 1 before the 7-bit magnitude is not correct.",
+          "answer": "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement.",
+          "options": [
+            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+            "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement.",
+            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
+          ],
+          "feedback": "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must a login program do?",
+          "text": "Read two inputs, decide whether both match the demonstration account, and show a clear result. Design the sequence before typing code."
+        },
+        {
+          "type": "paragraph",
+          "title": "Why start with sequence?",
+          "text": "Read username; read password; display what was entered only during debugging. In the final version never echo a password."
+        },
+        {
+          "type": "paragraph",
+          "title": "Introduce selection",
+          "text": "Use AND (&&) to require BOTH username and password to match. One wrong value must mean access denied."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make a second attempt possible",
+          "text": "A loop can repeat after invalid credentials. Add a maximum number of attempts to avoid an endless loop."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the first three lines — not the finished program",
+          "text": "Start in a blank .NET Fiddle console project. Predict what each statement does."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Create a console program",
+          "text": "using System; Console.Write(\"Username: \"); string username = Console.ReadLine() ?? \"\";"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Statements executed in order.'?",
+          "answer": "Statements executed in order.",
+          "options": [
+            "Statements executed in order.",
+            "Branching with if/else.",
+            "Repeating statements with a loop."
+          ],
+          "feedback": "Statements executed in order. — Statements executed in order."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Branching with if/else.'?",
+          "answer": "Branching with if/else.",
+          "options": [
+            "Statements executed in order.",
+            "Repeating statements with a loop.",
+            "Branching with if/else."
+          ],
+          "feedback": "Branching with if/else. — Branching with if/else."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Repeating statements with a loop.'?",
+          "answer": "Repeating statements with a loop.",
+          "options": [
+            "Branching with if/else.",
+            "Repeating statements with a loop.",
+            "Statements executed in order."
+          ],
+          "feedback": "Repeating statements with a loop. — Repeating statements with a loop."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Build the condition",
+          "text": "What Boolean operator makes BOTH checks compulsory?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain your solution first",
+          "text": "What Boolean operator makes BOTH checks compulsory?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Build the condition",
+          "text": "if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Handle repeated attempts",
+          "text": "How could you allow at most three attempts?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checking input meets defined rules.",
+          "answer": "Checking input meets defined rules.",
+          "options": [
+            "Branching with if/else.",
+            "Checking input meets defined rules.",
+            "Statements executed in order."
+          ],
+          "feedback": "Checking input meets defined rules. — Checking input meets defined rules."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Indexed fixed-size collection, possibly multidimensional.",
+          "answer": "Indexed fixed-size collection, possibly multidimensional.",
+          "options": [
+            "Indexed fixed-size collection, possibly multidimensional.",
+            "Statements executed in order.",
+            "Branching with if/else."
+          ],
+          "feedback": "Indexed fixed-size collection, possibly multidimensional. — Indexed fixed-size collection, possibly multidimensional."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Named fields grouped as a single item.",
+          "answer": "Named fields grouped as a single item.",
+          "options": [
+            "Statements executed in order.",
+            "Branching with if/else.",
+            "Named fields grouped as a single item."
+          ],
+          "feedback": "Named fields grouped as a single item. — Named fields grouped as a single item."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Collection that can grow or shrink.",
+          "answer": "Collection that can grow or shrink.",
+          "options": [
+            "Branching with if/else.",
+            "Collection that can grow or shrink.",
+            "Statements executed in order."
+          ],
+          "feedback": "Collection that can grow or shrink. — Collection that can grow or shrink."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Model the first three lines — not the finished program Start in a blank .NET Fiddle console project. Predict what each statement does.",
+          "answer": "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
+          "options": [
+            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
+            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
+            "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }"
+          ],
+          "feedback": "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";"
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build the condition What Boolean operator makes BOTH checks compulsory?",
+          "answer": "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
+          "options": [
+            "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
+            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
+            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Handle repeated attempts How could you allow at most three attempts?",
+          "answer": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
+          "options": [
+            "STEP 2 OF 3 Add the second input Console.Write(\"Demo password: \"); string password = Console.ReadLine() ?? \"\";",
+            "CHECK · MODEL RESPONSE Build the condition if (username == \"student\" && password == \"demo123\") { Console.WriteLine(\"Access granted\"); } else { Console.WriteLine(\"Access denied\"); }",
+            "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
+          ],
+          "feedback": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Handle repeated attempts How could you allow at most three attempts?",
+        "model": "CHECK · MODEL RESPONSE Handle repeated attempts for (int attempt = 1; attempt <= 3; attempt++) { // Read inputs, check both values, break on success. }",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Branching with if/else. means: Branching with if/else.",
+          "answer": "true",
+          "feedback": "Branching with if/else. — Branching with if/else."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Repeating statements with a loop. means: Indexed fixed-size collection, possibly multidimensional.",
+          "answer": "false",
+          "feedback": "Repeating statements with a loop. — Repeating statements with a loop."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Checking input meets defined rules. means: Checking input meets defined rules.",
+          "answer": "true",
+          "feedback": "Checking input meets defined rules. — Checking input meets defined rules."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-049",
+  "course": "h446",
+  "title": "Lesson 049 · Stack<T>: LIFO and Program State",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does List<T>.RemoveAt differ from Remove?",
+          "answer": "By index versus by matching value.",
+          "options": [
+            "LIFO.",
+            "Method called on a specific object.",
+            "By index versus by matching value."
+          ],
+          "feedback": "By index versus by matching value."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a stack's removal order?",
+          "answer": "LIFO.",
+          "options": [
+            "Method called on a specific object.",
+            "LIFO.",
+            "By index versus by matching value."
+          ],
+          "feedback": "LIFO."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an instance method?",
+          "answer": "Method called on a specific object.",
+          "options": [
+            "Method called on a specific object.",
+            "By index versus by matching value.",
+            "LIFO."
+          ],
+          "feedback": "Method called on a specific object."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 020",
+          "answer": "Push A then B then C; pop twice; push D. Give remaining stack bottom to top.",
+          "options": [
+            "By index versus by matching value.",
+            "LIFO.",
+            "Push A then B then C; pop twice; push D. Give remaining stack bottom to top."
+          ],
+          "feedback": "Push A then B then C; pop twice; push D. Give remaining stack bottom to top."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "A stack is last-in, first-out (LIFO). Push places a value on top, Pop removes the top, and Peek reads without removing."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A stack can support undo histories and recursive call frames. The physical call stack is a related example but not this Stack<T> collection."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "Always check Count or otherwise handle an empty-stack exception before Pop/Peek."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Trace and justify",
+          "text": "Popped BLUE; remaining stack top RED. Most recent value leaves first."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'LIFO'?",
+          "answer": "Last In First Out.",
+          "options": [
+            "Remove and return top.",
+            "Last In First Out.",
+            "Add to top of stack."
+          ],
+          "feedback": "LIFO — Last In First Out."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Push'?",
+          "answer": "Add to top of stack.",
+          "options": [
+            "Add to top of stack.",
+            "Last In First Out.",
+            "Remove and return top."
+          ],
+          "feedback": "Push — Add to top of stack."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Pop'?",
+          "answer": "Remove and return top.",
+          "options": [
+            "Last In First Out.",
+            "Add to top of stack.",
+            "Remove and return top."
+          ],
+          "feedback": "Pop — Remove and return top."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Trace and justify",
+          "text": "Stack bottom-to-top [2,9], Peek returns 9; popped value was 5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? View top without removing.",
+          "answer": "Peek",
+          "options": [
+            "LIFO",
+            "Push",
+            "Peek"
+          ],
+          "feedback": "Peek — View top without removing."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Last In First Out.",
+          "answer": "LIFO",
+          "options": [
+            "Pop",
+            "LIFO",
+            "Push"
+          ],
+          "feedback": "LIFO — Last In First Out."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Add to top of stack.",
+          "answer": "Push",
+          "options": [
+            "Push",
+            "LIFO",
+            "Pop"
+          ],
+          "feedback": "Push — Add to top of stack."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Remove and return top.",
+          "answer": "Pop",
+          "options": [
+            "LIFO",
+            "Push",
+            "Pop"
+          ],
+          "feedback": "Pop — Remove and return top."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Push A, B, C; Pop once, then Peek. State both outputs and remaining stack. [6]",
+          "answer": "/ MARKS Pop C [2], Peek B [2], remaining bottom-to-top A,B [2].",
+          "options": [
+            "/ MARKS var s=new Stack<int>(); [1], Push(3),Push(6),Push(9) [3], if(s.Count>0) [1] s.Pop() [1].",
+            "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1].",
+            "/ MARKS Pop C [2], Peek B [2], remaining bottom-to-top A,B [2]."
+          ],
+          "feedback": "/ MARKS Pop C [2], Peek B [2], remaining bottom-to-top A,B [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Write C# to push 3,6,9 and safely pop one value. [6]",
+          "answer": "/ MARKS var s=new Stack<int>(); [1], Push(3),Push(6),Push(9) [3], if(s.Count>0) [1] s.Pop() [1].",
+          "options": [
+            "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1].",
+            "/ MARKS var s=new Stack<int>(); [1], Push(3),Push(6),Push(9) [3], if(s.Count>0) [1] s.Pop() [1].",
+            "/ MARKS Pop C [2], Peek B [2], remaining bottom-to-top A,B [2]."
+          ],
+          "feedback": "/ MARKS var s=new Stack<int>(); [1], Push(3),Push(6),Push(9) [3], if(s.Count>0) [1] s.Pop() [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Explain why stack suits undo history but queue suits printing jobs; include two operations. [6]",
+          "answer": "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1].",
+          "options": [
+            "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1].",
+            "/ MARKS Pop C [2], Peek B [2], remaining bottom-to-top A,B [2].",
+            "/ MARKS var s=new Stack<int>(); [1], Push(3),Push(6),Push(9) [3], if(s.Count>0) [1] s.Pop() [1]."
+          ],
+          "feedback": "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Explain why stack suits undo history but queue suits printing jobs; include two operations. [6]",
+        "model": "/ MARKS Undo reverses most recent action [2] using Push/Pop [1]; printing queue serves earliest job [2] with Enqueue/Dequeue [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Push means: Add to top of stack.",
+          "answer": "true",
+          "feedback": "Push — Add to top of stack."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Pop means: Last In First Out.",
+          "answer": "false",
+          "feedback": "Pop — Remove and return top."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Peek means: View top without removing.",
+          "answer": "true",
+          "feedback": "Peek — View top without removing."
+        }
+      ]
+    }
+  ]
+}

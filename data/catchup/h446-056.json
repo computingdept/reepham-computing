@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-056",
+  "course": "h446",
+  "title": "Lesson 056 · Tree Traversals: Post-order and Breadth-first",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a leaf node?",
+          "answer": "Tree node with no children.",
+          "options": [
+            "Left subtree, right subtree, root.",
+            "Tree node with no children.",
+            "A queue."
+          ],
+          "feedback": "Tree node with no children."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is BFS's underlying structure?",
+          "answer": "A queue.",
+          "options": [
+            "A queue.",
+            "Tree node with no children.",
+            "Left subtree, right subtree, root."
+          ],
+          "feedback": "A queue."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What order does postorder use?",
+          "answer": "Left subtree, right subtree, root.",
+          "options": [
+            "Tree node with no children.",
+            "A queue.",
+            "Left subtree, right subtree, root."
+          ],
+          "feedback": "Left subtree, right subtree, root."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 022",
+          "answer": "BST root10 with left5 and right15; 5 has right7. Give inorder traversal.",
+          "options": [
+            "A queue.",
+            "BST root10 with left5 and right15; 5 has right7. Give inorder traversal.",
+            "Tree node with no children."
+          ],
+          "feedback": "BST root10 with left5 and right15; 5 has right7. Give inorder traversal."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Post-order visits both child subtrees before its parent. Traverse left subtree, right subtree, then root."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model",
+          "text": "Breadth-first visits by levels, left-to-right with a queue that stores the next vertices."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Traversal result depends on the precise tree and stated child order. BFS queue changes must be shown to justify an answer."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "PostOrder(5) waits for PostOrder(2), which prints 1 then 2. The right call prints 7; only then is 5 printed: 1,2,7,5. null returns without printing. Node supplies Key, Left and Right."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'postorder'?",
+          "answer": "Left-right-root tree traversal.",
+          "options": [
+            "Left-right-root tree traversal.",
+            "Breadth-first level exploration.",
+            "FIFO worklist."
+          ],
+          "feedback": "postorder — Left-right-root tree traversal."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'BFS'?",
+          "answer": "Breadth-first level exploration.",
+          "options": [
+            "Left-right-root tree traversal.",
+            "FIFO worklist.",
+            "Breadth-first level exploration."
+          ],
+          "feedback": "BFS — Breadth-first level exploration."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'queue'?",
+          "answer": "FIFO worklist.",
+          "options": [
+            "Breadth-first level exploration.",
+            "FIFO worklist.",
+            "Left-right-root tree traversal."
+          ],
+          "feedback": "queue — FIFO worklist."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Order 9,4,12,6. Visit by depth, using FIFO."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Process invoking itself on children.",
+          "answer": "recursive",
+          "options": [
+            "BFS",
+            "recursive",
+            "postorder"
+          ],
+          "feedback": "recursive — Process invoking itself on children."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Left-right-root tree traversal.",
+          "answer": "postorder",
+          "options": [
+            "postorder",
+            "BFS",
+            "queue"
+          ],
+          "feedback": "postorder — Left-right-root tree traversal."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Breadth-first level exploration.",
+          "answer": "BFS",
+          "options": [
+            "postorder",
+            "queue",
+            "BFS"
+          ],
+          "feedback": "BFS — Breadth-first level exploration."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? FIFO worklist.",
+          "answer": "queue",
+          "options": [
+            "BFS",
+            "queue",
+            "postorder"
+          ],
+          "feedback": "queue — FIFO worklist."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 Root8, children3 and10, with 3 children1 and6, 10 right child14. Give postorder. [6]",
+          "answer": "1 [1],6 [1],3 [1],14 [1],10 [1],8 [1].",
+          "options": [
+            "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1].",
+            "1 [1],6 [1],3 [1],14 [1],10 [1],8 [1].",
+            "8,3,10,1,6,14 [4]; start [8] [1] and after 8 [3,10] [1]."
+          ],
+          "feedback": "1 [1],6 [1],3 [1],14 [1],10 [1],8 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2/3 Give breadth-first order for same tree, and first two queue changes. [6]",
+          "answer": "8,3,10,1,6,14 [4]; start [8] [1] and after 8 [3,10] [1].",
+          "options": [
+            "8,3,10,1,6,14 [4]; start [8] [1] and after 8 [3,10] [1].",
+            "1 [1],6 [1],3 [1],14 [1],10 [1],8 [1].",
+            "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1]."
+          ],
+          "feedback": "8,3,10,1,6,14 [4]; start [8] [1] and after 8 [3,10] [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Explain why postorder is useful for deleting tree structures but BFS for shortest unweighted-edge distance. [6]",
+          "answer": "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1].",
+          "options": [
+            "1 [1],6 [1],3 [1],14 [1],10 [1],8 [1].",
+            "8,3,10,1,6,14 [4]; start [8] [1] and after 8 [3,10] [1].",
+            "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1]."
+          ],
+          "feedback": "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Explain why postorder is useful for deleting tree structures but BFS for shortest unweighted-edge distance. [6]",
+        "model": "Postorder visits children before parent [2] allowing safe subtree cleanup [1]; BFS explores layers [2] first discovery gives shortest unweighted edge count [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "BFS means: Breadth-first level exploration.",
+          "answer": "true",
+          "feedback": "BFS — Breadth-first level exploration."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "queue means: Left-right-root tree traversal.",
+          "answer": "false",
+          "feedback": "queue — FIFO worklist."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "recursive means: Process invoking itself on children.",
+          "answer": "true",
+          "feedback": "recursive — Process invoking itself on children."
+        }
+      ]
+    }
+  ]
+}

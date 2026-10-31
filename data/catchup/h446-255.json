@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-255",
+  "course": "h446",
+  "title": "RISC and CISC",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can instruction fetch and data access contend in Von Neumann architecture?",
+          "answer": "They share a memory pathway or resource.",
+          "options": [
+            "They share a memory pathway or resource.",
+            "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
+            "The operation part of a machine or assembly instruction."
+          ],
+          "feedback": "They share a memory pathway or resource."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a pipeline hazard?",
+          "answer": "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
+          "options": [
+            "They share a memory pathway or resource.",
+            "The operation part of a machine or assembly instruction.",
+            "An event such as a dependency, branch or memory stall disrupting instruction overlap."
+          ],
+          "feedback": "An event such as a dependency, branch or memory stall disrupting instruction overlap."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an opcode?",
+          "answer": "The operation part of a machine or assembly instruction.",
+          "options": [
+            "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
+            "The operation part of a machine or assembly instruction.",
+            "They share a memory pathway or resource."
+          ],
+          "feedback": "The operation part of a machine or assembly instruction."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Array [2,4,6,8,10,12,14,16,18], target 16. Give midpoint indexes inspected with low=0 high=8 and integer midpoint.",
+          "answer": "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7.",
+          "options": [
+            "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7.",
+            "They share a memory pathway or resource.",
+            "An event such as a dependency, branch or memory stall disrupting instruction overlap."
+          ],
+          "feedback": "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "RISC approach",
+          "text": "Typically favours a smaller set of comparatively simple, regular instructions, often using explicit load/store operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "CISC approach",
+          "text": "Can offer complex instructions that express several low-level operations in one instruction, potentially improving code density."
+        },
+        {
+          "type": "paragraph",
+          "title": "Avoid oversimplifying",
+          "text": "Fewer instructions in assembly do not guarantee fewer clock cycles. Actual performance depends on pipelining, decoding, caching and processor design."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Values are brought from memory into registers before the arithmetic instruction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain and check",
+          "text": "A regular load/store instruction set simplifies certain datapaths but may need more assembly instructions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'RISC'?",
+          "answer": "Reduced Instruction Set Computer design approach.",
+          "options": [
+            "Complex Instruction Set Computer design approach.",
+            "Access memory through dedicated instructions.",
+            "Reduced Instruction Set Computer design approach."
+          ],
+          "feedback": "RISC — Reduced Instruction Set Computer design approach."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'CISC'?",
+          "answer": "Complex Instruction Set Computer design approach.",
+          "options": [
+            "Access memory through dedicated instructions.",
+            "Complex Instruction Set Computer design approach.",
+            "Reduced Instruction Set Computer design approach."
+          ],
+          "feedback": "CISC — Complex Instruction Set Computer design approach."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'load/store'?",
+          "answer": "Access memory through dedicated instructions.",
+          "options": [
+            "Access memory through dedicated instructions.",
+            "Reduced Instruction Set Computer design approach.",
+            "Complex Instruction Set Computer design approach."
+          ],
+          "feedback": "load/store — Access memory through dedicated instructions."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The complex ISA version uses fewer listed instructions but could require more work per instruction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain and check",
+          "text": "Evaluate clock cycles, decode overhead, code size, memory behaviour and hardware rather than choosing by instruction count alone."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Amount of program function per unit of machine-code storage.",
+          "answer": "code density",
+          "options": [
+            "code density",
+            "RISC",
+            "CISC"
+          ],
+          "feedback": "code density — Amount of program function per unit of machine-code storage."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Operation part of an instruction.",
+          "answer": "opcode",
+          "options": [
+            "RISC",
+            "CISC",
+            "opcode"
+          ],
+          "feedback": "opcode — Operation part of an instruction."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reduced Instruction Set Computer design approach.",
+          "answer": "RISC",
+          "options": [
+            "load/store",
+            "RISC",
+            "CISC"
+          ],
+          "feedback": "RISC — Reduced Instruction Set Computer design approach."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Complex Instruction Set Computer design approach.",
+          "answer": "CISC",
+          "options": [
+            "CISC",
+            "RISC",
+            "load/store"
+          ],
+          "feedback": "CISC — Complex Instruction Set Computer design approach."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 State two characteristics of RISC and two of CISC.",
+          "answer": "[4] RISC typically simpler/regular instructions [1] and load/store designs [1]; CISC permits richer complex instructions [1] and often variable instruction lengths or complex addressing [1].",
+          "options": [
+            "[4] RISC typically simpler/regular instructions [1] and load/store designs [1]; CISC permits richer complex instructions [1] and often variable instruction lengths or complex addressing [1].",
+            "[6] The compound instruction can express more work in one opcode [2]; RISC separates memory access and arithmetic [2]; number of instructions is not the same as measured execution time [2].",
+            "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on…"
+          ],
+          "feedback": "[4] RISC typically simpler/regular instructions [1] and load/store designs [1]; CISC permits richer complex instructions [1] and often variable instruction lengths or complex addressing [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Compare one CISC-style memory-add instruction against a RISC-style LOAD, LOAD, ADD, STORE sequence for the same task.",
+          "answer": "[6] The compound instruction can express more work in one opcode [2]; RISC separates memory access and arithmetic [2]; number of instructions is not the same as measured execution time [2].",
+          "options": [
+            "[4] RISC typically simpler/regular instructions [1] and load/store designs [1]; CISC permits richer complex instructions [1] and often variable instruction lengths or complex addressing [1].",
+            "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on…",
+            "[6] The compound instruction can express more work in one opcode [2]; RISC separates memory access and arithmetic [2]; number of instructions is not the same as measured execution time [2]."
+          ],
+          "feedback": "[6] The compound instruction can express more work in one opcode [2]; RISC separates memory access and arithmetic [2]; number of instructions is not the same as measured execution time [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Evaluate the claim 'RISC is always faster because its instructions are simpler'. Include code density, decoding and pipelining.",
+          "answer": "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on…",
+          "options": [
+            "[6] The compound instruction can express more work in one opcode [2]; RISC separates memory access and arithmetic [2]; number of instructions is not the same as measured execution time [2].",
+            "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on…",
+            "[4] RISC typically simpler/regular instructions [1] and load/store designs [1]; CISC permits richer complex instructions [1] and often variable instruction lengths or complex addressing [1]."
+          ],
+          "feedback": "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on implementation/workload [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Evaluate the claim 'RISC is always faster because its instructions are simpler'. Include code density, decoding and pipelining.",
+        "model": "[6] Simpler regular instructions may support efficient decoding [1] and pipelining [1]; more instructions may increase code size [1] and fetch demand [1]; complex instructions can improve code density [1]; real performance depends on implementation/workload [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "CISC means: Complex Instruction Set Computer design approach.",
+          "answer": "true",
+          "feedback": "CISC — Complex Instruction Set Computer design approach."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "load/store means: Operation part of an instruction.",
+          "answer": "false",
+          "feedback": "load/store — Access memory through dedicated instructions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "code density means: Amount of program function per unit of machine-code storage.",
+          "answer": "true",
+          "feedback": "code density — Amount of program function per unit of machine-code storage."
+        }
+      ]
+    }
+  ]
+}

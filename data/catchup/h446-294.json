@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-294",
+  "course": "h446",
+  "title": "Search engine indexing and PageRank",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a hyperlink?",
+          "answer": "A reference to another page/resource.",
+          "options": [
+            "A reference to another page/resource.",
+            "A structure associating terms or keys with documents/records.",
+            "A directed graph."
+          ],
+          "feedback": "A reference to another page/resource."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an index in retrieval?",
+          "answer": "A structure associating terms or keys with documents/records.",
+          "options": [
+            "A reference to another page/resource.",
+            "A directed graph.",
+            "A structure associating terms or keys with documents/records."
+          ],
+          "feedback": "A structure associating terms or keys with documents/records."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What kind of graph models links?",
+          "answer": "A directed graph.",
+          "options": [
+            "A structure associating terms or keys with documents/records.",
+            "A directed graph.",
+            "A reference to another page/resource."
+          ],
+          "feedback": "A directed graph."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: BST root20, left10, right30; insert 25. Where is it placed?",
+          "answer": "25>20 go right to30; 25<30 go left of30.",
+          "options": [
+            "25>20 go right to30; 25<30 go left of30.",
+            "A reference to another page/resource.",
+            "A structure associating terms or keys with documents/records."
+          ],
+          "feedback": "25>20 go right to30; 25<30 go left of30."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "A crawler discovers pages by following links and sitemaps; an index records useful information about documents for searching."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "PageRank models a random web surfer and passes importance through directed links. A link from a high-ranked page can carry more weight than one from a low-ranked page."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "PageRank uses damping and repeated iterations; raw incoming link counts alone are not the full algorithm. Search engines combine many ranking signals."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Outgoing degree of A is two, so its rank is divided across two outgoing edges."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Both B and C receive half of A's contribution before damping and other link contributions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'crawler'?",
+          "answer": "Discovers/fetches documents.",
+          "options": [
+            "Maps terms to documents.",
+            "Iterative link-based importance model.",
+            "Discovers/fetches documents."
+          ],
+          "feedback": "crawler — Discovers/fetches documents."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'inverted index'?",
+          "answer": "Maps terms to documents.",
+          "options": [
+            "Iterative link-based importance model.",
+            "Maps terms to documents.",
+            "Discovers/fetches documents."
+          ],
+          "feedback": "inverted index — Maps terms to documents."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'PageRank'?",
+          "answer": "Iterative link-based importance model.",
+          "options": [
+            "Iterative link-based importance model.",
+            "Discovers/fetches documents.",
+            "Maps terms to documents."
+          ],
+          "feedback": "PageRank — Iterative link-based importance model."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "The outgoing links split A's contribution evenly in the simplified model."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "C receives 0.10; final PageRank needs damping, all incoming contributions and repeated iterations."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Probability factor in random-surfer model.",
+          "answer": "damping",
+          "options": [
+            "damping",
+            "crawler",
+            "inverted index"
+          ],
+          "feedback": "damping — Probability factor in random-surfer model."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Number of directed outgoing links.",
+          "answer": "out-degree",
+          "options": [
+            "crawler",
+            "inverted index",
+            "out-degree"
+          ],
+          "feedback": "out-degree — Number of directed outgoing links."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Discovers/fetches documents.",
+          "answer": "crawler",
+          "options": [
+            "PageRank",
+            "crawler",
+            "inverted index"
+          ],
+          "feedback": "crawler — Discovers/fetches documents."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maps terms to documents.",
+          "answer": "inverted index",
+          "options": [
+            "inverted index",
+            "crawler",
+            "PageRank"
+          ],
+          "feedback": "inverted index — Maps terms to documents."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Distinguish crawling and indexing. [4]",
+          "answer": "Crawling fetches/discovers pages [2]; indexing structures information for efficient query retrieval [2].",
+          "options": [
+            "Crawling fetches/discovers pages [2]; indexing structures information for efficient query retrieval [2].",
+            "C receives from A and B [2]; A has two outgoing links [2]; A contributes 0.4/2=0.2 to C [2].",
+            "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1]."
+          ],
+          "feedback": "Crawling fetches/discovers pages [2]; indexing structures information for efficient query retrieval [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 In directed link graph A→B,C and B→C, identify incoming links of C and A's share given rank 0.4, ignoring damping. [6]",
+          "answer": "C receives from A and B [2]; A has two outgoing links [2]; A contributes 0.4/2=0.2 to C [2].",
+          "options": [
+            "Crawling fetches/discovers pages [2]; indexing structures information for efficient query retrieval [2].",
+            "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1].",
+            "C receives from A and B [2]; A has two outgoing links [2]; A contributes 0.4/2=0.2 to C [2]."
+          ],
+          "feedback": "C receives from A and B [2]; A has two outgoing links [2]; A contributes 0.4/2=0.2 to C [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why the number of inbound links alone is not an adequate PageRank calculation. [6]",
+          "answer": "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1].",
+          "options": [
+            "C receives from A and B [2]; A has two outgoing links [2]; A contributes 0.4/2=0.2 to C [2].",
+            "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1].",
+            "Crawling fetches/discovers pages [2]; indexing structures information for efficient query retrieval [2]."
+          ],
+          "feedback": "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why the number of inbound links alone is not an adequate PageRank calculation. [6]",
+        "model": "Importance weighted by linking pages [2]; outgoing degree splits contributions [1]; damping/teleportation [1]; repeated iterative convergence [1]; other ranking signals used in real search [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "inverted index means: Maps terms to documents.",
+          "answer": "true",
+          "feedback": "inverted index — Maps terms to documents."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "PageRank means: Number of directed outgoing links.",
+          "answer": "false",
+          "feedback": "PageRank — Iterative link-based importance model."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "damping means: Probability factor in random-surfer model.",
+          "answer": "true",
+          "feedback": "damping — Probability factor in random-surfer model."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-015",
+  "course": "h446",
+  "title": "Noughts & Crosses · Part 3 — Make moves",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which method from Part 2 displays the board?",
+          "answer": "DrawBoard().",
+          "options": [
+            "DrawBoard().",
+            "Row 1, column 2.",
+            "Traverse every row and column."
+          ],
+          "feedback": "DrawBoard()."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a zero-indexed C# 2D array, which row and column does board[1,2] access?",
+          "answer": "Row 1, column 2.",
+          "options": [
+            "DrawBoard().",
+            "Traverse every row and column.",
+            "Row 1, column 2."
+          ],
+          "feedback": "Row 1, column 2."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What do nested loops let us do with the board?",
+          "answer": "Traverse every row and column.",
+          "options": [
+            "Row 1, column 2.",
+            "Traverse every row and column.",
+            "DrawBoard()."
+          ],
+          "feedback": "Traverse every row and column."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Move 5 is the centre square. What zero-based row and column should it map to?",
+          "answer": "[1,1].",
+          "options": [
+            "[1,1].",
+            "DrawBoard().",
+            "Row 1, column 2."
+          ],
+          "feedback": "[1,1]."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Map 1–9 into row/column",
+          "text": "Integer division finds the row; MOD finds the column. The picture highlights move 8: row 2, column 1. Inside MakeMove(), check the 1–9 range before using these indexes."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the move before accessing the array",
+          "text": "Reject choices outside 1–9 before calculating/using their indexes. Reject occupied squares too. Never overwrite an X or O."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make the move",
+          "text": "A Boolean return value tells Main whether the move succeeded."
+        },
+        {
+          "type": "paragraph",
+          "title": "Switch player only after success",
+          "text": "An invalid move should leave the same player to try again."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Turn move 8 into a board position",
+          "text": "Convert the player's 1–9 choice into zero-based indexes. move = 8"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Subtract 1",
+          "text": "move - 1 = 7 Board indexes begin at 0."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches '2D array'?",
+          "answer": "An array organised using rows and columns.",
+          "options": [
+            "The horizontal index in a 2D array.",
+            "The vertical index in a 2D array.",
+            "An array organised using rows and columns."
+          ],
+          "feedback": "2D array — An array organised using rows and columns."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Row'?",
+          "answer": "The horizontal index in a 2D array.",
+          "options": [
+            "The vertical index in a 2D array.",
+            "The horizontal index in a 2D array.",
+            "An array organised using rows and columns."
+          ],
+          "feedback": "Row — The horizontal index in a 2D array."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Column'?",
+          "answer": "The vertical index in a 2D array.",
+          "options": [
+            "The vertical index in a 2D array.",
+            "An array organised using rows and columns.",
+            "The horizontal index in a 2D array."
+          ],
+          "feedback": "Column — The vertical index in a 2D array."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Map a move",
+          "text": "Move 6 is chosen."
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same calculation",
+          "text": "row = (6 - 1) / 3 = ? col = (6 - 1) % 3 = ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Complete the same calculation",
+          "text": "row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
+        },
+        {
+          "type": "paragraph",
+          "title": "Validate range",
+          "text": "Reject choices outside 1–9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A loop inside another loop.",
+          "answer": "Nested loop",
+          "options": [
+            "Nested loop",
+            "2D array",
+            "Row"
+          ],
+          "feedback": "Nested loop — A loop inside another loop."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Checking input or a move against rules before accepting it.",
+          "answer": "Validation",
+          "options": [
+            "2D array",
+            "Row",
+            "Validation"
+          ],
+          "feedback": "Validation — Checking input or a move against rules before accepting it."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The repeated structure that runs turns until the game finishes.",
+          "answer": "Game loop",
+          "options": [
+            "Row",
+            "Game loop",
+            "2D array"
+          ],
+          "feedback": "Game loop — The repeated structure that runs turns until the game finishes."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A named section of C# code used to perform one task.",
+          "answer": "Method",
+          "options": [
+            "Method",
+            "2D array",
+            "Row"
+          ],
+          "feedback": "Method — A named section of C# code used to perform one task."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Turn move 8 into a board position Convert the player's 1–9 choice into zero-based indexes.",
+          "answer": "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
+          "options": [
+            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
+            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
+            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }"
+          ],
+          "feedback": "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Map a move Move 6 is chosen.",
+          "answer": "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
+          "options": [
+            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder.",
+            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
+          ],
+          "feedback": "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Validate range Reject choices outside 1–9.",
+          "answer": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+          "options": [
+            "CHECK Complete the same calculation row = (6 - 1) / 3 = 1 col = (6 - 1) % 3 = 2",
+            "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+            "STEP 2 · ROW Integer divide by 3 7 / 3 = 2 row = 2 Integer division discards the remainder."
+          ],
+          "feedback": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Validate range Reject choices outside 1–9.",
+        "model": "CHECK Fill the same condition if (move < 1 || move > 9) { return false; }",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Row means: The horizontal index in a 2D array.",
+          "answer": "true",
+          "feedback": "Row — The horizontal index in a 2D array."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Column means: Checking input or a move against rules before accepting it.",
+          "answer": "false",
+          "feedback": "Column — The vertical index in a 2D array."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Nested loop means: A loop inside another loop.",
+          "answer": "true",
+          "feedback": "Nested loop — A loop inside another loop."
+        }
+      ]
+    }
+  ]
+}

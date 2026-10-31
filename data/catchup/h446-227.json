@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-227",
+  "course": "h446",
+  "title": "OOP debugging with IDEs",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which structure supports BFS traversal?",
+          "answer": "A FIFO queue.",
+          "options": [
+            "The local variable.",
+            "A FIFO queue.",
+            "Stored state belonging to that object."
+          ],
+          "feedback": "A FIFO queue."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an object's field?",
+          "answer": "Stored state belonging to that object.",
+          "options": [
+            "Stored state belonging to that object.",
+            "A FIFO queue.",
+            "The local variable."
+          ],
+          "feedback": "Stored state belonging to that object."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When a local variable shadows a field, which name is used without qualification?",
+          "answer": "The local variable.",
+          "options": [
+            "A FIFO queue.",
+            "Stored state belonging to that object.",
+            "The local variable."
+          ],
+          "feedback": "The local variable."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why might Step Into be more useful than Step Over for a faulty function?",
+          "answer": "It lets you inspect statements, parameters and field updates inside the called function.",
+          "options": [
+            "Stored state belonging to that object.",
+            "It lets you inspect statements, parameters and field updates inside the called function.",
+            "A FIFO queue."
+          ],
+          "feedback": "It lets you inspect statements, parameters and field updates inside the called function."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Set a breakpoint",
+          "text": "Pause at a method call or the following instruction to inspect current state."
+        },
+        {
+          "type": "paragraph",
+          "title": "Step into to inspect internals",
+          "text": "Step Into executes the called method one instruction at a time. Watch Count and parameter n."
+        },
+        {
+          "type": "paragraph",
+          "title": "Step over to skip internals",
+          "text": "Step Over runs the entire call and pauses at the next statement, allowing you to inspect the result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Step Into Add and inspect the local points and the field Points."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "The local becomes 8 while the object field remains 3; the assignment targets the wrong variable."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model the reasoning",
+          "text": "Replace it with Points += amount; and rerun. The field should be 8."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'breakpoint'?",
+          "answer": "A chosen instruction where execution pauses.",
+          "options": [
+            "A chosen instruction where execution pauses.",
+            "Enter a called function for debugging.",
+            "Execute a call without entering it line by line."
+          ],
+          "feedback": "breakpoint — A chosen instruction where execution pauses."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Step Into'?",
+          "answer": "Enter a called function for debugging.",
+          "options": [
+            "A chosen instruction where execution pauses.",
+            "Execute a call without entering it line by line.",
+            "Enter a called function for debugging."
+          ],
+          "feedback": "Step Into — Enter a called function for debugging."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Step Over'?",
+          "answer": "Execute a call without entering it line by line.",
+          "options": [
+            "Enter a called function for debugging.",
+            "Execute a call without entering it line by line.",
+            "A chosen instruction where execution pauses."
+          ],
+          "feedback": "Step Over — Execute a call without entering it line by line."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "After the first call, true is correct; after the second, IsOn should become false."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model the reasoning",
+          "text": "The method always assigns true, so the second call fails. Fix to IsOn = !IsOn; and test twice."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? IDE display of chosen variables/expressions.",
+          "answer": "watch",
+          "options": [
+            "Step Into",
+            "watch",
+            "breakpoint"
+          ],
+          "feedback": "watch — IDE display of chosen variables/expressions."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Current values of an object's fields and properties.",
+          "answer": "object state",
+          "options": [
+            "object state",
+            "breakpoint",
+            "Step Into"
+          ],
+          "feedback": "object state — Current values of an object's fields and properties."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A chosen instruction where execution pauses.",
+          "answer": "breakpoint",
+          "options": [
+            "Step Into",
+            "Step Over",
+            "breakpoint"
+          ],
+          "feedback": "breakpoint — A chosen instruction where execution pauses."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Enter a called function for debugging.",
+          "answer": "Step Into",
+          "options": [
+            "Step Over",
+            "Step Into",
+            "breakpoint"
+          ],
+          "feedback": "Step Into — Enter a called function for debugging."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 3 marks · QUESTION 1 OF 3 Explain Step Into and Step Over at a method call.",
+          "answer": "[3] Step Into opens the called method for line-by-line execution [2]; Step Over executes it and stops at the next calling statement [1].",
+          "options": [
+            "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1].",
+            "[3] Step Into opens the called method for line-by-line execution [2]; Step Over executes it and stops at the next calling statement [1].",
+            "[5] Local variable shadows property and may be uninitialised/invalid [2]; use `this.Total += n;` [2]; verify by testing initial Total=4, Increase(3) gives 7 [1]."
+          ],
+          "feedback": "[3] Step Into opens the called method for line-by-line execution [2]; Step Over executes it and stops at the next calling statement [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 5 marks · QUESTION 2 OF 3 A class method Increase(int n) contains `int Total = Total + n;` while Total is an existing property. Identify the issue and write correct C# code.",
+          "answer": "[5] Local variable shadows property and may be uninitialised/invalid [2]; use `this.Total += n;` [2]; verify by testing initial Total=4, Increase(3) gives 7 [1].",
+          "options": [
+            "[5] Local variable shadows property and may be uninitialised/invalid [2]; use `this.Total += n;` [2]; verify by testing initial Total=4, Increase(3) gives 7 [1].",
+            "[3] Step Into opens the called method for line-by-line execution [2]; Step Over executes it and stops at the next calling statement [1].",
+            "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1]."
+          ],
+          "feedback": "[5] Local variable shadows property and may be uninitialised/invalid [2]; use `this.Total += n;` [2]; verify by testing initial Total=4, Increase(3) gives 7 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Design an IDE-debugging workflow for a temperature sensor whose Readings list gains two entries after a single AddReading() call.",
+          "answer": "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1].",
+          "options": [
+            "[3] Step Into opens the called method for line-by-line execution [2]; Step Over executes it and stops at the next calling statement [1].",
+            "[5] Local variable shadows property and may be uninitialised/invalid [2]; use `this.Total += n;` [2]; verify by testing initial Total=4, Increase(3) gives 7 [1].",
+            "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1]."
+          ],
+          "feedback": "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Design an IDE-debugging workflow for a temperature sensor whose Readings list gains two entries after a single AddReading() call.",
+        "model": "[6] Set breakpoint before call [1]; step into method [1]; inspect list count before update [1]; step through every append [1]; find duplicate append or duplicate caller invocation [1]; fix and retest one append [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Step Into means: Enter a called function for debugging.",
+          "answer": "true",
+          "feedback": "Step Into — Enter a called function for debugging."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Step Over means: Current values of an object's fields and properties.",
+          "answer": "false",
+          "feedback": "Step Over — Execute a call without entering it line by line."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "watch means: IDE display of chosen variables/expressions.",
+          "answer": "true",
+          "feedback": "watch — IDE display of chosen variables/expressions."
+        }
+      ]
+    }
+  ]
+}

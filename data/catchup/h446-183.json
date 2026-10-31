@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-183",
+  "course": "h446",
+  "title": "Recursion: write and debug algorithms",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In SumTo(4), which call returns first and which returns last?",
+          "answer": "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
+          "options": [
+            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
+            "Without a reachable base case, calls continue and the call stack grows until failure.",
+            "20, 10, 5."
+          ],
+          "feedback": "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must a recursive function contain a stopping condition?",
+          "answer": "Without a reachable base case, calls continue and the call stack grows until failure.",
+          "options": [
+            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
+            "20, 10, 5.",
+            "Without a reachable base case, calls continue and the call stack grows until failure."
+          ],
+          "feedback": "Without a reachable base case, calls continue and the call stack grows until failure."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A loop repeatedly halves n starting at 40 while n > 1 using integer division. List the next three n values.",
+          "answer": "20, 10, 5.",
+          "options": [
+            "Without a reachable base case, calls continue and the call stack grows until failure.",
+            "20, 10, 5.",
+            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind."
+          ],
+          "feedback": "20, 10, 5."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A function PowerTwo(n) returns 1 when n=0, otherwise 2*PowerTwo(n-1). What does PowerTwo(3) return?",
+          "answer": "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8.",
+          "options": [
+            "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8.",
+            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
+            "Without a reachable base case, calls continue and the call stack grows until failure."
+          ],
+          "feedback": "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find the smallest problem",
+          "text": "A positive single-digit number needs one digit. So n &lt; 10 is our base case."
+        },
+        {
+          "type": "paragraph",
+          "title": "Make progress",
+          "text": "For n ≥ 10, integer division by 10 makes the number shorter: 4827 → 482 → 48 → 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Count on the way back",
+          "text": "4 returns 1. Then 48 returns 2; 482 returns 3; 4827 returns 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model CountDigits(582). Why is integer division essential?",
+          "text": "CountDigits(582) → CountDigits(58) → CountDigits(5)"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Calls",
+          "text": "582 → 58 → 5. Each integer division by 10 discards the last digit."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Base case",
+          "text": "5 is a single digit, so CountDigits(5) returns 1."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'termination'?",
+          "answer": "Reaching a condition where the algorithm stops.",
+          "options": [
+            "Processing part of a problem before calling the function on a simpler input.",
+            "An assumption or input rule required for an algorithm.",
+            "Reaching a condition where the algorithm stops."
+          ],
+          "feedback": "termination — Reaching a condition where the algorithm stops."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'recursive step'?",
+          "answer": "Processing part of a problem before calling the function on a simpler input.",
+          "options": [
+            "An assumption or input rule required for an algorithm.",
+            "Processing part of a problem before calling the function on a simpler input.",
+            "Reaching a condition where the algorithm stops."
+          ],
+          "feedback": "recursive step — Processing part of a problem before calling the function on a simpler input."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "An assumption or input rule required for an algorithm.",
+          "options": [
+            "An assumption or input rule required for an algorithm.",
+            "Reaching a condition where the algorithm stops.",
+            "Processing part of a problem before calling the function on a simpler input."
+          ],
+          "feedback": "precondition — An assumption or input rule required for an algorithm."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Calls",
+          "text": "9031, 903, 90, 9."
+        },
+        {
+          "type": "paragraph",
+          "title": "Base case",
+          "text": "9 is a single digit so returns 1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Returns",
+          "text": "9 returns 1; 90 returns 2; 903 returns 3; 9031 returns 4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A failure that can occur when too many active calls consume stack space.",
+          "answer": "stack overflow",
+          "options": [
+            "stack overflow",
+            "termination",
+            "recursive step"
+          ],
+          "feedback": "stack overflow — A failure that can occur when too many active calls consume stack space."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Division discarding any fractional part of the result.",
+          "answer": "integer division",
+          "options": [
+            "termination",
+            "recursive step",
+            "integer division"
+          ],
+          "feedback": "integer division — Division discarding any fractional part of the result."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reaching a condition where the algorithm stops.",
+          "answer": "termination",
+          "options": [
+            "precondition",
+            "termination",
+            "recursive step"
+          ],
+          "feedback": "termination — Reaching a condition where the algorithm stops."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Processing part of a problem before calling the function on a simpler input.",
+          "answer": "recursive step",
+          "options": [
+            "recursive step",
+            "termination",
+            "precondition"
+          ],
+          "feedback": "recursive step — Processing part of a problem before calling the function on a simpler input."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Trace CountDigits(67): write the call sequence and final value.",
+          "answer": "Calls 67 → 6. Base case returns 1, then the outer call returns 2.",
+          "options": [
+            "Calls 67 → 6. Base case returns 1, then the outer call returns 2.",
+            "Correct: return 1 + CountDigits(n / 10);. The original line does not reduce n, so it never reaches the base case for n >= 10.",
+            "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10…"
+          ],
+          "feedback": "Calls 67 → 6. Base case returns 1, then the outer call returns 2."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 A pupil writes return CountDigits(n) + 1; for the recursive step. Correct the line and explain the error.",
+          "answer": "Correct: return 1 + CountDigits(n / 10);. The original line does not reduce n, so it never reaches the base case for n >= 10.",
+          "options": [
+            "Calls 67 → 6. Base case returns 1, then the outer call returns 2.",
+            "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10…",
+            "Correct: return 1 + CountDigits(n / 10);. The original line does not reduce n, so it never reaches the base case for n >= 10."
+          ],
+          "feedback": "Correct: return 1 + CountDigits(n / 10);. The original line does not reduce n, so it never reaches the base case for n >= 10."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Extend CountDigits for n = 0 and negative integers without overflowing on the minimum C# int value.",
+          "answer": "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10…",
+          "options": [
+            "Correct: return 1 + CountDigits(n / 10);. The original line does not reduce n, so it never reaches the base case for n >= 10.",
+            "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10…",
+            "Calls 67 → 6. Base case returns 1, then the outer call returns 2."
+          ],
+          "feedback": "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10 reduces the magnitude first."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Extend CountDigits for n = 0 and negative integers without overflowing on the minimum C# int value.",
+        "model": "An example robust implementation: int CountDigits(int n) { long value = Math.Abs((long)n); if (value < 10) return 1; return 1 + CountDigits((int)(value / 10)); } For the most-negative int, the cast is safe here because dividing by 10 reduces the magnitude first.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "recursive step means: Processing part of a problem before calling the function on a simpler input.",
+          "answer": "true",
+          "feedback": "recursive step — Processing part of a problem before calling the function on a simpler input."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "precondition means: Division discarding any fractional part of the result.",
+          "answer": "false",
+          "feedback": "precondition — An assumption or input rule required for an algorithm."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "stack overflow means: A failure that can occur when too many active calls consume stack space.",
+          "answer": "true",
+          "feedback": "stack overflow — A failure that can occur when too many active calls consume stack space."
+        }
+      ]
+    }
+  ]
+}

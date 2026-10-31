@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-298",
+  "course": "h446",
+  "title": "Backtracking in computational solutions",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does a recursive call stop?",
+          "answer": "When a base case is met.",
+          "options": [
+            "A partial choice/state considered in the search.",
+            "It avoids exploring states proven unable to succeed.",
+            "When a base case is met."
+          ],
+          "feedback": "When a base case is met."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a search tree node?",
+          "answer": "A partial choice/state considered in the search.",
+          "options": [
+            "It avoids exploring states proven unable to succeed.",
+            "A partial choice/state considered in the search.",
+            "When a base case is met."
+          ],
+          "feedback": "A partial choice/state considered in the search."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why may pruning reduce runtime?",
+          "answer": "It avoids exploring states proven unable to succeed.",
+          "options": [
+            "It avoids exploring states proven unable to succeed.",
+            "When a base case is met.",
+            "A partial choice/state considered in the search."
+          ],
+          "feedback": "It avoids exploring states proven unable to succeed."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Insert 12 into BST root10 with right child15 and left child5. Show the comparisons and position.",
+          "answer": "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15.",
+          "options": [
+            "When a base case is met.",
+            "A partial choice/state considered in the search.",
+            "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15."
+          ],
+          "feedback": "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Make a decision",
+          "text": "At each position choose the current item or skip it. Track index and running total."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reject a dead end",
+          "text": "When the sum exceeds the target (non-negative inputs) or the list ends, undo the choice."
+        },
+        {
+          "type": "paragraph",
+          "title": "Backtrack",
+          "text": "Try the other branch; success means a valid selection has been found. Exponential worst-case growth remains possible."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The first path over-shoots: 2+3+4=9, so reject that branch."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the method",
+          "text": "Undo 4, skip 3, then include 4 → 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'backtracking'?",
+          "answer": "Explore choices and undo a failed path.",
+          "options": [
+            "Branches of possible decisions.",
+            "Explore choices and undo a failed path.",
+            "Discard an impossible branch."
+          ],
+          "feedback": "backtracking — Explore choices and undo a failed path."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'pruning'?",
+          "answer": "Discard an impossible branch.",
+          "options": [
+            "Discard an impossible branch.",
+            "Explore choices and undo a failed path.",
+            "Branches of possible decisions."
+          ],
+          "feedback": "pruning — Discard an impossible branch."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'search tree'?",
+          "answer": "Branches of possible decisions.",
+          "options": [
+            "Explore choices and undo a failed path.",
+            "Discard an impossible branch.",
+            "Branches of possible decisions."
+          ],
+          "feedback": "search tree — Branches of possible decisions."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "Including 1 and 3 produces 4; adding 4 overshoots 5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the method",
+          "text": "Undo 4, skip 3, then include 4 → 5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Condition ending a recursive branch.",
+          "answer": "base case",
+          "options": [
+            "backtracking",
+            "pruning",
+            "base case"
+          ],
+          "feedback": "base case — Condition ending a recursive branch."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Explore choices and undo a failed path.",
+          "answer": "backtracking",
+          "options": [
+            "search tree",
+            "backtracking",
+            "pruning"
+          ],
+          "feedback": "backtracking — Explore choices and undo a failed path."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Discard an impossible branch.",
+          "answer": "pruning",
+          "options": [
+            "pruning",
+            "backtracking",
+            "search tree"
+          ],
+          "feedback": "pruning — Discard an impossible branch."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branches of possible decisions.",
+          "answer": "search tree",
+          "options": [
+            "backtracking",
+            "pruning",
+            "search tree"
+          ],
+          "feedback": "search tree — Branches of possible decisions."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain choice, dead end and backtrack using [2,3,4] target6. [6]",
+          "answer": "AND MARKING POINTS Try subset [2,3,4] [1], sum9 [1], prune as >6 for non-negative inputs [1], undo last choice [1], exclude 3 [1], choose 4 with 2 for sum6 [1].",
+          "options": [
+            "AND MARKING POINTS Check total==target return true [2]; end-of-input false [1]; prune total>target [1]; include branch [2]; exclude branch [1]; combine with OR [1].",
+            "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1].",
+            "AND MARKING POINTS Try subset [2,3,4] [1], sum9 [1], prune as >6 for non-negative inputs [1], undo last choice [1], exclude 3 [1], choose 4 with 2 for sum6 [1]."
+          ],
+          "feedback": "AND MARKING POINTS Try subset [2,3,4] [1], sum9 [1], prune as >6 for non-negative inputs [1], undo last choice [1], exclude 3 [1], choose 4 with 2 for sum6 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2 OF 3 Write a recursive include/exclude Boolean function for subset sum with non-negative integers, including base cases. [8]",
+          "answer": "AND MARKING POINTS Check total==target return true [2]; end-of-input false [1]; prune total>target [1]; include branch [2]; exclude branch [1]; combine with OR [1].",
+          "options": [
+            "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1].",
+            "AND MARKING POINTS Check total==target return true [2]; end-of-input false [1]; prune total>target [1]; include branch [2]; exclude branch [1]; combine with OR [1].",
+            "AND MARKING POINTS Try subset [2,3,4] [1], sum9 [1], prune as >6 for non-negative inputs [1], undo last choice [1], exclude 3 [1], choose 4 with 2 for sum6 [1]."
+          ],
+          "feedback": "AND MARKING POINTS Check total==target return true [2]; end-of-input false [1]; prune total>target [1]; include branch [2]; exclude branch [1]; combine with OR [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain why backtracking is useful for 4 queens but not guaranteed polynomial time. Give one safe-placement rule. [6]",
+          "answer": "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1].",
+          "options": [
+            "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1].",
+            "AND MARKING POINTS Try subset [2,3,4] [1], sum9 [1], prune as >6 for non-negative inputs [1], undo last choice [1], exclude 3 [1], choose 4 with 2 for sum6 [1].",
+            "AND MARKING POINTS Check total==target return true [2]; end-of-input false [1]; prune total>target [1]; include branch [2]; exclude branch [1]; combine with OR [1]."
+          ],
+          "feedback": "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain why backtracking is useful for 4 queens but not guaranteed polynomial time. Give one safe-placement rule. [6]",
+        "model": "AND MARKING POINTS Rows/columns/diagonals constrained [2]; choose next row/column then recurse [1]; undo when no legal square [1]; worst-case combinatorial branching [1]; safe placement checks no shared column or diagonal [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "pruning means: Discard an impossible branch.",
+          "answer": "true",
+          "feedback": "pruning — Discard an impossible branch."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "search tree means: Explore choices and undo a failed path.",
+          "answer": "false",
+          "feedback": "search tree — Branches of possible decisions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "base case means: Condition ending a recursive branch.",
+          "answer": "true",
+          "feedback": "base case — Condition ending a recursive branch."
+        }
+      ]
+    }
+  ]
+}

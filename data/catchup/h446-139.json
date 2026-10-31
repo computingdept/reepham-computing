@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-139",
+  "course": "h446",
+  "title": "Lesson 139 · SQL INSERT, UPDATE and DELETE Safely",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between WHERE and ORDER BY in a query?",
+          "answer": "WHERE filters rows; ORDER BY arranges returned rows.",
+          "options": [
+            "Sum 0, carry 1.",
+            "O(log n) for sorted random-access data.",
+            "WHERE filters rows; ORDER BY arranges returned rows."
+          ],
+          "feedback": "WHERE filters rows; ORDER BY arranges returned rows."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What are the outputs of a half adder when A=1 and B=1?",
+          "answer": "Sum 0, carry 1.",
+          "options": [
+            "O(log n) for sorted random-access data.",
+            "Sum 0, carry 1.",
+            "WHERE filters rows; ORDER BY arranges returned rows."
+          ],
+          "feedback": "Sum 0, carry 1."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In Big O notation, what is binary search worst-case complexity?",
+          "answer": "O(log n) for sorted random-access data.",
+          "options": [
+            "O(log n) for sorted random-access data.",
+            "WHERE filters rows; ORDER BY arranges returned rows.",
+            "Sum 0, carry 1."
+          ],
+          "feedback": "O(log n) for sorted random-access data."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does a linear search stop?",
+          "answer": "On a match or after examining all items.",
+          "options": [
+            "WHERE filters rows; ORDER BY arranges returned rows.",
+            "Sum 0, carry 1.",
+            "On a match or after examining all items."
+          ],
+          "feedback": "On a match or after examining all items."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Create rows",
+          "text": "INSERT INTO Table(columns) VALUES(...)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Change rows safely",
+          "text": "UPDATE Table SET column=value WHERE key=..."
+        },
+        {
+          "type": "paragraph",
+          "title": "Delete deliberately",
+          "text": "DELETE FROM Table WHERE key=...; verify matches before writing."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Identify BookID 8",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · UPDATE Stock = 3",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · WHERE BookID = 8",
+          "text": "UPDATE Book SET Stock = 3 WHERE BookID = 8; Before running, SELECT the matching row. Without WHERE, the stock column of all books would be changed."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'INSERT'?",
+          "answer": "Adds new rows.",
+          "options": [
+            "Removes matching rows.",
+            "Adds new rows.",
+            "Changes values in existing rows."
+          ],
+          "feedback": "INSERT — Adds new rows."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'UPDATE'?",
+          "answer": "Changes values in existing rows.",
+          "options": [
+            "Changes values in existing rows.",
+            "Adds new rows.",
+            "Removes matching rows."
+          ],
+          "feedback": "UPDATE — Changes values in existing rows."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'DELETE'?",
+          "answer": "Removes matching rows.",
+          "options": [
+            "Adds new rows.",
+            "Changes values in existing rows.",
+            "Removes matching rows."
+          ],
+          "feedback": "DELETE — Removes matching rows."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Insert club 24",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Confirm club 12 exists",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "DELETE WHERE ClubID=12",
+          "text": "INSERT INTO Club (ClubID, Name) VALUES (24, 'Robotics'); DELETE FROM Club WHERE ClubID = 12; Foreign-key dependencies may prevent delete until related records are handled by defined policy."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Restricts affected rows; omission can affect every row.",
+          "answer": "WHERE",
+          "options": [
+            "INSERT",
+            "UPDATE",
+            "WHERE"
+          ],
+          "feedback": "WHERE — Restricts affected rows; omission can affect every row."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Adds new rows.",
+          "answer": "INSERT",
+          "options": [
+            "DELETE",
+            "INSERT",
+            "UPDATE"
+          ],
+          "feedback": "INSERT — Adds new rows."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Changes values in existing rows.",
+          "answer": "UPDATE",
+          "options": [
+            "UPDATE",
+            "INSERT",
+            "DELETE"
+          ],
+          "feedback": "UPDATE — Changes values in existing rows."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Removes matching rows.",
+          "answer": "DELETE",
+          "options": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "feedback": "DELETE — Removes matching rows."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Write SQL inserting StudentID 22 and Name 'Kai' into Student. [4]",
+          "answer": "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
+          "options": [
+            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+          ],
+          "feedback": "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 A teacher must change a single pupil's YearGroup to 13. Explain a safe SQL statement. [6]",
+          "answer": "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+          "options": [
+            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1].",
+            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4]."
+          ],
+          "feedback": "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain risks in DELETE FROM Booking; and suggest protections in a relational production database. [8]",
+          "answer": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+          "options": [
+            "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+            "/ WORKED ANSWER INSERT INTO Student (StudentID, Name) VALUES (22, 'Kai'); [4].",
+            "/ WORKED ANSWER UPDATE Student SET YearGroup=13 [3] WHERE StudentID=<specific existing ID> [2]; confirm selected row before applying [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain risks in DELETE FROM Booking; and suggest protections in a relational production database. [8]",
+        "model": "/ WORKED ANSWER Missing WHERE deletes all rows [2], FK/referential impacts [2], transactions/rollback and backups [2], permission controls and dry-run SELECT [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "UPDATE means: Changes values in existing rows.",
+          "answer": "true",
+          "feedback": "UPDATE — Changes values in existing rows."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "DELETE means: Adds new rows.",
+          "answer": "false",
+          "feedback": "DELETE — Removes matching rows."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "WHERE means: Restricts affected rows; omission can affect every row.",
+          "answer": "true",
+          "feedback": "WHERE — Restricts affected rows; omission can affect every row."
+        }
+      ]
+    }
+  ]
+}

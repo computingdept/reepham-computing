@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-284",
+  "course": "h446",
+  "title": "Packet switching, circuit switching and standards",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which TCP/IP layer contains TCP?",
+          "answer": "Transport layer.",
+          "options": [
+            "Yes.",
+            "Transport layer.",
+            "An IP address for the name, when the appropriate DNS records exist."
+          ],
+          "feedback": "Transport layer."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does DNS usually provide when given a domain name?",
+          "answer": "An IP address for the name, when the appropriate DNS records exist.",
+          "options": [
+            "An IP address for the name, when the appropriate DNS records exist.",
+            "Transport layer.",
+            "Yes."
+          ],
+          "feedback": "An IP address for the name, when the appropriate DNS records exist."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Can a graph have more than one possible path between two vertices?",
+          "answer": "Yes.",
+          "options": [
+            "Transport layer.",
+            "An IP address for the name, when the appropriate DNS records exist.",
+            "Yes."
+          ],
+          "feedback": "Yes."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Name one advantage of sharing a network link instead of reserving it for one user.",
+          "answer": "Capacity can be used by other traffic when a user is idle, improving efficiency.",
+          "options": [
+            "An IP address for the name, when the appropriate DNS records exist.",
+            "Capacity can be used by other traffic when a user is idle, improving efficiency.",
+            "Transport layer."
+          ],
+          "feedback": "Capacity can be used by other traffic when a user is idle, improving efficiency."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Split a message into packets",
+          "text": "The sender can split data into separate packets or segments. Each includes control information such as addressing and/or sequence information at relevant protocol layers."
+        },
+        {
+          "type": "paragraph",
+          "title": "Packets may take different routes",
+          "text": "Packet switching lets network traffic share links. IP forwarding can choose different paths; it does not guarantee the same arrival order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Restore order when needed",
+          "text": "TCP provides a reliable ordered byte stream, using acknowledgements and retransmission if required. Do not confuse TCP guarantees with best-effort IP delivery."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Route",
+          "text": "The network may forward them along different paths, so arrival order is not guaranteed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Receive",
+          "text": "TCP uses sequence information to buffer out-of-order data."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Deliver",
+          "text": "When missing earlier bytes arrive, TCP makes data available to the application in the correct order: first 1, then 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'packet switching'?",
+          "answer": "Data is split and forwarded across shared network links.",
+          "options": [
+            "Data is split and forwarded across shared network links.",
+            "Communication uses a pre-established reserved path.",
+            "Control information that allows ordered reconstruction."
+          ],
+          "feedback": "packet switching — Data is split and forwarded across shared network links."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'circuit switching'?",
+          "answer": "Communication uses a pre-established reserved path.",
+          "options": [
+            "Data is split and forwarded across shared network links.",
+            "Control information that allows ordered reconstruction.",
+            "Communication uses a pre-established reserved path."
+          ],
+          "feedback": "circuit switching — Communication uses a pre-established reserved path."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'sequence information'?",
+          "answer": "Control information that allows ordered reconstruction.",
+          "options": [
+            "Communication uses a pre-established reserved path.",
+            "Control information that allows ordered reconstruction.",
+            "Data is split and forwarded across shared network links."
+          ],
+          "feedback": "sequence information — Control information that allows ordered reconstruction."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Detect gap",
+          "text": "The receiver recognises that data between segment 1 and segment 3 is missing."
+        },
+        {
+          "type": "paragraph",
+          "title": "Recover",
+          "text": "TCP can cause the missing data to be retransmitted; once the gap is filled, data is delivered in order."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Sending missing or unacknowledged data again.",
+          "answer": "retransmission",
+          "options": [
+            "circuit switching",
+            "retransmission",
+            "packet switching"
+          ],
+          "feedback": "retransmission — Sending missing or unacknowledged data again."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Agreed specification supporting compatibility and interoperability.",
+          "answer": "standard",
+          "options": [
+            "standard",
+            "packet switching",
+            "circuit switching"
+          ],
+          "feedback": "standard — Agreed specification supporting compatibility and interoperability."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Data is split and forwarded across shared network links.",
+          "answer": "packet switching",
+          "options": [
+            "circuit switching",
+            "sequence information",
+            "packet switching"
+          ],
+          "feedback": "packet switching — Data is split and forwarded across shared network links."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Communication uses a pre-established reserved path.",
+          "answer": "circuit switching",
+          "options": [
+            "sequence information",
+            "circuit switching",
+            "packet switching"
+          ],
+          "feedback": "circuit switching — Communication uses a pre-established reserved path."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Give one difference between packet switching and circuit switching. [2]",
+          "answer": "[2] Packet switching forwards separate packets using shared network links [1]; circuit switching establishes a dedicated or reserved connection/path resources for a session [1].",
+          "options": [
+            "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and…",
+            "[2] Packet switching forwards separate packets using shared network links [1]; circuit switching establishes a dedicated or reserved connection/path resources for a session [1].",
+            "[4] TCP identifies the out-of-order data from sequence information [1], buffers later data while earlier bytes are missing [1], releases the ordered stream once the gap is filled [1], so the application receives 1,2,3 [1]. This uses…"
+          ],
+          "feedback": "[2] Packet switching forwards separate packets using shared network links [1]; circuit switching establishes a dedicated or reserved connection/path resources for a session [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 Data labelled 1,2,3 arrives as 2,1,3 using TCP. Explain how TCP handles the out-of-order arrival and what the application receives. [4]",
+          "answer": "[4] TCP identifies the out-of-order data from sequence information [1], buffers later data while earlier bytes are missing [1], releases the ordered stream once the gap is filled [1], so the application receives 1,2,3 [1]. This uses…",
+          "options": [
+            "[4] TCP identifies the out-of-order data from sequence information [1], buffers later data while earlier bytes are missing [1], releases the ordered stream once the gap is filled [1], so the application receives 1,2,3 [1]. This uses…",
+            "[2] Packet switching forwards separate packets using shared network links [1]; circuit switching establishes a dedicated or reserved connection/path resources for a session [1].",
+            "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and…"
+          ],
+          "feedback": "[4] TCP identifies the out-of-order data from sequence information [1], buffers later data while earlier bytes are missing [1], releases the ordered stream once the gap is filled [1], so the application receives 1,2,3 [1]. This uses simplified labelled segments; TCP sequence numbers actually identify byte positions."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Explain one advantage of packet switching and why communication standards are important for different manufacturers' devices. [4]",
+          "answer": "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and…",
+          "options": [
+            "[2] Packet switching forwards separate packets using shared network links [1]; circuit switching establishes a dedicated or reserved connection/path resources for a session [1].",
+            "[4] TCP identifies the out-of-order data from sequence information [1], buffers later data while earlier bytes are missing [1], releases the ordered stream once the gap is filled [1], so the application receives 1,2,3 [1]. This uses…",
+            "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and…"
+          ],
+          "feedback": "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and software to interoperate [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Explain one advantage of packet switching and why communication standards are important for different manufacturers' devices. [4]",
+        "model": "[4] Packet switching allows links to be shared efficiently or can route around a failed path [2 with explanation]; agreed communication standards define consistent protocols/formats [1], allowing independently produced devices and software to interoperate [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "circuit switching means: Communication uses a pre-established reserved path.",
+          "answer": "true",
+          "feedback": "circuit switching — Communication uses a pre-established reserved path."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "sequence information means: Agreed specification supporting compatibility and interoperability.",
+          "answer": "false",
+          "feedback": "sequence information — Control information that allows ordered reconstruction."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "retransmission means: Sending missing or unacknowledged data again.",
+          "answer": "true",
+          "feedback": "retransmission — Sending missing or unacknowledged data again."
+        }
+      ]
+    }
+  ]
+}

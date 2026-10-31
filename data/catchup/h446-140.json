@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-140",
+  "course": "h446",
+  "title": "Lesson 140 · Referential Integrity, Indexing and Keys",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the result of UPDATE without a WHERE clause?",
+          "answer": "Every row in the target table can be updated.",
+          "options": [
+            "Eight.",
+            "Every row in the target table can be updated.",
+            "Tracking variable state changes as an algorithm runs."
+          ],
+          "feedback": "Every row in the target table can be updated."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a trace table used for?",
+          "answer": "Tracking variable state changes as an algorithm runs.",
+          "options": [
+            "Tracking variable state changes as an algorithm runs.",
+            "Every row in the target table can be updated.",
+            "Eight."
+          ],
+          "feedback": "Tracking variable state changes as an algorithm runs."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits are in one byte?",
+          "answer": "Eight.",
+          "options": [
+            "Every row in the target table can be updated.",
+            "Tracking variable state changes as an algorithm runs.",
+            "Eight."
+          ],
+          "feedback": "Eight."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What data structure uses LIFO?",
+          "answer": "Stack.",
+          "options": [
+            "Tracking variable state changes as an algorithm runs.",
+            "Stack.",
+            "Every row in the target table can be updated."
+          ],
+          "feedback": "Stack."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Link the records",
+          "text": "Order.CustomerID references Customer.CustomerID."
+        },
+        {
+          "type": "paragraph",
+          "title": "Enforce integrity",
+          "text": "Invalid FK values are rejected unless permitted rules apply."
+        },
+        {
+          "type": "paragraph",
+          "title": "Improve searches",
+          "text": "An index can speed lookup at the cost of extra storage/write overhead."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Customers 7 and 9",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Order requests ID 12",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Reject orphan reference",
+          "text": "The DBMS rejects the foreign key value 12, unless a matching Customer row is created or the reference is changed. Policies for deleting parent rows may RESTRICT, CASCADE or SET NULL, where permitted and configured."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'referential integrity'?",
+          "answer": "Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+          "options": [
+            "Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+            "Auxiliary structure helping the DBMS find rows efficiently.",
+            "Unique identifier of each record."
+          ],
+          "feedback": "referential integrity — Foreign-key values correspond to existing referenced keys or permitted NULLs."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'index'?",
+          "answer": "Auxiliary structure helping the DBMS find rows efficiently.",
+          "options": [
+            "Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+            "Unique identifier of each record.",
+            "Auxiliary structure helping the DBMS find rows efficiently."
+          ],
+          "feedback": "index — Auxiliary structure helping the DBMS find rows efficiently."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'primary key'?",
+          "answer": "Unique identifier of each record.",
+          "options": [
+            "Auxiliary structure helping the DBMS find rows efficiently.",
+            "Unique identifier of each record.",
+            "Foreign-key values correspond to existing referenced keys or permitted NULLs."
+          ],
+          "feedback": "primary key — Unique identifier of each record."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Frequent ISBN lookup",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Indexed search path",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Write and space overhead",
+          "text": "An index on ISBN can support quicker exact-match retrieval, especially for large data, but occupies space and requires maintenance after insert/update/delete. A UNIQUE constraint is appropriate if ISBN must be unique in this table."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Attribute referencing another relation.",
+          "answer": "foreign key",
+          "options": [
+            "index",
+            "foreign key",
+            "referential integrity"
+          ],
+          "feedback": "foreign key — Attribute referencing another relation."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+          "answer": "referential integrity",
+          "options": [
+            "referential integrity",
+            "index",
+            "primary key"
+          ],
+          "feedback": "referential integrity — Foreign-key values correspond to existing referenced keys or permitted NULLs."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Auxiliary structure helping the DBMS find rows efficiently.",
+          "answer": "index",
+          "options": [
+            "referential integrity",
+            "primary key",
+            "index"
+          ],
+          "feedback": "index — Auxiliary structure helping the DBMS find rows efficiently."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Unique identifier of each record.",
+          "answer": "primary key",
+          "options": [
+            "index",
+            "primary key",
+            "referential integrity"
+          ],
+          "feedback": "primary key — Unique identifier of each record."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain referential integrity using Borrower and Loan with a suitable example. [6]",
+          "answer": "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+          "options": [
+            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Identify two benefits and one cost of indexing a frequently searched field. [6]",
+          "answer": "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+          "options": [
+            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A library deletes Borrower ID 8 while Loan rows refer to 8. Compare RESTRICT and CASCADE and justify a safe policy. [8]",
+          "answer": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+          "options": [
+            "/ WORKED ANSWER Loan FK references existing Borrower key [2], prevents dangling child rows [2], example insertion/deletion rule [2].",
+            "/ WORKED ANSWER Faster key lookups [2], faster ordered/range operations where supported [2], storage or index-update overhead [2].",
+            "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+          ],
+          "feedback": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A library deletes Borrower ID 8 while Loan rows refer to 8. Compare RESTRICT and CASCADE and justify a safe policy. [8]",
+        "model": "/ WORKED ANSWER RESTRICT denies parent deletion [2]; CASCADE removes dependent loans [2]; loss/history risks [2]; reasoned chosen retention/archival policy [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "index means: Auxiliary structure helping the DBMS find rows efficiently.",
+          "answer": "true",
+          "feedback": "index — Auxiliary structure helping the DBMS find rows efficiently."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "primary key means: Foreign-key values correspond to existing referenced keys or permitted NULLs.",
+          "answer": "false",
+          "feedback": "primary key — Unique identifier of each record."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "foreign key means: Attribute referencing another relation.",
+          "answer": "true",
+          "feedback": "foreign key — Attribute referencing another relation."
+        }
+      ]
+    }
+  ]
+}

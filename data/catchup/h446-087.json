@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-087",
+  "course": "h446",
+  "title": "Lesson 087 · Algorithm Design and Testing Challenge",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an invariant?",
+          "answer": "A condition maintained while processing data.",
+          "options": [
+            "A condition maintained while processing data.",
+            "A single scan can find it in O(n).",
+            "An int? that can be an integer or null."
+          ],
+          "feedback": "A condition maintained while processing data."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is sorting unnecessary for just finding one maximum?",
+          "answer": "A single scan can find it in O(n).",
+          "options": [
+            "A condition maintained while processing data.",
+            "An int? that can be an integer or null.",
+            "A single scan can find it in O(n)."
+          ],
+          "feedback": "A single scan can find it in O(n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is nullable int?",
+          "answer": "An int? that can be an integer or null.",
+          "options": [
+            "A single scan can find it in O(n).",
+            "An int? that can be an integer or null.",
+            "A condition maintained while processing data."
+          ],
+          "feedback": "An int? that can be an integer or null."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search for 8 in [2,4,6,8,10]. Give midpoint indexes and result.",
+          "answer": "mid2=6, then mid3=8; found index3.",
+          "options": [
+            "mid2=6, then mid3=8; found index3.",
+            "A condition maintained while processing data.",
+            "A single scan can find it in O(n)."
+          ],
+          "feedback": "mid2=6, then mid3=8; found index3."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Specify output when inputs are empty, and preserve correctness on all-negative arrays."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Maintain invariant: best is the largest value among those inspected so far."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Compare against alternative sorting-based solution: an O(n) scan avoids O(n log n) sort when only the maximum is needed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model response",
+          "text": "The invariant tracks largest seen, not last examined."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'maximum'?",
+          "answer": "Largest value in set.",
+          "options": [
+            "Maintained fact during loop.",
+            "Type allowing absence/null.",
+            "Largest value in set."
+          ],
+          "feedback": "maximum — Largest value in set."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'invariant'?",
+          "answer": "Maintained fact during loop.",
+          "options": [
+            "Type allowing absence/null.",
+            "Maintained fact during loop.",
+            "Largest value in set."
+          ],
+          "feedback": "invariant — Maintained fact during loop."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'nullable'?",
+          "answer": "Type allowing absence/null.",
+          "options": [
+            "Type allowing absence/null.",
+            "Largest value in set.",
+            "Maintained fact during loop."
+          ],
+          "feedback": "nullable — Type allowing absence/null."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Model response",
+          "text": "Starting best at0 would be incorrect for all-negative arrays."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resource growth as input increases.",
+          "answer": "complexity",
+          "options": [
+            "complexity",
+            "maximum",
+            "invariant"
+          ],
+          "feedback": "complexity — Resource growth as input increases."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Largest value in set.",
+          "answer": "maximum",
+          "options": [
+            "invariant",
+            "nullable",
+            "maximum"
+          ],
+          "feedback": "maximum — Largest value in set."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Maintained fact during loop.",
+          "answer": "invariant",
+          "options": [
+            "nullable",
+            "invariant",
+            "maximum"
+          ],
+          "feedback": "invariant — Maintained fact during loop."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Type allowing absence/null.",
+          "answer": "nullable",
+          "options": [
+            "nullable",
+            "maximum",
+            "invariant"
+          ],
+          "feedback": "nullable — Type allowing absence/null."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 Trace Maximum([-5,-2,-8]) showing all changes and final value. [6]",
+          "answer": "/ MARKS Initial−5 [2], becomes−2 [2], remains−2 [1], returns−2 [1].",
+          "options": [
+            "/ MARKS Initial−5 [2], becomes−2 [2], remains−2 [1], returns−2 [1].",
+            "/ MARKS Empty return null [2], initial best=a[0] [1], iterate array [1], update if x>best [2], return best [1].",
+            "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2]."
+          ],
+          "feedback": "/ MARKS Initial−5 [2], becomes−2 [2], remains−2 [1], returns−2 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLY · QUESTION 2/3 Write algorithm for maximum of array, including empty input case. [7]",
+          "answer": "/ MARKS Empty return null [2], initial best=a[0] [1], iterate array [1], update if x>best [2], return best [1].",
+          "options": [
+            "/ MARKS Initial−5 [2], becomes−2 [2], remains−2 [1], returns−2 [1].",
+            "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2].",
+            "/ MARKS Empty return null [2], initial best=a[0] [1], iterate array [1], update if x>best [2], return best [1]."
+          ],
+          "feedback": "/ MARKS Empty return null [2], initial best=a[0] [1], iterate array [1], update if x>best [2], return best [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Compare O(n) maximum scan with sorting first and describe useful test coverage. [6]",
+          "answer": "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2].",
+          "options": [
+            "/ MARKS Empty return null [2], initial best=a[0] [1], iterate array [1], update if x>best [2], return best [1].",
+            "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2].",
+            "/ MARKS Initial−5 [2], becomes−2 [2], remains−2 [1], returns−2 [1]."
+          ],
+          "feedback": "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Compare O(n) maximum scan with sorting first and describe useful test coverage. [6]",
+        "model": "/ MARKS Scan O(n) [2], sorting typically O(n log n) [2], test empty and all-negative cases [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "invariant means: Maintained fact during loop.",
+          "answer": "true",
+          "feedback": "invariant — Maintained fact during loop."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "nullable means: Largest value in set.",
+          "answer": "false",
+          "feedback": "nullable — Type allowing absence/null."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "complexity means: Resource growth as input increases.",
+          "answer": "true",
+          "feedback": "complexity — Resource growth as input increases."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-263",
+  "course": "h446",
+  "title": "LMC branching and debugging",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does STA do?",
+          "answer": "Copies ACC to mailbox.",
+          "options": [
+            "Without updating a tested state, the loop may not terminate.",
+            "Copies ACC to mailbox.",
+            "Stops execution."
+          ],
+          "feedback": "Copies ACC to mailbox."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does LMC HLT do?",
+          "answer": "Stops execution.",
+          "options": [
+            "Stops execution.",
+            "Copies ACC to mailbox.",
+            "Without updating a tested state, the loop may not terminate."
+          ],
+          "feedback": "Stops execution."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must a loop's counter change?",
+          "answer": "Without updating a tested state, the loop may not terminate.",
+          "options": [
+            "Copies ACC to mailbox.",
+            "Stops execution.",
+            "Without updating a tested state, the loop may not terminate."
+          ],
+          "feedback": "Without updating a tested state, the loop may not terminate."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Full adder: inputs A=1, B=0, carry-in=1. Find sum and carry-out.",
+          "answer": "1+0+1=10₂; sum=0, carry-out=1.",
+          "options": [
+            "Stops execution.",
+            "1+0+1=10₂; sum=0, carry-out=1.",
+            "Copies ACC to mailbox."
+          ],
+          "feedback": "1+0+1=10₂; sum=0, carry-out=1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "BRP tests whether ACC is non-negative; BRZ tests zero; BRA is unconditional."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Load the counter, output it and subtract one. Test BRP immediately: save the new value and loop only when it is non-negative."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "After outputting 0, SUB ONE underflows; BRP is not taken, so HLT runs without storing a negative mailbox value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "INP sets ACC to 0"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check next state",
+          "text": "BRZ ZERO takes branch"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check next state",
+          "text": "LDA ONE loads 1"
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'BRA'?",
+          "answer": "Branch Always",
+          "options": [
+            "Branch Always",
+            "Branch if Zero",
+            "Branch if non-negative"
+          ],
+          "feedback": "BRA — Branch Always"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'BRZ'?",
+          "answer": "Branch if Zero",
+          "options": [
+            "Branch Always",
+            "Branch if non-negative",
+            "Branch if Zero"
+          ],
+          "feedback": "BRZ — Branch if Zero"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'BRP'?",
+          "answer": "Branch if non-negative",
+          "options": [
+            "Branch if Zero",
+            "Branch if non-negative",
+            "Branch Always"
+          ],
+          "feedback": "BRP — Branch if non-negative"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "INP makes ACC 4"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check next state",
+          "text": "BRZ not taken"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check next state",
+          "text": "OUT prints 4"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check next state",
+          "text": "HLT stops execution."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? LMC memory cell",
+          "answer": "mailbox",
+          "options": [
+            "BRZ",
+            "mailbox",
+            "BRA"
+          ],
+          "feedback": "mailbox — LMC memory cell"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branch Always",
+          "answer": "BRA",
+          "options": [
+            "BRA",
+            "BRZ",
+            "BRP"
+          ],
+          "feedback": "BRA — Branch Always"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branch if Zero",
+          "answer": "BRZ",
+          "options": [
+            "BRA",
+            "BRP",
+            "BRZ"
+          ],
+          "feedback": "BRZ — Branch if Zero"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Branch if non-negative",
+          "answer": "BRP",
+          "options": [
+            "BRZ",
+            "BRP",
+            "BRA"
+          ],
+          "feedback": "BRP — Branch if non-negative"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 Define BRA, BRZ and BRP and explain their effect on PC. [4]",
+          "answer": "BRA unconditional [1]; BRZ if ACC zero [1]; BRP if ACC non-negative [1]; taken branch changes instruction address [1].",
+          "options": [
+            "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1].",
+            "BRA unconditional [1]; BRZ if ACC zero [1]; BRP if ACC non-negative [1]; taken branch changes instruction address [1].",
+            "ACC 3 [1]; BRZ not taken [1]; subtract 1 -> 2 [2]; OUT prints 2 [1]; HLT [1]."
+          ],
+          "feedback": "BRA unconditional [1]; BRZ if ACC zero [1]; BRP if ACC non-negative [1]; taken branch changes instruction address [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 Input 3: trace INP; BRZ STOP; SUB ONE; OUT; HLT; ONE DAT 1; STOP HLT. [6]",
+          "answer": "ACC 3 [1]; BRZ not taken [1]; subtract 1 -> 2 [2]; OUT prints 2 [1]; HLT [1].",
+          "options": [
+            "ACC 3 [1]; BRZ not taken [1]; subtract 1 -> 2 [2]; OUT prints 2 [1]; HLT [1].",
+            "BRA unconditional [1]; BRZ if ACC zero [1]; BRP if ACC non-negative [1]; taken branch changes instruction address [1].",
+            "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1]."
+          ],
+          "feedback": "ACC 3 [1]; BRZ not taken [1]; subtract 1 -> 2 [2]; OUT prints 2 [1]; HLT [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Explain why an unconditional backward branch without a tested exit can run forever, and provide a safe counter-based solution. [6]",
+          "answer": "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1].",
+          "options": [
+            "BRA unconditional [1]; BRZ if ACC zero [1]; BRP if ACC non-negative [1]; taken branch changes instruction address [1].",
+            "ACC 3 [1]; BRZ not taken [1]; subtract 1 -> 2 [2]; OUT prints 2 [1]; HLT [1].",
+            "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1]."
+          ],
+          "feedback": "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Explain why an unconditional backward branch without a tested exit can run forever, and provide a safe counter-based solution. [6]",
+        "model": "BRA repeats [1]; no progress/exit [1]; initialise count [1]; decrement [1]; store update [1]; test an exit condition [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "BRZ means: Branch if Zero",
+          "answer": "true",
+          "feedback": "BRZ — Branch if Zero"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "BRP means: Branch Always",
+          "answer": "false",
+          "feedback": "BRP — Branch if non-negative"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "mailbox means: LMC memory cell",
+          "answer": "true",
+          "feedback": "mailbox — LMC memory cell"
+        }
+      ]
+    }
+  ]
+}

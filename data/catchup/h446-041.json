@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-041",
+  "course": "h446",
+  "title": "Programming Techniques · Scope and Lifetime",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does return do in a method?",
+          "answer": "Sends a value back to its caller",
+          "options": [
+            "It halves the remaining range",
+            "Sends a value back to its caller",
+            "Repeats while a test holds"
+          ],
+          "feedback": "Sends a value back to its caller"
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a condition-controlled loop?",
+          "answer": "Repeats while a test holds",
+          "options": [
+            "Repeats while a test holds",
+            "Sends a value back to its caller",
+            "It halves the remaining range"
+          ],
+          "feedback": "Repeats while a test holds"
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why might binary search outperform linear search?",
+          "answer": "It halves the remaining range",
+          "options": [
+            "Sends a value back to its caller",
+            "Repeats while a test holds",
+            "It halves the remaining range"
+          ],
+          "feedback": "It halves the remaining range"
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify ¬¬B.",
+          "answer": "B",
+          "options": [
+            "Repeats while a test holds",
+            "B",
+            "Sends a value back to its caller"
+          ],
+          "feedback": "B"
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the important decision",
+          "text": "The class field and method-local variable are different storage locations. C# allows a local to hide a field; this does not permit redeclaring any local in a nested block."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Spot two variables with one name",
+          "text": "class Program { static int score = 10; static void Main() { int score = 3; System.Console.WriteLine(score); System.Console.WriteLine(Program.score); } }"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Identify both variables",
+          "text": "Program.score is a class-level static field, initially 10. Main declares its own local score, initially 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Resolve each name",
+          "text": "The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'scope'?",
+          "answer": "Where a name is accessible",
+          "options": [
+            "Where a name is accessible",
+            "Declared in a limited scope",
+            "Variable belonging to a class/object"
+          ],
+          "feedback": "scope — Where a name is accessible"
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'local'?",
+          "answer": "Declared in a limited scope",
+          "options": [
+            "Where a name is accessible",
+            "Variable belonging to a class/object",
+            "Declared in a limited scope"
+          ],
+          "feedback": "local — Declared in a limited scope"
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'class field'?",
+          "answer": "Variable belonging to a class/object",
+          "options": [
+            "Declared in a limited scope",
+            "Variable belonging to a class/object",
+            "Where a name is accessible"
+          ],
+          "feedback": "class field — Variable belonging to a class/object"
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Problem 1",
+          "text": "A parameter n is set to 4. What is visible inside the function?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Discuss, then respond",
+          "text": "A parameter n is set to 4. What is visible inside the function?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Check your thinking",
+          "text": "The parameter n with value 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Problem 2",
+          "text": "Why avoid excessive global state?"
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Inner name hides an outer name",
+          "answer": "shadowing",
+          "options": [
+            "local",
+            "shadowing",
+            "scope"
+          ],
+          "feedback": "shadowing — Inner name hides an outer name"
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Period a value exists",
+          "answer": "lifetime",
+          "options": [
+            "lifetime",
+            "scope",
+            "local"
+          ],
+          "feedback": "lifetime — Period a value exists"
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Where a name is accessible",
+          "answer": "scope",
+          "options": [
+            "local",
+            "class field",
+            "scope"
+          ],
+          "feedback": "scope — Where a name is accessible"
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Declared in a limited scope",
+          "answer": "local",
+          "options": [
+            "class field",
+            "local",
+            "scope"
+          ],
+          "feedback": "local — Declared in a limited scope"
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Spot two variables with one name class Program { static int score = 10; static void Main() { int score = 3; System.Console.WriteLine(score); System.Console.WriteLine(Program.score); } }",
+          "answer": "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
+          "options": [
+            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
+            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
+            "MODEL ANSWER Check your thinking The parameter n with value 4."
+          ],
+          "feedback": "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 1 A parameter n is set to 4. What is visible inside the function?",
+          "answer": "MODEL ANSWER Check your thinking The parameter n with value 4.",
+          "options": [
+            "MODEL ANSWER Check your thinking The parameter n with value 4.",
+            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
+            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking The parameter n with value 4."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Problem 2 Why avoid excessive global state?",
+          "answer": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
+          "options": [
+            "STEP 2 Resolve each name The unqualified score inside Main refers to the local. Program.score explicitly selects the class field; the field has not changed.",
+            "MODEL ANSWER Check your thinking The parameter n with value 4.",
+            "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
+          ],
+          "feedback": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Problem 2 Why avoid excessive global state?",
+        "model": "MODEL ANSWER Check your thinking Changes from one part of the program can affect another.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "local means: Declared in a limited scope",
+          "answer": "true",
+          "feedback": "local — Declared in a limited scope"
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "class field means: Period a value exists",
+          "answer": "false",
+          "feedback": "class field — Variable belonging to a class/object"
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "shadowing means: Inner name hides an outer name",
+          "answer": "true",
+          "feedback": "shadowing — Inner name hides an outer name"
+        }
+      ]
+    }
+  ]
+}

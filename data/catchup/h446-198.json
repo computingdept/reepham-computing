@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-198",
+  "course": "h446",
+  "title": "Linked lists and pointers",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Push 2, 5, 8 then pop. What remains bottom-to-top?",
+          "answer": "2, 5. The top 8 is removed.",
+          "options": [
+            "2, 5. The top 8 is removed.",
+            "0.",
+            "The stopping condition in recursion."
+          ],
+          "feedback": "2, 5. The top 8 is removed."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the first index of a C# array?",
+          "answer": "0.",
+          "options": [
+            "2, 5. The top 8 is removed.",
+            "The stopping condition in recursion.",
+            "0."
+          ],
+          "feedback": "0."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a base case?",
+          "answer": "The stopping condition in recursion.",
+          "options": [
+            "0.",
+            "The stopping condition in recursion.",
+            "2, 5. The top 8 is removed."
+          ],
+          "feedback": "The stopping condition in recursion."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Queue A,B,C: dequeue once and enqueue D. What remains?",
+          "answer": "B,C,D front-to-rear.",
+          "options": [
+            "B,C,D front-to-rear.",
+            "2, 5. The top 8 is removed.",
+            "0."
+          ],
+          "feedback": "B,C,D front-to-rear."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Follow references",
+          "text": "head = 0 means the first node has value 10. next[0] initially points at node 1 (20)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Prepare the new node",
+          "text": "The new node at index 3 stores 15 and next[3] = 1, preserving the rest of the list."
+        },
+        {
+          "type": "paragraph",
+          "title": "Change the existing link",
+          "text": "Set next[0] = 3, producing the chain 10 → 15 → 20 → 30."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Create node 7 and set its next link to the existing node 9."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Confirm and explain",
+          "text": "Point node 4 at node 7. The chain becomes 4 → 7 → 9 → 12."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'node'?",
+          "answer": "A list element containing data and a link.",
+          "options": [
+            "Reference or index of the next node.",
+            "Reference to the first list node.",
+            "A list element containing data and a link."
+          ],
+          "feedback": "node — A list element containing data and a link."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'next pointer'?",
+          "answer": "Reference or index of the next node.",
+          "options": [
+            "Reference to the first list node.",
+            "Reference or index of the next node.",
+            "A list element containing data and a link."
+          ],
+          "feedback": "next pointer — Reference or index of the next node."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'head'?",
+          "answer": "Reference to the first list node.",
+          "options": [
+            "Reference to the first list node.",
+            "A list element containing data and a link.",
+            "Reference or index of the next node."
+          ],
+          "feedback": "head — Reference to the first list node."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "First link new node 6 to node 8."
+        },
+        {
+          "type": "paragraph",
+          "title": "Confirm and explain",
+          "text": "Then link node 2 to node 6, giving 2 → 6 → 8 → 11."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Marker such as −1 in an index implementation meaning no next node.",
+          "answer": "null sentinel",
+          "options": [
+            "null sentinel",
+            "node",
+            "next pointer"
+          ],
+          "feedback": "null sentinel — Marker such as −1 in an index implementation meaning no next node."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Visit nodes by following successive links.",
+          "answer": "traversal",
+          "options": [
+            "node",
+            "next pointer",
+            "traversal"
+          ],
+          "feedback": "traversal — Visit nodes by following successive links."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A list element containing data and a link.",
+          "answer": "node",
+          "options": [
+            "head",
+            "node",
+            "next pointer"
+          ],
+          "feedback": "node — A list element containing data and a link."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reference or index of the next node.",
+          "answer": "next pointer",
+          "options": [
+            "next pointer",
+            "node",
+            "head"
+          ],
+          "feedback": "next pointer — Reference or index of the next node."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 In linked list 5 → 10 → 15, what follows node 10?",
+          "answer": "Node 15.",
+          "options": [
+            "Node 15.",
+            "Set new12.next to node20, then set node7.next to new12.",
+            "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n)."
+          ],
+          "feedback": "Node 15."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 A node with value 12 must be inserted between 7 and 20. State the two link changes.",
+          "answer": "Set new12.next to node20, then set node7.next to new12.",
+          "options": [
+            "Node 15.",
+            "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n).",
+            "Set new12.next to node20, then set node7.next to new12."
+          ],
+          "feedback": "Set new12.next to node20, then set node7.next to new12."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Why does inserting into a linked list avoid shifting array elements but may still take O(n) time?",
+          "answer": "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n).",
+          "options": [
+            "Set new12.next to node20, then set node7.next to new12.",
+            "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n).",
+            "Node 15."
+          ],
+          "feedback": "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n)."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Why does inserting into a linked list avoid shifting array elements but may still take O(n) time?",
+        "model": "Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n).",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "next pointer means: Reference or index of the next node.",
+          "answer": "true",
+          "feedback": "next pointer — Reference or index of the next node."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "head means: Visit nodes by following successive links.",
+          "answer": "false",
+          "feedback": "head — Reference to the first list node."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "null sentinel means: Marker such as −1 in an index implementation meaning no next node.",
+          "answer": "true",
+          "feedback": "null sentinel — Marker such as −1 in an index implementation meaning no next node."
+        }
+      ]
+    }
+  ]
+}

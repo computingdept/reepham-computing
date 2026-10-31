@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-281",
+  "course": "h446",
+  "title": "Data capture, integrity and ACID transactions",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does DELETE differ from DROP TABLE?",
+          "answer": "DELETE removes row data; DROP removes table definition.",
+          "options": [
+            "Constraints remain satisfied by a valid committed transaction.",
+            "DELETE removes row data; DROP removes table definition.",
+            "Reference from one table to another key."
+          ],
+          "feedback": "DELETE removes row data; DROP removes table definition."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a foreign key?",
+          "answer": "Reference from one table to another key.",
+          "options": [
+            "Reference from one table to another key.",
+            "DELETE removes row data; DROP removes table definition.",
+            "Constraints remain satisfied by a valid committed transaction."
+          ],
+          "feedback": "Reference from one table to another key."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does database consistency mean?",
+          "answer": "Constraints remain satisfied by a valid committed transaction.",
+          "options": [
+            "DELETE removes row data; DROP removes table definition.",
+            "Reference from one table to another key.",
+            "Constraints remain satisfied by a valid committed transaction."
+          ],
+          "feedback": "Constraints remain satisfied by a valid committed transaction."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Array scores=[6,2,9,4]; replace element at index2 with element0+element1. Give final array and sum.",
+          "answer": "scores[2]=6+2=8; array [6,2,8,4]; sum20.",
+          "options": [
+            "Reference from one table to another key.",
+            "scores[2]=6+2=8; array [6,2,8,4]; sum20.",
+            "DELETE removes row data; DROP removes table definition."
+          ],
+          "feedback": "scores[2]=6+2=8; array [6,2,8,4]; sum20."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Data capture gathers data, while validation, verification and referential integrity address different correctness concerns."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Atomicity ensures a transaction is all-or-nothing; consistency preserves constraints; isolation addresses concurrent interference; durability keeps committed results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Row locking, transactions and appropriate constraints help prevent two concurrent changes from corrupting financial or stock records."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Both writes must succeed together or be undone so stock does not change without a valid order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the answer",
+          "text": "Explain which rule makes this result correct."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Atomicity'?",
+          "answer": "All changes or none.",
+          "options": [
+            "All changes or none.",
+            "Constraints preserved.",
+            "Concurrent effects safely separated."
+          ],
+          "feedback": "Atomicity — All changes or none."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Consistency'?",
+          "answer": "Constraints preserved.",
+          "options": [
+            "All changes or none.",
+            "Concurrent effects safely separated.",
+            "Constraints preserved."
+          ],
+          "feedback": "Consistency — Constraints preserved."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Isolation'?",
+          "answer": "Concurrent effects safely separated.",
+          "options": [
+            "Constraints preserved.",
+            "Concurrent effects safely separated.",
+            "All changes or none."
+          ],
+          "feedback": "Isolation — Concurrent effects safely separated."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Only one successful transaction should reserve the final seat, preventing double booking."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check the answer",
+          "text": "Explain which rule makes this result correct."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Committed changes persist.",
+          "answer": "Durability",
+          "options": [
+            "Consistency",
+            "Durability",
+            "Atomicity"
+          ],
+          "feedback": "Durability — Committed changes persist."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Foreign keys refer to valid rows.",
+          "answer": "referential integrity",
+          "options": [
+            "referential integrity",
+            "Atomicity",
+            "Consistency"
+          ],
+          "feedback": "referential integrity — Foreign keys refer to valid rows."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? All changes or none.",
+          "answer": "Atomicity",
+          "options": [
+            "Consistency",
+            "Isolation",
+            "Atomicity"
+          ],
+          "feedback": "Atomicity — All changes or none."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Constraints preserved.",
+          "answer": "Consistency",
+          "options": [
+            "Isolation",
+            "Consistency",
+            "Atomicity"
+          ],
+          "feedback": "Consistency — Constraints preserved."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 State the four ACID properties. [4]",
+          "answer": "Atomicity all-or-nothing [1], Consistency constraints [1], Isolation concurrent transactions behave safely [1], Durability committed changes persist [1].",
+          "options": [
+            "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1].",
+            "Atomicity all-or-nothing [1], Consistency constraints [1], Isolation concurrent transactions behave safely [1], Durability committed changes persist [1].",
+            "Initial total150 [1]; A80 [1], B70 [1], use one transaction [1]; if credit fails revert debit [1]; committed total150 [1]."
+          ],
+          "feedback": "Atomicity all-or-nothing [1], Consistency constraints [1], Isolation concurrent transactions behave safely [1], Durability committed changes persist [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 A transfer starts A100, B50. Move £20 and explain rollback on failure. [6]",
+          "answer": "Initial total150 [1]; A80 [1], B70 [1], use one transaction [1]; if credit fails revert debit [1]; committed total150 [1].",
+          "options": [
+            "Initial total150 [1]; A80 [1], B70 [1], use one transaction [1]; if credit fails revert debit [1]; committed total150 [1].",
+            "Atomicity all-or-nothing [1], Consistency constraints [1], Isolation concurrent transactions behave safely [1], Durability committed changes persist [1].",
+            "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1]."
+          ],
+          "feedback": "Initial total150 [1]; A80 [1], B70 [1], use one transaction [1]; if credit fails revert debit [1]; committed total150 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 Two clients try to book one remaining place. Explain how transaction isolation and locking protect integrity. [6]",
+          "answer": "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1].",
+          "options": [
+            "Atomicity all-or-nothing [1], Consistency constraints [1], Isolation concurrent transactions behave safely [1], Durability committed changes persist [1].",
+            "Initial total150 [1]; A80 [1], B70 [1], use one transaction [1]; if credit fails revert debit [1]; committed total150 [1].",
+            "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1]."
+          ],
+          "feedback": "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 Two clients try to book one remaining place. Explain how transaction isolation and locking protect integrity. [6]",
+        "model": "Read existing capacity [1], competing updates race [1], serialise/lock or atomic conditional update [2], only one succeeds [1], no negative/double booking [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Consistency means: Constraints preserved.",
+          "answer": "true",
+          "feedback": "Consistency — Constraints preserved."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Isolation means: Foreign keys refer to valid rows.",
+          "answer": "false",
+          "feedback": "Isolation — Concurrent effects safely separated."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Durability means: Committed changes persist.",
+          "answer": "true",
+          "feedback": "Durability — Committed changes persist."
+        }
+      ]
+    }
+  ]
+}

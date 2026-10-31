@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-074",
+  "course": "h446",
+  "title": "Lesson 074 · Big O: Constant, Linear and Logarithmic",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an algorithm's input size n?",
+          "answer": "Number of items or other measure of problem size.",
+          "options": [
+            "Property maintained through a loop.",
+            "Number of items or other measure of problem size.",
+            "Record of intermediate variables/states."
+          ],
+          "feedback": "Number of items or other measure of problem size."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a trace table?",
+          "answer": "Record of intermediate variables/states.",
+          "options": [
+            "Record of intermediate variables/states.",
+            "Number of items or other measure of problem size.",
+            "Property maintained through a loop."
+          ],
+          "feedback": "Record of intermediate variables/states."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an invariant?",
+          "answer": "Property maintained through a loop.",
+          "options": [
+            "Number of items or other measure of problem size.",
+            "Record of intermediate variables/states.",
+            "Property maintained through a loop."
+          ],
+          "feedback": "Property maintained through a loop."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A sorted search set of 128 candidates is halved repeatedly to one. How many halvings? Show the sequence.",
+          "answer": "128→64→32→16→8→4→2→1; seven halvings.",
+          "options": [
+            "Record of intermediate variables/states.",
+            "128→64→32→16→8→4→2→1; seven halvings.",
+            "Number of items or other measure of problem size."
+          ],
+          "feedback": "128→64→32→16→8→4→2→1; seven halvings."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Big O describes the upper bound on how work grows with input size, not the precise milliseconds of an execution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A fixed direct index operation is O(1), scanning n values is O(n), and repeatedly halving n is O(log n)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "For n=64, a linear scan may inspect 64 items, while halving 64→1 takes six halvings. Sorting requirements and constants still matter."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "The number of operations doubles when n doubles."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(1)'?",
+          "answer": "Constant asymptotic work.",
+          "options": [
+            "Constant asymptotic work.",
+            "Linear growth.",
+            "Logarithmic growth."
+          ],
+          "feedback": "O(1) — Constant asymptotic work."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(n)'?",
+          "answer": "Linear growth.",
+          "options": [
+            "Constant asymptotic work.",
+            "Logarithmic growth.",
+            "Linear growth."
+          ],
+          "feedback": "O(n) — Linear growth."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(log n)'?",
+          "answer": "Logarithmic growth.",
+          "options": [
+            "Linear growth.",
+            "Logarithmic growth.",
+            "Constant asymptotic work."
+          ],
+          "feedback": "O(log n) — Logarithmic growth."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Each iteration cuts remaining size in half."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Behaviour as size becomes large.",
+          "answer": "asymptotic",
+          "options": [
+            "O(n)",
+            "asymptotic",
+            "O(1)"
+          ],
+          "feedback": "asymptotic — Behaviour as size becomes large."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Constant asymptotic work.",
+          "answer": "O(1)",
+          "options": [
+            "O(1)",
+            "O(n)",
+            "O(log n)"
+          ],
+          "feedback": "O(1) — Constant asymptotic work."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Linear growth.",
+          "answer": "O(n)",
+          "options": [
+            "O(1)",
+            "O(log n)",
+            "O(n)"
+          ],
+          "feedback": "O(n) — Linear growth."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Logarithmic growth.",
+          "answer": "O(log n)",
+          "options": [
+            "O(n)",
+            "O(log n)",
+            "O(1)"
+          ],
+          "feedback": "O(log n) — Logarithmic growth."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Match direct array access, full array scan and repeated halving with Big O. [6]",
+          "answer": "O(1) constant [2], O(n) linear [2], O(log n) logarithmic [2].",
+          "options": [
+            "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1].",
+            "O(1) constant [2], O(n) linear [2], O(log n) logarithmic [2].",
+            "64→32→16→8→4→2→1 [4], six halvings [2]."
+          ],
+          "feedback": "O(1) constant [2], O(n) linear [2], O(log n) logarithmic [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLY · Q2/3 For input size64, compare scan steps64 and repeated halving to1; calculate halvings. [6]",
+          "answer": "64→32→16→8→4→2→1 [4], six halvings [2].",
+          "options": [
+            "64→32→16→8→4→2→1 [4], six halvings [2].",
+            "O(1) constant [2], O(n) linear [2], O(log n) logarithmic [2].",
+            "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1]."
+          ],
+          "feedback": "64→32→16→8→4→2→1 [4], six halvings [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain why O(log n) binary search may be unsuitable for unsorted data even if asymptotically faster than linear search. [6]",
+          "answer": "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1].",
+          "options": [
+            "O(1) constant [2], O(n) linear [2], O(log n) logarithmic [2].",
+            "64→32→16→8→4→2→1 [4], six halvings [2].",
+            "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1]."
+          ],
+          "feedback": "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain why O(log n) binary search may be unsuitable for unsorted data even if asymptotically faster than linear search. [6]",
+        "model": "Binary requires sorted data [2]; preprocessing sort costs time [2]; single lookup may favour linear scan [1], repeated searches justify sorting [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "O(n) means: Linear growth.",
+          "answer": "true",
+          "feedback": "O(n) — Linear growth."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "O(log n) means: Constant asymptotic work.",
+          "answer": "false",
+          "feedback": "O(log n) — Logarithmic growth."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "asymptotic means: Behaviour as size becomes large.",
+          "answer": "true",
+          "feedback": "asymptotic — Behaviour as size becomes large."
+        }
+      ]
+    }
+  ]
+}

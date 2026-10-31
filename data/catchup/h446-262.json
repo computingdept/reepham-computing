@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-262",
+  "course": "h446",
+  "title": "LMC instructions and data",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does direct addressing [30] retrieve?",
+          "answer": "The data at memory address 30.",
+          "options": [
+            "A CPU register holding an arithmetic/intermediate value.",
+            "A readable abbreviation of an operation code.",
+            "The data at memory address 30."
+          ],
+          "feedback": "The data at memory address 30."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the accumulator?",
+          "answer": "A CPU register holding an arithmetic/intermediate value.",
+          "options": [
+            "A readable abbreviation of an operation code.",
+            "A CPU register holding an arithmetic/intermediate value.",
+            "The data at memory address 30."
+          ],
+          "feedback": "A CPU register holding an arithmetic/intermediate value."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is a mnemonic?",
+          "answer": "A readable abbreviation of an operation code.",
+          "options": [
+            "A readable abbreviation of an operation code.",
+            "The data at memory address 30.",
+            "A CPU register holding an arithmetic/intermediate value."
+          ],
+          "feedback": "A readable abbreviation of an operation code."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Search for 19 in sorted [1,4,7,10,13,16,19,22,25]. Show midpoint indexes checked.",
+          "answer": "low0 high8 mid4→13, low5 high8 mid6→19; found index 6.",
+          "options": [
+            "The data at memory address 30.",
+            "A CPU register holding an arithmetic/intermediate value.",
+            "low0 high8 mid4→13, low5 high8 mid6→19; found index 6."
+          ],
+          "feedback": "low0 high8 mid4→13, low5 high8 mid6→19; found index 6."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Know LMC's parts",
+          "text": "LMC uses numbered mailboxes to hold instructions and data, and an accumulator for working values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace instructions in order",
+          "text": "First INP enters 4 into ACC, then STA FIRST copies 4 to the data mailbox before another input overwrites ACC."
+        },
+        {
+          "type": "paragraph",
+          "title": "Produce the result",
+          "text": "Second INP makes ACC=7; ADD FIRST adds stored 4 to make 11, and OUT prints 11. HLT ends the program."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Store the first input 3 into NUM so the second input will not overwrite it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Read the second input 5, add NUM to get 8 and output the result."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'LMC'?",
+          "answer": "Little Man Computer teaching instruction set.",
+          "options": [
+            "Numbered LMC memory location.",
+            "Little Man Computer teaching instruction set.",
+            "Accumulator holding current working value."
+          ],
+          "feedback": "LMC — Little Man Computer teaching instruction set."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'ACC'?",
+          "answer": "Accumulator holding current working value.",
+          "options": [
+            "Accumulator holding current working value.",
+            "Little Man Computer teaching instruction set.",
+            "Numbered LMC memory location."
+          ],
+          "feedback": "ACC — Accumulator holding current working value."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'mailbox'?",
+          "answer": "Numbered LMC memory location.",
+          "options": [
+            "Little Man Computer teaching instruction set.",
+            "Accumulator holding current working value.",
+            "Numbered LMC memory location."
+          ],
+          "feedback": "mailbox — Numbered LMC memory location."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Store input 9 as A and input 4 as B, since the accumulator is overwritten by INP."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "LDA A restores the first input 9 and SUB B produces 5; OUT prints 5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Store accumulator to memory.",
+          "answer": "STA",
+          "options": [
+            "LMC",
+            "ACC",
+            "STA"
+          ],
+          "feedback": "STA — Store accumulator to memory."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Load accumulator from memory.",
+          "answer": "LDA",
+          "options": [
+            "ACC",
+            "LDA",
+            "LMC"
+          ],
+          "feedback": "LDA — Load accumulator from memory."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Declare/initialise a data location.",
+          "answer": "DAT",
+          "options": [
+            "DAT",
+            "LMC",
+            "ACC"
+          ],
+          "feedback": "DAT — Declare/initialise a data location."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Little Man Computer teaching instruction set.",
+          "answer": "LMC",
+          "options": [
+            "ACC",
+            "mailbox",
+            "LMC"
+          ],
+          "feedback": "LMC — Little Man Computer teaching instruction set."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Explain what INP, OUT, LDA and STA do in LMC.",
+          "answer": "[4] INP takes input to ACC [1]; OUT outputs ACC [1]; LDA loads ACC from mailbox [1]; STA stores ACC to mailbox [1].",
+          "options": [
+            "[6] First INP makes ACC6 [1]; STA X stores X6 [1]; second INP makes ACC8 [1]; ADD X makes ACC14 [2]; OUT prints 14 [1].",
+            "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes.",
+            "[4] INP takes input to ACC [1]; OUT outputs ACC [1]; LDA loads ACC from mailbox [1]; STA stores ACC to mailbox [1]."
+          ],
+          "feedback": "[4] INP takes input to ACC [1]; OUT outputs ACC [1]; LDA loads ACC from mailbox [1]; STA stores ACC to mailbox [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Trace INP; STA X; INP; ADD X; OUT; HLT; X DAT 0 using inputs 6 and 8. State each change and output.",
+          "answer": "[6] First INP makes ACC6 [1]; STA X stores X6 [1]; second INP makes ACC8 [1]; ADD X makes ACC14 [2]; OUT prints 14 [1].",
+          "options": [
+            "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes.",
+            "[6] First INP makes ACC6 [1]; STA X stores X6 [1]; second INP makes ACC8 [1]; ADD X makes ACC14 [2]; OUT prints 14 [1].",
+            "[4] INP takes input to ACC [1]; OUT outputs ACC [1]; LDA loads ACC from mailbox [1]; STA stores ACC to mailbox [1]."
+          ],
+          "feedback": "[6] First INP makes ACC6 [1]; STA X stores X6 [1]; second INP makes ACC8 [1]; ADD X makes ACC14 [2]; OUT prints 14 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Write an OCR LMC program that takes two inputs from 0 to 999, with the first greater than or equal to the second. Subtract the second from the first and output the non-negative result. Trace inputs 9 and 2.",
+          "answer": "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes.",
+          "options": [
+            "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes.",
+            "[4] INP takes input to ACC [1]; OUT outputs ACC [1]; LDA loads ACC from mailbox [1]; STA stores ACC to mailbox [1].",
+            "[6] First INP makes ACC6 [1]; STA X stores X6 [1]; second INP makes ACC8 [1]; ADD X makes ACC14 [2]; OUT prints 14 [1]."
+          ],
+          "feedback": "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Write an OCR LMC program that takes two inputs from 0 to 999, with the first greater than or equal to the second. Subtract the second from the first and output the non-negative result. Trace inputs 9 and 2.",
+        "model": "[6] INP; STA A [1]; INP; STA B [1]; LDA A [1]; SUB B [1]; OUT; HLT and A DAT 0; B DAT 0 [1]; output 7 [1]. Assume inputs and the non-negative result are representable in LMC's three-digit mailboxes.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "ACC means: Accumulator holding current working value.",
+          "answer": "true",
+          "feedback": "ACC — Accumulator holding current working value."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "mailbox means: Load accumulator from memory.",
+          "answer": "false",
+          "feedback": "mailbox — Numbered LMC memory location."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "STA means: Store accumulator to memory.",
+          "answer": "true",
+          "feedback": "STA — Store accumulator to memory."
+        }
+      ]
+    }
+  ]
+}

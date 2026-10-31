@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-093",
+  "course": "h446",
+  "title": "Lesson 093 · Von Neumann and Harvard Architectures",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an address bus carry?",
+          "answer": "Memory location.",
+          "options": [
+            "Memory location.",
+            "Content value/instruction bits.",
+            "Two operations compete for same limited resource."
+          ],
+          "feedback": "Memory location."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a data bus transfer?",
+          "answer": "Content value/instruction bits.",
+          "options": [
+            "Memory location.",
+            "Two operations compete for same limited resource.",
+            "Content value/instruction bits."
+          ],
+          "feedback": "Content value/instruction bits."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define contention.",
+          "answer": "Two operations compete for same limited resource.",
+          "options": [
+            "Content value/instruction bits.",
+            "Two operations compete for same limited resource.",
+            "Memory location."
+          ],
+          "feedback": "Two operations compete for same limited resource."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A D flip-flop has D=1 and Q=0 immediately before a rising edge. What is Q just after?",
+          "answer": "Q becomes1, sampled at that active edge.",
+          "options": [
+            "Q becomes1, sampled at that active edge.",
+            "Memory location.",
+            "Content value/instruction bits."
+          ],
+          "feedback": "Q becomes1, sampled at that active edge."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Von Neumann stores programs and their data in a common memory/address space, so instruction fetches and data transfers may contend for shared resources."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Harvard architecture separates instruction and data pathways, potentially allowing simultaneous instruction fetch and data access."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Modern systems often use unified main memory but separate instruction/data caches; the classification is a model of design trade-offs, not a universal speed ranking."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the mechanism",
+          "text": "Instruction and data transfers share memory/bus resources, so competing accesses can wait. Describe the shared resource and its effect, not claim all Von Neumann machines are slow."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Von Neumann'?",
+          "answer": "Shared instruction/data memory organisation.",
+          "options": [
+            "Separate instruction/data stores or pathways.",
+            "Limiting shared resource.",
+            "Shared instruction/data memory organisation."
+          ],
+          "feedback": "Von Neumann — Shared instruction/data memory organisation."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Harvard'?",
+          "answer": "Separate instruction/data stores or pathways.",
+          "options": [
+            "Limiting shared resource.",
+            "Separate instruction/data stores or pathways.",
+            "Shared instruction/data memory organisation."
+          ],
+          "feedback": "Harvard — Separate instruction/data stores or pathways."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'bottleneck'?",
+          "answer": "Limiting shared resource.",
+          "options": [
+            "Limiting shared resource.",
+            "Shared instruction/data memory organisation.",
+            "Separate instruction/data stores or pathways."
+          ],
+          "feedback": "bottleneck — Limiting shared resource."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the mechanism",
+          "text": "Harvard-style separation; fetch instruction and access data paths may operate in parallel. It differs from a single shared path even when control logic is the same CPU."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Modern mixed memory hierarchy.",
+          "answer": "modified Harvard",
+          "options": [
+            "modified Harvard",
+            "Von Neumann",
+            "Harvard"
+          ],
+          "feedback": "modified Harvard — Modern mixed memory hierarchy."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Shared instruction/data memory organisation.",
+          "answer": "Von Neumann",
+          "options": [
+            "Harvard",
+            "bottleneck",
+            "Von Neumann"
+          ],
+          "feedback": "Von Neumann — Shared instruction/data memory organisation."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Separate instruction/data stores or pathways.",
+          "answer": "Harvard",
+          "options": [
+            "bottleneck",
+            "Harvard",
+            "Von Neumann"
+          ],
+          "feedback": "Harvard — Separate instruction/data stores or pathways."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Limiting shared resource.",
+          "answer": "bottleneck",
+          "options": [
+            "bottleneck",
+            "Von Neumann",
+            "Harvard"
+          ],
+          "feedback": "bottleneck — Limiting shared resource."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1/3 State difference between Von Neumann and Harvard memory organisation. [4]",
+          "answer": "Von Neumann shared instruction/data storage/path [2], Harvard separate instruction/data memory/pathways [2].",
+          "options": [
+            "Von Neumann shared instruction/data storage/path [2], Harvard separate instruction/data memory/pathways [2].",
+            "Shared route [2], competing transfers [2], stalls or throughput effect [2].",
+            "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2]."
+          ],
+          "feedback": "Von Neumann shared instruction/data storage/path [2], Harvard separate instruction/data memory/pathways [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · QUESTION 2/3 Explain Von Neumann bottleneck with instruction fetch and data read. [6]",
+          "answer": "Shared route [2], competing transfers [2], stalls or throughput effect [2].",
+          "options": [
+            "Von Neumann shared instruction/data storage/path [2], Harvard separate instruction/data memory/pathways [2].",
+            "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2].",
+            "Shared route [2], competing transfers [2], stalls or throughput effect [2]."
+          ],
+          "feedback": "Shared route [2], competing transfers [2], stalls or throughput effect [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3/3 Evaluate 'Harvard architecture always makes programs faster than Von Neumann' with contemporary caches and workload. [6]",
+          "answer": "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2].",
+          "options": [
+            "Shared route [2], competing transfers [2], stalls or throughput effect [2].",
+            "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2].",
+            "Von Neumann shared instruction/data storage/path [2], Harvard separate instruction/data memory/pathways [2]."
+          ],
+          "feedback": "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3/3 Evaluate 'Harvard architecture always makes programs faster than Von Neumann' with contemporary caches and workload. [6]",
+        "model": "Separate paths may reduce contention [2], real systems use modified Harvard caches [2], speed still depends on cache, clock and workload [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Harvard means: Separate instruction/data stores or pathways.",
+          "answer": "true",
+          "feedback": "Harvard — Separate instruction/data stores or pathways."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "bottleneck means: Shared instruction/data memory organisation.",
+          "answer": "false",
+          "feedback": "bottleneck — Limiting shared resource."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "modified Harvard means: Modern mixed memory hierarchy.",
+          "answer": "true",
+          "feedback": "modified Harvard — Modern mixed memory hierarchy."
+        }
+      ]
+    }
+  ]
+}

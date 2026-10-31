@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-141",
+  "course": "h446",
+  "title": "Lesson 141 · ACID Transactions, Locking and Redundancy",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does foreign-key referential integrity prevent?",
+          "answer": "A child key pointing to a nonexistent parent.",
+          "options": [
+            "A child key pointing to a nonexistent parent.",
+            "Binary search: O(log n) rather than O(n).",
+            "AND."
+          ],
+          "feedback": "A child key pointing to a nonexistent parent."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which is faster in the worst case on sorted arrays, linear or binary search?",
+          "answer": "Binary search: O(log n) rather than O(n).",
+          "options": [
+            "A child key pointing to a nonexistent parent.",
+            "AND.",
+            "Binary search: O(log n) rather than O(n)."
+          ],
+          "feedback": "Binary search: O(log n) rather than O(n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which logic gate outputs 1 only when both inputs are 1?",
+          "answer": "AND.",
+          "options": [
+            "Binary search: O(log n) rather than O(n).",
+            "AND.",
+            "A child key pointing to a nonexistent parent."
+          ],
+          "feedback": "AND."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the accumulator for?",
+          "answer": "Holding a CPU's working data/ALU results.",
+          "options": [
+            "Holding a CPU's working data/ALU results.",
+            "A child key pointing to a nonexistent parent.",
+            "Binary search: O(log n) rather than O(n)."
+          ],
+          "feedback": "Holding a CPU's working data/ALU results."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Begin transaction",
+          "text": "Move £20: subtract account A and add account B."
+        },
+        {
+          "type": "paragraph",
+          "title": "Protect consistency",
+          "text": "Both updates commit together or both roll back."
+        },
+        {
+          "type": "paragraph",
+          "title": "Coordinate concurrent work",
+          "text": "Isolation/locks reduce interference; durable commits survive failures."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Subtract £20 from A",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Crash before adding to B",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Rollback both changes",
+          "text": "Atomicity means the transfer is all-or-nothing. A DBMS transaction can roll back partial changes. Consistency checks valid constraints; isolation keeps concurrent transfers safe; durability preserves committed transfers."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'transaction'?",
+          "answer": "Group of DB operations treated as one unit of work.",
+          "options": [
+            "Atomicity, Consistency, Isolation, Durability.",
+            "Restricting conflicting access while data is being changed.",
+            "Group of DB operations treated as one unit of work."
+          ],
+          "feedback": "transaction — Group of DB operations treated as one unit of work."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'ACID'?",
+          "answer": "Atomicity, Consistency, Isolation, Durability.",
+          "options": [
+            "Restricting conflicting access while data is being changed.",
+            "Atomicity, Consistency, Isolation, Durability.",
+            "Group of DB operations treated as one unit of work."
+          ],
+          "feedback": "ACID — Atomicity, Consistency, Isolation, Durability."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'record locking'?",
+          "answer": "Restricting conflicting access while data is being changed.",
+          "options": [
+            "Restricting conflicting access while data is being changed.",
+            "Group of DB operations treated as one unit of work.",
+            "Atomicity, Consistency, Isolation, Durability."
+          ],
+          "feedback": "record locking — Restricting conflicting access while data is being changed."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Two concurrent requests",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Lock/check last seat",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Commit one booking",
+          "text": "Use an atomic inventory check and reservation update inside an appropriately isolated transaction, with row locking or other concurrency controls. Only one should succeed; second sees no remaining seat."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Duplicated resources/data for resilience, distinct from backup.",
+          "answer": "redundancy",
+          "options": [
+            "redundancy",
+            "transaction",
+            "ACID"
+          ],
+          "feedback": "redundancy — Duplicated resources/data for resilience, distinct from backup."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Group of DB operations treated as one unit of work.",
+          "answer": "transaction",
+          "options": [
+            "ACID",
+            "record locking",
+            "transaction"
+          ],
+          "feedback": "transaction — Group of DB operations treated as one unit of work."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Atomicity, Consistency, Isolation, Durability.",
+          "answer": "ACID",
+          "options": [
+            "record locking",
+            "ACID",
+            "transaction"
+          ],
+          "feedback": "ACID — Atomicity, Consistency, Isolation, Durability."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Restricting conflicting access while data is being changed.",
+          "answer": "record locking",
+          "options": [
+            "record locking",
+            "transaction",
+            "ACID"
+          ],
+          "feedback": "record locking — Restricting conflicting access while data is being changed."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Expand ACID and explain atomicity and durability. [6]",
+          "answer": "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+          "options": [
+            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
+          ],
+          "feedback": "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain why two concurrent users editing one record can cause a lost update. [6]",
+          "answer": "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+          "options": [
+            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2].",
+            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate replication, RAID and backups for database resilience. [8]",
+          "answer": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+          "options": [
+            "/ WORKED ANSWER Both read old value [2], overwriting changes [2], locking/transaction isolation prevents conflict [2].",
+            "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+            "/ WORKED ANSWER A Atomicity [1], C Consistency [1], I Isolation [1], D Durability [1], clear atomic/durable explanations [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate replication, RAID and backups for database resilience. [8]",
+        "model": "/ WORKED ANSWER Redundancy can reduce downtime [2], RAID is not a backup [2], replication can copy mistakes [2], independent tested backups restore deleted/corrupt data [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "ACID means: Atomicity, Consistency, Isolation, Durability.",
+          "answer": "true",
+          "feedback": "ACID — Atomicity, Consistency, Isolation, Durability."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "record locking means: Group of DB operations treated as one unit of work.",
+          "answer": "false",
+          "feedback": "record locking — Restricting conflicting access while data is being changed."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "redundancy means: Duplicated resources/data for resilience, distinct from backup.",
+          "answer": "true",
+          "feedback": "redundancy — Duplicated resources/data for resilience, distinct from backup."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-125",
+  "course": "h446",
+  "title": "Lesson 125 · Assembly Language and the Little Man Computer",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the purpose of a function return value?",
+          "answer": "It passes a computed result to the caller.",
+          "options": [
+            "Sum 0, carry-out 1.",
+            "It passes a computed result to the caller.",
+            "B, since a stack uses LIFO."
+          ],
+          "feedback": "It passes a computed result to the caller."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: After pushing A then B onto a stack, which is popped first?",
+          "answer": "B, since a stack uses LIFO.",
+          "options": [
+            "B, since a stack uses LIFO.",
+            "It passes a computed result to the caller.",
+            "Sum 0, carry-out 1."
+          ],
+          "feedback": "B, since a stack uses LIFO."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the output of a full adder with A=1, B=1 and carry-in=0?",
+          "answer": "Sum 0, carry-out 1.",
+          "options": [
+            "It passes a computed result to the caller.",
+            "B, since a stack uses LIFO.",
+            "Sum 0, carry-out 1."
+          ],
+          "feedback": "Sum 0, carry-out 1."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is the program counter important in a stored-program computer?",
+          "answer": "It tracks the address of the next instruction to fetch.",
+          "options": [
+            "B, since a stack uses LIFO.",
+            "It tracks the address of the next instruction to fetch.",
+            "It passes a computed result to the caller."
+          ],
+          "feedback": "It tracks the address of the next instruction to fetch."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Mailboxes",
+          "text": "Instructions and numeric data occupy addressed memory mailboxes. DAT reserves a data location. Programs execute the instructions addressed by the program counter."
+        },
+        {
+          "type": "paragraph",
+          "title": "Accumulator and PC",
+          "text": "INP reads into ACC; LDA reads memory into ACC; STA writes ACC to memory. The PC normally advances after a fetch, unless a branch selects a new address."
+        },
+        {
+          "type": "paragraph",
+          "title": "Branches and stopping",
+          "text": "ADD and SUB update ACC; OUT prints ACC; BRA always branches; BRZ tests for zero; BRP tests a non-negative result in standard LMC; HLT ends the program."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Track each change",
+          "text": "00 INP: ACC = 7. 01 STA 10: mailbox 10 becomes 7; ACC remains 7. 02 LDA 10: ACC = 7. 03 ADD 10: ACC = 14. 04 OUT: output is 14 . 05 HLT: stop. Data mailbox 10 is separate from instruction addresses 00–05."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'LMC'?",
+          "answer": "Educational model of a stored-program accumulator computer.",
+          "options": [
+            "Educational model of a stored-program accumulator computer.",
+            "Register holding current working data and arithmetic results.",
+            "Register holding address of the next instruction to fetch."
+          ],
+          "feedback": "LMC — Educational model of a stored-program accumulator computer."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'accumulator'?",
+          "answer": "Register holding current working data and arithmetic results.",
+          "options": [
+            "Educational model of a stored-program accumulator computer.",
+            "Register holding address of the next instruction to fetch.",
+            "Register holding current working data and arithmetic results."
+          ],
+          "feedback": "accumulator — Register holding current working data and arithmetic results."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'program counter'?",
+          "answer": "Register holding address of the next instruction to fetch.",
+          "options": [
+            "Register holding current working data and arithmetic results.",
+            "Register holding address of the next instruction to fetch.",
+            "Educational model of a stored-program accumulator computer."
+          ],
+          "feedback": "program counter — Register holding address of the next instruction to fetch."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the registers",
+          "text": "What are ACC and mailbox 20 after the first two instructions?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Calculate ACC",
+          "text": "Follow LDA 20 and SUB 21. Use the stored value 9 and constant 4."
+        },
+        {
+          "type": "paragraph",
+          "title": "Completed trace",
+          "text": "INP sets ACC to 9. STA 20 saves 9. LDA 20 reloads it. SUB 21 subtracts 4, leaving ACC = 5. OUT prints 5 ; HLT stops."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Symbolic name representing a machine instruction.",
+          "answer": "mnemonic",
+          "options": [
+            "accumulator",
+            "mnemonic",
+            "LMC"
+          ],
+          "feedback": "mnemonic — Symbolic name representing a machine instruction."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Educational model of a stored-program accumulator computer.",
+          "answer": "LMC",
+          "options": [
+            "LMC",
+            "accumulator",
+            "program counter"
+          ],
+          "feedback": "LMC — Educational model of a stored-program accumulator computer."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Register holding current working data and arithmetic results.",
+          "answer": "accumulator",
+          "options": [
+            "LMC",
+            "program counter",
+            "accumulator"
+          ],
+          "feedback": "accumulator — Register holding current working data and arithmetic results."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Register holding address of the next instruction to fetch.",
+          "answer": "program counter",
+          "options": [
+            "accumulator",
+            "program counter",
+            "LMC"
+          ],
+          "feedback": "program counter — Register holding address of the next instruction to fetch."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain what the PC, accumulator and memory mailboxes represent in LMC. [6]",
+          "answer": "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+          "options": [
+            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…",
+            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
+          ],
+          "feedback": "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Trace INP; STA 30; LDA 30; ADD 31; OUT; HLT, with input 5 and mailbox 31 containing 3. [6]",
+          "answer": "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+          "options": [
+            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…"
+          ],
+          "feedback": "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Write LMC instructions to read an integer and output it, using a BRZ branch when zero. Explain how you would test both paths. [8]",
+          "answer": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…",
+          "options": [
+            "/ WORKED ANSWER PC identifies next instruction to fetch [2]; accumulator holds data/arithmetic results [2]; mailboxes hold numbered instructions or data [2].",
+            "/ WORKED ANSWER ACC=5 after INP [1]; mailbox 30 gets 5 [1]; LDA restores 5 [1]; ADD makes 8 [2]; OUT displays 8 [1].",
+            "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths…"
+          ],
+          "feedback": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Write LMC instructions to read an integer and output it, using a BRZ branch when zero. Explain how you would test both paths. [8]",
+        "model": "/ WORKED ANSWER One valid approach: INP; BRZ ZERO; OUT; HLT; ZERO OUT; HLT. BRZ branches if ACC=0 [2]; the nonzero path outputs entered number [2]; zero path outputs 0 [2]; HLT terminates and test values 0 and 7 exercise both paths [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "accumulator means: Register holding current working data and arithmetic results.",
+          "answer": "true",
+          "feedback": "accumulator — Register holding current working data and arithmetic results."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "program counter means: Educational model of a stored-program accumulator computer.",
+          "answer": "false",
+          "feedback": "program counter — Register holding address of the next instruction to fetch."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "mnemonic means: Symbolic name representing a machine instruction.",
+          "answer": "true",
+          "feedback": "mnemonic — Symbolic name representing a machine instruction."
+        }
+      ]
+    }
+  ]
+}

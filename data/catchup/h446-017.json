@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-017",
+  "course": "h446",
+  "title": "Arrays in C#",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: For a 3 × 3 array called board , what do GetLength(0) and GetLength(1) return?",
+          "answer": "3 and 3.",
+          "options": [
+            "47.",
+            "3 and 3.",
+            "A function returns a value; a procedure does not."
+          ],
+          "feedback": "Dimension 0 is rows; dimension 1 is columns."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between a function and a procedure?",
+          "answer": "A function returns a value; a procedure does not.",
+          "options": [
+            "A function returns a value; a procedure does not.",
+            "3 and 3.",
+            "47."
+          ],
+          "feedback": "A function returns a value; a procedure does not."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Convert hexadecimal 2F to denary.",
+          "answer": "47.",
+          "options": [
+            "3 and 3.",
+            "A function returns a value; a procedure does not.",
+            "47."
+          ],
+          "feedback": "2 × 16 + 15 = 47 ."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why must every value in a C# string[,] array be stored as a string?",
+          "answer": "An array has one declared element type, so every element must be compatible with that type.",
+          "options": [
+            "A function returns a value; a procedure does not.",
+            "An array has one declared element type, so every element must be compatible with that type.",
+            "3 and 3."
+          ],
+          "feedback": "An array has one declared element type, so every element must be compatible with that type."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "1D · one index",
+          "text": "Indexes start at 0, so students[2] is Charlie ."
+        },
+        {
+          "type": "paragraph",
+          "title": "2D · row and column",
+          "text": "[0,0] means row 0, column 0. It outputs Amelia ."
+        },
+        {
+          "type": "paragraph",
+          "title": "GetLength() names the dimension",
+          "text": "For the array above, the answers are 3 and 2 ."
+        },
+        {
+          "type": "paragraph",
+          "title": "3D · layer, row, column",
+          "text": "Read the indexes as layer → row → column . A 3D array is easiest to visualise as several 2D tables stacked together."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Build studentResults",
+          "text": "Store each student's name and score in a 2D array, then display every row. Amelia 72 Ben 65 Charlie 81"
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Rows are students · columns are fields",
+          "text": "row 0 → Amelia | 72 row 1 → Ben | 65 row 2 → Charlie| 81 We need 3 rows and 2 columns."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Array'?",
+          "answer": "A fixed collection of elements accessed using indexes.",
+          "options": [
+            "A fixed collection of elements accessed using indexes.",
+            "One stored value inside an array.",
+            "The position number used to access an array element."
+          ],
+          "feedback": "Array — A fixed collection of elements accessed using indexes."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Element'?",
+          "answer": "One stored value inside an array.",
+          "options": [
+            "A fixed collection of elements accessed using indexes.",
+            "The position number used to access an array element.",
+            "One stored value inside an array."
+          ],
+          "feedback": "Element — One stored value inside an array."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Index'?",
+          "answer": "The position number used to access an array element.",
+          "options": [
+            "One stored value inside an array.",
+            "The position number used to access an array element.",
+            "A fixed collection of elements accessed using indexes."
+          ],
+          "feedback": "Index — The position number used to access an array element."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Read an indexed value",
+          "text": "string[] names = { \"Amelia\", \"Ben\", \"Charlie\", \"Daisy\" }; What is stored at index 2, and how many elements are in the array?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Read the array",
+          "text": "YOUR TURN Read the array Index ? Value ? Length ?"
+        },
+        {
+          "type": "paragraph",
+          "title": "Read the array",
+          "text": "CHECK Read the array Index 2 Value Charlie Length 4"
+        },
+        {
+          "type": "paragraph",
+          "title": "Read row and column",
+          "text": "string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Find studentResults[2,1] and the two dimension lengths."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? One direction or level used to locate an element.",
+          "answer": "Dimension",
+          "options": [
+            "Element",
+            "Dimension",
+            "Array"
+          ],
+          "feedback": "Dimension — One direction or level used to locate an element."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? C# syntax for an array with one dimension.",
+          "answer": "[]",
+          "options": [
+            "[]",
+            "Array",
+            "Element"
+          ],
+          "feedback": "[] — C# syntax for an array with one dimension."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? C# syntax for an array with two dimensions.",
+          "answer": "[,]",
+          "options": [
+            "Array",
+            "Element",
+            "[,]"
+          ],
+          "feedback": "[,] — C# syntax for an array with two dimensions."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? C# syntax for an array with three dimensions.",
+          "answer": "[,,]",
+          "options": [
+            "Element",
+            "[,,]",
+            "Array"
+          ],
+          "feedback": "[,,] — C# syntax for an array with three dimensions."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Build studentResults Store each student's name and score in a 2D array, then display every row.",
+          "answer": "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
+          "options": [
+            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
+            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
+            "CHECK Read the array Index 2 Value Charlie Length 4"
+          ],
+          "feedback": "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Read an indexed value What is stored at index 2, and how many elements are in the array?",
+          "answer": "CHECK Read the array Index 2 Value Charlie Length 4",
+          "options": [
+            "CHECK Read the array Index 2 Value Charlie Length 4",
+            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
+            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
+          ],
+          "feedback": "CHECK Read the array Index 2 Value Charlie Length 4"
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Read row and column Find studentResults[2,1] and the two dimension lengths.",
+          "answer": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
+          "options": [
+            "STEP 2 · DECLARE Create the 2D array string[,] studentResults = { { \"Amelia\", \"72\" }, { \"Ben\", \"65\" }, { \"Charlie\", \"81\" } }; Both columns use strings in this teaching example.",
+            "CHECK Read the array Index 2 Value Charlie Length 4",
+            "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
+          ],
+          "feedback": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2"
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Read row and column Find studentResults[2,1] and the two dimension lengths.",
+        "model": "CHECK Locate the element [2,1] 81 GetLength(0) 3 GetLength(1) 2",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Element means: One stored value inside an array.",
+          "answer": "true",
+          "feedback": "Element — One stored value inside an array."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Index means: C# syntax for an array with one dimension.",
+          "answer": "false",
+          "feedback": "Index — The position number used to access an array element."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Dimension means: One direction or level used to locate an element.",
+          "answer": "true",
+          "feedback": "Dimension — One direction or level used to locate an element."
+        }
+      ]
+    }
+  ]
+}

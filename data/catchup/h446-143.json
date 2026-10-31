@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-143",
+  "course": "h446",
+  "title": "Lesson 143 · The TCP/IP Stack and Encapsulation",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which device typically forwards traffic between different IP networks?",
+          "answer": "Router.",
+          "options": [
+            "Holding a CPU's working data/ALU results.",
+            "Router.",
+            "AND."
+          ],
+          "feedback": "Router."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which logic gate outputs 1 only when both inputs are 1?",
+          "answer": "AND.",
+          "options": [
+            "AND.",
+            "Router.",
+            "Holding a CPU's working data/ALU results."
+          ],
+          "feedback": "AND."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the accumulator for?",
+          "answer": "Holding a CPU's working data/ALU results.",
+          "options": [
+            "Router.",
+            "AND.",
+            "Holding a CPU's working data/ALU results."
+          ],
+          "feedback": "Holding a CPU's working data/ALU results."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which is faster in the worst case on sorted arrays, linear or binary search?",
+          "answer": "Binary search: O(log n) rather than O(n).",
+          "options": [
+            "AND.",
+            "Binary search: O(log n) rather than O(n).",
+            "Router."
+          ],
+          "feedback": "Binary search: O(log n) rather than O(n)."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Application data",
+          "text": "HTTP sends a request body/application message."
+        },
+        {
+          "type": "paragraph",
+          "title": "Transport and IP",
+          "text": "TCP segments carry ports, IP packets carry network addresses."
+        },
+        {
+          "type": "paragraph",
+          "title": "Frame on local link",
+          "text": "Ethernet/Wi-Fi frame delivers packet over one link, then changes at next hop."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · HTTP application data",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · TCP segment in IP packet",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Ethernet frame",
+          "text": "HTTP application bytes become TCP segment payload; the TCP segment goes into an IP packet; the packet is carried in an Ethernet frame. Receivers process headers in reverse to deliver data to the browser/server."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'application layer'?",
+          "answer": "Protocols providing services to programs, such as HTTP or DNS.",
+          "options": [
+            "Protocols providing services to programs, such as HTTP or DNS.",
+            "End-to-end service such as TCP or UDP.",
+            "IP packet addressing and routing between networks."
+          ],
+          "feedback": "application layer — Protocols providing services to programs, such as HTTP or DNS."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'transport layer'?",
+          "answer": "End-to-end service such as TCP or UDP.",
+          "options": [
+            "Protocols providing services to programs, such as HTTP or DNS.",
+            "IP packet addressing and routing between networks.",
+            "End-to-end service such as TCP or UDP."
+          ],
+          "feedback": "transport layer — End-to-end service such as TCP or UDP."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'internet layer'?",
+          "answer": "IP packet addressing and routing between networks.",
+          "options": [
+            "End-to-end service such as TCP or UDP.",
+            "IP packet addressing and routing between networks.",
+            "Protocols providing services to programs, such as HTTP or DNS."
+          ],
+          "feedback": "internet layer — IP packet addressing and routing between networks."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Incoming Ethernet frame",
+          "text": "Identify the relevant information and make a prediction."
+        },
+        {
+          "type": "paragraph",
+          "title": "Route IP packet",
+          "text": "Explain the change using correct technical terms."
+        },
+        {
+          "type": "paragraph",
+          "title": "Outgoing Wi-Fi frame",
+          "text": "Router removes the incoming link-layer framing, processes/forwards the IP packet and builds new outgoing link-layer framing. IP hop limit/TTL normally decreases; end-to-end transport data need not change."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Local frame delivery on physical or wireless link.",
+          "answer": "link layer",
+          "options": [
+            "transport layer",
+            "link layer",
+            "application layer"
+          ],
+          "feedback": "link layer — Local frame delivery on physical or wireless link."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Protocols providing services to programs, such as HTTP or DNS.",
+          "answer": "application layer",
+          "options": [
+            "application layer",
+            "transport layer",
+            "internet layer"
+          ],
+          "feedback": "application layer — Protocols providing services to programs, such as HTTP or DNS."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? End-to-end service such as TCP or UDP.",
+          "answer": "transport layer",
+          "options": [
+            "application layer",
+            "internet layer",
+            "transport layer"
+          ],
+          "feedback": "transport layer — End-to-end service such as TCP or UDP."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? IP packet addressing and routing between networks.",
+          "answer": "internet layer",
+          "options": [
+            "transport layer",
+            "internet layer",
+            "application layer"
+          ],
+          "feedback": "internet layer — IP packet addressing and routing between networks."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Name four layers of the TCP/IP stack and give one role for each. [8]",
+          "answer": "/ WORKED ANSWER Application user-facing network protocols [2], transport end-to-end delivery/ports [2], internet addressing/routing [2], link local frame transport [2].",
+          "options": [
+            "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2].",
+            "/ WORKED ANSWER Application user-facing network protocols [2], transport end-to-end delivery/ports [2], internet addressing/routing [2], link local frame transport [2].",
+            "/ WORKED ANSWER Application message [1], TCP header/segment [2], IP header/packet [2], frame encapsulation [1]."
+          ],
+          "feedback": "/ WORKED ANSWER Application user-facing network protocols [2], transport end-to-end delivery/ports [2], internet addressing/routing [2], link local frame transport [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Describe encapsulation of application data over TCP/IP and Ethernet. [6]",
+          "answer": "/ WORKED ANSWER Application message [1], TCP header/segment [2], IP header/packet [2], frame encapsulation [1].",
+          "options": [
+            "/ WORKED ANSWER Application message [1], TCP header/segment [2], IP header/packet [2], frame encapsulation [1].",
+            "/ WORKED ANSWER Application user-facing network protocols [2], transport end-to-end delivery/ports [2], internet addressing/routing [2], link local frame transport [2].",
+            "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Application message [1], TCP header/segment [2], IP header/packet [2], frame encapsulation [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Explain what a router changes when forwarding a packet to a different link technology. [8]",
+          "answer": "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2].",
+          "options": [
+            "/ WORKED ANSWER Application user-facing network protocols [2], transport end-to-end delivery/ports [2], internet addressing/routing [2], link local frame transport [2].",
+            "/ WORKED ANSWER Application message [1], TCP header/segment [2], IP header/packet [2], frame encapsulation [1].",
+            "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Explain what a router changes when forwarding a packet to a different link technology. [8]",
+        "model": "/ WORKED ANSWER Remove old link frame [2], inspect IP destination/routing [2], reduce TTL/hop limit and update necessary header fields [2], encapsulate with new link frame [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "transport layer means: End-to-end service such as TCP or UDP.",
+          "answer": "true",
+          "feedback": "transport layer — End-to-end service such as TCP or UDP."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "internet layer means: Protocols providing services to programs, such as HTTP or DNS.",
+          "answer": "false",
+          "feedback": "internet layer — IP packet addressing and routing between networks."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "link layer means: Local frame delivery on physical or wireless link.",
+          "answer": "true",
+          "feedback": "link layer — Local frame delivery on physical or wireless link."
+        }
+      ]
+    }
+  ]
+}

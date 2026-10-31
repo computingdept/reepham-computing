@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-203",
+  "course": "h446",
+  "title": "Karnaugh maps and simplification",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify ¬(A ∨ B).",
+          "answer": "¬A ∧ ¬B.",
+          "options": [
+            "0.",
+            "¬A ∧ ¬B.",
+            "A collision."
+          ],
+          "feedback": "¬A ∧ ¬B."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Keys 7 and 12 hash to index 2 in a table. What is that called?",
+          "answer": "A collision.",
+          "options": [
+            "A collision.",
+            "¬A ∧ ¬B.",
+            "0."
+          ],
+          "feedback": "A collision."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is 1 XOR 1?",
+          "answer": "0.",
+          "options": [
+            "¬A ∧ ¬B.",
+            "A collision.",
+            "0."
+          ],
+          "feedback": "0."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: If A changes from 0 to 1 while B is always 1, which variable is constant?",
+          "answer": "B, at value 1.",
+          "options": [
+            "A collision.",
+            "B, at value 1.",
+            "¬A ∧ ¬B."
+          ],
+          "feedback": "B, at value 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Read the labels",
+          "text": "Rows represent A, and columns use Gray order BC: 00, 01, 11, 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Group neighbouring ones",
+          "text": "The four 1s form one 2×2 rectangle. Adjacency across rows is allowed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep what is constant",
+          "text": "A and C change through the group, but B remains 0. So the simplified result is ¬B."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict and explain",
+          "text": "B and C each vary across the row; neither is needed in the expression."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check and extend",
+          "text": "A stays 0 in the whole group. The simplified term is ¬A."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Karnaugh map'?",
+          "answer": "Grid for simplifying Boolean functions using adjacent combinations.",
+          "options": [
+            "Grid for simplifying Boolean functions using adjacent combinations.",
+            "Ordering in which adjacent binary labels differ by one bit.",
+            "A rectangle containing 1, 2, 4, 8, … adjacent 1-cells."
+          ],
+          "feedback": "Karnaugh map — Grid for simplifying Boolean functions using adjacent combinations."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'Gray code'?",
+          "answer": "Ordering in which adjacent binary labels differ by one bit.",
+          "options": [
+            "Grid for simplifying Boolean functions using adjacent combinations.",
+            "A rectangle containing 1, 2, 4, 8, … adjacent 1-cells.",
+            "Ordering in which adjacent binary labels differ by one bit."
+          ],
+          "feedback": "Gray code — Ordering in which adjacent binary labels differ by one bit."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'group'?",
+          "answer": "A rectangle containing 1, 2, 4, 8, … adjacent 1-cells.",
+          "options": [
+            "Ordering in which adjacent binary labels differ by one bit.",
+            "A rectangle containing 1, 2, 4, 8, … adjacent 1-cells.",
+            "Grid for simplifying Boolean functions using adjacent combinations."
+          ],
+          "feedback": "group — A rectangle containing 1, 2, 4, 8, … adjacent 1-cells."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict and explain",
+          "text": "A changes between rows, and C changes between columns 11 and 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check and extend",
+          "text": "B remains 1, so the simplified term is B."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A variable with the same value in all cells of a group.",
+          "answer": "constant variable",
+          "options": [
+            "Gray code",
+            "constant variable",
+            "Karnaugh map"
+          ],
+          "feedback": "constant variable — A variable with the same value in all cells of a group."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? The opposite edges of a Karnaugh map are adjacent.",
+          "answer": "wraparound",
+          "options": [
+            "wraparound",
+            "Karnaugh map",
+            "Gray code"
+          ],
+          "feedback": "wraparound — The opposite edges of a Karnaugh map are adjacent."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Grid for simplifying Boolean functions using adjacent combinations.",
+          "answer": "Karnaugh map",
+          "options": [
+            "Gray code",
+            "group",
+            "Karnaugh map"
+          ],
+          "feedback": "Karnaugh map — Grid for simplifying Boolean functions using adjacent combinations."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Ordering in which adjacent binary labels differ by one bit.",
+          "answer": "Gray code",
+          "options": [
+            "group",
+            "Gray code",
+            "Karnaugh map"
+          ],
+          "feedback": "Gray code — Ordering in which adjacent binary labels differ by one bit."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Why do we group neighbouring 1s in a Karnaugh map?",
+          "answer": "To simplify the Boolean expression by removing variables that change inside a group.",
+          "options": [
+            "¬C. A changes between the rows and B changes between 00 and 10; C stays 0.",
+            "To simplify the Boolean expression by removing variables that change inside a group.",
+            "A. Both B and C change within the row, while A remains 1."
+          ],
+          "feedback": "To simplify the Boolean expression by removing variables that change inside a group."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 The whole A=1 row contains four 1s. Which simplified term remains?",
+          "answer": "A. Both B and C change within the row, while A remains 1.",
+          "options": [
+            "A. Both B and C change within the row, while A remains 1.",
+            "To simplify the Boolean expression by removing variables that change inside a group.",
+            "¬C. A changes between the rows and B changes between 00 and 10; C stays 0."
+          ],
+          "feedback": "A. Both B and C change within the row, while A remains 1."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 Columns BC=00 and BC=10 are joined by wraparound adjacency. Four 1s occupy both these columns. Simplify.",
+          "answer": "¬C. A changes between the rows and B changes between 00 and 10; C stays 0.",
+          "options": [
+            "To simplify the Boolean expression by removing variables that change inside a group.",
+            "A. Both B and C change within the row, while A remains 1.",
+            "¬C. A changes between the rows and B changes between 00 and 10; C stays 0."
+          ],
+          "feedback": "¬C. A changes between the rows and B changes between 00 and 10; C stays 0."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 Columns BC=00 and BC=10 are joined by wraparound adjacency. Four 1s occupy both these columns. Simplify.",
+        "model": "¬C. A changes between the rows and B changes between 00 and 10; C stays 0.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Gray code means: Ordering in which adjacent binary labels differ by one bit.",
+          "answer": "true",
+          "feedback": "Gray code — Ordering in which adjacent binary labels differ by one bit."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "group means: The opposite edges of a Karnaugh map are adjacent.",
+          "answer": "false",
+          "feedback": "group — A rectangle containing 1, 2, 4, 8, … adjacent 1-cells."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "constant variable means: A variable with the same value in all cells of a group.",
+          "answer": "true",
+          "feedback": "constant variable — A variable with the same value in all cells of a group."
+        }
+      ]
+    }
+  ]
+}

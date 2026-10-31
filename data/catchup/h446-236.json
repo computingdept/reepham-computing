@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-236",
+  "course": "h446",
+  "title": "Writing, following and documenting algorithms",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Give a test for a range 0–100 that should be rejected.",
+          "answer": "−1 or 101.",
+          "options": [
+            "3.",
+            "−1 or 101.",
+            "Passes a function's result back to the caller."
+          ],
+          "feedback": "−1 or 101."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does return do?",
+          "answer": "Passes a function's result back to the caller.",
+          "options": [
+            "Passes a function's result back to the caller.",
+            "−1 or 101.",
+            "3."
+          ],
+          "feedback": "Passes a function's result back to the caller."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the last index for an array of length 4?",
+          "answer": "3.",
+          "options": [
+            "−1 or 101.",
+            "Passes a function's result back to the caller.",
+            "3."
+          ],
+          "feedback": "3."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is a[0] unsafe for an empty array?",
+          "answer": "Index 0 does not exist, causing an out-of-range error.",
+          "options": [
+            "Passes a function's result back to the caller.",
+            "Index 0 does not exist, causing an out-of-range error.",
+            "−1 or 101."
+          ],
+          "feedback": "Index 0 does not exist, causing an out-of-range error."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "State the precondition",
+          "text": "The array must not be empty, or a[0] cannot be read."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace the maximum",
+          "text": "Set best to 3; compare 7, update best to 7, then ignore 2 and 5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Document contract",
+          "text": "Input: nonempty int array. Output: greatest element. Does not modify input."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Start best at first element 4; 2 does not replace it."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and explain",
+          "text": "9 is larger so best becomes 9; return 9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'algorithm'?",
+          "answer": "Precise finite steps that solve a problem.",
+          "options": [
+            "Precise finite steps that solve a problem.",
+            "Requirement inputs must meet before execution.",
+            "Condition guaranteed if the algorithm completes correctly."
+          ],
+          "feedback": "algorithm — Precise finite steps that solve a problem."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'precondition'?",
+          "answer": "Requirement inputs must meet before execution.",
+          "options": [
+            "Precise finite steps that solve a problem.",
+            "Condition guaranteed if the algorithm completes correctly.",
+            "Requirement inputs must meet before execution."
+          ],
+          "feedback": "precondition — Requirement inputs must meet before execution."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'postcondition'?",
+          "answer": "Condition guaranteed if the algorithm completes correctly.",
+          "options": [
+            "Requirement inputs must meet before execution.",
+            "Condition guaranteed if the algorithm completes correctly.",
+            "Precise finite steps that solve a problem."
+          ],
+          "feedback": "postcondition — Condition guaranteed if the algorithm completes correctly."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "11 replaces initial best 8; neither 6 nor 10 exceeds 11."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and explain",
+          "text": "The output is 11; the required precondition is a nonempty array."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Property maintained during repeated steps.",
+          "answer": "invariant",
+          "options": [
+            "precondition",
+            "invariant",
+            "algorithm"
+          ],
+          "feedback": "invariant — Property maintained during repeated steps."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Clear description of purpose, inputs and expected behaviour.",
+          "answer": "documentation",
+          "options": [
+            "documentation",
+            "algorithm",
+            "precondition"
+          ],
+          "feedback": "documentation — Clear description of purpose, inputs and expected behaviour."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Precise finite steps that solve a problem.",
+          "answer": "algorithm",
+          "options": [
+            "precondition",
+            "postcondition",
+            "algorithm"
+          ],
+          "feedback": "algorithm — Precise finite steps that solve a problem."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Requirement inputs must meet before execution.",
+          "answer": "precondition",
+          "options": [
+            "postcondition",
+            "precondition",
+            "algorithm"
+          ],
+          "feedback": "precondition — Requirement inputs must meet before execution."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Trace Largest([2,5,1]) and state initial and final best.",
+          "answer": "[4] Starts best=2 [1]; 5 greater so best=5 [1]; 1 ignored [1]; returns 5 [1].",
+          "options": [
+            "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1].",
+            "[4] Starts best=2 [1]; 5 greater so best=5 [1]; 1 ignored [1]; returns 5 [1].",
+            "[6] Set smallest=values[0] [1]; loop over remaining items [1]; if item<smallest [1] then smallest=item [1]; return smallest [1]; array must be nonempty [1]."
+          ],
+          "feedback": "[4] Starts best=2 [1]; 5 greater so best=5 [1]; 1 ignored [1]; returns 5 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Write pseudocode to return the minimum of a nonempty array values and explain its precondition.",
+          "answer": "[6] Set smallest=values[0] [1]; loop over remaining items [1]; if item<smallest [1] then smallest=item [1]; return smallest [1]; array must be nonempty [1].",
+          "options": [
+            "[6] Set smallest=values[0] [1]; loop over remaining items [1]; if item<smallest [1] then smallest=item [1]; return smallest [1]; array must be nonempty [1].",
+            "[4] Starts best=2 [1]; 5 greater so best=5 [1]; 1 ignored [1]; returns 5 [1].",
+            "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1]."
+          ],
+          "feedback": "[6] Set smallest=values[0] [1]; loop over remaining items [1]; if item<smallest [1] then smallest=item [1]; return smallest [1]; array must be nonempty [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Evaluate what happens for Largest([-4,-2,-9]) and explain why initialising best=0 would be incorrect.",
+          "answer": "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1].",
+          "options": [
+            "[4] Starts best=2 [1]; 5 greater so best=5 [1]; 1 ignored [1]; returns 5 [1].",
+            "[6] Set smallest=values[0] [1]; loop over remaining items [1]; if item<smallest [1] then smallest=item [1]; return smallest [1]; array must be nonempty [1].",
+            "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1]."
+          ],
+          "feedback": "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Evaluate what happens for Largest([-4,-2,-9]) and explain why initialising best=0 would be incorrect.",
+        "model": "[6] Original best=−4 [1]; update to −2 [1]; ignores −9 [1]; returns −2 [1]; initialising to zero would incorrectly return 0 [1] even though zero is absent [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "precondition means: Requirement inputs must meet before execution.",
+          "answer": "true",
+          "feedback": "precondition — Requirement inputs must meet before execution."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "postcondition means: Clear description of purpose, inputs and expected behaviour.",
+          "answer": "false",
+          "feedback": "postcondition — Condition guaranteed if the algorithm completes correctly."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "invariant means: Property maintained during repeated steps.",
+          "answer": "true",
+          "feedback": "invariant — Property maintained during repeated steps."
+        }
+      ]
+    }
+  ]
+}

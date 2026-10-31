@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-138",
+  "course": "h446",
+  "title": "Lesson 138 · SQL SELECT, Filtering, Sorting and JOIN",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What table is created to remove an EmployeeID→DeptID→DeptName transitive dependency?",
+          "answer": "Department(DeptID,DeptName), referenced by Employee.",
+          "options": [
+            "Department(DeptID,DeptName), referenced by Employee.",
+            "On a match or after examining all items.",
+            "The longest-waiting item at the front."
+          ],
+          "feedback": "Department(DeptID,DeptName), referenced by Employee."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When does a linear search stop?",
+          "answer": "On a match or after examining all items.",
+          "options": [
+            "Department(DeptID,DeptName), referenced by Employee.",
+            "The longest-waiting item at the front.",
+            "On a match or after examining all items."
+          ],
+          "feedback": "On a match or after examining all items."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which is removed first from a FIFO queue?",
+          "answer": "The longest-waiting item at the front.",
+          "options": [
+            "On a match or after examining all items.",
+            "The longest-waiting item at the front.",
+            "Department(DeptID,DeptName), referenced by Employee."
+          ],
+          "feedback": "The longest-waiting item at the front."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does ROM stand for?",
+          "answer": "Read-only memory.",
+          "options": [
+            "Read-only memory.",
+            "Department(DeptID,DeptName), referenced by Employee.",
+            "On a match or after examining all items."
+          ],
+          "feedback": "Read-only memory."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Choose projection",
+          "text": "SELECT chooses columns from a named relation."
+        },
+        {
+          "type": "paragraph",
+          "title": "Filter and order",
+          "text": "WHERE restricts rows; ORDER BY arranges results."
+        },
+        {
+          "type": "paragraph",
+          "title": "Join related rows",
+          "text": "Link keys using INNER JOIN ... ON."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Filter Total > 50",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Select OrderID, Total",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Sort DESC 120,75",
+          "text": "SELECT OrderID, Total FROM Orders WHERE Total > 50 ORDER BY Total DESC; returns orders with 120 then 75, excluding 25."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'SELECT'?",
+          "answer": "Returns specified columns/expressions.",
+          "options": [
+            "Filters rows according to a condition.",
+            "Sorts returned rows by chosen column/expression.",
+            "Returns specified columns/expressions."
+          ],
+          "feedback": "SELECT — Returns specified columns/expressions."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'WHERE'?",
+          "answer": "Filters rows according to a condition.",
+          "options": [
+            "Sorts returned rows by chosen column/expression.",
+            "Filters rows according to a condition.",
+            "Returns specified columns/expressions."
+          ],
+          "feedback": "WHERE — Filters rows according to a condition."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'ORDER BY'?",
+          "answer": "Sorts returned rows by chosen column/expression.",
+          "options": [
+            "Sorts returned rows by chosen column/expression.",
+            "Returns specified columns/expressions.",
+            "Filters rows according to a condition."
+          ],
+          "feedback": "ORDER BY — Sorts returned rows by chosen column/expression."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Join on CustomerID",
+          "text": "Find the given data and name the required result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Filter Total > 100",
+          "text": "Explain why this intermediate stage is necessary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Project Customer.Name",
+          "text": "SELECT Customer.Name FROM Customer INNER JOIN Orders ON Customer.CustomerID = Orders.CustomerID WHERE Orders.Total > 100; Returns a row per matching order; DISTINCT can remove repeated customer names."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combines rows from related tables using a join condition.",
+          "answer": "JOIN",
+          "options": [
+            "JOIN",
+            "SELECT",
+            "WHERE"
+          ],
+          "feedback": "JOIN — Combines rows from related tables using a join condition."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Returns specified columns/expressions.",
+          "answer": "SELECT",
+          "options": [
+            "WHERE",
+            "ORDER BY",
+            "SELECT"
+          ],
+          "feedback": "SELECT — Returns specified columns/expressions."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Filters rows according to a condition.",
+          "answer": "WHERE",
+          "options": [
+            "ORDER BY",
+            "WHERE",
+            "SELECT"
+          ],
+          "feedback": "WHERE — Filters rows according to a condition."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Sorts returned rows by chosen column/expression.",
+          "answer": "ORDER BY",
+          "options": [
+            "ORDER BY",
+            "SELECT",
+            "WHERE"
+          ],
+          "feedback": "ORDER BY — Sorts returned rows by chosen column/expression."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Write SQL listing Title and Price from Book where Price<10, sorted ascending by Price. [6]",
+          "answer": "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+          "options": [
+            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
+          ],
+          "feedback": "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Explain the role of the ON clause in an INNER JOIN between Borrower and Loan. [6]",
+          "answer": "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+          "options": [
+            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1].",
+            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Write an INNER JOIN query listing Student.Name and Course.Title using Student, Enrolment and Course. [8]",
+          "answer": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+          "options": [
+            "/ WORKED ANSWER Join matches records [2], ON states matching FK/PK relationship [2], avoids Cartesian result/mismatched associations [2].",
+            "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+            "/ WORKED ANSWER SELECT Title,Price [2] FROM Book [1] WHERE Price <10 [2] ORDER BY Price ASC [1]."
+          ],
+          "feedback": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Write an INNER JOIN query listing Student.Name and Course.Title using Student, Enrolment and Course. [8]",
+        "model": "/ WORKED ANSWER SELECT columns [2], FROM Student JOIN Enrolment ON Student.StudentID=Enrolment.StudentID [3], JOIN Course ON Enrolment.CourseID=Course.CourseID [3].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "WHERE means: Filters rows according to a condition.",
+          "answer": "true",
+          "feedback": "WHERE — Filters rows according to a condition."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "ORDER BY means: Returns specified columns/expressions.",
+          "answer": "false",
+          "feedback": "ORDER BY — Sorts returned rows by chosen column/expression."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "JOIN means: Combines rows from related tables using a join condition.",
+          "answer": "true",
+          "feedback": "JOIN — Combines rows from related tables using a join condition."
+        }
+      ]
+    }
+  ]
+}

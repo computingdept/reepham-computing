@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-078",
+  "course": "h446",
+  "title": "Lesson 078 · Binary Search: Bounds and Sorted Data",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search precondition?",
+          "answer": "Sorted data.",
+          "options": [
+            "Sorted data.",
+            "First possible candidate index.",
+            "Index3."
+          ],
+          "feedback": "Sorted data."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does low represent?",
+          "answer": "First possible candidate index.",
+          "options": [
+            "Sorted data.",
+            "Index3.",
+            "First possible candidate index."
+          ],
+          "feedback": "First possible candidate index."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is mid for bounds low0 high6?",
+          "answer": "Index3.",
+          "options": [
+            "First possible candidate index.",
+            "Index3.",
+            "Sorted data."
+          ],
+          "feedback": "Index3."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Binary search target15 in [1,3,5,7,9,11,13,15]: give midpoint indexes.",
+          "answer": "mid3=7, mid5=11, mid6=13, mid7=15; found index7.",
+          "options": [
+            "mid3=7, mid5=11, mid6=13, mid7=15; found index7.",
+            "Sorted data.",
+            "First possible candidate index."
+          ],
+          "feedback": "mid3=7, mid5=11, mid6=13, mid7=15; found index7."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Use binary search only when elements are sorted; keep inclusive low and high candidate bounds."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "At every mismatch discard the midpoint and half the candidates with low=mid+1 or high=mid−1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Each unsuccessful step shrinks the search interval. Worst time O(log n), iterative extra memory O(1)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the working",
+          "text": "mid3=11, mid5=17, mid4=14, returns index4."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'low'?",
+          "answer": "Lowest candidate index.",
+          "options": [
+            "Highest candidate index.",
+            "Middle candidate.",
+            "Lowest candidate index."
+          ],
+          "feedback": "low — Lowest candidate index."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'high'?",
+          "answer": "Highest candidate index.",
+          "options": [
+            "Middle candidate.",
+            "Highest candidate index.",
+            "Lowest candidate index."
+          ],
+          "feedback": "high — Highest candidate index."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'midpoint'?",
+          "answer": "Middle candidate.",
+          "options": [
+            "Middle candidate.",
+            "Lowest candidate index.",
+            "Highest candidate index."
+          ],
+          "feedback": "midpoint — Middle candidate."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check the working",
+          "text": "mid2=5, mid0=1, mid1=3, low2>high1: return−1."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeatedly reducing interval by about half.",
+          "answer": "halving",
+          "options": [
+            "halving",
+            "low",
+            "high"
+          ],
+          "feedback": "halving — Repeatedly reducing interval by about half."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Lowest candidate index.",
+          "answer": "low",
+          "options": [
+            "high",
+            "midpoint",
+            "low"
+          ],
+          "feedback": "low — Lowest candidate index."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Highest candidate index.",
+          "answer": "high",
+          "options": [
+            "midpoint",
+            "high",
+            "low"
+          ],
+          "feedback": "high — Highest candidate index."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Middle candidate.",
+          "answer": "midpoint",
+          "options": [
+            "midpoint",
+            "low",
+            "high"
+          ],
+          "feedback": "midpoint — Middle candidate."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Trace target11 in [1,3,5,7,9,11,13]. [6]",
+          "answer": "WORKED MODEL ANSWER mid3=7 [2], low4 [1], mid5=11 [2], return5 [1].",
+          "options": [
+            "WORKED MODEL ANSWER mid3=7 [2], low4 [1], mid5=11 [2], return5 [1].",
+            "WORKED MODEL ANSWER equal return mid [2], smaller array mid→low=mid+1 [2], larger→high=mid−1 [2].",
+            "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER mid3=7 [2], low4 [1], mid5=11 [2], return5 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Write three binary-search comparison cases and correct bounds. [6]",
+          "answer": "WORKED MODEL ANSWER equal return mid [2], smaller array mid→low=mid+1 [2], larger→high=mid−1 [2].",
+          "options": [
+            "WORKED MODEL ANSWER mid3=7 [2], low4 [1], mid5=11 [2], return5 [1].",
+            "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1].",
+            "WORKED MODEL ANSWER equal return mid [2], smaller array mid→low=mid+1 [2], larger→high=mid−1 [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER equal return mid [2], smaller array mid→low=mid+1 [2], larger→high=mid−1 [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare iterative binary and linear search with respect to time and precondition. [6]",
+          "answer": "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1].",
+          "options": [
+            "WORKED MODEL ANSWER equal return mid [2], smaller array mid→low=mid+1 [2], larger→high=mid−1 [2].",
+            "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1].",
+            "WORKED MODEL ANSWER mid3=7 [2], low4 [1], mid5=11 [2], return5 [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare iterative binary and linear search with respect to time and precondition. [6]",
+        "model": "WORKED MODEL ANSWER Linear O(n) [2] unsorted okay [1]; binary O(log n) [2] requires sorted data [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "high means: Highest candidate index.",
+          "answer": "true",
+          "feedback": "high — Highest candidate index."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "midpoint means: Lowest candidate index.",
+          "answer": "false",
+          "feedback": "midpoint — Middle candidate."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "halving means: Repeatedly reducing interval by about half.",
+          "answer": "true",
+          "feedback": "halving — Repeatedly reducing interval by about half."
+        }
+      ]
+    }
+  ]
+}

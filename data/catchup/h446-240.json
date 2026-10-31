@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-240",
+  "course": "h446",
+  "title": "Software testing: finding and correcting faults",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Define a cache miss.",
+          "answer": "Requested result is not already stored.",
+          "options": [
+            "Requested result is not already stored.",
+            "Only when both A and B are true.",
+            "0."
+          ],
+          "feedback": "Requested result is not already stored."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: When is A AND B true?",
+          "answer": "Only when both A and B are true.",
+          "options": [
+            "Requested result is not already stored.",
+            "0.",
+            "Only when both A and B are true."
+          ],
+          "feedback": "Only when both A and B are true."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Give a boundary-invalid input just below 1.",
+          "answer": "0.",
+          "options": [
+            "Only when both A and B are true.",
+            "0.",
+            "Requested result is not already stored."
+          ],
+          "feedback": "0."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Does 61 satisfy `seconds>=1 || seconds<=60`?",
+          "answer": "Yes, because seconds>=1 is true.",
+          "options": [
+            "Yes, because seconds>=1 is true.",
+            "Requested result is not already stored.",
+            "Only when both A and B are true."
+          ],
+          "feedback": "Yes, because seconds>=1 is true."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Read the stated rule",
+          "text": "Because the permitted ages are inclusive, both age 12 and age 18 must be accepted."
+        },
+        {
+          "type": "paragraph",
+          "title": "Locate the Boolean error",
+          "text": "The strict comparison operators > and < exclude both valid boundaries."
+        },
+        {
+          "type": "paragraph",
+          "title": "Repair and test",
+          "text": "Change to >= and <=; retest the boundaries plus values just outside the range."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "The valid endpoints were incorrectly rejected."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model and check",
+          "text": "Change the operators to >= and <=, and test −1 and 11 as invalid values."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'logic error'?",
+          "answer": "Runs but produces the wrong result.",
+          "options": [
+            "Endpoint allowed by a range.",
+            "Check input meets constraints.",
+            "Runs but produces the wrong result."
+          ],
+          "feedback": "logic error — Runs but produces the wrong result."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'inclusive boundary'?",
+          "answer": "Endpoint allowed by a range.",
+          "options": [
+            "Check input meets constraints.",
+            "Endpoint allowed by a range.",
+            "Runs but produces the wrong result."
+          ],
+          "feedback": "inclusive boundary — Endpoint allowed by a range."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'validation'?",
+          "answer": "Check input meets constraints.",
+          "options": [
+            "Check input meets constraints.",
+            "Runs but produces the wrong result.",
+            "Endpoint allowed by a range."
+          ],
+          "feedback": "validation — Check input meets constraints."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "OR accepts 61 because only one side needs to be true."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model and check",
+          "text": "AND requires both limits to hold and correctly rejects 61."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Find and correct a fault.",
+          "answer": "debugging",
+          "options": [
+            "debugging",
+            "logic error",
+            "inclusive boundary"
+          ],
+          "feedback": "debugging — Find and correct a fault."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeat tests after a change.",
+          "answer": "regression test",
+          "options": [
+            "logic error",
+            "inclusive boundary",
+            "regression test"
+          ],
+          "feedback": "regression test — Repeat tests after a change."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Runs but produces the wrong result.",
+          "answer": "logic error",
+          "options": [
+            "validation",
+            "logic error",
+            "inclusive boundary"
+          ],
+          "feedback": "logic error — Runs but produces the wrong result."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Endpoint allowed by a range.",
+          "answer": "inclusive boundary",
+          "options": [
+            "inclusive boundary",
+            "logic error",
+            "validation"
+          ],
+          "feedback": "inclusive boundary — Endpoint allowed by a range."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Correct x>5 && x<15 for values 5–15 inclusive, and state whether 5 and 15 are valid.",
+          "answer": "[4] Use the lower inclusive boundary x >= 5 [1] and upper inclusive boundary x <= 15 [1] together with AND: x >= 5 && x <= 15 ; x=5 is accepted [1] and x=15 is accepted [1]. Both clauses must be combined in the final condition.",
+          "options": [
+            "[4] Use the lower inclusive boundary x >= 5 [1] and upper inclusive boundary x <= 15 [1] together with AND: x >= 5 && x <= 15 ; x=5 is accepted [1] and x=15 is accepted [1]. Both clauses must be combined in the final condition.",
+            "[6] 100>=12 is true [1]; use && [1]; 11 false [1], 12 true [1], 18 true [1], 19 false [1].",
+            "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1]."
+          ],
+          "feedback": "[4] Use the lower inclusive boundary x >= 5 [1] and upper inclusive boundary x <= 15 [1] together with AND: x >= 5 && x <= 15 ; x=5 is accepted [1] and x=15 is accepted [1]. Both clauses must be combined in the final condition."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Explain why `age>=12 || age<=18` accepts 100, correct it, and give outputs for 11,12,18,19.",
+          "answer": "[6] 100>=12 is true [1]; use && [1]; 11 false [1], 12 true [1], 18 true [1], 19 false [1].",
+          "options": [
+            "[4] Use the lower inclusive boundary x >= 5 [1] and upper inclusive boundary x <= 15 [1] together with AND: x >= 5 && x <= 15 ; x=5 is accepted [1] and x=15 is accepted [1]. Both clauses must be combined in the final condition.",
+            "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1].",
+            "[6] 100>=12 is true [1]; use && [1]; 11 false [1], 12 true [1], 18 true [1], 19 false [1]."
+          ],
+          "feedback": "[6] 100>=12 is true [1]; use && [1]; 11 false [1], 12 true [1], 18 true [1], 19 false [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Outline a debugging and regression-testing process after correcting a validator.",
+          "answer": "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1].",
+          "options": [
+            "[6] 100>=12 is true [1]; use && [1]; 11 false [1], 12 true [1], 18 true [1], 19 false [1].",
+            "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1].",
+            "[4] Use the lower inclusive boundary x >= 5 [1] and upper inclusive boundary x <= 15 [1] together with AND: x >= 5 && x <= 15 ; x=5 is accepted [1] and x=15 is accepted [1]. Both clauses must be combined in the final condition."
+          ],
+          "feedback": "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Outline a debugging and regression-testing process after correcting a validator.",
+        "model": "[6] Reproduce failing case [1]; identify faulty condition [1]; correct code [1]; retest valid boundaries [1] and invalid neighbours [1]; retain automated regression tests [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "inclusive boundary means: Endpoint allowed by a range.",
+          "answer": "true",
+          "feedback": "inclusive boundary — Endpoint allowed by a range."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "validation means: Repeat tests after a change.",
+          "answer": "false",
+          "feedback": "validation — Check input meets constraints."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "debugging means: Find and correct a fault.",
+          "answer": "true",
+          "feedback": "debugging — Find and correct a fault."
+        }
+      ]
+    }
+  ]
+}

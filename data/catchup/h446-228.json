@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-228",
+  "course": "h446",
+  "title": "Object-oriented synoptic challenge",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the difference between Step Into and Step Over?",
+          "answer": "Step Into enters the called method; Step Over executes it without stopping inside.",
+          "options": [
+            "Step Into enters the called method; Step Over executes it without stopping inside.",
+            "Controlling how an object's internal state can be accessed or changed.",
+            "For example List<Book>, a collection holding Book references."
+          ],
+          "feedback": "Step Into enters the called method; Step Over executes it without stopping inside."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is encapsulation?",
+          "answer": "Controlling how an object's internal state can be accessed or changed.",
+          "options": [
+            "Step Into enters the called method; Step Over executes it without stopping inside.",
+            "For example List<Book>, a collection holding Book references.",
+            "Controlling how an object's internal state can be accessed or changed."
+          ],
+          "feedback": "Controlling how an object's internal state can be accessed or changed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How would you store many Book objects in C#?",
+          "answer": "For example List<Book>, a collection holding Book references.",
+          "options": [
+            "Controlling how an object's internal state can be accessed or changed.",
+            "For example List<Book>, a collection holding Book references.",
+            "Step Into enters the called method; Step Over executes it without stopping inside."
+          ],
+          "feedback": "For example List<Book>, a collection holding Book references."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A Borrow method should fail on a book already on loan. Give a useful test.",
+          "answer": "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true.",
+          "options": [
+            "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true.",
+            "Step Into enters the called method; Step Over executes it without stopping inside.",
+            "Controlling how an object's internal state can be accessed or changed."
+          ],
+          "feedback": "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Model the entity",
+          "text": "A Book has a Title and whether it is currently on loan."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep state protected",
+          "text": "The public Borrow method updates a private-set OnLoan property, so external code cannot change it freely."
+        },
+        {
+          "type": "paragraph",
+          "title": "Test a second call",
+          "text": "The first Borrow returns true and changes state; the second call returns false because the book is already on loan."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Initial Reserved is false, so Reserve sets it to true and returns true."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model response",
+          "text": "The second call detects Reserved already true; it returns false and leaves state unchanged."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'class'?",
+          "answer": "Template defining properties and methods.",
+          "options": [
+            "Instance of a class.",
+            "Control access to and modification of object state.",
+            "Template defining properties and methods."
+          ],
+          "feedback": "class — Template defining properties and methods."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'object'?",
+          "answer": "Instance of a class.",
+          "options": [
+            "Control access to and modification of object state.",
+            "Instance of a class.",
+            "Template defining properties and methods."
+          ],
+          "feedback": "object — Instance of a class."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'encapsulation'?",
+          "answer": "Control access to and modification of object state.",
+          "options": [
+            "Control access to and modification of object state.",
+            "Template defining properties and methods.",
+            "Instance of a class."
+          ],
+          "feedback": "encapsulation — Control access to and modification of object state."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "The first call sets Occupied to true and returns true."
+        },
+        {
+          "type": "paragraph",
+          "title": "Model response",
+          "text": "The second call returns false without changing Occupied."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Stores multiple elements, such as List<Book>.",
+          "answer": "collection",
+          "options": [
+            "collection",
+            "class",
+            "object"
+          ],
+          "feedback": "collection — Stores multiple elements, such as List<Book>."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? A property that should stay true while an object is used.",
+          "answer": "invariant",
+          "options": [
+            "class",
+            "object",
+            "invariant"
+          ],
+          "feedback": "invariant — A property that should stay true while an object is used."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Template defining properties and methods.",
+          "answer": "class",
+          "options": [
+            "encapsulation",
+            "class",
+            "object"
+          ],
+          "feedback": "class — Template defining properties and methods."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Instance of a class.",
+          "answer": "object",
+          "options": [
+            "object",
+            "class",
+            "encapsulation"
+          ],
+          "feedback": "object — Instance of a class."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Explain the difference between a class and an object using Book.",
+          "answer": "[4] A class is a blueprint/type [1] that defines attributes/methods [1]; an object is a particular instance [1], e.g. a Book for one title [1].",
+          "options": [
+            "[4] A class is a blueprint/type [1] that defines attributes/methods [1]; an object is a particular instance [1], e.g. a Book for one title [1].",
+            "[6] public bool ReturnBook(){ if(!OnLoan)return false; OnLoan=false; return true; } [4]; test after a successful Borrow, ReturnBook returns true [1] and OnLoan becomes false [1].",
+            "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1]."
+          ],
+          "feedback": "[4] A class is a blueprint/type [1] that defines attributes/methods [1]; an object is a particular instance [1], e.g. a Book for one title [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Write a method ReturnBook() that only succeeds if OnLoan is true, then explain one test.",
+          "answer": "[6] public bool ReturnBook(){ if(!OnLoan)return false; OnLoan=false; return true; } [4]; test after a successful Borrow, ReturnBook returns true [1] and OnLoan becomes false [1].",
+          "options": [
+            "[4] A class is a blueprint/type [1] that defines attributes/methods [1]; an object is a particular instance [1], e.g. a Book for one title [1].",
+            "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1].",
+            "[6] public bool ReturnBook(){ if(!OnLoan)return false; OnLoan=false; return true; } [4]; test after a successful Borrow, ReturnBook returns true [1] and OnLoan becomes false [1]."
+          ],
+          "feedback": "[6] public bool ReturnBook(){ if(!OnLoan)return false; OnLoan=false; return true; } [4]; test after a successful Borrow, ReturnBook returns true [1] and OnLoan becomes false [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Explain how to manage many Book objects, retrieve a book by unique ISBN, and test duplicate borrowing.",
+          "answer": "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1].",
+          "options": [
+            "[6] public bool ReturnBook(){ if(!OnLoan)return false; OnLoan=false; return true; } [4]; test after a successful Borrow, ReturnBook returns true [1] and OnLoan becomes false [1].",
+            "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1].",
+            "[4] A class is a blueprint/type [1] that defines attributes/methods [1]; an object is a particular instance [1], e.g. a Book for one title [1]."
+          ],
+          "feedback": "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Explain how to manage many Book objects, retrieve a book by unique ISBN, and test duplicate borrowing.",
+        "model": "[6] Store Book objects in a Dictionary<string,Book> keyed by ISBN [2]; unique ISBN maps to one Book [1]; look up the selected object [1]; borrow once succeeds [1], borrowing again returns false and state remains on loan [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "object means: Instance of a class.",
+          "answer": "true",
+          "feedback": "object — Instance of a class."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "encapsulation means: A property that should stay true while an object is used.",
+          "answer": "false",
+          "feedback": "encapsulation — Control access to and modification of object state."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "collection means: Stores multiple elements, such as List<Book>.",
+          "answer": "true",
+          "feedback": "collection — Stores multiple elements, such as List<Book>."
+        }
+      ]
+    }
+  ]
+}

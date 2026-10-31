@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-207",
+  "course": "h446",
+  "title": "Complexity and algorithm choice",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why is a queue suitable for a print server?",
+          "answer": "It processes jobs in arrival order (FIFO).",
+          "options": [
+            "It processes jobs in arrival order (FIFO).",
+            "It must be sorted.",
+            "Six times."
+          ],
+          "feedback": "It processes jobs in arrival order (FIFO)."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What condition must the array satisfy?",
+          "answer": "It must be sorted.",
+          "options": [
+            "It processes jobs in arrival order (FIFO).",
+            "Six times.",
+            "It must be sorted."
+          ],
+          "feedback": "It must be sorted."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many times does a for-loop from i=0 to i<6 execute?",
+          "answer": "Six times.",
+          "options": [
+            "It must be sorted.",
+            "Six times.",
+            "It processes jobs in arrival order (FIFO)."
+          ],
+          "feedback": "Six times."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A loop of length 4 inside another loop of length 4: how many inner operations?",
+          "answer": "16.",
+          "options": [
+            "16.",
+            "It processes jobs in arrival order (FIFO).",
+            "It must be sorted."
+          ],
+          "feedback": "16."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with n",
+          "text": "n is the number of items. More items usually mean more operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace loop nesting",
+          "text": "One full scan performs n steps. A nested n-by-n scan performs n² steps."
+        },
+        {
+          "type": "paragraph",
+          "title": "Compare growth",
+          "text": "When n doubles, linear work doubles; quadratic work roughly quadruples. Big O describes growth, not seconds."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "One loop visits five elements, so does five operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "The nested loop repeats five operations five times, making 25."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'Big O'?",
+          "answer": "Asymptotic growth of algorithm work.",
+          "options": [
+            "Constant growth.",
+            "Logarithmic growth, e.g. halving search intervals.",
+            "Asymptotic growth of algorithm work."
+          ],
+          "feedback": "Big O — Asymptotic growth of algorithm work."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(1)'?",
+          "answer": "Constant growth.",
+          "options": [
+            "Logarithmic growth, e.g. halving search intervals.",
+            "Constant growth.",
+            "Asymptotic growth of algorithm work."
+          ],
+          "feedback": "O(1) — Constant growth."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'O(log n)'?",
+          "answer": "Logarithmic growth, e.g. halving search intervals.",
+          "options": [
+            "Logarithmic growth, e.g. halving search intervals.",
+            "Asymptotic growth of algorithm work.",
+            "Constant growth."
+          ],
+          "feedback": "O(log n) — Logarithmic growth, e.g. halving search intervals."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Linear search can check all 64 values."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A standard midpoint binary search needs at most seven comparisons on 64 sorted values."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Linear growth.",
+          "answer": "O(n)",
+          "options": [
+            "O(n)",
+            "Big O",
+            "O(1)"
+          ],
+          "feedback": "O(n) — Linear growth."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Quadratic growth, e.g. complete nested scans.",
+          "answer": "O(n²)",
+          "options": [
+            "Big O",
+            "O(1)",
+            "O(n²)"
+          ],
+          "feedback": "O(n²) — Quadratic growth, e.g. complete nested scans."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Asymptotic growth of algorithm work.",
+          "answer": "Big O",
+          "options": [
+            "O(log n)",
+            "Big O",
+            "O(1)"
+          ],
+          "feedback": "Big O — Asymptotic growth of algorithm work."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Constant growth.",
+          "answer": "O(1)",
+          "options": [
+            "O(1)",
+            "Big O",
+            "O(log n)"
+          ],
+          "feedback": "O(1) — Constant growth."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 1 OF 3 Give the Big O of a single full scan of n elements.",
+          "answer": "O(n).",
+          "options": [
+            "O(n).",
+            "100 and 10,000 respectively.",
+            "It does not need the sorting preparation required before binary search."
+          ],
+          "feedback": "O(n)."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 2 OF 3 For n=100, give iterations of a linear n loop and nested n×n loop.",
+          "answer": "100 and 10,000 respectively.",
+          "options": [
+            "O(n).",
+            "It does not need the sorting preparation required before binary search.",
+            "100 and 10,000 respectively."
+          ],
+          "feedback": "100 and 10,000 respectively."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 3 OF 3 Why may linear search be preferable for a single search of a short unsorted array?",
+          "answer": "It does not need the sorting preparation required before binary search.",
+          "options": [
+            "100 and 10,000 respectively.",
+            "It does not need the sorting preparation required before binary search.",
+            "O(n)."
+          ],
+          "feedback": "It does not need the sorting preparation required before binary search."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 3 OF 3 Why may linear search be preferable for a single search of a short unsorted array?",
+        "model": "It does not need the sorting preparation required before binary search.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "O(1) means: Constant growth.",
+          "answer": "true",
+          "feedback": "O(1) — Constant growth."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "O(log n) means: Quadratic growth, e.g. complete nested scans.",
+          "answer": "false",
+          "feedback": "O(log n) — Logarithmic growth, e.g. halving search intervals."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "O(n) means: Linear growth.",
+          "answer": "true",
+          "feedback": "O(n) — Linear growth."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-052",
+  "course": "h446",
+  "title": "Lesson 052 · Binary Search Trees with Node Objects",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does LinkedList<T>.AddAfter use to place a new node?",
+          "answer": "An existing node reference.",
+          "options": [
+            "Its first node.",
+            "Left subtree keys less and right keys greater under chosen policy.",
+            "An existing node reference."
+          ],
+          "feedback": "An existing node reference."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does HEAD mean for a linked list?",
+          "answer": "Its first node.",
+          "options": [
+            "Left subtree keys less and right keys greater under chosen policy.",
+            "Its first node.",
+            "An existing node reference."
+          ],
+          "feedback": "Its first node."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an invariant of a BST?",
+          "answer": "Left subtree keys less and right keys greater under chosen policy.",
+          "options": [
+            "Left subtree keys less and right keys greater under chosen policy.",
+            "An existing node reference.",
+            "Its first node."
+          ],
+          "feedback": "Left subtree keys less and right keys greater under chosen policy."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: 022",
+          "answer": "BST root10, left6, right18. Insert 15. Give location.",
+          "options": [
+            "An existing node reference.",
+            "Its first node.",
+            "BST root10, left6, right18. Insert 15. Give location."
+          ],
+          "feedback": "BST root10, left6, right18. Insert 15. Give location."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Discover",
+          "text": "A binary search tree (BST) keeps smaller keys in the left subtree and larger keys in the right subtree under a consistent duplicate-key policy."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Each node stores a key and optional Left/Right child references. Inserting begins at the root and follows comparisons until an empty child link is found."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Inorder traversal (left, root, right) prints sorted keys for a valid BST without duplicates."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the trace",
+          "text": "7 becomes right child of 6; follow comparisons until a null child is reached."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'BST'?",
+          "answer": "Binary search tree ordered by key.",
+          "options": [
+            "Node without child nodes.",
+            "Binary search tree ordered by key.",
+            "Topmost tree node."
+          ],
+          "feedback": "BST — Binary search tree ordered by key."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'root'?",
+          "answer": "Topmost tree node.",
+          "options": [
+            "Topmost tree node.",
+            "Binary search tree ordered by key.",
+            "Node without child nodes."
+          ],
+          "feedback": "root — Topmost tree node."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'leaf'?",
+          "answer": "Node without child nodes.",
+          "options": [
+            "Binary search tree ordered by key.",
+            "Topmost tree node.",
+            "Node without child nodes."
+          ],
+          "feedback": "leaf — Node without child nodes."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain the trace",
+          "text": "Place 12 as left child of 14. Tree ordering remains valid."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Left subtree, root, right subtree.",
+          "answer": "inorder",
+          "options": [
+            "BST",
+            "root",
+            "inorder"
+          ],
+          "feedback": "inorder — Left subtree, root, right subtree."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Binary search tree ordered by key.",
+          "answer": "BST",
+          "options": [
+            "leaf",
+            "BST",
+            "root"
+          ],
+          "feedback": "BST — Binary search tree ordered by key."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Topmost tree node.",
+          "answer": "root",
+          "options": [
+            "root",
+            "BST",
+            "leaf"
+          ],
+          "feedback": "root — Topmost tree node."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Node without child nodes.",
+          "answer": "leaf",
+          "options": [
+            "BST",
+            "root",
+            "leaf"
+          ],
+          "feedback": "leaf — Node without child nodes."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 BST root8, left3, right10, insert 6. Show comparisons and location. [6]",
+          "answer": "WORKED MODEL ANSWER 6<8 [2]; 6>3 [2]; right child of3 [2].",
+          "options": [
+            "WORKED MODEL ANSWER 3,6,8,10 [4]; left-root-right order follows BST invariant [2].",
+            "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1].",
+            "WORKED MODEL ANSWER 6<8 [2]; 6>3 [2]; right child of3 [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER 6<8 [2]; 6>3 [2]; right child of3 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2/3 For BST with keys 8,3,10,6, give inorder traversal and explain sorting. [6]",
+          "answer": "WORKED MODEL ANSWER 3,6,8,10 [4]; left-root-right order follows BST invariant [2].",
+          "options": [
+            "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1].",
+            "WORKED MODEL ANSWER 3,6,8,10 [4]; left-root-right order follows BST invariant [2].",
+            "WORKED MODEL ANSWER 6<8 [2]; 6>3 [2]; right child of3 [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER 3,6,8,10 [4]; left-root-right order follows BST invariant [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain why BST search may be O(log n) when balanced but O(n) when skewed. [6]",
+          "answer": "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1].",
+          "options": [
+            "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1].",
+            "WORKED MODEL ANSWER 6<8 [2]; 6>3 [2]; right child of3 [2].",
+            "WORKED MODEL ANSWER 3,6,8,10 [4]; left-root-right order follows BST invariant [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain why BST search may be O(log n) when balanced but O(n) when skewed. [6]",
+        "model": "WORKED MODEL ANSWER Balanced height ≈log n [2]; follow only one path per comparison [1]; sorted insertions may create chain height n [2]; search may inspect n nodes [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "root means: Topmost tree node.",
+          "answer": "true",
+          "feedback": "root — Topmost tree node."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "leaf means: Binary search tree ordered by key.",
+          "answer": "false",
+          "feedback": "leaf — Node without child nodes."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "inorder means: Left subtree, root, right subtree.",
+          "answer": "true",
+          "feedback": "inorder — Left subtree, root, right subtree."
+        }
+      ]
+    }
+  ]
+}

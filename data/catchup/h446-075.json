@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-075",
+  "course": "h446",
+  "title": "Lesson 075 · Big O: Quadratic, Exponential and Growth",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How does O(n) differ from O(1)?",
+          "answer": "One grows with n; the other does not.",
+          "options": [
+            "One grows with n; the other does not.",
+            "Five.",
+            "Subset backtracking or exhaustive enumeration."
+          ],
+          "feedback": "One grows with n; the other does not."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many halvings 32→1?",
+          "answer": "Five.",
+          "options": [
+            "One grows with n; the other does not.",
+            "Subset backtracking or exhaustive enumeration.",
+            "Five."
+          ],
+          "feedback": "Five."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which algorithm naturally explores include/exclude branches?",
+          "answer": "Subset backtracking or exhaustive enumeration.",
+          "options": [
+            "Five.",
+            "Subset backtracking or exhaustive enumeration.",
+            "One grows with n; the other does not."
+          ],
+          "feedback": "Subset backtracking or exhaustive enumeration."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A rectangular 4×3 zero-indexed array holds how many elements? Give its last valid index pair.",
+          "answer": "12 elements; last index (3,2).",
+          "options": [
+            "12 elements; last index (3,2).",
+            "One grows with n; the other does not.",
+            "Five."
+          ],
+          "feedback": "12 elements; last index (3,2)."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "Two nested n loops perform n×n operations, producing O(n²) time when each inner operation is constant."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "A binary decision at each of n positions can create 2ⁿ possibilities. This exponential growth quickly outruns polynomial methods."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "Big O ignores constants and lower-order terms; compare classes by input growth while acknowledging memory, workload and implementation detail."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Each of the six outer iterations runs six inner iterations."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'quadratic'?",
+          "answer": "Growth proportional to n².",
+          "options": [
+            "Growth like 2ⁿ.",
+            "Avoid exploring impossible branches.",
+            "Growth proportional to n²."
+          ],
+          "feedback": "quadratic — Growth proportional to n²."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'exponential'?",
+          "answer": "Growth like 2ⁿ.",
+          "options": [
+            "Avoid exploring impossible branches.",
+            "Growth like 2ⁿ.",
+            "Growth proportional to n²."
+          ],
+          "feedback": "exponential — Growth like 2ⁿ."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'pruning'?",
+          "answer": "Avoid exploring impossible branches.",
+          "options": [
+            "Avoid exploring impossible branches.",
+            "Growth proportional to n².",
+            "Growth like 2ⁿ."
+          ],
+          "feedback": "pruning — Avoid exploring impossible branches."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Every new independent binary choice doubles the count."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Handling larger inputs feasibly.",
+          "answer": "scalability",
+          "options": [
+            "scalability",
+            "quadratic",
+            "exponential"
+          ],
+          "feedback": "scalability — Handling larger inputs feasibly."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth proportional to n².",
+          "answer": "quadratic",
+          "options": [
+            "exponential",
+            "pruning",
+            "quadratic"
+          ],
+          "feedback": "quadratic — Growth proportional to n²."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Growth like 2ⁿ.",
+          "answer": "exponential",
+          "options": [
+            "pruning",
+            "exponential",
+            "quadratic"
+          ],
+          "feedback": "exponential — Growth like 2ⁿ."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Avoid exploring impossible branches.",
+          "answer": "pruning",
+          "options": [
+            "pruning",
+            "quadratic",
+            "exponential"
+          ],
+          "feedback": "pruning — Avoid exploring impossible branches."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 For n=5 and n=10, calculate n² and 2ⁿ values. [6]",
+          "answer": "n5 n²25 [1] 2⁵32 [1]; n10 n²100 [2] 2¹⁰1024 [2].",
+          "options": [
+            "n5 n²25 [1] 2⁵32 [1]; n10 n²100 [2] 2¹⁰1024 [2].",
+            "Outer n iterations [2], inner n per outer [2], n² total [1], O(n²) [1].",
+            "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1]."
+          ],
+          "feedback": "n5 n²25 [1] 2⁵32 [1]; n10 n²100 [2] 2¹⁰1024 [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLY · Q2/3 Explain time growth of a nested n×n loop and classify. [6]",
+          "answer": "Outer n iterations [2], inner n per outer [2], n² total [1], O(n²) [1].",
+          "options": [
+            "n5 n²25 [1] 2⁵32 [1]; n10 n²100 [2] 2¹⁰1024 [2].",
+            "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1].",
+            "Outer n iterations [2], inner n per outer [2], n² total [1], O(n²) [1]."
+          ],
+          "feedback": "Outer n iterations [2], inner n per outer [2], n² total [1], O(n²) [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 A problem has 30 binary choices. Evaluate full subset enumeration and one way to reduce exploration. [6]",
+          "answer": "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1].",
+          "options": [
+            "Outer n iterations [2], inner n per outer [2], n² total [1], O(n²) [1].",
+            "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1].",
+            "n5 n²25 [1] 2⁵32 [1]; n10 n²100 [2] 2¹⁰1024 [2]."
+          ],
+          "feedback": "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 A problem has 30 binary choices. Evaluate full subset enumeration and one way to reduce exploration. [6]",
+        "model": "2³⁰≈1,073,741,824 subsets [2]; impractical exhaustive work may occur [1]; backtracking pruning with valid bound [2], depends on safe assumptions [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "exponential means: Growth like 2ⁿ.",
+          "answer": "true",
+          "feedback": "exponential — Growth like 2ⁿ."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "pruning means: Growth proportional to n².",
+          "answer": "false",
+          "feedback": "pruning — Avoid exploring impossible branches."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "scalability means: Handling larger inputs feasibly.",
+          "answer": "true",
+          "feedback": "scalability — Handling larger inputs feasibly."
+        }
+      ]
+    }
+  ]
+}

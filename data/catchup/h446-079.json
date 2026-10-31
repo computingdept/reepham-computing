@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-079",
+  "course": "h446",
+  "title": "Lesson 079 · Bubble Sort: Adjacent Swaps and Passes",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which elements does bubble sort compare?",
+          "answer": "Adjacent pairs.",
+          "options": [
+            "Largest unsorted value at end.",
+            "Exchanges two stored values.",
+            "Adjacent pairs."
+          ],
+          "feedback": "Adjacent pairs."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is placed by one ascending pass?",
+          "answer": "Largest unsorted value at end.",
+          "options": [
+            "Exchanges two stored values.",
+            "Largest unsorted value at end.",
+            "Adjacent pairs."
+          ],
+          "feedback": "Largest unsorted value at end."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does swap do?",
+          "answer": "Exchanges two stored values.",
+          "options": [
+            "Exchanges two stored values.",
+            "Adjacent pairs.",
+            "Largest unsorted value at end."
+          ],
+          "feedback": "Exchanges two stored values."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Swap elements at indexes 0 and 1 in array [4,2,6]. Give the new array.",
+          "answer": "[2,4,6].",
+          "options": [
+            "Adjacent pairs.",
+            "Largest unsorted value at end.",
+            "[2,4,6]."
+          ],
+          "feedback": "[2,4,6]."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "Compare adjacent pairs, swapping them when out of ascending order."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "One completed ascending pass places the largest remaining element at the right end of the unsorted prefix."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Straightforward bubble sort is O(n²) worst time and O(1) extra memory; an early-exit flag can give O(n) best time."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the working",
+          "text": "[1,4,3,2]→[1,3,4,2]→[1,3,2,4]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'bubble sort'?",
+          "answer": "Compare/swap adjacent values.",
+          "options": [
+            "Exchange two elements.",
+            "Compare/swap adjacent values.",
+            "Sweep through neighbouring pairs."
+          ],
+          "feedback": "bubble sort — Compare/swap adjacent values."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'pass'?",
+          "answer": "Sweep through neighbouring pairs.",
+          "options": [
+            "Sweep through neighbouring pairs.",
+            "Compare/swap adjacent values.",
+            "Exchange two elements."
+          ],
+          "feedback": "pass — Sweep through neighbouring pairs."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'swap'?",
+          "answer": "Exchange two elements.",
+          "options": [
+            "Compare/swap adjacent values.",
+            "Sweep through neighbouring pairs.",
+            "Exchange two elements."
+          ],
+          "feedback": "swap — Exchange two elements."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check the working",
+          "text": "[2,3,5,1] (swap); 3,5 no swap; [2,3,1,5] (swap)."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Always true state after given stage.",
+          "answer": "invariant",
+          "options": [
+            "bubble sort",
+            "pass",
+            "invariant"
+          ],
+          "feedback": "invariant — Always true state after given stage."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Compare/swap adjacent values.",
+          "answer": "bubble sort",
+          "options": [
+            "swap",
+            "bubble sort",
+            "pass"
+          ],
+          "feedback": "bubble sort — Compare/swap adjacent values."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Sweep through neighbouring pairs.",
+          "answer": "pass",
+          "options": [
+            "pass",
+            "bubble sort",
+            "swap"
+          ],
+          "feedback": "pass — Sweep through neighbouring pairs."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Exchange two elements.",
+          "answer": "swap",
+          "options": [
+            "bubble sort",
+            "pass",
+            "swap"
+          ],
+          "feedback": "swap — Exchange two elements."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Give all states from first pass [5,2,4,1]. [6]",
+          "answer": "WORKED MODEL ANSWER [2,5,4,1] [2], [2,4,5,1] [2], [2,4,1,5] [2].",
+          "options": [
+            "WORKED MODEL ANSWER Pass1 [2,4,1,5] [2], pass2 [2,1,4,5] [2], pass3 [1,2,4,5] [2].",
+            "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2].",
+            "WORKED MODEL ANSWER [2,5,4,1] [2], [2,4,5,1] [2], [2,4,1,5] [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER [2,5,4,1] [2], [2,4,5,1] [2], [2,4,1,5] [2]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Give pass-end arrays for [5,2,4,1] until sorted. [6]",
+          "answer": "WORKED MODEL ANSWER Pass1 [2,4,1,5] [2], pass2 [2,1,4,5] [2], pass3 [1,2,4,5] [2].",
+          "options": [
+            "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2].",
+            "WORKED MODEL ANSWER Pass1 [2,4,1,5] [2], pass2 [2,1,4,5] [2], pass3 [1,2,4,5] [2].",
+            "WORKED MODEL ANSWER [2,5,4,1] [2], [2,4,5,1] [2], [2,4,1,5] [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Pass1 [2,4,1,5] [2], pass2 [2,1,4,5] [2], pass3 [1,2,4,5] [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Explain bubble-sort worst-time and extra-space complexity and benefit of early-stop. [6]",
+          "answer": "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2].",
+          "options": [
+            "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2].",
+            "WORKED MODEL ANSWER [2,5,4,1] [2], [2,4,5,1] [2], [2,4,1,5] [2].",
+            "WORKED MODEL ANSWER Pass1 [2,4,1,5] [2], pass2 [2,1,4,5] [2], pass3 [1,2,4,5] [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Explain bubble-sort worst-time and extra-space complexity and benefit of early-stop. [6]",
+        "model": "WORKED MODEL ANSWER Worst O(n²) comparisons [2], O(1) in-place extra [2], no-swap pass can stop early [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "pass means: Sweep through neighbouring pairs.",
+          "answer": "true",
+          "feedback": "pass — Sweep through neighbouring pairs."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "swap means: Compare/swap adjacent values.",
+          "answer": "false",
+          "feedback": "swap — Exchange two elements."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "invariant means: Always true state after given stage.",
+          "answer": "true",
+          "feedback": "invariant — Always true state after given stage."
+        }
+      ]
+    }
+  ]
+}

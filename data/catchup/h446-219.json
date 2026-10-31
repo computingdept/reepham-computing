@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "id": "h446-219",
+  "course": "h446",
+  "title": "Dijkstra: shortest paths II",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What vertex does Dijkstra settle next?",
+          "answer": "The unsettled vertex with the smallest current tentative distance.",
+          "options": [
+            "The unsettled vertex with the smallest current tentative distance.",
+            "The cost of travelling between two connected vertices.",
+            "The previous vertex on that route."
+          ],
+          "feedback": "The unsettled vertex with the smallest current tentative distance."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a weighted edge record?",
+          "answer": "The cost of travelling between two connected vertices.",
+          "options": [
+            "The unsettled vertex with the smallest current tentative distance.",
+            "The previous vertex on that route.",
+            "The cost of travelling between two connected vertices."
+          ],
+          "feedback": "The cost of travelling between two connected vertices."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does a predecessor in a path mean?",
+          "answer": "The previous vertex on that route.",
+          "options": [
+            "The cost of travelling between two connected vertices.",
+            "The previous vertex on that route.",
+            "The unsettled vertex with the smallest current tentative distance."
+          ],
+          "feedback": "The previous vertex on that route."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Distance to A=3, edge A–B=4, current distance B=10. Update B.",
+          "answer": "Candidate 3+4=7, so update B to 7 and predecessor(B)=A.",
+          "options": [
+            "Candidate 3+4=7, so update B to 7 and predecessor(B)=A.",
+            "The unsettled vertex with the smallest current tentative distance.",
+            "The cost of travelling between two connected vertices."
+          ],
+          "feedback": "Candidate 3+4=7, so update B to 7 and predecessor(B)=A."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Track improvements",
+          "text": "Relax each edge by comparing the candidate total with the current best-known distance."
+        },
+        {
+          "type": "paragraph",
+          "title": "Remember predecessors",
+          "text": "When a distance improves, store the vertex from which the improvement came."
+        },
+        {
+          "type": "paragraph",
+          "title": "Finish with the best distance",
+          "text": "Here E reaches distance 7 after A, C, B and D have settled."
+        },
+        {
+          "type": "paragraph",
+          "title": "Reconstruct backwards",
+          "text": "Follow E←D←B←C←A, then reverse it to get the forward route."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict the next state",
+          "text": "Start S=0: tentative A=2, B=6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Update the table",
+          "text": "Settle A=2; B improves to 4 and T receives 9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'predecessor table'?",
+          "answer": "For each vertex, stores the prior vertex on its best-known path.",
+          "options": [
+            "Replace a distance when a cheaper route is discovered.",
+            "Shortest distance is final for a vertex under non-negative edge weights.",
+            "For each vertex, stores the prior vertex on its best-known path."
+          ],
+          "feedback": "predecessor table — For each vertex, stores the prior vertex on its best-known path."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'relaxation'?",
+          "answer": "Replace a distance when a cheaper route is discovered.",
+          "options": [
+            "Shortest distance is final for a vertex under non-negative edge weights.",
+            "Replace a distance when a cheaper route is discovered.",
+            "For each vertex, stores the prior vertex on its best-known path."
+          ],
+          "feedback": "relaxation — Replace a distance when a cheaper route is discovered."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'settled'?",
+          "answer": "Shortest distance is final for a vertex under non-negative edge weights.",
+          "options": [
+            "Shortest distance is final for a vertex under non-negative edge weights.",
+            "For each vertex, stores the prior vertex on its best-known path.",
+            "Replace a distance when a cheaper route is discovered."
+          ],
+          "feedback": "settled — Shortest distance is final for a vertex under non-negative edge weights."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict the next state",
+          "text": "Start P=0 gives Q=4, R=1; settle R next."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "R improves Q to 3 and gives T=11."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "Q improves T to 6."
+        },
+        {
+          "type": "paragraph",
+          "title": "Update the table",
+          "text": "T←Q←R←P reverses to P→R→Q→T, cost 6."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Marker for an as-yet unreachable vertex.",
+          "answer": "infinity",
+          "options": [
+            "infinity",
+            "predecessor table",
+            "relaxation"
+          ],
+          "feedback": "infinity — Marker for an as-yet unreachable vertex."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Follow predecessor links backwards then reverse.",
+          "answer": "route reconstruction",
+          "options": [
+            "predecessor table",
+            "relaxation",
+            "route reconstruction"
+          ],
+          "feedback": "route reconstruction — Follow predecessor links backwards then reverse."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? For each vertex, stores the prior vertex on its best-known path.",
+          "answer": "predecessor table",
+          "options": [
+            "settled",
+            "predecessor table",
+            "relaxation"
+          ],
+          "feedback": "predecessor table — For each vertex, stores the prior vertex on its best-known path."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Replace a distance when a cheaper route is discovered.",
+          "answer": "relaxation",
+          "options": [
+            "relaxation",
+            "predecessor table",
+            "settled"
+          ],
+          "feedback": "relaxation — Replace a distance when a cheaper route is discovered."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 4 marks · QUESTION 1 OF 3 Starting at U, edges U–V=4, U–W=1 and W–V=2. Find the shortest U→V path and total cost.",
+          "answer": "[4] U→W costs 1 [1]; W→V adds 2 [1]; total 3 [1]; it is shorter than the direct cost 4 [1].",
+          "options": [
+            "[4] U→W costs 1 [1]; W→V adds 2 [1]; total 3 [1]; it is shorter than the direct cost 4 [1].",
+            "[6] Start B=1, A=5 [1]; settle B=1 [1], improve A=3 [1]; settle A=3, T improves to 6 [1]; route S→B→A→T [1]; predecessor(T)=A [1].",
+            "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1]."
+          ],
+          "feedback": "[4] U→W costs 1 [1]; W→V adds 2 [1]; total 3 [1]; it is shorter than the direct cost 4 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Edges S–A=5, S–B=1, B–A=2, A–T=3 and B–T=9. Find S→T shortest distance, route and predecessor of T.",
+          "answer": "[6] Start B=1, A=5 [1]; settle B=1 [1], improve A=3 [1]; settle A=3, T improves to 6 [1]; route S→B→A→T [1]; predecessor(T)=A [1].",
+          "options": [
+            "[4] U→W costs 1 [1]; W→V adds 2 [1]; total 3 [1]; it is shorter than the direct cost 4 [1].",
+            "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1].",
+            "[6] Start B=1, A=5 [1]; settle B=1 [1], improve A=3 [1]; settle A=3, T improves to 6 [1]; route S→B→A→T [1]; predecessor(T)=A [1]."
+          ],
+          "feedback": "[6] Start B=1, A=5 [1]; settle B=1 [1], improve A=3 [1]; settle A=3, T improves to 6 [1]; route S→B→A→T [1]; predecessor(T)=A [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 A graph contains a disconnected vertex Z. Explain what happens to tentative distance and predecessor for Z in Dijkstra, and when the algorithm may stop.",
+          "answer": "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1].",
+          "options": [
+            "[6] Start B=1, A=5 [1]; settle B=1 [1], improve A=3 [1]; settle A=3, T improves to 6 [1]; route S→B→A→T [1]; predecessor(T)=A [1].",
+            "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1].",
+            "[4] U→W costs 1 [1]; W→V adds 2 [1]; total 3 [1]; it is shorter than the direct cost 4 [1]."
+          ],
+          "feedback": "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 A graph contains a disconnected vertex Z. Explain what happens to tentative distance and predecessor for Z in Dijkstra, and when the algorithm may stop.",
+        "model": "[6] Z is unreachable [1], remains at ∞ [1] and has no valid predecessor [1]; once all unsettled vertices have ∞ distance [1], no reachable vertex remains [1] and processing can terminate [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "relaxation means: Replace a distance when a cheaper route is discovered.",
+          "answer": "true",
+          "feedback": "relaxation — Replace a distance when a cheaper route is discovered."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "settled means: Follow predecessor links backwards then reverse.",
+          "answer": "false",
+          "feedback": "settled — Shortest distance is final for a vertex under non-negative edge weights."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "infinity means: Marker for an as-yet unreachable vertex.",
+          "answer": "true",
+          "feedback": "infinity — Marker for an as-yet unreachable vertex."
+        }
+      ]
+    }
+  ]
+}

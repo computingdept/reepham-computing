@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-204",
+  "course": "h446",
+  "title": "Logic circuits, adders and flip-flops",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can a group of four 1s remove two variables?",
+          "answer": "Two variables change within the group, so only constant variables remain.",
+          "options": [
+            "Two variables change within the group, so only constant variables remain.",
+            "¬A ∨ ¬B.",
+            "10₂."
+          ],
+          "feedback": "Two variables change within the group, so only constant variables remain."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify ¬(A ∧ B).",
+          "answer": "¬A ∨ ¬B.",
+          "options": [
+            "Two variables change within the group, so only constant variables remain.",
+            "10₂.",
+            "¬A ∨ ¬B."
+          ],
+          "feedback": "¬A ∨ ¬B."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Calculate 1+1 in binary.",
+          "answer": "10₂.",
+          "options": [
+            "¬A ∨ ¬B.",
+            "10₂.",
+            "Two variables change within the group, so only constant variables remain."
+          ],
+          "feedback": "10₂."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is (1 XOR 0) AND 1?",
+          "answer": "1. XOR gives 1, and 1 AND 1 is 1.",
+          "options": [
+            "1. XOR gives 1, and 1 AND 1 is 1.",
+            "Two variables change within the group, so only constant variables remain.",
+            "¬A ∨ ¬B."
+          ],
+          "feedback": "1. XOR gives 1, and 1 AND 1 is 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find the Sum bit",
+          "text": "XOR is 1 when A and B are different; A=1, B=1 gives Sum=0."
+        },
+        {
+          "type": "paragraph",
+          "title": "Find the Carry bit",
+          "text": "AND is 1 only when both inputs are 1; here Carry=1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Extend to full adder and memory",
+          "text": "A full adder also includes CarryIn. Unlike combinational logic, a D flip-flop stores a bit until the triggering clock edge."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict and explain",
+          "text": "XOR(0,1)=1, giving Sum=1."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check and extend",
+          "text": "AND(0,1)=0, giving Carry=0."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'half adder'?",
+          "answer": "Combinational circuit that adds two one-bit inputs.",
+          "options": [
+            "Adds two bits and a carry-in bit.",
+            "Current-column result bit.",
+            "Combinational circuit that adds two one-bit inputs."
+          ],
+          "feedback": "half adder — Combinational circuit that adds two one-bit inputs."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'full adder'?",
+          "answer": "Adds two bits and a carry-in bit.",
+          "options": [
+            "Current-column result bit.",
+            "Adds two bits and a carry-in bit.",
+            "Combinational circuit that adds two one-bit inputs."
+          ],
+          "feedback": "full adder — Adds two bits and a carry-in bit."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'Sum'?",
+          "answer": "Current-column result bit.",
+          "options": [
+            "Current-column result bit.",
+            "Combinational circuit that adds two one-bit inputs.",
+            "Adds two bits and a carry-in bit."
+          ],
+          "feedback": "Sum — Current-column result bit."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict and explain",
+          "text": "The total is decimal 2, binary 10."
+        },
+        {
+          "type": "paragraph",
+          "title": "Check and extend",
+          "text": "Sum is the low bit 0; CarryOut is the high bit 1."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Bit passed to the next higher column.",
+          "answer": "CarryOut",
+          "options": [
+            "CarryOut",
+            "half adder",
+            "full adder"
+          ],
+          "feedback": "CarryOut — Bit passed to the next higher column."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Clock-triggered circuit that stores one bit.",
+          "answer": "D flip-flop",
+          "options": [
+            "half adder",
+            "full adder",
+            "D flip-flop"
+          ],
+          "feedback": "D flip-flop — Clock-triggered circuit that stores one bit."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Combinational circuit that adds two one-bit inputs.",
+          "answer": "half adder",
+          "options": [
+            "Sum",
+            "half adder",
+            "full adder"
+          ],
+          "feedback": "half adder — Combinational circuit that adds two one-bit inputs."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Adds two bits and a carry-in bit.",
+          "answer": "full adder",
+          "options": [
+            "full adder",
+            "half adder",
+            "Sum"
+          ],
+          "feedback": "full adder — Adds two bits and a carry-in bit."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 A half adder receives A=1, B=0. Give Sum and Carry.",
+          "answer": "Sum=1; Carry=0.",
+          "options": [
+            "Sum=1; Carry=0.",
+            "1+1+0=2=10₂, so Sum=0, CarryOut=1.",
+            "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q."
+          ],
+          "feedback": "Sum=1; Carry=0."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 For a full adder A=1, B=1 and CarryIn=0, calculate Sum and CarryOut.",
+          "answer": "1+1+0=2=10₂, so Sum=0, CarryOut=1.",
+          "options": [
+            "Sum=1; Carry=0.",
+            "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q.",
+            "1+1+0=2=10₂, so Sum=0, CarryOut=1."
+          ],
+          "feedback": "1+1+0=2=10₂, so Sum=0, CarryOut=1."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 A rising-edge D flip-flop has Q=0 and D=1. D changes to 0 before the next rising clock edge. What value is stored after that edge, and why?",
+          "answer": "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q.",
+          "options": [
+            "1+1+0=2=10₂, so Sum=0, CarryOut=1.",
+            "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q.",
+            "Sum=1; Carry=0."
+          ],
+          "feedback": "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 A rising-edge D flip-flop has Q=0 and D=1. D changes to 0 before the next rising clock edge. What value is stored after that edge, and why?",
+        "model": "Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q.",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "full adder means: Adds two bits and a carry-in bit.",
+          "answer": "true",
+          "feedback": "full adder — Adds two bits and a carry-in bit."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Sum means: Clock-triggered circuit that stores one bit.",
+          "answer": "false",
+          "feedback": "Sum — Current-column result bit."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "CarryOut means: Bit passed to the next higher column.",
+          "answer": "true",
+          "feedback": "CarryOut — Bit passed to the next higher column."
+        }
+      ]
+    }
+  ]
+}

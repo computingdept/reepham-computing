@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-116",
+  "course": "h446",
+  "title": "Lesson 116 · Linkers, Loaders and Program Libraries",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which compilation stage converts source characters into tokens?",
+          "answer": "Lexical analysis.",
+          "options": [
+            "Its element locations can be calculated from base address and index.",
+            "Lexical analysis.",
+            "In its left subtree (under the chosen no-duplicate convention)."
+          ],
+          "feedback": "Lexical analysis."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: In a BST, where is a value less than the current node placed?",
+          "answer": "In its left subtree (under the chosen no-duplicate convention).",
+          "options": [
+            "In its left subtree (under the chosen no-duplicate convention).",
+            "Lexical analysis.",
+            "Its element locations can be calculated from base address and index."
+          ],
+          "feedback": "In its left subtree (under the chosen no-duplicate convention)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Why can an array provide direct indexed access?",
+          "answer": "Its element locations can be calculated from base address and index.",
+          "options": [
+            "Lexical analysis.",
+            "In its left subtree (under the chosen no-duplicate convention).",
+            "Its element locations can be calculated from base address and index."
+          ],
+          "feedback": "Its element locations can be calculated from base address and index."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A full adder receives A=1, B=1 and carry-in=0. What are sum and carry-out?",
+          "answer": "Sum 0 and carry-out 1.",
+          "options": [
+            "In its left subtree (under the chosen no-duplicate convention).",
+            "Sum 0 and carry-out 1.",
+            "Lexical analysis."
+          ],
+          "feedback": "Sum 0 and carry-out 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Compile modules",
+          "text": "Source files become object modules with symbols/references."
+        },
+        {
+          "type": "paragraph",
+          "title": "Link dependencies",
+          "text": "Linker resolves symbols and combines modules/libraries; static/dynamic linkage differs."
+        },
+        {
+          "type": "paragraph",
+          "title": "Load and run",
+          "text": "Loader maps executable and needed libraries into memory, then begins execution."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Model answer",
+          "text": "Compile source modules into object files; linker resolves the call and produces linked executable (or dynamic references); loader places executable and required libraries in memory and starts execution. Check: link each claim to the scenario and use precise OCR terminology."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'linker'?",
+          "answer": "Resolves symbols and combines object modules.",
+          "options": [
+            "Resolves symbols and combines object modules.",
+            "Places an executable in memory ready to run.",
+            "Reusable compiled routines/functions."
+          ],
+          "feedback": "linker — Resolves symbols and combines object modules."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'loader'?",
+          "answer": "Places an executable in memory ready to run.",
+          "options": [
+            "Resolves symbols and combines object modules.",
+            "Reusable compiled routines/functions.",
+            "Places an executable in memory ready to run."
+          ],
+          "feedback": "loader — Places an executable in memory ready to run."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'library'?",
+          "answer": "Reusable compiled routines/functions.",
+          "options": [
+            "Places an executable in memory ready to run.",
+            "Reusable compiled routines/functions.",
+            "Resolves symbols and combines object modules."
+          ],
+          "feedback": "library — Reusable compiled routines/functions."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "What must we decide?",
+          "text": "Identify the inputs, relevant facts and exact output or judgement required."
+        },
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Use the middle stage of the visual to follow the process and state each intermediate result."
+        },
+        {
+          "type": "paragraph",
+          "title": "Shared worked answer",
+          "text": "Lexical and syntax stages succeeded. The linker cannot find the referenced symbol's definition: implementation may be missing, not linked, misspelled or incompatible. Add the correct object/library or fix the symbol."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resolution/use of shared code at load time or runtime.",
+          "answer": "dynamic linking",
+          "options": [
+            "loader",
+            "dynamic linking",
+            "linker"
+          ],
+          "feedback": "dynamic linking — Resolution/use of shared code at load time or runtime."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Resolves symbols and combines object modules.",
+          "answer": "linker",
+          "options": [
+            "linker",
+            "loader",
+            "library"
+          ],
+          "feedback": "linker — Resolves symbols and combines object modules."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Places an executable in memory ready to run.",
+          "answer": "loader",
+          "options": [
+            "linker",
+            "library",
+            "loader"
+          ],
+          "feedback": "loader — Places an executable in memory ready to run."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reusable compiled routines/functions.",
+          "answer": "library",
+          "options": [
+            "loader",
+            "library",
+            "linker"
+          ],
+          "feedback": "library — Reusable compiled routines/functions."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain the roles of linker and loader with examples. [6]",
+          "answer": "/ WORKED ANSWER Linker resolves external references/builds runnable image [3]; loader places executable/dependencies in memory and initiates process [3].",
+          "options": [
+            "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2].",
+            "/ WORKED ANSWER Linker resolves external references/builds runnable image [3]; loader places executable/dependencies in memory and initiates process [3].",
+            "/ WORKED ANSWER Static includes library code in binary [2], dynamic references shared library at runtime [2], size/updates/dependency trade-off [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Linker resolves external references/builds runnable image [3]; loader places executable/dependencies in memory and initiates process [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Distinguish static from dynamic linking, giving one trade-off of each. [6]",
+          "answer": "/ WORKED ANSWER Static includes library code in binary [2], dynamic references shared library at runtime [2], size/updates/dependency trade-off [2].",
+          "options": [
+            "/ WORKED ANSWER Static includes library code in binary [2], dynamic references shared library at runtime [2], size/updates/dependency trade-off [2].",
+            "/ WORKED ANSWER Linker resolves external references/builds runnable image [3]; loader places executable/dependencies in memory and initiates process [3].",
+            "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Static includes library code in binary [2], dynamic references shared library at runtime [2], size/updates/dependency trade-off [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 A deployed app fails because a required shared library is unavailable. Explain why compile success did not prevent this. [8]",
+          "answer": "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2].",
+          "options": [
+            "/ WORKED ANSWER Linker resolves external references/builds runnable image [3]; loader places executable/dependencies in memory and initiates process [3].",
+            "/ WORKED ANSWER Static includes library code in binary [2], dynamic references shared library at runtime [2], size/updates/dependency trade-off [2].",
+            "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 A deployed app fails because a required shared library is unavailable. Explain why compile success did not prevent this. [8]",
+        "model": "/ WORKED ANSWER Compile per module [2]; link/reference external dependency [2]; runtime loader requires compatible library [2]; mitigation packaging/version control [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "loader means: Places an executable in memory ready to run.",
+          "answer": "true",
+          "feedback": "loader — Places an executable in memory ready to run."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "library means: Resolves symbols and combines object modules.",
+          "answer": "false",
+          "feedback": "library — Reusable compiled routines/functions."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "dynamic linking means: Resolution/use of shared code at load time or runtime.",
+          "answer": "true",
+          "feedback": "dynamic linking — Resolution/use of shared code at load time or runtime."
+        }
+      ]
+    }
+  ]
+}

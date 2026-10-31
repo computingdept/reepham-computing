@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "id": "h446-283",
+  "course": "h446",
+  "title": "TCP/IP stack, protocols and DNS",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which device typically forwards packets between different IP networks?",
+          "answer": "Router.",
+          "options": [
+            "A connection between two vertices.",
+            "Eight.",
+            "Router."
+          ],
+          "feedback": "Router."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does an edge represent in a network graph?",
+          "answer": "A connection between two vertices.",
+          "options": [
+            "Eight.",
+            "A connection between two vertices.",
+            "Router."
+          ],
+          "feedback": "A connection between two vertices."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits make one byte?",
+          "answer": "Eight.",
+          "options": [
+            "Eight.",
+            "Router.",
+            "A connection between two vertices."
+          ],
+          "feedback": "Eight."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A sender and receiver are on different networks. Can a switch alone normally route IP packets between them?",
+          "answer": "No. A router (or routing-capable layer-3 switch) is needed to route between IP networks.",
+          "options": [
+            "Router.",
+            "A connection between two vertices.",
+            "No. A router (or routing-capable layer-3 switch) is needed to route between IP networks."
+          ],
+          "feedback": "No. A router (or routing-capable layer-3 switch) is needed to route between IP networks."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Start with a hostname",
+          "text": "The browser uses DNS (an application-layer protocol) to resolve school.example to an IP address. A cached result may avoid further queries."
+        },
+        {
+          "type": "paragraph",
+          "title": "Understand four layers",
+          "text": "Application supports services such as HTTP(S), DNS and SMTP; transport includes TCP and UDP; internet uses IP; link transfers frames on the local connection."
+        },
+        {
+          "type": "paragraph",
+          "title": "Build an HTTPS connection",
+          "text": "A browser normally establishes TCP to port 443, negotiates TLS, then exchanges encrypted HTTP requests and responses. DNS lookup happens first if the IP is unknown."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Name resolution",
+          "text": "The resolver returns the IP address for library.example (or uses a cached answer)."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Transport connection",
+          "text": "TCP establishes a connection to the server, typically destination port 443."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Application exchange",
+          "text": "TLS secures the connection; HTTPS carries the page request and response."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'application layer'?",
+          "answer": "Protocols offering services to applications, including DNS and HTTP.",
+          "options": [
+            "Network addressing and forwarding using IP.",
+            "Protocols offering services to applications, including DNS and HTTP.",
+            "End-to-end transport protocols such as TCP and UDP."
+          ],
+          "feedback": "application layer — Protocols offering services to applications, including DNS and HTTP."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'transport layer'?",
+          "answer": "End-to-end transport protocols such as TCP and UDP.",
+          "options": [
+            "End-to-end transport protocols such as TCP and UDP.",
+            "Protocols offering services to applications, including DNS and HTTP.",
+            "Network addressing and forwarding using IP."
+          ],
+          "feedback": "transport layer — End-to-end transport protocols such as TCP and UDP."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'internet layer'?",
+          "answer": "Network addressing and forwarding using IP.",
+          "options": [
+            "Protocols offering services to applications, including DNS and HTTP.",
+            "End-to-end transport protocols such as TCP and UDP.",
+            "Network addressing and forwarding using IP."
+          ],
+          "feedback": "internet layer — Network addressing and forwarding using IP."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Identify the application",
+          "text": "SMTP is an application-layer protocol for transferring outgoing email."
+        },
+        {
+          "type": "paragraph",
+          "title": "Identify the other layers",
+          "text": "TCP provides reliable transport for SMTP; IP handles inter-network addressing and routing; link delivers frames on each local link."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Local transfer of frames over media such as Ethernet or Wi-Fi.",
+          "answer": "link layer",
+          "options": [
+            "application layer",
+            "transport layer",
+            "link layer"
+          ],
+          "feedback": "link layer — Local transfer of frames over media such as Ethernet or Wi-Fi."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Domain Name System; supports name-to-address resolution.",
+          "answer": "DNS",
+          "options": [
+            "transport layer",
+            "DNS",
+            "application layer"
+          ],
+          "feedback": "DNS — Domain Name System; supports name-to-address resolution."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Protocols offering services to applications, including DNS and HTTP.",
+          "answer": "application layer",
+          "options": [
+            "application layer",
+            "transport layer",
+            "internet layer"
+          ],
+          "feedback": "application layer — Protocols offering services to applications, including DNS and HTTP."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? End-to-end transport protocols such as TCP and UDP.",
+          "answer": "transport layer",
+          "options": [
+            "application layer",
+            "internet layer",
+            "transport layer"
+          ],
+          "feedback": "transport layer — End-to-end transport protocols such as TCP and UDP."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · QUESTION 1 OF 3 Which TCP/IP layer contains DNS, and what does DNS do? [2]",
+          "answer": "[2] Application layer [1]. DNS resolves domain names to IP addresses (among other DNS record types) [1].",
+          "options": [
+            "[6] HTTP: application layer [1], handles web requests/responses [1]; TCP: transport layer [1], delivers an ordered reliable byte stream [1]; IP: internet layer [1], provides packet addressing and routing across networks [1].",
+            "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern…",
+            "[2] Application layer [1]. DNS resolves domain names to IP addresses (among other DNS record types) [1]."
+          ],
+          "feedback": "[2] Application layer [1]. DNS resolves domain names to IP addresses (among other DNS record types) [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · QUESTION 2 OF 3 Place TCP, IP, and HTTP into the correct layers and explain one role of each. [6]",
+          "answer": "[6] HTTP: application layer [1], handles web requests/responses [1]; TCP: transport layer [1], delivers an ordered reliable byte stream [1]; IP: internet layer [1], provides packet addressing and routing across networks [1].",
+          "options": [
+            "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern…",
+            "[6] HTTP: application layer [1], handles web requests/responses [1]; TCP: transport layer [1], delivers an ordered reliable byte stream [1]; IP: internet layer [1], provides packet addressing and routing across networks [1].",
+            "[2] Application layer [1]. DNS resolves domain names to IP addresses (among other DNS record types) [1]."
+          ],
+          "feedback": "[6] HTTP: application layer [1], handles web requests/responses [1]; TCP: transport layer [1], delivers an ordered reliable byte stream [1]; IP: internet layer [1], provides packet addressing and routing across networks [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · QUESTION 3 OF 3 A pupil says DNS encrypts webpage traffic and TCP chooses the Wi-Fi channel. Correct both errors, identifying the relevant protocols/layers. [4]",
+          "answer": "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern…",
+          "options": [
+            "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern…",
+            "[2] Application layer [1]. DNS resolves domain names to IP addresses (among other DNS record types) [1].",
+            "[6] HTTP: application layer [1], handles web requests/responses [1]; TCP: transport layer [1], delivers an ordered reliable byte stream [1]; IP: internet layer [1], provides packet addressing and routing across networks [1]."
+          ],
+          "feedback": "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · QUESTION 3 OF 3 A pupil says DNS encrypts webpage traffic and TCP chooses the Wi-Fi channel. Correct both errors, identifying the relevant protocols/layers. [4]",
+        "model": "[4] DNS performs name resolution, not website-content encryption [1]; TLS provides encryption for HTTPS traffic [1]; TCP is a transport protocol for reliable ordered data [1]; wireless channel selection is a Wi-Fi/link-layer concern [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "transport layer means: End-to-end transport protocols such as TCP and UDP.",
+          "answer": "true",
+          "feedback": "transport layer — End-to-end transport protocols such as TCP and UDP."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "internet layer means: Domain Name System; supports name-to-address resolution.",
+          "answer": "false",
+          "feedback": "internet layer — Network addressing and forwarding using IP."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "link layer means: Local transfer of frames over media such as Ethernet or Wi-Fi.",
+          "answer": "true",
+          "feedback": "link layer — Local transfer of frames over media such as Ethernet or Wi-Fi."
+        }
+      ]
+    }
+  ]
+}

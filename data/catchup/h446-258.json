@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-258",
+  "course": "h446",
+  "title": "Processor and memory synoptic challenge",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is an ADC used for?",
+          "answer": "Converting an analogue sensor signal into a digital representation.",
+          "options": [
+            "Converting an analogue sensor signal into a digital representation.",
+            "CIR.",
+            "The next step cannot start until the earlier result exists."
+          ],
+          "feedback": "Converting an analogue sensor signal into a digital representation."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which register holds the current instruction?",
+          "answer": "CIR.",
+          "options": [
+            "Converting an analogue sensor signal into a digital representation.",
+            "The next step cannot start until the earlier result exists.",
+            "CIR."
+          ],
+          "feedback": "CIR."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the main limitation of two cores on wholly dependent steps?",
+          "answer": "The next step cannot start until the earlier result exists.",
+          "options": [
+            "CIR.",
+            "The next step cannot start until the earlier result exists.",
+            "Converting an analogue sensor signal into a digital representation."
+          ],
+          "feedback": "The next step cannot start until the earlier result exists."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: A full adder receives 1,1 and carry-in 0. Give sum and carry-out and explain.",
+          "answer": "1+1+0=10₂; sum bit 0, carry-out bit 1.",
+          "options": [
+            "1+1+0=10₂; sum bit 0, carry-out bit 1.",
+            "Converting an analogue sensor signal into a digital representation.",
+            "CIR."
+          ],
+          "feedback": "1+1+0=10₂; sum bit 0, carry-out bit 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Fetch the instruction",
+          "text": "PC identifies address 72, which MAR sends to memory. MDR transfers its contents to CIR."
+        },
+        {
+          "type": "paragraph",
+          "title": "Differentiate performance improvements",
+          "text": "Cores can execute independent work; cache helps when needed data/instructions are present."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain limits",
+          "text": "Branching, shared memory bandwidth, serial dependencies and software constrain real speedup."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict",
+          "text": "Copy PC=40 into MAR to select the instruction location."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain",
+          "text": "Instruction contents travel via MDR to CIR, while sequential PC advances to 41."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'PC'?",
+          "answer": "Program Counter; next instruction address.",
+          "options": [
+            "Memory Address Register.",
+            "Memory Data Register.",
+            "Program Counter; next instruction address."
+          ],
+          "feedback": "PC — Program Counter; next instruction address."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'MAR'?",
+          "answer": "Memory Address Register.",
+          "options": [
+            "Memory Data Register.",
+            "Memory Address Register.",
+            "Program Counter; next instruction address."
+          ],
+          "feedback": "MAR — Memory Address Register."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'MDR'?",
+          "answer": "Memory Data Register.",
+          "options": [
+            "Memory Data Register.",
+            "Program Counter; next instruction address.",
+            "Memory Address Register."
+          ],
+          "feedback": "MDR — Memory Data Register."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict",
+          "text": "Each available core receives a separate independent job."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Ideal duration is the longer job, five minutes; serial execution would take eight."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Fast nearby memory.",
+          "answer": "cache",
+          "options": [
+            "cache",
+            "PC",
+            "MAR"
+          ],
+          "feedback": "cache — Fast nearby memory."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Work completed per unit time.",
+          "answer": "throughput",
+          "options": [
+            "PC",
+            "MAR",
+            "throughput"
+          ],
+          "feedback": "throughput — Work completed per unit time."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Program Counter; next instruction address.",
+          "answer": "PC",
+          "options": [
+            "MDR",
+            "PC",
+            "MAR"
+          ],
+          "feedback": "PC — Program Counter; next instruction address."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Memory Address Register.",
+          "answer": "MAR",
+          "options": [
+            "MAR",
+            "PC",
+            "MDR"
+          ],
+          "feedback": "MAR — Memory Address Register."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 5 marks · QUESTION 1 OF 3 State what PC, MAR, MDR, CIR and ACC contain or do.",
+          "answer": "[5] PC next instruction address [1], MAR memory address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC interim arithmetic result [1].",
+          "options": [
+            "[5] PC next instruction address [1], MAR memory address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC interim arithmetic result [1].",
+            "[6] Cache can reduce some slow main-memory accesses [2]; cores can process independent frames or tiles [2]; dependencies, bandwidth and overhead reduce ideal gains [2].",
+            "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2]."
+          ],
+          "feedback": "[5] PC next instruction address [1], MAR memory address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC interim arithmetic result [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Explain how cache and extra cores could help video rendering, and why speedup may be less than expected.",
+          "answer": "[6] Cache can reduce some slow main-memory accesses [2]; cores can process independent frames or tiles [2]; dependencies, bandwidth and overhead reduce ideal gains [2].",
+          "options": [
+            "[5] PC next instruction address [1], MAR memory address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC interim arithmetic result [1].",
+            "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2].",
+            "[6] Cache can reduce some slow main-memory accesses [2]; cores can process independent frames or tiles [2]; dependencies, bandwidth and overhead reduce ideal gains [2]."
+          ],
+          "feedback": "[6] Cache can reduce some slow main-memory accesses [2]; cores can process independent frames or tiles [2]; dependencies, bandwidth and overhead reduce ideal gains [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Challenge · 6 marks · QUESTION 3 OF 3 Compare a multicore CPU and GPU for an interactive logic controller and a million independent pixels.",
+          "answer": "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2].",
+          "options": [
+            "[6] Cache can reduce some slow main-memory accesses [2]; cores can process independent frames or tiles [2]; dependencies, bandwidth and overhead reduce ideal gains [2].",
+            "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2].",
+            "[5] PC next instruction address [1], MAR memory address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC interim arithmetic result [1]."
+          ],
+          "feedback": "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Challenge · 6 marks · QUESTION 3 OF 3 Compare a multicore CPU and GPU for an interactive logic controller and a million independent pixels.",
+        "model": "[6] General control with branching suits CPU [2]; similar pixel calculations suit many GPU lanes [2]; data transfer and parallelisation overhead determine actual suitability [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "MAR means: Memory Address Register.",
+          "answer": "true",
+          "feedback": "MAR — Memory Address Register."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "MDR means: Work completed per unit time.",
+          "answer": "false",
+          "feedback": "MDR — Memory Data Register."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "cache means: Fast nearby memory.",
+          "answer": "true",
+          "feedback": "cache — Fast nearby memory."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-096",
+  "course": "h446",
+  "title": "Lesson 096 · Little Man Computer: Instructions and the Accumulator",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the ACC for?",
+          "answer": "Stores current/intermediate calculation.",
+          "options": [
+            "Stores current/intermediate calculation.",
+            "Stores current ACC into mailbox X.",
+            "Reads input into ACC, replacing its former value."
+          ],
+          "feedback": "Stores current/intermediate calculation."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does STA X do?",
+          "answer": "Stores current ACC into mailbox X.",
+          "options": [
+            "Stores current/intermediate calculation.",
+            "Reads input into ACC, replacing its former value.",
+            "Stores current ACC into mailbox X."
+          ],
+          "feedback": "Stores current ACC into mailbox X."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does INP do?",
+          "answer": "Reads input into ACC, replacing its former value.",
+          "options": [
+            "Stores current ACC into mailbox X.",
+            "Reads input into ACC, replacing its former value.",
+            "Stores current/intermediate calculation."
+          ],
+          "feedback": "Reads input into ACC, replacing its former value."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Half adder A1,B1: what Sum and Carry?",
+          "answer": "Sum0 (XOR); Carry1 (AND).",
+          "options": [
+            "Sum0 (XOR); Carry1 (AND).",
+            "Stores current/intermediate calculation.",
+            "Stores current ACC into mailbox X."
+          ],
+          "feedback": "Sum0 (XOR); Carry1 (AND)."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Observe",
+          "text": "LMC is a teaching model of a stored-program accumulator processor: mailboxes hold instructions or data, and ACC holds the immediate working value."
+        },
+        {
+          "type": "paragraph",
+          "title": "Apply",
+          "text": "INP replaces ACC; STA copies ACC into a mailbox; LDA copies a mailbox's contents into ACC; ADD adds mailbox contents to ACC."
+        },
+        {
+          "type": "paragraph",
+          "title": "Evaluate",
+          "text": "OUT writes current ACC to output. Trace ACC separately from mailbox contents and PC instruction addresses."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Follow the reasoning",
+          "text": "FIRST6, second INP sets ACC3, ADD FIRST gives9, OUT9."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'LMC'?",
+          "answer": "Little Man Computer, simplified stored-program model.",
+          "options": [
+            "Memory location.",
+            "Accumulator for working results.",
+            "Little Man Computer, simplified stored-program model."
+          ],
+          "feedback": "LMC — Little Man Computer, simplified stored-program model."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'mailbox'?",
+          "answer": "Memory location.",
+          "options": [
+            "Accumulator for working results.",
+            "Memory location.",
+            "Little Man Computer, simplified stored-program model."
+          ],
+          "feedback": "mailbox — Memory location."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'ACC'?",
+          "answer": "Accumulator for working results.",
+          "options": [
+            "Accumulator for working results.",
+            "Little Man Computer, simplified stored-program model.",
+            "Memory location."
+          ],
+          "feedback": "ACC — Accumulator for working results."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Follow the reasoning",
+          "text": "After first input store FIRST=4; second input ACC9; SUB FIRST → ACC5; OUT5."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Store ACC into memory.",
+          "answer": "STA",
+          "options": [
+            "STA",
+            "LMC",
+            "mailbox"
+          ],
+          "feedback": "STA — Store ACC into memory."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Load ACC from memory.",
+          "answer": "LDA",
+          "options": [
+            "LMC",
+            "mailbox",
+            "LDA"
+          ],
+          "feedback": "LDA — Load ACC from memory."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Little Man Computer, simplified stored-program model.",
+          "answer": "LMC",
+          "options": [
+            "ACC",
+            "LMC",
+            "mailbox"
+          ],
+          "feedback": "LMC — Little Man Computer, simplified stored-program model."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Memory location.",
+          "answer": "mailbox",
+          "options": [
+            "mailbox",
+            "LMC",
+            "ACC"
+          ],
+          "feedback": "mailbox — Memory location."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Trace program above for inputs 4,7: ACC after each INP, STA and ADD; output. [6]",
+          "answer": "/ WORKED METHOD ACC4 after first INP [1], FIRST4 after STA [1], ACC7 after second INP [1], ACC11 after ADD [2], output11 [1].",
+          "options": [
+            "/ WORKED METHOD ACC4 after first INP [1], FIRST4 after STA [1], ACC7 after second INP [1], ACC11 after ADD [2], output11 [1].",
+            "/ WORKED METHOD INP [1], STA N [1], LDA N [1], OUT [1], HLT [1], N DAT 0 [1].",
+            "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2]."
+          ],
+          "feedback": "/ WORKED METHOD ACC4 after first INP [1], FIRST4 after STA [1], ACC7 after second INP [1], ACC11 after ADD [2], output11 [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Write an LMC program that reads one integer, stores it as N, then loads and outputs N. [6]",
+          "answer": "/ WORKED METHOD INP [1], STA N [1], LDA N [1], OUT [1], HLT [1], N DAT 0 [1].",
+          "options": [
+            "/ WORKED METHOD ACC4 after first INP [1], FIRST4 after STA [1], ACC7 after second INP [1], ACC11 after ADD [2], output11 [1].",
+            "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2].",
+            "/ WORKED METHOD INP [1], STA N [1], LDA N [1], OUT [1], HLT [1], N DAT 0 [1]."
+          ],
+          "feedback": "/ WORKED METHOD INP [1], STA N [1], LDA N [1], OUT [1], HLT [1], N DAT 0 [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Compare LDA FIRST, STA FIRST and ADD FIRST in relation to ACC and mailbox; give distinct effects. [6]",
+          "answer": "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2].",
+          "options": [
+            "/ WORKED METHOD INP [1], STA N [1], LDA N [1], OUT [1], HLT [1], N DAT 0 [1].",
+            "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2].",
+            "/ WORKED METHOD ACC4 after first INP [1], FIRST4 after STA [1], ACC7 after second INP [1], ACC11 after ADD [2], output11 [1]."
+          ],
+          "feedback": "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Compare LDA FIRST, STA FIRST and ADD FIRST in relation to ACC and mailbox; give distinct effects. [6]",
+        "model": "/ WORKED METHOD LDA copies mailbox to ACC [2], STA copies ACC to mailbox [2], ADD adds mailbox value into ACC [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "mailbox means: Memory location.",
+          "answer": "true",
+          "feedback": "mailbox — Memory location."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "ACC means: Load ACC from memory.",
+          "answer": "false",
+          "feedback": "ACC — Accumulator for working results."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "STA means: Store ACC into memory.",
+          "answer": "true",
+          "feedback": "STA — Store ACC into memory."
+        }
+      ]
+    }
+  ]
+}

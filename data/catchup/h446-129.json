@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "id": "h446-129",
+  "course": "h446",
+  "title": "Lesson 129 · Dictionary Compression and Repeated Substrings",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: RLE is effective on what kind of input?",
+          "answer": "Long consecutive runs of identical symbols.",
+          "options": [
+            "Long consecutive runs of identical symbols.",
+            "24.",
+            "RAM."
+          ],
+          "feedback": "Long consecutive runs of identical symbols."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: How many bits are in three bytes?",
+          "answer": "24.",
+          "options": [
+            "Long consecutive runs of identical symbols.",
+            "RAM.",
+            "24."
+          ],
+          "feedback": "24."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which memory is typically volatile: RAM or ROM?",
+          "answer": "RAM.",
+          "options": [
+            "24.",
+            "RAM.",
+            "Long consecutive runs of identical symbols."
+          ],
+          "feedback": "RAM."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the binary result of 1 + 1 in a full adder with carry-in 0?",
+          "answer": "Sum 0, carry-out 1.",
+          "options": [
+            "Sum 0, carry-out 1.",
+            "Long consecutive runs of identical symbols.",
+            "24."
+          ],
+          "feedback": "Sum 0, carry-out 1."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Find recurring text",
+          "text": "Locate useful repeated words or substrings."
+        },
+        {
+          "type": "paragraph",
+          "title": "Build dictionary",
+          "text": "Assign tokens to recurring sequences and store mapping."
+        },
+        {
+          "type": "paragraph",
+          "title": "Encode and decode",
+          "text": "Replace sequences with tokens; decode using the same mapping."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Two dictionary entries",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · #1 #2 #1",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Restore original phrase",
+          "text": "Treat spaces as retained separators: #1 #2 #1. Decoder substitutes entries to recover 'COMPUTER SCIENCE COMPUTER'. Include dictionary storage when calculating total size."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'dictionary coding'?",
+          "answer": "Encodes recurring sequences by referring to dictionary entries.",
+          "options": [
+            "Short code representing a longer sequence.",
+            "Repeated sequence used by more than one part of the source.",
+            "Encodes recurring sequences by referring to dictionary entries."
+          ],
+          "feedback": "dictionary coding — Encodes recurring sequences by referring to dictionary entries."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'token'?",
+          "answer": "Short code representing a longer sequence.",
+          "options": [
+            "Repeated sequence used by more than one part of the source.",
+            "Short code representing a longer sequence.",
+            "Encodes recurring sequences by referring to dictionary entries."
+          ],
+          "feedback": "token — Short code representing a longer sequence."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'overlap'?",
+          "answer": "Repeated sequence used by more than one part of the source.",
+          "options": [
+            "Repeated sequence used by more than one part of the source.",
+            "Encodes recurring sequences by referring to dictionary entries.",
+            "Short code representing a longer sequence."
+          ],
+          "feedback": "overlap — Repeated sequence used by more than one part of the source."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "ABCD repeats three times",
+          "text": "Predict the first step from the prompt."
+        },
+        {
+          "type": "paragraph",
+          "title": "Token A for ABCD",
+          "text": "Explain the intermediate result or decision."
+        },
+        {
+          "type": "paragraph",
+          "title": "Count dictionary overhead",
+          "text": "AAXYZA, using single-character token A and leaving XYZ as literals under this toy scheme. Original 15 characters become 6 token/literal characters, plus dictionary overhead; real formats require unambiguous token conventions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Reconstruction is exact when dictionary and token mapping are known.",
+          "answer": "lossless",
+          "options": [
+            "lossless",
+            "dictionary coding",
+            "token"
+          ],
+          "feedback": "lossless — Reconstruction is exact when dictionary and token mapping are known."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Encodes recurring sequences by referring to dictionary entries.",
+          "answer": "dictionary coding",
+          "options": [
+            "token",
+            "overlap",
+            "dictionary coding"
+          ],
+          "feedback": "dictionary coding — Encodes recurring sequences by referring to dictionary entries."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Short code representing a longer sequence.",
+          "answer": "token",
+          "options": [
+            "overlap",
+            "token",
+            "dictionary coding"
+          ],
+          "feedback": "token — Short code representing a longer sequence."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Repeated sequence used by more than one part of the source.",
+          "answer": "overlap",
+          "options": [
+            "overlap",
+            "dictionary coding",
+            "token"
+          ],
+          "feedback": "overlap — Repeated sequence used by more than one part of the source."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · QUESTION 1 OF 3 Explain dictionary compression and why the decoder needs the dictionary. [6]",
+          "answer": "/ WORKED ANSWER Repeated substrings replaced by shorter references [3]; mapping resolves tokens for exact restoration [3].",
+          "options": [
+            "/ WORKED ANSWER Repeated substrings replaced by shorter references [3]; mapping resolves tokens for exact restoration [3].",
+            "/ WORKED ANSWER 1 2 1 1 [3]; BLUE RED [3], with token separators assumed.",
+            "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2]."
+          ],
+          "feedback": "/ WORKED ANSWER Repeated substrings replaced by shorter references [3]; mapping resolves tokens for exact restoration [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · QUESTION 2 OF 3 Using entries {1:'RED',2:'BLUE'}, encode 'RED BLUE RED RED' and decode '2 1'. [6]",
+          "answer": "/ WORKED ANSWER 1 2 1 1 [3]; BLUE RED [3], with token separators assumed.",
+          "options": [
+            "/ WORKED ANSWER Repeated substrings replaced by shorter references [3]; mapping resolves tokens for exact restoration [3].",
+            "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2].",
+            "/ WORKED ANSWER 1 2 1 1 [3]; BLUE RED [3], with token separators assumed."
+          ],
+          "feedback": "/ WORKED ANSWER 1 2 1 1 [3]; BLUE RED [3], with token separators assumed."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · QUESTION 3 OF 3 Evaluate dictionary coding for a document with frequent terms versus already-compressed random-looking data. [8]",
+          "answer": "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2].",
+          "options": [
+            "/ WORKED ANSWER 1 2 1 1 [3]; BLUE RED [3], with token separators assumed.",
+            "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2].",
+            "/ WORKED ANSWER Repeated substrings replaced by shorter references [3]; mapping resolves tokens for exact restoration [3]."
+          ],
+          "feedback": "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · QUESTION 3 OF 3 Evaluate dictionary coding for a document with frequent terms versus already-compressed random-looking data. [8]",
+        "model": "/ WORKED ANSWER Repeated sequences help [2], tokens shorten recurring data [2], dictionary overhead matters [2], little redundancy in high-entropy data and justified choice [2].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "token means: Short code representing a longer sequence.",
+          "answer": "true",
+          "feedback": "token — Short code representing a longer sequence."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "overlap means: Encodes recurring sequences by referring to dictionary entries.",
+          "answer": "false",
+          "feedback": "overlap — Repeated sequence used by more than one part of the source."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "lossless means: Reconstruction is exact when dictionary and token mapping are known.",
+          "answer": "true",
+          "feedback": "lossless — Reconstruction is exact when dictionary and token mapping are known."
+        }
+      ]
+    }
+  ]
+}

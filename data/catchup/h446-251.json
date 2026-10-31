@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "id": "h446-251",
+  "course": "h446",
+  "title": "CPU components and registers",
+  "year": 13,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Which data structure supports last-in-first-out Undo?",
+          "answer": "A stack.",
+          "options": [
+            "Arithmetic and logical operations.",
+            "A stack.",
+            "O(n)."
+          ],
+          "feedback": "A stack."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What is the extra space complexity of allocating a new length-n array?",
+          "answer": "O(n).",
+          "options": [
+            "O(n).",
+            "A stack.",
+            "Arithmetic and logical operations."
+          ],
+          "feedback": "O(n)."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does the ALU perform?",
+          "answer": "Arithmetic and logical operations.",
+          "options": [
+            "A stack.",
+            "O(n).",
+            "Arithmetic and logical operations."
+          ],
+          "feedback": "Arithmetic and logical operations."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: Simplify (A ∧ ¬B) ∨ (A ∧ B) and explain why the grouped cells make one variable disappear.",
+          "answer": "Factor A: A∧(¬B∨B)=A∧1=A. K-map adjacent cells differ only in B, so B is eliminated.",
+          "options": [
+            "O(n).",
+            "Factor A: A∧(¬B∨B)=A∧1=A. K-map adjacent cells differ only in B, so B is eliminated.",
+            "A stack."
+          ],
+          "feedback": "Factor A: A∧(¬B∨B)=A∧1=A. K-map adjacent cells differ only in B, so B is eliminated."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand the CPU areas",
+          "text": "The control unit decodes and coordinates operations; the ALU performs arithmetic and logical operations."
+        },
+        {
+          "type": "paragraph",
+          "title": "Separate address from data",
+          "text": "MAR holds the address being accessed; MDR holds the instruction or data transferred; PC holds the next instruction's address."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace the simplified fetch",
+          "text": "With PC=120, MAR becomes 120; memory supplies instruction via MDR to CIR; PC advances to the next sequential address. Branching may change PC later."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Predict first",
+          "text": "Copy PC=50 into MAR to identify the memory address being accessed."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Explain the answer",
+          "text": "Fetch memory content into MDR, copy it to CIR and advance PC to 51."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'ALU'?",
+          "answer": "Arithmetic Logic Unit.",
+          "options": [
+            "Arithmetic Logic Unit.",
+            "Control Unit, coordinates and decodes instruction operations.",
+            "Memory Address Register."
+          ],
+          "feedback": "ALU — Arithmetic Logic Unit."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'CU'?",
+          "answer": "Control Unit, coordinates and decodes instruction operations.",
+          "options": [
+            "Arithmetic Logic Unit.",
+            "Memory Address Register.",
+            "Control Unit, coordinates and decodes instruction operations."
+          ],
+          "feedback": "CU — Control Unit, coordinates and decodes instruction operations."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'MAR'?",
+          "answer": "Memory Address Register.",
+          "options": [
+            "Control Unit, coordinates and decodes instruction operations.",
+            "Memory Address Register.",
+            "Arithmetic Logic Unit."
+          ],
+          "feedback": "MAR — Memory Address Register."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Predict first",
+          "text": "MAR must contain 200 and MDR transports the instruction from memory."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain the answer",
+          "text": "CIR now contains ADD 10; for sequential execution PC has advanced to 201."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Memory Data Register.",
+          "answer": "MDR",
+          "options": [
+            "CU",
+            "MDR",
+            "ALU"
+          ],
+          "feedback": "MDR — Memory Data Register."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Current Instruction Register.",
+          "answer": "CIR",
+          "options": [
+            "CIR",
+            "ALU",
+            "CU"
+          ],
+          "feedback": "CIR — Current Instruction Register."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Program Counter.",
+          "answer": "PC",
+          "options": [
+            "ALU",
+            "CU",
+            "PC"
+          ],
+          "feedback": "PC — Program Counter."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Accumulator, stores intermediate arithmetic results.",
+          "answer": "ACC",
+          "options": [
+            "CU",
+            "ACC",
+            "ALU"
+          ],
+          "feedback": "ACC — Accumulator, stores intermediate arithmetic results."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Foundation · 5 marks · QUESTION 1 OF 3 State the roles of PC, MAR, MDR, CIR and ACC.",
+          "answer": "[5] PC next instruction address [1], MAR accessed address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC intermediate arithmetic/logical result [1].",
+          "options": [
+            "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1].",
+            "[5] PC next instruction address [1], MAR accessed address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC intermediate arithmetic/logical result [1].",
+            "[6] PC initially 73 [1], MAR becomes 73 [1], memory transfers LDA 92 via MDR [1], CIR receives LDA 92 [1], sequential PC becomes 74 [1], CU interprets the instruction [1]."
+          ],
+          "feedback": "[5] PC next instruction address [1], MAR accessed address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC intermediate arithmetic/logical result [1]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Core · 6 marks · QUESTION 2 OF 3 Trace a fetch starting PC=73 where Memory[73] contains LDA 92. State each register's role and the sequential next PC.",
+          "answer": "[6] PC initially 73 [1], MAR becomes 73 [1], memory transfers LDA 92 via MDR [1], CIR receives LDA 92 [1], sequential PC becomes 74 [1], CU interprets the instruction [1].",
+          "options": [
+            "[6] PC initially 73 [1], MAR becomes 73 [1], memory transfers LDA 92 via MDR [1], CIR receives LDA 92 [1], sequential PC becomes 74 [1], CU interprets the instruction [1].",
+            "[5] PC next instruction address [1], MAR accessed address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC intermediate arithmetic/logical result [1].",
+            "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1]."
+          ],
+          "feedback": "[6] PC initially 73 [1], MAR becomes 73 [1], memory transfers LDA 92 via MDR [1], CIR receives LDA 92 [1], sequential PC becomes 74 [1], CU interprets the instruction [1]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: Stretch · 6 marks · QUESTION 3 OF 3 Explain why the CPU uses both MAR and MDR rather than a single undifferentiated register, referring to an instruction fetch and a data load.",
+          "answer": "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1].",
+          "options": [
+            "[5] PC next instruction address [1], MAR accessed address [1], MDR transferred data/instruction [1], CIR current instruction [1], ACC intermediate arithmetic/logical result [1].",
+            "[6] PC initially 73 [1], MAR becomes 73 [1], memory transfers LDA 92 via MDR [1], CIR receives LDA 92 [1], sequential PC becomes 74 [1], CU interprets the instruction [1].",
+            "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1]."
+          ],
+          "feedback": "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. Stretch · 6 marks · QUESTION 3 OF 3 Explain why the CPU uses both MAR and MDR rather than a single undifferentiated register, referring to an instruction fetch and a data load.",
+        "model": "[6] MAR carries memory location address [1]; MDR carries actual contents [1]; fetching uses PC→MAR [1] and memory→MDR→CIR [1]; loading data uses an address in MAR [1] and the retrieved value via MDR towards target register/ACC [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "CU means: Control Unit, coordinates and decodes instruction operations.",
+          "answer": "true",
+          "feedback": "CU — Control Unit, coordinates and decodes instruction operations."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "MAR means: Current Instruction Register.",
+          "answer": "false",
+          "feedback": "MAR — Memory Address Register."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "MDR means: Memory Data Register.",
+          "answer": "true",
+          "feedback": "MDR — Memory Data Register."
+        }
+      ]
+    }
+  ]
+}

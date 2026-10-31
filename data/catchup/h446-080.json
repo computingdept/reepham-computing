@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "id": "h446-080",
+  "course": "h446",
+  "title": "Lesson 080 · Insertion Sort: Grow the Sorted Prefix",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What gets fixed after a bubble pass?",
+          "answer": "Largest remaining value at end.",
+          "options": [
+            "Initial already-ordered portion.",
+            "Largest remaining value at end.",
+            "Item currently being placed."
+          ],
+          "feedback": "Largest remaining value at end."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does insertion-sort key mean?",
+          "answer": "Item currently being placed.",
+          "options": [
+            "Item currently being placed.",
+            "Largest remaining value at end.",
+            "Initial already-ordered portion."
+          ],
+          "feedback": "Item currently being placed."
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Choose the model answer: What does sorted prefix mean?",
+          "answer": "Initial already-ordered portion.",
+          "options": [
+            "Largest remaining value at end.",
+            "Item currently being placed.",
+            "Initial already-ordered portion."
+          ],
+          "feedback": "Initial already-ordered portion."
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Choose the model answer: BST root10 with right child15: insert key12. Show comparisons and position.",
+          "answer": "12>10 so go right;12<15 so insert as left child of15.",
+          "options": [
+            "Item currently being placed.",
+            "12>10 so go right;12<15 so insert as left child of15.",
+            "Largest remaining value at end."
+          ],
+          "feedback": "12>10 so go right;12<15 so insert as left child of15."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Understand",
+          "text": "The left portion is kept sorted. Read the next item as key and compare backwards with earlier elements."
+        },
+        {
+          "type": "paragraph",
+          "title": "Trace",
+          "text": "Shift larger elements one position to the right, then insert key in the vacant position."
+        },
+        {
+          "type": "paragraph",
+          "title": "Explain",
+          "text": "Worst O(n²), already-sorted best O(n), auxiliary O(1); especially useful on small/nearly sorted arrays."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example · Check the working",
+          "text": "Key1→[1,4,3]; key3→[1,3,4]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Which description matches 'insertion sort'?",
+          "answer": "Insert key into ordered prefix.",
+          "options": [
+            "Insert key into ordered prefix.",
+            "Value currently being inserted.",
+            "Move existing value to make room."
+          ],
+          "feedback": "insertion sort — Insert key into ordered prefix."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which description matches 'key'?",
+          "answer": "Value currently being inserted.",
+          "options": [
+            "Insert key into ordered prefix.",
+            "Move existing value to make room.",
+            "Value currently being inserted."
+          ],
+          "feedback": "key — Value currently being inserted."
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which description matches 'shift'?",
+          "answer": "Move existing value to make room.",
+          "options": [
+            "Value currently being inserted.",
+            "Move existing value to make room.",
+            "Insert key into ordered prefix."
+          ],
+          "feedback": "shift — Move existing value to make room."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Check the working",
+          "text": "Shift5 and3 right then write2 at index0, giving [2,3,5]."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Already-sorted left section.",
+          "answer": "sorted prefix",
+          "options": [
+            "key",
+            "sorted prefix",
+            "insertion sort"
+          ],
+          "feedback": "sorted prefix — Already-sorted left section."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Insert key into ordered prefix.",
+          "answer": "insertion sort",
+          "options": [
+            "insertion sort",
+            "key",
+            "shift"
+          ],
+          "feedback": "insertion sort — Insert key into ordered prefix."
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Value currently being inserted.",
+          "answer": "key",
+          "options": [
+            "insertion sort",
+            "shift",
+            "key"
+          ],
+          "feedback": "key — Value currently being inserted."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which term best matches this explanation? Move existing value to make room.",
+          "answer": "shift",
+          "options": [
+            "key",
+            "shift",
+            "insertion sort"
+          ],
+          "feedback": "shift — Move existing value to make room."
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1/3 Give arrays after first two key insertions into [5,2,4,1]. [6]",
+          "answer": "WORKED MODEL ANSWER [2,5,4,1] [3]; [2,4,5,1] [3].",
+          "options": [
+            "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1].",
+            "WORKED MODEL ANSWER [2,5,4,1] [3]; [2,4,5,1] [3].",
+            "WORKED MODEL ANSWER Shift5 [1], shift4 [1], shift2 [1], insert1 at0 [1], final [1,2,4,5] [2]."
+          ],
+          "feedback": "WORKED MODEL ANSWER [2,5,4,1] [3]; [2,4,5,1] [3]."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: APPLICATION · Q2/3 Complete insertion of final key1 into [2,4,5,1], showing working. [6]",
+          "answer": "WORKED MODEL ANSWER Shift5 [1], shift4 [1], shift2 [1], insert1 at0 [1], final [1,2,4,5] [2].",
+          "options": [
+            "WORKED MODEL ANSWER Shift5 [1], shift4 [1], shift2 [1], insert1 at0 [1], final [1,2,4,5] [2].",
+            "WORKED MODEL ANSWER [2,5,4,1] [3]; [2,4,5,1] [3].",
+            "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Shift5 [1], shift4 [1], shift2 [1], insert1 at0 [1], final [1,2,4,5] [2]."
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare insertion and bubble sort method/time on already sorted input. [6]",
+          "answer": "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1].",
+          "options": [
+            "WORKED MODEL ANSWER [2,5,4,1] [3]; [2,4,5,1] [3].",
+            "WORKED MODEL ANSWER Shift5 [1], shift4 [1], shift2 [1], insert1 at0 [1], final [1,2,4,5] [2].",
+            "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1]."
+          ],
+          "feedback": "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1]."
+        }
+      ],
+      "writing": {
+        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3/3 Compare insertion and bubble sort method/time on already sorted input. [6]",
+        "model": "WORKED MODEL ANSWER Insertion compares backward and shifts [2], O(n) best case [1]; bubble adjacent passes/swaps [2], early-stop optimisation needed for O(n) best [1].",
+        "checklist": [
+          "I answered the specific question, not just the general topic.",
+          "I used precise H446 terminology and linked claims to the task.",
+          "I checked my response against the model and improved omissions."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "key means: Value currently being inserted.",
+          "answer": "true",
+          "feedback": "key — Value currently being inserted."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "shift means: Insert key into ordered prefix.",
+          "answer": "false",
+          "feedback": "shift — Move existing value to make room."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "sorted prefix means: Already-sorted left section.",
+          "answer": "true",
+          "feedback": "sorted prefix — Already-sorted left section."
+        }
+      ]
+    }
+  ]
+}
