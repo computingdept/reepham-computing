@@ -30,6 +30,7 @@ SIGN = {
 
 def compact(s, max_chars=0):
     s = re.sub(r"\s+", " ", str(s or "")).strip()
+    s = re.sub(r" (?=[.,;:!?])", "", s)
     s = s.replace("\u200b", "")
     if max_chars and len(s) > max_chars:
         cut = s[:max_chars].rsplit(" ", 1)[0]
@@ -96,6 +97,33 @@ def retrieval_mcq(qid, prompt, answer, explanation, seed):
         candidate = compact(candidate)
         if candidate != answer and candidate not in alternatives:
             alternatives.append(candidate)
+    # Short factual retrievals need subject-specific misconceptions rather
+    # than generic 'insufficient information' filler.
+    short = answer.casefold().rstrip(".!? ")
+    short_options = {
+        "queue": ["Stack.", "Binary search tree."],
+        "stack": ["Queue.", "Binary search tree."],
+        "page table": ["Process control block.", "File allocation table."],
+        "false": ["True.", "Only if both inputs are true."],
+        "true": ["False.", "Only if both inputs are false."],
+        "removes top element": ["Reads the top element but leaves it in place.",
+                                "Removes the bottom element."],
+        "quadratic asymptotic growth": ["Linear asymptotic growth.",
+                                       "Logarithmic asymptotic growth."],
+        "one needs the other's result first": [
+            "The two tasks are independent, so either can finish first.",
+            "A shared input always means both tasks can run simultaneously."
+        ],
+        "the address of the next instruction to fetch": [
+            "The instruction currently in the instruction register.",
+            "The data transferred from the selected memory address."
+        ],
+        "invert fixed-width positive representation then add one": [
+            "Invert the bits but do not add one.",
+            "Add one before inverting all the bits."
+        ],
+    }
+    for wrong in short_options.get(short, []): add(wrong)
     bits = list(re.finditer(r"(?<![A-Za-z0-9])[01]{4,}(?![A-Za-z0-9])", answer))
     if bits:
         match = bits[-1]
@@ -124,7 +152,15 @@ def retrieval_mcq(qid, prompt, answer, explanation, seed):
         ("AND", "OR"), ("OR", "AND"), ("not", "always"),
         ("preserve", "discard"), ("leading", "trailing"),
         ("identifier", "number"), ("return", "print"),
-        ("true", "false"), ("false", "true"), ("must", "need not"),
+        ("top", "bottom"), ("bottom", "top"),
+        ("next", "previous"), ("current", "previous"),
+        ("quadratic", "linear"), ("linear", "logarithmic"),
+        ("removes", "inspects"), ("print", "return"),
+        ("necessary", "unnecessary"), ("required", "optional"),
+        ("record", "list"), ("list", "record"),
+        ("correct", "incorrect"), ("equal", "unequal"),
+        ("true", "false"), ("false", "true"),
+        ("must", "need not"),
         ("can", "cannot"), ("is", "is not"), ("are", "are not"),
     ]
     for source, wrong in misconceptions:
@@ -302,6 +338,17 @@ def generate(n, template):
         d = donow_of(prior)
         substituted=True
     if len(d)!=4: raise ValueError(f"{number}: no valid four-question retrieval")
+    # Classroom 058 has an evident source typo: Q4 is literally "022" while
+    # the intended BST question appears in the answer position. Correct only
+    # the Catch-Up extraction, document the exception, do not alter lesson HTML.
+    corrected_source=False
+    if n == 58 and d[3][0] == "022" and "BST root8" in d[3][1]:
+        d[3]=(d[3][1],
+              "The node 5 is inserted as the right child of node 3.",
+              "Since 5 < 8 go left from the root; since 5 > 3 go right.")
+        corrected_source=True
+    if any(len(q.strip())<8 or re.fullmatch(r"\\d{1,4}",q.strip()) for q,_,_ in d):
+        raise ValueError(f"{number}: suspicious short/number-only Do Now prompt")
 
     words=vocab_of(soup)
     if n == 36:
@@ -446,6 +493,7 @@ def generate(n, template):
     assert f"Lesson {number}" in page and "catchup-lesson.js" in page
     assert 'href="index.html#do-now"' in page
     return cfg,page, {"id":number, "title":title, "year":cfg["year"], "retrieval_reused":substituted,
+                      "retrieval_source_correction":corrected_source,
                       "assessment_questions_protected":n in PROTECTED_ASSESSMENTS,
                       "vocabulary_source_count":len(words), "application_source_count":len(tasks),
                       "objective_question_count":13, "status":"generated; automated checks passed; teacher review pending"}
