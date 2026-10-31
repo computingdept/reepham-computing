@@ -22,8 +22,8 @@
           "prompt": "What is the main difference between an array and a list?",
           "answer": "An array has a fixed size; a list can change size.",
           "options": [
+            "An array has a fixed size; a record can change size.",
             "An array has a fixed size; a list cannot change size.",
-            "There is not enough information to determine the result.",
             "An array has a fixed size; a list can change size."
           ],
           "feedback": "Model answer: An array has a fixed size; a list can change size."
@@ -47,8 +47,8 @@
           "answer": "There is no next item.",
           "options": [
             "There is no next item.",
-            "There is not no next item.",
-            "There is not enough information to determine the result."
+            "There is no previous item.",
+            "There is not no next item."
           ],
           "feedback": "Model answer: There is no next item."
         },
@@ -108,7 +108,7 @@
         {
           "type": "paragraph",
           "title": "Worked example · Traverse Alex → Ben → Cara → Daisy",
-          "text": "using System; public class Program { public static void Main() { string[] data = {\"Ben\", \"Daisy\", \"Alex\", \"Cara\"}; int[] next = {3, -1, 0, 1}; int start = 2; int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; } } }"
+          "text": "using System; public class Program { public static void Main() { string[] data = {\"Ben\", \"Daisy\", \"Alex\", \"Cara\"}; int[] next = {3, -1, 0, 1}; int start = 2; int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; } } }"
         }
       ],
       "questions": [
@@ -165,7 +165,7 @@
         {
           "type": "paragraph",
           "title": "Complete the same trace",
-          "text": "firstIndex = start secondIndex = ? secondData = data[?]"
+          "text": "firstIndex = start secondIndex =? secondData = data[?]"
         },
         {
           "type": "paragraph",
@@ -243,7 +243,7 @@
           "prompt": "Choose the response that best addresses this independent task: Access the second linked-list item OCR asks how the second item is reached using pointer values.",
           "answer": "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
           "options": [
-            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+            "CHECK Fill the same code int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; }",
             "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
             "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
           ],
@@ -253,13 +253,13 @@
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Traverse Use the start pointer and follow next until -1.",
-          "answer": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+          "answer": "CHECK Fill the same code int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; }",
           "options": [
             "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
-            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }",
+            "CHECK Fill the same code int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; }",
             "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]"
           ],
-          "feedback": "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }"
+          "feedback": "CHECK Fill the same code int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; }"
         },
         {
           "id": "a3",
@@ -269,7 +269,7 @@
           "options": [
             "CHECK Fill the same code next[newIndex] = start; start = newIndex;",
             "CHECK Complete the same trace firstIndex = start secondIndex = next[firstIndex] secondData = data[secondIndex]",
-            "CHECK Fill the same code int current = start; while (current != -1) { Console.WriteLine(data[current]); current = next[current]; }"
+            "CHECK Fill the same code int current = start; while (current!= -1) { Console.WriteLine(data[current]); current = next[current]; }"
           ],
           "feedback": "CHECK Fill the same code next[newIndex] = start; start = newIndex;"
         }

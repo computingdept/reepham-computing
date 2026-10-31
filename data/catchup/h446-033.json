@@ -19,7 +19,7 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "A login check uses validUser && validPassword . What is the result when validUser is true and validPassword is false? Explain.",
+          "prompt": "A login check uses validUser && validPassword. What is the result when validUser is true and validPassword is false? Explain.",
           "answer": "False. AND ( && ) is true only when both conditions are true.",
           "options": [
             "False. AND ( && ) is true only when both conditions are true.",
@@ -170,7 +170,7 @@
         {
           "type": "paragraph",
           "title": "Insert with linear probing",
-          "text": "int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+          "text": "int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;"
         },
         {
           "type": "paragraph",
@@ -241,25 +241,25 @@
           "id": "a1",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Insert with linear probing What happens when a bucket is already occupied?",
-          "answer": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+          "answer": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;",
           "options": [
-            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
-            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index]!= null) { if (usernames[index] == username) break; index = (index…",
             "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket."
           ],
-          "feedback": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+          "feedback": "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;"
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Search using the same probing sequence How can we find a name after a collision?",
-          "answer": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+          "answer": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index]!= null) { if (usernames[index] == username) break; index = (index…",
           "options": [
-            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;",
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;",
             "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
-            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…"
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index]!= null) { if (usernames[index] == username) break; index = (index…"
           ],
-          "feedback": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }"
+          "feedback": "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index]!= null) { if (usernames[index] == username) break; index = (index + 1) % SIZE; checkedBuckets++; }"
         },
         {
           "id": "a3",
@@ -267,9 +267,9 @@
           "prompt": "Choose the response that best addresses this independent task: Predict a collision With table size 7, why do 'ab' and 'ba' choose the same initial index?",
           "answer": "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
           "options": [
-            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index] != null) { if (usernames[index] == username) break; index =…",
+            "CHECK · MODEL RESPONSE Search using the same probing sequence int index = Hash(username, SIZE); int checkedBuckets = 0; while (checkedBuckets < SIZE && usernames[index]!= null) { if (usernames[index] == username) break; index = (index…",
             "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket.",
-            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index] != null) { index = (index + 1) % SIZE; } usernames[index] = username;"
+            "CHECK · MODEL RESPONSE Insert with linear probing int index = Hash(username, SIZE); while (usernames[index]!= null) { index = (index + 1) % SIZE; } usernames[index] = username;"
           ],
           "feedback": "CHECK · MODEL RESPONSE Predict a collision Both strings contain the same character codes, so the total is identical. Linear probing moves the second username to the next free bucket."
         }

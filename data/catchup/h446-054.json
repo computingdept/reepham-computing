@@ -55,14 +55,14 @@
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "023",
-          "answer": "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?",
+          "prompt": "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?",
+          "answer": "Keys 9 and 16 collide in bucket 2; key 22 hashes to bucket 1.",
           "options": [
-            "With toy h(k)=k mod7, hash keys 9,16,22. Which collide?",
-            "With toy h(k)=k mod7, hash keys 10,16,22. Which collide?",
-            "With toy h(k)=k mod7, hash keys 8,16,22. Which collide?"
+            "Keys 9 and 16 collide in bucket 2; key 22 hashes to bucket 1.",
+            "Keys 10 and 16 collide in bucket 2; key 22 hashes to bucket 1.",
+            "Keys 8 and 16 collide in bucket 2; key 22 hashes to bucket 1."
           ],
-          "feedback": "Model answer: With toy h(k)=k mod7, hash keys 9,16,22. Which collide?"
+          "feedback": "Model answer: Keys 9 and 16 collide in bucket 2; key 22 hashes to bucket 1. Explanation: Worked response reconstructed from the challenge question because the classroom model is malformed; teacher review pending."
         }
       ]
     },
@@ -91,7 +91,7 @@
         {
           "type": "paragraph",
           "title": "Trace",
-          "text": "A .NET Dictionary<TKey,TValue> handles collision management internally; do not equate its actual buckets with simplistic modulo examples."
+          "text": "A.NET Dictionary<TKey,TValue> handles collision management internally; do not equate its actual buckets with simplistic modulo examples."
         },
         {
           "type": "paragraph",
@@ -222,7 +222,7 @@
           "answer": "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
           "options": [
             "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
-            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark))... [3], handles missing key.",
             "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2]."
           ],
           "feedback": "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1]."
@@ -231,13 +231,13 @@
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: CORE · Q2/3 Write C# Dictionary<string,int> code storing marks Ada80 and Ben65, then safely test whether Cleo exists. [6]",
-          "answer": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+          "answer": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark))... [3], handles missing key.",
           "options": [
             "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1].",
             "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
-            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key."
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark))... [3], handles missing key."
           ],
-          "feedback": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key."
+          "feedback": "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark))... [3], handles missing key."
         },
         {
           "id": "a3",
@@ -245,7 +245,7 @@
           "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3/3 Compare chaining and linear probing for toy hash collisions, and state two performance concerns. [6]",
           "answer": "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
           "options": [
-            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark)) ... [3], handles missing key.",
+            "WORKED MODEL ANSWER var d=new Dictionary<string,int>{{\"Ada\",80},{\"Ben\",65}}; [3]; if(d.TryGetValue(\"Cleo\",out int mark))... [3], handles missing key.",
             "WORKED MODEL ANSWER Chaining keeps multiple entries per bucket [2]; linear probing searches next available slot [2]; load factor and clustering affect lookup [2].",
             "WORKED MODEL ANSWER 8→3 [2],13→3 [2],19→4 [1], 8/13 collide [1]."
           ],

@@ -97,7 +97,7 @@
         {
           "type": "paragraph",
           "title": "Worked example · Constructor sets the initial state",
-          "text": "new Account(10) invokes Account(int opening) . It checks 10 is non-negative, then stores 10 in the private field balance ."
+          "text": "new Account(10) invokes Account(int opening). It checks 10 is non-negative, then stores 10 in the private field balance."
         },
         {
           "type": "paragraph",
@@ -154,7 +154,7 @@
         {
           "type": "paragraph",
           "title": "Trace a different validated account",
-          "text": "Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2); . What does current.GetBalance() give afterwards if the exception is caught by the caller?"
+          "text": "Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2);. What does current.GetBalance() give afterwards if the exception is caught by the caller?"
         },
         {
           "type": "paragraph",
@@ -164,7 +164,7 @@
         {
           "type": "paragraph",
           "title": "27; invalid deposit rejected",
-          "text": "Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+          "text": "Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
         },
         {
           "type": "paragraph",
@@ -234,43 +234,43 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace a different validated account Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2); . What does current.GetBalance() give afterwards if the exception is caught by the caller?",
-          "answer": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
+          "prompt": "Choose the response that best addresses this independent task: Trace a different validated account Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2);. What does current.GetBalance() give afterwards if the exception is caught by the caller?",
+          "answer": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
           "options": [
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private ."
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private."
           ],
-          "feedback": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+          "feedback": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
         },
         {
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
-          "answer": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
+          "answer": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
           "options": [
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 .",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected."
           ],
-          "feedback": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected."
+          "feedback": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected."
         },
         {
           "id": "a3",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Construct a valid account; control updates",
-          "answer": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
+          "answer": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
           "options": [
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w) . Width 4 is accepted; width 0 is rejected.",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27 ."
+            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
+            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
+            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
           ],
-          "feedback": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private ."
+          "feedback": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private."
         }
       ],
       "writing": {
         "prompt": "Write an exam-style response in your own words. Construct a valid account; control updates",
-        "model": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private .",
+        "model": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
         "checklist": [
           "I answered the specific question, not just the general topic.",
           "I used precise H446 terminology and linked claims to the task.",

@@ -22,8 +22,8 @@
           "prompt": "What does MakeMove() return after a successful move?",
           "answer": "true.",
           "options": [
-            "false.",
-            "There is not enough information to determine the result.",
+            "False.",
+            "Only if both inputs are false.",
             "true."
           ],
           "feedback": "Model answer: true."
@@ -88,7 +88,7 @@
         {
           "type": "paragraph",
           "title": "HasWon() checks 8 lines",
-          "text": "Each winning line needs three comparisons joined with && . The possible lines are joined with || ."
+          "text": "Each winning line needs three comparisons joined with &&. The possible lines are joined with ||."
         },
         {
           "type": "paragraph",
@@ -165,7 +165,7 @@
         {
           "type": "paragraph",
           "title": "Complete the condition",
-          "text": "if (board[0,0] == ? && board[1,1] == ? && board[2,2] == ?) { return true; }"
+          "text": "if (board[0,0] ==? && board[1,1] ==? && board[2,2] ==?) { return true; }"
         },
         {
           "type": "paragraph",
@@ -243,7 +243,7 @@
           "prompt": "Choose the response that best addresses this independent task: Complete one diagonal Player X wins on the main diagonal when all three diagonal positions contain X.",
           "answer": "CHECK Complete the condition if (board[0,0] == player && board[1,1] == player && board[2,2] == player) { return true; }",
           "options": [
-            "CHECK Build the Boolean test Not X != \"X\" Not O != \"O\" Join with && Return false",
+            "CHECK Build the Boolean test Not X!= \"X\" Not O!= \"O\" Join with && Return false",
             "CHECK Complete the sequence 1 Check HasWon() 2 Check BoardFull() 3 Switch player 4 Repeat loop",
             "CHECK Complete the condition if (board[0,0] == player && board[1,1] == player && board[2,2] == player) { return true; }"
           ],
@@ -253,13 +253,13 @@
           "id": "a2",
           "kind": "choice",
           "prompt": "Choose the response that best addresses this independent task: Spot a free square A square is free when it contains neither X nor O.",
-          "answer": "CHECK Build the Boolean test Not X != \"X\" Not O != \"O\" Join with && Return false",
+          "answer": "CHECK Build the Boolean test Not X!= \"X\" Not O!= \"O\" Join with && Return false",
           "options": [
             "CHECK Complete the sequence 1 Check HasWon() 2 Check BoardFull() 3 Switch player 4 Repeat loop",
-            "CHECK Build the Boolean test Not X != \"X\" Not O != \"O\" Join with && Return false",
+            "CHECK Build the Boolean test Not X!= \"X\" Not O!= \"O\" Join with && Return false",
             "CHECK Complete the condition if (board[0,0] == player && board[1,1] == player && board[2,2] == player) { return true; }"
           ],
-          "feedback": "CHECK Build the Boolean test Not X != \"X\" Not O != \"O\" Join with && Return false"
+          "feedback": "CHECK Build the Boolean test Not X!= \"X\" Not O!= \"O\" Join with && Return false"
         },
         {
           "id": "a3",
@@ -269,7 +269,7 @@
           "options": [
             "CHECK Complete the sequence 1 Check HasWon() 2 Check BoardFull() 3 Switch player 4 Repeat loop",
             "CHECK Complete the condition if (board[0,0] == player && board[1,1] == player && board[2,2] == player) { return true; }",
-            "CHECK Build the Boolean test Not X != \"X\" Not O != \"O\" Join with && Return false"
+            "CHECK Build the Boolean test Not X!= \"X\" Not O!= \"O\" Join with && Return false"
           ],
           "feedback": "CHECK Complete the sequence 1 Check HasWon() 2 Check BoardFull() 3 Switch player 4 Repeat loop"
         }
