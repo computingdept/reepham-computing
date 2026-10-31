@@ -1,0 +1,88 @@
+name: Publish H446 full-course Catch Up lessons
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/catchup/build_h446_full_course.py'
+      - '.github/workflows/publish-h446-catchup-full-course.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-h446-catchup-full-course
+  cancel-in-progress: false
+jobs:
+  generate-verify-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned HTML parser
+        run: python -m pip install beautifulsoup4==4.12.3
+      - name: Generate H446 lesson 007-160 and 181-320 Catch-Up resources
+        run: python tools/catchup/build_h446_full_course.py
+      - name: Validate all 300 lesson routes and teacher-curated exemplars
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=Path('data/catchup')
+          pages=Path('lessons/h446')
+          hub=Path('h446-hub.html').read_text(encoding='utf-8')
+          report=json.loads(Path('docs/audits/h446-catchup-full-course-generation.json').read_text(encoding='utf-8'))
+          assert report['new_expected']==report['new_generated']==294
+          assert not report['failed']
+          for n in list(range(1,161))+list(range(181,321)):
+              p=f'{n:03d}'
+              x=pages/f'lesson-{p}'/'learn.html'
+              y=data/f'h446-{p}.json'
+              assert x.is_file() and y.is_file(),p
+              text=x.read_text(encoding='utf-8')
+              cfg=json.loads(y.read_text(encoding='utf-8'))
+              assert cfg['id']==f'h446-{p}',p
+              assert f'catchup/h446-{p}.json' in text,p
+              assert cfg['course']=='h446' and cfg['pass_percent']==80,p
+              assert cfg['year']==(12 if n<181 else 13),p
+              assert [len(s['questions']) for s in cfg['stages']]==[4,3,4,3,3],p
+              assert len({q['id'] for s in cfg['stages'] for q in s['questions']})==17,p
+              for stage in cfg['stages']:
+                  for q in stage['questions']:
+                      assert q['prompt'] and q['answer'] and q['feedback'],p
+                      if q['kind']=='choice':
+                          assert len(q['options'])==3 and len(set(q['options']))==3 and q['answer'] in q['options'],p
+              assert 'assets/catchup-lesson.js' in text,p
+          assert 'x<=320' in hub and 'x<=160' in hub
+          print('PASS: all 300 H446 Catch-Up JSON and HTML routes, 80% mastery and question correctness structure')
+          PY
+          git diff --check
+      - name: Commit generated resources and links
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- data/catchup/h446-*.json
+          git add -- lessons/h446/lesson-*/learn.html
+          git add -- h446-hub.html docs/audits/h446-catchup-full-course-generation.json
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish source-grounded H446 Catch Up lessons 007-160 and 181-320'
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD:main; then
+                echo 'H446 Catch Up resources published to main'
+                break
+              fi
+              if [ "$attempt" -eq 4 ]; then
+                echo 'Concurrent changes prevented safe publication' >&2
+                exit 1
+              fi
+              git fetch origin main
+              git rebase origin/main
+            done
+          fi
