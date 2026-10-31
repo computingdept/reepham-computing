@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: After partitioning [8,1,7,3,6] around pivot 6, where is the pivot?",
+          "prompt": "After partitioning [8,1,7,3,6] around pivot 6, where is the pivot?",
           "answer": "Index 2 in [1,3,6,8,7].",
           "options": [
-            "To stop on empty or single-element partitions.",
-            "O(n log n).",
+            "Index 3 in [1,3,6,8,7].",
+            "Index 1 in [1,3,6,8,7].",
             "Index 2 in [1,3,6,8,7]."
           ],
-          "feedback": "Index 2 in [1,3,6,8,7]."
+          "feedback": "Model answer: Index 2 in [1,3,6,8,7]."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why does recursive quicksort need a base case?",
+          "prompt": "Why does recursive quicksort need a base case?",
           "answer": "To stop on empty or single-element partitions.",
           "options": [
-            "O(n log n).",
+            "There is not enough information to determine the result.",
             "To stop on empty or single-element partitions.",
-            "Index 2 in [1,3,6,8,7]."
+            "To stop on empty AND single-element partitions."
           ],
-          "feedback": "To stop on empty or single-element partitions."
+          "feedback": "Model answer: To stop on empty or single-element partitions."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the worst-case time complexity of merge sort?",
+          "prompt": "What is the worst-case time complexity of merge sort?",
           "answer": "O(n log n).",
           "options": [
             "O(n log n).",
-            "Index 2 in [1,3,6,8,7].",
-            "To stop on empty or single-element partitions."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "O(n log n)."
+          "feedback": "Model answer: O(n log n)."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: If the pivot finishes at index 3, give left and right recursive bounds in an array 0..6.",
+          "prompt": "If the pivot finishes at index 3, give left and right recursive bounds in an array 0..6.",
           "answer": "Left 0..2, right 4..6; do not include pivot index 3 again.",
           "options": [
-            "Index 2 in [1,3,6,8,7].",
-            "To stop on empty or single-element partitions.",
+            "Left 1..2, right 4..6; do not include pivot index 3 again.",
+            "Left -1..2, right 4..6; do not include pivot index 3 again.",
             "Left 0..2, right 4..6; do not include pivot index 3 again."
           ],
-          "feedback": "Left 0..2, right 4..6; do not include pivot index 3 again."
+          "feedback": "Model answer: Left 0..2, right 4..6; do not include pivot index 3 again."
         }
       ]
     },
@@ -289,22 +289,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "base case means: Condition ending recursion.",
-          "answer": "true",
+          "prompt": "base case means: Recursive sort using partitioning around a pivot.",
+          "answer": "false",
           "feedback": "base case — Condition ending recursion."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "partition index means: Storage used for nested calls.",
-          "answer": "false",
+          "prompt": "partition index means: Final index occupied by the pivot.",
+          "answer": "true",
           "feedback": "partition index — Final index occupied by the pivot."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "worst case means: Input arrangement causing the most expensive run.",
-          "answer": "true",
+          "prompt": "worst case means: Recursive sort using partitioning around a pivot.",
+          "answer": "false",
           "feedback": "worst case — Input arrangement causing the most expensive run."
         }
       ]

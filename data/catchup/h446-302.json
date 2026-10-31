@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a precondition?",
+          "prompt": "What is a precondition?",
           "answer": "Requirement for an algorithm to work correctly.",
           "options": [
-            "A property that stays true after each loop iteration.",
+            "This result cannot be obtained using the stated method.",
             "Requirement for an algorithm to work correctly.",
-            "To expose faults on boundaries/unusual inputs."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Requirement for an algorithm to work correctly."
+          "feedback": "Model answer: Requirement for an algorithm to work correctly."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why write edge-case tests?",
+          "prompt": "Why write edge-case tests?",
           "answer": "To expose faults on boundaries/unusual inputs.",
           "options": [
             "To expose faults on boundaries/unusual inputs.",
-            "Requirement for an algorithm to work correctly.",
-            "A property that stays true after each loop iteration."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "To expose faults on boundaries/unusual inputs."
+          "feedback": "Model answer: To expose faults on boundaries/unusual inputs."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does a loop invariant express?",
+          "prompt": "What does a loop invariant express?",
           "answer": "A property that stays true after each loop iteration.",
           "options": [
-            "Requirement for an algorithm to work correctly.",
-            "To expose faults on boundaries/unusual inputs.",
+            "A property that stays true before each loop iteration.",
+            "A property that stays false after each loop iteration.",
             "A property that stays true after each loop iteration."
           ],
-          "feedback": "A property that stays true after each loop iteration."
+          "feedback": "Model answer: A property that stays true after each loop iteration."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: C# array [4,1,4,2]: compute sum at indexes 0 and 2, and number of distinct values.",
+          "prompt": "C# array [4,1,4,2]: compute sum at indexes 0 and 2, and number of distinct values.",
           "answer": "Indexes 0 and 2 sum8; distinct values {4,1,2} count3.",
           "options": [
-            "To expose faults on boundaries/unusual inputs.",
+            "Indexes -1 and 2 sum8; distinct values {4,1,2} count3.",
             "Indexes 0 and 2 sum8; distinct values {4,1,2} count3.",
-            "Requirement for an algorithm to work correctly."
+            "Indexes 1 and 2 sum8; distinct values {4,1,2} count3."
           ],
-          "feedback": "Indexes 0 and 2 sum8; distinct values {4,1,2} count3."
+          "feedback": "Model answer: Indexes 0 and 2 sum8; distinct values {4,1,2} count3."
         }
       ]
     },
@@ -283,22 +283,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "precondition means: Assumption required for correctness.",
-          "answer": "true",
+          "prompt": "precondition means: Condition maintained throughout a loop.",
+          "answer": "false",
           "feedback": "precondition — Assumption required for correctness."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "boundary test means: Condition maintained throughout a loop.",
-          "answer": "false",
+          "prompt": "boundary test means: Tests around value/size limits.",
+          "answer": "true",
           "feedback": "boundary test — Tests around value/size limits."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "time complexity means: Growth in work as input increases.",
-          "answer": "true",
+          "prompt": "time complexity means: Condition maintained throughout a loop.",
+          "answer": "false",
           "feedback": "time complexity — Growth in work as input increases."
         }
       ]

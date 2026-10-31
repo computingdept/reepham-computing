@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: A half adder receives A = 1 and B = 0. Calculate Sum and Carry. Explain which logic operation produces each output.",
+          "prompt": "A half adder receives A = 1 and B = 0. Calculate Sum and Carry. Explain which logic operation produces each output.",
           "answer": "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
           "options": [
-            "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
-            "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "Sum = 2 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
+            "Sum = 0 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
             "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
           ],
-          "feedback": "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
+          "feedback": "Model answer: Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Apply De Morgan’s law to simplify ¬(A ∨ B).",
+          "prompt": "Apply De Morgan’s law to simplify ¬(A ∨ B).",
           "answer": "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
           "options": [
-            "30 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "¬A ∧ ¬B. Negate both inputs and change AND to AND.",
             "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
-            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0."
+            "¬A ∧ ¬B. Negate both inputs OR change OR to AND."
           ],
-          "feedback": "¬A ∧ ¬B. Negate both inputs and change OR to AND."
+          "feedback": "Model answer: ¬A ∧ ¬B. Negate both inputs and change OR to AND."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Insert 40, 20, 60, 30 into an empty binary search tree. State the parent of 30 and whether 30 is its left or right child.",
+          "prompt": "Insert 40, 20, 60, 30 into an empty binary search tree. State the parent of 30 and whether 30 is its left or right child.",
           "answer": "30 is the right child of 20: 30 is less than 40, but greater than 20.",
           "options": [
             "30 is the right child of 20: 30 is less than 40, but greater than 20.",
-            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
-            "¬A ∧ ¬B. Negate both inputs and change OR to AND."
+            "31 is the right child of 20: 30 is less than 40, but greater than 20.",
+            "29 is the right child of 20: 30 is less than 40, but greater than 20."
           ],
-          "feedback": "30 is the right child of 20: 30 is less than 40, but greater than 20."
+          "feedback": "Model answer: 30 is the right child of 20: 30 is less than 40, but greater than 20."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A = 0.1100₂ × 2³ and B = 0.0100₂ × 2³. Calculate A − B, showing the mantissa calculation and decimal result.",
+          "prompt": "A = 0.1100₂ × 2³ and B = 0.0100₂ × 2³. Calculate A − B, showing the mantissa calculation and decimal result.",
           "answer": "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀.",
           "options": [
-            "Sum = 1 because 1 XOR 0 = 1. Carry = 0 because 1 AND 0 = 0.",
-            "¬A ∧ ¬B. Negate both inputs and change OR to AND.",
+            "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1001₂ × 2³ = 4₁₀.",
+            "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1010₂ × 2³ = 4₁₀.",
             "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀."
           ],
-          "feedback": "The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀."
+          "feedback": "Model answer: The exponents already match. 0.1100₂ − 0.0100₂ = 0.1000₂. The result is 0.1000₂ × 2³ = 4₁₀."
         }
       ]
     },
@@ -302,15 +302,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "clock means: The currently stored bit.",
-          "answer": "false",
+          "prompt": "clock means: A timing signal.",
+          "answer": "true",
           "feedback": "clock — A timing signal."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "trigger means: The clock event that causes sampling.",
-          "answer": "true",
+          "prompt": "trigger means: A circuit that stores one bit.",
+          "answer": "false",
           "feedback": "trigger — The clock event that causes sampling."
         }
       ]

@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a loop invariant?",
+          "prompt": "What is a loop invariant?",
           "answer": "A property true before and after each completed iteration.",
           "options": [
-            "Otherwise a[0] could be invalid and initial count wrong.",
+            "A property true before and before each completed iteration.",
             "A property true before and after each completed iteration.",
-            "Runs count contiguous groups; distinct counts globally unique values."
+            "A property true after and after each completed iteration."
           ],
-          "feedback": "A property true before and after each completed iteration."
+          "feedback": "Model answer: A property true before and after each completed iteration."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What distinguishes a run from a distinct value?",
+          "prompt": "What distinguishes a run from a distinct value?",
           "answer": "Runs count contiguous groups; distinct counts globally unique values.",
           "options": [
             "Runs count contiguous groups; distinct counts globally unique values.",
-            "A property true before and after each completed iteration.",
-            "Otherwise a[0] could be invalid and initial count wrong."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Runs count contiguous groups; distinct counts globally unique values."
+          "feedback": "Model answer: Runs count contiguous groups; distinct counts globally unique values."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why handle empty arrays explicitly?",
+          "prompt": "Why handle empty arrays explicitly?",
           "answer": "Otherwise a[0] could be invalid and initial count wrong.",
           "options": [
-            "A property true before and after each completed iteration.",
-            "Runs count contiguous groups; distinct counts globally unique values.",
+            "Otherwise a[1] could be invalid and initial count wrong.",
+            "Otherwise a[-1] could be invalid and initial count wrong.",
             "Otherwise a[0] could be invalid and initial count wrong."
           ],
-          "feedback": "Otherwise a[0] could be invalid and initial count wrong."
+          "feedback": "Model answer: Otherwise a[0] could be invalid and initial count wrong."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: For a=[1,1,2,1], give count of distinct values and runs.",
+          "prompt": "For a=[1,1,2,1], give count of distinct values and runs.",
           "answer": "Distinct values 2; runs 3 ([1,1],[2],[1]).",
           "options": [
-            "Runs count contiguous groups; distinct counts globally unique values.",
+            "Distinct values 1; runs 3 ([1,1],[2],[1]).",
             "Distinct values 2; runs 3 ([1,1],[2],[1]).",
-            "A property true before and after each completed iteration."
+            "Distinct values 3; runs 3 ([1,1],[2],[1])."
           ],
-          "feedback": "Distinct values 2; runs 3 ([1,1],[2],[1])."
+          "feedback": "Model answer: Distinct values 2; runs 3 ([1,1],[2],[1])."
         }
       ]
     },
@@ -290,15 +290,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "edge case means: Consecutive equal-value group.",
-          "answer": "false",
+          "prompt": "edge case means: Boundary or unusual input.",
+          "answer": "true",
           "feedback": "edge case — Boundary or unusual input."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "distinct means: Different values irrespective of position.",
-          "answer": "true",
+          "prompt": "distinct means: Consecutive equal-value group.",
+          "answer": "false",
           "feedback": "distinct — Different values irrespective of position."
         }
       ]

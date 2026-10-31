@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does STA do?",
+          "prompt": "What does STA do?",
           "answer": "Copies ACC to mailbox.",
           "options": [
-            "Without updating a tested state, the loop may not terminate.",
+            "This result cannot be obtained using the stated method.",
             "Copies ACC to mailbox.",
-            "Stops execution."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Copies ACC to mailbox."
+          "feedback": "Model answer: Copies ACC to mailbox."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does LMC HLT do?",
+          "prompt": "What does LMC HLT do?",
           "answer": "Stops execution.",
           "options": [
             "Stops execution.",
-            "Copies ACC to mailbox.",
-            "Without updating a tested state, the loop may not terminate."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Stops execution."
+          "feedback": "Model answer: Stops execution."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why must a loop's counter change?",
+          "prompt": "Why must a loop's counter change?",
           "answer": "Without updating a tested state, the loop may not terminate.",
           "options": [
-            "Copies ACC to mailbox.",
-            "Stops execution.",
+            "Without updating a tested state, the loop may always terminate.",
+            "There is not enough information to determine the result.",
             "Without updating a tested state, the loop may not terminate."
           ],
-          "feedback": "Without updating a tested state, the loop may not terminate."
+          "feedback": "Model answer: Without updating a tested state, the loop may not terminate."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Full adder: inputs A=1, B=0, carry-in=1. Find sum and carry-out.",
+          "prompt": "Full adder: inputs A=1, B=0, carry-in=1. Find sum and carry-out.",
           "answer": "1+0+1=10₂; sum=0, carry-out=1.",
           "options": [
-            "Stops execution.",
+            "0+0+1=10₂; sum=0, carry-out=1.",
             "1+0+1=10₂; sum=0, carry-out=1.",
-            "Copies ACC to mailbox."
+            "2+0+1=10₂; sum=0, carry-out=1."
           ],
-          "feedback": "1+0+1=10₂; sum=0, carry-out=1."
+          "feedback": "Model answer: 1+0+1=10₂; sum=0, carry-out=1."
         }
       ]
     },
@@ -293,15 +293,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "BRZ means: Branch if Zero",
-          "answer": "true",
+          "prompt": "BRZ means: Branch Always",
+          "answer": "false",
           "feedback": "BRZ — Branch if Zero"
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "BRP means: Branch Always",
-          "answer": "false",
+          "prompt": "BRP means: Branch if non-negative",
+          "answer": "true",
           "feedback": "BRP — Branch if non-negative"
         },
         {

@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Can network packets travelling between the same two endpoints take different routes?",
+          "prompt": "Can network packets travelling between the same two endpoints take different routes?",
           "answer": "Yes, routing decisions and changing network conditions can lead to different paths.",
           "options": [
             "Yes, routing decisions and changing network conditions can lead to different paths.",
-            "A reliable, ordered byte stream between endpoints.",
-            "Deny; AND requires both conditions true."
+            "Yes, routing decisions and changing network conditions can lead to same paths.",
+            "Yes, routing decisions OR changing network conditions can lead to different paths."
           ],
-          "feedback": "Yes, routing decisions and changing network conditions can lead to different paths."
+          "feedback": "Model answer: Yes, routing decisions and changing network conditions can lead to different paths."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the transport-layer role of TCP?",
+          "prompt": "What is the transport-layer role of TCP?",
           "answer": "A reliable, ordered byte stream between endpoints.",
           "options": [
-            "Yes, routing decisions and changing network conditions can lead to different paths.",
-            "Deny; AND requires both conditions true.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "A reliable, ordered byte stream between endpoints."
           ],
-          "feedback": "A reliable, ordered byte stream between endpoints."
+          "feedback": "Model answer: A reliable, ordered byte stream between endpoints."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does a rule ‘allow if staff AND authenticated’ mean if authenticated is false?",
+          "prompt": "What does a rule ‘allow if staff AND authenticated’ mean if authenticated is false?",
           "answer": "Deny; AND requires both conditions true.",
           "options": [
-            "A reliable, ordered byte stream between endpoints.",
+            "Deny; AND requires both conditions false.",
             "Deny; AND requires both conditions true.",
-            "Yes, routing decisions and changing network conditions can lead to different paths."
+            "Deny; OR requires both conditions true."
           ],
-          "feedback": "Deny; AND requires both conditions true."
+          "feedback": "Model answer: Deny; AND requires both conditions true."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why can an open port be useful but also increase risk?",
+          "prompt": "Why can an open port be useful but also increase risk?",
           "answer": "It permits needed service connections, but exposes that service to network-originated attacks or probing.",
           "options": [
             "It permits needed service connections, but exposes that service to network-originated attacks or probing.",
-            "Yes, routing decisions and changing network conditions can lead to different paths.",
-            "A reliable, ordered byte stream between endpoints."
+            "It permits needed service connections, but exposes that service to network-originated attacks AND probing.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "It permits needed service connections, but exposes that service to network-originated attacks or probing."
+          "feedback": "Model answer: It permits needed service connections, but exposes that service to network-originated attacks or probing."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "filter rule means: Use multiple complementary security controls rather than trusting one.",
+          "prompt": "filter rule means: Security control that permits or blocks network traffic according to rules.",
           "answer": "false",
           "feedback": "filter rule — A condition and action defining whether traffic is permitted."
         },

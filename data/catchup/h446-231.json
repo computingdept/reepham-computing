@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: If procedural Deposit(balance,5) returns a value that the caller ignores, does balance change?",
+          "prompt": "If procedural Deposit(balance,5) returns a value that the caller ignores, does balance change?",
           "answer": "No. The returned value is discarded.",
           "options": [
             "No. The returned value is discarded.",
-            "A variable declared inside a method or block, with restricted scope.",
-            "Using return."
+            "No. The returned value is not discarded.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "No. The returned value is discarded."
+          "feedback": "Model answer: No. The returned value is discarded."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a local variable?",
+          "prompt": "What is a local variable?",
           "answer": "A variable declared inside a method or block, with restricted scope.",
           "options": [
-            "No. The returned value is discarded.",
-            "Using return.",
+            "A variable declared inside a method AND block, with restricted scope.",
+            "There is not enough information to determine the result.",
             "A variable declared inside a method or block, with restricted scope."
           ],
-          "feedback": "A variable declared inside a method or block, with restricted scope."
+          "feedback": "Model answer: A variable declared inside a method or block, with restricted scope."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: How does a value-returning function pass a result back?",
+          "prompt": "How does a value-returning function pass a result back?",
           "answer": "Using return.",
           "options": [
-            "A variable declared inside a method or block, with restricted scope.",
+            "There is not enough information to determine the result.",
             "Using return.",
-            "No. The returned value is discarded."
+            "Using print."
           ],
-          "feedback": "Using return."
+          "feedback": "Model answer: Using return."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why might using ref unexpectedly make a method harder to debug?",
+          "prompt": "Why might using ref unexpectedly make a method harder to debug?",
           "answer": "The method can change a caller's variable as a side effect, even if there is no returned result.",
           "options": [
             "The method can change a caller's variable as a side effect, even if there is no returned result.",
-            "No. The returned value is discarded.",
-            "A variable declared inside a method or block, with restricted scope."
+            "The method cannot change a caller's variable as a side effect, even if there is no returned result.",
+            "The method can change a caller's variable as a side effect, even if there is not no returned result."
           ],
-          "feedback": "The method can change a caller's variable as a side effect, even if there is no returned result."
+          "feedback": "Model answer: The method can change a caller's variable as a side effect, even if there is no returned result."
         }
       ]
     },
@@ -291,15 +291,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "global/class-level means: Pass an alias of the caller's variable.",
-          "answer": "false",
+          "prompt": "global/class-level means: Variable accessible in a wider scope, subject to access rules.",
+          "answer": "true",
           "feedback": "global/class-level — Variable accessible in a wider scope, subject to access rules."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "by value means: Pass a copy of the value.",
-          "answer": "true",
+          "prompt": "by value means: Where a name can be accessed.",
+          "answer": "false",
           "feedback": "by value — Pass a copy of the value."
         }
       ]

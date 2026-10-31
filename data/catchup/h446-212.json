@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which structure retrieves the most recently added item first?",
+          "prompt": "Which structure retrieves the most recently added item first?",
           "answer": "Stack (LIFO).",
           "options": [
-            "All preceding values greater than the key.",
+            "There is not enough information to determine the result.",
             "Stack (LIFO).",
-            "The array must be sorted."
+            "Stack (FIFO)."
           ],
-          "feedback": "Stack (LIFO)."
+          "feedback": "Model answer: Stack (LIFO)."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the sorted-input precondition?",
+          "prompt": "What is the sorted-input precondition?",
           "answer": "The array must be sorted.",
           "options": [
             "The array must be sorted.",
-            "Stack (LIFO).",
-            "All preceding values greater than the key."
+            "The array must be unsorted.",
+            "The array need not be sorted."
           ],
-          "feedback": "The array must be sorted."
+          "feedback": "Model answer: The array must be sorted."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What moves right as a key is inserted into a sorted prefix?",
+          "prompt": "What moves right as a key is inserted into a sorted prefix?",
           "answer": "All preceding values greater than the key.",
           "options": [
-            "Stack (LIFO).",
-            "The array must be sorted.",
+            "All preceding values smaller than the key.",
+            "There is not enough information to determine the result.",
             "All preceding values greater than the key."
           ],
-          "feedback": "All preceding values greater than the key."
+          "feedback": "Model answer: All preceding values greater than the key."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: What are the worst-case time complexities of linear and binary searches?",
+          "prompt": "What are the worst-case time complexities of linear and binary searches?",
           "answer": "Linear O(n); binary O(log n) for sorted input.",
           "options": [
-            "The array must be sorted.",
+            "There is not enough information to determine the result.",
             "Linear O(n); binary O(log n) for sorted input.",
-            "Stack (LIFO)."
+            "Linear O(n); binary O(log n) for unsorted input."
           ],
-          "feedback": "Linear O(n); binary O(log n) for sorted input."
+          "feedback": "Model answer: Linear O(n); binary O(log n) for sorted input."
         }
       ]
     },
@@ -289,22 +289,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "sorted prefix means: Part already in order during insertion sort.",
-          "answer": "true",
+          "prompt": "sorted prefix means: Record an algorithm's changing state.",
+          "answer": "false",
           "feedback": "sorted prefix — Part already in order during insertion sort."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "precondition means: Extra storage required by an algorithm.",
-          "answer": "false",
+          "prompt": "precondition means: Requirement, such as ordering, for an algorithm.",
+          "answer": "true",
           "feedback": "precondition — Requirement, such as ordering, for an algorithm."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "O(log n) means: Work grows by repeated halving.",
-          "answer": "true",
+          "prompt": "O(log n) means: Record an algorithm's changing state.",
+          "answer": "false",
           "feedback": "O(log n) — Work grows by repeated halving."
         }
       ]

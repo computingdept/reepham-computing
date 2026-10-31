@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: For Factorial(3), list the successive input values before any returns occur.",
+          "prompt": "For Factorial(3), list the successive input values before any returns occur.",
           "answer": "3, 2, 1, 0. Each call reduces n by one until the base case.",
           "options": [
-            "Q. The topmost R is removed first.",
+            "2, 2, 1, 0. Each call reduces n by one until the base case.",
             "3, 2, 1, 0. Each call reduces n by one until the base case.",
-            "A call transfers control into a function; return finishes that invocation and gives its result to the caller."
+            "4, 2, 1, 0. Each call reduces n by one until the base case."
           ],
-          "feedback": "3, 2, 1, 0. Each call reduces n by one until the base case."
+          "feedback": "Model answer: 3, 2, 1, 0. Each call reduces n by one until the base case."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the difference between a function calling another function and returning a value to its caller?",
+          "prompt": "What is the difference between a function calling another function and returning a value to its caller?",
           "answer": "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
           "options": [
             "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
-            "3, 2, 1, 0. Each call reduces n by one until the base case.",
-            "Q. The topmost R is removed first."
+            "A call transfers control into a function; return finishes that invocation OR gives its result to the caller.",
+            "A call transfers control into a function; print finishes that invocation and gives its result to the caller."
           ],
-          "feedback": "A call transfers control into a function; return finishes that invocation and gives its result to the caller."
+          "feedback": "Model answer: A call transfers control into a function; return finishes that invocation and gives its result to the caller."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: A stack contains bottom to top P, Q, R. After one pop, what is at the top?",
+          "prompt": "A stack contains bottom to top P, Q, R. After one pop, what is at the top?",
           "answer": "Q. The topmost R is removed first.",
           "options": [
-            "3, 2, 1, 0. Each call reduces n by one until the base case.",
-            "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+            "Q. The topmost R is not removed first.",
+            "There is not enough information to determine the result.",
             "Q. The topmost R is removed first."
           ],
-          "feedback": "Q. The topmost R is removed first."
+          "feedback": "Model answer: Q. The topmost R is removed first."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A function Square(x) returns x*x. Find Square(2)+Square(3), showing both calls.",
+          "prompt": "A function Square(x) returns x*x. Find Square(2)+Square(3), showing both calls.",
           "answer": "Square(2)=4 and Square(3)=9; the total is 13.",
           "options": [
-            "A call transfers control into a function; return finishes that invocation and gives its result to the caller.",
+            "Square(1)=4 and Square(3)=9; the total is 13.",
             "Square(2)=4 and Square(3)=9; the total is 13.",
-            "3, 2, 1, 0. Each call reduces n by one until the base case."
+            "Square(3)=4 and Square(3)=9; the total is 13."
           ],
-          "feedback": "Square(2)=4 and Square(3)=9; the total is 13."
+          "feedback": "Model answer: Square(2)=4 and Square(3)=9; the total is 13."
         }
       ]
     },
@@ -289,22 +289,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "unwind means: Return from calls in reverse order after a base case is reached.",
-          "answer": "true",
+          "prompt": "unwind means: An entry containing the state for one active function call.",
+          "answer": "false",
           "feedback": "unwind — Return from calls in reverse order after a base case is reached."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "local variable means: A condition that ends recursion.",
-          "answer": "false",
+          "prompt": "local variable means: A variable owned by a particular invocation.",
+          "answer": "true",
           "feedback": "local variable — A variable owned by a particular invocation."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "call stack means: Last-in, first-out storage for active calls.",
-          "answer": "true",
+          "prompt": "call stack means: An entry containing the state for one active function call.",
+          "answer": "false",
           "feedback": "call stack — Last-in, first-out storage for active calls."
         }
       ]

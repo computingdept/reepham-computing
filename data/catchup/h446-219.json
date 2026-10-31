@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What vertex does Dijkstra settle next?",
+          "prompt": "What vertex does Dijkstra settle next?",
           "answer": "The unsettled vertex with the smallest current tentative distance.",
           "options": [
             "The unsettled vertex with the smallest current tentative distance.",
-            "The cost of travelling between two connected vertices.",
-            "The previous vertex on that route."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "The unsettled vertex with the smallest current tentative distance."
+          "feedback": "Model answer: The unsettled vertex with the smallest current tentative distance."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does a weighted edge record?",
+          "prompt": "What does a weighted edge record?",
           "answer": "The cost of travelling between two connected vertices.",
           "options": [
-            "The unsettled vertex with the smallest current tentative distance.",
-            "The previous vertex on that route.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "The cost of travelling between two connected vertices."
           ],
-          "feedback": "The cost of travelling between two connected vertices."
+          "feedback": "Model answer: The cost of travelling between two connected vertices."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does a predecessor in a path mean?",
+          "prompt": "What does a predecessor in a path mean?",
           "answer": "The previous vertex on that route.",
           "options": [
-            "The cost of travelling between two connected vertices.",
+            "This result cannot be obtained using the stated method.",
             "The previous vertex on that route.",
-            "The unsettled vertex with the smallest current tentative distance."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "The previous vertex on that route."
+          "feedback": "Model answer: The previous vertex on that route."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Distance to A=3, edge A–B=4, current distance B=10. Update B.",
+          "prompt": "Distance to A=3, edge A–B=4, current distance B=10. Update B.",
           "answer": "Candidate 3+4=7, so update B to 7 and predecessor(B)=A.",
           "options": [
             "Candidate 3+4=7, so update B to 7 and predecessor(B)=A.",
-            "The unsettled vertex with the smallest current tentative distance.",
-            "The cost of travelling between two connected vertices."
+            "Candidate 4+4=7, so update B to 7 and predecessor(B)=A.",
+            "Candidate 2+4=7, so update B to 7 and predecessor(B)=A."
           ],
-          "feedback": "Candidate 3+4=7, so update B to 7 and predecessor(B)=A."
+          "feedback": "Model answer: Candidate 3+4=7, so update B to 7 and predecessor(B)=A."
         }
       ]
     },
@@ -301,7 +301,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "settled means: Follow predecessor links backwards then reverse.",
+          "prompt": "settled means: For each vertex, stores the prior vertex on its best-known path.",
           "answer": "false",
           "feedback": "settled — Shortest distance is final for a vertex under non-negative edge weights."
         },

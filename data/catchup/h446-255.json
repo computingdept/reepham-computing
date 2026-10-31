@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why can instruction fetch and data access contend in Von Neumann architecture?",
+          "prompt": "Why can instruction fetch and data access contend in Von Neumann architecture?",
           "answer": "They share a memory pathway or resource.",
           "options": [
             "They share a memory pathway or resource.",
-            "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
-            "The operation part of a machine or assembly instruction."
+            "They share a memory pathway AND resource.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "They share a memory pathway or resource."
+          "feedback": "Model answer: They share a memory pathway or resource."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a pipeline hazard?",
+          "prompt": "What is a pipeline hazard?",
           "answer": "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
           "options": [
-            "They share a memory pathway or resource.",
-            "The operation part of a machine or assembly instruction.",
+            "An event such as a dependency, branch AND memory stall disrupting instruction overlap.",
+            "There is not enough information to determine the result.",
             "An event such as a dependency, branch or memory stall disrupting instruction overlap."
           ],
-          "feedback": "An event such as a dependency, branch or memory stall disrupting instruction overlap."
+          "feedback": "Model answer: An event such as a dependency, branch or memory stall disrupting instruction overlap."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is an opcode?",
+          "prompt": "What is an opcode?",
           "answer": "The operation part of a machine or assembly instruction.",
           "options": [
-            "An event such as a dependency, branch or memory stall disrupting instruction overlap.",
+            "There is not enough information to determine the result.",
             "The operation part of a machine or assembly instruction.",
-            "They share a memory pathway or resource."
+            "The operation part of a machine AND assembly instruction."
           ],
-          "feedback": "The operation part of a machine or assembly instruction."
+          "feedback": "Model answer: The operation part of a machine or assembly instruction."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Array [2,4,6,8,10,12,14,16,18], target 16. Give midpoint indexes inspected with low=0 high=8 and integer midpoint.",
+          "prompt": "Array [2,4,6,8,10,12,14,16,18], target 16. Give midpoint indexes inspected with low=0 high=8 and integer midpoint.",
           "answer": "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7.",
           "options": [
             "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7.",
-            "They share a memory pathway or resource.",
-            "An event such as a dependency, branch or memory stall disrupting instruction overlap."
+            "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 5,6,7.",
+            "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 3,6,7."
           ],
-          "feedback": "mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7."
+          "feedback": "Model answer: mid4 value10 → low5 high8, mid6 value14 → low7 high8, mid7 value16 → found. Indexes 4,6,7."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "load/store means: Operation part of an instruction.",
+          "prompt": "load/store means: Reduced Instruction Set Computer design approach.",
           "answer": "false",
           "feedback": "load/store — Access memory through dedicated instructions."
         },

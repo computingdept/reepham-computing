@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does return do in a C# function?",
+          "prompt": "What does return do in a C# function?",
           "answer": "Finishes the invocation and returns a result to its caller.",
           "options": [
             "Finishes the invocation and returns a result to its caller.",
-            "Not directly. It is outside the variable's scope.",
-            "9."
+            "Finishes the invocation OR returns a result to its caller.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Finishes the invocation and returns a result to its caller."
+          "feedback": "Model answer: Finishes the invocation and returns a result to its caller."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Can a method read a local variable declared inside another method?",
+          "prompt": "Can a method read a local variable declared inside another method?",
           "answer": "Not directly. It is outside the variable's scope.",
           "options": [
-            "Finishes the invocation and returns a result to its caller.",
-            "9.",
+            "always directly. It is outside the variable's scope.",
+            "Not directly. It is not outside the variable's scope.",
             "Not directly. It is outside the variable's scope."
           ],
-          "feedback": "Not directly. It is outside the variable's scope."
+          "feedback": "Model answer: Not directly. It is outside the variable's scope."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a[0] for int[] a={9,6,3}?",
+          "prompt": "What is a[0] for int[] a={9,6,3}?",
           "answer": "9.",
           "options": [
-            "Not directly. It is outside the variable's scope.",
+            "8.",
             "9.",
-            "Finishes the invocation and returns a result to its caller."
+            "10."
           ],
-          "feedback": "9."
+          "feedback": "Model answer: 9."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: If Double(n) returns 2*n, find Double(Double(3)).",
+          "prompt": "If Double(n) returns 2*n, find Double(Double(3)).",
           "answer": "Double(3)=6; Double(6)=12.",
           "options": [
             "Double(3)=6; Double(6)=12.",
-            "Finishes the invocation and returns a result to its caller.",
-            "Not directly. It is outside the variable's scope."
+            "Double(4)=6; Double(6)=12.",
+            "Double(2)=6; Double(6)=12."
           ],
-          "feedback": "Double(3)=6; Double(6)=12."
+          "feedback": "Model answer: Double(3)=6; Double(6)=12."
         }
       ]
     },
@@ -284,22 +284,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "by reference means: The parameter refers to the caller's variable.",
-          "answer": "true",
+          "prompt": "by reference means: The subroutine receives a copy of the value.",
+          "answer": "false",
           "feedback": "by reference — The parameter refers to the caller's variable."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "modularity means: A change to external program state.",
-          "answer": "false",
+          "prompt": "modularity means: Divide a program into smaller testable subroutines.",
+          "answer": "true",
           "feedback": "modularity — Divide a program into smaller testable subroutines."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "ref means: C# keyword enabling reference parameter passing.",
-          "answer": "true",
+          "prompt": "ref means: The subroutine receives a copy of the value.",
+          "answer": "false",
           "feedback": "ref — C# keyword enabling reference parameter passing."
         }
       ]

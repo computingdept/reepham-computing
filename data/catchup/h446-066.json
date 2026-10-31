@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What makes a problem suitable for computation?",
+          "prompt": "What makes a problem suitable for computation?",
           "answer": "Explicit inputs, constraints and a testable outcome.",
           "options": [
             "Explicit inputs, constraints and a testable outcome.",
-            "A representation keeping relevant detail and omitting irrelevant detail.",
-            "Named subroutine performing a task."
+            "Explicit inputs, constraints OR a testable outcome.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Explicit inputs, constraints and a testable outcome."
+          "feedback": "Model answer: Explicit inputs, constraints and a testable outcome."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is an abstraction?",
+          "prompt": "What is an abstraction?",
           "answer": "A representation keeping relevant detail and omitting irrelevant detail.",
           "options": [
-            "Explicit inputs, constraints and a testable outcome.",
-            "Named subroutine performing a task.",
+            "A representation keeping relevant detail OR omitting irrelevant detail.",
+            "There is not enough information to determine the result.",
             "A representation keeping relevant detail and omitting irrelevant detail."
           ],
-          "feedback": "A representation keeping relevant detail and omitting irrelevant detail."
+          "feedback": "Model answer: A representation keeping relevant detail and omitting irrelevant detail."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a procedure?",
+          "prompt": "What is a procedure?",
           "answer": "Named subroutine performing a task.",
           "options": [
-            "A representation keeping relevant detail and omitting irrelevant detail.",
+            "This result cannot be obtained using the stated method.",
             "Named subroutine performing a task.",
-            "Explicit inputs, constraints and a testable outcome."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Named subroutine performing a task."
+          "feedback": "Model answer: Named subroutine performing a task."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Stack initially empty: Push A, B, C; Pop; Push D. Give the stack top-to-bottom.",
+          "prompt": "Stack initially empty: Push A, B, C; Pop; Push D. Give the stack top-to-bottom.",
           "answer": "D, B, A. C is popped and D is pushed above B.",
           "options": [
             "D, B, A. C is popped and D is pushed above B.",
-            "Explicit inputs, constraints and a testable outcome.",
-            "A representation keeping relevant detail and omitting irrelevant detail."
+            "D, B, A. C is popped OR D is pushed above B.",
+            "D, B, A. C is not popped and D is pushed above B."
           ],
-          "feedback": "D, B, A. C is popped and D is pushed above B."
+          "feedback": "Model answer: D, B, A. C is popped and D is pushed above B."
         }
       ]
     },
@@ -280,15 +280,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "interface means: Split task into smaller problems.",
-          "answer": "false",
+          "prompt": "interface means: Inputs/outputs between components.",
+          "answer": "true",
           "feedback": "interface — Inputs/outputs between components."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "modularity means: Small cohesive program components.",
-          "answer": "true",
+          "prompt": "modularity means: Split task into smaller problems.",
+          "answer": "false",
           "feedback": "modularity — Small cohesive program components."
         }
       ]

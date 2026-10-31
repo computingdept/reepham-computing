@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Write −13 as an 8-bit two’s-complement integer .",
+          "prompt": "Write −13 as an 8-bit two’s-complement integer .",
           "answer": "11110011 .",
           "options": [
-            "Q = ¬A ∧ ¬B .",
-            "[4, 6, 2, 8, 9] .",
+            "11110010 .",
+            "11110001 .",
             "11110011 ."
           ],
-          "feedback": "Start with +13 = 00001101. Invert the bits → 11110010, then add 1 → 11110011."
+          "feedback": "Model answer: 11110011 . Explanation: Start with +13 = 00001101. Invert the bits → 11110010, then add 1 → 11110011."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: For the circuit shown, simplify Q = ¬(A ∨ B) using De Morgan’s Law.",
+          "prompt": "For the circuit shown, simplify Q = ¬(A ∨ B) using De Morgan’s Law.",
           "answer": "Q = ¬A ∧ ¬B .",
           "options": [
-            "[4, 6, 2, 8, 9] .",
+            "This result cannot be obtained using the stated method.",
             "Q = ¬A ∧ ¬B .",
-            "11110011 ."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "NOT of an OR becomes AND of the individually negated inputs. Both expressions are equivalent."
+          "feedback": "Model answer: Q = ¬A ∧ ¬B . Explanation: NOT of an OR becomes AND of the individually negated inputs. Both expressions are equivalent."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Complete one full left-to-right pass of ascending bubble sort. What is the resulting array?",
+          "prompt": "Complete one full left-to-right pass of ascending bubble sort. What is the resulting array?",
           "answer": "[4, 6, 2, 8, 9] .",
           "options": [
             "[4, 6, 2, 8, 9] .",
-            "11110011 .",
-            "Q = ¬A ∧ ¬B ."
+            "[5, 6, 2, 8, 9] .",
+            "[3, 6, 2, 8, 9] ."
           ],
-          "feedback": "Compare neighbouring items and swap where needed: [4,9,6,2,8] → [4,6,9,2,8] → [4,6,2,9,8] → [4,6,2,8,9]."
+          "feedback": "Model answer: [4, 6, 2, 8, 9] . Explanation: Compare neighbouring items and swap where needed: [4,9,6,2,8] → [4,6,9,2,8] → [4,6,2,9,8] → [4,6,2,8,9]."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Normalise this positive binary mantissa without changing its value. Give the new exponent.",
+          "prompt": "Normalise this positive binary mantissa without changing its value. Give the new exponent.",
           "answer": "0.110100 × 2² .",
           "options": [
-            "11110011 .",
-            "Q = ¬A ∧ ¬B .",
+            "0.110101 × 2² .",
+            "0.110110 × 2² .",
             "0.110100 × 2² ."
           ],
-          "feedback": "Shift the mantissa point two places right (0.001101 → 0.110100), so decrease the exponent from 4 to 2. The numerical value stays the same."
+          "feedback": "Model answer: 0.110100 × 2² . Explanation: Shift the mantissa point two places right (0.001101 → 0.110100), so decrease the exponent from 4 to 2. The numerical value stays the same."
         }
       ]
     },
@@ -294,15 +294,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "Group means: Adjacent 1s circled as one rectangular region.",
-          "answer": "true",
+          "prompt": "Group means: A grid used to simplify the outputs from a truth table.",
+          "answer": "false",
           "feedback": "Group — Adjacent 1s circled as one rectangular region."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Adjacent means: An ordering in which neighbouring labels differ by one bit.",
-          "answer": "false",
+          "prompt": "Adjacent means: Cells next to each other horizontally or vertically.",
+          "answer": "true",
           "feedback": "Adjacent — Cells next to each other horizontally or vertically."
         },
         {

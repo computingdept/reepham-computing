@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: For CountDigits(582), list the calls and give the returned digit count.",
+          "prompt": "For CountDigits(582), list the calls and give the returned digit count.",
           "answer": "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3.",
           "options": [
-            "4 times: i is 0,1,2,3.",
-            "false. Both must be true for AND.",
+            "Calls 583 → 58 → 5; returns 1 → 2 → 3. The digit count is 3.",
+            "Calls 581 → 58 → 5; returns 1 → 2 → 3. The digit count is 3.",
             "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3."
           ],
-          "feedback": "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3."
+          "feedback": "Model answer: Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: How many times does a loop with i = 0; i < 4; i++ run?",
+          "prompt": "How many times does a loop with i = 0; i < 4; i++ run?",
           "answer": "4 times: i is 0,1,2,3.",
           "options": [
-            "false. Both must be true for AND.",
+            "3 times: i is 0,1,2,3.",
             "4 times: i is 0,1,2,3.",
-            "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3."
+            "5 times: i is 0,1,2,3."
           ],
-          "feedback": "4 times: i is 0,1,2,3."
+          "feedback": "Model answer: 4 times: i is 0,1,2,3."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: For A=true and B=false, what is A && B?",
+          "prompt": "For A=true and B=false, what is A && B?",
           "answer": "false. Both must be true for AND.",
           "options": [
             "false. Both must be true for AND.",
-            "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3.",
-            "4 times: i is 0,1,2,3."
+            "false. Both must be true for OR.",
+            "false. Both must be false for AND."
           ],
-          "feedback": "false. Both must be true for AND."
+          "feedback": "Model answer: false. Both must be true for AND."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: After swapping neighbouring values 7 and 3 in [7,3,5], what is the array?",
+          "prompt": "After swapping neighbouring values 7 and 3 in [7,3,5], what is the array?",
           "answer": "[3,7,5].",
           "options": [
-            "Calls 582 → 58 → 5; returns 1 → 2 → 3. The digit count is 3.",
-            "4 times: i is 0,1,2,3.",
+            "[4,7,5].",
+            "[2,7,5].",
             "[3,7,5]."
           ],
-          "feedback": "[3,7,5]."
+          "feedback": "Model answer: [3,7,5]."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "swap means: Stop when a pass makes no swaps.",
+          "prompt": "swap means: One traversal of the remaining unsorted section.",
           "answer": "false",
           "feedback": "swap — Exchange two stored values."
         },

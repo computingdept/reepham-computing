@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: A rising-edge-triggered D-type flip-flop has Q = 0 and D = 1. What happens to Q when the next rising edge occurs?",
+          "prompt": "A rising-edge-triggered D-type flip-flop has Q = 0 and D = 1. What happens to Q when the next rising edge occurs?",
           "answer": "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
           "options": [
-            "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop.",
+            "Q becomes 0 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
             "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
-            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed."
+            "Q becomes 2 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
           ],
-          "feedback": "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
+          "feedback": "Model answer: Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why do we group neighbouring 1s together on a Karnaugh map?",
+          "prompt": "Why do we group neighbouring 1s together on a Karnaugh map?",
           "answer": "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
           "options": [
             "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
-            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
-            "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
+            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group cannot be removed.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed."
+          "feedback": "Model answer: We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Push A, then B, then C onto an empty stack. Pop once and then push D. Which item is at the top, and what is the remaining stack from top to bottom?",
+          "prompt": "Push A, then B, then C onto an empty stack. Pop once and then push D. Which item is at the top, and what is the remaining stack from top to bottom?",
           "answer": "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop.",
           "options": [
-            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge.",
-            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+            "D is not at the top. From top to bottom the stack is D, B, A. C was removed by the pop.",
+            "There is not enough information to determine the result.",
             "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
           ],
-          "feedback": "D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
+          "feedback": "Model answer: D is at the top. From top to bottom the stack is D, B, A. C was removed by the pop."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Using 8-bit two’s complement, write −13 and explain why simply putting 1 before the 7-bit magnitude is not correct.",
+          "prompt": "Using 8-bit two’s complement, write −13 and explain why simply putting 1 before the 7-bit magnitude is not correct.",
           "answer": "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement.",
           "options": [
-            "We group neighbouring 1s to simplify the Boolean expression. Variables that change within the group can be removed.",
+            "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001111₂), not two’s complement.",
             "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement.",
-            "Q becomes 1 at the rising edge because the flip-flop samples D. It then holds that value until the next triggering edge."
+            "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001100₂), not two’s complement."
           ],
-          "feedback": "13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement."
+          "feedback": "Model answer: 13 = 00001101₂. Invert to 11110010₂, then add 1: 11110011₂. Prefixing the magnitude gives sign-and-magnitude (10001101₂), not two’s complement."
         }
       ]
     },
@@ -295,22 +295,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "Branching with if/else. means: Branching with if/else.",
-          "answer": "true",
+          "prompt": "Branching with if/else. means: Statements executed in order.",
+          "answer": "false",
           "feedback": "Branching with if/else. — Branching with if/else."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Repeating statements with a loop. means: Indexed fixed-size collection, possibly multidimensional.",
-          "answer": "false",
+          "prompt": "Repeating statements with a loop. means: Repeating statements with a loop.",
+          "answer": "true",
           "feedback": "Repeating statements with a loop. — Repeating statements with a loop."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Checking input meets defined rules. means: Checking input meets defined rules.",
-          "answer": "true",
+          "prompt": "Checking input meets defined rules. means: Statements executed in order.",
+          "answer": "false",
           "feedback": "Checking input meets defined rules. — Checking input meets defined rules."
         }
       ]

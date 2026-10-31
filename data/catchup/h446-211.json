@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: A three-element array is accessed at index 3. What happens?",
+          "prompt": "A three-element array is accessed at index 3. What happens?",
           "answer": "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
           "options": [
-            "O(n), as it may inspect every element.",
-            "C, because a stack is LIFO.",
+            "Index 4 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
+            "Index 2 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
             "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
           ],
-          "feedback": "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
+          "feedback": "Model answer: Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the worst-case Big O of a sequential search?",
+          "prompt": "What is the worst-case Big O of a sequential search?",
           "answer": "O(n), as it may inspect every element.",
           "options": [
-            "C, because a stack is LIFO.",
+            "This result cannot be obtained using the stated method.",
             "O(n), as it may inspect every element.",
-            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "O(n), as it may inspect every element."
+          "feedback": "Model answer: O(n), as it may inspect every element."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Push A, B, C. Which pops first?",
+          "prompt": "Push A, B, C. Which pops first?",
           "answer": "C, because a stack is LIFO.",
           "options": [
             "C, because a stack is LIFO.",
-            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
-            "O(n), as it may inspect every element."
+            "C, because a stack is FIFO.",
+            "C, because a stack is not LIFO."
           ],
-          "feedback": "C, because a stack is LIFO."
+          "feedback": "Model answer: C, because a stack is LIFO."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: In five buckets, h(k)=k MOD 5. Where does 12 start?",
+          "prompt": "In five buckets, h(k)=k MOD 5. Where does 12 start?",
           "answer": "Bucket 2.",
           "options": [
-            "Index 3 is outside indexes 0–2; a C# IndexOutOfRangeException occurs.",
-            "O(n), as it may inspect every element.",
+            "Bucket 3.",
+            "Bucket 1.",
             "Bucket 2."
           ],
-          "feedback": "Bucket 2."
+          "feedback": "Model answer: Bucket 2."
         }
       ]
     },
@@ -296,15 +296,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "head means: Two hashed keys initially share a bucket.",
-          "answer": "false",
+          "prompt": "head means: Reference to the first node in a linked list.",
+          "answer": "true",
           "feedback": "head — Reference to the first node in a linked list."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "BST means: Binary search tree ordered by key comparisons.",
-          "answer": "true",
+          "prompt": "BST means: Last In, First Out.",
+          "answer": "false",
           "feedback": "BST — Binary search tree ordered by key comparisons."
         }
       ]

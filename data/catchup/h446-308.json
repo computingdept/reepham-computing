@@ -6,7 +6,7 @@
   "year": 13,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Independent prior-topic revision only. This activity does not reproduce classroom assessment questions or marking schemes.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What stops recursion?",
+          "prompt": "What stops recursion?",
           "answer": "A reachable base case.",
           "options": [
-            "Remove the top item.",
+            "This result cannot be obtained using the stated method.",
             "A reachable base case.",
-            "Sorted data."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "A reachable base case."
+          "feedback": "Model answer: A reachable base case."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What precondition does binary search require?",
+          "prompt": "What precondition does binary search require?",
           "answer": "Sorted data.",
           "options": [
             "Sorted data.",
-            "A reachable base case.",
-            "Remove the top item."
+            "unsorted data.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Sorted data."
+          "feedback": "Model answer: Sorted data."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a stack Pop operation?",
+          "prompt": "What is a stack Pop operation?",
           "answer": "Remove the top item.",
           "options": [
-            "A reachable base case.",
-            "Sorted data.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Remove the top item."
           ],
-          "feedback": "Remove the top item."
+          "feedback": "Model answer: Remove the top item."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search 13 in [1,3,5,7,9,11,13,15]. Which indexes?",
+          "prompt": "Binary search 13 in [1,3,5,7,9,11,13,15]. Which indexes?",
           "answer": "mid3=7, mid5=11, mid6=13. Found index6.",
           "options": [
-            "Sorted data.",
+            "mid3=6, mid5=11, mid6=13. Found index6.",
             "mid3=7, mid5=11, mid6=13. Found index6.",
-            "A reachable base case."
+            "mid3=8, mid5=11, mid6=13. Found index6."
           ],
-          "feedback": "mid3=7, mid5=11, mid6=13. Found index6."
+          "feedback": "Model answer: mid3=7, mid5=11, mid6=13. Found index6."
         }
       ]
     },
@@ -75,32 +75,12 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Previously taught terminology",
           "items": [
             "trace — Record algorithm state changes.",
             "base case — Terminating condition for recursion.",
             "Big O — Asymptotic growth classification."
           ]
-        },
-        {
-          "type": "paragraph",
-          "title": "Understand",
-          "text": "Allocate roughly one minute per mark across three independent questions."
-        },
-        {
-          "type": "paragraph",
-          "title": "Apply",
-          "text": "Trace each algorithm with intermediate state rather than only its final result."
-        },
-        {
-          "type": "paragraph",
-          "title": "Evaluate",
-          "text": "Use the authored mark scheme after finishing, not while answering."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Explain the result",
-          "text": "Calls 3→2→1; return 1→2→6."
         }
       ],
       "questions": [
@@ -151,8 +131,8 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Explain the result",
-          "text": "The algorithm returns index3 after two comparisons."
+          "title": "Guided recall",
+          "text": "Read the terminology, cover the definitions and explain each term before attempting the review questions. Refer to the separate revision guide for worked examples."
         }
       ],
       "questions": [
@@ -217,47 +197,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: QUESTION 1 OF 3 · ASSESSMENT Q1 [15]: (a) Trace factorial(4), given factorial(1)=1 and factorial(n)=n × factorial(n−1) for n>1. Show the calls and returns. [7] (b) Trace binary search for 11 in [1,3,5,7,9,11,13]. [6] (c) State its worst-case complexity. [2]",
-          "answer": "/ MARK SCHEME /15: (a) calls factorial(4)→factorial(3)→factorial(2)→factorial(1) [3]; base factorial(1)=1 [1]; unwind returns 2, 6, 24 [3]. (b) low0 high6 mid3→7 [2], low4 high6 mid5→11 [2], returns index5 [2]. (c) O(log n) [2].",
+          "prompt": "Choose the response that best addresses this independent task: Identify the taught term for this definition: Record algorithm state changes.",
+          "answer": "trace",
           "options": [
-            "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values…",
-            "/ MARK SCHEME /15: (a) calls factorial(4)→factorial(3)→factorial(2)→factorial(1) [3]; base factorial(1)=1 [1]; unwind returns 2, 6, 24 [3]. (b) low0 high6 mid3→7 [2], low4 high6 mid5→11 [2], returns index5 [2]. (c) O(log n) [2].",
-            "/ MARK SCHEME /15: pass 1: swap 5 and 2 → [2,5,4,1] [1]; swap 5 and 4 → [2,4,5,1] [1]; swap 5 and 1 → [2,4,1,5] [1]; recognise 5 is fixed at the end [1]. Pass 2: 2 and 4 need no swap [1]; swap 4 and 1 → [2,1,4,5] [1]; recognise 4 is…"
+            "Big O",
+            "trace",
+            "base case"
           ],
-          "feedback": "/ MARK SCHEME /15: (a) calls factorial(4)→factorial(3)→factorial(2)→factorial(1) [3]; base factorial(1)=1 [1]; unwind returns 2, 6, 24 [3]. (b) low0 high6 mid3→7 [2], low4 high6 mid5→11 [2], returns index5 [2]. (c) O(log n) [2]."
+          "feedback": "trace"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: QUESTION 2 OF 3 · ASSESSMENT Q2 [15]: (a) Trace the first two ascending bubble-sort passes on [5,2,4,1], showing each adjacent comparison, every intermediate array after a swap, and whether the result is fully sorted after Pass 2. [8] (b) Compare worst-case time and auxiliary space of bubble and merge sorts. [7]",
-          "answer": "/ MARK SCHEME /15: pass 1: swap 5 and 2 → [2,5,4,1] [1]; swap 5 and 4 → [2,4,5,1] [1]; swap 5 and 1 → [2,4,1,5] [1]; recognise 5 is fixed at the end [1]. Pass 2: 2 and 4 need no swap [1]; swap 4 and 1 → [2,1,4,5] [1]; recognise 4 is…",
+          "prompt": "Choose the response that best addresses this independent task: Identify the taught term for this definition: Terminating condition for recursion.",
+          "answer": "base case",
           "options": [
-            "/ MARK SCHEME /15: pass 1: swap 5 and 2 → [2,5,4,1] [1]; swap 5 and 4 → [2,4,5,1] [1]; swap 5 and 1 → [2,4,1,5] [1]; recognise 5 is fixed at the end [1]. Pass 2: 2 and 4 need no swap [1]; swap 4 and 1 → [2,1,4,5] [1]; recognise 4 is…",
-            "/ MARK SCHEME /15: (a) calls factorial(4)→factorial(3)→factorial(2)→factorial(1) [3]; base factorial(1)=1 [1]; unwind returns 2, 6, 24 [3]. (b) low0 high6 mid3→7 [2], low4 high6 mid5→11 [2], returns index5 [2]. (c) O(log n) [2].",
-            "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values…"
+            "base case",
+            "trace",
+            "Big O"
           ],
-          "feedback": "/ MARK SCHEME /15: pass 1: swap 5 and 2 → [2,5,4,1] [1]; swap 5 and 4 → [2,4,5,1] [1]; swap 5 and 1 → [2,4,1,5] [1]; recognise 5 is fixed at the end [1]. Pass 2: 2 and 4 need no swap [1]; swap 4 and 1 → [2,1,4,5] [1]; recognise 4 is fixed before 5 [1]; recognise the array is NOT yet sorted because 2>1 [1]. (b) Bubble worst O(n²) [2] and O(1) extra [1]; merge worst O(n log n) [2] and typical O(n) extra [2]."
+          "feedback": "base case"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: QUESTION 3 OF 3 · ASSESSMENT Q3 [15]: (a) Stack Push4,Push8,Pop,Push2. State popped value and final stack. [5] (b) Starting with an empty queue, enqueue 4, 8 and 2, then dequeue twice. Give both removed values in order and the final front-to-rear queue. [5] (c) Write a C# function CountPositive(int[] a) returning the number of elements strictly greater than…",
-          "answer": "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values…",
+          "prompt": "Choose the response that best addresses this independent task: Identify the taught term for this definition: Asymptotic growth classification.",
+          "answer": "Big O",
           "options": [
-            "/ MARK SCHEME /15: (a) calls factorial(4)→factorial(3)→factorial(2)→factorial(1) [3]; base factorial(1)=1 [1]; unwind returns 2, 6, 24 [3]. (b) low0 high6 mid3→7 [2], low4 high6 mid5→11 [2], returns index5 [2]. (c) O(log n) [2].",
-            "/ MARK SCHEME /15: pass 1: swap 5 and 2 → [2,5,4,1] [1]; swap 5 and 4 → [2,4,5,1] [1]; swap 5 and 1 → [2,4,1,5] [1]; recognise 5 is fixed at the end [1]. Pass 2: 2 and 4 need no swap [1]; swap 4 and 1 → [2,1,4,5] [1]; recognise 4 is…",
-            "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values…"
+            "trace",
+            "base case",
+            "Big O"
           ],
-          "feedback": "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values greater than 0 [1]; return count [1]. The empty array returns 0. static int CountPositive(int[] a) { int count = 0; foreach (int x in a) { if (x > 0) count++; } return count; } Equivalent correct C# loops also gain full credit."
+          "feedback": "Big O"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. QUESTION 3 OF 3 · ASSESSMENT Q3 [15]: (a) Stack Push4,Push8,Pop,Push2. State popped value and final stack. [5] (b) Starting with an empty queue, enqueue 4, 8 and 2, then dequeue twice. Give both removed values in order and the final front-to-rear queue. [5] (c) Write a C# function CountPositive(int[] a) returning the number of elements strictly greater than…",
-        "model": "/ MARK SCHEME /15: (a) popped8 [2], stack bottom-to-top [4,2] [3]. (b) dequeue4,8 [3]; remaining [2] [2]. (c) Award: correct int-returning signature [1]; initialise count=0 [1]; traverse the array [1]; increment only for values greater than 0 [1]; return count [1]. The empty array returns 0. static int CountPositive(int[] a) { int count = 0; foreach (int x in a) { if (x > 0) count++; } return count; } Equivalent correct C# loops also gain full credit.",
+        "prompt": "Choose a topic from an earlier classroom lesson. Explain a correct method, then plan how to check your reasoning without referring to a live assessment paper.",
+        "model": "Name the topic, outline the method with precise terminology, test it on an independent example, compare with a previously taught model and correct any errors.",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "I identified the earlier topic.",
+          "I explained an independent method.",
+          "I described how to check and improve it."
         ]
       }
     },
@@ -272,15 +252,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "base case means: Terminating condition for recursion.",
-          "answer": "true",
+          "prompt": "base case means: Record algorithm state changes.",
+          "answer": "false",
           "feedback": "base case — Terminating condition for recursion."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Big O means: Terminating condition for recursion.",
-          "answer": "false",
+          "prompt": "Big O means: Asymptotic growth classification.",
+          "answer": "true",
           "feedback": "Big O — Asymptotic growth classification."
         },
         {

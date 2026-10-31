@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the ACC for?",
+          "prompt": "What is the ACC for?",
           "answer": "Stores current/intermediate calculation.",
           "options": [
             "Stores current/intermediate calculation.",
-            "Stores current ACC into mailbox X.",
-            "Reads input into ACC, replacing its former value."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Stores current/intermediate calculation."
+          "feedback": "Model answer: Stores current/intermediate calculation."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does STA X do?",
+          "prompt": "What does STA X do?",
           "answer": "Stores current ACC into mailbox X.",
           "options": [
-            "Stores current/intermediate calculation.",
-            "Reads input into ACC, replacing its former value.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Stores current ACC into mailbox X."
           ],
-          "feedback": "Stores current ACC into mailbox X."
+          "feedback": "Model answer: Stores current ACC into mailbox X."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does INP do?",
+          "prompt": "What does INP do?",
           "answer": "Reads input into ACC, replacing its former value.",
           "options": [
-            "Stores current ACC into mailbox X.",
+            "This result cannot be obtained using the stated method.",
             "Reads input into ACC, replacing its former value.",
-            "Stores current/intermediate calculation."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Reads input into ACC, replacing its former value."
+          "feedback": "Model answer: Reads input into ACC, replacing its former value."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Half adder A1,B1: what Sum and Carry?",
+          "prompt": "Half adder A1,B1: what Sum and Carry?",
           "answer": "Sum0 (XOR); Carry1 (AND).",
           "options": [
             "Sum0 (XOR); Carry1 (AND).",
-            "Stores current/intermediate calculation.",
-            "Stores current ACC into mailbox X."
+            "Sum0 (XOR); Carry1 (OR).",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Sum0 (XOR); Carry1 (AND)."
+          "feedback": "Model answer: Sum0 (XOR); Carry1 (AND)."
         }
       ]
     },
@@ -281,15 +281,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "ACC means: Load ACC from memory.",
-          "answer": "false",
+          "prompt": "ACC means: Accumulator for working results.",
+          "answer": "true",
           "feedback": "ACC — Accumulator for working results."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "STA means: Store ACC into memory.",
-          "answer": "true",
+          "prompt": "STA means: Little Man Computer, simplified stored-program model.",
+          "answer": "false",
           "feedback": "STA — Store ACC into memory."
         }
       ]

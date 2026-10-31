@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is merge sort's combine step?",
+          "prompt": "What is merge sort's combine step?",
           "answer": "Merge two individually sorted runs.",
           "options": [
-            "Selected value used to partition an array.",
-            "No; subarrays still need sorting.",
+            "Merge two individually unsorted runs.",
+            "There is not enough information to determine the result.",
             "Merge two individually sorted runs."
           ],
-          "feedback": "Merge two individually sorted runs."
+          "feedback": "Model answer: Merge two individually sorted runs."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a pivot in quicksort?",
+          "prompt": "What is a pivot in quicksort?",
           "answer": "Selected value used to partition an array.",
           "options": [
-            "No; subarrays still need sorting.",
+            "This result cannot be obtained using the stated method.",
             "Selected value used to partition an array.",
-            "Merge two individually sorted runs."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Selected value used to partition an array."
+          "feedback": "Model answer: Selected value used to partition an array."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Is a partitioned array necessarily fully sorted?",
+          "prompt": "Is a partitioned array necessarily fully sorted?",
           "answer": "No; subarrays still need sorting.",
           "options": [
             "No; subarrays still need sorting.",
-            "Merge two individually sorted runs.",
-            "Selected value used to partition an array."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "No; subarrays still need sorting."
+          "feedback": "Model answer: No; subarrays still need sorting."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Swap values at indexes0 and2 in [4,1,7]. Give the resulting array.",
+          "prompt": "Swap values at indexes0 and2 in [4,1,7]. Give the resulting array.",
           "answer": "[7,1,4].",
           "options": [
-            "Merge two individually sorted runs.",
-            "Selected value used to partition an array.",
+            "[8,1,4].",
+            "[6,1,4].",
             "[7,1,4]."
           ],
-          "feedback": "[7,1,4]."
+          "feedback": "Model answer: [7,1,4]."
         }
       ]
     },
@@ -273,22 +273,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "pivot means: Value partitioning subarray.",
-          "answer": "true",
+          "prompt": "pivot means: Recursive partition-based sorting.",
+          "answer": "false",
           "feedback": "pivot — Value partitioning subarray."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "partition means: Recursive partition-based sorting.",
-          "answer": "false",
+          "prompt": "partition means: Place smaller/larger values around pivot.",
+          "answer": "true",
           "feedback": "partition — Place smaller/larger values around pivot."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "worst case means: Maximum growth for adverse input.",
-          "answer": "true",
+          "prompt": "worst case means: Recursive partition-based sorting.",
+          "answer": "false",
           "feedback": "worst case — Maximum growth for adverse input."
         }
       ]

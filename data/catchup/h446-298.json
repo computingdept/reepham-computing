@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: When does a recursive call stop?",
+          "prompt": "When does a recursive call stop?",
           "answer": "When a base case is met.",
           "options": [
-            "A partial choice/state considered in the search.",
-            "It avoids exploring states proven unable to succeed.",
+            "When a base case is not met.",
+            "There is not enough information to determine the result.",
             "When a base case is met."
           ],
-          "feedback": "When a base case is met."
+          "feedback": "Model answer: When a base case is met."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a search tree node?",
+          "prompt": "What is a search tree node?",
           "answer": "A partial choice/state considered in the search.",
           "options": [
-            "It avoids exploring states proven unable to succeed.",
+            "This result cannot be obtained using the stated method.",
             "A partial choice/state considered in the search.",
-            "When a base case is met."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "A partial choice/state considered in the search."
+          "feedback": "Model answer: A partial choice/state considered in the search."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why may pruning reduce runtime?",
+          "prompt": "Why may pruning reduce runtime?",
           "answer": "It avoids exploring states proven unable to succeed.",
           "options": [
             "It avoids exploring states proven unable to succeed.",
-            "When a base case is met.",
-            "A partial choice/state considered in the search."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "It avoids exploring states proven unable to succeed."
+          "feedback": "Model answer: It avoids exploring states proven unable to succeed."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Insert 12 into BST root10 with right child15 and left child5. Show the comparisons and position.",
+          "prompt": "Insert 12 into BST root10 with right child15 and left child5. Show the comparisons and position.",
           "answer": "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15.",
           "options": [
-            "When a base case is met.",
-            "A partial choice/state considered in the search.",
+            "13>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15.",
+            "11>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15.",
             "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15."
           ],
-          "feedback": "12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15."
+          "feedback": "Model answer: 12>10 ⇒ go right to15; 12<15 ⇒ insert as left child of15."
         }
       ]
     },
@@ -283,15 +283,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "pruning means: Discard an impossible branch.",
-          "answer": "true",
+          "prompt": "pruning means: Explore choices and undo a failed path.",
+          "answer": "false",
           "feedback": "pruning — Discard an impossible branch."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "search tree means: Explore choices and undo a failed path.",
-          "answer": "false",
+          "prompt": "search tree means: Branches of possible decisions.",
+          "answer": "true",
           "feedback": "search tree — Branches of possible decisions."
         },
         {

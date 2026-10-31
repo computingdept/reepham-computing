@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is decomposition?",
+          "prompt": "What is decomposition?",
           "answer": "Breaking a task into smaller independent parts.",
           "options": [
-            "Sorted elements.",
-            "Returns the smaller argument.",
+            "Breaking a task into greater independent parts.",
+            "There is not enough information to determine the result.",
             "Breaking a task into smaller independent parts."
           ],
-          "feedback": "Breaking a task into smaller independent parts."
+          "feedback": "Model answer: Breaking a task into smaller independent parts."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which input assumption does binary search require?",
+          "prompt": "Which input assumption does binary search require?",
           "answer": "Sorted elements.",
           "options": [
-            "Returns the smaller argument.",
+            "There is not enough information to determine the result.",
             "Sorted elements.",
-            "Breaking a task into smaller independent parts."
+            "unsorted elements."
           ],
-          "feedback": "Sorted elements."
+          "feedback": "Model answer: Sorted elements."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: How does Math.Min(a,b) behave?",
+          "prompt": "How does Math.Min(a,b) behave?",
           "answer": "Returns the smaller argument.",
           "options": [
             "Returns the smaller argument.",
-            "Breaking a task into smaller independent parts.",
-            "Sorted elements."
+            "Returns the greater argument.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Returns the smaller argument."
+          "feedback": "Model answer: Returns the smaller argument."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search [2,4,6,8,10,12,14] for 12: show low/high and midpoint indexes.",
+          "prompt": "Binary search [2,4,6,8,10,12,14] for 12: show low/high and midpoint indexes.",
           "answer": "low0 high6 mid3=8, then low4 high6 mid5=12; found index5.",
           "options": [
-            "Breaking a task into smaller independent parts.",
-            "Sorted elements.",
+            "low0 high6 mid3=9, then low4 high6 mid5=12; found index5.",
+            "low0 high6 mid3=7, then low4 high6 mid5=12; found index5.",
             "low0 high6 mid3=8, then low4 high6 mid5=12; found index5."
           ],
-          "feedback": "low0 high6 mid3=8, then low4 high6 mid5=12; found index5."
+          "feedback": "Model answer: low0 high6 mid3=8, then low4 high6 mid5=12; found index5."
         }
       ]
     },
@@ -273,22 +273,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "precondition means: Requirement for correctness.",
-          "answer": "true",
+          "prompt": "precondition means: Solve smaller subproblems and combine.",
+          "answer": "false",
           "feedback": "precondition — Requirement for correctness."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "binary search means: Solve smaller subproblems and combine.",
-          "answer": "false",
+          "prompt": "binary search means: Halving search on sorted data.",
+          "answer": "true",
           "feedback": "binary search — Halving search on sorted data."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "merge means: Combine sorted partial results.",
-          "answer": "true",
+          "prompt": "merge means: Solve smaller subproblems and combine.",
+          "answer": "false",
           "feedback": "merge — Combine sorted partial results."
         }
       ]

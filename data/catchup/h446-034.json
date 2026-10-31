@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: In a seven-bucket hash table, a collision occurs at bucket 6. Which bucket is checked next by linear probing, and why?",
+          "prompt": "In a seven-bucket hash table, a collision occurs at bucket 6. Which bucket is checked next by linear probing, and why?",
           "answer": "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
           "options": [
-            "False. The age test is true but hasPermission is false, so the AND expression is false.",
-            "It becomes the left child of the root’s right child.",
+            "Bucket 1: (6 + 1) MOD 7 = 0, so probing wraps around.",
+            "Bucket -1: (6 + 1) MOD 7 = 0, so probing wraps around.",
             "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
           ],
-          "feedback": "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
+          "feedback": "Model answer: Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Predict the output of Console.WriteLine((age >= 16) && hasPermission); when age = 17 and hasPermission = false. Explain.",
+          "prompt": "Predict the output of Console.WriteLine((age >= 16) && hasPermission); when age = 17 and hasPermission = false. Explain.",
           "answer": "False. The age test is true but hasPermission is false, so the AND expression is false.",
           "options": [
-            "It becomes the left child of the root’s right child.",
+            "False. The age test is false but hasPermission is false, so the AND expression is false.",
             "False. The age test is true but hasPermission is false, so the AND expression is false.",
-            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around."
+            "False. The age test is true but hasPermission is false, so the OR expression is false."
           ],
-          "feedback": "False. The age test is true but hasPermission is false, so the AND expression is false."
+          "feedback": "Model answer: False. The age test is true but hasPermission is false, so the AND expression is false."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: In a binary search tree, a new key is greater than the root but smaller than the root’s right child. Where will it go if that right child has no left child?",
+          "prompt": "In a binary search tree, a new key is greater than the root but smaller than the root’s right child. Where will it go if that right child has no left child?",
           "answer": "It becomes the left child of the root’s right child.",
           "options": [
             "It becomes the left child of the root’s right child.",
-            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
-            "False. The age test is true but hasPermission is false, so the AND expression is false."
+            "It becomes the right child of the root’s right child.",
+            "It becomes the left child of the root’s left child."
           ],
-          "feedback": "It becomes the left child of the root’s right child."
+          "feedback": "Model answer: It becomes the left child of the root’s right child."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A print server must process jobs in the order submitted. Choose a suitable data structure and explain why a stack would be unsuitable.",
+          "prompt": "A print server must process jobs in the order submitted. Choose a suitable data structure and explain why a stack would be unsuitable.",
           "answer": "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first.",
           "options": [
-            "Bucket 0: (6 + 1) MOD 7 = 0, so probing wraps around.",
-            "False. The age test is true but hasPermission is false, so the AND expression is false.",
+            "Use a queue: FIFO serves the earliest job first. A stack uses FIFO and would process the most recently added job first.",
+            "Use a queue: LIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first.",
             "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first."
           ],
-          "feedback": "Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first."
+          "feedback": "Model answer: Use a queue: FIFO serves the earliest job first. A stack uses LIFO and would process the most recently added job first."
         }
       ]
     },
@@ -302,7 +302,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Check a value at a limit, such as a full table. means: Search sequential buckets for an available place.",
+          "prompt": "Check a value at a limit, such as a full table. means: Confirm data meets input rules.",
           "answer": "false",
           "feedback": "Check a value at a limit, such as a full table. — Check a value at a limit, such as a full table."
         },

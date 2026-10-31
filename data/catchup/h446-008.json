@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which data type should store a telephone number beginning with 0? Explain briefly.",
+          "prompt": "Which data type should store a telephone number beginning with 0? Explain briefly.",
           "answer": "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
           "options": [
-            "00000101. The low four bits are preserved; the high four are cleared.",
+            "String: discard the leading zero; it is an identifier, not a quantity for arithmetic.",
             "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
-            "65; 01000001."
+            "String: preserve the leading zero; it is an identifier, always a quantity for arithmetic."
           ],
-          "feedback": "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic."
+          "feedback": "Model answer: String: preserve the leading zero; it is an identifier, not a quantity for arithmetic."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Convert 41₁₆ to denary and eight-bit binary.",
+          "prompt": "Convert 41₁₆ to denary and eight-bit binary.",
           "answer": "65; 01000001.",
           "options": [
             "65; 01000001.",
-            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
-            "00000101. The low four bits are preserved; the high four are cleared."
+            "65; 01000000.",
+            "65; 01000011."
           ],
-          "feedback": "65; 01000001."
+          "feedback": "Model answer: 65; 01000001."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Apply AND 00001111 to 10100101. Explain which bits the mask preserves.",
+          "prompt": "Apply AND 00001111 to 10100101. Explain which bits the mask preserves.",
           "answer": "00000101. The low four bits are preserved; the high four are cleared.",
           "options": [
-            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic.",
-            "65; 01000001.",
+            "00000100. The low four bits are preserved; the high four are cleared.",
+            "00000111. The low four bits are preserved; the high four are cleared.",
             "00000101. The low four bits are preserved; the high four are cleared."
           ],
-          "feedback": "00000101. The low four bits are preserved; the high four are cleared."
+          "feedback": "Model answer: 00000101. The low four bits are preserved; the high four are cleared."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: In 6+4 two’s-complement floating-point format, subtract 010000 0010 from 011000 0010. Give a normalised result.",
+          "prompt": "In 6+4 two’s-complement floating-point format, subtract 010000 0010 from 011000 0010. Give a normalised result.",
           "answer": "3 − 2 = 1 → 010000 0001.",
           "options": [
-            "65; 01000001.",
+            "3 − 2 = 1 → 010000 0011.",
             "3 − 2 = 1 → 010000 0001.",
-            "String: preserve the leading zero; it is an identifier, not a quantity for arithmetic."
+            "3 − 2 = 1 → 010000 0000."
           ],
-          "feedback": "3 − 2 = 1 → 010000 0001."
+          "feedback": "Model answer: 3 − 2 = 1 → 010000 0001."
         }
       ]
     },
@@ -295,15 +295,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "Code point means: A numeric identifier assigned to a character in Unicode.",
-          "answer": "true",
+          "prompt": "Code point means: A collection of characters with assigned codes.",
+          "answer": "false",
           "feedback": "Code point — A numeric identifier assigned to a character in Unicode."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Encoding means: A standard assigning codes to characters from many writing systems and symbols.",
-          "answer": "false",
+          "prompt": "Encoding means: Rules for representing character codes as bytes.",
+          "answer": "true",
           "feedback": "Encoding — Rules for representing character codes as bytes."
         },
         {

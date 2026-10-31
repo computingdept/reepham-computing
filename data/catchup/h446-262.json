@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does direct addressing [30] retrieve?",
+          "prompt": "What does direct addressing [30] retrieve?",
           "answer": "The data at memory address 30.",
           "options": [
-            "A CPU register holding an arithmetic/intermediate value.",
-            "A readable abbreviation of an operation code.",
+            "The data at memory address 31.",
+            "The data at memory address 29.",
             "The data at memory address 30."
           ],
-          "feedback": "The data at memory address 30."
+          "feedback": "Model answer: The data at memory address 30."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the accumulator?",
+          "prompt": "What is the accumulator?",
           "answer": "A CPU register holding an arithmetic/intermediate value.",
           "options": [
-            "A readable abbreviation of an operation code.",
+            "This result cannot be obtained using the stated method.",
             "A CPU register holding an arithmetic/intermediate value.",
-            "The data at memory address 30."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "A CPU register holding an arithmetic/intermediate value."
+          "feedback": "Model answer: A CPU register holding an arithmetic/intermediate value."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a mnemonic?",
+          "prompt": "What is a mnemonic?",
           "answer": "A readable abbreviation of an operation code.",
           "options": [
             "A readable abbreviation of an operation code.",
-            "The data at memory address 30.",
-            "A CPU register holding an arithmetic/intermediate value."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "A readable abbreviation of an operation code."
+          "feedback": "Model answer: A readable abbreviation of an operation code."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Search for 19 in sorted [1,4,7,10,13,16,19,22,25]. Show midpoint indexes checked.",
+          "prompt": "Search for 19 in sorted [1,4,7,10,13,16,19,22,25]. Show midpoint indexes checked.",
           "answer": "low0 high8 mid4→13, low5 high8 mid6→19; found index 6.",
           "options": [
-            "The data at memory address 30.",
-            "A CPU register holding an arithmetic/intermediate value.",
+            "low0 high8 mid4→14, low5 high8 mid6→19; found index 6.",
+            "low0 high8 mid4→12, low5 high8 mid6→19; found index 6.",
             "low0 high8 mid4→13, low5 high8 mid6→19; found index 6."
           ],
-          "feedback": "low0 high8 mid4→13, low5 high8 mid6→19; found index 6."
+          "feedback": "Model answer: low0 high8 mid4→13, low5 high8 mid6→19; found index 6."
         }
       ]
     },
@@ -285,22 +285,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "ACC means: Accumulator holding current working value.",
-          "answer": "true",
+          "prompt": "ACC means: Little Man Computer teaching instruction set.",
+          "answer": "false",
           "feedback": "ACC — Accumulator holding current working value."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "mailbox means: Load accumulator from memory.",
-          "answer": "false",
+          "prompt": "mailbox means: Numbered LMC memory location.",
+          "answer": "true",
           "feedback": "mailbox — Numbered LMC memory location."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "STA means: Store accumulator to memory.",
-          "answer": "true",
+          "prompt": "STA means: Little Man Computer teaching instruction set.",
+          "answer": "false",
           "feedback": "STA — Store accumulator to memory."
         }
       ]

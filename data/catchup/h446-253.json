@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does the data bus transport during an instruction fetch?",
+          "prompt": "What does the data bus transport during an instruction fetch?",
           "answer": "The instruction's contents from memory towards the CPU.",
           "options": [
-            "PC.",
-            "One operation cannot proceed until another result is ready.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "The instruction's contents from memory towards the CPU."
           ],
-          "feedback": "The instruction's contents from memory towards the CPU."
+          "feedback": "Model answer: The instruction's contents from memory towards the CPU."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which register holds the address of the next instruction?",
+          "prompt": "Which register holds the address of the next instruction?",
           "answer": "PC.",
           "options": [
-            "One operation cannot proceed until another result is ready.",
+            "This result cannot be obtained using the stated method.",
             "PC.",
-            "The instruction's contents from memory towards the CPU."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "PC."
+          "feedback": "Model answer: PC."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a dependency between tasks?",
+          "prompt": "What is a dependency between tasks?",
           "answer": "One operation cannot proceed until another result is ready.",
           "options": [
             "One operation cannot proceed until another result is ready.",
-            "The instruction's contents from memory towards the CPU.",
-            "PC."
+            "One operation cannot proceed until another result is not ready.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "One operation cannot proceed until another result is ready."
+          "feedback": "Model answer: One operation cannot proceed until another result is ready."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A rising-edge D flip-flop initially has Q=0. D changes 0→1 between edges, then 1→0 just before the next rising edge. What is Q immediately after that edge? Justify.",
+          "prompt": "A rising-edge D flip-flop initially has Q=0. D changes 0→1 between edges, then 1→0 just before the next rising edge. What is Q immediately after that edge? Justify.",
           "answer": "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored.",
           "options": [
-            "The instruction's contents from memory towards the CPU.",
-            "PC.",
+            "Q=1. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored.",
+            "Q=-1. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored.",
             "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored."
           ],
-          "feedback": "Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored."
+          "feedback": "Model answer: Q=0. The flip-flop samples D at the rising edge (D=0 at that instant); an earlier pulse between clock edges is not stored."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "cache means: Small, fast memory that reduces some main-memory accesses.",
-          "answer": "true",
+          "prompt": "cache means: Number of processor clock cycles each second.",
+          "answer": "false",
           "feedback": "cache — Small, fast memory that reduces some main-memory accesses."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "pipeline means: Amount of work completed in a given time.",
-          "answer": "false",
+          "prompt": "pipeline means: Overlap stages of several instructions.",
+          "answer": "true",
           "feedback": "pipeline — Overlap stages of several instructions."
         },
         {

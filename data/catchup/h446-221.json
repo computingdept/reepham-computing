@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Calculate f when g=4 and h=3.",
+          "prompt": "Calculate f when g=4 and h=3.",
           "answer": "f=7.",
           "options": [
-            "7.",
+            "f=6.",
             "f=7.",
-            "It lets us reconstruct the path by following predecessors backwards."
+            "f=8."
           ],
-          "feedback": "f=7."
+          "feedback": "Model answer: f=7."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the role of a predecessor table?",
+          "prompt": "What is the role of a predecessor table?",
           "answer": "It lets us reconstruct the path by following predecessors backwards.",
           "options": [
             "It lets us reconstruct the path by following predecessors backwards.",
-            "f=7.",
-            "7."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "It lets us reconstruct the path by following predecessors backwards."
+          "feedback": "Model answer: It lets us reconstruct the path by following predecessors backwards."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: If S–A=2 and A–G=5, what is this route's total cost?",
+          "prompt": "If S–A=2 and A–G=5, what is this route's total cost?",
           "answer": "7.",
           "options": [
-            "f=7.",
-            "It lets us reconstruct the path by following predecessors backwards.",
+            "8.",
+            "6.",
             "7."
           ],
-          "feedback": "7."
+          "feedback": "Model answer: 7."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: The true cheapest remaining cost from A is 4. Is h(A)=6 admissible?",
+          "prompt": "The true cheapest remaining cost from A is 4. Is h(A)=6 admissible?",
           "answer": "No. It overestimates the true cost.",
           "options": [
-            "It lets us reconstruct the path by following predecessors backwards.",
+            "There is not enough information to determine the result.",
             "No. It overestimates the true cost.",
-            "f=7."
+            "No. It overestimates the false cost."
           ],
-          "feedback": "No. It overestimates the true cost."
+          "feedback": "Model answer: No. It overestimates the true cost."
         }
       ]
     },
@@ -301,15 +301,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "suboptimal means: An estimated remaining cost used to guide search.",
-          "answer": "false",
+          "prompt": "suboptimal means: A valid route whose cost is greater than the cheapest possible.",
+          "answer": "true",
           "feedback": "suboptimal — A valid route whose cost is greater than the cheapest possible."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "frontier means: Discovered vertices awaiting expansion.",
-          "answer": "true",
+          "prompt": "frontier means: Heuristic never overestimates the true cheapest remaining cost.",
+          "answer": "false",
           "feedback": "frontier — Discovered vertices awaiting expansion."
         }
       ]

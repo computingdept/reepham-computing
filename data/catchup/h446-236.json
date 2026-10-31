@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Give a test for a range 0–100 that should be rejected.",
+          "prompt": "Give a test for a range 0–100 that should be rejected.",
           "answer": "−1 or 101.",
           "options": [
-            "3.",
+            "−0 or 101.",
             "−1 or 101.",
-            "Passes a function's result back to the caller."
+            "−2 or 101."
           ],
-          "feedback": "−1 or 101."
+          "feedback": "Model answer: −1 or 101."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does return do?",
+          "prompt": "What does return do?",
           "answer": "Passes a function's result back to the caller.",
           "options": [
             "Passes a function's result back to the caller.",
-            "−1 or 101.",
-            "3."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Passes a function's result back to the caller."
+          "feedback": "Model answer: Passes a function's result back to the caller."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the last index for an array of length 4?",
+          "prompt": "What is the last index for an array of length 4?",
           "answer": "3.",
           "options": [
-            "−1 or 101.",
-            "Passes a function's result back to the caller.",
+            "4.",
+            "2.",
             "3."
           ],
-          "feedback": "3."
+          "feedback": "Model answer: 3."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why is a[0] unsafe for an empty array?",
+          "prompt": "Why is a[0] unsafe for an empty array?",
           "answer": "Index 0 does not exist, causing an out-of-range error.",
           "options": [
-            "Passes a function's result back to the caller.",
+            "Index -1 does not exist, causing an out-of-range error.",
             "Index 0 does not exist, causing an out-of-range error.",
-            "−1 or 101."
+            "Index 1 does not exist, causing an out-of-range error."
           ],
-          "feedback": "Index 0 does not exist, causing an out-of-range error."
+          "feedback": "Model answer: Index 0 does not exist, causing an out-of-range error."
         }
       ]
     },
@@ -291,15 +291,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "postcondition means: Clear description of purpose, inputs and expected behaviour.",
-          "answer": "false",
+          "prompt": "postcondition means: Condition guaranteed if the algorithm completes correctly.",
+          "answer": "true",
           "feedback": "postcondition — Condition guaranteed if the algorithm completes correctly."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "invariant means: Property maintained during repeated steps.",
-          "answer": "true",
+          "prompt": "invariant means: Precise finite steps that solve a problem.",
+          "answer": "false",
           "feedback": "invariant — Property maintained during repeated steps."
         }
       ]

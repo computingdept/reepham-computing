@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Define lossless compression.",
+          "prompt": "Define lossless compression.",
           "answer": "Original can be reconstructed exactly.",
           "options": [
-            "Extra metadata needed to represent/decode data.",
+            "There is not enough information to determine the result.",
             "Original can be reconstructed exactly.",
-            "Consecutive repeated instances of the same symbol."
+            "Original cannot be reconstructed exactly."
           ],
-          "feedback": "Original can be reconstructed exactly."
+          "feedback": "Model answer: Original can be reconstructed exactly."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a run in RLE?",
+          "prompt": "What is a run in RLE?",
           "answer": "Consecutive repeated instances of the same symbol.",
           "options": [
             "Consecutive repeated instances of the same symbol.",
-            "Original can be reconstructed exactly.",
-            "Extra metadata needed to represent/decode data."
+            "Consecutive repeated instances of the different symbol.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Consecutive repeated instances of the same symbol."
+          "feedback": "Model answer: Consecutive repeated instances of the same symbol."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a compression overhead?",
+          "prompt": "What is a compression overhead?",
           "answer": "Extra metadata needed to represent/decode data.",
           "options": [
-            "Original can be reconstructed exactly.",
-            "Consecutive repeated instances of the same symbol.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Extra metadata needed to represent/decode data."
           ],
-          "feedback": "Extra metadata needed to represent/decode data."
+          "feedback": "Model answer: Extra metadata needed to represent/decode data."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: For array [2,3,4,5], double values at indexes 1 and 3. State final array and sum.",
+          "prompt": "For array [2,3,4,5], double values at indexes 1 and 3. State final array and sum.",
           "answer": "[2,6,4,10], sum 22; indexes are positions 1 and 3.",
           "options": [
-            "Consecutive repeated instances of the same symbol.",
+            "[1,6,4,10], sum 22; indexes are positions 1 and 3.",
             "[2,6,4,10], sum 22; indexes are positions 1 and 3.",
-            "Original can be reconstructed exactly."
+            "[3,6,4,10], sum 22; indexes are positions 1 and 3."
           ],
-          "feedback": "[2,6,4,10], sum 22; indexes are positions 1 and 3."
+          "feedback": "Model answer: [2,6,4,10], sum 22; indexes are positions 1 and 3."
         }
       ]
     },
@@ -284,22 +284,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "run means: Maximal consecutive equal symbols.",
-          "answer": "true",
+          "prompt": "run means: Encode repeated runs with counts.",
+          "answer": "false",
           "feedback": "run — Maximal consecutive equal symbols."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "dictionary coding means: Metadata/structure required by encoding.",
-          "answer": "false",
+          "prompt": "dictionary coding means: Represent repeated strings by references.",
+          "answer": "true",
           "feedback": "dictionary coding — Represent repeated strings by references."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "dictionary means: Mapping of codes to values/phrases.",
-          "answer": "true",
+          "prompt": "dictionary means: Encode repeated runs with counts.",
+          "answer": "false",
           "feedback": "dictionary — Mapping of codes to values/phrases."
         }
       ]

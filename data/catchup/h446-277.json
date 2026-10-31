@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a transitive dependency?",
+          "prompt": "What is a transitive dependency?",
           "answer": "An attribute depends on key through another non-key attribute.",
           "options": [
-            "Search speed on indexed fields.",
-            "Atomic fields and no repeating groups.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "An attribute depends on key through another non-key attribute."
           ],
-          "feedback": "An attribute depends on key through another non-key attribute."
+          "feedback": "Model answer: An attribute depends on key through another non-key attribute."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does an index help with?",
+          "prompt": "What does an index help with?",
           "answer": "Search speed on indexed fields.",
           "options": [
-            "Atomic fields and no repeating groups.",
+            "This result cannot be obtained using the stated method.",
             "Search speed on indexed fields.",
-            "An attribute depends on key through another non-key attribute."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Search speed on indexed fields."
+          "feedback": "Model answer: Search speed on indexed fields."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does 1NF require?",
+          "prompt": "What does 1NF require?",
           "answer": "Atomic fields and no repeating groups.",
           "options": [
             "Atomic fields and no repeating groups.",
-            "An attribute depends on key through another non-key attribute.",
-            "Search speed on indexed fields."
+            "Atomic fields OR no repeating groups.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Atomic fields and no repeating groups."
+          "feedback": "Model answer: Atomic fields and no repeating groups."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Simplify (A∧B)∨(A∧¬B), stating the Boolean law.",
+          "prompt": "Simplify (A∧B)∨(A∧¬B), stating the Boolean law.",
           "answer": "A∧(B∨¬B)=A∧1=A.",
           "options": [
-            "An attribute depends on key through another non-key attribute.",
-            "Search speed on indexed fields.",
+            "A∧(B∨¬B)=A∧2=A.",
+            "A∧(B∨¬B)=A∧0=A.",
             "A∧(B∨¬B)=A∧1=A."
           ],
-          "feedback": "A∧(B∨¬B)=A∧1=A."
+          "feedback": "Model answer: A∧(B∨¬B)=A∧1=A."
         }
       ]
     },
@@ -283,22 +283,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "2NF means: No partial dependency on part of composite key.",
-          "answer": "true",
+          "prompt": "2NF means: Atomic values/no repeating groups.",
+          "answer": "false",
           "feedback": "2NF — No partial dependency on part of composite key."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "3NF means: Atomic values/no repeating groups.",
-          "answer": "false",
+          "prompt": "3NF means: No non-key transitive dependency violating key dependency.",
+          "answer": "true",
           "feedback": "3NF — No non-key transitive dependency violating key dependency."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "index means: Search structure over columns.",
-          "answer": "true",
+          "prompt": "index means: Atomic values/no repeating groups.",
+          "answer": "false",
           "feedback": "index — Search structure over columns."
         }
       ]

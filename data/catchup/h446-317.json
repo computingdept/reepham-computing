@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a precondition?",
+          "prompt": "What is a precondition?",
           "answer": "Requirement that must be satisfied for correctness.",
           "options": [
-            "Additional memory remains constant with input size.",
+            "There is not enough information to determine the result.",
             "Requirement that must be satisfied for correctness.",
-            "Property maintained as iterations progress."
+            "Requirement that need not be satisfied for correctness."
           ],
-          "feedback": "Requirement that must be satisfied for correctness."
+          "feedback": "Model answer: Requirement that must be satisfied for correctness."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a loop invariant?",
+          "prompt": "What is a loop invariant?",
           "answer": "Property maintained as iterations progress.",
           "options": [
             "Property maintained as iterations progress.",
-            "Requirement that must be satisfied for correctness.",
-            "Additional memory remains constant with input size."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Property maintained as iterations progress."
+          "feedback": "Model answer: Property maintained as iterations progress."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does O(1) auxiliary space mean?",
+          "prompt": "What does O(1) auxiliary space mean?",
           "answer": "Additional memory remains constant with input size.",
           "options": [
-            "Requirement that must be satisfied for correctness.",
-            "Property maintained as iterations progress.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Additional memory remains constant with input size."
           ],
-          "feedback": "Additional memory remains constant with input size."
+          "feedback": "Model answer: Additional memory remains constant with input size."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: For [1,1,2,3,3], count globally distinct values and consecutive runs.",
+          "prompt": "For [1,1,2,3,3], count globally distinct values and consecutive runs.",
           "answer": "Three distinct values; three consecutive runs.",
           "options": [
-            "Property maintained as iterations progress.",
+            "This result cannot be obtained using the stated method.",
             "Three distinct values; three consecutive runs.",
-            "Requirement that must be satisfied for correctness."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Three distinct values; three consecutive runs."
+          "feedback": "Model answer: Three distinct values; three consecutive runs."
         }
       ]
     },
@@ -272,22 +272,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "Step 2 means: Trace changing values with a loop invariant and correct bounds.",
-          "answer": "true",
+          "prompt": "Step 2 means: State the sorted-input precondition and any edge cases.",
+          "answer": "false",
           "feedback": "Step 2 — Trace changing values with a loop invariant and correct bounds."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Step 3 means: Trace changing values with a loop invariant and correct bounds.",
-          "answer": "false",
+          "prompt": "Step 3 means: Explain why the selected algorithm is efficient and when another is preferable.",
+          "answer": "true",
           "feedback": "Step 3 — Explain why the selected algorithm is efficient and when another is preferable."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Step 1 means: State the sorted-input precondition and any edge cases.",
-          "answer": "true",
+          "prompt": "Step 1 means: Trace changing values with a loop invariant and correct bounds.",
+          "answer": "false",
           "feedback": "Step 1 — State the sorted-input precondition and any edge cases."
         }
       ]

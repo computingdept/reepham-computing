@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is RAM used for?",
+          "prompt": "What is RAM used for?",
           "answer": "Active program and data.",
           "options": [
-            "Required page/data is not resident and must be loaded.",
+            "There is not enough information to determine the result.",
             "Active program and data.",
-            "Files hosted on network-accessible servers."
+            "Active program OR data."
           ],
-          "feedback": "Active program and data."
+          "feedback": "Model answer: Active program and data."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What are remote virtual storage files?",
+          "prompt": "What are remote virtual storage files?",
           "answer": "Files hosted on network-accessible servers.",
           "options": [
             "Files hosted on network-accessible servers.",
-            "Active program and data.",
-            "Required page/data is not resident and must be loaded."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Files hosted on network-accessible servers."
+          "feedback": "Model answer: Files hosted on network-accessible servers."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why might a process have to wait on memory I/O?",
+          "prompt": "Why might a process have to wait on memory I/O?",
           "answer": "Required page/data is not resident and must be loaded.",
           "options": [
-            "Active program and data.",
-            "Files hosted on network-accessible servers.",
+            "Required page/data is not resident OR must be loaded.",
+            "Required page/data is always resident and must be loaded.",
             "Required page/data is not resident and must be loaded."
           ],
-          "feedback": "Required page/data is not resident and must be loaded."
+          "feedback": "Model answer: Required page/data is not resident and must be loaded."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A 4-row, 3-column zero-indexed array: give its final valid index pair and number of values.",
+          "prompt": "A 4-row, 3-column zero-indexed array: give its final valid index pair and number of values.",
           "answer": "Index (3,2), twelve values.",
           "options": [
-            "Files hosted on network-accessible servers.",
+            "Index (2,2), twelve values.",
             "Index (3,2), twelve values.",
-            "Active program and data."
+            "Index (4,2), twelve values."
           ],
-          "feedback": "Index (3,2), twelve values."
+          "feedback": "Model answer: Index (3,2), twelve values."
         }
       ]
     },
@@ -280,15 +280,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "page fault means: Virtual fixed-size memory block",
-          "answer": "false",
+          "prompt": "page fault means: Page absent from RAM",
+          "answer": "true",
           "feedback": "page fault — Page absent from RAM"
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "segmentation means: Logical variable-length regions",
-          "answer": "true",
+          "prompt": "segmentation means: Virtual fixed-size memory block",
+          "answer": "false",
           "feedback": "segmentation — Logical variable-length regions"
         }
       ]

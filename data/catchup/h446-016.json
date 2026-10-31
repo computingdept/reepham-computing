@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does MakeMove() return after a successful move?",
+          "prompt": "What does MakeMove() return after a successful move?",
           "answer": "true.",
           "options": [
-            "The same player needs another attempt.",
-            "[2,1].",
+            "false.",
+            "There is not enough information to determine the result.",
             "true."
           ],
-          "feedback": "true."
+          "feedback": "Model answer: true."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why must an invalid move not switch player?",
+          "prompt": "Why must an invalid move not switch player?",
           "answer": "The same player needs another attempt.",
           "options": [
-            "[2,1].",
+            "There is not enough information to determine the result.",
             "The same player needs another attempt.",
-            "true."
+            "The different player needs another attempt."
           ],
-          "feedback": "The same player needs another attempt."
+          "feedback": "Model answer: The same player needs another attempt."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What row and column does move 8 map to?",
+          "prompt": "What row and column does move 8 map to?",
           "answer": "[2,1].",
           "options": [
             "[2,1].",
-            "true.",
-            "The same player needs another attempt."
+            "[3,1].",
+            "[1,1]."
           ],
-          "feedback": "[2,1]."
+          "feedback": "Model answer: [2,1]."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: How many winning lines exist on a 3 × 3 Noughts & Crosses board?",
+          "prompt": "How many winning lines exist on a 3 × 3 Noughts & Crosses board?",
           "answer": "8: 3 rows, 3 columns and 2 diagonals.",
           "options": [
-            "true.",
-            "The same player needs another attempt.",
+            "9: 3 rows, 3 columns and 2 diagonals.",
+            "7: 3 rows, 3 columns and 2 diagonals.",
             "8: 3 rows, 3 columns and 2 diagonals."
           ],
-          "feedback": "8: 3 rows, 3 columns and 2 diagonals."
+          "feedback": "Model answer: 8: 3 rows, 3 columns and 2 diagonals."
         }
       ]
     },
@@ -302,15 +302,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "State means: A chosen input and expected outcome used to check a program.",
-          "answer": "false",
+          "prompt": "State means: The current data describing what is happening in the program.",
+          "answer": "true",
           "feedback": "State — The current data describing what is happening in the program."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Game loop means: The repeated structure that controls turns until the game ends.",
-          "answer": "true",
+          "prompt": "Game loop means: A data type with only two possible values: true or false.",
+          "answer": "false",
           "feedback": "Game loop — The repeated structure that controls turns until the game ends."
         }
       ]

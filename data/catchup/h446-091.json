@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which register holds the current instruction?",
+          "prompt": "Which register holds the current instruction?",
           "answer": "CIR.",
           "options": [
-            "Stores address being accessed.",
-            "PC.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "CIR."
           ],
-          "feedback": "CIR."
+          "feedback": "Model answer: CIR."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the role of MAR?",
+          "prompt": "What is the role of MAR?",
           "answer": "Stores address being accessed.",
           "options": [
-            "PC.",
+            "This result cannot be obtained using the stated method.",
             "Stores address being accessed.",
-            "CIR."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Stores address being accessed."
+          "feedback": "Model answer: Stores address being accessed."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Where is the next instruction address kept?",
+          "prompt": "Where is the next instruction address kept?",
           "answer": "PC.",
           "options": [
             "PC.",
-            "CIR.",
-            "Stores address being accessed."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "PC."
+          "feedback": "Model answer: PC."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A full adder has A=1,B=0 and carry-in=1. State Sum and carry-out.",
+          "prompt": "A full adder has A=1,B=0 and carry-in=1. State Sum and carry-out.",
           "answer": "1+0+1=10₂, so Sum0, carry-out1.",
           "options": [
-            "CIR.",
-            "Stores address being accessed.",
+            "2+0+1=10₂, so Sum0, carry-out1.",
+            "0+0+1=10₂, so Sum0, carry-out1.",
             "1+0+1=10₂, so Sum0, carry-out1."
           ],
-          "feedback": "1+0+1=10₂, so Sum0, carry-out1."
+          "feedback": "Model answer: 1+0+1=10₂, so Sum0, carry-out1."
         }
       ]
     },
@@ -281,15 +281,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "execute means: Accumulator.",
-          "answer": "false",
+          "prompt": "execute means: Carry out operation.",
+          "answer": "true",
           "feedback": "execute — Carry out operation."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "CIR means: Current Instruction Register.",
-          "answer": "true",
+          "prompt": "CIR means: Retrieve next instruction.",
+          "answer": "false",
           "feedback": "CIR — Current Instruction Register."
         }
       ]

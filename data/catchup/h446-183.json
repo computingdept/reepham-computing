@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: In SumTo(4), which call returns first and which returns last?",
+          "prompt": "In SumTo(4), which call returns first and which returns last?",
           "answer": "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
           "options": [
             "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
-            "Without a reachable base case, calls continue and the call stack grows until failure.",
-            "20, 10, 5."
+            "SumTo(2) returns first; SumTo(4) returns last after its nested calls unwind.",
+            "SumTo(0) returns first; SumTo(4) returns last after its nested calls unwind."
           ],
-          "feedback": "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind."
+          "feedback": "Model answer: SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why must a recursive function contain a stopping condition?",
+          "prompt": "Why must a recursive function contain a stopping condition?",
           "answer": "Without a reachable base case, calls continue and the call stack grows until failure.",
           "options": [
-            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
-            "20, 10, 5.",
+            "Without a reachable base case, calls continue OR the call stack grows until failure.",
+            "There is not enough information to determine the result.",
             "Without a reachable base case, calls continue and the call stack grows until failure."
           ],
-          "feedback": "Without a reachable base case, calls continue and the call stack grows until failure."
+          "feedback": "Model answer: Without a reachable base case, calls continue and the call stack grows until failure."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: A loop repeatedly halves n starting at 40 while n > 1 using integer division. List the next three n values.",
+          "prompt": "A loop repeatedly halves n starting at 40 while n > 1 using integer division. List the next three n values.",
           "answer": "20, 10, 5.",
           "options": [
-            "Without a reachable base case, calls continue and the call stack grows until failure.",
+            "19, 10, 5.",
             "20, 10, 5.",
-            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind."
+            "21, 10, 5."
           ],
-          "feedback": "20, 10, 5."
+          "feedback": "Model answer: 20, 10, 5."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A function PowerTwo(n) returns 1 when n=0, otherwise 2*PowerTwo(n-1). What does PowerTwo(3) return?",
+          "prompt": "A function PowerTwo(n) returns 1 when n=0, otherwise 2*PowerTwo(n-1). What does PowerTwo(3) return?",
           "answer": "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8.",
           "options": [
             "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8.",
-            "SumTo(1) returns first; SumTo(4) returns last after its nested calls unwind.",
-            "Without a reachable base case, calls continue and the call stack grows until failure."
+            "PowerTwo(1)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8.",
+            "PowerTwo(-1)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8."
           ],
-          "feedback": "PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8."
+          "feedback": "Model answer: PowerTwo(0)=1, PowerTwo(1)=2, PowerTwo(2)=4 and PowerTwo(3)=8."
         }
       ]
     },
@@ -289,15 +289,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "recursive step means: Processing part of a problem before calling the function on a simpler input.",
-          "answer": "true",
+          "prompt": "recursive step means: Reaching a condition where the algorithm stops.",
+          "answer": "false",
           "feedback": "recursive step — Processing part of a problem before calling the function on a simpler input."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "precondition means: Division discarding any fractional part of the result.",
-          "answer": "false",
+          "prompt": "precondition means: An assumption or input rule required for an algorithm.",
+          "answer": "true",
           "feedback": "precondition — An assumption or input rule required for an algorithm."
         },
         {

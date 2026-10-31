@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why does quicksort exclude the pivot from its recursive calls?",
+          "prompt": "Why does quicksort exclude the pivot from its recursive calls?",
           "answer": "The pivot is already in its final sorted position.",
           "options": [
-            "0.",
+            "The pivot is not already in its final sorted position.",
             "The pivot is already in its final sorted position.",
-            "A connection between vertices with an associated cost or distance."
+            "The pivot is already in its final unsorted position."
           ],
-          "feedback": "The pivot is already in its final sorted position."
+          "feedback": "Model answer: The pivot is already in its final sorted position."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Define a weighted edge.",
+          "prompt": "Define a weighted edge.",
           "answer": "A connection between vertices with an associated cost or distance.",
           "options": [
             "A connection between vertices with an associated cost or distance.",
-            "The pivot is already in its final sorted position.",
-            "0."
+            "A connection between vertices with an associated cost AND distance.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "A connection between vertices with an associated cost or distance."
+          "feedback": "Model answer: A connection between vertices with an associated cost or distance."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the first index of an array?",
+          "prompt": "What is the first index of an array?",
           "answer": "0.",
           "options": [
-            "The pivot is already in its final sorted position.",
-            "A connection between vertices with an associated cost or distance.",
+            "1.",
+            "-1.",
             "0."
           ],
-          "feedback": "0."
+          "feedback": "Model answer: 0."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A–B costs 3 and B–C costs 5. What is cost of A→B→C?",
+          "prompt": "A–B costs 3 and B–C costs 5. What is cost of A→B→C?",
           "answer": "8.",
           "options": [
-            "A connection between vertices with an associated cost or distance.",
+            "7.",
             "8.",
-            "The pivot is already in its final sorted position."
+            "9."
           ],
-          "feedback": "8."
+          "feedback": "Model answer: 8."
         }
       ]
     },
@@ -289,15 +289,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "settled means: Vertex whose shortest distance has been finalised.",
-          "answer": "true",
+          "prompt": "settled means: Best known cost to an unsettled vertex.",
+          "answer": "false",
           "feedback": "settled — Vertex whose shortest distance has been finalised."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "relaxation means: Edge cost of zero or greater.",
-          "answer": "false",
+          "prompt": "relaxation means: Improve a neighbour's distance via the current vertex.",
+          "answer": "true",
           "feedback": "relaxation — Improve a neighbour's distance via the current vertex."
         },
         {

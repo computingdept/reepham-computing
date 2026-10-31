@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What table is created to remove an EmployeeID→DeptID→DeptName transitive dependency?",
+          "prompt": "What table is created to remove an EmployeeID→DeptID→DeptName transitive dependency?",
           "answer": "Department(DeptID,DeptName), referenced by Employee.",
           "options": [
             "Department(DeptID,DeptName), referenced by Employee.",
-            "On a match or after examining all items.",
-            "The longest-waiting item at the front."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Department(DeptID,DeptName), referenced by Employee."
+          "feedback": "Model answer: Department(DeptID,DeptName), referenced by Employee."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: When does a linear search stop?",
+          "prompt": "When does a linear search stop?",
           "answer": "On a match or after examining all items.",
           "options": [
-            "Department(DeptID,DeptName), referenced by Employee.",
-            "The longest-waiting item at the front.",
+            "On a match or before examining all items.",
+            "On a match AND after examining all items.",
             "On a match or after examining all items."
           ],
-          "feedback": "On a match or after examining all items."
+          "feedback": "Model answer: On a match or after examining all items."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which is removed first from a FIFO queue?",
+          "prompt": "Which is removed first from a FIFO queue?",
           "answer": "The longest-waiting item at the front.",
           "options": [
-            "On a match or after examining all items.",
+            "This result cannot be obtained using the stated method.",
             "The longest-waiting item at the front.",
-            "Department(DeptID,DeptName), referenced by Employee."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "The longest-waiting item at the front."
+          "feedback": "Model answer: The longest-waiting item at the front."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does ROM stand for?",
+          "prompt": "What does ROM stand for?",
           "answer": "Read-only memory.",
           "options": [
             "Read-only memory.",
-            "Department(DeptID,DeptName), referenced by Employee.",
-            "On a match or after examining all items."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Read-only memory."
+          "feedback": "Model answer: Read-only memory."
         }
       ]
     },
@@ -288,15 +288,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "WHERE means: Filters rows according to a condition.",
-          "answer": "true",
+          "prompt": "WHERE means: Returns specified columns/expressions.",
+          "answer": "false",
           "feedback": "WHERE — Filters rows according to a condition."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "ORDER BY means: Returns specified columns/expressions.",
-          "answer": "false",
+          "prompt": "ORDER BY means: Sorts returned rows by chosen column/expression.",
+          "answer": "true",
           "feedback": "ORDER BY — Sorts returned rows by chosen column/expression."
         },
         {

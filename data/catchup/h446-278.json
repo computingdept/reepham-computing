@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the purpose of an INNER JOIN?",
+          "prompt": "What is the purpose of an INNER JOIN?",
           "answer": "Combines matching rows.",
           "options": [
-            "Filters results according to a predicate.",
+            "This result cannot be obtained using the stated method.",
             "Combines matching rows.",
-            "Foreign key referencing primary key."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Combines matching rows."
+          "feedback": "Model answer: Combines matching rows."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which relational key connects two tables?",
+          "prompt": "Which relational key connects two tables?",
           "answer": "Foreign key referencing primary key.",
           "options": [
             "Foreign key referencing primary key.",
-            "Combines matching rows.",
-            "Filters results according to a predicate."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Foreign key referencing primary key."
+          "feedback": "Model answer: Foreign key referencing primary key."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does WHERE do?",
+          "prompt": "What does WHERE do?",
           "answer": "Filters results according to a predicate.",
           "options": [
-            "Combines matching rows.",
-            "Foreign key referencing primary key.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Filters results according to a predicate."
           ],
-          "feedback": "Filters results according to a predicate."
+          "feedback": "Model answer: Filters results according to a predicate."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search for 9 in sorted [1,3,5,7,9,11,13]. Show midpoint indexes.",
+          "prompt": "Binary search for 9 in sorted [1,3,5,7,9,11,13]. Show midpoint indexes.",
           "answer": "low0 high6 mid3→7 then low4 high6 mid5→11 then high4 mid4→9, found index4.",
           "options": [
-            "Foreign key referencing primary key.",
+            "low0 high6 mid3→6 then low4 high6 mid5→11 then high4 mid4→9, found index4.",
             "low0 high6 mid3→7 then low4 high6 mid5→11 then high4 mid4→9, found index4.",
-            "Combines matching rows."
+            "low0 high6 mid3→8 then low4 high6 mid5→11 then high4 mid4→9, found index4."
           ],
-          "feedback": "low0 high6 mid3→7 then low4 high6 mid5→11 then high4 mid4→9, found index4."
+          "feedback": "Model answer: low0 high6 mid3→7 then low4 high6 mid5→11 then high4 mid4→9, found index4."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "INNER JOIN means: Combine matching rows.",
-          "answer": "true",
+          "prompt": "INNER JOIN means: Choose fields for output.",
+          "answer": "false",
           "feedback": "INNER JOIN — Combine matching rows."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "nested SELECT means: Filter rows.",
-          "answer": "false",
+          "prompt": "nested SELECT means: Query inside another query.",
+          "answer": "true",
           "feedback": "nested SELECT — Query inside another query."
         },
         {

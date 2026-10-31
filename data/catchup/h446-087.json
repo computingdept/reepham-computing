@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is an invariant?",
+          "prompt": "What is an invariant?",
           "answer": "A condition maintained while processing data.",
           "options": [
             "A condition maintained while processing data.",
-            "A single scan can find it in O(n).",
-            "An int? that can be an integer or null."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "A condition maintained while processing data."
+          "feedback": "Model answer: A condition maintained while processing data."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why is sorting unnecessary for just finding one maximum?",
+          "prompt": "Why is sorting unnecessary for just finding one maximum?",
           "answer": "A single scan can find it in O(n).",
           "options": [
-            "A condition maintained while processing data.",
-            "An int? that can be an integer or null.",
+            "A single scan cannot find it in O(n).",
+            "There is not enough information to determine the result.",
             "A single scan can find it in O(n)."
           ],
-          "feedback": "A single scan can find it in O(n)."
+          "feedback": "Model answer: A single scan can find it in O(n)."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is nullable int?",
+          "prompt": "What is nullable int?",
           "answer": "An int? that can be an integer or null.",
           "options": [
-            "A single scan can find it in O(n).",
+            "An int? that cannot be an integer or null.",
             "An int? that can be an integer or null.",
-            "A condition maintained while processing data."
+            "An int? that can be an integer AND null."
           ],
-          "feedback": "An int? that can be an integer or null."
+          "feedback": "Model answer: An int? that can be an integer or null."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search for 8 in [2,4,6,8,10]. Give midpoint indexes and result.",
+          "prompt": "Binary search for 8 in [2,4,6,8,10]. Give midpoint indexes and result.",
           "answer": "mid2=6, then mid3=8; found index3.",
           "options": [
             "mid2=6, then mid3=8; found index3.",
-            "A condition maintained while processing data.",
-            "A single scan can find it in O(n)."
+            "mid2=7, then mid3=8; found index3.",
+            "mid2=5, then mid3=8; found index3."
           ],
-          "feedback": "mid2=6, then mid3=8; found index3."
+          "feedback": "Model answer: mid2=6, then mid3=8; found index3."
         }
       ]
     },
@@ -273,22 +273,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "invariant means: Maintained fact during loop.",
-          "answer": "true",
+          "prompt": "invariant means: Largest value in set.",
+          "answer": "false",
           "feedback": "invariant — Maintained fact during loop."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "nullable means: Largest value in set.",
-          "answer": "false",
+          "prompt": "nullable means: Type allowing absence/null.",
+          "answer": "true",
           "feedback": "nullable — Type allowing absence/null."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "complexity means: Resource growth as input increases.",
-          "answer": "true",
+          "prompt": "complexity means: Largest value in set.",
+          "answer": "false",
           "feedback": "complexity — Resource growth as input increases."
         }
       ]

@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What makes a heuristic admissible?",
+          "prompt": "What makes a heuristic admissible?",
           "answer": "It never overestimates the true cheapest remaining cost.",
           "options": [
-            "Places it at its final index with smaller/equal values to its left.",
-            "The first node in a linked list.",
+            "It never overestimates the false cheapest remaining cost.",
+            "There is not enough information to determine the result.",
             "It never overestimates the true cheapest remaining cost."
           ],
-          "feedback": "It never overestimates the true cheapest remaining cost."
+          "feedback": "Model answer: It never overestimates the true cheapest remaining cost."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does a partition do to the pivot?",
+          "prompt": "What does a partition do to the pivot?",
           "answer": "Places it at its final index with smaller/equal values to its left.",
           "options": [
-            "The first node in a linked list.",
+            "Places it at its final index with greater/equal values to its left.",
             "Places it at its final index with smaller/equal values to its left.",
-            "It never overestimates the true cheapest remaining cost."
+            "Places it at its final index with smaller/equal values to its right."
           ],
-          "feedback": "Places it at its final index with smaller/equal values to its left."
+          "feedback": "Model answer: Places it at its final index with smaller/equal values to its left."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does the head reference identify?",
+          "prompt": "What does the head reference identify?",
           "answer": "The first node in a linked list.",
           "options": [
             "The first node in a linked list.",
-            "It never overestimates the true cheapest remaining cost.",
-            "Places it at its final index with smaller/equal values to its left."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "The first node in a linked list."
+          "feedback": "Model answer: The first node in a linked list."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why must a new node's Next be set before replacing an existing Next link?",
+          "prompt": "Why must a new node's Next be set before replacing an existing Next link?",
           "answer": "Otherwise the original successor can become unreachable and part of the list may be lost.",
           "options": [
-            "It never overestimates the true cheapest remaining cost.",
-            "Places it at its final index with smaller/equal values to its left.",
+            "Otherwise the original successor can become unreachable OR part of the list may be lost.",
+            "Otherwise the original successor cannot become unreachable and part of the list may be lost.",
             "Otherwise the original successor can become unreachable and part of the list may be lost."
           ],
-          "feedback": "Otherwise the original successor can become unreachable and part of the list may be lost."
+          "feedback": "Model answer: Otherwise the original successor can become unreachable and part of the list may be lost."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "head means: Reference to the first node.",
-          "answer": "true",
+          "prompt": "head means: An object containing data and a reference to another node.",
+          "answer": "false",
           "feedback": "head — Reference to the first node."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Next means: Visit nodes successively by following Next references.",
-          "answer": "false",
+          "prompt": "Next means: Link to the successor node.",
+          "answer": "true",
           "feedback": "Next — Link to the successor node."
         },
         {

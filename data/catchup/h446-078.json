@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search precondition?",
+          "prompt": "Binary search precondition?",
           "answer": "Sorted data.",
           "options": [
             "Sorted data.",
-            "First possible candidate index.",
-            "Index3."
+            "unsorted data.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Sorted data."
+          "feedback": "Model answer: Sorted data."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does low represent?",
+          "prompt": "What does low represent?",
           "answer": "First possible candidate index.",
           "options": [
-            "Sorted data.",
-            "Index3.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "First possible candidate index."
           ],
-          "feedback": "First possible candidate index."
+          "feedback": "Model answer: First possible candidate index."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is mid for bounds low0 high6?",
+          "prompt": "What is mid for bounds low0 high6?",
           "answer": "Index3.",
           "options": [
-            "First possible candidate index.",
+            "This result cannot be obtained using the stated method.",
             "Index3.",
-            "Sorted data."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Index3."
+          "feedback": "Model answer: Index3."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search target15 in [1,3,5,7,9,11,13,15]: give midpoint indexes.",
+          "prompt": "Binary search target15 in [1,3,5,7,9,11,13,15]: give midpoint indexes.",
           "answer": "mid3=7, mid5=11, mid6=13, mid7=15; found index7.",
           "options": [
             "mid3=7, mid5=11, mid6=13, mid7=15; found index7.",
-            "Sorted data.",
-            "First possible candidate index."
+            "mid3=8, mid5=11, mid6=13, mid7=15; found index7.",
+            "mid3=6, mid5=11, mid6=13, mid7=15; found index7."
           ],
-          "feedback": "mid3=7, mid5=11, mid6=13, mid7=15; found index7."
+          "feedback": "Model answer: mid3=7, mid5=11, mid6=13, mid7=15; found index7."
         }
       ]
     },
@@ -273,15 +273,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "high means: Highest candidate index.",
-          "answer": "true",
+          "prompt": "high means: Lowest candidate index.",
+          "answer": "false",
           "feedback": "high — Highest candidate index."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "midpoint means: Lowest candidate index.",
-          "answer": "false",
+          "prompt": "midpoint means: Middle candidate.",
+          "answer": "true",
           "feedback": "midpoint — Middle candidate."
         },
         {

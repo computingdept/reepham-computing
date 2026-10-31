@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the ideal completion cycle for four independent instructions in a three-stage pipeline?",
+          "prompt": "What is the ideal completion cycle for four independent instructions in a three-stage pipeline?",
           "answer": "Cycle 6 (=4+3−1).",
           "options": [
-            "The CU identifies and interprets the opcode/operands.",
+            "Cycle 5 (=4+3−1).",
             "Cycle 6 (=4+3−1).",
-            "The instruction being transferred from memory."
+            "Cycle 7 (=4+3−1)."
           ],
-          "feedback": "Cycle 6 (=4+3−1)."
+          "feedback": "Model answer: Cycle 6 (=4+3−1)."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does MDR contain during an instruction fetch?",
+          "prompt": "What does MDR contain during an instruction fetch?",
           "answer": "The instruction being transferred from memory.",
           "options": [
             "The instruction being transferred from memory.",
-            "Cycle 6 (=4+3−1).",
-            "The CU identifies and interprets the opcode/operands."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "The instruction being transferred from memory."
+          "feedback": "Model answer: The instruction being transferred from memory."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What happens in the Decode stage?",
+          "prompt": "What happens in the Decode stage?",
           "answer": "The CU identifies and interprets the opcode/operands.",
           "options": [
-            "Cycle 6 (=4+3−1).",
-            "The instruction being transferred from memory.",
+            "The CU identifies OR interprets the opcode/operands.",
+            "There is not enough information to determine the result.",
             "The CU identifies and interprets the opcode/operands."
           ],
-          "feedback": "The CU identifies and interprets the opcode/operands."
+          "feedback": "Model answer: The CU identifies and interprets the opcode/operands."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Calculate Sum and Carry-out for a full adder with A=1, B=0, Carry-in=1. Explain in binary.",
+          "prompt": "Calculate Sum and Carry-out for a full adder with A=1, B=0, Carry-in=1. Explain in binary.",
           "answer": "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1.",
           "options": [
-            "The instruction being transferred from memory.",
+            "0+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1.",
             "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1.",
-            "Cycle 6 (=4+3−1)."
+            "2+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1."
           ],
-          "feedback": "1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1."
+          "feedback": "Model answer: 1+0+1=2 decimal = 10₂, so Sum=0 and Carry-out=1."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "bottleneck means: Combines features of different architectural approaches.",
+          "prompt": "bottleneck means: Architecture with shared memory space for instructions and data.",
           "answer": "false",
           "feedback": "bottleneck — Limit caused by a shared resource or transfer path."
         },

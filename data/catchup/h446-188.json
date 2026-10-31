@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Does linear search require ordered input?",
+          "prompt": "Does linear search require ordered input?",
           "answer": "No. It scans sequentially and works on unsorted arrays.",
           "options": [
-            "6.",
+            "There is not enough information to determine the result.",
             "No. It scans sequentially and works on unsorted arrays.",
-            "They must already be sorted."
+            "No. It scans sequentially OR works on unsorted arrays."
           ],
-          "feedback": "No. It scans sequentially and works on unsorted arrays."
+          "feedback": "Model answer: No. It scans sequentially and works on unsorted arrays."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What must be true of the two input runs when merging them?",
+          "prompt": "What must be true of the two input runs when merging them?",
           "answer": "They must already be sorted.",
           "options": [
             "They must already be sorted.",
-            "No. It scans sequentially and works on unsorted arrays.",
-            "6."
+            "They must already be unsorted.",
+            "They need not already be sorted."
           ],
-          "feedback": "They must already be sorted."
+          "feedback": "Model answer: They must already be sorted."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: For seven elements, what is the last zero-based index?",
+          "prompt": "For seven elements, what is the last zero-based index?",
           "answer": "6.",
           "options": [
-            "No. It scans sequentially and works on unsorted arrays.",
-            "They must already be sorted.",
+            "7.",
+            "5.",
             "6."
           ],
-          "feedback": "6."
+          "feedback": "Model answer: 6."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Find the integer midpoint of low=2 and high=8.",
+          "prompt": "Find the integer midpoint of low=2 and high=8.",
           "answer": "5: 2 + (8-2)/2 = 5.",
           "options": [
-            "They must already be sorted.",
+            "4: 2 + (8-2)/2 = 5.",
             "5: 2 + (8-2)/2 = 5.",
-            "No. It scans sequentially and works on unsorted arrays."
+            "6: 2 + (8-2)/2 = 5."
           ],
-          "feedback": "5: 2 + (8-2)/2 = 5."
+          "feedback": "Model answer: 5: 2 + (8-2)/2 = 5."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "low means: Lower inclusive search index.",
-          "answer": "true",
+          "prompt": "low means: Input assumption: the array is ordered.",
+          "answer": "false",
           "feedback": "low — Lower inclusive search index."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "high means: Search repeatedly halves the candidate set.",
-          "answer": "false",
+          "prompt": "high means: Upper inclusive search index.",
+          "answer": "true",
           "feedback": "high — Upper inclusive search index."
         },
         {

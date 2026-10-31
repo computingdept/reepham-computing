@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Define a cache miss.",
+          "prompt": "Define a cache miss.",
           "answer": "Requested result is not already stored.",
           "options": [
             "Requested result is not already stored.",
-            "Only when both A and B are true.",
-            "0."
+            "Requested result is always already stored.",
+            "Requested result is not not already stored."
           ],
-          "feedback": "Requested result is not already stored."
+          "feedback": "Model answer: Requested result is not already stored."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: When is A AND B true?",
+          "prompt": "When is A AND B true?",
           "answer": "Only when both A and B are true.",
           "options": [
-            "Requested result is not already stored.",
-            "0.",
+            "Only when both A OR B are true.",
+            "Only when both A and B are false.",
             "Only when both A and B are true."
           ],
-          "feedback": "Only when both A and B are true."
+          "feedback": "Model answer: Only when both A and B are true."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Give a boundary-invalid input just below 1.",
+          "prompt": "Give a boundary-invalid input just below 1.",
           "answer": "0.",
           "options": [
-            "Only when both A and B are true.",
+            "-1.",
             "0.",
-            "Requested result is not already stored."
+            "1."
           ],
-          "feedback": "0."
+          "feedback": "Model answer: 0."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Does 61 satisfy `seconds>=1 || seconds<=60`?",
+          "prompt": "Does 61 satisfy `seconds>=1 || seconds<=60`?",
           "answer": "Yes, because seconds>=1 is true.",
           "options": [
             "Yes, because seconds>=1 is true.",
-            "Requested result is not already stored.",
-            "Only when both A and B are true."
+            "Yes, because seconds>=2 is true.",
+            "Yes, because seconds>=0 is true."
           ],
-          "feedback": "Yes, because seconds>=1 is true."
+          "feedback": "Model answer: Yes, because seconds>=1 is true."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "validation means: Repeat tests after a change.",
+          "prompt": "validation means: Runs but produces the wrong result.",
           "answer": "false",
           "feedback": "validation — Check input meets constraints."
         },

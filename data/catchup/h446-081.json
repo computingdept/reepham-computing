@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a sorted run?",
+          "prompt": "What is a sorted run?",
           "answer": "Contiguous segment already in ascending order.",
           "options": [
             "Contiguous segment already in ascending order.",
-            "Inserts each next key into its sorted prefix.",
-            "Work scaling with n times log n."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Contiguous segment already in ascending order."
+          "feedback": "Model answer: Contiguous segment already in ascending order."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: How does insertion sort work?",
+          "prompt": "How does insertion sort work?",
           "answer": "Inserts each next key into its sorted prefix.",
           "options": [
-            "Contiguous segment already in ascending order.",
-            "Work scaling with n times log n.",
+            "Inserts each next key into its unsorted prefix.",
+            "There is not enough information to determine the result.",
             "Inserts each next key into its sorted prefix."
           ],
-          "feedback": "Inserts each next key into its sorted prefix."
+          "feedback": "Model answer: Inserts each next key into its sorted prefix."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is O(n log n) complexity?",
+          "prompt": "What is O(n log n) complexity?",
           "answer": "Work scaling with n times log n.",
           "options": [
-            "Inserts each next key into its sorted prefix.",
+            "This result cannot be obtained using the stated method.",
             "Work scaling with n times log n.",
-            "Contiguous segment already in ascending order."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Work scaling with n times log n."
+          "feedback": "Model answer: Work scaling with n times log n."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Binary search sorted [1,3,5,7,9,11,13] for 11: show midpoint index sequence.",
+          "prompt": "Binary search sorted [1,3,5,7,9,11,13] for 11: show midpoint index sequence.",
           "answer": "mid3=7 then mid5=11; return index5.",
           "options": [
             "mid3=7 then mid5=11; return index5.",
-            "Contiguous segment already in ascending order.",
-            "Inserts each next key into its sorted prefix."
+            "mid3=8 then mid5=11; return index5.",
+            "mid3=6 then mid5=11; return index5."
           ],
-          "feedback": "mid3=7 then mid5=11; return index5."
+          "feedback": "Model answer: mid3=7 then mid5=11; return index5."
         }
       ]
     },
@@ -280,15 +280,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "merge means: Sort by merging sorted runs.",
-          "answer": "false",
+          "prompt": "merge means: Combine two sorted sequences.",
+          "answer": "true",
           "feedback": "merge — Combine two sorted sequences."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "auxiliary space means: Extra memory beyond input.",
-          "answer": "true",
+          "prompt": "auxiliary space means: Sort by merging sorted runs.",
+          "answer": "false",
           "feedback": "auxiliary space — Extra memory beyond input."
         }
       ]

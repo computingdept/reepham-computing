@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: In a Karnaugh-map pair, A stays 0 and B changes between 0 and 1. What is the simplified term?",
+          "prompt": "In a Karnaugh-map pair, A stays 0 and B changes between 0 and 1. What is the simplified term?",
           "answer": "¬A",
           "options": [
-            "24 values; GetLength(2) = 4",
+            "This result cannot be obtained using the stated method.",
             "¬A",
-            "[3, 6, 2, 8]"
+            "There is not enough information to determine the result."
           ],
-          "feedback": "A stays 0, so retain NOT A (¬A). B changes, so remove B."
+          "feedback": "Model answer: ¬A Explanation: A stays 0, so retain NOT A (¬A). B changes, so remove B."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Show the array after one complete left-to-right pass of ascending bubble sort on [8, 3, 6, 2] .",
+          "prompt": "Show the array after one complete left-to-right pass of ascending bubble sort on [8, 3, 6, 2] .",
           "answer": "[3, 6, 2, 8]",
           "options": [
             "[3, 6, 2, 8]",
-            "¬A",
-            "24 values; GetLength(2) = 4"
+            "[4, 6, 2, 8]",
+            "[2, 6, 2, 8]"
           ],
-          "feedback": "Swap 8 and 3 → [3, 8, 6, 2]; swap 8 and 6 → [3, 6, 8, 2]; swap 8 and 2 → [3, 6, 2, 8]. The largest value is now last."
+          "feedback": "Model answer: [3, 6, 2, 8] Explanation: Swap 8 and 3 → [3, 8, 6, 2]; swap 8 and 6 → [3, 6, 8, 2]; swap 8 and 2 → [3, 6, 2, 8]. The largest value is now last."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: C#: int[,,] scores = new int[2, 3, 4]; How many values can it store? What does scores.GetLength(2) return?",
+          "prompt": "C#: int[,,] scores = new int[2, 3, 4]; How many values can it store? What does scores.GetLength(2) return?",
           "answer": "24 values; GetLength(2) = 4",
           "options": [
-            "¬A",
-            "[3, 6, 2, 8]",
+            "25 values; GetLength(2) = 4",
+            "23 values; GetLength(2) = 4",
             "24 values; GetLength(2) = 4"
           ],
-          "feedback": "2 layers × 3 rows × 4 columns = 24 values. Dimension 2 is the third dimension (columns)."
+          "feedback": "Model answer: 24 values; GetLength(2) = 4 Explanation: 2 layers × 3 rows × 4 columns = 24 values. Dimension 2 is the third dimension (columns)."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Add 01000000 0011 and 01000000 0010 . Format: 8-bit two’s-complement fractional mantissa + 4-bit two’s-complement exponent . Show exponent alignment and the final normalised result.",
+          "prompt": "Add 01000000 0011 and 01000000 0010 . Format: 8-bit two’s-complement fractional mantissa + 4-bit two’s-complement exponent . Show exponent alignment and the final normalised result.",
           "answer": "01100000 0011 (denary 6)",
           "options": [
-            "[3, 6, 2, 8]",
+            "01100000 0001 (denary 6)",
             "01100000 0011 (denary 6)",
-            "¬A"
+            "01100000 0010 (denary 6)"
           ],
-          "feedback": "Align to exponent 3 by shifting the second mantissa right: 01000000 → 00100000. Add the mantissas: 01000000 + 00100000 = 01100000. The exponent remains 0011. This is normalised: 0.75 × 2³ = 6."
+          "feedback": "Model answer: 01100000 0011 (denary 6) Explanation: Align to exponent 3 by shifting the second mantissa right: 01000000 → 00100000. Add the mantissas: 01000000 + 00100000 = 01100000. The exponent remains 0011. This is normalised: 0.75 × 2³ = 6."
         }
       ]
     },
@@ -302,7 +302,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "wraparound means: An expression made with AND, such as A ∧ B.",
+          "prompt": "wraparound means: A group of 1, 2, 4, 8 or 16 neighbouring 1s.",
           "answer": "false",
           "feedback": "wraparound — The left/right edges touch, and the top/bottom edges touch."
         },

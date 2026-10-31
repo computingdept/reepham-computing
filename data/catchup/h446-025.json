@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What index identifies the first element of a C# array?",
+          "prompt": "What index identifies the first element of a C# array?",
           "answer": "0 — C# arrays are zero indexed.",
           "options": [
-            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
-            "18 — the fourth item has index 3.",
+            "1 — C# arrays are zero indexed.",
+            "-1 — C# arrays are zero indexed.",
             "0 — C# arrays are zero indexed."
           ],
-          "feedback": "0 — C# arrays are zero indexed."
+          "feedback": "Model answer: 0 — C# arrays are zero indexed."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: How does a linear search differ from a binary search?",
+          "prompt": "How does a linear search differ from a binary search?",
           "answer": "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
           "options": [
-            "18 — the fourth item has index 3.",
+            "There is not enough information to determine the result.",
             "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
-            "0 — C# arrays are zero indexed."
+            "Linear search checks sequentially; binary search repeatedly halves the remaining unsorted range."
           ],
-          "feedback": "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range."
+          "feedback": "Model answer: Linear search checks sequentially; binary search repeatedly halves the remaining sorted range."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Given int[] numbers = {3, 7, 12, 18, 24}; what is numbers[3]?",
+          "prompt": "Given int[] numbers = {3, 7, 12, 18, 24}; what is numbers[3]?",
           "answer": "18 — the fourth item has index 3.",
           "options": [
             "18 — the fourth item has index 3.",
-            "0 — C# arrays are zero indexed.",
-            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range."
+            "19 — the fourth item has index 3.",
+            "17 — the fourth item has index 3."
           ],
-          "feedback": "18 — the fourth item has index 3."
+          "feedback": "Model answer: 18 — the fourth item has index 3."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why can binary search miss a target that exists in an unsorted array?",
+          "prompt": "Why can binary search miss a target that exists in an unsorted array?",
           "answer": "Because comparisons rely on sorted order to discard one half safely.",
           "options": [
-            "0 — C# arrays are zero indexed.",
-            "Linear search checks sequentially; binary search repeatedly halves the remaining sorted range.",
+            "Because comparisons rely on unsorted order to discard one half safely.",
+            "There is not enough information to determine the result.",
             "Because comparisons rely on sorted order to discard one half safely."
           ],
-          "feedback": "Because comparisons rely on sorted order to discard one half safely."
+          "feedback": "Model answer: Because comparisons rely on sorted order to discard one half safely."
         }
       ]
     },
@@ -302,7 +302,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "midpoint means: The last index still under consideration.",
+          "prompt": "midpoint means: Values arranged in order, so comparisons can eliminate ranges.",
           "answer": "false",
           "feedback": "midpoint — The middle index of the current candidate range."
         },

@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: A C# function is declared int Double(int n). What does return n * 2; do when n is 4?",
+          "prompt": "A C# function is declared int Double(int n). What does return n * 2; do when n is 4?",
           "answer": "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
           "options": [
-            "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
-            "C. A stack is last in, first out (LIFO).",
+            "It sends the value 9 back to the caller. A return statement also ends the current invocation.",
+            "It sends the value 7 back to the caller. A return statement also ends the current invocation.",
             "It sends the value 8 back to the caller. A return statement also ends the current invocation."
           ],
-          "feedback": "It sends the value 8 back to the caller. A return statement also ends the current invocation."
+          "feedback": "Model answer: It sends the value 8 back to the caller. A return statement also ends the current invocation."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: Starting total = 1, repeat total = total * i for i = 1, 2, 3. What is total after each iteration?",
+          "prompt": "Starting total = 1, repeat total = total * i for i = 1, 2, 3. What is total after each iteration?",
           "answer": "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
           "options": [
-            "C. A stack is last in, first out (LIFO).",
+            "0, 2 and 6. Each iteration multiplies the previous total by the new i.",
             "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
-            "It sends the value 8 back to the caller. A return statement also ends the current invocation."
+            "2, 2 and 6. Each iteration multiplies the previous total by the new i."
           ],
-          "feedback": "1, 2 and 6. Each iteration multiplies the previous total by the new i."
+          "feedback": "Model answer: 1, 2 and 6. Each iteration multiplies the previous total by the new i."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Values A, B and C are pushed onto a stack in that order. Which leaves first when popping?",
+          "prompt": "Values A, B and C are pushed onto a stack in that order. Which leaves first when popping?",
           "answer": "C. A stack is last in, first out (LIFO).",
           "options": [
             "C. A stack is last in, first out (LIFO).",
-            "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
-            "1, 2 and 6. Each iteration multiplies the previous total by the new i."
+            "C. A stack is first in, first out (LIFO).",
+            "C. A stack is last in, first out (FIFO)."
           ],
-          "feedback": "C. A stack is last in, first out (LIFO)."
+          "feedback": "Model answer: C. A stack is last in, first out (LIFO)."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A function AddTwo(x) returns x + 2. Calculate AddTwo(AddTwo(3)) and show the inner and outer calls.",
+          "prompt": "A function AddTwo(x) returns x + 2. Calculate AddTwo(AddTwo(3)) and show the inner and outer calls.",
           "answer": "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7.",
           "options": [
-            "It sends the value 8 back to the caller. A return statement also ends the current invocation.",
-            "1, 2 and 6. Each iteration multiplies the previous total by the new i.",
+            "The inner AddTwo(4) returns 5; then the outer AddTwo(5) returns 7.",
+            "The inner AddTwo(2) returns 5; then the outer AddTwo(5) returns 7.",
             "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7."
           ],
-          "feedback": "The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7."
+          "feedback": "Model answer: The inner AddTwo(3) returns 5; then the outer AddTwo(5) returns 7."
         }
       ]
     },
@@ -296,15 +296,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "recursive case means: The result passed back to a caller.",
-          "answer": "false",
+          "prompt": "recursive case means: A call to the same function with a smaller or simpler input.",
+          "answer": "true",
           "feedback": "recursive case — A call to the same function with a smaller or simpler input."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "call stack means: Memory tracking active function calls and their local state.",
-          "answer": "true",
+          "prompt": "call stack means: A function calling itself to solve a smaller problem.",
+          "answer": "false",
           "feedback": "call stack — Memory tracking active function calls and their local state."
         }
       ]

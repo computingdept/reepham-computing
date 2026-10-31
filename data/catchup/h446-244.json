@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does the MAR contain during a memory access?",
+          "prompt": "What does the MAR contain during a memory access?",
           "answer": "The address of the memory location being accessed.",
           "options": [
-            "Only when both operands are true.",
-            "Incremental working versions and repeated feedback.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "The address of the memory location being accessed."
           ],
-          "feedback": "The address of the memory location being accessed."
+          "feedback": "Model answer: The address of the memory location being accessed."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: When is A AND B true?",
+          "prompt": "When is A AND B true?",
           "answer": "Only when both operands are true.",
           "options": [
-            "Incremental working versions and repeated feedback.",
+            "Only when both operands are not true.",
             "Only when both operands are true.",
-            "The address of the memory location being accessed."
+            "Only when both operands are false."
           ],
-          "feedback": "Only when both operands are true."
+          "feedback": "Model answer: Only when both operands are true."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What distinguishes iterative development from a fixed sequence?",
+          "prompt": "What distinguishes iterative development from a fixed sequence?",
           "answer": "Incremental working versions and repeated feedback.",
           "options": [
             "Incremental working versions and repeated feedback.",
-            "The address of the memory location being accessed.",
-            "Only when both operands are true."
+            "Incremental working versions OR repeated feedback.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Incremental working versions and repeated feedback."
+          "feedback": "Model answer: Incremental working versions and repeated feedback."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Search for 13 in sorted indexes 0–14. Trace the midpoint indexes inspected by standard integer midpoint selection.",
+          "prompt": "Search for 13 in sorted indexes 0–14. Trace the midpoint indexes inspected by standard integer midpoint selection.",
           "answer": "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13.",
           "options": [
-            "The address of the memory location being accessed.",
-            "Only when both operands are true.",
+            "low=1 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13.",
+            "low=-1 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13.",
             "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13."
           ],
-          "feedback": "low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13."
+          "feedback": "Model answer: low=0 high=14 → mid=7; target greater → low=8 high=14 mid=11; greater → low=12 high=14 mid=13; found. Midpoints 7,11,13."
         }
       ]
     },
@@ -291,7 +291,7 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "critical path means: Coordination of operations using shared state.",
+          "prompt": "critical path means: Tasks making progress over overlapping intervals.",
           "answer": "false",
           "feedback": "critical path — Longest dependent chain determining ideal completion time."
         },

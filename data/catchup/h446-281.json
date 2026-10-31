@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: How does DELETE differ from DROP TABLE?",
+          "prompt": "How does DELETE differ from DROP TABLE?",
           "answer": "DELETE removes row data; DROP removes table definition.",
           "options": [
-            "Constraints remain satisfied by a valid committed transaction.",
+            "This result cannot be obtained using the stated method.",
             "DELETE removes row data; DROP removes table definition.",
-            "Reference from one table to another key."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "DELETE removes row data; DROP removes table definition."
+          "feedback": "Model answer: DELETE removes row data; DROP removes table definition."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a foreign key?",
+          "prompt": "What is a foreign key?",
           "answer": "Reference from one table to another key.",
           "options": [
             "Reference from one table to another key.",
-            "DELETE removes row data; DROP removes table definition.",
-            "Constraints remain satisfied by a valid committed transaction."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Reference from one table to another key."
+          "feedback": "Model answer: Reference from one table to another key."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does database consistency mean?",
+          "prompt": "What does database consistency mean?",
           "answer": "Constraints remain satisfied by a valid committed transaction.",
           "options": [
-            "DELETE removes row data; DROP removes table definition.",
-            "Reference from one table to another key.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Constraints remain satisfied by a valid committed transaction."
           ],
-          "feedback": "Constraints remain satisfied by a valid committed transaction."
+          "feedback": "Model answer: Constraints remain satisfied by a valid committed transaction."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Array scores=[6,2,9,4]; replace element at index2 with element0+element1. Give final array and sum.",
+          "prompt": "Array scores=[6,2,9,4]; replace element at index2 with element0+element1. Give final array and sum.",
           "answer": "scores[2]=6+2=8; array [6,2,8,4]; sum20.",
           "options": [
-            "Reference from one table to another key.",
+            "scores[1]=6+2=8; array [6,2,8,4]; sum20.",
             "scores[2]=6+2=8; array [6,2,8,4]; sum20.",
-            "DELETE removes row data; DROP removes table definition."
+            "scores[3]=6+2=8; array [6,2,8,4]; sum20."
           ],
-          "feedback": "scores[2]=6+2=8; array [6,2,8,4]; sum20."
+          "feedback": "Model answer: scores[2]=6+2=8; array [6,2,8,4]; sum20."
         }
       ]
     },
@@ -291,15 +291,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Isolation means: Foreign keys refer to valid rows.",
-          "answer": "false",
+          "prompt": "Isolation means: Concurrent effects safely separated.",
+          "answer": "true",
           "feedback": "Isolation — Concurrent effects safely separated."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Durability means: Committed changes persist.",
-          "answer": "true",
+          "prompt": "Durability means: All changes or none.",
+          "answer": "false",
           "feedback": "Durability — Committed changes persist."
         }
       ]

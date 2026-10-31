@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: A login check uses validUser && validPassword . What is the result when validUser is true and validPassword is false? Explain.",
+          "prompt": "A login check uses validUser && validPassword . What is the result when validUser is true and validPassword is false? Explain.",
           "answer": "False. AND ( && ) is true only when both conditions are true.",
           "options": [
             "False. AND ( && ) is true only when both conditions are true.",
-            "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
-            "B, C, D. A leaves first because a queue is FIFO."
+            "False. OR ( && ) is true only when both conditions are true.",
+            "False. AND ( && ) is false only when both conditions are true."
           ],
-          "feedback": "False. AND ( && ) is true only when both conditions are true."
+          "feedback": "Model answer: False. AND ( && ) is true only when both conditions are true."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: A D-type flip-flop currently stores Q = 1. D changes to 0 but there is no triggering clock edge. What is Q?",
+          "prompt": "A D-type flip-flop currently stores Q = 1. D changes to 0 but there is no triggering clock edge. What is Q?",
           "answer": "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
           "options": [
-            "False. AND ( && ) is true only when both conditions are true.",
-            "B, C, D. A leaves first because a queue is FIFO.",
+            "Q remains 2. The input is sampled only when the triggering clock edge occurs.",
+            "Q remains 0. The input is sampled only when the triggering clock edge occurs.",
             "Q remains 1. The input is sampled only when the triggering clock edge occurs."
           ],
-          "feedback": "Q remains 1. The input is sampled only when the triggering clock edge occurs."
+          "feedback": "Model answer: Q remains 1. The input is sampled only when the triggering clock edge occurs."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: A queue receives A, B and C in that order. Remove one item, then enqueue D. List the remaining items from front to rear.",
+          "prompt": "A queue receives A, B and C in that order. Remove one item, then enqueue D. List the remaining items from front to rear.",
           "answer": "B, C, D. A leaves first because a queue is FIFO.",
           "options": [
-            "Q remains 1. The input is sampled only when the triggering clock edge occurs.",
+            "B, C, D. A leaves first because a queue is not FIFO.",
             "B, C, D. A leaves first because a queue is FIFO.",
-            "False. AND ( && ) is true only when both conditions are true."
+            "B, C, D. A leaves first because a queue is LIFO."
           ],
-          "feedback": "B, C, D. A leaves first because a queue is FIFO."
+          "feedback": "Model answer: B, C, D. A leaves first because a queue is FIFO."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A five-bucket hash table uses h(k) = k MOD 5 with linear probing. Insert keys 7, 12 and 17 in that order into an empty table. State each final index.",
+          "prompt": "A five-bucket hash table uses h(k) = k MOD 5 with linear probing. Insert keys 7, 12 and 17 in that order into an empty table. State each final index.",
           "answer": "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4.",
           "options": [
             "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4.",
-            "False. AND ( && ) is true only when both conditions are true.",
-            "Q remains 1. The input is sampled only when the triggering clock edge occurs."
+            "8 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4.",
+            "6 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4."
           ],
-          "feedback": "7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4."
+          "feedback": "Model answer: 7 hashes to 2 and is stored at 2. 12 also hashes to 2, so probes to 3. 17 also hashes to 2; 2 and 3 are occupied, so it goes to 4."
         }
       ]
     },
@@ -295,15 +295,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "A repeatable mapping from key to bucket index. means: A repeatable mapping from key to bucket index.",
-          "answer": "true",
+          "prompt": "A repeatable mapping from key to bucket index. means: A table using a hash function to locate data from a key.",
+          "answer": "false",
           "feedback": "A repeatable mapping from key to bucket index. — A repeatable mapping from key to bucket index."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "A location in the hash table. means: Resolve collisions by checking successive buckets.",
-          "answer": "false",
+          "prompt": "A location in the hash table. means: A location in the hash table.",
+          "answer": "true",
           "feedback": "A location in the hash table. — A location in the hash table."
         },
         {

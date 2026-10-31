@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why doesn't a smaller assembly instruction count guarantee a faster program?",
+          "prompt": "Why doesn't a smaller assembly instruction count guarantee a faster program?",
           "answer": "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
           "options": [
-            "An execution unit capable of carrying out its own instruction stream.",
-            "4 minutes, ignoring overhead.",
+            "same instructions have different costs, and decoding, caches and pipelining affect performance.",
+            "Different instructions have different costs, OR decoding, caches and pipelining affect performance.",
             "Different instructions have different costs, and decoding, caches and pipelining affect performance."
           ],
-          "feedback": "Different instructions have different costs, and decoding, caches and pipelining affect performance."
+          "feedback": "Model answer: Different instructions have different costs, and decoding, caches and pipelining affect performance."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a core?",
+          "prompt": "What is a core?",
           "answer": "An execution unit capable of carrying out its own instruction stream.",
           "options": [
-            "4 minutes, ignoring overhead.",
+            "This result cannot be obtained using the stated method.",
             "An execution unit capable of carrying out its own instruction stream.",
-            "Different instructions have different costs, and decoding, caches and pipelining affect performance."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "An execution unit capable of carrying out its own instruction stream."
+          "feedback": "Model answer: An execution unit capable of carrying out its own instruction stream."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Two independent tasks each take 4 minutes; what is ideal concurrent time?",
+          "prompt": "Two independent tasks each take 4 minutes; what is ideal concurrent time?",
           "answer": "4 minutes, ignoring overhead.",
           "options": [
             "4 minutes, ignoring overhead.",
-            "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
-            "An execution unit capable of carrying out its own instruction stream."
+            "5 minutes, ignoring overhead.",
+            "3 minutes, ignoring overhead."
           ],
-          "feedback": "4 minutes, ignoring overhead."
+          "feedback": "Model answer: 4 minutes, ignoring overhead."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Given int[] a={1,2,3,4}, perform a[i]=a[i]*2 for even indexes 0 and 2 only. Give final array and its sum.",
+          "prompt": "Given int[] a={1,2,3,4}, perform a[i]=a[i]*2 for even indexes 0 and 2 only. Give final array and its sum.",
           "answer": "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements.",
           "options": [
-            "Different instructions have different costs, and decoding, caches and pipelining affect performance.",
-            "An execution unit capable of carrying out its own instruction stream.",
+            "Final [3,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements.",
+            "Final [1,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements.",
             "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements."
           ],
-          "feedback": "Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements."
+          "feedback": "Model answer: Final [2,2,6,4], sum=14. Indexes 0 and 2 were changed, not the even-valued elements."
         }
       ]
     },
@@ -291,15 +291,15 @@
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "data parallelism means: Coordinating shared work and results.",
-          "answer": "false",
+          "prompt": "data parallelism means: Apply the same operation to many independent data elements.",
+          "answer": "true",
           "feedback": "data parallelism — Apply the same operation to many independent data elements."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "bandwidth means: Volume of data transferred in a given time.",
-          "answer": "true",
+          "prompt": "bandwidth means: Processor designed for highly parallel workloads.",
+          "answer": "false",
           "feedback": "bandwidth — Volume of data transferred in a given time."
         }
       ]

@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a Ready process?",
+          "prompt": "What is a Ready process?",
           "answer": "Eligible for CPU time.",
           "options": [
-            "Maximum CPU time per RR turn.",
-            "Saving and restoring execution context when changing process.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Eligible for CPU time."
           ],
-          "feedback": "Eligible for CPU time."
+          "feedback": "Model answer: Eligible for CPU time."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a scheduling quantum?",
+          "prompt": "What is a scheduling quantum?",
           "answer": "Maximum CPU time per RR turn.",
           "options": [
-            "Saving and restoring execution context when changing process.",
+            "This result cannot be obtained using the stated method.",
             "Maximum CPU time per RR turn.",
-            "Eligible for CPU time."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Maximum CPU time per RR turn."
+          "feedback": "Model answer: Maximum CPU time per RR turn."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a context switch?",
+          "prompt": "What is a context switch?",
           "answer": "Saving and restoring execution context when changing process.",
           "options": [
             "Saving and restoring execution context when changing process.",
-            "Eligible for CPU time.",
-            "Maximum CPU time per RR turn."
+            "Saving OR restoring execution context when changing process.",
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Saving and restoring execution context when changing process."
+          "feedback": "Model answer: Saving and restoring execution context when changing process."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Sorted [1,3,5,7,9,11,13,15,17], target 15. Trace midpoint indexes.",
+          "prompt": "Sorted [1,3,5,7,9,11,13,15,17], target 15. Trace midpoint indexes.",
           "answer": "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7.",
           "options": [
-            "Eligible for CPU time.",
-            "Maximum CPU time per RR turn.",
+            "mid4→10, mid6→13, mid7→15 found; indexes 4,6,7.",
+            "mid4→8, mid6→13, mid7→15 found; indexes 4,6,7.",
             "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7."
           ],
-          "feedback": "mid4→9, mid6→13, mid7→15 found; indexes 4,6,7."
+          "feedback": "Model answer: mid4→9, mid6→13, mid7→15 found; indexes 4,6,7."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "SJF means: Shortest Job First.",
-          "answer": "true",
+          "prompt": "SJF means: First Come First Served.",
+          "answer": "false",
           "feedback": "SJF — Shortest Job First."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "SRT means: Multilevel feedback queue.",
-          "answer": "false",
+          "prompt": "SRT means: Shortest Remaining Time.",
+          "answer": "true",
           "feedback": "SRT — Shortest Remaining Time."
         },
         {

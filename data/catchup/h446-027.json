@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Normalise 0.0110 × 2⁴ using a two’s-complement mantissa. Give the new mantissa and exponent.",
+          "prompt": "Normalise 0.0110 × 2⁴ using a two’s-complement mantissa. Give the new mantissa and exponent.",
           "answer": "0.1100 × 2³ .",
           "options": [
             "0.1100 × 2³ .",
-            "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
-            "[3, 5, 2, 7] ."
+            "0.1101 × 2³ .",
+            "0.1110 × 2³ ."
           ],
-          "feedback": "Shift the mantissa one place left and decrease the exponent by one to preserve the value. A normalised positive two’s-complement mantissa begins 01 ; a negative one begins 10 ."
+          "feedback": "Model answer: 0.1100 × 2³ . Explanation: Shift the mantissa one place left and decrease the exponent by one to preserve the value. A normalised positive two’s-complement mantissa begins 01 ; a negative one begins 10 ."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: A sorted array is [3, 8, 12, 19, 27, 35, 42] . When searching for 27 , which indexes are checked, in order?",
+          "prompt": "A sorted array is [3, 8, 12, 19, 27, 35, 42] . When searching for 27 , which indexes are checked, in order?",
           "answer": "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
           "options": [
-            "0.1100 × 2³ .",
-            "[3, 5, 2, 7] .",
+            "Indexes 4 → 5 → 4 (values 19 → 35 → 27).",
+            "Indexes 2 → 5 → 4 (values 19 → 35 → 27).",
             "Indexes 3 → 5 → 4 (values 19 → 35 → 27)."
           ],
-          "feedback": "Binary search tests the middle index of the remaining sorted range, using zero-based indexing."
+          "feedback": "Model answer: Indexes 3 → 5 → 4 (values 19 → 35 → 27). Explanation: Binary search tests the middle index of the remaining sorted range, using zero-based indexing."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Show the array after one full left-to-right pass of ascending bubble sort on [7, 3, 5, 2] .",
+          "prompt": "Show the array after one full left-to-right pass of ascending bubble sort on [7, 3, 5, 2] .",
           "answer": "[3, 5, 2, 7] .",
           "options": [
-            "Indexes 3 → 5 → 4 (values 19 → 35 → 27).",
+            "[2, 5, 2, 7] .",
             "[3, 5, 2, 7] .",
-            "0.1100 × 2³ ."
+            "[4, 5, 2, 7] ."
           ],
-          "feedback": "Compare adjacent values and swap when the left value is larger. The largest value, 7, moves to the end."
+          "feedback": "Model answer: [3, 5, 2, 7] . Explanation: Compare adjacent values and swap when the left value is larger. The largest value, 7, moves to the end."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: An alarm sounds if the door is open AND the system is armed, OR if panic is pressed. Write Q using A, B and C.",
+          "prompt": "An alarm sounds if the door is open AND the system is armed, OR if panic is pressed. Write Q using A, B and C.",
           "answer": "Q = (A ∧ B) ∨ C .",
           "options": [
             "Q = (A ∧ B) ∨ C .",
-            "0.1100 × 2³ .",
-            "Indexes 3 → 5 → 4 (values 19 → 35 → 27)."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "A = door open, B = armed, C = panic pressed. Group door AND armed first; panic is an alternative trigger."
+          "feedback": "Model answer: Q = (A ∧ B) ∨ C . Explanation: A = door open, B = armed, C = panic pressed. Group door AND armed first; panic is an alternative trigger."
         }
       ]
     },
@@ -295,22 +295,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "distribution means: Expanding/factoring Boolean expressions.",
-          "answer": "true",
+          "prompt": "distribution means: Rules for negating AND/OR groups.",
+          "answer": "false",
           "feedback": "distribution — Expanding/factoring Boolean expressions."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "association means: Two NOT operations cancel.",
-          "answer": "false",
+          "prompt": "association means: Regrouping repeated same operations.",
+          "answer": "true",
           "feedback": "association — Regrouping repeated same operations."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "commutation means: Changing order.",
-          "answer": "true",
+          "prompt": "commutation means: Rules for negating AND/OR groups.",
+          "answer": "false",
           "feedback": "commutation — Changing order."
         }
       ]

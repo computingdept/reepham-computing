@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a loop invariant?",
+          "prompt": "What is a loop invariant?",
           "answer": "Property true after processing each step.",
           "options": [
             "Property true after processing each step.",
-            "Expected outcome after valid execution.",
-            "Defines valid types, conditions and outputs."
+            "Property true before processing each step.",
+            "Property false after processing each step."
           ],
-          "feedback": "Property true after processing each step."
+          "feedback": "Model answer: Property true after processing each step."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is a postcondition?",
+          "prompt": "What is a postcondition?",
           "answer": "Expected outcome after valid execution.",
           "options": [
-            "Property true after processing each step.",
-            "Defines valid types, conditions and outputs.",
+            "Expected outcome before valid execution.",
+            "There is not enough information to determine the result.",
             "Expected outcome after valid execution."
           ],
-          "feedback": "Expected outcome after valid execution."
+          "feedback": "Model answer: Expected outcome after valid execution."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: How is an input specification useful?",
+          "prompt": "How is an input specification useful?",
           "answer": "Defines valid types, conditions and outputs.",
           "options": [
-            "Expected outcome after valid execution.",
+            "There is not enough information to determine the result.",
             "Defines valid types, conditions and outputs.",
-            "Property true after processing each step."
+            "Defines valid types, conditions OR outputs."
           ],
-          "feedback": "Defines valid types, conditions and outputs."
+          "feedback": "Model answer: Defines valid types, conditions and outputs."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: C# array a=[3,5,7]: set a[1]=a[0]+a[2]. Give final array and sum.",
+          "prompt": "C# array a=[3,5,7]: set a[1]=a[0]+a[2]. Give final array and sum.",
           "answer": "[3,10,7], sum20.",
           "options": [
             "[3,10,7], sum20.",
-            "Property true after processing each step.",
-            "Expected outcome after valid execution."
+            "[4,10,7], sum20.",
+            "[2,10,7], sum20."
           ],
-          "feedback": "[3,10,7], sum20."
+          "feedback": "Model answer: [3,10,7], sum20."
         }
       ]
     },
@@ -273,22 +273,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "invariant means: Property preserved across loop iterations.",
-          "answer": "true",
+          "prompt": "invariant means: Finite unambiguous sequence of steps.",
+          "answer": "false",
           "feedback": "invariant — Property preserved across loop iterations."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "precondition means: Finite unambiguous sequence of steps.",
-          "answer": "false",
+          "prompt": "precondition means: Required input assumption.",
+          "answer": "true",
           "feedback": "precondition — Required input assumption."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "postcondition means: Expected condition after executing.",
-          "answer": "true",
+          "prompt": "postcondition means: Finite unambiguous sequence of steps.",
+          "answer": "false",
           "feedback": "postcondition — Expected condition after executing."
         }
       ]

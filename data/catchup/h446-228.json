@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is the difference between Step Into and Step Over?",
+          "prompt": "What is the difference between Step Into and Step Over?",
           "answer": "Step Into enters the called method; Step Over executes it without stopping inside.",
           "options": [
             "Step Into enters the called method; Step Over executes it without stopping inside.",
-            "Controlling how an object's internal state can be accessed or changed.",
-            "For example List<Book>, a collection holding Book references."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Step Into enters the called method; Step Over executes it without stopping inside."
+          "feedback": "Model answer: Step Into enters the called method; Step Over executes it without stopping inside."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is encapsulation?",
+          "prompt": "What is encapsulation?",
           "answer": "Controlling how an object's internal state can be accessed or changed.",
           "options": [
-            "Step Into enters the called method; Step Over executes it without stopping inside.",
-            "For example List<Book>, a collection holding Book references.",
+            "Controlling how an object's internal state can be accessed AND changed.",
+            "Controlling how an object's internal state cannot be accessed or changed.",
             "Controlling how an object's internal state can be accessed or changed."
           ],
-          "feedback": "Controlling how an object's internal state can be accessed or changed."
+          "feedback": "Model answer: Controlling how an object's internal state can be accessed or changed."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: How would you store many Book objects in C#?",
+          "prompt": "How would you store many Book objects in C#?",
           "answer": "For example List<Book>, a collection holding Book references.",
           "options": [
-            "Controlling how an object's internal state can be accessed or changed.",
+            "This result cannot be obtained using the stated method.",
             "For example List<Book>, a collection holding Book references.",
-            "Step Into enters the called method; Step Over executes it without stopping inside."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "For example List<Book>, a collection holding Book references."
+          "feedback": "Model answer: For example List<Book>, a collection holding Book references."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A Borrow method should fail on a book already on loan. Give a useful test.",
+          "prompt": "A Borrow method should fail on a book already on loan. Give a useful test.",
           "answer": "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true.",
           "options": [
             "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true.",
-            "Step Into enters the called method; Step Over executes it without stopping inside.",
-            "Controlling how an object's internal state can be accessed or changed."
+            "Set OnLoan=true, call Borrow, expect false OR OnLoan to stay true.",
+            "Set OnLoan=false, call Borrow, expect false and OnLoan to stay true."
           ],
-          "feedback": "Set OnLoan=true, call Borrow, expect false and OnLoan to stay true."
+          "feedback": "Model answer: Set OnLoan=true, call Borrow, expect false and OnLoan to stay true."
         }
       ]
     },
@@ -284,15 +284,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "object means: Instance of a class.",
-          "answer": "true",
+          "prompt": "object means: Template defining properties and methods.",
+          "answer": "false",
           "feedback": "object — Instance of a class."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "encapsulation means: A property that should stay true while an object is used.",
-          "answer": "false",
+          "prompt": "encapsulation means: Control access to and modification of object state.",
+          "answer": "true",
           "feedback": "encapsulation — Control access to and modification of object state."
         },
         {

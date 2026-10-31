@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why can OCR array[5] access index4 but not index5?",
+          "prompt": "Why can OCR array[5] access index4 but not index5?",
           "answer": "Five items are indexed 0–4.",
           "options": [
             "Five items are indexed 0–4.",
-            "Parameter passing allowing modification of caller's underlying variable.",
-            "Next line of text from a file."
+            "Five items are indexed 1–4.",
+            "Five items are indexed -1–4."
           ],
-          "feedback": "Five items are indexed 0–4."
+          "feedback": "Model answer: Five items are indexed 0–4."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What is byRef?",
+          "prompt": "What is byRef?",
           "answer": "Parameter passing allowing modification of caller's underlying variable.",
           "options": [
-            "Five items are indexed 0–4.",
-            "Next line of text from a file.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Parameter passing allowing modification of caller's underlying variable."
           ],
-          "feedback": "Parameter passing allowing modification of caller's underlying variable."
+          "feedback": "Model answer: Parameter passing allowing modification of caller's underlying variable."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does readLine return?",
+          "prompt": "What does readLine return?",
           "answer": "Next line of text from a file.",
           "options": [
-            "Parameter passing allowing modification of caller's underlying variable.",
+            "This result cannot be obtained using the stated method.",
             "Next line of text from a file.",
-            "Five items are indexed 0–4."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Next line of text from a file."
+          "feedback": "Model answer: Next line of text from a file."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: In C# array [2,3,5,7], what is a[2] and total sum?",
+          "prompt": "In C# array [2,3,5,7], what is a[2] and total sum?",
           "answer": "a[2]=5; total=17.",
           "options": [
             "a[2]=5; total=17.",
-            "Five items are indexed 0–4.",
-            "Parameter passing allowing modification of caller's underlying variable."
+            "a[3]=5; total=17.",
+            "a[1]=5; total=17."
           ],
-          "feedback": "a[2]=5; total=17."
+          "feedback": "Model answer: a[2]=5; total=17."
         }
       ]
     },
@@ -283,15 +283,15 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "byVal means: Pass a value/copy.",
-          "answer": "true",
+          "prompt": "byVal means: Fixed-length zero-indexed sequence.",
+          "answer": "false",
           "feedback": "byVal — Pass a value/copy."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "byRef means: Fixed-length zero-indexed sequence.",
-          "answer": "false",
+          "prompt": "byRef means: Pass a reference to original.",
+          "answer": "true",
           "feedback": "byRef — Pass a reference to original."
         },
         {

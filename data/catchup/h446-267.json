@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Define fetch-decode-execute.",
+          "prompt": "Define fetch-decode-execute.",
           "answer": "Read, interpret, execute an instruction.",
           "options": [
             "Read, interpret, execute an instruction.",
-            "Unavailable I/O or required event.",
-            "Which Ready process receives CPU time."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Read, interpret, execute an instruction."
+          "feedback": "Model answer: Read, interpret, execute an instruction."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What causes a process to enter Waiting?",
+          "prompt": "What causes a process to enter Waiting?",
           "answer": "Unavailable I/O or required event.",
           "options": [
-            "Read, interpret, execute an instruction.",
-            "Which Ready process receives CPU time.",
+            "Unavailable I/O AND required event.",
+            "There is not enough information to determine the result.",
             "Unavailable I/O or required event."
           ],
-          "feedback": "Unavailable I/O or required event."
+          "feedback": "Model answer: Unavailable I/O or required event."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does an OS scheduler choose?",
+          "prompt": "What does an OS scheduler choose?",
           "answer": "Which Ready process receives CPU time.",
           "options": [
-            "Unavailable I/O or required event.",
+            "This result cannot be obtained using the stated method.",
             "Which Ready process receives CPU time.",
-            "Read, interpret, execute an instruction."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "Which Ready process receives CPU time."
+          "feedback": "Model answer: Which Ready process receives CPU time."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Simplify (A∧B)∨(A∧¬B), showing factoring.",
+          "prompt": "Simplify (A∧B)∨(A∧¬B), showing factoring.",
           "answer": "A∧(B∨¬B)=A∧1=A.",
           "options": [
             "A∧(B∨¬B)=A∧1=A.",
-            "Read, interpret, execute an instruction.",
-            "Unavailable I/O or required event."
+            "A∧(B∨¬B)=A∧2=A.",
+            "A∧(B∨¬B)=A∧0=A."
           ],
-          "feedback": "A∧(B∨¬B)=A∧1=A."
+          "feedback": "Model answer: A∧(B∨¬B)=A∧1=A."
         }
       ]
     },
@@ -273,22 +273,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "ISR means: Interrupt Service Routine",
-          "answer": "true",
+          "prompt": "ISR means: CPU attention request",
+          "answer": "false",
           "feedback": "ISR — Interrupt Service Routine"
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "context means: CPU attention request",
-          "answer": "false",
+          "prompt": "context means: State for safe resume",
+          "answer": "true",
           "feedback": "context — State for safe resume"
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "polling means: Repeatedly checking event state",
-          "answer": "true",
+          "prompt": "polling means: CPU attention request",
+          "answer": "false",
           "feedback": "polling — Repeatedly checking event state"
         }
       ]

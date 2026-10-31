@@ -19,50 +19,45 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Why must floating-point exponents match before the mantissas are added directly?",
+          "prompt": "Why must floating-point exponents match before the mantissas are added directly?",
           "answer": "Because corresponding mantissa bit positions must represent the same scaled place values .",
           "options": [
-            "0.1875",
-            "01101101₂",
+            "Because corresponding mantissa bit positions must represent the different scaled place values .",
+            "Because corresponding mantissa bit positions need not represent the same scaled place values .",
             "Because corresponding mantissa bit positions must represent the same scaled place values ."
           ],
-          "feedback": "Aligning the exponents puts both operands on the same scale before the mantissas are added."
+          "feedback": "Model answer: Because corresponding mantissa bit positions must represent the same scaled place values . Explanation: Aligning the exponents puts both operands on the same scale before the mantissas are added."
         },
         {
           "id": "r2",
-          "kind": "choice",
-          "prompt": "Choose the model answer: Convert 01100000 1110 to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.",
+          "kind": "number",
+          "prompt": "Convert 01100000 1110 to denary. Use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent.",
           "answer": "0.1875",
-          "options": [
-            "01101101₂",
-            "0.1875",
-            "Because corresponding mantissa bit positions must represent the same scaled place values ."
-          ],
-          "feedback": "Mantissa 01100000 = 0.75 ; exponent 1110 = −2 ; 0.75 × 2⁻² = 0.75 ÷ 4 = 0.1875 ."
+          "feedback": "Model answer: 0.1875 Explanation: Mantissa 01100000 = 0.75 ; exponent 1110 = −2 ; 0.75 × 2⁻² = 0.75 ÷ 4 = 0.1875 ."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: Convert 6D₁₆ to eight-bit binary.",
+          "prompt": "Convert 6D₁₆ to eight-bit binary.",
           "answer": "01101101₂",
           "options": [
             "01101101₂",
-            "Because corresponding mantissa bit positions must represent the same scaled place values .",
-            "0.1875"
+            "01101100₂",
+            "01101111₂"
           ],
-          "feedback": "6 → 0110 and D → 1101 ."
+          "feedback": "Model answer: 01101101₂ Explanation: 6 → 0110 and D → 1101 ."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Use 8-bit two’s complement to calculate 18 − 29 . Show how subtraction becomes addition.",
-          "answer": "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 .",
+          "prompt": "Use 8-bit two’s complement to calculate 18 − 29 . Show how subtraction becomes addition.",
+          "answer": "+18 = 00010010 +29 = 00011101 −29 = 11100011 00010010 + 11100011 = 11110101",
           "options": [
-            "Because corresponding mantissa bit positions must represent the same scaled place values .",
-            "0.1875",
-            "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 ."
+            "+18 = 00010010 +29 = 00011101 −29 = 11100011 00010010 + 11100011 = 11110100",
+            "+18 = 00010010 +29 = 00011101 −29 = 11100011 00010010 + 11100011 = 11110111",
+            "+18 = 00010010 +29 = 00011101 −29 = 11100011 00010010 + 11100011 = 11110101"
           ],
-          "feedback": "11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 ."
+          "feedback": "Model answer: +18 = 00010010 +29 = 00011101 −29 = 11100011 00010010 + 11100011 = 11110101 Explanation: 11110101 represents −11 . So 18 − 29 = 18 + (−29) = −11 ."
         }
       ]
     },
@@ -295,22 +290,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "Cancellation means: When subtracting similar values produces a much smaller result.",
-          "answer": "true",
+          "prompt": "Cancellation means: Changing the sign of a value; in two’s complement, invert and add 1.",
+          "answer": "false",
           "feedback": "Cancellation — When subtracting similar values produces a much smaller result."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Guard bits means: Restoring a normalised mantissa while adjusting the exponent to preserve value.",
-          "answer": "false",
+          "prompt": "Guard bits means: Extra low-order working bits retained during calculation.",
+          "answer": "true",
           "feedback": "Guard bits — Extra low-order working bits retained during calculation."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Arithmetic right shift means: A right shift that repeats the sign bit.",
-          "answer": "true",
+          "prompt": "Arithmetic right shift means: Changing the sign of a value; in two’s complement, invert and add 1.",
+          "answer": "false",
           "feedback": "Arithmetic right shift — A right shift that repeats the sign bit."
         }
       ]

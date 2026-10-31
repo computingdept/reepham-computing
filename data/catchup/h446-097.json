@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does BRA do in LMC?",
+          "prompt": "What does BRA do in LMC?",
           "answer": "Branches unconditionally to a label.",
           "options": [
-            "When accumulator equals zero.",
-            "Loads COUNT's mailbox contents into ACC.",
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method.",
             "Branches unconditionally to a label."
           ],
-          "feedback": "Branches unconditionally to a label."
+          "feedback": "Model answer: Branches unconditionally to a label."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: When does BRZ branch?",
+          "prompt": "When does BRZ branch?",
           "answer": "When accumulator equals zero.",
           "options": [
-            "Loads COUNT's mailbox contents into ACC.",
+            "This result cannot be obtained using the stated method.",
             "When accumulator equals zero.",
-            "Branches unconditionally to a label."
+            "There is not enough information to determine the result."
           ],
-          "feedback": "When accumulator equals zero."
+          "feedback": "Model answer: When accumulator equals zero."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does LDA COUNT do?",
+          "prompt": "What does LDA COUNT do?",
           "answer": "Loads COUNT's mailbox contents into ACC.",
           "options": [
             "Loads COUNT's mailbox contents into ACC.",
-            "Branches unconditionally to a label.",
-            "When accumulator equals zero."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "Loads COUNT's mailbox contents into ACC."
+          "feedback": "Model answer: Loads COUNT's mailbox contents into ACC."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: Stack Push2,Push5,Pop,Push8: final bottom-to-top?",
+          "prompt": "Stack Push2,Push5,Pop,Push8: final bottom-to-top?",
           "answer": "[2,8].",
           "options": [
-            "Branches unconditionally to a label.",
-            "When accumulator equals zero.",
+            "[3,8].",
+            "[1,8].",
             "[2,8]."
           ],
-          "feedback": "[2,8]."
+          "feedback": "Model answer: [2,8]."
         }
       ]
     },
@@ -274,22 +274,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "BRZ means: Branch if ACC zero.",
-          "answer": "true",
+          "prompt": "BRZ means: Always branch to label.",
+          "answer": "false",
           "feedback": "BRZ — Branch if ACC zero."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "label means: Stop condition for loop.",
-          "answer": "false",
+          "prompt": "label means: Symbolic instruction/memory address.",
+          "answer": "true",
           "feedback": "label — Symbolic instruction/memory address."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "loop means: Repeated control flow.",
-          "answer": "true",
+          "prompt": "loop means: Always branch to label.",
+          "answer": "false",
           "feedback": "loop — Repeated control flow."
         }
       ]

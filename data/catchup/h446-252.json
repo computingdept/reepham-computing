@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "Choose the model answer: Which register holds the address accessed during a fetch?",
+          "prompt": "Which register holds the address accessed during a fetch?",
           "answer": "MAR.",
           "options": [
             "MAR.",
-            "The current instruction that is being decoded or executed.",
-            "Addresses identifying the memory or device location."
+            "There is not enough information to determine the result.",
+            "This result cannot be obtained using the stated method."
           ],
-          "feedback": "MAR."
+          "feedback": "Model answer: MAR."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Choose the model answer: What does the CIR hold?",
+          "prompt": "What does the CIR hold?",
           "answer": "The current instruction that is being decoded or executed.",
           "options": [
-            "MAR.",
-            "Addresses identifying the memory or device location.",
+            "The current instruction that is being decoded AND executed.",
+            "The current instruction that is not being decoded or executed.",
             "The current instruction that is being decoded or executed."
           ],
-          "feedback": "The current instruction that is being decoded or executed."
+          "feedback": "Model answer: The current instruction that is being decoded or executed."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Choose the model answer: What kind of information travels along the address bus?",
+          "prompt": "What kind of information travels along the address bus?",
           "answer": "Addresses identifying the memory or device location.",
           "options": [
-            "The current instruction that is being decoded or executed.",
+            "There is not enough information to determine the result.",
             "Addresses identifying the memory or device location.",
-            "MAR."
+            "Addresses identifying the memory AND device location."
           ],
-          "feedback": "Addresses identifying the memory or device location."
+          "feedback": "Model answer: Addresses identifying the memory or device location."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Choose the model answer: A rising-edge D flip-flop has Q=0. D changes to 1 between clock edges; the next rising edge occurs while D=1. State Q before and after that edge, and explain why.",
+          "prompt": "A rising-edge D flip-flop has Q=0. D changes to 1 between clock edges; the next rising edge occurs while D=1. State Q before and after that edge, and explain why.",
           "answer": "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes.",
           "options": [
             "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes.",
-            "MAR.",
-            "The current instruction that is being decoded or executed."
+            "Before edge Q stays 1; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes.",
+            "Before edge Q stays -1; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes."
           ],
-          "feedback": "Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes."
+          "feedback": "Model answer: Before edge Q stays 0; at rising edge D=1 is sampled so Q becomes 1. It changes on the active edge, not merely when D changes."
         }
       ]
     },
@@ -285,22 +285,22 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "decode means: Interpret opcode and operands.",
-          "answer": "true",
+          "prompt": "decode means: Retrieve next instruction from memory.",
+          "answer": "false",
           "feedback": "decode — Interpret opcode and operands."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "execute means: Transfers data and instructions.",
-          "answer": "false",
+          "prompt": "execute means: Perform the operation.",
+          "answer": "true",
           "feedback": "execute — Perform the operation."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "address bus means: Transfers memory/device addresses.",
-          "answer": "true",
+          "prompt": "address bus means: Retrieve next instruction from memory.",
+          "answer": "false",
           "feedback": "address bus — Transfers memory/device addresses."
         }
       ]
