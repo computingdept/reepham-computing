@@ -90,6 +90,12 @@ def vocab_of(soup):
             found.append((word, definition))
     found = list({a.casefold(): (a, b) for a, b in found}.values())
     if len(found) < 3:
+        for item in soup.select("#vocabulary .vocab-stage"):
+            term = txt(item.select_one(".vocab-answer-value"), 95)
+            definition = txt(item.select_one(".vocab-question"), 300)
+            if term and definition and term.casefold() not in {a.casefold() for a, _ in found}:
+                found.append((term, definition))
+    if len(found) < 3:
         for n in soup.select("#new-learning .nl-stage"):
             h = txt(n.find(["h2", "h3"]), 95)
             p = txt(n.find("p"), 300)
@@ -221,11 +227,22 @@ def generate(n, template):
     if len(d)!=4: raise ValueError(f"{number}: no valid four-question retrieval")
 
     words=vocab_of(soup)
+    if n == 36:
+        # The classroom lesson is a protected 45-minute assessment: do not
+        # expose its test answers. Use vocabulary already taught and retrieved
+        # in the following feedback lesson for independent review instead.
+        feedback_soup=BeautifulSoup((LESSONS/"lesson-037"/"index.html").read_text(encoding="utf-8"),"html.parser")
+        words=vocab_of(feedback_soup)
     if len(words)<3:
         # Review/assessment lessons may not supply definitions. Extract
         # meaningful headings and explanations from their learning stages.
         raise ValueError(f"{number}: fewer than 3 source-derived terms/explanations")
     tasks=apply_of(soup)
+    if n in (36, 37):
+        # Do not reveal live synoptic assessment answers or invent cohort data.
+        # These are source-grounded vocabulary/review questions, not the test.
+        tasks=[("Identify the correct term for this definition: "+definition, term)
+               for term,definition in words[:3]]
     if len(tasks)<3:
         tasks += fallback_pairs(soup)
     if len(tasks)<3:
@@ -290,6 +307,8 @@ def generate(n, template):
             stage("check",3,[],check)
         ]
     }
+    if n in (36,37):
+        cfg["intro"]="Independent synoptic revision and reflection. This is not the classroom assessment or personalised marked-test feedback."
     assert len(cfg["stages"])==5
     assert len(cfg["stages"][0]["questions"])==4
     assert [len(s["questions"]) for s in cfg["stages"]]==[4,3,4,3,3]
