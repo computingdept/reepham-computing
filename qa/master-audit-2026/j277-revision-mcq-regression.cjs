@@ -285,7 +285,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     try{
      const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
      assert(resp?.status()===200,view+' '+id+' HTTP 200',resp?.status());
-     const expectedCount={'1-1':5,'1-2':15,'1-3':7,'1-4':3,'1-5':3,'1-6':3,'2-1':10,'2-2':15,'2-3':4,'2-4':2,'2-5':2}[id];
+     const expectedCount={'1-1':5,'1-2':15,'1-3':7,'1-4':3,'1-5':3,'1-6':3,'2-1':11,'2-2':15,'2-3':4,'2-4':2,'2-5':2}[id];
      assert((await page.locator('#topic-grid .topic').count())===expectedCount,view+' '+id+' small skills');
      const bank=await page.evaluate(()=>({skills:SKILLS.map(s=>({id:s.id,title:s.title,count:s.questions.length,valid:s.questions.every(q=>q.options.length===4&&q.options.includes(q.answer)&&new Set(q.options).size===4)})),section:J277_SECTION.code,links:SKILLS.map(s=>({id:s.id,mapped:!!window.J277_RESOURCE_INDEX.skills[s.id],lessons:window.J277_RESOURCE_INDEX.skills[s.id]?.lessons||[],guide:window.J277_RESOURCE_INDEX.pageLabel(s.id)}))}));
      assert(bank.section===id.replace('-','.'),view+' '+id+' correct section',bank.section);
@@ -297,6 +297,18 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
      assert(common.enhanced&&common.assets&&common.next==='feedback-next',view+' '+id+' shared UI loaded',common);
      assert(common.progress?.includes('skills mastered'),view+' '+id+' progress summary',common);
      if(expectedCount>3)assert(common.groups>=2&&common.continuous,view+' '+id+' continuous grid with specification boundaries',common);
+     if(id==='2-1'){
+      await page.goto(url+'#2.1/21-flowchart-reading',{waitUntil:'networkidle'});
+      await page.waitForFunction(()=>!document.getElementById('quiz').hidden&&document.querySelector('#figure .rhsc-flowchart-figure img')?.naturalWidth>0);
+      const diagram=await page.evaluate(()=>{
+        const img=document.querySelector('#figure .rhsc-flowchart-figure img'),fig=document.querySelector('#figure figcaption');
+        const width=img?.getBoundingClientRect().width||0;
+        return {src:img?.getAttribute('src'),alt:img?.alt,loaded:img?.naturalWidth>0,caption:fig?.textContent,width,availableWidth:document.documentElement.clientWidth,guide:window.J277_RESOURCE_INDEX.guideLink('21-flowchart-reading')};
+      });
+      assert(diagram.loaded&&diagram.src?.endsWith('.svg')&&diagram.alt&&diagram.guide?.endsWith('#page=16')&&diagram.width<=diagram.availableWidth,
+        view+' J277 complete flowchart loaded, accessible and guide-linked',diagram);
+      await page.goto(url,{waitUntil:'networkidle'});
+     }
      const first=bank.skills[0].id;
      await page.locator('#topic-grid .topic button').first().click();
      await page.waitForFunction(()=>!document.getElementById('quiz').hidden);
