@@ -1130,14 +1130,14 @@ const SKILLS=[
       {
         "id": "22-string-slicing-10",
         "prompt": "What is printed?",
-        "answer": "Cup",
+        "answer": "Cer",
         "options": [
-          "Cup",
-          "Up",
-          "CUP",
-          "CupUp"
+          "Cer",
+          "Com",
+          "ter",
+          "Cter"
         ],
-        "explanation": "The first character, C, is joined to the final two characters, up.",
+        "explanation": "Computer begins with C and ends with er, so concatenating the first and last parts gives Cer.",
         "skill": "String slicing and OCR ERL operations",
         "code": "word = \"Computer\"\nprint(word.left(1) + word.right(2))",
         "language": "OCR Exam Reference Language"
@@ -1664,16 +1664,16 @@ const SKILLS=[
       {
         "id": "22-array-parameters-8",
         "prompt": "What value is printed by this function?",
-        "answer": "3",
+        "answer": "13",
         "options": [
-          "3",
-          "2",
-          "4",
-          "5"
+          "13",
+          "8",
+          "5",
+          "15"
         ],
-        "explanation": "The parameter receives the array and the loop counts three entries. The length is three.",
+        "explanation": "The function receives the array and returns values[0] + values[1] = 5 + 8 = 13.",
         "skill": "Subprograms, arrays and local variables",
-        "code": "function countItems(values)\n  return values.length\nendfunction\narray nums = [5, 8, 2]\nprint(countItems(nums))",
+        "code": "function sumFirstTwo(values)\n  return values[0] + values[1]\nendfunction\narray nums = [5, 8, 2]\nprint(sumFirstTwo(nums))",
         "language": "OCR Exam Reference Language"
       },
       {
