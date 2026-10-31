@@ -3681,6 +3681,161 @@ const SKILLS = [
     ]
   },
   {
+    "key": "kmap4",
+    "title": "Four-variable Karnaugh maps",
+    "lessons": [
+      28,
+      29
+    ],
+    "page": 174,
+    "reading": 4,
+    "questions": [
+      {
+        "id": "143-kmap4-1",
+        "prompt": "A four-variable Boolean function F(A,B,C,D) has 1s at minterms 0, 1, 2, 3 only; all other cells are 0. What is its simplest sum-of-products expression?",
+        "answer": "NOT A AND NOT B",
+        "options": [
+          "NOT A AND NOT B",
+          "NOT A AND NOT C",
+          "NOT B AND NOT D",
+          "NOT A AND B"
+        ],
+        "explanation": "The four cells make the AB=00 row: C and D vary, leaving NOT A AND NOT B.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-2",
+        "prompt": "F(A,B,C,D) has 1s only at minterms 0, 2, 8, 10. Which product term covers all four cells?",
+        "answer": "NOT B AND NOT D",
+        "options": [
+          "NOT B AND NOT D",
+          "NOT A AND NOT B",
+          "NOT B AND D",
+          "A AND NOT D"
+        ],
+        "explanation": "All four minterms have B=0 and D=0; A and C vary. The corner group wraps both edges.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-3",
+        "prompt": "F(A,B,C,D) has 1s only at minterms 4,5,6,7,12,13,14,15. Simplify it.",
+        "answer": "B",
+        "options": [
+          "B",
+          "A",
+          "C",
+          "NOT B"
+        ],
+        "explanation": "These eight minterms have B=1, while A, C and D change.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-4",
+        "prompt": "F(A,B,C,D) is 1 only at minterms 0,1,4,5. Which product term remains after grouping?",
+        "answer": "NOT A AND NOT C",
+        "options": [
+          "NOT A AND NOT C",
+          "NOT A AND NOT B",
+          "NOT B AND NOT D",
+          "A AND C"
+        ],
+        "explanation": "A and C are 0 in every listed minterm; B and D vary.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-5",
+        "prompt": "F(A,B,C,D) has 1s only at minterms 0,1,2,3,8,9,10,11. What is the simplest expression?",
+        "answer": "NOT B",
+        "options": [
+          "NOT B",
+          "NOT A",
+          "NOT C",
+          "B"
+        ],
+        "explanation": "These eight cells share B=0 and include both A values and all CD values.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-6",
+        "prompt": "F(A,B,C,D) has 1s only at minterms 2,3,6,7,10,11,14,15. What is its simplest expression?",
+        "answer": "C",
+        "options": [
+          "C",
+          "D",
+          "B",
+          "NOT C"
+        ],
+        "explanation": "The eight listed minterms all have C=1; the other three inputs vary.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-7",
+        "prompt": "F(A,B,C,D) is 1 for minterms 0 through 11 and 0 for minterms 12 through 15. What is its simplest sum-of-products expression?",
+        "answer": "NOT A OR NOT B",
+        "options": [
+          "NOT A OR NOT B",
+          "A OR B",
+          "NOT A AND NOT B",
+          "A AND B"
+        ],
+        "explanation": "Only A=1 and B=1 produces 0, so NOT(A AND B) equals NOT A OR NOT B.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-8",
+        "prompt": "F(A,B,C,D) has 1s only at minterms 0,1,2,3,8,9,10,11,12,13,14,15. Simplify the function.",
+        "answer": "A OR NOT B",
+        "options": [
+          "A OR NOT B",
+          "NOT A OR B",
+          "A AND NOT B",
+          "NOT A AND B"
+        ],
+        "explanation": "The eight cells where A=1 combine with the eight where B=0; their overlap is allowed.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-9",
+        "prompt": "Which column order uses Gray code for a four-variable Karnaugh map?",
+        "answer": "00, 01, 11, 10",
+        "options": [
+          "00, 01, 11, 10",
+          "00, 01, 10, 11",
+          "00, 10, 01, 11",
+          "00, 11, 01, 10"
+        ],
+        "explanation": "Each neighbouring pair, including the wraparound from 10 to 00, differs in exactly one bit.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      },
+      {
+        "id": "143-kmap4-10",
+        "prompt": "In a four-variable map with AB rows 00,01,11,10 and CD columns 00,01,11,10, which pair is vertically adjacent across the top/bottom wrap?",
+        "answer": "m0 and m8",
+        "options": [
+          "m0 and m8",
+          "m0 and m12",
+          "m0 and m2",
+          "m0 and m10"
+        ],
+        "explanation": "m0 has AB=00, CD=00; m8 has AB=10, CD=00. The top and bottom rows differ only in A.",
+        "skill": "Four-variable Karnaugh maps",
+        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
+      }
+    ],
+    "id": "143-kmap4",
+    "section": "1.4.3",
+    "spec": "1.4.3(b)"
+  },
+  {
     "id": "143-laws",
     "title": "Boolean laws and derivations",
     "spec": "1.4.3(c)",
@@ -4439,160 +4594,5 @@ const SKILLS = [
         "source": "Original H446 practice question, checked against specification and linked teaching"
       }
     ]
-  },
-  {
-    "key": "kmap4",
-    "title": "Four-variable Karnaugh maps",
-    "lessons": [
-      28,
-      29
-    ],
-    "page": 174,
-    "reading": 4,
-    "questions": [
-      {
-        "id": "143-kmap4-1",
-        "prompt": "A four-variable Boolean function F(A,B,C,D) has 1s at minterms 0, 1, 2, 3 only; all other cells are 0. What is its simplest sum-of-products expression?",
-        "answer": "NOT A AND NOT B",
-        "options": [
-          "NOT A AND NOT B",
-          "NOT A AND NOT C",
-          "NOT B AND NOT D",
-          "NOT A AND B"
-        ],
-        "explanation": "The four cells make the AB=00 row: C and D vary, leaving NOT A AND NOT B.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-2",
-        "prompt": "F(A,B,C,D) has 1s only at minterms 0, 2, 8, 10. Which product term covers all four cells?",
-        "answer": "NOT B AND NOT D",
-        "options": [
-          "NOT B AND NOT D",
-          "NOT A AND NOT B",
-          "NOT B AND D",
-          "A AND NOT D"
-        ],
-        "explanation": "All four minterms have B=0 and D=0; A and C vary. The corner group wraps both edges.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-3",
-        "prompt": "F(A,B,C,D) has 1s only at minterms 4,5,6,7,12,13,14,15. Simplify it.",
-        "answer": "B",
-        "options": [
-          "B",
-          "A",
-          "C",
-          "NOT B"
-        ],
-        "explanation": "These eight minterms have B=1, while A, C and D change.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-4",
-        "prompt": "F(A,B,C,D) is 1 only at minterms 0,1,4,5. Which product term remains after grouping?",
-        "answer": "NOT A AND NOT C",
-        "options": [
-          "NOT A AND NOT C",
-          "NOT A AND NOT B",
-          "NOT B AND NOT D",
-          "A AND C"
-        ],
-        "explanation": "A and C are 0 in every listed minterm; B and D vary.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-5",
-        "prompt": "F(A,B,C,D) has 1s only at minterms 0,1,2,3,8,9,10,11. What is the simplest expression?",
-        "answer": "NOT B",
-        "options": [
-          "NOT B",
-          "NOT A",
-          "NOT C",
-          "B"
-        ],
-        "explanation": "These eight cells share B=0 and include both A values and all CD values.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-6",
-        "prompt": "F(A,B,C,D) has 1s only at minterms 2,3,6,7,10,11,14,15. What is its simplest expression?",
-        "answer": "C",
-        "options": [
-          "C",
-          "D",
-          "B",
-          "NOT C"
-        ],
-        "explanation": "The eight listed minterms all have C=1; the other three inputs vary.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-7",
-        "prompt": "F(A,B,C,D) is 1 for minterms 0 through 11 and 0 for minterms 12 through 15. What is its simplest sum-of-products expression?",
-        "answer": "NOT A OR NOT B",
-        "options": [
-          "NOT A OR NOT B",
-          "A OR B",
-          "NOT A AND NOT B",
-          "A AND B"
-        ],
-        "explanation": "Only A=1 and B=1 produces 0, so NOT(A AND B) equals NOT A OR NOT B.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-8",
-        "prompt": "F(A,B,C,D) has 1s only at minterms 0,1,2,3,8,9,10,11,12,13,14,15. Simplify the function.",
-        "answer": "A OR NOT B",
-        "options": [
-          "A OR NOT B",
-          "NOT A OR B",
-          "A AND NOT B",
-          "NOT A AND B"
-        ],
-        "explanation": "The eight cells where A=1 combine with the eight where B=0; their overlap is allowed.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-9",
-        "prompt": "Which column order uses Gray code for a four-variable Karnaugh map?",
-        "answer": "00, 01, 11, 10",
-        "options": [
-          "00, 01, 11, 10",
-          "00, 01, 10, 11",
-          "00, 10, 01, 11",
-          "00, 11, 01, 10"
-        ],
-        "explanation": "Each neighbouring pair, including the wraparound from 10 to 00, differs in exactly one bit.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      },
-      {
-        "id": "143-kmap4-10",
-        "prompt": "In a four-variable map with AB rows 00,01,11,10 and CD columns 00,01,11,10, which pair is vertically adjacent across the top/bottom wrap?",
-        "answer": "m0 and m8",
-        "options": [
-          "m0 and m8",
-          "m0 and m12",
-          "m0 and m2",
-          "m0 and m10"
-        ],
-        "explanation": "m0 has AB=00, CD=00; m8 has AB=10, CD=00. The top and bottom rows differ only in A.",
-        "skill": "Four-variable Karnaugh maps",
-        "source": "H446 final Paper 1 guide, four-variable Karnaugh-map cycle, pages 256–259"
-      }
-    ],
-    "id": "143-kmap4",
-    "section": "1.4.3",
-    "spec": "1.4.3(b)"
   }
 ];
