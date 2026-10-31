@@ -1018,7 +1018,7 @@ const SKILLS = [
       },
       {
         "id": "221-loops-8",
-        "prompt": "A sensor-reading loop should stop when the sentinel value -1 is entered. What condition should a pre-test WHILE loop use after the first input?",
+        "prompt": "A sensor can return positive or negative values; -1 alone is the end sentinel. What condition should a pre-test WHILE loop use after the first input?",
         "answer": "reading != -1",
         "options": [
           "reading != -1",
