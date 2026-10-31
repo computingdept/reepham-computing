@@ -439,7 +439,7 @@ const SKILLS=[
         "explanation": "The decision n >= 10 is true, so follow Yes to the output High.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-selection-grade.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input n, test n greater than or equal to 10. Yes outputs High; No outputs Low. Then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -456,7 +456,7 @@ const SKILLS=[
         "explanation": "7 is less than 10, so the No branch outputs Low.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-selection-grade.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input n, test n greater than or equal to 10. Yes outputs High; No outputs Low. Then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -473,7 +473,7 @@ const SKILLS=[
         "explanation": "The process adds the two input values, 4 + 7 = 11, before outputting total.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-sequence.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input a and b, process total equals a plus b, output total, then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -490,7 +490,7 @@ const SKILLS=[
         "explanation": "The process calculates -2 + 5 = 3.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-sequence.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input a and b, process total equals a plus b, output total, then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -507,7 +507,7 @@ const SKILLS=[
         "explanation": "It adds 1 + 2 + 3 + 4 before the decision becomes false.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, set total to zero and count to one. While count is at most four, add count to total, increase count by one, then test again. Otherwise output total and End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -524,7 +524,7 @@ const SKILLS=[
         "explanation": "The Yes branch is taken for count values 1, 2, 3 and 4.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, set total to zero and count to one. While count is at most four, add count to total, increase count by one, then test again. Otherwise output total and End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -541,7 +541,7 @@ const SKILLS=[
         "explanation": "The body would run for count 1, 2 and 3 only; the sum is 6.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-counter-loop.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, set total to zero and count to one. While count is at most four, add count to total, increase count by one, then test again. Otherwise output total and End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -558,7 +558,7 @@ const SKILLS=[
         "explanation": "7 MOD 2 is 1, so the decision is false and the No branch outputs Odd.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input n, test whether n MOD 2 equals 0. Yes outputs Even; No outputs Odd. Then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -575,7 +575,7 @@ const SKILLS=[
         "explanation": "0 MOD 2 is 0, so the Yes branch outputs Even.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input n, test whether n MOD 2 equals 0. Yes outputs Even; No outputs Odd. Then End."
         },
         "skill": "Read and trace complete flowcharts"
       },
@@ -592,7 +592,7 @@ const SKILLS=[
         "explanation": "For 7 the changed condition is true; the flowchart's Yes branch is still labelled Even, illustrating a logic error.",
         "diagram": {
           "src": "/revision/j277/diagrams/flowchart-selection-parity.svg",
-          "alt": "Algorithm flowchart with correct start/end, input/output, process and decision symbols. Follow the arrows and Yes/No labels."
+          "alt": "Start, input n, test whether n MOD 2 equals 0. Yes outputs Even; No outputs Odd. Then End."
         },
         "skill": "Read and trace complete flowcharts"
       }
