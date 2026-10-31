@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "id": "h446-005",
+  "course": "h446",
+  "title": "Floating point → denary",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Represent 6.5 using an eight-bit two’s-complement mantissa and four-bit two’s-complement exponent.",
+          "answer": "01101000 0011",
+          "feedback": "6.5 = 0.1101₂ × 2³.",
+          "options": [
+            "01101000 0011",
+            "01101000 0010",
+            "01101000 1101"
+          ]
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Convert 6D hexadecimal to eight-bit binary and denary.",
+          "answer": "01101101; 109",
+          "feedback": "6 × 16 + 13 = 109; each hex digit gives four bits.",
+          "options": [
+            "01101101; 109",
+            "01101101; 96",
+            "11010110; 214"
+          ]
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Convert eight-bit two’s complement 11110110 to denary.",
+          "answer": "−10",
+          "feedback": "−128 + 64 + 32 + 16 + 4 + 2 = −10.",
+          "options": [
+            "−10",
+            "246",
+            "−118"
+          ]
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Apply AND 00001111 to 10110110. Give binary and hexadecimal.",
+          "answer": "00000110; 06",
+          "feedback": "AND clears the upper nibble and preserves the lower nibble.",
+          "options": [
+            "00000110; 06",
+            "10111111; BF",
+            "10110000; B0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Split → evaluate → scale",
+          "text": "Read the field widths in each question. Both fields use two’s complement. For an eight-bit mantissa the weights are −1, ½, ¼, ⅛, 1/16, 1/32, 1/64, 1/128. For a four-bit exponent use −8, 4, 2, 1. Compute mantissa × 2ᴱ."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example: 01011000 0011",
+          "text": "With an eight-bit mantissa and four-bit exponent: mantissa = ½ + ⅛ + 1/16 = 0.6875. Exponent = 3. Value = 0.6875 × 8 = 5.5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep the two signs separate",
+          "text": "10110000 0010 gives mantissa −1 + ¼ + ⅛ = −0.625, exponent 2, and value −2.5. 01100000 1110 gives +0.75 × 2⁻² = +0.1875. A negative exponent divides by a power of two; it does not make the value negative."
+        },
+        {
+          "type": "paragraph",
+          "title": "Different field widths",
+          "text": "For a four-bit mantissa use weights −1, ½, ¼, ⅛. In 1010 1110 the mantissa is −0.75 and exponent −2, so the value is −0.1875. Always split at the stated boundary."
+        },
+        {
+          "type": "paragraph",
+          "title": "Precision and range",
+          "text": "Non-zero normalised mantissas start 01 or 10. More mantissa bits improve precision; more exponent bits increase range. If the total width is fixed, allocating more bits to one field leaves fewer for the other."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "With an eight-bit mantissa, what is the value of 01100000?",
+          "answer": "0.75",
+          "feedback": "½ + ¼ = 0.75."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "What is the signed four-bit exponent 1110?",
+          "answer": "−2",
+          "feedback": "−8 + 4 + 2 = −2.",
+          "options": [
+            "−2",
+            "14",
+            "−6"
+          ]
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "What determines the sign of a non-zero floating-point value?",
+          "answer": "The mantissa",
+          "feedback": "Multiplication by 2ᴱ preserves the mantissa’s sign.",
+          "options": [
+            "The mantissa",
+            "The exponent",
+            "The total number of bits"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Check the field widths before starting. Use the worked examples to guide each calculation, then read the feedback."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "number",
+          "prompt": "Convert 01100000 1110 to denary (8-bit mantissa, 4-bit exponent).",
+          "answer": "0.1875",
+          "feedback": "0.75 × 2⁻² = 0.75 ÷ 4."
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Convert 10100000 1111 to denary (8+4 format).",
+          "answer": "−0.375",
+          "feedback": "Mantissa −0.75, exponent −1: divide by 2.",
+          "options": [
+            "−0.375",
+            "0.375",
+            "−1.5"
+          ]
+        },
+        {
+          "id": "p3",
+          "kind": "number",
+          "prompt": "Convert 0100 1110 to denary (4-bit mantissa, 4-bit exponent).",
+          "answer": "0.125",
+          "feedback": "Mantissa 0.5, exponent −2: 0.5 ÷ 4."
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Which six-bit mantissa is NOT normalised?",
+          "answer": "110101",
+          "feedback": "11 indicates a redundant leading sign bit.",
+          "options": [
+            "010101",
+            "110101",
+            "011010",
+            "101010"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "number",
+          "prompt": "Convert 01110000 0010 to denary (8+4 format).",
+          "answer": "3.5",
+          "feedback": "Mantissa 0.875, exponent 2: 0.875 × 4."
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Convert 10010000 1111 to denary (8+4 format).",
+          "answer": "−0.4375",
+          "feedback": "Mantissa −1 + ⅛ = −0.875; exponent −1 means divide by 2.",
+          "options": [
+            "−0.4375",
+            "0.4375",
+            "−1.75"
+          ]
+        },
+        {
+          "id": "a3",
+          "kind": "number",
+          "prompt": "Convert 00011010 0101 to denary (8+4 format).",
+          "answer": "6.5",
+          "feedback": "Mantissa 0.203125 × 2⁵ = 6.5. A non-normalised pattern can still have a valid value."
+        }
+      ],
+      "writing": {
+        "prompt": "A fixed 12-bit format currently has an eight-bit mantissa and four-bit exponent. Explain the trade-off if one mantissa bit is reassigned to the exponent.",
+        "model": "The exponent becomes five bits, increasing the range of powers of two and therefore the range of representable magnitudes. The mantissa becomes seven bits, reducing precision because fewer significant bits remain. Some values that were exact may need rounding. A greater range does not mean greater precision.",
+        "checklist": [
+          "I linked more exponent bits to greater range.",
+          "I linked fewer mantissa bits to reduced precision.",
+          "I explained the fixed-width trade-off."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "A negative exponent makes every floating-point value negative.",
+          "answer": "false",
+          "feedback": "The mantissa determines sign; the exponent determines scale."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "A non-zero normalised negative mantissa starts 10.",
+          "answer": "true",
+          "feedback": "The leading bits differ."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Both fields must be interpreted separately before applying the scale.",
+          "answer": "true",
+          "feedback": "Evaluate the signed fraction and signed integer, then multiply by 2ᴱ."
+        }
+      ]
+    }
+  ]
+}

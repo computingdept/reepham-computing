@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "id": "h446-006",
+  "course": "h446",
+  "title": "Floating-point addition",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "number",
+          "prompt": "Convert 01011000 0011 to denary (8-bit mantissa, 4-bit exponent).",
+          "answer": "5.5",
+          "feedback": "0.6875 × 2³ = 5.5."
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Encode 0.375 in normalised 8-bit mantissa, 4-bit exponent format.",
+          "answer": "01100000 1111",
+          "feedback": "0.375 = 0.11₂ × 2⁻¹.",
+          "options": [
+            "01100000 1111",
+            "01100000 0001",
+            "00110000 0000"
+          ]
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Convert eight-bit two’s complement 11110110 to denary.",
+          "answer": "−10",
+          "feedback": "−128 + 64 + 32 + 16 + 4 + 2 = −10.",
+          "options": [
+            "−10",
+            "246",
+            "−118"
+          ]
+        },
+        {
+          "id": "r4",
+          "kind": "number",
+          "prompt": "Convert AD hexadecimal to binary, then logically shift right once. What is the final denary value?",
+          "answer": "86",
+          "feedback": "AD = 10101101; right shift gives 01010110 = 86."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Format and method",
+          "text": "Use a six-bit two’s-complement mantissa and four-bit two’s-complement exponent unless stated otherwise. Mantissa weights are −1, ½, ¼, ⅛, 1/16, 1/32. Align exponents → add signed mantissas with extra working width → normalise → check precision and range."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example: align 5 + 1.5",
+          "text": "5 = 010100 0011; 1.5 = 011000 0001. Use exponent 3. Increase the second exponent from 1 to 3 and arithmetic-right-shift its mantissa twice: 011000 → 001100 → 000110. It still represents 1.5 at exponent 3."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example: add and normalise",
+          "text": "Sign-extend both aligned mantissas to seven working bits: 0010100 + 0000110 = 0011010. Remove the redundant extra working sign bit to return to six bits: 011010. This is already normalised. Result: 011010 0011 = 6.5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Negative values and rescaling",
+          "text": "Arithmetic right shifts repeat the sign bit: a negative mantissa receives 1 on the left. For 6 + 5 at exponent 3, widened mantissas give 0011000 + 0010100 = 0101100. The sum is too large for a six-bit mantissa: rescale right once and increase exponent to 4. Store 010110 0100 = 11."
+        },
+        {
+          "type": "paragraph",
+          "title": "Keep precision until the final result",
+          "text": "Guard bits retain low-order working digits during alignment. They reduce premature precision loss but cannot make an unrepresentable final result exact. At exponent 6, adjacent six-bit positive mantissas differ in value by 2. Therefore 32.5 cannot be stored exactly. Use the rounding or truncation rule specified."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "choice",
+          "prompt": "Why align exponents before adding mantissas?",
+          "answer": "So corresponding bits have the same scaled place values",
+          "feedback": "Without alignment, the bit columns represent different amounts.",
+          "options": [
+            "So corresponding bits have the same scaled place values",
+            "To make both operands positive",
+            "To discard their fractional parts"
+          ]
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Which bit enters on the left when a negative mantissa is arithmetic-right-shifted?",
+          "answer": "1",
+          "feedback": "Repeat the sign bit to preserve a negative sign.",
+          "options": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "id": "l3",
+          "kind": "number",
+          "prompt": "How many working bits are used when adding a temporary extra sign bit to a six-bit mantissa?",
+          "answer": "7",
+          "feedback": "Six stored bits plus one temporary sign bit = seven."
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Check the field widths before starting. Use the worked examples to guide each calculation, then read the feedback."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Align 011000 0001 to exponent 0011 (six-bit mantissa).",
+          "answer": "000110 0011",
+          "feedback": "Two right shifts compensate for increasing exponent 1 to 3.",
+          "options": [
+            "000110 0011",
+            "011000 0011",
+            "110000 0011"
+          ]
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Choose 5 + 1.5 in normalised 6+4 format.",
+          "answer": "011010 0011",
+          "feedback": "0.8125 × 8 = 6.5.",
+          "options": [
+            "011010 0011",
+            "011010 0100",
+            "001101 0011"
+          ]
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Choose 6 + 5 in normalised 6+4 format.",
+          "answer": "010110 0100",
+          "feedback": "The mantissa sum needs right rescaling; exponent rises to 4.",
+          "options": [
+            "010110 0100",
+            "010110 0011",
+            "101100 0011"
+          ]
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Arithmetic-right-shift six-bit mantissa 101000 once.",
+          "answer": "110100",
+          "feedback": "Copy the leading 1. This halves the signed mantissa for alignment.",
+          "options": [
+            "110100",
+            "010100",
+            "010000"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Add 011000 0011 and 010000 0010. Choose the normalised 6+4 result.",
+          "answer": "010000 0100",
+          "feedback": "6 + 2 = 8. Align 010000 to 001000 at exponent 3; sum rescaling gives 0.5 × 16.",
+          "options": [
+            "010000 0100",
+            "100000 0011",
+            "010000 0011"
+          ]
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Add 101100 0011 and 011000 0001. Choose the normalised 6+4 result.",
+          "answer": "100100 0010",
+          "feedback": "−5 + 1.5 = −3.5. Align, add to get −0.4375 at exponent 3, then normalise to −0.875 at exponent 2.",
+          "options": [
+            "100100 0010",
+            "100100 0011",
+            "011100 0010"
+          ]
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Can 32.5 be stored exactly with a six-bit mantissa and four-bit exponent?",
+          "answer": "No: insufficient mantissa precision",
+          "feedback": "At this scale the representable step is 2; 32.5 lies between representable values.",
+          "options": [
+            "No: insufficient mantissa precision",
+            "No: exponent overflow",
+            "Yes: normalisation restores all lost bits"
+          ]
+        }
+      ],
+      "writing": {
+        "prompt": "Explain why exponent alignment uses an arithmetic right shift for a negative mantissa, and why guard bits may be needed.",
+        "model": "Alignment increases the smaller exponent and divides its mantissa by two for each step, preserving the operand’s value when no precision is lost. An arithmetic right shift repeats the leading 1 of a negative mantissa so its sign is preserved. Guard bits retain low-order working bits that would otherwise be discarded. The final stored width may still require rounding, so guard bits do not guarantee an exact result.",
+        "checklist": [
+          "I linked exponent increase to compensating mantissa division.",
+          "I explained sign-bit repetition.",
+          "I distinguished working guard bits from final precision."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Mantissas can be added directly even if their exponents differ.",
+          "answer": "false",
+          "feedback": "Align exponents first so place values match."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Right-rescaling an oversized mantissa sum requires increasing the exponent.",
+          "answer": "true",
+          "feedback": "This compensates for dividing the mantissa by two."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Normalisation can restore non-zero bits already discarded during alignment.",
+          "answer": "false",
+          "feedback": "Lost information cannot be recovered by shifting."
+        }
+      ]
+    }
+  ]
+}

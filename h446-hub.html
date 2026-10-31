@@ -488,9 +488,9 @@ function renderLessons(){
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
-        // First H446 interactive catch-up batch uses the shared J277 engine.
-        learnHref:x>=1&&x<=3?'lessons/h446/lesson-'+pad(x)+'/learn.html':publishedDraft?.learn_colour||null,
-        learnLabel:x>=1&&x<=3?'Catch up':publishedDraft?'Catch up draft':'Catch up',
+        // H446 interactive catch-up lessons 001–006 uses the shared J277 engine.
+        learnHref:x>=1&&x<=6?'lessons/h446/lesson-'+pad(x)+'/learn.html':publishedDraft?.learn_colour||null,
+        learnLabel:x>=1&&x<=6?'Catch up':publishedDraft?'Catch up draft':'Catch up',
         printHref:publishedDraft?.print_bw||null,
         printColourHref:publishedDraft?.learn_colour||null,
         printLabel:publishedDraft?'Print draft':'Print',

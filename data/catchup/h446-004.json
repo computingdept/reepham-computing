@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "id": "h446-004",
+  "course": "h446",
+  "title": "Denary → floating point",
+  "year": 12,
+  "estimated_minutes": 15,
+  "pass_percent": 80,
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "stages": [
+    {
+      "id": "remember",
+      "label": "Do Now",
+      "minutes": 3,
+      "sign": "DoNow_CodingIcon.png",
+      "lead": "Do Now",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "r1",
+          "kind": "choice",
+          "prompt": "Which type is suitable for a measured temperature of 12.75°C?",
+          "answer": "Real / float",
+          "feedback": "A measured temperature may contain a fractional part.",
+          "options": [
+            "Integer",
+            "Real / float",
+            "Boolean"
+          ]
+        },
+        {
+          "id": "r2",
+          "kind": "choice",
+          "prompt": "Convert 3C hexadecimal to eight-bit binary and denary.",
+          "answer": "00111100; 60",
+          "feedback": "3 → 0011 and C → 1100; 3 × 16 + 12 = 60.",
+          "options": [
+            "00111100; 60",
+            "00111100; 48",
+            "00110010; 50"
+          ]
+        },
+        {
+          "id": "r3",
+          "kind": "choice",
+          "prompt": "Select −26 as an eight-bit two’s-complement integer.",
+          "answer": "11100110",
+          "feedback": "+26 = 00011010; invert to 11100101, then add 1.",
+          "options": [
+            "11100110",
+            "10011010",
+            "11100101"
+          ]
+        },
+        {
+          "id": "r4",
+          "kind": "choice",
+          "prompt": "Logically shift 10110000 left once in an unsigned byte. Which result and explanation are correct?",
+          "answer": "01100000; the leading 1 is lost",
+          "feedback": "176 × 2 = 352 exceeds 255. Only eight bits remain, storing 96.",
+          "options": [
+            "01100000; the leading 1 is lost",
+            "01100000; the value has doubled",
+            "101100000; nine bits are retained"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "label": "I Do",
+      "minutes": 3,
+      "sign": "IDo_CodingIcon.png",
+      "lead": "I Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Read the format first",
+          "text": "Throughout this lesson use an eight-bit two’s-complement mantissa and a four-bit two’s-complement exponent. The mantissa point is after its sign bit: weights −1, ½, ¼, ⅛, 1/16, 1/32, 1/64, 1/128. Exponent weights are −8, 4, 2, 1. Value = mantissa × 2ᴱ. There is no exponent bias."
+        },
+        {
+          "type": "paragraph",
+          "title": "Worked example: +6.5",
+          "text": "6.5 = 110.1₂ = 0.1101₂ × 2³. Pad the mantissa to eight bits: 01101000. The exponent +3 is 0011. Store 01101000 0011. Check: 0.8125 × 8 = 6.5."
+        },
+        {
+          "type": "paragraph",
+          "title": "Small and negative values",
+          "text": "0.15625 = 0.00101₂ = 0.101₂ × 2⁻², giving 01010000 1110. For −6.5, negate the +6.5 mantissa: 01101000 → invert 10010111 → add 1 → 10011000. Keep exponent 0011."
+        },
+        {
+          "type": "paragraph",
+          "title": "Normalise without changing value",
+          "text": "A non-zero normalised mantissa starts 01 if positive or 10 if negative. Shift left to remove redundant sign bits and decrease the exponent equally. For −0.5, 11000000 0000 becomes 10000000 1111: −1 × 2⁻¹. Zero is special; use all-zero fields. More mantissa bits improve precision; more exponent bits increase range."
+        }
+      ],
+      "questions": [
+        {
+          "id": "l1",
+          "kind": "number",
+          "prompt": "What is the denary value of binary 0.011?",
+          "answer": "0.375",
+          "feedback": "¼ + ⅛ = 0.375."
+        },
+        {
+          "id": "l2",
+          "kind": "choice",
+          "prompt": "Where is the binary point in the eight-bit mantissa?",
+          "answer": "Immediately after the sign bit",
+          "feedback": "The leading bit has weight −1; the next has weight ½.",
+          "options": [
+            "Immediately after the sign bit",
+            "After all eight bits",
+            "Before the sign bit"
+          ]
+        },
+        {
+          "id": "l3",
+          "kind": "choice",
+          "prompt": "Which leading pair identifies a negative normalised mantissa?",
+          "answer": "10",
+          "feedback": "10 has no redundant leading sign bit.",
+          "options": [
+            "00",
+            "01",
+            "10",
+            "11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practise",
+      "label": "We Do",
+      "minutes": 3,
+      "sign": "WeDo_CodingIcon.png",
+      "lead": "We Do",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Work through the method",
+          "text": "Check the field widths before starting. Use the worked examples to guide each calculation, then read the feedback."
+        }
+      ],
+      "questions": [
+        {
+          "id": "p1",
+          "kind": "choice",
+          "prompt": "Encode +10.5 using an eight-bit mantissa and four-bit exponent.",
+          "answer": "01010100 0100",
+          "feedback": "10.5 = 1010.1₂ = 0.10101₂ × 2⁴.",
+          "options": [
+            "01010100 0100",
+            "01010100 0011",
+            "01010100 1100"
+          ]
+        },
+        {
+          "id": "p2",
+          "kind": "choice",
+          "prompt": "Encode 0.375 using the same 8+4 format.",
+          "answer": "01100000 1111",
+          "feedback": "0.375 = 0.11₂ × 2⁻¹. −1 is 1111.",
+          "options": [
+            "01100000 1111",
+            "01100000 0001",
+            "00110000 1111"
+          ]
+        },
+        {
+          "id": "p3",
+          "kind": "choice",
+          "prompt": "Choose −10.5 in normalised 8+4 format.",
+          "answer": "10101100 0100",
+          "feedback": "Negate mantissa 01010100: invert 10101011 and add 1. Keep exponent +4.",
+          "options": [
+            "10101100 0100",
+            "11010100 0100",
+            "10101100 1100"
+          ]
+        },
+        {
+          "id": "p4",
+          "kind": "choice",
+          "prompt": "Normalise 00011010 0101 in 8+4 format.",
+          "answer": "01101000 0011",
+          "feedback": "Shift left twice and reduce exponent from 5 to 3.",
+          "options": [
+            "01101000 0011",
+            "01101000 0101",
+            "00110100 0011"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apply",
+      "label": "You Do",
+      "minutes": 3,
+      "sign": "YouDo_CodingIcon.png",
+      "lead": "You Do",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "a1",
+          "kind": "choice",
+          "prompt": "Encode −0.375 in normalised 8+4 format.",
+          "answer": "10100000 1111",
+          "feedback": "−0.75 × 2⁻¹ = −0.375.",
+          "options": [
+            "10100000 1111",
+            "10100000 0001",
+            "01100000 1111"
+          ]
+        },
+        {
+          "id": "a2",
+          "kind": "choice",
+          "prompt": "Normalise 00001011 0111 in 8+4 format.",
+          "answer": "01011000 0100",
+          "feedback": "Three left shifts give 01011000; decrease exponent 7 to 4.",
+          "options": [
+            "01011000 0100",
+            "01011000 0111",
+            "01100000 0100"
+          ]
+        },
+        {
+          "id": "a3",
+          "kind": "choice",
+          "prompt": "Choose the normalised 8+4 representation of −0.5.",
+          "answer": "10000000 1111",
+          "feedback": "11000000 0000 has the right value but is not normalised. −1 × 2⁻¹ is normalised.",
+          "options": [
+            "10000000 1111",
+            "11000000 0000",
+            "01000000 0000"
+          ]
+        }
+      ],
+      "writing": {
+        "prompt": "A pupil changes 00101000 0011 to 01010000 0011 and calls it normalisation (8-bit mantissa, 4-bit exponent). Explain the error and give the correct normalised pattern.",
+        "model": "The left shift doubles the mantissa, so leaving the exponent at 3 doubles the value from 2.5 to 5. Decrease the exponent to 2 to compensate. The correct pattern is 01010000 0010. Normalisation removes redundant sign bits and uses the available precision efficiently without changing the value.",
+        "checklist": [
+          "I explained why the value doubled.",
+          "I gave 01010000 0010.",
+          "I explained that normalisation preserves value."
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": "Review & Improve",
+      "minutes": 3,
+      "sign": "Questionning_CodingIcon.png",
+      "lead": "Review & Improve",
+      "blocks": [],
+      "questions": [
+        {
+          "id": "c1",
+          "kind": "truefalse",
+          "prompt": "Increasing the mantissa width can improve precision.",
+          "answer": "true",
+          "feedback": "More significant bits allow finer distinctions."
+        },
+        {
+          "id": "c2",
+          "kind": "truefalse",
+          "prompt": "Left-shifting a mantissa for normalisation requires an equal increase in exponent.",
+          "answer": "false",
+          "feedback": "Decrease the exponent to compensate."
+        },
+        {
+          "id": "c3",
+          "kind": "truefalse",
+          "prompt": "Zero must start 01 or 10 to be stored.",
+          "answer": "false",
+          "feedback": "Zero is a special case; all-zero fields represent it."
+        }
+      ]
+    }
+  ]
+}
