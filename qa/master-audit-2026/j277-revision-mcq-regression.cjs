@@ -122,9 +122,9 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     const jLink=await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-2 a.rhsc-practice-tile')?.href);
     assert(jLink?.includes('theme=synergy'),view+' J277 preview carried into quiz destination',jLink);
     await page.goto(jLink,{waitUntil:'networkidle'});
-    const jBack=await page.evaluate(()=>document.querySelector('header.practice-nav a')?.href);
+    const jBack=await page.evaluate(()=>document.querySelector('header.practice-nav a.rhsc-site-nav-back')?.href);
     assert(jBack?.includes('theme=synergy'),view+' J277 quiz return preserves preview setting',jBack);
-    await page.locator('header.practice-nav a').click();
+    await page.locator('header.practice-nav a.rhsc-site-nav-back').click();
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')),
       view+' J277 Synergy style retained after quiz return');
@@ -248,9 +248,9 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     const hLink=await page.evaluate(()=>document.querySelector('#rhsc-revision-paper-2 a.rhsc-practice-tile')?.href);
     assert(hLink?.includes('theme=synergy'),view+' H446 preview carried into quiz destination',hLink);
     await page.goto(hLink,{waitUntil:'networkidle'});
-    const hBack=await page.evaluate(()=>document.querySelector('header.practice-nav a')?.href);
+    const hBack=await page.evaluate(()=>document.querySelector('header.practice-nav a.rhsc-site-nav-back')?.href);
     assert(hBack?.includes('theme=synergy'),view+' H446 quiz return preserves preview setting',hBack);
-    await page.locator('header.practice-nav a').click();
+    await page.locator('header.practice-nav a.rhsc-site-nav-back').click();
     await page.waitForFunction(()=>document.querySelector('#revisionhub')?.dataset.rhscPaperNav==='ready');
     assert(await page.evaluate(()=>document.documentElement.classList.contains('synergy-hub-preview')),
       view+' H446 Synergy style retained after quiz return');
@@ -422,8 +422,8 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
                support.some(x=>x.href?.includes('/lessons/h446/')&&x.href?.includes('#i-do')),
           view+' H446 '+id+' below-80% original lesson and worked example',support);
         const expected=await page.evaluate(()=>{
-          const key=SKILLS[0].page;
-          return location.pathname.includes('/section-2-')?RHSC_GUIDE_LINKS.paper2(key):RHSC_GUIDE_LINKS.paper1(key);
+          const skill=SKILLS[0];
+          return location.pathname.includes('/section-2-')?RHSC_GUIDE_LINKS.paper2(skill.page,skill.id):RHSC_GUIDE_LINKS.paper1(skill.page,skill.id);
         });
         const guide=support.find(x=>x.href?.includes('/guides/')&&x.href?.includes('.pdf'));
         assert(!!guide&&new URL(guide.href,origin).href===new URL(expected,origin).href,
