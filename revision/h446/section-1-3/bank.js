@@ -4484,7 +4484,7 @@ const SKILLS = [
         "explanation": "70 meets the inclusive >= 70 test, so the first branch sets the paragraph text.",
         "skill": "OCR Appendix 5d: JavaScript forms and output",
         "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let m = Number(document.getElementById(\"mark\").value);\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
+        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
       },
       {
         "id": "13-js-form-4",
@@ -4499,7 +4499,7 @@ const SKILLS = [
         "explanation": "69 is below the threshold, so the else branch changes the displayed text.",
         "skill": "OCR Appendix 5d: JavaScript forms and output",
         "source": "Final H446 Paper 1, OCR Appendix 5d JS form cycle (pages 369–372)",
-        "code": "let m = Number(document.getElementById(\"mark\").value);\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
+        "code": "let m = Number(document.getElementById(\"mark\").value);\nconst result = document.getElementById(\"result\");\nif (m >= 70) result.textContent = \"Distinction\";\nelse result.textContent = \"Keep practising\";"
       },
       {
         "id": "13-js-form-5",
