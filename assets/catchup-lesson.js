@@ -122,7 +122,21 @@
     }
     return section;
   }
+  // Shared compact Catch Up masthead: keep the real accessible lesson heading,
+  // move it into the single header bar, and leave lesson/quiz data unchanged.
+  function compactHeader(){
+    const top=document.querySelector('.catchup-top-inner');
+    const intro=document.getElementById('catchup-intro');
+    if(!top||!intro||top.querySelector('.catchup-title-lockup'))return;
+    const heading=intro.querySelector('h1');
+    const eyebrow=intro.querySelector('.catchup-eyebrow');
+    if(!heading||!eyebrow)return;
+    const title=$('div','catchup-title-lockup');
+    title.append(eyebrow,heading);
+    top.append(title);
+  }
   async function init(){
+    compactHeader();
     const app=document.getElementById('catchup-app');
     const configUrl=document.body.dataset.catchupConfig;
     if(!app||!configUrl)return;
@@ -144,7 +158,7 @@
         const bankRes=await fetch('../../../data/catchup/j277-donow-mcq-20261030.json',{cache:'no-store'});
         if(!bankRes.ok)throw Error('Do Now MCQ source missing');
         const bank=await bankRes.json();
-        const lessonNo=(cfg.id.match(/\d{3}/)||[])[0];
+        const lessonNo=(cfg.id.match(/-(\d{3})$/)||[])[1];
         const questions=bank.lessons[lessonNo];
         if(!questions||questions.length!==4)throw Error('Incomplete lesson-matched Do Now');
         cfg.stages[0].questions=questions;
@@ -165,7 +179,11 @@
     all.forEach(q=>q._state=state);
     let step=0;
     const intro=document.getElementById('catchup-intro');
-    intro.querySelector('h1').textContent=cfg.title;
+    // J277 Lesson 001 classroom title uses “&”, not the catch-up source's “and”.
+    const classroomTitle=cfg.id==='j277-001'?'Binary & Denary':cfg.title;
+    const heading=document.querySelector('.catchup-title-lockup h1');
+    if(heading)heading.textContent=classroomTitle;
+    document.title=(cfg.course==='h446'?'H446':'J277')+' · Lesson '+cfg.id.slice(-3)+' · '+classroomTitle;
     intro.querySelector('.catchup-description').textContent=cfg.intro;
     intro.querySelector('.catchup-duration').textContent='About '+cfg.estimated_minutes+' minutes';
     intro.querySelector('.catchup-threshold').textContent=cfg.pass_percent+'% mastery · '+threshold+' of '+all.length+' correct';
