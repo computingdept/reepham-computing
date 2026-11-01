@@ -306,7 +306,6 @@
         if(focusPilot&&Object.prototype.hasOwnProperty.call(state.responses,q.id)&&
            String(value??'').trim()){
           const saved=$('p','catchup-saved-selection','Saved answer from this device — you can change or clear it.');
-          choices.before&&choices.before(saved);
           box.append(saved);
         }
         options.forEach((option,i)=>{
@@ -562,6 +561,33 @@
         questionNext.addEventListener('click',()=>{questionPage=Math.min(lastPage,questionPage+1);focusedRefresh();focusQuestion();});
         if(studyNext)studyNext.addEventListener('click',()=>{viewPane='practice';focusedRefresh();focusQuestion();});
         if(studyBack)studyBack.addEventListener('click',()=>{viewPane='learn';focusedRefresh();window.scrollTo({top:0,behavior:'instant'});});
+        // Touch-only, horizontal question navigation. Do not capture vertical
+        // scroll or gestures starting on answer fields, text, buttons,
+        // draggable ordering items, links, or selectable text.
+        let swipeStart=null;
+        activity.addEventListener('touchstart',event=>{
+          if(!mobile()||event.touches.length!==1){swipeStart=null;return;}
+          const target=event.target;
+          if(target.closest('input,textarea,select,label,button,a,details,summary,[draggable="true"],.catchup-order,[contenteditable]')){
+            swipeStart=null;return;
+          }
+          const touch=event.touches[0];
+          swipeStart={x:touch.clientX,y:touch.clientY,time:Date.now()};
+        },{passive:true});
+        activity.addEventListener('touchcancel',()=>{swipeStart=null;},{passive:true});
+        activity.addEventListener('touchend',event=>{
+          if(!swipeStart||!mobile()||event.changedTouches.length!==1){swipeStart=null;return;}
+          const start=swipeStart;swipeStart=null;
+          const touch=event.changedTouches[0];
+          const dx=touch.clientX-start.x,dy=touch.clientY-start.y;
+          const selection=String(window.getSelection?.()?.toString()||'').trim();
+          if(selection||Date.now()-start.time>900||Math.abs(dx)<75||
+             Math.abs(dx)<Math.abs(dy)*1.6)return;
+          if(dx<0&&questionPage<lastPage)questionPage++;
+          else if(dx>0&&questionPage>0)questionPage--;
+          else return;
+          focusedRefresh();focusQuestion();
+        },{passive:true});
         // Keep the existing Check Answers button tied to the final
         // question or writing page. Navigation does not mark anything.
         const originalRefresh=focusedRefresh;
@@ -579,11 +605,15 @@
         if(!focusPilot)return;
         const all=!writingCard&&!learning&&window.matchMedia&&
           window.matchMedia('(min-width:1180px) and (min-height:880px)').matches;
-        const showCheck=all||questionPage===lastFocusedPage;
-        actions.hidden=!showCheck;
-        status.hidden=!showCheck;
+        // Pilot questions are checked individually. Never allow the old
+        // stage-wide button to reveal unchecked questions' answers.
+        const lastQuestion=info.questions[info.questions.length-1];
+        actions.hidden=true;
+        status.hidden=!(questionPage===lastFocusedPage&&
+          !!state.checked[lastQuestion.id]);
         const result=activity.querySelector('.catchup-result');
-        if(result)result.hidden=!showCheck;
+        if(result)result.hidden=!(step===cfg.stages.length-1&&
+          questionPage===lastFocusedPage&&!!state.checked[lastQuestion.id]);
       };
       function stageStatus(){
         const marked=info.questions.filter(q=>state.checked[q.id]&&attempted(q,read(q,state))).length;
