@@ -61,6 +61,17 @@
     if(id==='j277-001'||id==='h446-001')return;
     try{localStorage.setItem(storageKey(id),JSON.stringify(state));}catch{}
   }
+  function saveCompletedSummary(id,result,reviewed){
+    // A completion summary can persist without retaining question responses,
+    // selected MCQs, question feedback, or written-answer text.
+    if(result.checked!==result.total)return;
+    const summary={
+      scored:result.scored,total:result.total,percent:result.pct,
+      mastered:result.mastered,reviewed:!!reviewed,
+      completed_at:new Date().toISOString()
+    };
+    try{localStorage.setItem('rhsccs-catchup-'+id+'-summary-v1',JSON.stringify(summary));}catch{}
+  }
   function blockUI(block){
     const section=$('section','catchup-block');
     if(block.title)section.append($('h3','',block.title));
@@ -460,8 +471,10 @@
       if(focusPilot){
         const finish=$('button','catchup-btn primary catchup-finish','Finish → Lessons');
         finish.type='button';
-        finish.addEventListener('click',()=>window.location.assign(
-          '../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons'));
+        finish.addEventListener('click',()=>{
+          saveCompletedSummary(cfg.id,{...aggregate(),total:all.length},state.reviewed);
+          window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
+        });
         panel.append(finish);
       }
       return panel;
