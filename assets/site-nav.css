@@ -276,3 +276,32 @@ body.course-hub.course-inline-nav:has(.topbar .synergy-corner-title) .course-top
 @media print{
   .synergy-corner-title{display:none !important}
 }
+
+/* 2026-11-01: single-symbol identity in the upper-right of all website headers.
+   The page title remains centred; Home stays on the left. The actual Synergy
+   logo is still loaded from the shared authentic-logo asset.
+   Only visually redundant wordmark/subtitle text is hidden. */
+body.course-hub .topbar.synergy-corners > .brand.synergy-brand .brand-copy,
+body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand > span:not(.synergy-brand-icon),
+body.school-chooser .chooser-head-inner.synergy-corners > .brand.synergy-brand > span:not(.synergy-brand-icon),
+body.central-legacy-hub .top .topin.synergy-corners > .hubhome.synergy-brand .brand,
+.synergy-inline-brand.synergy-corners > strong {
+  display:none !important;
+}
+body.course-hub .topbar.synergy-corners > .brand.synergy-brand,
+body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand,
+body.school-chooser .chooser-head-inner.synergy-corners > .brand.synergy-brand,
+body.central-legacy-hub .top .topin.synergy-corners > .hubhome.synergy-brand {
+  gap:0;
+  flex:0 0 auto;
+}
+/* Compact symbol, with its accessible link name preserved. */
+body.course-hub .topbar.synergy-corners .synergy-brand-icon,
+body.learning-hub .top .top-inner.synergy-corners .synergy-brand-icon,
+body.school-chooser .chooser-head-inner.synergy-corners .synergy-brand-icon,
+body.central-legacy-hub .top .topin.synergy-corners .synergy-brand-icon {
+  display:block !important;
+  width:34px !important;
+  height:34px !important;
+  flex:0 0 34px;
+}
