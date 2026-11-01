@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#173c3a">
+  <meta name="description" content="Synergy MAT Year 12 assembly at Reepham College: generative AI, Microsoft Copilot, fact-checking, academic integrity and AI image safety.">
+  <title>Generative AI &amp; Responsible Study | Synergy MAT · Year 12</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07101f; --surface: #0f2136; --surface2: #132b42;
+      --text: #f5f9ff; --muted: #a9bcd0; --line: rgba(201,224,249,.19);
+      --cyan: #67e4e1; --blue: #72b7ff; --gold: #ffd27e; --red: #ffa6a6; --green: #9bf0bc;
+      --pad: clamp(22px, 5.2vw, 88px);
+      font-family: Inter, Aptos, "Segoe UI", system-ui, sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+    body{overflow-x:hidden}
+    button{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+    ::selection{background:var(--cyan);color:#07101f}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .shell{min-height:100svh;display:flex;flex-direction:column;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse 70% 80% at 85% 12%,#183b59 0%,transparent 65%),radial-gradient(ellipse 55% 80% at 0% 100%,#092a3b 0%,transparent 75%),var(--bg)}
+    .shell::before{content:"";pointer-events:none;position:absolute;inset:0;z-index:-1;opacity:.32;background-image:linear-gradient(rgba(183,218,239,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(183,218,239,.075) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(90deg,transparent,#000 55%)}
+    .topbar{height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--pad);border-bottom:1px solid var(--line);z-index:4}
+    .brand{display:flex;align-items:center;gap:13px;letter-spacing:.15em;text-transform:uppercase;font-size:clamp(11px,1vw,14px);font-weight:800;color:#e5f6ff}
+    .brandmark{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(103,228,225,.45);border-radius:12px;background:rgba(103,228,225,.09);color:var(--cyan);font-size:18px;font-weight:900;letter-spacing:0}
+    .topright{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+    .minute-pill{padding:8px 12px;border-radius:100px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+    main{flex:1;display:grid;min-height:0}
+    .slide{grid-area:1/1;display:none;align-self:stretch;min-height:min(640px,calc(100svh - 142px));padding:clamp(30px,5vh,75px) var(--pad);max-width:1600px;width:100%;margin:auto;align-content:center;position:relative}
+    .slide.active{display:grid;animation:in .38s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes in{from{opacity:.25;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .slide>*{min-width:0}
+    .eyebrow{display:inline-flex;align-items:center;gap:12px;font-weight:800;font-size:clamp(13px,1.4vw,18px);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin:0 0 24px}
+    .eyebrow::before{content:"";width:26px;height:3px;background:currentColor;border-radius:2px}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(64px,8.3vw,134px);line-height:.96;letter-spacing:-.065em;margin-bottom:32px;font-weight:850;max-width:1100px}
+    h2{font-size:clamp(42px,5.9vw,92px);line-height:1.01;letter-spacing:-.056em;margin-bottom:25px;font-weight:850;max-width:1200px}
+    h3{font-size:clamp(23px,2.35vw,36px);letter-spacing:-.025em;margin-bottom:12px;line-height:1.17}
+    .lead{font-size:clamp(24px,2.7vw,40px);line-height:1.35;max-width:1050px;color:#c8d9e9;letter-spacing:-.025em}
+    .fine{color:var(--muted);font-size:clamp(16px,1.45vw,22px);line-height:1.5}
+    .accent{color:var(--cyan)}.gold{color:var(--gold)}.blue{color:var(--blue)}.green{color:var(--green)}.red{color:var(--red)}
+    .hero-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(250px,.65fr);align-items:center;gap:35px}
+    .hero-graphic{width:min(100%,350px);margin-left:auto;filter:drop-shadow(0 0 50px rgba(103,228,225,.12))}
+    .question-strip{border-left:5px solid var(--gold);padding:12px 0 12px 24px;color:#fff;font-size:clamp(25px,3.25vw,48px);line-height:1.23;font-weight:750;letter-spacing:-.035em;max-width:1150px}
+    .hero-bottom{font-size:clamp(16px,1.6vw,23px);color:var(--muted);margin-top:15px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.6vw,34px);width:100%;align-items:stretch}
+    .three-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,28px);width:100%}
+    .panel{background:linear-gradient(145deg,rgba(24,51,75,.95),rgba(10,29,48,.89));border:1px solid rgba(201,224,249,.20);border-radius:22px;padding:clamp(23px,2.3vw,36px);box-shadow:0 24px 70px rgba(0,0,0,.09);min-width:0}
+    .panel p:last-child{margin-bottom:0}
+    .panel .symbol{font-size:38px;display:inline-block;margin-bottom:26px;color:var(--cyan)}
+    .panel p{font-size:clamp(17px,1.5vw,23px);line-height:1.42;color:#c3d5e8}
+    .panel strong{color:white}
+    .panel .small-caps{color:var(--cyan);text-transform:uppercase;letter-spacing:.13em;font-weight:800;font-size:clamp(12px,1.1vw,16px);margin-bottom:16px}
+    .block-quote{font-size:clamp(27px,3.2vw,46px);line-height:1.25;letter-spacing:-.04em;font-weight:750;color:white}
+    .rule{height:1px;background:var(--line);margin:24px 0}
+    .callout{display:flex;align-items:center;gap:16px;margin-top:24px;padding:18px 22px;border-radius:14px;background:rgba(255,210,126,.10);border:1px solid rgba(255,210,126,.24);font-size:clamp(17px,1.55vw,23px);font-weight:700;color:#ffe6b7}
+    .big-number{font-size:clamp(70px,7.4vw,118px);letter-spacing:-.07em;line-height:1;font-weight:900;color:var(--cyan)}
+    .example-label{font-size:clamp(13px,1.1vw,17px);text-transform:uppercase;letter-spacing:.12em;font-weight:850;color:var(--muted);margin-bottom:16px}
+    .example-copy{font-size:clamp(21px,2.15vw,32px);font-weight:650;line-height:1.36;letter-spacing:-.024em}
+    .mini-tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
+    .tip{border-top:3px solid var(--cyan);padding-top:18px;font-size:clamp(18px,1.9vw,28px);font-weight:720;line-height:1.3}
+    .tip span{display:block;color:var(--muted);font-size:clamp(15px,1.35vw,19px);line-height:1.4;font-weight:450;margin-top:7px}
+    .claim{border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);padding:17px 21px;font-size:clamp(19px,2vw,29px);font-weight:680;line-height:1.4}
+    .claim + .claim{margin-top:12px}
+    .claim span{color:var(--cyan);margin-right:12px}
+    .claim.wrong{background:rgba(255,166,166,.10);border-color:rgba(255,166,166,.65)}
+    .reveal{appearance:none;background:var(--gold);border:0;border-radius:13px;padding:14px 22px;color:#1c2030;font-weight:850;font-size:clamp(16px,1.45vw,21px);cursor:pointer;margin-top:22px}
+    .reveal:hover{filter:brightness(1.09)}
+    .answer{display:none;margin-top:16px;border-radius:14px;background:rgba(155,240,188,.10);border:1px solid rgba(155,240,188,.32);padding:17px 21px;color:#d4ffe5;font-size:clamp(17px,1.7vw,23px);line-height:1.45}
+    .answer.show{display:block}
+    .traffic{border-top:4px solid transparent}.traffic.good{border-top-color:var(--green)}.traffic.care{border-top-color:var(--gold)}.traffic.stop{border-top-color:var(--red)}
+    .traffic h3{margin-bottom:20px}
+    .traffic ul{padding-left:1.1em;margin-bottom:0;color:#d4e4f1;font-size:clamp(17px,1.65vw,24px);line-height:1.52}
+    .traffic li{margin-bottom:14px}
+    .last-question{font-size:clamp(36px,4.7vw,77px);line-height:1.12;font-weight:850;letter-spacing:-.055em;max-width:1190px}
+    .bottomline{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:25px}
+    .timehint{font-size:clamp(14px,1.25vw,18px);color:var(--muted);font-weight:700;letter-spacing:.04em}
+    .footer{min-height:66px;padding:8px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px;z-index:4;border-top:1px solid var(--line);background:rgba(3,13,27,.56)}
+    .footer-left,.footer-right{display:flex;align-items:center;gap:12px}
+    .footer-label{font-size:13px;font-weight:750;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+    .progress{display:flex;align-items:center;gap:7px}
+    .dot{width:22px;height:6px;background:#35516b;border-radius:30px;border:0;padding:0;cursor:pointer}
+    .dot[aria-current="step"]{background:var(--cyan);width:42px}
+    .navbtn,.iconbtn{display:inline-flex;justify-content:center;align-items:center;min-width:45px;height:42px;padding:0 13px;border-radius:11px;cursor:pointer;color:#eff7ff;background:rgba(255,255,255,.065);border:1px solid var(--line);font-weight:750}
+    .navbtn:hover,.iconbtn:hover{background:rgba(103,228,225,.14);border-color:rgba(103,228,225,.6)}
+    .navbtn:disabled{opacity:.28;cursor:not-allowed}
+    .count{min-width:60px;text-align:center;font-size:15px;font-variant-numeric:tabular-nums;font-weight:820;color:var(--muted)}
+    .notes{display:none}
+    .note-overlay{position:fixed;inset:auto 24px 82px auto;width:min(620px,calc(100vw - 48px));max-height:60vh;overflow:auto;background:#fbfcff;color:#142638;border-radius:18px;box-shadow:0 22px 90px rgba(0,0,0,.55);border:2px solid #87bed2;padding:24px 28px;z-index:20;display:none;font-size:17px;line-height:1.55}
+    .note-overlay.show{display:block}
+    .note-overlay h3{font-size:21px;color:#162b40;margin:0 0 10px}
+    .note-overlay p,.note-overlay li{color:#263f55}
+    .note-overlay ul{margin:10px 0;padding-left:22px}
+    .note-head{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #b7c8d7;padding-bottom:10px;margin-bottom:15px}
+    .note-head button{cursor:pointer;background:#e8edf2;color:#192f42;border:0;border-radius:8px;padding:5px 10px;font-weight:800}
+    .keyboard-tip{font-size:12px;color:var(--muted);margin-left:9px}
+    .brief{font-size:clamp(18px,1.65vw,24px);color:#c8d9e9;line-height:1.35;margin:0}
+    /* Keep the entire slide and navigation visible on typical 720p projectors. */
+    @media (min-width:901px) and (max-height:780px){
+      .slide{padding-top:18px;padding-bottom:18px}
+      .eyebrow{margin-bottom:14px}
+      h2{font-size:clamp(40px,5.2vw,76px);margin-bottom:16px}
+      h1{font-size:clamp(58px,7.3vw,110px);margin-bottom:20px}
+      .panel{padding:21px}
+      .panel .symbol{margin-bottom:12px}
+      .traffic h3{margin-bottom:9px}
+      .traffic li{margin-bottom:7px}
+      .callout{margin-top:16px;padding:13px 19px}
+    }
+    @media (max-width:900px){
+      .topbar{height:60px}.slide{min-height:calc(100svh - 120px)}
+      .hero-layout{grid-template-columns:1fr}.hero-graphic{display:none}
+      .three-col{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}
+      .slide{align-content:start;padding-top:36px;padding-bottom:32px}
+      .panel{padding:22px}.panel .symbol{margin-bottom:8px}
+      .mini-tips{grid-template-columns:1fr;gap:12px}.tip{padding-top:8px}
+      .footer-label,.minute-pill,.keyboard-tip{display:none}
+      .topright{font-size:11px}.footer{min-height:60px}
+    }
+    @media(max-width:520px){
+      :root{--pad:20px}
+      h1{font-size:clamp(55px,13vw,76px)}h2{font-size:clamp(39px,10vw,60px)}
+      .topright .desktop-only{display:none}
+      .brand{gap:8px;letter-spacing:.06em}.brandmark{width:31px;height:31px}
+      .footer-left{gap:6px}.footer-right{gap:6px}.count{min-width:44px}
+      .dot{width:12px}.dot[aria-current="step"]{width:20px}
+      .iconbtn{min-width:36px;padding:0 8px}.navbtn{min-width:40px;padding:0 10px}
+      .panel p,.traffic ul{font-size:18px}
+      .claim{font-size:20px}
+    }
+
+    /* Technical explanations: big, legible, classroom-friendly diagrams. */
+    .tech-sub{font-size:clamp(20px,2.15vw,31px);line-height:1.35;color:#c9dbea;max-width:1120px;margin:0 0 22px}
+    .concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,25px);margin-top:12px}
+    .concept{border:1px solid rgba(201,224,249,.22);border-radius:18px;padding:clamp(19px,2vw,28px);background:rgba(13,36,58,.82)}
+    .concept .concept-label{font-weight:900;text-transform:uppercase;letter-spacing:.11em;font-size:clamp(12px,1.05vw,15px);color:var(--cyan);margin-bottom:10px}
+    .concept h3{font-size:clamp(24px,2.4vw,35px);margin-bottom:9px}
+    .concept p{font-size:clamp(17px,1.5vw,23px);line-height:1.36;color:#cbdcea;margin:0}
+    .pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0 18px}
+    .stage{position:relative;min-width:0;padding:19px 18px 17px;border-radius:18px;background:rgba(17,44,69,.9);border:1px solid rgba(103,228,225,.24);}
+    .stage:not(:last-child)::after{content:'→';position:absolute;right:-15px;top:50%;transform:translateY(-50%);z-index:2;color:var(--gold);font-size:24px;font-weight:900}
+    .stage .stage-num{display:block;font-weight:900;letter-spacing:.09em;color:var(--cyan);font-size:clamp(12px,1.15vw,16px);margin-bottom:10px}
+    .stage h3{font-size:clamp(22px,2.15vw,31px);margin-bottom:8px}
+    .stage p{font-size:clamp(15px,1.43vw,21px);line-height:1.34;margin:0;color:#c9d9e8}
+    .sample-line{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:rgba(3,20,36,.66);border:1px solid var(--line);border-radius:15px;padding:16px 20px;margin:10px 0}
+    .sample-label{font-size:clamp(12px,1vw,15px);font-weight:850;letter-spacing:.09em;text-transform:uppercase;color:var(--gold)}
+    .sample-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:clamp(18px,1.95vw,29px);font-weight:650}
+    .sample-fill{background:rgba(103,228,225,.16);color:var(--cyan);padding:3px 8px;border-radius:7px}
+    .micro-note{font-size:clamp(15px,1.4vw,20px);line-height:1.4;color:#bbd2e4;margin:10px 0 0}
+    .tech-aside{display:flex;align-items:center;gap:14px;padding:14px 18px;margin-top:16px;background:rgba(255,210,126,.085);border-left:4px solid var(--gold);border-radius:8px;color:#ffe9bf;font-size:clamp(16px,1.5vw,22px);font-weight:680;line-height:1.36}
+    @media (min-width:901px) and (max-height:780px){
+      .concept{padding:16px 20px}.concept p{font-size:clamp(16px,1.44vw,20px)}
+      .tech-sub{margin-bottom:10px}.pipeline{margin:12px 0}.stage{padding:13px 14px}
+      .stage p{font-size:clamp(14px,1.28vw,18px)}.stage h3{margin-bottom:5px}
+      .sample-line{padding:10px 16px}.tech-aside{margin-top:10px;padding:10px 16px}
+    }
+    @media(max-width:900px){
+      .concept-grid{grid-template-columns:1fr}
+      .pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stage:nth-child(2)::after{content:''}
+      .sample-line{align-items:flex-start}
+    }
+    @media(max-width:520px){.pipeline{grid-template-columns:1fr}.stage::after{display:none}.concept h3{font-size:25px}}
+    /* Structured, prewritten arguments: no live Copilot required. */
+    .debate-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2.5vw,30px);margin-top:10px}
+    .argument{display:flex;flex-direction:column;min-width:0;min-height:205px;border-radius:21px;padding:clamp(22px,2.5vw,34px);border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,51,76,.96),rgba(10,29,47,.92))}
+    .argument.yes{border-top:5px solid var(--cyan)}
+    .argument.no{border-top:5px solid var(--gold)}
+    .argument .arg-label{font-size:clamp(13px,1.28vw,18px);font-weight:850;letter-spacing:.11em;text-transform:uppercase;margin:0 0 15px;color:var(--cyan)}
+    .argument.no .arg-label{color:var(--gold)}
+    .argument .arg-text{font-size:clamp(21px,2.2vw,32px);line-height:1.37;letter-spacing:-.025em;font-weight:600;margin:0;color:#f3f8fc}
+    .debate-conclusion{font-size:clamp(18px,1.75vw,25px);color:#d7e6f1;margin:24px 0 0;border-left:4px solid var(--cyan);padding:5px 0 5px 18px;line-height:1.38}
+    .debate-conclusion strong{color:#fff}
+    .closing-question{font-size:clamp(44px,5.25vw,80px);max-width:1150px;line-height:1.08}
+    .closing-grid .argument{min-height:175px}
+    .closing-grid .arg-text{font-size:clamp(20px,2vw,29px)}
+    .closing-message{font-weight:780;font-size:clamp(23px,2.65vw,39px);letter-spacing:-.026em;margin-top:22px;color:#f5faff}
+    @media (min-width:901px) and (max-height:780px){
+      .argument{padding:20px 24px;min-height:0}
+      .argument .arg-text{font-size:clamp(19px,2vw,28px)}
+      .argument .arg-label{margin-bottom:10px}
+      .debate-conclusion{margin-top:18px;font-size:clamp(17px,1.6vw,22px)}
+      .closing-grid .argument{min-height:0}
+      .closing-grid .arg-text{font-size:clamp(19px,1.8vw,26px)}
+      .closing-message{margin-top:16px}
+    }
+    @media(max-width:900px){.debate-cards{grid-template-columns:1fr}.argument{min-height:0}.argument .arg-text{font-size:22px}.closing-question{font-size:clamp(42px,9.5vw,64px)}}
+    @media print{.argument{background:#f5f8fb!important;color:#132940!important;border:1px solid #b5c9d9!important}.argument .arg-text,.closing-message{color:#132940!important}.debate-conclusion{color:#344f64!important}}
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+    @media print {
+      @page{size:A4 landscape;margin:12mm}
+      html,body{background:#fff!important;color:#10253d!important}
+      body{overflow:visible}
+      .shell,.shell::before{background:#fff!important;overflow:visible;display:block}
+      .topbar,.footer,.note-overlay,.reveal{display:none!important}
+      main{display:block!important}
+      .slide,.slide.active{display:block!important;page-break-after:always;break-after:page;min-height:0;height:175mm;padding:12mm 8mm!important;animation:none!important;opacity:1!important;transform:none!important}
+      .slide:last-child{page-break-after:auto;break-after:auto}
+      h1,h2,h3,.question-strip,.block-quote,.last-question{color:#12263b!important}
+      .lead,.brief,.fine,.hero-bottom,.panel p,.traffic ul{color:#344f64!important}
+      .accent,.eyebrow,.big-number,.green,.blue{color:#077d8d!important}.gold{color:#946000!important}.red{color:#9a2f2f!important}
+      .panel,.claim,.callout{background:#f5f8fb!important;box-shadow:none!important;border:1px solid #c4d3df!important;color:#10253d!important}
+      .panel strong{color:#10253d!important}
+      .answer{display:block!important;background:#f0fbf5!important;color:#114a33!important}
+      .hero-graphic{display:none}
+    }
+
+    /* Mirrored transformer slide: the single wrong continuation is deliberately conspicuous. */
+    .stage-error{border-color:rgba(255,166,166,.72);background:linear-gradient(145deg,rgba(80,32,49,.62),rgba(24,42,62,.9))}
+    .stage-error .stage-num{color:var(--red)}
+    .sample-line-error{border-color:rgba(255,166,166,.6)}
+    .sample-wrong{display:inline-block;padding:3px 8px;border-radius:7px;background:rgba(255,166,166,.17);color:#ffc0c0;text-decoration:underline;text-decoration-style:wavy;text-decoration-color:#ff8c98;text-underline-offset:5px}
+    .error-punchline{background:rgba(255,166,166,.09);border-left-color:var(--red);color:#ffe5e5;margin-top:12px}
+    @media (min-width:901px) and (max-height:780px){.error-punchline{margin-top:10px}}
+    @media print{.sample-wrong{background:#ffe0e0!important;color:#972a3a!important}.stage-error{background:#fff2f3!important}}
+
+    /* Year 12 cross-subject examples: high contrast, no audience interaction. */
+    .subject-headline{font-size:clamp(43px,5.25vw,78px);line-height:1.06;margin-bottom:16px;max-width:1350px}
+    .subject-intro{font-size:clamp(18px,1.65vw,24px);color:#cbdce9;line-height:1.38;margin:0 0 19px}
+    .subject-list{display:flex;flex-direction:column;gap:11px;width:100%}
+    .subject-row{display:grid;grid-template-columns:210px minmax(0,1.08fr) minmax(0,.95fr);align-items:stretch;min-width:0;gap:0;border:1px solid rgba(199,225,247,.22);border-radius:16px;background:linear-gradient(105deg,rgba(19,43,65,.92),rgba(17,32,54,.84));overflow:hidden}
+    .subject-name{display:flex;align-items:center;gap:13px;padding:16px 16px 16px 20px;border-right:1px solid rgba(198,223,245,.15);font-size:clamp(18px,1.48vw,22px);letter-spacing:-.025em}
+    .subject-icon{flex:none;display:grid;place-items:center;width:37px;height:37px;border-radius:10px;background:rgba(103,228,225,.12);color:var(--cyan);font-size:26px;font-weight:750}
+    .subject-copy{padding:14px 19px;min-width:0}
+    .subject-copy.subject-false{background:rgba(255,210,126,.055);border-left:1px solid rgba(198,223,245,.15)}
+    .subject-label{display:block;text-transform:uppercase;letter-spacing:.10em;font-size:clamp(11px,.93vw,14px);font-weight:850;color:var(--cyan);margin:0 0 5px}
+    .subject-false .subject-label{color:var(--gold)}
+    .subject-copy p{font-size:clamp(17px,1.46vw,22px);font-weight:580;line-height:1.3;margin:0}
+    .subject-false p{font-weight:750;color:#fff5d9}
+    .subject-disclaimer{font-size:clamp(14px,1.2vw,18px);color:#b7cbdc;margin:15px 0 0}
+    .answer-list .subject-row{grid-template-columns:210px minmax(0,.78fr) minmax(0,1.12fr)}
+    .subject-correction{padding:17px 20px}
+    .subject-correction strong{display:block;color:var(--green);font-size:clamp(20px,1.85vw,28px);line-height:1.16;margin-bottom:5px}
+    .subject-correction p{font-size:clamp(17px,1.38vw,21px);line-height:1.32;color:#dae9f2;margin:0}
+    .subject-wrong{padding:17px 20px;background:rgba(224,202,143,.055);border-left:1px solid rgba(191,231,221,.19)}
+    .subject-wrong .subject-label{color:var(--gold)}
+    .subject-wrong p{font-size:clamp(18px,1.42vw,22px);font-weight:760;line-height:1.3;color:#ffefd8;margin:0}
+    .subject-takeaway{border-left:4px solid var(--gold);border-radius:7px;background:rgba(255,210,126,.08);padding:14px 18px;font-size:clamp(18px,1.67vw,25px);font-weight:650;margin-top:18px;color:#ffe7b9;line-height:1.33}
+    .subject-takeaway strong{color:white}
+    .subject-key-banner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 22px;border-left-width:5px}
+    .subject-key-banner strong{flex:0 0 auto;color:#f2d89b;font-size:clamp(26px,2.75vw,42px);font-weight:850;line-height:1.05;letter-spacing:-.035em}
+    .subject-key-banner span{display:block;text-align:right;font-size:clamp(15px,1.34vw,20px);line-height:1.3;color:#eaf5ed;font-weight:650}
+    @media(max-width:900px){.subject-key-banner{flex-direction:column;align-items:flex-start}.subject-key-banner span{text-align:left}}
+    @media print{.subject-key-banner strong{color:#355d52!important}.subject-key-banner span{color:#553b0f!important}}
+    @media(min-width:901px) and (max-height:780px){
+      .subject-headline{font-size:clamp(39px,4.7vw,69px);margin-bottom:13px}
+      .subject-intro{margin-bottom:12px}
+      .subject-list{gap:8px}
+      .subject-copy{padding:11px 16px}
+      .subject-name{padding:12px 14px}
+      .subject-correction{padding:12px 18px}
+      .subject-disclaimer{margin-top:10px}
+      .subject-takeaway{margin-top:12px;padding:12px 18px}
+    }
+    @media(max-width:900px){
+      .subject-row,.answer-list .subject-row{grid-template-columns:1fr}
+      .subject-name{padding:13px 16px;border-right:0;border-bottom:1px solid rgba(198,223,245,.15)}
+      .subject-copy{padding:13px 16px}
+      .subject-copy.subject-false{border-left:0;border-top:1px solid rgba(198,223,245,.15)}
+      .subject-correction{padding:15px 16px}
+      .subject-headline{font-size:clamp(37px,7.5vw,62px)}
+    }
+    @media print{
+      .subject-row{background:#f4f8fc!important;border:1px solid #c4d3df!important;color:#12263b!important}
+      .subject-copy p,.subject-name,.subject-correction p,.subject-false p{color:#12263b!important}
+      .subject-correction strong{color:#146a46!important}
+      .subject-takeaway{color:#553b0f!important;background:#fff5de!important}
+    }
+  
+    /* Final NEA slide: two unmistakable examples, zero audience interaction. */
+    .nea-boardline{font-size:clamp(13px,1.15vw,17px);letter-spacing:.13em;text-transform:uppercase;font-weight:820;color:#bfd5e5;margin:-8px 0 18px}
+    .nea-headline{font-size:clamp(51px,5.8vw,88px);line-height:1.03;margin-bottom:18px}
+    .nea-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.5vw,30px)}
+    .nea-card{border:1px solid rgba(201,224,249,.23);border-radius:20px;padding:clamp(22px,2.4vw,35px);min-width:0;background:linear-gradient(145deg,rgba(20,51,70,.96),rgba(9,27,43,.89))}
+    .nea-card.help{border-top:5px solid var(--cyan)}
+    .nea-card.submit{border-top:5px solid var(--red)}
+    .nea-card h3{font-size:clamp(27px,2.3vw,36px);margin:0 0 14px;letter-spacing:-.034em}
+    .nea-card.help h3{color:var(--cyan)}.nea-card.submit h3{color:var(--red)}
+    .nea-kicker{font-size:clamp(13px,1.07vw,16px);font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#b8cedd;margin-bottom:8px}
+    .nea-example{font-size:clamp(21px,2.05vw,31px);font-weight:650;line-height:1.28;color:white;margin:0 0 10px}
+    .nea-example:last-child{margin-bottom:0}
+    .nea-finalrule{border-left:4px solid var(--gold);background:rgba(255,210,126,.075);padding:14px 20px;border-radius:8px;font-size:clamp(19px,1.78vw,27px);line-height:1.37;margin-top:22px;font-weight:650;color:#ffe6bc}
+    .nea-finalrule strong{color:#fff}
+    @media(min-width:901px) and (max-height:780px){
+      .nea-headline{font-size:clamp(47px,5.3vw,76px)}
+      .nea-boardline{margin-bottom:12px}
+      .nea-card{padding:20px 26px}
+      .nea-card h3{margin-bottom:9px}
+      .nea-finalrule{margin-top:14px;padding:11px 16px}
+    }
+    @media(max-width:900px){.nea-grid{grid-template-columns:1fr}.nea-headline{font-size:clamp(42px,8vw,65px)}.nea-card{padding:20px 24px}.nea-example{font-size:22px}}
+    @media print{
+      .nea-card{background:#f5f8fb!important;color:#132940!important;border:1px solid #c4d3df!important}
+      .nea-example{color:#132940!important}.nea-boardline{color:#345067!important}
+      .nea-finalrule{background:#fff4df!important;color:#533d16!important}.nea-finalrule strong{color:#132940!important}
+    }
+
+    /* Signed acceptable-use agreement reminder. No purported policy quotes. */
+    .aup-heading{font-size:clamp(52px,6.4vw,98px);line-height:1.02;max-width:1300px;margin-bottom:16px}
+    .aup-intro{font-size:clamp(22px,2.25vw,34px);color:#c8d9e9;max-width:1150px;line-height:1.35;margin-bottom:26px}
+    .aup-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+    .aup-check{background:linear-gradient(150deg,rgba(22,51,73,.92),rgba(10,30,49,.92));border:1px solid rgba(201,224,249,.2);border-top:4px solid var(--cyan);border-radius:19px;padding:clamp(20px,2vw,30px);min-width:0}
+    .aup-check:nth-child(2){border-top-color:var(--gold)}
+    .aup-check:nth-child(3){border-top-color:var(--green)}
+    .aup-check-label{font-size:clamp(13px,1.13vw,17px);color:#a7c1d5;font-weight:850;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+    .aup-check-text{font-size:clamp(23px,2.05vw,31px);font-weight:720;line-height:1.26;letter-spacing:-.025em;color:#fff;margin-bottom:0}
+    .aup-bottom{border-left:4px solid var(--gold);padding:12px 20px;background:rgba(255,210,126,.075);border-radius:8px;color:#ffe6bc;font-size:clamp(18px,1.72vw,25px);font-weight:670;margin:23px 0 0}
+    @media(min-width:901px) and (max-height:780px){
+      .aup-heading{font-size:clamp(48px,5.5vw,83px);margin-bottom:10px}
+      .aup-intro{margin-bottom:18px}
+      .aup-check{padding:20px 22px}
+      .aup-bottom{margin-top:17px;padding:9px 18px}
+    }
+    @media(max-width:900px){
+      .aup-checks{grid-template-columns:1fr;gap:12px}
+      .aup-heading{font-size:clamp(45px,8vw,64px)}
+      .aup-check{padding:17px 20px}
+      .aup-check-label{margin-bottom:5px}
+      .aup-check-text{font-size:clamp(21px,3.4vw,28px)}
+      .aup-intro{margin-bottom:18px}
+    }
+    @media print{.aup-check{background:#f5f8fb!important;color:#132940!important;border-color:#b5c9d9!important}.aup-check-text{color:#132940!important}.aup-bottom{background:#fff4df!important;color:#533d16!important}}
+
+    /* School-approved AI reminder and responsible generated-image use. */
+    .approved-banner{display:inline-flex;align-items:center;gap:12px;padding:10px 16px;
+      border-radius:100px;border:1px solid rgba(103,228,225,.47);background:rgba(103,228,225,.12);
+      color:#b5fffa;font-size:clamp(15px,1.37vw,21px);font-weight:820;margin:0 0 17px}
+    .approved-dot{display:inline-block;background:var(--cyan);height:10px;width:10px;border-radius:100%;box-shadow:0 0 14px rgba(103,228,225,.5)}
+    .aup-slide .aup-heading{font-size:clamp(47px,5.8vw,84px);max-width:1360px}
+    .aup-slide .aup-intro{font-size:clamp(20px,1.85vw,28px);margin-bottom:19px}
+    .aup-slide .aup-check-text{font-size:clamp(20px,1.86vw,27px)}
+    .aup-slide .aup-check{padding:clamp(18px,1.85vw,27px)}
+    .aup-slide .aup-bottom{font-size:clamp(17px,1.5vw,22px);margin-top:18px}
+    .image-safety .safety-headline{font-size:clamp(51px,6.2vw,90px);line-height:1.04;margin-bottom:17px;max-width:1370px}
+    .image-safety .safety-deck{font-size:clamp(20px,2vw,30px);line-height:1.36;color:#c4d9e9;margin:0 0 26px;max-width:1220px}
+    .safety-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(13px,1.7vw,25px)}
+    .safety-card{padding:clamp(19px,2vw,31px);background:linear-gradient(145deg,rgba(27,47,68,.92),rgba(12,31,52,.95));border:1px solid rgba(201,224,249,.21);border-radius:18px;border-top:4px solid var(--red)}
+    .safety-card:nth-child(2){border-top-color:var(--gold)}
+    .safety-card:nth-child(3){border-top-color:var(--cyan)}
+    .safety-card h3{font-size:clamp(23px,2.3vw,34px);margin-bottom:12px}
+    .safety-card p{font-size:clamp(19px,1.65vw,25px);line-height:1.32;color:#d3e1ed;margin:0}
+    .safety-response{border-left:4px solid var(--gold);border-radius:9px;background:rgba(255,210,126,.095);color:#ffe9c4;font-size:clamp(18px,1.78vw,26px);font-weight:770;line-height:1.33;padding:14px 19px;margin:25px 0 0}
+    @media(min-width:901px) and (max-height:780px){
+      .image-safety .safety-headline{font-size:clamp(48px,5.2vw,74px);margin-bottom:11px}
+      .image-safety .safety-deck{margin-bottom:17px}
+      .safety-card{padding:19px 23px}.safety-card p{font-size:clamp(17px,1.5vw,22px)}
+      .safety-response{margin-top:16px;padding:12px 16px}
+      .aup-slide .aup-heading{font-size:clamp(47px,5.3vw,76px)}
+      .approved-banner{margin-bottom:11px}.aup-slide .aup-intro{margin-bottom:12px}
+    }
+    @media(max-width:900px){
+      .safety-grid{grid-template-columns:1fr;gap:11px}
+      .safety-card{padding:19px 22px}
+      .safety-card h3{margin-bottom:5px}
+      .safety-card p{font-size:clamp(18px,2.6vw,23px)}
+      .image-safety .safety-headline{font-size:clamp(43px,8vw,65px)}
+      .image-safety .safety-deck{margin-bottom:18px}
+      .safety-response{margin-top:17px}
+      .aup-slide .aup-heading{font-size:clamp(42px,8.5vw,66px)}
+      .aup-slide .aup-check-text{font-size:clamp(21px,3.4vw,27px)}
+    }
+    @media print{
+      .approved-banner{border-color:#72bdc0!important;color:#10555a!important;background:#e5fafa!important}
+      .safety-card{background:#f6f8fb!important;border:1px solid #bdcdda!important;color:#122940!important;border-top:4px solid #c45a5a!important}
+      .safety-card p{color:#1a3850!important}
+      .safety-response{background:#fff3dc!important;color:#573b12!important}
+    }
+
+/* Synergy MAT corporate identity, based on the Trust's 2024–27 Strategic Plan.
+   Colour values are palette approximations, not claimed official HEX standards.
+   The Synergy wordmark above is the original Trust asset embedded from an existing Trust presentation. */
+:root {
+  color-scheme:dark;
+  --bg:#102c2c;--surface:#1b4543;--surface2:#255550;
+  --text:#f5faf8;--muted:#c0d6d1;--line:rgba(184,231,220,.24);
+  --cyan:#b0e9de;--blue:#a9ded8;--gold:#eed8aa;
+  --red:#f6b1aa;--green:#b8e7bf;
+  --pad:clamp(22px,5.2vw,88px);
+  font-family:Aptos, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+html,body{background:var(--bg);color:var(--text)}
+.shell{background:linear-gradient(115deg,rgba(16,44,44,.98),rgba(25,67,63,.96) 70%,rgba(52,99,93,.94));}
+.shell::before{opacity:.23;background-image:linear-gradient(rgba(184,231,220,.095) 1px,transparent 1px),linear-gradient(90deg,rgba(184,231,220,.095) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(90deg,transparent,#000 62%)}
+.shell::after{content:"";position:absolute;right:0;top:76px;bottom:62px;width:5px;background:linear-gradient(180deg,#b7ebe0,#567c76);opacity:.85;pointer-events:none}
+.topbar{background:rgba(7,36,34,.72);border-color:var(--line);height:76px}
+.brand{gap:17px;letter-spacing:.09em;color:#eef9f5;font-size:12px}
+.synergy-wordmark{width:112px;height:49px;object-fit:contain;flex:none}
+.brand-divider{height:34px;width:1px;background:rgba(188,231,221,.38);flex:none}
+.masthead-copy{display:flex;flex-direction:column;gap:4px;line-height:1.15;min-width:0}
+.masthead-copy strong{font-size:clamp(11px,1.03vw,14px);letter-spacing:.13em;white-space:nowrap}
+.masthead-copy small{font-weight:550;font-size:clamp(10px,.89vw,12px);letter-spacing:.055em;text-transform:none;color:#b9d7cf}
+.topright{color:#c5ddd6;gap:16px;font-size:11px;letter-spacing:.13em}
+.minute-pill{border-radius:2px;padding:8px 12px;color:#102f2d;background:#aee6db;border-color:#aee6db;font-weight:900}
+.slide{max-width:1540px}
+.eyebrow{color:#bcebe0;font-size:clamp(12px,1.21vw,16px);letter-spacing:.13em;margin-bottom:19px}
+.eyebrow::before{width:31px;height:2px}
+h1,h2,h3{letter-spacing:-.045em}
+h1{font-size:clamp(54px,7.5vw,116px);line-height:1.03;max-width:1150px}
+h2{font-size:clamp(41px,5.5vw,83px);line-height:1.06}
+h3{font-weight:740}
+.lead,.fine,.brief,.tech-sub,.subject-intro,.micro-note,.aup-intro,.image-safety .safety-deck{color:#d3e6e0}
+.hero-bottom,.timehint{color:#bbd4ce}
+.hero-layout{grid-template-columns:minmax(0,1.52fr) minmax(300px,.68fr);gap:52px}
+.trust-hero-panel{min-height:380px;border:1px solid rgba(195,234,226,.32);background:linear-gradient(152deg,rgba(63,114,106,.4),rgba(15,47,44,.65));border-radius:3px;padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;position:relative;box-shadow:0 22px 55px rgba(2,20,17,.13)}
+.trust-hero-panel::before,.trust-hero-panel::after{content:"";position:absolute;width:35px;height:35px;border-color:#addfd3;border-style:solid;opacity:.5}
+.trust-hero-panel::before{top:17px;left:17px;border-width:2px 0 0 2px}
+.trust-hero-panel::after{bottom:17px;right:17px;border-width:0 2px 2px 0}
+.trust-hero-rule{height:1px;width:80%;background:rgba(205,239,230,.32);margin-bottom:7px}
+.trust-hero-wordmark{width:min(100%,300px);height:auto;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.08))}
+.trust-hero-motto{font-size:clamp(23px,2.25vw,32px);font-weight:300;letter-spacing:.01em;margin:0;color:#eaf8f4}
+.trust-hero-values{width:100%;display:flex;justify-content:space-around;gap:7px;flex-wrap:wrap;border-top:1px solid rgba(205,239,230,.25);padding-top:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#b5e3d8}
+.panel,.concept,.stage,.argument,.subject-row,.nea-card,.aup-check,.safety-card{border-radius:7px;box-shadow:none;background:rgba(18,54,51,.85);border:1px solid rgba(191,231,221,.24)}
+.panel,.concept,.stage,.argument,.nea-card,.aup-check,.safety-card{border-top:3px solid rgba(178,230,218,.56)}
+.panel p,.concept p,.stage p,.subject-correction p,.safety-card p{color:#d2e7e0}
+.panel .small-caps,.concept .concept-label,.stage .stage-num,.subject-label,.nea-kicker,.aup-check-label{color:#b8e9dc}
+.panel strong,.debate-conclusion strong,.subject-takeaway strong{color:#f4fcf8}
+.panel .block-quote,.argument .arg-text,.aup-check-text,.nea-example{color:#f5faf8}
+.callout,.tech-aside,.subject-takeaway,.nea-finalrule,.aup-bottom,.safety-response{background:rgba(212,233,216,.09);border-color:#dfc991;color:#f6e4c3;border-radius:2px}
+.tech-aside{border-left-color:var(--gold)}
+.claim,.sample-line,.subject-row{border-radius:5px;background:rgba(15,47,44,.8)}
+.claim.wrong,.stage-error,.sample-line-error{border-color:rgba(246,177,170,.65)}
+.stage-error{background:rgba(89,46,47,.36)}
+.sample-wrong{color:#ffbfb6;background:rgba(246,177,170,.17)}
+.subject-name,.subject-copy.subject-false{border-color:rgba(191,231,221,.19)}
+.subject-copy.subject-false{background:rgba(224,202,143,.055)}
+.subject-icon{border-radius:2px;background:rgba(174,230,217,.12)}
+.subject-false p{color:#ffefd8}
+.subject-disclaimer{color:#b7d5cd}
+.subject-correction strong{color:#c3f1c8}
+.nea-card.help,.argument.yes,.aup-check:first-child{border-top-color:#b1e8dd}
+.nea-card.submit,.safety-card:first-child{border-top-color:#f4ada3}
+.argument.no,.aup-check:nth-child(2),.safety-card:nth-child(2){border-top-color:#e9d29e}
+.safety-card:nth-child(3),.aup-check:nth-child(3){border-top-color:#a8d5cb}
+.nea-boardline{color:#c5dbd4}
+.nea-card.help h3{color:#c5f2e6}
+.nea-card.submit h3{color:#ffc4be}
+.approved-banner{border-radius:3px;background:rgba(170,230,218,.13);border-color:rgba(170,230,218,.55);color:#d3f8eb}
+.approved-dot{box-shadow:none}
+.footer{background:rgba(7,35,33,.84);border-color:var(--line);min-height:62px}
+.footer::before{content:"STRONGER TOGETHER";color:#91c4b7;font-size:10px;font-weight:800;letter-spacing:.14em;margin-right:18px;white-space:nowrap}
+.footer-label,.count,.keyboard-tip{color:#b6d1c9}
+.dot{background:#4b766e;width:19px;height:5px;border-radius:0}
+.dot[aria-current="step"]{background:#c3f3e7;width:29px}
+.navbtn,.iconbtn{border-radius:3px;color:#f2fcf8;background:rgba(212,241,231,.06)}
+.navbtn:hover,.iconbtn:hover{background:rgba(178,230,218,.16);border-color:rgba(178,230,218,.54)}
+.note-overlay{border-color:#7caea5}
+/* Widescreen auditorium displays and responsive mobile reading */
+@media(min-width:901px) and (max-height:780px){
+ .slide{padding-top:16px;padding-bottom:14px}
+ h1{font-size:clamp(56px,7.1vw,99px)}
+ h2{font-size:clamp(40px,4.95vw,72px)}
+ .trust-hero-panel{min-height:330px;padding:20px;gap:15px}
+ .trust-hero-wordmark{width:min(100%,265px)}
+ .trust-hero-values{padding-top:14px}
+ .panel,.argument,.concept,.nea-card{padding:19px 22px}
+ .eyebrow{margin-bottom:13px}
+}
+@media(max-width:900px){
+ .hero-layout{grid-template-columns:1fr;gap:15px}
+ .trust-hero-panel{display:none}
+ .shell::after{top:60px;bottom:60px}
+ .topbar{height:60px}
+ .synergy-wordmark{width:92px;height:39px}
+ .brand{gap:10px}.brand-divider{height:26px}
+ .masthead-copy small{display:none}
+ .footer::before{display:none}
+ .minute-pill{padding:5px 7px}
+}
+@media(max-width:520px){
+ .topright .minute-pill{display:none}
+ .brand{gap:7px}.synergy-wordmark{width:79px;height:36px}
+ .masthead-copy strong{font-size:10px;letter-spacing:.045em}
+ .brand-divider{height:22px}
+ .subject-row{border-radius:5px}
+}
+@media print{
+ .trust-hero-panel{display:none!important}
+}
+
+/* The prompt IS the example input: large, projector-first, consistent over both transformer slides. */
+#slide-4 .tech-sub,#slide-5 .tech-sub{margin:0 0 10px;font-size:clamp(19px,1.9vw,27px)}
+#slide-4 .pipeline,#slide-5 .pipeline{margin:10px 0 12px}
+#slide-4 .stage,#slide-5 .stage{padding:12px 16px 14px}
+#slide-4 .stage .stage-num,#slide-5 .stage .stage-num{margin-bottom:5px}
+#slide-4 .stage h3,#slide-5 .stage h3{margin-bottom:4px}
+#slide-4 .micro-note,#slide-5 .micro-note{margin-top:8px}
+.input-context{background:rgba(180,233,219,.10);border:1px solid rgba(180,233,219,.51);border-left:6px solid var(--cyan);padding:15px 22px 16px;margin:10px 0 12px;border-radius:4px;}
+.input-context .input-label{font-size:clamp(14px,1.15vw,18px);letter-spacing:.13em;text-transform:uppercase;font-weight:850;color:#b3eadd;margin:0 0 7px}
+.input-context .prompt-quote{font-size:clamp(29px,3.1vw,47px);font-weight:800;letter-spacing:-.035em;line-height:1.15;color:#fbfffe;margin:0}
+.input-context .prompt-ellipsis{color:#f5d59b}
+.predict-result{display:flex;justify-content:flex-start;align-items:center;gap:22px;flex-wrap:wrap;padding:12px 21px;background:rgba(6,38,34,.8);border:1px solid rgba(188,229,218,.43);border-radius:4px;margin:10px 0 0}
+.predict-result .predict-label{font-size:clamp(13px,1.12vw,17px);text-transform:uppercase;letter-spacing:.10em;color:#c5e5d9;font-weight:800}
+.predict-result .predict-arrow{font-size:clamp(24px,2.3vw,32px);color:#edd49e;font-weight:800}
+.predict-result .predict-word{font-size:clamp(33px,3.6vw,52px);font-weight:850;color:#d4f5ea;line-height:1.1;letter-spacing:-.04em}
+.predict-result .predict-wrong{color:#ffb9b3}
+#slide-5 .predict-result{border-color:rgba(246,177,170,.66);background:rgba(82,31,31,.24)}
+#slide-5 .error-punchline{margin-top:9px;padding:9px 14px;font-size:clamp(18px,1.48vw,21px)}
+#slide-4 .micro-note,#slide-5 .micro-note{font-size:clamp(15px,1.28vw,18px)}
+@media(min-width:901px) and (max-height:780px){
+  #slide-4 h2,#slide-5 h2{font-size:clamp(40px,4.15vw,59px);margin-bottom:9px}
+  #slide-4 .eyebrow,#slide-5 .eyebrow{margin-bottom:8px}
+  #slide-4 .tech-sub,#slide-5 .tech-sub{margin-bottom:7px;font-size:clamp(18px,1.7vw,24px)}
+  #slide-4 .stage,#slide-5 .stage{padding:10px 14px 10px}
+  #slide-4 .stage .stage-num,#slide-5 .stage .stage-num{margin-bottom:3px}
+  #slide-4 .stage h3,#slide-5 .stage h3{font-size:clamp(22px,1.95vw,27px);margin-bottom:4px}
+  #slide-4 .stage p,#slide-5 .stage p{font-size:clamp(15px,1.3vw,18px)}
+  .input-context{padding:11px 17px 12px;margin:8px 0}
+  .input-context .input-label{font-size:14px;margin-bottom:5px}
+  .input-context .prompt-quote{font-size:clamp(27px,2.75vw,39px)}
+  #slide-4 .pipeline,#slide-5 .pipeline{margin:9px 0}
+  .predict-result{padding:8px 16px;margin-top:8px}
+  .predict-result .predict-word{font-size:clamp(29px,3vw,43px)}
+  #slide-4 .micro-note,#slide-5 .micro-note{margin-top:7px;font-size:16px}
+}
+@media(max-width:900px){
+  #slide-4 .pipeline,#slide-5 .pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .input-context .prompt-quote{font-size:clamp(26px,5.2vw,38px)}
+}
+@media(max-width:520px){
+  #slide-4 .pipeline,#slide-5 .pipeline{grid-template-columns:1fr}
+  .input-context{padding:15px}
+  .predict-result{gap:9px}
+  .predict-result .predict-label{width:100%}
+}
+@media print{.input-context,.predict-result{background:#e9f5f1!important;color:#102e29!important}.input-context .prompt-quote,.predict-result .predict-word{color:#122c28!important}}
+
+  
+/* Year 12 conversational prompt explanation + specific academy masthead */
+.masthead-copy strong{font-size:clamp(10px,.94vw,13px);letter-spacing:.055em;text-transform:none}
+#slide-1 .eyebrow{text-transform:none}
+.input-context .input-label{text-transform:none;letter-spacing:.015em;font-size:clamp(17px,1.45vw,22px);font-weight:800;color:#bceee1;margin-bottom:8px}
+.input-context .prompt-question{margin:7px 0 0;font-size:clamp(17px,1.45vw,22px);font-weight:750;letter-spacing:.005em;color:#f4d69c}
+@media(max-height:790px) and (min-width:901px){
+  .input-context{padding:9px 17px;margin:7px 0}
+  .input-context .input-label{font-size:clamp(15px,1.27vw,20px);margin-bottom:4px}
+  .input-context .prompt-question{font-size:clamp(15px,1.27vw,20px);margin-top:4px}
+  #slide-4 .tech-sub,#slide-5 .tech-sub{margin-bottom:10px}
+}
+@media(max-width:900px){.masthead-copy strong{font-size:10px;letter-spacing:0}}
+@media(max-width:520px){.masthead-copy strong{font-size:9px;letter-spacing:-.02em}.input-context .prompt-question{font-size:19px}}
+
+/* Traffic-light section: purposeful colour, confined to one slide. */
+#slide-11 .traffic{border:1px solid var(--traffic-edge);border-top:5px solid var(--traffic-edge);background:linear-gradient(156deg,var(--traffic-tint) 0%,rgba(14,47,43,.96) 95%);box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+#slide-11 .traffic.good{--traffic-edge:#90dfac;--traffic-tint:rgba(43,113,78,.54)}
+#slide-11 .traffic.care{--traffic-edge:#f2c778;--traffic-tint:rgba(114,82,38,.52)}
+#slide-11 .traffic.stop{--traffic-edge:#f1a0a3;--traffic-tint:rgba(111,47,55,.54)}
+#slide-11 .traffic .small-caps{color:var(--traffic-edge);font-size:clamp(13px,1.15vw,17px);letter-spacing:.09em}
+#slide-11 .traffic h3{color:var(--traffic-edge)}
+#slide-11 .traffic ul{color:#f0f9f5}
+#slide-11 .traffic li::marker{color:var(--traffic-edge)}
+@media print {
+  #slide-11 .traffic{background:#f4f8f6!important;border:2px solid var(--traffic-edge)!important;border-top-width:5px!important}
+  #slide-11 .traffic h3,#slide-11 .traffic .small-caps{color:#143d37!important}
+  #slide-11 .traffic ul{color:#183c35!important}
+}
+
+/* Final slide: bookend to the opening slide, QR instead of right-side Synergy logo panel */
+.final-hero .hero-layout{grid-template-columns:minmax(0,1.55fr) minmax(285px,.65fr);gap:clamp(22px,4vw,65px)}
+.final-hero h2{font-size:clamp(50px,6.35vw,100px);line-height:1.03;max-width:870px;margin-bottom:24px}
+.final-hero .final-subtitle{font-size:clamp(21px,2.15vw,31px);color:#d3e7e0;line-height:1.35;max-width:820px}
+.final-hero .qr-wrap{display:block;background:#fff;padding:19px;border-radius:8px;width:min(100%,355px);margin:auto;box-shadow:0 24px 70px rgba(0,0,0,.13)}
+.final-hero .qr-wrap svg{display:block;max-width:100%}
+.final-hero .qr-help{font-size:clamp(13px,1.2vw,17px);letter-spacing:.055em;text-align:center;color:#c2e5d9;margin:16px auto 0;font-weight:750;overflow-wrap:anywhere}
+.final-hero .qr-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
+.final-hero .final-access-link{color:#bcece0;text-decoration:underline;text-underline-offset:5px;font-weight:750;overflow-wrap:anywhere}
+.final-hero .final-trust{font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:#d0ece4;font-size:clamp(13px,1.15vw,17px);margin-bottom:18px}
+@media(min-width:901px) and (max-height:780px){.final-hero .qr-wrap{width:min(100%,302px);padding:15px}.final-hero h2{font-size:clamp(50px,5.45vw,79px)}.final-hero .final-subtitle{font-size:clamp(19px,1.8vw,27px)}}
+@media(max-width:900px){.final-hero .hero-layout{grid-template-columns:1fr;gap:16px}.final-hero .qr-wrap{width:min(65vw,295px)}.final-hero h2{font-size:clamp(39px,8vw,67px)}.final-hero .final-subtitle{font-size:19px}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><img class="synergy-wordmark" alt="Synergy Multi-Academy Trust" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWwAAACcCAYAAABbepEUAAAEuGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjM2NCIKICAgZXhpZjpQaXhlbFlEaW1lbnNpb249IjE1NiIKICAgZXhpZjpDb2xvclNwYWNlPSIxIgogICB0aWZmOkltYWdlV2lkdGg9IjM2NCIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMTU2IgogICB0aWZmOlJlc29sdXRpb25Vbml0PSIyIgogICB0aWZmOlhSZXNvbHV0aW9uPSI3Mi8xIgogICB0aWZmOllSZXNvbHV0aW9uPSI3Mi8xIgogICBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIgogICBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiCiAgIHhtcDpNb2RpZnlEYXRlPSIyMDI1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"><span class="brand-divider" aria-hidden="true"></span><span class="masthead-copy"><strong>SYNERGY MAT / YEAR 12 / Reepham College</strong><small>AI &amp; digital literacy</small></span></div>
+    <div class="topright"><span class="desktop-only">TRUST LEAD · AI &amp; MIS</span><span class="minute-pill">STRONGER TOGETHER</span></div>
+  </header>
+  <main id="presentation" aria-label="Year 12 AI assembly slides">
+
+    <section class="slide active" id="slide-1" aria-label="Slide 1, AI: Your thinking matters">
+      <div class="hero-layout">
+        <div>
+          <p class="eyebrow">SYNERGY MAT / YEAR 12 / Reepham College</p>
+          <h1>Generative AI.<br><span class="accent">Human judgement</span><br>still matters.</h1>
+          <p class="lead">Using Microsoft Copilot to support independent learning.</p>
+          <p class="hero-bottom">Understanding the technology · Checking the evidence · Using AI responsibly</p>
+        </div>
+        <div class="trust-hero-panel" aria-label="Synergy Multi-Academy Trust — Stronger Together">
+          <div class="trust-hero-rule"></div>
+          <img class="trust-hero-wordmark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWwAAACcCAYAAABbepEUAAAEuGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjM2NCIKICAgZXhpZjpQaXhlbFlEaW1lbnNpb249IjE1NiIKICAgZXhpZjpDb2xvclNwYWNlPSIxIgogICB0aWZmOkltYWdlV2lkdGg9IjM2NCIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMTU2IgogICB0aWZmOlJlc29sdXRpb25Vbml0PSIyIgogICB0aWZmOlhSZXNvbHV0aW9uPSI3Mi8xIgogICB0aWZmOllSZXNvbHV0aW9uPSI3Mi8xIgogICBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIgogICBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiCiAgIHhtcDpNb2RpZnlEYXRlPSIyMDI1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" alt="Synergy Multi-Academy Trust">
+          <p class="trust-hero-motto">Stronger Together.</p>
+          <div class="trust-hero-values"><span>Inclusive</span><span>Collaborative</span><span>Ambitious</span></div>
+        </div>
+      </div>
+      <aside class="notes"><p><strong>Time: 45 seconds.</strong> Open as Trust Lead for AI &amp; MIS: “AI is changing how we study, work and communicate. Synergy supports responsible use of our school-approved tool, Microsoft Copilot. Today is about using it in ways that strengthen learning and protect others.” Pause after the title.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-2" aria-label="Slide 2, how AI is changing study">
+      <p class="eyebrow">01 / AI in everyday study</p>
+      <h2>AI is changing <span class="accent">how we learn.</span></h2>
+      <div class="two-col">
+        <div class="panel">
+          <p class="small-caps">Used as a learning tool</p>
+          <p class="block-quote">Copilot can explain ideas, create practice questions and offer feedback.</p>
+          <p class="fine">The student still does the thinking.</p>
+        </div>
+        <div class="panel">
+          <p class="small-caps">Used as a shortcut</p>
+          <p class="block-quote">AI can produce polished answers without building understanding.</p>
+          <p class="fine">Finishing work is not the same as learning it.</p>
+        </div>
+      </div>
+      <div class="bottomline"><p class="brief"><strong>Same technology. Two very different ways to use it.</strong></p></div>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute.</strong> Explain: “AI is already part of everyday learning. Copilot can make a difficult topic easier to understand, offer extra practice or provide feedback. But it can also do the entire task for you. The difference isn't the tool; it's whether you are learning.” Read the two examples without inviting a show of hands or audience responses. Transition into how generative AI works.</p></aside>
+    </section>
+
+
+    <section class="slide" id="slide-3" aria-label="Slide 3, what generative AI means">
+      <p class="eyebrow">02 / What does generative mean?</p>
+      <h2>It generates <span class="accent">new content.</span></h2>
+      <p class="tech-sub">Unlike a traditional search engine, a generative AI model can construct a response, one small piece at a time.</p>
+      <div class="concept-grid">
+        <div class="concept"><p class="concept-label">01 / Training</p><h3>Learn patterns</h3><p>During training, a model adjusts billions of numerical <strong>parameters</strong> to improve its predictions.</p></div>
+        <div class="concept"><p class="concept-label">02 / Your prompt</p><h3>Provide context</h3><p>Your words are split into <strong>tokens</strong> — often words or pieces of words — that the model can process.</p></div>
+        <div class="concept"><p class="concept-label">03 / Generation</p><h3>Predict and repeat</h3><p>The model estimates possible <strong>next tokens</strong>, chooses one, then uses the updated sequence to continue.</p></div>
+      </div>
+      <div class="tech-aside"><span aria-hidden="true">✳</span><span>It's generating a response, not necessarily retrieving a checked fact.</span></div>
+      <aside class="notes"><p><strong>Time: 1 minute 30 seconds.</strong> Define <em>generative</em>: technology that produces text, code, images or other output from learned patterns. This is distinct from a basic search engine returning a list of links. During training, the model's parameters are adjusted to reduce prediction errors; during a normal response (inference), it uses the learned parameters to generate output. A token can be a word, part of a word or punctuation. Some Copilot experiences can also search for current sources: the distinction here is about the language model at its core, not a claim that Copilot never retrieves information.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-4" aria-label="Slide 4, the prompt is context, and a transformer predicts the next token">
+      <p class="eyebrow">03 / A look under the bonnet</p>
+      <h2>Inside a <span class="accent">language model.</span></h2>
+      <p class="tech-sub">A <strong>transformer</strong> uses the context it receives to predict what comes next.</p>
+      <div class="input-context" aria-label="Example input prompt shown as the model's context">
+        <p class="input-label">So you bang this into Copilot …</p>
+        <p class="prompt-quote">“Plants convert light into chemical <span class="prompt-ellipsis">…</span>”</p>
+        <p class="prompt-question">What happens next?</p>
+      </div>
+      <div class="pipeline" role="list" aria-label="Simplified process for generating a next token">
+        <div class="stage" role="listitem"><span class="stage-num">STEP 01</span><h3>Tokens</h3><p>Split the prompt into small text units.</p></div>
+        <div class="stage" role="listitem"><span class="stage-num">STEP 02</span><h3>Vectors</h3><p>Represent tokens as numerical embeddings.</p></div>
+        <div class="stage" role="listitem"><span class="stage-num">STEP 03</span><h3>Attention</h3><p>Use relationships in the context.</p></div>
+        <div class="stage" role="listitem"><span class="stage-num">STEP 04</span><h3>Prediction</h3><p>Score possible next tokens. Select one.</p></div>
+      </div>
+      <div class="predict-result" aria-label="Illustrative next token: energy">
+        <span class="predict-label">PREDICTED NEXT TOKEN</span><span class="predict-arrow" aria-hidden="true">→</span><span class="predict-word">energy</span>
+      </div>
+      <p class="micro-note">Your words supply <strong>context</strong>. A likely continuation is not automatically a checked fact.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute 45 seconds.</strong> Point to the large prompt first. Say: “So you bang ‘Plants convert light into chemical …’ into Copilot. What happens next? Those words are the input context. It has not been given a completed fact: it must predict what to produce next.” Follow the four boxes. A tokenizer turns the prompt into token IDs; the model maps them to numeric embeddings; the transformer uses attention to combine relevant information across the context; the model scores possible next tokens and a decoding strategy chooses a continuation. “Energy” is a plausible next token in this simplified illustration. <strong>Technical nuance:</strong> the complete context can also include earlier dialogue, system instructions and retrieved material—not only the visible user prompt. This is an educational schematic, not Copilot's proprietary internal pipeline, and “energy” is illustrative rather than an observed model trace. Nothing in simple token selection guarantees the output is true. Link to the next slide: “Now look what happens if it carries on in the wrong direction.”</p></aside>
+    </section>
+
+    <section class="slide" id="slide-5" aria-label="Slide 5, same prompt and deliberately silly continuation">
+      <p class="eyebrow">03 / A look under the bonnet · take two</p>
+      <h2>Same prompt. <span class="gold">Wrong direction.</span></h2>
+      <p class="tech-sub">Same context. The model can still generate a <strong>confidently wrong continuation.</strong></p>
+      <div class="input-context" aria-label="The same example input prompt">
+        <p class="input-label">Same words. Same Copilot.</p>
+        <p class="prompt-quote">“Plants convert light into chemical <span class="prompt-ellipsis">…</span>”</p>
+        <p class="prompt-question">But what if it gets it wrong?</p>
+      </div>
+      <div class="pipeline" role="list" aria-label="Same transformer process with an incorrect continuation">
+        <div class="stage" role="listitem"><span class="stage-num">STEP 01</span><h3>Tokens</h3><p>Split the prompt into small text units.</p></div>
+        <div class="stage" role="listitem"><span class="stage-num">STEP 02</span><h3>Vectors</h3><p>Represent tokens as numerical embeddings.</p></div>
+        <div class="stage" role="listitem"><span class="stage-num">STEP 03</span><h3>Attention</h3><p>Use relationships in the context.</p></div>
+        <div class="stage stage-error" role="listitem"><span class="stage-num">STEP 04</span><h3>Prediction</h3><p>Generate the wrong continuation.</p></div>
+      </div>
+      <div class="predict-result" aria-label="Deliberately comic generated continuation: energy drinks">
+        <span class="predict-label">GENERATED CONTINUATION</span><span class="predict-arrow" aria-hidden="true">→</span><span class="predict-word">energy <span class="predict-wrong">drinks</span></span>
+      </div>
+      <div class="tech-aside error-punchline"><span aria-hidden="true">🥤</span><span>Photosynthesis is <em>not</em> a vending machine.</span></div>
+      <aside class="notes"><p><strong>Suggested speaking time: 45 seconds.</strong> Say: “Same prompt, same AI, but this time it runs off in the wrong direction.” The prompt and the four model stages are unchanged: only the generated continuation differs. The example is intentionally silly, not a real Copilot output or a claim that “drinks” is a likely next token. Explain: “A model can produce grammatically plausible text that changes the meaning. Real mistakes are usually far subtler.” Note that the context available at each generation step includes tokens already generated, as well as the original prompt; therefore the slide intentionally simplifies the full process. Link forward to the realistic Maths, Geography and Psychology mistakes.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-6" aria-label="Slide 6, AI can be wrong">
+      <p class="eyebrow">04 / Know the limitation</p>
+      <h2>Confident ≠ <span class="gold">correct.</span></h2>
+      <div class="two-col">
+        <div class="panel">
+          <span class="symbol" aria-hidden="true">✦</span>
+          <h3>AI is excellent at producing language.</h3>
+          <p>It uses learned parameters and context to generate likely sequences of tokens.</p>
+          <p><strong>Fluent is not the same as factual.</strong></p>
+        </div>
+        <div class="panel">
+          <span class="symbol gold" aria-hidden="true">◇</span>
+          <h3>AI can still make things up.</h3>
+          <p>It may give wrong facts, false quotations or invented references — sometimes with great confidence.</p>
+          <p><strong>Checking is your responsibility.</strong></p>
+        </div>
+      </div>
+      <div class="callout"><span aria-hidden="true">⚡</span><span>Use AI as a starting point for thinking, not the final authority.</span></div>
+      <aside class="notes"><p><strong>Time: 1 minute.</strong> Link back to the transformer diagram: predicting the next token is not the same process as verifying a claim against evidence. The useful distinction is <em>plausibility versus accuracy</em>. Say that Copilot responses should be checked against reliable sources and teachers' guidance.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-7" aria-label="Slide 7, the three Ts of AI learning">
+      <p class="eyebrow">05 / Use Copilot as a study partner</p>
+      <h2>Three ways to make AI<br><span class="accent">work for you.</span></h2>
+      <div class="three-col">
+        <div class="panel"><p class="small-caps">01 / Teach me</p><h3>Explain</h3><p>“Explain this concept in simpler language, then give me a new example.”</p></div>
+        <div class="panel"><p class="small-caps">02 / Test me</p><h3>Practise</h3><p>“Ask me five retrieval questions, one at a time. Don't show the answers yet.”</p></div>
+        <div class="panel"><p class="small-caps">03 / Tell me what to improve</p><h3>Feedback</h3><p>“Challenge my reasoning. Show me what's unclear, but let me fix it.”</p></div>
+      </div>
+      <div class="callout"><span aria-hidden="true">✓</span><span>The goal: more independence, not more dependence.</span></div>
+      <aside class="notes"><p><strong>Time: 1 minute 15 seconds.</strong> Say: “We have Copilot at school. Think of it as an endlessly patient practice partner — not a replacement for your teacher and not an answer machine.” Read out the three prompt types. These are examples, not promises about every Copilot feature.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-8" aria-label="Slide 8, two sides of the Copilot learning debate">
+      <p class="eyebrow">06 / Two sides of the argument</p>
+      <h2>Does Copilot make you a <span class="accent">better learner?</span></h2>
+      <div class="debate-cards" aria-label="Two prewritten points of view">
+        <div class="argument yes">
+          <p class="arg-label">Yes — when it supports your thinking</p>
+          <p class="arg-text">“It can explain difficult ideas, quiz me and give feedback. I still have to practise and decide what I believe.”</p>
+        </div>
+        <div class="argument no">
+          <p class="arg-label">No — when it replaces your thinking</p>
+          <p class="arg-text">“If it produces all my answers, I may finish quicker but never learn how to do the work myself.”</p>
+        </div>
+      </div>
+      <p class="debate-conclusion"><strong>The difference:</strong> Learning develops a skill you can use without AI; copying does not.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute 15 seconds.</strong> Both answers are prewritten examples, not live Copilot results. Read each aloud and explain that the tool is not automatically good or bad — the study behaviour matters. No audience response is required. No login, internet or live demonstration is needed.</p></aside>
+    </section>
+
+    <section class="slide subject-slide" id="slide-9" aria-label="Slide 9, three plausible but inaccurate fictional AI answers">
+      <p class="eyebrow">07 / Three sixth-form scenarios</p>
+      <h2 class="subject-headline">AI sounds confident. <span class="gold">Is it correct?</span></h2>
+      <p class="subject-intro">Three students ask for help. The answers sound reasonable — but each contains a mistake.</p>
+      <div class="subject-list" aria-label="Three made-up AI responses across Year 12 subjects">
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">%</span><strong>Mathematics</strong></div>
+          <div class="subject-copy"><span class="subject-label">Student asks</span><p>£100 goes up 20%, then down 20%. What's the final price?</p></div>
+          <div class="subject-copy subject-false"><span class="subject-label">Example AI response</span><p>“£100. The two changes cancel out.”</p></div>
+        </div>
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">≈</span><strong>Geography</strong></div>
+          <div class="subject-copy"><span class="subject-label">Student asks</span><p>How much more energy does a magnitude 7 earthquake release than a magnitude 6?</p></div>
+          <div class="subject-copy subject-false"><span class="subject-label">Example AI response</span><p>“Twice as much energy.”</p></div>
+        </div>
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">↗</span><strong>Psychology</strong></div>
+          <div class="subject-copy"><span class="subject-label">Student asks</span><p>A study links social media use with anxiety. What can we conclude?</p></div>
+          <div class="subject-copy subject-false"><span class="subject-label">Example AI response</span><p>“Social media causes anxiety.”</p></div>
+        </div>
+      </div>
+      <p class="subject-disclaimer">These are deliberately fictional AI answers, not actual Copilot responses.</p>
+      <aside class="notes">
+        <p><strong>Suggested speaking time: 1 minute.</strong> Introduce these as three <em>made-up examples of errors AI could make</em>. They are not live Copilot output and are not a claim that Copilot would necessarily give these answers. Read each student question and the short response in turn. There is no audience vote or interactive element.</p>
+        <p><strong>Mathematics:</strong> “Up 20%, down 20%” sounds as though the changes cancel. That everyday intuition is the trap.</p>
+        <p><strong>Geography:</strong> “Twice as much” sounds reasonable if you assume earthquake magnitudes rise on a simple linear scale, but they don't.</p>
+        <p><strong>Psychology:</strong> The misleading step is moving from an observed relationship to the stronger claim that one thing <em>causes</em> the other.</p>
+        <p><strong>Transition:</strong> “All three answers are short, confident and believable. Let's put the subject knowledge back in.” Then advance to the next slide, where the corrections are already visible.</p>
+      </aside>
+    </section>
+
+    <section class="slide subject-slide" id="slide-10" aria-label="Slide 10, what the fictional AI answers got wrong">
+      <p class="eyebrow">08 / Check the answer</p>
+      <h2 class="subject-headline">Three confident answers. <span class="accent">Three mistakes.</span></h2>
+      <div class="subject-list answer-list" aria-label="Wrong answers and corrected explanations">
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">%</span><strong>Mathematics</strong></div>
+          <div class="subject-wrong"><span class="subject-label">Wrong AI answer</span><p>“£100. The two changes cancel out.”</p></div>
+          <div class="subject-correction"><strong>£96, not £100.</strong><p>£100 → £120 → £96. The 20% decrease is taken from £120, not £100.</p></div>
+        </div>
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">≈</span><strong>Geography</strong></div>
+          <div class="subject-wrong"><span class="subject-label">Wrong AI answer</span><p>“Twice as much energy.”</p></div>
+          <div class="subject-correction"><strong>About 32 times the energy, not twice.</strong><p>Earthquake magnitude is logarithmic: one whole-number step represents about 31.6× the energy.</p></div>
+        </div>
+        <div class="subject-row">
+          <div class="subject-name"><span class="subject-icon" aria-hidden="true">↗</span><strong>Psychology</strong></div>
+          <div class="subject-wrong"><span class="subject-label">Wrong AI answer</span><p>“Social media causes anxiety.”</p></div>
+          <div class="subject-correction"><strong>Correlation does not prove causation.</strong><p>Anxiety might increase social-media use, or another factor could affect both.</p></div>
+        </div>
+      </div>
+      <div class="subject-takeaway subject-key-banner" aria-label="Key takeaway: Context is key. Check the working, facts and evidence.">
+        <strong>Context is key.</strong>
+        <span>Check the working. Check the facts. Check the evidence.</span>
+      </div>
+      <aside class="notes">
+        <p><strong>Suggested speaking time: 1 minute 30 seconds.</strong> Give the full explanation here; keep the slide readable from the back of the room.</p>
+        <p><strong>Mathematics:</strong> Twenty per cent of £100 is £20, so the price rises to £120. Twenty per cent of £120 is £24, so the price falls to £96. Another way to show it is 100 × 1.20 × 0.80 = 96. The percentage changes do not cancel because they act on different starting amounts. You could say: “That answer sounds logical until you check the working.”</p>
+        <p><strong>Geography:</strong> Earthquake magnitudes are logarithmic. For a difference of one magnitude unit, the approximate energy ratio is 10 to the power of 1.5, or around 31.6. So magnitude 7 releases roughly 32 times the energy of magnitude 6, not two times. This is about <em>energy released</em>, not about how much damage a particular earthquake will do; depth, construction and location affect damage. You could say: “Without that subject knowledge, twice as much might sound perfectly sensible.”</p>
+        <p><strong>Psychology:</strong> A study reporting that people with more social-media use also report more anxiety has found an association. It has not, by itself, demonstrated that social media causes anxiety. Anxiety might lead some people to use social media more, or stress or poor sleep might affect both. Establishing causation requires more evidence and suitable research design. You could say: “The dangerous part is the word <em>proves</em>: it's stronger than the evidence allows.”</p>
+        <p><strong>Link to generative AI:</strong> Fluent output is not a guarantee of factual accuracy or logically valid conclusions. Modern AI systems may use reasoning and checking tools, but their answers still require evaluation, especially for assessments. These examples are fictional and intentionally wrong; they're demonstrations of error types, not a measured test of Copilot.</p>
+        <p><strong>Slide emphasis:</strong> Point to the wrong answer first, then the correction. That visual contrast helps students see how a confident answer can still be flawed.</p><p><strong>Transition:</strong> “Context is key — but so is checking. And that is why we still need to learn the subject ourselves. The best use of AI is to improve your understanding, not to replace it.”</p>
+      </aside>
+    </section>
+
+    <section class="slide" id="slide-11" aria-label="Slide 11, responsible use boundaries">
+      <p class="eyebrow">09 / Where is the line?</p>
+      <h2>Use it wisely. <span class="accent">Own your work.</span></h2>
+      <div class="three-col">
+        <div class="panel traffic good"><p class="small-caps green">Green / Helpful</p><h3>Learn</h3><ul><li>Ask for explanations</li><li>Make practice questions</li><li>Compare different ideas</li></ul></div>
+        <div class="panel traffic care"><p class="small-caps gold">Amber / Check first</p><h3>Improve</h3><ul><li>Feedback on your draft</li><li>Editing and rewriting</li><li>Using AI in assessed tasks</li></ul></div>
+        <div class="panel traffic stop"><p class="small-caps red">Red / Not OK</p><h3>Misrepresent</h3><ul><li>Submit AI writing as your own</li><li>Invent sources or evidence</li><li>Share private or sensitive data</li></ul></div>
+      </div>
+      <p class="fine" style="margin-top:22px">For assessment, follow your teacher's instructions and your school's AI and academic-integrity rules.</p>
+      <aside class="notes"><p><strong>Time: 1 minute 30 seconds.</strong> Be clear that the exact boundary depends on the task and teacher instructions. AI assistance must not be passed off as a student's unaided work. Tell students never to paste other people's personal data, confidential school information or sensitive information into prompts. The amber zone is a question to ask, not a blanket permission.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-12" aria-label="Slide 12, does AI assistance count as cheating">
+      <p class="eyebrow">10 / A fair question</p>
+      <h2>Is using AI for homework <span class="gold">cheating?</span></h2>
+      <div class="debate-cards" aria-label="Two fixed responses about academic integrity">
+        <div class="argument yes">
+          <p class="arg-label">Not necessarily — when permitted</p>
+          <p class="arg-text">“If my teacher allows it, using Copilot to explain a method or test my recall can help me learn.”</p>
+        </div>
+        <div class="argument no">
+          <p class="arg-label">Yes — if you misrepresent the work</p>
+          <p class="arg-text">“If I hand in generated writing or reasoning as my own, I've hidden what I can actually do.”</p>
+        </div>
+      </div>
+      <p class="debate-conclusion"><strong>The deciding questions:</strong> Was it allowed? Was I honest? Can I explain it?</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute 15 seconds.</strong> These are fixed, prewritten responses. Avoid implying that all AI use is banned or that all AI use is allowed. Set the boundary: rules for an assessed piece of work may be more restrictive than ordinary revision. Always follow the teacher's instructions, disclose use where required and never submit AI-created work as unaided work.</p></aside>
+    </section>
+
+    <section class="slide" id="slide-13" aria-label="Slide 13, closing question and two possible answers">
+      <p class="eyebrow">11 / The question to take away</p>
+      <h2 class="closing-question">If Copilot disappeared tomorrow, <span class="gold">could you still explain your work?</span></h2>
+      <div class="debate-cards closing-grid" aria-label="Two possible answers">
+        <div class="argument yes">
+          <p class="arg-label">Yes — I have learnt it</p>
+          <p class="arg-text">“I can explain my choices, defend my evidence and work through the problem without the tool.”</p>
+        </div>
+        <div class="argument no">
+          <p class="arg-label">Not yet — I relied on it</p>
+          <p class="arg-text">“It helped me finish, but I can't explain why the answer works. I need to try again unaided.”</p>
+        </div>
+      </div>
+      <p class="closing-message">AI should make you a <span class="accent">better thinker</span> — not do your thinking for you.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute.</strong> Pause on the central question, then read the two possible answers. Neither is a judgement about a pupil; it is a way to self-check learning. End with: “Think first. Use AI to stretch yourself. Then close it and see what you can explain.” The key is to leave students with a specific test of independence.</p></aside>
+    </section>
+
+
+
+    <section class="slide aup-slide" id="slide-14" aria-label="Slide 14, Microsoft Copilot is the school-approved AI tool">
+      <p class="eyebrow">12 / Our school agreement</p>
+      <p class="approved-banner"><span class="approved-dot" aria-hidden="true"></span> SCHOOL-APPROVED AI · MICROSOFT COPILOT</p>
+      <h2 class="aup-heading">Use Copilot. <span class="gold">Use it responsibly.</span></h2>
+      <p class="aup-intro">You signed a school acceptable-use agreement at the start of Year 12. Remember these three checks:</p>
+      <div class="aup-checks" aria-label="Three principles for school use of AI">
+        <div class="aup-check"><p class="aup-check-label">Approved tool</p><p class="aup-check-text">Use Microsoft Copilot for school AI tasks — not unapproved AI services.</p></div>
+        <div class="aup-check"><p class="aup-check-label">Your learning</p><p class="aup-check-text">Check its answers. Be able to explain your own work.</p></div>
+        <div class="aup-check"><p class="aup-check-label">Your responsibility</p><p class="aup-check-text">Protect people's privacy. Follow your teacher's instructions.</p></div>
+      </div>
+      <p class="aup-bottom">School approval does not mean AI is permitted for every task — especially assessed work.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 45 seconds.</strong> State clearly that Microsoft Copilot is the school-approved AI tool, as confirmed by the school presenter. Students should not switch to unapproved AI platforms for school tasks. Copilot is a helpful learning aid, but approval of the tool is not blanket approval to use it in homework, coursework or examinations. Students must still follow their teacher's instructions, protect personal data and be able to explain their work. Students signed a school acceptable-use agreement at the start of Year 12; its original wording has not been independently recovered, so the points on this slide are practical reminders, <em>not verbatim quotations</em> from the agreement. This school rule is distinct from JCQ and individual exam-board restrictions.</p></aside>
+    </section>
+
+    <section class="slide image-safety" id="slide-15" aria-label="Slide 15, harms caused by misused AI-generated images">
+      <p class="eyebrow">13 / AI-generated images</p>
+      <h2 class="safety-headline">A fake image can cause <span class="gold">real harm.</span></h2>
+      <p class="safety-deck">AI can make images look real. Creating or sharing a fake image of someone can have serious consequences.</p>
+      <div class="safety-grid" aria-label="Three ways synthetic images can harm people">
+        <div class="safety-card"><h3>Impersonation</h3><p>Making it look as though someone did or said something they didn't.</p></div>
+        <div class="safety-card"><h3>Bullying</h3><p>Making or sharing images to embarrass, threaten or humiliate someone.</p></div>
+        <div class="safety-card"><h3>Sexualised fakes</h3><p>Never create, request or share intimate or sexualised images of a real person.</p></div>
+      </div>
+      <p class="safety-response">If an image targets someone: don't forward it. Tell a trusted member of school staff.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 45 seconds.</strong> AI-generated images can be used responsibly for design, creative tasks or illustrations when your teacher permits it. The serious issue is misuse: fake pictures of real people that imply events that never happened; humiliating or threatening content; and sexualised deepfakes or intimate image abuse. These are not pranks, and a synthetic picture can do real damage to someone's reputation, wellbeing and safety. Being able to create an image in Copilot does not make every use acceptable. The instruction is simple: do not create, request or circulate harmful material; do not amplify it in a group chat; and alert a trusted adult or member of school safeguarding staff promptly. If someone is targeted, preserve information safely in line with school safeguarding instructions rather than reposting the image. This slide states safety expectations, not a quotation from an unretrieved school policy.</p></aside>
+    </section>
+
+    <section class="slide nea-slide" id="slide-16" aria-label="Slide 16, AI rules for A-level NEA coursework">
+      <p class="eyebrow">14 / Your assessed work</p>
+      <h2 class="nea-headline">Your NEA. <span class="gold">Your work.</span></h2>
+      <p class="nea-boardline">OCR &nbsp;·&nbsp; Pearson Edexcel &nbsp;·&nbsp; JCQ guidance</p>
+      <div class="nea-grid">
+        <div class="nea-card help">
+          <p class="nea-kicker">Revision and understanding</p>
+          <h3>AI can help you learn.</h3>
+          <p class="nea-example">“Explain this theory.”</p>
+          <p class="nea-example">“Quiz me on this topic.”</p>
+        </div>
+        <div class="nea-card submit">
+          <p class="nea-kicker">NEA / coursework submission</p>
+          <h3>AI cannot be your author.</h3>
+          <p class="nea-example">“Write my analysis.”</p>
+          <p class="nea-example">“Generate my conclusions.”</p>
+        </div>
+      </div>
+      <p class="nea-finalrule"><strong>Before using AI in assessed work:</strong> ask your teacher, follow subject rules and acknowledge any permitted use.</p>
+      <aside class="notes"><p><strong>Suggested speaking time: 1 minute.</strong> This is a general message covering OCR and Pearson Edexcel A levels under JCQ guidance, not a list of permissions for every NEA subject. Simple revision prompts asking AI to explain ideas or quiz the student are useful examples of learning support. During assessed NEA/coursework, even planning, editing, research and feedback may be restricted by the subject's requirements; students should ask their teacher before using AI. AI-generated paragraphs, analysis, conclusions or complete solutions cannot be passed off as original independent work. Merely acknowledging AI use does not make generated content eligible for marks. Where AI use as a source is permitted, follow JCQ requirements: identify the tool and date, retain the prompt and response, and explain how it was used. OCR's 2026 AI guidance says only independent candidate work is credited; Pearson's guidance likewise requires work to demonstrate learners' own knowledge and skills. End by stressing: “If you can't explain or defend what you've submitted, it isn't evidence of your learning.”</p><p><strong>Reference documents:</strong> JCQ AI Use in Assessments (2025), OCR Guidance and support for the use of AI in A Level Computer Science NEA (2026), and Pearson Artificial Intelligence Guidance (2025). See jcq.org.uk, ocr.org.uk and qualifications.pearson.com for the specific subject rules.</p></aside>
+    </section>
+
+<section class="slide final-hero" id="slide-17" aria-label="Slide 17, scan the QR code to revisit the Year 12 AI assembly">
+<div class="hero-layout">
+<div>
+<p class="eyebrow">SYNERGY MAT / YEAR 12 / Reepham College</p>
+<p class="final-trust">The takeaway</p>
+<h2>The tool can help.<br><span class="accent">The thinking is yours.</span></h2>
+<p class="final-subtitle">Think first. Use Copilot responsibly. Check what it gives you.</p>
+<p class="hero-bottom">Scan the QR code to revisit today's assembly.</p>
+<p class="hero-bottom"><a class="final-access-link" href="https://rhsccs.org/assemblies/year12-ai.html">rhsccs.org/assemblies/year12-ai.html</a></p>
+</div>
+<div class="qr-panel">
+<a class="qr-wrap" href="https://rhsccs.org/assemblies/year12-ai.html" target="_blank" rel="noopener noreferrer" aria-label="Open the Year 12 AI assembly"><svg role="img" aria-label="QR code linking to this Year 12 AI assembly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" width="100%" height="auto" shape-rendering="crispEdges"><rect width="45" height="45" fill="white"/><path fill="#092823" d="M4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM7 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM34 4h1v1h-1zM35 4h1v1h-1zM36 4h1v1h-1zM37 4h1v1h-1zM38 4h1v1h-1zM39 4h1v1h-1zM40 4h1v1h-1zM4 5h1v1h-1zM10 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM17 5h1v1h-1zM19 5h1v1h-1zM20 5h1v1h-1zM21 5h1v1h-1zM22 5h1v1h-1zM24 5h1v1h-1zM25 5h1v1h-1zM27 5h1v1h-1zM29 5h1v1h-1zM31 5h1v1h-1zM32 5h1v1h-1zM34 5h1v1h-1zM40 5h1v1h-1zM4 6h1v1h-1zM6 6h1v1h-1zM7 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM32 6h1v1h-1zM34 6h1v1h-1zM36 6h1v1h-1zM37 6h1v1h-1zM38 6h1v1h-1zM40 6h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM7 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM17 7h1v1h-1zM18 7h1v1h-1zM19 7h1v1h-1zM23 7h1v1h-1zM24 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM34 7h1v1h-1zM36 7h1v1h-1zM37 7h1v1h-1zM38 7h1v1h-1zM40 7h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM13 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM29 8h1v1h-1zM34 8h1v1h-1zM36 8h1v1h-1zM37 8h1v1h-1zM38 8h1v1h-1zM40 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM24 9h1v1h-1zM25 9h1v1h-1zM26 9h1v1h-1zM31 9h1v1h-1zM32 9h1v1h-1zM34 9h1v1h-1zM40 9h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h1v1h-1zM32 10h1v1h-1zM34 10h1v1h-1zM35 10h1v1h-1zM36 10h1v1h-1zM37 10h1v1h-1zM38 10h1v1h-1zM39 10h1v1h-1zM40 10h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM32 11h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM14 12h1v1h-1zM17 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM25 12h1v1h-1zM28 12h1v1h-1zM29 12h1v1h-1zM30 12h1v1h-1zM33 12h1v1h-1zM34 12h1v1h-1zM35 12h1v1h-1zM38 12h1v1h-1zM39 12h1v1h-1zM40 12h1v1h-1zM4 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM11 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM27 13h1v1h-1zM28 13h1v1h-1zM29 13h1v1h-1zM30 13h1v1h-1zM32 13h1v1h-1zM35 13h1v1h-1zM37 13h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM20 14h1v1h-1zM22 14h1v1h-1zM26 14h1v1h-1zM29 14h1v1h-1zM30 14h1v1h-1zM31 14h1v1h-1zM34 14h1v1h-1zM35 14h1v1h-1zM37 14h1v1h-1zM38 14h1v1h-1zM39 14h1v1h-1zM40 14h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM15 15h1v1h-1zM17 15h1v1h-1zM19 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM25 15h1v1h-1zM26 15h1v1h-1zM27 15h1v1h-1zM30 15h1v1h-1zM32 15h1v1h-1zM34 15h1v1h-1zM35 15h1v1h-1zM36 15h1v1h-1zM37 15h1v1h-1zM39 15h1v1h-1zM4 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM13 16h1v1h-1zM15 16h1v1h-1zM20 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM26 16h1v1h-1zM29 16h1v1h-1zM30 16h1v1h-1zM32 16h1v1h-1zM33 16h1v1h-1zM34 16h1v1h-1zM36 16h1v1h-1zM38 16h1v1h-1zM40 16h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM11 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM18 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM25 17h1v1h-1zM28 17h1v1h-1zM29 17h1v1h-1zM30 17h1v1h-1zM32 17h1v1h-1zM33 17h1v1h-1zM35 17h1v1h-1zM37 17h1v1h-1zM38 17h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM21 18h1v1h-1zM25 18h1v1h-1zM28 18h1v1h-1zM29 18h1v1h-1zM30 18h1v1h-1zM31 18h1v1h-1zM32 18h1v1h-1zM33 18h1v1h-1zM36 18h1v1h-1zM37 18h1v1h-1zM39 18h1v1h-1zM40 18h1v1h-1zM4 19h1v1h-1zM5 19h1v1h-1zM9 19h1v1h-1zM12 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM28 19h1v1h-1zM30 19h1v1h-1zM31 19h1v1h-1zM32 19h1v1h-1zM39 19h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM30 20h1v1h-1zM31 20h1v1h-1zM33 20h1v1h-1zM34 20h1v1h-1zM36 20h1v1h-1zM38 20h1v1h-1zM40 20h1v1h-1zM4 21h1v1h-1zM5 21h1v1h-1zM7 21h1v1h-1zM8 21h1v1h-1zM12 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM25 21h1v1h-1zM27 21h1v1h-1zM28 21h1v1h-1zM29 21h1v1h-1zM32 21h1v1h-1zM37 21h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM7 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM24 22h1v1h-1zM26 22h1v1h-1zM29 22h1v1h-1zM30 22h1v1h-1zM31 22h1v1h-1zM33 22h1v1h-1zM35 22h1v1h-1zM36 22h1v1h-1zM38 22h1v1h-1zM39 22h1v1h-1zM40 22h1v1h-1zM5 23h1v1h-1zM6 23h1v1h-1zM7 23h1v1h-1zM8 23h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM21 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM28 23h1v1h-1zM30 23h1v1h-1zM34 23h1v1h-1zM40 23h1v1h-1zM4 24h1v1h-1zM7 24h1v1h-1zM10 24h1v1h-1zM18 24h1v1h-1zM19 24h1v1h-1zM21 24h1v1h-1zM25 24h1v1h-1zM27 24h1v1h-1zM28 24h1v1h-1zM29 24h1v1h-1zM30 24h1v1h-1zM31 24h1v1h-1zM33 24h1v1h-1zM34 24h1v1h-1zM35 24h1v1h-1zM36 24h1v1h-1zM37 24h1v1h-1zM38 24h1v1h-1zM39 24h1v1h-1zM4 25h1v1h-1zM7 25h1v1h-1zM8 25h1v1h-1zM9 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM16 25h1v1h-1zM17 25h1v1h-1zM18 25h1v1h-1zM21 25h1v1h-1zM26 25h1v1h-1zM30 25h1v1h-1zM35 25h1v1h-1zM39 25h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM7 26h1v1h-1zM10 26h1v1h-1zM11 26h1v1h-1zM14 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM22 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM28 26h1v1h-1zM30 26h1v1h-1zM31 26h1v1h-1zM34 26h1v1h-1zM39 26h1v1h-1zM40 26h1v1h-1zM4 27h1v1h-1zM7 27h1v1h-1zM8 27h1v1h-1zM11 27h1v1h-1zM15 27h1v1h-1zM19 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM23 27h1v1h-1zM26 27h1v1h-1zM28 27h1v1h-1zM33 27h1v1h-1zM34 27h1v1h-1zM35 27h1v1h-1zM39 27h1v1h-1zM40 27h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM7 28h1v1h-1zM10 28h1v1h-1zM11 28h1v1h-1zM13 28h1v1h-1zM19 28h1v1h-1zM21 28h1v1h-1zM23 28h1v1h-1zM25 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1zM29 28h1v1h-1zM30 28h1v1h-1zM33 28h1v1h-1zM34 28h1v1h-1zM36 28h1v1h-1zM37 28h1v1h-1zM38 28h1v1h-1zM40 28h1v1h-1zM4 29h1v1h-1zM6 29h1v1h-1zM8 29h1v1h-1zM11 29h1v1h-1zM16 29h1v1h-1zM17 29h1v1h-1zM18 29h1v1h-1zM20 29h1v1h-1zM23 29h1v1h-1zM24 29h1v1h-1zM26 29h1v1h-1zM28 29h1v1h-1zM37 29h1v1h-1zM39 29h1v1h-1zM4 30h1v1h-1zM6 30h1v1h-1zM7 30h1v1h-1zM9 30h1v1h-1zM10 30h1v1h-1zM17 30h1v1h-1zM19 30h1v1h-1zM20 30h1v1h-1zM21 30h1v1h-1zM23 30h1v1h-1zM24 30h1v1h-1zM25 30h1v1h-1zM28 30h1v1h-1zM29 30h1v1h-1zM31 30h1v1h-1zM32 30h1v1h-1zM34 30h1v1h-1zM36 30h1v1h-1zM39 30h1v1h-1zM40 30h1v1h-1zM4 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM9 31h1v1h-1zM14 31h1v1h-1zM15 31h1v1h-1zM16 31h1v1h-1zM17 31h1v1h-1zM18 31h1v1h-1zM19 31h1v1h-1zM20 31h1v1h-1zM22 31h1v1h-1zM25 31h1v1h-1zM26 31h1v1h-1zM31 31h1v1h-1zM33 31h1v1h-1zM37 31h1v1h-1zM39 31h1v1h-1zM4 32h1v1h-1zM8 32h1v1h-1zM10 32h1v1h-1zM11 32h1v1h-1zM12 32h1v1h-1zM14 32h1v1h-1zM15 32h1v1h-1zM19 32h1v1h-1zM20 32h1v1h-1zM22 32h1v1h-1zM23 32h1v1h-1zM25 32h1v1h-1zM26 32h1v1h-1zM27 32h1v1h-1zM28 32h1v1h-1zM29 32h1v1h-1zM30 32h1v1h-1zM32 32h1v1h-1zM33 32h1v1h-1zM34 32h1v1h-1zM35 32h1v1h-1zM36 32h1v1h-1zM38 32h1v1h-1zM40 32h1v1h-1zM12 33h1v1h-1zM17 33h1v1h-1zM18 33h1v1h-1zM19 33h1v1h-1zM20 33h1v1h-1zM23 33h1v1h-1zM24 33h1v1h-1zM25 33h1v1h-1zM26 33h1v1h-1zM27 33h1v1h-1zM31 33h1v1h-1zM32 33h1v1h-1zM36 33h1v1h-1zM39 33h1v1h-1zM4 34h1v1h-1zM5 34h1v1h-1zM6 34h1v1h-1zM7 34h1v1h-1zM8 34h1v1h-1zM9 34h1v1h-1zM10 34h1v1h-1zM13 34h1v1h-1zM14 34h1v1h-1zM16 34h1v1h-1zM17 34h1v1h-1zM18 34h1v1h-1zM19 34h1v1h-1zM25 34h1v1h-1zM32 34h1v1h-1zM34 34h1v1h-1zM36 34h1v1h-1zM37 34h1v1h-1zM39 34h1v1h-1zM40 34h1v1h-1zM4 35h1v1h-1zM10 35h1v1h-1zM14 35h1v1h-1zM15 35h1v1h-1zM16 35h1v1h-1zM19 35h1v1h-1zM20 35h1v1h-1zM23 35h1v1h-1zM24 35h1v1h-1zM25 35h1v1h-1zM26 35h1v1h-1zM30 35h1v1h-1zM32 35h1v1h-1zM36 35h1v1h-1zM40 35h1v1h-1zM4 36h1v1h-1zM6 36h1v1h-1zM7 36h1v1h-1zM8 36h1v1h-1zM10 36h1v1h-1zM12 36h1v1h-1zM14 36h1v1h-1zM15 36h1v1h-1zM16 36h1v1h-1zM18 36h1v1h-1zM19 36h1v1h-1zM22 36h1v1h-1zM24 36h1v1h-1zM25 36h1v1h-1zM28 36h1v1h-1zM29 36h1v1h-1zM30 36h1v1h-1zM31 36h1v1h-1zM32 36h1v1h-1zM33 36h1v1h-1zM34 36h1v1h-1zM35 36h1v1h-1zM36 36h1v1h-1zM38 36h1v1h-1zM4 37h1v1h-1zM6 37h1v1h-1zM7 37h1v1h-1zM8 37h1v1h-1zM10 37h1v1h-1zM12 37h1v1h-1zM13 37h1v1h-1zM15 37h1v1h-1zM16 37h1v1h-1zM18 37h1v1h-1zM19 37h1v1h-1zM21 37h1v1h-1zM22 37h1v1h-1zM23 37h1v1h-1zM24 37h1v1h-1zM27 37h1v1h-1zM29 37h1v1h-1zM30 37h1v1h-1zM34 37h1v1h-1zM36 37h1v1h-1zM37 37h1v1h-1zM4 38h1v1h-1zM6 38h1v1h-1zM7 38h1v1h-1zM8 38h1v1h-1zM10 38h1v1h-1zM12 38h1v1h-1zM13 38h1v1h-1zM14 38h1v1h-1zM15 38h1v1h-1zM17 38h1v1h-1zM18 38h1v1h-1zM21 38h1v1h-1zM22 38h1v1h-1zM25 38h1v1h-1zM26 38h1v1h-1zM31 38h1v1h-1zM32 38h1v1h-1zM33 38h1v1h-1zM35 38h1v1h-1zM38 38h1v1h-1zM40 38h1v1h-1zM4 39h1v1h-1zM10 39h1v1h-1zM13 39h1v1h-1zM17 39h1v1h-1zM18 39h1v1h-1zM19 39h1v1h-1zM21 39h1v1h-1zM25 39h1v1h-1zM30 39h1v1h-1zM32 39h1v1h-1zM33 39h1v1h-1zM35 39h1v1h-1zM40 39h1v1h-1zM4 40h1v1h-1zM5 40h1v1h-1zM6 40h1v1h-1zM7 40h1v1h-1zM8 40h1v1h-1zM9 40h1v1h-1zM10 40h1v1h-1zM14 40h1v1h-1zM16 40h1v1h-1zM19 40h1v1h-1zM20 40h1v1h-1zM21 40h1v1h-1zM22 40h1v1h-1zM24 40h1v1h-1zM25 40h1v1h-1zM27 40h1v1h-1zM28 40h1v1h-1zM29 40h1v1h-1zM30 40h1v1h-1zM33 40h1v1h-1zM35 40h1v1h-1zM36 40h1v1h-1zM38 40h1v1h-1zM39 40h1v1h-1zM40 40h1v1h-1z"/></svg></a>
+<p class="qr-help">SCAN TO REVISIT THIS ASSEMBLY</p>
+</div>
+</div>
+<aside class="notes"><p><strong>Close:</strong> “The tool can help. The thinking is yours. When using Copilot, check the information, protect other people and make sure you could explain your work yourself.” The QR code links to this public presentation at https://rhsccs.org/assemblies/year12-ai.html. The page is self-contained and does not collect students’ personal information.</p></aside>
+</section>
+
+  </main>
+  <footer class="footer" aria-label="Presentation controls">
+    <div class="footer-left">
+      <span class="footer-label">Slides</span>
+      <div class="progress" id="progress" aria-label="Jump to slide"></div>
+      <span class="count" id="slideCount" aria-live="polite">01 / 17</span>
+    </div>
+    <div class="footer-right">
+      <button type="button" class="iconbtn" id="notesBtn" aria-label="Toggle presenter notes" title="Presenter notes (N)">☷</button>
+      <button type="button" class="iconbtn" id="fullscreenBtn" aria-label="Toggle full screen" title="Full screen (F)">⛶</button>
+      <button type="button" class="navbtn" id="prevBtn" aria-label="Previous slide" title="Previous (←)">←</button>
+      <button type="button" class="navbtn" id="nextBtn" aria-label="Next slide" title="Next (→ or Space)">→</button>
+      <span class="keyboard-tip">← → navigate · N notes · F full screen</span>
+    </div>
+  </footer>
+</div>
+<div class="note-overlay" id="notesOverlay" role="region" aria-label="Presenter notes" tabindex="-1">
+  <div class="note-head"><h3>Presenter notes</h3><button type="button" id="closeNotes" aria-label="Close notes">✕ Close</button></div>
+  <div id="notesContent"></div>
+</div>
+<script>
+(function(){
+  'use strict';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const progress = document.getElementById('progress');
+  const count = document.getElementById('slideCount');
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+  const noteBox = document.getElementById('notesOverlay');
+  const noteContent = document.getElementById('notesContent');
+  let current = 0;
+  slides.forEach((slide, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';b.className = 'dot';b.setAttribute('aria-label', 'Go to slide '+(i+1));
+    b.title = 'Slide '+(i+1);b.addEventListener('click',()=>go(i));progress.appendChild(b);
+  });
+  const dots = Array.from(progress.children);
+  function go(index){
+    if(index<0 || index>=slides.length)return;
+    current=index;
+    slides.forEach((s,i)=>{s.classList.toggle('active',i===index);s.setAttribute('aria-hidden',String(i!==index));});
+    dots.forEach((d,i)=>{if(i===index)d.setAttribute('aria-current','step');else d.removeAttribute('aria-current');});
+    count.textContent=String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    prev.disabled=index===0;next.disabled=index===slides.length-1;
+    updateNotes();window.scrollTo({top:0,behavior:'instant'});
+    try{history.replaceState(null,'','#slide-'+(index+1));}catch(e){}
+  }
+  function updateNotes(){noteContent.innerHTML=slides[current].querySelector('.notes').innerHTML;}
+  function toggleNotes(show){noteBox.classList.toggle('show',show===undefined?!noteBox.classList.contains('show'):show);document.getElementById('notesBtn').setAttribute('aria-pressed',String(noteBox.classList.contains('show')));if(noteBox.classList.contains('show'))noteBox.focus();}
+  prev.addEventListener('click',()=>go(current-1));next.addEventListener('click',()=>go(current+1));
+  document.getElementById('notesBtn').addEventListener('click',()=>toggleNotes());
+  document.getElementById('closeNotes').addEventListener('click',()=>toggleNotes(false));
+  async function fullscreen(){try{if(document.fullscreenElement){await document.exitFullscreen();}else if(document.documentElement.requestFullscreen){await document.documentElement.requestFullscreen();}}catch(e){}}
+  document.getElementById('fullscreenBtn').addEventListener('click',fullscreen);
+  document.addEventListener('keydown',e=>{
+    const target=e.target;
+    const interactive=target instanceof Element && !!target.closest('button,input,textarea,select,a,[contenteditable="true"]');
+    if(e.key==='Escape'){toggleNotes(false);return;}
+    if(e.key==='n'||e.key==='N'){if(!interactive){e.preventDefault();toggleNotes();}return;}
+    if(e.key==='f'||e.key==='F'){if(!interactive){e.preventDefault();fullscreen();}return;}
+    if(interactive || e.altKey || e.ctrlKey || e.metaKey)return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(current+1);}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current-1);}
+    else if(e.key==='Home'){e.preventDefault();go(0);}
+    else if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+  });
+  const hash=window.location.hash.match(/^#slide-(\d+)$/);go(hash?Math.min(slides.length,Math.max(1,Number(hash[1])))-1:0);
+})();
+</script>
+</body>
+</html>
