@@ -221,6 +221,7 @@
     const purposeFooter=$('footer','catchup-purpose-footer');
     purposeFooter.setAttribute('aria-label','Learning journey');
     purposeFooter.append(progress);
+    document.body.classList.add('catchup-bottom-nav-on');
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
       if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
