@@ -89,3 +89,32 @@ body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blo
 .synergy-voice-launch-label{display:inline;color:inherit}
 .synergy-voice-panel{z-index:1101}
 @media(max-width:600px){.synergy-voice-launch{right:calc(10px + env(safe-area-inset-right));bottom:calc(10px + env(safe-area-inset-bottom));min-width:88px;min-height:46px}.synergy-voice-panel{bottom:calc(67px + env(safe-area-inset-bottom));max-height:calc(100dvh - 85px - env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}}
+
+/* Catch Up: the single shared Reading Tools button lives in the header,
+   directly before the existing Synergy symbol. No duplicated controls. */
+.catchup-top-inner > .synergy-voice-header-launch{
+ position:static;order:2;flex:0 0 auto;
+ margin:0 2px 0 0;min-width:75px;height:40px;
+ padding:0 9px;z-index:1;box-shadow:none;
+ border-radius:9px;font-size:12px
+}
+.catchup-top-inner > .synergy-corner-mark{order:3;margin-left:0!important}
+.synergy-voice-header-panel{
+ position:fixed;top:68px;bottom:auto;
+ right:max(12px,env(safe-area-inset-right));
+ max-height:calc(100dvh - 82px);z-index:1101;
+ overscroll-behavior:contain;-webkit-overflow-scrolling:touch
+}
+@media(max-width:620px){
+ .catchup-top-inner > .synergy-voice-header-launch{
+  width:42px;min-width:42px;min-height:44px;height:44px;
+  padding:0;gap:0;border-radius:10px
+ }
+ .catchup-top-inner > .synergy-voice-header-launch .synergy-voice-launch-label{display:none}
+ .catchup-top-inner > .synergy-voice-header-launch svg{width:20px;height:20px}
+ .synergy-voice-header-panel{
+  top:calc(61px + env(safe-area-inset-top));bottom:auto;
+  left:8px;right:8px;width:auto;
+  max-height:calc(100dvh - 75px - env(safe-area-inset-top) - env(safe-area-inset-bottom))
+ }
+}
