@@ -69,7 +69,8 @@
   open.href=pdf;
   if(mobileOriginal)mobileOriginal.href=pdf;
   if(mobileBox)mobileBox.hidden=true;
-  fallback.hidden=false;
+  // No PDF overlay on top of the reader while its accessible content loads.
+  fallback.hidden=preferReading;
   // Print always opens the original, unchanged PDF as a normal link.
   // This lets the school's browser or Adobe Acrobat extension handle it.
   // A website cannot force desktop Acrobat to start.
