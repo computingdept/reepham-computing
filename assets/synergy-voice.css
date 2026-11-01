@@ -118,3 +118,53 @@ body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blo
   max-height:calc(100dvh - 75px - env(safe-area-inset-top) - env(safe-area-inset-bottom))
  }
 }
+
+/* GCSE/A Level Practice: same top-header Reading Tools placement as Catch Up.
+   The original voice/reading tool and panel are reused, never duplicated. */
+header.practice-nav > .synergy-voice-practice-launch{
+ position:static;flex:0 0 auto;width:auto;min-width:75px;height:40px;
+ margin:0 2px 0 4px;padding:0 10px;gap:6px;
+ border-radius:9px;box-shadow:none;font-size:12px;z-index:1
+}
+header.practice-nav.synergy-corners > .synergy-corner-mark{
+ margin-left:0!important
+}
+body > .synergy-voice-practice-panel{
+ top:68px;bottom:auto;right:max(12px,env(safe-area-inset-right));
+ max-height:calc(100dvh - 82px);overscroll-behavior:contain
+}
+@media(max-width:620px){
+ header.practice-nav > .synergy-voice-practice-launch{
+  width:44px;min-width:44px;height:44px;min-height:44px;
+  margin:0 2px 0 0;padding:0;gap:0;border-radius:10px
+ }
+ header.practice-nav > .synergy-voice-practice-launch .synergy-voice-launch-label{
+  display:none
+ }
+ header.practice-nav > .synergy-voice-practice-launch svg{width:20px;height:20px}
+ body > .synergy-voice-practice-panel{
+  top:calc(61px + env(safe-area-inset-top));bottom:auto;
+  left:8px;right:8px;width:auto;
+  max-height:calc(100dvh - 75px - env(safe-area-inset-top) - env(safe-area-inset-bottom))
+ }
+ /* H446 1.4 needs room for its three-way specification selector.
+    Keep the Back/Home and Tools/brand on one row; selector below. */
+ header.practice-nav:has(.topic-switch){
+  flex-wrap:wrap;column-gap:8px;row-gap:3px
+ }
+ header.practice-nav:has(.topic-switch) > .rhsc-site-nav{order:0}
+ header.practice-nav:has(.topic-switch) > .synergy-voice-practice-launch{
+  order:1;margin-left:auto
+ }
+ header.practice-nav:has(.topic-switch) > .synergy-corner-mark{order:2}
+ header.practice-nav:has(.topic-switch) > .topic-switch{
+  order:3;flex:1 0 100%;max-width:100%;margin:1px 0 3px
+ }
+ header.practice-nav:has(.topic-switch) > .topic-switch select{
+  display:block;width:100%;max-width:100%;font-size:.9rem
+ }
+ body:has(header.practice-nav .topic-switch) > .synergy-voice-practice-panel{
+  top:calc(118px + env(safe-area-inset-top));
+  max-height:calc(100dvh - 132px - env(safe-area-inset-top) - env(safe-area-inset-bottom))
+ }
+}
