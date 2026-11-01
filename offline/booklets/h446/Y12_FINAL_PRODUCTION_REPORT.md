@@ -1,16 +1,16 @@
 # H446 Year 12 print production report
 
 Lessons 001–160; generated in five-lesson batches.
-New eight/nine-page drafts: **136 / 145**
+New eight/nine-page drafts: **140 / 145**
 First 15 booklets retained from earlier approved-format batches.
-Outstanding exceptions: **9**
+Outstanding exceptions: **5**
 
 | Batch | Generated | Deferred |
 |---|---:|---:|
-| 016–020 | 3 | 2 |
-| 021–025 | 4 | 1 |
+| 016–020 | 5 | 0 |
+| 021–025 | 5 | 0 |
 | 026–030 | 5 | 0 |
-| 031–035 | 4 | 1 |
+| 031–035 | 5 | 0 |
 | 036–040 | 3 | 2 |
 | 041–045 | 5 | 0 |
 | 046–050 | 5 | 0 |
@@ -39,13 +39,13 @@ Outstanding exceptions: **9**
 
 ## Longer booklets to preserve the model
 
+- Lesson 017: 9 A4 pages
+- Lesson 019: 10 A4 pages
+- Lesson 025: 9 A4 pages
+- Lesson 031: 9 A4 pages
 
 ## Protected or incomplete lessons
 
-- Lesson 017: ValueError: Source incomplete: you_do_model_answers. Existing Print link preserved where available.
-- Lesson 019: ValueError: Content does not fit A4 page (896pt > 655pt).. Existing Print link preserved where available.
-- Lesson 025: ValueError: Source incomplete: you_do_model_answers. Existing Print link preserved where available.
-- Lesson 031: ValueError: Content does not fit A4 page (969pt > 655pt).. Existing Print link preserved where available.
 - Lesson 036: ValueError: Assessment/feedback lesson — protected from student booklet publication. Existing Print link preserved where available.
 - Lesson 037: ValueError: Assessment/feedback lesson — protected from student booklet publication. Existing Print link preserved where available.
 - Lesson 058: ValueError: Assessment/feedback lesson — protected from student booklet publication. Existing Print link preserved where available.
