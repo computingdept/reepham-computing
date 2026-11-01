@@ -238,7 +238,7 @@ def make_pdf(lesson,soup,mode,outfile):
     # 4 — full I Do steps.
     y,p=begin(c,lesson,4,'I Do — Worked example','Follow the worked method',mode)
     items=model(soup,lesson)
-    items.append(obj('Repeat the method with different inputs in your notebook. Check every intermediate value.','note'))
+    # Keep all the actual I Do steps; omit redundant generic instruction that caused overflow.
     y=render_items(c,items,y,p,maxheight=y-60)
     page_end(c,y,4)
 
