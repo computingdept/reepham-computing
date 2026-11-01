@@ -53,7 +53,18 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add offline/booklets/catalogue.json offline/booklets/h446/Y12_EIGHT_PAGE_BATCHES.json offline/booklets/h446/Y12_FINAL_PRODUCTION_REPORT.md
-          git add offline/booklets/h446/H446_Lesson_0{17,19,25,31}_{8,9}PAGE_REVIEW_*.pdf 2>/dev/null || true
+          find offline/booklets/h446 -maxdepth 1 -type f -name 'H446_Lesson_*PAGE_REVIEW_*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          d=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          staged=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n in (17,19,25,31):
+              e=d['lessons']['h446'][str(n)]
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[k] in staged,(n,k,e[k])
+          print('All four corrected Year12 booklet variants are staged.')
+          PY
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Resolve Year12 booklet exceptions and publish course report'
           pushed=0
