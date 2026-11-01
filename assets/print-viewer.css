@@ -116,3 +116,21 @@ h1{font-size:clamp(13px,1.5vw,17px);font-weight:750;line-height:1.2;text-align:c
 }
 @media(prefers-reduced-motion:reduce){.reading-view *{scroll-behavior:auto!important}}
 @media print{.access-panel,.reading-view{display:none!important}}
+
+
+/* Revision guide automatic reading layer: original PDF remains authoritative. */
+.reading-view .guide-reader-pages{
+ display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0 22px;
+ padding:12px;border:1px solid currentColor;border-radius:9px;
+}
+.reading-view .guide-reader-pages button{
+ border:1px solid #a9bcb0;border-radius:7px;padding:8px 12px;
+ background:#fff;color:#285348;font-size:.85em;font-weight:700;min-height:42px;cursor:pointer;
+}
+.reading-view .guide-reader-pages button:disabled{opacity:.5;cursor:default}
+.reading-view .guide-reader-pages label{display:flex;align-items:center;gap:7px;font-size:.85em;font-weight:700}
+.reading-view .guide-reader-pages input{width:75px;min-height:42px;font:inherit;border-radius:7px;border:1px solid #9eb2a7;padding:6px;color:#25352c;background:#fff}
+.reading-view .guide-page-total{font-size:.85em}
+.reading-view .guide-extracted-lines{display:flex;flex-direction:column;gap:0}
+.reading-view .guide-extracted-line{white-space:pre-wrap;max-width:80ch;margin:.13em 0 .35em}
+@media(max-width:540px){.reading-view .guide-reader-pages{gap:5px;padding:9px}.reading-view .guide-reader-pages button{padding:6px 9px}}
