@@ -206,3 +206,79 @@ h1{font-size:clamp(13px,1.5vw,17px);font-weight:750;line-height:1.2;text-align:c
 .reading-view .reader-exact-body canvas{display:block;max-width:100%;width:100%;height:auto;margin:0 auto;background:white;border:1px solid #cbd3ce;box-shadow:0 2px 8px #0001}
 .reading-view .reader-exact-body a{font-weight:750}
 @media(max-width:540px){.reading-view .reader-exact-page{padding:8px;margin:14px 0}}
+
+/* J277 Lesson 001 pilot — paper FIRST. The original PDF page is the reading
+   canvas. No reflowed PDF text or duplicate lesson content is displayed. */
+body.paper-first-booklet .preview{background:#e9eeeb}
+body.paper-first-booklet .reading-view{
+  padding:12px 12px 35px;min-height:100%;background:#e9eeeb;color:#25352c
+}
+body.paper-first-booklet .reading-view .booklet-page-inner{
+  max-width:970px;margin:0 auto
+}
+body.paper-first-booklet .booklet-page-heading{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+body.paper-first-booklet .booklet-paper-instruction{
+  max-width:none;margin:0 0 9px;text-align:center;
+  font-size:13px;line-height:1.4;font-weight:650;color:#315648
+}
+body.paper-first-booklet .booklet-page-controls{
+  max-width:900px;margin:0 auto 9px;display:flex;align-items:center;
+  justify-content:center;gap:9px;flex-wrap:wrap;
+  border:1px solid #ccd8d1;border-radius:9px;background:#fff;
+  padding:6px 9px
+}
+body.paper-first-booklet .booklet-page-controls button{
+  min-height:43px;min-width:44px;padding:8px 11px;
+  border:1px solid #9eb8aa;border-radius:7px;background:white;
+  color:#1c503c;font:750 13px/1.2 system-ui,Arial,sans-serif;cursor:pointer
+}
+body.paper-first-booklet .booklet-page-controls button:disabled{
+  cursor:default;opacity:.40
+}
+body.paper-first-booklet .booklet-page-count{
+  text-align:center;font:800 14px/1.3 system-ui,Arial,sans-serif;
+  color:#1a4435;min-width:93px
+}
+body.paper-first-booklet .booklet-zoom{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-left:8px;padding-left:12px;border-left:1px solid #ccd8d1
+}
+body.paper-first-booklet .booklet-zoom button{font-size:19px;padding:4px 8px}
+body.paper-first-booklet .booklet-zoom-label{
+  min-width:42px;text-align:center;font:750 12px/1 system-ui,Arial,sans-serif
+}
+body.paper-first-booklet .booklet-page-scroll{
+  max-width:100%;min-height:200px;overflow:auto;overscroll-behavior:contain;
+  border-radius:5px;padding:4px 6px 10px;
+  text-align:center;-webkit-overflow-scrolling:touch
+}
+body.paper-first-booklet .booklet-page-scroll canvas{
+  display:block;max-width:none;height:auto;margin:0 auto;
+  background:#fff;border:1px solid #d5deda;
+  box-shadow:0 3px 17px rgba(20,40,28,.16)
+}
+/* Keep extractable page text available for read-aloud and screen readers,
+   never visually insert it above the printed questions. */
+body.paper-first-booklet .booklet-page-speech{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+body.paper-first-booklet .booklet-page-speech .reader-highlight-target{display:block}
+@media(max-width:540px){
+ body.paper-first-booklet .reading-view{padding:7px 5px 18px}
+ body.paper-first-booklet .booklet-paper-instruction{font-size:12px;margin:3px 8px 7px}
+ body.paper-first-booklet .booklet-page-controls{gap:5px;padding:5px 4px}
+ body.paper-first-booklet .booklet-page-controls button{min-height:44px;padding:7px 8px}
+ body.paper-first-booklet .booklet-page-count{min-width:82px;font-size:13px}
+ body.paper-first-booklet .booklet-zoom{margin-left:0;padding-left:0;border-left:0}
+ body.paper-first-booklet .booklet-page-scroll{padding:2px 4px 9px}
+}
+@media print{
+ body.paper-first-booklet .booklet-page-controls,
+ body.paper-first-booklet .booklet-paper-instruction{display:none!important}
+}
