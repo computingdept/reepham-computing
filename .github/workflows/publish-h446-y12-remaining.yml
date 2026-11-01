@@ -1,0 +1,102 @@
+name: Publish H446 Year 12 remaining eight-page print booklets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_y12_remaining.py'
+      - '.github/workflows/publish-h446-y12-remaining.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h446-y12-remaining-publication
+  cancel-in-progress: false
+
+jobs:
+  produce:
+    name: Process 016–160 in batches of five, validate, and publish a report
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF tooling and fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+          python -m pip install 'reportlab==4.2.5' 'beautifulsoup4==4.12.3' 'PyMuPDF==1.26.4'
+      - name: Process five-lesson groups sequentially
+        run: |
+          python tools/independent_booklets/publish_h446_y12_remaining.py --first 16 --last 160
+      - name: Audit every new PDF and every updated Print link
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          root=Path('.')
+          report=json.loads((root/'offline/booklets/h446/Y12_EIGHT_PAGE_BATCHES.json').read_text())
+          c=json.loads((root/'offline/booklets/catalogue.json').read_text())
+          assert len(report['batches'])==29
+          seen=set()
+          for item in report['generated']:
+              n=item['lesson']
+              assert n not in seen
+              seen.add(n)
+              link=c['lessons']['h446'][str(n)]
+              assert link['a4_pages']==8 and not link['teacher_approved']
+              for field,count in [('print_bw',8),('learn_colour',8),('booklet_bw',4),('booklet_colour',4)]:
+                  f=root/link[field]
+                  assert f.is_file() and f.stat().st_size>10000, (n,field)
+                  with fitz.open(f) as pdf:
+                      assert len(pdf)==count,(n,field,len(pdf))
+                      if count==8:
+                          assert all(len(p.get_text().strip())>40 for p in pdf),n
+          for item in report['deferred']:
+              n=str(item['lesson'])
+              if item['old_print_link_kept']:
+                  assert c['lessons']['h446'][n]['print_bw']==item['old_print_link']
+          assert len(report['generated'])+len(report['deferred'])==145
+          assert (root/'offline/booklets/h446/Y12_EIGHT_PAGE_BATCH_REPORT.md').is_file()
+          print('Eight-page drafts verified:',len(report['generated']))
+          print('Exception cases recorded:',len(report['deferred']))
+          PY
+      - name: Commit publication and full batch report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json
+          git add offline/booklets/h446/H446_Lesson_*_8PAGE_REVIEW_* \
+                  offline/booklets/h446/Y12_EIGHT_PAGE_BATCH_REPORT.md \
+                  offline/booklets/h446/Y12_EIGHT_PAGE_BATCHES.json
+          if git diff --cached --quiet; then
+            echo 'No new PDFs or report'
+            exit 0
+          fi
+          git commit -m 'Publish verified Year 12 H446 print drafts and five-lesson audit report'
+          published=0
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              published=1
+              break
+            fi
+            sleep 3
+          done
+          test "$published" -eq 1
+      - name: Show course status and exception summary
+        if: always()
+        run: |
+          if test -s offline/booklets/h446/Y12_EIGHT_PAGE_BATCH_REPORT.md; then
+            cat offline/booklets/h446/Y12_EIGHT_PAGE_BATCH_REPORT.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Generation failed before writing report.' >> "$GITHUB_STEP_SUMMARY"
+          fi
