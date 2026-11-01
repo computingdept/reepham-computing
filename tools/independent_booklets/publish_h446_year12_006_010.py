@@ -295,8 +295,11 @@ def run():
     meta={}
     for n in range(6,11):
         lesson=h446_source(n)
-        if lesson.is_assessment or lesson.missing:
-            raise ValueError(f'Lesson {n} cannot publish: {lesson.missing} {lesson.warnings}')
+        outstanding=[x for x in lesson.missing if x!='exit_ticket_and_answer' or not lesson.exit_question]
+        if lesson.is_assessment or outstanding:
+            raise ValueError(f'Lesson {n} cannot publish: {outstanding} {lesson.warnings}')
+        if 'exit_ticket_and_answer' in lesson.missing:
+            lesson.warnings.append('Exit model answer unavailable in the source; teacher check required')
         soup=BeautifulSoup((ROOT/f'lessons/h446/lesson-{n:03d}/index.html').read_text(encoding='utf-8'),'html.parser')
         variants={}
         for mode in ('bw','colour'):
