@@ -55,10 +55,9 @@
     }catch{return {responses:{},checked:{},writing:'',reviewed:false};}
   }
   function save(id,state){
-    // Focused Lesson 001 pilots keep in-progress answers in memory only.
-    // Reloading or reopening is a new, blank attempt; other Catch Up
-    // lessons retain their existing device-progress behaviour.
-    if(id==='j277-001'||id==='h446-001')return;
+    // Every Catch Up lesson keeps in-progress answers in memory only.
+    // Reloading or reopening is a new, blank attempt for J277, H446, KS3.
+    if(/^(?:j277|h446|ks3)-/.test(id))return;
     try{localStorage.setItem(storageKey(id),JSON.stringify(state));}catch{}
   }
   function saveCompletedSummary(id,result,reviewed){
@@ -187,7 +186,7 @@
       }
       if(!Array.isArray(cfg.stages)||cfg.stages.length!==5)throw Error('Invalid lesson stages');
       // The independent route and the classroom share their four Do Now stems.
-      if(configUrl!=='auto'&&cfg.course!=='h446'){
+      if(configUrl!=='auto'&&/^j277-/.test(cfg.id)){
         const bankRes=await fetch('../../../data/catchup/j277-donow-mcq-20261030.json',{cache:'no-store'});
         if(!bankRes.ok)throw Error('Do Now MCQ source missing');
         const bank=await bankRes.json();
@@ -208,10 +207,10 @@
     // 13 objective questions in I Do, We Do, You Do and Review & Improve.
     const all=cfg.stages.slice(1).flatMap(stage=>stage.questions);
     const threshold=Math.ceil(all.length*Number(cfg.pass_percent)/100);
-    // The focused pilots start each fresh page visit without remembered
-    // selections, including any stored by earlier versions of the pilot.
+    // Shared Catch Up starts each fresh page visit without remembered
+    // selections, including any stored by earlier versions of the lessons.
     // The same in-memory state still survives question and phase navigation.
-    const focusPilot=cfg.id==='j277-001'||cfg.id==='h446-001';
+    const focusPilot=/^(?:j277|h446|ks3)-/.test(cfg.id);
     if(focusPilot){
       try{localStorage.removeItem(storageKey(cfg.id));}catch{}
     }
@@ -222,7 +221,7 @@
     let step=0;
     if(focusPilot)document.body.classList.add('catchup-focused-pilot');
     let questionPage=0,viewPane='learn';
-    // Recalculate the pilot's responsive question layout on rotation/resize,
+    // Recalculate responsive question layout on rotation/resize,
     // without rebuilding input nodes or losing typed answers.
     let refreshCurrentLayout=()=>{};
     if(focusPilot)window.addEventListener('resize',()=>refreshCurrentLayout());
@@ -232,7 +231,7 @@
     const classroomTitle=cfg.id==='j277-001'?'Binary & Denary':cfg.title;
     const heading=document.querySelector('.catchup-title-lockup h1');
     if(heading)heading.textContent=classroomTitle;
-    document.title=(cfg.course==='h446'?'H446':'J277')+' · Lesson '+cfg.id.slice(-3)+' · '+classroomTitle;
+    document.title=(cfg.course==='h446'?'H446':cfg.course==='ks3'?'KS3':'J277')+' · Lesson '+cfg.id.slice(-3)+' · '+classroomTitle;
     intro.querySelector('.catchup-description').textContent=cfg.intro;
     intro.querySelector('.catchup-duration').textContent='About '+cfg.estimated_minutes+' minutes';
     intro.querySelector('.catchup-threshold').textContent=cfg.pass_percent+'% mastery · '+threshold+' of '+all.length+' correct';
@@ -268,7 +267,7 @@
     if(focusPilot)nav.hidden=true;
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
-      if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
+      if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='ks3'?'ks3-computing.html':(cfg.course==='h446'?'h446-hub.html':'j277-hub.html'))+'?year='+cfg.year+'#lessons');
       else go(step+1,true);
     });
     function setResponse(id,value){
@@ -298,7 +297,11 @@
       if(!did)panel.append($('p','','Choose or enter an answer before checking.'));
       else{
         if(!yes&&(focusPilot||q.id.startsWith('dn')))
-          panel.append($('p','catchup-correct-answer','Correct answer: '+q.answer));
+          panel.append($('p','catchup-correct-answer','Correct answer: '+(
+            q.kind==='match'?q.pairs.map(p=>p[0]+' → '+p[1]).join('; '):
+            q.kind==='order'?(q.answer||[]).join(' → '):
+            String(q.answer??'See explanation below')
+          )));
         panel.append($('p','catchup-feedback-explanation',q.feedback));
         if(focusPilot&&!yes)panel.append($('p','catchup-feedback-hint','Change your answer and check again, or move to the next question.'));
       }
@@ -318,9 +321,9 @@
         answerMount.append(input);
       }else if(q.kind==='choice'||q.kind==='truefalse'){
         let options=q.kind==='truefalse'?['True','False']:q.options;
-        // Stable, deterministic H446 pilot option order: balanced correct
+        // Stable, deterministic H446 option order: balanced correct
         // positions, unchanged answers, and no reshuffling on back/forward.
-        if(focusPilot&&cfg.id==='h446-001'&&q.kind==='choice'&&options.length>1){
+        if(focusPilot&&cfg.course==='h446'&&q.kind==='choice'&&options.length>1){
           const rotation=(index*2+step+1)%options.length;
           options=options.slice(rotation).concat(options.slice(0,rotation));
         }
@@ -330,7 +333,7 @@
           const input=$('input');
           input.type='radio';input.name=cfg.id+'-'+q.id;
           input.value=q.kind==='truefalse'?option.toLowerCase():option;
-          // Fresh pilot visits always begin blank; moving around within the
+          // Fresh visits always begin blank; moving around within the
           // same attempt retains the answer until the page is reopened.
           input.checked=!!String(value??'').trim()&&normal(value)===normal(input.value);
           input.addEventListener('change',()=>{setResponse(q.id,input.value);resetFeedback();});
@@ -473,7 +476,7 @@
         finish.type='button';
         finish.addEventListener('click',()=>{
           saveCompletedSummary(cfg.id,{...aggregate(),total:all.length},state.reviewed);
-          window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
+          window.location.assign('../../../'+(cfg.course==='ks3'?'ks3-computing.html':(cfg.course==='h446'?'h446-hub.html':'j277-hub.html'))+'?year='+cfg.year+'#lessons');
         });
         panel.append(finish);
       }
