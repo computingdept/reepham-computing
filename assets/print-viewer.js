@@ -23,6 +23,8 @@
   const sizeDisplay=byId('fontSizeValue');
   const speechAvailable=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance==='function';
   let readerData=null, mode='pdf', focusTarget=null;
+  const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
+  let guideDocument=null,guideLoading=null,guidePage=1;
   let ttsQueue=[],ttsIndex=0,ttsToken=0,ttsActive=false,ttsPaused=false,ttsCurrent=null;
   const storeKey='synergy-assist-reading-preferences-v1';
   const defaults={font:'system',spacing:'comfortable',colour:'white',size:100,focus:false,rate:'1'};
@@ -269,6 +271,100 @@
     };
     window.speechSynthesis.speak(utterance);
   }
+
+  /* Automatic, page-at-a-time text extraction for revision-guide PDFs.
+     Not a teacher-reviewed transcript; diagrams/tables/equations remain in
+     the original PDF. Does not change or re-save the guide document. */
+  function enableGuideReader(){
+    if(!guidePdf)return;
+    tools.hidden=false;
+    const note=panel.querySelector('.view-switch + .access-note');
+    if(note)note.textContent='Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
+    notice('The original revision guide is open. Select Reading View to prepare text and listening tools.');
+  }
+  async function renderGuidePage(requested){
+    if(!guideDocument)return;
+    stopSpeech();
+    const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
+    guidePage=n;
+    notice('Reading guide page '+n+' of '+guideDocument.numPages+'…');
+    const page=await guideDocument.getPage(n);
+    const content=await page.getTextContent();
+    const lines=[];
+    let line='';
+    for(const part of content.items){
+      if(typeof part.str!=='string')continue;
+      const word=part.str;
+      if(word){
+        if(line&&!/\s$/.test(line)&&!word.startsWith(' ')&&!/^[.,!?;:%)\]]/.test(word))line+=' ';
+        line+=word;
+      }
+      if(part.hasEOL){
+        if(line.trim())lines.push(line.trim());
+        line='';
+      }
+    }
+    if(line.trim())lines.push(line.trim());
+    const inner=el('div','reader-inner guide-reader-inner');
+    inner.append(el('h1','',label));
+    inner.append(el('p','reader-source-note','Automatically extracted reading aid. Text order and technical notation may be inaccurate; pictures and diagrams may be omitted. Refer to the Original PDF for authoritative content.'));
+    const nav=el('nav','guide-reader-pages');
+    nav.setAttribute('aria-label','Revision guide page navigation');
+    const prev=el('button','', 'Previous page');
+    prev.type='button';prev.disabled=n===1;
+    const pageLabel=el('label','', 'Page');
+    const pageInput=el('input','');
+    pageInput.type='number';pageInput.min='1';pageInput.max=String(guideDocument.numPages);
+    pageInput.value=String(n);pageInput.setAttribute('aria-label','PDF page number');
+    pageLabel.append(pageInput);
+    const total=el('span','guide-page-total','of '+guideDocument.numPages);
+    const go=el('button','','Go');go.type='button';
+    const next=el('button','','Next page');next.type='button';next.disabled=n===guideDocument.numPages;
+    const changePage=num=>renderGuidePage(num).then(()=>reading.scrollTo?.(0,0)).catch(()=>notice('Could not extract that page. The original PDF remains available.'));
+    prev.addEventListener('click',()=>changePage(n-1));
+    next.addEventListener('click',()=>changePage(n+1));
+    go.addEventListener('click',()=>changePage(pageInput.value));
+    pageInput.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();changePage(pageInput.value);}});
+    nav.append(prev,pageLabel,total,go,next);
+    inner.append(nav);
+    const heading=el('h2','', 'Page '+n);
+    inner.append(heading);
+    if(!lines.length){
+      inner.append(el('p','', 'No selectable text was found on this page. View the original PDF for illustrations or scanned content.'));
+    }else{
+      const section=el('section','guide-extracted-lines');
+      section.setAttribute('aria-label','Automatically extracted page text');
+      for(const item of lines)section.append(el('p','reader-highlight-target guide-extracted-line',item));
+      inner.append(section);
+    }
+    reading.replaceChildren(inner);
+    reading.tabIndex=-1;applyPrefs();
+    notice('Page '+n+' of '+guideDocument.numPages+' ready. Select Play to listen to this page.');
+  }
+  function loadGuideReader(){
+    if(!guidePdf)return Promise.resolve();
+    if(guideLoading)return guideLoading;
+    notice('Preparing reading text from the original guide…');
+    showReading.disabled=true;
+    guideLoading=(async()=>{
+      // PDF.js runs in the browser; the PDF itself is fetched only from our domain.
+      const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.449/pdf.min.mjs');
+      pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.449/pdf.worker.min.mjs';
+      guideDocument=await pdfjs.getDocument({url:pdf,withCredentials:false}).promise;
+      if(!guideDocument||guideDocument.numPages<1)throw Error('No pages in PDF');
+      readerData={type:'automatically-extracted-guide'};
+      await renderGuidePage(1);
+      setMode('reading');
+      notice('Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
+      return true;
+    })().catch(()=>{
+      guideDocument=null;readerData=null;guideLoading=null;
+      notice('Reading View could not load on this device or network. The original PDF remains available.');
+      return false;
+    }).finally(()=>{showReading.disabled=false;});
+    return guideLoading;
+  }
+
   loadPrefs();
   if(sharedVoice)prefs.rate=String(sharedVoice.getRate());
   applyPrefs();
@@ -310,7 +406,7 @@
     if(target)selectFocus(target,false);
   });
   showPdf.addEventListener('click',()=>setMode('pdf'));
-  showReading.addEventListener('click',()=>setMode('reading'));
+  showReading.addEventListener('click',()=>{if(guidePdf&&!readerData)loadGuideReader();else setMode('reading');});
   font.addEventListener('change',()=>{prefs.font=font.value;savePrefs();applyPrefs();});
   spacing.addEventListener('change',()=>{prefs.spacing=spacing.value;savePrefs();applyPrefs();});
   colour.addEventListener('change',()=>{prefs.colour=colour.value;savePrefs();applyPrefs();});
@@ -321,6 +417,7 @@
   vocab.addEventListener('change',()=>{const node=byId('readerVocabulary');if(node)node.hidden=!vocab.checked;});
   memory.addEventListener('change',()=>{const node=byId('readerMemory');if(node)node.hidden=!memory.checked;});
   play.addEventListener('click',()=>{
+    if(guidePdf&&!readerData){loadGuideReader();return;}
     if(mode!=='reading')setMode('reading');
     if(!speechAvailable){notice('Read aloud is not supported by this browser.');return;}
     if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');return;}
@@ -347,7 +444,7 @@
     if(catalogue.schema_version!==1||!catalogue.entries)return;
     const source=catalogue.entries[file.pathname];
     const dataUrl=localUrl(source,'.json');
-    if(!dataUrl)return;
+    if(!dataUrl){enableGuideReader();return;}
     return fetch(dataUrl.pathname,{cache:'no-store'}).then(response=>{
       if(!response.ok)throw Error('Reading companion unavailable');
       return response.json();
@@ -369,6 +466,6 @@
     });
   }).catch(()=>{
     // Fail safely to the original PDF, without pretending it is accessible text.
-    tools.hidden=true;
+    if(guidePdf)enableGuideReader();else tools.hidden=true;
   });
 })();
