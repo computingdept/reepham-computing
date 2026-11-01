@@ -186,6 +186,14 @@
       catchup.classList.add('synergy-corners');
       return;
     }
+    const legacySlides=document.querySelector('body > aside.sidebar');
+    if(legacySlides){
+      const home=button(null,'home',route,'Learning Hub home');
+      legacySlides.insertBefore(home,legacySlides.firstChild);
+      logo(document.body);
+      document.body.classList.add('synergy-legacy-corners');
+      return;
+    }
     const legacyRevision=document.querySelector('.synergy-inline-brand');
     if(legacyRevision){
       firstHome(legacyRevision);
