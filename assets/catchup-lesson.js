@@ -189,7 +189,8 @@
     intro.querySelector('.catchup-description').textContent=cfg.intro;
     intro.querySelector('.catchup-duration').textContent='About '+cfg.estimated_minutes+' minutes';
     intro.querySelector('.catchup-threshold').textContent=cfg.pass_percent+'% mastery · '+threshold+' of '+all.length+' correct';
-    // One functional bottom navigation, not a duplicate of the top row.
+    // Single compact top navigation below the shared site header.
+    // Its five existing buttons retain their click handlers and current-step state.
     const purposeSteps=[
       ['Do Now','Recall previous learning'],
       ['I Do','Read new knowledge'],
@@ -198,16 +199,13 @@
       ['Review & Improve','Check my understanding']
     ];
     const progress=document.getElementById('catchup-progress');
-    progress.classList.add('catchup-progress-bottom');
+    progress.classList.add('catchup-progress-top');
     progress.setAttribute('aria-label','Choose a catch-up learning stage');
     const progressItems=cfg.stages.map((stage,i)=>{
       const button=$('button','');
       button.type='button';
       button.setAttribute('aria-label','Go to '+stage.label+': '+purposeSteps[i][1]);
-      button.append(
-        $('span','catchup-step-name',i===4?'Review':stage.label),
-        $('span','catchup-step-purpose',purposeSteps[i][1])
-      );
+      button.append($('span','catchup-step-name',i===4?'Review':stage.label));
       button.addEventListener('click',()=>go(i,true));
       progress.append(button);
       return button;
@@ -218,10 +216,6 @@
     const next=$('button','catchup-btn primary','Next →');
     previous.type=next.type='button';
     nav.append(previous,next);
-    const purposeFooter=$('footer','catchup-purpose-footer');
-    purposeFooter.setAttribute('aria-label','Learning journey');
-    purposeFooter.append(progress);
-    document.body.classList.add('catchup-bottom-nav-on');
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
       if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
@@ -452,8 +446,7 @@
       status.tabIndex=-1;
       stageStatus();
       if(step===cfg.stages.length-1)stageMount.append(overall());
-      // Reattach the same five live buttons with their original click handlers.
-      stageMount.append(purposeFooter);
+      // Keep the top navigation in place and announce the active stage.
       progressItems.forEach((button,i)=>{
         if(i===step)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
       });
