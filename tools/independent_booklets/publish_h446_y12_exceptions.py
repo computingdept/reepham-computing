@@ -12,6 +12,121 @@ from source_model import h446_source
 from render_pdf import impose_a3
 from publish_h446_year12_011_015 import make_pdf
 
+
+from publish_h446_year12_011_015 import (
+    begin,page_end,render_items,obj,objectives,new_learning,model,guided,choices,dims,split_lines
+)
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+
+def split_overlong_item(item,capacity=575):
+    """Split a source paragraph when it cannot fit even with adjusted spacing."""
+    text=item['text']
+    tokens=text.split(' ') if '\n' not in text else text.split('\n')
+    separator=' ' if '\n' not in text else '\n'
+    parts=[]
+    current=''
+    for token in tokens:
+        candidate=(current+separator+token).lstrip(separator) if current else token
+        test=obj(candidate,item['kind'])
+        if dims([test],.90,.48)>capacity and current:
+            parts.append(obj(current,item['kind']))
+            current=token
+        else:
+            current=candidate
+    if current:parts.append(obj(current,item['kind']))
+    if not parts:raise ValueError('Could not divide source paragraph')
+    parts[-1]['rule']=item['rule']
+    return parts
+
+def divide_into_pages(items,available):
+    """Greedy pagination at natural block boundaries; no dropped lesson text."""
+    queue=list(items)
+    pages=[]
+    while queue:
+        chunk=[]
+        while queue:
+            item=queue[0]
+            if dims(chunk+[item],.90,.48)<=available:
+                chunk.append(queue.pop(0))
+            else:
+                if chunk:break
+                queue=split_overlong_item(queue.pop(0),available-15)+queue
+                # If the single item still cannot fit, this is a genuine error.
+                if dims([queue[0]],.90,.48)>available:
+                    raise ValueError('A source block could not be paginated')
+        if not chunk:raise ValueError('Pagination produced an empty page')
+        pages.append(chunk)
+    return pages
+
+def make_pdf_flexible(lesson,soup,mode,outfile):
+    """Eight pages normally; additional A4 sheets only where complete content requires them."""
+    pages=[]
+    # A page descriptor is (stage, title, blocks, name_line).
+    def add(stage,title,blocks,name_line=False):
+        allowance=625 if name_line else 655
+        for i,chunk in enumerate(divide_into_pages(blocks,allowance)):
+            label=title if i==0 else title+' · continued'
+            pages.append((stage,label,chunk,name_line and i==0))
+    add('Do Now — Recall',lesson.title,[obj(f'{i}. {q}','prompt',3)
+            for i,(q,_) in enumerate(lesson.do_now,1)],True)
+    checks=[obj('Check page 1 in GREEN PEN. Write corrections in full.','note')]
+    for i,(_,a) in enumerate(lesson.do_now,1):
+        checks.extend((obj(f'{i}. Model answer','sub'),obj(a,'body')))
+    goals=objectives(soup)
+    if goals:
+        checks.append(obj('By the end, you can…','sub'))
+        checks.extend(obj('• '+g,'body') for g in goals[:4])
+    if lesson.vocab:
+        checks.append(obj('Vocabulary — know these terms','sub'))
+        checks.extend(obj(f'{t} — {d}','body') for t,d in lesson.vocab[:8])
+    add('Do Now — Check / Objectives','Correct and improve',checks)
+    learning=new_learning(soup)+[obj(
+         'Explain one step in your own words, using the correct technical terms.','prompt',5)]
+    add('New Learning','Read, annotate and explain',learning)
+    add('I Do — Worked example','Follow the worked method',model(soup,lesson))
+    group=guided(soup);g=[]
+    for i,(title,desc,code) in enumerate(group,1):
+        g.append(obj(f'{i}. {title}','prompt'))
+        if desc:g.append(obj(desc,'body'))
+        if code:g.append(obj(code,'code'))
+        g.append(obj('Method / working:','note',2 if len(group)>=5 else 3))
+    add('We Do — Guided practice','Try, discuss and improve',g)
+    qs=choices(lesson)
+    if len(qs)<3:raise ValueError('Not enough You Do source questions')
+    mid=(len(qs)+1)//2
+    for ix,group in enumerate((qs[:mid],qs[mid:])):
+        blocks=[obj('Answer independently. Show code, calculations or a justified explanation.','note')]
+        for qn,q in enumerate(group,1+ix*mid):
+            blocks.extend((obj(f'Question {qn}','sub'),obj(q,'body',6 if len(group)<=2 else 4)))
+        add('You Do — Independent practice',f'Questions · Part {ix+1}',blocks)
+    add('Exit Ticket / Reflection','Check your understanding',[
+        obj('Complete the actual lesson Exit Ticket before checking.','note'),
+        obj(lesson.exit_question,'prompt',4),
+        obj('Circle: Confident / Getting there / Need help','prompt'),
+        obj('Explain what you can now do independently.','body',3),
+        obj('GREEN PEN — Correct and explain','sub'),
+        obj('Choose one error. Write the correct method and explain precisely why your first response was wrong.','body',7)])
+    # No arbitrary page limit, but flag extreme cases for teacher inspection.
+    if len(pages)>16:raise ValueError(f'{len(pages)} sheets would be excessive; manual page design required')
+    c=canvas.Canvas(str(outfile),pagesize=A4,pageCompression=1)
+    c.setTitle(f'H446 Lesson {lesson.number:03d}: {lesson.title} — {len(pages)}-page print draft')
+    for i,(stage,title,items,nameline) in enumerate(pages,1):
+        y,palette=begin(c,lesson,i,stage,title,mode,len(pages))
+        if nameline:
+            c.setFillColor(palette['accent']);c.setFont('RHS',9)
+            from publish_h446_year12_011_015 import M
+            c.drawString(M,y,'Name: __________________________  Class: _________  Date: _________')
+            y-=30
+        y=render_items(c,items,y,palette,maxheight=y-60)
+        page_end(c,y,i)
+    c.save()
+    with fitz.open(outfile) as doc:
+        if len(doc)!=len(pages):raise ValueError('PDF page count mismatch')
+        for page in doc:
+            if len(page.get_text().strip())<40:raise ValueError('Blank or clipped PDF page')
+    return len(pages)
+
 def main():
     base=ROOT/'offline/booklets/h446'
     catpath=ROOT/'offline/booklets/catalogue.json'
@@ -31,15 +146,19 @@ def main():
             if not lesson.exit_answer:
                 lesson.warnings.append('Exit solution unavailable; teacher check required')
             soup=BeautifulSoup((ROOT/f'lessons/h446/lesson-{n:03d}/index.html').read_text(),'html.parser')
-            pages=9 if n in (19,31) else 8
-            a3pages=6 if pages==9 else 4
+            pages=None
+            a3pages=None
             variants={}
             for mode in ('bw','colour'):
                 base_name=f'H446_Lesson_{n:03d}_{pages}PAGE_REVIEW_{mode.upper()}'
                 a4=base/(base_name+'_A4.pdf')
                 a3=base/(base_name+'_A3_Booklet.pdf')
                 files.extend((a4,a3))
-                make_pdf(lesson,soup,mode,a4)
+                built=make_pdf_flexible(lesson,soup,mode,a4)
+                if pages is None:
+                    pages=built
+                    a3pages=((pages+3)//4)*2
+                elif built!=pages:raise ValueError('Colour/B&W page counts differ')
                 if impose_a3(a4,a3)!=a3pages:raise ValueError('A3 page count mismatch')
                 for path,count in ((a4,pages),(a3,a3pages)):
                     if not path.is_file() or path.stat().st_size<10000:raise ValueError('PDF missing or small')
