@@ -241,6 +241,9 @@
     const next=$('button','catchup-btn primary','Next →');
     previous.type=next.type='button';
     nav.append(previous,next);
+    // Pilot lessons navigate stages using the blue phase bar, not a second
+    // Previous/Next row below the activity.
+    if(focusPilot)nav.hidden=true;
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
       if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
@@ -264,11 +267,18 @@
       const did=attempted(q,current);
       const yes=correct(q,current);
       const panel=$('div','catchup-feedback '+(yes?'correct':'review'));
-      panel.append($('strong','',!did?'Answer needed':yes?'Correct':'Check and try again'));
-      if(!did)panel.append($('p','','Choose or enter an answer, then check again.'));
+      if(focusPilot){
+        panel.setAttribute('role','status');
+        panel.setAttribute('aria-live','polite');
+        panel.tabIndex=-1;
+      }
+      panel.append($('strong','',!did?'Answer needed':yes?'Correct — well done':'Review your answer'));
+      if(!did)panel.append($('p','','Choose or enter an answer before checking.'));
       else{
-        if(q.id.startsWith('dn')&&!yes)panel.append($('p','','Correct answer: '+q.answer));
-        panel.append($('p','',q.feedback));
+        if(!yes&&(focusPilot||q.id.startsWith('dn')))
+          panel.append($('p','catchup-correct-answer','Correct answer: '+q.answer));
+        panel.append($('p','catchup-feedback-explanation',q.feedback));
+        if(focusPilot&&!yes)panel.append($('p','catchup-feedback-hint','Change your answer and check again, or move to the next question.'));
       }
       return panel;
     }
@@ -285,19 +295,52 @@
         input.addEventListener('input',()=>{setResponse(q.id,input.value);resetFeedback();});
         answerMount.append(input);
       }else if(q.kind==='choice'||q.kind==='truefalse'){
-        const options=q.kind==='truefalse'?['True','False']:q.options;
+        let options=q.kind==='truefalse'?['True','False']:q.options;
+        // Stable, deterministic H446 pilot option order: balanced correct
+        // positions, unchanged answers, and no reshuffling on back/forward.
+        if(focusPilot&&cfg.id==='h446-001'&&q.kind==='choice'&&options.length>1){
+          const rotation=(index*2+step+1)%options.length;
+          options=options.slice(rotation).concat(options.slice(0,rotation));
+        }
         const choices=$('div','catchup-choices');
+        if(focusPilot&&Object.prototype.hasOwnProperty.call(state.responses,q.id)&&
+           String(value??'').trim()){
+          const saved=$('p','catchup-saved-selection','Saved answer from this device — you can change or clear it.');
+          choices.before&&choices.before(saved);
+          box.append(saved);
+        }
         options.forEach((option,i)=>{
           const label=$('label','catchup-choice');
           const input=$('input');
           input.type='radio';input.name=cfg.id+'-'+q.id;
           input.value=q.kind==='truefalse'?option.toLowerCase():option;
-          input.checked=normal(value)===normal(input.value);
+          // Never select an MCQ answer by default. Only restore one that
+          // the learner previously selected and saved on this device.
+          input.checked=!!String(value??'').trim()&&normal(value)===normal(input.value);
           input.addEventListener('change',()=>{setResponse(q.id,input.value);resetFeedback();});
           label.append(input,document.createTextNode(option));
           choices.append(label);
         });
         answerMount.append(choices);
+        if(focusPilot){
+          const clear=$('button','catchup-clear-answer','Clear selection');
+          clear.type='button';
+          clear.hidden=!String(value??'').trim();
+          clear.addEventListener('click',()=>{
+            delete state.responses[q.id];delete state.checked[q.id];save(cfg.id,state);
+            choices.querySelectorAll('input[type="radio"]').forEach(input=>input.checked=false);
+            clear.hidden=true;
+            const note=box.querySelector('.catchup-saved-selection');if(note)note.remove();
+            resetFeedback();
+          });
+          choices.querySelectorAll('input[type="radio"]').forEach(input=>{
+            input.addEventListener('change',()=>{
+              clear.hidden=false;
+              const note=box.querySelector('.catchup-saved-selection');if(note)note.remove();
+            });
+          });
+          answerMount.append(clear);
+        }
       }else if(q.kind==='match'){
         const used=Array.isArray(value)?value:[];
         const grid=$('div','catchup-match');
@@ -358,6 +401,24 @@
         answerMount.append(list);
       }
       box.append(answerMount);
+      if(focusPilot){
+        const checkOne=$('button','catchup-btn primary catchup-check-one','Check answer');
+        checkOne.type='button';
+        checkOne.disabled=!attempted(q,read(q,state));
+        const updateCheck=()=>{checkOne.disabled=!attempted(q,read(q,state));};
+        answerMount.addEventListener('input',updateCheck);
+        answerMount.addEventListener('change',updateCheck);
+        checkOne.addEventListener('click',()=>{
+          if(!attempted(q,read(q,state)))return;
+          state.checked[q.id]=true;save(cfg.id,state);resetFeedback();
+          const explanation=box.querySelector('.catchup-feedback');
+          if(explanation)explanation.focus({preventScroll:true});
+        });
+        box.append(checkOne);
+        // Clear-selection is handled on click rather than input/change.
+        const clear=box.querySelector('.catchup-clear-answer');
+        if(clear)clear.addEventListener('click',updateCheck);
+      }
       const node=feedback(q);if(node)box.append(node);
       return box;
     }
@@ -413,6 +474,13 @@
       const retry=$('button','catchup-btn','Review answers');
       retry.type='button';retry.addEventListener('click',()=>go(0,true));
       panel.append(retry);
+      if(focusPilot){
+        const finish=$('button','catchup-btn primary catchup-finish','Finish → Lessons');
+        finish.type='button';
+        finish.addEventListener('click',()=>window.location.assign(
+          '../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons'));
+        panel.append(finish);
+      }
       return panel;
     }
     function renderStage(){
