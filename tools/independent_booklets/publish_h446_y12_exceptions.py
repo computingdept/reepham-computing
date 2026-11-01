@@ -184,6 +184,8 @@ def main():
               'booklet_colour':variants['colour'][1].relative_to(ROOT).as_posix()}
             cat['lessons']['h446'][str(n)]=entry
             audit['deferred']=[x for x in audit['deferred'] if x['lesson']!=n]
+            # Idempotent reruns must replace the old result, not double-count it.
+            audit['generated']=[item for item in audit['generated'] if item['lesson']!=n]
             audit['generated'].append({'lesson':n,'title':lesson.title,'page_count':pages,
               'question_count':len(lesson.you_do),'retrieval_count':len(lesson.do_now),
               'visual_count':lesson.visual_count,'status':entry['status'],'warnings':entry['warnings']})
