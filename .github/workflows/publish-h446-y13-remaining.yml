@@ -70,15 +70,24 @@ jobs:
           git add offline/booklets/catalogue.json \
                   offline/booklets/h446/Y13_EIGHT_PAGE_BATCHES.json \
                   offline/booklets/h446/Y13_PRINT_PRODUCTION_REPORT.md
-          git add offline/booklets/h446/H446_Lesson_*_8PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_9PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_10PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_11PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_12PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_13PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_14PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_15PAGE_REVIEW_* \
-                  offline/booklets/h446/H446_Lesson_*_16PAGE_REVIEW_* 2>/dev/null || true
+          # Add only real generated files. Unmatched shell globs previously caused
+          # git add to fail and left the catalogue pointing to uncommitted PDFs.
+          find offline/booklets/h446 -maxdepth 1 -type f -name 'H446_Lesson_*PAGE_REVIEW_*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import subprocess
+          d=json.loads(Path('offline/booklets/h446/Y13_EIGHT_PAGE_BATCHES.json').read_text())
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          missing=[]
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          for item in d['generated']:
+              e=c['lessons']['h446'][str(item['lesson'])]
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  if e[k] not in tracked:missing.append((item['lesson'],k,e[k]))
+          assert not missing,f'Publication staging missed PDFs: {missing[:8]}'
+          print('All Year 13 PDF paths staged or tracked.')
+          PY
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish checked H446 Year 13 print drafts and complete five-lesson batch report'
           pushed=0
