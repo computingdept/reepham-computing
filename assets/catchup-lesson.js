@@ -10,6 +10,22 @@
     if(text!==undefined)node.textContent=String(text);
     return node;
   };
+  // Exact blue phase-symbol artwork already used by the J277/H446
+  // classroom lesson controls (assets/h446-lesson/lesson.js).
+  // Use SVG rather than image files so all Catch Up lessons share one set.
+  const phaseIconPaths=[
+    '<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/>',
+    '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    '<circle cx="8" cy="7" r="3"/><circle cx="17" cy="8" r="2.5"/><path d="M2 21v-3a6 6 0 0 1 12 0v3M15 15a5 5 0 0 1 7 5v1"/>',
+    '<path d="m4 20 4.5-1 11-11-3.5-3.5-11 11L4 20Z"/><path d="M14.5 6.5 18 10"/>',
+    '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'
+  ];
+  const phaseIcon=index=>{
+    const span=$('span','catchup-phase-icon');
+    span.setAttribute('aria-hidden','true');
+    span.innerHTML='<svg viewBox="0 0 24 24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+phaseIconPaths[index]+'</svg>';
+    return span;
+  };
   const number=value=>{
     const v=String(value??'').trim().replace(/,/g,'').replace(/\s*(?:bits?|bytes?)\s*$/i,'');
     return /^\d+(?:\.\d+)?$/.test(v)?Number(v):NaN;
@@ -180,6 +196,11 @@
     const state=load(cfg.id);
     all.forEach(q=>q._state=state);
     let step=0;
+    // Restrict new focused activity behaviour to the two reviewed pilots.
+    const focusPilot=cfg.id==='j277-001'||cfg.id==='h446-001';
+    if(focusPilot)document.body.classList.add('catchup-focused-pilot');
+    let questionPage=0,viewPane='learn';
+
     const intro=document.getElementById('catchup-intro');
     // J277 Lesson 001 classroom title uses “&”, not the catch-up source's “and”.
     const classroomTitle=cfg.id==='j277-001'?'Binary & Denary':cfg.title;
@@ -205,7 +226,7 @@
       const button=$('button','');
       button.type='button';
       button.setAttribute('aria-label','Go to '+stage.label+': '+purposeSteps[i][1]);
-      button.append($('span','catchup-step-name',i===4?'Review':stage.label));
+      button.append(phaseIcon(i),$('span','catchup-step-name',i===4?'Review':stage.label));
       button.addEventListener('click',()=>go(i,true));
       progress.append(button);
       return button;
