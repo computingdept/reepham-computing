@@ -150,18 +150,25 @@ def main():
             a3pages=None
             variants={}
             for mode in ('bw','colour'):
-                base_name=f'H446_Lesson_{n:03d}_{pages}PAGE_REVIEW_{mode.upper()}'
-                a4=base/(base_name+'_A4.pdf')
-                a3=base/(base_name+'_A3_Booklet.pdf')
-                files.extend((a4,a3))
-                built=make_pdf_flexible(lesson,soup,mode,a4)
+                # Discover actual page count first. The previous code generated
+                # an invalid "NonePAGE" filename for the first B&W edition.
+                tmp=base/f'H446_Lesson_{n:03d}_TEMP_REVIEW_{mode.upper()}_A4.pdf'
+                files.append(tmp)
+                built=make_pdf_flexible(lesson,soup,mode,tmp)
                 if pages is None:
                     pages=built
                     a3pages=((pages+3)//4)*2
-                elif built!=pages:raise ValueError('Colour/B&W page counts differ')
+                elif built!=pages:
+                    raise ValueError('Colour/B&W page counts differ')
+                base_name=f'H446_Lesson_{n:03d}_{pages}PAGE_REVIEW_{mode.upper()}'
+                a4=base/(base_name+'_A4.pdf')
+                a3=base/(base_name+'_A3_Booklet.pdf')
+                tmp.replace(a4)
+                files.extend((a4,a3))
                 if impose_a3(a4,a3)!=a3pages:raise ValueError('A3 page count mismatch')
                 for path,count in ((a4,pages),(a3,a3pages)):
-                    if not path.is_file() or path.stat().st_size<10000:raise ValueError('PDF missing or small')
+                    if not path.is_file() or path.stat().st_size<10000:
+                        raise ValueError('PDF missing or small')
                     with fitz.open(path) as pdf:
                         if len(pdf)!=count:raise ValueError('PDF count mismatch')
                         if path==a4 and not all(len(p.get_text().strip())>40 for p in pdf):
