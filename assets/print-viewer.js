@@ -57,6 +57,7 @@
   // Print the original document using the browser PDF viewer. Some browsers
   // cannot programmatically print an embedded PDF; open the original as backup.
   print.addEventListener('click',()=>{
+    if(mode==='reading'){window.open(pdf,'_blank','noopener');return;}
     try{
       if(frame.contentWindow&&typeof frame.contentWindow.print==='function'){
         frame.contentWindow.focus();
@@ -99,6 +100,7 @@
     reading.classList.toggle('focus-on',prefs.focus);
     sizeDisplay.textContent=prefs.size+'%';
     if(!prefs.focus)clearFocus();
+    else if(!focusTarget&&mode==='reading')selectFocus(reading.querySelector('.reader-highlight-target'),false);
   }
   function setMode(next){
     if(next==='reading'&&!readerData)return;
@@ -260,7 +262,7 @@
   byId('toolsClose').addEventListener('click',()=>togglePanel(false));
   document.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&!panel.hidden){togglePanel(false);return;}
-    if(!prefs.focus||mode!=='reading'||event.target.closest('button,summary,input,select,a,textarea'))return;
+    if(!prefs.focus||mode!=='reading'||!event.target.closest||event.target.closest('button,summary,input,select,a,textarea'))return;
     if(event.key!=='ArrowDown'&&event.key!=='ArrowUp')return;
     const nodes=currentSpeechNodes();
     if(!nodes.length)return;
