@@ -55,6 +55,10 @@
     }catch{return {responses:{},checked:{},writing:'',reviewed:false};}
   }
   function save(id,state){
+    // Focused Lesson 001 pilots keep in-progress answers in memory only.
+    // Reloading or reopening is a new, blank attempt; other Catch Up
+    // lessons retain their existing device-progress behaviour.
+    if(id==='j277-001'||id==='h446-001')return;
     try{localStorage.setItem(storageKey(id),JSON.stringify(state));}catch{}
   }
   function blockUI(block){
@@ -193,11 +197,18 @@
     // 13 objective questions in I Do, We Do, You Do and Review & Improve.
     const all=cfg.stages.slice(1).flatMap(stage=>stage.questions);
     const threshold=Math.ceil(all.length*Number(cfg.pass_percent)/100);
-    const state=load(cfg.id);
+    // The focused pilots start each fresh page visit without remembered
+    // selections, including any stored by earlier versions of the pilot.
+    // The same in-memory state still survives question and phase navigation.
+    const focusPilot=cfg.id==='j277-001'||cfg.id==='h446-001';
+    if(focusPilot){
+      try{localStorage.removeItem(storageKey(cfg.id));}catch{}
+    }
+    const state=focusPilot
+      ?{responses:{},checked:{},writing:'',reviewed:false}
+      :load(cfg.id);
     all.forEach(q=>q._state=state);
     let step=0;
-    // Restrict new focused activity behaviour to the two reviewed pilots.
-    const focusPilot=cfg.id==='j277-001'||cfg.id==='h446-001';
     if(focusPilot)document.body.classList.add('catchup-focused-pilot');
     let questionPage=0,viewPane='learn';
     // Recalculate the pilot's responsive question layout on rotation/resize,
@@ -303,43 +314,19 @@
           options=options.slice(rotation).concat(options.slice(0,rotation));
         }
         const choices=$('div','catchup-choices');
-        if(focusPilot&&Object.prototype.hasOwnProperty.call(state.responses,q.id)&&
-           String(value??'').trim()){
-          const saved=$('p','catchup-saved-selection','Saved answer from this device — you can change or clear it.');
-          box.append(saved);
-        }
         options.forEach((option,i)=>{
           const label=$('label','catchup-choice');
           const input=$('input');
           input.type='radio';input.name=cfg.id+'-'+q.id;
           input.value=q.kind==='truefalse'?option.toLowerCase():option;
-          // Never select an MCQ answer by default. Only restore one that
-          // the learner previously selected and saved on this device.
+          // Fresh pilot visits always begin blank; moving around within the
+          // same attempt retains the answer until the page is reopened.
           input.checked=!!String(value??'').trim()&&normal(value)===normal(input.value);
           input.addEventListener('change',()=>{setResponse(q.id,input.value);resetFeedback();});
           label.append(input,document.createTextNode(option));
           choices.append(label);
         });
         answerMount.append(choices);
-        if(focusPilot){
-          const clear=$('button','catchup-clear-answer','Clear selection');
-          clear.type='button';
-          clear.hidden=!String(value??'').trim();
-          clear.addEventListener('click',()=>{
-            delete state.responses[q.id];delete state.checked[q.id];save(cfg.id,state);
-            choices.querySelectorAll('input[type="radio"]').forEach(input=>input.checked=false);
-            clear.hidden=true;
-            const note=box.querySelector('.catchup-saved-selection');if(note)note.remove();
-            resetFeedback();
-          });
-          choices.querySelectorAll('input[type="radio"]').forEach(input=>{
-            input.addEventListener('change',()=>{
-              clear.hidden=false;
-              const note=box.querySelector('.catchup-saved-selection');if(note)note.remove();
-            });
-          });
-          answerMount.append(clear);
-        }
       }else if(q.kind==='match'){
         const used=Array.isArray(value)?value:[];
         const grid=$('div','catchup-match');
@@ -414,9 +401,6 @@
           if(explanation)explanation.focus({preventScroll:true});
         });
         box.append(checkOne);
-        // Clear-selection is handled on click rather than input/change.
-        const clear=box.querySelector('.catchup-clear-answer');
-        if(clear)clear.addEventListener('click',updateCheck);
       }
       const node=feedback(q);if(node)box.append(node);
       return box;
