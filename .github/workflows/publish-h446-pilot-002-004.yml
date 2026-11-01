@@ -1,0 +1,66 @@
+name: Publish reviewed H446 8-page booklet PDFs 002 and 004
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_pilots_002_004.py'
+      - '.github/workflows/publish-h446-pilot-002-004.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h446-reviewed-pilots-002-004
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install booklet dependencies and fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-lato fonts-dejavu-core
+          python -m pip install 'reportlab==4.2.5' 'pypdf==5.1.0'
+      - name: Regenerate reviewed eight-page booklets
+        run: |
+          python tools/independent_booklets/publish_h446_pilots_002_004.py
+          python - <<'PY'
+          from pathlib import Path
+          from pypdf import PdfReader
+          for n in (2,4):
+              f=Path(f'offline/booklets/h446/H446_Lesson_{n:03d}_8PAGE_REVIEW_BW_A4.pdf')
+              assert f.is_file() and f.stat().st_size>20000, f
+              pdf=PdfReader(str(f))
+              assert len(pdf.pages)==8, f'{f}: {len(pdf.pages)} pages'
+              assert all(abs(float(p.mediabox.width)-595.2756)<1 and abs(float(p.mediabox.height)-841.8898)<1 for p in pdf.pages)
+              assert all(p.extract_text().strip() for p in pdf.pages)
+              print(f, 'verified', len(pdf.pages), 'A4 pages')
+          PY
+      - name: Commit reviewed PDFs only (catalogue stays unchanged until verified)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_Lesson_002_8PAGE_REVIEW_BW_A4.pdf offline/booklets/h446/H446_Lesson_004_8PAGE_REVIEW_BW_A4.pdf
+          if git diff --cached --quiet; then
+            echo 'No PDF changes'
+          else
+            git commit -m 'Publish eight-page reviewed H446 print drafts for lessons 002 and 004'
+            pushed=0
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then pushed=1; break; fi
+              sleep 3
+            done
+            test "$pushed" -eq 1
+          fi
