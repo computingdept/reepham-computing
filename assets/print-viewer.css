@@ -1,0 +1,38 @@
+@import url("/assets/synergy-logo.css?v=20261101-logo1");
+:root{--green:#285348;--ink:#30383a;--line:#d5ddda;--header-height:54px}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:#edf1ef}
+button,a{font:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid #bd7d08;outline-offset:2px}
+.skip{position:absolute;top:-100px;left:8px;padding:8px;background:white;z-index:100}
+.skip:focus{top:4px}
+.viewer-header{height:var(--header-height);display:grid;grid-template-columns:108px minmax(0,1fr) 128px;align-items:center;gap:5px;padding:0 10px;background:#fff;border-bottom:2px solid var(--green)}
+.viewer-left,.viewer-actions{display:flex;align-items:center;gap:3px}
+.viewer-actions{justify-content:flex-end}
+.icon-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;border-radius:7px;color:#546760;text-decoration:none}
+.icon-link:hover{background:#eff3f0;color:var(--green)}
+svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+h1{font-size:clamp(13px,1.5vw,17px);font-weight:750;line-height:1.2;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;letter-spacing:-.01em}
+#viewerPrint{border:1px solid #bbc9c1;background:#fff;color:var(--green);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 9px;font-size:13px;font-weight:750;cursor:pointer}
+#viewerPrint:hover:not(:disabled){background:#eaf3ed}
+#viewerPrint:disabled{opacity:.5;cursor:default}
+#viewerPrint svg{width:17px;height:17px}
+.synergy-symbol{display:block;width:34px;height:34px;flex:0 0 34px;background:var(--synergy-logo-image) center/contain no-repeat}
+.preview{height:calc(100dvh - var(--header-height));width:100%;overflow:auto;background:#e6ebe8}
+#viewerFrame{display:block;width:100%;height:100%;border:0;background:#fff}
+#viewerFrame[hidden]{display:none}
+.viewer-error{max-width:650px;margin:28px auto;padding:20px;border:1px solid #d7a9a9;background:#fff;border-radius:10px}
+.viewer-fallback{position:fixed;bottom:12px;right:12px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px #0001;font-size:12px}
+.viewer-fallback p{margin:0;max-width:330px}
+.viewer-fallback a{color:var(--green);font-weight:800;white-space:nowrap}
+.viewer-fallback[hidden]{display:none}
+@media(max-width:540px){
+ .viewer-header{grid-template-columns:94px minmax(0,1fr) 93px;padding:0 5px}
+ .icon-link{width:42px;height:44px;flex-basis:42px}
+ #viewerPrint{font-size:0;padding:0;width:42px;height:42px}
+ #viewerPrint svg{width:20px;height:20px}
+ .synergy-symbol{width:30px;height:30px;flex-basis:30px}
+ .viewer-fallback{left:8px;right:8px;bottom:8px;justify-content:space-between}
+ .viewer-fallback p{font-size:11px}
+}
+@media print{.viewer-header,.viewer-fallback,.viewer-error{display:none!important}.preview{height:100%;overflow:visible}}

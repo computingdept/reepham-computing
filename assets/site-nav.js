@@ -225,7 +225,37 @@
       legacyRevision.classList.add('synergy-corners');
     }
   }
-  function ready(){init();positionCorners();}
+  /* Route existing student-facing PDF Print links into the one consistent
+     viewer. Download and Read actions are intentionally left unchanged.
+     Event delegation supports dynamically generated J277/H446/KS3 tiles. */
+  function enablePdfPrintViewer(){
+    document.addEventListener('click',function(event){
+      if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+      const link=event.target.closest&&event.target.closest('a[href]');
+      if(!link||link.hasAttribute('download')||link.dataset.printViewer==='off')return;
+      const text=(link.textContent||'').trim();
+      const title=(link.getAttribute('aria-label')||'').trim();
+      const marked=link.matches('.lesson-action-print, .lesson-action-print-draft, .print')||
+        /(?:^|\s|🖨)print(?:\s|$|[-:])/i.test(text)||/(?:^|\s)print(?:[-\s:]|$)/i.test(title);
+      if(!marked)return;
+      let target;
+      try{target=new URL(link.href,location.href);}catch(_){return;}
+      if(target.origin!==location.origin||!target.pathname.toLowerCase().endsWith('.pdf'))return;
+      const lesson=link.closest('.lesson-entry');
+      const lessonTitle=lesson?.querySelector('.lesson-tile-title')?.textContent?.trim();
+      const lessonNumber=lesson?.querySelector('.lesson-tile-number')?.textContent?.trim();
+      let label=lessonTitle?(lessonNumber&&/^\d+$/.test(lessonNumber)?'Lesson '+lessonNumber+' · ':'')+lessonTitle:
+        title||'Printable resource';
+      label=label.replace(/^(?:Open\s+)?(?:print[-\s]ready|print)(?:\s+the)?\s*/i,'').trim()||'Printable resource';
+      const url=new URL('/print-viewer.html',location.origin);
+      url.searchParams.set('file',target.pathname+target.search);
+      url.searchParams.set('from',location.pathname+location.search+location.hash);
+      url.searchParams.set('title',label.slice(0,110));
+      event.preventDefault();
+      location.assign(url.pathname+url.search);
+    },true);
+  }
+  function ready(){init();positionCorners();enablePdfPrintViewer();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});
   else ready();
 })();
