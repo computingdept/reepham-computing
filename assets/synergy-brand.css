@@ -207,42 +207,16 @@ body.central-legacy-hub .top .hubhome.synergy-brand .synergy-subline {
 
 
 /* Lesson header consolidation · 2026-11-01.
-   On phones the live blue/green/orange cues are already repeated with
-   readable labels in the bottom lesson key. Keep those bottom cues and use
-   their vacated header space for the existing Synergy Assist logo.
-   On classroom/tablet layouts the large teaching signal tiles are NOT
-   duplicated by a bottom key, so retain them. Branding is decorative. */
+   Keep the mobile teaching cue icons hidden here because they already appear
+   in the bottom lesson key. The shared site-nav.js/site-nav.css now owns the
+   single Synergy Assist mark at the far right of the lesson navigation.
+   Do not add another mark to #mobile-lesson-status or .signal-wrap. */
 @media (max-width: 700px) {
   body .navwrap #mobile-lesson-status .mobile-lesson-signals {
     display: none !important;
   }
-  body .navwrap #mobile-lesson-status::after {
-    content: "";
-    display: block;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    margin-left: auto;
-    background-image: var(--synergy-logo-image);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
   /* The left edge stays reserved for the existing Home/course-back action. */
   body .navwrap .course-back::before {
     display: none !important;
-  }
-}
-@media (min-width: 701px) {
-  body .signal-wrap::after {
-    content: "";
-    display: block;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    background-image: var(--synergy-logo-image);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
   }
 }
