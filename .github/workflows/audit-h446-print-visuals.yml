@@ -1,0 +1,45 @@
+name: Audit H446 print diagrams and PDF preflight
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/audit_h446_print_visuals.py'
+      - '.github/workflows/audit-h446-print-visuals.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-print-visual-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install inspection dependencies
+        run: python -m pip install 'beautifulsoup4==4.12.3' 'PyMuPDF==1.26.4'
+      - name: Compare lesson SVGs with print PDFs
+        run: |
+          python tools/independent_booklets/audit_h446_print_visuals.py
+          test -s offline/booklets/h446/H446_VISUAL_AUDIT.json
+          test -s offline/booklets/h446/H446_VISUAL_AUDIT.md
+      - name: Commit read-only audit outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_VISUAL_AUDIT.json offline/booklets/h446/H446_VISUAL_AUDIT.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Audit H446 printed booklet visual dependencies'
+          for i in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
