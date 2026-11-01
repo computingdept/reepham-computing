@@ -46,6 +46,12 @@ def main():
         records.append({'lesson':n,'title':entry.get('title',''),
             'priority':priority,'diagrams':diagrams,'pdf':pdfrec,
             'teacher_approved':bool(entry.get('teacher_approved'))})
+    # A published catalogue target must resolve to a real PDF in the repository.
+    # Never report the course as complete if the files were only generated
+    # in a temporary runner directory and not actually committed.
+    missing=[x['lesson'] for x in records if not x['pdf']['exists']]
+    if missing:
+        raise RuntimeError(f'Broken print catalogue: {len(missing)} missing PDFs; examples {missing[:20]}')
     count=Counter(x['priority'] for x in records)
     audit={'generated_utc':datetime.now(timezone.utc).isoformat(),
            'total':len(records),'priority_counts':dict(count),'records':records}
