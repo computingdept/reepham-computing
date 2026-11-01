@@ -220,7 +220,7 @@
    if(!panel.hidden&&!panel.contains(e.target)&&e.target!==launch&&!launch.contains(e.target)){panel.hidden=true;launch.setAttribute('aria-expanded','false');}
   });
   document.addEventListener('click',e=>{
-   if(e.target.closest('.phase-nav,.catchup-nav,.course-nav,.year-switch,[data-page],.lesson-tile-open,.lesson-grid a,[data-tab]'))stop();
+   if(e.target.closest('.phase-nav,.catchup-nav,.course-nav,.year-switch,.nav-tools,#advance,#previous,.control-btn,.back-btn,[data-page],.lesson-tile-open,.lesson-grid a,[data-tab]'))stop();
   },true);
   window.addEventListener('pagehide',()=>{stop();unsubscribe();});
  }
