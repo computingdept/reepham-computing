@@ -113,3 +113,35 @@ body .sidebar .course::before {
   letter-spacing: .02em;
   color: #fff;
 }
+
+/* School selector stays school-aware; only its masthead is trust-branded. */
+.school-chooser .chooser-head-inner .chooser-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--synergy-ink, #30383a);
+  text-decoration: none;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: none;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-name {
+  display: block;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.12 Arial, Helvetica, sans-serif;
+  letter-spacing: .06em;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-subline {
+  display: block;
+  margin-top: 3px;
+  font: 600 11px/1.2 Arial, Helvetica, sans-serif;
+  color: var(--synergy-muted, #626b68);
+}
+@media (max-width: 550px) {
+  .school-chooser .chooser-head-inner .chooser-brand .synergy-brand-icon {
+    width: 34px; height: 34px;
+  }
+}
