@@ -269,7 +269,9 @@
     };
     window.speechSynthesis.speak(utterance);
   }
-  loadPrefs();applyPrefs();
+  loadPrefs();
+  if(sharedVoice)prefs.rate=String(sharedVoice.getRate());
+  applyPrefs();
   if(sharedVoice){
     sharedVoice.subscribe(()=>sharedVoice.populate(voiceSelect));
     voiceSelect.addEventListener('change',()=>{
