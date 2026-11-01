@@ -352,3 +352,62 @@ body.catchup-focused-pilot .catchup-nav{margin-top:10px}
  }
  body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button{flex:1}
 }
+
+/* Focused J277/H446 Lesson 001 pilots: a single answer-checking flow.
+   The phase bar handles stage navigation; no duplicate bottom stage buttons. */
+body.catchup-focused-pilot #catchup-nav{display:none!important}
+body.catchup-focused-pilot .catchup-question{
+ border-color:#c8d7d0;background:#fff
+}
+body.catchup-focused-pilot .catchup-check-one{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:46px;margin-top:12px;padding:10px 18px;
+ background:#184c36;border-color:#184c36;color:#fff;
+ font-size:15px;font-weight:800;border-radius:8px
+}
+body.catchup-focused-pilot .catchup-check-one:disabled{background:#9daaa3;border-color:#9daaa3}
+body.catchup-focused-pilot .catchup-feedback{
+ margin-top:15px;padding:15px 17px;
+ border:2px solid #397752;border-left-width:6px;border-radius:10px;
+ background:#e8f5ed;color:#153d28;
+ font-size:16px;line-height:1.5
+}
+body.catchup-focused-pilot .catchup-feedback.review{
+ background:#fff6df;color:#533e16;border-color:#b98b35
+}
+body.catchup-focused-pilot .catchup-feedback strong{
+ display:block;font-size:20px;line-height:1.25;margin-bottom:8px
+}
+body.catchup-focused-pilot .catchup-feedback p{
+ margin:7px 0;font-size:16px;line-height:1.5
+}
+body.catchup-focused-pilot .catchup-feedback .catchup-correct-answer{
+ font-weight:800;font-size:18px;line-height:1.4;margin:9px 0
+}
+body.catchup-focused-pilot .catchup-feedback .catchup-feedback-explanation{
+ font-size:16px;line-height:1.5
+}
+body.catchup-focused-pilot .catchup-feedback:focus{outline:3px solid #c48a2d;outline-offset:3px}
+body.catchup-focused-pilot .catchup-saved-selection{
+ margin:0 0 8px;color:#375d72;font-size:13px;font-weight:650
+}
+body.catchup-focused-pilot .catchup-clear-answer{
+ min-height:42px;margin-top:8px;padding:6px 11px;
+ border:1px solid #9caeb0;background:#f5f8f7;color:#304e51;
+ border-radius:7px;font-size:13px;font-weight:700;cursor:pointer
+}
+body.catchup-focused-pilot .catchup-question-pager{
+ border-top:1px solid #dce5e0;padding-top:9px;margin-top:14px
+}
+body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button{
+ min-height:46px;border-color:#8caea3;color:#174c39;
+ font-size:14px
+}
+body.catchup-focused-pilot .catchup-finish{margin:11px 0 0}
+@media(max-width:620px){
+ body.catchup-focused-pilot .catchup-feedback{padding:13px 14px}
+ body.catchup-focused-pilot .catchup-feedback strong{font-size:19px}
+ body.catchup-focused-pilot .catchup-feedback p{font-size:16px}
+ body.catchup-focused-pilot .catchup-feedback .catchup-correct-answer{font-size:17px}
+ body.catchup-focused-pilot .catchup-check-one{width:100%;min-height:47px}
+}
