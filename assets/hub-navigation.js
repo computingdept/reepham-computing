@@ -276,6 +276,17 @@
     if(!top||!topline||!resources||!year||!key||!terms)return;
     if(top.querySelector('.synergy-course-controls'))return;
     watchUsageKey(terms);
+    // Preserve each button and its listener; shorten only the visible year
+    // label on narrow phones, retaining full accessible names.
+    year.querySelectorAll('.year-btn[data-year]').forEach(button=>{
+      const n=String(button.dataset.year||'');
+      if(!/^\d+$/.test(n)||button.querySelector('.year-word'))return;
+      const word=document.createElement('span');
+      word.className='year-word';
+      word.textContent='Year ';
+      button.setAttribute('aria-label','Year '+n);
+      button.replaceChildren(word,document.createTextNode(n));
+    });
     const controls=document.createElement('div');
     controls.className='synergy-course-controls';
     controls.setAttribute('aria-label','Year and course resources');
