@@ -355,12 +355,51 @@
     const heading=el('h2','', 'Page '+n);
     inner.append(heading);
     if(!lines.length){
-      inner.append(el('p','', 'No selectable text was found on this page. View the original PDF for illustrations or scanned content.'));
+      inner.append(el('p','reader-source-note', 'No selectable text was found on this PDF page. Use its original-page image for the questions and diagrams.'));
     }else{
       const section=el('section','guide-extracted-lines');
       section.setAttribute('aria-label','Automatically extracted page text');
       for(const item of lines)section.append(el('p','reader-highlight-target guide-extracted-line',item));
       inner.append(section);
+    }
+    if(knownLessonCompanion){
+      // The page image is rendered from the SAME PDF, on demand. It preserves
+      // diagrams, tables, maths symbols and the original exact layout without
+      // introducing a second source or any model-answer reveal controls.
+      const exact=el('details','reader-exact-page');
+      const exactLabel=el('summary','','View original PDF page '+n+' (diagrams and exact layout)');
+      const exactBody=el('div','reader-exact-body');
+      exact.append(exactLabel,exactBody);
+      inner.append(exact);
+      let imageLoaded=false,imageLoading=false;
+      exact.addEventListener('toggle',async()=>{
+        if(!exact.open||imageLoaded||imageLoading)return;
+        imageLoading=true;
+        exactBody.replaceChildren(el('p','', 'Loading original PDF page…'));
+        try{
+          const viewport=page.getViewport({scale:1.6});
+          const canvas=document.createElement('canvas');
+          canvas.width=Math.ceil(viewport.width);
+          canvas.height=Math.ceil(viewport.height);
+          canvas.setAttribute('role','img');
+          canvas.setAttribute('aria-label','Original PDF page '+n+' including its diagrams and layout');
+          const context=canvas.getContext('2d',{alpha:false});
+          if(!context)throw Error('Canvas unavailable');
+          await page.render({canvasContext:context,viewport}).promise;
+          exactBody.replaceChildren(canvas);
+          imageLoaded=true;
+        }catch(_){
+          const link=el('a','', 'Open the original PDF');
+          link.href=pdf;link.target='_blank';link.rel='noopener';
+          exactBody.replaceChildren(el('p','', 'This device could not display the original page here.'),link);
+        }finally{imageLoading=false;}
+      });
+      if(!lines.length){
+        // On image-only pages the exact original page is necessary: extractable
+        // text cannot provide an accessible equivalent without a reviewed OCR.
+        exact.open=true;
+        exact.dispatchEvent(new Event('toggle'));
+      }
     }
     reading.replaceChildren(inner);
     reading.tabIndex=-1;applyPrefs();
