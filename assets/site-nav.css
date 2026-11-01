@@ -161,3 +161,22 @@ body.synergy-legacy-corners > .synergy-corner-mark{
 @media print{
   body.synergy-legacy-corners > .synergy-corner-mark{display:none!important;}
 }
+
+/* In the right-aligned identity lock-up the actual symbol sits at the
+   outermost right edge (wordmark, then logo). */
+.synergy-corners > .synergy-brand > .synergy-brand-icon,
+.synergy-corners > .hubhome.synergy-brand > .synergy-brand-icon{
+  order:2;
+}
+.synergy-corners > .synergy-brand > .brand-copy,
+.synergy-corners > .synergy-brand > span:not(.synergy-brand-icon),
+.synergy-corners > .hubhome.synergy-brand > .brand{
+  order:1;
+}
+.synergy-inline-brand.synergy-corners > .synergy-brand-icon{
+  order:3;
+  margin-left:auto;
+}
+.synergy-inline-brand.synergy-corners > strong{
+  order:1;
+}
