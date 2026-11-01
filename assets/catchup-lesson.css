@@ -403,3 +403,57 @@ body.catchup-focused-pilot .catchup-finish{margin:11px 0 0}
  body.catchup-focused-pilot .catchup-feedback .catchup-correct-answer{font-size:17px}
  body.catchup-focused-pilot .catchup-check-one{width:100%;min-height:47px}
 }
+
+/* Focused 001 pilots: replace oversized phone question buttons with compact,
+   tappable chevrons. Keep full text labels on desktop and for screen readers. */
+body.catchup-focused-pilot .catchup-pager-center{
+  flex:1 1 auto;min-width:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;text-align:center
+}
+body.catchup-focused-pilot .catchup-pager-chevron,
+body.catchup-focused-pilot .catchup-question-dots,
+body.catchup-focused-pilot .catchup-swipe-hint{display:none}
+@media(max-width:850px){
+  body.catchup-focused-pilot .catchup-question-pager{
+    display:grid;grid-template-columns:44px minmax(0,1fr) 44px;
+    gap:5px;align-items:center;justify-content:stretch;
+    margin:7px 0 12px;padding:0 0 9px;border-top:0;
+    border-bottom:1px solid #dce5e0;flex-wrap:nowrap
+  }
+  body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button{
+    width:44px;height:44px;min-width:44px;min-height:44px;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid #80a7c2;background:#c1e5f5;color:#0a3258;
+    border-radius:10px
+  }
+  body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button:disabled{
+    opacity:.38;cursor:default
+  }
+  body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button:focus-visible{
+    outline:3px solid #bb8523;outline-offset:2px
+  }
+  body.catchup-focused-pilot .catchup-pager-label{display:none}
+  body.catchup-focused-pilot .catchup-pager-chevron{
+    display:inline-flex;width:23px;height:23px;align-items:center;justify-content:center
+  }
+  body.catchup-focused-pilot .catchup-pager-chevron svg{display:block;width:23px;height:23px}
+  body.catchup-focused-pilot .catchup-question-count{
+    order:0;display:block;width:auto;font-size:13px;
+    font-weight:800;line-height:1.2;color:#0a3258;
+    white-space:normal
+  }
+  body.catchup-focused-pilot .catchup-question-dots{
+    display:flex;align-items:center;justify-content:center;gap:5px
+  }
+  body.catchup-focused-pilot .catchup-question-dot{
+    width:7px;height:6px;border-radius:50%;
+    background:#bdcfdc;flex:0 0 auto
+  }
+  body.catchup-focused-pilot .catchup-question-dot.is-current{
+    width:19px;border-radius:99px;background:#3676a4
+  }
+  body.catchup-focused-pilot .catchup-swipe-hint{
+    display:block;color:#586b76;font-size:10px;line-height:1.1
+  }
+}
