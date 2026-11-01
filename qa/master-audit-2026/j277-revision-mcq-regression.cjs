@@ -8,6 +8,31 @@ const views=[['classroom TV',1920,1080],['phone',390,844]];
 let checks=0;
 const failures=[];
 function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};failures.push(fail);console.error('J277_MCQ_FAIL '+JSON.stringify(fail));}}
+// Header Tools must be the SAME central widget used by Catch Up, not a
+// second floating button. Inspect both classroom and mobile views.
+async function checkPracticeTools(page,view,course,id){
+ await page.waitForFunction(()=>!!document.querySelector('header.practice-nav > #synergyListenLaunch'),null,{timeout:9000});
+ const layout=await page.evaluate(()=>{
+  const launch=document.getElementById('synergyListenLaunch');
+  const header=document.querySelector('header.practice-nav');
+  const panel=document.getElementById('synergyListenPanel');
+  const r=launch.getBoundingClientRect(),h=header.getBoundingClientRect();
+  return {count:document.querySelectorAll('#synergyListenLaunch').length,
+   inHeader:header.contains(launch),position:getComputedStyle(launch).position,
+   inBounds:r.width>35&&r.left>=-2&&r.right<=innerWidth+2,
+   inTopBar:r.top>=h.top-2&&r.bottom<=h.bottom+2,
+   iconOnly:innerWidth>620||getComputedStyle(launch.querySelector('.synergy-voice-launch-label')).display==='none',
+   noOverflow:document.documentElement.scrollWidth<=innerWidth+5,
+   panelExists:!!panel,markup:launch.getAttribute('aria-controls')};
+ });
+ assert(layout.count===1&&layout.inHeader&&layout.position==='static'&&layout.inBounds&&
+  layout.inTopBar&&layout.iconOnly&&layout.noOverflow&&layout.panelExists&&
+  layout.markup==='synergyListenPanel',view+' '+course+' '+id+' accessible header Tools not floating',layout);
+ await page.locator('#synergyListenLaunch').click();
+ assert(await page.locator('#synergyListenPanel').isVisible(),view+' '+course+' '+id+' Tools panel opens');
+ await page.keyboard.press('Escape');
+ assert(await page.locator('#synergyListenPanel').isHidden(),view+' '+course+' '+id+' Tools panel closes');
+}
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
  try{
@@ -285,6 +310,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     try{
      const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
      assert(resp?.status()===200,view+' '+id+' HTTP 200',resp?.status());
+     if(id==='1-1')await checkPracticeTools(page,view,'J277',id);
      const expectedCount={'1-1':5,'1-2':15,'1-3':7,'1-4':3,'1-5':3,'1-6':3,'2-1':11,'2-2':15,'2-3':4,'2-4':2,'2-5':2}[id];
      assert((await page.locator('#topic-grid .topic').count())===expectedCount,view+' '+id+' small skills');
      const bank=await page.evaluate(()=>({skills:SKILLS.map(s=>({id:s.id,title:s.title,count:s.questions.length,valid:s.questions.every(q=>q.options.length===4&&q.options.includes(q.answer)&&new Set(q.options).size===4)})),section:J277_SECTION.code,links:SKILLS.map(s=>({id:s.id,mapped:!!window.J277_RESOURCE_INDEX.skills[s.id],lessons:window.J277_RESOURCE_INDEX.skills[s.id]?.lessons||[],guide:window.J277_RESOURCE_INDEX.pageLabel(s.id)}))}));
@@ -380,6 +406,7 @@ function assert(ok,label,detail){checks++;if(!ok){const fail={label,detail};fail
     try{
       const resp=await page.goto(url,{waitUntil:'networkidle',timeout:25000});
       assert(resp?.status()===200,view+' H446 '+id+' HTTP 200',resp?.status());
+      if(id==='1-1'||id==='1-4')await checkPracticeTools(page,view,'H446',id);
       await page.waitForFunction(()=>document.querySelector('.rhsc-progress-summary:not([hidden])'));
       const before=await page.evaluate(()=>({
         topics:document.querySelectorAll('#topic-grid .topic').length,
