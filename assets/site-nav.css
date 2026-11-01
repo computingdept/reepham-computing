@@ -192,3 +192,87 @@ body.central-legacy-hub .top .synergy-brand-icon{
   background-size:contain !important;
   background-position:center !important;
 }
+
+
+/* 2026-11-01: one compact hub masthead on desktop and mobile.
+   Titles sit between the existing Home control and Synergy Assist symbol.
+   Scope to the four hub pages; teaching slides and quiz UI are untouched. */
+body.course-hub .topbar.synergy-corners,
+body.learning-hub .top .top-inner.synergy-corners{
+  position:relative;
+  min-height:58px;
+  height:58px;
+  padding:6px clamp(12px,2vw,24px);
+  gap:8px;
+}
+:is(body.course-hub .topbar,body.learning-hub .top .top-inner).synergy-corners > .synergy-corner-title{
+  position:absolute;
+  z-index:1;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:block;
+  max-width:calc(100% - 120px);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-align:center;
+  pointer-events:none;
+  font:750 clamp(16px,1.7vw,20px)/1.15 "Segoe UI Variable Display","Aptos Display",system-ui,sans-serif;
+  letter-spacing:-.025em;
+  color:var(--synergy-ink,#253831);
+}
+body.course-hub .topbar.synergy-corners > .brand.synergy-brand,
+body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand{
+  position:relative;
+  z-index:2;
+}
+
+/* Retain accessible h1 content, while eliminating its duplicated visual
+   heading and the gateway subtitle from the page's vertical layout. */
+body.pilot-public:has(.top-inner .synergy-corner-title) .gateway-header,
+body.course-hub.course-inline-nav:has(.topbar .synergy-corner-title) .course-topline .course-intro{
+  display:block !important;
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:-1px !important;
+  overflow:hidden !important;
+  clip:rect(0,0,0,0) !important;
+  white-space:nowrap !important;
+  border:0 !important;
+}
+body.pilot-public:has(.top-inner .synergy-corner-title) .gateway-home{
+  margin-top:clamp(14px,2.5vw,26px);
+}
+body.course-hub.course-inline-nav:has(.topbar .synergy-corner-title) .course-topline{
+  gap:0;
+}
+body.course-hub.course-inline-nav:has(.topbar .synergy-corner-title) .course-topline .course-nav{
+  width:100%;
+}
+@media(max-width:900px){
+  body.course-hub .topbar.synergy-corners > .brand.synergy-brand .brand-copy,
+  body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand > span:not(.synergy-brand-icon){
+    display:none !important;
+  }
+}
+@media(max-width:700px){
+  body.course-hub .topbar.synergy-corners,
+  body.learning-hub .top .top-inner.synergy-corners{
+    min-height:54px;
+    height:54px;
+    padding:5px 12px;
+  }
+  :is(body.course-hub .topbar,body.learning-hub .top .top-inner).synergy-corners > .synergy-corner-title{
+    max-width:calc(100% - 114px);
+    font-size:clamp(14px,4vw,17px);
+  }
+  body.pilot-public:has(.top-inner .synergy-corner-title) .gateway-home{
+    margin-top:12px;
+  }
+}
+@media print{
+  .synergy-corner-title{display:none !important}
+}
