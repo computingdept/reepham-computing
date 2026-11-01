@@ -117,6 +117,90 @@
       return;
     }
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
+  /* One central, visual-only website identity: Home on the left, the
+     original Synergy Assist artwork on the right. Existing back links,
+     teaching phases and question engines remain in place. */
+  function positionCorners(){
+    const pathname=location.pathname;
+    function logo(mount){
+      if(!mount||mount.querySelector('.synergy-corner-mark'))return;
+      const mark=document.createElement('span');
+      mark.className='synergy-corner-mark';
+      mark.setAttribute('role','img');
+      mark.setAttribute('aria-label','Synergy Assist');
+      mount.append(mark);
+    }
+    function firstHome(mount){
+      if(!mount)return;
+      let home=mount.querySelector(':scope > a.rhsc-site-nav-home, :scope > a.home.rhsc-site-nav-home');
+      if(!home)home=button(null,'home',route,'Learning Hub home');
+      mount.insertBefore(home,mount.firstChild);
+      if(pathname==='/'||pathname==='/index.html')home.setAttribute('aria-current','page');
+      mount.classList.add('synergy-corners');
+    }
+    const top=document.querySelector('body.course-hub > header.topbar');
+    if(top){
+      firstHome(top);
+      top.classList.add('synergy-corners');
+      return; // the existing Synergy logo + wordmark is already in the masthead
+    }
+    const homeTop=document.querySelector('body.learning-hub > header.top .top-inner');
+    const chooser=document.querySelector('body.school-chooser > header.chooser-head .chooser-head-inner');
+    const legacyTop=document.querySelector('body.central-legacy-hub > header.top .topin');
+    if(homeTop||chooser||legacyTop){
+      firstHome(homeTop||chooser||legacyTop);
+      return;
+    }
+    const lessonNav=document.querySelector('.navwrap');
+    if(lessonNav){
+      const pair=lessonNav.querySelector('.rhsc-site-nav');
+      const home=pair&&pair.querySelector('.rhsc-site-nav-home');
+      if(pair&&home)pair.insertBefore(home,pair.firstChild);
+      logo(lessonNav);
+      document.body.classList.add('synergy-corners-enabled');
+      return;
+    }
+    const practice=document.querySelector('header.practice-nav');
+    if(practice){
+      const pair=practice.querySelector('.rhsc-site-nav');
+      const home=pair&&pair.querySelector('.rhsc-site-nav-home');
+      if(pair&&home)pair.insertBefore(home,pair.firstChild);
+      logo(practice);
+      practice.classList.add('synergy-corners');
+      return;
+    }
+    const catchup=document.querySelector('.catchup-top-inner');
+    if(catchup){
+      const existing=catchup.querySelector('a[href*="-hub.html"]');
+      if(existing&&!catchup.querySelector('.rhsc-site-nav')){
+        const group=pair(existing,existing.getAttribute('href'),'course lessons');
+        if(group){
+          const home=group.querySelector('.rhsc-site-nav-home');
+          if(home)group.insertBefore(home,group.firstChild);
+          catchup.insertBefore(group,catchup.firstChild);
+        }
+      }
+      const title=catchup.querySelector('strong');
+      if(title&&/RHS Computing|RHSC Computing/i.test(title.textContent))title.textContent='Catch Up';
+      logo(catchup);
+      catchup.classList.add('synergy-corners');
+      return;
+    }
+    const legacySlides=document.querySelector('body > aside.sidebar');
+    if(legacySlides){
+      const home=button(null,'home',route,'Learning Hub home');
+      legacySlides.insertBefore(home,legacySlides.firstChild);
+      logo(document.body);
+      document.body.classList.add('synergy-legacy-corners');
+      return;
+    }
+    const legacyRevision=document.querySelector('.synergy-inline-brand');
+    if(legacyRevision){
+      firstHome(legacyRevision);
+      legacyRevision.classList.add('synergy-corners');
+    }
+  }
+  function ready(){init();positionCorners();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});
+  else ready();
 })();

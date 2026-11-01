@@ -1,3 +1,4 @@
+@import url("/assets/synergy-logo.css?v=20261101-logo1");
 /* RHSC shared website navigation. Icon-only and scoped: does not style teaching phases. */
 .rhsc-site-nav{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0}
 .rhsc-site-nav-button,
@@ -39,3 +40,155 @@ a.rhsc-site-nav-button,
   .topbar:has(> .rhsc-site-nav){gap:6px;padding-left:7px;padding-right:7px}
 }
 @media print{.rhsc-site-nav,.rhsc-site-nav-button{display:none!important}}
+
+/* Shared identity: separate the reliable Home control on the left from
+   the genuine Synergy Assist brand on the right. No classroom phase changes. */
+:is(body.course-hub .topbar, body.learning-hub .top .top-inner,
+    body.school-chooser .chooser-head-inner,
+    body.central-legacy-hub .top .topin).synergy-corners{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+:is(body.course-hub .topbar, body.learning-hub .top .top-inner,
+    body.school-chooser .chooser-head-inner,
+    body.central-legacy-hub .top .topin).synergy-corners > .rhsc-site-nav-home{
+  order:-1;
+  flex:0 0 44px;
+}
+body.course-hub .topbar.synergy-corners > .brand.synergy-brand,
+body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand,
+body.school-chooser .chooser-head-inner.synergy-corners > .brand.synergy-brand,
+body.central-legacy-hub .top .topin.synergy-corners > .hubhome.synergy-brand{
+  order:2;
+  margin-left:auto;
+}
+body.course-hub .topbar.synergy-corners > a.home:not(.rhsc-site-nav-home){
+  display:none !important;
+}
+
+/* Preserve left-hand navigation and course return on every lesson screen. */
+body.synergy-corners-enabled .navwrap .course-back::before{
+  content:none;
+  background:none;
+  display:none;
+}
+body.synergy-corners-enabled .navwrap > .synergy-corner-mark{
+  position:fixed;
+  z-index:45;
+  right:12px;
+  top:14px;
+  width:34px;
+  height:34px;
+  pointer-events:none;
+  background:var(--synergy-logo-image) center / contain no-repeat;
+}
+body.synergy-corners-enabled .signal-wrap .lesson-label{
+  padding-right:40px;
+}
+body .synergy-corner-mark{
+  display:block;
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  pointer-events:none;
+  background:var(--synergy-logo-image) center / contain no-repeat;
+}
+.practice-nav.synergy-corners .synergy-corner-mark{
+  margin-left:auto;
+}
+.catchup-top-inner.synergy-corners .synergy-corner-mark{
+  margin-left:auto;
+}
+.catchup-top-inner.synergy-corners > strong{
+  white-space:nowrap;
+}
+.synergy-inline-brand.synergy-corners{
+  justify-content:space-between;
+}
+.synergy-inline-brand.synergy-corners > .rhsc-site-nav-home{
+  flex:0 0 44px;
+}
+/* On phones the icon sits at the top right of the lesson navigation, not
+   over the three classroom phase/routine/response signs. */
+@media(max-width:900px){
+  body.synergy-corners-enabled .navwrap{
+    position:relative;
+  }
+  body.synergy-corners-enabled .navwrap > .synergy-corner-mark{
+    position:absolute;
+    top:5px;
+    right:9px;
+    width:32px;
+    height:32px;
+  }
+}
+@media(max-width:700px){
+  body.course-hub .topbar.synergy-corners > .brand.synergy-brand .brand-copy,
+  body.learning-hub .top .top-inner.synergy-corners > .brand.synergy-brand > span:not(.synergy-brand-icon),
+  body.central-legacy-hub .top .topin.synergy-corners > .hubhome.synergy-brand .brand{
+    display:none !important;
+  }
+  .catchup-top-inner.synergy-corners > strong{display:none;}
+  .catchup-top-inner.synergy-corners .synergy-corner-mark,
+  .practice-nav.synergy-corners .synergy-corner-mark{
+    width:30px;
+    height:30px;
+    flex-basis:30px;
+  }
+}
+@media print{
+  .synergy-corner-mark{display:none !important;}
+}
+
+/* Legacy GCSE full-screen slides: keep the Home control in the sidebar
+   and the logo on the screen's upper-right without covering navigation. */
+body.synergy-legacy-corners > aside.sidebar > .rhsc-site-nav-home{
+  align-self:flex-start;
+  flex:0 0 44px;
+  color:#fff !important;
+}
+body.synergy-legacy-corners .sidebar .course::before{
+  content:none;
+  display:none;
+}
+body.synergy-legacy-corners > .synergy-corner-mark{
+  position:fixed;
+  top:12px;
+  right:12px;
+  z-index:20;
+}
+@media print{
+  body.synergy-legacy-corners > .synergy-corner-mark{display:none!important;}
+}
+
+/* In the right-aligned identity lock-up the actual symbol sits at the
+   outermost right edge (wordmark, then logo). */
+.synergy-corners > .synergy-brand > .synergy-brand-icon,
+.synergy-corners > .hubhome.synergy-brand > .synergy-brand-icon{
+  order:2;
+}
+.synergy-corners > .synergy-brand > .brand-copy,
+.synergy-corners > .synergy-brand > span:not(.synergy-brand-icon),
+.synergy-corners > .hubhome.synergy-brand > .brand{
+  order:1;
+}
+.synergy-inline-brand.synergy-corners > .synergy-brand-icon{
+  order:3;
+  margin-left:auto;
+}
+.synergy-inline-brand.synergy-corners > strong{
+  order:1;
+}
+
+/* Override an earlier trust-brand reset that used background:transparent
+   at higher specificity, inadvertently suppressing the original logo. */
+body.course-hub .topbar .synergy-brand-icon,
+body.learning-hub .top .synergy-brand-icon,
+body.school-chooser .chooser-head .synergy-brand-icon,
+body.central-legacy-hub .top .synergy-brand-icon{
+  background-image:var(--synergy-logo-image) !important;
+  background-repeat:no-repeat !important;
+  background-size:contain !important;
+  background-position:center !important;
+}
