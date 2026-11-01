@@ -146,7 +146,7 @@
  function readVisibleContent(){
   const root=readingRoot();
   if(!root)return [];
-  const elements=root.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,pre,summary,.donow-question,.catchup-question');
+  const elements=root.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,pre,summary,.donow-question,.catchup-question,.lesson-tile-open,.term-head strong');
   const out=[];
   for(const el of elements){
    if(!nodeVisible(el))continue;
@@ -157,6 +157,19 @@
    if(out.length>=100)break;
   }
   return out;
+ }
+ function navigationLabels(){
+  const nodes=document.querySelectorAll('header a,header button,.course-nav .tab,.year-switch .year-btn,.rhsc-site-nav-button');
+  const output=[];
+  for(const node of nodes){
+   if(node.closest('[hidden],[aria-hidden="true"]'))continue;
+   const style=getComputedStyle(node);
+   if(style.display==='none'||style.visibility==='hidden'||!node.getClientRects().length)continue;
+   const text=(node.getAttribute('aria-label')||node.textContent||'').trim().replace(/\s+/g,' ');
+   if(text&&!output.includes(text))output.push(text);
+   if(output.length>=20)break;
+  }
+  return output;
  }
  function icon(){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/></svg>';
@@ -186,9 +199,9 @@
   speedSelect.value=String(prefs.rate);speedLabel.append(speedSelect);
   const actions=document.createElement('div');actions.className='synergy-voice-actions';
   function button(text){const b=document.createElement('button');b.type='button';b.textContent=text;return b;}
-  const start=button('Play page'),pauseButton=button('Pause'),stopButton=button('Stop'),tryVoice=button('Preview voice');
+  const start=button('Play page'),navRead=button('Read navigation'),pauseButton=button('Pause'),stopButton=button('Stop'),tryVoice=button('Preview voice');
   pauseButton.disabled=true;stopButton.disabled=true;
-  actions.append(start,pauseButton,stopButton);
+  actions.append(start,navRead,pauseButton,stopButton);
   const privacy=document.createElement('p');privacy.className='synergy-voice-note';
   privacy.textContent='On-device voices are preferred. Online voices may send spoken text to their provider.';
   const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
@@ -209,6 +222,7 @@
    if(chosen&&chosen.length<1501)return speak([chosen],notify);
    return speak(readVisibleContent(),notify);
   });
+  navRead.addEventListener('click',()=>speak(navigationLabels(),notify));
   pauseButton.addEventListener('click',()=>togglePause());
   stopButton.addEventListener('click',stop);
   tryVoice.addEventListener('click',()=>preview(notify));
