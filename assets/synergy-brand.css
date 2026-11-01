@@ -1,0 +1,78 @@
+/* Synergy Assist identity · central visual-only header branding.
+   Loaded after existing hub styling; no lesson/quiz scripts changed. */
+body.course-hub .topbar .brand.synergy-brand,
+body.learning-hub .top .brand.synergy-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+body.course-hub .topbar .synergy-brand-icon,
+body.learning-hub .top .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  object-fit: contain;
+  background: transparent;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  line-height: 1.18;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy strong,
+body.learning-hub .top .brand.synergy-brand .synergy-name {
+  display: block !important;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .065em;
+  white-space: nowrap;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy span,
+body.learning-hub .top .brand.synergy-brand .synergy-subline {
+  display: block !important;
+  margin: 0;
+  color: var(--synergy-muted, #626b68);
+  font: 600 11px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .015em;
+  white-space: nowrap;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy::after {
+  content: none !important;
+}
+body.learning-hub .top .brand.synergy-brand .synergy-name {
+  margin: 0;
+}
+body.learning-hub .top .brand.synergy-brand .synergy-subline {
+  margin-top: 4px;
+}
+body.course-hub .topbar .brand.synergy-brand:focus-visible,
+body.learning-hub .top .brand.synergy-brand:focus-visible {
+  outline: 3px solid var(--synergy-focus, #bd7d08);
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  body.course-hub .topbar .brand.synergy-brand .synergy-brand-icon,
+  body.learning-hub .top .brand.synergy-brand .synergy-brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+  body.course-hub .topbar .brand.synergy-brand .brand-copy strong,
+  body.learning-hub .top .brand.synergy-brand .synergy-name {
+    display: block !important;
+    font-size: 13px;
+    letter-spacing: .03em;
+  }
+  body.course-hub .topbar .brand.synergy-brand .brand-copy span,
+  body.learning-hub .top .brand.synergy-brand .synergy-subline {
+    display: block !important;
+    font-size: 10px;
+  }
+}
+@media print {
+  body.course-hub .topbar .synergy-brand-icon,
+  body.learning-hub .top .synergy-brand-icon { width: 24px; height: 24px; }
+}
