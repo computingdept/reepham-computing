@@ -1,7 +1,8 @@
-/* Synergy Assist PDF preview + accessible reading companions.
-   Source PDF remains unchanged; reading content is from approved lesson
-   material and is NOT a verbatim PDF transcript. Only matching PDFs offer
-   Reading View. All dynamic content is rendered via textContent. */
+/* Synergy Assist PDF viewer.
+   J277 Lesson 001 pilot: show the exact source PDF page (paper-first), with
+   PDF-derived speech text only. No duplicate lesson or answers are authored.
+   Revision guides retain their existing text-extraction reading mode.
+   Other approved, catalogued companions retain their legacy code path. */
 (function(){
   'use strict';
   const byId=id=>document.getElementById(id);
@@ -321,7 +322,7 @@
     tools.hidden=false;
     const note=panel.querySelector('.view-switch + .access-note');
     if(note)note.textContent=knownLessonCompanion
-      ?'Reading View uses the very same printable PDF, page by page. Write answers in the paper booklet. For diagrams, tables and exact layout, open the original PDF page below. Print opens the unchanged PDF.'
+      ?'Reading View shows the actual paper booklet page. Use page arrows and Zoom to inspect it; write answers in the printed booklet. Listen reads selectable PDF text and may not handle complex layouts perfectly. Print opens the unchanged PDF.'
       :'Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
     notice('Preparing Reading View from the original PDF.');
   }
