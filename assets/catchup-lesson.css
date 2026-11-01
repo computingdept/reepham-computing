@@ -208,3 +208,147 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
  .catchup-stage-minutes{font-size:11px;padding-top:3px}
 }
 @media print{.catchup-progress-top{display:none!important}}
+
+/* Classroom-consistent blue PHASE signs (exact palette in lesson-base.css).
+   These controls are buttons, not decorative images. */
+.catchup-progress-top{
+  gap:6px;margin-bottom:9px;
+}
+.catchup-progress-top button{
+  background:#c1e5f5;border:1px solid #7aabce;color:#0a3258;
+  min-height:48px;padding:5px 6px;gap:7px;
+  flex-direction:row;font-size:13px;border-radius:7px
+}
+.catchup-progress-top .catchup-phase-icon{
+  flex:0 0 auto;width:22px;height:22px;display:inline-flex;
+  align-items:center;justify-content:center
+}
+.catchup-progress-top .catchup-phase-icon svg{
+  width:22px;height:22px;display:block;pointer-events:none
+}
+.catchup-progress-top button[aria-current="step"]{
+  background:#a9d6ed;border:2px solid #28628d;color:#0a3258;
+  box-shadow:inset 0 0 0 1px #28628d
+}
+.catchup-progress-top button:hover:not(:disabled){background:#b5ddf2}
+@media(max-width:620px){
+  .catchup-progress-top{gap:3px;margin-bottom:7px}
+  .catchup-progress-top button{
+    min-height:52px;flex-direction:column;gap:1px;padding:4px 1px;
+    font-size:clamp(10px,2.85vw,12px)
+  }
+  .catchup-progress-top .catchup-phase-icon{width:19px;height:19px}
+  .catchup-progress-top .catchup-phase-icon svg{width:19px;height:19px}
+}
+
+/* The two approved 001 pilots: compact teaching content, normal readable
+   font sizes, and no nested scroll panes or early answer reveals. */
+[hidden]{display:none!important}
+body.catchup-focused-pilot .catchup-shell{
+  max-width:1180px;padding-left:clamp(10px,2vw,22px);
+  padding-right:clamp(10px,2vw,22px);
+  margin-bottom:20px
+}
+body.catchup-focused-pilot .catchup-card{padding:clamp(12px,1.5vw,18px)}
+body.catchup-focused-pilot .catchup-card-header{
+  margin-bottom:7px;padding-bottom:8px
+}
+body.catchup-focused-pilot .catchup-card-header .catchup-stage-heading h2{
+  font-size:clamp(18px,2.2vw,23px)
+}
+body.catchup-focused-pilot .catchup-stage-columns{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start
+}
+@media(min-width:851px){
+ body.catchup-focused-pilot .catchup-stage-columns:has(.catchup-learning-panel){
+   grid-template-columns:minmax(0,0.9fr) minmax(0,1fr);
+ }
+}
+body.catchup-focused-pilot .catchup-learning-panel,
+body.catchup-focused-pilot .catchup-activity-panel{min-width:0}
+body.catchup-focused-pilot .catchup-learning-panel{
+  border:1px solid #d5e2da;border-radius:8px;
+  background:#f8fbf9;padding:9px
+}
+body.catchup-focused-pilot .catchup-block{
+ margin:6px 0;padding:9px 11px
+}
+body.catchup-focused-pilot .catchup-block:first-child{margin-top:0}
+body.catchup-focused-pilot .catchup-block:last-of-type{margin-bottom:0}
+body.catchup-focused-pilot .catchup-block p{
+ font-size:15px;line-height:1.45;margin:3px 0
+}
+body.catchup-focused-pilot .catchup-block h3{
+ font-size:15px;line-height:1.3;margin:0 0 4px
+}
+body.catchup-focused-pilot .catchup-facts{margin:3px 0;gap:4px}
+body.catchup-focused-pilot .catchup-facts li{padding:7px;font-size:14px}
+body.catchup-focused-pilot .catchup-section-heading{
+ font-size:15px;margin:0 0 8px
+}
+body.catchup-focused-pilot .catchup-question{
+ margin:0 0 9px;padding:11px 12px
+}
+body.catchup-focused-pilot .catchup-question h3{
+ font-size:16px;line-height:1.4;margin:0 0 9px
+}
+body.catchup-focused-pilot .catchup-choices{gap:6px}
+body.catchup-focused-pilot .catchup-choice{min-height:44px;padding:7px 9px}
+body.catchup-focused-pilot .catchup-question-pager{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ margin:10px 0 5px
+}
+body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button,
+body.catchup-focused-pilot .catchup-revisit-learning{
+ border:1px solid #acc1b5;background:#fff;color:#285348;
+ border-radius:7px;min-height:44px;padding:8px 11px;
+ font-weight:750;font-size:13px;cursor:pointer
+}
+body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button:disabled{
+ cursor:default;opacity:.45
+}
+body.catchup-focused-pilot .catchup-question-count{
+ font-size:13px;white-space:nowrap;color:#3c5e4c;font-weight:700
+}
+body.catchup-focused-pilot .catchup-study-next{display:none}
+body.catchup-focused-pilot .catchup-revisit-learning{display:none}
+body.catchup-focused-pilot .catchup-actions{margin:7px 0 3px}
+body.catchup-focused-pilot .catchup-stage-score{margin:6px 0;font-size:13px}
+body.catchup-focused-pilot .catchup-nav{margin-top:10px}
+@media(min-width:1180px) and (min-height:880px){
+ body.catchup-focused-pilot .catchup-stage-columns:not(:has(.catchup-learning-panel)):not(:has(.catchup-written))
+ .catchup-activity-panel:has(.catchup-question-pager[hidden]){
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 11px
+ }
+ body.catchup-focused-pilot .catchup-activity-panel:has(.catchup-question-pager[hidden])
+ .catchup-section-heading,
+ body.catchup-focused-pilot .catchup-activity-panel:has(.catchup-question-pager[hidden]) .catchup-actions,
+ body.catchup-focused-pilot .catchup-activity-panel:has(.catchup-question-pager[hidden]) .catchup-stage-score{
+  grid-column:1/-1
+ }
+ body.catchup-focused-pilot .catchup-activity-panel:has(.catchup-question-pager[hidden]) .catchup-question{margin:0}
+}
+@media(max-width:850px){
+ body.catchup-focused-pilot .catchup-stage-columns{display:block}
+ body.catchup-focused-pilot .catchup-learning-panel{padding:10px}
+ body.catchup-focused-pilot .catchup-study-next{display:inline-flex;align-items:center;margin:10px 0 3px}
+ body.catchup-focused-pilot .catchup-revisit-learning{
+  display:inline-flex;align-items:center;margin:0 0 9px
+ }
+ body.catchup-focused-pilot .catchup-question-pager{gap:6px}
+ body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button{
+  padding:7px 8px;font-size:12px
+ }
+ body.catchup-focused-pilot .catchup-question-count{font-size:12px}
+ body.catchup-focused-pilot .catchup-card{padding:11px 10px}
+ body.catchup-focused-pilot .catchup-card-header .catchup-stage-heading h2{font-size:18px}
+}
+@media(max-width:380px){
+ body.catchup-focused-pilot .catchup-question-pager{
+  flex-wrap:wrap;justify-content:center
+ }
+ body.catchup-focused-pilot .catchup-question-count{
+  order:-1;text-align:center;width:100%
+ }
+ body.catchup-focused-pilot .catchup-question-pager .catchup-pager-button{flex:1}
+}
