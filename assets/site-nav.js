@@ -237,15 +237,30 @@
       const title=(link.getAttribute('aria-label')||'').trim();
       const marked=link.matches('.lesson-action-print, .lesson-action-print-draft, .print')||
         /(?:^|\s|🖨)print(?:\s|$|[-:])/i.test(text)||/(?:^|\s)print(?:[-\s:]|$)/i.test(title);
-      if(!marked)return;
       let target;
       try{target=new URL(link.href,location.href);}catch(_){return;}
       if(target.origin!==location.origin||!target.pathname.toLowerCase().endsWith('.pdf'))return;
+      // Both main and individual unit revision guides use the shared viewer.
+      // Downloads and print-ready editions continue using their established routes.
+      const guide=location.pathname.match(/^\/(?:j277|h446)-hub\.html$/i) &&
+        !!link.closest('#booklet') &&
+        /^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(target.pathname) &&
+        (link.matches('.action,.j277-unit-link') || /\bread\b/i.test(title));
+      if(!marked&&!guide)return;
+      if(marked&&!guide&&!link.closest('.lesson-entry')&&!link.matches('.lesson-action-print,.lesson-action-print-draft,.print'))return;
       const lesson=link.closest('.lesson-entry');
       const lessonTitle=lesson?.querySelector('.lesson-tile-title')?.textContent?.trim();
       const lessonNumber=lesson?.querySelector('.lesson-tile-number')?.textContent?.trim();
       let label=lessonTitle?(lessonNumber&&/^\d+$/.test(lessonNumber)?'Lesson '+lessonNumber+' · ':'')+lessonTitle:
-        title||'Printable resource';
+        title||text||'Printable resource';
+      if(guide){
+        const card=link.closest('.h446-guide-card,.j277-guide-column');
+        const paper=card?.querySelector('.kicker')?.textContent?.trim();
+        const topic=card?.querySelector('h3')?.textContent?.trim();
+        label=link.matches('.j277-unit-link')?
+          (title.replace(/^Read\s*/i,'').replace(/\s*PDF$/i,'').trim()||text.trim()):
+          ((paper?paper+' · ':'')+(topic||'Revision guide'));
+      }
       label=label.replace(/^(?:Open\s+)?(?:print[-\s]ready|print)(?:\s+the)?\s*/i,'').trim()||'Printable resource';
       const url=new URL('/print-viewer.html',location.origin);
       url.searchParams.set('file',target.pathname+target.search);
