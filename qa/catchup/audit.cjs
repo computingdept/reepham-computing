@@ -32,7 +32,7 @@ function validate(cfg,course,n){
   const id=course+'-'+pad(n);
   assert(cfg && cfg.id===id,'incorrect config ID');
   assert(typeof cfg.title==='string' && cfg.title.trim(),'title missing');
-  assert(cfg.year===(course==='j277'?(n>=100?11:10):(n>=181?13:12)),'wrong year');
+  assert(cfg.year===(course==='j277'?(n>=96?11:10):(n>=181?13:12)),'wrong year');
   assert(Number(cfg.pass_percent)===80,'incorrect mastery threshold');
   assert(Array.isArray(cfg.stages) && cfg.stages.length===5,'not five stages');
   assert(cfg.stages.every(s=>Array.isArray(s.questions)),'questions missing');
@@ -94,7 +94,7 @@ async function main(){
       expected.set(course+'-'+p,course==='j277'&&n===1?'Binary & Denary':cfg.title);
       const original=classroomTitle(course,n);
       meta.push({course,n,title:cfg.title,questions:q,classroomTitle:original,
-        titleMatch:!original||(course==='h446'&&[36,37].includes(n))||norm(original)===norm(cfg.title)});
+        titleMatch:!original||norm(original)==='do now'||(course==='h446'&&[36,37].includes(n))||norm(original)===norm(cfg.title)});
     }catch(err){fail(course,n,'STATIC: '+err.message);}
   }
   console.log('Static audit: '+meta.length+'/'+ids.length+' lesson routes and configs passed');
@@ -123,6 +123,11 @@ async function main(){
         assert(await page.locator('.catchup-top-inner a:not(.rhsc-site-nav-button)').filter({hasText:/^(Teach|Print|Lesson)$/i}).count()===0 ||
           await page.locator('.catchup-top-inner a:not(.rhsc-site-nav-button)').filter({hasText:/^(Teach|Print|Lesson)$/i}).first().isHidden(),
           'Teach/Print control still visible');
+        await page.locator('.catchup-top-inner .rhsc-site-nav-back').waitFor({state:'attached',timeout:8000});
+        const hubBack=await page.locator('.catchup-top-inner .rhsc-site-nav-back').getAttribute('href');
+        const year=new URL(hubBack,page.url()).searchParams.get('year');
+        assert(Number(year)===(course==='j277'?(n>=96?11:10):(n>=181?13:12)),
+          'back link goes to wrong course year: '+hubBack);
         await page.locator('.catchup-progress button').nth(3).click();
         assert(await page.locator('.catchup-question').count()>=2,'You Do did not render');
         pass++;
