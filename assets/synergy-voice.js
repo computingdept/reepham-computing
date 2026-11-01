@@ -296,7 +296,17 @@
   status.className='synergy-voice-status';status.textContent=supported?'Reads the currently visible page. Answers stay hidden until revealed.':'Speech is unavailable on this browser. Visual reading tools still work.';
   const readerControls=makeReaderControls();
   panel.append(head,readerControls,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
-  document.body.append(launch,panel);
+  // The Catch Up header is shared by J277 and H446. Its existing
+  // working button belongs beside the brand rather than over the content.
+  const catchupHeader=document.querySelector('.catchup-top-inner');
+  if(catchupHeader){
+   launch.classList.add('synergy-voice-header-launch');
+   panel.classList.add('synergy-voice-header-panel');
+   catchupHeader.append(launch);
+   document.body.append(panel);
+  }else{
+   document.body.append(launch,panel);
+  }
   const notify=message=>{
    status.textContent=message;
    pauseButton.disabled=!active;
