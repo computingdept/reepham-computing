@@ -215,10 +215,16 @@
     const voc=el('section','reader-study-aids');
     voc.id='readerVocabulary';voc.hidden=!vocab.checked;
     renderVocabulary(voc,data.vocabulary||[]);
-    const mem=el('section','reader-study-aids');
-    mem.id='readerMemory';mem.hidden=!memory.checked;
-    renderMemory(mem,data.memory_aids||[],data.memory_aids_status||'Draft — teacher review required');
-    inner.append(voc,mem);
+    inner.append(voc);
+    // Future phase: Remember It memory aids remain excluded from student
+    // reading content until specifically enabled and teacher-approved.
+    const aidPolicy=data.aid_policy||{};
+    if(aidPolicy.memory_aids_enabled===true&&aidPolicy.teacher_approved===true){
+      const mem=el('section','reader-study-aids');
+      mem.id='readerMemory';mem.hidden=!memory.checked;
+      renderMemory(mem,data.memory_aids||[],data.memory_aids_status||'Teacher-approved memory aids');
+      inner.append(mem);
+    }
     reading.replaceChildren(inner);
     reading.tabIndex=-1;
     applyPrefs();
@@ -334,8 +340,10 @@
       // lesson data. This is an editorial flag, not student authentication.
       const policy=data.aid_policy||{};
       vocab.disabled=policy.vocabulary_enabled===false;
-      memory.disabled=policy.memory_aids_enabled===false;
+      memory.disabled=!(policy.memory_aids_enabled===true&&policy.teacher_approved===true);
       vocab.checked=false;memory.checked=false;
+      const memoryField=memory.closest('label');
+      if(memoryField)memoryField.hidden=memory.disabled;
       renderReader(data);
       tools.hidden=false;
       notice('Reading View is available for this lesson.');
