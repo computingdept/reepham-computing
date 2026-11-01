@@ -23,11 +23,20 @@ async function checkPracticeTools(page,view,course,id){
    inTopBar:r.top>=h.top-2&&r.bottom<=h.bottom+2,
    iconOnly:innerWidth>620||getComputedStyle(launch.querySelector('.synergy-voice-launch-label')).display==='none',
    noOverflow:document.documentElement.scrollWidth<=innerWidth+5,
-   panelExists:!!panel,markup:launch.getAttribute('aria-controls')};
+   panelExists:!!panel,markup:launch.getAttribute('aria-controls'),
+   headerBackground:getComputedStyle(header).backgroundColor,
+   headerDivider:getComputedStyle(header).borderBottomColor,
+   headingColor:getComputedStyle(header.querySelector('.nav-title')).color,
+   backColor:getComputedStyle(header.querySelector('.rhsc-site-nav-button')).color};
  });
  assert(layout.count===1&&layout.inHeader&&layout.position==='static'&&layout.inBounds&&
   layout.inTopBar&&layout.iconOnly&&layout.noOverflow&&layout.panelExists&&
   layout.markup==='synergyListenPanel',view+' '+course+' '+id+' accessible header Tools not floating',layout);
+ assert(layout.headerBackground==='rgb(255, 255, 255)'&&
+  layout.headingColor==='rgb(23, 63, 51)'&&
+  layout.backColor==='rgb(64, 94, 80)'&&
+  layout.headerDivider==='rgb(222, 222, 222)',
+  view+' '+course+' '+id+' white shared Practice header and readable navigation',layout);
  await page.locator('#synergyListenLaunch').click();
  assert(await page.locator('#synergyListenPanel').isVisible(),view+' '+course+' '+id+' Tools panel opens');
  await page.keyboard.press('Escape');
