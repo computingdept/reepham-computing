@@ -255,7 +255,21 @@
       location.assign(url.pathname+url.search);
     },true);
   }
-  function ready(){init();positionCorners();enablePdfPrintViewer();}
+  /* One shared Listen entry point across hubs, classroom lessons, Catch Up
+     and revision pages; no individual lesson navigation needs modifying. */
+  function enableSharedListening(){
+    if(document.querySelector('script[data-synergy-voice]'))return;
+    const css=document.createElement('link');
+    css.rel='stylesheet';
+    css.href='/assets/synergy-voice.css?v=20261101-voice1';
+    css.dataset.synergyVoice='1';
+    document.head.append(css);
+    const script=document.createElement('script');
+    script.src='/assets/synergy-voice.js?v=20261101-voice1';
+    script.dataset.synergyVoice='1';
+    document.head.append(script);
+  }
+  function ready(){init();positionCorners();enablePdfPrintViewer();enableSharedListening();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});
   else ready();
 })();

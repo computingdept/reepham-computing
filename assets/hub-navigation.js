@@ -321,7 +321,7 @@
 (function(){
   if(document.querySelector('script[data-rhsc-site-nav]'))return;
   const script=document.createElement('script');
-  script.src='/assets/site-nav.js?v=20261101-pdfviewer1';
+  script.src='/assets/site-nav.js?v=20261101-voice1';
   script.dataset.rhscSiteNav='1';
   document.head.appendChild(script);
 })();

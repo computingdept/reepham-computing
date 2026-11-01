@@ -7,7 +7,8 @@
 <meta name="description" content="Synergy Assist printable resource viewer">
 <title>Print resource · Synergy Assist</title>
 <link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-send-demo1">
-<script src="/assets/print-viewer.js?v=20261101-send-demo1" defer></script>
+<script src="/assets/synergy-voice.js?v=20261101-voice1" defer></script>
+<script src="/assets/print-viewer.js?v=20261101-voice1" defer></script>
 </head>
 <body>
 <a class="skip" href="#preview">Skip to PDF preview</a>
@@ -46,10 +47,12 @@
     <output id="fontSizeValue" aria-live="polite">100%</output>
     <button type="button" id="fontUp" aria-label="Increase Reading View text size">A+</button>
   </div></div>
+  <div class="access-field"><label for="listenVoice">Voice</label><select id="listenVoice" aria-label="Choose reading voice"><option value="">Best English available</option></select></div>
+  <p class="access-note">On-device voices are preferred. Online voices may process text through their provider.</p>
   <div class="access-field"><span>Listen</span><div class="access-inline">
-    <button type="button" id="listenPlay">Play</button><button type="button" id="listenPause" disabled>Pause</button><button type="button" id="listenStop" disabled>Stop</button>
+    <button type="button" id="listenPlay">Play</button><button type="button" id="listenPause" disabled>Pause</button><button type="button" id="listenStop" disabled>Stop</button><button type="button" id="listenVoicePreview" aria-label="Preview selected reading voice">Preview voice</button>
     <label for="listenRate">Speed</label><select id="listenRate" aria-label="Reading speed">
-      <option value="0.8">0.8×</option><option value="1">1×</option><option value="1.2">1.2×</option>
+      <option value="0.8">0.8×</option><option value="0.9">0.9×</option><option value="1">1×</option><option value="1.1">1.1×</option><option value="1.2">1.2×</option>
     </select>
   </div></div>
   <label class="access-check"><input type="checkbox" id="readingFocus"> Highlight one paragraph at a time</label>
