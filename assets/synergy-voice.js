@@ -16,8 +16,12 @@
  }catch(_){}
  const persist=()=>{try{localStorage.setItem(key,JSON.stringify(prefs));}catch(_){}};
  const locale=voice=>String(voice.lang||'').replace('_','-').toLowerCase();
- const rank=voice=>locale(voice)==='en-gb'?0:locale(voice).startsWith('en-')?1:voice.default?2:3;
- const sorted=items=>items.slice().sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));
+ const rank=voice=>{
+  const english=locale(voice)==='en-gb'?0:locale(voice).startsWith('en-')?2:4;
+  return english+(voice.localService?0:1);
+ };
+ const quality=voice=>/natural|enhanced|premium/i.test(voice.name)?0:1;
+ const sorted=items=>items.slice().sort((a,b)=>rank(a)-rank(b)||quality(a)-quality(b)||a.name.localeCompare(b.name));
  function reload(){
   if(!supported)return;
   try{voices=sorted(synth.getVoices()||[]);}catch(_){voices=[];}
@@ -29,8 +33,9 @@
   else synth.onvoiceschanged=reload;
  }
  function choice(){
-  return voices.find(v=>v.voiceURI===prefs.uri)||voices.find(v=>locale(v)==='en-gb')||
-   voices.find(v=>locale(v).startsWith('en'))||voices.find(v=>v.default)||null;
+  return voices.find(v=>v.voiceURI===prefs.uri)||voices.find(v=>locale(v)==='en-gb'&&v.localService)||
+   voices.find(v=>locale(v).startsWith('en')&&v.localService)||
+   voices.find(v=>locale(v)==='en-gb')||voices.find(v=>locale(v).startsWith('en'))||voices.find(v=>v.default)||null;
  }
  function apply(utterance){
   const voice=choice();
@@ -58,7 +63,7 @@
   items.append(auto);
   voices.forEach(v=>{
    const option=document.createElement('option');
-   option.value=v.voiceURI;option.textContent=v.name+' · '+v.lang+(v.localService?'':' · device/network');
+   option.value=v.voiceURI;option.textContent=v.name+' · '+v.lang+(v.localService?' · on device':' · may use online processing');
    items.append(option);
   });
   select.replaceChildren(items);
@@ -106,7 +111,7 @@
  }
  function preview(notify){
   if(!supported)return;
-  speak(['Hello. This is the selected Synergy Assist reading voice.'],notify);
+  speak(['Hello. Binary uses zero and one. Eight bits make one byte.'],notify);
  }
  function nodeVisible(node){
   if(!node||!node.isConnected)return false;
@@ -184,9 +189,11 @@
   const start=button('Play page'),pauseButton=button('Pause'),stopButton=button('Stop'),tryVoice=button('Preview voice');
   pauseButton.disabled=true;stopButton.disabled=true;
   actions.append(start,pauseButton,stopButton);
+  const privacy=document.createElement('p');privacy.className='synergy-voice-note';
+  privacy.textContent='On-device voices are preferred. Online voices may send spoken text to their provider.';
   const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   status.className='synergy-voice-status';status.textContent='Reads the currently visible page. Answers stay hidden until revealed.';
-  panel.append(head,voiceLabel,speedLabel,tryVoice,actions,status);
+  panel.append(head,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
   document.body.append(launch,panel);
   const notify=message=>{
    status.textContent=message;
@@ -197,7 +204,11 @@
   const unsubscribe=subscribe(()=>populate(voiceSelect));
   voiceSelect.addEventListener('change',()=>{stop();selectVoice(voiceSelect.value);notify('Voice selected. Choose Preview or Play page.');});
   speedSelect.addEventListener('change',()=>{stop();setRate(speedSelect.value);notify('Speed changed.');});
-  start.addEventListener('click',()=>speak(readVisibleContent(),notify));
+  start.addEventListener('click',()=>{
+   const chosen=String(window.getSelection?.()?.toString()||'').trim();
+   if(chosen&&chosen.length<1501)return speak([chosen],notify);
+   return speak(readVisibleContent(),notify);
+  });
   pauseButton.addEventListener('click',()=>togglePause());
   stopButton.addEventListener('click',stop);
   tryVoice.addEventListener('click',()=>preview(notify));
