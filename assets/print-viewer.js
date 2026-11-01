@@ -55,11 +55,29 @@
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
   const knownLessonCompanion=file.pathname==='/offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf';
   const pdf=file.pathname+file.search;
-  frame.src=pdf;
-  frame.hidden=false;
+  const mobileDevice=window.matchMedia('(max-width: 540px)').matches;
+  const loading=byId('viewerLoading');
+  const viewStoreKey='synergy-assist-print-view-mode-v1';
+  let savedView=null;
+  try{
+    const stored=localStorage.getItem(viewStoreKey);
+    if(stored==='reading'||stored==='pdf')savedView=stored;
+  }catch(_){}
+  // A phone defaults to the accessible reader when one exists. A student's
+  // explicit choice is retained on this device; the URL can override it.
+  const preferReading=params.get('reading')==='1'||
+    (params.get('reading')!=='0'&&(savedView==='reading'||(mobileDevice&&savedView!=='pdf')));
+  function rememberView(value){
+    try{localStorage.setItem(viewStoreKey,value);}catch(_){}
+  }
+  // Avoid triggering Android's generic PDF file-opening screen while the
+  // accessible reader is being resolved. Load the PDF only if requested.
+  if(!preferReading)frame.src=pdf;
+  frame.hidden=preferReading;
+  if(loading)loading.hidden=!preferReading;
   open.href=pdf;
   if(mobileOriginal)mobileOriginal.href=pdf;
-  if(mobileBox)mobileBox.hidden=false;
+  if(mobileBox)mobileBox.hidden=true;
   fallback.hidden=false;
   print.disabled=false;
   // Make Tools visible immediately for revision guides, even if the
@@ -118,10 +136,12 @@
     if(next==='reading'&&!readerData)return;
     stopSpeech();
     mode=next;
+    if(mode==='pdf'&&frame.getAttribute('src')!==pdf)frame.src=pdf;
+    if(loading)loading.hidden=true;
     reading.hidden=mode!=='reading';
     frame.hidden=mode==='reading';
     fallback.hidden=mode==='reading';
-    if(mobileBox)mobileBox.hidden=mode==='reading';
+    if(mobileBox)mobileBox.hidden=mode==='reading'||!mobileDevice;
     showPdf.setAttribute('aria-pressed',String(mode==='pdf'));
     showReading.setAttribute('aria-pressed',String(mode==='reading'));
     if(mode==='reading'){reading.focus({preventScroll:true});}
@@ -369,7 +389,8 @@
       return true;
     })().catch(()=>{
       guideDocument=null;readerData=null;guideLoading=null;
-      notice('Reading View could not load on this device or network. The original PDF remains available.');
+      setMode('pdf');
+      notice('Reading View could not load on this device or network. Open the original PDF instead.');
       return false;
     }).finally(()=>{showReading.disabled=false;});
     return guideLoading;
@@ -415,8 +436,11 @@
     const target=event.target.closest('.reader-highlight-target');
     if(target)selectFocus(target,false);
   });
-  showPdf.addEventListener('click',()=>setMode('pdf'));
-  showReading.addEventListener('click',()=>{if(guidePdf&&!readerData)loadGuideReader();else setMode('reading');});
+  showPdf.addEventListener('click',()=>{rememberView('pdf');setMode('pdf');});
+  showReading.addEventListener('click',()=>{
+    if(guidePdf&&!readerData){rememberView('reading');loadGuideReader();}
+    else if(readerData){rememberView('reading');setMode('reading');}
+  });
   if(mobileRead)mobileRead.addEventListener('click',()=>showReading.click());
   font.addEventListener('change',()=>{prefs.font=font.value;savePrefs();applyPrefs();});
   spacing.addEventListener('change',()=>{prefs.spacing=spacing.value;savePrefs();applyPrefs();});
@@ -446,18 +470,27 @@
   stop.addEventListener('click',()=>{stopSpeech();notice('Reading stopped.');});
   window.addEventListener('pagehide',stopSpeech);
 
-  // Only show an accessibility menu for PDFs with a reviewed, source-bound
-  // reading companion. Other printable resources retain their existing viewer.
+  // Guides have an automatic, text-only PDF reading aid; lesson booklets
+  // require a separately reviewed companion in the catalogue.
+  if(guidePdf){
+    enableGuideReader();
+    if(preferReading)loadGuideReader();
+    else setMode('pdf');
+    return;
+  }
   fetch('/assets/accessible/catalogue.json',{cache:'no-store'}).then(response=>{
     if(!response.ok)throw Error('No accessibility catalogue');
     return response.json();
   }).then(catalogue=>{
-    if(catalogue.schema_version!==1||!catalogue.entries){enableGuideReader();return;}
+    if(catalogue.schema_version!==1||!catalogue.entries){
+      setMode('pdf');
+      return;
+    }
     const source=catalogue.entries[file.pathname];
     const dataUrl=localUrl(source,'.json');
     if(!dataUrl){
-      if(guidePdf)enableGuideReader();
-      else if(knownLessonCompanion)notice('Reading View is temporarily unavailable. You can still open the original PDF.');
+      setMode('pdf');
+      if(knownLessonCompanion)notice('Reading View is temporarily unavailable. You can still open the original PDF.');
       return;
     }
     return fetch(dataUrl.pathname,{cache:'no-store'}).then(response=>{
@@ -478,14 +511,15 @@
       if(memoryField)memoryField.hidden=memory.disabled;
       renderReader(data);
       tools.hidden=false;
-      notice('Reading View is available for this lesson.');
-      if(params.get('reading')==='1')setMode('reading');
+      if(preferReading)setMode('reading');
+      else setMode('pdf');
     });
   }).catch(()=>{
-    // Fail safely to the original PDF, without pretending it is accessible text.
-    if(guidePdf)enableGuideReader();
-    else if(knownLessonCompanion){
-      notice('Reading View could not be loaded. You can still open the original PDF.');
+    // If the reader cannot load, show the original document rather than
+    // leaving a blank screen or an indefinite loading state.
+    setMode('pdf');
+    if(knownLessonCompanion){
+      notice('Reading View could not be loaded. Open the original PDF instead.');
       showReading.disabled=true;
       if(mobileRead)mobileRead.hidden=true;
     }else tools.hidden=true;
