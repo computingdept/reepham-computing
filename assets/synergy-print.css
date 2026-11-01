@@ -1,0 +1,20 @@
+/* Browser-print presentation for site hubs only.
+   Standalone booklet PDFs use the matching generator design; CSS cannot
+   modify an already-generated PDF. Avoid modifying classroom slide printing. */
+@media print {
+  body.course-hub, body.learning-hub {
+    background: #fff !important;
+    color: #202020 !important;
+    print-color-adjust: economy;
+    -webkit-print-color-adjust: economy;
+  }
+  body.course-hub :is(.topbar,.card,.term,.panel,.course-topline),
+  body.learning-hub :is(.top,.subject,.resource) {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  body.course-hub .topbar,
+  body.learning-hub .top {
+    border-bottom-color: #a7ada9 !important;
+  }
+}
