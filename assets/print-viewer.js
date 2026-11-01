@@ -10,6 +10,7 @@
   const title=byId('viewerTitle'), back=byId('viewerBack');
   const print=byId('viewerPrint'), open=byId('viewerOpen');
   const fallback=byId('viewerFallback'), reading=byId('readingView');
+  const mobileBox=byId('mobilePdfOptions'),mobileRead=byId('mobileReadingBtn'),mobileOriginal=byId('mobileOriginal');
   const tools=byId('viewerTools'), panel=byId('accessPanel');
   const status=byId('accessStatus');
   const showPdf=byId('showPdf'), showReading=byId('showReading');
@@ -56,6 +57,8 @@
   frame.src=pdf;
   frame.hidden=false;
   open.href=pdf;
+  if(mobileOriginal)mobileOriginal.href=pdf;
+  if(mobileBox)mobileBox.hidden=false;
   fallback.hidden=false;
   print.disabled=false;
   // Make Tools visible immediately for revision guides, even if the
@@ -116,6 +119,7 @@
     reading.hidden=mode!=='reading';
     frame.hidden=mode==='reading';
     fallback.hidden=mode==='reading';
+    if(mobileBox)mobileBox.hidden=mode==='reading';
     showPdf.setAttribute('aria-pressed',String(mode==='pdf'));
     showReading.setAttribute('aria-pressed',String(mode==='reading'));
     if(mode==='reading'){reading.focus({preventScroll:true});}
@@ -356,6 +360,7 @@
       guideDocument=await pdfjs.getDocument({url:pdf,withCredentials:false}).promise;
       if(!guideDocument||guideDocument.numPages<1)throw Error('No pages in PDF');
       readerData={type:'automatically-extracted-guide'};
+      if(mobileRead)mobileRead.hidden=false;
       await renderGuidePage(1);
       setMode('reading');
       notice('Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
@@ -410,6 +415,7 @@
   });
   showPdf.addEventListener('click',()=>setMode('pdf'));
   showReading.addEventListener('click',()=>{if(guidePdf&&!readerData)loadGuideReader();else setMode('reading');});
+  if(mobileRead)mobileRead.addEventListener('click',()=>showReading.click());
   font.addEventListener('change',()=>{prefs.font=font.value;savePrefs();applyPrefs();});
   spacing.addEventListener('change',()=>{prefs.spacing=spacing.value;savePrefs();applyPrefs();});
   colour.addEventListener('change',()=>{prefs.colour=colour.value;savePrefs();applyPrefs();});
@@ -454,6 +460,7 @@
     }).then(data=>{
       if(data.schema_version!==1||!Array.isArray(data.sections)||!Array.isArray(data.vocabulary))throw Error('Invalid reading companion');
       readerData=data;
+      if(mobileRead)mobileRead.hidden=false;
       // Trust editors control whether either aid family is offered, using
       // lesson data. This is an editorial flag, not student authentication.
       const policy=data.aid_policy||{};
@@ -469,6 +476,9 @@
     });
   }).catch(()=>{
     // Fail safely to the original PDF, without pretending it is accessible text.
-    if(guidePdf)enableGuideReader();else tools.hidden=true;
+    if(guidePdf)enableGuideReader();else if(tools.hidden){
+      // The original PDF always remains accessible on mobile.
+      if(mobileRead)mobileRead.hidden=true;
+    }
   });
 })();
