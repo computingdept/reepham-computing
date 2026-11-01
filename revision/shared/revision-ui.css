@@ -1,3 +1,4 @@
+@import url("../../assets/synergy-logo.css?v=20261101-logo1");
 /* RHSC Revision Hub · shared progressive enhancement, GCSE J277 + A Level H446.
    Legacy course styles remain as compatibility layers during the migration.
    New layout and responsive UX rules belong here: one source, both qualifications. */
@@ -222,5 +223,32 @@
 @media(min-width:1150px){
   .rhsc-revision-ui #directory #topic-grid.rhsc-continuous{
     grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+/* Synergy Assist identity inside every GCSE/A-level revision-practice page.
+   Reuse the existing return-to-hub link; no extra navigation or quiz scripts. */
+header.practice-nav > a:first-child::before {
+  content: "SYNERGY ASSIST";
+  display: inline-flex;
+  align-items: center;
+  padding-left: 33px;
+  min-height: 30px;
+  margin-right: 8px;
+  background-image: var(--synergy-logo-image);
+  background-size: 29px 29px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  color: #285348;
+  font: 800 10px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: .025em;
+}
+@media(max-width:700px) {
+  header.practice-nav > a:first-child::before {
+    content: "";
+    min-height: 29px;
+    width: 29px;
+    padding-left: 29px;
+    margin-right: 2px;
   }
 }

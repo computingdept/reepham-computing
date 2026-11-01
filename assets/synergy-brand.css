@@ -1,0 +1,206 @@
+@import url("./synergy-logo.css?v=20261101-logo1");
+/* Synergy Assist identity · central visual-only header branding.
+   Loaded after existing hub styling; no lesson/quiz scripts changed. */
+body.course-hub .topbar .brand.synergy-brand,
+body.learning-hub .top .brand.synergy-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+body.course-hub .topbar .synergy-brand-icon,
+body.learning-hub .top .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  object-fit: contain;
+  background: transparent;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  line-height: 1.18;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy strong,
+body.learning-hub .top .brand.synergy-brand .synergy-name {
+  display: block !important;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .065em;
+  white-space: nowrap;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy span,
+body.learning-hub .top .brand.synergy-brand .synergy-subline {
+  display: block !important;
+  margin: 0;
+  color: var(--synergy-muted, #626b68);
+  font: 600 11px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .015em;
+  white-space: nowrap;
+}
+body.course-hub .topbar .brand.synergy-brand .brand-copy::after {
+  content: none !important;
+}
+body.learning-hub .top .brand.synergy-brand .synergy-name {
+  margin: 0;
+}
+body.learning-hub .top .brand.synergy-brand .synergy-subline {
+  margin-top: 4px;
+}
+body.course-hub .topbar .brand.synergy-brand:focus-visible,
+body.learning-hub .top .brand.synergy-brand:focus-visible {
+  outline: 3px solid var(--synergy-focus, #bd7d08);
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  body.course-hub .topbar .brand.synergy-brand .synergy-brand-icon,
+  body.learning-hub .top .brand.synergy-brand .synergy-brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+  body.course-hub .topbar .brand.synergy-brand .brand-copy strong,
+  body.learning-hub .top .brand.synergy-brand .synergy-name {
+    display: block !important;
+    font-size: 13px;
+    letter-spacing: .03em;
+  }
+  body.course-hub .topbar .brand.synergy-brand .brand-copy span,
+  body.learning-hub .top .brand.synergy-brand .synergy-subline {
+    display: block !important;
+    font-size: 10px;
+  }
+}
+@media print {
+  body.course-hub .topbar .synergy-brand-icon,
+  body.learning-hub .top .synergy-brand-icon { width: 24px; height: 24px; }
+}
+
+/* Actual logo artwork for both ordinary headers and classroom navigation. */
+.synergy-brand-icon {
+  background-image: var(--synergy-logo-image);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+body .navwrap .course-back::before {
+  content: "SYNERGY ASSIST";
+  display: block;
+  min-height: 29px;
+  padding: 5px 0 4px 32px;
+  margin-bottom: 6px;
+  background-image: var(--synergy-logo-image);
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 27px 27px;
+  color: var(--synergy-ink, #30383a);
+  font: 800 9px/1.15 Arial, Helvetica, sans-serif;
+  letter-spacing: .01em;
+}
+body .sidebar .course::before {
+  content: "SYNERGY ASSIST";
+  display: block;
+  min-height: 30px;
+  margin-bottom: 9px;
+  padding: 7px 0 0 34px;
+  background-image: var(--synergy-logo-image);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 28px 28px;
+  font: 800 10px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: .02em;
+  color: #fff;
+}
+
+/* School selector stays school-aware; only its masthead is trust-branded. */
+.school-chooser .chooser-head-inner .chooser-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--synergy-ink, #30383a);
+  text-decoration: none;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: none;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-name {
+  display: block;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.12 Arial, Helvetica, sans-serif;
+  letter-spacing: .06em;
+}
+.school-chooser .chooser-head-inner .chooser-brand .synergy-subline {
+  display: block;
+  margin-top: 3px;
+  font: 600 11px/1.2 Arial, Helvetica, sans-serif;
+  color: var(--synergy-muted, #626b68);
+}
+@media (max-width: 550px) {
+  .school-chooser .chooser-head-inner .chooser-brand .synergy-brand-icon {
+    width: 34px; height: 34px;
+  }
+}
+
+/* Older KS3 hub reuses the same visual lock-up, without changing its links. */
+body.central-legacy-hub .top .hubhome.synergy-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .brand {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.15;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-name {
+  display: block;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .06em;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-subline {
+  display: block;
+  color: var(--synergy-muted, #626b68);
+  font: 600 11px/1.1 Arial, Helvetica, sans-serif;
+}
+@media(max-width:600px){
+  body.central-legacy-hub .top .hubhome.synergy-brand .synergy-brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+  body.central-legacy-hub .top .hubhome.synergy-brand .synergy-name {
+    font-size: 12px;
+  }
+}
+
+/* A single legacy Year 8 revision page with its own HTML shell. */
+.synergy-inline-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 0 10px;
+  margin: 0 0 14px;
+  border-bottom: 2px solid var(--synergy-green, #285348);
+  color: var(--synergy-ink, #30383a);
+  font: 800 12px/1.15 Arial, Helvetica, sans-serif;
+  letter-spacing: .065em;
+}
+.synergy-inline-brand .synergy-brand-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
