@@ -25,6 +25,7 @@
   const speechAvailable=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance==='function';
   let readerData=null, mode='pdf', focusTarget=null;
   let guideDocument=null,guideLoading=null,guidePage=1;
+  let bookletZoom=1,bookletRenderToken=0;
   let ttsQueue=[],ttsIndex=0,ttsToken=0,ttsActive=false,ttsPaused=false,ttsCurrent=null;
   const storeKey='synergy-assist-reading-preferences-v1';
   const defaults={font:'system',spacing:'comfortable',colour:'white',size:100,focus:false,rate:'1'};
@@ -57,6 +58,23 @@
   // separately maintained transcript or classroom-lesson JSON.
   const knownLessonCompanion=file.pathname==='/offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf';
   const pdfTextReader=guidePdf||knownLessonCompanion;
+  if(knownLessonCompanion){
+    document.body.classList.add('paper-first-booklet');
+    // The original page is always shown, so settings which only reflow HTML
+    // text must not misleadingly promise to change the printed page.
+    [font,spacing,colour].forEach(control=>{
+      const field=control.closest('.access-field');
+      if(field)field.hidden=true;
+    });
+    [focus,vocab,memory].forEach(control=>{
+      const field=control.closest('label');
+      if(field)field.hidden=true;
+    });
+    [byId('fontUp'),byId('fontDown')].forEach(control=>{
+      const field=control.closest('.access-field');
+      if(field)field.hidden=true;
+    });
+  }
   const pdf=file.pathname+file.search;
   const mobileDevice=window.matchMedia('(max-width: 540px)').matches;
   const loading=byId('viewerLoading');
@@ -307,7 +325,113 @@
       :'Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
     notice('Preparing Reading View from the original PDF.');
   }
+  // Paper-first pilot: render the real four-page booklet directly from
+  // the SAME PDF used by Print. Text extraction is only an off-screen aid
+  // for speech and screen readers; it is never the visible worksheet.
+  async function renderBookletPage(requested){
+    if(!guideDocument)return;
+    const token=++bookletRenderToken;
+    const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
+    guidePage=n;
+    stopSpeech();
+    const page=await guideDocument.getPage(n);
+    if(token!==bookletRenderToken)return;
+    const inner=el('div','reader-inner booklet-page-inner');
+    const heading=el('h2','booklet-page-heading',label);
+    inner.append(heading);
+    const instructions=el('p','booklet-paper-instruction',
+      'Read or listen on screen. Write your answers in the printed booklet.');
+    inner.append(instructions);
+    const controls=el('nav','booklet-page-controls');
+    controls.setAttribute('aria-label','Booklet page navigation');
+    const prev=el('button','booklet-page-prev','← Previous');
+    const count=el('strong','booklet-page-count','Page '+n+' of '+guideDocument.numPages);
+    count.setAttribute('aria-live','polite');
+    const next=el('button','booklet-page-next','Next →');
+    prev.type=next.type='button';
+    prev.disabled=n===1;next.disabled=n===guideDocument.numPages;
+    prev.addEventListener('click',()=>renderBookletPage(n-1));
+    next.addEventListener('click',()=>renderBookletPage(n+1));
+    const zoomRow=el('div','booklet-zoom');
+    const zoomOut=el('button','','−');
+    zoomOut.type='button';zoomOut.disabled=bookletZoom<=1;
+    zoomOut.setAttribute('aria-label','Zoom out of booklet page');
+    const zoomLabel=el('span','booklet-zoom-label',Math.round(bookletZoom*100)+'%');
+    const zoomIn=el('button','','+');
+    zoomIn.type='button';zoomIn.disabled=bookletZoom>=2.5;
+    zoomIn.setAttribute('aria-label','Zoom in on booklet page');
+    zoomOut.addEventListener('click',()=>{bookletZoom=Math.max(1,Math.round((bookletZoom-.25)*100)/100);renderBookletPage(n);});
+    zoomIn.addEventListener('click',()=>{bookletZoom=Math.min(2.5,Math.round((bookletZoom+.25)*100)/100);renderBookletPage(n);});
+    zoomRow.append(zoomOut,zoomLabel,zoomIn);
+    controls.append(prev,count,next,zoomRow);
+    inner.append(controls);
+    const holder=el('div','booklet-page-scroll');
+    holder.setAttribute('role','region');
+    holder.setAttribute('aria-label','Original PDF page '+n+' — scroll horizontally when zoomed');
+    holder.tabIndex=0;
+    const canvas=document.createElement('canvas');
+    canvas.setAttribute('role','img');
+    canvas.setAttribute('aria-label','Original printed booklet, page '+n+' of '+guideDocument.numPages);
+    holder.append(canvas);
+    inner.append(holder);
+    const speech=el('div','booklet-page-speech');
+    speech.setAttribute('aria-label','Text extracted from the current PDF page for assistive reading');
+    inner.append(speech);
+    reading.replaceChildren(inner);
+    reading.tabIndex=-1;
+    applyPrefs();
+    const viewportBase=page.getViewport({scale:1});
+    const container=byId('preview');
+    // Fit to the viewport at 100%. Zoom enlarges the SAME page, not its text
+    // in a separate layout; the page can then be panned horizontally.
+    const fitWidth=Math.min(840,Math.max(260,(container?.clientWidth||window.innerWidth||950)-38));
+    const displayWidth=Math.round(fitWidth*bookletZoom);
+    const displayScale=displayWidth/viewportBase.width;
+    const pixelRatio=Math.min(2,window.devicePixelRatio||1);
+    const viewport=page.getViewport({scale:displayScale*pixelRatio});
+    canvas.width=Math.round(viewport.width);
+    canvas.height=Math.round(viewport.height);
+    canvas.style.width=displayWidth+'px';
+    canvas.style.height=Math.round(displayWidth*viewportBase.height/viewportBase.width)+'px';
+    holder.setAttribute('aria-busy','true');
+    try{
+      const ctx=canvas.getContext('2d',{alpha:false});
+      if(!ctx)throw Error('Canvas not supported');
+      // Rendering the source PDF means diagrams, writing lines and exact
+      // question/answer positions remain identical to the paper booklet.
+      await page.render({canvasContext:ctx,viewport}).promise;
+      if(token!==bookletRenderToken)return;
+      holder.setAttribute('aria-busy','false');
+      // Source PDF text is not displayed as a separate, confusing text dump.
+      // Sort by visual page position for more natural speech where supported.
+      const items=(await page.getTextContent()).items.filter(item=>typeof item.str==='string'&&item.str.trim());
+      if(token!==bookletRenderToken)return;
+      const placed=items.map((item,i)=>({text:item.str.trim(),x:item.transform?.[4]||0,y:item.transform?.[5]||0,i}));
+      placed.sort((a,b)=>Math.abs(b.y-a.y)>3?b.y-a.y:a.x-b.x||a.i-b.i);
+      const lines=[];
+      for(const item of placed){
+        const last=lines[lines.length-1];
+        if(!last||Math.abs(last.y-item.y)>3)lines.push({y:item.y,text:item.text});
+        else last.text+=' '+item.text;
+      }
+      for(const line of lines)speech.append(el('span','reader-highlight-target',line.text));
+      if(!lines.length){
+        play.disabled=true;
+        speech.append(el('span','', 'No selectable text is available for read-aloud on this page.'));
+      }else play.disabled=!speechAvailable;
+      notice('Showing the original PDF page '+n+' of '+guideDocument.numPages+'. Write answers on paper.');
+    }catch(_){
+      if(token!==bookletRenderToken)return;
+      holder.replaceChildren(el('p','', 'This page could not be drawn on your device.'));
+      const pdfLink=el('a','', 'Open original PDF');
+      pdfLink.href=pdf;pdfLink.target='_blank';pdfLink.rel='noopener';
+      holder.append(pdfLink);
+      notice('Page preview unavailable. Open the original PDF to continue.');
+    }
+  }
+
   async function renderGuidePage(requested){
+    if(knownLessonCompanion)return renderBookletPage(requested);
     if(!guideDocument)return;
     stopSpeech();
     const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
@@ -420,7 +544,9 @@
       if(mobileRead)mobileRead.hidden=false;
       await renderGuidePage(1);
       setMode('reading');
-      notice('Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
+      notice(knownLessonCompanion
+        ?'Original booklet page 1 of '+guideDocument.numPages+' ready. Write answers on paper.'
+        :'Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
       return true;
     })().catch(()=>{
       guideDocument=null;readerData=null;guideLoading=null;
