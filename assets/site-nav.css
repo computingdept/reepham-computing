@@ -180,3 +180,15 @@ body.synergy-legacy-corners > .synergy-corner-mark{
 .synergy-inline-brand.synergy-corners > strong{
   order:1;
 }
+
+/* Override an earlier trust-brand reset that used background:transparent
+   at higher specificity, inadvertently suppressing the original logo. */
+body.course-hub .topbar .synergy-brand-icon,
+body.learning-hub .top .synergy-brand-icon,
+body.school-chooser .chooser-head .synergy-brand-icon,
+body.central-legacy-hub .top .synergy-brand-icon{
+  background-image:var(--synergy-logo-image) !important;
+  background-repeat:no-repeat !important;
+  background-size:contain !important;
+  background-position:center !important;
+}
