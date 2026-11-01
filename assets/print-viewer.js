@@ -23,7 +23,6 @@
   const sizeDisplay=byId('fontSizeValue');
   const speechAvailable=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance==='function';
   let readerData=null, mode='pdf', focusTarget=null;
-  const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
   let guideDocument=null,guideLoading=null,guidePage=1;
   let ttsQueue=[],ttsIndex=0,ttsToken=0,ttsActive=false,ttsPaused=false,ttsCurrent=null;
   const storeKey='synergy-assist-reading-preferences-v1';
@@ -52,6 +51,7 @@
     error.hidden=false;
     return;
   }
+  const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
   const pdf=file.pathname+file.search;
   frame.src=pdf;
   frame.hidden=false;
