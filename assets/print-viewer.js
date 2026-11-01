@@ -55,15 +55,15 @@
     return;
   }
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
-  // Shared paper-first reading for existing KS3, J277 and H446 printable
-  // booklets only. Page visuals, selectable text and printing ALL use the
-  // SAME source PDF; revision guides retain their distinct reading mode.
+  // Paper-first reading for J277/H446 revision guides and KS3/J277/H446
+  // booklets. The visual page, read-aloud text and Print use ONE source PDF.
   const paperFirstBooklet=
     /^\/offline\/booklets\/(?:j277|h446)\/[^/]+\.pdf$/i.test(file.pathname)||
     /^\/lessons\/year[789]\/year[789]-lesson-upload\/Y[789]-L\d{2}-print\.pdf$/i.test(file.pathname)||
     /^\/assets\/year8\/[^/]*booklet\.pdf$/i.test(file.pathname);
-  const pdfTextReader=guidePdf||paperFirstBooklet;
-  if(paperFirstBooklet){
+  const paperFirstDocument=guidePdf||paperFirstBooklet;
+  const pdfTextReader=paperFirstDocument;
+  if(paperFirstDocument){
     document.body.classList.add('paper-first-booklet');
     // The original page is always shown, so settings which only reflow HTML
     // text must not misleadingly promise to change the printed page.
@@ -104,8 +104,8 @@
   print.hidden=false;
   // Make Tools visible immediately for revision guides, even if the
   // accessibility catalogue is unavailable or slow to load.
-  if(guidePdf||paperFirstBooklet){tools.hidden=false;panel.hidden=true;}
-  if(paperFirstBooklet)showReading.disabled=true;
+  if(paperFirstDocument){tools.hidden=false;panel.hidden=true;}
+  if(paperFirstDocument)showReading.disabled=true;
 
   const el=(tag,className,content)=>{
     const node=document.createElement(tag);
@@ -325,14 +325,13 @@
     if(!pdfTextReader)return;
     tools.hidden=false;
     const note=panel.querySelector('.view-switch + .access-note');
-    if(note)note.textContent=paperFirstBooklet
-      ?'Reading View shows the actual paper booklet page. Use page arrows and Zoom to inspect it; write answers in the printed booklet. Listen reads selectable PDF text and may not handle complex layouts perfectly. Print opens the unchanged PDF.'
-      :'Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
+    if(note)note.textContent=guidePdf
+      ?'Reading View shows the exact revision guide pages, including diagrams and worked examples. Navigate by page or zoom in. Listen uses selectable text from the same PDF; complicated layouts may be read out of order. Print opens the original PDF.'
+      :'Reading View shows the actual paper booklet page. Use page arrows and Zoom to inspect it; write answers in the printed booklet. Listen reads selectable PDF text and may not handle complex layouts perfectly. Print opens the unchanged PDF.';
     notice('Preparing Reading View from the original PDF.');
   }
-  // Paper-first booklet: render the real four-page booklet directly from
-  // the SAME PDF used by Print. Text extraction is only an off-screen aid
-  // for speech and screen readers; it is never the visible worksheet.
+  // Paper-first guide/booklet: render the actual PDF page, however many
+  // pages it contains. Extraction serves speech only, never a visible text dump.
   async function renderBookletPage(requested){
     if(!guideDocument)return;
     const token=++bookletRenderToken;
@@ -344,11 +343,12 @@
     const inner=el('div','reader-inner booklet-page-inner');
     const heading=el('h2','booklet-page-heading',label);
     inner.append(heading);
-    const instructions=el('p','booklet-paper-instruction',
-      'Read or listen on screen. Write your answers in the printed booklet.');
+    const instructions=el('p','booklet-paper-instruction',guidePdf
+      ?'Original revision guide · Use the arrows to turn pages, or zoom to inspect diagrams.'
+      :'Read or listen on screen. Write your answers in the printed booklet.');
     inner.append(instructions);
     const controls=el('nav','booklet-page-controls');
-    controls.setAttribute('aria-label','Booklet page navigation');
+    controls.setAttribute('aria-label',guidePdf?'Revision guide page navigation':'Booklet page navigation');
     const prev=el('button','booklet-page-prev','← Previous');
     const count=el('strong','booklet-page-count','Page '+n+' of '+guideDocument.numPages);
     count.setAttribute('aria-live','polite');
@@ -357,6 +357,36 @@
     prev.disabled=n===1;next.disabled=n===guideDocument.numPages;
     prev.addEventListener('click',()=>renderBookletPage(n-1));
     next.addEventListener('click',()=>renderBookletPage(n+1));
+    // Revision guides may be much longer than four-page lesson booklets.
+    // Keep random access to any original PDF page without scroll hunting.
+    if(guidePdf){
+      const jump=el('div','booklet-page-jump');
+      const jumpLabel=el('label','', 'Go to');
+      const jumpInput=el('input','');
+      jumpInput.type='number';
+      jumpInput.min='1';jumpInput.max=String(guideDocument.numPages);
+      jumpInput.value=String(n);
+      jumpInput.setAttribute('aria-label','Go to revision guide page number');
+      jumpInput.setAttribute('inputmode','numeric');
+      jumpLabel.append(jumpInput);
+      const jumpButton=el('button','','Go');
+      jumpButton.type='button';
+      const go=()=>{
+        const pageNo=Number(jumpInput.value);
+        if(!Number.isInteger(pageNo)||pageNo<1||pageNo>guideDocument.numPages){
+          notice('Choose a page between 1 and '+guideDocument.numPages+'.');
+          jumpInput.focus();
+          return;
+        }
+        renderBookletPage(pageNo);
+      };
+      jumpButton.addEventListener('click',go);
+      jumpInput.addEventListener('keydown',event=>{
+        if(event.key==='Enter'){event.preventDefault();go();}
+      });
+      jump.append(jumpLabel,jumpButton);
+      controls.append(jump);
+    }
     const zoomRow=el('div','booklet-zoom');
     const zoomOut=el('button','','−');
     zoomOut.type='button';zoomOut.disabled=bookletZoom<=1;
@@ -376,7 +406,7 @@
     holder.tabIndex=0;
     const canvas=document.createElement('canvas');
     canvas.setAttribute('role','img');
-    canvas.setAttribute('aria-label','Original printed booklet, page '+n+' of '+guideDocument.numPages);
+    canvas.setAttribute('aria-label',(guidePdf?'Original revision guide':'Original printed booklet')+', page '+n+' of '+guideDocument.numPages);
     holder.append(canvas);
     inner.append(holder);
     const speech=el('div','booklet-page-speech');
@@ -392,7 +422,11 @@
     const fitWidth=Math.min(840,Math.max(260,(container?.clientWidth||window.innerWidth||950)-38));
     const displayWidth=Math.round(fitWidth*bookletZoom);
     const displayScale=displayWidth/viewportBase.width;
-    const pixelRatio=Math.min(2,window.devicePixelRatio||1);
+    // Cap raster pixels to avoid large, high-DPI revision guides exhausting
+    // mobile memory at maximum zoom; the CSS page remains zoomed to scale.
+    const displayHeight=displayWidth*viewportBase.height/viewportBase.width;
+    const pixelRatio=Math.min(2,window.devicePixelRatio||1,
+      Math.sqrt(12000000/Math.max(1,displayWidth*displayHeight)));
     const viewport=page.getViewport({scale:displayScale*pixelRatio});
     canvas.width=Math.round(viewport.width);
     canvas.height=Math.round(viewport.height);
@@ -428,7 +462,8 @@
         play.disabled=true;
         speech.append(el('span','', 'Read-aloud text is unavailable on this PDF page.'));
       }else play.disabled=!speechAvailable;
-      notice('Showing the original PDF page '+n+' of '+guideDocument.numPages+'. Write answers on paper.');
+      notice((guidePdf?'Showing revision guide page ':'Showing the original PDF page ')+n+
+        ' of '+guideDocument.numPages+(guidePdf?'.':' · Write answers on paper.'));
     }catch(_){
       if(token!==bookletRenderToken)return;
       holder.replaceChildren(el('p','', 'This page could not be drawn on your device.'));
@@ -440,7 +475,7 @@
   }
 
   async function renderGuidePage(requested){
-    if(paperFirstBooklet)return renderBookletPage(requested);
+    if(paperFirstDocument)return renderBookletPage(requested);
     if(!guideDocument)return;
     stopSpeech();
     const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
@@ -553,9 +588,9 @@
       if(mobileRead)mobileRead.hidden=false;
       await renderGuidePage(1);
       setMode('reading');
-      notice(paperFirstBooklet
-        ?'Original booklet page 1 of '+guideDocument.numPages+' ready. Write answers on paper.'
-        :'Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
+      notice(guidePdf
+        ?'Original revision guide page 1 of '+guideDocument.numPages+' ready.'
+        :'Original booklet page 1 of '+guideDocument.numPages+' ready. Write answers on paper.');
       return true;
     })().catch(()=>{
       guideDocument=null;readerData=null;guideLoading=null;
