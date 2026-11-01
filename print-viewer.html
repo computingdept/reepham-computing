@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="Synergy Assist printable resource viewer">
 <title>Print resource · Synergy Assist</title>
-<link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-access1">
-<script src="/assets/print-viewer.js?v=20261101-access1" defer></script>
+<link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-send-demo1">
+<script src="/assets/print-viewer.js?v=20261101-send-demo1" defer></script>
 </head>
 <body>
 <a class="skip" href="#preview">Skip to PDF preview</a>
@@ -18,15 +18,15 @@
  </nav>
  <h1 id="viewerTitle">Printable resource</h1>
  <div class="viewer-actions">
-  <button id="viewerTools" class="tools-button" type="button" aria-label="Reading and learning tools" aria-controls="accessPanel" aria-expanded="false" hidden>
+  <button id="viewerTools" class="tools-button" type="button" aria-label="Reading tools" aria-controls="accessPanel" aria-expanded="false" hidden>
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="6" r="1"/><path d="m8 10 4 2 4-2m-4 2v6m0-4-3 5m3-5 3 5"/></svg><span>Tools</span>
   </button>
   <button id="viewerPrint" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3"/></svg><span>Print</span></button>
   <span class="synergy-symbol" role="img" aria-label="Synergy Assist"></span>
  </div>
 </header>
-<aside id="accessPanel" class="access-panel" aria-label="Reading and learning tools" hidden>
-  <div class="access-panel-head"><strong>Reading &amp; learning tools</strong><button type="button" id="toolsClose" aria-label="Close tools">×</button></div>
+<aside id="accessPanel" class="access-panel" aria-label="Reading tools" hidden>
+  <div class="access-panel-head"><strong>Reading tools</strong><button type="button" id="toolsClose" aria-label="Close tools">×</button></div>
   <div class="view-switch" role="group" aria-label="Choose how to view this resource">
     <button type="button" id="showPdf" aria-pressed="true">Original PDF</button>
     <button type="button" id="showReading" aria-pressed="false">Reading View</button>
@@ -54,8 +54,8 @@
   </div></div>
   <label class="access-check"><input type="checkbox" id="readingFocus"> Highlight one paragraph at a time</label>
   <label class="access-check"><input type="checkbox" id="showVocabulary"> Key vocabulary</label>
-  <label class="access-check"><input type="checkbox" id="showMemory"> Remember It — memory aids</label>
-  <p class="access-warning">Memory aids are a draft for teacher review. They are hidden until you choose to show them.</p>
+  <label class="access-check" hidden><input type="checkbox" id="showMemory" disabled> Remember It — memory aids</label>
+  <p class="access-warning" hidden>Memory aids are not available in the current demo.</p>
   <p id="accessStatus" class="access-status" role="status" aria-live="polite"></p>
 </aside>
 <main id="preview" class="preview" tabindex="-1">
