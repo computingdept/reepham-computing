@@ -134,6 +134,12 @@
   function renderQuestion(block){
     const article=el('div','reader-question');
     article.append(el('p','reader-highlight-target',block.prompt));
+    if(Array.isArray(block.options)&&block.options.length){
+      const options=el('ol','reader-choices');
+      options.type='A';
+      block.options.forEach(option=>options.append(el('li','reader-highlight-target',option)));
+      article.append(options);
+    }
     const details=el('details','');
     details.append(el('summary','', 'Check model answer after attempting'));
     const answer=el('p','reader-highlight-target',block.answer||'');
