@@ -252,3 +252,164 @@ header.practice-nav > a:first-child::before {
     margin-right: 2px;
   }
 }
+
+/* 2026-11 shared Practice refresh — J277 + H446. Presentation only.
+   Keep the existing MCQ engines, spec ordering, local saves and 80% target.
+   The site's existing Home/Back and Listen/Reading View are reused. */
+
+/* A single calm rhythm from section directory to question to results. */
+.rhsc-revision-ui main{min-width:0}
+.rhsc-revision-ui .practice-nav{min-height:62px;gap:12px;align-items:center}
+.rhsc-revision-ui .practice-nav .nav-title{font-size:.94rem;line-height:1.35;white-space:normal;min-width:0}
+.rhsc-revision-ui .practice-nav .nav-spec{font-size:.85rem;font-weight:650}
+.rhsc-revision-ui .practice-nav :is(a,button,select):focus-visible,
+.rhsc-revision-ui main :is(a,button,input,select,summary):focus-visible{
+  outline:3px solid #b77c15;outline-offset:3px
+}
+.rhsc-revision-ui #directory .directory-heading{margin-bottom:14px}
+.rhsc-revision-ui #directory h1{font-size:clamp(1.45rem,2.5vw,2rem);line-height:1.2;letter-spacing:-.02em}
+.rhsc-revision-ui .practice-meta{font-size:.88rem;line-height:1.5}
+.rhsc-revision-ui .rhsc-progress-summary strong{font-size:1rem}
+.rhsc-revision-ui .rhsc-progress-summary span{font-size:.87rem}
+.rhsc-revision-ui .rhsc-progress-summary button{min-height:46px;font-size:.92rem}
+.rhsc-revision-ui #directory #topic-grid.rhsc-continuous>.topic{
+  min-height:100px;padding:14px 15px;
+  border-radius:10px;gap:5px 12px;
+  box-shadow:0 2px 8px rgba(16,49,34,.035)
+}
+.rhsc-revision-ui #topic-grid .topic .spec{font-size:.82rem;font-weight:750;line-height:1.4}
+.rhsc-revision-ui #topic-grid .topic h2{font-size:1.04rem;line-height:1.36;letter-spacing:0}
+.rhsc-revision-ui #topic-grid .topic .status{font-size:.85rem;line-height:1.4}
+.rhsc-revision-ui #topic-grid .topic button{font-size:.9rem;min-height:46px;padding:9px 13px;white-space:normal;text-align:center}
+.rhsc-revision-ui .rhsc-progress-track{height:7px}
+
+/* Question numbering is easy to spot; dots use the native quiz counter.
+   The native progress element remains in the accessibility tree. */
+.rhsc-revision-ui #quiz{max-width:1130px}
+.rhsc-revision-ui #quiz>.back,
+.rhsc-revision-ui #results>.back{min-height:44px;font-size:.91rem;margin-bottom:7px}
+.rhsc-revision-ui #quiz .eyebrow{font-size:.85rem;margin:0 0 5px}
+.rhsc-revision-ui #quiz .quiz-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
+.rhsc-revision-ui #quiz .quiz-top h1{font-size:clamp(1.35rem,2.1vw,1.8rem);line-height:1.24;margin:0}
+.rhsc-revision-ui #quiz #counter{font-size:1rem;font-weight:800;color:#1d5845;white-space:nowrap;margin:0}
+.rhsc-revision-ui #quiz progress{position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.rhsc-revision-ui .rhsc-question-steps{display:flex;align-items:center;gap:7px;margin:13px 0 17px;min-height:9px}
+.rhsc-revision-ui .rhsc-question-step{width:25px;height:7px;border:1px solid #b9cbc1;background:#d5e0d9;border-radius:30px}
+.rhsc-revision-ui .rhsc-question-step.is-complete{background:#568a72;border-color:#568a72}
+.rhsc-revision-ui .rhsc-question-step.is-current{width:36px;height:9px;background:#005b43;border-color:#005b43}
+
+/* Keep the primary task a recognisable question card.
+   Desktop retains side-by-side answer feedback; mobile follows reading order. */
+.rhsc-revision-ui #quiz .quiz-workspace{gap:0 20px}
+.rhsc-revision-ui #quiz #answer-form{
+  background:#fff;border:1px solid #d7e3dc;border-radius:13px;
+  padding:clamp(17px,2.2vw,27px);min-width:0
+}
+.rhsc-revision-ui #quiz fieldset{min-width:0}
+.rhsc-revision-ui #quiz legend{
+  display:block;width:100%;font-size:clamp(1.18rem,1.6vw,1.38rem);
+  font-weight:750;line-height:1.48;margin:0 0 18px;letter-spacing:0
+}
+.rhsc-revision-ui #quiz #choices{gap:11px}
+.rhsc-revision-ui #quiz #choices .choice{
+  display:flex;min-height:58px;padding:13px 16px;
+  border:1px solid #b3cbbd;border-radius:10px;
+  background:#fff;font-size:1.03rem;line-height:1.45;
+  color:#203c30;align-items:center
+}
+.rhsc-revision-ui #quiz .choice input{width:22px;height:22px;flex:0 0 22px}
+.rhsc-revision-ui #quiz .choice:has(input:checked){border:2px solid #006347;background:#eaf5ed;padding:12px 15px}
+.rhsc-revision-ui #quiz .choice.correct{background:#e5f3e8;border:2px solid #147444;padding:12px 15px}
+.rhsc-revision-ui #quiz .choice.incorrect{background:#fff1e5;border:2px solid #9b5425;padding:12px 15px}
+.rhsc-revision-ui #quiz #answer-form .quiz-actions{margin-top:18px}
+.rhsc-revision-ui #quiz .quiz-actions button,
+.rhsc-revision-ui #quiz .feedback-next button{
+  min-height:50px;border-radius:9px;font-size:1rem;font-weight:750
+}
+.rhsc-revision-ui #quiz .feedback-panel{
+  border:1px solid #d4e1d9;border-radius:12px;
+  background:#f1f6f2;padding:20px;min-height:120px
+}
+.rhsc-revision-ui #quiz .feedback-hint{font-size:.91rem;line-height:1.55}
+.rhsc-revision-ui #quiz .feedback{font-size:1.01rem;line-height:1.6;color:#203c30}
+.rhsc-revision-ui #quiz .feedback p{font-size:1rem;line-height:1.65;margin:8px 0 0}
+.rhsc-revision-ui #quiz .feedback-next{margin-top:12px}
+
+/* Technical content must not be crushed or have indentation silently lost. */
+.rhsc-revision-ui #quiz #figure,
+.rhsc-revision-ui #results .review-item{max-width:100%;min-width:0}
+.rhsc-revision-ui :is(#figure,.review-item) .practice-code{
+  display:block;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;
+  white-space:pre;overflow-wrap:normal;word-break:normal;
+  font-size:clamp(.91rem,1.25vw,1rem);line-height:1.65;
+  tab-size:2;-webkit-overflow-scrolling:touch
+}
+.rhsc-revision-ui #quiz #figure:has(.question-table),
+.rhsc-revision-ui #results .review-item:has(.question-table){overflow-x:auto}
+.rhsc-revision-ui :is(#figure,.review-item) .question-table{
+  width:max-content;min-width:min(100%,330px);max-width:none;
+  table-layout:auto;font-size:.93rem
+}
+.rhsc-revision-ui :is(#figure,.review-item) .question-table :is(th,td){
+  white-space:normal;overflow-wrap:normal;min-width:54px;padding:9px 12px
+}
+.rhsc-revision-ui .rhsc-flowchart-figure img{width:100%;height:auto;max-width:620px}
+
+/* Results: clearly separate what was achieved from what happens next. */
+.rhsc-revision-ui #results{max-width:900px}
+.rhsc-revision-ui #results #result-heading{font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1.25}
+.rhsc-revision-ui #results .score{font-size:clamp(2.8rem,5vw,4rem)}
+.rhsc-revision-ui #results #result-message{font-size:1rem;line-height:1.5}
+.rhsc-revision-ui #results .result-actions button{min-height:48px;font-size:1rem}
+.rhsc-revision-ui #results .resource-button{min-height:48px;font-size:.96rem}
+.rhsc-revision-ui #results #review-details{border-top:1px solid #d4e0d8;margin-top:15px}
+.rhsc-revision-ui #results #review-details>summary{min-height:48px;font-size:1rem}
+
+/* The existing reading settings must remain legible on practice questions. */
+.rhsc-revision-ui body.synergy-reading-active #quiz #answer-form,
+.rhsc-revision-ui body.synergy-reading-active #quiz #choices .choice,
+.rhsc-revision-ui body.synergy-reading-active #quiz .feedback-panel{
+  background:var(--synergy-reader-bg,#fff)!important;
+  color:var(--synergy-reader-ink,#223b30)!important
+}
+.rhsc-revision-ui body.synergy-reading-active #quiz #choices .choice{
+  border-color:currentColor!important
+}
+.rhsc-revision-ui body.synergy-reading-active #quiz legend,
+.rhsc-revision-ui body.synergy-reading-active #quiz .feedback,
+.rhsc-revision-ui body.synergy-reading-active #quiz .choice span{
+  color:var(--synergy-reader-ink,#223b30)!important;
+  font-family:var(--synergy-reader-font,system-ui)!important;
+  line-height:var(--synergy-reader-line,1.6)!important
+}
+@media(max-width:760px){
+  .rhsc-revision-ui #quiz .quiz-workspace{display:flex;flex-direction:column;gap:11px}
+  .rhsc-revision-ui #quiz .feedback-panel:has(#feedback[hidden]){display:none}
+  .rhsc-revision-ui #quiz .feedback-panel{width:100%;min-height:0;padding:17px}
+  .rhsc-revision-ui #quiz .feedback-next{width:100%;margin-top:0}
+}
+@media(max-width:600px){
+  .rhsc-revision-ui .practice-nav{min-height:54px}
+  .rhsc-revision-ui main{padding-left:12px;padding-right:12px}
+  .rhsc-revision-ui #quiz .quiz-top h1{font-size:1.32rem}
+  .rhsc-revision-ui #quiz #counter{font-size:.94rem}
+  .rhsc-revision-ui #quiz .rhsc-question-steps{margin:10px 0 13px}
+  .rhsc-revision-ui #quiz #answer-form{padding:17px 14px}
+  .rhsc-revision-ui #quiz legend{font-size:1.17rem;line-height:1.48}
+  .rhsc-revision-ui #quiz #choices .choice{min-height:58px;padding:13px 12px}
+  .rhsc-revision-ui #quiz .choice:has(input:checked),
+  .rhsc-revision-ui #quiz .choice.correct,
+  .rhsc-revision-ui #quiz .choice.incorrect{padding:12px 11px}
+  .rhsc-revision-ui #topic-grid .topic h2{font-size:1.04rem}
+  .rhsc-revision-ui #topic-grid .topic .status{font-size:.87rem}
+  .rhsc-revision-ui #directory #topic-grid.rhsc-continuous>.topic{padding:13px 12px}
+}
+@media(forced-colors:active){
+  .rhsc-revision-ui #quiz #choices .choice:has(input:checked),
+  .rhsc-revision-ui #quiz #choices .choice:focus-within{outline:2px solid Highlight}
+  .rhsc-revision-ui .rhsc-question-step{border:1px solid CanvasText;background:Canvas}
+  .rhsc-revision-ui .rhsc-question-step.is-current{background:Highlight}
+}
+@media(prefers-reduced-motion:reduce){
+  .rhsc-revision-ui #quiz *{scroll-behavior:auto!important;transition:none!important}
+}
