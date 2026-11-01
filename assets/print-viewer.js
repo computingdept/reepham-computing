@@ -58,6 +58,9 @@
   open.href=pdf;
   fallback.hidden=false;
   print.disabled=false;
+  // Make Tools visible immediately for revision guides, even if the
+  // accessibility catalogue is unavailable or slow to load.
+  if(guidePdf){tools.hidden=false;panel.hidden=true;}
   // Print the original document using the browser PDF viewer. Some browsers
   // cannot programmatically print an embedded PDF; open the original as backup.
   print.addEventListener('click',()=>{
@@ -348,8 +351,8 @@
     showReading.disabled=true;
     guideLoading=(async()=>{
       // PDF.js runs in the browser; the PDF itself is fetched only from our domain.
-      const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.449/pdf.min.mjs');
-      pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.449/pdf.worker.min.mjs';
+      const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.min.mjs');
+      pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs';
       guideDocument=await pdfjs.getDocument({url:pdf,withCredentials:false}).promise;
       if(!guideDocument||guideDocument.numPages<1)throw Error('No pages in PDF');
       readerData={type:'automatically-extracted-guide'};
