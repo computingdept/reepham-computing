@@ -50,6 +50,16 @@ These are assessment or feedback lesson sources. The generator deliberately avoi
 - Original classroom lessons, revision guides, shared CSS/JS and navigation left unchanged.
 - Exceptions logged without fabrication of missing model answers.
 
+## Post-publication link and visual preflight (1 November 2026)
+
+A second independent repository-checkout audit identified and corrected a publishing workflow error: Year 13 PDFs had been generated but not committed due to unmatched filename patterns. Four longer Year 12 booklets also had an invalid initial black-and-white filename. Both publishing workflows have been repaired to verify catalogue targets before committing.
+
+**Rechecked after repairs: all 288 catalogue PDF targets exist (zero missing).** This establishes repository link integrity, not classroom readiness.
+
+The visual dependency audit found original lesson diagrams or images in the teaching stages of **272 of 288** booklets. **127** were provisionally prioritised because their source descriptions suggested potentially important technical diagrams; **145** have other figure candidates, and **16** had no figures in the checked stages. The current text-first PDFs contain no embedded raster image objects, and their generator does not import the lesson SVGs.
+
+The detailed repair inventory is available in [H446 visual audit](H446_VISUAL_AUDIT.md) and [machine-readable visual audit](H446_VISUAL_AUDIT.json). Original source diagrams must be restored and checked before issuing diagram-dependent resources to pupils.
+
 ## Essential teacher approval checks before delivery
 
 **Important visual limitation:** Of the 273 booklets generated in the new bulk runs, **268 were flagged as containing source diagrams/images that the text-first generator did not embed**. Some may be decorative, but many computing topics rely on diagrams, graphs, circuits, flowcharts, trace tables and data structures. **These PDF drafts are not yet visually or pedagogically approved**. Reconstruct or verify the necessary visuals before classroom use.
