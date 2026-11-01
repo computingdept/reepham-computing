@@ -104,6 +104,18 @@
         if(new URLSearchParams(location.search).get('theme')==='synergy')back.searchParams.set('theme','synergy');
         const group=pair(existing,back.pathname+back.search+back.hash,course.toUpperCase()+' '+(course==='j277'?'Year '+year:'Year '+year)+' practice');
         if(!existing&&group)parent.insertBefore(group,parent.firstChild);
+        // Option B: one labelled Topics control in the shared practice header.
+        // The quiz engine still owns the hash routing and topic state.
+        if(!parent.querySelector('.rhsc-practice-topics')){
+          const topics=document.createElement('a');
+          topics.className='rhsc-practice-topics';
+          const match=path.match(/section-([\d-]+)/);
+          const sectionCode=match?match[1].replace(/-/g,'.'):'';
+          topics.href='#'+sectionCode;
+          topics.textContent='Topics';
+          topics.setAttribute('aria-label','Back to practice topics');
+          parent.insertBefore(topics,group?.nextSibling||parent.firstChild);
+        }
       }
       return;
     }
