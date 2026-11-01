@@ -1,5 +1,5 @@
 /* Synergy Assist PDF viewer.
-   J277 Lesson 001 pilot: show the exact source PDF page (paper-first), with
+   Shared KS3, J277 and H446 booklets: show the exact source PDF page (paper-first), with
    PDF-derived speech text only. No duplicate lesson or answers are authored.
    Revision guides retain their existing text-extraction reading mode.
    Other approved, catalogued companions retain their legacy code path. */
@@ -55,11 +55,15 @@
     return;
   }
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
-  // Pilot: build Reading View from this exact approved PDF, not from a
-  // separately maintained transcript or classroom-lesson JSON.
-  const knownLessonCompanion=file.pathname==='/offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf';
-  const pdfTextReader=guidePdf||knownLessonCompanion;
-  if(knownLessonCompanion){
+  // Shared paper-first reading for existing KS3, J277 and H446 printable
+  // booklets only. Page visuals, selectable text and printing ALL use the
+  // SAME source PDF; revision guides retain their distinct reading mode.
+  const paperFirstBooklet=
+    /^\/offline\/booklets\/(?:j277|h446)\/[^/]+\.pdf$/i.test(file.pathname)||
+    /^\/lessons\/year[789]\/year[789]-lesson-upload\/Y[789]-L\d{2}-print\.pdf$/i.test(file.pathname)||
+    /^\/assets\/year8\/[^/]*booklet\.pdf$/i.test(file.pathname);
+  const pdfTextReader=guidePdf||paperFirstBooklet;
+  if(paperFirstBooklet){
     document.body.classList.add('paper-first-booklet');
     // The original page is always shown, so settings which only reflow HTML
     // text must not misleadingly promise to change the printed page.
@@ -100,8 +104,8 @@
   print.hidden=false;
   // Make Tools visible immediately for revision guides, even if the
   // accessibility catalogue is unavailable or slow to load.
-  if(guidePdf||knownLessonCompanion){tools.hidden=false;panel.hidden=true;}
-  if(knownLessonCompanion)showReading.disabled=true;
+  if(guidePdf||paperFirstBooklet){tools.hidden=false;panel.hidden=true;}
+  if(paperFirstBooklet)showReading.disabled=true;
 
   const el=(tag,className,content)=>{
     const node=document.createElement(tag);
@@ -321,12 +325,12 @@
     if(!pdfTextReader)return;
     tools.hidden=false;
     const note=panel.querySelector('.view-switch + .access-note');
-    if(note)note.textContent=knownLessonCompanion
+    if(note)note.textContent=paperFirstBooklet
       ?'Reading View shows the actual paper booklet page. Use page arrows and Zoom to inspect it; write answers in the printed booklet. Listen reads selectable PDF text and may not handle complex layouts perfectly. Print opens the unchanged PDF.'
       :'Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
     notice('Preparing Reading View from the original PDF.');
   }
-  // Paper-first pilot: render the real four-page booklet directly from
+  // Paper-first booklet: render the real four-page booklet directly from
   // the SAME PDF used by Print. Text extraction is only an off-screen aid
   // for speech and screen readers; it is never the visible worksheet.
   async function renderBookletPage(requested){
@@ -436,7 +440,7 @@
   }
 
   async function renderGuidePage(requested){
-    if(knownLessonCompanion)return renderBookletPage(requested);
+    if(paperFirstBooklet)return renderBookletPage(requested);
     if(!guideDocument)return;
     stopSpeech();
     const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
@@ -461,7 +465,7 @@
     if(line.trim())lines.push(line.trim());
     const inner=el('div','reader-inner guide-reader-inner');
     inner.append(el('h1','',label));
-    inner.append(el('p','reader-source-note',knownLessonCompanion?'Content extracted from this same printable PDF. Write answers on your paper booklet. Check the exact PDF page below for diagrams, equations and layout.':'Automatically extracted reading aid. Text order and technical notation may be inaccurate; pictures and diagrams may be omitted. Refer to the Original PDF for authoritative content.'));
+    inner.append(el('p','reader-source-note',paperFirstBooklet?'Content extracted from this same printable PDF. Write answers on your paper booklet. Check the exact PDF page below for diagrams, equations and layout.':'Automatically extracted reading aid. Text order and technical notation may be inaccurate; pictures and diagrams may be omitted. Refer to the Original PDF for authoritative content.'));
     const nav=el('nav','guide-reader-pages');
     nav.setAttribute('aria-label','PDF page navigation');
     const prev=el('button','', 'Previous page');
@@ -491,7 +495,7 @@
       for(const item of lines)section.append(el('p','reader-highlight-target guide-extracted-line',item));
       inner.append(section);
     }
-    if(knownLessonCompanion){
+    if(paperFirstBooklet){
       // The page image is rendered from the SAME PDF, on demand. It preserves
       // diagrams, tables, maths symbols and the original exact layout without
       // introducing a second source or any model-answer reveal controls.
@@ -549,7 +553,7 @@
       if(mobileRead)mobileRead.hidden=false;
       await renderGuidePage(1);
       setMode('reading');
-      notice(knownLessonCompanion
+      notice(paperFirstBooklet
         ?'Original booklet page 1 of '+guideDocument.numPages+' ready. Write answers on paper.'
         :'Reading View ready: automatically extracted text, page 1 of '+guideDocument.numPages+'. Check technical content against the Original PDF.');
       return true;
@@ -636,8 +640,8 @@
   stop.addEventListener('click',()=>{stopSpeech();notice('Reading stopped.');});
   window.addEventListener('pagehide',stopSpeech);
 
-  // The source-PDF reader is the only lesson content source for this pilot.
-  // Do not fetch the old, separately maintained J277-001 JSON companion.
+  // The source-PDF reader is the only lesson content source for booklets.
+  // No separately maintained lesson transcript is needed for booklet PDFs.
   if(pdfTextReader){
     enableGuideReader();
     if(preferReading)loadGuideReader();
@@ -656,7 +660,7 @@
     const dataUrl=localUrl(source,'.json');
     if(!dataUrl){
       setMode('pdf');
-      if(knownLessonCompanion)notice('Reading View is temporarily unavailable. You can still open the original PDF.');
+      if(paperFirstBooklet)notice('Reading View is temporarily unavailable. You can still open the original PDF.');
       return;
     }
     return fetch(dataUrl.pathname,{cache:'no-store'}).then(response=>{
@@ -684,7 +688,7 @@
     // If the reader cannot load, show the original document rather than
     // leaving a blank screen or an indefinite loading state.
     setMode('pdf');
-    if(knownLessonCompanion){
+    if(paperFirstBooklet){
       notice('Reading View could not be loaded. Open the original PDF instead.');
       showReading.disabled=true;
       if(mobileRead)mobileRead.hidden=true;
