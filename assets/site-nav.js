@@ -8,7 +8,7 @@
     back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg>',
     home:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg>'
   };
-  const css='/assets/site-nav.css?v=20261101-compactbar1';
+  const css='/assets/site-nav.css?v=20261101-icon-only1';
   if(!document.querySelector('link[data-rhsc-site-nav]')){
     const link=document.createElement('link');
     link.rel='stylesheet';link.href=css;link.dataset.rhscSiteNav='1';document.head.appendChild(link);
