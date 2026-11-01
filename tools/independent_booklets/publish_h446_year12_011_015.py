@@ -177,7 +177,7 @@ def render_items(c,items,y,palette,maxheight=None,scale=1):
             y-=a['rule']*19*scale
     return y
 
-def begin(c,lesson,number,stage,title,mode):
+def begin(c,lesson,number,stage,title,mode,total_pages=8):
     palette=tone(mode)
     c.setFillColor(palette['accent']);c.rect(0,A4H-10,A4W,10,stroke=0,fill=1)
     c.setFillColor(palette['accent']);c.setFont('RHSBold',9.2)
@@ -190,7 +190,7 @@ def begin(c,lesson,number,stage,title,mode):
     c.setStrokeColor(LINE);c.line(M,48,A4W-M,48)
     c.setFont('RHS',7.8);c.setFillColor(GREY)
     c.drawString(M,33,'BLACK PEN · complete your work    GREEN PEN · check, correct and explain')
-    c.drawRightString(A4W-M,33,f'{number} / 8')
+    c.drawRightString(A4W-M,33,f'{number} / {total_pages}')
     return A4H-127,palette
 
 def page_end(c,y,n):
@@ -202,8 +202,10 @@ def make_pdf(lesson,soup,mode,outfile):
     c.setTitle(f'H446 Lesson {lesson.number:03d}: {lesson.title} — eight-page reviewed draft')
     c.setAuthor('RHS Computing')
     l=lesson.number
+    extra=1 if lesson.number in (19,31) else 0
+    total_pages=8+extra
     # 1 — retrieval. Exactly four authentic source questions.
-    y,p=begin(c,lesson,1,'Do Now — Recall',lesson.title,mode)
+    y,p=begin(c,lesson,1,'Do Now — Recall',lesson.title,mode,total_pages)
     c.setFont('RHS',9);c.setFillColor(GREY)
     c.drawString(M,y,'Name: ______________________________    Class: __________    Date: __________')
     y-=30
@@ -214,7 +216,7 @@ def make_pdf(lesson,soup,mode,outfile):
     page_end(c,y,1)
 
     # 2 — separate retrieval answers, objectives, glossary.
-    y,p=begin(c,lesson,2,'Do Now — Check / Objectives','Correct and improve',mode)
+    y,p=begin(c,lesson,2,'Do Now — Check / Objectives','Correct and improve',mode,total_pages)
     items=[obj('Check page 1 in GREEN PEN. Write corrections in full.','note')]
     for i,(q,a) in enumerate(lesson.do_now,1):
         items.extend([obj(f'{i}. Model answer','sub'),obj(a,'body')])
@@ -229,21 +231,33 @@ def make_pdf(lesson,soup,mode,outfile):
     page_end(c,y,2)
 
     # 3 — explicitly source-grounded small steps.
-    y,p=begin(c,lesson,3,'New Learning','Read, annotate and explain',mode)
+    y,p=begin(c,lesson,3,'New Learning','Read, annotate and explain',mode,total_pages)
     items=new_learning(soup)
     items.append(obj('Explain one step in your own words, using the correct technical terms.','prompt',rule=5))
     y=render_items(c,items,y,p,maxheight=y-60)
     page_end(c,y,3)
 
-    # 4 — full I Do steps.
-    y,p=begin(c,lesson,4,'I Do — Worked example','Follow the worked method',mode)
+    # 4 — full I Do steps. Long technical models get a second modelling
+    # page rather than being truncated or printed below a legible font size.
+    y,p=begin(c,lesson,4,'I Do — Worked example','Follow the worked method',mode,total_pages)
     items=model(soup,lesson)
-    # Keep all the actual I Do steps; omit redundant generic instruction that caused overflow.
-    y=render_items(c,items,y,p,maxheight=y-60)
-    page_end(c,y,4)
+    if extra:
+        # Choose a whole-block break close to the midpoint. All source steps
+        # remain intact and are still checked by render_items on both pages.
+        from publish_h446_year12_011_015 import dims
+        candidates=range(1,len(items))
+        split=min(candidates,key=lambda j:max(dims(items[:j]),dims(items[j:])))
+        y=render_items(c,items[:split],y,p,maxheight=y-60)
+        page_end(c,y,4)
+        y,p=begin(c,lesson,5,'I Do — Worked example','Worked method continued',mode,total_pages)
+        y=render_items(c,items[split:],y,p,maxheight=y-60)
+        page_end(c,y,5)
+    else:
+        y=render_items(c,items,y,p,maxheight=y-60)
+        page_end(c,y,4)
 
     # 5 — guided practice: real prompts and optional starter code, no reveal.
-    y,p=begin(c,lesson,5,'We Do — Guided practice','Try → Discuss → Improve',mode)
+    y,p=begin(c,lesson,5+extra,'We Do — Guided practice','Try → Discuss → Improve',mode,total_pages)
     cases=guided(soup)
     items=[]
     for i,(title,desc,code) in enumerate(cases,1):
@@ -258,9 +272,9 @@ def make_pdf(lesson,soup,mode,outfile):
     qs=choices(lesson)
     if len(qs)<3:raise ValueError(f'Lesson {l}: insufficient original You Do questions ({len(qs)})')
     middle=(len(qs)+1)//2
-    for pn,group,start in [(6,qs[:middle],0),(7,qs[middle:],middle)]:
+    for pn,group,start in [(6+extra,qs[:middle],0),(7+extra,qs[middle:],middle)]:
         y,p=begin(c,lesson,pn,'You Do — Independent practice',
-                   'Questions · Part 1' if pn==6 else 'Questions · Part 2',mode)
+                   'Questions · Part 1' if pn==6+extra else 'Questions · Part 2',mode,total_pages)
         items=[obj('Answer independently. Show code, calculations, a trace or justified reasoning as appropriate.','note')]
         lines=6 if len(group)<=2 else 4
         for j,q in enumerate(group,start+1):
@@ -270,7 +284,7 @@ def make_pdf(lesson,soup,mode,outfile):
         page_end(c,y,pn)
 
     # 8 — original exit ticket, student reflection and correction.
-    y,p=begin(c,lesson,8,'Exit Ticket / Reflection','Check your understanding',mode)
+    y,p=begin(c,lesson,8+extra,'Exit Ticket / Reflection','Check your understanding',mode,total_pages)
     items=[
       obj('Complete the actual lesson Exit Ticket before checking the answer.','note'),
       obj(lesson.exit_question,'prompt',rule=4),
@@ -281,10 +295,10 @@ def make_pdf(lesson,soup,mode,outfile):
       obj('Next step: revisit the model or a relevant revision-guide section if needed.','note'),
     ]
     y=render_items(c,items,y,p,maxheight=y-60)
-    page_end(c,y,8)
+    page_end(c,y,8+extra)
     c.save()
     with fitz.open(str(outfile)) as doc:
-        if len(doc)!=8:raise ValueError(f'{outfile} created {len(doc)} pages')
+        if len(doc)!=total_pages:raise ValueError(f'{outfile} created {len(doc)} pages')
         text='\n'.join(page.get_text() for page in doc)
         for term in ('Do Now','I Do','We Do','You Do','Exit Ticket','BLACK PEN','GREEN PEN'):
             if term.casefold() not in text.casefold():raise ValueError(f'Missing {term} from {outfile}')
