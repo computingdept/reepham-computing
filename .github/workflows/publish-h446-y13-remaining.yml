@@ -1,0 +1,96 @@
+name: Publish H446 Year 13 eight-page print booklet collection
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_y13_remaining.py'
+      - '.github/workflows/publish-h446-y13-remaining.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h446-year13-remaining-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Produce and audit H446 181-320 in five-lesson batches
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+          python -m pip install 'reportlab==4.2.5' 'beautifulsoup4==4.12.3' 'PyMuPDF==1.26.4'
+      - name: Build Year 13 lesson drafts in groups of five
+        run: python tools/independent_booklets/publish_h446_y13_remaining.py
+      - name: Verify all new PDFs and catalogue links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz
+          p=Path('offline/booklets/h446/Y13_EIGHT_PAGE_BATCHES.json')
+          a=json.loads(p.read_text())
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          assert len(a['batches'])==28
+          assert len(a['generated'])+len(a['deferred'])==140
+          for row in a['generated']:
+              n=row['lesson']
+              v=c['lessons']['h446'][str(n)]
+              assert not v['teacher_approved']
+              for key,expected in (('print_bw',v['a4_pages']),('learn_colour',v['a4_pages']),
+                                   ('booklet_bw',v['a3_spreads']),('booklet_colour',v['a3_spreads'])):
+                  path=Path(v[key])
+                  assert path.is_file() and path.stat().st_size>10000,(n,key)
+                  with fitz.open(path) as pdf:
+                      assert len(pdf)==expected,(n,key)
+                      if key in ('print_bw','learn_colour'):
+                          assert all(len(p.get_text().strip())>=40 for p in pdf),(n,key)
+          for row in a['deferred']:
+              if row['retained_old_link']:
+                  assert c['lessons']['h446'][str(row['lesson'])]['print_bw']==row['prior_print_link']
+          assert Path('offline/booklets/h446/Y13_PRINT_PRODUCTION_REPORT.md').is_file()
+          print('Generated:',len(a['generated']),'Deferred:',len(a['deferred']))
+          PY
+      - name: Commit verified PDFs, catalogue and report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json \
+                  offline/booklets/h446/Y13_EIGHT_PAGE_BATCHES.json \
+                  offline/booklets/h446/Y13_PRINT_PRODUCTION_REPORT.md
+          git add offline/booklets/h446/H446_Lesson_*_8PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_9PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_10PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_11PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_12PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_13PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_14PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_15PAGE_REVIEW_* \
+                  offline/booklets/h446/H446_Lesson_*_16PAGE_REVIEW_* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish checked H446 Year 13 print drafts and complete five-lesson batch report'
+          pushed=0
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then pushed=1;break;fi
+            sleep 3
+          done
+          test "$pushed" -eq 1
+      - name: Include audit results in workflow summary
+        if: always()
+        run: |
+          if test -s offline/booklets/h446/Y13_PRINT_PRODUCTION_REPORT.md; then
+            cat offline/booklets/h446/Y13_PRINT_PRODUCTION_REPORT.md >> "$GITHUB_STEP_SUMMARY"
+          fi
