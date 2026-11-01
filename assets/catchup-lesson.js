@@ -132,6 +132,8 @@
     const eyebrow=intro.querySelector('.catchup-eyebrow');
     if(!heading||!eyebrow)return;
     const title=$('div','catchup-title-lockup');
+    const lessonNumber=(location.pathname.match(/\/lesson-(\d{3})\//)||[])[1];
+    if(lessonNumber)eyebrow.textContent='LESSON '+lessonNumber;
     title.append(eyebrow,heading);
     top.append(title);
   }
