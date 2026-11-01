@@ -8,7 +8,7 @@
     back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg>',
     home:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg>'
   };
-  const css='/assets/site-nav.css?v=20261030-nav1';
+  const css='/assets/site-nav.css?v=20261101-compactbar1';
   if(!document.querySelector('link[data-rhsc-site-nav]')){
     const link=document.createElement('link');
     link.rel='stylesheet';link.href=css;link.dataset.rhscSiteNav='1';document.head.appendChild(link);
@@ -120,6 +120,16 @@
   /* One central, visual-only website identity: Home on the left, the
      original Synergy Assist artwork on the right. Existing back links,
      teaching phases and question engines remain in place. */
+  // The visible title belongs in the same compact bar as Home and the logo.
+  // Existing page h1 headings remain in the DOM for accessibility.
+  function addTopTitle(mount,label){
+    if(!mount||mount.querySelector(':scope > .synergy-corner-title'))return;
+    const el=document.createElement('span');
+    el.className='synergy-corner-title';
+    el.textContent=label;
+    el.setAttribute('aria-hidden','true');
+    mount.append(el);
+  }
   function positionCorners(){
     const pathname=location.pathname;
     function logo(mount){
@@ -141,6 +151,13 @@
     const top=document.querySelector('body.course-hub > header.topbar');
     if(top){
       firstHome(top);
+      const courseTitles={
+        'ks3-computing':'KS3 Computing',
+        'j277-hub':'GCSE Computer Science',
+        'h446-hub':'A Level Computer Science'
+      };
+      const matched=pathname.match(/\/(ks3-computing|j277-hub|h446-hub)\.html$/);
+      if(matched)addTopTitle(top,courseTitles[matched[1]]);
       top.classList.add('synergy-corners');
       return; // the existing Synergy logo + wordmark is already in the masthead
     }
@@ -149,6 +166,7 @@
     const legacyTop=document.querySelector('body.central-legacy-hub > header.top .topin');
     if(homeTop||chooser||legacyTop){
       firstHome(homeTop||chooser||legacyTop);
+      if(homeTop)addTopTitle(homeTop,'Learning Hub');
       return;
     }
     const lessonNav=document.querySelector('.navwrap');
