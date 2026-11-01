@@ -44,6 +44,26 @@
     return {label:canonical+(multiple?' +':''),colour:variants[index],full:source};
   }
 
+  /* Send published booklet PDFs to the ONE paper-first viewer, rather
+     than opening a small browser PDF immediately. The viewer's Print link
+     still opens the unchanged original PDF for browser/Adobe printing.
+     Keep any non-PDF or already-wrapped links intact. */
+  function bookletReadingUrl(href,number,title){
+    if(!href||typeof href!=='string')return href;
+    try{
+      const source=new URL(href,location.href);
+      if(source.origin!==location.origin)return href;
+      if(source.pathname==='/print-viewer.html')return href;
+      if(!source.pathname.toLowerCase().endsWith('.pdf'))return href;
+      const viewer=new URL('/print-viewer.html',location.origin);
+      viewer.searchParams.set('file',source.pathname+source.search);
+      viewer.searchParams.set('from',location.pathname+location.search+location.hash);
+      viewer.searchParams.set('title',('Lesson '+number+' · '+title).slice(0,110));
+      viewer.searchParams.set('reading','1');
+      return viewer.pathname+viewer.search;
+    }catch(_){return href;}
+  }
+
   /* One-click lesson actions: Full lesson, Catch up, and Print. Any legacy
      secondary print routes supplied by course hubs are intentionally ignored. */
   function createTile(options){
@@ -52,7 +72,7 @@
     const title=String(o.title||'');
     const teach=typeof o.openHref==='string'&&o.openHref.trim()?o.openHref:null;
     const catchup=typeof o.learnHref==='string'&&o.learnHref.trim()?o.learnHref:null;
-    const print=typeof o.printHref==='string'&&o.printHref.trim()?o.printHref:null;
+    const print=typeof o.printHref==='string'&&o.printHref.trim()?bookletReadingUrl(o.printHref.trim(),number,title):null;
     // Limit copy to the two approved labels, including for older hub data.
     const learnLabel=/(?:^|\s)draft\b/i.test(String(o.learnLabel||''))?'Catch up draft':'Catch up';
     const printLabel=typeof o.printLabel==='string'&&o.printLabel.trim()?o.printLabel:'Print';
