@@ -403,21 +403,25 @@
       if(token!==bookletRenderToken)return;
       holder.setAttribute('aria-busy','false');
       // Source PDF text is not displayed as a separate, confusing text dump.
-      // Sort by visual page position for more natural speech where supported.
-      const items=(await page.getTextContent()).items.filter(item=>typeof item.str==='string'&&item.str.trim());
+      // Extraction failure must NEVER prevent the intact PDF page being shown.
+      let lines=[];
+      try{
+        const content=await page.getTextContent();
+        if(token!==bookletRenderToken)return;
+        const items=content.items.filter(item=>typeof item.str==='string'&&item.str.trim());
+        const placed=items.map((item,i)=>({text:item.str.trim(),x:item.transform?.[4]||0,y:item.transform?.[5]||0,i}));
+        placed.sort((a,b)=>Math.abs(b.y-a.y)>3?b.y-a.y:a.x-b.x||a.i-b.i);
+        for(const item of placed){
+          const last=lines[lines.length-1];
+          if(!last||Math.abs(last.y-item.y)>3)lines.push({y:item.y,text:item.text});
+          else last.text+=' '+item.text;
+        }
+      }catch(_){lines=[];}
       if(token!==bookletRenderToken)return;
-      const placed=items.map((item,i)=>({text:item.str.trim(),x:item.transform?.[4]||0,y:item.transform?.[5]||0,i}));
-      placed.sort((a,b)=>Math.abs(b.y-a.y)>3?b.y-a.y:a.x-b.x||a.i-b.i);
-      const lines=[];
-      for(const item of placed){
-        const last=lines[lines.length-1];
-        if(!last||Math.abs(last.y-item.y)>3)lines.push({y:item.y,text:item.text});
-        else last.text+=' '+item.text;
-      }
       for(const line of lines)speech.append(el('span','reader-highlight-target',line.text));
       if(!lines.length){
         play.disabled=true;
-        speech.append(el('span','', 'No selectable text is available for read-aloud on this page.'));
+        speech.append(el('span','', 'Read-aloud text is unavailable on this PDF page.'));
       }else play.disabled=!speechAvailable;
       notice('Showing the original PDF page '+n+' of '+guideDocument.numPages+'. Write answers on paper.');
     }catch(_){
