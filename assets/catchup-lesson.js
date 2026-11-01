@@ -189,11 +189,25 @@
     intro.querySelector('.catchup-description').textContent=cfg.intro;
     intro.querySelector('.catchup-duration').textContent='About '+cfg.estimated_minutes+' minutes';
     intro.querySelector('.catchup-threshold').textContent=cfg.pass_percent+'% mastery · '+threshold+' of '+all.length+' correct';
+    // One functional bottom navigation, not a duplicate of the top row.
+    const purposeSteps=[
+      ['Do Now','Recall previous learning'],
+      ['I Do','Read new knowledge'],
+      ['We Do','Practise with guidance'],
+      ['You Do','Work independently'],
+      ['Review & Improve','Check my understanding']
+    ];
     const progress=document.getElementById('catchup-progress');
+    progress.classList.add('catchup-progress-bottom');
+    progress.setAttribute('aria-label','Choose a catch-up learning stage');
     const progressItems=cfg.stages.map((stage,i)=>{
       const button=$('button','');
       button.type='button';
-      button.append($('span','step-index',String(i+1)+' of 5'),document.createTextNode(stage.label));
+      button.setAttribute('aria-label','Go to '+stage.label+': '+purposeSteps[i][1]);
+      button.append(
+        $('span','catchup-step-name',i===4?'Review':stage.label),
+        $('span','catchup-step-purpose',purposeSteps[i][1])
+      );
       button.addEventListener('click',()=>go(i,true));
       progress.append(button);
       return button;
@@ -204,26 +218,9 @@
     const next=$('button','catchup-btn primary','Next →');
     previous.type=next.type='button';
     nav.append(previous,next);
-    // The approved J277 print-booklet learning-purpose footer, rendered centrally.
-    // Informational only: existing step buttons and Previous/Next remain the navigation.
-    const purposeSteps=[
-      ['Do Now','Recall previous learning'],
-      ['I Do','Read new knowledge'],
-      ['We Do','Practise with guidance'],
-      ['You Do','Work independently'],
-      ['Review & Improve','Check my understanding']
-    ];
     const purposeFooter=$('footer','catchup-purpose-footer');
     purposeFooter.setAttribute('aria-label','Learning journey');
-    const purposeList=$('div','catchup-purpose-stages');
-    const purposeItems=purposeSteps.map(([label,description])=>{
-      const item=$('span','catchup-purpose-stage');
-      item.append($('span','catchup-purpose-title',label),$('span','catchup-purpose-description',description));
-      purposeList.append(item);
-      return item;
-    });
-    const purposeCurrent=$('p','catchup-purpose-current');
-    purposeFooter.append(purposeList,purposeCurrent);
+    purposeFooter.append(progress);
     previous.addEventListener('click',()=>go(step-1,true));
     next.addEventListener('click',()=>{
       if(step===cfg.stages.length-1)window.location.assign('../../../'+(cfg.course==='h446'?'h446':'j277')+'-hub.html?year='+cfg.year+'#lessons');
@@ -401,18 +398,17 @@
     function renderStage(){
       const info=cfg.stages[step];
       stageMount.replaceChildren();
+      // One clear stage heading with learning purpose and duration.
       const head=$('div','catchup-card-header');
-      const title=$('div','');
-      title.append($('span','catchup-eyebrow', 'Step '+(step+1)+' of 5 · '+info.minutes+' min'));
-      const h=$('h2','',info.label);h.id='catchup-stage-title';
-      title.append(h,$('p','',info.lead));
-      head.append(title);
-      if(info.sign){
-        const icon=$('img','catchup-sign');
-        icon.src='../../../lessons/h446/lesson-001/assets/'+info.sign;
-        icon.alt=info.label+' classroom sign';
-        head.append(icon);
-      }
+      const title=$('div','catchup-stage-heading');
+      const h=$('h2','',info.label+' · '+purposeSteps[step][1]);
+      h.id='catchup-stage-title';
+      title.append(h);
+      const lead=String(info.lead||'').trim();
+      if(lead&&lead.toLowerCase()!==info.label.toLowerCase()&&
+         lead.toLowerCase()!==purposeSteps[step][1].toLowerCase())
+        title.append($('p','catchup-stage-lead',lead));
+      head.append(title,$('span','catchup-stage-minutes',info.minutes+' min'));
       stageMount.append(head);
       info.blocks.forEach(block=>stageMount.append(blockUI(block)));
       stageMount.append($('h3','catchup-section-heading','Quick questions · '+info.questions.length));
@@ -455,12 +451,7 @@
       status.tabIndex=-1;
       stageStatus();
       if(step===cfg.stages.length-1)stageMount.append(overall());
-      purposeItems.forEach((item,i)=>{
-        item.classList.toggle('is-active',i===step);
-        if(i===step)item.setAttribute('aria-current','step');
-        else item.removeAttribute('aria-current');
-      });
-      purposeCurrent.textContent=purposeSteps[step][0]+' · '+purposeSteps[step][1];
+      // Reattach the same five live buttons with their original click handlers.
       stageMount.append(purposeFooter);
       progressItems.forEach((button,i)=>{
         if(i===step)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
