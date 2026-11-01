@@ -1,3 +1,4 @@
+@import url("./synergy-logo.css?v=20261101-logo1");
 /* Synergy Assist identity · central visual-only header branding.
    Loaded after existing hub styling; no lesson/quiz scripts changed. */
 body.course-hub .topbar .brand.synergy-brand,
@@ -75,4 +76,40 @@ body.learning-hub .top .brand.synergy-brand:focus-visible {
 @media print {
   body.course-hub .topbar .synergy-brand-icon,
   body.learning-hub .top .synergy-brand-icon { width: 24px; height: 24px; }
+}
+
+/* Actual logo artwork for both ordinary headers and classroom navigation. */
+.synergy-brand-icon {
+  background-image: var(--synergy-logo-image);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+body .navwrap .course-back::before {
+  content: "SYNERGY ASSIST";
+  display: block;
+  min-height: 29px;
+  padding: 5px 0 4px 32px;
+  margin-bottom: 6px;
+  background-image: var(--synergy-logo-image);
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 27px 27px;
+  color: var(--synergy-ink, #30383a);
+  font: 800 9px/1.15 Arial, Helvetica, sans-serif;
+  letter-spacing: .01em;
+}
+body .sidebar .course::before {
+  content: "SYNERGY ASSIST";
+  display: block;
+  min-height: 30px;
+  margin-bottom: 9px;
+  padding: 7px 0 0 34px;
+  background-image: var(--synergy-logo-image);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 28px 28px;
+  font: 800 10px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: .02em;
+  color: #fff;
 }
