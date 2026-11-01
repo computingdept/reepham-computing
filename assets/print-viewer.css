@@ -134,3 +134,62 @@ h1{font-size:clamp(13px,1.5vw,17px);font-weight:750;line-height:1.2;text-align:c
 .reading-view .guide-extracted-lines{display:flex;flex-direction:column;gap:0}
 .reading-view .guide-extracted-line{white-space:pre-wrap;max-width:80ch;margin:.13em 0 .35em}
 @media(max-width:540px){.reading-view .guide-reader-pages{gap:5px;padding:9px}.reading-view .guide-reader-pages button{padding:6px 9px}}
+
+
+/* Mobile PDF reliability: controls stay above the embedded browser PDF.
+   Safari may only preview one page inside an iframe; open original is always offered. */
+.mobile-pdf-options{display:none}
+@media(max-width:540px){
+  :root{--header-height:56px}
+  .viewer-header{
+    position:relative;z-index:90;height:var(--header-height);
+    grid-template-columns:86px minmax(0,1fr) 161px;
+    padding:0 5px;gap:3px
+  }
+  .viewer-left{gap:3px}
+  .icon-link{height:42px;width:40px;flex-basis:40px}
+  .viewer-actions{gap:4px}
+  .tools-button{
+    width:auto;min-width:75px;min-height:40px;
+    padding:0 8px;gap:4px;font-size:12px;
+    flex-shrink:0
+  }
+  .tools-button svg{width:17px;height:17px}
+  .tools-button span{display:inline}
+  #viewerPrint{min-width:39px;height:40px;width:39px}
+  .synergy-symbol{width:28px;height:28px;flex-basis:28px}
+  .access-panel{
+    z-index:120;top:calc(var(--header-height) + 5px);
+    left:7px;right:7px;bottom:calc(7px + env(safe-area-inset-bottom));
+    width:auto;max-height:none;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain
+  }
+  .mobile-pdf-options:not([hidden]){
+    display:block;flex:0 0 auto;
+    padding:10px 13px 12px;
+    background:#f4f8f5;
+    border-bottom:1px solid #c9d8ce;
+    color:#2e463b;position:relative;z-index:2
+  }
+  .mobile-pdf-options p{font-size:12px;line-height:1.4;margin:0 0 8px}
+  .mobile-pdf-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .mobile-pdf-actions a,.mobile-pdf-actions button{
+    display:inline-flex;justify-content:center;align-items:center;
+    min-height:42px;padding:8px 12px;
+    font-size:13px;font-weight:750;line-height:1.2;
+    border:1px solid #9eBAa8;border-radius:8px;
+    background:#fff;color:#285348;text-decoration:none;cursor:pointer
+  }
+  .mobile-pdf-actions a{background:#285348;color:#fff;border-color:#285348}
+  .preview{display:flex;flex-direction:column;min-height:0}
+  #viewerFrame{flex:1 1 auto;min-height:0;height:auto}
+  .viewer-fallback{display:none!important}
+  .reading-view{width:100%;flex:1 0 auto}
+}
+@media(max-width:360px){
+  .viewer-header{grid-template-columns:84px minmax(0,1fr) 156px}
+  .tools-button{min-width:73px;padding:0 6px}
+  .synergy-symbol{width:25px;flex-basis:25px}
+  #viewerTitle{font-size:11px}
+}
