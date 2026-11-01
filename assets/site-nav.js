@@ -236,7 +236,7 @@
       const text=(link.textContent||'').trim();
       const title=(link.getAttribute('aria-label')||'').trim();
       const marked=link.matches('.lesson-action-print, .lesson-action-print-draft, .print')||
-        /(?:^|\\s|🖨)print(?:\\s|$|[-:])/i.test(text)||/(?:^|\\s)print(?:[-\\s:]|$)/i.test(title);
+        /(?:^|\s|🖨)print(?:\s|$|[-:])/i.test(text)||/(?:^|\s)print(?:[-\s:]|$)/i.test(title);
       if(!marked)return;
       let target;
       try{target=new URL(link.href,location.href);}catch(_){return;}
@@ -244,9 +244,9 @@
       const lesson=link.closest('.lesson-entry');
       const lessonTitle=lesson?.querySelector('.lesson-tile-title')?.textContent?.trim();
       const lessonNumber=lesson?.querySelector('.lesson-tile-number')?.textContent?.trim();
-      let label=lessonTitle?(lessonNumber&&/^\\d+$/.test(lessonNumber)?'Lesson '+lessonNumber+' · ':'')+lessonTitle:
+      let label=lessonTitle?(lessonNumber&&/^\d+$/.test(lessonNumber)?'Lesson '+lessonNumber+' · ':'')+lessonTitle:
         title||'Printable resource';
-      label=label.replace(/^(?:Open\\s+)?(?:print[-\\s]ready|print)(?:\\s+the)?\\s*/i,'').trim()||'Printable resource';
+      label=label.replace(/^(?:Open\s+)?(?:print[-\s]ready|print)(?:\s+the)?\s*/i,'').trim()||'Printable resource';
       const url=new URL('/print-viewer.html',location.origin);
       url.searchParams.set('file',target.pathname+target.search);
       url.searchParams.set('from',location.pathname+location.search+location.hash);
