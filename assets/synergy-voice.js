@@ -267,7 +267,7 @@
   launch.id='synergyListenLaunch';launch.className='synergy-voice-launch synergy-voice-tool';
   launch.type='button';launch.title='Reading tools';launch.setAttribute('aria-label','Reading tools: listen, zoom and reading view');
   launch.setAttribute('aria-expanded','false');launch.setAttribute('aria-controls','synergyListenPanel');
-  launch.innerHTML=icon();
+  launch.innerHTML=icon()+'<span class="synergy-voice-launch-label" aria-hidden="true">Tools</span>';
   const panel=document.createElement('section');
   panel.id='synergyListenPanel';panel.className='synergy-voice-panel synergy-voice-tool';panel.hidden=true;
   panel.setAttribute('aria-label','Listen settings');
