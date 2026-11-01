@@ -145,3 +145,43 @@ body .sidebar .course::before {
     width: 34px; height: 34px;
   }
 }
+
+/* Older KS3 hub reuses the same visual lock-up, without changing its links. */
+body.central-legacy-hub .top .hubhome.synergy-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-brand-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .brand {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.15;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-name {
+  display: block;
+  color: var(--synergy-ink, #30383a);
+  font: 800 15px/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: .06em;
+}
+body.central-legacy-hub .top .hubhome.synergy-brand .synergy-subline {
+  display: block;
+  color: var(--synergy-muted, #626b68);
+  font: 600 11px/1.1 Arial, Helvetica, sans-serif;
+}
+@media(max-width:600px){
+  body.central-legacy-hub .top .hubhome.synergy-brand .synergy-brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+  body.central-legacy-hub .top .hubhome.synergy-brand .synergy-name {
+    font-size: 12px;
+  }
+}
