@@ -174,3 +174,26 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .catchup-shell{margin-top:9px}
 }
 @media print{.catchup-title-lockup{display:none}}
+
+/* Compact, shared Catch Up stage navigation. The existing five live buttons,
+   progress state, keyboard support and Previous/Next logic are unchanged. */
+.catchup-progress{gap:4px;margin-bottom:11px}
+.catchup-progress button{
+ min-height:44px;padding:5px 4px;border-radius:7px;
+ font-size:11px;line-height:1.23
+}
+.catchup-progress button .step-index{
+ font-size:10px;margin-bottom:2px;line-height:1.15
+}
+.catchup-progress button[aria-current=step]{
+ border-color:#284438;background:#eef3f0;
+ box-shadow:inset 0 0 0 1px #284438
+}
+@media(max-width:620px){
+ .catchup-progress{gap:3px;margin-bottom:9px}
+ .catchup-progress button{
+  min-height:47px;padding:5px 2px;font-size:10px;line-height:1.17;
+  overflow-wrap:break-word
+ }
+ .catchup-progress button .step-index{font-size:9px;line-height:1.15}
+}
