@@ -134,7 +134,7 @@ def write_lines(c,lines,y,font,fs,leading,color,accent):
         y-=leading
     return y
 
-def dims(items,scale=1):
+def dims(items,scale=1,density=1):
     y=0.0
     for a in items:
         kind=a['kind']
@@ -144,15 +144,21 @@ def dims(items,scale=1):
         elif kind=='prompt':fs=10.15*scale;leading=15.5*scale;font='RHSBold';gap=7*scale
         else:fs=9.65*scale;leading=15*scale;font='RHS';gap=9*scale
         lines=split_lines(a['text'],font,fs,A4W-2*M)
-        y+=len(lines)*leading+gap+a['rule']*19*scale
+        y+=len(lines)*leading+gap*density+a['rule']*19*scale
     return y
 
 def render_items(c,items,y,palette,maxheight=None,scale=1):
+    density=1
     if maxheight:
-        # Scale whitespace first, then text. Do not silently drop source content.
-        needed=dims(items,scale)
-        while needed>maxheight and scale>0.88:
-            scale=round(scale-.025,3);needed=dims(items,scale)
+        # Reduce inter-block whitespace before reducing font size.
+        # Never delete source material or compact ruled writing lines.
+        needed=dims(items,scale,density)
+        while needed>maxheight and density>0.48:
+            density=round(density-0.08,3)
+            needed=dims(items,scale,density)
+        while needed>maxheight and scale>0.90:
+            scale=round(scale-.02,3)
+            needed=dims(items,scale,density)
         if needed>maxheight:
             raise ValueError(f'Content does not fit A4 page ({needed:.0f}pt > {maxheight:.0f}pt).')
     for a in items:
@@ -162,7 +168,7 @@ def render_items(c,items,y,palette,maxheight=None,scale=1):
         elif k=='note':fs=9.2*scale;leading=14*scale;font='RHS';gap=12*scale;color=GREY
         elif k=='prompt':fs=10.15*scale;leading=15.5*scale;font='RHSBold';gap=7*scale
         else:fs=9.65*scale;leading=15*scale;font='RHS';gap=9*scale
-        y=write_lines(c,split_lines(a['text'],font,fs,A4W-2*M),y,font,fs,leading,color,palette['accent'])-gap
+        y=write_lines(c,split_lines(a['text'],font,fs,A4W-2*M),y,font,fs,leading,color,palette['accent'])-gap*density
         if a['rule']:
             c.setStrokeColor(LINE);c.setLineWidth(.6)
             for i in range(a['rule']):
