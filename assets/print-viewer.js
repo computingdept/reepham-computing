@@ -330,6 +330,12 @@
     }).then(data=>{
       if(data.schema_version!==1||!Array.isArray(data.sections)||!Array.isArray(data.vocabulary))throw Error('Invalid reading companion');
       readerData=data;
+      // Trust editors control whether either aid family is offered, using
+      // lesson data. This is an editorial flag, not student authentication.
+      const policy=data.aid_policy||{};
+      vocab.disabled=policy.vocabulary_enabled===false;
+      memory.disabled=policy.memory_aids_enabled===false;
+      vocab.checked=false;memory.checked=false;
       renderReader(data);
       tools.hidden=false;
       notice('Reading View is available for this lesson.');
