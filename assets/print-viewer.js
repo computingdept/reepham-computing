@@ -53,6 +53,7 @@
     return;
   }
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
+  const knownLessonCompanion=file.pathname==='/offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf';
   const pdf=file.pathname+file.search;
   frame.src=pdf;
   frame.hidden=false;
@@ -63,7 +64,8 @@
   print.disabled=false;
   // Make Tools visible immediately for revision guides, even if the
   // accessibility catalogue is unavailable or slow to load.
-  if(guidePdf){tools.hidden=false;panel.hidden=true;}
+  if(guidePdf||knownLessonCompanion){tools.hidden=false;panel.hidden=true;}
+  if(knownLessonCompanion)showReading.disabled=true;
   // Print the original document using the browser PDF viewer. Some browsers
   // cannot programmatically print an embedded PDF; open the original as backup.
   print.addEventListener('click',()=>{
@@ -453,13 +455,18 @@
     if(catalogue.schema_version!==1||!catalogue.entries){enableGuideReader();return;}
     const source=catalogue.entries[file.pathname];
     const dataUrl=localUrl(source,'.json');
-    if(!dataUrl){enableGuideReader();return;}
+    if(!dataUrl){
+      if(guidePdf)enableGuideReader();
+      else if(knownLessonCompanion)notice('Reading View is temporarily unavailable. You can still open the original PDF.');
+      return;
+    }
     return fetch(dataUrl.pathname,{cache:'no-store'}).then(response=>{
       if(!response.ok)throw Error('Reading companion unavailable');
       return response.json();
     }).then(data=>{
       if(data.schema_version!==1||!Array.isArray(data.sections)||!Array.isArray(data.vocabulary))throw Error('Invalid reading companion');
       readerData=data;
+      showReading.disabled=false;
       if(mobileRead)mobileRead.hidden=false;
       // Trust editors control whether either aid family is offered, using
       // lesson data. This is an editorial flag, not student authentication.
@@ -476,9 +483,11 @@
     });
   }).catch(()=>{
     // Fail safely to the original PDF, without pretending it is accessible text.
-    if(guidePdf)enableGuideReader();else if(tools.hidden){
-      // The original PDF always remains accessible on mobile.
+    if(guidePdf)enableGuideReader();
+    else if(knownLessonCompanion){
+      notice('Reading View could not be loaded. You can still open the original PDF.');
+      showReading.disabled=true;
       if(mobileRead)mobileRead.hidden=true;
-    }
+    }else tools.hidden=true;
   });
 })();
