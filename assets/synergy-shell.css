@@ -1,0 +1,94 @@
+/* Synergy Assist shared site shell · 2026-11-01
+   Load AFTER legacy hub/synergy-preview/monochrome styles.
+   Scope only to the course and Learning Hub shells, never .page classroom
+   slides, revision questions, diagrams or interactive quiz content.
+   Reversible: remove this single stylesheet link from each hub entrypoint. */
+@import url("./synergy-tokens.css?v=20261101-brand1");
+@import url("./synergy-print.css?v=20261101-brand1");
+
+body.course-hub,
+body.learning-hub {
+  --green: var(--synergy-green);
+  --green-dark: var(--synergy-green-dark);
+  --green-mid: var(--synergy-green);
+  --ink: var(--synergy-ink);
+  --muted: var(--synergy-muted);
+  --line: var(--synergy-border);
+  --hubnav-ink: var(--synergy-ink);
+  --hubnav-muted: var(--synergy-muted);
+  --hubnav-border: var(--synergy-border);
+  background: var(--synergy-white);
+  color: var(--synergy-ink);
+}
+
+/* Quiet, low-ink identity: white header and a fine Synergy-green divider. */
+body.course-hub .topbar,
+body.learning-hub .top {
+  background: var(--synergy-white);
+  border-bottom: 2px solid var(--synergy-green);
+  box-shadow: none;
+}
+body.course-hub .topbar .brand-copy strong,
+body.learning-hub .top .brand,
+body.learning-hub .top .school-brand {
+  color: var(--synergy-ink);
+}
+body.course-hub .topbar .brand-copy span,
+body.course-hub .topbar .home {
+  color: var(--synergy-muted);
+}
+
+/* Retain the existing course/school text. The green outline is a visual
+   refinement, not an inaccessible pseudo-text replacement for the logo. */
+body.course-hub .topbar .mark,
+html.synergy-hub-preview body.course-hub .topbar .mark {
+  background: var(--synergy-white);
+  color: var(--synergy-green);
+  border: 1px solid var(--synergy-green);
+  box-shadow: none;
+}
+
+body.course-hub .course-topline .heading h1,
+html.synergy-hub-preview body.course-hub .course-topline .heading h1 {
+  color: var(--synergy-ink);
+}
+body.course-hub .course-topline .heading .eyebrow,
+body.course-hub .course-intro .eyebrow {
+  color: var(--synergy-green);
+}
+body.course-hub .course-topline {
+  border-bottom-color: var(--synergy-border);
+}
+
+/* Selection state remains semantic and keyboard accessible. No tab sizes
+   or layout positions are changed. */
+body.course-hub .course-nav .tabs .tab[aria-selected="true"],
+html.synergy-hub-preview body.course-hub .course-nav .tabs .tab[aria-selected="true"] {
+  color: var(--synergy-green);
+  border-bottom-color: var(--synergy-green);
+}
+body.course-hub .year-switch .year-btn[aria-pressed="true"],
+body.course-hub .year-switch button[aria-pressed="true"] {
+  color: var(--synergy-green);
+}
+
+/* Lightweight reading surfaces. Do not touch colour-coded specification
+   markers or the blue/green/orange teaching-routine system. */
+body.course-hub .card,
+body.learning-hub .subject {
+  background: var(--synergy-white);
+  border-color: var(--synergy-border);
+  box-shadow: none;
+}
+body.course-hub .term,
+body.course-hub .panel,
+body.learning-hub .resource {
+  border-color: var(--synergy-border);
+  box-shadow: none;
+}
+body.course-hub .topbar a:focus-visible,
+body.course-hub .course-nav .tabs .tab:focus-visible,
+body.learning-hub .top a:focus-visible {
+  outline: 3px solid var(--synergy-focus);
+  outline-offset: 3px;
+}
