@@ -159,7 +159,7 @@
   return out;
  }
  function navigationLabels(){
-  const nodes=document.querySelectorAll('header a,header button,.course-nav .tab,.year-switch .year-btn,.rhsc-site-nav-button');
+  const nodes=document.querySelectorAll('header a,header button,.rhsc-site-nav a,.phase-nav button,#catchup-progress button,#catchup-nav button,.course-nav .tab,.year-switch .year-btn,.rhsc-site-nav-button');
   const output=[];
   for(const node of nodes){
    if(node.closest('[hidden],[aria-hidden="true"]'))continue;
