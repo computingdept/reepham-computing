@@ -282,3 +282,29 @@ body.paper-first-booklet .booklet-page-speech .reader-highlight-target{display:b
  body.paper-first-booklet .booklet-page-controls,
  body.paper-first-booklet .booklet-paper-instruction{display:none!important}
 }
+
+/* Longer J277/H446 revision guides: one unobtrusive page-jump control,
+   sharing the exact-page viewer used by lesson booklets. */
+body.paper-first-booklet .booklet-page-jump{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  border-left:1px solid #ccd8d1;margin-left:5px;padding-left:10px
+}
+body.paper-first-booklet .booklet-page-jump label{
+  display:flex;align-items:center;gap:5px;font:700 12px/1.2 system-ui,Arial,sans-serif;
+  color:#294d40
+}
+body.paper-first-booklet .booklet-page-jump input{
+  width:64px;min-height:42px;padding:5px 6px;
+  color:#1d4436;background:#fff;border:1px solid #95ad9d;border-radius:7px;
+  font:700 14px system-ui,Arial,sans-serif;text-align:center
+}
+body.paper-first-booklet .booklet-page-jump button{min-height:42px}
+body.paper-first-booklet .booklet-page-jump input:focus-visible{
+  outline:3px solid #bd7d08;outline-offset:2px
+}
+@media(max-width:540px){
+  body.paper-first-booklet .booklet-page-jump{
+    margin-left:0;padding-left:0;border-left:0
+  }
+  body.paper-first-booklet .booklet-page-jump input{width:58px}
+}
