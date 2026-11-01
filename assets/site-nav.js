@@ -275,11 +275,11 @@
     if(document.querySelector('script[data-synergy-voice]'))return;
     const css=document.createElement('link');
     css.rel='stylesheet';
-    css.href='/assets/synergy-voice.css?v=20261101-reading2';
+    css.href='/assets/synergy-voice.css?v=20261101-lesson-tools4';
     css.dataset.synergyVoice='1';
     document.head.append(css);
     const script=document.createElement('script');
-    script.src='/assets/synergy-voice.js?v=20261101-reading2';
+    script.src='/assets/synergy-voice.js?v=20261101-lesson-tools4';
     script.dataset.synergyVoice='1';
     document.head.append(script);
   }
