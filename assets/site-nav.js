@@ -247,7 +247,6 @@
         /^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(target.pathname) &&
         (link.matches('.action,.j277-unit-link') || /\bread\b/i.test(title));
       if(!marked&&!guide)return;
-      if(marked&&!guide&&!link.closest('.lesson-entry')&&!link.matches('.lesson-action-print,.lesson-action-print-draft,.print'))return;
       const lesson=link.closest('.lesson-entry');
       const lessonTitle=lesson?.querySelector('.lesson-tile-title')?.textContent?.trim();
       const lessonNumber=lesson?.querySelector('.lesson-tile-number')?.textContent?.trim();
