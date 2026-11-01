@@ -426,16 +426,93 @@
         title.append($('p','catchup-stage-lead',lead));
       head.append(title,$('span','catchup-stage-minutes',info.minutes+' min'));
       stageMount.append(head);
-      info.blocks.forEach(block=>stageMount.append(blockUI(block)));
-      stageMount.append($('h3','catchup-section-heading','Quick questions · '+info.questions.length));
-      info.questions.forEach((q,i)=>stageMount.append(renderQuestion(q,i)));
-      if(info.writing)stageMount.append(writingUI(info.writing));
+      const stageBody=focusPilot?$('div','catchup-stage-columns'):stageMount;
+      const learning=focusPilot&&info.blocks.length?$('section','catchup-learning-panel'):null;
+      const activity=focusPilot?$('section','catchup-activity-panel'):stageMount;
+      info.blocks.forEach(block=>(learning||stageMount).append(blockUI(block)));
+      if(learning)stageBody.append(learning);
+      activity.append($('h3','catchup-section-heading','Quick questions · '+info.questions.length));
+      const questionCards=info.questions.map((q,i)=>renderQuestion(q,i));
+      questionCards.forEach(card=>activity.append(card));
+      const writingCard=info.writing?writingUI(info.writing):null;
+      if(writingCard)activity.append(writingCard);
+      let focusedRefresh=()=>{};
+      if(focusPilot){
+        const pager=$('nav','catchup-question-pager');
+        pager.setAttribute('aria-label','Move between questions');
+        const questionBack=$('button','catchup-pager-button','← Previous question');
+        const questionCount=$('span','catchup-question-count');
+        questionCount.setAttribute('role','status');
+        questionCount.setAttribute('aria-live','polite');
+        const questionNext=$('button','catchup-pager-button','Next question →');
+        questionBack.type=questionNext.type='button';
+        pager.append(questionBack,questionCount,questionNext);
+        activity.append(pager);
+        let studyNext=null,studyBack=null;
+        if(learning){
+          studyNext=$('button','catchup-btn primary catchup-study-next','Try questions →');
+          studyNext.type='button';
+          learning.append(studyNext);
+          studyBack=$('button','catchup-revisit-learning','← Review learning');
+          studyBack.type='button';
+          activity.insertBefore(studyBack,activity.firstChild);
+        }
+        const totalPages=questionCards.length+(writingCard?1:0);
+        const lastPage=totalPages-1;
+        const mobile=()=>window.matchMedia&&window.matchMedia('(max-width:850px)').matches;
+        const roomy=()=>window.matchMedia&&window.matchMedia('(min-width:1180px) and (min-height:880px)').matches&&
+          !learning&&!writingCard;
+        const focusQuestion=()=>{
+          window.scrollTo({top:0,behavior:'instant'});
+          const q=questionCards[questionPage];
+          const heading=q?.querySelector('h3')||(writingCard&&writingCard.querySelector('h3'));
+          if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+        };
+        focusedRefresh=()=>{
+          const split=!!learning&&mobile();
+          const all=!!roomy();
+          questionPage=Math.max(0,Math.min(lastPage,questionPage));
+          if(learning){
+            learning.hidden=split&&viewPane!=='learn';
+            if(studyNext)studyNext.hidden=!split;
+            if(studyBack)studyBack.hidden=!split;
+          }
+          activity.hidden=split&&viewPane==='learn';
+          questionCards.forEach((card,i)=>{card.hidden=!all&&i!==questionPage;});
+          if(writingCard)writingCard.hidden=questionPage!==questionCards.length;
+          pager.hidden=all;
+          questionBack.disabled=questionPage===0;
+          questionNext.disabled=questionPage===lastPage;
+          questionCount.textContent=questionPage===questionCards.length?'Written answer':
+            'Question '+(questionPage+1)+' of '+questionCards.length;
+        };
+        questionBack.addEventListener('click',()=>{questionPage=Math.max(0,questionPage-1);focusedRefresh();focusQuestion();});
+        questionNext.addEventListener('click',()=>{questionPage=Math.min(lastPage,questionPage+1);focusedRefresh();focusQuestion();});
+        if(studyNext)studyNext.addEventListener('click',()=>{viewPane='practice';focusedRefresh();focusQuestion();});
+        if(studyBack)studyBack.addEventListener('click',()=>{viewPane='learn';focusedRefresh();window.scrollTo({top:0,behavior:'instant'});});
+        // Keep the existing Check Answers button tied to the final
+        // question or writing page. Navigation does not mark anything.
+        const originalRefresh=focusedRefresh;
+        focusedRefresh=()=>{originalRefresh();syncFocusedActions();};
+      }
+      if(focusPilot){stageBody.append(activity);stageMount.append(stageBody);}
       const actions=$('div','catchup-actions');
       const check=$('button','catchup-btn primary','Check these answers');
       check.type='button';
       const status=$('div','catchup-stage-score');
       status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-      actions.append(check);stageMount.append(actions,status);
+      actions.append(check);activity.append(actions,status);
+      const lastFocusedPage=questionCards.length+(writingCard?1:0)-1;
+      const syncFocusedActions=()=>{
+        if(!focusPilot)return;
+        const all=!writingCard&&!learning&&window.matchMedia&&
+          window.matchMedia('(min-width:1180px) and (min-height:880px)').matches;
+        const showCheck=all||questionPage===lastFocusedPage;
+        actions.hidden=!showCheck;
+        status.hidden=!showCheck;
+        const result=activity.querySelector('.catchup-result');
+        if(result)result.hidden=!showCheck;
+      };
       function stageStatus(){
         const marked=info.questions.filter(q=>state.checked[q.id]&&attempted(q,read(q,state))).length;
         const good=info.questions.filter(q=>state.checked[q.id]&&correct(q,read(q,state))).length;
@@ -457,6 +534,7 @@
         if(step===cfg.stages.length-1){
           const old=stageMount.querySelector('.catchup-result');if(old)old.replaceWith(overall());
         }
+        syncFocusedActions();
       };
       check.addEventListener('click',()=>{
         info.questions.forEach(q=>state.checked[q.id]=true);
@@ -466,7 +544,9 @@
       });
       status.tabIndex=-1;
       stageStatus();
-      if(step===cfg.stages.length-1)stageMount.append(overall());
+      if(step===cfg.stages.length-1)activity.append(overall());
+      focusedRefresh();
+      syncFocusedActions();
       // Keep the top navigation in place and announce the active stage.
       progressItems.forEach((button,i)=>{
         if(i===step)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
@@ -476,6 +556,7 @@
     }
     function go(index,focus){
       step=Math.max(0,Math.min(cfg.stages.length-1,index));
+      questionPage=0;viewPane='learn';
       renderStage();
       if(focus){
         window.scrollTo({top:0,behavior:'instant'});
