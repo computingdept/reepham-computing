@@ -508,13 +508,30 @@
       if(focusPilot){
         const pager=$('nav','catchup-question-pager');
         pager.setAttribute('aria-label','Move between questions');
-        const questionBack=$('button','catchup-pager-button','← Previous question');
+        const questionBack=$('button','catchup-pager-button catchup-pager-back');
+        const questionNext=$('button','catchup-pager-button catchup-pager-next');
+        questionBack.type=questionNext.type='button';
+        questionBack.setAttribute('aria-label','Previous question');
+        questionNext.setAttribute('aria-label','Next question');
+        // Same accessible controls on desktop and mobile. On phones the
+        // large labels become compact chevrons; buttons remain 44px targets.
+        const chevron=direction=>{
+          const span=$('span','catchup-pager-chevron');
+          span.setAttribute('aria-hidden','true');
+          span.innerHTML='<svg viewBox="0 0 24 24" focusable="false" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="'+(direction==='left'?'m15 18-6-6 6-6':'m9 18 6-6-6-6')+'"/></svg>';
+          return span;
+        };
+        questionBack.append(chevron('left'),$('span','catchup-pager-label','Previous question'));
+        questionNext.append($('span','catchup-pager-label','Next question'),chevron('right'));
+        const questionCenter=$('div','catchup-pager-center');
         const questionCount=$('span','catchup-question-count');
         questionCount.setAttribute('role','status');
         questionCount.setAttribute('aria-live','polite');
-        const questionNext=$('button','catchup-pager-button','Next question →');
-        questionBack.type=questionNext.type='button';
-        pager.append(questionBack,questionCount,questionNext);
+        const questionDots=$('div','catchup-question-dots');
+        questionDots.setAttribute('aria-hidden','true');
+        const questionHint=$('span','catchup-swipe-hint','Swipe to move between questions');
+        questionCenter.append(questionCount,questionDots,questionHint);
+        pager.append(questionBack,questionCenter,questionNext);
         activity.append(pager);
         let studyNext=null,studyBack=null;
         if(learning){
@@ -527,6 +544,11 @@
         }
         const totalPages=questionCards.length+(writingCard?1:0);
         const lastPage=totalPages-1;
+        const dots=Array.from({length:totalPages},()=>{
+          const dot=$('span','catchup-question-dot');
+          questionDots.append(dot);
+          return dot;
+        });
         const mobile=()=>window.matchMedia&&window.matchMedia('(max-width:850px)').matches;
         const roomy=()=>window.matchMedia&&window.matchMedia('(min-width:1180px) and (min-height:880px)').matches&&
           !learning&&!writingCard;
@@ -549,8 +571,13 @@
           questionCards.forEach((card,i)=>{card.hidden=!all&&i!==questionPage;});
           if(writingCard)writingCard.hidden=questionPage!==questionCards.length;
           pager.hidden=all;
+          // Place the compact controls above the question on phones, while
+          // preserving the familiar bottom question controls on desktops.
+          if(mobile())activity.insertBefore(pager,questionCards[0]);
+          else activity.append(pager);
           questionBack.disabled=questionPage===0;
           questionNext.disabled=questionPage===lastPage;
+          dots.forEach((dot,i)=>dot.classList.toggle('is-current',i===questionPage));
           questionCount.textContent=questionPage===questionCards.length?'Written answer':
             'Question '+(questionPage+1)+' of '+questionCards.length;
         };
