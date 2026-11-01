@@ -17,6 +17,8 @@
   const colour=byId('readingColour'), focus=byId('readingFocus');
   const vocab=byId('showVocabulary'), memory=byId('showMemory');
   const rate=byId('listenRate'), play=byId('listenPlay');
+  const voiceSelect=byId('listenVoice'), voicePreview=byId('listenVoicePreview');
+  const sharedVoice=window.SynergyVoice;
   const pause=byId('listenPause'), stop=byId('listenStop');
   const sizeDisplay=byId('fontSizeValue');
   const speechAvailable=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance==='function';
@@ -249,7 +251,9 @@
     }
     const node=ttsQueue[ttsIndex];
     const utterance=new SpeechSynthesisUtterance(node.textContent.trim());
-    utterance.lang='en-GB';utterance.rate=Number(prefs.rate);
+    if(sharedVoice)sharedVoice.apply(utterance);
+    else utterance.lang='en-GB';
+    utterance.rate=Number(prefs.rate);
     ttsCurrent=node;
     node.classList.add('tts-speaking');
     if(prefs.focus)selectFocus(node,true);
@@ -266,6 +270,18 @@
     window.speechSynthesis.speak(utterance);
   }
   loadPrefs();applyPrefs();
+  if(sharedVoice){
+    sharedVoice.subscribe(()=>sharedVoice.populate(voiceSelect));
+    voiceSelect.addEventListener('change',()=>{
+      stopSpeech();sharedVoice.selectVoice(voiceSelect.value);
+      notice('Voice selected. Choose Preview voice or Play.');
+    });
+    voicePreview.addEventListener('click',()=>{
+      stopSpeech();sharedVoice.preview(notice);
+    });
+  }else{
+    voiceSelect.disabled=true;voicePreview.disabled=true;
+  }
   if(!speechAvailable){
     play.disabled=true;
     notice('Read aloud is not supported by this browser. Screen reader support remains available.');
@@ -297,7 +313,7 @@
   spacing.addEventListener('change',()=>{prefs.spacing=spacing.value;savePrefs();applyPrefs();});
   colour.addEventListener('change',()=>{prefs.colour=colour.value;savePrefs();applyPrefs();});
   focus.addEventListener('change',()=>{prefs.focus=focus.checked;savePrefs();applyPrefs();});
-  rate.addEventListener('change',()=>{prefs.rate=rate.value;savePrefs();if(ttsActive){stopSpeech();notice('Speech speed updated. Select Play to restart.');}});
+  rate.addEventListener('change',()=>{prefs.rate=rate.value;savePrefs();if(sharedVoice)sharedVoice.setRate(rate.value);if(ttsActive){stopSpeech();notice('Speech speed updated. Select Play to restart.');}});
   byId('fontUp').addEventListener('click',()=>{prefs.size=Math.min(160,prefs.size+10);savePrefs();applyPrefs();});
   byId('fontDown').addEventListener('click',()=>{prefs.size=Math.max(90,prefs.size-10);savePrefs();applyPrefs();});
   vocab.addEventListener('change',()=>{const node=byId('readerVocabulary');if(node)node.hidden=!vocab.checked;});
