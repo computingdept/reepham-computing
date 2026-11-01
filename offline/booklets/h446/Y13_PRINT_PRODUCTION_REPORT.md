@@ -1,6 +1,6 @@
 # H446 Year 13 — print booklet production report
 
-Production UTC: 2026-11-01T18:33:01.072247+00:00
+Production UTC: 2026-11-01T19:38:39.105979+00:00
 Lesson range: 181–320; sequential groups of five.
 
 **Generated and checked: 133** of 140 lesson slots.
