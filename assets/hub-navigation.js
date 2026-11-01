@@ -260,41 +260,41 @@
   /* True DOM relocation, not CSS-only positioning. On desktop the year
      selector lives in the course heading and the key follows all lessons.
      Below 701px both controls return to their original positions. */
+  /* One shared header across KS3, J277 and H446. Move the EXISTING tabs
+     and year controls (keeping their listeners, states and routes), rather
+     than rendering copies. The main h1 remains available to screen readers. */
   function activateCourseLayout(){
     const body=document.body;
     if(!body||!body.matches('.course-hub.course-inline-nav'))return;
+    const top=body.querySelector(':scope > header.topbar');
     const topline=document.querySelector('main > .course-topline');
     const resources=topline?.querySelector(':scope > .course-nav');
     const lessons=document.getElementById('lessons');
     const year=lessons?.querySelector('.year-toolbar .year-switch');
     const key=lessons?.querySelector('.year-tools > .course-key');
     const terms=lessons?.querySelector('#terms');
-    if(!topline||!resources||!year||!key||!terms)return;
+    if(!top||!topline||!resources||!year||!key||!terms)return;
+    if(top.querySelector('.synergy-course-controls'))return;
     watchUsageKey(terms);
-    const yearAnchor=document.createComment('Original year selector position');
-    const keyAnchor=document.createComment('Original colour key position');
-    year.before(yearAnchor);
-    key.before(keyAnchor);
-    const footer=document.createElement('footer');
-    footer.className='lesson-footer';
-    footer.setAttribute('aria-label','Lesson colour key');
+    const controls=document.createElement('div');
+    controls.className='synergy-course-controls';
+    controls.setAttribute('aria-label','Year and course resources');
+    // Move the original nodes. All click handlers and accessibility state stay.
+    controls.append(year,resources);
+    top.append(controls);
+    const keyFooter=document.createElement('footer');
+    keyFooter.className='lesson-footer synergy-course-legend';
+    keyFooter.setAttribute('aria-label','Lesson colour key');
+    keyFooter.append(key);
+    terms.after(keyFooter);
+    body.classList.add('synergy-unified-hub');
+    // Keep existing desktop-only colour-key styles in use. The visible header
+    // is responsive entirely through the shared synergy-course-bar.css.
     const desktop=window.matchMedia('(min-width: 701px)');
-    function arrange(){
-      if(desktop.matches){
-        topline.insertBefore(year,resources);
-        footer.append(key);
-        terms.after(footer);
-        body.classList.add('desktop-nav-merged');
-      }else{
-        yearAnchor.after(year);
-        keyAnchor.after(key);
-        footer.remove();
-        body.classList.remove('desktop-nav-merged');
-      }
-    }
-    arrange();
-    if(desktop.addEventListener)desktop.addEventListener('change',arrange);
-    else if(desktop.addListener)desktop.addListener(arrange);
+    function syncMode(){body.classList.toggle('desktop-nav-merged',desktop.matches);}
+    syncMode();
+    if(desktop.addEventListener)desktop.addEventListener('change',syncMode);
+    else if(desktop.addListener)desktop.addListener(syncMode);
   }
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded',activateCourseLayout,{once:true});
