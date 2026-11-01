@@ -56,3 +56,11 @@ if(next){
   });
   renderObjective();
 }
+
+/* Shared navigation and Synergy branding; no alteration to slide reveals. */
+(function(){
+  const script=document.createElement('script');
+  script.src='/assets/site-nav.js?v=20261101-corners2';
+  script.dataset.rhscSiteNav='1';
+  document.head.appendChild(script);
+})();
