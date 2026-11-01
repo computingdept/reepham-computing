@@ -1,6 +1,6 @@
 # H446 printable booklets — source visual preflight
 
-Generated 2026-11-01T19:36:17.106603+00:00
+Generated 2026-11-01T19:40:59.485331+00:00
 **PDF catalogue entries inspected:** 288
 **Teaching-stage diagrams identified:** 272 booklets
 **High-priority source diagram candidates:** 127 booklets
