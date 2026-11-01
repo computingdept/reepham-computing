@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Synergy Assist printable resource viewer">
+<title>Print resource · Synergy Assist</title>
+<link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-view1">
+<script src="/assets/print-viewer.js?v=20261101-view1" defer></script>
+</head>
+<body>
+<a class="skip" href="#preview">Skip to PDF preview</a>
+<header class="viewer-header">
+ <nav class="viewer-left" aria-label="PDF resource navigation">
+  <a class="icon-link" href="/" aria-label="Learning Hub home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></a>
+  <a class="icon-link" id="viewerBack" href="/" aria-label="Back to the previous resource" title="Back to resources"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg></a>
+ </nav>
+ <h1 id="viewerTitle">Printable resource</h1>
+ <div class="viewer-actions">
+  <button id="viewerPrint" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3"/></svg><span>Print</span></button>
+  <span class="synergy-symbol" role="img" aria-label="Synergy Assist"></span>
+ </div>
+</header>
+<main id="preview" class="preview" tabindex="-1">
+ <div id="viewerError" class="viewer-error" hidden role="alert"></div>
+ <iframe id="viewerFrame" title="Printable PDF preview" hidden></iframe>
+ <div id="viewerFallback" class="viewer-fallback" hidden>
+   <p>If the PDF does not display on your device, open the original document.</p>
+   <a id="viewerOpen" href="/" target="_blank" rel="noopener">Open PDF</a>
+ </div>
+</main>
+</body>
+</html>
