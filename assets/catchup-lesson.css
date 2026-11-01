@@ -152,3 +152,25 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 @media print{.catchup-top,.catchup-progress,.catchup-actions,.catchup-nav{display:none!important}.catchup-card{box-shadow:none}}
+
+
+/* Compact shared Catch Up header (J277 and H446): no per-lesson HTML edits. */
+.catchup-top-inner{max-width:960px;min-height:58px;padding:6px 12px;display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.catchup-top-inner > strong,
+.catchup-top-inner > a:not([href*="-hub.html"]){display:none!important}
+.catchup-top-inner > a[href*="-hub.html"]{flex:0 0 auto}
+.catchup-top-inner > .rhsc-site-nav{order:0;flex:0 0 auto}
+.catchup-title-lockup{order:1;min-width:0;flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px}
+.catchup-title-lockup .catchup-eyebrow{margin:0;color:#52645d;font-size:10px;line-height:1.2;letter-spacing:.06em;font-weight:750}
+.catchup-title-lockup h1{margin:0;color:#173b30;font-size:clamp(14px,1.6vw,19px);font-weight:800;line-height:1.22;letter-spacing:-.01em;overflow-wrap:anywhere;text-wrap:balance}
+.catchup-top-inner > .synergy-corner-mark{order:2;flex:0 0 34px;width:34px;height:34px;margin-left:0!important}
+#catchup-intro{display:none}
+.catchup-shell{margin-top:12px}
+@media(max-width:620px){
+  .catchup-top-inner{padding:5px 8px;gap:5px;min-height:54px}
+  .catchup-title-lockup h1{font-size:clamp(13px,3.6vw,16px);line-height:1.17}
+  .catchup-title-lockup .catchup-eyebrow{font-size:9px;letter-spacing:.03em}
+  .catchup-top-inner > .synergy-corner-mark{flex-basis:30px;width:30px;height:30px}
+  .catchup-shell{margin-top:9px}
+}
+@media print{.catchup-title-lockup{display:none}}
