@@ -262,7 +262,7 @@
  }
 
  function mount(){
-  if(!supported||location.pathname.endsWith('/print-viewer.html')||document.getElementById('synergyListenLaunch')||document.body.classList.contains('print-reader'))return;
+  if(location.pathname.endsWith('/print-viewer.html')||document.getElementById('synergyListenLaunch')||document.body.classList.contains('print-reader'))return;
   const launch=document.createElement('button');
   launch.id='synergyListenLaunch';launch.className='synergy-voice-launch synergy-voice-tool';
   launch.type='button';launch.title='Reading tools';launch.setAttribute('aria-label','Reading tools: listen, zoom and reading view');
@@ -288,11 +288,12 @@
   function button(text){const b=document.createElement('button');b.type='button';b.textContent=text;return b;}
   const start=button('Play page'),navRead=button('Read navigation'),pauseButton=button('Pause'),stopButton=button('Stop'),tryVoice=button('Preview voice');
   pauseButton.disabled=true;stopButton.disabled=true;
+  if(!supported){start.disabled=true;navRead.disabled=true;tryVoice.disabled=true;voiceSelect.disabled=true;speedSelect.disabled=true;}
   actions.append(start,navRead,pauseButton,stopButton);
   const privacy=document.createElement('p');privacy.className='synergy-voice-note';
   privacy.textContent='On-device voices are preferred. Online voices may send spoken text to their provider.';
   const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  status.className='synergy-voice-status';status.textContent='Reads the currently visible page. Answers stay hidden until revealed.';
+  status.className='synergy-voice-status';status.textContent=supported?'Reads the currently visible page. Answers stay hidden until revealed.':'Speech is unavailable on this browser. Visual reading tools still work.';
   const readerControls=makeReaderControls();
   panel.append(head,readerControls,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
   document.body.append(launch,panel);
