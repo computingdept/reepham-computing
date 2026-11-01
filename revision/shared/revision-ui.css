@@ -438,3 +438,24 @@ header.practice-nav > a:first-child::before {
  color:#154d36!important;
  background:#eff3f0!important;
 }
+
+/* Option B — compact shared J277/H446 question navigation.
+   Keep the labelled Topics link alongside the existing Home/Back controls. */
+.rhsc-revision-ui header.practice-nav .rhsc-practice-topics{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:44px;padding:7px 12px;border:1px solid #c8d8cf;
+ border-radius:8px;background:#f5f8f6;color:#205743;
+ font-size:.9rem;font-weight:700;text-decoration:none;white-space:nowrap;
+}
+.rhsc-revision-ui header.practice-nav .rhsc-practice-topics:hover{background:#e7f2eb}
+.rhsc-revision-ui:has(.rhsc-practice-topics) #quiz>.back,
+.rhsc-revision-ui:has(.rhsc-practice-topics) #results>.back{display:none}
+.rhsc-revision-ui #quiz>.eyebrow{display:none}
+.rhsc-revision-ui #quiz .quiz-top{margin-top:4px}
+.rhsc-revision-ui #quiz .rhsc-question-steps{margin:8px 0 10px}
+.rhsc-revision-ui #quiz #answer-form{padding:clamp(14px,1.7vw,22px)}
+.rhsc-revision-ui #quiz #answer-form .quiz-actions{margin-top:12px}
+@media(max-width:600px){
+ .rhsc-revision-ui header.practice-nav .rhsc-practice-topics{min-height:44px;padding:7px 9px;font-size:.82rem}
+ .rhsc-revision-ui header.practice-nav{gap:7px}
+}
