@@ -157,7 +157,7 @@
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/></svg>';
  }
  function mount(){
-  if(!supported||document.getElementById('synergyListenLaunch')||document.body.classList.contains('print-reader'))return;
+  if(!supported||location.pathname.endsWith('/print-viewer.html')||document.getElementById('synergyListenLaunch')||document.body.classList.contains('print-reader'))return;
   const launch=document.createElement('button');
   launch.id='synergyListenLaunch';launch.className='synergy-voice-launch synergy-voice-tool';
   launch.type='button';launch.title='Listen to this page';launch.setAttribute('aria-label','Listen to this page');
