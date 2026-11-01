@@ -115,11 +115,11 @@
  }
  function nodeVisible(node){
   if(!node||!node.isConnected)return false;
-  if(node.closest('[hidden],[inert],[aria-hidden="true"],template,script,style,noscript,nav,header,footer,aside,button,select,option,input,textarea,[role="navigation"],.synergy-voice-tool,[data-synergy-voice-ignore],.teacher-only,.answer-key,.mark-scheme,.model-answer,.catchup-feedback,.donow-review-answer,.review-answer,.j277-mark-scheme,.self-mark-answer'))return false;
+  if(node.closest('[hidden],[inert],[aria-hidden="true"],template,script,style,noscript,nav,header,footer,aside,button,select,option,input,textarea,[role="navigation"],.synergy-voice-tool,[data-synergy-voice-ignore],.teacher-only,.answer-key,.mark-scheme,.model-answer,.catchup-feedback,.donow-review-answer,.review-answer,.j277-mark-scheme,.self-mark-answer,.youdo-solution,.answer-result,.correct-answer,.marking-scheme,.assessment-feedback'))return false;
   let p=node;
   while(p&&p.nodeType===1){
    const style=getComputedStyle(p);
-   if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse')return false;
+   if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse'||style.opacity==='0')return false;
    if(p.tagName==='DETAILS'&&!p.open&&p!==node)return false;
    p=p.parentElement;
   }
