@@ -174,21 +174,108 @@
  function icon(){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/></svg>';
  }
+
+ /* One shared set of Reading View preferences, also understood by the PDF viewer.
+    Visual adjustments never modify the underlying lesson or answer states. */
+ const readerKey='synergy-assist-reading-preferences-v1';
+ const readerPrefs={font:'system',spacing:'normal',colour:'white',size:100,focus:false};
+ let readingMode=false,readingFocus=null;
+ const readerChoices={font:['system','arial','verdana','atkinson'],spacing:['normal','comfortable','wide'],colour:['white','cream','blue','green','dark']};
+ try{
+   const stored=JSON.parse(localStorage.getItem(readerKey)||'{}');
+   for(const name of ['font','spacing','colour'])if(readerChoices[name].includes(stored[name]))readerPrefs[name]=stored[name];
+   if(Number.isFinite(stored.size)&&stored.size>=90&&stored.size<=160)readerPrefs.size=Math.round(stored.size/10)*10;
+   if(typeof stored.focus==='boolean')readerPrefs.focus=stored.focus;
+ }catch(_){}
+ function saveReader(){
+   try{const previous=JSON.parse(localStorage.getItem(readerKey)||'{}');
+     localStorage.setItem(readerKey,JSON.stringify({...previous,...readerPrefs}));}catch(_){}
+ }
+ function clearReadingFocus(){
+   if(readingFocus)readingFocus.classList.remove('synergy-reading-focus-target');
+   readingFocus=null;
+ }
+ function applyReader(){
+   const body=document.body;if(!body)return;
+   body.classList.toggle('synergy-reading-active',readingMode);
+   body.classList.toggle('synergy-reading-zoom',readerPrefs.size!==100);
+   body.dataset.synergyReaderFont=readerPrefs.font;
+   body.dataset.synergyReaderSpacing=readerPrefs.spacing;
+   body.dataset.synergyReaderColour=readerPrefs.colour;
+   body.style.setProperty('--synergy-reader-zoom',String(readerPrefs.size/100));
+   if(!readingMode||!readerPrefs.focus)clearReadingFocus();
+ }
+ function makeReaderControls(){
+   const section=document.createElement('section');
+   section.className='synergy-reading-controls synergy-voice-tool';
+   section.setAttribute('aria-label','Visual reading tools');
+   section.innerHTML=[
+    '<div class="synergy-reading-heading">Reading View</div>',
+    '<button type="button" data-reading-view aria-pressed="false">Turn Reading View on</button>',
+    '<p class="synergy-voice-note">Adjusts only what is shown on screen. Lesson reveals, questions and navigation still work normally.</p>',
+    '<div class="synergy-reading-heading">Text zoom</div>',
+    '<div class="synergy-reading-inline"><button type="button" data-reading-smaller aria-label="Make page text smaller">A−</button>',
+    '<output data-reading-size aria-live="polite">100%</output>',
+    '<button type="button" data-reading-larger aria-label="Make page text bigger">A+</button></div>',
+    '<label>Font<select data-reading-font><option value="system">System</option><option value="arial">Arial</option>',
+    '<option value="verdana">Verdana</option><option value="atkinson">Atkinson Hyperlegible (if installed)</option></select></label>',
+    '<label>Spacing<select data-reading-spacing><option value="normal">Normal</option>',
+    '<option value="comfortable">Comfortable</option><option value="wide">Wide</option></select></label>',
+    '<label>Page colour<select data-reading-colour><option value="white">White</option>',
+    '<option value="cream">Warm cream</option><option value="blue">Soft blue</option>',
+    '<option value="green">Soft green</option><option value="dark">Dark</option></select></label>',
+    '<label class="synergy-reading-check"><input type="checkbox" data-reading-focus> Highlight selected paragraph</label>',
+    '<button type="button" data-reading-reset>Reset reading settings</button>',
+    '<p class="synergy-voice-note">Preferences save on this device. Reading View starts off on each new page.</p>'
+   ].join('');
+   const find=name=>section.querySelector('[data-reading-'+name+']');
+   const view=find('view'),size=find('size'),font=find('font'),
+     spacing=find('spacing'),colour=find('colour'),focus=find('focus');
+   function sync(){
+     view.setAttribute('aria-pressed',String(readingMode));
+     view.textContent=readingMode?'Turn Reading View off':'Turn Reading View on';
+     size.textContent=readerPrefs.size+'%';
+     font.value=readerPrefs.font;spacing.value=readerPrefs.spacing;
+     colour.value=readerPrefs.colour;focus.checked=readerPrefs.focus;
+     find('smaller').disabled=readerPrefs.size<=90;
+     find('larger').disabled=readerPrefs.size>=160;
+   }
+   function change(){saveReader();applyReader();sync();}
+   view.addEventListener('click',()=>{readingMode=!readingMode;change();});
+   find('smaller').addEventListener('click',()=>{readerPrefs.size=Math.max(90,readerPrefs.size-10);change();});
+   find('larger').addEventListener('click',()=>{readerPrefs.size=Math.min(160,readerPrefs.size+10);change();});
+   font.addEventListener('change',()=>{readerPrefs.font=font.value;change();});
+   spacing.addEventListener('change',()=>{readerPrefs.spacing=spacing.value;change();});
+   colour.addEventListener('change',()=>{readerPrefs.colour=colour.value;change();});
+   focus.addEventListener('change',()=>{readerPrefs.focus=focus.checked;change();});
+   find('reset').addEventListener('click',()=>{
+     Object.assign(readerPrefs,{font:'system',spacing:'normal',colour:'white',size:100,focus:false});
+     readingMode=false;change();
+   });
+   document.addEventListener('click',event=>{
+     if(!readingMode||!readerPrefs.focus||event.target.closest('.synergy-voice-tool,button,a,input,select,textarea'))return;
+     const root=readingRoot(),target=event.target.closest('p,li,blockquote,h1,h2,h3');
+     if(!root||!target||!root.contains(target)||!nodeVisible(target))return;
+     clearReadingFocus();readingFocus=target;target.classList.add('synergy-reading-focus-target');
+   });
+   sync();applyReader();return section;
+ }
+
  function mount(){
   if(!supported||location.pathname.endsWith('/print-viewer.html')||document.getElementById('synergyListenLaunch')||document.body.classList.contains('print-reader'))return;
   const launch=document.createElement('button');
   launch.id='synergyListenLaunch';launch.className='synergy-voice-launch synergy-voice-tool';
-  launch.type='button';launch.title='Listen to this page';launch.setAttribute('aria-label','Listen to this page');
+  launch.type='button';launch.title='Reading tools';launch.setAttribute('aria-label','Reading tools: listen, zoom and reading view');
   launch.setAttribute('aria-expanded','false');launch.setAttribute('aria-controls','synergyListenPanel');
   launch.innerHTML=icon();
   const panel=document.createElement('section');
   panel.id='synergyListenPanel';panel.className='synergy-voice-panel synergy-voice-tool';panel.hidden=true;
   panel.setAttribute('aria-label','Listen settings');
   const head=document.createElement('div');head.className='synergy-voice-head';
-  const label=document.createElement('strong');label.textContent='Listen';
+  const label=document.createElement('strong');label.textContent='Reading tools';
   const close=document.createElement('button');close.type='button';close.textContent='×';close.setAttribute('aria-label','Close Listen settings');
   head.append(label,close);
-  const voiceLabel=document.createElement('label');voiceLabel.textContent='Voice';
+  const voiceLabel=document.createElement('label');voiceLabel.textContent='Listen · Voice';
   const voiceSelect=document.createElement('select');voiceSelect.setAttribute('aria-label','Reading voice');
   voiceLabel.append(voiceSelect);
   const speedLabel=document.createElement('label');speedLabel.textContent='Speed';
@@ -206,7 +293,8 @@
   privacy.textContent='On-device voices are preferred. Online voices may send spoken text to their provider.';
   const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   status.className='synergy-voice-status';status.textContent='Reads the currently visible page. Answers stay hidden until revealed.';
-  panel.append(head,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
+  const readerControls=makeReaderControls();
+  panel.append(head,readerControls,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
   document.body.append(launch,panel);
   const notify=message=>{
    status.textContent=message;
