@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="Synergy Assist printable resource viewer">
 <title>Print resource · Synergy Assist</title>
-<link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-guides1">
+<link rel="stylesheet" href="/assets/print-viewer.css?v=20261101-mobile3">
 <script src="/assets/synergy-voice.js?v=20261101-voice1" defer></script>
-<script src="/assets/print-viewer.js?v=20261101-guides2" defer></script>
+<script src="/assets/print-viewer.js?v=20261101-mobile3" defer></script>
 </head>
 <body>
 <a class="skip" href="#preview">Skip to PDF preview</a>
@@ -62,6 +62,13 @@
   <p id="accessStatus" class="access-status" role="status" aria-live="polite"></p>
 </aside>
 <main id="preview" class="preview" tabindex="-1">
+ <section id="mobilePdfOptions" class="mobile-pdf-options" aria-label="Mobile PDF viewing options" hidden>
+   <p>Viewing on a phone? Choose Reading View for larger, adjustable text, or open the original PDF directly.</p>
+   <div class="mobile-pdf-actions">
+     <button id="mobileReadingBtn" type="button" hidden>Reading View</button>
+     <a id="mobileOriginal" href="/" target="_blank" rel="noopener">Open original PDF</a>
+   </div>
+ </section>
  <div id="viewerError" class="viewer-error" hidden role="alert"></div>
  <iframe id="viewerFrame" title="Printable PDF preview" hidden></iframe>
  <article id="readingView" class="reading-view" hidden lang="en-GB" aria-label="Accessible lesson reading companion"></article>
