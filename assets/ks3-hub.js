@@ -87,6 +87,7 @@
             number:number,title:info[0],
             openHref:href,
             learnHref:href?(cfg.catchupMaps?.[year]?.[n]||null):null,
+            printHref:href?(cfg.printMaps?.[year]?.[n]||null):null,
             color:href?'#287852':'#b5c0b9'
           }));
         }
