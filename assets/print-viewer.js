@@ -1,15 +1,31 @@
-/* Reusable preview for published, same-origin PDF documents only.
-   The original PDF is embedded unchanged. No changes to lesson or guide files. */
+/* Synergy Assist PDF preview + accessible reading companions.
+   Source PDF remains unchanged; reading content is from approved lesson
+   material and is NOT a verbatim PDF transcript. Only matching PDFs offer
+   Reading View. All dynamic content is rendered via textContent. */
 (function(){
   'use strict';
+  const byId=id=>document.getElementById(id);
   const params=new URLSearchParams(location.search);
-  const frame=document.getElementById('viewerFrame');
-  const error=document.getElementById('viewerError');
-  const title=document.getElementById('viewerTitle');
-  const back=document.getElementById('viewerBack');
-  const print=document.getElementById('viewerPrint');
-  const open=document.getElementById('viewerOpen');
-  const fallback=document.getElementById('viewerFallback');
+  const frame=byId('viewerFrame'), error=byId('viewerError');
+  const title=byId('viewerTitle'), back=byId('viewerBack');
+  const print=byId('viewerPrint'), open=byId('viewerOpen');
+  const fallback=byId('viewerFallback'), reading=byId('readingView');
+  const tools=byId('viewerTools'), panel=byId('accessPanel');
+  const status=byId('accessStatus');
+  const showPdf=byId('showPdf'), showReading=byId('showReading');
+  const font=byId('readingFont'), spacing=byId('readingSpacing');
+  const colour=byId('readingColour'), focus=byId('readingFocus');
+  const vocab=byId('showVocabulary'), memory=byId('showMemory');
+  const rate=byId('listenRate'), play=byId('listenPlay');
+  const pause=byId('listenPause'), stop=byId('listenStop');
+  const sizeDisplay=byId('fontSizeValue');
+  const speechAvailable=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance==='function';
+  let readerData=null, mode='pdf', focusTarget=null;
+  let ttsQueue=[],ttsIndex=0,ttsToken=0,ttsActive=false,ttsPaused=false,ttsCurrent=null;
+  const storeKey='synergy-assist-reading-preferences-v1';
+  const defaults={font:'system',spacing:'comfortable',colour:'white',size:100,focus:false,rate:'1'};
+  let prefs={...defaults};
+  const allowed={font:['system','arial','verdana','atkinson'],spacing:['normal','comfortable','wide'],colour:['white','cream','blue','green','dark'],rate:['0.8','1','1.2']};
   function localUrl(raw,ext){
     if(typeof raw!=='string'||!raw.startsWith('/')||raw.startsWith('//')||raw.length>1400)return null;
     try{
@@ -28,7 +44,7 @@
   title.textContent=label;
   document.title=label+' · Synergy Assist';
   if(!file){
-    error.textContent='This print link is invalid. Please return to the lesson or resource hub and open its Print link again.';
+    error.textContent='This print link is invalid. Return to your resource hub and use its Print link.';
     error.hidden=false;
     return;
   }
@@ -38,9 +54,9 @@
   open.href=pdf;
   fallback.hidden=false;
   print.disabled=false;
-  // The embedded PDF viewer can offer its own Print button; our explicit
-  // control requests the original document instead of printing the HTML shell.
-  print.addEventListener('click',function(){
+  // Print the original document using the browser PDF viewer. Some browsers
+  // cannot programmatically print an embedded PDF; open the original as backup.
+  print.addEventListener('click',()=>{
     try{
       if(frame.contentWindow&&typeof frame.contentWindow.print==='function'){
         frame.contentWindow.focus();
@@ -49,5 +65,270 @@
       }
     }catch(_){}
     window.open(pdf,'_blank','noopener');
+  });
+
+  const el=(tag,className,content)=>{
+    const node=document.createElement(tag);
+    if(className)node.className=className;
+    if(content!==undefined)node.textContent=String(content);
+    return node;
+  };
+  function notice(msg){status.textContent=msg||'';}
+  function loadPrefs(){
+    try{
+      const loaded=JSON.parse(localStorage.getItem(storeKey)||'{}');
+      if(loaded&&typeof loaded==='object'){
+        for(const key of ['font','spacing','colour','rate']){
+          if(allowed[key].includes(loaded[key]))prefs[key]=loaded[key];
+        }
+        if(Number.isFinite(loaded.size)&&loaded.size>=90&&loaded.size<=160)prefs.size=Math.round(loaded.size/10)*10;
+        if(typeof loaded.focus==='boolean')prefs.focus=loaded.focus;
+      }
+    }catch(_){}
+  }
+  function savePrefs(){
+    try{localStorage.setItem(storeKey,JSON.stringify(prefs));}catch(_){}
+  }
+  function applyPrefs(){
+    font.value=prefs.font; spacing.value=prefs.spacing;
+    colour.value=prefs.colour; focus.checked=prefs.focus;rate.value=prefs.rate;
+    reading.dataset.font=prefs.font;
+    reading.dataset.spacing=prefs.spacing;
+    reading.dataset.colour=prefs.colour;
+    reading.style.setProperty('--reader-size',(17*prefs.size/100)+'px');
+    reading.classList.toggle('focus-on',prefs.focus);
+    sizeDisplay.textContent=prefs.size+'%';
+    if(!prefs.focus)clearFocus();
+  }
+  function setMode(next){
+    if(next==='reading'&&!readerData)return;
+    stopSpeech();
+    mode=next;
+    reading.hidden=mode!=='reading';
+    frame.hidden=mode==='reading';
+    fallback.hidden=mode==='reading';
+    showPdf.setAttribute('aria-pressed',String(mode==='pdf'));
+    showReading.setAttribute('aria-pressed',String(mode==='reading'));
+    if(mode==='reading'){reading.focus({preventScroll:true});}
+    notice(mode==='reading'?'Reading View is on. Print still uses the original PDF.':'Original PDF is on.');
+  }
+  function togglePanel(opened){
+    panel.hidden=!opened;
+    tools.setAttribute('aria-expanded',String(opened));
+    if(opened){byId('toolsClose').focus();}
+    else tools.focus();
+  }
+  function clearFocus(){
+    if(focusTarget)focusTarget.classList.remove('is-focused');
+    focusTarget=null;
+  }
+  function selectFocus(node,scroll){
+    if(!node)return;
+    clearFocus();
+    focusTarget=node;
+    node.classList.add('is-focused');
+    if(scroll)node.scrollIntoView({block:'center',behavior:'auto'});
+  }
+  function renderQuestion(block){
+    const article=el('div','reader-question');
+    article.append(el('p','reader-highlight-target',block.prompt));
+    const details=el('details','');
+    details.append(el('summary','', 'Check model answer after attempting'));
+    const answer=el('p','reader-highlight-target',block.answer||'');
+    details.append(answer);
+    article.append(details);
+    return article;
+  }
+  function renderBlock(block){
+    if(block.type==='paragraph')return el('p','reader-highlight-target',block.text);
+    if(block.type==='instruction')return el('p','reader-instruction reader-highlight-target',block.text);
+    if(block.type==='code')return el('pre','',block.text);
+    if(block.type==='question')return renderQuestion(block);
+    if(block.type==='place-values'){
+      const wrap=el('div','reader-example');
+      wrap.append(el('p','reader-highlight-target',block.caption));
+      const list=el('ol','reader-places');list.setAttribute('aria-label',block.caption);
+      block.labels.forEach(item=>list.append(el('li','',item)));
+      wrap.append(list);return wrap;
+    }
+    if(block.type==='worked'){
+      const wrap=el('div','reader-example');
+      wrap.append(el('h3','reader-highlight-target',block.heading));
+      const list=el('ol','');
+      (block.steps||[]).forEach(step=>list.append(el('li','reader-highlight-target',step)));
+      wrap.append(list);
+      wrap.append(el('p','reader-result reader-highlight-target',block.result));
+      return wrap;
+    }
+    return null;
+  }
+  function renderVocabulary(section,entries){
+    section.replaceChildren(el('h2','', 'Key vocabulary'));
+    section.append(el('p','', 'Open a term when you want a definition and example.'));
+    for(const entry of entries){
+      const detail=el('details','');
+      detail.append(el('summary','',entry.term));
+      detail.append(el('p','reader-highlight-target',entry.meaning));
+      detail.append(el('p','reader-highlight-target',entry.example));
+      section.append(detail);
+    }
+  }
+  function renderMemory(section,entries,statusText){
+    section.replaceChildren(el('h2','', 'Remember It — optional memory aids'));
+    section.append(el('p','reader-source-note',statusText));
+    for(const entry of entries){
+      const detail=el('details','');
+      detail.append(el('summary','',entry.title));
+      detail.append(el('p','reader-highlight-target',entry.text));
+      section.append(detail);
+    }
+  }
+  function renderReader(data){
+    const inner=el('div','reader-inner');
+    inner.append(el('h1','reader-highlight-target',data.title));
+    inner.append(el('p','reader-subtitle reader-highlight-target',data.qualification));
+    inner.append(el('p','reader-source-note',data.source_note));
+    const source=el('p','');
+    const link=el('a','', 'Open the classroom lesson');
+    const url=localUrl(data.source_lesson,null);
+    link.href=url?url.pathname:'/j277-hub.html?year=10';
+    source.append(link);inner.append(source);
+    const objectives=el('section','reader-section');
+    objectives.append(el('h2','','Learning objectives'));
+    const ul=el('ul','');(data.learning_objectives||[]).forEach(t=>ul.append(el('li','reader-highlight-target',t)));
+    objectives.append(ul);inner.append(objectives);
+    for(const sec of (data.sections||[])){
+      const group=el('section','reader-section');
+      group.id='reading-'+sec.id;
+      group.append(el('h2','reader-highlight-target',sec.label));
+      (sec.blocks||[]).forEach(block=>{const node=renderBlock(block);if(node)group.append(node);});
+      inner.append(group);
+    }
+    const voc=el('section','reader-study-aids');
+    voc.id='readerVocabulary';voc.hidden=!vocab.checked;
+    renderVocabulary(voc,data.vocabulary||[]);
+    const mem=el('section','reader-study-aids');
+    mem.id='readerMemory';mem.hidden=!memory.checked;
+    renderMemory(mem,data.memory_aids||[],data.memory_aids_status||'Draft — teacher review required');
+    inner.append(voc,mem);
+    reading.replaceChildren(inner);
+    reading.tabIndex=-1;
+    applyPrefs();
+  }
+  function stopSpeech(){
+    ttsToken++;
+    ttsActive=false;ttsPaused=false;ttsCurrent=null;ttsQueue=[];ttsIndex=0;
+    try{if(speechAvailable)window.speechSynthesis.cancel();}catch(_){}
+    reading.querySelectorAll('.tts-speaking').forEach(n=>n.classList.remove('tts-speaking'));
+    pause.disabled=true;stop.disabled=true;pause.textContent='Pause';
+    play.disabled=!speechAvailable;
+  }
+  function currentSpeechNodes(){
+    return Array.from(reading.querySelectorAll('.reader-highlight-target'))
+      .filter(node=>!node.closest('[hidden],details:not([open])'))
+      .filter(node=>node.textContent.trim().length>0);
+  }
+  function speakNext(token){
+    if(token!==ttsToken||!ttsActive)return;
+    if(ttsIndex>=ttsQueue.length){
+      ttsActive=false;stopSpeech();notice('Read aloud finished.');return;
+    }
+    const node=ttsQueue[ttsIndex];
+    const utterance=new SpeechSynthesisUtterance(node.textContent.trim());
+    utterance.lang='en-GB';utterance.rate=Number(prefs.rate);
+    ttsCurrent=node;
+    node.classList.add('tts-speaking');
+    if(prefs.focus)selectFocus(node,true);
+    utterance.onend=()=>{
+      node.classList.remove('tts-speaking');
+      if(token!==ttsToken)return;
+      ttsIndex++;speakNext(token);
+    };
+    utterance.onerror=()=>{
+      node.classList.remove('tts-speaking');
+      if(token!==ttsToken)return;
+      ttsIndex++;speakNext(token);
+    };
+    window.speechSynthesis.speak(utterance);
+  }
+  loadPrefs();applyPrefs();
+  if(!speechAvailable){
+    play.disabled=true;
+    notice('Read aloud is not supported by this browser. Screen reader support remains available.');
+  }
+  tools.addEventListener('click',()=>togglePanel(panel.hidden));
+  byId('toolsClose').addEventListener('click',()=>togglePanel(false));
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&!panel.hidden){togglePanel(false);return;}
+    if(!prefs.focus||mode!=='reading'||event.target.closest('button,summary,input,select,a,textarea'))return;
+    if(event.key!=='ArrowDown'&&event.key!=='ArrowUp')return;
+    const nodes=currentSpeechNodes();
+    if(!nodes.length)return;
+    event.preventDefault();
+    const idx=nodes.indexOf(focusTarget);
+    const next=event.key==='ArrowDown'?Math.min(nodes.length-1,idx+1):Math.max(0,idx<0?0:idx-1);
+    selectFocus(nodes[next],true);
+  });
+  document.addEventListener('pointerdown',event=>{
+    if(!panel.hidden&&!panel.contains(event.target)&&!tools.contains(event.target))togglePanel(false);
+  });
+  reading.addEventListener('click',event=>{
+    if(!prefs.focus)return;
+    const target=event.target.closest('.reader-highlight-target');
+    if(target)selectFocus(target,false);
+  });
+  showPdf.addEventListener('click',()=>setMode('pdf'));
+  showReading.addEventListener('click',()=>setMode('reading'));
+  font.addEventListener('change',()=>{prefs.font=font.value;savePrefs();applyPrefs();});
+  spacing.addEventListener('change',()=>{prefs.spacing=spacing.value;savePrefs();applyPrefs();});
+  colour.addEventListener('change',()=>{prefs.colour=colour.value;savePrefs();applyPrefs();});
+  focus.addEventListener('change',()=>{prefs.focus=focus.checked;savePrefs();applyPrefs();});
+  rate.addEventListener('change',()=>{prefs.rate=rate.value;savePrefs();if(ttsActive){stopSpeech();notice('Speech speed updated. Select Play to restart.');}});
+  byId('fontUp').addEventListener('click',()=>{prefs.size=Math.min(160,prefs.size+10);savePrefs();applyPrefs();});
+  byId('fontDown').addEventListener('click',()=>{prefs.size=Math.max(90,prefs.size-10);savePrefs();applyPrefs();});
+  vocab.addEventListener('change',()=>{const node=byId('readerVocabulary');if(node)node.hidden=!vocab.checked;});
+  memory.addEventListener('change',()=>{const node=byId('readerMemory');if(node)node.hidden=!memory.checked;});
+  play.addEventListener('click',()=>{
+    if(mode!=='reading')setMode('reading');
+    if(!speechAvailable){notice('Read aloud is not supported by this browser.');return;}
+    if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');return;}
+    stopSpeech();
+    ttsQueue=currentSpeechNodes();ttsIndex=0;
+    if(!ttsQueue.length){notice('No readable lesson text is available.');return;}
+    ttsActive=true;const token=ttsToken;pause.disabled=false;stop.disabled=false;
+    notice('Reading the lesson aloud.');speakNext(token);
+  });
+  pause.addEventListener('click',()=>{
+    if(!ttsActive||!speechAvailable)return;
+    if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');}
+    else {window.speechSynthesis.pause();ttsPaused=true;pause.textContent='Resume';notice('Reading paused.');}
+  });
+  stop.addEventListener('click',()=>{stopSpeech();notice('Reading stopped.');});
+  window.addEventListener('pagehide',stopSpeech);
+
+  // Only show an accessibility menu for PDFs with a reviewed, source-bound
+  // reading companion. Other printable resources retain their existing viewer.
+  fetch('/assets/accessible/catalogue.json',{cache:'no-store'}).then(response=>{
+    if(!response.ok)throw Error('No accessibility catalogue');
+    return response.json();
+  }).then(catalogue=>{
+    if(catalogue.schema_version!==1||!catalogue.entries)return;
+    const source=catalogue.entries[file.pathname];
+    const dataUrl=localUrl(source,'.json');
+    if(!dataUrl)return;
+    return fetch(dataUrl.pathname,{cache:'no-store'}).then(response=>{
+      if(!response.ok)throw Error('Reading companion unavailable');
+      return response.json();
+    }).then(data=>{
+      if(data.schema_version!==1||!Array.isArray(data.sections)||!Array.isArray(data.vocabulary))throw Error('Invalid reading companion');
+      readerData=data;
+      renderReader(data);
+      tools.hidden=false;
+      notice('Reading View is available for this lesson.');
+      if(params.get('reading')==='1')setMode('reading');
+    });
+  }).catch(()=>{
+    // Fail safely to the original PDF, without pretending it is accessible text.
+    tools.hidden=true;
   });
 })();
