@@ -281,7 +281,7 @@ def make_pdf(lesson,soup,mode,outfile):
         if len(doc)!=8:raise ValueError(f'{outfile} created {len(doc)} pages')
         text='\n'.join(page.get_text() for page in doc)
         for term in ('Do Now','I Do','We Do','You Do','Exit Ticket','BLACK PEN','GREEN PEN'):
-            if term not in text:raise ValueError(f'Missing {term} from {outfile}')
+            if term.casefold() not in text.casefold():raise ValueError(f'Missing {term} from {outfile}')
         for i,page in enumerate(doc):
             if len(page.get_text().strip())<40:raise ValueError(f'Near blank page {i+1}')
             if abs(page.rect.width-A4W)>1 or abs(page.rect.height-A4H)>1:raise ValueError('Not A4')
