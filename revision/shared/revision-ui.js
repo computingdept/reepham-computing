@@ -33,6 +33,42 @@
     slot.append(next);
   }
 
+  // One lightweight progress cue for both qualifications. Read the existing
+  // question counter; never alter quiz position, scoring, questions or answers.
+  // The native <progress> element stays available to assistive technology.
+  const counter=document.getElementById('counter');
+  const progress=quiz.querySelector('#progress');
+  if(counter&&progress&&!quiz.querySelector('.rhsc-question-steps')){
+    const steps=document.createElement('div');
+    steps.className='rhsc-question-steps';
+    steps.setAttribute('aria-hidden','true');
+    const dots=[];
+    const total=Number(progress.max)||5;
+    for(let i=0;i<total;i++){
+      const dot=document.createElement('span');
+      dot.className='rhsc-question-step';
+      steps.append(dot);
+      dots.push(dot);
+    }
+    progress.after(steps);
+    function updateSteps(){
+      const match=counter.textContent.match(/Question\s+(\d+)\s+of\s+(\d+)/i);
+      if(!match)return;
+      const current=Math.max(1,Math.min(total,Number(match[1])));
+      for(let i=0;i<dots.length;i++){
+        dots[i].classList.toggle('is-complete',i<current-1);
+        dots[i].classList.toggle('is-current',i===current-1);
+      }
+    }
+    const counterObserver=new MutationObserver(updateSteps);
+    counterObserver.observe(counter,{childList:true,characterData:true,subtree:true});
+    updateSteps();
+  }
+
+  // Existing site-nav.js already supplies Home/Back; Synergy Voice supplies
+  // Listen and Reading View. There must be no duplicate controls here.
+  // Preserve all original button listeners, focus handling and saved results.
+
   const section=document.getElementById('directory');
   const heading=section?.querySelector('.directory-heading');
   const summary=document.createElement('div');
