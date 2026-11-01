@@ -34,7 +34,7 @@
     return group;
   }
   function yearFromLesson(course,number){
-    return course==='j277'?(number>=100?11:10):(number>=181?13:12);
+    return course==='j277'?(number>=96?11:10):(number>=181?13:12);
   }
   function hubHref(course,year,section){
     const name=course==='ks3'?'ks3-computing.html':course+'-hub.html';
@@ -190,6 +190,13 @@
     const catchup=document.querySelector('.catchup-top-inner');
     if(catchup){
       const existing=catchup.querySelector('a[href*="-hub.html"]');
+      // J277 Year 11 starts at 096 (not 100). Correct older catch-up
+      // inline links centrally before adapting the back control.
+      const lessonRoute=pathname.match(/\/lessons\/(j277|h446)\/lesson-(\d{3})\/learn\.html$/);
+      if(existing&&lessonRoute){
+        const year=yearFromLesson(lessonRoute[1],Number(lessonRoute[2]));
+        existing.setAttribute('href',hubHref(lessonRoute[1],year,'lessons'));
+      }
       if(existing&&!catchup.querySelector('.rhsc-site-nav')){
         const group=pair(existing,existing.getAttribute('href'),'course lessons');
         if(group){
