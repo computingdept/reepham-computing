@@ -320,7 +320,7 @@
     const total=el('span','guide-page-total','of '+guideDocument.numPages);
     const go=el('button','','Go');go.type='button';
     const next=el('button','','Next page');next.type='button';next.disabled=n===guideDocument.numPages;
-    const changePage=num=>renderGuidePage(num).then(()=>reading.scrollTo?.(0,0)).catch(()=>notice('Could not extract that page. The original PDF remains available.'));
+    const changePage=num=>renderGuidePage(num).then(()=>{byId('preview').scrollTop=0;reading.querySelector('h2')?.scrollIntoView({block:'start'});}).catch(()=>notice('Could not extract that page. The original PDF remains available.'));
     prev.addEventListener('click',()=>changePage(n-1));
     next.addEventListener('click',()=>changePage(n+1));
     go.addEventListener('click',()=>changePage(pageInput.value));
@@ -441,7 +441,7 @@
     if(!response.ok)throw Error('No accessibility catalogue');
     return response.json();
   }).then(catalogue=>{
-    if(catalogue.schema_version!==1||!catalogue.entries)return;
+    if(catalogue.schema_version!==1||!catalogue.entries){enableGuideReader();return;}
     const source=catalogue.entries[file.pathname];
     const dataUrl=localUrl(source,'.json');
     if(!dataUrl){enableGuideReader();return;}
