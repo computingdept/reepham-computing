@@ -57,19 +57,10 @@
   const pdf=file.pathname+file.search;
   const mobileDevice=window.matchMedia('(max-width: 540px)').matches;
   const loading=byId('viewerLoading');
-  const viewStoreKey='synergy-assist-print-view-mode-v1';
-  let savedView=null;
-  try{
-    const stored=localStorage.getItem(viewStoreKey);
-    if(stored==='reading'||stored==='pdf')savedView=stored;
-  }catch(_){}
-  // A phone defaults to the accessible reader when one exists. A student's
-  // explicit choice is retained on this device; the URL can override it.
-  const preferReading=params.get('reading')==='1'||
-    (params.get('reading')!=='0'&&(savedView==='reading'||(mobileDevice&&savedView!=='pdf')));
-  function rememberView(value){
-    try{localStorage.setItem(viewStoreKey,value);}catch(_){}
-  }
+  // Reading View is the default on every device wherever the resource has
+  // an available companion. The explicit reading=0 URL option can still show
+  // the original PDF. A previous PDF preference cannot override the default.
+  const preferReading=params.get('reading')!=='0';
   // Avoid triggering Android's generic PDF file-opening screen while the
   // accessible reader is being resolved. Load the PDF only if requested.
   if(!preferReading)frame.src=pdf;
@@ -79,24 +70,15 @@
   if(mobileOriginal)mobileOriginal.href=pdf;
   if(mobileBox)mobileBox.hidden=true;
   fallback.hidden=false;
-  print.disabled=false;
+  // Print always opens the original, unchanged PDF as a normal link.
+  // This lets the school's browser or Adobe Acrobat extension handle it.
+  // A website cannot force desktop Acrobat to start.
+  print.href=pdf;
+  print.hidden=false;
   // Make Tools visible immediately for revision guides, even if the
   // accessibility catalogue is unavailable or slow to load.
   if(guidePdf||knownLessonCompanion){tools.hidden=false;panel.hidden=true;}
   if(knownLessonCompanion)showReading.disabled=true;
-  // Print the original document using the browser PDF viewer. Some browsers
-  // cannot programmatically print an embedded PDF; open the original as backup.
-  print.addEventListener('click',()=>{
-    if(mode==='reading'){window.open(pdf,'_blank','noopener');return;}
-    try{
-      if(frame.contentWindow&&typeof frame.contentWindow.print==='function'){
-        frame.contentWindow.focus();
-        frame.contentWindow.print();
-        return;
-      }
-    }catch(_){}
-    window.open(pdf,'_blank','noopener');
-  });
 
   const el=(tag,className,content)=>{
     const node=document.createElement(tag);
@@ -444,10 +426,10 @@
     const target=event.target.closest('.reader-highlight-target');
     if(target)selectFocus(target,false);
   });
-  showPdf.addEventListener('click',()=>{rememberView('pdf');setMode('pdf');});
+  showPdf.addEventListener('click',()=>setMode('pdf'));
   showReading.addEventListener('click',()=>{
-    if(guidePdf&&!readerData){rememberView('reading');loadGuideReader();}
-    else if(readerData){rememberView('reading');setMode('reading');}
+    if(guidePdf&&!readerData)loadGuideReader();
+    else if(readerData)setMode('reading');
   });
   if(mobileRead)mobileRead.addEventListener('click',()=>showReading.click());
   font.addEventListener('change',()=>{prefs.font=font.value;savePrefs();applyPrefs();});
