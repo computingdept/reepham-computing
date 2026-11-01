@@ -53,7 +53,10 @@
     return;
   }
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
+  // Pilot: build Reading View from this exact approved PDF, not from a
+  // separately maintained transcript or classroom-lesson JSON.
   const knownLessonCompanion=file.pathname==='/offline/booklets/j277/J277_Lesson_001_Gold_Standard_4_Page.pdf';
+  const pdfTextReader=guidePdf||knownLessonCompanion;
   const pdf=file.pathname+file.search;
   const mobileDevice=window.matchMedia('(max-width: 540px)').matches;
   const loading=byId('viewerLoading');
@@ -292,15 +295,17 @@
     window.speechSynthesis.speak(utterance);
   }
 
-  /* Automatic, page-at-a-time text extraction for revision-guide PDFs.
-     Not a teacher-reviewed transcript; diagrams/tables/equations remain in
-     the original PDF. Does not change or re-save the guide document. */
+  /* Extract selectable text directly from the source PDF, one page at a
+     time. The pilot keeps an exact visual reproduction available for any
+     diagrams, tables, maths notation, and extraction-order ambiguities. */
   function enableGuideReader(){
-    if(!guidePdf)return;
+    if(!pdfTextReader)return;
     tools.hidden=false;
     const note=panel.querySelector('.view-switch + .access-note');
-    if(note)note.textContent='Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
-    notice('The original revision guide is open. Select Reading View to prepare text and listening tools.');
+    if(note)note.textContent=knownLessonCompanion
+      ?'Reading View uses the very same printable PDF, page by page. Write answers in the paper booklet. For diagrams, tables and exact layout, open the original PDF page below. Print opens the unchanged PDF.'
+      :'Reading View extracts selectable text from this PDF automatically. The order of tables, algorithms, equations and diagrams may be inaccurate or incomplete. Use Original PDF to check them. Printing uses the original document.';
+    notice('Preparing Reading View from the original PDF.');
   }
   async function renderGuidePage(requested){
     if(!guideDocument)return;
@@ -362,7 +367,7 @@
     notice('Page '+n+' of '+guideDocument.numPages+' ready. Select Play to listen to this page.');
   }
   function loadGuideReader(){
-    if(!guidePdf)return Promise.resolve();
+    if(!pdfTextReader)return Promise.resolve();
     if(guideLoading)return guideLoading;
     notice('Preparing reading text from the original guide…');
     showReading.disabled=true;
@@ -372,7 +377,7 @@
       pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs';
       guideDocument=await pdfjs.getDocument({url:pdf,withCredentials:false}).promise;
       if(!guideDocument||guideDocument.numPages<1)throw Error('No pages in PDF');
-      readerData={type:'automatically-extracted-guide'};
+      readerData={type:'automatically-extracted-pdf'};
       if(mobileRead)mobileRead.hidden=false;
       await renderGuidePage(1);
       setMode('reading');
@@ -429,7 +434,7 @@
   });
   showPdf.addEventListener('click',()=>setMode('pdf'));
   showReading.addEventListener('click',()=>{
-    if(guidePdf&&!readerData)loadGuideReader();
+    if(pdfTextReader&&!readerData)loadGuideReader();
     else if(readerData)setMode('reading');
   });
   if(mobileRead)mobileRead.addEventListener('click',()=>showReading.click());
@@ -443,7 +448,7 @@
   vocab.addEventListener('change',()=>{const node=byId('readerVocabulary');if(node)node.hidden=!vocab.checked;});
   memory.addEventListener('change',()=>{const node=byId('readerMemory');if(node)node.hidden=!memory.checked;});
   play.addEventListener('click',()=>{
-    if(guidePdf&&!readerData){loadGuideReader();return;}
+    if(pdfTextReader&&!readerData){loadGuideReader();return;}
     if(mode!=='reading')setMode('reading');
     if(!speechAvailable){notice('Read aloud is not supported by this browser.');return;}
     if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');return;}
@@ -461,9 +466,9 @@
   stop.addEventListener('click',()=>{stopSpeech();notice('Reading stopped.');});
   window.addEventListener('pagehide',stopSpeech);
 
-  // Guides have an automatic, text-only PDF reading aid; lesson booklets
-  // require a separately reviewed companion in the catalogue.
-  if(guidePdf){
+  // The source-PDF reader is the only lesson content source for this pilot.
+  // Do not fetch the old, separately maintained J277-001 JSON companion.
+  if(pdfTextReader){
     enableGuideReader();
     if(preferReading)loadGuideReader();
     else setMode('pdf');
