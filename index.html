@@ -208,7 +208,8 @@ body.pilot-public .footer .sources{display:none}
 </style>
 <link rel="stylesheet" href="assets/hub.css?v=20260929-0856"><link rel="stylesheet" href="assets/hub-monochrome.css?v=20261027-1">
 <link rel="stylesheet" href="assets/synergy-shell.css?v=20261101-brand1">
-</head><body class="learning-hub"><a class="skip" href="#main">Skip to learning</a><header class="top"><div class="top-inner"><a class="brand school-brand" id="schoolBrandLink" href="/" aria-label="Learning Hub home"><span><small id="schoolNameHeader"></small><strong>Learning Hub</strong></span></a><button type="button" id="pilotExit" class="pilot-exit" hidden>Exit staff preview</button></div></header><main id="main"></main><footer class="footer"><div class="footer-inner footer-trust"><div class="footer-school"><strong id="schoolNameFooter"></strong><span id="schoolAcademicYear"></span></div><div class="synergy-footer-block"><a class="synergy-lockup" href="https://www.synergymat.org.uk/" target="_blank" rel="noopener" aria-label="Synergy Multi-Academy Trust website"><span>Part of</span><img src="https://www.synergymat.org.uk/images/uploads/4/488/Synergy%20MASTER%20Logo%20RGB%20no%20bground.png" alt="Synergy Multi-Academy Trust" width="150" height="68" loading="lazy" decoding="async"></a><a class="footer-school-picker" href="choose-school.html">Choose your school</a></div><div class="sources"><a id="schoolCurriculumLink" href="#">School curriculum ↗</a><a id="schoolCollegeCoursesLink" href="#">College courses ↗</a></div></div></footer><script src="assets/year8/y8-booklet-accessibility.js"></script>
+<link rel="stylesheet" href="assets/synergy-brand.css?v=20261101-logo1">
+</head><body class="learning-hub"><a class="skip" href="#main">Skip to learning</a><header class="top"><div class="top-inner"><a class="brand school-brand synergy-brand" id="schoolBrandLink" href="/" aria-label="Synergy Assist Learning Hub home"><span class="synergy-brand-icon" aria-hidden="true"></span><span><small class="synergy-name">SYNERGY ASSIST</small><strong class="synergy-subline">Learning Hub</strong></span></a><button type="button" id="pilotExit" class="pilot-exit" hidden>Exit staff preview</button></div></header><main id="main"></main><footer class="footer"><div class="footer-inner footer-trust"><div class="footer-school"><strong id="schoolNameFooter"></strong><span id="schoolAcademicYear"></span></div><div class="synergy-footer-block"><a class="synergy-lockup" href="https://www.synergymat.org.uk/" target="_blank" rel="noopener" aria-label="Synergy Multi-Academy Trust website"><span>Part of</span><img src="https://www.synergymat.org.uk/images/uploads/4/488/Synergy%20MASTER%20Logo%20RGB%20no%20bground.png" alt="Synergy Multi-Academy Trust" width="150" height="68" loading="lazy" decoding="async"></a><a class="footer-school-picker" href="choose-school.html">Choose your school</a></div><div class="sources"><a id="schoolCurriculumLink" href="#">School curriculum ↗</a><a id="schoolCollegeCoursesLink" href="#">College courses ↗</a></div></div></footer><script src="assets/year8/y8-booklet-accessibility.js"></script>
 <script src="assets/schools.js?v=20260929-0922"></script>
 <script src="assets/pilot-access.js?v=20261015-pilot2"></script>
 <script>
@@ -241,11 +242,11 @@ function applySchoolIdentity(){
   const collegeLink=document.getElementById('schoolCollegeCoursesLink');
   const themeColour=document.getElementById('themeColour');
   const favicon=document.getElementById('schoolFavicon');
-  if(header)header.textContent=school.name.toUpperCase();
-  if(footer)footer.textContent=school.name;
+  /* The Synergy Assist masthead is trust-wide, not school-specific. */
+  if(footer)footer.textContent='Synergy Assist';
   if(year)year.textContent=school.academicYear||'';
   if(brand){
-    brand.setAttribute('aria-label',school.name+' Learning Hub home');
+    brand.setAttribute('aria-label','Synergy Assist Learning Hub home');
     brand.href=school.id===window.LEARNING_HUB_DEFAULT_SCHOOL?'/':'?school='+encodeURIComponent(school.id);
   }
   if(curriculum)curriculum.href=school.links.curriculum||school.links.website||'#';
@@ -258,7 +259,7 @@ function applySchoolIdentity(){
   for(const [key,cssVar] of Object.entries(vars))if(b[key])document.documentElement.style.setProperty(cssVar,b[key]);
   if(themeColour&&b.primary)themeColour.content=b.primary;
   if(favicon&&b.primary){
-    const letter=(school.shortName||school.name||'L').charAt(0).toUpperCase();
+    const letter='S';
     const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="'+b.primary+'"/><text x="16" y="23" text-anchor="middle" fill="white" font-size="23" font-family="Arial">'+letter+'</text></svg>';
     favicon.href='data:image/svg+xml,'+encodeURIComponent(svg);
   }
@@ -385,7 +386,7 @@ function renderKs3ComputingChooser(){
   document.body.classList.toggle('pilot-public',!staff);
   delete document.body.dataset.year;
   clearYearTheme();
-  document.title='KS3 Computing · RHSC Learning Hub';
+  document.title='KS3 Computing · Synergy Assist';
   const exit=document.getElementById('pilotExit');
   if(exit)exit.hidden=!staff;
   const cards=[7,8,9].map(y=>
@@ -404,12 +405,12 @@ function renderPilotLanding(){
   document.body.classList.add('pilot-public');
   delete document.body.dataset.year;
   clearYearTheme();
-  document.title='Computer Science Learning Hub · RHSC';
+  document.title='Computer Science Learning Hub · Synergy Assist';
   const exit=document.getElementById('pilotExit');
   if(exit)exit.hidden=true;
   main.innerHTML=`<section class="gateway-home" aria-labelledby="gatewayTitle">
     <div class="gateway-header">
-      <span class="gateway-eyebrow">REEPHAM HIGH SCHOOL &amp; COLLEGE</span>
+      <span class="gateway-eyebrow">SYNERGY ASSIST</span>
       <h1 id="gatewayTitle">Learning Hub</h1>
       <p>Choose your learning pathway</p>
     </div>
@@ -427,11 +428,11 @@ function renderPilotLanding(){
         <span class="gateway-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="gateway-card gateway-school" href="https://synergymat.sharepoint.com/SitePages/ReephamHighandCollege-Student.aspx" aria-label="Official Reepham High School and College student learning portal">
-        <span class="gateway-card-copy"><strong>Reepham High School &amp; College</strong><small>Official School Learning Hub</small></span>
+        <span class="gateway-card-copy"><strong>School learning portal</strong><small>Official school resources</small></span>
         <span class="gateway-arrow" aria-hidden="true">↗</span>
       </a>
     </nav>
-    <p class="gateway-disclaimer">KS3, GCSE and A Level resources are part of the RHSC Computing teaching pilot.</p>
+    <p class="gateway-disclaimer">Synergy Assist computing resources for KS3, GCSE and A Level learners.</p>
     <details class="gateway-staff">
       <summary>Teaching staff · preview access</summary>
       <div class="gateway-staff-inner">
