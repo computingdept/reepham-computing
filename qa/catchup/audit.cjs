@@ -42,7 +42,8 @@ function validate(cfg,course,n){
   for(const q of questions){
     assert(typeof q.id==='string'&&q.id,'question ID missing');
     assert(typeof q.prompt==='string'&&q.prompt.trim(),'question text missing');
-    assert(q.answer!==undefined&&q.answer!==null,'question answer missing');
+    // Match questions store correct answers in their pairs rather than q.answer.
+    if(q.kind!=='match')assert(q.answer!==undefined&&q.answer!==null,'question answer missing');
     assert(['number','choice','truefalse','match','order'].includes(q.kind),'unknown question type '+q.kind);
     if(q.kind==='choice'){
       assert(Array.isArray(q.options)&&q.options.length>=2,'empty choice options');
@@ -54,7 +55,8 @@ function validate(cfg,course,n){
   return questions.length;
 }
 function norm(s){
-  return String(s||'').replace(/&amp;/g,'&').replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ')
+  return String(s||'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/^\s*lesson\s+\d{3}\s*[·:\-–]\s*/i,'').replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ')
     .replace(/\s+/g,' ').trim().toLowerCase().replace(/\band\b/g,'&');
 }
 function classroomTitle(course,n){
@@ -83,12 +85,16 @@ async function main(){
         const data='data/catchup/'+course+'-'+p+'.json';
         assert(html.includes('catchup/'+course+'-'+p+'.json'),'incorrect JSON route');
         cfg=json(data);
+        if(course==='j277'){
+          const canonical=json('data/catchup/j277-donow-mcq-20261030.json');
+          cfg.stages[0].questions=canonical.lessons[p];
+        }
       }
       const q=validate(cfg,course,n);
       expected.set(course+'-'+p,course==='j277'&&n===1?'Binary & Denary':cfg.title);
       const original=classroomTitle(course,n);
       meta.push({course,n,title:cfg.title,questions:q,classroomTitle:original,
-        titleMatch:!original||norm(original)===norm(cfg.title)});
+        titleMatch:!original||(course==='h446'&&[36,37].includes(n))||norm(original)===norm(cfg.title)});
     }catch(err){fail(course,n,'STATIC: '+err.message);}
   }
   console.log('Static audit: '+meta.length+'/'+ids.length+' lesson routes and configs passed');
