@@ -155,77 +155,56 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 @media print{.catchup-title-lockup{display:none}}
 
 
-/* Shared J277/H446 Catch Up: one working five-stage navigation at the bottom.
-   The original buttons are moved into this footer by the central JS. */
-.catchup-purpose-footer{
-  margin-top:20px;padding:12px 0 0;border-top:1px solid #ccd6d0
+/* Shared J277/H446 Catch Up: one compact, NON-STICKY five-stage
+   navigation immediately below the shared header. Only this real row
+   is interactive; Previous/Next remain after the lesson content. */
+.catchup-shell{margin-top:10px}
+.catchup-progress-top{
+ display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:5px;margin:0 0 12px;position:static
 }
-.catchup-progress-bottom{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:5px;margin:0
+.catchup-progress-top button{
+ min-width:0;min-height:46px;display:flex;
+ align-items:center;justify-content:center;
+ padding:7px 4px;border:1px solid #c4d4cc;border-radius:7px;
+ background:#f7faf8;color:#285348;font-size:12px;line-height:1.2;
+ font-weight:800;cursor:pointer;text-align:center
 }
-.catchup-progress-bottom button{
-  min-height:63px;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:4px;min-width:0;
-  padding:8px 4px;border:1px solid #c4d4cc;border-radius:7px;
-  background:#f7faf8;color:#285348;
-  line-height:1.18;text-align:center;cursor:pointer
+.catchup-progress-top .catchup-step-name{font-size:inherit;line-height:inherit}
+.catchup-progress-top button[aria-current="step"]{
+ background:#e4f0e8;border:2px solid #376b53;
+ box-shadow:inset 0 0 0 1px #376b53
 }
-.catchup-progress-bottom .catchup-step-name{
-  font-size:12px;font-weight:800;line-height:1.2
+.catchup-progress-top button:hover:not(:disabled){background:#eaf4ed}
+.catchup-progress-top button:focus-visible{
+ outline:3px solid #bb8523;outline-offset:2px
 }
-.catchup-progress-bottom .catchup-step-purpose{
-  font-size:11px;line-height:1.2;font-weight:500;color:#52685f
-}
-.catchup-progress-bottom button[aria-current="step"]{
-  background:#e4f0e8;border:2px solid #376b53;
-  box-shadow:inset 0 0 0 1px #376b53
-}
-.catchup-progress-bottom button[aria-current="step"] .catchup-step-purpose{
-  color:#244d37;font-weight:700
-}
-.catchup-progress-bottom button:hover:not(:disabled){background:#eaf4ed}
-/* One clear heading and timing cue; the stage icon and repeated heading
-   lines are removed in JS, without changing any lesson content blocks. */
+/* One useful heading; no repeated Step X / phase icon. */
 .catchup-card-header{
-  align-items:flex-start;justify-content:space-between;
-  gap:12px;margin-bottom:12px;padding-bottom:11px
+ align-items:flex-start;justify-content:space-between;
+ gap:12px;margin-bottom:12px;padding-bottom:11px
 }
 .catchup-stage-heading{min-width:0;flex:1 1 auto}
 .catchup-card-header .catchup-stage-heading h2{
-  font-size:clamp(19px,2.8vw,25px);line-height:1.24;margin:0
+ font-size:clamp(19px,2.8vw,25px);line-height:1.24;margin:0
 }
 .catchup-card-header .catchup-stage-lead{
-  font-size:14px;line-height:1.43;margin:5px 0 0;color:#444
+ font-size:14px;line-height:1.43;margin:5px 0 0;color:#444
 }
 .catchup-stage-minutes{
-  flex:0 0 auto;white-space:nowrap;
-  padding-top:4px;font-size:12px;color:#51665d;font-weight:700
+ flex:0 0 auto;white-space:nowrap;
+ padding-top:4px;font-size:12px;color:#51665d;font-weight:700
 }
 @media(max-width:620px){
-  /* Compact fixed navigation stays reachable while reading or answering;
-     reserve page padding so it never covers checking or Previous/Next. */
-  body.catchup-bottom-nav-on .catchup-shell{
-    padding-bottom:calc(96px + env(safe-area-inset-bottom))
-  }
-  .catchup-purpose-footer{
-    position:fixed;left:0;right:0;bottom:0;z-index:1050;
-    margin:0;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
-    border-top:1px solid #b9cfc1;background:rgba(255,255,255,.98);
-    box-shadow:0 -3px 12px rgba(15,52,30,.1)
-  }
-  .catchup-progress-bottom{gap:4px}
-  .catchup-progress-bottom button{
-    min-height:50px;padding:5px 2px;gap:0;
-    font-size:11px;overflow-wrap:anywhere
-  }
-  .catchup-progress-bottom .catchup-step-name{
-    font-size:clamp(10px,2.9vw,12px);line-height:1.16
-  }
-  .catchup-progress-bottom .catchup-step-purpose{display:none}
-  .catchup-card-header .catchup-stage-heading h2{
-    font-size:clamp(18px,5vw,21px)
-  }
-  .catchup-stage-minutes{font-size:11px;padding-top:3px}
+ .catchup-shell{margin-top:9px}
+ .catchup-progress-top{gap:3px;margin:0 0 9px}
+ .catchup-progress-top button{
+  min-height:44px;padding:5px 2px;font-size:clamp(10px,2.85vw,12px);
+  line-height:1.16;overflow-wrap:anywhere
+ }
+ .catchup-card-header .catchup-stage-heading h2{
+  font-size:clamp(18px,5vw,21px)
+ }
+ .catchup-stage-minutes{font-size:11px;padding-top:3px}
 }
-@media print{.catchup-purpose-footer{display:none!important}}
+@media print{.catchup-progress-top{display:none!important}}
