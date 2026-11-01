@@ -200,6 +200,10 @@
     const focusPilot=cfg.id==='j277-001'||cfg.id==='h446-001';
     if(focusPilot)document.body.classList.add('catchup-focused-pilot');
     let questionPage=0,viewPane='learn';
+    // Recalculate the pilot's responsive question layout on rotation/resize,
+    // without rebuilding input nodes or losing typed answers.
+    let refreshCurrentLayout=()=>{};
+    if(focusPilot)window.addEventListener('resize',()=>refreshCurrentLayout());
 
     const intro=document.getElementById('catchup-intro');
     // J277 Lesson 001 classroom title uses “&”, not the catch-up source's “and”.
@@ -547,6 +551,7 @@
       if(step===cfg.stages.length-1)activity.append(overall());
       focusedRefresh();
       syncFocusedActions();
+      if(focusPilot)refreshCurrentLayout=focusedRefresh;
       // Keep the top navigation in place and announce the active stage.
       progressItems.forEach((button,i)=>{
         if(i===step)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
