@@ -199,7 +199,7 @@ def page_end(c,y,n):
 
 def make_pdf(lesson,soup,mode,outfile):
     c=canvas.Canvas(str(outfile),pagesize=A4,pageCompression=1)
-    c.setTitle(f'H446 Lesson {lesson.number:03d}: {lesson.title} — eight-page reviewed draft')
+    c.setTitle(f'H446 Lesson {lesson.number:03d}: {lesson.title} — reviewed print draft')
     c.setAuthor('RHS Computing')
     l=lesson.number
     extra=1 if lesson.number in (19,31) else 0
@@ -244,7 +244,6 @@ def make_pdf(lesson,soup,mode,outfile):
     if extra:
         # Choose a whole-block break close to the midpoint. All source steps
         # remain intact and are still checked by render_items on both pages.
-        from publish_h446_year12_011_015 import dims
         candidates=range(1,len(items))
         split=min(candidates,key=lambda j:max(dims(items[:j]),dims(items[j:])))
         y=render_items(c,items[:split],y,p,maxheight=y-60)
@@ -266,7 +265,7 @@ def make_pdf(lesson,soup,mode,outfile):
         if code:items.append(obj(code,'code'))
         items.append(obj('Method / working:','note',rule=2 if len(cases)>=5 else 3))
     y=render_items(c,items,y,p,maxheight=y-60)
-    page_end(c,y,5)
+    page_end(c,y,5+extra)
 
     # 6+7 — exact original independent questions, without source answer reveals.
     qs=choices(lesson)
