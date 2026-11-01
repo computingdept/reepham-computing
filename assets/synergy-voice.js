@@ -296,13 +296,21 @@
   status.className='synergy-voice-status';status.textContent=supported?'Reads the currently visible page. Answers stay hidden until revealed.':'Speech is unavailable on this browser. Visual reading tools still work.';
   const readerControls=makeReaderControls();
   panel.append(head,readerControls,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
-  // The Catch Up header is shared by J277 and H446. Its existing
-  // working button belongs beside the brand rather than over the content.
+  // The same central Reading Tools control sits in the header on
+  // both Catch Up and J277/H446 Practice. No second launcher is created.
   const catchupHeader=document.querySelector('.catchup-top-inner');
-  if(catchupHeader){
+  const practiceHeader=document.querySelector('header.practice-nav');
+  const toolsHeader=catchupHeader||practiceHeader;
+  if(toolsHeader){
    launch.classList.add('synergy-voice-header-launch');
    panel.classList.add('synergy-voice-header-panel');
-   catchupHeader.append(launch);
+   if(practiceHeader){
+    launch.classList.add('synergy-voice-practice-launch');
+    panel.classList.add('synergy-voice-practice-panel');
+    const mark=practiceHeader.querySelector(':scope > .synergy-corner-mark');
+    if(mark)practiceHeader.insertBefore(launch,mark);
+    else practiceHeader.append(launch);
+   }else catchupHeader.append(launch);
    document.body.append(panel);
   }else{
    document.body.append(launch,panel);
