@@ -312,7 +312,7 @@
     stopSpeech();
     const n=Math.max(1,Math.min(guideDocument.numPages,Math.round(Number(requested)||1)));
     guidePage=n;
-    notice('Reading guide page '+n+' of '+guideDocument.numPages+'…');
+    notice('Reading PDF page '+n+' of '+guideDocument.numPages+'…');
     const page=await guideDocument.getPage(n);
     const content=await page.getTextContent();
     const lines=[];
@@ -332,9 +332,9 @@
     if(line.trim())lines.push(line.trim());
     const inner=el('div','reader-inner guide-reader-inner');
     inner.append(el('h1','',label));
-    inner.append(el('p','reader-source-note','Automatically extracted reading aid. Text order and technical notation may be inaccurate; pictures and diagrams may be omitted. Refer to the Original PDF for authoritative content.'));
+    inner.append(el('p','reader-source-note',knownLessonCompanion?'Content extracted from this same printable PDF. Write answers on your paper booklet. Check the exact PDF page below for diagrams, equations and layout.':'Automatically extracted reading aid. Text order and technical notation may be inaccurate; pictures and diagrams may be omitted. Refer to the Original PDF for authoritative content.'));
     const nav=el('nav','guide-reader-pages');
-    nav.setAttribute('aria-label','Revision guide page navigation');
+    nav.setAttribute('aria-label','PDF page navigation');
     const prev=el('button','', 'Previous page');
     prev.type='button';prev.disabled=n===1;
     const pageLabel=el('label','', 'Page');
@@ -408,7 +408,7 @@
   function loadGuideReader(){
     if(!pdfTextReader)return Promise.resolve();
     if(guideLoading)return guideLoading;
-    notice('Preparing reading text from the original guide…');
+    notice('Preparing reading text from the original PDF…');
     showReading.disabled=true;
     guideLoading=(async()=>{
       // PDF.js runs in the browser; the PDF itself is fetched only from our domain.
