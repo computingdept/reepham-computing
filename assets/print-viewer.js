@@ -141,7 +141,15 @@
     reading.hidden=mode!=='reading';
     frame.hidden=mode==='reading';
     fallback.hidden=mode==='reading';
-    if(mobileBox)mobileBox.hidden=mode==='reading'||!mobileDevice;
+    if(mobileBox){
+      mobileBox.hidden=mode==='reading'||!mobileDevice;
+      if(mode==='pdf'){
+        const mobileHint=mobileBox.querySelector('p');
+        if(mobileHint)mobileHint.textContent=readerData?
+          'Original PDF selected. Use Tools to return to Reading View, or open the PDF directly.':
+          'Reading View is not available for this resource right now. Open the original PDF directly.';
+      }
+    }
     showPdf.setAttribute('aria-pressed',String(mode==='pdf'));
     showReading.setAttribute('aria-pressed',String(mode==='reading'));
     if(mode==='reading'){reading.focus({preventScroll:true});}
