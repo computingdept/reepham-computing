@@ -19,3 +19,67 @@
 @media print{.synergy-voice-tool{display:none!important}}
 
 .synergy-voice-note{font-size:11px;line-height:1.35;color:#53685b;margin:10px 0 0}
+
+
+/* One site-wide opt-in reading layer. Content, reveal logic and navigation
+   are never cloned or hidden. The PDF viewer has its own companion styles. */
+.synergy-voice-panel{width:min(345px,calc(100vw - 28px))}
+.synergy-reading-controls{padding:8px 0 13px;border-bottom:1px solid #d8e3db}
+.synergy-reading-heading{font-size:13px;font-weight:800;letter-spacing:.015em;margin:11px 0 7px}
+.synergy-reading-inline{display:flex;align-items:center;gap:9px;margin:5px 0 11px}
+.synergy-reading-inline output{min-width:55px;text-align:center;font-weight:750}
+.synergy-voice-panel .synergy-reading-check{display:flex;flex-direction:row;align-items:center;gap:9px}
+.synergy-reading-check input{height:17px;width:17px;margin:0;accent-color:#2c684d}
+.synergy-reading-controls [aria-pressed="true"]{background:#e4efe8!important;border-color:#5d9277!important}
+body.synergy-reading-zoom main{zoom:var(--synergy-reader-zoom,1)}
+body.synergy-reading-active{
+  --synergy-reader-bg:#fff;
+  --synergy-reader-ink:#26372f;
+  --synergy-reader-font:system-ui,Arial,sans-serif;
+  --synergy-reader-line:1.65;
+  --synergy-reader-letter:0;
+  --synergy-reader-word:normal;
+}
+body.synergy-reading-active[data-synergy-reader-font="arial"]{--synergy-reader-font:Arial,sans-serif}
+body.synergy-reading-active[data-synergy-reader-font="verdana"]{--synergy-reader-font:Verdana,Arial,sans-serif}
+body.synergy-reading-active[data-synergy-reader-font="atkinson"]{--synergy-reader-font:"Atkinson Hyperlegible",Arial,sans-serif}
+body.synergy-reading-active[data-synergy-reader-spacing="comfortable"]{
+ --synergy-reader-line:1.85;--synergy-reader-letter:.012em;--synergy-reader-word:.03em
+}
+body.synergy-reading-active[data-synergy-reader-spacing="wide"]{
+ --synergy-reader-line:2;--synergy-reader-letter:.025em;--synergy-reader-word:.075em
+}
+body.synergy-reading-active[data-synergy-reader-colour="cream"]{--synergy-reader-bg:#faf3e5;--synergy-reader-ink:#342f29}
+body.synergy-reading-active[data-synergy-reader-colour="blue"]{--synergy-reader-bg:#eaf2f8;--synergy-reader-ink:#263949}
+body.synergy-reading-active[data-synergy-reader-colour="green"]{--synergy-reader-bg:#eaf4eb;--synergy-reader-ink:#284236}
+body.synergy-reading-active[data-synergy-reader-colour="dark"]{--synergy-reader-bg:#1f2926;--synergy-reader-ink:#f0f4f0}
+body.synergy-reading-active main{
+  background:var(--synergy-reader-bg)!important;
+  color:var(--synergy-reader-ink);
+  font-family:var(--synergy-reader-font)!important;
+}
+body.synergy-reading-active main :is(.page.active,#catchup-stage,.panel.active){
+  background:var(--synergy-reader-bg)!important;
+  color:var(--synergy-reader-ink)!important;
+}
+body.synergy-reading-active main :is(p,li,blockquote,dd,dt,h1,h2,h3,h4,.question-text,.catchup-question){
+  font-family:var(--synergy-reader-font)!important;
+  line-height:var(--synergy-reader-line)!important;
+  letter-spacing:var(--synergy-reader-letter)!important;
+  word-spacing:var(--synergy-reader-word)!important;
+}
+body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(.page.active,#catchup-stage,.panel.active,.exam-card,.catchup-card,.card){
+  background:#1f2926!important;color:#f0f4f0!important;border-color:#52635b!important;
+}
+body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blockquote,dd,dt,h1,h2,h3,h4,.question-text,.catchup-question){
+  color:#f0f4f0!important;
+}
+.synergy-reading-focus-target{outline:3px solid #c28f2e!important;outline-offset:5px;border-radius:3px}
+@media print{
+ body.synergy-reading-zoom main{zoom:1!important}
+ body.synergy-reading-active main,
+ body.synergy-reading-active main :is(.page.active,#catchup-stage,.panel.active){
+   background:initial!important;color:initial!important;
+ }
+ .synergy-reading-focus-target{outline:none!important}
+}
