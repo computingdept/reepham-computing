@@ -29,7 +29,7 @@ jobs:
           sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
           python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
       - name: Generate next five original-diagram booklets
-        run: python tools/independent_booklets/publish_h446_visual_batch.py 21 22 23 182 183
+        run: python tools/independent_booklets/publish_h446_visual_batch.py 32 33 34 184 185
       - name: Verify generated PDFs and links
         run: |
           python - <<'PY'
@@ -38,7 +38,7 @@ jobs:
           import fitz
           cat=json.loads(Path('offline/booklets/catalogue.json').read_text())
           updated=[]
-          for n in (21,22,23,182,183):
+          for n in (32,33,34,184,185):
               record=cat['lessons']['h446'][str(n)]
               if record.get('status')!='visual_draft_needs_teacher_review':
                   print('Original print link preserved for',n)
@@ -62,7 +62,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add offline/booklets/catalogue.json
-          for n in 021 022 023 182 183; do
+          for n in 032 033 034 184 185; do
             find offline/booklets/h446 -maxdepth 1 -type f -name "H446_Lesson_${n}_VISUAL_PILOT_*.pdf" -print0 | xargs -0 -r git add --
           done
           python - <<'PY'
@@ -70,14 +70,14 @@ jobs:
           from pathlib import Path
           c=json.loads(Path('offline/booklets/catalogue.json').read_text())
           tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
-          for n in (21,22,23,182,183):
+          for n in (32,33,34,184,185):
               e=c['lessons']['h446'][str(n)]
               if e.get('status')=='visual_draft_needs_teacher_review':
                   for field in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
                       assert e[field] in tracked,(n,field)
           PY
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Publish next five diagram-restored H446 print drafts'
+          git commit -m 'Publish another five diagram-restored H446 print drafts'
           for attempt in 1 2 3 4 5 6 7 8; do
             git pull --rebase origin main
             if git push origin HEAD:main; then exit 0; fi
