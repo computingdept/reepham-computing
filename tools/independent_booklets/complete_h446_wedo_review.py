@@ -66,7 +66,7 @@ def publish_safe(number: int, old: dict, lesson) -> dict:
     made = []
     try:
         for mode in ("bw", "colour"):
-            stem = f"H446_Lesson_{number:03d}_WEDO_REVIEW_{mode.upper()}"
+            stem = f"H446_Lesson_{number:03d}_WEDO_DISCUSS_REVIEW_{mode.upper()}"
             a4 = OUT / f"{stem}_A4.pdf"
             a3 = OUT / f"{stem}_A3_Booklet.pdf"
             made.extend((a4, a3))
@@ -123,8 +123,13 @@ def main() -> None:
             count = len(lesson.guided)
             models = sum(bool(q.strip() and a.strip()) for q, a in lesson.guided)
             source_diagrams = lesson.visual_count
-            already = "WEDO_REVIEW" in before["print_bw"]
+            already = ("_WEDO_REVIEW_" in before["print_bw"] or
+                       "_WEDO_DISCUSS_REVIEW_" in before["print_bw"])
+            up_to_date = False
             if already:
+                with fitz.open(ROOT / before["print_bw"]) as existing:
+                    up_to_date = PHRASE in "\n".join(p.get_text() for p in existing)
+            if already and up_to_date:
                 status = "review_pilot_existing"
             elif source_diagrams:
                 status = "deferred_visual_preservation"
