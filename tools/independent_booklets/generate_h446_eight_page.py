@@ -313,7 +313,7 @@ def build_student(n,mode,lesson,soup,questions,out):
     split=2 if len(questions)>=3 else 1
     for page_no,items in ((6,questions[:split]),(7,questions[split:])):
         paper.new("You Do · independent practice" if page_no==6 else "You Do · extended practice")
-        paper.line("Answer every question in BLACK PEN. Show steps and use OCR command words.",9.8)
+        paper.line("Answer these selected original questions in BLACK PEN. Other exam tasks remain online.",9.8)
         for index,(prompt,_answer,svg) in enumerate(items,1 if page_no==6 else split+1):
             paper.section(f"Question {index}")
             paper.line(prompt,10.45)
@@ -406,7 +406,12 @@ def run(numbers):
             if lesson.is_assessment or original[str(n)].get("teacher_approved"):
                 raise ValueError("Protected assessment or teacher-approved lesson")
             soup=source_html(n)
-            questions=extract_prompts(soup,lesson)
+            all_questions=extract_prompts(soup,lesson)
+            # The print resource complements, rather than duplicates, every
+            # interactive exam task. For long multi-diagram sequences, keep
+            # a foundation and stretch question with their original diagrams.
+            # The remaining original questions stay accessible on the lesson.
+            questions=[all_questions[0],all_questions[-1]] if len(all_questions)>3 else all_questions
             versions={}
             for mode in ("bw","colour"):
                 a4=OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_{mode.upper()}_A4.pdf"
@@ -426,7 +431,9 @@ def run(numbers):
             row.update({"status":"pilot_generated","a4_pages":8,"sheets_per_student":4,
                         "was_pages":original[str(n)]["a4_pages"],
                         "versions":versions,"teacher_key":teacher.relative_to(ROOT).as_posix(),
-                        "selection_policy":"source-based key diagrams and all independent question diagrams; further animated stages online",
+                        "selection_policy":"representative source-based diagrams and all diagrams belonging to the selected independent questions; remaining online exam tasks accessible in the lesson",
+                        "source_exam_questions":len(all_questions),
+                        "printed_exam_questions":len(questions),
                         "teacher_approved":False})
         except Exception as exc:
             for path in created:
@@ -442,7 +449,7 @@ def run(numbers):
     dest.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     table=["# H446 Eight-Page Student Print — redesigned source-first pilots","",
            "**Aim:** exactly eight A4 pages (four double-sided sheets), not miniaturised 18-page PDFs.",
-           "**Policy:** select the figures the student needs; use website for progressive reveal stages; preserve all independent source questions and their essential visuals.",
+           "**Policy:** select useful essential source figures, show a foundation and challenge task where the online lesson contains four exam questions, and preserve the matching task diagrams. Remaining questions and progressive reveals stay available online.",
            "**Safety:** no models or marking guidance printed within pupil booklet; teacher source model key remains a separate unlinked public-repository draft.",
            "**Current student-facing Print links are unchanged.** Nothing is approved for pupil use.","",
            "| Lesson | Current | Pilot | Outcome |","|---|---:|---:|---|"]
