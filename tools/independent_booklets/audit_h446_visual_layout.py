@@ -51,7 +51,7 @@ def contact_sheet(n,mode,filename):
     image.save(output,optimize=True)
     return output,records
 report={'created_utc':datetime.now(timezone.utc).isoformat(),'lessons':{}}
-lines=['# H446 visual print pilot — rendered page QA','','Read the contact sheets at 100% before releasing these booklets.','','| Lesson | Edition | Pages | Diagram pages | Text block edge warnings |','|---|---|---:|---:|---:|']
+lines=['# H446 visual print pilot — rendered page QA','','Read the contact sheets at 100% before releasing these booklets.','Lesson 031 uses integrated theory and diagrams (11 learning stages), rather than a dense single theory page.','','| Lesson | Edition | Pages | Diagram pages | Text block edge warnings |','|---|---|---:|---:|---:|']
 for n in TARGETS:
     e=CAT['lessons']['h446'][str(n)]
     report['lessons'][str(n)]={}
@@ -62,8 +62,14 @@ for n in TARGETS:
         if margin:
             raise ValueError(f'Lesson {n:03d} {mode}: {margin} text blocks extend beyond safe margins')
         diagram_count=sum(p['images'] for p in records)
-        if n==31 and diagram_count<10:
-            raise ValueError(f'Lesson 031 expected 10 restored diagram images, found {diagram_count}')
+        if n==31:
+            if diagram_count<10:
+                raise ValueError(f'Lesson 031 expected 10 restored diagram images, found {diagram_count}')
+            if len(records)>14:
+                raise ValueError('Lesson 031 should not exceed 14 A4 pages after integrating diagrams')
+            dense=[p['page'] for p in records if p['chars']>2000]
+            if dense:
+                raise ValueError(f'Lesson 031 still has dense pages: {dense}')
         report['lessons'][str(n)][mode]={
             'source_pdf':e[key],'contact_sheet':sheet.relative_to(ROOT).as_posix(),
             'pages':records,'text_edge_warnings':margin,
