@@ -41,7 +41,7 @@ Outstanding exceptions: **5**
 
 - Lesson 017: 10 A4 pages
 - Lesson 019: 11 A4 pages
-- Lesson 025: 11 A4 pages
+- Lesson 025: 12 A4 pages
 - Lesson 031: 10 A4 pages
 
 ## Protected or incomplete lessons
