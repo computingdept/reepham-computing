@@ -1,0 +1,75 @@
+name: Publish five H446 We Do teacher-review PDFs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_wedo_review_batch.py'
+      - '.github/workflows/publish-h446-wedo-pilot-batch.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-wedo-reviewed-pilot-publishing
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install booklet dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+          python -m pip install 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
+      - name: Generate five guided-practice books using original source checks
+        run: python tools/independent_booklets/publish_h446_wedo_review_batch.py
+      - name: Validate catalogue targets, review status and PDF sequence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          for n in (8,9,10,11,12):
+              e=c[str(n)]
+              assert e['status']=='draft_needs_teacher_content_review'
+              assert e['teacher_approved'] is False
+              assert all(Path(e[k]).is_file() for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'))
+              with fitz.open(e['print_bw']) as doc:
+                  text=[p.get_text() for p in doc]
+                  order=[next((i for i,t in enumerate(text) if needle in t),-1) for needle in ('Guided 1 — TRY','EXIT TICKET / REFLECTION','Guided 1 — CHECK')]
+                  assert -1 not in order and order==sorted(order) and len(set(order))==3,(n,order)
+          print('All five linked PDFs passed Try, Exit, Check sequencing; approval remains false')
+          PY
+      - name: Commit verified PDF drafts and catalogue updates
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_REVIEW_PILOT_BATCH.md
+          for n in 008 009 010 011 012; do
+            find offline/booklets/h446 -maxdepth 1 -type f -name "H446_Lesson_${n}_WEDO_REVIEW_*.pdf" -print0 | xargs -0 -r git add --
+          done
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n in (8,9,10,11,12):
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert c[str(n)][k] in tracked,(n,k)
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish five H446 Try Check Improve teacher-review print pilots'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
