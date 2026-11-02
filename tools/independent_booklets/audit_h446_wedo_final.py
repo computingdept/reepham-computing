@@ -78,10 +78,12 @@ def main():
                 discussion=find(pages,r"TRY\s*[·→> -]+\s*DISCUSS\s*[·→> -]+\s*IMPROVE")
             if discussion<0:
                 issues.append(f"{field}: Try/Discuss/Improve sequence missing")
-            attempt=find(pages,r"\b(?:Guided\s*1\s*[-—·:]\s*TRY|WE\s+DO\s*[-—·]\s*TRY)\b")
-            independent=find(pages,r"\bYOU DO\b")
-            exit_at=find(pages,r"\bEXIT TICKET\b")
-            check=find(pages,r"Guided\s*1\s*[-—·:]\s*CHECK|WE DO\s*[-—·]\s*SOURCE CHECK")
+            # Section headers must start on their own line. Generic instructions
+            # may mention "Exit Ticket" many pages before the actual stage.
+            attempt=find(pages,r"(?m)^\s*(?:Guided\s*1\s*[-—·:]\s*TRY|WE\s+DO\s*[-—·]\s*TRY)\b")
+            independent=find(pages,r"(?m)^\s*YOU DO\s*[-—·/]\s*")
+            exit_at=find(pages,r"(?m)^\s*EXIT TICKET\s*(?:[/·—-]|$)")
+            check=find(pages,r"(?m)^\s*(?:Guided\s*1\s*[-—·:]\s*CHECK|WE DO\s*[-—·]\s*SOURCE CHECK)")
             if attempt<0 or independent<0 or exit_at<0 or check<0:
                 issues.append(f"{field}: guided/independent/exit/source-check marker missing")
             elif not (attempt < independent <= exit_at < check):
