@@ -10,9 +10,11 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import fitz
+from bs4 import BeautifulSoup
 
 from render_pdf import build_a4
-from source_model import h446_source
+from publish_h446_y12_exceptions import make_pdf_flexible
+from source_model import HROOT, h446_source
 
 SAMPLES = (10, 20, 30, 181, 185, 260)
 PDF_PILOTS = (10, 181, 185)
@@ -55,6 +57,34 @@ def run() -> None:
                     assert count == len(pdf), (number, mode, count, len(pdf))
                     assert count < 25, (number, mode, "excessive page count", count)
                 print(f"PDF {number:03d} {mode}: {count} pages; "
+                      f"TRY {positions['try']+1}, EXIT {positions['exit']+1}, "
+                      f"CHECK {positions['check']+1}", flush=True)
+    with TemporaryDirectory() as temp:
+        for number in (10, 181, 185, 260):
+            lesson = h446_source(number)
+            source = HROOT / f"lesson-{number:03d}" / "index.html"
+            soup = BeautifulSoup(source.read_text(encoding="utf-8"), "html.parser")
+            for mode in ("bw", "colour"):
+                filename = Path(temp) / f"H446_{number:03d}_{mode}_FLEX_QA.pdf"
+                count = make_pdf_flexible(lesson, soup, mode, filename)
+                with fitz.open(filename) as pdf:
+                    pages = [page.get_text() for page in pdf]
+                    labels = {
+                        "try": "Guided 1 — TRY",
+                        "exit": "Exit Ticket / Reflection",
+                        "check": "Guided 1 — CHECK",
+                    }
+                    positions = {
+                        key: next((i for i, page in enumerate(pages) if needle in page), -1)
+                        for key, needle in labels.items()
+                    }
+                    assert min(positions.values()) >= 0, (number, mode, positions)
+                    assert positions["try"] < positions["exit"] < positions["check"], (
+                        number, mode, positions)
+                    assert count < 17, (number, mode, "excessive flexible page count", count)
+                    assert count == len(pdf), (number, mode, "page count mismatch")
+                    assert all(len(page.strip()) >= 40 for page in pages), (number, mode, "blank page")
+                print(f"FLEX {number:03d} {mode}: {count} pages; "
                       f"TRY {positions['try']+1}, EXIT {positions['exit']+1}, "
                       f"CHECK {positions['check']+1}", flush=True)
     print("PASS: Guided source answers stay after student attempts and Exit Ticket.")
