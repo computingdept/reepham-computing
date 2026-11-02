@@ -155,6 +155,25 @@ def source_figures(n, lesson, existing_img_count):
         grouped[phase].append(d)
     return grouped, len(drawings), "All static source SVGs included, hidden We Do reveals after Exit"
 
+def stamp_page_numbers(doc) -> None:
+    """Print true pagination over the old footer counter without touching teaching content."""
+    total=len(doc)
+    for index,page in enumerate(doc):
+        width,height=page.rect.width,page.rect.height
+        # Bottom-right footer is a reserved print area in all H446 variants.
+        rect=fitz.Rect(width-119,height-52,width-33,height-18)
+        page.draw_rect(rect, color=None, fill=(1,1,1), overlay=True)
+        page.insert_text((width-97,height-31),f"{index+1} / {total}",
+                         fontname="helv",fontsize=8.2,color=(.23,.31,.27),overlay=True)
+
+def correct_existing_page_numbers(path: Path) -> None:
+    """Idempotence is guarded by a catalogue metadata flag in the caller."""
+    temp=path.with_name(path.stem+"_numbered_temp.pdf")
+    with fitz.open(path) as pdf:
+        stamp_page_numbers(pdf)
+        pdf.save(temp,garbage=4,deflate=True)
+    temp.replace(path)
+
 def build(n: int, old: dict, mode: str, lesson) -> tuple[str,str,int,int,dict]:
     filename=ROOT/old["print_bw" if mode=="bw" else "learn_colour"]
     if not filename.exists():raise FileNotFoundError(filename)
@@ -213,6 +232,7 @@ def build(n: int, old: dict, mode: str, lesson) -> tuple[str,str,int,int,dict]:
     if models and not any("WE DO — SOURCE CHECK" in t for t in text[first_exit+1:]):
         raise ValueError("Source CHECK not safely separated")
     target=OUT/f"H446_Lesson_{n:03d}_WEDO_VISUAL_DISCUSS_{mode.upper()}_A4.pdf"
+    stamp_page_numbers(combined)
     combined.save(target,garbage=4,deflate=True)
     count=len(combined)
     base.close();combined.close();discuss.close()
@@ -245,7 +265,17 @@ def run(numbers):
             if lesson.is_assessment or old.get("teacher_approved",False):
                 raise ValueError("Protected assessment or teacher-approved resource")
             if "WEDO_VISUAL_DISCUSS" in old.get("print_bw",""):
-                row["status"]="already_revised"
+                if not old.get("print_page_count_corrected",False):
+                    for mode in ("bw","colour"):
+                        a4=ROOT/old["print_bw" if mode=="bw" else "learn_colour"]
+                        a3=ROOT/old["booklet_bw" if mode=="bw" else "booklet_colour"]
+                        correct_existing_page_numbers(a4)
+                        impose_a3(a4,a3)
+                    entries[str(n)]={**old,"print_page_count_corrected":True}
+                    row.update({"status":"existing_page_count_corrected",
+                                "pages":old["a4_pages"]})
+                else:
+                    row["status"]="already_revised"
             elif not lesson.visual_count:
                 raise ValueError("No source visuals; use figure-free We Do generator")
             elif not lesson.guided or any(not q.strip() or not a.strip() for q,a in lesson.guided):
@@ -267,6 +297,7 @@ def run(numbers):
                     "a4_pages":variants["bw"][2],
                     "a3_spreads":variants["bw"][3],
                     "status":"visual_wedo_draft_needs_teacher_review",
+                    "print_page_count_corrected":True,
                     "teacher_approved":False,
                     "warnings":list(dict.fromkeys(old.get("warnings",[])+[
                         "Original source PDF pages and embedded figures retained",
