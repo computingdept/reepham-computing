@@ -17,6 +17,21 @@
 
 Earlier 1 November production and preflight findings below are preserved as historical results, not a claim that all 288 PDFs still lack diagrams.
 
+## H446 We Do teacher-review pilot — 2 November 2026
+
+Five **non-diagram-dependent** Year 12 Print links have been updated to source-grounded
+**Try → Check → Improve** review drafts: lessons **008, 009, 010, 011 and 012**.
+
+- The original guided questions remain in the **We Do** section.
+- Source CHECK explanations appear **after the Exit Ticket**, not beside unanswered tasks.
+- Both A4 black-and-white and colour variants and both A3 booklet formats passed automated checks.
+- These are **nine-page A4 teacher-review drafts**, not a change to the eight-page default for the rest of H446.
+- All five remain `teacher_approved=false`. The original PDFs remain available for comparison or rollback.
+- The existing **15 diagram-restored PDF drafts remain untouched**. Diagram-dependent lessons require their diagrams to be preserved during any further We Do improvement.
+- Regression tests passed on the shared extraction and the longer flexible print layout. See [pilot batch report](H446_WEDO_REVIEW_PILOT_BATCH.md).
+
+No claims of full-course We Do approval are made here. Other booklet links have not yet been regenerated with the revised We Do sequence.
+
 ## Executive production summary
 
 | Measure | Year 12 | Year 13 | Total |
