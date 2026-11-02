@@ -251,7 +251,18 @@ def compose(n,mode,entry,diagrams):
     if base_pages not in (8,9) or (base_pages==9 and n!=31):
         raise ValueError(f'Unexpected source page count {base_pages} for {n}')
     groups=defaultdict(list)
+    integrated=None
+    integrated_count=0
+    if n==31:
+        # Replace the dense, diagram-free page three with compact steps
+        # combining each theory explanation and its source diagram.
+        from integrated_031_new_learning import make_integrated_new_learning_031
+        data,integrated_count,figure_count,headings=make_integrated_new_learning_031(mode,diagrams)
+        integrated=fitz.open(stream=data,filetype='pdf')
+        assert figure_count==sum(d['stage']=='new-learning' for d in diagrams)
     for d in diagrams:
+        if n==31 and d['stage']=='new-learning':
+            continue  # Already included alongside its New Learning explanation.
         # Lesson 031 has TWO I Do model pages: diagrams for that phase
         # belong after page 5, while We Do is after page 6.
         index=d['base_page']+(1 if n==31 and d['stage'] in ('i-do','we-do') else 0)
@@ -268,12 +279,15 @@ def compose(n,mode,entry,diagrams):
     merged=fitz.open()
     visual_pages=0
     for i in range(base_pages):
-        merged.insert_pdf(pdf,from_page=i,to_page=i)
+        if n==31 and i==2:
+            merged.insert_pdf(integrated)
+        else:
+            merged.insert_pdf(pdf,from_page=i,to_page=i)
         for segment in additions.get(i,[]):
             merged.insert_pdf(segment)
             visual_pages+=len(segment)
     total=len(merged)
-    assert total==base_pages+visual_pages
+    assert total==base_pages+visual_pages+(integrated_count-1 if n==31 else 0)
     # Rewrite only the page number in bottom right, leaving the source
     # text and answer placements unchanged.
     for i,page in enumerate(merged,1):
@@ -290,11 +304,12 @@ def compose(n,mode,entry,diagrams):
         original_text=[p.get_text() for p in pdf]
         new_text=[p.get_text() for p in after]
         cursor=0
-        for old in original_text:
+        for old_index,old in enumerate(original_text):
+            if n==31 and old_index==2:continue
             while cursor<len(new_text) and old[:160] not in new_text[cursor]:
                 cursor+=1
             if cursor==len(new_text):
-                raise ValueError(f'Existing page text lost in output lesson {n}')
+                raise ValueError(f'Existing page text lost in output lesson {n}: original {old_index+1}')
             cursor+=1
         embedded=sum(len(p.get_images(full=True)) for p in after)
         if embedded < len(diagrams):
@@ -302,7 +317,8 @@ def compose(n,mode,entry,diagrams):
         if any(abs(p.rect.width-W)>1 or abs(p.rect.height-H)>1 for p in after):
             raise ValueError('Non-A4 page')
     pdf.close()
-    return output,total,visual_pages,quality
+    if integrated is not None:integrated.close()
+    return output,total,visual_pages+(integrated_count-1 if n==31 else 0),quality
 
 def main():
     catalogue=json.loads(CATALOGUE.read_text(encoding='utf-8'))
