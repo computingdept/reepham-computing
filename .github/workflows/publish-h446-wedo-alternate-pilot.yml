@@ -28,7 +28,8 @@ jobs:
           sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
           python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
       - name: Complete alternate-source We Do print conversion
-        run: python tools/independent_booklets/publish_h446_wedo_alternate.py \
+        run: |
+          python tools/independent_booklets/publish_h446_wedo_alternate.py \
             $(seq 46 57) $(seq 59 82) $(seq 85 87) $(seq 89 97) $(seq 99 105) \
             $(seq 264 267) 309 310 $(seq 316 320)
           cp offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json offline/booklets/h446/H446_WEDO_ALTERNATE_FULL_REPORT.json
