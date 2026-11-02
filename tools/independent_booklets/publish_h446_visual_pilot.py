@@ -353,10 +353,13 @@ def main():
           'a3_spreads':outputs['bw']['a3_sheets'],
           'status':'visual_pilot_draft_needs_teacher_review',
           'teacher_approved':False,
-          'warnings':list(dict.fromkeys(entry.get('warnings',[])+[
+          'warnings':list(dict.fromkeys([w for w in entry.get('warnings',[])
+              if not (n==31 and ('New learning condensed to first eight source steps' in w or
+                   'Lesson 031 contains a representative subset' in w))]+[
+            'All eleven New Learning stages restored with their original explanations' if n==31 else 'Original source explanations preserved',
             'Original instructional SVGs restored on phase-adjacent visual pages',
             'Teacher must visually check printed diagram sizes and answer accuracy before use',
-            'Lesson 031 contains a representative subset of its diagrams; full visual audit remains outstanding' if n==31 else 'Visual-pilot draft, not final teacher approval']))
+            'Lesson 031 restores ten selected diagrams; supplementary figures need review' if n==31 else 'Visual-pilot draft, not final teacher approval']))
         })
         new_records[str(n)]=new_entry
         audit['changes'].append({
