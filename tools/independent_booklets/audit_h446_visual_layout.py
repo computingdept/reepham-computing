@@ -85,7 +85,7 @@ for n in TARGETS:
     else:
         lines.append(f'- Lesson {n:03d}: no text-dense pages above the 2,000-character threshold.')
 lines.append('- Lesson 031 restores ten source diagrams; the remaining interactive or supplementary visual stages require separate review.')
-lines+=['','**Notes**: Original teaching text and restored source diagrams remain on distinct, phase-adjacent pages. '
+lines+=['','**Notes**: Lesson 031 pairs New Learning text with related diagrams; its I Do and We Do diagrams remain on phase-adjacent pages. '
         'Low nonwhite-ratio or very short text pages should be visually checked. '
         'Automated edge-warning counts are conservative because the header/footer approaches the paper edge.',
         'Contact sheets are for human print review; no lesson source, guide or print navigation changed.']
