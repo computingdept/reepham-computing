@@ -16,5 +16,5 @@ Lesson 031 uses integrated theory and diagrams (11 learning stages), rather than
 - Lesson 031: no text-dense pages above the 2,000-character threshold.
 - Lesson 031 restores ten source diagrams; the remaining interactive or supplementary visual stages require separate review.
 
-**Notes**: Original teaching text and restored source diagrams remain on distinct, phase-adjacent pages. Low nonwhite-ratio or very short text pages should be visually checked. Automated edge-warning counts are conservative because the header/footer approaches the paper edge.
+**Notes**: Lesson 031 pairs New Learning text with related diagrams; its I Do and We Do diagrams remain on phase-adjacent pages. Low nonwhite-ratio or very short text pages should be visually checked. Automated edge-warning counts are conservative because the header/footer approaches the paper edge.
 Contact sheets are for human print review; no lesson source, guide or print navigation changed.
