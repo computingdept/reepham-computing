@@ -301,11 +301,41 @@ def h446_source(number: int) -> Lesson:
                           or any(parent.has_attr("hidden")
                                  for parent in step.parents if getattr(parent, "name", None))]
                 prompt_parts = (blocks(reference) if reference else [])
-                for step in visible:
-                    prompt_parts.extend(blocks(step))
-                answer_parts = []
-                for step in hidden:
-                    answer_parts.extend(blocks(step))
+                # Alternate H446 template: two side-by-side panes, often with
+                # answers visible in the right pane and an answer-bearing SVG.
+                # Only the left-pane question belongs in TRY; model steps and
+                # worked-state diagrams must be deferred to post-Exit review.
+                if not reference and example.select_one(".h13-grid, .h446-grid"):
+                    panes = example.select(".h13-pane, .h446-panel")
+                    first = panes[0] if panes else example
+                    title = first.select_one("h2")
+                    if title:
+                        prompt_parts = [clean(title.get_text(" ", strip=True))]
+                    # Input code is a student-facing task only if it clearly
+                    # contains executable/program-state syntax, rather than a
+                    # completed model such as O(log n); values 32,16,... .
+                    code = first.select_one("pre")
+                    if code:
+                        source_code = code.get_text("\n", strip=True).strip()
+                        solved = bool(re.search(
+                            r"(?im)^\\s*(?:O\\([^)]*\\)|Answer\\s*:|Output\\s*:|"
+                            r"Result\\s*:|Solution\\s*:|\\bvalues\\s+\\d+[,;])",
+                            source_code))
+                        if source_code and not solved:
+                            prompt_parts.append("Source code / input:\\n" + source_code)
+                    answer_parts = []
+                    for step in example.select(".wedo-step"):
+                        answer_parts.extend(blocks(step))
+                    if code and source_code and solved:
+                        answer_parts.append("Original worked example:\\n" + source_code)
+                    if not prompt_parts:
+                        lesson.warnings.append("Alternate We Do prompt requires teacher review")
+                else:
+                    for step in visible:
+                        prompt_parts.extend(blocks(step))
+                    answer_parts = []
+                    for step in hidden:
+                        answer_parts.extend(blocks(step))
                 # Do not invent a worked answer where the source has none.
                 prompt = "\n".join(dict.fromkeys(prompt_parts))
                 answer = "\n".join(dict.fromkeys(answer_parts))
