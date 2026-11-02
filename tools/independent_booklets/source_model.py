@@ -307,8 +307,8 @@ def h446_source(number: int) -> Lesson:
                 for step in hidden:
                     answer_parts.extend(blocks(step))
                 # Do not invent a worked answer where the source has none.
-                prompt = "\\n".join(dict.fromkeys(prompt_parts))
-                answer = "\\n".join(dict.fromkeys(answer_parts))
+                prompt = "\n".join(dict.fromkeys(prompt_parts))
+                answer = "\n".join(dict.fromkeys(answer_parts))
                 if prompt:
                     lesson.guided.append((prompt, answer))
             if not lesson.guided:
