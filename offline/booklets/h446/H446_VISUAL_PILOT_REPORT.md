@@ -8,7 +8,7 @@ All files remain draft and require teacher visual approval before classroom deli
 | 020 | 2 | 9 | 1 |
 | 026 | 7 | 13 | 5 |
 | 030 | 8 | 14 | 6 |
-| 031 | 8 | 14 | 5 |
+| 031 | 10 | 15 | 6 |
 | 181 | 3 | 11 | 3 |
 
 ## Approach
