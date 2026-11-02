@@ -85,13 +85,15 @@ def make_pdf_flexible(lesson,soup,mode,outfile):
          'Explain one step in your own words, using the correct technical terms.','prompt',5)]
     add('New Learning','Read, annotate and explain',learning)
     add('I Do — Worked example','Follow the worked method',model(soup,lesson))
-    group=guided(soup);g=[]
+    group=guided(soup);g=[
+        obj('TRY in BLACK PEN. Complete the guided tasks before the Exit Ticket. '
+            'CHECK the original source model later; IMPROVE errors in GREEN PEN.','note')]
     for i,(title,desc,code) in enumerate(group,1):
-        g.append(obj(f'{i}. {title}','prompt'))
+        g.append(obj(f'Guided {i} — TRY: {title}','prompt'))
         if desc:g.append(obj(desc,'body'))
         if code:g.append(obj(code,'code'))
         g.append(obj('Method / working:','note',2 if len(group)>=5 else 3))
-    add('We Do — Guided practice','Try, discuss and improve',g)
+    add('We Do — Guided practice','Try → Check → Improve',g)
     qs=choices(lesson)
     if len(qs)<3:raise ValueError('Not enough You Do source questions')
     mid=(len(qs)+1)//2
@@ -107,6 +109,15 @@ def make_pdf_flexible(lesson,soup,mode,outfile):
         obj('Explain what you can now do independently.','body',3),
         obj('GREEN PEN — Correct and explain','sub'),
         obj('Choose one error. Write the correct method and explain precisely why your first response was wrong.','body',7)])
+    # Review follows the Exit Ticket, never the unattempted We Do tasks.
+    if lesson.guided:
+        checks=[obj('CHECK only after completing the guided practice and Exit Ticket. '
+                    'Use GREEN PEN to improve your method and explain any error.','note')]
+        for i,(_,answer) in enumerate(lesson.guided,1):
+            checks.append(obj(f'Guided {i} — CHECK','sub'))
+            checks.append(obj(answer if answer else
+                'No source model supplied. Ask your teacher to check; do not guess.','body'))
+        add('We Do — Check and improve','Source-grounded model answers',checks)
     # No arbitrary page limit, but flag extreme cases for teacher inspection.
     if len(pages)>16:raise ValueError(f'{len(pages)} sheets would be excessive; manual page design required')
     c=canvas.Canvas(str(outfile),pagesize=A4,pageCompression=1)
