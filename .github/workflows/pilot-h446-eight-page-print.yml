@@ -1,0 +1,67 @@
+name: H446 eight-page source-first student print pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/generate_h446_eight_page.py'
+      - '.github/workflows/pilot-h446-eight-page-print.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-eight-page-redesign-pilot
+  cancel-in-progress: false
+jobs:
+  verify-source-first-eight-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install SVG, font, image and PDF dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Build actual 8-page student booklet pilots from classroom source
+        run: python tools/independent_booklets/generate_h446_eight_page.py 29 106 218
+      - name: Validate true eight-page length, separation and all other Print links
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          import fitz
+          report=json.loads(Path('offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_PILOT.json').read_text())
+          assert len(report['lessons'])==3
+          assert report['catalogue_unchanged'] is True
+          assert report['teacher_approval_required'] is True
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          assert len(cat)==288 and not any(e.get('teacher_approved',False) for e in cat.values())
+          assert subprocess.check_output(['git','diff','--','offline/booklets/catalogue.json'])==b''
+          for n,e in cat.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[k]).exists(),(n,k,e[k])
+          for row in report['lessons']:
+              if row['status']!='pilot_generated':continue
+              assert row['a4_pages']==8
+              for v in row['versions'].values():
+                  with fitz.open(v['a4']) as a4,fitz.open(v['a3']) as a3:
+                      assert len(a4)==8 and len(a3)==4,row['lesson']
+                      assert all(len(p.get_text().strip())>150 for p in a4)
+          print('8-page redesign pilot results:',[(r['lesson'],r['status'],r.get('reason')) for r in report['lessons']])
+          PY
+      - name: Commit validated drafts only (never update current Print links)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_PILOT.json offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_PILOT.md
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*8PAGE_REDESIGN*.pdf' -print0 | xargs -0 -r git add --
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish source-first H446 eight-page student booklet teacher-review pilots'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
