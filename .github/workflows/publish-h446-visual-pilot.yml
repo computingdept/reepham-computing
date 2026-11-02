@@ -1,0 +1,87 @@
+name: Publish H446 original-diagram print pilots
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_visual_pilot.py'
+      - '.github/workflows/publish-h446-visual-pilot.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-visual-pilot-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install SVG and PDF renderer dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Generate and restore five pilot print drafts
+        run: |
+          python tools/independent_booklets/publish_h446_visual_pilot.py
+      - name: Verify print links and embedded diagrams
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz
+          root=Path('.')
+          data=json.loads((root/'offline/booklets/h446/H446_VISUAL_PILOT_AUDIT.json').read_text())
+          catalogue=json.loads((root/'offline/booklets/catalogue.json').read_text())
+          assert [x['lesson'] for x in data['changes']]==[20,26,30,31,181]
+          for item in data['changes']:
+              n=item['lesson']
+              e=catalogue['lessons']['h446'][str(n)]
+              assert e['status']=='visual_pilot_draft_needs_teacher_review'
+              assert not e['teacher_approved']
+              for field in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  path=root/e[field]
+                  assert path.is_file() and path.stat().st_size>15000,(n,field)
+                  with fitz.open(path) as doc:
+                      expected=e['a4_pages'] if field in ('print_bw','learn_colour') else e['a3_spreads']
+                      assert len(doc)==expected,(n,field,len(doc),expected)
+                      if field in ('print_bw','learn_colour'):
+                          imgs=sum(len(p.get_images(full=True)) for p in doc)
+                          assert imgs>=item['figures'],(n,field,imgs,item['figures'])
+                          assert all(len(p.get_text().strip())>=40 for p in doc),n
+              print(f"PASS {n:03d}: {item['figures']} original figures; {e['a4_pages']} A4 pages")
+          PY
+      - name: Commit verified A4/A3 PDFs, catalogue, visual audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json \
+                  offline/booklets/h446/H446_VISUAL_PILOT_AUDIT.json \
+                  offline/booklets/h446/H446_VISUAL_PILOT_REPORT.md
+          for n in 020 026 030 031 181; do
+            git add "offline/booklets/h446/H446_Lesson_"$n"_VISUAL_PILOT_"*.pdf
+          done
+          python - <<'PY'
+          from pathlib import Path
+          import json,subprocess
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          staged=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n in (20,26,30,31,181):
+              e=cat['lessons']['h446'][str(n)]
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[k] in staged,(n,k,e[k])
+          PY
+          git commit -m 'Publish diagram-restored H446 print pilot PDFs for 020 026 030 031 181'
+          pushed=0
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then pushed=1;break;fi
+            sleep 3
+          done
+          test "$pushed" -eq 1
