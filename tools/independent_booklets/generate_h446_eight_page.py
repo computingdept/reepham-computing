@@ -317,7 +317,13 @@ def build_student(n,mode,lesson,soup,questions,out):
         for index,(prompt,_answer,svg) in enumerate(items,1 if page_no==6 else split+1):
             paper.section(f"Question {index}")
             paper.line(prompt,10.45)
-            if svg:paper.figure(svg,f"Question {index} · original source diagram",maxw=365,maxh=152)
+            if svg:
+                # The last independent question gets a dedicated page in the
+                # two-question K-map selection; print its four-variable grid
+                # appreciably larger without reducing the response area.
+                visual_height=190 if page_no==7 and len(items)==1 else 152
+                paper.figure(svg,f"Question {index} · original source diagram",
+                             maxw=392,maxh=visual_height)
             # Each page uses no smaller than 10-point text; preserve room.
             # A K-map carries its own workspace for circling cells; three
             # ruled lines below preserve space for a Boolean expression and
