@@ -7,7 +7,7 @@
 
 | Lesson | Current | Pilot | Outcome |
 |---|---:|---:|---|
-| 029 | — | — | deferred: ValueError: Figure too small in student print: Question 2 · original source diagram 152×114 |
+| 029 | — | — | deferred: ValueError: Page 6 overflow y=49.7; no automatic shrinking permitted |
 | 106 | 18 | 8 | pilot_generated:  |
 | 218 | 18 | 8 | pilot_generated:  |
 
