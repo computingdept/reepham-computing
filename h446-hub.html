@@ -218,6 +218,9 @@
  body.course-hub #lessons .h446-year-route{display:none}
 }
 
+.h446-print-status{margin:4px 0 12px;color:#47594f;font-size:.86rem;line-height:1.45}
+@media(max-width:700px){.h446-print-status{margin:0 0 9px;font-size:.78rem}}
+
 /* H446 uses the same guide layout as J277 (assets/guide-dashboard.css). */
 </style>
 <link rel="stylesheet" href="assets/guide-dashboard.css?v=20261030-unified1">
@@ -252,6 +255,7 @@
       <span class="paper-key-item"><span class="paper-key-line" style="--key-colour:#628D75" aria-hidden="true"></span>NEA</span>
     </div></details></div></div>
     <nav class="h446-year-route" aria-label="Switch H446 year"><a id="otherYearLink" href="h446-hub.html?year=13#lessons">Explore Year 13 lessons →</a></nav>
+    <p id="h446PrintStatus" class="h446-print-status" role="status" aria-live="polite" hidden></p>
     <div id="terms"></div>
   </section>
 
@@ -487,7 +491,7 @@ function renderLessons(){
       if(!staffPreview&&year!==13&&!href)continue;
       const specKey=lessonSpecification(x);
       const publishedDraft=window.OfflineBooklets?.get('h446',x)||null;
-      grid.append(Navigation.createTile({
+      const tile=Navigation.createTile({
         number:pad(x),
         title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
@@ -496,15 +500,35 @@ function renderLessons(){
         learnLabel:((x>=1&&x<=160)||(x>=181&&x<=320))?'Catch up':publishedDraft?'Catch up draft':'Catch up',
         printHref:publishedDraft?.print_bw||null,
         printColourHref:publishedDraft?.learn_colour||null,
-        printLabel:publishedDraft?'Print draft':'Print',
+        printLabel:'Print',
         color:curriculumColour(specKey),
         specPoint:specKey,
         specRaw:specKey
-      }));
+      });
+      if(publishedDraft){
+        const state=publishedDraft.teacher_approved===true?'Approved for student use':'Awaiting individual teacher review before student use';
+        tile.dataset.printApproval=publishedDraft.teacher_approved===true?'approved':'teacher-review';
+        const action=tile.querySelector('.lesson-action-print');
+        if(action){
+          action.title=state;
+          action.setAttribute('aria-description',state);
+        }
+      }
+      grid.append(tile);
     }
     sec.append(grid);
     holder.append(sec);n=end+1;
   }
+  // Read review status from the catalogue; publication does not imply approval.
+  const first=year===12?1:181,last=year===12?160:320;
+  let available=0,approved=0;
+  for(let lesson=first;lesson<=last;lesson++){
+    const booklet=window.OfflineBooklets?.get('h446',lesson);
+    if(booklet){available++;if(booklet.teacher_approved===true)approved++;}
+  }
+  const statusLine=document.getElementById('h446PrintStatus');
+  statusLine.hidden=available===0;
+  if(available)statusLine.textContent='Print booklets: '+available+' available for individual teacher review · '+approved+' approved for student use.';
   document.getElementById('lessonTitle').textContent='Year '+year+' lessons · Ready';
   document.getElementById('lessonCount').textContent=year===13?'140 ready lessons': '160 ready lessons · 20 protected NEA periods';
 }
