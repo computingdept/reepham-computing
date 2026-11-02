@@ -1,0 +1,137 @@
+name: H446 We Do visually safe Year 12 and Year 13 course rollout
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-h446-wedo-visual-course.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-wedo-complete-visual-course-publishing
+  cancel-in-progress: false
+jobs:
+  year-12:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF and diagram dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Complete safeguarded Year 12 print rollout
+        run: |
+          python tools/independent_booklets/publish_h446_wedo_visual_safe.py $(seq 1 160)
+          cp offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.json
+          cp offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.md offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.md
+      - name: Verify source visual preservation, catalogue and page lengths
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          report=json.loads(Path('offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.json').read_text())
+          assert len(cat)==288
+          assert len(report['results'])==160
+          assert all(v['teacher_approved'] is False for v in cat.values())
+          for n,e in cat.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[key]).is_file(),(n,key,e[key])
+              if not e['print_bw'].endswith('_A4.pdf') or 'WEDO_VISUAL_DISCUSS' not in e['print_bw']:continue
+              with fitz.open(e['print_bw']) as doc:
+                  assert len(doc)==e['a4_pages'],n
+                  assert any(p.get_images(full=True) for p in doc),(n,'lost diagrams')
+          print('Y12 results:',report['status_counts'])
+          PY
+      - name: Commit verified Year 12 draft PDFs and audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.json offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.md
+          git add offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.md
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_VISUAL_DISCUSS*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          entries=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          paths=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,e in entries.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[k] in paths,(n,k)
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish safe H446 Year 12 illustrated We Do review drafts'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
+  year-13:
+    needs: year-12
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF and diagram dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Complete safeguarded Year 13 print rollout
+        run: |
+          python tools/independent_booklets/publish_h446_wedo_visual_safe.py $(seq 181 320)
+          cp offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json offline/booklets/h446/H446_WEDO_YEAR13_ROLLOUT.json
+          cp offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.md offline/booklets/h446/H446_WEDO_YEAR13_ROLLOUT.md
+      - name: Verify all 288 resource links and Year 13 outcomes
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          y12=json.loads(Path('offline/booklets/h446/H446_WEDO_YEAR12_ROLLOUT.json').read_text())
+          y13=json.loads(Path('offline/booklets/h446/H446_WEDO_YEAR13_ROLLOUT.json').read_text())
+          assert len(cat)==288 and len(y12['results'])==160 and len(y13['results'])==140
+          assert not any(e.get('teacher_approved') for e in cat.values())
+          for n,e in cat.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[k]).is_file(),(n,k,e[k])
+              if 'WEDO_VISUAL_DISCUSS' in e['print_bw']:
+                  with fitz.open(e['print_bw']) as doc:
+                      assert len(doc)==e['a4_pages'],n
+                      assert any(p.get_images(full=True) for p in doc),n
+          print('Y12:',y12['status_counts'],'Y13:',y13['status_counts'])
+          PY
+      - name: Commit Year 13 print drafts and complete course audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_YEAR13_ROLLOUT.json offline/booklets/h446/H446_WEDO_YEAR13_ROLLOUT.md
+          git add offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.md
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_VISUAL_DISCUSS*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          entries=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          paths=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,e in entries.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[k] in paths,(n,k)
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish safe H446 Year 13 illustrated We Do review drafts and audit'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
