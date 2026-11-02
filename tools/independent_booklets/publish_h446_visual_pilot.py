@@ -115,6 +115,10 @@ def png_bytes(svg_text,mode):
     if not svg.get('width') or not svg.get('height'):
         raise ValueError('Original SVG lacks a usable viewBox and dimensions')
     if not svg.get('xmlns'):svg['xmlns']='http://www.w3.org/2000/svg'
+    # Browser responsive styles (height:auto, max-height:48vh) can reduce
+    # an otherwise valid print render to a 0-height blank SVG in Cairo.
+    # Explicit viewBox-derived dimensions remain authoritative.
+    if svg.has_attr('style'):del svg['style']
     for bad in svg.find_all(['script','foreignObject']):
         bad.decompose()
     # The gate lessons define their stroke classes in classroom CSS. Supply
