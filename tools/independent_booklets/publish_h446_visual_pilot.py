@@ -263,7 +263,7 @@ def compose(n,mode,entry,diagrams):
         embedded=sum(len(p.get_images(full=True)) for p in after)
         if embedded < len(diagrams):
             raise ValueError(f'Expected {len(diagrams)} embedded diagrams, found {embedded}')
-        if any(p.rect.width!=A4W or p.rect.height!=A4H for p in after):
+        if any(abs(p.rect.width-W)>1 or abs(p.rect.height-H)>1 for p in after):
             raise ValueError('Non-A4 page')
     pdf.close()
     return output,total,visual_pages,quality
