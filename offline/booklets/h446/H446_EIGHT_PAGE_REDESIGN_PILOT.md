@@ -7,7 +7,7 @@
 
 | Lesson | Current | Pilot | Outcome |
 |---|---:|---:|---|
-| 029 | — | — | deferred: ValueError: You Do Q1 has 2 diagrams; needs manual layout |
+| 029 | — | — | deferred: ValueError: Figure too small in student print: Question 2 · original source diagram 152×114 |
 | 106 | 18 | 8 | pilot_generated:  |
 | 218 | 18 | 8 | pilot_generated:  |
 
