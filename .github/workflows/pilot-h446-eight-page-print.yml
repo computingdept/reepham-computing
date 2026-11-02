@@ -48,6 +48,7 @@ jobs:
           for row in report['lessons']:
               if row['status']!='pilot_generated':continue
               assert row['a4_pages']==8
+              assert Path(row['preview_png']).is_file(),row['lesson']
               for v in row['versions'].values():
                   with fitz.open(v['a4']) as a4,fitz.open(v['a3']) as a3:
                       assert len(a4)==8 and len(a3)==4,row['lesson']
@@ -59,7 +60,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_PILOT.json offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_PILOT.md
-          find offline/booklets/h446 -maxdepth 1 -type f -name '*8PAGE_REDESIGN*.pdf' -print0 | xargs -0 -r git add --
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*8PAGE_REDESIGN*' -print0 | xargs -0 -r git add --
           git diff --cached --quiet && exit 0
           git commit -m 'Publish source-first H446 eight-page student booklet teacher-review pilots'
           git fetch origin main
