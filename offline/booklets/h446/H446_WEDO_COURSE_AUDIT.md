@@ -1,6 +1,6 @@
 # H446 We Do — complete curriculum audit and guarded print rollout
 
-Audit: 2026-11-02T19:50:28.488497+00:00  |  Curriculum print records checked: **288**.
+Audit: 2026-11-02T19:53:10.702807+00:00  |  Curriculum print records checked: **288**.
 All items are **unapproved teacher-review drafts**. This audit is not an OCR accuracy sign-off.
 The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless a safe generator explicitly replaces a figure-free version.
 
