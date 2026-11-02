@@ -71,7 +71,7 @@ def run() -> None:
                     pages = [page.get_text() for page in pdf]
                     labels = {
                         "try": "Guided 1 — TRY",
-                        "exit": "Exit Ticket / Reflection",
+                        "exit": "EXIT TICKET / REFLECTION",
                         "check": "Guided 1 — CHECK",
                     }
                     positions = {
