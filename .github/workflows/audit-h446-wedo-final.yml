@@ -1,0 +1,50 @@
+name: Final H446 We Do all-print PDF QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/audit_h446_wedo_final.py'
+      - '.github/workflows/audit-h446-wedo-final.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-all-we-do-final-quality-review
+  cancel-in-progress: false
+jobs:
+  pdf-consistency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF text inspection
+        run: python -m pip install 'PyMuPDF==1.26.4'
+      - name: Audit every H446 A4 and A3 PDF in both colour modes
+        run: python tools/independent_booklets/audit_h446_wedo_final.py
+      - name: Verify audit integrity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('offline/booklets/h446/H446_WEDO_FINAL_QA.json').read_text())
+          assert a['catalogue_records']==288
+          assert sum(a['family_counts'].values())==288
+          assert a['teacher_approved']==0
+          print('PDF structural issues:',a['lessons_with_automated_issues'])
+          print('Longer than 16 A4 pages:',a['longer_than_16_pages'])
+          PY
+      - name: Publish cross-course structural QA results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_WEDO_FINAL_QA.json offline/booklets/h446/H446_WEDO_FINAL_QA.md
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record final H446 We Do 288-booklet structural and page-length audit'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
