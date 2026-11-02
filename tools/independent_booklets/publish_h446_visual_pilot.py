@@ -98,6 +98,19 @@ def png_bytes(svg_text,mode):
     soup=BeautifulSoup(svg_text,'xml')
     svg=soup.find('svg')
     if svg is None:raise ValueError('Invalid SVG')
+    # BeautifulSoup's HTML parser lowercases SVG viewBox to viewbox.
+    # Restore the case-sensitive SVG attribute and set explicit dimensions.
+    view=svg.get('viewBox') or svg.get('viewbox')
+    if view:
+        vals=re.split(r'[ ,]+',view.strip())
+        if len(vals)==4:
+            svg['viewBox']=' '.join(vals)
+            svg['width']=str(max(1,float(vals[2])))
+            svg['height']=str(max(1,float(vals[3])))
+        if svg.has_attr('viewbox'):del svg['viewbox']
+    if not svg.get('width') or not svg.get('height'):
+        raise ValueError('Original SVG lacks a usable viewBox and dimensions')
+    if not svg.get('xmlns'):svg['xmlns']='http://www.w3.org/2000/svg'
     for bad in svg.find_all(['script','foreignObject']):
         bad.decompose()
     # The gate lessons define their stroke classes in classroom CSS. Supply
