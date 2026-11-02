@@ -13,8 +13,9 @@ All files remain draft and require teacher visual approval before classroom deli
 
 ## Approach
 
-Original classroom text pages and answer placement remain unchanged.
-Relevant original SVG diagrams have been rendered at print resolution and inserted immediately after their New Learning / I Do / We Do page.
+Original independent questions and answer placements remain unchanged.
+For Lesson 031, a crowded New Learning page was replaced by all eleven original source explanations paired with selected diagrams.
+Source SVG diagrams have been rendered at print resolution. Lesson 031 New Learning diagrams are integrated with their explanations; other visual pages follow the related phase.
 Black-and-white uses contrast-enhanced greyscale and colour retains source colours.
 Each figure has the source accessible description and nearby lesson heading or explanation.
 B&W and colour A4 outputs and A3 booklet imposition passed automated checks.
