@@ -86,8 +86,8 @@ def make_pdf_flexible(lesson,soup,mode,outfile):
     add('New Learning','Read, annotate and explain',learning)
     add('I Do — Worked example','Follow the worked method',model(soup,lesson))
     group=guided(soup);g=[
-        obj('TRY in BLACK PEN. Complete the guided tasks before the Exit Ticket. '
-            'CHECK the original source model later; IMPROVE errors in GREEN PEN.','note')]
+        obj('TRY: Attempt the guided questions in BLACK PEN. DISCUSS: Compare approaches with a partner, explain your reasoning and agree one improvement. '
+            'IMPROVE: After the Exit Ticket, use the source CHECK model in GREEN PEN to correct and explain errors.','note')]
     if group:
         for i,(title,desc,code) in enumerate(group,1):
             g.append(obj(f'Guided {i} — TRY: {title}','prompt'))
@@ -100,7 +100,7 @@ def make_pdf_flexible(lesson,soup,mode,outfile):
         for i,(prompt,_) in enumerate(lesson.guided,1):
             g.append(obj(f'Guided {i} — TRY','prompt'))
             g.append(obj(prompt,'body',3))
-    add('We Do — Guided practice','Try → Check → Improve',g)
+    add('We Do — Guided practice','Try → Discuss → Improve',g)
     qs=choices(lesson)
     if len(qs)<3:raise ValueError('Not enough You Do source questions')
     mid=(len(qs)+1)//2

@@ -1,0 +1,66 @@
+name: Audit and safely improve all H446 printed We Do sections
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/complete_h446_wedo_review.py'
+      - 'tools/independent_booklets/publish_h446_y12_exceptions.py'
+      - 'tools/independent_booklets/render_pdf.py'
+      - 'tools/independent_booklets/test_h446_wedo_review.py'
+      - '.github/workflows/audit-and-complete-h446-wedo.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-wedo-course-safe-rollout
+  cancel-in-progress: false
+jobs:
+  audit-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+          python -m pip install 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
+      - name: Check pedagogical sequence in source and sample PDFs
+        run: python tools/independent_booklets/test_h446_wedo_review.py
+      - name: Audit every published H446 Print booklet and republish only safe variants
+        run: python tools/independent_booklets/complete_h446_wedo_review.py
+      - name: Verify catalogue remains safe
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          a=json.loads(Path('offline/booklets/h446/H446_WEDO_COURSE_AUDIT.json').read_text())
+          assert len(c)==a['catalogue_entries']==288
+          assert sum(a['status_counts'].values())==288
+          assert not any(e['teacher_approved'] for e in c.values())
+          for item in a['rows']:
+              e=c[str(item['lesson'])]
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[key]).is_file(), (item['lesson'],key,e[key])
+          print('All 288 original links or validated replacement PDFs exist; zero approvals.')
+          PY
+      - name: Commit safeguarded audited drafts and report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_COURSE_AUDIT.json offline/booklets/h446/H446_WEDO_COURSE_AUDIT.md
+          find offline/booklets/h446 -maxdepth 1 -name '*WEDO_REVIEW_*.pdf' -type f -print0 | xargs -0 -r git add --
+          git diff --cached --quiet && exit 0
+          git commit -m 'Audit H446 guided practice and publish diagram-safe We Do drafts'
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1

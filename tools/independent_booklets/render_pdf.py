@@ -262,8 +262,8 @@ def build_a4(path: Path, lesson, large=False, mode="colour"):
         append_text(story, f"{i}. {item}", st)
     if lesson.course == "h446":
         story.append(p("We Do · Guided practice", st["h1"]))
-        story.append(p("Try → Check → Improve. Attempt each guided task in BLACK PEN now. "
-                       "Check the original source model in Review & Improve AFTER the Exit Ticket; "
+        story.append(p("Try → Discuss → Improve. Attempt each guided task in BLACK PEN now. "
+                       "Discuss your method with a partner and explain a point of agreement or difference. Check the original source model in Review & Improve AFTER the Exit Ticket; "
                        "correct and explain errors in GREEN PEN.", st["small"]))
         for i, (prompt, _) in enumerate(lesson.guided, 1):
             story.append(p(f"Guided {i} · TRY", st["label"]))

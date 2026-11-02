@@ -51,7 +51,8 @@ def run() -> None:
                     assert min(positions.values()) >= 0, (number, mode, positions)
                     assert positions["try"] < positions["exit"] < positions["check"], (
                         number, mode, positions)
-                    assert "Try → Check → Improve" in joined, (number, mode)
+                    assert "Try → Discuss → Improve" in joined, (number, mode)
+                    assert "Discuss your method with a partner" in joined, (number, mode)
                     assert "We Do · Check and improve" in joined, (number, mode)
                     assert all(page.strip() for page in pages), (number, mode, "blank page")
                     assert count == len(pdf), (number, mode, count, len(pdf))
@@ -81,6 +82,7 @@ def run() -> None:
                     assert min(positions.values()) >= 0, (number, mode, positions)
                     assert positions["try"] < positions["exit"] < positions["check"], (
                         number, mode, positions)
+                    assert "Try → Discuss → Improve" in "\n".join(pages), (number, mode)
                     assert count < 17, (number, mode, "excessive flexible page count", count)
                     assert count == len(pdf), (number, mode, "page count mismatch")
                     assert all(len(page.strip()) >= 40 for page in pages), (number, mode, "blank page")
