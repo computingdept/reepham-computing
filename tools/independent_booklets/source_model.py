@@ -318,16 +318,16 @@ def h446_source(number: int) -> Lesson:
                     if code:
                         source_code = code.get_text("\n", strip=True).strip()
                         solved = bool(re.search(
-                            r"(?im)^\\s*(?:O\\([^)]*\\)|Answer\\s*:|Output\\s*:|"
-                            r"Result\\s*:|Solution\\s*:|\\bvalues\\s+\\d+[,;])",
+                            r"(?im)^\s*(?:O\([^)]*\)|Answer\s*:|Output\s*:|"
+                            r"Result\s*:|Solution\s*:|\bvalues\s+\d+[,;])",
                             source_code))
                         if source_code and not solved:
-                            prompt_parts.append("Source code / input:\\n" + source_code)
+                            prompt_parts.append("Source code / input:\n" + source_code)
                     answer_parts = []
                     for step in example.select(".wedo-step"):
                         answer_parts.extend(blocks(step))
                     if code and source_code and solved:
-                        answer_parts.append("Original worked example:\\n" + source_code)
+                        answer_parts.append("Original worked example:\n" + source_code)
                     if not prompt_parts:
                         lesson.warnings.append("Alternate We Do prompt requires teacher review")
                 else:
