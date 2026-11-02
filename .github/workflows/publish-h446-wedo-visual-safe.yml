@@ -1,0 +1,86 @@
+name: H446 lossless illustrated We Do review pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_wedo_visual_safe.py'
+      - '.github/workflows/publish-h446-wedo-visual-safe.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-wedo-illustrated-safe-publish
+  cancel-in-progress: false
+jobs:
+  first-illustrated-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original SVG and PDF dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Pilot five source-illustrated booklets
+        run: python tools/independent_booklets/publish_h446_wedo_visual_safe.py 20 21 22 23 26
+      - name: Verify all existing and new PDF paths
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz
+          d=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          cat=d['lessons']['h446']
+          report=json.loads(Path('offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json').read_text())
+          assert len(cat)==288
+          assert not any(v.get('teacher_approved',False) for v in cat.values())
+          assert len(report['results'])==5
+          assert any(r['status']=='published_review_draft' for r in report['results']), 'Pilot produced no publishable PDFs'
+          for n,v in cat.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(v[key]).is_file(),(n,key,v[key])
+              if int(n) not in (20,21,22,23,26):continue
+              if 'WEDO_VISUAL_DISCUSS' not in v['print_bw']:continue
+              for key in ('print_bw','learn_colour'):
+                  with fitz.open(v[key]) as doc:
+                      texts=[p.get_text() for p in doc]
+                      assert len(doc)==v['a4_pages'],n
+                      dindex=next((i for i,t in enumerate(texts) if 'WE DO — TRY' in t),-1)
+                      yindex=next((i for i,t in enumerate(texts) if 'YOU DO' in t[:330]),-1)
+                      eindex=next((i for i,t in enumerate(texts) if 'EXIT TICKET' in t[:330]),-1)
+                      cindex=next((i for i,t in enumerate(texts) if 'WE DO — SOURCE CHECK' in t),-1)
+                      assert 0<=dindex<yindex<eindex<cindex,(n,key,dindex,yindex,eindex,cindex)
+                      assert sum(len(p.get_images(full=True)) for p in doc)>0,(n,key,'diagrams missing')
+          print('Five-lesson guarded pilot validated: links, source images and answer separation.')
+          PY
+      - name: Commit complete validated changes or preserve original links
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.md offline/booklets/h446/H446_WEDO_VISUAL_SAFE_BATCH.json
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_VISUAL_DISCUSS*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          entries=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,entry in entries.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert entry[key] in tracked,(n,key,entry[key])
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish H446 We Do illustrated source-faithful teacher review batch'
+          for i in 1 2 3; do
+            git fetch origin main
+            if test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"; then
+              git push origin HEAD:main && exit 0
+            fi
+            sleep 2
+          done
+          echo 'Repository changed concurrently; refuse risky catalogue rebase' >&2
+          exit 1
