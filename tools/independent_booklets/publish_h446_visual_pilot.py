@@ -273,7 +273,7 @@ def compose(n,mode,entry,diagrams):
         page.draw_rect(rect,color=None,fill=(1,1,1),overlay=True)
         page.insert_text((W-74,H-31),f'{i} / {total}',fontsize=8.5,
                          fontname='helv',color=(.29,.36,.32),overlay=True)
-    output=OUT/f'H446_Lesson_{n}_VISUAL_PILOT_{mode.upper()}_A4.pdf'
+    output=OUT/f'H446_Lesson_{n:03d}_VISUAL_PILOT_{mode.upper()}_A4.pdf'
     merged.save(output,garbage=4,deflate=True)
     merged.close()
     # Check old pages survive in order and newly inserted pages include
@@ -309,7 +309,7 @@ def main():
         outputs={}
         for mode in ('bw','colour'):
             out,pages,extra,details=compose(n,mode,entry,diagrams)
-            a3=OUT/f'H446_Lesson_{n}_VISUAL_PILOT_{mode.upper()}_A3_Booklet.pdf'
+            a3=OUT/f'H446_Lesson_{n:03d}_VISUAL_PILOT_{mode.upper()}_A3_Booklet.pdf'
             sheets=impose_a3(out,a3)
             expected=((pages+3)//4)*2
             if sheets!=expected:raise ValueError('A3 booklet imposition mismatch')
