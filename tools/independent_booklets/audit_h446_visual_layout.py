@@ -70,6 +70,15 @@ for n in TARGETS:
             'image_objects':diagram_count,
             'dense_text_pages':[p['page'] for p in records if p['chars']>2000]}
         lines.append(f'| {n:03d} | {mode} | {len(records)} | {sum(bool(x["images"]) for x in records)} | {margin} |')
+lines += ['', '## Specific teacher review flags', '']
+for n in TARGETS:
+    entry=report['lessons'][str(n)]['bw']
+    dense=entry['dense_text_pages']
+    if dense:
+        lines.append(f'- **Lesson {n:03d}**: page(s) {", ".join(map(str,dense))} contain over 2,000 text characters; check font size and consider splitting explanation before classroom delivery.')
+    else:
+        lines.append(f'- Lesson {n:03d}: no text-dense pages above the 2,000-character threshold.')
+lines.append('- Lesson 031 restores ten source diagrams; the remaining interactive or supplementary visual stages require separate review.')
 lines+=['','**Notes**: Original teaching text and restored source diagrams remain on distinct, phase-adjacent pages. '
         'Low nonwhite-ratio or very short text pages should be visually checked. '
         'Automated edge-warning counts are conservative because the header/footer approaches the paper edge.',
