@@ -241,9 +241,13 @@ def compose(n,mode,entry,diagrams):
     if not original.is_file():raise FileNotFoundError(original)
     pdf=fitz.open(original)
     base_pages=len(pdf)
-    if base_pages!=8:raise ValueError(f'Pilot requires standard 8-page PDF, got {base_pages} for {n}')
+    if base_pages not in (8,9) or (base_pages==9 and n!=31):
+        raise ValueError(f'Unexpected source page count {base_pages} for {n}')
     groups=defaultdict(list)
-    for d in diagrams:groups[(d['base_page'],d['stage'])].append(d)
+    for d in diagrams:
+        # Lesson 031 has a second I Do model page before We Do.
+        index=d['base_page']+(1 if n==31 and d['stage']=='we-do' else 0)
+        groups[(index,d['stage'])].append(d)
     additions={}
     quality=[]
     for (index,stage),figures in groups.items():
