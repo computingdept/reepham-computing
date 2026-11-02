@@ -88,11 +88,18 @@ def make_pdf_flexible(lesson,soup,mode,outfile):
     group=guided(soup);g=[
         obj('TRY in BLACK PEN. Complete the guided tasks before the Exit Ticket. '
             'CHECK the original source model later; IMPROVE errors in GREEN PEN.','note')]
-    for i,(title,desc,code) in enumerate(group,1):
-        g.append(obj(f'Guided {i} — TRY: {title}','prompt'))
-        if desc:g.append(obj(desc,'body'))
-        if code:g.append(obj(code,'code'))
-        g.append(obj('Method / working:','note',2 if len(group)>=5 else 3))
+    if group:
+        for i,(title,desc,code) in enumerate(group,1):
+            g.append(obj(f'Guided {i} — TRY: {title}','prompt'))
+            if desc:g.append(obj(desc,'body'))
+            if code:g.append(obj(code,'code'))
+            g.append(obj('Method / working:','note',2 if len(group)>=5 else 3))
+    else:
+        # Year 13 lessons commonly have a different guided HTML structure.
+        # Use the same source-model prompts as the later CHECK section.
+        for i,(prompt,_) in enumerate(lesson.guided,1):
+            g.append(obj(f'Guided {i} — TRY','prompt'))
+            g.append(obj(prompt,'body',3))
     add('We Do — Guided practice','Try → Check → Improve',g)
     qs=choices(lesson)
     if len(qs)<3:raise ValueError('Not enough You Do source questions')
