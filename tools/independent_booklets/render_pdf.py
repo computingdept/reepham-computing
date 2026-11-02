@@ -260,18 +260,22 @@ def build_a4(path: Path, lesson, large=False, mode="colour"):
     append_text(story, lesson.model_question, st)
     for i, item in enumerate(lesson.model_steps, 1):
         append_text(story, f"{i}. {item}", st)
-    story.append(p("We Do · Practise with guidance", st["h1"]))
-    if lesson.course == "j277":
+    if lesson.course == "h446":
+        story.append(p("We Do · Guided practice", st["h1"]))
+        story.append(p("Try → Check → Improve. Attempt each guided task in BLACK PEN now. "
+                       "Check the original source model in Review & Improve AFTER the Exit Ticket; "
+                       "correct and explain errors in GREEN PEN.", st["small"]))
+        for i, (prompt, _) in enumerate(lesson.guided, 1):
+            story.append(p(f"Guided {i} · TRY", st["label"]))
+            append_text(story, prompt, st)
+            ruled_lines(story, width, 2, large)
+    else:
+        story.append(p("We Do · Practise with guidance", st["h1"]))
         for i, (prompt, answer) in enumerate(lesson.guided, 1):
             story.append(p(f"Guided {i}", st["label"]))
             append_text(story, prompt, st)
             if answer:
                 append_text(story, f"Worked method: {answer}", st)
-    else:
-        for item, answer in lesson.guided:
-            append_text(story, item, st)
-            if answer:
-                append_text(story, answer, st)
 
     # PAGE GROUP 3 — INDEPENDENT + EXIT, ALL BEFORE ANSWERS
     phase(story, "practice", st)
@@ -301,6 +305,17 @@ def build_a4(path: Path, lesson, large=False, mode="colour"):
     story.append(p("Page 1 onwards · Do Now", st["h2"]))
     for i, (_, answer) in enumerate(lesson.do_now, 1):
         model_answer(story, i, answer or "[No source model answer — teacher review required]", st)
+    if lesson.course == "h446" and lesson.guided:
+        story.append(p("We Do · Check and improve", st["h2"]))
+        story.append(p("Check the same numbered guided tasks only now. "
+                       "Use GREEN PEN to correct working and explain why.", st["small"]))
+        for i, (_, answer) in enumerate(lesson.guided, 1):
+            story.append(p(f"Guided {i} · CHECK", st["label"]))
+            if answer:
+                append_text(story, answer, st)
+            else:
+                append_text(story, "No source model is available. Ask your teacher to "
+                            "check this task; do not invent an answer.", st)
     if lesson.course == "j277" and lesson.guided:
         story.append(p("I Do / We Do pages · Guided practice", st["h2"]))
         for i, (_, answer) in enumerate(lesson.guided, 1):
