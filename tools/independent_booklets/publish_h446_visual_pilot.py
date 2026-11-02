@@ -148,7 +148,10 @@ def png_bytes(svg_text,mode):
 def figure_blocks(visuals,mode):
     blocks=[]
     for d in visuals:
-        data,size,ink=png_bytes(d['svg'],mode)
+        try:
+            data,size,ink=png_bytes(d['svg'],mode)
+        except Exception as exc:
+            raise ValueError(f'Failed SVG [{d["stage"]}] [{d["label"][:125]}]: {exc}') from exc
         # Sized for print; high-res original remains embedded.
         aspect=size[0]/size[1]
         w=min(TEXTWIDTH,465.0,270.0*aspect)
