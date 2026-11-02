@@ -82,6 +82,10 @@ def source_diagrams(n):
         section=soup.select_one('#'+section_id)
         if not section:continue
         for svg in section.select('svg'):
+            # Some classroom diagrams are drawn by JavaScript at runtime.
+            # An empty <svg> placeholder cannot be safely restored from HTML.
+            if not svg.select('path,rect,line,circle,ellipse,polygon,polyline,text,use'):
+                continue
             raw=str(svg)
             identity=hashlib.sha256(raw.encode()).hexdigest()
             if identity in seen:continue
