@@ -89,11 +89,26 @@ def exam_questions(soup,lesson):
         if not prompt:raise ValueError(f"You Do {i} missing original prompt")
         # These are attached to their corresponding source question, not
         # generic instructional figures selected from the web lesson.
-        visuals=source_svg(node,"svg")
+        # Keep original *question* diagrams, never the second SVG inside
+        # a hidden answer/solution <details> element. An entire rolling
+        # question article may be hidden initially by the classroom UI;
+        # that does NOT mean its independent source question is omitted.
+        visuals=[]
+        for svg in source_svg(node,"svg"):
+            parents=[]
+            for parent in svg.parents:
+                if parent is node:break
+                parents.append(parent)
+            if any(p.name=="details" or p.has_attr("hidden") or
+                   any("model" in cls.lower() or "solution" in cls.lower()
+                       for cls in p.get("class",[]))
+                   for p in parents):
+                continue
+            visuals.append(svg)
         if node.select("img"):
             raise ValueError(f"You Do Q{i}: external image requires manual print design")
         if len(visuals)>1:
-            raise ValueError(f"You Do Q{i} has {len(visuals)} diagrams; needs manual layout")
+            raise ValueError(f"You Do Q{i} has {len(visuals)} unsolved diagrams; needs manual layout")
         result.append((prompt,answer,visuals[0] if visuals else None))
     if len(result)>4:
         raise ValueError(f"{len(result)} independent questions cannot fit as approved eight-page design")
