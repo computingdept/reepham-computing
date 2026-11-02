@@ -13,15 +13,21 @@
 
 ## Lesson 029
 
+[Eight-page visual overview](H446_Lesson_029_8PAGE_REDESIGN_eight_page_preview.png)
+
 [A4 black-and-white booklet](H446_Lesson_029_8PAGE_REDESIGN_BW_A4.pdf) · [A4 colour booklet](H446_Lesson_029_8PAGE_REDESIGN_COLOUR_A4.pdf)
 [A3 black-and-white imposition](H446_Lesson_029_8PAGE_REDESIGN_BW_A3_Booklet.pdf) · [Separate teacher-model draft](H446_Lesson_029_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf)
 
 ## Lesson 106
 
+[Eight-page visual overview](H446_Lesson_106_8PAGE_REDESIGN_eight_page_preview.png)
+
 [A4 black-and-white booklet](H446_Lesson_106_8PAGE_REDESIGN_BW_A4.pdf) · [A4 colour booklet](H446_Lesson_106_8PAGE_REDESIGN_COLOUR_A4.pdf)
 [A3 black-and-white imposition](H446_Lesson_106_8PAGE_REDESIGN_BW_A3_Booklet.pdf) · [Separate teacher-model draft](H446_Lesson_106_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf)
 
 ## Lesson 218
+
+[Eight-page visual overview](H446_Lesson_218_8PAGE_REDESIGN_eight_page_preview.png)
 
 [A4 black-and-white booklet](H446_Lesson_218_8PAGE_REDESIGN_BW_A4.pdf) · [A4 colour booklet](H446_Lesson_218_8PAGE_REDESIGN_COLOUR_A4.pdf)
 [A3 black-and-white imposition](H446_Lesson_218_8PAGE_REDESIGN_BW_A3_Booklet.pdf) · [Separate teacher-model draft](H446_Lesson_218_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf)
