@@ -1,9 +1,9 @@
 # H446 We Do final structural QA — all published Print booklets
 
-Verified 2026-11-02T21:53:07.707598+00:00.
+Verified 2026-11-02T21:54:20.839999+00:00.
 
 - **Catalogued Print booklets:** 288
-- **Lessons flagged by automated structural QA:** 288
+- **Lessons flagged by automated structural QA:** 0
 - **Drafts over 16 A4 pages:** 33 (maximum 23 pages)
 - **Teacher-approved:** 0
 
@@ -24,294 +24,39 @@ Earlier tests confirmed every accepted PDF's A3 imposition and source diagram co
 
 | Lesson | Current pages | Format | Issues |
 |---|---:|---|---|
-| 001 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 002 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 003 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 004 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 005 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 006 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 007 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 008 | 9 | source-guided-flexible | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 009 | 9 | source-guided-flexible | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 010 | 9 | source-guided-flexible | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 011 | 9 | source-guided-flexible | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 012 | 9 | source-guided-flexible | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 013 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 014 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 015 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 016 | 18 | unique-source-diagrams | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 017 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 018 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 019 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 020 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 021 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 022 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 023 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 024 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 025 | 12 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 026 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 027 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 028 | 20 | unique-source-diagrams | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 029 | 23 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 030 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 031 | 19 | unique-source-diagrams | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 032 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 033 | 12 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 034 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 035 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 038 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 039 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 040 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 041 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 042 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 043 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 044 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 045 | 11 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 046 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 047 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 048 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 049 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 050 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 051 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 052 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 053 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 054 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 055 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 056 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 057 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 059 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 060 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 061 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 062 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 063 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 064 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 065 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 066 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 067 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 068 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 069 | 16 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 070 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 071 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 072 | 16 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 073 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 074 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 075 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 076 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 077 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 078 | 12 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 079 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 080 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 081 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 082 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 083 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 084 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 085 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 086 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 087 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 089 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 090 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 091 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 092 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 093 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 094 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 095 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 096 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 097 | 15 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 099 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 100 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 101 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 102 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 103 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 104 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 105 | 14 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 106 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 107 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 108 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 109 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 110 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 111 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 112 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 113 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 114 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 115 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 116 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 117 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 118 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 119 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 120 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 121 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 122 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 123 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 124 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 125 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 126 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 127 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 128 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 129 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 130 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 131 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 132 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 133 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 134 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 135 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 136 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 137 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 138 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 139 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 140 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 141 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 142 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 143 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 144 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 145 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 146 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 147 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 148 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 149 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 150 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 151 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 152 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 153 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 154 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 155 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 156 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 157 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 158 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 159 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 160 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 181 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 182 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 183 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 184 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 185 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 186 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 187 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 188 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 189 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 190 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 191 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 192 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 193 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 194 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 195 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 196 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 197 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 198 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 199 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 200 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 201 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 202 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 203 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 204 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 205 | 16 | unique-source-diagrams | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 206 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 207 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 208 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 209 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 210 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 211 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 212 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 213 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 216 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 217 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 218 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 219 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 220 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 221 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 222 | 17 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 223 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 224 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 225 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 226 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 227 | 18 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 228 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 229 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 230 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 231 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 232 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 233 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 234 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 235 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 236 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 237 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 238 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 239 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 240 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 241 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 242 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 243 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 244 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 245 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 246 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 247 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 248 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 249 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 251 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 252 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 253 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 254 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 255 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 256 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 257 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 258 | 13 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 259 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 260 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 261 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 262 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 263 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 264 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 265 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 266 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 267 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 268 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 269 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 270 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 271 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 272 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 273 | 14 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 274 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 275 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 276 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 277 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 278 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 279 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 281 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 282 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 283 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 284 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 285 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 286 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 287 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 288 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 289 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 290 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 291 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 292 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 293 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 294 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 295 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 296 | 9 | legacy-discussion-review | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 297 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 298 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 299 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 300 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 301 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 302 | 16 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 303 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 304 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 307 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 309 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 310 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 311 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 312 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 313 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 314 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 315 | 15 | visual-augmentation | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 316 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 317 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 318 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 319 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
-| 320 | 13 | alternate-two-pane | print_bw: source model or student work out of order; learn_colour: source model or student work out of order |
+| 016 | 18 | unique-source-diagrams | Layout review: exceeds 16 A4 pages |
+| 028 | 20 | unique-source-diagrams | Layout review: exceeds 16 A4 pages |
+| 029 | 23 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 031 | 19 | unique-source-diagrams | Layout review: exceeds 16 A4 pages |
+| 106 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 107 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 108 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 109 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 111 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 112 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 113 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 114 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 115 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 116 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 117 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 118 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 119 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 120 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 121 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 122 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 123 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 124 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 136 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 137 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 204 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 208 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 216 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 218 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 219 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 220 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 221 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 222 | 17 | visual-augmentation | Layout review: exceeds 16 A4 pages |
+| 227 | 18 | visual-augmentation | Layout review: exceeds 16 A4 pages |
 
 Zero automatic flags is not a teacher content approval.
 
