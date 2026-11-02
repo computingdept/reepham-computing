@@ -1,0 +1,41 @@
+name: Render and audit H446 pilot print layout
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/audit_h446_visual_layout.py'
+      - '.github/workflows/audit-h446-visual-layout.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-layout-qa
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF and image dependencies
+        run: python -m pip install 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
+      - name: Render all pages and measure layout boundaries
+        run: python tools/independent_booklets/audit_h446_visual_layout.py
+      - name: Publish visual audit images and report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/qa/H446_0{20,31}_* offline/booklets/h446/qa/H446_TWO_PILOT_LAYOUT_AUDIT.*
+          git diff --cached --quiet && exit 0
+          git commit -m 'Add rendered-page QA contact sheets for H446 020 and 031'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main
+            git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 1
