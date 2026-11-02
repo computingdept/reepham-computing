@@ -18,7 +18,7 @@ import fitz
 REQUIRED_BODY = (
     "Do Now · Recall previous learning",
     "I Do · Read new knowledge",
-    "We Do · Practise with guidance",
+    "We Do ·",
     "You Do · Work independently",
     "Exit Ticket · Answer before checking",
     "Review & Improve · GREEN PEN",
@@ -69,6 +69,13 @@ def inspect(record, folder: Path) -> dict:
                         evidence.append(f"Missing: {phrase}")
                 if record["course"] == "j277" and "Code First" not in joined:
                     issues.append("code_first_stage_missing")
+                if record["course"] == "h446" and "Try → Check → Improve" in joined:
+                    try_page = next((i for i,t in enumerate(texts) if "Guided 1 · TRY" in t), -1)
+                    check_page = next((i for i,t in enumerate(texts) if "Guided 1 · CHECK" in t), -1)
+                    exit_page = next((i for i,t in enumerate(texts) if "Exit Ticket · Answer before checking" in t), -1)
+                    if min(try_page,check_page,exit_page)<0 or not (try_page < exit_page < check_page):
+                        issues.append("h446_guided_model_revealed_before_exit")
+                        evidence.append(f"We Do TRY={try_page+1}; Exit={exit_page+1}; CHECK={check_page+1}")
                 exit_index = next((i for i,t in enumerate(texts) if "Exit Ticket · Answer before checking" in t), -1)
                 review_index = next((i for i,t in enumerate(texts) if "Review & Improve · GREEN PEN" in t), -1)
                 if exit_index < 0 or review_index < 0 or exit_index >= review_index:
