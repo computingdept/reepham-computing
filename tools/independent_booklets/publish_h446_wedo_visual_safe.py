@@ -143,7 +143,7 @@ def source_figures(n, lesson, existing_img_count):
     safely defer instead of claiming complete diagram restoration.
     """
     if existing_img_count:
-        return {}, 0, "Original embedded PDF visuals preserved"
+        return {}, 0, "Existing PDF figure pages preserved (source-wide image coverage still requires review)"
     SELECT[n]=None
     drawings=source_diagrams(n)
     if len(drawings)!=lesson.visual_count:
