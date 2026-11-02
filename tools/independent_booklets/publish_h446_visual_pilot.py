@@ -239,7 +239,12 @@ def render_visual_pages(n,stage,blocks,mode):
     return output.getvalue(),len(pages)
 
 def compose(n,mode,entry,diagrams):
-    original=ROOT/entry['print_bw' if mode=='bw' else 'learn_colour']
+    # Idempotent publishing: never use a prior visual pilot as the new
+    # "source" PDF or diagrams would duplicate on every rerun.
+    if entry.get('status')=='visual_pilot_draft_needs_teacher_review':
+        original=OUT/f'H446_Lesson_{n:03d}_{9 if n==31 else 8}PAGE_REVIEW_{mode.upper()}_A4.pdf'
+    else:
+        original=ROOT/entry['print_bw' if mode=='bw' else 'learn_colour']
     if not original.is_file():raise FileNotFoundError(original)
     pdf=fitz.open(original)
     base_pages=len(pdf)
@@ -339,7 +344,7 @@ def main():
         })
         new_records[str(n)]=new_entry
         audit['changes'].append({
-          'lesson':n,'original_a4_pages':entry['a4_pages'],
+          'lesson':n,'original_a4_pages':9 if n==31 else 8,
           'new_a4_pages':outputs['bw']['pages'],
           'added_visual_pages':outputs['bw']['extra_pages'],
           'figures':len(diagrams),'bw_ink_ratios':[x['ink_ratio'] for x in outputs['bw']['diagrams']],
