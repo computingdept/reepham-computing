@@ -317,7 +317,7 @@ def build_student(n,mode,lesson,soup,questions,out):
         for index,(prompt,_answer,svg) in enumerate(items,1 if page_no==6 else split+1):
             paper.section(f"Question {index}")
             paper.line(prompt,10.45)
-            if svg:paper.figure(svg,f"Question {index} · original source diagram",maxw=365,maxh=114)
+            if svg:paper.figure(svg,f"Question {index} · original source diagram",maxw=365,maxh=152)
             # Each page uses no smaller than 10-point text; preserve room.
             paper.rules(4 if svg else (7 if page_no==7 and len(items)==1 else 4))
         if paper.y>155:
