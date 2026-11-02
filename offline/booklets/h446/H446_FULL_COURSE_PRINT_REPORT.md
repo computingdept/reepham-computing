@@ -4,6 +4,19 @@
 **Repository:** `computingdept/reepham-computing`  
 **Scope:** Year 12 Lessons 001–160 and Year 13 Lessons 181–320
 
+## Current status — 2 November 2026 (updated from live GitHub catalogue)
+
+- **Published print drafts:** 288 / 300 curriculum lesson slots (Year 12: 155 / 160; Year 13: 133 / 140). Twelve assessment/feedback lessons remain deliberately excluded.
+- **Source diagrams restored in illustrated PDFs:** 15 booklets, with A4 colour/black-and-white and A3 variants. Current lesson IDs: **020–023, 026, 030–034 and 181–185**.
+- **Illustrated drafts:** 5 labelled `visual_pilot_draft_needs_teacher_review`; 10 labelled `visual_draft_needs_teacher_review`. Both remain unapproved.
+- **Other print drafts:** 273, comprising 14 marked `draft_ready_for_teacher_audit` and 259 marked `draft_needs_teacher_content_review`. These are *not* teacher-approved releases.
+- **Teacher-approved count:** **0 / 288**, as recorded in `offline/booklets/catalogue.json`. Do not interpret a published link or automated PDF check as pedagogical approval.
+- **Page count:** Eight A4 pages remains the standard for text-first booklets, but the 15 illustrated versions currently run from **9 to 14 A4 pages** so that diagrams and teaching material are not omitted. Their longer length needs explicit teacher review before release.
+- **Quality assurance completed:** automated source and PDF checks ran during generation and GitHub publication, with links committed to the catalogue. The 1 November full-catalogue repair audit reported all 288 PDF targets present; this 2 November update confirms catalogue records, not an independent fresh live-site check.
+- **Remaining work:** verify page-by-page visual layout, diagrams, worked answers, OCR terminology and independent tasks; continue illustration restoration for diagram-dependent booklets; approve student-facing copies individually. Original interactive lessons, revision guides and central navigation were not changed for this status update.
+
+Earlier 1 November production and preflight findings below are preserved as historical results, not a claim that all 288 PDFs still lack diagrams.
+
 ## Executive production summary
 
 | Measure | Year 12 | Year 13 | Total |
