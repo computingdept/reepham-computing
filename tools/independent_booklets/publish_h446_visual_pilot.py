@@ -33,7 +33,9 @@ LESSONS=(20,26,30,31,181)
 STAGES=(('new-learning',2,'New Learning'),('i-do',3,'I Do'),('we-do',4,'We Do'))
 # The pilot includes representative, nonduplicate instructional figures.
 # Lesson 031 uses a deliberate core subset; other 031 SVGs stay on the audit queue.
-SELECT={20:None,26:None,30:None,31:[0,1,2,3,4,5,10,13],181:None}
+# Lesson 031 now includes both I Do worked diagrams (indices 11 and 12).
+# Source uses a JS-controlled timing sequence for some other SVGs.
+SELECT={20:None,26:None,30:None,31:[0,1,2,3,4,5,10,11,12,13],181:None}
 FONT_REG='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 FONT_BOLD='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 pdfmetrics.registerFont(TTFont('RHSV',FONT_REG))
@@ -245,8 +247,9 @@ def compose(n,mode,entry,diagrams):
         raise ValueError(f'Unexpected source page count {base_pages} for {n}')
     groups=defaultdict(list)
     for d in diagrams:
-        # Lesson 031 has a second I Do model page before We Do.
-        index=d['base_page']+(1 if n==31 and d['stage']=='we-do' else 0)
+        # Lesson 031 has TWO I Do model pages: diagrams for that phase
+        # belong after page 5, while We Do is after page 6.
+        index=d['base_page']+(1 if n==31 and d['stage'] in ('i-do','we-do') else 0)
         groups[(index,d['stage'])].append(d)
     additions={}
     quality=[]
