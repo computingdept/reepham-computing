@@ -59,11 +59,18 @@ for n in TARGETS:
         f=ROOT/e[key]
         sheet,records=contact_sheet(n,mode,f)
         margin=sum(len(r['edge_text_blocks']) for r in records)
+        if margin:
+            raise ValueError(f'Lesson {n:03d} {mode}: {margin} text blocks extend beyond safe margins')
+        diagram_count=sum(p['images'] for p in records)
+        if n==31 and diagram_count<10:
+            raise ValueError(f'Lesson 031 expected 10 restored diagram images, found {diagram_count}')
         report['lessons'][str(n)][mode]={
             'source_pdf':e[key],'contact_sheet':sheet.relative_to(ROOT).as_posix(),
-            'pages':records,'text_edge_warnings':margin}
+            'pages':records,'text_edge_warnings':margin,
+            'image_objects':diagram_count,
+            'dense_text_pages':[p['page'] for p in records if p['chars']>2000]}
         lines.append(f'| {n:03d} | {mode} | {len(records)} | {sum(bool(x["images"]) for x in records)} | {margin} |')
-lines+=['','**Notes**: Page 3 and 4 contain source text plus the adjacent diagram inserts. '
+lines+=['','**Notes**: Original teaching text and restored source diagrams remain on distinct, phase-adjacent pages. '
         'Low nonwhite-ratio or very short text pages should be visually checked. '
         'Automated edge-warning counts are conservative because the header/footer approaches the paper edge.',
         'Contact sheets are for human print review; no lesson source, guide or print navigation changed.']
