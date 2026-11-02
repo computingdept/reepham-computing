@@ -27,8 +27,12 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
           python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
-      - name: Source-aware We Do conversion samples
-        run: python tools/independent_booklets/publish_h446_wedo_alternate.py 46 74 99 264 316
+      - name: Complete alternate-source We Do print conversion
+        run: python tools/independent_booklets/publish_h446_wedo_alternate.py \
+            $(seq 46 57) $(seq 59 82) $(seq 85 87) $(seq 89 97) $(seq 99 105) \
+            $(seq 264 267) 309 310 $(seq 316 320)
+          cp offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json offline/booklets/h446/H446_WEDO_ALTERNATE_FULL_REPORT.json
+          cp offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.md offline/booklets/h446/H446_WEDO_ALTERNATE_FULL_REPORT.md
       - name: Verify retained Print links and answer separation
         run: |
           python - <<'PY'
@@ -37,8 +41,8 @@ jobs:
           cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
           a=json.loads(Path('offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json').read_text())
           assert len(cat)==288
-          assert len(a['results'])==5
-          assert any(x['status']=='published_review_draft' for x in a['results']),a['counts']
+          assert len(a['results'])==66
+          assert a['counts'].get('published_review_draft',0)+a['counts'].get('already_revised',0)>=60,a['counts']
           assert not any(x['teacher_approved'] for x in cat.values())
           for n,e in cat.items():
               for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
@@ -50,13 +54,14 @@ jobs:
                   assert 0<=at('Guided 1 — TRY')<at('EXIT TICKET')<at('Guided 1 — CHECK'),n
                   assert sum(len(p.get_images(full=True)) for p in pdf)>0,n
                   assert len(pdf)==e['a4_pages'],n
-          print('Sample alternate We Do PDFs passed PDF link, visual and answer gates.')
+          print('Alternate We Do course batch passed source-check/print visual gates.')
           PY
-      - name: Publish verified draft PDFs and batch report
+      - name: Commit only passing alternate-template PDFs with full report
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.md
+          git add offline/booklets/h446/H446_WEDO_ALTERNATE_FULL_REPORT.json offline/booklets/h446/H446_WEDO_ALTERNATE_FULL_REPORT.md
           find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_ALTERNATE_*.pdf' -print0 | xargs -0 -r git add --
           python - <<'PY'
           import json,subprocess
