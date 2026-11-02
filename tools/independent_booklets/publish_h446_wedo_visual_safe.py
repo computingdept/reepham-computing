@@ -166,9 +166,9 @@ def build(n: int, old: dict, mode: str, lesson) -> tuple[str,str,int,int,dict]:
     idx_e=phase_start(pages,"EXIT TICKET")
     if min(idx_i,idx_w,idx_y,idx_e)<0 or not idx_i<idx_w<idx_y<idx_e:
         raise ValueError(f"Cannot prove I Do/We Do/You Do/Exit order: {(idx_i,idx_w,idx_y,idx_e)}")
-    if any("GUIDED 1" in normal(t.upper()) and "CHECK" in normal(t.upper())
+    if any(re.search(r"Guided\s+1\s*[-—·:]\s*CHECK\b", t, re.I)
            for t in pages[:idx_e]):
-        raise ValueError("A CHECK/model may be exposed before Exit Ticket")
+        raise ValueError("A source CHECK/model heading is exposed before Exit Ticket")
     source_imgs=sum(len(p.get_images(full=True)) for p in base)
     figures,restored,figure_note=source_figures(n,lesson,source_imgs)
     original_models=any(re.search(r"Guided\s+1\s*[-—·]\s*CHECK",t,re.I)
