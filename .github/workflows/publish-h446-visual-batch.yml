@@ -1,0 +1,86 @@
+name: Publish next H446 original-diagram print batch
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_visual_batch.py'
+      - '.github/workflows/publish-h446-visual-batch.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-next-visual-print-batch
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install SVG and PDF dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Generate next five original-diagram booklets
+        run: python tools/independent_booklets/publish_h446_visual_batch.py 21 22 23 182 183
+      - name: Verify generated PDFs and links
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import fitz
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          updated=[]
+          for n in (21,22,23,182,183):
+              record=cat['lessons']['h446'][str(n)]
+              if record.get('status')!='visual_draft_needs_teacher_review':
+                  print('Original print link preserved for',n)
+                  continue
+              for key,expected in [('print_bw',record['a4_pages']),('learn_colour',record['a4_pages']),
+                                   ('booklet_bw',record['a3_spreads']),('booklet_colour',record['a3_spreads'])]:
+                  file=Path(record[key])
+                  assert file.exists(),(n,key,file)
+                  with fitz.open(file) as doc:
+                      assert len(doc)==expected,(n,key)
+                      if key in ('print_bw','learn_colour'):
+                          assert any(len(p.get_images(full=True))>0 for p in doc),n
+                          assert all(len(p.get_text().strip())>=40 for p in doc),n
+              assert not record['teacher_approved']
+              updated.append(n)
+          print('New illustrated drafts:',updated)
+          assert updated, 'No booklet in this batch could be published'
+          PY
+      - name: Commit new PDF files and updated Print links
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json
+          for n in 021 022 023 182 183; do
+            find offline/booklets/h446 -maxdepth 1 -type f -name "H446_Lesson_${n}_VISUAL_PILOT_*.pdf" -print0 | xargs -0 -r git add --
+          done
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          c=json.loads(Path('offline/booklets/catalogue.json').read_text())
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n in (21,22,23,182,183):
+              e=c['lessons']['h446'][str(n)]
+              if e.get('status')=='visual_draft_needs_teacher_review':
+                  for field in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                      assert e[field] in tracked,(n,field)
+          PY
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish next five diagram-restored H446 print drafts'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
