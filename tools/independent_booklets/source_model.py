@@ -284,11 +284,48 @@ def h446_source(number: int) -> Lesson:
         lesson.model_question = lesson.model_steps[0]
 
     wedo = soup.select_one("#we-do")
-    guided_parts = blocks(wedo, limit=18)
-    if guided_parts:
-        lesson.guided = [(part, "") for part in guided_parts]
-    if len(blocks(wedo)) > 18:
-        lesson.warnings.append("We Do condensed to eighteen source blocks")
+    # Keep the original We Do 'YOUR TURN' tasks distinct from hidden CHECK
+    # stages. The latter belong only in the post-Exit Ticket review, never
+    # beside an unattempted printed question.
+    if wedo:
+        examples = wedo.select(".wedo-example")
+        if examples:
+            for example in examples:
+                reference = example.select_one(".wedo-reference")
+                visible = [step for step in example.select(".wedo-step")
+                           if not step.has_attr("hidden")
+                           and not any(parent.has_attr("hidden")
+                                       for parent in step.parents if getattr(parent, "name", None))]
+                hidden = [step for step in example.select(".wedo-step")
+                          if step.has_attr("hidden")
+                          or any(parent.has_attr("hidden")
+                                 for parent in step.parents if getattr(parent, "name", None))]
+                prompt_parts = (blocks(reference) if reference else [])
+                for step in visible:
+                    prompt_parts.extend(blocks(step))
+                answer_parts = []
+                for step in hidden:
+                    answer_parts.extend(blocks(step))
+                # Do not invent a worked answer where the source has none.
+                prompt = "\\n".join(dict.fromkeys(prompt_parts))
+                answer = "\\n".join(dict.fromkeys(answer_parts))
+                if prompt:
+                    lesson.guided.append((prompt, answer))
+            if not lesson.guided:
+                lesson.warnings.append("We Do has no extractable guided prompts")
+            if any(not answer for _, answer in lesson.guided):
+                lesson.warnings.append("We Do source check stages incomplete; teacher model required")
+            # Some lessons also have supplementary We Do exam cards; these
+            # require a deliberate manual comparison, not silent dropping.
+            if wedo.select(".exam-card, .we-do-exam"):
+                lesson.warnings.append("We Do supplementary exam cards require print-content review")
+        else:
+            # Legacy source: cannot reliably separate teacher reveal stages.
+            # Flag for review rather than pretending the prose is a model.
+            lesson.guided = [(part, "") for part in blocks(wedo, limit=18)]
+            lesson.warnings.append("We Do legacy source has no distinct CHECK stage")
+            if len(blocks(wedo)) > 18:
+                lesson.warnings.append("We Do condensed to eighteen source blocks")
 
     question_nodes = soup.select("#you-do article.youdo-question")
     if not question_nodes:
