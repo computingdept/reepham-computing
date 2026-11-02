@@ -52,7 +52,7 @@ def run() -> None:
                     assert positions["try"] < positions["exit"] < positions["check"], (
                         number, mode, positions)
                     assert "Try → Discuss → Improve" in joined, (number, mode)
-                    assert "Discuss your method with a partner" in joined, (number, mode)
+                    assert "Discuss your method with a partner" in " ".join(joined.split()), (number, mode)
                     assert "We Do · Check and improve" in joined, (number, mode)
                     assert all(page.strip() for page in pages), (number, mode, "blank page")
                     assert count == len(pdf), (number, mode, count, len(pdf))
