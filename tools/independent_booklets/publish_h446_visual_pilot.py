@@ -253,15 +253,19 @@ def compose(n,mode,entry,diagrams):
     groups=defaultdict(list)
     integrated=None
     integrated_count=0
-    if n==31:
-        # Replace the dense, diagram-free page three with compact steps
-        # combining each theory explanation and its source diagram.
-        from integrated_031_new_learning import make_integrated_new_learning_031
-        data,integrated_count,figure_count,headings=make_integrated_new_learning_031(mode,diagrams)
+    if n in (26,30,31):
+        # Replace the dense, diagram-free text page with original source
+        # explanations and original SVGs, grouped into readable print pages.
+        if n==31:
+            from integrated_031_new_learning import make_integrated_new_learning_031
+            data,integrated_count,figure_count,headings=make_integrated_new_learning_031(mode,diagrams)
+        else:
+            from integrated_026_030_new_learning import make_integrated_learning
+            data,integrated_count,figure_count,headings=make_integrated_learning(n,mode,diagrams)
         integrated=fitz.open(stream=data,filetype='pdf')
         assert figure_count==sum(d['stage']=='new-learning' for d in diagrams)
     for d in diagrams:
-        if n==31 and d['stage']=='new-learning':
+        if n in (26,30,31) and d['stage']=='new-learning':
             continue  # Already included alongside its New Learning explanation.
         # Lesson 031 has TWO I Do model pages: diagrams for that phase
         # belong after page 5, while We Do is after page 6.
@@ -279,7 +283,7 @@ def compose(n,mode,entry,diagrams):
     merged=fitz.open()
     visual_pages=0
     for i in range(base_pages):
-        if n==31 and i==2:
+        if integrated is not None and i==2:
             merged.insert_pdf(integrated)
         else:
             merged.insert_pdf(pdf,from_page=i,to_page=i)
@@ -287,7 +291,7 @@ def compose(n,mode,entry,diagrams):
             merged.insert_pdf(segment)
             visual_pages+=len(segment)
     total=len(merged)
-    assert total==base_pages+visual_pages+(integrated_count-1 if n==31 else 0)
+    assert total==base_pages+visual_pages+(integrated_count-1 if integrated is not None else 0)
     # Rewrite only the page number in bottom right, leaving the source
     # text and answer placements unchanged.
     for i,page in enumerate(merged,1):
@@ -305,7 +309,7 @@ def compose(n,mode,entry,diagrams):
         new_text=[p.get_text() for p in after]
         cursor=0
         for old_index,old in enumerate(original_text):
-            if n==31 and old_index==2:continue
+            if integrated is not None and old_index==2:continue
             while cursor<len(new_text) and old[:160] not in new_text[cursor]:
                 cursor+=1
             if cursor==len(new_text):
@@ -318,7 +322,7 @@ def compose(n,mode,entry,diagrams):
             raise ValueError('Non-A4 page')
     pdf.close()
     if integrated is not None:integrated.close()
-    return output,total,visual_pages+(integrated_count-1 if n==31 else 0),quality
+    return output,total,visual_pages+(integrated_count-1 if integrated_count else 0),quality
 
 def main():
     catalogue=json.loads(CATALOGUE.read_text(encoding='utf-8'))
@@ -357,7 +361,7 @@ def main():
               if not (('not embedded' in w.lower()) or
                       (n==31 and ('New learning condensed to first eight source steps' in w or
                                   'Lesson 031 contains a representative subset' in w)))]+[
-            'All eleven New Learning stages restored with their original explanations' if n==31 else 'Original source explanations preserved',
+            'All eleven New Learning stages restored with their original explanations' if n==31 else ('Source New Learning explanations paired with original illustrations' if n in (26,30) else 'Original source explanations preserved'),
             'Original instructional SVGs restored on phase-adjacent visual pages',
             'Teacher must visually check printed diagram sizes and answer accuracy before use',
             'Lesson 031 restores ten selected diagrams; supplementary figures need review' if n==31 else 'Visual-pilot draft, not final teacher approval']))
@@ -382,8 +386,8 @@ def main():
         lines.append(f"| {r['lesson']:03d} | {r['figures']} | {r['new_a4_pages']} | {r['added_visual_pages']} |")
     lines += ['','## Approach','',
       'Original independent questions and answer placements remain unchanged.',
-      'For Lesson 031, a crowded New Learning page was replaced by all eleven original source explanations paired with selected diagrams.',
-      'Source SVG diagrams have been rendered at print resolution. Lesson 031 New Learning diagrams are integrated with their explanations; other visual pages follow the related phase.',
+      'For Lessons 026, 030 and 031, diagram-free New Learning summaries were replaced by source explanations paired directly with the original classroom figures.',
+      'Original source SVG diagrams are rendered at print resolution; integrated New Learning pages are followed by phase-adjacent I Do and We Do visual pages.',
       'Black-and-white uses contrast-enhanced greyscale and colour retains source colours.',
       'Each figure has the source accessible description and nearby lesson heading or explanation.',
       'B&W and colour A4 outputs and A3 booklet imposition passed automated checks.',
