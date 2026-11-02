@@ -6,6 +6,8 @@ on:
       - 'tools/independent_booklets/source_model.py'
       - 'tools/independent_booklets/render_pdf.py'
       - 'tools/independent_booklets/test_h446_wedo_review.py'
+      - 'tools/independent_booklets/publish_h446_y12_exceptions.py'
+      - 'tools/independent_booklets/build_h446_wedo_review_pilots.py'
       - '.github/workflows/qa-h446-wedo.yml'
   workflow_dispatch:
 permissions:
@@ -26,3 +28,12 @@ jobs:
           python -m pip install 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
       - name: Render black-and-white and colour H446 guided-practice pilots
         run: python tools/independent_booklets/test_h446_wedo_review.py
+      - name: Build teacher-review PDFs without changing live Print links
+        run: python tools/independent_booklets/build_h446_wedo_review_pilots.py
+      - name: Make reviewed pilot PDFs available as a GitHub Actions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: h446-wedo-try-check-improve-teacher-review
+          path: build/h446-wedo-review-pilots/
+          if-no-files-found: error
+          retention-days: 30
