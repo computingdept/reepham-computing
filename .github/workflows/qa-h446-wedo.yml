@@ -1,0 +1,28 @@
+name: QA H446 We Do Try Check Improve pilots
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/source_model.py'
+      - 'tools/independent_booklets/render_pdf.py'
+      - 'tools/independent_booklets/test_h446_wedo_review.py'
+      - '.github/workflows/qa-h446-wedo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safety-and-layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF and extraction dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+          python -m pip install 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
+      - name: Render black-and-white and colour H446 guided-practice pilots
+        run: python tools/independent_booklets/test_h446_wedo_review.py
