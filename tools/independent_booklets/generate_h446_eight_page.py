@@ -319,7 +319,10 @@ def build_student(n,mode,lesson,soup,questions,out):
             paper.line(prompt,10.45)
             if svg:paper.figure(svg,f"Question {index} · original source diagram",maxw=365,maxh=152)
             # Each page uses no smaller than 10-point text; preserve room.
-            paper.rules(4 if svg else (7 if page_no==7 and len(items)==1 else 4))
+            # A K-map carries its own workspace for circling cells; three
+            # ruled lines below preserve space for a Boolean expression and
+            # annotated gate plan. Never shrink the diagram or text.
+            paper.rules(3 if svg else (7 if page_no==7 and len(items)==1 else 4))
         if paper.y>155:
             paper.line("Check that you have used the technical terms and explained your decisions.",9.4)
 
