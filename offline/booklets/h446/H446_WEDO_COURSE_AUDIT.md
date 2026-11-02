@@ -1,6 +1,6 @@
 # H446 We Do — complete curriculum audit and guarded print rollout
 
-Audit: 2026-11-02T19:48:08.755626+00:00  |  Curriculum print records checked: **288**.
+Audit: 2026-11-02T19:50:28.488497+00:00  |  Curriculum print records checked: **288**.
 All items are **unapproved teacher-review drafts**. This audit is not an OCR accuracy sign-off.
 The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless a safe generator explicitly replaces a figure-free version.
 
@@ -9,8 +9,8 @@ The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless 
 | Outcome | Count |
 |---|---:|
 | deferred visual preservation | 272 |
-| published review draft | 11 |
-| review pilot existing | 5 |
+| published review draft | 5 |
+| review pilot existing | 11 |
 
 ## What the audit guarantees
 
@@ -31,31 +31,31 @@ The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless 
 
 | Lesson | Guided | Models | Figures | Outcome | Reason |
 |---|---:|---:|---:|---|---|
-| 001 | 4 | 4 | 0 | published_review_draft |  |
-| 002 | 5 | 5 | 0 | published_review_draft |  |
-| 003 | 5 | 5 | 0 | published_review_draft |  |
-| 004 | 5 | 5 | 0 | published_review_draft |  |
-| 005 | 4 | 4 | 0 | published_review_draft |  |
+| 001 | 4 | 4 | 0 | review_pilot_existing |  |
+| 002 | 5 | 5 | 0 | review_pilot_existing |  |
+| 003 | 5 | 5 | 0 | review_pilot_existing |  |
+| 004 | 5 | 5 | 0 | review_pilot_existing |  |
+| 005 | 4 | 4 | 0 | review_pilot_existing |  |
 | 006 | 5 | 5 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
-| 007 | 5 | 5 | 0 | published_review_draft |  |
-| 008 | 5 | 5 | 0 | review_pilot_existing |  |
-| 009 | 4 | 4 | 0 | review_pilot_existing |  |
-| 010 | 4 | 4 | 0 | review_pilot_existing |  |
-| 011 | 4 | 4 | 0 | review_pilot_existing |  |
-| 012 | 4 | 4 | 0 | review_pilot_existing |  |
+| 007 | 5 | 5 | 0 | review_pilot_existing |  |
+| 008 | 5 | 5 | 0 | published_review_draft |  |
+| 009 | 4 | 4 | 0 | published_review_draft |  |
+| 010 | 4 | 4 | 0 | published_review_draft |  |
+| 011 | 4 | 4 | 0 | published_review_draft |  |
+| 012 | 4 | 4 | 0 | published_review_draft |  |
 | 013 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 014 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 015 | 4 | 4 | 2 | deferred_visual_preservation | 2 source figure(s) require visual-safe treatment |
 | 016 | 4 | 4 | 10 | deferred_visual_preservation | 10 source figure(s) require visual-safe treatment |
 | 017 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
-| 018 | 4 | 4 | 0 | published_review_draft |  |
+| 018 | 4 | 4 | 0 | review_pilot_existing |  |
 | 019 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 020 | 4 | 4 | 5 | deferred_visual_preservation | 5 source figure(s) require visual-safe treatment |
 | 021 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 022 | 4 | 4 | 2 | deferred_visual_preservation | 2 source figure(s) require visual-safe treatment |
 | 023 | 4 | 4 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
-| 024 | 4 | 4 | 0 | published_review_draft |  |
-| 025 | 11 | 11 | 0 | published_review_draft |  |
+| 024 | 4 | 4 | 0 | review_pilot_existing |  |
+| 025 | 11 | 11 | 0 | review_pilot_existing |  |
 | 026 | 4 | 4 | 9 | deferred_visual_preservation | 9 source figure(s) require visual-safe treatment |
 | 027 | 4 | 4 | 4 | deferred_visual_preservation | 4 source figure(s) require visual-safe treatment |
 | 028 | 4 | 4 | 13 | deferred_visual_preservation | 13 source figure(s) require visual-safe treatment |
@@ -65,7 +65,7 @@ The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless 
 | 032 | 3 | 3 | 2 | deferred_visual_preservation | 2 source figure(s) require visual-safe treatment |
 | 033 | 3 | 3 | 2 | deferred_visual_preservation | 2 source figure(s) require visual-safe treatment |
 | 034 | 3 | 3 | 2 | deferred_visual_preservation | 2 source figure(s) require visual-safe treatment |
-| 035 | 4 | 4 | 0 | published_review_draft |  |
+| 035 | 4 | 4 | 0 | review_pilot_existing |  |
 | 038 | 2 | 2 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 039 | 2 | 2 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
 | 040 | 2 | 2 | 1 | deferred_visual_preservation | 1 source figure(s) require visual-safe treatment |
@@ -297,7 +297,7 @@ The five earlier pilot PDFs and all diagram-dependent PDFs are preserved unless 
 | 293 | 1 | 1 | 8 | deferred_visual_preservation | 8 source figure(s) require visual-safe treatment |
 | 294 | 1 | 1 | 8 | deferred_visual_preservation | 8 source figure(s) require visual-safe treatment |
 | 295 | 1 | 1 | 9 | deferred_visual_preservation | 9 source figure(s) require visual-safe treatment |
-| 296 | 1 | 1 | 0 | published_review_draft |  |
+| 296 | 1 | 1 | 0 | review_pilot_existing |  |
 | 297 | 1 | 1 | 8 | deferred_visual_preservation | 8 source figure(s) require visual-safe treatment |
 | 298 | 1 | 1 | 8 | deferred_visual_preservation | 8 source figure(s) require visual-safe treatment |
 | 299 | 1 | 1 | 9 | deferred_visual_preservation | 9 source figure(s) require visual-safe treatment |
