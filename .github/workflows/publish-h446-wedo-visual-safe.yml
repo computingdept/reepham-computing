@@ -54,7 +54,7 @@ jobs:
                       yindex=next((i for i,t in enumerate(texts) if 'YOU DO' in t[:330]),-1)
                       eindex=next((i for i,t in enumerate(texts) if 'EXIT TICKET' in t[:330]),-1)
                       import re
-                      cindex=next((i for i,t in enumerate(texts) if 'WE DO — SOURCE CHECK' in t or re.search(r'Guided\\s+1\\s*[-—·:]\\s*CHECK',t,re.I)),-1)
+                      cindex=next((i for i,t in enumerate(texts) if 'WE DO — SOURCE CHECK' in t or re.search(r'Guided\s+1\s*[-—·:]\s*CHECK',t,re.I)),-1)
                       assert 0<=dindex<yindex<eindex<cindex,(n,key,dindex,yindex,eindex,cindex)
                       assert sum(len(p.get_images(full=True)) for p in doc)>0,(n,key,'diagrams missing')
           print('Ten-lesson batch checked: links, source visuals and answer separation.')
