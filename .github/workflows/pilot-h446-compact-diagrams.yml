@@ -1,0 +1,59 @@
+name: Generate H446 compact diagram teacher-review pilots
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/pilot_h446_compact_diagrams.py'
+      - '.github/workflows/pilot-h446-compact-diagrams.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-compact-pilots
+  cancel-in-progress: false
+jobs:
+  make-previews:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF inspection and preview libraries
+        run: python -m pip install 'PyMuPDF==1.26.4' 'Pillow==11.3.0' 'reportlab==4.2.5'
+      - name: Generate original-scale compact pilots without changing Print links
+        run: python tools/independent_booklets/pilot_h446_compact_diagrams.py
+      - name: Validate catalogue and generated candidates
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          report=json.loads(Path('offline/booklets/h446/H446_WEDO_COMPACT_THREE_PILOTS.json').read_text())
+          assert len(report['results'])==3
+          assert report['scope'].startswith('PDF pilot only')
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          assert len(cat)==288
+          assert not any(e['teacher_approved'] for e in cat.values())
+          assert subprocess.check_output(['git','diff','--','offline/booklets/catalogue.json'])==b''
+          for row in report['results']:
+            if row['status']!='pilot_generated':continue
+            assert row['saved']>0
+            for v in row['variants'].values():
+              assert Path(v['a4']).is_file() and Path(v['a3']).is_file()
+            assert Path(row['preview']).is_file()
+          print('Original-scale compact pilot outcomes:',[(x['lesson'],x['status'],x.get('saved'),x.get('reason')) for x in report['results']])
+          PY
+      - name: Publish only validated comparisons and draft pilots
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_WEDO_COMPACT_THREE_PILOTS.*
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_COMPACT_PILOT*' -print0 | xargs -0 -r git add --
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish H446 compact PDF pilots for 029 106 218 without changing print links'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
