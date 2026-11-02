@@ -40,7 +40,7 @@ jobs:
           assert len(cat)==288
           assert not any(v.get('teacher_approved',False) for v in cat.values())
           assert len(report['results'])==8
-          assert any(r['status']=='published_review_draft' for r in report['results']), 'No safe PDF in this batch'
+          assert any(r['status'] in ('published_review_draft','existing_page_count_corrected') for r in report['results']), 'No revised or renumbered PDF in this batch'
           for n,v in cat.items():
               for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
                   assert Path(v[key]).is_file(),(n,key,v[key])
