@@ -13,7 +13,7 @@ import html, io, json, re, textwrap, sys
 from collections import Counter
 from pathlib import Path
 from bs4 import BeautifulSoup
-from PIL import Image
+from PIL import Image,ImageDraw
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
@@ -401,6 +401,25 @@ def inspect_pdf(n,student,questions,figures):
             raise ValueError("Discuss phase missing")
     return count
 
+def render_preview(n,a4):
+    """Full eight-page overview for human layout and SEND readability checks."""
+    out=Image.new("RGB",(810,2100),"#eeeeec")
+    draw=ImageDraw.Draw(out)
+    draw.text((20,14),f"OCR H446 Lesson {n:03d} · all eight pupil pages",fill="#202a27")
+    with fitz.open(a4) as doc:
+        if len(doc)!=8:raise ValueError("Cannot preview non-eight-page candidate")
+        for i,page in enumerate(doc):
+            pm=page.get_pixmap(matrix=fitz.Matrix(.65,.65),alpha=False)
+            im=Image.frombytes("RGB",(pm.width,pm.height),pm.samples)
+            im.thumbnail((372,485))
+            col=i%2;row=i//2
+            x=20+col*398;y=47+row*506
+            out.paste(im,(x,y))
+            draw.text((x,y+im.height+6),f"Page {i+1}: {STAGES[i]}",fill="#222222")
+    dest=OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_eight_page_preview.png"
+    out.save(dest)
+    return dest.relative_to(ROOT).as_posix()
+
 def run(numbers):
     original=json.loads(CAT.read_text(encoding="utf-8"))["lessons"]["h446"]
     rows=[]
@@ -434,7 +453,9 @@ def run(numbers):
             teacher=OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf"
             build_staff(n,lesson,teacher)
             created.append(teacher)
-            row.update({"status":"pilot_generated","a4_pages":8,"sheets_per_student":4,
+            preview=render_preview(n,OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_BW_A4.pdf")
+            created.append(ROOT/preview)
+            row.update({"preview_png":preview,"status":"pilot_generated","a4_pages":8,"sheets_per_student":4,
                         "was_pages":original[str(n)]["a4_pages"],
                         "versions":versions,"teacher_key":teacher.relative_to(ROOT).as_posix(),
                         "selection_policy":"representative source-based diagrams and all diagrams belonging to the selected independent questions; remaining online exam tasks accessible in the lesson",
@@ -466,6 +487,7 @@ def run(numbers):
         if row["status"]!="pilot_generated":continue
         n=row["lesson"]
         table+= [f"## Lesson {n:03d}", "",
+            f"[Eight-page visual overview](H446_Lesson_{n:03d}_8PAGE_REDESIGN_eight_page_preview.png)", "",
             f"[A4 black-and-white booklet](H446_Lesson_{n:03d}_8PAGE_REDESIGN_BW_A4.pdf) · "+
             f"[A4 colour booklet](H446_Lesson_{n:03d}_8PAGE_REDESIGN_COLOUR_A4.pdf)",
             f"[A3 black-and-white imposition](H446_Lesson_{n:03d}_8PAGE_REDESIGN_BW_A3_Booklet.pdf) · "+
