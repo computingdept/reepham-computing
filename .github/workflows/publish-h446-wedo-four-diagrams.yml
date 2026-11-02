@@ -1,0 +1,72 @@
+name: Final four H446 We Do SVG duplicate-safe recovery
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_wedo_four_diagrams.py'
+      - '.github/workflows/publish-h446-wedo-four-diagrams.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-wedo-final-four-diagrams
+  cancel-in-progress: false
+jobs:
+  restore-four:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render and original-source diagram dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Recover verified original figures and source-check stages
+        run: python tools/independent_booklets/publish_h446_wedo_four_diagrams.py
+      - name: Confirm publication safety and all lesson PDF links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz
+          entries=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          report=json.loads(Path('offline/booklets/h446/H446_WEDO_FOUR_DIAGRAM_EXCEPTIONS.json').read_text())
+          assert len(entries)==288 and len(report['results'])==4
+          assert not any(x['teacher_approved'] for x in entries.values())
+          for n,e in entries.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[key]).is_file(),(n,key,e[key])
+              if 'WEDO_DEDUP_' not in e['print_bw']:continue
+              with fitz.open(e['print_bw']) as pdf:
+                  pages=[p.get_text() for p in pdf]
+                  at=lambda x:next((i for i,t in enumerate(pages) if x in t),-1)
+                  assert 0<=at('Guided 1 — TRY')<at('EXIT TICKET')<at('Guided 1 — CHECK'),n
+                  assert any(p.get_images(full=True) for p in pdf),n
+                  assert len(pdf)==e['a4_pages'],n
+          print('Source diagram duplicates / validation:',report['status_counts'])
+          PY
+      - name: Publish only validated print variants and exception report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_FOUR_DIAGRAM_EXCEPTIONS.json offline/booklets/h446/H446_WEDO_FOUR_DIAGRAM_EXCEPTIONS.md
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_DEDUP_*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          staged=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,e in cat.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[key] in staged,(n,key)
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Restore verified unique H446 source diagrams in four We Do print drafts'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
