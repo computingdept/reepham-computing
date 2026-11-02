@@ -39,10 +39,10 @@ Outstanding exceptions: **5**
 
 ## Longer booklets to preserve the model
 
-- Lesson 017: 9 A4 pages
-- Lesson 019: 10 A4 pages
-- Lesson 025: 9 A4 pages
-- Lesson 031: 9 A4 pages
+- Lesson 017: 10 A4 pages
+- Lesson 019: 11 A4 pages
+- Lesson 025: 11 A4 pages
+- Lesson 031: 10 A4 pages
 
 ## Protected or incomplete lessons
 
