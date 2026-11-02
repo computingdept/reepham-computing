@@ -59,7 +59,14 @@ def publish_safe(number: int, old: dict, lesson) -> dict:
     source = HROOT / f"lesson-{number:03d}" / "index.html"
     soup = BeautifulSoup(source.read_text(encoding="utf-8"), "html.parser")
     # Even source-free visuals in a current PDF must not be silently erased.
-    with fitz.open(ROOT / old["print_bw"]) as current:
+    base_pdf = ROOT / old["print_bw"]
+    if not base_pdf.exists():
+        # Recover the original five teacher-review pilots if a prior failed
+        # concurrent upload left a catalogue reference without PDF bytes.
+        base_pdf = OUT / f"H446_Lesson_{number:03d}_WEDO_REVIEW_BW_A4.pdf"
+    if not base_pdf.exists():
+        raise FileNotFoundError("Existing print PDF unavailable; leave original catalogue entry")
+    with fitz.open(base_pdf) as current:
         if any(p.get_images(full=True) for p in current):
             raise ValueError("existing PDF contains embedded figures: protect")
     results = {}
@@ -126,7 +133,7 @@ def main() -> None:
             already = ("_WEDO_REVIEW_" in before["print_bw"] or
                        "_WEDO_DISCUSS_REVIEW_" in before["print_bw"])
             up_to_date = False
-            if already:
+            if already and (ROOT / before["print_bw"]).exists():
                 with fitz.open(ROOT / before["print_bw"]) as existing:
                     up_to_date = PHRASE in "\n".join(p.get_text() for p in existing)
             if already and up_to_date:

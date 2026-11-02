@@ -32,6 +32,8 @@ jobs:
           python -m pip install 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4' 'Pillow==11.3.0'
       - name: Check pedagogical sequence in source and sample PDFs
         run: python tools/independent_booklets/test_h446_wedo_review.py
+      - name: Refresh working checkout before guarded publication
+        run: git pull --ff-only origin main
       - name: Audit every published H446 Print booklet and republish only safe variants
         run: python tools/independent_booklets/complete_h446_wedo_review.py
       - name: Verify catalogue remains safe
@@ -56,6 +58,17 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_COURSE_AUDIT.json offline/booklets/h446/H446_WEDO_COURSE_AUDIT.md
           find offline/booklets/h446 -maxdepth 1 -name '*WEDO*REVIEW_*.pdf' -type f -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,entry in cat.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert entry[k] in tracked, (n,k,entry[k],'not staged/tracked')
+                  assert Path(entry[k]).is_file(), (n,k,entry[k],'missing locally')
+          print('Every H446 print catalogue target is staged or already tracked.')
+          PY
           git diff --cached --quiet && exit 0
           git commit -m 'Audit H446 guided practice and publish diagram-safe We Do drafts'
           for i in 1 2 3 4 5 6; do
