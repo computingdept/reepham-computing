@@ -1,0 +1,74 @@
+name: H446 alternative We Do source-aware printed pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/independent_booklets/publish_h446_wedo_alternate.py'
+      - '.github/workflows/publish-h446-wedo-alternate-pilot.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-alternate-wedo-pilot
+  cancel-in-progress: false
+jobs:
+  source-aware-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install booklets and source SVG dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Source-aware We Do conversion samples
+        run: python tools/independent_booklets/publish_h446_wedo_alternate.py 46 74 99 264 316
+      - name: Verify retained Print links and answer separation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz
+          cat=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          a=json.loads(Path('offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json').read_text())
+          assert len(cat)==288
+          assert len(a['results'])==5
+          assert any(x['status']=='published_review_draft' for x in a['results']),a['counts']
+          assert not any(x['teacher_approved'] for x in cat.values())
+          for n,e in cat.items():
+              for key in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(e[key]).exists(),(n,key,e[key])
+              if 'WEDO_ALTERNATE_' not in e['print_bw']:continue
+              with fitz.open(e['print_bw']) as pdf:
+                  texts=[p.get_text() for p in pdf]
+                  at=lambda x: next((i for i,t in enumerate(texts) if x in t),-1)
+                  assert 0<=at('Guided 1 — TRY')<at('EXIT TICKET')<at('Guided 1 — CHECK'),n
+                  assert sum(len(p.get_images(full=True)) for p in pdf)>0,n
+                  assert len(pdf)==e['a4_pages'],n
+          print('Sample alternate We Do PDFs passed PDF link, visual and answer gates.')
+          PY
+      - name: Publish verified draft PDFs and batch report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/catalogue.json offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.json offline/booklets/h446/H446_WEDO_ALTERNATE_BATCH.md
+          find offline/booklets/h446 -maxdepth 1 -type f -name '*WEDO_ALTERNATE_*.pdf' -print0 | xargs -0 -r git add --
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          entries=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          tracked=set(subprocess.check_output(['git','ls-files','--cached'],text=True).splitlines())
+          for n,e in entries.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert e[k] in tracked,(n,k)
+          PY
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish safe alternate-template H446 We Do pilot drafts'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
