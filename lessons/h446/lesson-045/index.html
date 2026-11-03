@@ -57,7 +57,13 @@ class Device {
 class Laptop : Device {
   public Laptop(string id) : base(id) { }
   public override string Label() { return &quot;Laptop&quot;; }
-}</code></pre></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">THINK</span><h2>Explain the design decision</h2><p>The Laptop constructor passes an ID to Device, and the virtual Label call dispatches to Laptop&#39;s override.</p></div><div class="nl-stage"><span class="nl-stage-label">CONNECT TO PRIOR KNOWLEDGE</span><p>Procedural programming was taught in Lessons 009–012. Now focus on how classes and objects organise related data and behaviour.</p></div></article></div></section><section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">MODELLED EXAMPLE</span><h2>OOP · Synoptic Exam Practice</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.05rem;line-height:1.5"><code>Device d = new Laptop(&quot;L01&quot;);
+}</code></pre></article><article class="nl-explanation"><div class="nl-stage"><span class="nl-stage-label">THINK</span><h2>Explain the design decision</h2><p>The Laptop constructor passes an ID to Device, and the virtual Label call dispatches to Laptop&#39;s override.</p></div><div class="nl-stage"><span class="nl-stage-label">CONNECT TO PRIOR KNOWLEDGE</span><p>Procedural programming was taught in Lessons 009–012. Now focus on how classes and objects organise related data and behaviour.</p></div><div class="nl-stage"><span class="nl-stage-label">OCR APPENDIX 5d · EXAM NOTATION</span><h2>Recognise the same idea in OCR pseudocode</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.05rem;line-height:1.5"><code>class Pet
+  private name
+  public procedure new(givenName)
+    name = givenName
+  endprocedure
+endclass
+pet = new Pet("Pip")</code></pre><p>OCR uses <strong>new</strong> for the constructor and <strong>inherits</strong> for inheritance in its exam pseudocode. Our classroom implementation is C#.</p></div></article></div></section><section id="i-do" class="page phase-ido" data-phase-time="8 minutes"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">MODELLED EXAMPLE</span><h2>OOP · Synoptic Exam Practice</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.05rem;line-height:1.5"><code>Device d = new Laptop(&quot;L01&quot;);
 Console.WriteLine(d.Label());
 
 class Device {
