@@ -31,7 +31,7 @@
   const storeKey='synergy-assist-reading-preferences-v1';
   const defaults={font:'system',spacing:'comfortable',colour:'white',size:100,focus:false,rate:'1'};
   let prefs={...defaults};
-  const allowed={font:['system','arial','verdana','atkinson'],spacing:['normal','comfortable','wide'],colour:['white','cream','blue','green','dark'],rate:['0.8','1','1.2']};
+  const allowed={font:['system','arial','verdana','atkinson'],spacing:['normal','comfortable','wide'],colour:['white','cream','blue','green','dark'],rate:['0.8','0.9','1','1.1','1.2']};
   function localUrl(raw,ext){
     if(typeof raw!=='string'||!raw.startsWith('/')||raw.startsWith('//')||raw.length>1400)return null;
     try{
