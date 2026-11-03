@@ -136,7 +136,8 @@
   return chunks.join(' ').replace(/\s+/g,' ').trim();
  }
  function readingRoot(){
-  return document.querySelector('main .page.active')||
+  return document.querySelector('#viewer > .page:not([hidden])')||
+    document.querySelector('main .page.active')||
    document.querySelector('main .screen.active')||
    document.querySelector('#catchup-stage')||
    document.querySelector('main .panel.active')||
