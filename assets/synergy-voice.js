@@ -186,10 +186,11 @@
    for(const name of ['font','spacing','colour'])if(readerChoices[name].includes(stored[name]))readerPrefs[name]=stored[name];
    if(Number.isFinite(stored.size)&&stored.size>=90&&stored.size<=160)readerPrefs.size=Math.round(stored.size/10)*10;
    if(typeof stored.focus==='boolean')readerPrefs.focus=stored.focus;
+    if(typeof stored.enabled==='boolean')readingMode=stored.enabled;
  }catch(_){}
  function saveReader(){
    try{const previous=JSON.parse(localStorage.getItem(readerKey)||'{}');
-     localStorage.setItem(readerKey,JSON.stringify({...previous,...readerPrefs}));}catch(_){}
+     localStorage.setItem(readerKey,JSON.stringify({...previous,...readerPrefs,enabled:readingMode}));}catch(_){}
  }
  function clearReadingFocus(){
    if(readingFocus)readingFocus.classList.remove('synergy-reading-focus-target');
@@ -226,7 +227,7 @@
     '<option value="green">Soft green</option><option value="dark">Dark</option></select></label>',
     '<label class="synergy-reading-check"><input type="checkbox" data-reading-focus> Highlight selected paragraph</label>',
     '<button type="button" data-reading-reset>Reset reading settings</button>',
-    '<p class="synergy-voice-note">Preferences save on this device. Reading View starts off on each new page.</p>'
+    '<p class="synergy-voice-note">Changing a reading setting turns Reading View on. Your choices stay in place on this device until you switch it off or reset them.</p>'
    ].join('');
    const find=name=>section.querySelector('[data-reading-'+name+']');
    const view=find('view'),size=find('size'),font=find('font'),
@@ -240,14 +241,14 @@
      find('smaller').disabled=readerPrefs.size<=90;
      find('larger').disabled=readerPrefs.size>=160;
    }
-   function change(){saveReader();applyReader();sync();}
+   function change(activate=false){if(activate)readingMode=true;saveReader();applyReader();sync();}
    view.addEventListener('click',()=>{readingMode=!readingMode;change();});
-   find('smaller').addEventListener('click',()=>{readerPrefs.size=Math.max(90,readerPrefs.size-10);change();});
-   find('larger').addEventListener('click',()=>{readerPrefs.size=Math.min(160,readerPrefs.size+10);change();});
-   font.addEventListener('change',()=>{readerPrefs.font=font.value;change();});
-   spacing.addEventListener('change',()=>{readerPrefs.spacing=spacing.value;change();});
-   colour.addEventListener('change',()=>{readerPrefs.colour=colour.value;change();});
-   focus.addEventListener('change',()=>{readerPrefs.focus=focus.checked;change();});
+   find('smaller').addEventListener('click',()=>{readerPrefs.size=Math.max(90,readerPrefs.size-10);change(true);});
+   find('larger').addEventListener('click',()=>{readerPrefs.size=Math.min(160,readerPrefs.size+10);change(true);});
+   font.addEventListener('change',()=>{readerPrefs.font=font.value;change(true);});
+   spacing.addEventListener('change',()=>{readerPrefs.spacing=spacing.value;change(true);});
+   colour.addEventListener('change',()=>{readerPrefs.colour=colour.value;change(true);});
+   focus.addEventListener('change',()=>{readerPrefs.focus=focus.checked;change(true);});
    find('reset').addEventListener('click',()=>{
      Object.assign(readerPrefs,{font:'system',spacing:'normal',colour:'white',size:100,focus:false});
      readingMode=false;change();
