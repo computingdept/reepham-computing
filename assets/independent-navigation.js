@@ -114,6 +114,13 @@
     });
     show(0,false);
   }
+  /* All independent lesson screens share the same accessibility service. */
+  if(!document.querySelector('script[data-rhsc-site-nav]')){
+    const script=document.createElement('script');
+    script.src='/assets/site-nav.js?v=20261103-audit3';
+    script.dataset.rhscSiteNav='1';
+    document.head.appendChild(script);
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 })();
