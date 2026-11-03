@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-045",
   "course": "h446",
-  "title": "Data Structures · Constructors and Encapsulation",
+  "title": "OOP · Synoptic Exam Practice",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · synoptic exam practice. Retrieve earlier learning, read and trace the C# example, and practise OOP concepts with feedback.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "How do you create an object in C#?",
-          "answer": "Use new with a constructor",
+          "prompt": "How does LibraryBook reject a second loan?",
+          "answer": "It tests its private onLoan value and returns false.",
           "options": [
-            "Use new with a constructor",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "It tests its private onLoan value and returns false.",
+            "Initialise a new object.",
+            "Sorted input."
           ],
-          "feedback": "Model answer: Use new with a constructor"
+          "feedback": "Model answer: It tests its private onLoan value and returns false."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What is an instance field?",
-          "answer": "Value held separately per object",
+          "prompt": "What is a constructor for?",
+          "answer": "Initialise a new object.",
           "options": [
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method.",
-            "Value held separately per object"
+            "Initialise a new object.",
+            "Sorted input.",
+            "Restricted direct changes and validated updates."
           ],
-          "feedback": "Model answer: Value held separately per object"
+          "feedback": "Model answer: Initialise a new object."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "What does modularity improve?",
-          "answer": "Reuse and maintainability",
+          "prompt": "What does binary search require?",
+          "answer": "Sorted input.",
           "options": [
-            "There is not enough information to determine the result.",
-            "Reuse and maintainability",
-            "Reuse OR maintainability"
+            "Sorted input.",
+            "Restricted direct changes and validated updates.",
+            "It tests its private onLoan value and returns false."
           ],
-          "feedback": "Model answer: Reuse and maintainability"
+          "feedback": "Model answer: Sorted input."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "What is LIFO?",
-          "answer": "Last in first out",
+          "prompt": "Give two benefits of a private balance and public Deposit. [challenge]",
+          "answer": "Restricted direct changes and validated updates.",
           "options": [
-            "Last in first out",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "Restricted direct changes and validated updates.",
+            "It tests its private onLoan value and returns false.",
+            "Initialise a new object."
           ],
-          "feedback": "Model answer: Last in first out"
+          "feedback": "Model answer: Restricted direct changes and validated updates."
         }
       ]
     },
@@ -75,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "constructor — Initialises a new object",
-            "encapsulation — Controls access to internal state",
-            "private — Accessible only within its containing type",
-            "public — Accessible from other code",
-            "validation — Checks input meets rules"
+            "constructor — Initialises a newly created object",
+            "encapsulation — Control access to object state",
+            "inheritance — Reuse accessible members of a base class",
+            "polymorphism — Common call with different implementations",
+            "test case — Action/input with an expected outcome"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Protect the object invariant",
-          "text": "The constructor refuses a negative opening balance before storing it. The field is private, so outside code must use approved public methods instead of bypassing validation."
+          "title": "C# model",
+          "text": "Device d = new Laptop(\"L01\");\nConsole.WriteLine(d.Label());\n\nclass Device {\n  public string Id;\n  public Device(string id) { Id = id; }\n  public virtual string Label() { return \"Device\"; }\n}\n\nclass Laptop : Device {\n  public Laptop(string id) : base(id) { }\n  public override string Label() { return \"Laptop\"; }\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · Construct a valid account; control updates",
-          "text": "using System; Account savings = new Account(10); savings.Deposit(5); Console.WriteLine(savings.GetBalance()); class Account { private int balance; public Account(int opening) { if (opening < 0) throw new ArgumentOutOfRangeException(); balance = opening; } public int GetBalance()…"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Constructor sets the initial state",
-          "text": "new Account(10) invokes Account(int opening). It checks 10 is non-negative, then stores 10 in the private field balance."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Method validates the proposed change",
-          "text": "savings.Deposit(5) passes the positive-amount check and increases balance from 10 to 15. Outside code cannot change the private field directly."
+          "title": "Explain the trace",
+          "text": "The Laptop constructor passes an ID to Device, and the virtual Label call dispatches to Laptop's override."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'constructor'?",
-          "answer": "Initialises a new object",
+          "prompt": "Which definition matches 'constructor'?",
+          "answer": "Initialises a newly created object",
           "options": [
-            "Controls access to internal state",
-            "Accessible only within its containing type",
-            "Initialises a new object"
+            "Initialises a newly created object",
+            "Control access to object state",
+            "Reuse accessible members of a base class"
           ],
-          "feedback": "constructor — Initialises a new object"
+          "feedback": "Model answer: Initialises a newly created object"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'encapsulation'?",
-          "answer": "Controls access to internal state",
+          "prompt": "Which definition matches 'encapsulation'?",
+          "answer": "Control access to object state",
           "options": [
-            "Accessible only within its containing type",
-            "Controls access to internal state",
-            "Initialises a new object"
+            "Control access to object state",
+            "Reuse accessible members of a base class",
+            "Common call with different implementations"
           ],
-          "feedback": "encapsulation — Controls access to internal state"
+          "feedback": "Model answer: Control access to object state"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'private'?",
-          "answer": "Accessible only within its containing type",
+          "prompt": "Which definition matches 'inheritance'?",
+          "answer": "Reuse accessible members of a base class",
           "options": [
-            "Accessible only within its containing type",
-            "Initialises a new object",
-            "Controls access to internal state"
+            "Reuse accessible members of a base class",
+            "Common call with different implementations",
+            "Action/input with an expected outcome"
           ],
-          "feedback": "private — Accessible only within its containing type"
+          "feedback": "Model answer: Reuse accessible members of a base class"
         }
       ]
     },
@@ -153,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Trace a different validated account",
-          "text": "Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2);. What does current.GetBalance() give afterwards if the exception is caught by the caller?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Show the value after each operation",
-          "text": "What happens at construction, after the valid deposit, and at the attempted negative deposit?"
-        },
-        {
-          "type": "paragraph",
-          "title": "27; invalid deposit rejected",
-          "text": "Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
-        },
-        {
-          "type": "paragraph",
-          "title": "Construct a different valid object",
-          "text": "A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow."
+          "title": "Try → Discuss → Improve",
+          "text": "Predict the outcome of the object-oriented example, then check and improve."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Accessible from other code",
-          "answer": "public",
+          "prompt": "What does new Device(\"D01\").Label() return?",
+          "answer": "Device",
           "options": [
-            "public",
-            "constructor",
-            "encapsulation"
+            "Device",
+            "Laptop",
+            "D01"
           ],
-          "feedback": "public — Accessible from other code"
+          "feedback": "Model answer: Device"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Checks input meets rules",
-          "answer": "validation",
+          "prompt": "What does class Laptop : Device declare?",
+          "answer": "Laptop inherits Device",
           "options": [
-            "constructor",
-            "encapsulation",
-            "validation"
+            "Laptop inherits Device",
+            "Device inherits Laptop",
+            "Laptop contains a separate Device field"
           ],
-          "feedback": "validation — Checks input meets rules"
+          "feedback": "Model answer: Laptop inherits Device"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Initialises a new object",
-          "answer": "constructor",
+          "prompt": "Which term means: Common call with different implementations?",
+          "answer": "polymorphism",
           "options": [
-            "private",
-            "constructor",
-            "encapsulation"
+            "polymorphism",
+            "encapsulation",
+            "inheritance"
           ],
-          "feedback": "constructor — Initialises a new object"
+          "feedback": "Model answer: polymorphism"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Controls access to internal state",
-          "answer": "encapsulation",
+          "prompt": "Which term means: Action/input with an expected outcome?",
+          "answer": "test case",
           "options": [
-            "encapsulation",
-            "constructor",
-            "private"
+            "test case",
+            "inheritance",
+            "constructor"
           ],
-          "feedback": "encapsulation — Controls access to internal state"
+          "feedback": "Model answer: test case"
         }
       ]
     },
@@ -234,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace a different validated account Using the Account class, run Account current = new Account(20); current.Deposit(7); Then attempt current.Deposit(-2);. What does current.GetBalance() give afterwards if the exception is caught by the caller?",
-          "answer": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
+          "prompt": "What does Device d = new Laptop(\"L01\"); d.Label() return?",
+          "answer": "Laptop",
           "options": [
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private."
+            "Laptop",
+            "Device",
+            "L01"
           ],
-          "feedback": "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
+          "feedback": "Model answer: Laptop"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Construct a different valid object A Box has private int width; and a constructor accepting width. Write the validation condition that rejects zero or negative widths, then state which values new Box(4) and new Box(0) should allow.",
-          "answer": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
+          "prompt": "What does base(id) do in Laptop's constructor?",
+          "answer": "Calls the Device constructor",
           "options": [
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27.",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected."
+            "Calls the Device constructor",
+            "Overrides Device.Label()",
+            "Creates a new Device object"
           ],
-          "feedback": "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected."
+          "feedback": "Model answer: Calls the Device constructor"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Construct a valid account; control updates",
-          "answer": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
+          "prompt": "Why does override matter?",
+          "answer": "It supplies Laptop's implementation of Label()",
           "options": [
-            "MODEL ANSWER Reject invalid initial state if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w)); width = w; goes inside public Box(int w). Width 4 is accepted; width 0 is rejected.",
-            "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
-            "MODEL ANSWER 27; invalid deposit rejected Constructor sets 20; valid deposit makes 27. The second call raises an ArgumentOutOfRangeException before the assignment; when the caller handles it, the balance remains 27."
+            "It supplies Laptop's implementation of Label()",
+            "It makes the Id field static",
+            "It prevents a Device reference to a Laptop"
           ],
-          "feedback": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private."
+          "feedback": "Model answer: It supplies Laptop's implementation of Label()"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Construct a valid account; control updates",
-        "model": "STEP 3 Check valid and invalid cases GetBalance() returns 15. Deposit(-3) throws an exception before changing the balance. Encapsulation is controlled access, not merely writing private.",
+        "prompt": "Why does override matter? Explain why.",
+        "model": "It supplies Laptop's implementation of Label()",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "My explanation matches the scenario.",
+          "I used accurate OOP vocabulary.",
+          "I corrected my answer against the model."
         ]
       }
     },
@@ -289,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "encapsulation means: Controls access to internal state",
+          "prompt": "A Device variable can refer to a Laptop.",
           "answer": "true",
-          "feedback": "encapsulation — Controls access to internal state"
+          "feedback": "Correct: TRUE. Explain with lesson vocabulary."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "private means: Initialises a new object",
+          "prompt": "Constructors remove the need for testing.",
           "answer": "false",
-          "feedback": "private — Accessible only within its containing type"
+          "feedback": "Correct: FALSE. Explain with lesson vocabulary."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "public means: Accessible from other code",
+          "prompt": "An override can return type-specific output.",
           "answer": "true",
-          "feedback": "public — Accessible from other code"
+          "feedback": "Correct: TRUE. Explain with lesson vocabulary."
         }
       ]
     }

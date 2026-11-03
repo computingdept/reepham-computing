@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-039",
   "course": "h446",
-  "title": "Programming Techniques · Iteration and Tracing",
+  "title": "OOP · Attributes, Methods and State",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · attributes, methods and state. Retrieve earlier learning, trace the C# class example and complete independent OOP practice before checking feedback.",
   "stages": [
     {
       "id": "remember",
@@ -18,41 +18,51 @@
       "questions": [
         {
           "id": "r1",
-          "kind": "number",
-          "prompt": "What prints after int x=2; x=x*3;?",
-          "answer": "6",
-          "feedback": "Model answer: 6"
+          "kind": "choice",
+          "prompt": "What is the difference between class and object?",
+          "answer": "Blueprint versus instance.",
+          "options": [
+            "Blueprint versus instance.",
+            "A variable with a limited scope.",
+            "Last in, first out."
+          ],
+          "feedback": "Model answer: Blueprint versus instance."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What does a queue remove first?",
-          "answer": "The oldest item",
+          "prompt": "What is a local variable?",
+          "answer": "A variable with a limited scope.",
           "options": [
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method.",
-            "The oldest item"
+            "A variable with a limited scope.",
+            "Last in, first out.",
+            "They have independent stored states."
           ],
-          "feedback": "Model answer: The oldest item"
+          "feedback": "Model answer: A variable with a limited scope."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Why should loops have a stopping condition?",
-          "answer": "To avoid non-termination",
+          "prompt": "What does LIFO mean?",
+          "answer": "Last in, first out.",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "To avoid non-termination",
-            "There is not enough information to determine the result."
+            "Last in, first out.",
+            "They have independent stored states.",
+            "Blueprint versus instance."
           ],
-          "feedback": "Model answer: To avoid non-termination"
+          "feedback": "Model answer: Last in, first out."
         },
         {
           "id": "r4",
-          "kind": "number",
-          "prompt": "What is 0 XOR 1?",
-          "answer": "1",
-          "feedback": "Model answer: 1"
+          "kind": "choice",
+          "prompt": "Why might two Counter objects have different totals?",
+          "answer": "They have independent stored states.",
+          "options": [
+            "They have independent stored states.",
+            "Blueprint versus instance.",
+            "A variable with a limited scope."
+          ],
+          "feedback": "Model answer: They have independent stored states."
         }
       ]
     },
@@ -65,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "iteration — Repetition of statements",
-            "accumulator — Running total",
-            "counter — Tracks repetitions",
-            "condition — Controls loop continuation",
-            "termination — The loop ends"
+            "method — Named operation defined in a class",
+            "attribute — Data stored by an object",
+            "state — Current attribute values",
+            "instance — One object created from a class",
+            "call — Invoke a method on an object"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Explain the important decision",
-          "text": "Initialise the accumulator once. Each iteration changes total; i++ then advances the counter. Test i <= 3 before every pass."
+          "title": "Modelled C# example",
+          "text": "Counter a = new Counter();\nCounter b = new Counter();\na.Increment(); a.Increment();\nb.Increment();\n\nclass Counter {\n  public int Value = 0;\n  public void Increment() { Value++; }\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · Trace an accumulator",
-          "text": "int total = 0; for (int i = 1; i <= 3; i++) total += i;"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Initialise and trace pass one",
-          "text": "Initially total=0 and i=1. The test 1<=3 is true; total becomes 1, then i becomes 2."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Trace the remaining passes",
-          "text": "At i=2, total becomes 1+2=3; i becomes 3. At i=3, total becomes 3+3=6; i becomes 4."
+          "title": "Explain",
+          "text": "Value is an attribute; Increment is a method. Calling a.Increment affects a, not b."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'iteration'?",
-          "answer": "Repetition of statements",
+          "prompt": "Which definition matches 'method'?",
+          "answer": "Named operation defined in a class",
           "options": [
-            "Running total",
-            "Tracks repetitions",
-            "Repetition of statements"
+            "Named operation defined in a class",
+            "Data stored by an object",
+            "Current attribute values"
           ],
-          "feedback": "iteration — Repetition of statements"
+          "feedback": "Model answer: Named operation defined in a class"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'accumulator'?",
-          "answer": "Running total",
+          "prompt": "Which definition matches 'attribute'?",
+          "answer": "Data stored by an object",
           "options": [
-            "Tracks repetitions",
-            "Running total",
-            "Repetition of statements"
+            "Data stored by an object",
+            "Current attribute values",
+            "One object created from a class"
           ],
-          "feedback": "accumulator — Running total"
+          "feedback": "Model answer: Data stored by an object"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'counter'?",
-          "answer": "Tracks repetitions",
+          "prompt": "Which definition matches 'state'?",
+          "answer": "Current attribute values",
           "options": [
-            "Tracks repetitions",
-            "Repetition of statements",
-            "Running total"
+            "Current attribute values",
+            "One object created from a class",
+            "Invoke a method on an object"
           ],
-          "feedback": "counter — Tracks repetitions"
+          "feedback": "Model answer: Current attribute values"
         }
       ]
     },
@@ -143,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Problem 1",
-          "text": "for i = 0 to 3 exclusive, how many iterations?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Discuss, then respond",
-          "text": "for i = 0 to 3 exclusive, how many iterations?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Check your thinking",
-          "text": "3: i=0,1,2."
-        },
-        {
-          "type": "paragraph",
-          "title": "Problem 2",
-          "text": "while (x < 5) x++; starting x=3: final x?"
+          "title": "Try → Discuss → Improve",
+          "text": "Work through the class example. Predict the result before reading the feedback. Focus on the object, its state and the method call."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Controls loop continuation",
-          "answer": "condition",
+          "prompt": "What are a.Value and b.Value after two increments on a and one on b?",
+          "answer": "2 and 1",
           "options": [
-            "condition",
-            "iteration",
-            "accumulator"
+            "2 and 1",
+            "3 and 3",
+            "1 and 2"
           ],
-          "feedback": "condition — Controls loop continuation"
+          "feedback": "Model answer: 2 and 1"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? The loop ends",
-          "answer": "termination",
+          "prompt": "Which member changes Value?",
+          "answer": "Increment()",
           "options": [
-            "iteration",
-            "accumulator",
-            "termination"
+            "Increment()",
+            "Value",
+            "Counter"
           ],
-          "feedback": "termination — The loop ends"
+          "feedback": "Model answer: Increment()"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Repetition of statements",
-          "answer": "iteration",
+          "prompt": "Which OOP term means: One object created from a class?",
+          "answer": "instance",
           "options": [
-            "counter",
-            "iteration",
-            "accumulator"
+            "instance",
+            "attribute",
+            "state"
           ],
-          "feedback": "iteration — Repetition of statements"
+          "feedback": "Model answer: instance"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Running total",
-          "answer": "accumulator",
+          "prompt": "Which OOP term means: Invoke a method on an object?",
+          "answer": "call",
           "options": [
-            "accumulator",
-            "iteration",
-            "counter"
+            "call",
+            "state",
+            "method"
           ],
-          "feedback": "accumulator — Running total"
+          "feedback": "Model answer: call"
         }
       ]
     },
@@ -224,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 1 for i = 0 to 3 exclusive, how many iterations?",
-          "answer": "MODEL ANSWER Check your thinking 3: i=0,1,2.",
+          "prompt": "Which is the attribute in Counter?",
+          "answer": "Value",
           "options": [
-            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
-            "MODEL ANSWER Check your thinking 5.",
-            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once."
+            "Value",
+            "Increment()",
+            "new Counter()"
           ],
-          "feedback": "MODEL ANSWER Check your thinking 3: i=0,1,2."
+          "feedback": "Model answer: Value"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 2 while (x < 5) x++; starting x=3: final x?",
-          "answer": "MODEL ANSWER Check your thinking 5.",
+          "prompt": "What is a.Value after two Increment() calls from zero?",
+          "answer": "2",
           "options": [
-            "MODEL ANSWER Check your thinking 3: i=0,1,2.",
-            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
-            "MODEL ANSWER Check your thinking 5."
+            "2",
+            "1",
+            "0"
           ],
-          "feedback": "MODEL ANSWER Check your thinking 5."
+          "feedback": "Model answer: 2"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
-          "answer": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
+          "prompt": "What does calling b.Increment() change?",
+          "answer": "b's Value",
           "options": [
-            "MODEL ANSWER Check your thinking 5.",
-            "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
-            "MODEL ANSWER Check your thinking 3: i=0,1,2."
+            "b's Value",
+            "a's Value",
+            "Both objects' Value"
           ],
-          "feedback": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once."
+          "feedback": "Model answer: b's Value"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Trace an accumulator int total = 0; for (int i = 1; i <= 3; i++) total += i;",
-        "model": "STEP 3 Show the failed test 4<=3 is false, so the body stops and total remains 6. A while loop may run zero times; a do...while tests after its body and runs at least once.",
+        "prompt": "What does calling b.Increment() change? Explain your decision using precise H446 terminology.",
+        "model": "b's Value",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "My answer responds to the specific question.",
+          "I use precise OOP vocabulary.",
+          "I check and improve my reasoning after the model."
         ]
       }
     },
@@ -279,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "accumulator means: Running total",
-          "answer": "true",
-          "feedback": "accumulator — Running total"
+          "prompt": "Value is a method.",
+          "answer": "false",
+          "feedback": "The correct answer is FALSE. Explain it using today's lesson."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "counter means: Repetition of statements",
-          "answer": "false",
-          "feedback": "counter — Tracks repetitions"
+          "prompt": "A method may update an attribute.",
+          "answer": "true",
+          "feedback": "The correct answer is TRUE. Explain it using today's lesson."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "condition means: Controls loop continuation",
-          "answer": "true",
-          "feedback": "condition — Controls loop continuation"
+          "prompt": "A call on one object must update every other instance.",
+          "answer": "false",
+          "feedback": "The correct answer is FALSE. Explain it using today's lesson."
         }
       ]
     }

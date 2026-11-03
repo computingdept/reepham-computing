@@ -384,7 +384,7 @@ yearButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.yea
    Audit subpoints as future lessons are written. Summer 2 161–180 is protected NEA. */
 const plannedYear12=[
   // Autumn 2: revisit existing programming and data structure lessons using C# OOP.
-  [38,43,'2.2.1'],[44,58,'1.4.2'],
+  [38,45,'2.2.1'],[46,58,'1.4.2'],
   // Computational thinking: compact first coverage, revisited within later algorithms.
   [59,60,'2.1.1'],[61,61,'2.1.2'],[62,62,'2.1.3'],
   [63,63,'2.1.4'],[64,64,'2.1.5'],
@@ -407,6 +407,16 @@ function curriculumColour(specKey){
   const section=String(specKey).match(/^[12]\.\d/);
   return section?paperPalette[section[0]]||paperPalette.planned:paperPalette.planned;
 }
+const year12OOPTitles={
+  38:'OOP · Classes and Objects',
+  39:'OOP · Attributes, Methods and State',
+  40:'OOP · Constructors and Initialisation',
+  41:'OOP · Encapsulation and Access',
+  42:'OOP · Inheritance and Reuse',
+  43:'OOP · Polymorphism and Overriding',
+  44:'OOP · Design a Class Model',
+  45:'OOP · Synoptic Exam Practice'
+};
 const year12Journeys=[
   'Data types → Programming techniques → Data structures → Boolean algebra → Consolidation',
   'OOP foundations → Data structures revisited → Computational thinking & methods',
@@ -493,7 +503,7 @@ function renderLessons(){
       const publishedDraft=window.OfflineBooklets?.get('h446',x)||null;
       const tile=Navigation.createTile({
         number:pad(x),
-        title:year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
+        title:(year===12?year12OOPTitles[x]:null)||year13Lessons[x]?.title||specificationThemes[specKey]?.label||'Lesson '+pad(x),
         openHref:href?href.split('#')[0]+'#do-now':null,
         // H446 interactive catch-up lessons 001–006 uses the shared J277 engine.
         learnHref:(x>=1&&x<=160)||(x>=181&&x<=320)?'lessons/h446/lesson-'+pad(x)+'/learn.html':publishedDraft?.learn_colour||null,

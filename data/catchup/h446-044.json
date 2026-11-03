@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-044",
   "course": "h446",
-  "title": "Data Structures · Classes and Objects in C#",
+  "title": "OOP · Design a Class Model",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · design a class model. Retrieve earlier learning, read and trace the C# example, and practise OOP concepts with feedback.",
   "stages": [
     {
       "id": "remember",
@@ -19,45 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What is a method parameter?",
-          "answer": "Named input to a method",
+          "prompt": "What makes Sound polymorphic?",
+          "answer": "Dog and Cat override the virtual base method.",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "Named input to a method",
-            "There is not enough information to determine the result."
+            "Dog and Cat override the virtual base method.",
+            "Named fields versus indexed elements.",
+            "To break work into reusable steps."
           ],
-          "feedback": "Model answer: Named input to a method"
+          "feedback": "Model answer: Dog and Cat override the virtual base method."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What is a breakpoint?",
-          "answer": "A debugger stopping point",
+          "prompt": "How do records differ from arrays?",
+          "answer": "Named fields versus indexed elements.",
           "options": [
-            "A debugger stopping point",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "Named fields versus indexed elements.",
+            "To break work into reusable steps.",
+            "A student is not a kind of book."
           ],
-          "feedback": "Model answer: A debugger stopping point"
+          "feedback": "Model answer: Named fields versus indexed elements."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "How does a queue differ from stack?",
-          "answer": "FIFO versus LIFO",
+          "prompt": "Why use procedures?",
+          "answer": "To break work into reusable steps.",
           "options": [
-            "FIFO versus FIFO",
-            "LIFO versus LIFO",
-            "FIFO versus LIFO"
+            "To break work into reusable steps.",
+            "A student is not a kind of book.",
+            "Dog and Cat override the virtual base method."
           ],
-          "feedback": "Model answer: FIFO versus LIFO"
+          "feedback": "Model answer: To break work into reusable steps."
         },
         {
           "id": "r4",
-          "kind": "number",
-          "prompt": "State the output of 1 AND 0.",
-          "answer": "0",
-          "feedback": "Model answer: 0"
+          "kind": "choice",
+          "prompt": "Why is Student has-a Book an association rather than inheritance?",
+          "answer": "A student is not a kind of book.",
+          "options": [
+            "A student is not a kind of book.",
+            "Dog and Cat override the virtual base method.",
+            "Named fields versus indexed elements."
+          ],
+          "feedback": "Model answer: A student is not a kind of book."
         }
       ]
     },
@@ -70,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "class — Blueprint for objects",
-            "object — An instance of a class",
-            "field — Data associated with an object",
-            "method — Behaviour in a class",
-            "instance — One created object"
+            "model — Simplified representation of a problem",
+            "class diagram — Shows classes, fields, methods and relationships",
+            "responsibility — What one class must represent or do",
+            "association — Relationship between different object types",
+            "encapsulation — Control access to object state"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Class ≠ instance",
-          "text": "A class defines the fields and behaviour available to each object. new Student() constructs an instance; a separate new creates another independent object."
+          "title": "C# model",
+          "text": "class LibraryBook {\n  private bool onLoan = false;\n  public string Title { get; }\n  public LibraryBook(string title) { Title = title; }\n  public bool Borrow() {\n    if (onLoan) return false;\n    onLoan = true;\n    return true;\n  }\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · One class, two independent objects",
-          "text": "using System; Badge amber = new Badge(); Badge blue = new Badge(); amber.Add(2); Console.WriteLine(amber.Points + \",\" + blue.Points); class Badge { public int Points = 0; public void Add(int n) { Points += n; } }"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Identify class, objects and members",
-          "text": "Badge is the class (blueprint). amber and blue are references to two objects. Each has its own Points field and can run the Add method."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Trace the state change",
-          "text": "new Badge() creates each object with Points = 0. amber.Add(2) changes amber’s field from 0 to 2; blue remains at 0 because it is a different instance."
+          "title": "Explain the trace",
+          "text": "Choose meaningful classes from the scenario, then decide which data each object owns and which methods enforce rules."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'class'?",
-          "answer": "Blueprint for objects",
+          "prompt": "Which definition matches 'model'?",
+          "answer": "Simplified representation of a problem",
           "options": [
-            "Blueprint for objects",
-            "An instance of a class",
-            "Data associated with an object"
+            "Simplified representation of a problem",
+            "Shows classes, fields, methods and relationships",
+            "What one class must represent or do"
           ],
-          "feedback": "class — Blueprint for objects"
+          "feedback": "Model answer: Simplified representation of a problem"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'object'?",
-          "answer": "An instance of a class",
+          "prompt": "Which definition matches 'class diagram'?",
+          "answer": "Shows classes, fields, methods and relationships",
           "options": [
-            "Blueprint for objects",
-            "Data associated with an object",
-            "An instance of a class"
+            "Shows classes, fields, methods and relationships",
+            "What one class must represent or do",
+            "Relationship between different object types"
           ],
-          "feedback": "object — An instance of a class"
+          "feedback": "Model answer: Shows classes, fields, methods and relationships"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'field'?",
-          "answer": "Data associated with an object",
+          "prompt": "Which definition matches 'responsibility'?",
+          "answer": "What one class must represent or do",
           "options": [
-            "An instance of a class",
-            "Data associated with an object",
-            "Blueprint for objects"
+            "What one class must represent or do",
+            "Relationship between different object types",
+            "Control access to object state"
           ],
-          "feedback": "field — Data associated with an object"
+          "feedback": "Model answer: What one class must represent or do"
         }
       ]
     },
@@ -148,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Different class, different data",
-          "text": "using System; Counter first = new Counter(); Counter second = new Counter(); first.Increase(); first.Increase(); Console.WriteLine(first.Value + \",\" + second.Value); class Counter { public int Value = 0; public void Increase() { Value++; } } What are first.Value and second.Value?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Trace both instances",
-          "text": "Start with separate fields: first = 0, second = 0. Track which object receives each method call before revealing the result."
-        },
-        {
-          "type": "paragraph",
-          "title": "Independent state",
-          "text": "first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second."
-        },
-        {
-          "type": "paragraph",
-          "title": "Change the receiver",
-          "text": "Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies."
+          "title": "Try → Discuss → Improve",
+          "text": "Predict the outcome of the object-oriented example, then check and improve."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Behaviour in a class",
-          "answer": "method",
+          "prompt": "What happens when a book is borrowed twice?",
+          "answer": "First true; then false",
           "options": [
-            "object",
-            "method",
-            "class"
+            "First true; then false",
+            "Both calls return true",
+            "Both calls return false"
           ],
-          "feedback": "method — Behaviour in a class"
+          "feedback": "Model answer: First true; then false"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? One created object",
-          "answer": "instance",
+          "prompt": "Why is onLoan private?",
+          "answer": "To prevent bypassing the borrowing rule",
           "options": [
-            "instance",
-            "class",
-            "object"
+            "To prevent bypassing the borrowing rule",
+            "So every borrower sees the field",
+            "So Book becomes a subclass of Student"
           ],
-          "feedback": "instance — One created object"
+          "feedback": "Model answer: To prevent bypassing the borrowing rule"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Blueprint for objects",
-          "answer": "class",
+          "prompt": "Which term means: Relationship between different object types?",
+          "answer": "association",
           "options": [
-            "object",
-            "field",
-            "class"
+            "association",
+            "class diagram",
+            "responsibility"
           ],
-          "feedback": "class — Blueprint for objects"
+          "feedback": "Model answer: association"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? An instance of a class",
-          "answer": "object",
+          "prompt": "Which term means: Control access to object state?",
+          "answer": "encapsulation",
           "options": [
-            "field",
-            "object",
-            "class"
+            "encapsulation",
+            "responsibility",
+            "model"
           ],
-          "feedback": "object — An instance of a class"
+          "feedback": "Model answer: encapsulation"
         }
       ]
     },
@@ -229,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Different class, different data What are first.Value and second.Value?",
-          "answer": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second.",
+          "prompt": "Which candidate classes fit the library scenario?",
+          "answer": "Student and LibraryBook",
           "options": [
-            "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
-            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second.",
-            "MODEL ANSWER Targeted update first.Value = 2; second.Value = 1. The variable second refers to the second created Counter instance."
+            "Student and LibraryBook",
+            "Title and True",
+            "Borrow and Return"
           ],
-          "feedback": "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second."
+          "feedback": "Model answer: Student and LibraryBook"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Change the receiver Continue from Example 1: second.Increase(); What values are stored now? Explain what second identifies.",
-          "answer": "MODEL ANSWER Targeted update first.Value = 2; second.Value = 1. The variable second refers to the second created Counter instance.",
+          "prompt": "Student borrows LibraryBook is what relationship?",
+          "answer": "An association",
           "options": [
-            "MODEL ANSWER Targeted update first.Value = 2; second.Value = 1. The variable second refers to the second created Counter instance.",
-            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second.",
-            "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another."
+            "An association",
+            "Inheritance",
+            "Overriding"
           ],
-          "feedback": "MODEL ANSWER Targeted update first.Value = 2; second.Value = 1. The variable second refers to the second created Counter instance."
+          "feedback": "Model answer: An association"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: One class, two independent objects",
-          "answer": "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
+          "prompt": "Which test checks the loan rule?",
+          "answer": "Borrow twice: true then false",
           "options": [
-            "MODEL ANSWER Independent state first.Value = 2 and second.Value = 0. Both calls act on first; they do not change second.",
-            "MODEL ANSWER Targeted update first.Value = 2; second.Value = 1. The variable second refers to the second created Counter instance.",
-            "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another."
+            "Borrow twice: true then false",
+            "Borrow twice: true then true",
+            "Create a book without reading its methods"
           ],
-          "feedback": "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another."
+          "feedback": "Model answer: Borrow twice: true then false"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. One class, two independent objects",
-        "model": "STEP 3 Predict, then check the output The output is 2,0. A class definition does not create an object. A method call on one object does not automatically change the fields of another.",
+        "prompt": "Which test checks the loan rule? Explain why.",
+        "model": "Borrow twice: true then false",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "My explanation matches the scenario.",
+          "I used accurate OOP vocabulary.",
+          "I corrected my answer against the model."
         ]
       }
     },
@@ -284,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "object means: An instance of a class",
-          "answer": "true",
-          "feedback": "object — An instance of a class"
+          "prompt": "Every noun must be a class.",
+          "answer": "false",
+          "feedback": "Correct: FALSE. Explain with lesson vocabulary."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "field means: Blueprint for objects",
-          "answer": "false",
-          "feedback": "field — Data associated with an object"
+          "prompt": "A method can enforce rules.",
+          "answer": "true",
+          "feedback": "Correct: TRUE. Explain with lesson vocabulary."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "method means: Behaviour in a class",
-          "answer": "true",
-          "feedback": "method — Behaviour in a class"
+          "prompt": "Student should inherit LibraryBook.",
+          "answer": "false",
+          "feedback": "Correct: FALSE. Explain with lesson vocabulary."
         }
       ]
     }

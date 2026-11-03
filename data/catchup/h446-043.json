@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-043",
   "course": "h446",
-  "title": "Programming Techniques · Modular Design and IDE Debugging",
+  "title": "OOP · Polymorphism and Overriding",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · polymorphism and overriding. Retrieve earlier learning, trace the C# object model, and practise before reviewing your answers.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What does ref do in C#?",
-          "answer": "Allows access to and modification of caller variable",
+          "prompt": "What does Dog inherit from Animal?",
+          "answer": "Accessible members, such as Eat and Name.",
           "options": [
-            "Allows access to OR modification of caller variable",
-            "There is not enough information to determine the result.",
-            "Allows access to and modification of caller variable"
+            "Accessible members, such as Eat and Name.",
+            "The position of an element.",
+            "Two keys map to the same index."
           ],
-          "feedback": "Model answer: Allows access to and modification of caller variable"
+          "feedback": "Model answer: Accessible members, such as Eat and Name."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What is variable scope?",
-          "answer": "Where a variable is accessible",
+          "prompt": "What is an array index?",
+          "answer": "The position of an element.",
           "options": [
-            "There is not enough information to determine the result.",
-            "Where a variable is accessible",
-            "Where a variable is not accessible"
+            "The position of an element.",
+            "Two keys map to the same index.",
+            "Dog is a subtype of Animal."
           ],
-          "feedback": "Model answer: Where a variable is accessible"
+          "feedback": "Model answer: The position of an element."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "What does a void method return?",
-          "answer": "No value",
+          "prompt": "What is a hash collision?",
+          "answer": "Two keys map to the same index.",
           "options": [
-            "No value",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "Two keys map to the same index.",
+            "Dog is a subtype of Animal.",
+            "Accessible members, such as Eat and Name."
           ],
-          "feedback": "Model answer: No value"
+          "feedback": "Model answer: Two keys map to the same index."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "State one advantage of a hash table.",
-          "answer": "Fast average access when well designed",
+          "prompt": "Why can an Animal variable refer to a Dog?",
+          "answer": "Dog is a subtype of Animal.",
           "options": [
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method.",
-            "Fast average access when well designed"
+            "Dog is a subtype of Animal.",
+            "Accessible members, such as Eat and Name.",
+            "The position of an element."
           ],
-          "feedback": "Model answer: Fast average access when well designed"
+          "feedback": "Model answer: Dog is a subtype of Animal."
         }
       ]
     },
@@ -75,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "modularity — Divide code into independent components",
-            "breakpoint — Pause in the debugger",
-            "step into — Enter a method while debugging",
-            "watch — Monitor expression/variable",
-            "testability — Ease of checking behaviour"
+            "polymorphism — Different object types respond through a common interface",
+            "virtual — Base method that can be overridden",
+            "override — Provide a derived-class implementation",
+            "base type — Shared parent type",
+            "dispatch — Select the implementation executed"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Explain the important decision",
-          "text": "Break on the array access, Step Into Sum and watch i, marks.Length and total. Diagnose the failing state before editing the loop condition."
+          "title": "Trace this C# example",
+          "text": "Animal[] pets = { new Dog(), new Cat() };\nforeach (Animal p in pets) Console.WriteLine(p.Sound());\n\nclass Animal {\n  public virtual string Sound() { return \"?\"; }\n}\n\nclass Dog : Animal {\n  public override string Sound() { return \"Woof\"; }\n}\n\nclass Cat : Animal {\n  public override string Sound() { return \"Meow\"; }\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · Trace a method call",
-          "text": "static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Pause and inspect",
-          "text": "Call Sum with [4,6]. Step Into enters the method; Step Over a call would run it without following its internal statements. Watch total=0, Length=2 and i=0."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Locate the first invalid access",
-          "text": "At i=0 total becomes 4; at i=1 it becomes 10. The faulty test allows i=2, but valid indexes are 0 and 1. The next array access fails."
+          "title": "What to notice",
+          "text": "One call, p.Sound(), has different results according to the actual object type: Woof then Meow."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'modularity'?",
-          "answer": "Divide code into independent components",
+          "prompt": "Which definition matches 'polymorphism'?",
+          "answer": "Different object types respond through a common interface",
           "options": [
-            "Enter a method while debugging",
-            "Divide code into independent components",
-            "Pause in the debugger"
+            "Different object types respond through a common interface",
+            "Base method that can be overridden",
+            "Provide a derived-class implementation"
           ],
-          "feedback": "modularity — Divide code into independent components"
+          "feedback": "Model answer: Different object types respond through a common interface"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'breakpoint'?",
-          "answer": "Pause in the debugger",
+          "prompt": "Which definition matches 'virtual'?",
+          "answer": "Base method that can be overridden",
           "options": [
-            "Pause in the debugger",
-            "Divide code into independent components",
-            "Enter a method while debugging"
+            "Base method that can be overridden",
+            "Provide a derived-class implementation",
+            "Shared parent type"
           ],
-          "feedback": "breakpoint — Pause in the debugger"
+          "feedback": "Model answer: Base method that can be overridden"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'step into'?",
-          "answer": "Enter a method while debugging",
+          "prompt": "Which definition matches 'override'?",
+          "answer": "Provide a derived-class implementation",
           "options": [
-            "Divide code into independent components",
-            "Pause in the debugger",
-            "Enter a method while debugging"
+            "Provide a derived-class implementation",
+            "Shared parent type",
+            "Select the implementation executed"
           ],
-          "feedback": "step into — Enter a method while debugging"
+          "feedback": "Model answer: Provide a derived-class implementation"
         }
       ]
     },
@@ -153,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Problem 1",
-          "text": "A method has no return despite return type int. What is wrong?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Discuss, then respond",
-          "text": "A method has no return despite return type int. What is wrong?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Check your thinking",
-          "text": "Not all code paths return a value."
-        },
-        {
-          "type": "paragraph",
-          "title": "Problem 2",
-          "text": "Why step into a function in a debugger?"
+          "title": "Try → Discuss → Improve",
+          "text": "Predict the result before checking your response. Refer back to the C# example if needed."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Monitor expression/variable",
-          "answer": "watch",
+          "prompt": "What does Animal a = new Cat(); a.Sound() produce?",
+          "answer": "Meow",
           "options": [
-            "modularity",
-            "breakpoint",
-            "watch"
+            "Meow",
+            "Woof",
+            "?"
           ],
-          "feedback": "watch — Monitor expression/variable"
+          "feedback": "Model answer: Meow"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Ease of checking behaviour",
-          "answer": "testability",
+          "prompt": "Why is Sound virtual in Animal?",
+          "answer": "Derived classes can override its implementation",
           "options": [
-            "breakpoint",
-            "testability",
-            "modularity"
+            "Derived classes can override its implementation",
+            "It makes Sound a private attribute",
+            "It calls every Sound method at once"
           ],
-          "feedback": "testability — Ease of checking behaviour"
+          "feedback": "Model answer: Derived classes can override its implementation"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Divide code into independent components",
-          "answer": "modularity",
+          "prompt": "Which term means: Shared parent type?",
+          "answer": "base type",
           "options": [
-            "modularity",
-            "breakpoint",
-            "step into"
+            "base type",
+            "virtual",
+            "override"
           ],
-          "feedback": "modularity — Divide code into independent components"
+          "feedback": "Model answer: base type"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Pause in the debugger",
-          "answer": "breakpoint",
+          "prompt": "Which term means: Select the implementation executed?",
+          "answer": "dispatch",
           "options": [
-            "modularity",
-            "step into",
-            "breakpoint"
+            "dispatch",
+            "override",
+            "polymorphism"
           ],
-          "feedback": "breakpoint — Pause in the debugger"
+          "feedback": "Model answer: dispatch"
         }
       ]
     },
@@ -234,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 1 A method has no return despite return type int. What is wrong?",
-          "answer": "MODEL ANSWER Check your thinking Not all code paths return a value.",
+          "prompt": "What are the outputs for Dog followed by Cat?",
+          "answer": "Woof then Meow",
           "options": [
-            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
-            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
-            "MODEL ANSWER Check your thinking Not all code paths return a value."
+            "Woof then Meow",
+            "Meow then Woof",
+            "? then ?"
           ],
-          "feedback": "MODEL ANSWER Check your thinking Not all code paths return a value."
+          "feedback": "Model answer: Woof then Meow"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 2 Why step into a function in a debugger?",
-          "answer": "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
+          "prompt": "What enables method overriding in the base class?",
+          "answer": "virtual",
           "options": [
-            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
-            "MODEL ANSWER Check your thinking To inspect statements inside the called method.",
-            "MODEL ANSWER Check your thinking Not all code paths return a value."
+            "virtual",
+            "private",
+            "new"
           ],
-          "feedback": "MODEL ANSWER Check your thinking To inspect statements inside the called method."
+          "feedback": "Model answer: virtual"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
-          "answer": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
+          "prompt": "What is polymorphism in this example?",
+          "answer": "The same Sound call can use different derived implementations",
           "options": [
-            "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
-            "MODEL ANSWER Check your thinking Not all code paths return a value.",
-            "MODEL ANSWER Check your thinking To inspect statements inside the called method."
+            "The same Sound call can use different derived implementations",
+            "Every Animal has the same Name",
+            "All objects must be Dog"
           ],
-          "feedback": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused."
+          "feedback": "Model answer: The same Sound call can use different derived implementations"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Trace a method call static int Sum(int[] marks) { int total = 0; for (int i=0; i<=marks.Length; i++) total += marks[i]; return total; }",
-        "model": "STEP 3 Correct and retest Change i<=marks.Length to i<marks.Length. Retest [4,6]→10, []→0 and [7]→7. A small routine can now be tested independently and reused.",
+        "prompt": "What is polymorphism in this example? Explain using precise OOP terminology.",
+        "model": "The same Sound call can use different derived implementations",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "I explain the class and object involved.",
+          "I use accurate OOP keywords.",
+          "I correct and improve after comparing with the model."
         ]
       }
     },
@@ -289,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "breakpoint means: Divide code into independent components",
-          "answer": "false",
-          "feedback": "breakpoint — Pause in the debugger"
+          "prompt": "The same call may run a derived override.",
+          "answer": "true",
+          "feedback": "Correct: TRUE. Explain using today's idea."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "step into means: Enter a method while debugging",
-          "answer": "true",
-          "feedback": "step into — Enter a method while debugging"
+          "prompt": "An override must return the same value as its parent.",
+          "answer": "false",
+          "feedback": "Correct: FALSE. Explain using today's idea."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "watch means: Monitor expression/variable",
+          "prompt": "The actual object type determines virtual method dispatch.",
           "answer": "true",
-          "feedback": "watch — Monitor expression/variable"
+          "feedback": "Correct: TRUE. Explain using today's idea."
         }
       ]
     }
