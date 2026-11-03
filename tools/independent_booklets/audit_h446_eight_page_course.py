@@ -137,12 +137,16 @@ def main():
           "issues":list(dict.fromkeys(issues))
         })
     problems=[x for x in rows if x["issues"]]
+    selection_review=[x for x in rows if x["source_question_count"] is not None and x["printed_question_count"] is not None and x["source_question_count"]>x["printed_question_count"]]
+    first_last_review=[x for x in selection_review if x["printed_question_count"]==2 and x["printed_to_original_question_numbers"]==[1,x["source_question_count"]]]
     result={
       "audit_utc":datetime.now(timezone.utc).isoformat(),
       "catalogued_print_resources":len(cat),
       "eight_page_student_drafts":sum(r["new_a4_pages"]==8 for r in rows),
       "a4_and_a3_variants_expected_per_lesson":4,
       "structural_issue_count":len(problems),
+      "question_selection_review_count":len(selection_review),
+      "first_last_selection_review_count":len(first_last_review),
       "teacher_approved":sum(x.get("teacher_approved") is True for x in cat.values()),
       "live_print_links_unchanged":not any("Live Print link" in e for x in rows for e in x["issues"]),
       "old_booklets_over_16_pages":sum(r["original_a4_pages"]>16 for r in rows),
@@ -160,6 +164,8 @@ def main():
       f"| Existing catalogue | {result['catalogued_print_resources']} |",
       f"| Eight-page draft sets with A4, A3, colour and B&W | {result['eight_page_student_drafts']} |",
       f"| Structural QA exceptions | {result['structural_issue_count']} |",
+      f"| Independent exam-question selection needing curriculum review | {result['question_selection_review_count']} |",
+      f"| Of those, automatic first-and-last selections | {result['first_last_selection_review_count']} |",
       f"| Original print booklets longer than 16 A4 | {result['old_booklets_over_16_pages']} |",
       f"| Original print booklets longer than eight A4 | {result['old_booklets_over_8_pages']} |",
       f"| Teacher-approved | {result['teacher_approved']} |",
@@ -174,6 +180,11 @@ def main():
       "- The two selected exam questions in some booklets map to original online questions as shown in the per-lesson record; a longer online question list has not been silently reproduced in print.",
       "- Detailed marking guidance is in separate **publicly accessible GitHub review-key files**, which are NOT secured teacher-only material; do not rely on file names for student access control.",
       "- The original published **Print buttons still point to the earlier PDFs**. No booklet has been personally checked or teacher-approved. Human inspection of OCR accuracy, question value, diagram labels, writable space and readability is essential before changing links.",
+      "",
+      "## Independent question selection — curriculum review flags","",
+      "These flags are NOT structural QA exceptions and NOT proof that another booklet page lacks the skill. They identify lessons whose printed independent questions omit some of the online You Do sequence; assess objective coverage by reading the student booklet.",
+      "",
+      ("Flagged lessons: "+", ".join(f"{x['lesson']:03d}" for x in selection_review)) if selection_review else "No reduced question selections identified.",
       "",
       "## Structural exceptions",""
     ]
