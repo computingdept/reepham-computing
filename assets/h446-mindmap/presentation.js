@@ -137,7 +137,8 @@ const slides37=[
   ["STRUCTURES → SEARCH","Ordered data makes binary search possible."],
   ["FINAL CHECK","Circle one weak subtopic. In green pen, add one missing step or example."]
  ],4,"links"),
- exit("Exit · True or false?","Binary search can work reliably on any unsorted collection without preparing the data.",false,"False. Binary search relies on ordering to justify discarding half of the collection.")
+ exit("Exit · True or false?","Binary search can work reliably on any unsorted collection without preparing the data.",false,"False. Binary search relies on ordering to justify discarding half of the collection."),
+ {type:"complete",phase:"REVIEW",routine:"Listening",response:"A3 mind map",mins:3,title:"Our completed H446 mind map",sub:"A model to compare with your own work — not a page to copy. Check it and add one missing link."}
 ];
 const slides=lesson===36?slides36:slides37;
 let index=0,shownSteps=0,answerVisible=false;
@@ -185,8 +186,56 @@ function microSVG(title,steps){
  }).join("");
  return '<svg class="micro-svg" viewBox="0 0 850 405" role="img" aria-label="Example mind map of H446 1.4.1 Number Systems that grows as four pieces of information are revealed"><rect width="850" height="405" rx="16" fill="white"/>'+lines+'<rect x="310" y="171" width="230" height="72" rx="17" fill="#205b42"/><text x="425" y="199" text-anchor="middle" font-size="21" font-weight="900" fill="white">1.4.1</text><text x="425" y="224" text-anchor="middle" font-size="21" font-weight="900" fill="white">NUMBER SYSTEMS</text>'+cards+'</svg>';
 }
+/* Final teaching aid: a complete *example* built from the topics already
+   taught. It contains no source assessment questions, diagrams or mark scheme. */
+function completedMapSVG(){
+ const topics=[
+  {spec:"1.4.1",name:"DATA TYPES",x:22,y:25,w:395,h:207,color:"#326a99",fill:"#e9f3fc",
+   lines:["Binary (2) · denary (10) · hex (16)","Signed numbers: two's complement","Float: signed mantissa × 2^exponent","Bit shifts / masks; ASCII and Unicode"],
+   example:"Example: 13₁₀ = 1101₂ = D₁₆"},
+  {spec:"1.4.2",name:"DATA STRUCTURES",x:903,y:25,w:395,h:207,color:"#237a61",fill:"#e7f5ef",
+   lines:["Array: index · record: named fields","Stack push/pop = LIFO","Queue enqueue/dequeue = FIFO","Tree / linked list / graph / hash table"],
+   example:"Link: pointer → another node"},
+  {spec:"1.4.3",name:"BOOLEAN ALGEBRA",x:22,y:488,w:395,h:217,color:"#a76c2d",fill:"#fff2e0",
+   lines:["AND · OR · NOT · XOR / truth tables","K-maps: group adjacent 1s (2, 4, 8…)","Half adder: A + B → Sum, Carry","Full adder adds Cin; D-type stores 1 bit"],
+   example:"Binary values → gates and circuits"},
+  {spec:"2.2.1",name:"PROGRAMMING",x:903,y:488,w:395,h:217,color:"#7953a5",fill:"#f2eafb",
+   lines:["Sequence · selection · iteration","Functions return; procedures perform","Local scope; by-value / by-reference","Modularity, tracing and debugging"],
+   example:"byRef can update caller data"},
+  {spec:"2.3.1",name:"ALGORITHMS",x:459,y:523,w:401,h:182,color:"#497c88",fill:"#e7f3f6",
+   lines:["Linear search: in turn — O(n)","Binary search: halve — O(log n)","Precondition: appropriately ordered","Evaluate sorting cost and repeated use"],
+   example:"Sorted data → binary search"}
+ ];
+ const links='<g fill="none" stroke-width="7" stroke-linecap="round" opacity=".9">'+
+  '<path d="M540 308 Q422 233 222 219" stroke="#326a99"/>'+
+  '<path d="M777 308 Q881 232 1098 219" stroke="#237a61"/>'+
+  '<path d="M534 390 Q423 478 218 513" stroke="#a76c2d"/>'+
+  '<path d="M784 390 Q882 478 1102 513" stroke="#7953a5"/>'+
+  '<path d="M660 397 Q660 462 660 530" stroke="#497c88"/>'+
+  '</g>';
+ const safe=t=>escapeHtml(t);
+ const cards=topics.map(t=>{
+  const cx=t.x+t.w/2;
+  const body=t.lines.map((l,i)=>'<text x="'+cx+'" y="'+(t.y+91+i*24)+'" text-anchor="middle" font-size="22" font-weight="650" fill="#25443c">'+safe(l)+'</text>').join("");
+  return '<g><rect x="'+t.x+'" y="'+t.y+'" width="'+t.w+'" height="'+t.h+'" rx="17" fill="'+t.fill+'" stroke="'+t.color+'" stroke-width="3"/>'+
+  '<text x="'+cx+'" y="'+(t.y+32)+'" text-anchor="middle" font-size="28" font-weight="900" fill="'+t.color+'">'+safe(t.name)+'</text>'+
+  '<text x="'+cx+'" y="'+(t.y+58)+'" text-anchor="middle" font-size="22" font-weight="800" fill="'+t.color+'">'+t.spec+'</text>'+
+  body+'<text x="'+cx+'" y="'+(t.y+t.h-14)+'" text-anchor="middle" font-size="18" font-weight="800" fill="'+t.color+'">'+safe(t.example)+'</text></g>';
+ }).join("");
+ const labels='<g font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="900" text-anchor="middle">'+
+  '<rect x="23" y="333" width="290" height="36" rx="17" fill="#fff6dc" stroke="#d6b26d"/><text x="168" y="357" fill="#7f5523">Binary → Boolean gates</text>'+
+  '<rect x="1002" y="333" width="291" height="36" rx="17" fill="#e3f4e9" stroke="#83ba9c"/><text x="1147" y="357" fill="#235e43">Structures → Program code</text>'+
+  '<rect x="505" y="451" width="310" height="36" rx="17" fill="#e2eff3" stroke="#92b9c5"/><text x="660" y="475" fill="#285465">Ordered data → binary search</text></g>';
+ return '<svg class="bigmap completed-svg" viewBox="0 0 1320 728" role="img" aria-label="Completed H446 knowledge mind map: 1.4.1 data types, 1.4.2 data structures, 1.4.3 Boolean algebra, 2.2.1 programming, 2.3.1 algorithms, with connections between binary and logic, structures and programming, and ordered data and search." xmlns="http://www.w3.org/2000/svg">'+
+  '<rect x="1" y="1" width="1318" height="726" rx="18" fill="#fff" stroke="#d6e4dd" stroke-width="2"/>'+
+  links+'<rect x="524" y="298" width="272" height="111" rx="21" fill="#194834" stroke="#123b2e" stroke-width="3"/>'+
+  '<text x="660" y="342" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="900" fill="#fff">H446 AP1</text>'+
+  '<text x="660" y="375" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="850" fill="#fff">Revision mind map</text>'+
+  cards+labels+'</svg>';
+}
+
 function printSheet(){
- return '<div class="printonly"><h1>OCR H446 · One A3 revision map</h1><p class="student-line">Name: _______________________ &nbsp;&nbsp; Class: __________ &nbsp;&nbsp; Date: __________</p>'+mapSVG(0)+'</div>';
+ return '<div class="printonly printonly-blank"><h1>OCR H446 · One A3 revision map</h1><p class="student-line">Name: _______________________ &nbsp;&nbsp; Class: __________ &nbsp;&nbsp; Date: __________</p>'+mapSVG(0)+'</div>'+'<div class="printonly printonly-complete"><h1>OCR H446 · Completed revision mind-map example</h1>'+completedMapSVG()+'</div>';
 }
 const simpleList=items=>'<ul>'+items.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>';
 function slideBody(s){
@@ -209,6 +258,7 @@ function slideBody(s){
  }
  if(s.type==="board")return '<div class="split"><article class="card board-prompt"><span class="board-label">WRITE → HOLD UP → EXPLAIN</span><p>'+escapeHtml(s.prompt)+'</p><div class="focus-note">Use your mini-whiteboard. The answer is hidden until the teacher reveals it.</div></article><div class="stack"><div class="board-wait" '+(answerVisible?'hidden':'')+'>Show your whiteboard before checking</div><div class="board-answer" '+(answerVisible?'':'hidden')+'><span class="label">MODEL ANSWER</span><div>'+escapeHtml(s.answer)+'</div>'+(s.explain?'<p class="note">'+escapeHtml(s.explain)+'</p>':'')+'</div></div></div>';
  if(s.type==="write")return '<div class="split"><article class="card"><div class="label">YOUR A3 SHEET · '+(s.focus==="data"?"1.4.1":s.focus==="structures"?"1.4.2":s.focus==="logic"?"1.4.3":s.focus==="programming"?"2.2.1":"2.3.1")+'</div><div class="text-block">'+simpleList(s.prompts)+'</div></article><div class="write-side"><h2>Check your own branch</h2><div class="checks">'+s.checks.map(x=>'<span>□ '+escapeHtml(x)+'</span>').join("")+'</div><p>First from memory in black pen. Then check using your guide and improve in green pen.</p><p><strong>The full model is not on this slide.</strong></p></div></div>';
+ if(s.type==="complete")return '<div class="map-stage final-map-stage"><div class="map-panel final-map-panel">'+completedMapSVG()+'</div><div class="map-caption"><span>MODEL EXAMPLE · FIVE BRANCHES · THREE LABELLED CONNECTIONS</span><button type="button" id="print-complete" class="complete-print">Print this finished A3 example</button></div></div>';
  if(s.type==="exit")return '<div class="split"><article class="card board-prompt"><span class="board-label">TRUE OR FALSE? · THUMBS UP / DOWN</span><p>'+escapeHtml(s.statement)+'</p><div class="confidence"><span>👍 True</span><span>👎 False</span><span>↔ Unsure</span></div></article><article class="card"><div class="label">REVEAL AFTER RESPONSE</div>'+(answerVisible?'<div class="board-answer"><strong>'+(s.correct?"TRUE":"FALSE")+'</strong><p>'+escapeHtml(s.explanation)+'</p></div>':'<div class="board-wait">Show your answer first</div>')+'<p class="note">Finish by circling the one part of your map you still need to practise.</p></article></div>';
  return '<div class="card">Continue to the next step.</div>';
 }
@@ -217,7 +267,7 @@ function signalName(phase){
  return m[phase]||phase;
 }
 function render(){
- const s=slides[index];document.title="Lesson "+(lesson===36?"036":"037")+" · "+s.title+" · H446";
+ const s=slides[index];document.body.classList.toggle("show-complete-map",s.type==="complete");document.title="Lesson "+(lesson===36?"036":"037")+" · "+s.title+" · H446";
  $("#lesson-number").textContent="L"+(lesson===36?"036":"037");
  $("#top-title").textContent="A3 Mind Map · Part "+(lesson===36?"1":"2");
  $("#slide-title").textContent=s.title;$("#subtitle").textContent=s.sub||"";
@@ -226,9 +276,12 @@ function render(){
  $("#response-tag").textContent=s.response;
  $("#time").textContent=s.mins+" min";
  $("#stage").innerHTML=slideBody(s);
+ const finishedPrint=$("#print-complete");
+ if(finishedPrint)finishedPrint.addEventListener("click",()=>{document.body.classList.add("print-complete");window.print();});
  $("#count").textContent=(index+1)+" / "+slides.length;
  $("#back").disabled=index===0&&shownSteps===0&&!answerVisible;
- $("#next").textContent=(s.type==="model"&&shownSteps<s.steps.length)?"Reveal next step →":((s.type==="board"||s.type==="exit")&&!answerVisible)?"Reveal answer →":"Next →";
+ $("#next").textContent=s.type==="complete"?"Completed ✓":(s.type==="model"&&shownSteps<s.steps.length)?"Reveal next step →":((s.type==="board"||s.type==="exit")&&!answerVisible)?"Reveal answer →":"Next →";
+ $("#next").disabled=s.type==="complete";
  $("#progress").innerHTML=slides.map((_,i)=>'<span class="'+(i<=index?"active":"")+'"></span>').join("");
  $("#stage").scrollTop=0;
  const main=$("#main");if(main)main.scrollTop=0;
@@ -246,7 +299,8 @@ function back(){
 }
 function start(){
  $("#app").innerHTML='<header class="top"><div class="top-left"><a class="home" href="../../../h446-hub.html?year=12#lessons" aria-label="Back to Year 12 hub">⌂ Home</a><span class="lesson-tag" id="lesson-number"></span><div><div class="top-title" id="top-title"></div><div class="top-note">Teacher-led revision · One growing A3 sheet</div></div></div><div class="top-right"><button type="button" id="print" title="Print a blank A3 outline">Print blank A3</button><button type="button" id="fullscreen">Full screen ⛶</button></div></header><main class="scene-shell" id="main"><div class="scene-head"><div class="tags"><span class="tag tag-phase" id="phase-tag"></span><span class="tag tag-routine" id="routine-tag"></span><span class="tag tag-response" id="response-tag"></span></div><span class="time" id="time"></span></div><h1 id="slide-title"></h1><p class="subtitle" id="subtitle"></p><section class="scene-body" id="stage" aria-live="polite"></section></main><footer class="footer"><span class="progress" id="progress" aria-hidden="true"></span><div class="count" id="count"></div><div class="controls"><button type="button" id="back">← Back</button><button type="button" id="next" class="primary">Next →</button></div></footer>';
- $("#print").addEventListener("click",()=>window.print());
+ $("#print").addEventListener("click",()=>{document.body.classList.remove("print-complete");window.print();});
+ window.addEventListener("afterprint",()=>document.body.classList.remove("print-complete"));
  $("#fullscreen").addEventListener("click",()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen?.();}else{document.exitFullscreen?.();}});
  $("#back").addEventListener("click",back);$("#next").addEventListener("click",next);
  document.addEventListener("keydown",e=>{if(e.target instanceof HTMLElement&&["INPUT","TEXTAREA","BUTTON"].includes(e.target.tagName))return;if(e.key==="ArrowRight"||e.key===" "){e.preventDefault();next();}if(e.key==="ArrowLeft"){e.preventDefault();back();}});
