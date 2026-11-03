@@ -80,6 +80,25 @@ def source_svg(soup,selector):
             result.append(node)
     return result
 
+def source_vocabulary(soup):
+    """Use actual OCR terms, not the interactive heading 'Recall the term'."""
+    result=[]
+    for stage in soup.select("#vocabulary .vocab-stage"):
+        term=stage.select_one(".vocab-answer-value")
+        clue=stage.select_one(".vocab-question")
+        if term and clue:
+            word=clean(term.get_text(" ",strip=True))
+            definition=clean(clue.get_text(" ",strip=True))
+        else:
+            term=stage.select_one("h2")
+            clue=stage.select_one("p")
+            word=clean(term.get_text(" ",strip=True)) if term else ""
+            definition=clean(clue.get_text(" ",strip=True)) if clue else ""
+        if word and definition and word.lower() not in ("recall the term","recall the syntax"):
+            if (word,definition) not in result:
+                result.append((word,definition))
+    return result
+
 def exam_questions(soup,lesson):
     nodes=soup.select("#you-do article.youdo-question, #you-do article.exam-card")
     if len(nodes)!=len(lesson.you_do):
@@ -109,7 +128,10 @@ def exam_questions(soup,lesson):
             raise ValueError(f"You Do Q{i}: external image requires manual print design")
         if len(visuals)>1:
             raise ValueError(f"You Do Q{i} has {len(visuals)} unsolved diagrams; needs manual layout")
-        result.append((prompt,answer,visuals[0] if visuals else None))
+        # In the booklet a source Q4 selected as the second printed
+        # question must not still be labelled "4." inside its prompt.
+        shown=re.sub(r"^\s*(?:(?:Question|Q)\s*)?\d+[.)]\s+","",prompt,flags=re.I)
+        result.append((shown,answer,visuals[0] if visuals else None))
     if len(result)<2:
         raise ValueError("Insufficient independent practice for eight-page design")
     return result
@@ -253,7 +275,7 @@ def build_student(n,mode,lesson,soup,questions,out):
     for i,(prompt,_) in enumerate(lesson.do_now,1):
         paper.section(f"Q{i}")
         paper.line(prompt,10.6)
-        paper.rules(2 if len(prompt)>125 else 1)
+        paper.rules(3 if i==4 else (2 if len(prompt)>125 else 1))
 
     new=pick(lesson.new_learning,5)
     new_figure=source_svg(soup,"#new-learning svg")
@@ -275,17 +297,22 @@ def build_student(n,mode,lesson,soup,questions,out):
         paper.figure(selected,"Key visual · complete concept",maxw=370,
                      maxh=190 if aspect<=1.15 else 137)
 
+    if paper.y>330:
+        paper.section("Annotate the key visual")
+        paper.line("Explain which labels or features show the main process.",9.8)
+        paper.rules(4)
     paper.new("New Learning · applying the ideas")
     for k,item in enumerate(new[3:],4):
         paper.section(f"Core idea {k}")
         paper.line(item,10.4)
-    if lesson.vocab:
+    vocab=source_vocabulary(soup)
+    if vocab:
         paper.section("Vocabulary · use the correct technical terms")
-        for term,definition in lesson.vocab[:4]:
+        for term,definition in vocab[:4]:
             paper.line(f"{term} — {definition}",10.0)
     paper.section("Check your understanding")
     paper.line("Explain one key process in your own words using two of the terms above.",10.4)
-    paper.rules(4)
+    paper.rules(7)
     paper.line("More animated examples are available in the original online lesson.",9.0)
 
     paper.new("I Do · worked example")
@@ -316,13 +343,13 @@ def build_student(n,mode,lesson,soup,questions,out):
         v=source_svg(soup,"#we-do .wedo-example svg")
         if not v:raise ValueError("K-map guided question needs a diagram")
         paper.figure(v[0],"Guided K-map · mark the pair",maxw=380,maxh=142)
-    paper.rules(5)
+    paper.rules(8)
     paper.section("DISCUSS")
     paper.line("Compare how you reached the answer. Where could someone make an error?",10.1)
-    paper.rules(2)
+    paper.rules(4)
     paper.section("IMPROVE")
     paper.line("Add one precise correction or a stronger reason. Answers are not printed here.",10.0)
-    paper.rules(2)
+    paper.rules(4)
 
     split=2 if len(questions)>=3 else 1
     for page_no,items in ((6,questions[:split]),(7,questions[split:])):
@@ -338,11 +365,18 @@ def build_student(n,mode,lesson,soup,questions,out):
                 visual_height=190 if page_no==7 and len(items)==1 else 152
                 paper.figure(svg,f"Question {index} · original source diagram",
                              maxw=392,maxh=visual_height)
-            # Each page uses no smaller than 10-point text; preserve room.
-            # A K-map carries its own workspace for circling cells; three
-            # ruled lines below preserve space for a Boolean expression and
-            # annotated gate plan. Never shrink the diagram or text.
-            paper.rules(3 if svg else (7 if page_no==7 and len(items)==1 else 4))
+            # Allocate actual handwriting space to an extended exam answer.
+            # Six-mark responses need far more than four short ruled lines.
+            # Preserve printed diagrams and stop on any A4 overflow.
+            m=re.search(r"\[(\d{1,2})\]|\b(\d{1,2})\s+marks?\b",prompt,re.I)
+            marks=int(next((v for v in m.groups() if v),0)) if m else 0
+            if svg:
+                lines=7 if len(items)==1 else 5
+            elif len(items)==1:
+                lines=max(14,min(20,marks*2+2)) if marks else 15
+            else:
+                lines=max(7,min(12,marks*2)) if marks else 9
+            paper.rules(lines)
         if paper.y>155:
             paper.line("Check that you have used the technical terms and explained your decisions.",9.4)
 
@@ -351,7 +385,7 @@ def build_student(n,mode,lesson,soup,questions,out):
     paper.line(lesson.exit_question,10.9)
     paper.rules(3)
     paper.section("Use key vocabulary from memory")
-    for i,(term,_) in enumerate(lesson.vocab[:3],1):
+    for i,(term,_) in enumerate(vocab[:3],1):
         paper.line(f"{i}. Explain {term} in your own words.",10.1)
         paper.rules(2)
     paper.section("Confidence and next step")
@@ -362,7 +396,7 @@ def build_student(n,mode,lesson,soup,questions,out):
     paper.close()
     return paper.figures
 
-def build_staff(n,lesson,out):
+def build_staff(n,lesson,out,selected_indices):
     """A separate unlinked source-answer PDF for the teacher, not the pupil PDF."""
     doc=SimpleDocTemplate(str(out),pagesize=A4,leftMargin=45,rightMargin=45,
         topMargin=48,bottomMargin=49,title=f"OCR H446 {n:03d} unapproved source-model key")
@@ -370,7 +404,10 @@ def build_staff(n,lesson,out):
     sub=ParagraphStyle("Sub",fontName="EightBold",fontSize=11.1,leading=17,spaceBefore=12,spaceAfter=6)
     body=ParagraphStyle("Body",fontName="Eight",fontSize=9.8,leading=15,spaceAfter=8)
     flow=[Paragraph(f"STAFF REVIEW · H446 {n:03d} source models",heading),
-          Paragraph("Separate from the eight-page pupil workbook. This copy is in a public repository and is NOT access controlled. Check technical correctness before use.",body)]
+          Paragraph("Separate from the eight-page pupil workbook. This copy is in a public repository and is NOT access controlled. Check technical correctness before use.",body),
+          Paragraph("Printed question mapping: "+"; ".join(
+              f"Booklet Q{i} = original online Q{source_i+1}"
+              for i,source_i in enumerate(selected_indices,1)),body)]
     def add(name,answers):
         flow.append(Paragraph(name,sub))
         for i,answer in enumerate(answers,1):
@@ -452,7 +489,8 @@ def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
             # interactive exam task. For long multi-diagram sequences, keep
             # a foundation and stretch question with their original diagrams.
             # The remaining original questions stay accessible on the lesson.
-            questions=[all_questions[0],all_questions[-1]] if len(all_questions)>3 else all_questions
+            selected_indices=[0,len(all_questions)-1] if len(all_questions)>3 else list(range(len(all_questions)))
+            questions=[all_questions[i] for i in selected_indices]
             versions={}
             for mode in ("bw","colour"):
                 a4=OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_{mode.upper()}_A4.pdf"
@@ -467,7 +505,7 @@ def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
                                 "a3":a3.relative_to(ROOT).as_posix(),
                                 "figures":figures,"embedded_image_count":images}
             teacher=OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf"
-            build_staff(n,lesson,teacher)
+            build_staff(n,lesson,teacher,selected_indices)
             created.append(teacher)
             preview=render_preview(n,OUT/f"H446_Lesson_{n:03d}_8PAGE_REDESIGN_BW_A4.pdf")
             created.append(ROOT/preview)
@@ -477,6 +515,7 @@ def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
                         "selection_policy":"representative source-based diagrams and all diagrams belonging to the selected independent questions; remaining online exam tasks accessible in the lesson",
                         "source_exam_questions":len(all_questions),
                         "printed_exam_questions":len(questions),
+                        "printed_to_source_question_numbers":[i+1 for i in selected_indices],
                         "teacher_approved":False})
         except Exception as exc:
             for path in created:
