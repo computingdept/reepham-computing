@@ -33,6 +33,7 @@
 .synergy-reading-controls [aria-pressed="true"]{background:#e4efe8!important;border-color:#5d9277!important}
 @media screen {
 body.synergy-reading-active.synergy-reading-zoom main{zoom:var(--synergy-reader-zoom,1)}
+body.synergy-reading-active.synergy-reading-zoom:not(:has(main)) .screen.show{zoom:var(--synergy-reader-zoom,1)}
 body.synergy-reading-active{
   --synergy-reader-bg:#fff;
   --synergy-reader-ink:#26372f;
@@ -60,6 +61,8 @@ body.synergy-reading-active main{
   font-family:var(--synergy-reader-font)!important;
 }
 body.synergy-reading-active .viewer > .page:not([hidden]),
+body.synergy-reading-active .screen.show,
+body.synergy-reading-active main .scene:not([hidden]),
 body.synergy-reading-active main :is(.page.active,#catchup-stage,.panel.active){
   background:var(--synergy-reader-bg)!important;
   color:var(--synergy-reader-ink)!important;
@@ -96,7 +99,8 @@ body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blo
     .vocab-stage,.vocab-card,
     .catchup-card,.catchup-block,.catchup-question,
     .reader-card,.practice-card,.question-card,.revision-card,
-    .card,.topic-content,.model-stage,.note,.reader-section
+    .card,.topic-content,.model-stage,.note,.reader-section,
+    .do-now-card,.lesson-table,.whiteboard-question,.index-card
   ) {
     background:var(--synergy-reader-bg)!important;
     color:var(--synergy-reader-ink)!important;
@@ -118,7 +122,8 @@ body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blo
     .vocab-stage,.vocab-card,
     .catchup-card,.catchup-block,.catchup-question,
     .reader-card,.practice-card,.question-card,.revision-card,
-    .card,.topic-content,.model-stage,.note,.reader-section
+    .card,.topic-content,.model-stage,.note,.reader-section,
+    .do-now-card,.lesson-table,.whiteboard-question,.index-card
   ) { border-color:#52635b!important; }
 }
 }
