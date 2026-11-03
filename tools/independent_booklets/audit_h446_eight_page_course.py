@@ -96,8 +96,11 @@ def main():
                                 issues.append(f"{variant}: page {i} text outside safe paper edge")
                             if re.search(r"(?m)^\s*Recall the term\s*[—–:]\s*",text):
                                 issues.append(f"{variant}: unresolved interactive vocabulary placeholder")
-                        if "DISCUSS" not in content[4] or "IMPROVE" not in content[4]:
-                            issues.append(f"{variant}: incomplete guided-practice sequence")
+                        old_guided=("DISCUSS" in content[4] and "IMPROVE" in content[4])
+                        independent_guided=("CLUES" in content[4] and "BUILD YOUR ANSWER" in content[4] and
+                                            "END SELF-CHECK" in content[7] and "Guided We Do solution" in content[7])
+                        if not (old_guided or independent_guided):
+                            issues.append(f"{variant}: missing guided scaffold or delayed self-check")
                         if re.search(r"(?m)^\s*(?:SOURCE CHECK|MODEL ANSWER|MARK SCHEME)\s*(?:[:—-]|$)", "\n".join(content[:7])):
                             issues.append(f"{variant}: model or marking section before Exit")
                     for p in pdf:
