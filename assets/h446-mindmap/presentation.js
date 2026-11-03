@@ -203,8 +203,8 @@ function completedMapSVG(){
    lines:["Sequence · selection · iteration","Functions return; procedures perform","Local scope; by-value / by-reference","Modularity, tracing and debugging"],
    example:"byRef can update caller data"},
   {spec:"2.3.1",name:"ALGORITHMS",x:459,y:523,w:401,h:182,color:"#497c88",fill:"#e7f3f6",
-   lines:["Linear search: in turn — O(n)","Binary search: halve — O(log n)","Precondition: appropriately ordered","Evaluate sorting cost and repeated use"],
-   example:"Sorted data → binary search"}
+   lines:["Linear: inspect in turn — O(n)","Binary: halve sorted data — O(log n)","Compare sorting cost and repeated use"],
+   example:"Precondition: appropriately ordered"}
  ];
  const links='<g fill="none" stroke-width="7" stroke-linecap="round" opacity=".9">'+
   '<path d="M540 308 Q422 233 222 219" stroke="#326a99"/>'+
@@ -229,7 +229,7 @@ function completedMapSVG(){
  return '<svg class="bigmap completed-svg" viewBox="0 0 1320 728" role="img" aria-label="Completed H446 knowledge mind map: 1.4.1 data types, 1.4.2 data structures, 1.4.3 Boolean algebra, 2.2.1 programming, 2.3.1 algorithms, with connections between binary and logic, structures and programming, and ordered data and search." xmlns="http://www.w3.org/2000/svg">'+
   '<rect x="1" y="1" width="1318" height="726" rx="18" fill="#fff" stroke="#d6e4dd" stroke-width="2"/>'+
   links+'<rect x="524" y="298" width="272" height="111" rx="21" fill="#194834" stroke="#123b2e" stroke-width="3"/>'+
-  '<text x="660" y="342" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="900" fill="#fff">H446 AP1</text>'+
+  '<text x="660" y="342" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="900" fill="#fff">H446 Year 12</text>'+
   '<text x="660" y="375" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="850" fill="#fff">Revision mind map</text>'+
   cards+labels+'</svg>';
 }
