@@ -22,6 +22,15 @@ jobs:
         with:
           fetch-depth: 1
           filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/independent_booklets/*
+            /lessons/h446/lesson-00[1-9]/*
+            /lessons/h446/lesson-010/*
+            /offline/booklets/catalogue.json
+            /offline/booklets/h446/H446_Lesson_00[1-9]_8PAGE_REDESIGN_*
+            /offline/booklets/h446/H446_Lesson_010_8PAGE_REDESIGN_*
+            /offline/booklets/h446/H446_EIGHT_PAGE_SOLO_WE_DO_001_010.*
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
