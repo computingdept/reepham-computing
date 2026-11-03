@@ -127,7 +127,13 @@
     }catch(_){}
   }
   function savePrefs(){
-    try{localStorage.setItem(storeKey,JSON.stringify(prefs));}catch(_){}
+    // The PDF reader and lesson tools own different preferences under one key.
+    // Preserve lesson Reading View state (enabled) and any later shared fields.
+    try{
+      const previous=JSON.parse(localStorage.getItem(storeKey)||'{}');
+      const shared=previous&&typeof previous==='object'&&!Array.isArray(previous)?previous:{};
+      localStorage.setItem(storeKey,JSON.stringify({...shared,...prefs}));
+    }catch(_){}
   }
   function applyPrefs(){
     font.value=prefs.font; spacing.value=prefs.spacing;
