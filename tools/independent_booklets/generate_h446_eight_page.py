@@ -96,6 +96,93 @@ EXAM_SELECTION_OVERRIDES={
    10: (1,3),  # useful count-controlled loop + do/while challenge
 }
 
+
+# Guided practice written for a learner working ALONE with the booklet.
+# Use progressive, topic-specific CLUES rather than a partner/teacher prompt.
+# Answers are kept off page 5 and appear at the END of the booklet.
+SOLO_WE_DO = {
+    1: {
+      "clues": ("Is 0042 an amount to calculate with, or an identifier?",
+                "What would happen to its leading zeros if it were stored as an integer?",
+                "Choose a type that preserves the exact sequence of characters."),
+      "steps": ("State the value's purpose.", "Choose the most suitable data type.",
+                "Explain why a different type would change the identifier."),
+      "answer": 'Use a string: "0042" is an identifier, and an integer would discard the leading zeros.'
+    },
+    2: {
+      "clues": ("For 8-bit two's complement, the leftmost place has weight -128.",
+                "Write the weights of every bit set to 1 in 11100110.",
+                "Add those signed place values; the final number should be negative."),
+      "steps": ("List the signed place values.", "Add the signed values.",
+                "State the denary value and check the sign."),
+      "answer": "11100110 = -128 + 64 + 32 + 4 + 2 = -26."
+    },
+    3: {
+      "clues": ("Three hexadecimal digits have place values 256, 16 and 1.",
+                "The hexadecimal digit F represents denary 15.",
+                "Multiply each digit by its place value before adding."),
+      "steps": ("Write the three place values.", "Calculate each weighted contribution.",
+                "Add to give the denary result."),
+      "answer": "2F3 = (2 x 256) + (15 x 16) + (3 x 1) = 755."
+    },
+    4: {
+      "clues": ("0.15625 is 1/8 + 1/32. Write this as a binary fraction.",
+                "For a normalised positive two's-complement mantissa, the first two bits are 01.",
+                "If the binary point moves left, compensate using a negative exponent."),
+      "steps": ("Convert the fraction to binary.", "Normalise the fraction.",
+                "Encode the 8-bit mantissa and signed 4-bit exponent."),
+      "answer": "0.15625 = 0.00101 (binary) = 0.101 x 2^-2; mantissa 01010000, exponent 1110."
+    },
+    5: {
+      "clues": ("For an 8-bit two's-complement mantissa, weights begin -1, 1/2, 1/4, 1/8.",
+                "Decode the four-bit exponent as a signed integer.",
+                "Multiply the signed mantissa by 2 to the power of the exponent."),
+      "steps": ("Decode the mantissa.", "Decode the exponent.",
+                "Scale and calculate the final denary value."),
+      "answer": "10110000 = -0.625; 0010 = +2; -0.625 x 2^2 = -2.5."
+    },
+    6: {
+      "clues": ("Express 6 and 5 with 6-bit mantissas and a common exponent of 3.",
+                "Keep an extra sign bit for the working sum before storing a 6-bit mantissa.",
+                "If the mantissa is too large, shift it right and increase the exponent."),
+      "steps": ("Align the two operands.", "Add the widened signed mantissas.",
+                "Normalise and state both final fields."),
+      "answer": "At exponent 3, 0011000 + 0010100 = 0101100 (working width); normalised 010110 0100 = 11."
+    },
+    7: {
+      "clues": ("Rewrite 1.5 - 5 as 1.5 + (-5).",
+                "Align to the same exponent BEFORE negating the second mantissa.",
+                "Keep an extra sign bit in the working sum; then normalise."),
+      "steps": ("Align the mantissas.", "Negate the second and add.",
+                "Normalise the signed result and check its value."),
+      "answer": "Aligned at exponent 3: 0000110 + 1101100 = 1110010; normalised 100100 0010 = -3.5."
+    },
+    8: {
+      "clues": ("The ASCII code for character '0' is 48.",
+                "The code for character '7' is seven more than the code for '0'.",
+                "An integer with value 7 is not the same as the ASCII code for '7'."),
+      "steps": ("Find the ASCII code for the digit character.", "Convert that code to an 8-bit byte.",
+                "Convert the integer 7 and explain the difference."),
+      "answer": "Character '7' has code 55 = 00110111; integer 7 is 00000111 as an 8-bit unsigned value."
+    },
+    9: {
+      "clues": ("The operator % gives the remainder after division.",
+                "An even number has remainder 0 when divided by 2.",
+                "Use if for the even case and else for the remaining case."),
+      "steps": ("Write the Boolean condition.", "Write the two output branches.",
+                "Test one even and one odd input."),
+      "answer": 'if (number % 2 == 0) { Console.WriteLine("Even"); } else { Console.WriteLine("Odd"); }'
+    },
+    10: {
+      "clues": ("The counter starts at 1 and increases by 1 each time.",
+                "The loop must include 5 but must not run when i becomes 6.",
+                "The value printed each time is the counter multiplied by itself."),
+      "steps": ("Complete the loop start and condition.", "Complete the counter update.",
+                "Write the output statement and test the five results."),
+      "answer": "for (int i = 1; i <= 5; i++) { Console.WriteLine(i * i); }  Output: 1, 4, 9, 16, 25."
+    },
+}
+
 def source_html(n):
     return BeautifulSoup((HROOT/f"lesson-{n:03d}"/"index.html").read_text(encoding="utf-8"),"html.parser")
 
@@ -382,23 +469,40 @@ def build_student(n,mode,lesson,soup,questions,out):
     paper.line("Identify the decision, rule or invariant that makes the method correct.",10.3)
     paper.rules(3)
 
-    paper.new("We Do · Try → Discuss → Improve")
-    paper.line("TRY independently in BLACK PEN; compare methods with a partner; improve your reasoning.",10.0)
     task=model_and_guided(lesson,soup,n)
-    paper.section("Guided problem · TRY")
-    paper.line(task,10.7)
-    # Only an input state is permitted, never a worked/reveal SVG.
-    if n==29:
-        v=source_svg(soup,"#we-do .wedo-example svg")
-        if not v:raise ValueError("K-map guided question needs a diagram")
-        paper.figure(v[0],"Guided K-map · mark the pair",maxw=380,maxh=142)
-    paper.rules(8)
-    paper.section("DISCUSS")
-    paper.line("Compare how you reached the answer. Where could someone make an error?",10.1)
-    paper.rules(4)
-    paper.section("IMPROVE")
-    paper.line("Add one precise correction or a stronger reason. Answers are not printed here.",10.0)
-    paper.rules(4)
+    if n in SOLO_WE_DO:
+        support=SOLO_WE_DO[n]
+        paper.new("We Do · solo guided practice")
+        paper.line("Work ALONE. Try first; read the clues one at a time if you get stuck.",9.8)
+        paper.line("Complete the steps below. Check your answer only on page 8.",9.6)
+        paper.section("YOUR TASK")
+        paper.line(task,10.3)
+        paper.section("CLUES · uncover one at a time")
+        for i,clue in enumerate(support["clues"],1):
+            paper.line(f"Clue {i}: {clue}",9.8,spacing=2)
+        paper.section("BUILD YOUR ANSWER · in BLACK PEN")
+        for i,step in enumerate(support["steps"],1):
+            paper.line(f"Step {i}: {step}",9.7,spacing=1)
+            paper.rules(2)
+        paper.section("CHECK BEFORE TURNING THE PAGE")
+        paper.line("Have you shown every step? The worked self-check is at the END on page 8.",9.3)
+    else:
+        paper.new("We Do · Try → Discuss → Improve")
+        paper.line("TRY independently in BLACK PEN; compare methods with a partner; improve your reasoning.",10.0)
+        paper.section("Guided problem · TRY")
+        paper.line(task,10.7)
+        # Only an input state is permitted, never a worked/reveal SVG.
+        if n==29:
+            v=source_svg(soup,"#we-do .wedo-example svg")
+            if not v:raise ValueError("K-map guided question needs a diagram")
+            paper.figure(v[0],"Guided K-map · mark the pair",maxw=380,maxh=142)
+        paper.rules(8)
+        paper.section("DISCUSS")
+        paper.line("Compare how you reached the answer. Where could someone make an error?",10.1)
+        paper.rules(4)
+        paper.section("IMPROVE")
+        paper.line("Add one precise correction or a stronger reason. Answers are not printed here.",10.0)
+        paper.rules(4)
 
     split=2 if len(questions)>=3 else 1
     for page_no,items in ((6,questions[:split]),(7,questions[split:])):
@@ -437,11 +541,24 @@ def build_student(n,mode,lesson,soup,questions,out):
     for i,(term,_) in enumerate(vocab[:3],1):
         paper.line(f"{i}. Explain {term} in your own words.",10.1)
         paper.rules(2)
-    paper.section("Confidence and next step")
-    paper.line("How confident are you?   Thumbs up / side / down",10.3)
-    paper.line("Which question would you improve after checking the classroom model?",10.3)
-    paper.rules(3)
-    paper.line("Check answers after the lesson using the teacher-guided source models.",9.4)
+    if n in SOLO_WE_DO:
+        paper.section("Confidence and next step")
+        paper.line("How confident are you?  Thumbs up / side / down",10.0)
+        paper.rules(1)
+        paper.section("END SELF-CHECK · only after you have attempted the work")
+        paper.line("PAGE 5 · Guided We Do solution:",9.2,bold=True,spacing=2)
+        paper.line(SOLO_WE_DO[n]["answer"],9.25,spacing=3)
+        paper.line("PAGE 3 · Independent skill check:",9.2,bold=True,spacing=2)
+        paper.line(SKILL_CHECKS[n][1],9.1,spacing=2)
+        paper.line("Correct any errors in GREEN PEN. Write one improvement.",9.2)
+        paper.rules(1)
+        paper.line(f"YOU DO ANSWERS: rhsccs.org/lessons/h446/lesson-{n:03d}/answers.html",8.8)
+    else:
+        paper.section("Confidence and next step")
+        paper.line("How confident are you?   Thumbs up / side / down",10.3)
+        paper.line("Which question would you improve after checking the classroom model?",10.3)
+        paper.rules(3)
+        paper.line("Check answers after the lesson using the teacher-guided source models.",9.4)
     paper.close()
     return paper.figures
 
@@ -484,6 +601,14 @@ def inspect_pdf(n,student,questions,figures):
                 raise ValueError("Non-A4 page")
         if n in SKILL_CHECKS and "Independent skill check" not in ptext[2]:
             raise ValueError("Page 3 missing the required independent skill check")
+        if n in SOLO_WE_DO:
+            for expected in ("CLUES", "Step 1:", "Step 2:", "Step 3:"):
+                if expected not in ptext[4]:
+                    raise ValueError(f"Page 5 missing solo scaffold: {expected}")
+            if "END SELF-CHECK" not in ptext[7] or "Guided We Do solution" not in ptext[7]:
+                raise ValueError("Page 8 lacks the end-of-booklet We Do self-check")
+            if SOLO_WE_DO[n]["answer"][:35] in ptext[4]:
+                raise ValueError("We Do solution appears before the end of the booklet")
         for i,question in enumerate(questions,1):
             if not question[0][:65].strip() in "\n".join(ptext):
                 # Line wrapping may intervene; compare normalized text.
