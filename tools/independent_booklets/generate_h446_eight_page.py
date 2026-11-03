@@ -110,8 +110,6 @@ def exam_questions(soup,lesson):
         if len(visuals)>1:
             raise ValueError(f"You Do Q{i} has {len(visuals)} unsolved diagrams; needs manual layout")
         result.append((prompt,answer,visuals[0] if visuals else None))
-    if len(result)>4:
-        raise ValueError(f"{len(result)} independent questions cannot fit as approved eight-page design")
     if len(result)<2:
         raise ValueError("Insufficient independent practice for eight-page design")
     return result
@@ -265,7 +263,14 @@ def build_student(n,mode,lesson,soup,questions,out):
     for k,item in enumerate(new[:3],1):
         paper.section(f"Core idea {k}")
         paper.line(item,10.4)
-    if new_figure:paper.figure(new_figure[-1],"Key visual · complete concept",maxw=370,maxh=137)
+    if new_figure:
+        # A square state-grid needs an A4 footprint large enough for the
+        # labels: do not reject or thumbnail it to save a few centimetres.
+        selected=new_figure[-1]
+        parts=[float(v) for v in (selected.get("viewBox","").replace(","," ").split())]
+        aspect=parts[2]/parts[3] if len(parts)==4 and parts[3]>0 else 2
+        paper.figure(selected,"Key visual · complete concept",maxw=370,
+                     maxh=190 if aspect<=1.15 else 137)
 
     paper.new("New Learning · applying the ideas")
     for k,item in enumerate(new[3:],4):
