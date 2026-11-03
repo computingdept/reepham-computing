@@ -31,6 +31,7 @@ REPORT_STEMS=[
 "H446_EIGHT_PAGE_REDESIGN_BATCH06",
 "H446_EIGHT_PAGE_REDESIGN_BATCH07",
 "H446_EIGHT_PAGE_REDESIGN_REFRESH_V2",
+"H446_EIGHT_PAGE_SOLO_WE_DO_001_010",
 ]
 
 def most_recent_source_results():
@@ -67,7 +68,7 @@ def main():
             issues.extend("missing "+label for label,f in paths.items() if not f.is_file())
         if entry.get("teacher_approved") is not False:
             issues.append("Teacher approval unexpectedly granted")
-        if any("8PAGE_REDESIGN" in entry.get(k,"") for k in
+        if any("8PAGE_REDESIGN" in (entry.get(k) or "") for k in
                ("print_bw","learn_colour","booklet_bw","booklet_colour")):
             issues.append("Live Print link was replaced without review")
         previous_pages=int(entry.get("a4_pages") or 0)
