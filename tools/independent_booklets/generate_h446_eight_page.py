@@ -267,7 +267,10 @@ def build_student(n,mode,lesson,soup,questions,out):
         # A square state-grid needs an A4 footprint large enough for the
         # labels: do not reject or thumbnail it to save a few centimetres.
         selected=new_figure[-1]
-        parts=[float(v) for v in (selected.get("viewBox","").replace(","," ").split())]
+        # BeautifulSoup's HTML parser canonicalises SVG 'viewBox' to
+        # lowercase 'viewbox', so check both spellings.
+        vb=selected.get("viewbox") or selected.get("viewBox") or ""
+        parts=[float(v) for v in vb.replace(","," ").split()]
         aspect=parts[2]/parts[3] if len(parts)==4 and parts[3]>0 else 2
         paper.figure(selected,"Key visual · complete concept",maxw=370,
                      maxh=190 if aspect<=1.15 else 137)
