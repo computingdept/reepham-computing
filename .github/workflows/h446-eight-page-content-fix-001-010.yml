@@ -1,0 +1,83 @@
+name: Regenerate H446 eight-page review drafts 001-010 after practice improvements
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/h446-eight-page-content-fix-001-010.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h446-eight-page-content-001-010
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF and source-figure dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Regenerate updated eight-page student drafts and review-key PDFs
+        run: |
+          python tools/independent_booklets/generate_h446_eight_page.py \
+            1 2 3 4 5 6 7 8 9 10 \
+            --report-stem H446_EIGHT_PAGE_CONTENT_FIX_001_010
+      - name: Require 10 completed drafts, eight pages, student-safe answer separation and unchanged website links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import fitz,json,subprocess
+          r=json.loads(Path('offline/booklets/h446/H446_EIGHT_PAGE_CONTENT_FIX_001_010.json').read_text())
+          assert r['catalogue_unchanged'] is True
+          assert len(r['lessons'])==10
+          failed=[(x['lesson'],x.get('reason','')) for x in r['lessons'] if x['status']!='pilot_generated']
+          assert not failed, failed
+          assert subprocess.check_output(['git','diff','--','offline/booklets/catalogue.json'])==b''
+          for x in r['lessons']:
+              n=x['lesson']
+              assert x['a4_pages']==8 and not x['teacher_approved']
+              assert x['printed_exam_questions']==2
+              assert Path(x['preview_png']).is_file()
+              with fitz.open(x['teacher_key']) as key:
+                  assert 'Page 3' in ''.join(p.get_text() for p in key)
+              for mode,v in x['versions'].items():
+                  with fitz.open(v['a4']) as pdf:
+                      assert len(pdf)==8
+                      p3=pdf[2].get_text()
+                      assert 'Independent skill check' in p3, (n,mode)
+                      assert all(len(p.get_text().strip())>150 for p in pdf), (n,mode)
+                      assert 'teacher-review model' not in ''.join(p.get_text() for p in pdf).lower()
+                  with fitz.open(v['a3']) as book:
+                      assert len(book)==4
+              print(f'{n:03d} verified in colour and B&W',flush=True)
+          PY
+      - name: Commit regenerated review PDFs, previews and report only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_EIGHT_PAGE_CONTENT_FIX_001_010.json offline/booklets/h446/H446_EIGHT_PAGE_CONTENT_FIX_001_010.md
+          for n in {001..010}; do
+            git add -- "offline/booklets/h446/H446_Lesson_${n}_8PAGE_REDESIGN_"*
+          done
+          git diff --cached --quiet && exit 0
+          git commit -m 'Regenerate corrected H446 eight-page booklets 001-010 (draft only)'
+          pushed=0
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then pushed=1; break; fi
+            sleep 3
+          done
+          test "$pushed" -eq 1
