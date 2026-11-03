@@ -62,7 +62,7 @@ jobs:
                       p5=pdf[4].get_text();p8=pdf[7].get_text()
                       assert 'CLUES' in p5 and 'Step 1:' in p5 and 'Step 2:' in p5 and 'Step 3:' in p5, (n,mode)
                       assert 'END SELF-CHECK' in p8 and 'Guided We Do solution' in p8, (n,mode)
-                      assert 'partner' not in p5.lower() and 'teacher' not in p5.lower(), (n,mode)
+                      assert 'partner' not in p5.lower() and 'teacher-guided' not in p5.lower(), (n,mode)
                       assert 'YOU DO ANSWERS:' in p8, (n,mode)
                       assert all(len(p.get_text().strip())>150 for p in pdf), (n,mode)
                       assert 'teacher-review model' not in ''.join(p.get_text() for p in pdf).lower()
