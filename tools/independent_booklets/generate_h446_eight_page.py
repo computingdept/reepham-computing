@@ -60,6 +60,42 @@ STAGES=[
   "Exit Ticket · check learning",
 ]
 
+
+# Purpose-built, answer-free application prompts. These replace the generic
+# page-3 reflection for early lessons where Q1 + final-Q selection misses a
+# central skill. Each prompt is accompanied by a short teacher-review key;
+# neither changes the live classroom lesson nor the student Print catalogue.
+# Keep wording brief enough to retain full-size print and handwriting space.
+SKILL_CHECKS={
+    1: ("Convert 37 to unsigned 8-bit binary; convert 01101001 to denary. Show the place values in both directions.",
+        "37 = 32 + 4 + 1, so 00100101. 01101001 = 64 + 32 + 8 + 1 = 105."),
+    2: ("Using 8-bit two's complement, calculate 23 + 19 and 18 - 29. Show the binary working and signed results.",
+        "23 + 19: 00010111 + 00010011 = 00101010 (+42). 18 - 29: 00010010 + 11100011 = 11110101 (-11)."),
+    3: ("Starting with 10100101, calculate (a) a logical shift right by 2 and (b) AND with 00001111. Explain each result.",
+        "Logical >>2 gives 00101001 (discard two rightmost bits, fill with zeros). AND 00001111 gives 00000101 (clear upper four bits)."),
+    4: ("Represent -0.375 in normalised floating-point form using an 8-bit two's-complement mantissa and 4-bit exponent. Show each step.",
+        "-0.375 = -0.11 binary = -0.75 x 2^-1. Mantissa 10100000; exponent 1111. Normalised sign bits are 10."),
+    5: ("Decode 01110000 0010 to denary (8-bit mantissa, 4-bit exponent). Is 00011010 0101 normalised? Justify.",
+        "01110000 = +0.875, exponent 0010 = +2, so 3.5. 00011010 is not normalised: its first two mantissa bits are 00."),
+    6: ("Add -5 and +3 with a 6-bit two's-complement mantissa and 4-bit exponent. Show alignment, signed addition and normalisation.",
+        "-5 + 3 = -2. With common exponent 3, working sum is 1111000 in 7-bit working width. Normalised result: 100000 0001."),
+    7: ("Calculate 5 - (-1.5) with a 6-bit two's-complement mantissa and 4-bit exponent. Show align, negate, add and normalise.",
+        "5 - (-1.5) = +6.5. Common exponent 3; aligned mantissas 0010100 and 1111010; negate second to 0000110; sum 0011010; normalised result 011010 0011."),
+    8: ("Compare standard ASCII with Unicode for a multilingual app. Then encode the character C as an 8-bit ASCII byte (A = 65).",
+        "Standard ASCII has 128 codes (7-bit), unsuitable for Chinese characters; Unicode has a far wider repertoire. C = 67 = 01000011 in an 8-bit byte."),
+    9: ("Write C# if / else if / else to label ages 0-11 Child, 12-17 Teen, 18+ Adult. Test 11, 12, 17 and 18.",
+        "Assuming age >= 0: if (age < 12) Child; else if (age < 18) Teen; else Adult. Boundary outputs: Child, Teen, Teen, Adult."),
+   10: ("Write a C# while loop that asks for an age until it is between 0 and 120 inclusive. Test -1, 121 and 0.",
+        "Use do-once input before while OR initialise age to -1: while (age < 0 || age > 120) { age = int.Parse(Console.ReadLine()); }. The first two entries are rejected; 0 is accepted."),
+}
+# Zero-based indices. The remaining 278 booklets retain their previous
+# source-question policy until individually revised.
+EXAM_SELECTION_OVERRIDES={
+    8: (1,4),  # ASCII/Unicode comparison + variable-width UTF-8 capacity
+    9: (0,2),  # basic selection + compound AND application
+   10: (1,3),  # useful count-controlled loop + do/while challenge
+}
+
 def source_html(n):
     return BeautifulSoup((HROOT/f"lesson-{n:03d}"/"index.html").read_text(encoding="utf-8"),"html.parser")
 
@@ -318,9 +354,14 @@ def build_student(n,mode,lesson,soup,questions,out):
         paper.section("Vocabulary · use the correct technical terms")
         for term,definition in vocab[:4]:
             paper.line(f"{term} — {definition}",10.0)
-    paper.section("Check your understanding")
-    paper.line("Explain one key process in your own words using two of the terms above.",10.4)
-    paper.rules(7)
+    if n in SKILL_CHECKS:
+        paper.section("Independent skill check · apply the lesson")
+        paper.line(SKILL_CHECKS[n][0],10.1)
+        paper.rules(7 if n in (9,10) else 6)
+    else:
+        paper.section("Check your understanding")
+        paper.line("Explain one key process in your own words using two of the terms above.",10.4)
+        paper.rules(7)
     paper.line("More animated examples are available in the original online lesson.",9.0)
 
     paper.new("I Do · worked example")
@@ -425,6 +466,8 @@ def build_staff(n,lesson,out,selected_indices):
     add("Do Now — source answers",[v for _,v in lesson.do_now])
     add("I Do — source worked steps",lesson.model_steps)
     add("We Do — guided CHECK",[v for _,v in lesson.guided])
+    if n in SKILL_CHECKS:
+        add("Page 3 — independent skill check, teacher-review model",[SKILL_CHECKS[n][1]])
     add("You Do — source mark schemes",[v for _,v in lesson.you_do])
     add("Exit Ticket — source answer",[lesson.exit_answer])
     doc.build(flow)
@@ -439,6 +482,8 @@ def inspect_pdf(n,student,questions,figures):
             if len(text.strip())<170:raise ValueError(f"Page {i} nearly empty")
             if abs(pdf[i-1].rect.width-W)>1 or abs(pdf[i-1].rect.height-H)>1:
                 raise ValueError("Non-A4 page")
+        if n in SKILL_CHECKS and "Independent skill check" not in ptext[2]:
+            raise ValueError("Page 3 missing the required independent skill check")
         for i,question in enumerate(questions,1):
             if not question[0][:65].strip() in "\n".join(ptext):
                 # Line wrapping may intervene; compare normalized text.
@@ -497,7 +542,9 @@ def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
             # interactive exam task. For long multi-diagram sequences, keep
             # a foundation and stretch question with their original diagrams.
             # The remaining original questions stay accessible on the lesson.
-            selected_indices=[0,len(all_questions)-1] if len(all_questions)>3 else list(range(len(all_questions)))
+            selected_indices=list(EXAM_SELECTION_OVERRIDES[n]) if n in EXAM_SELECTION_OVERRIDES else ([0,len(all_questions)-1] if len(all_questions)>3 else list(range(len(all_questions))))
+            if max(selected_indices)>=len(all_questions):
+                raise ValueError("Selected question index missing in live lesson")
             questions=[all_questions[i] for i in selected_indices]
             versions={}
             for mode in ("bw","colour"):
@@ -520,7 +567,7 @@ def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
             row.update({"preview_png":preview,"status":"pilot_generated","a4_pages":8,"sheets_per_student":4,
                         "was_pages":original[str(n)]["a4_pages"],
                         "versions":versions,"teacher_key":teacher.relative_to(ROOT).as_posix(),
-                        "selection_policy":"representative source-based diagrams and all diagrams belonging to the selected independent questions; remaining online exam tasks accessible in the lesson",
+                        "selection_policy":"representative source-based exam questions; lessons 001-010 also include a targeted application check on page 3, with source diagrams preserved where selected",
                         "source_exam_questions":len(all_questions),
                         "printed_exam_questions":len(questions),
                         "printed_to_source_question_numbers":[i+1 for i in selected_indices],
