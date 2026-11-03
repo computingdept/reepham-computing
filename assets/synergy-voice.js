@@ -137,6 +137,7 @@
  }
  function readingRoot(){
   return document.querySelector('#viewer > .page:not([hidden])')||
+    document.querySelector('body:not(:has(main)) .screen.show')||
     document.querySelector('main .page.active')||
    document.querySelector('main .screen.active')||
    document.querySelector('#catchup-stage')||
@@ -147,7 +148,7 @@
  function readVisibleContent(){
   const root=readingRoot();
   if(!root)return [];
-  const elements=root.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,pre,summary,.donow-question,.catchup-question,.lesson-tile-open,.term-head strong');
+  const elements=root.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,pre,summary,th,td,#questionText,.do-now-question,.donow-question,.catchup-question,.lesson-tile-open,.term-head strong');
   const out=[];
   for(const el of elements){
    if(!nodeVisible(el))continue;
