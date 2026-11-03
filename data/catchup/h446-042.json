@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-042",
   "course": "h446",
-  "title": "Programming Techniques · Value and Reference",
+  "title": "OOP · Inheritance and Reuse",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · inheritance and reuse. Retrieve earlier learning, trace the C# object model, and practise before reviewing your answers.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What is a local variable?",
-          "answer": "A name scoped to a function or block",
+          "prompt": "Why make balance private?",
+          "answer": "To prevent direct uncontrolled changes.",
           "options": [
-            "A name scoped to a function or block",
-            "A name scoped to a function AND block",
-            "There is not enough information to determine the result."
+            "To prevent direct uncontrolled changes.",
+            "To pass a named input to an operation.",
+            "The input must be sorted."
           ],
-          "feedback": "Model answer: A name scoped to a function or block"
+          "feedback": "Model answer: To prevent direct uncontrolled changes."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Why use a method?",
-          "answer": "To modularise and reuse logic",
+          "prompt": "Why use a method parameter?",
+          "answer": "To pass a named input to an operation.",
           "options": [
-            "To modularise OR reuse logic",
-            "There is not enough information to determine the result.",
-            "To modularise and reuse logic"
+            "To pass a named input to an operation.",
+            "The input must be sorted.",
+            "A timetable is associated with a student; it is not a subtype of student."
           ],
-          "feedback": "Model answer: To modularise and reuse logic"
+          "feedback": "Model answer: To pass a named input to an operation."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "What does an accumulator store?",
-          "answer": "A running total",
+          "prompt": "What condition must hold for binary search?",
+          "answer": "The input must be sorted.",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "A running total",
-            "There is not enough information to determine the result."
+            "The input must be sorted.",
+            "A timetable is associated with a student; it is not a subtype of student.",
+            "To prevent direct uncontrolled changes."
           ],
-          "feedback": "Model answer: A running total"
+          "feedback": "Model answer: The input must be sorted."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "What is a hash collision?",
-          "answer": "Two keys produce the same location",
+          "prompt": "Why is Student is-a Person inheritance but Student has-a Timetable not?",
+          "answer": "A timetable is associated with a student; it is not a subtype of student.",
           "options": [
-            "Two keys produce the same location",
-            "Two keys produce the different location",
-            "There is not enough information to determine the result."
+            "A timetable is associated with a student; it is not a subtype of student.",
+            "To prevent direct uncontrolled changes.",
+            "To pass a named input to an operation."
           ],
-          "feedback": "Model answer: Two keys produce the same location"
+          "feedback": "Model answer: A timetable is associated with a student; it is not a subtype of student."
         }
       ]
     },
@@ -75,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "by value — Copies a value to a parameter",
-            "ref — Allows changes to caller variable",
-            "reference — Identifies an object",
-            "argument — Value provided to a call",
-            "mutation — Change to a value or object"
+            "inheritance — A derived class reuses accessible base-class members",
+            "base class — Parent type",
+            "derived class — Type that inherits",
+            "reuse — Avoid duplicating existing code",
+            "is-a — Relationship supporting inheritance"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Explain the important decision",
-          "text": "An int parameter normally receives a copied number. A Box parameter normally receives a copied reference to the same object. ref instead aliases the caller variable, allowing that variable to be reassigned."
+          "title": "Trace this C# example",
+          "text": "Dog d = new Dog();\nd.Name = \"Max\";\nd.Eat(); d.Bark();\n\nclass Animal {\n  public string Name = \"\";\n  public void Eat() { Console.WriteLine(\"Eating\"); }\n}\n\nclass Dog : Animal {\n  public void Bark() { Console.WriteLine(\"Woof\"); }\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · Compare changes to a copy and an object",
-          "text": "Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Copy an integer value",
-          "text": "Start x=5; CopyInt(x) changes only local n to 9. The caller x remains 5. This is pass-by-value."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Copy a reference; mutate one object",
-          "text": "Start item→Box A(Value=5), alias=item. Mutate(item) copies the reference, then changes Box A.Value to 9. Both item and alias still refer to Box A."
+          "title": "What to notice",
+          "text": "Dog is an Animal: Dog objects reuse accessible Name and Eat, while adding Bark."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'by value'?",
-          "answer": "Copies a value to a parameter",
+          "prompt": "Which definition matches 'inheritance'?",
+          "answer": "A derived class reuses accessible base-class members",
           "options": [
-            "Allows changes to caller variable",
-            "Identifies an object",
-            "Copies a value to a parameter"
+            "A derived class reuses accessible base-class members",
+            "Parent type",
+            "Type that inherits"
           ],
-          "feedback": "by value — Copies a value to a parameter"
+          "feedback": "Model answer: A derived class reuses accessible base-class members"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'ref'?",
-          "answer": "Allows changes to caller variable",
+          "prompt": "Which definition matches 'base class'?",
+          "answer": "Parent type",
           "options": [
-            "Identifies an object",
-            "Allows changes to caller variable",
-            "Copies a value to a parameter"
+            "Parent type",
+            "Type that inherits",
+            "Avoid duplicating existing code"
           ],
-          "feedback": "ref — Allows changes to caller variable"
+          "feedback": "Model answer: Parent type"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'reference'?",
-          "answer": "Identifies an object",
+          "prompt": "Which definition matches 'derived class'?",
+          "answer": "Type that inherits",
           "options": [
-            "Identifies an object",
-            "Copies a value to a parameter",
-            "Allows changes to caller variable"
+            "Type that inherits",
+            "Avoid duplicating existing code",
+            "Relationship supporting inheritance"
           ],
-          "feedback": "reference — Identifies an object"
+          "feedback": "Model answer: Type that inherits"
         }
       ]
     },
@@ -153,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Problem 1",
-          "text": "If a method takes ref int n and adds 2, starting 3, what is the caller value?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Discuss, then respond",
-          "text": "If a method takes ref int n and adds 2, starting 3, what is the caller value?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Check your thinking",
-          "text": "5."
-        },
-        {
-          "type": "paragraph",
-          "title": "Problem 2",
-          "text": "Does passing a reference-type object by value copy the object itself?"
+          "title": "Try → Discuss → Improve",
+          "text": "Predict the result before checking your response. Refer back to the C# example if needed."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Value provided to a call",
-          "answer": "argument",
+          "prompt": "Does a Dog object inherit Eat()?",
+          "answer": "Yes, from Animal",
           "options": [
-            "argument",
-            "by value",
-            "ref"
+            "Yes, from Animal",
+            "No, only Bark()",
+            "Only when Eat is rewritten in Dog"
           ],
-          "feedback": "argument — Value provided to a call"
+          "feedback": "Model answer: Yes, from Animal"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Change to a value or object",
-          "answer": "mutation",
+          "prompt": "Which declaration means Teacher inherits Person?",
+          "answer": "class Teacher : Person",
           "options": [
-            "by value",
-            "ref",
-            "mutation"
+            "class Teacher : Person",
+            "class Person : Teacher",
+            "new Teacher(Person)"
           ],
-          "feedback": "mutation — Change to a value or object"
+          "feedback": "Model answer: class Teacher : Person"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Copies a value to a parameter",
-          "answer": "by value",
+          "prompt": "Which term means: Avoid duplicating existing code?",
+          "answer": "reuse",
           "options": [
-            "reference",
-            "by value",
-            "ref"
+            "reuse",
+            "base class",
+            "derived class"
           ],
-          "feedback": "by value — Copies a value to a parameter"
+          "feedback": "Model answer: reuse"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Allows changes to caller variable",
-          "answer": "ref",
+          "prompt": "Which term means: Relationship supporting inheritance?",
+          "answer": "is-a",
           "options": [
-            "ref",
-            "by value",
-            "reference"
+            "is-a",
+            "derived class",
+            "inheritance"
           ],
-          "feedback": "ref — Allows changes to caller variable"
+          "feedback": "Model answer: is-a"
         }
       ]
     },
@@ -234,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 1 If a method takes ref int n and adds 2, starting 3, what is the caller value?",
-          "answer": "MODEL ANSWER Check your thinking 5.",
+          "prompt": "What does the colon mean in class Dog : Animal?",
+          "answer": "Dog inherits Animal",
           "options": [
-            "MODEL ANSWER Check your thinking 5.",
-            "MODEL ANSWER Check your thinking No; the reference is copied.",
-            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged."
+            "Dog inherits Animal",
+            "Animal inherits Dog",
+            "Dog creates an Animal field"
           ],
-          "feedback": "MODEL ANSWER Check your thinking 5."
+          "feedback": "Model answer: Dog inherits Animal"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 2 Does passing a reference-type object by value copy the object itself?",
-          "answer": "MODEL ANSWER Check your thinking No; the reference is copied.",
+          "prompt": "Which method is defined on Dog rather than Animal?",
+          "answer": "Bark()",
           "options": [
-            "MODEL ANSWER Check your thinking 5.",
-            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
-            "MODEL ANSWER Check your thinking No; the reference is copied."
+            "Bark()",
+            "Eat()",
+            "The Name field"
           ],
-          "feedback": "MODEL ANSWER Check your thinking No; the reference is copied."
+          "feedback": "Model answer: Bark()"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
-          "answer": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
+          "prompt": "Why implement shared Eat() in Animal?",
+          "answer": "Derived types reuse one implementation",
           "options": [
-            "MODEL ANSWER Check your thinking No; the reference is copied.",
-            "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
-            "MODEL ANSWER Check your thinking 5."
+            "Derived types reuse one implementation",
+            "Every subclass must copy it",
+            "It makes every animal a Dog"
           ],
-          "feedback": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged."
+          "feedback": "Model answer: Derived types reuse one implementation"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Compare changes to a copy and an object Trace these calls from fresh state: int x=5; CopyInt(x); Box item=new Box { Value=5 }; Box alias=item; Mutate(item); Replace(ref item);",
-        "model": "STEP 3 Reassign the caller through ref Replace(ref item) makes caller item refer to new Box B(Value=20). alias still refers to Box A(Value=9). Without ref, assigning a new Box to local p would leave item unchanged.",
+        "prompt": "Why implement shared Eat() in Animal? Explain using precise OOP terminology.",
+        "model": "Derived types reuse one implementation",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "I explain the class and object involved.",
+          "I use accurate OOP keywords.",
+          "I correct and improve after comparing with the model."
         ]
       }
     },
@@ -289,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "ref means: Copies a value to a parameter",
-          "answer": "false",
-          "feedback": "ref — Allows changes to caller variable"
+          "prompt": "Dog : Animal means Dog inherits Animal.",
+          "answer": "true",
+          "feedback": "Correct: TRUE. Explain using today's idea."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "reference means: Identifies an object",
+          "prompt": "Derived classes may add methods.",
           "answer": "true",
-          "feedback": "reference — Identifies an object"
+          "feedback": "Correct: TRUE. Explain using today's idea."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "argument means: Copies a value to a parameter",
+          "prompt": "Inheritance requires copying all source code.",
           "answer": "false",
-          "feedback": "argument — Value provided to a call"
+          "feedback": "Correct: FALSE. Explain using today's idea."
         }
       ]
     }
