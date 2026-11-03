@@ -84,3 +84,36 @@ h1{font-size:clamp(29px,3.3vw,51px);line-height:1.08;letter-spacing:-.025em;marg
  .model-current p{font-size:20px}
  .micro-svg{height:auto;max-height:34vh;min-height:180px}
 }
+
+/* Lesson 037: completed A3 map as a final, single-screen synthesis. */
+.final-map-stage{height:100%;min-height:0;gap:5px}
+.final-map-panel{min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px}
+.final-map-panel .completed-svg{display:block;width:100%;height:100%;max-height:100%;object-fit:contain}
+.show-complete-map .scene-shell h1{font-size:clamp(28px,2.65vw,42px);margin-bottom:4px}
+.show-complete-map .scene-shell .subtitle{font-size:clamp(15px,1.13vw,19px);margin-bottom:5px}
+.show-complete-map .scene-head{margin-bottom:4px}
+.show-complete-map .map-caption{font-size:13px;line-height:1.12}
+.complete-print{border:1px solid #a0bea9;background:#edf7ee;color:#205e3e;font-weight:850;border-radius:8px;padding:8px 12px;cursor:pointer}
+.complete-print:focus-visible{outline:3px solid #b27b2d;outline-offset:2px}
+@media(min-width:901px) and (max-height:760px){
+ .show-complete-map .scene-shell{padding:5px 14px}
+ .show-complete-map .scene-shell h1{font-size:28px;margin-bottom:2px}
+ .show-complete-map .scene-shell .subtitle{font-size:14px;margin-bottom:3px}
+ .show-complete-map .scene-head{margin-bottom:2px}
+ .show-complete-map .tag{padding:4px 8px;font-size:13px}
+ .show-complete-map .final-map-panel{padding:1px}
+ .show-complete-map .complete-print{padding:5px 10px}
+}
+@media(max-width:900px){
+ .final-map-panel .completed-svg{height:auto;min-height:0;max-height:none;width:100%}
+ .show-complete-map .scene-body{overflow:auto}
+ .final-map-stage{height:auto}
+ .complete-print{font-size:13px;padding:7px 8px}
+}
+@media print{
+ .printonly-complete{display:none!important}
+ body.print-complete .printonly-blank{display:none!important}
+ body.print-complete .printonly-complete{display:block!important}
+ body.print-complete .printonly-complete h1{font-size:22pt;margin:0 0 4mm}
+ body.print-complete .printonly-complete .completed-svg{width:100%;height:242mm;object-fit:contain}
+}
