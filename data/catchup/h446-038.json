@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-038",
   "course": "h446",
-  "title": "Programming Techniques · Sequence and Selection",
+  "title": "OOP · Classes and Objects",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
+  "intro": "Catch up on oop · classes and objects. Retrieve earlier learning, trace the C# class example and complete independent OOP practice before checking feedback.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What does a full adder include that a half adder does not?",
-          "answer": "Carry-in",
+          "prompt": "After a test-feedback lesson, what should you do with an error?",
+          "answer": "Correct and reattempt it.",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "Carry-in",
-            "There is not enough information to determine the result."
+            "Correct and reattempt it.",
+            "A named block of reusable instructions.",
+            "A record has named fields; an array has indexed elements."
           ],
-          "feedback": "Model answer: Carry-in"
+          "feedback": "Model answer: Correct and reattempt it."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What is a local variable?",
-          "answer": "A variable declared within a scope",
+          "prompt": "What is a procedure?",
+          "answer": "A named block of reusable instructions.",
           "options": [
-            "A variable declared within a scope",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "A named block of reusable instructions.",
+            "A record has named fields; an array has indexed elements.",
+            "Only a local copy was changed."
           ],
-          "feedback": "Model answer: A variable declared within a scope"
+          "feedback": "Model answer: A named block of reusable instructions."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "Why does a stack use LIFO?",
-          "answer": "The most recently inserted item is removed first",
+          "prompt": "How does a record differ from an array?",
+          "answer": "A record has named fields; an array has indexed elements.",
           "options": [
-            "The most recently inserted item is not removed first",
-            "There is not enough information to determine the result.",
-            "The most recently inserted item is removed first"
+            "A record has named fields; an array has indexed elements.",
+            "Only a local copy was changed.",
+            "Correct and reattempt it."
           ],
-          "feedback": "Model answer: The most recently inserted item is removed first"
+          "feedback": "Model answer: A record has named fields; an array has indexed elements."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Simplify A ∨ (A ∧ B).",
-          "answer": "A, by absorption",
+          "prompt": "Why can a pass-by-value change leave the caller's integer unchanged?",
+          "answer": "Only a local copy was changed.",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "A, by absorption",
-            "There is not enough information to determine the result."
+            "Only a local copy was changed.",
+            "Correct and reattempt it.",
+            "A named block of reusable instructions."
           ],
-          "feedback": "Model answer: A, by absorption"
+          "feedback": "Model answer: Only a local copy was changed."
         }
       ]
     },
@@ -75,72 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key vocabulary",
+          "title": "Key OOP vocabulary",
           "items": [
-            "sequence — Instructions run in order",
-            "selection — A conditional branch",
-            "Boolean — True or false expression",
-            "condition — A logical test",
-            "trace — Follow state changes"
+            "class — Blueprint specifying attributes and methods",
+            "object — An instance of a class",
+            "attribute — A value stored in an object",
+            "instantiate — Create an object using a class",
+            "state — The current values of an object's attributes"
           ]
         },
         {
           "type": "paragraph",
-          "title": "Explain the important decision",
-          "text": "Sequence changes score before selection tests it. The condition is true at exactly 10 because >= includes the boundary."
+          "title": "Modelled C# example",
+          "text": "Student a = new Student();\nStudent b = new Student();\na.Name = \"Ada\";\nb.Name = \"Ben\";\nConsole.WriteLine(a.Name);\n\nclass Student {\n  public string Name = \"\";\n}"
         },
         {
           "type": "paragraph",
-          "title": "Worked example · Follow the order of execution",
-          "text": "int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");"
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Update in sequence",
-          "text": "score starts at 7. Adding 3 changes the same variable to 10; the condition has not been tested yet."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Evaluate the condition",
-          "text": "Substitute the new value: 10 >= 10 is true. Using the old value 7 would trace the wrong state."
+          "title": "Explain",
+          "text": "Student is the class; a and b are distinct objects. Each object holds its own Name value."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'sequence'?",
-          "answer": "Instructions run in order",
+          "prompt": "Which definition matches 'class'?",
+          "answer": "Blueprint specifying attributes and methods",
           "options": [
-            "Instructions run in order",
-            "A conditional branch",
-            "True or false expression"
+            "Blueprint specifying attributes and methods",
+            "An instance of a class",
+            "A value stored in an object"
           ],
-          "feedback": "sequence — Instructions run in order"
+          "feedback": "Model answer: Blueprint specifying attributes and methods"
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'selection'?",
-          "answer": "A conditional branch",
+          "prompt": "Which definition matches 'object'?",
+          "answer": "An instance of a class",
           "options": [
-            "Instructions run in order",
-            "True or false expression",
-            "A conditional branch"
+            "An instance of a class",
+            "A value stored in an object",
+            "Create an object using a class"
           ],
-          "feedback": "selection — A conditional branch"
+          "feedback": "Model answer: An instance of a class"
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'Boolean'?",
-          "answer": "True or false expression",
+          "prompt": "Which definition matches 'attribute'?",
+          "answer": "A value stored in an object",
           "options": [
-            "A conditional branch",
-            "True or false expression",
-            "Instructions run in order"
+            "A value stored in an object",
+            "Create an object using a class",
+            "The current values of an object's attributes"
           ],
-          "feedback": "Boolean — True or false expression"
+          "feedback": "Model answer: A value stored in an object"
         }
       ]
     },
@@ -153,73 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Problem 1",
-          "text": "value = 3; value *= 4; is value > 10?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Discuss, then respond",
-          "text": "value = 3; value *= 4; is value > 10?"
-        },
-        {
-          "type": "paragraph",
-          "title": "Check your thinking",
-          "text": "Yes: 12 > 10."
-        },
-        {
-          "type": "paragraph",
-          "title": "Problem 2",
-          "text": "A user enters age 16. Test age >= 18."
+          "title": "Try → Discuss → Improve",
+          "text": "Work through the class example. Predict the result before reading the feedback. Focus on the object, its state and the method call."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? A logical test",
-          "answer": "condition",
+          "prompt": "Two different Student objects have Names Ada and Ben. What does the second Name contain?",
+          "answer": "Ben",
           "options": [
-            "selection",
-            "condition",
-            "sequence"
+            "Ben",
+            "Ada",
+            "An empty string"
           ],
-          "feedback": "condition — A logical test"
+          "feedback": "Model answer: Ben"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Follow state changes",
-          "answer": "trace",
+          "prompt": "What creates a new Student instance?",
+          "answer": "new Student()",
           "options": [
-            "trace",
-            "sequence",
-            "selection"
+            "new Student()",
+            "class Student()",
+            "Student.new"
           ],
-          "feedback": "trace — Follow state changes"
+          "feedback": "Model answer: new Student()"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Instructions run in order",
-          "answer": "sequence",
+          "prompt": "Which OOP term means: Create an object using a class?",
+          "answer": "instantiate",
           "options": [
-            "selection",
-            "Boolean",
-            "sequence"
+            "instantiate",
+            "object",
+            "attribute"
           ],
-          "feedback": "sequence — Instructions run in order"
+          "feedback": "Model answer: instantiate"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? A conditional branch",
-          "answer": "selection",
+          "prompt": "Which OOP term means: The current values of an object's attributes?",
+          "answer": "state",
           "options": [
-            "Boolean",
-            "selection",
-            "sequence"
+            "state",
+            "attribute",
+            "class"
           ],
-          "feedback": "selection — A conditional branch"
+          "feedback": "Model answer: state"
         }
       ]
     },
@@ -234,47 +209,47 @@
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 1 value = 3; value *= 4; is value > 10?",
-          "answer": "MODEL ANSWER Check your thinking Yes: 12 > 10.",
+          "prompt": "A class is best described as which of these?",
+          "answer": "A blueprint for instances",
           "options": [
-            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
-            "MODEL ANSWER Check your thinking Yes: 12 > 10.",
-            "MODEL ANSWER Check your thinking False; else branch executes."
+            "A blueprint for instances",
+            "One specific instance",
+            "A method call"
           ],
-          "feedback": "MODEL ANSWER Check your thinking Yes: 12 > 10."
+          "feedback": "Model answer: A blueprint for instances"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Problem 2 A user enters age 16. Test age >= 18.",
-          "answer": "MODEL ANSWER Check your thinking False; else branch executes.",
+          "prompt": "What does a.Name print after setting a.Name to Ada and b.Name to Ben?",
+          "answer": "Ada",
           "options": [
-            "MODEL ANSWER Check your thinking False; else branch executes.",
-            "MODEL ANSWER Check your thinking Yes: 12 > 10.",
-            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
+            "Ada",
+            "Ben",
+            "Both names"
           ],
-          "feedback": "MODEL ANSWER Check your thinking False; else branch executes."
+          "feedback": "Model answer: Ada"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: Follow the order of execution int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");",
-          "answer": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
+          "prompt": "Why are a.Name and b.Name independent?",
+          "answer": "They belong to separate instances",
           "options": [
-            "MODEL ANSWER Check your thinking Yes: 12 > 10.",
-            "MODEL ANSWER Check your thinking False; else branch executes.",
-            "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
+            "They belong to separate instances",
+            "Because Name is a loop variable",
+            "Because every object uses the same state"
           ],
-          "feedback": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass."
+          "feedback": "Model answer: They belong to separate instances"
         }
       ],
       "writing": {
-        "prompt": "Write an exam-style response in your own words. Follow the order of execution int score = 7; score = score + 3; if (score >= 10) Console.WriteLine(\"Pass\");",
-        "model": "STEP 3 Take the selected branch The true branch prints Pass. For initial scores 6, 7 and 8, the updated scores are 9, 10 and 11: only the latter two print Pass.",
+        "prompt": "Why are a.Name and b.Name independent? Explain your decision using precise H446 terminology.",
+        "model": "They belong to separate instances",
         "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
+          "My answer responds to the specific question.",
+          "I use precise OOP vocabulary.",
+          "I check and improve my reasoning after the model."
         ]
       }
     },
@@ -289,23 +264,23 @@
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "selection means: Instructions run in order",
+          "prompt": "An object is a blueprint.",
           "answer": "false",
-          "feedback": "selection — A conditional branch"
+          "feedback": "The correct answer is FALSE. Explain it using today's lesson."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Boolean means: True or false expression",
+          "prompt": "Two objects from one class can have different states.",
           "answer": "true",
-          "feedback": "Boolean — True or false expression"
+          "feedback": "The correct answer is TRUE. Explain it using today's lesson."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "condition means: A logical test",
+          "prompt": "new Student() creates an instance.",
           "answer": "true",
-          "feedback": "condition — A logical test"
+          "feedback": "The correct answer is TRUE. Explain it using today's lesson."
         }
       ]
     }
