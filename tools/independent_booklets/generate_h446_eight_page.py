@@ -244,6 +244,14 @@ class Paper:
             h=maxh;w=h*aspect
         # Do not shrink a visual below the minimum legibility envelope:
         # source image must remain meaningful in the student print version.
+        # Slightly narrow figures (e.g. an 184pt Noughts & Crosses
+        # board) may be enlarged 3-8% without shrinking labels or taking
+        # over the page. This is a genuine print-size increase.
+        if 175<=w<190:
+            factor=190/w
+            if h*factor<=maxh+16:
+                w=190
+                h*=factor
         if w<190 or h<49:
             raise ValueError(f"Figure too small in student print: {tag} {w:.0f}×{h:.0f}")
         self.safe(self.y-h-29)
