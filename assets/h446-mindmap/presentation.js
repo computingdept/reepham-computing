@@ -29,12 +29,12 @@ function exit(title,statement,correct,explanation){return {type:"exit",phase:"EX
 const slides36=[
  doNow(),answers(),
  mapStage("Start one A3 mind map","Landscape · One sheet across Lessons 036 and 037",0,3,"","Copy the five branch headings only. Leave plenty of space to grow each branch."),
- model("I Do · How to start a useful branch","Watch this example grow one piece at a time.","A good mind map is not a collection of copied paragraphs.",[
-  ["HEADING","Write STACK. Branch out from Data Structures."],
-  ["DEFINITION","LIFO: the newest pushed item is the first popped."],
-  ["EXAMPLE","Sketch A → B → C being pushed; pop returns C."],
-  ["LINK + WARNING","Link to Queue (FIFO). Do not confuse pop with dequeue."]
- ],4,"stack"),
+ model("I Do · 1.4.1 Start with Data Types","Watch a number-systems branch grow one idea at a time.","Our first branch follows OCR 1.4.1 — not Data Structures.",[
+  ["HEADING + BASES","From 1.4.1 Data Types, write Number systems. Binary is base 2; denary is base 10."],
+  ["HEX","Hexadecimal is base 16, using digits 0–9 and A–F."],
+  ["EXAMPLE","13₁₀ = 1101₂ = D₁₆. Check with 8 + 4 + 1 = 13."],
+  ["LINK + WARNING","Link binary to hex using four-bit groups. Pad with leading zeroes if necessary."]
+ ],4,"numbers-map"),
  model("I Do · Number systems","A small worked example belongs on the branch.","Use place values to explain an original conversion, not a memorised answer.",[
   ["PLACE VALUES","For 26 in denary: 16 + 8 + 2."],
   ["BINARY","Write 11010₂ and show which powers of two you used."],
@@ -142,7 +142,7 @@ const slides37=[
 const slides=lesson===36?slides36:slides37;
 let index=0,shownSteps=0,answerVisible=false;
 const branches=[
- {name:"DATA REPRESENTATION",spec:"1.4.1",x:22,y:31,w:352,h:162,color:"#3574a5",fill:"#e8f3fc",lines:["Binary · denary · hex","2's complement · float","bitwise · ASCII / Unicode"]},
+ {name:"DATA TYPES",spec:"1.4.1",x:22,y:31,w:352,h:162,color:"#3574a5",fill:"#e8f3fc",lines:["Binary · denary · hex","2's complement · float","bitwise · ASCII / Unicode"]},
  {name:"DATA STRUCTURES",spec:"1.4.2",x:795,y:31,w:352,h:162,color:"#278671",fill:"#e8f7f0",lines:["Arrays · records · lists","stack / queue · tree / graph","linked list · hash · pointers"]},
  {name:"BOOLEAN LOGIC",spec:"1.4.3",x:22,y:467,w:352,h:166,color:"#b47736",fill:"#fff4e5",lines:["Truth tables · expressions","K-maps · De Morgan's","adders · D-type flip-flop"]},
  {name:"PROGRAMMING",spec:"2.2.1",x:795,y:467,w:352,h:166,color:"#7d60aa",fill:"#f3ebfc",lines:["Sequence · selection · loops","local scope · byVal / byRef","functions · modularity"]},
@@ -166,11 +166,24 @@ function mapSVG(level=0,focus=""){
  return '<svg class="bigmap" viewBox="0 0 1170 660" role="img" aria-label="Growing revision mind map with five branches. Coloured branches show model ideas added so far." xmlns="http://www.w3.org/2000/svg"><rect width="1170" height="660" rx="15" fill="#fff"/><g fill="none" stroke-width="7" stroke-linecap="round">'+paths+'</g><rect x="467" y="275" width="240" height="100" rx="20" fill="#193f33"/><text x="587" y="315" text-anchor="middle" font-weight="900" font-size="30" fill="white">H446</text><text x="587" y="348" text-anchor="middle" font-weight="800" font-size="25" fill="white">A3 revision map</text>'+cards+'</svg>';
 }
 function microSVG(title,steps){
- const terms=["HEADING","DEFINITION","EXAMPLE","LINK / WARNING"];
- return '<svg class="micro-svg" viewBox="0 0 850 405" role="img" aria-label="Small example of a revision mind map growing one branch at a time"><rect width="850" height="405" rx="16" fill="white"/><g fill="none" stroke="#5ba187" stroke-width="6" stroke-linecap="round"><path d="M422 199 Q284 90 152 90"/><path d="M423 185 Q548 77 684 91"/><path d="M423 213 Q276 327 156 330"/><path d="M428 214 Q558 331 693 330"/></g><rect x="307" y="167" width="230" height="71" rx="18" fill="#205b42"/><text x="422" y="209" text-anchor="middle" font-size="26" font-weight="900" fill="white">'+escapeHtml(title)+'</text>'+terms.map((t,i)=>{
-  const pos=[[15,42],[550,42],[15,284],[550,284]][i],visible=i<steps;
-  return '<rect x="'+pos[0]+'" y="'+pos[1]+'" width="285" height="80" rx="13" stroke="'+(visible?"#2f8d65":"#b9c9bf")+'" stroke-width="3" fill="'+(visible?"#e5f4eb":"#f5f7f5")+'"/><text x="'+(pos[0]+142)+'" y="'+(pos[1]+31)+'" text-anchor="middle" font-size="21" font-weight="900" fill="'+(visible?"#205b42":"#9baa9f")+'">'+(visible?t:"?")+'</text><text x="'+(pos[0]+142)+'" y="'+(pos[1]+58)+'" text-anchor="middle" font-size="18" fill="#60776b">'+(visible?"✓ added to map":"wait for reveal")+'</text>';
- }).join("")+'</svg>';
+ /* This is a genuinely growing student-example branch, not a diagram
+    of generic tasks. Content remains hidden until each teacher reveal. */
+ const nodes=[
+  {title:"1 · BASES",lines:["Binary: base 2","Denary: base 10"]},
+  {title:"2 · HEX",lines:["Hexadecimal: base 16","Digits: 0–9 and A–F"]},
+  {title:"3 · EXAMPLE",lines:["13₁₀ = 1101₂","1101₂ = D₁₆"]},
+  {title:"4 · LINK + WARNING",lines:["1 hex digit ↔ 4 bits","Pad on the left if needed"]}
+ ];
+ const positions=[[20,29],[550,29],[20,280],[550,280]];
+ const lines='<g fill="none" stroke="#5ba187" stroke-width="6" stroke-linecap="round"><path d="M420 186 Q260 115 165 104"/><path d="M430 185 Q565 116 694 104"/><path d="M420 217 Q260 311 165 326"/><path d="M430 218 Q574 310 694 328"/></g>';
+ const cards=nodes.map((node,i)=>{
+  const p=positions[i],visible=i<steps;
+  const background=visible?"#e5f4eb":"#f5f7f5",border=visible?"#2f8d65":"#b9c9bf";
+  const heading=visible?node.title:"IDEA "+(i+1)+" · TO REVEAL";
+  const details=visible?node.lines.map((line,j)=>'<text x="'+(p[0]+142)+'" y="'+(p[1]+54+j*22)+'" font-size="18" font-weight="700" text-anchor="middle" fill="#24473a">'+escapeHtml(line)+'</text>').join(""):"";
+  return '<g><rect x="'+p[0]+'" y="'+p[1]+'" width="285" height="98" rx="13" stroke="'+border+'" stroke-width="3" fill="'+background+'"/><text x="'+(p[0]+142)+'" y="'+(p[1]+27)+'" font-size="18" font-weight="900" text-anchor="middle" fill="'+(visible?"#205b42":"#98a99f")+'">'+heading+'</text>'+details+'</g>';
+ }).join("");
+ return '<svg class="micro-svg" viewBox="0 0 850 405" role="img" aria-label="Example mind map of H446 1.4.1 Number Systems that grows as four pieces of information are revealed"><rect width="850" height="405" rx="16" fill="white"/>'+lines+'<rect x="310" y="171" width="230" height="72" rx="17" fill="#205b42"/><text x="425" y="199" text-anchor="middle" font-size="21" font-weight="900" fill="white">1.4.1</text><text x="425" y="224" text-anchor="middle" font-size="21" font-weight="900" fill="white">NUMBER SYSTEMS</text>'+cards+'</svg>';
 }
 function printSheet(){
  return '<div class="printonly"><h1>OCR H446 · One A3 revision map</h1><p class="student-line">Name: _______________________ &nbsp;&nbsp; Class: __________ &nbsp;&nbsp; Date: __________</p>'+mapSVG(0)+'</div>';
@@ -181,7 +194,7 @@ function slideBody(s){
  if(s.type==="map")return '<div class="map-stage"><div class="map-panel">'+mapSVG(s.level,s.focus)+'</div><div class="map-caption"><span>ONE A3 LANDSCAPE SHEET · '+(lesson===36?"BUILD THE FIRST TWO BRANCHES":"CONTINUE THE SAME SHEET")+'</span><strong>'+escapeHtml(s.caption)+'</strong></div></div>';
  if(s.type==="model"){
   const steps=s.steps.map((p,i)=>'<div class="step '+(i<shownSteps?"":"hidden-step")+'"><span class="number">STEP '+(i+1)+(i<shownSteps?" · REVEALED":" · TO COME")+'</span><div>'+(i<shownSteps?'<strong>'+escapeHtml(p[0])+'</strong> — '+escapeHtml(p[1]):'Think about how this strengthens the branch.')+'</div></div>').join("");
-  const left=s.example==="stack"?'<div class="micro-panel"><div class="label">A SAMPLE BEGINNING · GROWS WITH EACH REVEAL</div>'+microSVG("STACK",shownSteps)+'</div>':s.example==="links"?'<div class="map-panel">'+mapSVG(5)+'</div>':'<div class="card visual"><div class="stack"><h2>'+escapeHtml(s.lead)+'</h2><div class="focus-note">Watch → explain → put a shorter version on your map.</div><div class="word-chips"><span>Definition</span><span>Method</span><span>Misconception</span><span>Link</span></div></div></div>';
+  const left=s.example==="numbers-map"?'<div class="micro-panel"><div class="label">OCR 1.4.1 · SAMPLE BRANCH · REVEAL ONE IDEA AT A TIME</div>'+microSVG("NUMBER SYSTEMS",shownSteps)+'</div>':s.example==="links"?'<div class="map-panel">'+mapSVG(5)+'</div>':'<div class="card visual"><div class="stack"><h2>'+escapeHtml(s.lead)+'</h2><div class="focus-note">Watch → explain → put a shorter version on your map.</div><div class="word-chips"><span>Definition</span><span>Method</span><span>Misconception</span><span>Link</span></div></div></div>';
   return '<div class="split">'+left+'<article class="card"><div class="label">TEACHER MODELS · '+shownSteps+' OF '+s.steps.length+' STEPS</div><div class="steps">'+steps+'</div></article></div>';
  }
  if(s.type==="board")return '<div class="split"><article class="card board-prompt"><span class="board-label">WRITE → HOLD UP → EXPLAIN</span><p>'+escapeHtml(s.prompt)+'</p><div class="focus-note">Use your mini-whiteboard. The answer is hidden until the teacher reveals it.</div></article><div class="stack"><div class="board-wait" '+(answerVisible?'hidden':'')+'>Show your whiteboard before checking</div><div class="board-answer" '+(answerVisible?'':'hidden')+'><span class="label">MODEL ANSWER</span><div>'+escapeHtml(s.answer)+'</div>'+(s.explain?'<p class="note">'+escapeHtml(s.explain)+'</p>':'')+'</div></div></div>';
