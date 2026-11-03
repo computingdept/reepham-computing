@@ -395,8 +395,8 @@ def inspect_pdf(n,student,questions,figures):
                 raise ValueError("A You Do model answer appears in pupil version")
         count=sum(len(p.get_images(full=True)) for p in pdf)
         expected_count=sum(bool(q[2]) for q in questions)
-        if count<expected_count+1:
-            raise ValueError("Missing essential source independent-question diagram")
+        if count < len(figures) or count < expected_count:
+            raise ValueError("Missing a source figure or independent-question diagram")
         if not any("Discuss" in p for p in ptext):
             raise ValueError("Discuss phase missing")
     return count
@@ -420,11 +420,13 @@ def render_preview(n,a4):
     out.save(dest)
     return dest.relative_to(ROOT).as_posix()
 
-def run(numbers):
+def run(numbers, report_stem="H446_EIGHT_PAGE_REDESIGN_PILOT"):
+    if not re.fullmatch(r"H446_EIGHT_PAGE_[A-Z0-9_]+",report_stem):
+        raise ValueError("Unsafe report name")
     original=json.loads(CAT.read_text(encoding="utf-8"))["lessons"]["h446"]
     rows=[]
     for n in numbers:
-        row={"lesson":n,"status":"deferred"}
+        row={"lesson":n,"status":"deferred","title":original.get(str(n),{}).get("title",f"Lesson {n:03d}")}
         created=[]
         try:
             lesson=h446_source(n)
@@ -472,7 +474,7 @@ def run(numbers):
             "catalogue_unchanged":True,"lessons":rows,
             "counts":dict(Counter(x["status"] for x in rows)),
             "eight_pages_required":True,"teacher_approval_required":True}
-    dest=OUT/"H446_EIGHT_PAGE_REDESIGN_PILOT.json"
+    dest=OUT/f"{report_stem}.json"
     dest.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     table=["# H446 Eight-Page Student Print — redesigned source-first pilots","",
            "**Aim:** exactly eight A4 pages (four double-sided sheets), not miniaturised 18-page PDFs.",
@@ -492,12 +494,13 @@ def run(numbers):
             f"[A4 colour booklet](H446_Lesson_{n:03d}_8PAGE_REDESIGN_COLOUR_A4.pdf)",
             f"[A3 black-and-white imposition](H446_Lesson_{n:03d}_8PAGE_REDESIGN_BW_A3_Booklet.pdf) · "+
             f"[Separate teacher-model draft](H446_Lesson_{n:03d}_8PAGE_REDESIGN_SOURCE_MARK_SCHEME_STAFF_REVIEW.pdf)", ""]
-    (OUT/"H446_EIGHT_PAGE_REDESIGN_PILOT.md").write_text("\n".join(table),encoding="utf-8")
+    (OUT/f"{report_stem}.md").write_text("\n".join(table),encoding="utf-8")
     return result
 
 if __name__=="__main__":
     import argparse
     a=argparse.ArgumentParser()
     a.add_argument("numbers",type=int,nargs="*",default=list(NUMBERS))
+    a.add_argument("--report-stem",default="H446_EIGHT_PAGE_REDESIGN_PILOT")
     opts=a.parse_args()
-    run(opts.numbers)
+    run(opts.numbers, report_stem=opts.report_stem)
