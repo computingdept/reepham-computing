@@ -74,6 +74,52 @@ body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(.page.ac
 body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(p,li,blockquote,dd,dt,h1,h2,h3,h4,.question-text,.catchup-question){
   color:#f0f4f0!important;
 }
+/* Reading colours must cover the white content surfaces, not just main.
+   Limit overrides to content panels so answer states, signals, controls and
+   diagrams retain their meaning. Only applies on screen and when enabled. */
+@media screen {
+  html:has(body.synergy-reading-active) {
+    background:var(--synergy-reader-bg)!important;
+  }
+  body.synergy-reading-active {
+    --paper:var(--synergy-reader-bg);
+    background:var(--synergy-reader-bg)!important;
+    color:var(--synergy-reader-ink);
+  }
+  body.synergy-reading-active main :is(
+    .donow-question,.donow-answer-row,.donow-review-question,.donow-review-answer,
+    .objectives-vocab-left,.objective-vocab-stage,.objectives,
+    .nl-reference,.nl-explanation,.nl-stage,
+    .ido-reference,.ido-method,.ido-step,
+    .wedo-question,.wedo-response,.wedo-example,
+    .exam-card,.youdo-question,.youdo-stage,
+    .exit-yn-panel,.exit-stage,
+    .vocab-stage,.vocab-card,
+    .catchup-card,.catchup-block,.catchup-question,
+    .reader-card,.practice-card,.question-card,.revision-card
+  ) {
+    background:var(--synergy-reader-bg)!important;
+    color:var(--synergy-reader-ink)!important;
+  }
+  body.synergy-reading-active main :is(
+    h1,h2,h3,h4,p,li,blockquote,dd,dt,.question-text,.catchup-question,
+    .donow-answer-row .q,.donow-answer-row .a
+  ) {
+    color:var(--synergy-reader-ink)!important;
+  }
+  body.synergy-reading-active[data-synergy-reader-colour="dark"] main :is(
+    .donow-question,.donow-answer-row,.donow-review-question,.donow-review-answer,
+    .objectives-vocab-left,.objective-vocab-stage,.objectives,
+    .nl-reference,.nl-explanation,.nl-stage,
+    .ido-reference,.ido-method,.ido-step,
+    .wedo-question,.wedo-response,.wedo-example,
+    .exam-card,.youdo-question,.youdo-stage,
+    .exit-yn-panel,.exit-stage,
+    .vocab-stage,.vocab-card,
+    .catchup-card,.catchup-block,.catchup-question,
+    .reader-card,.practice-card,.question-card,.revision-card
+  ) { border-color:#52635b!important; }
+}
 .synergy-reading-focus-target{outline:3px solid #c28f2e!important;outline-offset:5px;border-radius:3px}
 @media print{
  body.synergy-reading-zoom main{zoom:1!important}
