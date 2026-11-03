@@ -626,7 +626,7 @@ def inspect_pdf(n,student,questions,figures):
         expected_count=sum(bool(q[2]) for q in questions)
         if count < len(figures) or count < expected_count:
             raise ValueError("Missing a source figure or independent-question diagram")
-        if not any("Discuss" in p for p in ptext):
+        if n not in SOLO_WE_DO and not any("Discuss" in p for p in ptext):
             raise ValueError("Discuss phase missing")
     return count
 
