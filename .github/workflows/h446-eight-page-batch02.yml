@@ -1,0 +1,75 @@
+name: H446 eight-page source-first batch 02
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/h446-eight-page-batch02.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: h446-eight-page-batch02
+  cancel-in-progress: false
+jobs:
+  generate-mixed-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install print and original SVG dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core libcairo2 libpango-1.0-0 libgdk-pixbuf-2.0-0
+          python -m pip install 'CairoSVG==2.8.2' 'Pillow==11.3.0' 'numpy==2.3.2' 'beautifulsoup4==4.12.3' 'lxml==5.4.0' 'reportlab==4.2.5' 'PyMuPDF==1.26.4'
+      - name: Generate 40 new H446 source-first eight-page teacher-review drafts
+        run: |
+          python tools/independent_booklets/generate_h446_eight_page.py \
+            $(seq 2 15) $(seq 18 23) $(seq 25 27) $(seq 32 34) $(seq 185 198) \
+            --report-stem H446_EIGHT_PAGE_REDESIGN_BATCH02
+      - name: Verify exactly eight pages and unchanged live catalogue
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,fitz,subprocess,collections
+          report=json.loads(Path('offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_BATCH02.json').read_text())
+          assert len(report['lessons'])==40
+          assert report['catalogue_unchanged'] is True
+          catalogue=json.loads(Path('offline/booklets/catalogue.json').read_text())['lessons']['h446']
+          assert len(catalogue)==288
+          assert all(e.get('teacher_approved') is False for e in catalogue.values())
+          assert subprocess.check_output(['git','diff','--','offline/booklets/catalogue.json'])==b''
+          for n,record in catalogue.items():
+              for k in ('print_bw','learn_colour','booklet_bw','booklet_colour'):
+                  assert Path(record[k]).is_file(),(n,k,record[k])
+          for row in report['lessons']:
+              if row['status']!='pilot_generated':continue
+              assert row['a4_pages']==8
+              assert 2<=row['printed_exam_questions']<=row['source_exam_questions']
+              assert Path(row['preview_png']).is_file()
+              assert Path(row['teacher_key']).is_file()
+              for mode,variant in row['versions'].items():
+                  with fitz.open(variant['a4']) as pdf:
+                      assert len(pdf)==8,(row['lesson'],mode)
+                      assert all(len(p.get_text().strip())>150 for p in pdf)
+                  with fitz.open(variant['a3']) as pdf:
+                      assert len(pdf)==4,(row['lesson'],mode)
+          print('Batch output: ',dict(collections.Counter(x['status'] for x in report['lessons'])))
+          for row in report['lessons']:
+              print(str(row['lesson']).zfill(3),row['status'],row.get('reason',''))
+          PY
+      - name: Commit only passing teacher-review drafts and exception report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_BATCH02.json offline/booklets/h446/H446_EIGHT_PAGE_REDESIGN_BATCH02.md
+          find offline/booklets/h446 -maxdepth 1 -type f \( -name '*8PAGE_REDESIGN*.pdf' -o -name '*8PAGE_REDESIGN*preview.png' \) -print0 | xargs -0 -r git add --
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish H446 eight-page source-first review batch 02'
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD~1)"
+          git push origin HEAD:main
