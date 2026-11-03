@@ -74,12 +74,21 @@ body.script-mode #slides{display:none}body.script-mode #script{display:block}bod
 #printScript{background:var(--gold);color:#17271e;padding:12px 20px;border:0;border-radius:11px;font-weight:900}
 #scriptButton{background:var(--gold);color:#14241d;border-color:var(--gold)}
 .hint{color:var(--muted);font-size:13px}
+
+.video-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(240px,.8fr);align-items:center;gap:24px}
+.video-frame{width:100%;aspect-ratio:16/9;background:#030807;border:2px solid #ffffff4d;border-radius:18px;overflow:hidden;box-shadow:0 16px 52px #0007}
+.video-frame iframe{display:block;width:100%;height:100%;border:0}
+.video-aside{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.video-aside h3{margin:0}.video-aside .small{margin:0}
+.watch-link{display:inline-flex;align-items:center;padding:13px 17px;border-radius:12px;background:var(--gold);color:#17241b;text-decoration:none;font-weight:900}
+.watch-link:hover{background:#ffe6a1}
+.video-disclaimer{font-size:14px;color:var(--muted);line-height:1.35;margin:0}
 @media(max-width:900px){.hero{grid-template-columns:1fr 260px}.rolegrid{grid-template-columns:repeat(3,1fr)}.moves{grid-template-columns:repeat(2,1fr)}.cues{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){
 header{height:64px;padding:10px 14px}.tag{display:none}.topright{gap:6px}.plain{padding:8px 10px;font-size:13px}
 #slides{padding:20px 16px 25px;min-height:calc(100dvh - 140px)}
 .slide{min-height:calc(100dvh - 170px);align-content:start;gap:20px}
-.hero{grid-template-columns:1fr}.blob-art{max-width:180px;justify-self:start}.art-caption{display:none}
+.hero{grid-template-columns:1fr}.blob-art{max-width:180px;justify-self:start}.video-layout{grid-template-columns:1fr}.video-aside{gap:10px}.video-aside h3{font-size:22px}.art-caption{display:none}
 .boxes,.cues{grid-template-columns:1fr}.timegrid{grid-template-columns:repeat(2,1fr)}.rolegrid{grid-template-columns:repeat(2,1fr)}
 .box{padding:19px}.num{font-size:39px}.footerinner{padding:10px 14px;min-height:70px}.hint{display:none}
 }
@@ -129,6 +138,30 @@ header{height:64px;padding:10px 14px}.tag{display:none}.topright{gap:6px}.plain{
     <path d="M297 179L325 151M305 141L333 120M341 150L362 137" fill="none" stroke="#ffdc72" stroke-width="6" stroke-linecap="round"/>
   </svg>
   <div class="art-caption">BLOBBY! BLOBBY! BLOBBY!</div>
+  </div>
+</section>
+
+<section class="slide video-slide" data-title="Who is Mr Blobby?">
+  <div>
+    <span class="eyebrow">First, a very important bit of 1990s history...</span>
+    <h2>Who on earth is <span class="pink">Mr Blobby?</span></h2>
+    <p class="lead">A giant pink-and-yellow TV character who caused complete chaos, shouted “BLOBBY!” — and somehow had the <span class="gold">1993 Christmas Number 1.</span></p>
+  </div>
+  <div class="video-layout">
+    <div class="video-frame">
+      <iframe id="blobbyIntroVideo" title="Mr Blobby — 30-second introduction from the original 1993 music video" loading="lazy"
+        src="https://www.youtube-nocookie.com/embed/rNkgDJpcuwU?start=0&amp;end=30&amp;rel=0&amp;playsinline=1"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+    <div class="video-aside">
+      <div class="eyebrow">Watch just 30 seconds</div>
+      <h3>This is who your form tutor is going to become. 😳</h3>
+      <p class="small">Press play on the video. It is set to stop after 30 seconds — then move to the next slide.</p>
+      <a class="watch-link" href="https://www.youtube.com/watch?v=rNkgDJpcuwU&amp;t=0s">▶ Watch on YouTube if video is blocked</a>
+      <p class="video-disclaimer">Video requires internet / YouTube access. The rest of this presentation and the script work offline.</p>
+    </div>
   </div>
 </section>
 
@@ -326,7 +359,7 @@ header{height:64px;padding:10px 14px}.tag{display:none}.topright{gap:6px}.plain{
 </article>
 
 <footer aria-label="Slide navigation"><div id="progress"><div id="progressFill"></div></div><div class="footerinner">
- <div><strong id="counter">01 / 09</strong><span class="hint" style="margin-left:15px">← → keys or swipe to navigate</span></div>
+ <div><strong id="counter">01 / 10</strong><span class="hint" style="margin-left:15px">← → keys or swipe to navigate</span></div>
  <div class="nav"><button type="button" id="prev" aria-label="Previous slide">←</button><button type="button" id="next" aria-label="Next slide">→</button></div>
 </div></footer>
 <script>
@@ -345,6 +378,13 @@ header{height:64px;padding:10px 14px}.tag{display:none}.topright{gap:6px}.plain{
     slides.forEach(function(slide,i){var active=i===index;slide.classList.toggle('active',active);slide.setAttribute('aria-hidden',String(!active));});
     counter.textContent=String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
     fill.style.width=((index+1)/slides.length*100)+'%';
+    // Stop the 30-second YouTube clip when leaving its slide, so audio never carries on.
+    var clip=document.getElementById('blobbyIntroVideo');
+    if(clip && !slides[index].contains(clip) && clip.dataset.watchedSlide==='true'){
+      clip.src=clip.src;
+      clip.dataset.watchedSlide='false';
+    }
+    if(clip && slides[index].contains(clip)) clip.dataset.watchedSlide='true';
     previous.disabled=index===0;next.disabled=index===slides.length-1;
     document.title=slides[index].dataset.title+' · Away in a Blobby!';
     window.scrollTo(0,0);
