@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: h446-eight-page-content-001-010
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   regenerate:
@@ -20,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          filter: blob:none
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
