@@ -295,7 +295,13 @@ def build_student(n,mode,lesson,soup,questions,out):
     for k,step in enumerate(pick(lesson.model_steps,3),1):
         paper.line(f"{k}. {step}",10.1)
     model_fig=source_svg(soup,"#i-do svg")
-    if model_fig:paper.figure(model_fig[-1],"Source model · final illustrated step",maxw=385,maxh=153)
+    if model_fig:
+        worked=model_fig[-1]
+        vb=worked.get("viewbox") or worked.get("viewBox") or ""
+        parts=[float(v) for v in vb.replace(","," ").split()]
+        aspect=parts[2]/parts[3] if len(parts)==4 and parts[3]>0 else 2
+        paper.figure(worked,"Source model · final illustrated step",maxw=385,
+                     maxh=190 if aspect<=1.15 else 153)
     paper.section("Why this method works")
     paper.line("Identify the decision, rule or invariant that makes the method correct.",10.3)
     paper.rules(3)
