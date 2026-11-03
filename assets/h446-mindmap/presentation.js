@@ -141,7 +141,7 @@ const slides37=[
  {type:"complete",phase:"REVIEW",routine:"Listening",response:"A3 mind map",mins:3,title:"Our completed H446 mind map",sub:"A model to compare with your own work — not a page to copy. Check it and add one missing link."}
 ];
 const slides=lesson===36?slides36:slides37;
-let index=0,shownSteps=0,answerVisible=false;
+let index=lesson===37&&location.hash==="#complete"?slides37.length-1:0,shownSteps=0,answerVisible=false;
 const branches=[
  {name:"DATA TYPES",spec:"1.4.1",x:22,y:31,w:352,h:162,color:"#3574a5",fill:"#e8f3fc",lines:["Binary · denary · hex","2's complement · float","bitwise · ASCII / Unicode"]},
  {name:"DATA STRUCTURES",spec:"1.4.2",x:795,y:31,w:352,h:162,color:"#278671",fill:"#e8f7f0",lines:["Arrays · records · lists","stack / queue · tree / graph","linked list · hash · pointers"]},
