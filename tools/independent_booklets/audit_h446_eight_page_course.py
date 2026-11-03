@@ -98,7 +98,7 @@ def main():
                                 issues.append(f"{variant}: unresolved interactive vocabulary placeholder")
                         if "DISCUSS" not in content[4] or "IMPROVE" not in content[4]:
                             issues.append(f"{variant}: incomplete guided-practice sequence")
-                        if re.search(r"(?im)^\s*(?:SOURCE CHECK|MODEL ANSWER|MARK SCHEME)\s*[:—]", "\n".join(content[:7])):
+                        if re.search(r"(?m)^\s*(?:SOURCE CHECK|MODEL ANSWER|MARK SCHEME)\s*(?:[:—-]|$)", "\n".join(content[:7])):
                             issues.append(f"{variant}: model or marking section before Exit")
                     for p in pdf:
                         if abs(p.rect.width-595.28)>1 or abs(p.rect.height-841.89)>1:
