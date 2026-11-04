@@ -310,7 +310,7 @@ var prev=document.getElementById('prev'),next=document.getElementById('next'),co
 var single=document.getElementById('singleSection'),all=document.getElementById('allSection');
 var index=0,allOpen=false,touchX=null,touchY=null;
 allCards.innerHTML=cards.innerHTML;
-Array.prototype.slice.call(allCards.querySelectorAll('.cue')).forEach(function(node){node.removeAttribute('hidden');node.setAttribute('aria-hidden','false');node.removeAttribute('id');});
+Array.prototype.slice.call(allCards.querySelectorAll('.cue')).forEach(function(node){node.removeAttribute('hidden');node.setAttribute('aria-hidden','false');node.removeAttribute('id');Array.prototype.slice.call(node.querySelectorAll('.soundbox')).forEach(function(audio){audio.remove();});});
 function setCue(n){
  index=Math.max(0,Math.min(items.length-1,n));
  items.forEach(function(item,i){var active=i===index;item.hidden=!active;item.classList.toggle('active',active);item.setAttribute('aria-hidden',String(!active));});
