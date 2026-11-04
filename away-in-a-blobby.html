@@ -2,377 +2,180 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#132921">
-<meta name="description" content="Away in a Blobby! One simple cue at a time: four-minute Nativity rehearsal script.">
-<title>Away in a Blobby! · Cue by cue</title>
+<meta name="description" content="Away in a Blobby — complete four-minute talent-show script with exact lines, actions and timings.">
+<title>Away in a Blobby! — Rehearsal Script</title>
 <style>
-:root{color-scheme:dark;--bg:#132921;--panel:#1c372d;--line:#486e59;--white:#fffaf0;--light:#d1e2d4;--yellow:#ffe182;--pink:#ff9ac3;--green:#a2f0c2}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);margin:0;font:17px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-a{color:var(--yellow);text-underline-offset:3px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1100px;margin:0 auto;padding:14px 22px;border-bottom:1px solid var(--line)}
-.brand{font-size:clamp(19px,2.5vw,28px);font-weight:1000;letter-spacing:-.055em;text-decoration:none;color:var(--white)}
-.brand em{font-style:normal;color:var(--pink)}
-.toplinks{display:flex;gap:10px;align-items:center}
-.toplinks button{background:transparent;border:1px solid var(--line);padding:8px 12px;border-radius:9px;color:var(--white);font-weight:750;font-size:14px}
-main{max-width:1000px;margin:0 auto;padding:18px 22px 30px}
-.progress{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px;font-size:14px;font-weight:800;color:var(--light)}
-.bar{height:7px;border-radius:8px;background:#ffffff22;overflow:hidden;margin-bottom:15px}
-#fill{width:5.882%;background:var(--yellow);height:100%;transition:width .2s}
-.cue{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3.2vw,36px);min-height:390px}
-.cue[hidden]{display:none}
-.cue-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.time{font-size:clamp(38px,5vw,66px);font-weight:950;color:var(--yellow);font-variant-numeric:tabular-nums;line-height:1.04;letter-spacing:-.07em}
-.category{color:var(--pink);border:1px solid #ff9ac380;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
-h1,h2,h3,p{margin-top:0}h2{font-size:clamp(29px,4vw,49px);letter-spacing:-.06em;line-height:1.08;margin:14px 0 8px}
-.who{font-size:clamp(17px,1.9vw,22px);color:var(--green);font-weight:850;margin:0 0 20px}
-.steps{display:grid;gap:12px}
-.line{display:grid;grid-template-columns:minmax(115px,27%) 1fr;gap:12px;padding:12px 0;border-top:1px solid #ffffff23}
-.line-time{font-weight:950;color:var(--yellow);font-size:15px}
-.line-action{font-size:clamp(18px,2vw,24px);line-height:1.35}
-.note{border-left:4px solid var(--pink);padding:8px 13px;color:var(--light);background:#ffffff0b;border-radius:0 8px 8px 0;margin:17px 0 0;font-size:15px}
-.soundbox{border-top:1px solid var(--line);padding-top:14px;margin-top:17px}
-.soundbox p{margin-bottom:7px}.soundbox button{margin-right:7px;margin-bottom:5px}
-.soundbox summary{cursor:pointer;color:var(--yellow);font-weight:850;padding:6px 0}
-.soundbox iframe{width:100%;max-width:560px;aspect-ratio:16/9;display:block;border:0;border-radius:12px;background:#000;margin:10px 0}
-.sm{font-size:13px}.muted{color:var(--light)}
-.nav{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:14px 0 4px}
-.nav button{padding:15px 24px;border-radius:12px;font-size:18px;font-weight:950}
-.primary{background:var(--yellow);color:#14251c;border:1px solid var(--yellow);border-radius:10px;padding:11px 16px;font-weight:900}
-.secondary{background:transparent;color:var(--white);border:1px solid #ffffff70;border-radius:10px;padding:11px 16px;font-weight:850}
-button[disabled]{opacity:.35;cursor:default}
-#allSection[hidden],#singleSection[hidden]{display:none}
-#allSection .intro{color:var(--light);margin:3px 0 16px}
-#allSection .cue{display:block!important;min-height:0;margin-bottom:12px;padding:21px}
-#allSection .cue h2{font-size:30px}
-#allSection .cue .time{font-size:40px}
-#allSection .cue .line-action{font-size:17px}
-#allSection .cue .who{font-size:17px}
-#allSection .cue .line{padding:7px 0}
-#allSection .cue .note{font-size:13px}
-.prep{max-width:1000px;margin:0 auto;padding:0 22px 36px}
-.prep details{border:1px solid var(--line);border-radius:12px;padding:13px 18px;color:var(--light)}
-.prep summary{cursor:pointer;font-weight:850;color:var(--white)}
-.prep p{margin:12px 0 0;font-size:15px}
-.printnote{font-size:13px;color:var(--light);text-align:center;margin:18px 0 4px}
-@media(max-width:600px){
-header{padding:12px 14px}.toplinks button{padding:7px 9px;font-size:12px}.brand{font-size:21px}
-main{padding:14px 12px 20px}
-.cue{padding:18px;min-height:calc(100dvh - 205px);border-radius:15px}
-.cue .line{grid-template-columns:1fr;gap:1px;padding:10px 0}
-.cue .line-time{font-size:13px}
-.cue .line-action{font-size:19px}
-h2{font-size:32px}
-.nav{position:sticky;bottom:0;background:#132921ee;padding:10px 0 3px;z-index:5}
-.nav button{padding:13px 18px;font-size:16px}
-#allSection .cue{padding:13px;border-radius:12px}
-#allSection .cue .line{grid-template-columns:1fr}
-#allSection .cue h2{font-size:25px}
-.prep{padding:0 12px 30px}
+:root{--ink:#182824;--muted:#50645c;--line:#d8e1dc;--pink:#a61562;--green:#1d6248;--bg:#fff;--wash:#f5f8f5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,system-ui,sans-serif;line-height:1.44}
+main{max-width:910px;margin:auto;padding:clamp(20px,3vw,44px)}
+header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:20px}
+h1{margin:0 0 7px;font-size:clamp(34px,5vw,54px);letter-spacing:-.05em;line-height:1.08}
+.subtitle{font-size:18px;margin:0;color:var(--muted)}
+.metadata{font-weight:750;margin:13px 0 0;font-size:15px}
+.note{padding:12px 16px;background:var(--wash);border-left:4px solid var(--green);font-size:15px;margin:17px 0 26px}
+section{margin:27px 0 34px}
+.scene-head{display:flex;align-items:center;gap:17px;color:var(--green);font-weight:850;font-size:14px;letter-spacing:.06em}
+.scene-time{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px;letter-spacing:0}
+h2{font-size:clamp(23px,3vw,31px);letter-spacing:-.035em;line-height:1.13;margin:6px 0 11px}
+.cue{display:grid;grid-template-columns:115px 1fr;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.when{font-size:17px;font-weight:850;font-variant-numeric:tabular-nums;color:var(--green);white-space:nowrap}
+.who{display:block;color:var(--pink);font-size:14px;letter-spacing:.025em;margin:0 0 3px}
+.action{font-size:18px;line-height:1.4}
+.action em{font-style:italic}
+.listen{font-size:13px;display:inline-block;vertical-align:middle;border:1px solid #548d72;background:#e5f5ed;color:#174f39;padding:5px 9px;margin:5px 0 0 4px;border-radius:6px;font-weight:800;cursor:pointer}
+.listen:disabled{opacity:.5}
+.audio-status{font-size:12px;color:var(--muted);padding-left:4px}
+a{color:#145c7a;text-underline-offset:2px}
+button:focus-visible,a:focus-visible{outline:3px solid #cc8a00;outline-offset:3px}
+footer{margin-top:36px;padding-top:14px;border-top:2px solid var(--ink);font-size:14px;color:var(--muted)}
+@media(max-width:540px){
+main{padding:18px 15px 30px}
+.cue{grid-template-columns:85px 1fr;gap:8px;padding:10px 0}
+.when{font-size:14px}
+.who{font-size:12px}
+.action{font-size:16px}
+.note{padding:10px 12px}
 }
 @media print{
 @page{size:A4;margin:12mm}
-:root{color-scheme:light}
-body{background:white;color:#111;font:10pt/1.27 Arial,sans-serif}
-header,.progress,.bar,#singleSection,.toplinks,.soundbox,.printnote{display:none!important}
-main{padding:0;max-width:none;margin:0}
-#allSection{display:block!important}
-#allSection h1{font-size:20pt;margin:0 0 8px}
-#allSection .intro{color:#333;font-size:10pt}
-#allSection .cue{border:1px solid #bbb;background:white;color:#111;break-inside:avoid;margin:0 0 7px;padding:9px 12px;border-radius:6px}
-#allSection .cue h2{font-size:12pt;margin:4px 0}
-#allSection .cue .time{font-size:16pt;color:#111}
-#allSection .cue .who{font-size:9pt;color:#111;margin:4px 0}
-#allSection .cue .category{font-size:8pt;color:#111;border-color:#bbb}
-#allSection .cue .line{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:3px 0;border-top:1px solid #ddd}
-#allSection .cue .line-time,#allSection .cue .line-action{font-size:9pt;color:#111}
-#allSection .cue .note{font-size:8pt;color:#444;margin:5px 0 0;padding:3px 7px;border-color:#888;background:white}
-.prep{display:none}
+html,body{color:#111;background:#fff}
+main{max-width:none;padding:0}
+header{margin-bottom:12px;padding-bottom:9px}
+h1{font-size:25pt}
+.subtitle,.metadata{font-size:10pt}
+.note{border:1px solid #bbb;background:#fff;color:#111;padding:7px;font-size:9pt;margin:10px 0}
+section{margin:14px 0 16px}
+h2{font-size:16pt;margin:3px 0 7px}
+.scene-head{color:#111;font-size:9pt}
+.scene-time{font-size:9pt}
+.cue{grid-template-columns:75px 1fr;gap:8px;padding:4px 0;break-inside:avoid}
+.when{font-size:9pt;color:#111}
+.who{font-size:9pt;color:#111;margin:0}
+.action{font-size:10pt;line-height:1.2}
+.listen,.audio-status{display:none}
+footer{margin-top:16px}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<main>
 <header>
- <a class="brand" href="#top">AWAY IN A <em>BLOBBY!</em></a>
- <div class="toplinks"><button type="button" id="toggleAll">All cues / print</button></div>
+<h1>Away in a Blobby!</h1>
+<p class="subtitle">Full rehearsal script — timings, lines and stage actions</p>
+<p class="metadata">4 minutes · 20 students · form tutor as Mr Blobby</p>
 </header>
-<main id="top">
- <div id="singleSection">
-  <div class="progress"><span id="cueCount">Cue 1 of 17</span><span>4-minute show</span></div>
-  <div class="bar"><div id="fill"></div></div>
-  <div id="singleCards">
-<article class="cue active" id="cue-1" data-step="1" aria-hidden="false" >
- <div class="cue-top"><span class="time">00:00</span><span class="category">TRUMPET</span></div>
- <h2>Silent Night — opening</h2>
- <p class="who">🎺 Gabriel · Narrator 1</p>
- <div class="steps"><div class="line"><div class="line-time">00:00 · GABRIEL</div><div class="line-action">Play the short opening phrase of <em>Silent Night</em> on the trumpet (about 4 seconds).</div></div>
-<div class="line"><div class="line-time">00:04 · NARRATOR 1</div><div class="line-action">“Long ago, in Bethlehem, Mary and Joseph were searching for somewhere to stay.”</div></div></div>
- <p class="note">Mary and Joseph are ready to enter. The baby doll is already wrapped in the manger. Mr Blobby is hidden at the side entrance.</p>
- <div class="soundbox"><button id="silentNightPlay" class="primary" type="button">▶ Hear Silent Night (trumpet)</button><button id="silentNightStop" class="secondary" type="button" disabled>■ Stop</button><p id="silentNightStatus" class="muted sm">12-second synthesised trumpet preview. Gabriel plays a short opening phrase live.</p></div>
- </article>
-<article class="cue" id="cue-2" data-step="2" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">00:11</span><span class="category">SPEAK</span></div>
- <h2>No room at the inn</h2>
- <p class="who">Joseph · Innkeeper · Mary</p>
- <div class="steps"><div class="line"><div class="line-time">00:11 · JOSEPH</div><div class="line-action">“Have you got a room?”</div></div>
-<div class="line"><div class="line-time">00:14 · INNKEEPER</div><div class="line-action">“Sorry, we're fully booked. There's a stable round the back.”</div></div>
-<div class="line"><div class="line-time">00:19 · MARY</div><div class="line-action">“It'll have to do.”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-3" data-step="3" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">00:20</span><span class="category">ENTER</span></div>
- <h2>Everyone gathers</h2>
- <p class="who">Mary · Joseph · Angels · Shepherds · Star · Gabriel</p>
- <div class="steps"><div class="line"><div class="line-time">00:20 · STAGE</div><div class="line-action">Mary and Joseph walk to the manger. The angels and shepherds enter in their Blobby-themed costumes; Star points to the baby doll.</div></div>
-<div class="line"><div class="line-time">00:25 · NARRATOR 2</div><div class="line-action">“And that night, something truly extraordinary happened.”</div></div>
-<div class="line"><div class="line-time">00:31 · GABRIEL</div><div class="line-action">“Fear not! I bring wonderful news!”</div></div>
-<div class="line"><div class="line-time">00:36 · SHEPHERD 1</div><div class="line-action">“You could have knocked!”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-4" data-step="4" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">00:40</span><span class="category">ENTER &amp; SPEAK</span></div>
- <h2>The wise men arrive</h2>
- <p class="who">Wise Men 1–3 · Shepherd 2</p>
- <div class="steps"><div class="line"><div class="line-time">00:40 · STAGE</div><div class="line-action">Three Blobby-spotted wise men enter with their gifts.</div></div>
-<div class="line"><div class="line-time">00:44 · WISE MAN 1</div><div class="line-action">“I bring gold.”</div></div>
-<div class="line"><div class="line-time">00:48 · WISE MAN 2</div><div class="line-action">“I bring frankincense.”</div></div>
-<div class="line"><div class="line-time">00:52 · WISE MAN 3</div><div class="line-action">“I bring myrrh.”</div></div>
-<div class="line"><div class="line-time">00:56 · SHEPHERD 2</div><div class="line-action">“Nobody thought to bring nappies?”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-5" data-step="5" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">00:59</span><span class="category">FANFARE</span></div>
- <h2>Look at the manger</h2>
- <p class="who">Narrator 1 · 🎺 Gabriel</p>
- <div class="steps"><div class="line"><div class="line-time">00:59 · NARRATOR 1</div><div class="line-action">“And there, beneath the star, lay the baby, peacefully asleep in the manger...”</div></div>
-<div class="line"><div class="line-time">01:02 · GABRIEL</div><div class="line-action">Play a grand, short trumpet fanfare. Everyone turns towards the doll. Short pause.</div></div></div>
- <p class="note">Mr Blobby waits out of sight at the side entrance.</p>
- 
- </article>
-<article class="cue" id="cue-6" data-step="6" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">01:05</span><span class="category">BIG REVEAL</span></div>
- <h2>Mr Blobby enters!</h2>
- <p class="who">💗 Mr Blobby (form tutor)</p>
- <div class="steps"><div class="line"><div class="line-time">01:05 · BLOBBY</div><div class="line-action">Waddle on from the side, in the full Mr Blobby costume. Notice the doll and freeze in amazement.</div></div>
-<div class="line"><div class="line-time">01:10 · BLOBBY</div><div class="line-action">Gently pick up the lightweight doll, cradle it proudly and face the audience.</div></div></div>
- <p class="note">Everyone else is already dressed with Blobby spots; only the tutor wears the full costume.</p>
- 
- </article>
-<article class="cue" id="cue-7" data-step="7" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">01:12</span><span class="category">COMEDY</span></div>
- <h2>BLOBBY!</h2>
- <p class="who">💗 Mr Blobby · 🎺 Gabriel</p>
- <div class="steps"><div class="line"><div class="line-time">01:12 · BLOBBY</div><div class="line-action">“BLOBBY! BLOBBY! BLOBBY!”</div></div>
-<div class="line"><div class="line-time">01:12 · GABRIEL</div><div class="line-action">Play one deliberately terrible trumpet note as Blobby lifts the doll.</div></div>
-<div class="line"><div class="line-time">ALL STUDENTS</div><div class="line-action">Freeze, gasp and recoil dramatically.</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-8" data-step="8" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">01:17</span><span class="category">SPEAK</span></div>
- <h2>Give the baby back!</h2>
- <p class="who">Joseph · Mary · Wise Men</p>
- <div class="steps"><div class="line"><div class="line-time">01:17 · JOSEPH</div><div class="line-action">“EXCUSE ME! PUT THE BABY BACK!”</div></div>
-<div class="line"><div class="line-time">01:22 · MARY</div><div class="line-action">“HE IS NOT THE BABYSITTER!”</div></div>
-<div class="line"><div class="line-time">01:27 · WISE MAN 1</div><div class="line-action">“I think we've come to the wrong stable.”</div></div>
-<div class="line"><div class="line-time">01:33 · WISE MAN 2</div><div class="line-action">“Can we get the gold back?”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-9" data-step="9" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">01:37</span><span class="category">COMEDY</span></div>
- <h2>Blobby is delighted</h2>
- <p class="who">💗 Mr Blobby · Narrator 2</p>
- <div class="steps"><div class="line"><div class="line-time">01:37 · BLOBBY</div><div class="line-action">Rock the doll gently as if you're its proud parent. Joseph looks appalled; shepherds hide; angels gasp.</div></div>
-<div class="line"><div class="line-time">01:39 · NARRATOR 2</div><div class="line-action">“Things had taken a very unexpected turn.”</div></div>
-<div class="line"><div class="line-time">01:43 · BLOBBY</div><div class="line-action">“BLOBBY!”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-10" data-step="10" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">01:45</span><span class="category">MUSIC</span></div>
- <h2>Mr Blobby music starts</h2>
- <p class="who">🎵 Sound · 💗 Mr Blobby · Mary</p>
- <div class="steps"><div class="line"><div class="line-time">01:45 · SOUND</div><div class="line-action">Start the first Mr Blobby music excerpt — roughly 0:00–0:23 of the 1993 song.</div></div>
-<div class="line"><div class="line-time">BLOBBY</div><div class="line-action">Begin a silly, gentle dance while cradling the doll.</div></div>
-<div class="line"><div class="line-time">01:52 · MARY</div><div class="line-action">Calmly take the doll from Blobby.</div></div>
-<div class="line"><div class="line-time">02:00 · MARY</div><div class="line-action">Put the doll safely back in the manger. Blobby now has both hands free.</div></div></div>
- <p class="note">The song excerpt is only for rehearsal planning; test the exact cut before the show.</p>
- <div class="soundbox"><p class="muted sm">🎵 Music: 1993 <em>Mr Blobby</em> · 0:00–0:23. <a href="https://www.youtube.com/watch?v=rNkgDJpcuwU" target="_blank" rel="noopener noreferrer">Hear the original</a></p></div>
- </article>
-<article class="cue" id="cue-11" data-step="11" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">02:03</span><span class="category">CUT MUSIC</span></div>
- <h2>Stop the chaos</h2>
- <p class="who">Joseph · 🎺 Gabriel · Sound · Narrator 1 · Mary</p>
- <div class="steps"><div class="line"><div class="line-time">02:03 · JOSEPH</div><div class="line-action">“Somebody do something!”</div></div>
-<div class="line"><div class="line-time">02:08 · GABRIEL + SOUND</div><div class="line-action">Two sharp trumpet notes. Cut Mr Blobby music instantly. Blobby freezes.</div></div>
-<div class="line"><div class="line-time">02:11 · NARRATOR 1</div><div class="line-action">“Finally, peace returned to Bethlehem.”</div></div>
-<div class="line"><div class="line-time">02:15 · BLOBBY</div><div class="line-action">“BLOBBY BLOBBY BLOBBY!”</div></div>
-<div class="line"><div class="line-time">02:17 · MARY</div><div class="line-action">“Oh, just join in!”</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-12" data-step="12" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">02:20</span><span class="category">DANCE TRACK</span></div>
- <h2>Start the Blobby dance</h2>
- <p class="who">🎵 Sound · All 20 students · Star</p>
- <div class="steps"><div class="line"><div class="line-time">02:20 · SOUND</div><div class="line-action">Play the <strong>same Mr Blobby Christmas Number 1</strong>, starting at approximately 0:40 in the recording. Aim for a 90-second clip, ending at 2:10 in the song.</div></div>
-<div class="line"><div class="line-time">02:20–02:36 · STAR + EVERYONE</div><div class="line-action">Move into two rows of ten. Blobby stands at the front. Gabriel puts the trumpet down safely and joins the cast.</div></div></div>
- <p class="note">The music selection is a proposed cut; check that the 0:40–2:10 section suits the choreography.</p>
- <div class="soundbox"><p><strong>Proposed music section: 0:40–2:10</strong> of the 1993 Mr Blobby song.</p><details><summary>▶ Hear our dance excerpt</summary><iframe title="Mr Blobby rehearsal dance section, 0:40–2:10" loading="lazy" src="https://www.youtube-nocookie.com/embed/rNkgDJpcuwU?start=40&amp;end=130&amp;rel=0&amp;playsinline=1" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><p class="muted sm"><a href="https://www.youtube.com/watch?v=rNkgDJpcuwU&amp;t=40s" target="_blank" rel="noopener noreferrer">Watch the dance section on YouTube</a></p></details></div>
- </article>
-<article class="cue" id="cue-13" data-step="13" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">02:36</span><span class="category">DANCE</span></div>
- <h2>Everyone dances!</h2>
- <p class="who">All 20 students</p>
- <div class="steps"><div class="line"><div class="line-time">1–4</div><div class="line-action">Step right, left — clap, clap.</div></div>
-<div class="line"><div class="line-time">5–8</div><div class="line-action">Step right, left — hands up.</div></div>
-<div class="line"><div class="line-time">9–12</div><div class="line-action">March on the spot four counts.</div></div>
-<div class="line"><div class="line-time">13–16</div><div class="line-action">Point at Blobby — clap.</div></div></div>
- <p class="note">Repeat the easy 16-count routine together until 03:08.</p>
- 
- </article>
-<article class="cue" id="cue-14" data-step="14" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">03:08</span><span class="category">COMEDY DANCE</span></div>
- <h2>Blobby's terrible solo</h2>
- <p class="who">💗 Mr Blobby · Everyone</p>
- <div class="steps"><div class="line"><div class="line-time">03:08 · EVERYONE</div><div class="line-action">Freeze and watch Blobby.</div></div>
-<div class="line"><div class="line-time">BLOBBY</div><div class="line-action">Do the moves completely wrong, without touching or colliding with anyone.</div></div>
-<div class="line"><div class="line-time">EVERYONE</div><div class="line-action">Shake your heads together, in disbelief.</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-15" data-step="15" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">03:24</span><span class="category">DANCE</span></div>
- <h2>Back to the dance</h2>
- <p class="who">All 20 students</p>
- <div class="steps"><div class="line"><div class="line-time">03:24 · EVERYONE</div><div class="line-action">Rejoin the 16-count Blobby dance routine.</div></div>
-<div class="line"><div class="line-time">BLOBBY</div><div class="line-action">Try (and fail) to keep up with the group.</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-16" data-step="16" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">03:43</span><span class="category">POSE</span></div>
- <h2>Final Nativity pose</h2>
- <p class="who">Star · Gabriel · Everyone</p>
- <div class="steps"><div class="line"><div class="line-time">03:43 · STAR</div><div class="line-action">Lead everyone into a final Nativity tableau.</div></div>
-<div class="line"><div class="line-time">03:43 · GABRIEL</div><div class="line-action">Step clear and retrieve your trumpet safely.</div></div>
-<div class="line"><div class="line-time">EVERYONE</div><div class="line-action">Hold the pose and face the audience.</div></div></div>
- 
- 
- </article>
-<article class="cue" id="cue-17" data-step="17" aria-hidden="true" hidden>
- <div class="cue-top"><span class="time">03:50</span><span class="category">THE END</span></div>
- <h2>The final joke</h2>
- <p class="who">🎵 Sound · Narrator 1 · 🎺 Gabriel · Mr Blobby · Everyone</p>
- <div class="steps"><div class="line"><div class="line-time">03:50 · SOUND</div><div class="line-action">Stop the music. Everybody freezes.</div></div>
-<div class="line"><div class="line-time">03:51 · NARRATOR 1</div><div class="line-action">“And they all lived happily ever after.”</div></div>
-<div class="line"><div class="line-time">03:54 · GABRIEL</div><div class="line-action">One beautiful, gentle trumpet note.</div></div>
-<div class="line"><div class="line-time">03:56 · BLOBBY</div><div class="line-action">“BLOOOOOOOBBBBBYYYY!”</div></div>
-<div class="line"><div class="line-time">03:58 · EVERYONE</div><div class="line-action">“NOOOOO!”</div></div>
-<div class="line"><div class="line-time">04:00 · SOUND / LIGHTS</div><div class="line-action">Blackout. Hold the pose. End.</div></div></div>
- 
- 
- </article>
-  </div>
-  <div class="nav">
-   <button type="button" class="secondary" id="prev" disabled>← Previous</button>
-   <button type="button" class="primary" id="next">Next cue →</button>
-  </div>
- </div>
- <div id="allSection" hidden>
-  <h1 style="letter-spacing:-.05em;margin:5px 0 8px">Full cue sheet</h1>
-  <p class="intro">Read straight down from the trumpet fanfare to the blackout. <button class="secondary" style="font-size:13px;padding:7px 10px" id="print">🖨 Print script</button></p>
-  <div id="allCards"></div>
- </div>
- <p class="printnote">← / → keys or swipe to move between cues on a phone. Select “All cues / print” to see the whole script.</p>
+<div class="note"><strong>Before 00:00:</strong> All students are already in Blobby-themed Nativity costumes. The baby doll is in the manger. Gabriel has the trumpet, the gifts are ready, and the form tutor is hidden at the side entrance. An offstage operator handles the music. All timings are rehearsal targets.</div>
+<section aria-labelledby="scene-1">
+<div class="scene-head"><span class="scene-number">SCENE 1</span><span class="scene-time">00:00–00:40</span></div>
+<h2 id="scene-1">The Nativity begins</h2>
+<div class="cue"><div class="when">BEFORE</div><div class="detail"><strong class="who">STAGE</strong><div class="action">All 20 students wear Blobby-themed Nativity costumes. Baby doll lies wrapped in the manger. Mr Blobby (form tutor) waits out of sight at the side entrance. Gabriel, narrators, Mary, Joseph and innkeeper are ready.</div></div></div>
+<div class="cue"><div class="when">00:00</div><div class="detail"><strong class="who">🎺 GABRIEL</strong><div class="action">Play the opening phrase of <em>Silent Night</em> (about four seconds). <button class='listen' type='button' id='hearSilent'>▶ Hear trumpet example</button><span id='hearStatus' class='audio-status' aria-live='polite'></span></div></div></div>
+<div class="cue"><div class="when">00:04</div><div class="detail"><strong class="who">NARRATOR 1</strong><div class="action">“Long ago, in Bethlehem, Mary and Joseph were searching for somewhere to stay.”</div></div></div>
+<div class="cue"><div class="when">00:11</div><div class="detail"><strong class="who">JOSEPH</strong><div class="action">“Have you got a room?”</div></div></div>
+<div class="cue"><div class="when">00:14</div><div class="detail"><strong class="who">INNKEEPER</strong><div class="action">“Sorry, we're fully booked. There's a stable round the back.”</div></div></div>
+<div class="cue"><div class="when">00:19</div><div class="detail"><strong class="who">MARY</strong><div class="action">“It'll have to do.”</div></div></div>
+<div class="cue"><div class="when">00:20</div><div class="detail"><strong class="who">STAGE</strong><div class="action">Mary and Joseph walk to the manger. Angels and shepherds enter; the Star gestures towards the doll. Everyone treats this as a serious Nativity.</div></div></div>
+<div class="cue"><div class="when">00:25</div><div class="detail"><strong class="who">NARRATOR 2</strong><div class="action">“And that night, something truly extraordinary happened.”</div></div></div>
+<div class="cue"><div class="when">00:31</div><div class="detail"><strong class="who">GABRIEL</strong><div class="action">“Fear not! I bring wonderful news!”</div></div></div>
+<div class="cue"><div class="when">00:36</div><div class="detail"><strong class="who">SHEPHERD 1</strong><div class="action">“You could have knocked!”</div></div></div>
+</section>
+<section aria-labelledby="scene-2">
+<div class="scene-head"><span class="scene-number">SCENE 2</span><span class="scene-time">00:40–01:05</span></div>
+<h2 id="scene-2">The wise men arrive</h2>
+<div class="cue"><div class="when">00:40</div><div class="detail"><strong class="who">STAGE</strong><div class="action">Three wise men enter together in spotted crowns, each holding a gift. Shepherds gather round the manger.</div></div></div>
+<div class="cue"><div class="when">00:44</div><div class="detail"><strong class="who">WISE MAN 1</strong><div class="action">“I bring gold.”</div></div></div>
+<div class="cue"><div class="when">00:48</div><div class="detail"><strong class="who">WISE MAN 2</strong><div class="action">“I bring frankincense.”</div></div></div>
+<div class="cue"><div class="when">00:52</div><div class="detail"><strong class="who">WISE MAN 3</strong><div class="action">“I bring myrrh.”</div></div></div>
+<div class="cue"><div class="when">00:56</div><div class="detail"><strong class="who">SHEPHERD 2</strong><div class="action">“Nobody thought to bring nappies?”</div></div></div>
+<div class="cue"><div class="when">00:59</div><div class="detail"><strong class="who">NARRATOR 1</strong><div class="action">“And there, beneath the star, lay the baby, peacefully asleep in the manger...”</div></div></div>
+<div class="cue"><div class="when">01:02</div><div class="detail"><strong class="who">🎺 GABRIEL</strong><div class="action">Play a short, grand fanfare. Everyone looks towards the manger. Pause.</div></div></div>
+</section>
+<section aria-labelledby="scene-3">
+<div class="scene-head"><span class="scene-number">SCENE 3</span><span class="scene-time">01:05–01:45</span></div>
+<h2 id="scene-3">Mr Blobby meets the baby</h2>
+<div class="cue"><div class="when">01:05</div><div class="detail"><strong class="who">BLOBBY — ENTRANCE</strong><div class="action">The form tutor waddles on from the side in the full Mr Blobby costume. Notice the baby doll; stop and stare at it.</div></div></div>
+<div class="cue"><div class="when">01:10</div><div class="detail"><strong class="who">BLOBBY — ACTION</strong><div class="action">Gently lift the lightweight doll and cradle it proudly, turning to face the audience.</div></div></div>
+<div class="cue"><div class="when">01:12</div><div class="detail"><strong class="who">BLOBBY</strong><div class="action">“BLOBBY! BLOBBY! BLOBBY!”</div></div></div>
+<div class="cue"><div class="when">01:12</div><div class="detail"><strong class="who">🎺 GABRIEL</strong><div class="action">Play one deliberately awful trumpet note. Everyone freezes, gasps, then recoils dramatically.</div></div></div>
+<div class="cue"><div class="when">01:17</div><div class="detail"><strong class="who">JOSEPH</strong><div class="action">“EXCUSE ME! PUT THE BABY BACK!”</div></div></div>
+<div class="cue"><div class="when">01:22</div><div class="detail"><strong class="who">MARY</strong><div class="action">“HE IS NOT THE BABYSITTER!”</div></div></div>
+<div class="cue"><div class="when">01:27</div><div class="detail"><strong class="who">WISE MAN 1</strong><div class="action">“I think we've come to the wrong stable.”</div></div></div>
+<div class="cue"><div class="when">01:33</div><div class="detail"><strong class="who">WISE MAN 2</strong><div class="action">“Can we get the gold back?”</div></div></div>
+<div class="cue"><div class="when">01:37</div><div class="detail"><strong class="who">BLOBBY — ACTION</strong><div class="action">Gently rock the doll, looking absolutely delighted. Shepherds hide behind one another; angels gasp; Joseph looks horrified.</div></div></div>
+<div class="cue"><div class="when">01:39</div><div class="detail"><strong class="who">NARRATOR 2</strong><div class="action">“Things had taken a very unexpected turn.”</div></div></div>
+<div class="cue"><div class="when">01:43</div><div class="detail"><strong class="who">BLOBBY</strong><div class="action">“BLOBBY!”</div></div></div>
+</section>
+<section aria-labelledby="scene-4">
+<div class="scene-head"><span class="scene-number">SCENE 4</span><span class="scene-time">01:45–02:20</span></div>
+<h2 id="scene-4">Blobby chaos</h2>
+<div class="cue"><div class="when">01:45</div><div class="detail"><strong class="who">🎵 SOUND</strong><div class="action">Start the <em>Mr Blobby</em> song at 0:00 of the recording. Play approximately 23 seconds. <a href='https://www.youtube.com/watch?v=rNkgDJpcuwU' target='_blank' rel='noopener noreferrer'>Hear song</a>.</div></div></div>
+<div class="cue"><div class="when">01:45</div><div class="detail"><strong class="who">BLOBBY — ACTION</strong><div class="action">Begin a deliberately silly, gentle dance while holding the doll. Angels recoil; wise men shuffle away.</div></div></div>
+<div class="cue"><div class="when">01:52</div><div class="detail"><strong class="who">MARY + BLOBBY</strong><div class="action">Mary approaches calmly. Blobby gently hands her the doll.</div></div></div>
+<div class="cue"><div class="when">02:00</div><div class="detail"><strong class="who">MARY — ACTION</strong><div class="action">Return the doll securely to the manger. Blobby now has both hands free.</div></div></div>
+<div class="cue"><div class="when">02:03</div><div class="detail"><strong class="who">JOSEPH</strong><div class="action">“Somebody do something!”</div></div></div>
+<div class="cue"><div class="when">02:08</div><div class="detail"><strong class="who">🎺 GABRIEL + SOUND</strong><div class="action">Gabriel plays two short notes; sound operator stops the song immediately. Blobby freezes.</div></div></div>
+<div class="cue"><div class="when">02:11</div><div class="detail"><strong class="who">NARRATOR 1</strong><div class="action">“Finally, peace returned to Bethlehem.”</div></div></div>
+<div class="cue"><div class="when">02:15</div><div class="detail"><strong class="who">BLOBBY</strong><div class="action">“BLOBBY BLOBBY BLOBBY!”</div></div></div>
+<div class="cue"><div class="when">02:17</div><div class="detail"><strong class="who">MARY</strong><div class="action">“Oh, just join in!”</div></div></div>
+</section>
+<section aria-labelledby="scene-5">
+<div class="scene-head"><span class="scene-number">SCENE 5</span><span class="scene-time">02:20–03:50</span></div>
+<h2 id="scene-5">Everybody dances to Mr Blobby</h2>
+<div class="cue"><div class="when">02:20</div><div class="detail"><strong class="who">🎵 SOUND</strong><div class="action">Start the <strong>90-second dance excerpt of the same Mr Blobby song</strong>, provisionally at 0:40 of the original recording; stop at 2:10. <a href='https://www.youtube.com/watch?v=rNkgDJpcuwU&t=40s' target='_blank' rel='noopener noreferrer'>Hear proposed starting point</a>.</div></div></div>
+<div class="cue"><div class="when">02:20–02:36</div><div class="detail"><strong class="who">STAR + EVERYONE</strong><div class="action">Star leads all 20 students into two rows of ten. Blobby stands at the front. Gabriel puts trumpet safely aside and joins the dance.</div></div></div>
+<div class="cue"><div class="when">02:36–03:08</div><div class="detail"><strong class="who">ALL 20 — DANCE</strong><div class="action">Repeat this <strong>16-count routine</strong>: counts 1–4 step right, left, clap twice; 5–8 step right, left, hands up; 9–12 march four times; 13–16 point at Blobby and clap.</div></div></div>
+<div class="cue"><div class="when">03:08–03:24</div><div class="detail"><strong class="who">BLOBBY SOLO</strong><div class="action">Everyone stops and watches. Blobby does the dance deliberately wrong. Students shake their heads together.</div></div></div>
+<div class="cue"><div class="when">03:24–03:43</div><div class="detail"><strong class="who">ALL 20 — DANCE</strong><div class="action">Everyone rejoins the same 16-count routine. Blobby tries and fails to follow.</div></div></div>
+<div class="cue"><div class="when">03:43–03:50</div><div class="detail"><strong class="who">STAR + GABRIEL</strong><div class="action">Star leads everyone into the final Nativity pose. Gabriel moves clear and retrieves trumpet. Everyone holds still.</div></div></div>
+</section>
+<section aria-labelledby="scene-6">
+<div class="scene-head"><span class="scene-number">SCENE 6</span><span class="scene-time">03:50–04:00</span></div>
+<h2 id="scene-6">The final joke</h2>
+<div class="cue"><div class="when">03:50</div><div class="detail"><strong class="who">🎵 SOUND</strong><div class="action">Stop music instantly. Everyone freezes.</div></div></div>
+<div class="cue"><div class="when">03:51</div><div class="detail"><strong class="who">NARRATOR 1</strong><div class="action">“And they all lived happily ever after.”</div></div></div>
+<div class="cue"><div class="when">03:54</div><div class="detail"><strong class="who">🎺 GABRIEL</strong><div class="action">Play one beautiful, gentle closing note.</div></div></div>
+<div class="cue"><div class="when">03:56</div><div class="detail"><strong class="who">BLOBBY</strong><div class="action">“BLOOOOOOOBBBBBYYYY!”</div></div></div>
+<div class="cue"><div class="when">03:58</div><div class="detail"><strong class="who">EVERYONE</strong><div class="action">“NOOOOO!”</div></div></div>
+<div class="cue"><div class="when">04:00</div><div class="detail"><strong class="who">LIGHTS / ALL</strong><div class="action">Blackout. Hold the pose. <strong>End.</strong></div></div></div>
+</section>
+<footer><strong>Safety:</strong> Gently lift and hand back the lightweight doll; no throwing or rough movement. The trumpet decoration must not interfere with playing. Rehearse the two Mr Blobby music excerpts against the clock before performing.</footer>
 </main>
-<div class="prep">
- <details><summary>Before we start · costumes and props</summary>
-  <p><strong>Everyone:</strong> traditional Nativity role with pink-and-yellow Blobby spots or accessories. Narrators have spotted badges or bow ties; angels have spotted halos; shepherds have tea towels and spotted sashes; wise men have spotted crowns; Mary and Joseph have spotted robes; Star has a Blobby face; innkeeper has a spotted apron. Gabriel has a lightweight Blobby decoration attached safely to a music stand, not obstructing the trumpet.</p>
-  <p><strong>Onstage:</strong> manger with lightweight baby doll and blanket, three gifts, safe spot for trumpet. <strong>Offstage:</strong> form tutor in full Mr Blobby costume, waiting at side entrance. Someone offstage controls the music and lights.</p>
-  <p><strong>Safety:</strong> Blobby gently lifts and hands the doll to Mary before the group dance. No running, shaking or throwing the doll. All 20 students join the dance, and everyone must be able to see through costumes.</p>
- </details>
-</div>
 <script>
 (function(){
 'use strict';
-var items=Array.prototype.slice.call(document.querySelectorAll('#singleCards .cue'));
-var cards=document.getElementById('singleCards'),allCards=document.getElementById('allCards');
-var prev=document.getElementById('prev'),next=document.getElementById('next'),count=document.getElementById('cueCount'),fill=document.getElementById('fill'),toggle=document.getElementById('toggleAll');
-var single=document.getElementById('singleSection'),all=document.getElementById('allSection');
-var index=0,allOpen=false,touchX=null,touchY=null;
-allCards.innerHTML=cards.innerHTML;
-Array.prototype.slice.call(allCards.querySelectorAll('.cue')).forEach(function(node){node.removeAttribute('hidden');node.setAttribute('aria-hidden','false');node.removeAttribute('id');Array.prototype.slice.call(node.querySelectorAll('.soundbox')).forEach(function(audio){audio.remove();});});
-function setCue(n){
- index=Math.max(0,Math.min(items.length-1,n));
- items.forEach(function(item,i){var active=i===index;item.hidden=!active;item.classList.toggle('active',active);item.setAttribute('aria-hidden',String(!active));});
- prev.disabled=index===0;next.disabled=index===items.length-1;
- count.textContent='Cue '+(index+1)+' of '+items.length;
- fill.style.width=((index+1)/items.length*100)+'%';
- window.scrollTo(0,0);
-}
-function setAll(on){
- allOpen=on;single.hidden=on;all.hidden=!on;
- toggle.textContent=on?'← One cue at a time':'All cues / print';
- window.scrollTo(0,0);
-}
-prev.addEventListener('click',function(){setCue(index-1);});
-next.addEventListener('click',function(){setCue(index+1);});
-toggle.addEventListener('click',function(){setAll(!allOpen);});
-document.getElementById('print').addEventListener('click',function(){window.print();});
-document.addEventListener('keydown',function(e){if(allOpen||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key==='ArrowRight'){e.preventDefault();setCue(index+1);}if(e.key==='ArrowLeft'){e.preventDefault();setCue(index-1);}});
-single.addEventListener('touchstart',function(e){if(e.touches.length!==1)return;touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;},{passive:true});
-single.addEventListener('touchend',function(e){if(touchX===null)return;var dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.4)setCue(index+(dx<0?1:-1));touchX=null;touchY=null;},{passive:true});
-setCue(0);
-})();
-(function(){
-'use strict';
-var play=document.getElementById('silentNightPlay'),stop=document.getElementById('silentNightStop'),status=document.getElementById('silentNightStatus');
-if(!play||!stop)return;
-var ctx=null,active=[],finishHandle=null;
-function end(){
- if(finishHandle){clearTimeout(finishHandle);finishHandle=null;}
- active.forEach(function(x){try{x.stop();}catch(e){}});
- active=[];
- play.disabled=false;stop.disabled=true;play.textContent='▶ Hear Silent Night (trumpet)';
-}
-function trumpet(context,when,midi,duration){
- var freq=440*Math.pow(2,(midi-69)/12),env=context.createGain();
- env.gain.setValueAtTime(.0001,when);
- env.gain.exponentialRampToValueAtTime(.14,when+.07);
- env.gain.setValueAtTime(.13,when+Math.max(.09,duration-.15));
- env.gain.exponentialRampToValueAtTime(.0001,when+duration+.1);
- var filter=context.createBiquadFilter();filter.type='lowpass';filter.frequency.value=1950;filter.Q.value=.5;
- env.connect(filter);filter.connect(context.destination);
- [['sawtooth',.35],['sine',.65]].forEach(function(kind){
-   var o=context.createOscillator(),g=context.createGain();
-   o.type=kind[0];o.frequency.setValueAtTime(freq,when);g.gain.value=kind[1];
-   o.connect(g);g.connect(env);o.start(when);o.stop(when+duration+.13);active.push(o);
- });
+var button=document.getElementById('hearSilent'),status=document.getElementById('hearStatus');
+if(!button)return;
+var ctx=null,osc=[],timeout=null,playing=false;
+function clear(){
+ if(timeout)clearTimeout(timeout);
+ timeout=null;
+ osc.forEach(function(o){try{o.stop();}catch(e){}});
+ osc=[];playing=false;button.textContent='▶ Hear trumpet example';status.textContent='';
 }
 var notes=[[0,79,.72],[.78,81,.26],[1.07,79,.55],[1.68,83,1.15],[3.03,79,.72],[3.79,81,.25],[4.09,79,.55],[4.65,83,1.16],[6.04,74,1.25],[7.40,83,1.02],[8.56,72,1.25],[9.87,79,1.20]];
-play.addEventListener('click',function(){
- end();
+button.addEventListener('click',function(){
+ if(playing){clear();return;}
  try{
-  var AudioContextConstructor=window.AudioContext||window.webkitAudioContext;
-  if(!AudioContextConstructor)throw Error('Audio unavailable');
-  if(!ctx)ctx=new AudioContextConstructor();
-  ctx.resume();var now=ctx.currentTime+.09;
-  notes.forEach(function(n){trumpet(ctx,now+n[0],n[1],n[2]);});
-  play.disabled=true;stop.disabled=false;play.textContent='Playing…';
-  status.textContent='Playing the 12-second Silent Night reference.';
-  finishHandle=setTimeout(function(){end();status.textContent='Finished. Play again whenever needed.';},12400);
- }catch(e){end();status.textContent='Audio could not play in this browser. Check sound permissions.';}
+ var AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)throw Error('Audio unavailable');
+ if(!ctx)ctx=new AC();
+ ctx.resume();
+ var t=ctx.currentTime+.09;
+ notes.forEach(function(n){
+  var when=t+n[0],duration=n[2],freq=440*Math.pow(2,(n[1]-69)/12);
+  var env=ctx.createGain();env.gain.setValueAtTime(.0001,when);env.gain.exponentialRampToValueAtTime(.13,when+.08);env.gain.setValueAtTime(.12,when+Math.max(.1,duration-.14));env.gain.exponentialRampToValueAtTime(.0001,when+duration+.1);
+  var filt=ctx.createBiquadFilter();filt.type='lowpass';filt.frequency.value=1950;env.connect(filt);filt.connect(ctx.destination);
+  [['sawtooth',.32],['sine',.68]].forEach(function(v){var o=ctx.createOscillator(),g=ctx.createGain();o.type=v[0];o.frequency.value=freq;g.gain.value=v[1];o.connect(g);g.connect(env);o.start(when);o.stop(when+duration+.13);osc.push(o);});
+ });
+ playing=true;button.textContent='■ Stop trumpet example';status.textContent='Playing...';
+ timeout=setTimeout(clear,12400);
+ }catch(e){clear();status.textContent='Audio unavailable in this browser.';}
 });
-stop.addEventListener('click',function(){end();status.textContent='Stopped.';});
 })();
 </script>
 </body>
