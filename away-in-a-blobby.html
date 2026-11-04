@@ -190,7 +190,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
       <div><div class="overline">Practice stopwatch</div><div class="timerdigits" id="timerDisplay">00:00</div><p class="muted" style="font-size:13px">Elapsed / 04:00</p></div>
       <div>
         <div class="tag" id="timerScene">READY TO REHEARSE</div>
-        <h3 id="timerCue" style="margin:6px 0">Everyone in starting position; Blobby hidden</h3>
+        <h3 id="timerCue" style="margin:6px 0">Baby doll in manger; Blobby hidden at side entrance</h3>
         <p id="timerNext" class="muted">Next: 00:00 — Gabriel plays Silent Night.</p>
         <div class="controls no-print">
           <button type="button" class="btn btn-primary" id="timerStart">▶ Start</button>
@@ -490,26 +490,48 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
 'use strict';
 var cast=[
 ['n1','Narrator 1','Open the story and deliver the very last serious line. Stay by the side microphone.'],
-['n2','Narrator 2','Set up the extraordinary birth and comment on the strange Blobby reveal.'],
-['mary','Mary','Enter with Joseph; stand by the manger; react to Blobby; say the line that starts the dance.'],
-['joseph','Joseph','Ask the innkeeper for a room; look completely horrified when Blobby appears.'],
-['gabriel','Gabriel — trumpet','Five short trumpet signals at 00:00, 01:02, 01:05, 02:08 and 03:54. Speak at 00:31. Set the trumpet safely down for the dance and retrieve it at 03:43.'],
+['n2','Narrator 2','Set up the Nativity; at 01:39 react to Blobby proudly cradling the baby doll.'],
+['mary','Mary','Stand beside the manger. React at 01:22 when Blobby lifts the doll. At 01:52 calmly take the doll back and place it in the manger by 02:00. Then cue the dance.'],
+['joseph','Joseph','Ask the innkeeper for a room. At 01:17 demand that Blobby put the baby doll back; remain appalled during the handover.'],
+['gabriel','Gabriel — trumpet','Five trumpet cues: Silent Night at 00:00, grand fanfare at 01:02, wrong note when Blobby lifts the doll at 01:12, freeze signal at 02:08, closing note at 03:54. Speak at 00:31. Put trumpet safely down before the dance; retrieve it at 03:43.'],
 ['innkeeper','Innkeeper','Stand at the entrance and offer Mary and Joseph the stable before stepping to the side.'],
-['wise1','Wise Man 1','Carry gold and deliver the wrong-stable joke.'],
-['wise2','Wise Man 2','Carry frankincense and deliver the refund joke.'],
+['wise1','Wise Man 1','Carry gold and deliver the wrong-stable joke while Blobby proudly holds the baby doll.'],
+['wise2','Wise Man 2','Carry frankincense and deliver the refund joke after Blobby lifts the doll.'],
 ['wise3','Wise Man 3','Carry myrrh. Enter with the other wise men and visibly react to Blobby.'],
 ['shepherd1','Shepherd 1','React to Gabriel and say “You could have knocked!”'],
 ['shepherd2','Shepherd 2','Deliver the nappies joke. Then lead group reactions.'],
-['shepherd3','Shepherd 3','Lead the other shepherds onto the stage at 00:20. React with a gasp at 01:05.'],
-['shepherd4','Shepherd 4','Follow the shepherd entrance at 00:20. At Blobby’s reveal step backwards in disbelief.'],
+['shepherd3','Shepherd 3','Lead other shepherds on at 00:20. Gasp at 01:12 as Blobby picks up the doll.'],
+['shepherd4','Shepherd 4','Enter at 00:20. Step backwards in disbelief as Blobby lifts the baby doll.'],
 ['shepherd5','Shepherd 5','Join the shepherds at 00:20, regroup at 01:45 and dance with everyone.'],
 ['angel1','Angel 1','Lead the angels in with the shepherds, help create the serious Nativity scene, then react to Blobby.'],
 ['angel2','Angel 2','Join Nativity tableau. Freeze in shock at reveal; join the dance.'],
 ['angel3','Angel 3','Join Nativity tableau. Step back at reveal; join the dance.'],
 ['angel4','Angel 4','Join Nativity tableau. React to Blobby’s awful dance; join the final dance.'],
 ['angel5','Angel 5','Join Nativity tableau. React to Blobby’s awful dance; join the final dance.'],
-['star','Star of Bethlehem','Guide cast towards the manger, lead formation at 02:20, and signal final tableau at 03:43.']
+['star','Star of Bethlehem','Lead people towards the baby doll in the manger, guide the group into dance formation at 02:20 and signal the final tableau at 03:43.']
 ];
+var roleCostumes={
+ n1:'Dark outfit with Blobby-spotted bow tie or badge.',
+ n2:'Dark outfit with Blobby-spotted bow tie or badge.',
+ mary:'Traditional robe and headscarf, pink/yellow spotted sash.',
+ joseph:'Traditional robe and headcloth, pink/yellow spotted scarf.',
+ gabriel:'Angel costume, Blobby charm attached safely to music stand or away from trumpet playing parts.',
+ innkeeper:'Traditional outfit with Blobby-spotted apron or waistcoat.',
+ wise1:'Crown and robe trimmed with pink/yellow Blobby spots; carry gold.',
+ wise2:'Crown and robe trimmed with pink/yellow Blobby spots; carry frankincense.',
+ wise3:'Crown and robe trimmed with pink/yellow Blobby spots; carry myrrh.',
+ shepherd1:'Shepherd tea towel and staff with spotted sash or scarf.',
+ shepherd2:'Shepherd tea towel and staff with spotted sash or scarf.',
+ shepherd3:'Shepherd tea towel and staff with spotted sash or scarf.',
+ shepherd4:'Shepherd tea towel and staff with spotted sash or scarf.',
+ shepherd5:'Shepherd tea towel and staff with spotted sash or scarf.',
+ angel1:'White clothes, halo, bright pink/yellow Blobby spots.',
+ angel2:'White clothes, halo, bright pink/yellow Blobby spots.',
+ angel3:'White clothes, halo, bright pink/yellow Blobby spots.',
+ angel4:'White clothes, halo, bright pink/yellow Blobby spots.',
+ angel5:'White clothes, halo, bright pink/yellow Blobby spots.',
+ star:'Star costume decorated with Blobby face or spots.'
+};
 var selector=document.getElementById('roleSelect'),assignmentRows=document.getElementById('assignmentRows'),result=document.getElementById('myPartResult');
 cast.forEach(function(role){
  var option=document.createElement('option');option.value=role[0];option.textContent=role[1];selector.appendChild(option);
@@ -523,6 +545,7 @@ function showRole(){
  if(!role){var p=document.createElement('p');p.className='muted';p.textContent='Choose your role to see your instructions.';result.appendChild(p);return;}
  var h=document.createElement('h3');h.textContent=role[1];result.appendChild(h);
  var p=document.createElement('p');p.textContent=role[2];result.appendChild(p);
+ var outfit=document.createElement('p');outfit.className='myline';outfit.textContent='🎭 My Blobby costume: '+(roleCostumes[role[0]]||'Pink-and-yellow Blobby-themed Nativity outfit');result.appendChild(outfit);
  var common=document.createElement('p');common.className='green';common.textContent='EVERYONE: At 02:20 move into two rows of ten, dance from 02:36 and join the final pose at 03:43.';result.appendChild(common);
  var lines=document.querySelectorAll('.dialogue[data-role="'+role[0]+'"]');
  if(lines.length){
@@ -542,8 +565,8 @@ selector.addEventListener('change',showRole);
 var boundaries=[
  {s:0, label:'Scene 1 · Nativity',cue:'Gabriel plays Silent Night; Mary and Joseph enter.'},
  {s:40,label:'Scene 2 · Wise men',cue:'Three wise men enter with gifts.'},
- {s:65,label:'Scene 3 · The reveal',cue:'Blobby appears. Trumpet wrong note. Everyone freezes.'},
- {s:105,label:'Scene 4 · Chaos',cue:'Sound plays the Mr Blobby excerpt. Blobby dances badly.'},
+ {s:65,label:'Scene 3 · Blobby & the baby',cue:'Blobby enters from the side, lifts the doll; wrong trumpet note at 01:12.'},
+ {s:105,label:'Scene 4 · Chaos',cue:'Blobby dances; Mary takes the doll back by 02:00.'},
  {s:140,label:'Scene 5 · Christmas dance',cue:'Sound starts the Christmas track. Two rows form.'},
  {s:156,label:'Scene 5 · Group routine',cue:'Everyone does the 16-count steps.'},
  {s:188,label:'Scene 5 · Blobby solo',cue:'Students freeze and watch Blobby’s terrible solo.'},
@@ -574,7 +597,7 @@ pauseButton.addEventListener('click',function(){
 resetButton.addEventListener('click',function(){
  running=false;clearInterval(interval);interval=null;elapsed=0;lastIndex=-1;
  startButton.disabled=false;pauseButton.disabled=true;startButton.textContent='▶ Start';
- sceneEl.textContent='READY TO REHEARSE';cueEl.textContent='Everyone in starting position; Blobby hidden';nextEl.textContent='Next: 00:00 — Gabriel’s opening trumpet fanfare.';
+ sceneEl.textContent='READY TO REHEARSE';cueEl.textContent='Baby doll in manger, everyone Blobby-themed, tutor hidden at side entrance';nextEl.textContent='Next: 00:00 — Gabriel’s opening trumpet fanfare.';
  display.textContent='00:00';fill.style.width='0%';
 });
 window.addEventListener('beforeprint',function(){document.querySelectorAll('.scene-script').forEach(function(el){el.dataset.printWasOpen=String(el.open);el.open=true;});});
