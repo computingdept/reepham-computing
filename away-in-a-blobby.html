@@ -141,7 +141,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
   <a href="#running-order">Running order</a>
   <a href="#cast">Cast</a>
   <a href="#my-part">My part</a>
-  <a href="#hark-audio">🎺 Hear carol</a>
+  <a href="#silent-night-audio">🎺 Hear Silent Night</a>
   <a href="#script">Full script</a>
   <a href="#dance">Dance</a>
   <a href="#tech">Props &amp; cues</a>
@@ -158,7 +158,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
    <div class="actions">
      <a class="btn btn-primary" href="#my-part">Find my part</a>
      <a class="btn" href="#script">Read the full script</a>
-     <a class="btn" href="#hark-audio">🎺 Hear Hark! The Herald Angels Sing</a>
+     <a class="btn" href="#silent-night-audio">🎺 Hear Silent Night</a>
      <button class="btn" type="button" onclick="window.print()">🖨 Print rehearsal pack</button>
    </div>
  </div>
@@ -184,7 +184,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
       <div>
         <div class="tag" id="timerScene">READY TO REHEARSE</div>
         <h3 id="timerCue" style="margin:6px 0">Everyone in starting position; Blobby hidden</h3>
-        <p id="timerNext" class="muted">Next: 00:00 — Gabriel’s opening trumpet fanfare.</p>
+        <p id="timerNext" class="muted">Next: 00:00 — Gabriel plays Silent Night.</p>
         <div class="controls no-print">
           <button type="button" class="btn btn-primary" id="timerStart">▶ Start</button>
           <button type="button" class="btn" id="timerPause" disabled>⏸ Pause</button>
@@ -244,15 +244,16 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
 </section>
 
 <section id="cue-sheet">
- <div id="hark-audio" class="panel" style="margin-bottom:17px">
-   <span class="overline">🎺 Hear the opening carol</span>
-   <h3 style="margin:9px 0">Hark! The Herald Angels Sing</h3>
-   <p class="muted">Listen here, then choose a short phrase for Gabriel to play on the trumpet.</p>
-   <audio controls preload="none" style="width:100%;max-width:660px;display:block;margin:12px 0" aria-label="Play Hark the Herald Angels Sing">
-     <source src="https://upload.wikimedia.org/wikipedia/commons/9/94/Hark_the_Herald_Angels_Sing_-_Concert_Band_-_United_States_Air_Force_Heritage_of_America_Band.mp3" type="audio/mpeg">
-     Your browser does not support the audio player.
-   </audio>
-   <p class="muted" style="font-size:13px;margin-bottom:0">Reference recording: US Air Force Heritage of America Band (via Wikimedia Commons). Full-band performance; the student plays a short trumpet phrase live. <a href="https://commons.wikimedia.org/wiki/File:Hark_the_Herald_Angels_Sing_-_Concert_Band_-_United_States_Air_Force_Heritage_of_America_Band.mp3" target="_blank" rel="noopener noreferrer">Recording source</a>.</p>
+
+ <div id="silent-night-audio" class="panel" style="margin-bottom:17px">
+   <span class="overline">🎺 Opening music · Silent Night</span>
+   <h3 style="margin:9px 0">Silent Night — Trumpet (12 seconds)</h3>
+   <p class="muted">Hear the trumpet-style melody for the Nativity opening. The trumpet player can practise this short phrase.</p>
+   <div class="actions no-print">
+     <button id="silentNightPlay" type="button" class="btn btn-primary">▶ Play Silent Night</button>
+     <button id="silentNightStop" type="button" class="btn" disabled>■ Stop</button>
+   </div>
+   <p id="silentNightStatus" class="muted" role="status" style="font-size:13px;margin-top:11px">Short instrumental preview. No external video or login needed.</p>
  </div>
 
  <span class="overline">For the sound operator and cast</span>
@@ -263,7 +264,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
   <thead><tr><th>Clock</th><th>Who / cue</th><th>Action</th></tr></thead>
   <tbody>
     <tr><td class="time">Before 00:00</td><td>Everyone</td><td>Mary, Joseph, innkeeper, narrators, Gabriel in position. Blobby completely hidden. Gifts, props and trumpet ready.</td></tr>
-    <tr><td class="time">00:00</td><td>🎺 Gabriel</td><td>Play short Christmas fanfare (about 4 seconds). Narrator begins immediately afterwards.</td></tr>
+    <tr><td class="time">00:00</td><td>🎺 Gabriel</td><td>Play the opening phrase of <em>Silent Night</em> (about 4 seconds). Narrator begins immediately afterwards.</td></tr>
     <tr><td class="time">00:20</td><td>Mary, Joseph</td><td>Move to manger. Angels and shepherds enter quietly.</td></tr>
     <tr><td class="time">00:40</td><td>Wise men</td><td>Enter, one after another, with three gifts.</td></tr>
     <tr><td class="time">01:02</td><td>🎺 Gabriel</td><td>Grand fanfare and a brief dramatic pause. Blobby gets ready behind manger frontage.</td></tr>
@@ -292,7 +293,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <summary><span>1 · The Nativity</span><time>00:00–00:40</time></summary>
  <div class="scene-content">
  <p class="stage"><strong>Positions:</strong> Mary and Joseph ready to walk in. Innkeeper to one side. Narrators visible. Gabriel with trumpet. Angels and shepherds waiting to enter. Blobby hidden.</p>
- <p class="tech">00:00 🎺 Gabriel: four-second opening Christmas fanfare. Trumpet safely lowered afterwards.</p>
+ <p class="tech">00:00 🎺 Gabriel: play the first four seconds of the <em>Silent Night</em> trumpet phrase. Trumpet safely lowered afterwards.</p>
  <p class="dialogue" data-role="n1"><span class="line-time">00:04</span><strong>NARRATOR 1:</strong> Long ago, in Bethlehem, Mary and Joseph were searching for somewhere to stay.</p>
  <p class="dialogue" data-role="joseph"><span class="line-time">00:11</span><strong>JOSEPH:</strong> Have you got a room?</p>
  <p class="dialogue" data-role="innkeeper"><span class="line-time">00:14</span><strong>INNKEEPER:</strong> Sorry, we're fully booked. There's a stable round the back.</p>
@@ -420,7 +421,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <div class="twin">
    <div class="panel">
     <h3>🎵 Mr Blobby soundtrack and trumpet</h3>
-    <p><strong>Gabriel:</strong> opening fanfare (00:00), dramatic fanfare (01:02), wrong note (01:05), freeze signal (02:08), beautiful closing note (03:54).</p>
+    <p><strong>Gabriel:</strong> <em>Silent Night</em> opening phrase (00:00), dramatic fanfare (01:02), wrong note (01:05), freeze signal (02:08), beautiful closing note (03:54).</p>
     <p><strong>Sound operator:</strong> play <em>Mr Blobby</em> (1993) recording 0:00–0:23 at performance 01:45–02:08; stop for the freeze; then play approximately 0:40–2:10 of the <em>same song</em> at performance 02:20–03:50. Cut at exactly 03:50.</p>
     <p class="muted">The two dance and comedy excerpts come from the same 1993 Mr Blobby single. The preview below is an external YouTube video; for the show, cue the music with the event's playback setup. Verify the excerpt boundaries against the recording you use.</p>
     <p class="muted">Assign a person who is not performing to operate the PA, or arrange playback with the event technician.</p>
@@ -513,7 +514,7 @@ function showRole(){
 selector.addEventListener('change',showRole);
 
 var boundaries=[
- {s:0, label:'Scene 1 · Nativity',cue:'Gabriel opens with a fanfare; Mary and Joseph enter.'},
+ {s:0, label:'Scene 1 · Nativity',cue:'Gabriel plays Silent Night; Mary and Joseph enter.'},
  {s:40,label:'Scene 2 · Wise men',cue:'Three wise men enter with gifts.'},
  {s:65,label:'Scene 3 · The reveal',cue:'Blobby appears. Trumpet wrong note. Everyone freezes.'},
  {s:105,label:'Scene 4 · Chaos',cue:'Sound plays the Mr Blobby excerpt. Blobby dances badly.'},
@@ -552,6 +553,54 @@ resetButton.addEventListener('click',function(){
 });
 window.addEventListener('beforeprint',function(){document.querySelectorAll('.scene-script').forEach(function(el){el.dataset.printWasOpen=String(el.open);el.open=true;});});
 window.addEventListener('afterprint',function(){document.querySelectorAll('.scene-script').forEach(function(el){el.open=el.dataset.printWasOpen==='true';});});
+})();
+
+
+(function(){
+'use strict';
+var play=document.getElementById('silentNightPlay');
+var stop=document.getElementById('silentNightStop');
+var status=document.getElementById('silentNightStatus');
+if(!play||!stop)return;
+var ctx=null,active=[],finishHandle=null;
+function end(){
+  if(finishHandle){clearTimeout(finishHandle);finishHandle=null;}
+  active.forEach(function(x){try{x.stop();}catch(e){}});
+  active=[];
+  play.disabled=false;stop.disabled=true;play.textContent='▶ Play Silent Night';
+}
+function trumpet(context, when, midi, duration){
+  var freq=440*Math.pow(2,(midi-69)/12);
+  var envelope=context.createGain();
+  envelope.gain.setValueAtTime(0.0001,when);
+  envelope.gain.exponentialRampToValueAtTime(0.14,when+0.07);
+  envelope.gain.setValueAtTime(0.13,when+Math.max(.09,duration-.15));
+  envelope.gain.exponentialRampToValueAtTime(.0001,when+duration+.10);
+  var filter=context.createBiquadFilter();filter.type='lowpass';filter.frequency.value=1950;filter.Q.value=.5;
+  envelope.connect(filter);filter.connect(context.destination);
+  var types=[['sawtooth',.35],['sine',.65]];
+  types.forEach(function(item){
+    var o=context.createOscillator(),g=context.createGain();
+    o.type=item[0];o.frequency.setValueAtTime(freq,when);g.gain.value=item[1];
+    o.connect(g);g.connect(envelope);o.start(when);o.stop(when+duration+.13);active.push(o);
+  });
+}
+var notes=[[0,79,.72],[.78,81,.26],[1.07,79,.55],[1.68,83,1.15],[3.03,79,.72],[3.79,81,.25],[4.09,79,.55],[4.65,83,1.16],[6.04,74,1.25],[7.40,83,1.02],[8.56,72,1.25],[9.87,79,1.20]];
+play.addEventListener('click',function(){
+   end();
+   try {
+      var AudioContextCtor=window.AudioContext||window.webkitAudioContext;
+      if(!AudioContextCtor)throw new Error('Audio not supported');
+      if(!ctx)ctx=new AudioContextCtor();
+      ctx.resume();
+      var t=ctx.currentTime+.09;
+      notes.forEach(function(n){trumpet(ctx,t+n[0],n[1],n[2]);});
+      play.disabled=true;stop.disabled=false;play.textContent='Playing…';
+      status.textContent='Playing the 12-second Silent Night trumpet-style preview.';
+      finishHandle=setTimeout(function(){end();status.textContent='Finished. Press play to hear it again.';},12400);
+   }catch(e){end();status.textContent='This browser could not play the preview. Open the page in Safari or Chrome with sound enabled.';}
+});
+stop.addEventListener('click',function(){end();status.textContent='Stopped. Press play to hear it again.';});
 })();
 </script>
 </body>
