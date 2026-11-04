@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#133b60">
+  <meta name="description" content="Practise binary to hexadecimal, denary to binary, and denary to hexadecimal with automatic marking. All values fit in eight bits.">
+  <title>8-Bit Number Conversions | Computing Practice</title>
+  <style>
+    :root { color-scheme: light; --navy:#133b60; --navy2:#0c2945; --blue:#176caa; --blue-light:#eaf3fb; --ink:#182d40; --muted:#52687c; --line:#d6e2ec; --bg:#f3f7fb; --white:#fff; --green:#12613e; --green-bg:#e8f6ed; --amber:#815111; --amber-bg:#fff5e3; }
+    * { box-sizing:border-box }
+    html { -webkit-text-size-adjust:100% }
+    body { margin:0; font:16px/1.48 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; background:var(--bg); color:var(--ink) }
+    button,input { font:inherit }
+    button { cursor:pointer }
+    button:disabled { cursor:default; opacity:.55 }
+    :focus-visible { outline:3px solid #e49b20; outline-offset:3px }
+    .site-header { background:var(--navy); color:#fff }
+    .header-inner { max-width:1090px; margin:auto; padding:15px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:750; letter-spacing:.01em }
+    .brand-mark { background:#f4b85b; color:#102e4c; width:35px; height:35px; display:grid; place-items:center; border-radius:9px; font-size:13px; font-weight:850 }
+    .home-link { color:#e9f4ff; text-decoration:none; font-weight:650; font-size:.92rem; padding:7px 9px; border-radius:8px }
+    .home-link:hover { background:#ffffff20 }
+    .container { max-width:1090px; margin:auto; padding:30px 22px 55px }
+    .eyebrow { color:var(--blue); font-size:.76rem; letter-spacing:.115em; font-weight:850; text-transform:uppercase; margin:0 0 5px }
+    h1 { font-size:clamp(1.9rem,4vw,2.65rem); margin:0; letter-spacing:-.035em; line-height:1.15; color:var(--navy2) }
+    .intro { color:var(--muted); margin:10px 0 22px; max-width:780px; font-size:1.03rem }
+    .mode-group { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:21px }
+    .mode { background:#fff; border:2px solid var(--line); color:var(--navy); border-radius:13px; padding:15px 12px; font-weight:800; min-height:64px; line-height:1.25; text-align:center }
+    .mode[aria-pressed="true"] { background:var(--blue-light); border-color:var(--blue); box-shadow:0 0 0 1px var(--blue) inset }
+    .mode:hover { border-color:var(--blue) }
+    .workspace { display:grid; grid-template-columns:minmax(0,1.57fr) minmax(250px,.88fr); gap:17px; align-items:start }
+    .panel { background:var(--white); border:1px solid var(--line); border-radius:17px; box-shadow:0 8px 28px #1c466810; overflow:hidden }
+    .practice { padding:23px 27px 25px }
+    .statbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:9px; align-items:center; font-size:.9rem; font-weight:720; color:var(--muted) }
+    .statbar strong { color:var(--navy) }
+    .progress { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:5px; margin:14px 0 28px }
+    .progress span { height:8px; background:#e3ebf2; border-radius:99px }
+    .progress .correct { background:#258e5c }
+    .progress .incorrect { background:#d29944 }
+    .progress .current { background:var(--blue) }
+    .question-label { text-transform:uppercase; color:var(--muted); letter-spacing:.08em; font-size:.74rem; font-weight:850; margin:0 0 10px }
+    .number { color:var(--navy2); font-weight:850; font-size:clamp(2.6rem,7vw,4.9rem); letter-spacing:.04em; margin:1px 0 8px; line-height:1.18; font-variant-numeric:tabular-nums; overflow-wrap:anywhere }
+    .number.binary { letter-spacing:.09em; font-size:clamp(2.15rem,5.3vw,4rem) }
+    .base-note { color:var(--muted); margin:0 0 23px; font-size:.9rem }
+    .answer-label { display:block; font-weight:800; color:var(--navy2); margin-bottom:9px }
+    .answer-row { display:flex; gap:9px }
+    .answer-input { flex:1; min-width:0; width:100%; padding:13px 15px; font-size:clamp(1.3rem,3vw,1.65rem); letter-spacing:.08em; font-weight:700; border:2px solid #b4c9d9; border-radius:11px; color:var(--navy2); text-transform:uppercase; background:#fff }
+    .answer-input::placeholder { text-transform:none; letter-spacing:0; color:#8193a2; font-size:1rem; font-weight:500 }
+    .primary { border:2px solid var(--blue); background:var(--blue); color:#fff; font-weight:800; padding:13px 19px; border-radius:11px; min-height:54px }
+    .primary:hover:not(:disabled) { background:#105785 }
+    .minor { border:1px solid #bbcfe0; background:#f8fbfe; color:var(--navy); font-weight:750; padding:10px 13px; border-radius:10px }
+    .minor:hover { background:var(--blue-light) }
+    .under-input { color:var(--muted); font-size:.85rem; margin:9px 0 0 }
+    .validation { color:#a73d26; font-weight:750; margin-top:8px; min-height:0 }
+    .actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:18px }
+    .feedback { margin-top:20px; border-radius:12px; padding:16px 17px; border:1px solid }
+    .feedback.correct { background:var(--green-bg); border-color:#a4d3b5; color:#155434 }
+    .feedback.incorrect { background:var(--amber-bg); border-color:#ebca91; color:#68430f }
+    .feedback h2 { font-size:1.17rem; margin:0 0 5px; line-height:1.3 }
+    .feedback p { margin:5px 0 0 }
+    .worked { border-top:1px solid #d2dce5; padding-top:12px; margin-top:13px; color:var(--ink) }
+    .worked h3 { font-size:.95rem; margin:0 0 9px }
+    .worked p { margin:5px 0 8px }
+    .mono { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-weight:750 }
+    .worked-line { margin:7px 0; padding:8px 10px; background:#ffffffaf; border-radius:7px; font-size:.95rem }
+    .bit-grid { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:3px; margin-top:10px; text-align:center; font-variant-numeric:tabular-nums }
+    .bit-grid div { background:#fff; border:1px solid #d9e3eb; border-radius:6px; padding:5px 1px }
+    .bit-grid .weight { font-size:.75rem; color:var(--muted); font-weight:700 }
+    .bit-grid .bit { font:800 1.1rem/1.4 ui-monospace,Consolas,monospace; color:var(--navy) }
+    .side { padding:21px 22px }
+    .side h2 { font-size:1.14rem; margin:0 0 9px; color:var(--navy2) }
+    .side p { color:var(--muted); margin:0 0 11px; font-size:.93rem }
+    .steps { margin:10px 0 16px; padding-left:23px; color:var(--ink); font-size:.94rem }
+    .steps li { margin-bottom:8px; padding-left:2px }
+    .side details { border-top:1px solid var(--line); padding-top:15px; margin-top:14px }
+    .side summary { font-weight:800; color:var(--navy); cursor:pointer }
+    .side .reference-note { font-size:.8rem; margin:8px 0 }
+    .ref-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; margin-top:10px }
+    .ref-grid div { background:var(--bg); border:1px solid var(--line); border-radius:7px; text-align:center; padding:6px 2px; font-size:.79rem }
+    .ref-grid b { display:block; color:var(--navy); font-family:ui-monospace,Consolas,monospace }
+    .hint { background:#eef5fa; border:1px solid #d0e4f1; border-radius:9px; padding:12px; margin-top:12px; font-size:.91rem; color:var(--ink) }
+    .side-foot { font-size:.78rem; color:var(--muted); margin-top:21px }
+    .result-page { text-align:center; padding:15px 2px 5px }
+    .big-score { color:var(--navy); font-weight:850; font-size:clamp(3.2rem,7vw,5rem); letter-spacing:-.04em; margin:12px 0 3px }
+    .result-page h2 { margin:0 0 8px; font-size:1.5rem }
+    .result-page p { color:var(--muted) }
+    .result-marks { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin:19px 0 }
+    .result-marks span { border-radius:8px; min-width:35px; padding:6px; font-weight:800; background:#edf2f7; }
+    .result-marks .yes { color:var(--green); background:var(--green-bg) }
+    .result-marks .no { color:var(--amber); background:var(--amber-bg) }
+    .footer { text-align:center; color:var(--muted); font-size:.83rem; margin-top:20px }
+    [hidden] { display:none !important }
+    @media (max-width:760px) {
+      .container { padding:23px 14px 35px }
+      .header-inner { padding:12px 14px }
+      .workspace { grid-template-columns:1fr }
+      .mode-group { gap:7px }
+      .mode { padding:12px 5px; font-size:.88rem; min-height:68px }
+      .practice { padding:20px 16px }
+      .side { padding:20px 16px }
+      .progress { margin-bottom:20px }
+      .answer-row { flex-direction:column }
+      .primary { width:100% }
+      .actions .minor { flex:1 }
+      .brand { font-size:.91rem }
+    }
+    @media (max-width:370px) { .mode { font-size:.76rem } .home-link { font-size:.8rem } .bit-grid { gap:1px } }
+    @media (prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto !important; transition:none !important } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">01</span><span>COMPUTING PRACTICE</span></div>
+      <a class="home-link" href="/j277-hub.html?year=10" aria-label="Return to the GCSE Computing Learning Hub">← Learning Hub</a>
+    </div>
+  </header>
+  <main class="container">
+    <p class="eyebrow">OCR J277 · Number systems</p>
+    <h1>8-Bit Number Conversions</h1>
+    <p class="intro">Choose a conversion, type your answer and check it instantly. Ten questions per round, with worked solutions after each answer.</p>
+
+    <div class="mode-group" role="group" aria-label="Choose a conversion to practise">
+      <button class="mode" type="button" data-mode="binhex" aria-pressed="true">Binary → Hex</button>
+      <button class="mode" type="button" data-mode="denbin" aria-pressed="false">Denary → Binary</button>
+      <button class="mode" type="button" data-mode="denhex" aria-pressed="false">Denary → Hex</button>
+    </div>
+
+    <div class="workspace">
+      <section class="panel practice" aria-label="Conversion questions">
+        <div class="statbar"><span id="question-count">Question 1 of 10</span><span><strong id="score">0</strong> correct · Best <strong id="best">0</strong>/10</span></div>
+        <div class="progress" id="progress" aria-label="Question progress"></div>
+
+        <div id="question-area">
+          <p class="question-label" id="prompt-label">Convert this binary number to hexadecimal</p>
+          <p class="number binary" id="number" aria-label="Number to convert">1010 0111</p>
+          <p class="base-note" id="base-note">Binary (base 2) · 8 bits</p>
+          <form id="answer-form" novalidate>
+            <label for="answer" class="answer-label" id="answer-label">Your hexadecimal answer</label>
+            <div class="answer-row">
+              <input id="answer" class="answer-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" aria-describedby="input-note validation" placeholder="e.g. A7" maxlength="16" required>
+              <button class="primary" id="check-button" type="submit">Check answer</button>
+            </div>
+            <p class="under-input" id="input-note">Use hexadecimal digits 0–9 and A–F.</p>
+            <div class="validation" id="validation" role="alert"></div>
+          </form>
+          <div id="feedback" class="feedback" aria-live="polite" hidden>
+            <h2 id="feedback-title"></h2>
+            <p id="feedback-text"></p>
+            <div class="worked" id="worked"></div>
+          </div>
+          <div class="actions">
+            <button type="button" class="minor" id="hint-button" aria-expanded="false" aria-controls="hint">Show hint</button>
+            <button type="button" class="minor" id="reveal-button">I'm stuck · show solution</button>
+            <button type="button" class="primary" id="next-button" hidden>Next question →</button>
+          </div>
+          <div id="hint" class="hint" hidden></div>
+        </div>
+
+        <div class="result-page" id="result-page" hidden>
+          <p class="eyebrow">Round complete</p>
+          <div class="big-score" id="final-score">8/10</div>
+          <h2 id="result-title">Good practice!</h2>
+          <p id="result-description"></p>
+          <div class="result-marks" id="result-marks" aria-label="Your ten question results"></div>
+          <button type="button" class="primary" id="restart-button">Practise another 10 →</button>
+        </div>
+      </section>
+
+      <aside class="panel side" aria-label="Conversion guidance">
+        <h2 id="method-title">How to convert</h2>
+        <p id="method-intro">Each hexadecimal digit represents four binary bits.</p>
+        <ol class="steps" id="method-steps"></ol>
+        <details>
+          <summary>4-bit hexadecimal reference</summary>
+          <p class="reference-note">Open this when you need help. Each group of four bits corresponds to one hexadecimal digit.</p>
+          <div class="ref-grid" id="reference"></div>
+        </details>
+        <p class="side-foot">All questions are within 0–255. Hex answers are shown as two digits (00–FF), and binary answers as eight bits. Your progress is saved on this device only.</p>
+        <button class="minor" type="button" id="reset-button">Start this round again</button>
+      </aside>
+    </div>
+    <p class="footer">Learn → Practise → Check → Improve · No login needed</p>
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+    var STORAGE = 'rhs-8bit-practice-v1';
+    var MODES = {
+      binhex: {
+        label: 'Convert this binary number to hexadecimal',
+        base: 'Binary (base 2) · 8 bits',
+        answerLabel: 'Your hexadecimal answer',
+        inputNote: 'Enter 1 or 2 hex digits, 0–9 or A–F. Answers display with two digits.',
+        placeholder: 'e.g. A7',
+        methodTitle: 'Binary → Hexadecimal',
+        methodIntro: 'One hexadecimal digit represents four binary bits.',
+        steps: ['Split the eight bits into two groups of four.', 'Convert the left group into one hex digit.', 'Convert the right group and join the two digits.'],
+        hint: 'Group the bits into two nibbles (4 bits each). Within each group, add the weights 8, 4, 2 and 1, then convert 10–15 to A–F.'
+      },
+      denbin: {
+        label: 'Convert this denary number to 8-bit binary',
+        base: 'Denary (base 10) · Range 0–255',
+        answerLabel: 'Your 8-bit binary answer',
+        inputNote: 'Enter exactly eight 0s and 1s, including any leading zeros.',
+        placeholder: 'e.g. 00101101',
+        methodTitle: 'Denary → Binary',
+        methodIntro: 'Use all eight place values, even when the first bits are zero.',
+        steps: ['Write the place values: 128, 64, 32, 16, 8, 4, 2, 1.', 'Starting from 128, decide if each value fits in the amount remaining.', 'Write 1 if it fits (and subtract it); otherwise write 0.'],
+        hint: 'Use the eight columns 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1. The number must have eight bits, so include leading zeros.'
+      },
+      denhex: {
+        label: 'Convert this denary number to hexadecimal',
+        base: 'Denary (base 10) · Range 0–255',
+        answerLabel: 'Your hexadecimal answer',
+        inputNote: 'Enter 1 or 2 hex digits, 0–9 or A–F. Answers display with two digits.',
+        placeholder: 'e.g. 2D',
+        methodTitle: 'Denary → Hexadecimal',
+        methodIntro: 'Each hex place represents a power of 16.',
+        steps: ['Divide the denary number by 16.', 'The whole-number quotient gives the first hex digit.', 'The remainder gives the second digit; use A–F for 10–15.'],
+        hint: 'Divide the number by 16. Turn the whole-number quotient and the remainder into hex digits (10=A, 11=B, 12=C, 13=D, 14=E, 15=F).'
+      }
+    };
+
+    function $(id) { return document.getElementById(id); }
+    function pad8(n) { return n.toString(2).padStart(8, '0'); }
+    function hex2(n) { return n.toString(16).toUpperCase().padStart(2, '0'); }
+    function correctAnswer(mode, n) { return mode === 'denbin' ? pad8(n) : hex2(n); }
+    function mix(arr) {
+      for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+      }
+      return arr;
+    }
+    function newSession() {
+      var pool = mix([0,1,15,16,31,32,63,64,127,128,170,240,255]).slice(0, 3);
+      while (pool.length < 10) {
+        var n = Math.floor(Math.random() * 256);
+        if (pool.indexOf(n) === -1) pool.push(n);
+      }
+      return { questions: mix(pool), index: 0, attempts: [] };
+    }
+    function load() {
+      var empty = { active: 'binhex', sessions: {}, best: {} };
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORAGE));
+        if (!saved || !MODES[saved.active] || typeof saved.sessions !== 'object' || !saved.sessions || typeof saved.best !== 'object' || !saved.best) return empty;
+        Object.keys(saved.sessions).forEach(function (k) {
+          var s = saved.sessions[k];
+          var valid = MODES[k] && s && Array.isArray(s.questions) && s.questions.length === 10 &&
+            new Set(s.questions).size === 10 && s.questions.every(function (n) { return Number.isInteger(n) && n >= 0 && n <= 255; }) &&
+            Number.isInteger(s.index) && s.index >= 0 && s.index <= 10 &&
+            Array.isArray(s.attempts) && s.attempts.length <= 10 && s.attempts.length >= s.index &&
+            s.attempts.every(function (a) { return a && typeof a.correct === 'boolean' && typeof a.revealed === 'boolean' && typeof a.given === 'string'; });
+          if (!valid) delete saved.sessions[k];
+        });
+        return saved;
+      } catch (e) { return empty; }
+    }
+
+    var data = load();
+    var active = data.active;
+    var hintOpen = false;
+    function save() { try { localStorage.setItem(STORAGE, JSON.stringify(data)); } catch (e) {} }
+    function session() {
+      if (!data.sessions[active]) data.sessions[active] = newSession();
+      return data.sessions[active];
+    }
+    function score(s) { return s.attempts.filter(function (a) { return a.correct; }).length; }
+    function updateBest(s) {
+      var v = Number(data.best[active]) || 0;
+      data.best[active] = Math.max(v, score(s));
+    }
+    function working(n) {
+      if (active === 'binhex') {
+        var bits = pad8(n), left = bits.slice(0,4), right = bits.slice(4), hex = hex2(n);
+        return '<h3>Worked method</h3>' +
+          '<p>Split into two groups of four bits:</p>' +
+          '<div class="worked-line mono">' + left + ' | ' + right + '</div>' +
+          '<div class="worked-line mono">' + left + ' = ' + (n >> 4) + ' = ' + hex[0] + '</div>' +
+          '<div class="worked-line mono">' + right + ' = ' + (n & 15) + ' = ' + hex[1] + '</div>' +
+          '<p>So <strong>' + bits + '</strong>₂ = <strong>' + hex + '</strong>₁₆.</p>';
+      }
+      if (active === 'denhex') {
+        var quotient = Math.floor(n / 16), remainder = n % 16, hx = hex2(n);
+        return '<h3>Worked method</h3>' +
+          '<div class="worked-line mono">' + n + ' ÷ 16 = ' + quotient + ' remainder ' + remainder + '</div>' +
+          '<p>First digit: <strong>' + quotient + ' → ' + hx[0] + '</strong></p>' +
+          '<p>Second digit: <strong>' + remainder + ' → ' + hx[1] + '</strong></p>' +
+          '<p>Therefore <strong>' + n + '</strong>₁₀ = <strong>' + hx + '</strong>₁₆.</p>';
+      }
+      var weights = [128,64,32,16,8,4,2,1], bits8 = pad8(n);
+      var chosen = weights.filter(function (w, i) { return bits8[i] === '1'; });
+      var cells = weights.map(function (w, i) {
+        return '<div><div class="weight">' + w + '</div><div class="bit">' + bits8[i] + '</div></div>';
+      }).join('');
+      return '<h3>Worked method</h3>' +
+        '<p>Build ' + n + ' using the 8-bit place values:</p>' +
+        '<div class="worked-line mono">' + (chosen.length ? chosen.join(' + ') : '0') + ' = ' + n + '</div>' +
+        '<div class="bit-grid" role="group" aria-label="Place values and binary digits">' + cells + '</div>' +
+        '<p>Read the bottom row from left to right: <strong class="mono">' + bits8 + '</strong>.</p>';
+    }
+    function showFeedback(s, attempt, n) {
+      var expected = correctAnswer(active, n);
+      $('feedback').hidden = false;
+      $('feedback').className = 'feedback ' + (attempt.correct ? 'correct' : 'incorrect');
+      $('feedback-title').textContent = attempt.correct ? '✓ Correct!' : (attempt.revealed ? 'Solution shown' : 'Not quite — try this method');
+      var text = attempt.correct ? 'Well done. The 8-bit answer is ' + expected + '.' :
+        'The correct answer is ' + expected + '. Use the worked method below, then try the next question.';
+      $('feedback-text').textContent = text;
+      $('worked').innerHTML = working(n);
+      $('answer').value = attempt.given || '';
+      $('answer').disabled = true;
+      $('check-button').hidden = true;
+      $('reveal-button').hidden = true;
+      $('next-button').hidden = false;
+      $('next-button').textContent = s.index === 9 ? 'See my results →' : 'Next question →';
+    }
+    function render() {
+      var s = session(), done = s.index >= 10, m = MODES[active];
+      data.active = active;
+      document.querySelectorAll('[data-mode]').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.mode === active));
+      });
+      $('method-title').textContent = m.methodTitle;
+      $('method-intro').textContent = m.methodIntro;
+      $('method-steps').innerHTML = m.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+      $('score').textContent = score(s);
+      $('best').textContent = Number(data.best[active]) || 0;
+      $('question-count').textContent = done ? '10 questions completed' : 'Question ' + (s.index + 1) + ' of 10';
+      $('progress').innerHTML = s.questions.map(function (_, i) {
+        var state = i < s.attempts.length ? (s.attempts[i].correct ? 'correct' : 'incorrect') : (!done && i === s.index ? 'current' : '');
+        return '<span class="' + state + '" aria-hidden="true"></span>';
+      }).join('');
+      $('progress').setAttribute('aria-label', score(s) + ' correct out of ' + s.attempts.length + ' answered');
+      $('question-area').hidden = done;
+      $('result-page').hidden = !done;
+      if (done) {
+        $('final-score').textContent = score(s) + '/10';
+        $('result-title').textContent = score(s) === 10 ? 'Excellent — full marks!' : score(s) >= 7 ? 'Good work!' : 'Keep practising!';
+        $('result-description').textContent = 'Your best score in this mode is ' + (Number(data.best[active]) || 0) + '/10. Choose another mode or have another go.';
+        $('result-marks').innerHTML = s.attempts.map(function (a, i) {
+          return '<span class="' + (a.correct ? 'yes' : 'no') + '" aria-label="Question ' + (i + 1) + (a.correct ? ' correct' : ' incorrect') + '">' + (a.correct ? '✓' : '×') + '</span>';
+        }).join('');
+        save();
+        return;
+      }
+      var n = s.questions[s.index], a = s.attempts[s.index];
+      $('prompt-label').textContent = m.label;
+      $('number').textContent = active === 'binhex' ? pad8(n).slice(0,4) + ' ' + pad8(n).slice(4) : String(n);
+      $('number').className = 'number' + (active === 'binhex' ? ' binary' : '');
+      $('base-note').textContent = m.base;
+      $('answer-label').textContent = m.answerLabel;
+      $('input-note').textContent = m.inputNote;
+      $('answer').placeholder = m.placeholder;
+      $('answer').value = '';
+      $('answer').disabled = false;
+      $('answer').setAttribute('inputmode', active === 'denbin' ? 'numeric' : 'text');
+      $('validation').textContent = '';
+      $('feedback').hidden = true;
+      $('check-button').hidden = false;
+      $('reveal-button').hidden = false;
+      $('next-button').hidden = true;
+      $('hint').textContent = m.hint;
+      $('hint').hidden = !hintOpen;
+      $('hint-button').textContent = hintOpen ? 'Hide hint' : 'Show hint';
+      $('hint-button').setAttribute('aria-expanded', String(hintOpen));
+      if (a) showFeedback(s, a, n);
+      save();
+    }
+
+    function validate(value) {
+      var compact = value.trim().replace(/\s+/g, '').toUpperCase();
+      if (active === 'denbin') {
+        if (!/^[01]{8}$/.test(compact)) return { error: 'Enter exactly eight binary digits (0 or 1), including leading zeros.' };
+        return { answer: compact };
+      }
+      compact = compact.replace(/^0X/, '');
+      if (!/^[0-9A-F]{1,2}$/.test(compact)) return { error: 'Enter one or two hexadecimal digits (0–9 or A–F).' };
+      return { answer: compact };
+    }
+    function mark(reveal) {
+      var s = session();
+      if (s.index >= 10 || s.attempts[s.index]) return;
+      var given = '';
+      if (!reveal) {
+        var parsed = validate($('answer').value);
+        if (parsed.error) {
+          $('validation').textContent = parsed.error;
+          $('answer').setAttribute('aria-invalid', 'true');
+          $('answer').focus();
+          return;
+        }
+        given = parsed.answer;
+      }
+      $('answer').removeAttribute('aria-invalid');
+      $('validation').textContent = '';
+      var n = s.questions[s.index];
+      var correct = !reveal && (active === 'denbin' ? given === pad8(n) : parseInt(given, 16) === n);
+      s.attempts.push({ given: given, correct: correct, revealed: !!reveal });
+      hintOpen = false;
+      render();
+      $('feedback-title').setAttribute('tabindex', '-1');
+      $('feedback-title').focus();
+    }
+    function next() {
+      var s = session();
+      if (!s.attempts[s.index]) return;
+      s.index += 1;
+      if (s.index >= 10) updateBest(s);
+      hintOpen = false;
+      render();
+      if (s.index >= 10) $('restart-button').focus();
+      else $('answer').focus();
+    }
+    function reset() {
+      if (session().attempts.length && !window.confirm('Start a new set of 10 questions for this conversion? Your current round will be replaced.')) return;
+      data.sessions[active] = newSession();
+      hintOpen = false;
+      render();
+      $('answer').focus();
+    }
+    $('answer-form').addEventListener('submit', function (event) { event.preventDefault(); if (!$('check-button').hidden) mark(false); else if (!$('next-button').hidden) next(); });
+    $('answer').addEventListener('input', function () { $('validation').textContent = ''; $('answer').removeAttribute('aria-invalid'); });
+    $('answer').addEventListener('keydown', function (event) { if (event.key === 'Enter' && !$('next-button').hidden) { event.preventDefault(); next(); } });
+    $('reveal-button').addEventListener('click', function () { mark(true); });
+    $('next-button').addEventListener('click', next);
+    $('restart-button').addEventListener('click', function () { data.sessions[active] = newSession(); hintOpen = false; render(); $('answer').focus(); });
+    $('reset-button').addEventListener('click', reset);
+    $('hint-button').addEventListener('click', function () {
+      hintOpen = !hintOpen;
+      $('hint').hidden = !hintOpen;
+      $('hint-button').textContent = hintOpen ? 'Hide hint' : 'Show hint';
+      $('hint-button').setAttribute('aria-expanded', String(hintOpen));
+    });
+    document.querySelectorAll('[data-mode]').forEach(function (button) {
+      button.addEventListener('click', function () { active = button.dataset.mode; hintOpen = false; render(); });
+    });
+    $('reference').innerHTML = Array.from({length:16}, function (_, i) {
+      return '<div><b>' + i.toString(2).padStart(4,'0') + '</b>' + i.toString(16).toUpperCase() + '</div>';
+    }).join('');
+    render();
+  }());
+  </script>
+</body>
+</html>
