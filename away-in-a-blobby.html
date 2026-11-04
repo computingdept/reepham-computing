@@ -103,6 +103,13 @@ select{width:100%;background:var(--bg);color:var(--text);padding:13px;border:1px
 .video-frame iframe{width:100%;height:100%;border:0;display:block}
 .footer{border-top:1px solid var(--line);padding:20px;text-align:center;color:var(--muted);font-size:14px}
 .only-print{display:none}
+.costume-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.costume-grid>div{background:#ffffff0a;border:1px solid var(--line);border-radius:12px;padding:13px}
+.costume-grid strong{color:var(--gold);font-size:15px}
+.costume-grid p{color:var(--muted);font-size:14px;margin:6px 0 0}
+@media(max-width:850px){.costume-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.costume-grid{grid-template-columns:1fr}}
+@media print{.costume-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.costume-grid>div{background:white;border-color:#aaa;padding:8px}.costume-grid strong,.costume-grid p{color:#111}}
 @media(max-width:850px){.hero,.timergrid,.roletool,.video-grid{grid-template-columns:1fr}.cast-grid{grid-template-columns:repeat(3,1fr)}.schedule{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){main{padding:20px 13px 55px}header .header-top{padding:9px 13px}.pill{font-size:10px}nav{padding:0 13px 9px}.cast-grid{grid-template-columns:repeat(2,1fr)}.schedule{grid-template-columns:1fr 1fr;gap:8px}.schedule-card{padding:12px}.schedule-card h3{font-size:17px}.schedule-card p{font-size:13px}.dance-grid{grid-template-columns:repeat(2,1fr)}.twin,.choreo,.checklist{grid-template-columns:1fr}.scene-script summary{font-size:18px;padding:14px}.scene-content{padding:0 14px 14px}.panel{padding:16px}.hero{padding-top:3px}}
 @media print{
@@ -139,7 +146,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
 </div>
 <nav aria-label="Rehearsal sections">
   <a href="#running-order">Running order</a>
-  <a href="#cast">Cast</a>
+  <a href="#cast">Cast &amp; costumes</a>
   <a href="#my-part">My part</a>
   <a href="#silent-night-audio">🎺 Hear Silent Night</a>
   <a href="#script">Full script</a>
@@ -153,7 +160,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <div>
    <span class="overline">Our agreed Christmas performance</span>
    <h1>AWAY IN A <span class="pink">BLOBBY!</span></h1>
-   <p>A serious Nativity. An unexpected Mr Blobby. A live trumpet. <strong>All 20 students</strong> in the dance finale.</p>
+   <p>A <strong>Blobby-themed Nativity</strong>. A baby doll in the manger. The form tutor arrives in a full Mr Blobby costume. A live trumpet — and <strong>all 20 students</strong> in the dance finale.</p>
    <p class="muted" style="font-size:16px">Everything we need to rehearse the four-minute show — lines, entrances, timings, choreography and technical cues.</p>
    <div class="actions">
      <a class="btn btn-primary" href="#my-part">Find my part</a>
@@ -171,10 +178,10 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
   <p class="sectionlead">These are exact target times. The sound operator follows the cue sheet and the cast rehearses against the timer. The 30-second introduction video is <strong>not</strong> part of these four minutes.</p>
   <div class="timeline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="schedule">
-    <a class="schedule-card" href="#scene-1"><div class="clocklabel">00:00–00:40 · 40s</div><h3>1. The Nativity</h3><p>Fanfare, Mary and Joseph, innkeeper, Gabriel.</p></a>
-    <a class="schedule-card" href="#scene-2"><div class="clocklabel">00:40–01:05 · 25s</div><h3>2. The Wise Men</h3><p>Three gifts and the first joke.</p></a>
-    <a class="schedule-card" href="#scene-3"><div class="clocklabel">01:05–01:45 · 40s</div><h3>3. Blobby arrives</h3><p>Huge surprise, terrible trumpet note, reactions.</p></a>
-    <a class="schedule-card" href="#scene-4"><div class="clocklabel">01:45–02:20 · 35s</div><h3>4. Total chaos</h3><p>Mr Blobby song, comedy dance, music stop.</p></a>
+    <a class="schedule-card" href="#scene-1"><div class="clocklabel">00:00–00:40 · 40s</div><h3>1. The Nativity</h3><p>Silent Night, Blobby-themed Nativity characters and baby doll.</p></a>
+    <a class="schedule-card" href="#scene-2"><div class="clocklabel">00:40–01:05 · 25s</div><h3>2. The Wise Men</h3><p>Spotted wise men and their gifts gather around the doll.</p></a>
+    <a class="schedule-card" href="#scene-3"><div class="clocklabel">01:05–01:45 · 40s</div><h3>3. Blobby arrives</h3><p>Blobby enters, finds the doll and proudly picks it up.</p></a>
+    <a class="schedule-card" href="#scene-4"><div class="clocklabel">01:45–02:20 · 35s</div><h3>4. Total chaos</h3><p>Blobby dances, Mary retrieves the doll, music stops.</p></a>
     <a class="schedule-card" href="#scene-5"><div class="clocklabel">02:20–03:50 · 90s</div><h3>5. Blobby dance</h3><p>Two rows of ten, repeat the simple routine.</p></a>
     <a class="schedule-card" href="#scene-6"><div class="clocklabel">03:50–04:00 · 10s</div><h3>6. Final joke</h3><p>Silence, trumpet, Blobby, blackout.</p></a>
   </div>
@@ -200,13 +207,13 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
 <section id="cast">
   <span class="overline">Already allocated</span>
   <h2>Cast &amp; responsibilities</h2>
-  <p class="sectionlead">Your agreed cast stays as it is. There are 20 student roles below; Mr Blobby is the form tutor. Students' names are deliberately not published on this public webpage.</p>
+  <p class="sectionlead">All 20 allocated student roles stay the same. Everyone wears a Blobby-themed Nativity costume; the tutor is the only full-size Mr Blobby. No student names are published on this public webpage.</p>
   <div class="cast-grid">
     <div class="cast-item"><strong>Narrator 1</strong><small>Opens the story · final line</small></div>
     <div class="cast-item"><strong>Narrator 2</strong><small>Blobby setup · bridge to chaos</small></div>
-    <div class="cast-item"><strong>Mary</strong><small>Inn / reveal / dance trigger</small></div>
-    <div class="cast-item"><strong>Joseph</strong><small>Inn / Blobby reaction</small></div>
-    <div class="cast-item"><strong>Gabriel 🎺</strong><small>Trumpet cues · one line · final note</small></div>
+    <div class="cast-item"><strong>Mary</strong><small>Inn / retrieves doll / dance trigger</small></div>
+    <div class="cast-item"><strong>Joseph</strong><small>Inn / baby-doll reaction</small></div>
+    <div class="cast-item"><strong>Gabriel 🎺</strong><small>Trumpet and Blobby charm · final note</small></div>
     <div class="cast-item"><strong>Innkeeper</strong><small>First scene · stable offer</small></div>
     <div class="cast-item"><strong>Wise Man 1</strong><small>Gold · Blobby reaction</small></div>
     <div class="cast-item"><strong>Wise Man 2</strong><small>Frankincense · refund joke</small></div>
@@ -223,6 +230,22 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
     <div class="cast-item"><strong>Angel 5</strong><small>Surprise / dance</small></div>
     <div class="cast-item"><strong>Star of Bethlehem</strong><small>Guides entrances &amp; formation</small></div>
   </div>
+
+  <div class="panel" id="costumes" style="margin-top:17px">
+    <span class="overline">Everyone looks Blobby-themed</span>
+    <h3 style="margin:9px 0 14px">Costumes by part</h3>
+    <div class="costume-grid">
+      <div><strong>👼 Angels ×5</strong><p>White with yellow/pink spots, halo, Blobby headband or bow.</p></div>
+      <div><strong>🐑 Shepherds ×5</strong><p>Traditional tea towel and staff, plus big Blobby-spotted sash or scarf.</p></div>
+      <div><strong>👑 Wise men ×3</strong><p>Crowns, gifts and robes trimmed with pink and yellow Blobby spots.</p></div>
+      <div><strong>🎙 Narrators ×2</strong><p>Black outfits plus matching Blobby badges or spotted bow ties.</p></div>
+      <div><strong>👶 Mary &amp; Joseph ×2</strong><p>Traditional robes and headscarves, but pink/yellow spotted sashes.</p></div>
+      <div><strong>🎺 Gabriel ×1</strong><p>Angel costume. Blobby decoration on music stand, or securely fixed where it cannot interfere with the trumpet.</p></div>
+      <div><strong>⭐ Star ×1</strong><p>Large star with cheerful Blobby face and yellow spots.</p></div>
+      <div><strong>🚪 Innkeeper ×1</strong><p>Blobby-spotted apron or waistcoat over traditional clothes.</p></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:14px 0 0">The tutor is the only person in the full Mr Blobby costume. Decorations must stay secure during the dance and never block the trumpet bell, valves or mouthpiece.</p>
+  </div>
   <details class="panel assign" style="margin-top:14px">
    <summary style="cursor:pointer;font-weight:900">✏️ Optional printable cast sheet — fill in the names</summary>
    <p class="assign-note">Names entered here stay in this browser session and are never uploaded or added to GitHub. Print the sheet before leaving the page.</p>
@@ -236,7 +259,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
 <section id="my-part">
   <span class="overline">For every student</span>
   <h2>What do I need to do?</h2>
-  <p class="sectionlead">Choose your role to see your lines and your stage action. Everyone joins the dance at 02:20.</p>
+  <p class="sectionlead">Choose your allocated role to see lines, entrances, actions and Blobby-themed costume. Everyone joins the dance at 02:20.</p>
   <div class="panel roletool">
     <div><label for="roleSelect">My part</label><select id="roleSelect"><option value="">Choose your role…</option></select></div>
     <div id="myPartResult" aria-live="polite"><p class="muted">Select your role from the menu. Your instructions and exact lines will appear here.</p></div>
@@ -263,13 +286,15 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
   <table class="cue-table">
   <thead><tr><th>Clock</th><th>Who / cue</th><th>Action</th></tr></thead>
   <tbody>
-    <tr><td class="time">Before 00:00</td><td>Everyone</td><td>Mary, Joseph, innkeeper, narrators, Gabriel in position. Blobby completely hidden. Gifts, props and trumpet ready.</td></tr>
+    <tr><td class="time">Before 00:00</td><td>Everyone</td><td>Blobby-themed students in starting positions. Baby doll lies safely wrapped in manger. Full-size Blobby hidden at the side entrance. Trumpet and gifts ready.</td></tr>
     <tr><td class="time">00:00</td><td>🎺 Gabriel</td><td>Play the opening phrase of <em>Silent Night</em> (about 4 seconds). Narrator begins immediately afterwards.</td></tr>
     <tr><td class="time">00:20</td><td>Mary, Joseph</td><td>Move to manger. Angels and shepherds enter quietly.</td></tr>
     <tr><td class="time">00:40</td><td>Wise men</td><td>Enter, one after another, with three gifts.</td></tr>
-    <tr><td class="time">01:02</td><td>🎺 Gabriel</td><td>Grand fanfare and a brief dramatic pause. Blobby gets ready behind manger frontage.</td></tr>
-    <tr><td class="time">01:05</td><td>💗 Blobby</td><td>Reveal and shout “BLOBBY!” Trumpeter follows with one comically wrong note.</td></tr>
-    <tr><td class="time">01:45</td><td>🎵 Sound</td><td>Start approximately 20-second excerpt of <em>Mr Blobby</em>. Blobby begins dreadful dance.</td></tr>
+    <tr><td class="time">01:02</td><td>🎺 Gabriel</td><td>Grand fanfare while the cast looks at the baby doll. Blobby gets ready to enter from the side.</td></tr>
+    <tr><td class="time">01:05–01:12</td><td>💗 Blobby + 🎺 Gabriel</td><td>Blobby waddles on from the side, notices the doll, gently lifts and cradles it. Blobby shouts; Gabriel plays a comically wrong note.</td></tr>
+    <tr><td class="time">01:15–01:43</td><td>Mary, Joseph, wise men, narrator</td><td>Shock, panic and jokes as Blobby proudly holds the doll.</td></tr>
+    <tr><td class="time">01:52–02:00</td><td>Mary + Blobby</td><td>Mary gently takes the doll back and places it securely in the manger, leaving Blobby's hands free for the dance.</td></tr>
+    <tr><td class="time">01:45</td><td>🎵 Sound</td><td>Play the opening <em>Mr Blobby</em> excerpt (song 0:00–0:23). Blobby dances gently with the doll until Mary retrieves it.</td></tr>
     <tr><td class="time">02:08</td><td>🎺 Gabriel + Sound</td><td>Two-note signal. Cut song sharply. Blobby freezes.</td></tr>
     <tr><td class="time">02:20</td><td>🎵 Sound</td><td>Start the 90-second dance excerpt from <em>Mr Blobby</em> (1993 Christmas No. 1), approximately 0:40–2:10 of the original video. Cast forms two rows.</td></tr>
     <tr><td class="time">02:36</td><td>All 20</td><td>Begin repeating the 16-count group routine.</td></tr>
@@ -292,13 +317,13 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <details class="scene-script" id="scene-1" data-scene="1" data-time="00:00–00:40" open>
  <summary><span>1 · The Nativity</span><time>00:00–00:40</time></summary>
  <div class="scene-content">
- <p class="stage"><strong>Positions:</strong> Mary and Joseph ready to walk in. Innkeeper to one side. Narrators visible. Gabriel with trumpet. Angels and shepherds waiting to enter. Blobby hidden.</p>
+ <p class="stage"><strong>Positions:</strong> All 20 students wear pink/yellow Blobby-themed Nativity costumes. Baby doll wrapped in manger. Mary, Joseph, narrators, innkeeper and Gabriel ready; spotted angels and shepherds wait to enter. Full-size Blobby hidden at the side entrance.</p>
  <p class="tech">00:00 🎺 Gabriel: play the first four seconds of the <em>Silent Night</em> trumpet phrase. Trumpet safely lowered afterwards.</p>
  <p class="dialogue" data-role="n1"><span class="line-time">00:04</span><strong>NARRATOR 1:</strong> Long ago, in Bethlehem, Mary and Joseph were searching for somewhere to stay.</p>
  <p class="dialogue" data-role="joseph"><span class="line-time">00:11</span><strong>JOSEPH:</strong> Have you got a room?</p>
  <p class="dialogue" data-role="innkeeper"><span class="line-time">00:14</span><strong>INNKEEPER:</strong> Sorry, we're fully booked. There's a stable round the back.</p>
  <p class="dialogue" data-role="mary"><span class="line-time">00:19</span><strong>MARY:</strong> It'll have to do.</p>
- <p class="stage">00:20 Mary and Joseph walk to manger. Angels and shepherds enter. Star gestures towards manger.</p>
+ <p class="stage">00:20 Mary and Joseph walk to the baby doll in the manger. Spotted angels and shepherds enter. The Star gestures towards the manger. Everyone plays the Nativity completely seriously.</p>
  <p class="dialogue" data-role="n2"><span class="line-time">00:25</span><strong>NARRATOR 2:</strong> And that night, something truly extraordinary happened.</p>
  <p class="dialogue" data-role="gabriel"><span class="line-time">00:31</span><strong>GABRIEL:</strong> Fear not! I bring wonderful news!</p>
  <p class="dialogue" data-role="shepherd1"><span class="line-time">00:36</span><strong>SHEPHERD 1:</strong> You could have knocked!</p>
@@ -307,27 +332,28 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <details class="scene-script" id="scene-2" data-scene="2" data-time="00:40–01:05">
  <summary><span>2 · The Wise Men</span><time>00:40–01:05</time></summary>
  <div class="scene-content">
- <p class="stage">00:40 Three wise men enter, each holding their gift. Other shepherds gather. Angels hold the tableau. Star points to manger.</p>
+ <p class="stage">00:40 Three pink-and-yellow-spotted wise men enter with their gifts. Shepherds gather, angels hold a tableau and the Star points to the baby doll.</p>
  <p class="dialogue" data-role="wise1"><span class="line-time">00:44</span><strong>WISE MAN 1:</strong> I bring gold.</p>
  <p class="dialogue" data-role="wise2"><span class="line-time">00:48</span><strong>WISE MAN 2:</strong> I bring frankincense.</p>
  <p class="dialogue" data-role="wise3"><span class="line-time">00:52</span><strong>WISE MAN 3:</strong> I bring myrrh.</p>
  <p class="dialogue" data-role="shepherd2"><span class="line-time">00:56</span><strong>SHEPHERD 2:</strong> Nobody thought to bring nappies?</p>
- <p class="dialogue" data-role="n1"><span class="line-time">00:59</span><strong>NARRATOR 1:</strong> And there, beneath the star, they discovered the most extraordinary sight...</p>
- <p class="tech">01:02 🎺 Gabriel: grand fanfare. Group looks toward manger; short silence.</p>
+ <p class="dialogue" data-role="n1"><span class="line-time">00:59</span><strong>NARRATOR 1:</strong> And there, beneath the star, lay the baby, peacefully asleep in the manger...</p>
+ <p class="tech">01:02 🎺 Gabriel: grand fanfare. Everyone gazes at the baby doll. Short silence, then Blobby enters from the side.</p>
  </div></details>
 
  <details class="scene-script" id="scene-3" data-scene="3" data-time="01:05–01:45">
- <summary><span>3 · Mr Blobby Appears</span><time>01:05–01:45</time></summary>
+ <summary><span>3 · Blobby Meets the Baby</span><time>01:05–01:45</time></summary>
  <div class="scene-content">
- <p class="stage">01:05 Blobby stands up safely from behind the cardboard manger frontage — not from inside a box. This is the first time the audience sees the costume.</p>
- <p class="dialogue" data-role="blobby"><span class="line-time">01:05</span><strong>BLOBBY:</strong> BLOBBY! BLOBBY! BLOBBY!</p>
- <p class="tech">🎺 Gabriel: one intentionally discordant note. All students freeze, then gasp or step back.</p>
- <p class="dialogue" data-role="joseph"><span class="line-time">01:13</span><strong>JOSEPH:</strong> MARY! WHAT IS THAT?!</p>
- <p class="dialogue" data-role="mary"><span class="line-time">01:18</span><strong>MARY:</strong> DON'T LOOK AT ME!</p>
- <p class="dialogue" data-role="wise1"><span class="line-time">01:24</span><strong>WISE MAN 1:</strong> I think we've come to the wrong stable.</p>
- <p class="dialogue" data-role="wise2"><span class="line-time">01:30</span><strong>WISE MAN 2:</strong> Can we get the gold back?</p>
- <p class="stage">01:34 Blobby waves and approaches Joseph slowly; Joseph hides behind the shepherds. Angels recoil; Star points at Blobby.</p>
- <p class="dialogue" data-role="n2"><span class="line-time">01:37</span><strong>NARRATOR 2:</strong> This was not quite how the story was supposed to go.</p>
+ <p class="stage">01:05 The full-size Mr Blobby waddles on from the <strong>side entrance</strong>. Everybody else is already wearing Blobby-themed Nativity outfits. Blobby sees the doll in the manger, pauses and stares.</p>
+ <p class="stage">01:10 Blobby gently lifts the lightweight doll and proudly cradles it, turning towards the audience.</p>
+ <p class="dialogue" data-role="blobby"><span class="line-time">01:12</span><strong>BLOBBY:</strong> BLOBBY! BLOBBY! BLOBBY!</p>
+ <p class="tech">01:12 🎺 Gabriel: one deliberately terrible trumpet note as the doll is lifted. Everyone freezes, then recoils theatrically.</p>
+ <p class="dialogue" data-role="joseph"><span class="line-time">01:17</span><strong>JOSEPH:</strong> EXCUSE ME! PUT THE BABY BACK!</p>
+ <p class="dialogue" data-role="mary"><span class="line-time">01:22</span><strong>MARY:</strong> HE IS NOT THE BABYSITTER!</p>
+ <p class="dialogue" data-role="wise1"><span class="line-time">01:27</span><strong>WISE MAN 1:</strong> I think we've come to the wrong stable.</p>
+ <p class="dialogue" data-role="wise2"><span class="line-time">01:33</span><strong>WISE MAN 2:</strong> Can we get the gold back?</p>
+ <p class="stage">01:37 Blobby gently rocks the doll, looking delighted. Joseph looks appalled, shepherds hide and angels gasp.</p>
+ <p class="dialogue" data-role="n2"><span class="line-time">01:39</span><strong>NARRATOR 2:</strong> Things had taken a very unexpected turn.</p>
  <p class="dialogue" data-role="blobby"><span class="line-time">01:43</span><strong>BLOBBY:</strong> BLOBBY!</p>
  </div></details>
 
@@ -335,7 +361,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
  <summary><span>4 · Blobby Chaos</span><time>01:45–02:20</time></summary>
  <div class="scene-content">
  <p class="tech">01:45 🎵 Sound: play the opening 0:00–0:23 of <em>Mr Blobby</em> (1993). This is the comedy solo clip, not the later group-dance excerpt.</p>
- <p class="stage">Blobby dances terribly. Angels recoil dramatically, shepherds attempt to restore order, wise men shuffle backwards. Nothing involves contact or a fall.</p>
+ <p class="stage">01:45 Blobby begins a gentle, deliberately awful dance while cradling the doll. Angels recoil, shepherds attempt to restore order and wise men retreat. At 01:52 Mary calmly approaches and Blobby hands the doll over. By 02:00 Mary has placed it safely back in the manger. Blobby now has both hands free. No contact, falls, running or throwing the doll.</p>
  <p class="dialogue" data-role="joseph"><span class="line-time">02:03</span><strong>JOSEPH:</strong> Somebody do something!</p>
  <p class="tech">02:08 🎺 Gabriel plays two loud notes; Sound cuts the music instantly; Blobby freezes.</p>
  <p class="dialogue" data-role="n1"><span class="line-time">02:11</span><strong>NARRATOR 1:</strong> Finally, peace returned to Bethlehem.</p>
@@ -403,7 +429,7 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
   <svg class="stage-plan" viewBox="0 0 680 240" role="img" aria-label="Stage plan: two rows of ten students behind the teacher as Mr Blobby. Audience is at the front.">
     <rect x="1" y="1" width="678" height="238" rx="16" fill="#ffffff07" stroke="#8ab69d"/>
     <rect x="229" y="10" width="222" height="33" rx="7" fill="#ffffff15"/>
-    <text x="340" y="31" text-anchor="middle" font-size="16" fill="#f8f4e6">Manger / back of stage</text>
+    <text x="340" y="31" text-anchor="middle" font-size="16" fill="#f8f4e6">Manger + baby doll</text>
     <g fill="#8be1bc" stroke="#214f3f" stroke-width="2">
       <circle cx="67" cy="86" r="17"/><circle cx="127" cy="86" r="17"/><circle cx="187" cy="86" r="17"/><circle cx="247" cy="86" r="17"/><circle cx="307" cy="86" r="17"/><circle cx="367" cy="86" r="17"/><circle cx="427" cy="86" r="17"/><circle cx="487" cy="86" r="17"/><circle cx="547" cy="86" r="17"/><circle cx="607" cy="86" r="17"/>
       <circle cx="67" cy="136" r="17"/><circle cx="127" cy="136" r="17"/><circle cx="187" cy="136" r="17"/><circle cx="247" cy="136" r="17"/><circle cx="307" cy="136" r="17"/><circle cx="367" cy="136" r="17"/><circle cx="427" cy="136" r="17"/><circle cx="487" cy="136" r="17"/><circle cx="547" cy="136" r="17"/><circle cx="607" cy="136" r="17"/>
@@ -428,19 +454,19 @@ h1{font-size:32pt;margin:5px 0}h2{font-size:20pt;margin:10px 0}h3{font-size:12pt
    </div>
    <div class="panel">
     <h3>🎭 Costumes and props</h3>
-    <p>Manger frontage or screen to conceal Blobby, blanket, three gifts, shepherd staffs, simple halos, Bethlehem star, traditional Nativity costumes and Mr Blobby costume.</p>
-    <p><strong>Safety:</strong> Blobby must have room to enter safely and clear sightlines; no falls or collisions. Keep the trumpet in a safe place while dancing.</p>
-    <p class="muted">We are parodying a school performance going wrong — the joke is the surprise character and the chaos.</p>
+    <p>Lightweight baby doll and blanket in the manger, three gifts, staffs, halos, Bethlehem star, <strong>all 20 pink/yellow Blobby-themed Nativity outfits</strong>, full Mr Blobby costume and a clear side entrance for the tutor.</p>
+    <p><strong>Safety:</strong> Blobby must see clearly, enter from a clear side passage and lift the lightweight doll only at a safe height. Mary takes it back before the dance. No shaking, throwing, falls or collisions. Keep Blobby decorations clear of the trumpet bell opening, valves, slides and mouthpiece; set the trumpet down safely before dancing.</p>
+    <p class="muted">We are parodying a school Nativity going wrong — the joke is Blobby proudly adopting the doll and the chaos that follows.</p>
    </div>
  </div>
  <h3 style="margin-top:24px">Before the show</h3>
  <div class="checklist">
    <label><input type="checkbox">Everyone knows their allocated part and entrances</label>
    <label><input type="checkbox">The trumpet player has practised all five signals</label>
-   <label><input type="checkbox">Props and stage layout are organised</label>
+   <label><input type="checkbox">Baby doll, manger, side entrance and all Blobby-themed outfits are ready</label>
    <label><input type="checkbox">The music clips have been prepared and tested</label>
    <label><input type="checkbox">All 20 can do the 16-count dance</label>
-   <label><input type="checkbox">Mr Blobby costume reveal is safe and hidden</label>
+   <label><input type="checkbox">Mr Blobby entrance and gentle baby-doll handover are safe</label>
    <label><input type="checkbox">Someone is operating the music</label>
    <label><input type="checkbox">We can perform it in four minutes!</label>
  </div>
