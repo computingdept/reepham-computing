@@ -2462,3 +2462,69 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     border-bottom-color:var(--green);
   }
 }
+
+
+/* LEARNER-FIRST TV TYPOGRAPHY · 2026-11-05
+   Rebalance the SHARED classroom template, not individual lessons:
+   the response/question on the RHS of I Do, We Do and New Learning is
+   at least as legible as the supporting reference on the LHS.
+   Mathematical prompts get a larger size than long code listings.
+   Phone/tablet and the existing navigation/reveal behaviour are unchanged. */
+@media (min-width:901px) and (min-height:500px){
+  /* Teaching explanation / guided step: the text pupils must read, not
+     the small phase tag, progress label or resource metadata. */
+  body:not(.answer-page) #new-learning .nl-explanation .nl-stage :is(p,li),
+  body:not(.answer-page) #i-do .ido-method .ido-step :is(p,li),
+  body:not(.answer-page) #we-do .wedo-practice .wedo-step :is(p,li),
+  body:not(.answer-page) #we-do .wedo-question .question-text,
+  body:not(.answer-page) #we-do .wedo-response :is(p,li){
+    font-size:clamp(29px,2.05vw,35px)!important;
+    line-height:1.29;
+  }
+  /* A pupil's question in You Do must remain prominent even when
+     J277's later subject-specific polish has smaller font declarations. */
+  body:not(.answer-page) #you-do .youdo-rolling .exam-card .question-text,
+  body:not(.answer-page) #you-do .youdo-rolling .exam-card .question-text :is(p,li){
+    font-size:clamp(28px,1.95vw,34px)!important;
+    line-height:1.31;
+  }
+  /* Mathematical expressions are response targets, not small code captions.
+     :not(:has(code)) keeps long program listings at the code-text scale. */
+  body:not(.answer-page) #we-do .wedo-practice .wedo-step > pre.arithmetic:not(:has(code)),
+  body:not(.answer-page) #i-do .ido-method .ido-step > pre.arithmetic:not(:has(code)),
+  body:not(.answer-page) #we-do .wedo-practice .wedo-step > .arithmetic:not(pre),
+  body:not(.answer-page) #i-do .ido-method .ido-step > .arithmetic:not(pre),
+  body:not(.answer-page) #new-learning .nl-explanation .nl-stage > pre.arithmetic:not(:has(code)){
+    font-size:clamp(32px,2.3vw,40px)!important;
+    line-height:1.28;
+    white-space:pre-wrap;
+    overflow-wrap:normal;
+    overflow-x:auto;
+  }
+  /* Real code often has multiple lines. Preserve indentation and allow
+     horizontal inspection rather than making the entire panel tiny. */
+  body:not(.answer-page) #i-do .ido-method .ido-step pre:has(code),
+  body:not(.answer-page) #we-do .wedo-practice .wedo-step pre:has(code),
+  body:not(.answer-page) #you-do .exam-card .question-text pre:has(code),
+  body:not(.answer-page) #new-learning .nl-explanation .nl-stage pre:has(code){
+    font-size:clamp(23px,1.53vw,29px)!important;
+    line-height:1.32;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    overflow-x:auto;
+  }
+  /* Alternative shared KS3 pilot structure: sometimes the prompt is on
+     the LEFT and the revealed response/model is on the RIGHT. Both matter. */
+  body:not(.answer-page) :is(#i-do,#we-do) .ks3-lesson-split .prompt-panel > p:not(.ks3-cue),
+  body:not(.answer-page) :is(#i-do,#we-do) .ks3-lesson-split .method-panel .classroom-focus-active :is(p,li),
+  body:not(.answer-page) :is(#i-do,#we-do) .ks3-lesson-split .method-panel .ks3-model-steps .ido-step,
+  body:not(.answer-page) :is(#i-do,#we-do) .ks3-lesson-split .method-panel .ks3-model-steps .wedo-step{
+    font-size:clamp(28px,1.95vw,34px)!important;
+    line-height:1.31;
+  }
+  /* Don't trade visibility for clipping on shorter TV resolutions. */
+  body:not(.answer-page) :is(#i-do,#we-do) :is(.ido-method,.wedo-practice){
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+}
