@@ -1,263 +1,247 @@
 {
   "019": {
-    "t": "CPU Performance",
-    "s": "1.1.2",
+    "t": "Sequence, Input and Output",
+    "s": "2.2.1",
+    "vis": "diagram-spec",
+    "visualAuditV3": true,
     "o": [
-      "Identify clock speed, cache size and number of cores as the three CPU performance factors.",
-      "Explain how changing each factor can affect CPU performance.",
-      "Compare two CPUs using evidence from their specifications."
-    ],
-    "refs": [
-      "L018 · last lesson",
-      "L016 · CPU components",
-      "L015 · units",
-      "L018 / L010 · image size and compression"
-    ],
-    "r": [
-      [
-        "What is stored by the Program Counter (PC), and what is held in the Memory Data Register (MDR)?",
-        "PC: address of the next instruction to be fetched. MDR: the data or instruction currently being transferred to/from memory. Both are registers."
-      ],
-      [
-        "Identify one job of the ALU and one job of the Control Unit.",
-        "ALU: arithmetic and logical operations. Control Unit: decodes instructions and coordinates/controls CPU activity."
-      ],
-      [
-        "Convert 4 KB to bytes using the decimal convention 1 KB = 1,000 bytes.",
-        "4 × 1,000 = 4,000 bytes. Include the unit."
-      ],
-      [
-        "A 120 × 80 pixel image uses 8-bit colour depth. Calculate the uncompressed pixel-data size in bytes. Why should a source-code file use lossless rather than lossy compression?",
-        "120 × 80 = 9,600 pixels. × 8 = 76,800 bits. ÷ 8 = 9,600 bytes. Lossless is required to restore the original source code exactly."
-      ]
+      "Write and run a short program whose instructions execute in sequence.",
+      "Use input() to store a response in a named variable.",
+      "Use print() to display stored values and trace the exact output."
     ],
     "c": [
       [
-        "Clock speed",
-        "Clock speed is measured in hertz (Hz). A higher clock speed means the CPU carries out more clock cycles each second, so it can generally process instructions faster."
+        "Sequence",
+        "A program follows instructions in order. In a club-name program, obtain the input before attempting to display the stored value."
       ],
       [
-        "Cache size",
-        "Cache is small, fast memory used to store frequently used data and instructions. A larger cache can reduce the need to fetch them from slower main memory (RAM), improving performance."
+        "Input",
+        "input(\"Club name?\") asks the user for text. Store the answer with club = input(\"Club name?\"). The question itself is not the stored answer."
       ],
       [
-        "Number of cores",
-        "A core processes instructions. A processor with more cores can process more tasks at the same time, which can improve performance when several programs are running."
+        "Output",
+        "print(club) displays the value held in club. print(\"club\") instead prints the literal word club; quotation marks change the meaning."
       ],
       [
-        "Compare before you decide",
-        "Look at all three factors: clock speed, cache size and number of cores. For example, one CPU may have a higher clock speed while another has more cores and a larger cache. Explain which factors matter for the stated task."
+        "Predict → Write → Test → Improve",
+        "Predict the output using a sample response, write the short program, test two inputs in the ERL interpreter, then check and improve any mistakes."
       ]
     ],
+    "visuals": [
+      {
+        "title": "Sequence · ordered instructions",
+        "layout": "sequence",
+        "boxes": [
+          "Start",
+          "Input",
+          "Output"
+        ],
+        "foot": "Execute instructions from first to last"
+      },
+      {
+        "title": "Input · obtain data",
+        "layout": "sequence",
+        "boxes": [
+          "Question",
+          "User types",
+          "Store value"
+        ],
+        "foot": "input() returns the text the user enters"
+      },
+      {
+        "title": "Output · display data",
+        "layout": "sequence",
+        "boxes": [
+          "Stored value",
+          "print(variable)",
+          "Screen"
+        ],
+        "foot": "A variable is not the same as quoted text"
+      },
+      {
+        "title": "Develop and test",
+        "layout": "sequence",
+        "boxes": [
+          "Predict",
+          "Write",
+          "Test"
+        ],
+        "foot": "Improve your program after testing"
+      }
+    ],
+    "memoryCue": "Ask → store → display. Input must happen before printing the value.",
     "m": {
-      "q": "Using the CPU A and CPU B specifications shown, explain TWO reasons CPU B may be better for running several programs at the same time. [4 marks]",
+      "q": "Write a program to ask for a club name and display it.",
       "st": [
-        "Read the specifications shown: CPU A has the higher clock speed. CPU B has more cores and a larger cache. The task involves running several programs.",
-        "First reason: CPU B has four cores rather than two [1]. More cores can process more tasks at the same time, improving multitasking [1].",
-        "Second reason: CPU B has 8 MB cache rather than 4 MB [1]. More frequently used data and instructions can be accessed quickly, reducing slower RAM access [1].",
-        "Check the command word 'explain': each reason must link a CPU characteristic to an improvement. CPU A's higher clock speed is a valid comparison, but we cannot guarantee which CPU is faster in every task."
+        "First obtain the club name, then display it. The input instruction must run before the output.",
+        "input() asks a question. The text entered is stored in the variable club.",
+        "print(club) uses the value already stored, rather than printing the word club.",
+        "If the learner enters Chess, the final output is Chess. Change the input and check it still works."
       ]
     },
     "w": [
       [
-        "Compare CPU C and CPU D",
-        "CPU C: 3.6 GHz, 2 cores, 4 MB cache. CPU D: 3.0 GHz, 6 cores, 12 MB cache. A pupil runs several programs at the same time. Explain TWO reasons why CPU D may be a better choice. [4 marks]",
-        "CPU D has six cores rather than two [1], so it may process more tasks at the same time [1]. CPU D has 12 MB cache rather than 4 MB [1], allowing more frequently used data and instructions to be accessed quickly rather than from slower RAM [1]. CPU C has the higher clock speed; neither is guaranteed to be faster for every task."
+        "A sports club asks for a favourite sport and then prints it. Complete both missing lines.",
+        "sport = input(\"Favourite sport?\")\nprint(sport)"
       ],
       [
-        "Clock speed",
-        "CPU E runs at 3 GHz and CPU F at 2 GHz. Identify which has the higher clock speed and explain one possible performance advantage. [2 marks]",
-        "CPU E has the higher clock speed, 3 GHz rather than 2 GHz [1]. More clock cycles happen each second, so it may process instructions more quickly [1]."
+        "A library asks for a book title, then displays it. Write both lines with only the variable name supplied.",
+        "book = input(\"Book title?\")\nprint(book)"
       ],
       [
-        "Cache size",
-        "A processor is upgraded from 2 MB of cache to 8 MB. Explain how this could improve CPU performance. [2 marks]",
-        "The larger cache can store more frequently used data and instructions [1], reducing slower accesses to main memory (RAM) and potentially improving performance [1]."
+        "Write a complete program with NO starter: ask for a team name and a house colour, then display both on separate lines.",
+        "team = input(\"Team?\")\ncolour = input(\"House colour?\")\nprint(team)\nprint(colour)"
       ]
     ],
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "Ask for a club name and display the entered name.",
+        "scaffold": "club = ______(\"Club name?\")\n______(club)",
+        "steps": [
+          {
+            "title": "Plan the sequence",
+            "explanation": "First obtain the club name, then display it. The input instruction must run before the output.",
+            "code": "// Input comes before output"
+          },
+          {
+            "title": "Read the input",
+            "explanation": "input() asks a question. The text entered is stored in the variable club.",
+            "code": "club = input(\"Club name?\")"
+          },
+          {
+            "title": "Display the stored value",
+            "explanation": "print(club) uses the value already stored, rather than printing the word club.",
+            "code": "club = input(\"Club name?\")\nprint(club)"
+          },
+          {
+            "title": "Trace and test",
+            "explanation": "If the learner enters Chess, the final output is Chess. Change the input and check it still works.",
+            "code": "club = input(\"Club name?\")\nprint(club)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "A sports club asks for a favourite sport and then prints it. Complete both missing lines.",
+          "scaffold": "sport = ______(\"Favourite sport?\")\n______(sport)",
+          "steps": [
+            {
+              "title": "Identify input and output",
+              "explanation": "An input must be stored before its value can be displayed.",
+              "code": "sport = input(\"Favourite sport?\")"
+            },
+            {
+              "title": "Complete the output",
+              "explanation": "Use the variable sport, without quotation marks. If the input is tennis, the output is tennis.",
+              "code": "sport = input(\"Favourite sport?\")\nprint(sport)"
+            }
+          ]
+        },
+        {
+          "question": "A library asks for a book title, then displays it. Write both lines with only the variable name supplied.",
+          "scaffold": "book = ______\n______",
+          "steps": [
+            {
+              "title": "Construct the input",
+              "explanation": "Use input() with an appropriate question and store the response in book.",
+              "code": "book = input(\"Book title?\")"
+            },
+            {
+              "title": "Check the sequence",
+              "explanation": "Printing the variable displays the learner's entry. A quoted word would print literal text.",
+              "code": "book = input(\"Book title?\")\nprint(book)"
+            }
+          ]
+        },
+        {
+          "question": "Write a complete program with NO starter: ask for a team name and a house colour, then display both on separate lines.",
+          "scaffold": "// Input 1\n// Input 2\n// Output 1\n// Output 2",
+          "steps": [
+            {
+              "title": "Think first",
+              "explanation": "You need two stored inputs and two print instructions. Write the entire program before revealing.",
+              "code": "team = input(\"Team?\")\ncolour = input(\"House colour?\")"
+            },
+            {
+              "title": "Reveal the complete answer",
+              "explanation": "Each variable is printed after it is assigned. Test with Owls and Blue.",
+              "code": "team = input(\"Team?\")\ncolour = input(\"House colour?\")\nprint(team)\nprint(colour)"
+            }
+          ]
+        }
+      ]
+    },
     "k": {
-      "q": "Code First · Use different CPU values from I Do and We Do. Predict the output, change a value, then extend this OCR Exam Reference Language selection program.",
-      "code": "clockJ = 2.6\nclockK = 3.4\nif clockJ > clockK then\n    print(\"CPU J has a higher clock speed\")\nelse\n    print(\"CPU K has an equal or higher clock speed\")\nendif",
-      "p": [
-        "Predict the exact output and identify which processor has the higher clock speed.",
-        "Change clockJ to 3.8. Predict the new output and test it.",
-        "Extend the program by adding coresJ = 6 and coresK = 4, then write a second IF statement to identify which CPU has more cores."
-      ],
-      "a": "Original program output:\nCPU K has an equal or higher clock speed\n\nAfter changing clockJ to 3.8, the output becomes:\nCPU J has a higher clock speed\n\nComplete extended OCR ERL example:\nclockJ = 3.8\nclockK = 3.4\ncoresJ = 6\ncoresK = 4\nif clockJ > clockK then\n    print(\"CPU J has a higher clock speed\")\nelse\n    print(\"CPU K has an equal or higher clock speed\")\nendif\nif coresJ > coresK then\n    print(\"CPU J has more cores\")\nelse\n    print(\"CPU K has at least as many cores\")\nendif\n\nExpected outputs:\nCPU J has a higher clock speed\nCPU J has more cores\n\nThis compares specifications; it does not measure actual CPU performance."
+      "q": "A variable has been assigned a value. Predict what is displayed, then change and improve the code.",
+      "code": "club = \"Chess\"\nprint(club)",
+      "p": [],
+      "a": "Chess. Changing club = \"Drama\" prints Drama. Add print(\"Ready\") before print(club) for two lines of output."
     },
     "e": [
       [
-        "State the three characteristics of a CPU that affect performance. [3 marks]\n\nSource: Original J277-style question based on OCR J277 1.1.2.",
-        "Clock speed [1]; cache size [1]; number of CPU cores [1]."
+        "WRITE CODE [3 marks]\nA school club wants to ask for a pupil’s chosen team and then display the team name. Write TWO lines of OCR ERL to do this. Use the variable team.",
+        "team = input(\"Team?\") [2: correct input() and assignment]\nprint(team) [1]\nA valid alternative prompt is acceptable."
       ],
       [
-        "A college chooses a CPU for computers running several applications.\nCPU G: 3.9 GHz, 2 cores, 6 MB cache.\nCPU H: 3.1 GHz, 8 cores, 16 MB cache.\nExplain TWO reasons why CPU H could be better for this use. [4 marks]\n\nSource: Original J277-style application question based on OCR J277 1.1.2.",
-        "CPU H has eight cores rather than two [1], so it can process more tasks at the same time [1]. CPU H has 16 MB cache rather than 6 MB [1], so more frequently used instructions/data can be accessed quickly, reducing slower RAM accesses [1]. CPU G has the higher clock speed; the best choice depends on the workload. Original practice marking points, not an official OCR mark scheme."
+        "TRACE CODE [2 marks]\nThe program is:\nprint(\"Welcome\")\nprint(\"Goodbye\")\nState the two lines of output in the correct order.",
+        "Welcome [1]\nGoodbye [1]\nThe instructions run in sequence, top to bottom."
       ],
       [
-        "Explain how clock speed, cache size and the number of cores each affect CPU performance. [6 marks]\n\nSource: Adapted from your Paper 1 revision booklet, section 1.1.2.",
-        "Clock speed: a higher clock speed provides more clock cycles each second [1], allowing the CPU to process instructions faster [1]. Cache size: a larger cache can store more frequently used data/instructions [1], reducing access to slower main memory [1]. Number of cores: more cores can process more tasks at the same time [1], improving multitasking/performance for tasks that can run in parallel [1]. This point-by-point allocation is a teaching model; assess extended answers against the relevant question criteria."
+        "DEBUG CODE [4 marks]\nA student writes:\nprint(team)\nteam = input(\"Team?\")\nExplain why the program is incorrect and rewrite the two lines in a correct order.",
+        "The program tries to use team before it has been assigned a value [1]. Input must be obtained before output [1].\nteam = input(\"Team?\") [1]\nprint(team) [1]."
       ]
     ],
     "v": [
       [
-        "Clock speed",
-        "The number of clock cycles the CPU carries out per second, measured in hertz."
+        "Sequence",
+        "Instructions carried out in their written order."
       ],
       [
-        "Hertz (Hz)",
-        "Unit of clock speed: one clock cycle per second."
+        "Input",
+        "Data entered into a program, for example through input()."
       ],
       [
-        "Cache",
-        "Small, fast memory that stores frequently used data and instructions for the CPU."
+        "Output",
+        "Information shown by a program, for example using print()."
       ],
       [
-        "CPU core",
-        "Part of a CPU that processes instructions."
+        "Variable",
+        "A named place to store a value that can be used later."
       ],
       [
-        "Parallel processing",
-        "Processing more than one task at the same time using multiple CPU cores."
+        "Trace",
+        "Following executed instructions to work out values and output."
       ]
     ],
     "x": [
-      "A processor with more cores can improve performance when several programs are running.",
-      true
+      "In a program that asks for a name, print(name) must come before name = input(\"Name?\").",
+      false,
+      "The variable must be assigned before its value is printed."
     ],
-    "vis": "cpu-performance",
-    "wSteps": [
+    "r": [
       [
-        [
-          "Your turn · start together",
-          "Look at the two processors. Which has more cores? Which has more cache? Which has the higher clock speed? Write the two differences that might help when several programs are open."
-        ],
-        [
-          "Step 1 · read the specifications",
-          "CPU D has 6 cores instead of 2 and 12 MB cache instead of 4 MB. CPU C has the higher clock speed (3.6 GHz versus 3.0 GHz). Choose the two features relevant to running several programs."
-        ],
-        [
-          "Step 2 · explain the cores",
-          "CPU D has SIX cores rather than two [1]. It can process more tasks at the same time, potentially improving multitasking [1]."
-        ],
-        [
-          "Step 3 · explain the cache",
-          "CPU D has 12 MB cache rather than 4 MB [1]. More frequently used instructions and data may be accessed quickly, reducing slower RAM access [1]."
-        ],
-        [
-          "Step 4 · check the four marks",
-          "Two reasons, each with an explained link to performance: cores → more simultaneous tasks [2]; cache → faster access to frequently used data/instructions [2]. CPU C has the higher clock speed, so the outcome depends on the task."
-        ]
+        "Name one reason to test an algorithm after writing it.",
+        "Testing checks whether it behaves correctly with different inputs."
       ],
       [
-        [
-          "Your turn · compare",
-          "Identify the processor with the higher clock speed. On your whiteboard write one reason why that could affect performance."
-        ],
-        [
-          "Step 1 · find the evidence",
-          "CPU E = 3 GHz and CPU F = 2 GHz. CPU E has the higher clock speed [1]."
-        ],
-        [
-          "Step 2 · explain the effect",
-          "A higher clock speed gives more clock cycles each second, so CPU E may process instructions more quickly [1]."
-        ],
-        [
-          "Step 3 · check both marks",
-          "Two marks: identify CPU E as faster in clock speed [1], and explain the link from higher clock speed to processing [1]."
-        ]
+        "Which flowchart symbol represents a decision?",
+        "A diamond."
       ],
       [
-        [
-          "Your turn · focus on cache",
-          "What has changed when cache increases from 2 MB to 8 MB? Write one benefit of storing frequently accessed data near the CPU."
-        ],
-        [
-          "Step 1 · identify the change",
-          "The cache has increased from 2 MB to 8 MB. That means it can hold more frequently used data and instructions [1]."
-        ],
-        [
-          "Step 2 · explain the effect",
-          "The CPU may fetch these from fast cache rather than slower RAM more often, improving performance [1]."
-        ],
-        [
-          "Step 3 · check both marks",
-          "Two marks: more frequently used instructions/data fit in cache [1], reducing slower main-memory access [1]."
-        ]
+        "What is the purpose of output in a program?",
+        "To display or communicate a result."
+      ],
+      [
+        "total = 4; total = total + 6; print(total). What is printed?",
+        "10; the second assignment updates total."
       ]
     ],
-    "visualAuditV2": true,
-    "memoryCue": "Clock speed = clock cycles each second; cache = faster access to frequently used data; cores = more tasks can run simultaneously.",
-    "retrievalVisuals": [
-      {
-        "title": "CPU registers · retrieve the contents",
-        "layout": "cpu-registers",
-        "boxes": [
-          "PC",
-          "MDR"
-        ],
-        "foot": "What does each register hold?"
-      },
-      null,
-      null,
-      {
-        "title": "Uncompressed bitmap · calculate the size",
-        "layout": "bitmap",
-        "boxes": [
-          "120 pixels wide",
-          "80 pixels high",
-          "8 bits/pixel"
-        ],
-        "foot": "Find pixels, bits, then bytes."
-      }
-    ],
-    "examVisuals": [
-      null,
-      {
-        "title": "Compare CPU G and CPU H",
-        "layout": "cpu-comparison",
-        "boxes": [
-          "CPU G",
-          "3.9 GHz",
-          "2 cores",
-          "6 MB cache",
-          "CPU H",
-          "3.1 GHz",
-          "8 cores",
-          "16 MB cache"
-        ],
-        "foot": "Two linked reasons for the workload."
-      },
-      {
-        "title": "CPU performance · three blank factors",
-        "layout": "cpu-factors-blank",
-        "boxes": [
-          "CPU",
-          "?",
-          "?",
-          "?"
-        ],
-        "foot": "Name three factors and explain each effect."
-      }
-    ],
-    "wVisuals": [
-      "cpu-we-compare",
-      "cpu-speed-ef",
-      "cpu-cache-upgrade"
-    ],
-    "priorExam": {
-      "from": "017",
-      "q": "State the roles of the Memory Address Register (MAR) and the Accumulator (ACC) during processing. [2 marks]",
-      "a": "MAR holds the address of the memory location being accessed [1]. ACC stores the results of calculations performed by the ALU [1].",
-      "visual": {
-        "title": "Autumn 1 · CPU register roles",
-        "layout": "compare",
-        "boxes": [
-          "MAR · ?",
-          "ACC · ?"
-        ],
-        "foot": "Retrieve registers taught before Lesson 019."
-      }
-    }
+    "refs": [
+      "L018",
+      "L013",
+      "L016",
+      "L016"
+    ]
   }
 }
