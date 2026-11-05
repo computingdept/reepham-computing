@@ -2528,3 +2528,65 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     overflow-x:hidden;
   }
 }
+
+
+/* CENTRED CLASSROOM HEADER IDENTITY · 2026-11-05
+   Classroom TV only. Align lesson badge, title, timer and the single
+   Synergy Assist logo on the same vertical centre as the teaching signals.
+   Reuse existing markup and preserve mobile layout and header height. */
+@media (min-width:901px) and (min-height:500px){
+  body:not(.answer-page) .signal-wrap .signal-meta{
+    align-self:center;
+    min-width:0;
+    margin-left:auto;
+    padding:0 48px 0 0; /* space for the fixed Synergy Assist mark */
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-end;
+    gap:clamp(12px,1.25vw,20px);
+  }
+  body:not(.answer-page) .signal-wrap .signal-phase-time{
+    order:0;
+    align-self:center;
+    flex:0 0 auto;
+    margin:0;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  body:not(.answer-page) .signal-wrap .signal-meta .lesson-id-row{
+    order:1;
+    align-self:center;
+    margin:0;
+    width:auto;
+    max-width:none;
+    min-width:0;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-end;
+    gap:11px;
+  }
+  body:not(.answer-page) .signal-wrap .signal-meta .lesson-id-badge{
+    width:79px;
+    flex:0 0 79px;
+  }
+  body:not(.answer-page) .signal-wrap .signal-meta .lesson-id-row .lesson-label,
+  body:not(.answer-page) .signal-wrap .signal-meta > .lesson-label{
+    margin:0;
+    min-width:0;
+    text-align:right;
+    line-height:1.22;
+  }
+  /* The logo's 48px reserve is on the group, so don't double-pad its label. */
+  body.synergy-corners-enabled:not(.answer-page) .signal-wrap .signal-meta .lesson-id-row .lesson-label,
+  body.synergy-corners-enabled:not(.answer-page) .signal-wrap .signal-meta > .lesson-label{
+    padding-right:0;
+  }
+  /* Keep the one site-wide logo visually centred across 66px and 58px
+     teaching header variants. No duplicate logo is created. */
+  body.synergy-corners-enabled:not(.answer-page) .navwrap > .synergy-corner-mark{
+    top:calc(var(--signal-h)/2);
+    transform:translateY(-50%);
+  }
+}
