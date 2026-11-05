@@ -1,45 +1,45 @@
 {
   "schema_version": 1,
   "id": "j277-020",
-  "title": "Embedded Systems",
+  "title": "Variables, Assignment and Data Types",
   "year": 10,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "A short, independent catch-up: learn the essential knowledge, practise and review answers.",
+  "intro": "Independent catch-up for the Autumn 2 coding sequence. Work through the model, test ideas and self-mark at the end.",
   "stages": [
     {
       "id": "remember",
       "label": "Remember",
       "minutes": 1,
       "sign": "DoNow_CodingIcon.png",
-      "lead": "Retrieve two previously taught ideas.",
+      "lead": "Recall previously taught ideas.",
       "blocks": [],
       "questions": [
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What makes an algorithm clear?",
+          "prompt": "If club = \"Chess\", what does print(club) display?",
           "options": [
-            "Steps in any order",
-            "Missing conditions",
-            "Instructions that need guessing",
-            "Precise steps in order"
+            "Chess",
+            "club",
+            "Nothing",
+            "input"
           ],
-          "answer": "Precise steps in order",
-          "feedback": "D — Precise steps in order"
+          "answer": "Chess",
+          "feedback": "A variable is printed without quotes."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "Which characteristic is typical of an embedded system?",
+          "prompt": "Which is the correct order?",
           "options": [
-            "It performs a dedicated function inside a larger device",
-            "It must run every desktop application",
-            "It always has a full-size keyboard",
-            "It stores data only in the cloud"
+            "Print an unassigned variable, then input",
+            "Input the value, then print it",
+            "Print before running any code",
+            "Delete the variable, then print"
           ],
-          "answer": "It performs a dedicated function inside a larger device",
-          "feedback": "Embedded controllers perform specific jobs within devices."
+          "answer": "Input the value, then print it",
+          "feedback": "Use the input first."
         }
       ]
     },
@@ -48,63 +48,62 @@
       "label": "Learn",
       "minutes": 4,
       "sign": "IDo_CodingIcon.png",
-      "lead": "Read the explanations, visual and model before answering.",
+      "lead": "Read the teaching points and worked code.",
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Built into a larger device",
-          "text": "An embedded system is a computer built into a larger device to perform a specific function. Unlike a general-purpose PC, it is designed for a particular job, such as controlling an automatic device."
+          "title": "Assignment",
+          "text": "score = 5 stores 5 in score."
         },
         {
           "type": "paragraph",
-          "title": "Input → process → output",
-          "text": "A sensor or switch provides an input. The embedded processor follows stored instructions to make a decision, then controls an output. The output might be a display, motor, light or heater."
+          "title": "Update",
+          "text": "score = score + 2 uses the old value and stores 7."
         },
         {
           "type": "paragraph",
-          "title": "Software and memory",
-          "text": "The dedicated control program is commonly stored in non-volatile memory (such as ROM/flash) so it remains available when power is off. RAM holds temporary data while the system runs."
+          "title": "Data types",
+          "text": "12 is an integer, 2.5 is real, \"Owls\" is a string, true is Boolean."
         },
         {
           "type": "paragraph",
-          "title": "Characteristics depend on the job",
-          "text": "Embedded systems often have limited user interfaces and are designed to use little power. Some must respond within a fixed time (real-time operation), for example where a delay would affect safety. Not every device has every feature."
+          "title": "Casting",
+          "text": "int(input(\"Age?\")) converts numeric text into a number."
         },
         {
           "type": "diagram",
-          "title": "Visual model",
+          "title": "Learning sequence",
           "layout": "flow",
           "items": [
             [
-              "Input",
-              "Temperature or sensor"
+              "Start",
+              "Assign integer"
             ],
             [
-              "Processing",
-              "Dedicated controller"
+              "Change",
+              "Calculate update"
             ],
             [
-              "Output",
-              "Heater or motor"
+              "Show",
+              "Print result"
             ]
           ],
-          "caption": "Use these linked concepts to explain your answer."
+          "caption": "An updated assignment replaces the previous value."
         },
         {
           "type": "example",
-          "title": "Worked example · A washing machine uses a processor to control its wash cycle. Explain why it is an embedded system, identify a sensor input, and name an output. [4 marks]",
-          "text": "Identify the machine's job: controlling the washing cycle. The controller is part of a larger washing machine, not a general-purpose computer. It is a computer built into another device [1] designed for the specific job of controlling the wash cycle [1]. A water-level sensor sends information to the controller [1]. Other relevant sensors could include temperature sensors. The controller may switch the drum motor on/off as an output [1]. Total: 4 clear marking points — larger device, dedicated purpose, input, output."
+          "title": "Worked program",
+          "text": "books = 8\nbooks = books - 3\nprint(books)\nThe output is 5."
         },
         {
           "type": "facts",
           "items": [
-            "Embedded system — A computer built into a larger device to perform a specific function.",
-            "Dedicated function — A particular task for which a system has been designed.",
-            "Sensor — An input device that detects or measures a physical condition.",
-            "Actuator — An output device that produces a physical action, such as switching or moving a mechanism.",
-            "Real-time operation — A system responds to inputs within a required time limit.",
-            "Non-volatile memory — Memory that keeps stored information even when power is switched off.",
-            "User interface — The controls or display through which a person interacts with a system."
+            "Variable — A named storage location for a value.",
+            "Assignment — Storing or replacing a variable's value using = in OCR ERL.",
+            "Integer — A whole-number data type such as 12.",
+            "Real — A numeric data type that can represent values with a fractional part, such as 2.5.",
+            "String — Text stored in quotation marks, such as \"Owls\".",
+            "Boolean — A value that is true or false."
           ]
         }
       ],
@@ -112,41 +111,38 @@
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which key term means: A computer built into a larger device to perform a specific function.",
+          "prompt": "Choose the term matching this definition: A named storage location for a value.",
           "options": [
-            "Embedded system",
-            "Dedicated function",
-            "Sensor",
-            "Actuator"
+            "Variable",
+            "Assignment",
+            "Integer"
           ],
-          "answer": "Embedded system",
-          "feedback": "Embedded system: A computer built into a larger device to perform a specific function."
+          "answer": "Variable",
+          "feedback": "A named storage location for a value."
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which key term means: A particular task for which a system has been designed.",
+          "prompt": "Choose the term matching this definition: Storing or replacing a variable's value using = in OCR ERL.",
           "options": [
-            "Dedicated function",
-            "Sensor",
-            "Actuator",
-            "Embedded system"
+            "Assignment",
+            "Variable",
+            "Integer"
           ],
-          "answer": "Dedicated function",
-          "feedback": "Dedicated function: A particular task for which a system has been designed."
+          "answer": "Assignment",
+          "feedback": "Storing or replacing a variable's value using = in OCR ERL."
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which key term means: An input device that detects or measures a physical condition.",
+          "prompt": "Choose the term matching this definition: A whole-number data type such as 12.",
           "options": [
-            "Sensor",
-            "Actuator",
-            "Embedded system",
-            "Dedicated function"
+            "Integer",
+            "Variable",
+            "Assignment"
           ],
-          "answer": "Sensor",
-          "feedback": "Sensor: An input device that detects or measures a physical condition."
+          "answer": "Integer",
+          "feedback": "A whole-number data type such as 12."
         }
       ]
     },
@@ -155,75 +151,75 @@
       "label": "Practise",
       "minutes": 4,
       "sign": "YouDo_CodingIcon.png",
-      "lead": "Match, order and apply these ideas.",
+      "lead": "Complete these short checks independently.",
       "blocks": [
         {
           "type": "hint",
-          "text": "Read each option carefully and use the worked model."
+          "text": "Use the model, but work out the answer before checking."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "match",
-          "prompt": "Match each term with its definition.",
+          "prompt": "Match the type to an example.",
           "pairs": [
             [
-              "Embedded system",
-              "A computer built into a larger device to perform a specific function."
+              "Integer",
+              "12"
             ],
             [
-              "Dedicated function",
-              "A particular task for which a system has been designed."
+              "Real",
+              "2.5"
             ],
             [
-              "Sensor",
-              "An input device that detects or measures a physical condition."
+              "String",
+              "\"Owls\""
             ]
           ],
-          "feedback": "These key words distinguish the ideas used in this lesson."
+          "feedback": "Whole number, fractional number and quoted text differ."
         },
         {
           "id": "p2",
           "kind": "order",
-          "prompt": "Put these steps in the correct order.",
+          "prompt": "Order the steps for updating a score.",
           "items": [
-            "Control an output such as a motor",
-            "Read a sensor or switch",
-            "Process the input using control instructions"
+            "Display the new value",
+            "Assign the starting value",
+            "Calculate and assign the update"
           ],
           "answer": [
-            "Read a sensor or switch",
-            "Process the input using control instructions",
-            "Control an output such as a motor"
+            "Assign the starting value",
+            "Calculate and assign the update",
+            "Display the new value"
           ],
-          "feedback": "An embedded controller typically follows input–process–output."
+          "feedback": "First store, then update, then print."
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which is a sensor input in a washing machine?",
+          "prompt": "If points = 5 then points = points + 2, what is points?",
           "options": [
-            "Water level measurement",
-            "Motor turning",
-            "A heater warming water",
-            "A display showing time"
+            "7",
+            "5",
+            "2",
+            "3"
           ],
-          "answer": "Water level measurement",
-          "feedback": "The water-level sensor supplies an input to the controller."
+          "answer": "7",
+          "feedback": "5 + 2 = 7 is assigned back to points."
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which is an actuator output?",
+          "prompt": "Which is a string?",
           "options": [
-            "A motor that lifts a barrier",
-            "Temperature reading",
-            "Button press",
-            "A water sensor reading"
+            "\"Owls\"",
+            "12",
+            "2.5",
+            "true"
           ],
-          "answer": "A motor that lifts a barrier",
-          "feedback": "An actuator performs a physical action controlled by the system."
+          "answer": "\"Owls\"",
+          "feedback": "Quotation marks indicate text."
         }
       ]
     },
@@ -232,74 +228,71 @@
       "label": "Apply",
       "minutes": 4,
       "sign": "YouDo_CodingIcon.png",
-      "lead": "Use Code First and write an exam-style response.",
+      "lead": "Try Code First and write a short program.",
       "blocks": [
         {
           "type": "code",
           "title": "Code First · Predict → Write → Test → Improve",
           "lines": [
-            "temperature = 29",
-            "if temperature > 28 then",
-            "    print(\"Ventilation on\")",
-            "else",
-            "    print(\"Ventilation off\")",
-            "endif"
+            "points = 5",
+            "points = points + 2",
+            "print(points)"
           ],
-          "caption": "Predict the exact output for temperature = 29 and explain which condition is tested. Change the temperature to 22 and predict the output before running it. Extend by adding limit = 28. Replace the number in the IF statement with the variable limit. Test at temperature = 28, explaining whether ventilation starts."
+          "caption": "Predict the output. Change 5 to 10 and add another 3 before print()."
         },
         {
           "type": "prompt",
-          "text": "A car-park barrier uses a vehicle sensor and a motor to lift the barrier when authorised. Explain why its controller is an embedded system, and identify an input and an output. [4 marks]"
+          "text": "A school club starts with 6 points and earns 4 more. Write OCR ERL to store, update and display the total."
         }
       ],
       "questions": [
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "At temperature 29 and condition temperature > 28, what prints?",
+          "prompt": "What is the original output for points = 5; points = points + 2; print(points)?",
           "options": [
-            "Ventilation on",
-            "Ventilation off",
-            "Temperature 0",
-            "No output"
+            "7",
+            "5",
+            "2",
+            "10"
           ],
-          "answer": "Ventilation on",
-          "feedback": "29 is greater than 28."
+          "answer": "7",
+          "feedback": "The assignment updates points to 7."
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "After changing temperature to 22, what prints?",
+          "prompt": "After changing the initial points to 10, what prints?",
           "options": [
-            "Ventilation off",
-            "Ventilation on",
-            "22 > 28",
-            "No output"
+            "12",
+            "7",
+            "10",
+            "15"
           ],
-          "answer": "Ventilation off",
-          "feedback": "22 does not exceed 28."
+          "answer": "12",
+          "feedback": "10 + 2 = 12."
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Why is non-volatile storage useful in an embedded controller?",
+          "prompt": "After also adding points = points + 3, what prints?",
           "options": [
-            "It retains the control program without power",
-            "It makes RAM permanent automatically",
-            "It replaces all sensors",
-            "It prevents every fault"
+            "15",
+            "13",
+            "12",
+            "10"
           ],
-          "answer": "It retains the control program without power",
-          "feedback": "Firmware can still be available at the next start."
+          "answer": "15",
+          "feedback": "10 + 2 + 3 = 15."
         }
       ],
       "writing": {
-        "prompt": "A car-park barrier uses a vehicle sensor and a motor to lift the barrier when authorised. Explain why its controller is an embedded system, and identify an input and an output. [4 marks]",
-        "model": "It is a computer built into the wider barrier system [1] for the specific function of controlling entry [1]. Input: a vehicle-detection sensor [1]. Output: controlling the motor to raise/lower the barrier [1]. 'Barrier' alone is not a specific input or output.",
+        "prompt": "A school club starts with 6 points and earns 4 more. Write OCR ERL to store, update and display the total.",
+        "model": "points = 6\npoints = points + 4\nprint(points)",
         "checklist": [
-          "I addressed the command word in the question.",
-          "I used the correct computing vocabulary and reasoning.",
-          "I compared my writing with the model answer and improved it."
+          "I used a variable with an initial value.",
+          "I updated the value rather than replacing it with a fixed answer.",
+          "I checked that 10 is printed."
         ]
       }
     },
@@ -308,29 +301,29 @@
       "label": "Check",
       "minutes": 2,
       "sign": "Questionning_CodingIcon.png",
-      "lead": "Complete the three final checks and review mastery.",
+      "lead": "Complete three final checks.",
       "blocks": [],
       "questions": [
         {
           "id": "c1",
           "kind": "truefalse",
-          "prompt": "A thermostat controller inside a heating system can be an embedded system.",
+          "prompt": "An integer stores a whole number.",
           "answer": "true",
-          "feedback": "It carries out a specific heating-control task."
+          "feedback": "For example, 12."
         },
         {
           "id": "c2",
           "kind": "truefalse",
-          "prompt": "Embedded systems always need a full keyboard and screen.",
+          "prompt": "After count = 5 and count = count + 2, count remains 5.",
           "answer": "false",
-          "feedback": "Many run automatically with simple controls or no full user interface."
+          "feedback": "The updated value is 7."
         },
         {
           "id": "c3",
           "kind": "truefalse",
-          "prompt": "Every embedded system must have a full keyboard and monitor.",
-          "answer": "false",
-          "feedback": "Review the statement against the original lesson's key concepts."
+          "prompt": "A string such as \"Owls\" is quoted text.",
+          "answer": "true",
+          "feedback": "String literals use quotation marks."
         }
       ]
     }
