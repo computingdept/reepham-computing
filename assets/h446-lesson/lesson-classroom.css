@@ -2355,3 +2355,110 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     overflow-y:auto;
   }
 }
+
+
+/* CLASSROOM TEACHER CONTROL ORDER · 2026-11-05
+   Teacher stands left: Home | Previous | Next | contextual next action | phases.
+   Keep phones, portrait student layouts, reveal logic and phase IDs unchanged. */
+.teacher-next-action{display:none}
+@media(min-width:901px) and (min-height:500px){
+  body:not(.answer-page) .navwrap{
+    /* Reserve the lower-right corner for the existing floating Tools control. */
+    padding-right:116px;
+    gap:7px;
+  }
+  body:not(.answer-page) .navwrap .lesson-header-links,
+  body:not(.answer-page) .navwrap > .course-back{
+    order:0;
+  }
+  body:not(.answer-page) .navwrap .nav-tools{
+    order:1;
+    justify-content:flex-start;
+    gap:5px;
+  }
+  body:not(.answer-page) .navwrap .phase-nav{
+    order:2;
+    flex:1 1 auto;
+    justify-content:space-between;
+    gap:1px;
+    padding-left:6px;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #previous,
+  body:not(.answer-page) .navwrap .nav-tools #advance{
+    width:51px;
+    min-width:51px;
+    height:52px;
+    min-height:52px;
+    padding:0;
+    margin:0;
+    font-size:0!important; /* Text stays in DOM, visible in other layouts. */
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    flex:0 0 51px;
+    white-space:nowrap;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #previous{
+    order:0;
+    background:#f5f8f6;
+    border:1px solid #a8bdb1;
+    color:#1d503d;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #advance{
+    order:1;
+    background:#224d3f;
+    border:1px solid #224d3f;
+    color:#fff;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #previous::before{
+    content:"←";
+    font:700 30px/1 Arial,Helvetica,sans-serif;
+    color:inherit;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #advance::before{
+    content:"→";
+    font:700 30px/1 Arial,Helvetica,sans-serif;
+    color:inherit;
+  }
+  body:not(.answer-page) .navwrap .nav-tools #previous:disabled{
+    opacity:.4;
+  }
+  body:not(.answer-page) .navwrap .teacher-next-action{
+    order:2;
+    flex:0 0 clamp(106px,10vw,176px);
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:1px;
+    max-width:176px;
+    height:52px;
+    padding:3px 6px;
+    color:#255542;
+    font-size:clamp(11px,.95vw,14px);
+    line-height:1.18;
+    font-weight:700;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+  }
+  body:not(.answer-page) .navwrap .teacher-next-action::before{
+    content:"NEXT ACTION";
+    display:block;
+    flex:0 0 auto;
+    color:#68796f;
+    font:800 9px/1.25 Arial,Helvetica,sans-serif;
+    letter-spacing:.075em;
+  }
+  body:not(.answer-page) .navwrap .phase-nav button{
+    margin:0;
+    padding:6px clamp(4px,.49vw,11px);
+    border-radius:8px;
+    font-size:clamp(11px,.91vw,15px);
+    min-width:0;
+  }
+  body:not(.answer-page) .navwrap .phase-nav button.active{
+    border-bottom-color:var(--green);
+  }
+}
