@@ -1,1 +1,346 @@
-{"114":{"year11":true,"t":"String Manipulation","s":"2.2.3","vis":"diagram-spec","highlights":["State","Identify","Explain","Compare","Calculate","Trace","Describe","Write","Evaluate","Justify"],"o":["Explain the core ideas of string manipulation using accurate OCR terminology.","Apply a clear method to the worked and guided questions.","Use Code First and unseen exam practice to demonstrate independent understanding."],"c":[["Concatenation","Joining strings creates new text; it does not add numerical values."],["Length","Counting characters helps validate usernames and input."],["Slicing","A slice extracts a specified portion of a string, using the selected language's indexing rules."],["Data type","Characters and strings represent text, even when they contain numeric-looking digits."]],"visuals":[{"year11":"string","year11Extension":true,"y11Version":2,"title":"NEW LEARNING · String Manipulation","topic":"String Manipulation","caption":"Follow the concept in small steps","focus":0,"phase":"new-learning","scenario":"model","values":["Concatenation","Length","Slicing","Data type"]},{"year11":"string","year11Extension":true,"y11Version":2,"title":"NEW LEARNING · String Manipulation","topic":"String Manipulation","caption":"Follow the concept in small steps","focus":1,"phase":"new-learning","scenario":"model","values":["Concatenation","Length","Slicing","Data type"]},{"year11":"string","year11Extension":true,"y11Version":2,"title":"NEW LEARNING · String Manipulation","topic":"String Manipulation","caption":"Follow the concept in small steps","focus":2,"phase":"new-learning","scenario":"model","values":["Concatenation","Length","Slicing","Data type"]},{"year11":"string","year11Extension":true,"y11Version":2,"title":"NEW LEARNING · String Manipulation","topic":"String Manipulation","caption":"Follow the concept in small steps","focus":3,"phase":"new-learning","scenario":"model","values":["Concatenation","Length","Slicing","Data type"]}],"m":{"title":"String Manipulation","q":"A school prints a username from firstName = 'Sam' and lastName = 'Lee'. Explain how to produce 'Sam.Lee'.","headings":["Understand the problem","Set up the method","Follow the example","Check and explain"],"st":["Identify both strings and the separator.","Concatenate firstName + '.' + lastName.","The result is the string 'Sam.Lee'; do not add the text mathematically.","Check that the period occurs once and no spaces were introduced."]},"idoVisual":{"year11":"string","year11Extension":true,"y11Version":2,"title":"I DO · String Manipulation","topic":"String Manipulation","caption":"Use the visual to justify the answer","focus":0,"phase":"i-do","scenario":"model","values":["Concatenation","Length","Slicing","Data type"]},"w":[["A library creates an ID from 'BK' and '204'. What string is produced?","'BK204'."]],"wTitles":["Solve the different example together"],"wVisuals":[{"year11":"string","year11Extension":true,"y11Version":2,"title":"WE DO · String Manipulation","topic":"String Manipulation","caption":"Use the visual to justify the answer","focus":0,"phase":"we-do","scenario":"guided","values":["Concatenation","Length","Slicing","Data type"]}],"wSteps":[[["Read the data","Recognise that both parts are strings."],["Set up the solution","Join them without a space."],["Calculate or trace","Check that leading text is retained."],["Check the answer","'BK204'."]]],"k":{"q":"Predict the printed string.","code":"prefix = \"CS\"\nnumber = \"27\"\nprint(prefix + number)","p":["Explain your predicted result using the first assignment or test.","Change number to '28'.","Add a dash between prefix and number."],"a":"CS27; CS28; CS-27."},"e":[["State the difference between concatenation and arithmetic addition. [2 marks]","Concatenation joins string content; arithmetic addition calculates a numerical sum."],["A user enters 'AB' and '12'. Write the resulting concatenated string with no spaces. [1 mark]","AB12."],["Explain why checking string length can support validation of a password. [3 marks]","Length checks whether the input meets a stated minimum/maximum number of characters; alone it does not guarantee a secure password."]],"v":[["Concatenation","Joining strings creates new text; it does not add numerical values."],["Length","Counting characters helps validate usernames and input."],["Slicing","A slice extracts a specified portion of a string, using the selected language's indexing rules."],["Data type","Characters and strings represent text, even when they contain numeric-looking digits."]],"x":["Concatenating strings always adds their numeric values.",false],"r":[["Explain why binary search requires sorted data.","It uses midpoint comparisons to discard half the range safely."],["Which part of the CPU performs addition, and which coordinates the instruction?","ALU performs arithmetic; Control Unit coordinates the instruction."],["Give one disadvantage of a star topology when its central switch fails.","The connected devices can lose communication because they depend on the central switch."],["Give the array after one pass of bubble sort on [3,1,2].","[1,2,3]."]],"refs":["L113 · retrieval","L100 · retrieval","L096 · retrieval","L110 · retrieval"],"memoryCue":"Concatenation: Joining strings creates new text; it does not add numerical values.","retrievalVisuals":[],"examVisuals":[],"requiredVisuals":[null,null,null],"challenge":{"n":114,"coreHint":"Treat every value as text: + joins characters.","stretch":{"task":"Modify the original program to place a hyphen between the prefix and the number, then print the character count.","hint":"Join three strings, then count characters.","answer":"print(prefix + \"-\" + number) gives CS-27; the length is 5."},"mastery":{"task":"Accept a two-character prefix and a number string; output a code only when the final code has exactly five characters. Test a shorter input.","hint":"Create fullCode = prefix + \"-\" + number; use a length check on fullCode.","answer":"If prefix=\"CS\" and number=\"27\", fullCode=\"CS-27\" has length 5 and is accepted. If number=\"7\", length 4 and it is rejected. State why string length, not numerical value, matters."}},"priorExam":null,"visualAuditV2":false,"visualAuditV3":false}}
+{
+  "114": {
+    "year11": true,
+    "t": "String Manipulation",
+    "s": "2.2.3",
+    "vis": "diagram-spec",
+    "highlights": [
+      "State",
+      "Identify",
+      "Explain",
+      "Compare",
+      "Calculate",
+      "Trace",
+      "Describe",
+      "Write",
+      "Evaluate",
+      "Justify"
+    ],
+    "o": [
+      "Trace multi-step string expressions using zero-based indexes, slicing, case conversion and concatenation.",
+      "Construct a string identifier in OCR Exam Reference Language and calculate its length.",
+      "Write, test and debug an exam-style algorithm, including a length-validation check."
+    ],
+    "c": [
+      [
+        "Concatenation",
+        "The + operator joins strings in order. For example, \"CS\" + \"-\" + \"27\" creates \"CS-27\", not a numerical total. The hyphen is one character."
+      ],
+      [
+        "Substring and slices",
+        "OCR ERL uses zero-based indexing. text.substring(start, count) begins at start and takes count characters. text.left(n) takes the first n; text.right(n) takes the last n."
+      ],
+      [
+        "Length and case",
+        "text.length counts all characters, including spaces and hyphens. text.upper and text.lower change the case of letters; neither changes digits. An extracted substring can also be converted."
+      ],
+      [
+        "Build, check, then output",
+        "For an identifier, select the required characters, change case, concatenate the parts and check the result. Validate input length before extracting characters that might not exist."
+      ]
+    ],
+    "visuals": [
+      {
+        "year11": "string",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · String Manipulation",
+        "topic": "String Manipulation",
+        "caption": "Follow the concept in small steps",
+        "focus": 0,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Concatenation",
+          "Length",
+          "Slicing",
+          "Data type"
+        ]
+      },
+      {
+        "year11": "string",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · String Manipulation",
+        "topic": "String Manipulation",
+        "caption": "Follow the concept in small steps",
+        "focus": 1,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Concatenation",
+          "Length",
+          "Slicing",
+          "Data type"
+        ]
+      },
+      {
+        "year11": "string",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · String Manipulation",
+        "topic": "String Manipulation",
+        "caption": "Follow the concept in small steps",
+        "focus": 2,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Concatenation",
+          "Length",
+          "Slicing",
+          "Data type"
+        ]
+      },
+      {
+        "year11": "string",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "NEW LEARNING · String Manipulation",
+        "topic": "String Manipulation",
+        "caption": "Follow the concept in small steps",
+        "focus": 3,
+        "phase": "new-learning",
+        "scenario": "model",
+        "values": [
+          "Concatenation",
+          "Length",
+          "Slicing",
+          "Data type"
+        ]
+      }
+    ],
+    "m": {
+      "title": "String manipulation · worked coding example",
+      "q": "firstName = \"Amelia\" and team = \"Falcons\". Build the code AME-FAL and output its character count using OCR ERL.",
+      "headings": [
+        "Identify the strings",
+        "Extract three characters from each",
+        "Convert case and concatenate",
+        "Trace the exact output"
+      ],
+      "st": [
+        "The two variables store strings. The required identifier has two groups of three letters and a hyphen between them.",
+        "firstPart = firstName.left(3) gives \"Ame\"; secondPart = team.left(3) gives \"Fal\". The method left(3) takes exactly three characters.",
+        "code = firstPart.upper + \"-\" + secondPart.upper gives \"AME-FAL\". The + operator concatenates strings; the hyphen is text inside quotation marks.",
+        "print(code) produces AME-FAL. print(code.length) produces 7 because the code has 3 letters + 1 hyphen + 3 letters."
+      ]
+    },
+    "idoVisual": {
+      "year11": "string",
+      "year11Extension": true,
+      "y11Version": 2,
+      "title": "I DO · String Manipulation",
+      "topic": "String Manipulation",
+      "caption": "Use the visual to justify the answer",
+      "focus": 0,
+      "phase": "i-do",
+      "scenario": "model",
+      "values": [
+        "Concatenation",
+        "Length",
+        "Slicing",
+        "Data type"
+      ]
+    },
+    "w": [
+      [
+        "student = \"Harrison\" and club = \"Robotics\". Write OCR ERL to create SON-ROB using the last three characters of the student's name and first three of the club. Print its length.",
+        "lastPart = student.right(3) gives \"son\"; firstPart = club.left(3) gives \"Rob\"; code = lastPart.upper + \"-\" + firstPart.upper; print(code) gives SON-ROB and print(code.length) gives 7."
+      ]
+    ],
+    "wTitles": [
+      "Build a different identifier · mini-whiteboards"
+    ],
+    "wVisuals": [
+      {
+        "year11": "string",
+        "year11Extension": true,
+        "y11Version": 2,
+        "title": "WE DO · String Manipulation",
+        "topic": "String Manipulation",
+        "caption": "Use the visual to justify the answer",
+        "focus": 0,
+        "phase": "we-do",
+        "scenario": "guided",
+        "values": [
+          "Concatenation",
+          "Length",
+          "Slicing",
+          "Data type"
+        ]
+      }
+    ],
+    "wSteps": [
+      [
+        [
+          "Read and plan",
+          "There are two source strings. The target has three uppercase letters from the END of student, a hyphen, then three from the START of club. What is the correct order?"
+        ],
+        [
+          "Choose the methods",
+          "Which OCR ERL methods obtain the last three characters and the first three? Write the two assignment statements on your mini-whiteboard."
+        ],
+        [
+          "Complete the concatenation",
+          "Convert both extracted parts to uppercase, then join them with a quoted hyphen using +. Predict the exact output before revealing."
+        ],
+        [
+          "Check the full answer",
+          "lastPart = student.right(3) gives \"son\"; firstPart = club.left(3) gives \"Rob\"; code = lastPart.upper + \"-\" + firstPart.upper gives SON-ROB. code.length is 7."
+        ]
+      ]
+    ],
+    "k": {
+      "q": "On a mini-whiteboard, complete the missing assignment so the code prints MAT-27. Use uppercase conversion and concatenation; then test.",
+      "code": "student = \"Matilda\"\ngroup = \"27\"\nfirst = student.left(3)\ncode = ____________________\nprint(code)",
+      "p": [
+        "Identify the first three characters of Matilda.",
+        "Use .upper and join the hyphen and group as strings.",
+        "Check that the exact output is MAT-27."
+      ],
+      "a": "MODEL OCR ERL\nstudent = \"Matilda\"\ngroup = \"27\"\nfirst = student.left(3)\ncode = first.upper + \"-\" + group\nprint(code)\n\nEXPECTED OUTPUT\nMAT-27"
+    },
+    "e": [
+      [
+        "Trace the following OCR Exam Reference Language. Write the exact TWO lines printed. Show how the substring is selected. [4 marks]\n\nusername = \"TylerFox\"\nprefix = username.left(2)\nsuffix = username.substring(5, 3)\ncode = prefix.upper + \"-\" + suffix.lower\nprint(code)\nprint(code.length)",
+        "prefix = \"Ty\"; suffix = \"Fox\" (begin at index 5 and take 3 characters).\nFirst output: TY-fox.\nSecond output: 6 (two letters, hyphen, three letters).\nMarking: correct parts (1), correct case and concatenation (1), exact first output (1), correct length (1)."
+      ],
+      [
+        "A school generates a pupil identifier from the FIRST three letters of firstName and the LAST three letters of surname, both uppercase, separated by a hyphen.\n\nWith firstName = \"Georgia\" and surname = \"Mitchell\", the required output is GEO-ELL.\n\nWrite an OCR Exam Reference Language algorithm that prints \"Invalid\" if EITHER name has fewer than three characters; otherwise print the identifier. [6 marks]",
+        "MODEL OCR ERL\nfirstName = \"Georgia\"\nsurname = \"Mitchell\"\nif firstName.length >= 3 AND surname.length >= 3 then\n    firstPart = firstName.left(3)\n    lastPart = surname.right(3)\n    print(firstPart.upper + \"-\" + lastPart.upper)\nelse\n    print(\"Invalid\")\nendif\n\nExpected output: GEO-ELL.\nMarking: checks lengths of both inputs (2), correct left(3) (1), correct right(3) (1), uppercase and hyphen concatenation (1), correct valid/invalid output paths (1). Accept equivalent correct OCR ERL."
+      ],
+      [
+        "A programmer intends the following program to print MAT-27, but it produces the wrong result.\n\nstudent = \"Matilda\"\ngroup = \"27\"\ncode = student.substring(1, 3) + group\nprint(code)\n\n(a) State the output of the original program. [1]\n(b) Identify THREE changes needed to produce MAT-27. [3]\n(c) Rewrite the string-handling statements using OCR Exam Reference Language so the program prints MAT-27. [2]\n[6 marks total]",
+        "(a) ati27.\n(b) Select characters starting at index 0, not index 1; convert the letters to uppercase; insert a quoted hyphen between the letters and group.\n(c) One acceptable answer:\nfirst = student.left(3)\ncode = first.upper + \"-\" + group\nprint(code)\nAlternative: student.substring(0, 3) instead of left(3).\nMarking: exact original output (1), three distinct corrections (3), valid slicing and uppercase (1), correct concatenation and print (1)."
+      ]
+    ],
+    "v": [
+      [
+        "Concatenation",
+        "Joining two or more strings using +, including literal characters such as a quoted hyphen."
+      ],
+      [
+        "Substring",
+        "A sequence of characters extracted from text. In OCR ERL, substring(start, count) uses a zero-based start and a character count."
+      ],
+      [
+        "String length",
+        "The number of characters in a string, including spaces, digits and punctuation."
+      ],
+      [
+        "Case conversion",
+        "Using .upper or .lower to make letters uppercase or lowercase without changing digits."
+      ]
+    ],
+    "x": [
+      "In OCR Exam Reference Language, text.substring(3, 2) takes two characters beginning at index 3.",
+      true,
+      "True. OCR ERL uses zero-based indexing and the second argument is the number of characters, not the ending index."
+    ],
+    "r": [
+      [
+        "Explain why binary search requires sorted data.",
+        "It uses midpoint comparisons to discard half the range safely."
+      ],
+      [
+        "Which part of the CPU performs addition, and which coordinates the instruction?",
+        "ALU performs arithmetic; Control Unit coordinates the instruction."
+      ],
+      [
+        "Give one disadvantage of a star topology when its central switch fails.",
+        "The connected devices can lose communication because they depend on the central switch."
+      ],
+      [
+        "Give the array after one pass of bubble sort on [3,1,2].",
+        "[1,2,3]."
+      ]
+    ],
+    "refs": [
+      "L113 · retrieval",
+      "L100 · retrieval",
+      "L096 · retrieval",
+      "L110 · retrieval"
+    ],
+    "memoryCue": "OCR ERL substring(start, count): start at zero; count the number taken. Concatenate text with +, then count every output character.",
+    "retrievalVisuals": [],
+    "examVisuals": [],
+    "requiredVisuals": [
+      null,
+      null,
+      null
+    ],
+    "challenge": {
+      "n": 114,
+      "coreHint": "Use OCR ERL .left, .right and .substring(start, count); a quoted hyphen is a single string character.",
+      "stretch": {
+        "task": "Adapt the worked example for student = \"Harrison\" and club = \"Robotics\": produce SON:ROB using right(3), left(3), .upper and a colon. Then print the length. Write OCR ERL.",
+        "hint": "The last three letters of Harrison are son; the first three of Robotics are Rob. A colon counts as one character.",
+        "answer": "MODEL OCR ERL\nstudent = \"Harrison\"\nclub = \"Robotics\"\na = student.right(3)\nb = club.left(3)\ncode = a.upper + \":\" + b.upper\nprint(code)\nprint(code.length)\n\nOutputs: SON:ROB and 7."
+      },
+      "mastery": {
+        "task": "Design an OCR ERL algorithm that accepts a surname and a two-character year code. If surname has fewer than three characters OR year code is not exactly two characters, print Invalid. Otherwise print the first three surname letters in uppercase, followed by a hyphen and the year code. Give one normal, one boundary and one invalid test.",
+        "hint": "Check both lengths before calling .left(3). Use .length for each condition and concatenate strings with +.",
+        "answer": "MODEL OCR ERL\nsurname = input(\"Surname\")\nyearCode = input(\"Two-character year code\")\nif surname.length >= 3 AND yearCode.length == 2 then\n    prefix = surname.left(3)\n    print(prefix.upper + \"-\" + yearCode)\nelse\n    print(\"Invalid\")\nendif\n\nTests: surname = \"Mason\", yearCode = \"27\" -> MAS-27 (normal); surname = \"Lee\", yearCode = \"27\" -> LEE-27 (boundary valid); surname = \"Li\", yearCode = \"27\" -> Invalid (invalid). Also test a one-character year code."
+      }
+    },
+    "priorExam": null,
+    "visualAuditV2": false,
+    "visualAuditV3": false,
+    "codeModelling": {
+      "ido": {
+        "question": "Build AME-FAL from firstName = \"Amelia\" and team = \"Falcons\". Print the identifier and its length.",
+        "scaffold": "firstName = \"Amelia\"\nteam = \"Falcons\"\nfirstPart = firstName.left(3)\nsecondPart = team.left(3)\ncode = ____________________\nprint(code)\nprint(code.length)",
+        "steps": [
+          {
+            "title": "1 · Identify the input strings",
+            "explanation": "The program is combining parts of two strings, not adding numbers. The expected result contains six letters and one hyphen.",
+            "code": "firstName = \"Amelia\"\nteam = \"Falcons\""
+          },
+          {
+            "title": "2 · Extract the characters",
+            "explanation": "left(3) takes the first three characters: Ame and Fal. Keep these as strings.",
+            "code": "firstPart = firstName.left(3)\nsecondPart = team.left(3)"
+          },
+          {
+            "title": "3 · Convert case and join",
+            "explanation": "The uppercase property changes the extracted text. The quoted hyphen contributes one character. Together these produce AME-FAL.",
+            "code": "code = firstPart.upper + \"-\" + secondPart.upper"
+          },
+          {
+            "title": "4 · Output and verify",
+            "explanation": "The first line prints AME-FAL. The second prints 7, because 3 + 1 + 3 = 7 characters.",
+            "code": "firstName = \"Amelia\"\nteam = \"Falcons\"\nfirstPart = firstName.left(3)\nsecondPart = team.left(3)\ncode = firstPart.upper + \"-\" + secondPart.upper\nprint(code)\nprint(code.length)"
+          }
+        ]
+      },
+      "wedo": [
+        {
+          "question": "On mini-whiteboards: student = \"Harrison\", club = \"Robotics\". Create SON-ROB from the last three characters of student and first three of club, then print the length.",
+          "scaffold": "student = \"Harrison\"\nclub = \"Robotics\"\nlastPart = ____________________\nfirstPart = ____________________\ncode = ____________________\nprint(code)\nprint(code.length)",
+          "steps": [
+            {
+              "title": "1 · Plan before writing",
+              "explanation": "Identify the two source strings and the order of the output: three letters from the end, a hyphen, then three letters from the start.",
+              "code": "student = \"Harrison\"\nclub = \"Robotics\""
+            },
+            {
+              "title": "2 · Choose the OCR ERL slices",
+              "explanation": "Write the two missing lines. Compare right(3) and left(3); each returns a string of three characters.",
+              "code": "lastPart = student.right(3)\nfirstPart = club.left(3)"
+            },
+            {
+              "title": "3 · Join and check the case",
+              "explanation": "Convert the two extracted strings to uppercase, add the hyphen as a quoted string and predict both printed results.",
+              "code": "code = lastPart.upper + \"-\" + firstPart.upper\nprint(code)\nprint(code.length)"
+            },
+            {
+              "title": "4 · Reveal and improve",
+              "explanation": "The substring values are son and Rob. The outputs are SON-ROB and 7. Check every method, the plus signs and the quotation marks.",
+              "code": "student = \"Harrison\"\nclub = \"Robotics\"\nlastPart = student.right(3)\nfirstPart = club.left(3)\ncode = lastPart.upper + \"-\" + firstPart.upper\nprint(code)\nprint(code.length)"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
