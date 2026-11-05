@@ -16,6 +16,13 @@ const pages=[...document.querySelectorAll('.page')];
 const nav=[...document.querySelectorAll('[data-page]')];
 const advance=document.getElementById('advance');
 const previous=document.getElementById('previous');
+/* Classroom displays only: contextual caption for the NEXT arrow. The button's
+   existing text and event listeners stay intact for phone, screen readers and
+   lesson reveal logic. CSS hides this caption on phone/tablet layouts. */
+const teacherNextAction=document.createElement('span');
+teacherNextAction.className='teacher-next-action';
+teacherNextAction.setAttribute('aria-hidden','true');
+advance.insertAdjacentElement('afterend',teacherNextAction);
 let current='do-now';
 
 /* Shared H446/J277 lesson identity: badge is drawn once from the URL, so
@@ -1014,6 +1021,9 @@ function updateControl(){
     }
   }
   advance.textContent=label;
+  teacherNextAction.textContent=label.replace(/[←→]/g,'').trim();
+  teacherNextAction.title=teacherNextAction.textContent;
+  advance.title=teacherNextAction.textContent;
   previous.disabled=order.indexOf(current)===0||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
   syncClassroomFocus();
