@@ -36,8 +36,8 @@ function head(q){
  return '<div class="j277-sm-card-head"><strong>'+q.name+'</strong><span class="j277-sm-marks">'+(q.marks!=null?q.marks+' MARKS':'EXAM PRACTICE')+'</span></div>';
 }
 function questionCard(q,i){
- var meaningfulStyle=q.style&&!/^OCR J277 examination practice$/i.test(q.style);
- return '<section class="j277-sm-card'+(i===0?' j277-sm-question-active':'')+'">'+head(q)+(meaningfulStyle?'<div class="j277-sm-kind">'+esc(q.style)+'</div>':'')+'<div class="j277-sm-question">'+emphasized(q.body,q.command)+'</div>'+(q.visual?'<div class="j277-sm-visual">'+q.visual+'</div>':'')+'</section>';
+ var genericStyle=/^OCR J277 examination practice$/i.test(q.style||'');
+ return '<section class="j277-sm-card'+(i===0?' j277-sm-question-active':'')+'">'+head(q)+(q.style?'<div class="j277-sm-kind'+(genericStyle?' j277-sm-kind-generic':'')+'">'+esc(q.style)+'</div>':'')+'<div class="j277-sm-question">'+emphasized(q.body,q.command)+'</div>'+(q.visual?'<div class="j277-sm-visual">'+q.visual+'</div>':'')+'</section>';
 }
 function markCard(q,i){
  var content="",levels=q.scheme&&q.marks===8;
@@ -63,9 +63,9 @@ function questionNav(qs){
 function group(qs,extra,extended){
  var classes=qs.length===1?" one":qs.length===2?" two":"";
  var range=qs.length===1?qs[0].name:qs[0].name+"–"+qs[qs.length-1].name;
- // Each question already has a Q number and marks; do not repeat it above
- // the card. The source/style label remains only when it conveys new detail.
- var question='<div class="j277-sm-grid j277-sm-questions'+classes+'">'+qs.map(questionCard).join("")+'</div>'+questionNav(qs);
+ // Keep the existing phone headings in the DOM; desktop CSS hides only
+ // the duplicate teacher-facing heading above the numbered question card.
+ var question='<div class="j277-sm-toolbar j277-sm-question-toolbar">'+(extended?range+' · 8-mark extended response':'YOU DO · '+range)+'</div><div class="j277-sm-grid j277-sm-questions'+classes+'">'+qs.map(questionCard).join("")+'</div>'+questionNav(qs);
  if(extra&&extra.priorExam){question+='<details class="j277-sm-extra"><summary>Optional retrieval · earlier learning</summary><p>'+esc(clean(extra.priorExam.q))+'</p></details>'}
  if(extra&&extra.challenge){question+='<details class="j277-sm-extra"><summary>Optional stretch and mastery</summary><p>'+esc(extra.challenge.stretch&&extra.challenge.stretch.task||"")+'</p><p>'+esc(extra.challenge.mastery&&extra.challenge.mastery.task||"")+'</p></details>'}
  var answers='<div class="j277-sm-toolbar">'+(extended?"Q4 · levels of response":"SELF-MARK · "+qs.map(function(q){return q.name}).join(" · "))+'</div><div class="j277-sm-grid j277-sm-answers'+classes+'">'+qs.map(markCard).join("")+'</div>'+phoneNav(qs);
