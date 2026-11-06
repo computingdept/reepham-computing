@@ -1,0 +1,90 @@
+name: Classroom asset versions (pilot proposal)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/h446-lesson/lesson-classroom.css"
+      - "assets/h446-lesson/lesson.js"
+      - "scripts/version_lesson_assets.py"
+      - "tests/test_lesson_asset_versions.py"
+      - ".github/workflows/lesson-asset-versions.yml"
+  workflow_dispatch:
+
+# Do not change the site's current Pages deployment workflow.
+# Never auto-merge or push versioned lesson pages onto main:
+# staff should review a small proposed diff before any student sees it.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: classroom-asset-version-proposal
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    name: Validate and propose cache-version updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Run isolated safety tests
+        run: python3 -m unittest discover -s tests -p test_lesson_asset_versions.py -v
+
+      - name: Update only the four pilot lesson paths and their generators
+        run: |
+          python3 scripts/version_lesson_assets.py --write
+          python3 scripts/version_lesson_assets.py --check
+          git diff --check
+
+      - name: Check classroom JavaScript syntax
+        run: |
+          node --check assets/h446-lesson/lesson.js
+          node --check lessons/j277/h446-adapter.js
+          node --check lessons/j277/autumn2-rebuilt.js
+
+      - name: Save review patch if pull requests are disabled
+        run: |
+          git diff -- \
+            lessons/j277/h446-adapter.js \
+            lessons/j277/autumn2-rebuilt.js \
+            lessons/j277/lesson-001/index.html \
+            lessons/j277/lesson-003/index.html \
+            lessons/j277/lesson-020/index.html \
+            lessons/h446/lesson-038/index.html \
+            > classroom-asset-version-pilot.patch
+
+      - name: Attach internal review patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: classroom-asset-version-pilot
+          path: classroom-asset-version-pilot.patch
+          retention-days: 14
+
+      - name: Propose reviewed changes rather than publishing automatically
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/classroom-asset-version-pilot
+          delete-branch: true
+          add-paths: |
+            lessons/j277/h446-adapter.js
+            lessons/j277/autumn2-rebuilt.js
+            lessons/j277/lesson-001/index.html
+            lessons/j277/lesson-003/index.html
+            lessons/j277/lesson-020/index.html
+            lessons/h446/lesson-038/index.html
+          commit-message: "chore: refresh pilot classroom asset hashes"
+          title: "Review: refresh shared lesson asset versions (pilot)"
+          body: |
+            Internal change only. This refreshes content-based cache versions
+            for J277 Lessons 001, 003 and 020, and H446 Lesson 038.
+            Shared lesson generators also receive updated nested references.
+
+            Safety checks: Python tests, idempotence, JavaScript syntax and
+            whitespace checks. No lesson questions, marking, navigation
+            behaviour, publishing method or student-visible status UI changed.
+
+            **Review before merge.** Merging remains a teacher decision.
