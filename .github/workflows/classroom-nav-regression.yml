@@ -1,0 +1,48 @@
+name: Classroom lesson browser regression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/h446-lesson/lesson.js"
+      - "assets/h446-lesson/lesson-classroom.css"
+      - "assets/site-nav.js"
+      - "assets/site-nav.css"
+      - "assets/j277/classroom-polish.css"
+      - "assets/j277/independent-nav.css"
+      - "lessons/j277/h446-adapter.js"
+      - "lessons/j277/autumn2-rebuilt.js"
+      - "lessons/j277/lesson-001/index.html"
+      - "lessons/j277/lesson-003/index.html"
+      - "lessons/j277/lesson-020/index.html"
+      - "lessons/h446/lesson-038/index.html"
+      - "tests/test_classroom_nav_browser.py"
+      - ".github/workflows/classroom-nav-regression.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  classroom-browser:
+    name: Test lessons in Chromium and Safari-compatible WebKit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test browsers
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium webkit
+      - name: Check JavaScript and Python syntax
+        run: |
+          node --check assets/h446-lesson/lesson.js
+          node --check assets/site-nav.js
+          node --check lessons/j277/h446-adapter.js
+          node --check lessons/j277/autumn2-rebuilt.js
+          python -m compileall -q tests/test_classroom_nav_browser.py
+      - name: Verify lesson startup and fixed navigation in real browsers
+        run: python -m unittest discover -s tests -p test_classroom_nav_browser.py -v
