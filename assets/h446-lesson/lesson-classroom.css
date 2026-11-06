@@ -2590,3 +2590,33 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     transform:translateY(-50%);
   }
 }
+
+
+/* SHARED YOU DO QUESTION-FIRST ALIGNMENT · 2026-11-06
+   Applies to ordinary KS3/J277/H446 lesson cards; J277 generated cards
+   have their own central renderer rules. No changes to content, answers,
+   navigation, phone gestures or self-marking views. */
+@media (min-width:901px) and (min-height:500px){
+  body:not(.answer-page) #you-do:not([data-answer-mode="true"])
+    .youdo-rolling > .youdo-question.exam-card:not(.j277-code-first):not(.j277-sm-group):not([hidden]){
+    justify-content:flex-start;
+    align-items:stretch;
+    padding-top:clamp(11px,1vw,18px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+  body:not(.answer-page) #you-do:not([data-answer-mode="true"])
+    .youdo-rolling > .youdo-question.exam-card:not(.j277-code-first):not(.j277-sm-group) > .phase-tag{
+    margin-top:0;
+    margin-bottom:5px;
+  }
+  body:not(.answer-page) #you-do:not([data-answer-mode="true"])
+    .youdo-rolling > .youdo-question.exam-card:not(.j277-code-first):not(.j277-sm-group) > h3{
+    margin-top:2px;
+    margin-bottom:7px;
+  }
+  body:not(.answer-page) #you-do:not([data-answer-mode="true"])
+    .youdo-rolling > .youdo-question.exam-card:not(.j277-code-first):not(.j277-sm-group) > .question-text{
+    margin-top:0;
+  }
+}
