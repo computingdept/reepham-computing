@@ -76,7 +76,7 @@ function prepareLessonIdBadge(){
      Only remove the redundant OCR/lesson text when the badge matches it. */
   const first=label.firstChild;
   const match=first?.nodeType===Node.TEXT_NODE
-    ? /^\\s*OCR\\s+(?:J277|H446)\\s*[·•]\\s*Lesson\\s*(\\d{3})\\s*$/i.exec(first.textContent)
+    ? /^\s*OCR\s+(?:J277|H446)\s*[·•]\s*Lesson\s*(\d{3})\s*$/i.exec(first.textContent)
     : null;
   if(match?.[1]===number){
     first.remove();
