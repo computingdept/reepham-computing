@@ -72,14 +72,14 @@ function prepareLessonIdBadge(){
   label.before(row);
   row.append(badge,label);
 
-  /* The L-number badge already identifies the lesson. Remove only the
-     repeated course + lesson number from the visible header label, leaving
-     the authored topic and any nested status/markup untouched. */
+  /* Decorative header cleanup must be simple, exact and non-critical.
+     Only remove the redundant OCR/lesson text when the badge matches it. */
   const first=label.firstChild;
-  const prefix=new RegExp('^\\s*(?:OCR\\s+)?(?:J277|H446)\\s*[·•|—–-]?\\s*Lesson\\s*0*'+Number(number)+'\\b\\s*(?:[·•|—–-]\\s*)?','i');
-  if(first?.nodeType===Node.TEXT_NODE && prefix.test(first.textContent)){
-    first.textContent=first.textContent.replace(prefix,'');
-    if(!first.textContent.trim())first.remove();
+  const match=first?.nodeType===Node.TEXT_NODE
+    ? /^\\s*OCR\\s+(?:J277|H446)\\s*[·•]\\s*Lesson\\s*(\\d{3})\\s*$/i.exec(first.textContent)
+    : null;
+  if(match?.[1]===number){
+    first.remove();
     if(label.firstChild?.nodeName==='BR')label.firstChild.remove();
   }
 }
@@ -2065,7 +2065,6 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
-prepareLessonIdBadge();
 prepareJ277DoNowSourceLabels();
 prepareH446DoNowSourceLabels();
 prepareMobileSwipeNavigation();
@@ -2106,6 +2105,10 @@ function prepareResponsivePlaceValues(){
 prepareResponsivePlaceValues();
 prepareYouDoSolutionsLink();
 showPage(location.hash.slice(1)||'do-now');
+/* Identity is non-essential presentation. A badge/label problem must never
+   interrupt lesson content, classroom signals, or phase navigation. */
+try { prepareLessonIdBadge(); }
+catch (error) { console.error('Lesson identity decoration:', error); }
 
 /* One shared marker module for KS3, GCSE J277 and A Level H446 lessons.
    It respects authored vocabulary, teacher reveals, and Code First. */
