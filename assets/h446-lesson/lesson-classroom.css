@@ -2298,8 +2298,11 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     height:100%;
   }
   body:not(.answer-page) .donow-questions{
-    height:100%;
-    grid-template-rows:repeat(2,minmax(246px,1fr));
+    /* Let the tallest question determine each row's minimum height.
+       On shorter displays the phase scrolls instead of hiding MCQ options. */
+    height:auto;
+    min-height:100%;
+    grid-template-rows:repeat(2,minmax(max-content,1fr));
     align-content:stretch;
     gap:14px;
   }
