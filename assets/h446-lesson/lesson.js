@@ -69,6 +69,17 @@ function prepareLessonIdBadge(){
   row.className='lesson-id-row';
   label.before(row);
   row.append(badge,label);
+
+  /* The L-number badge already identifies the lesson. Remove only the
+     repeated course + lesson number from the visible header label, leaving
+     the authored topic and any nested status/markup untouched. */
+  const first=label.firstChild;
+  const prefix=new RegExp('^\\s*(?:OCR\\s+)?(?:J277|H446)\\s*[·•|—–-]?\\s*Lesson\\s*0*'+Number(number)+'\\b\\s*(?:[·•|—–-]\\s*)?','i');
+  if(first?.nodeType===Node.TEXT_NODE && prefix.test(first.textContent)){
+    first.textContent=first.textContent.replace(prefix,'');
+    if(!first.textContent.trim())first.remove();
+    if(label.firstChild?.nodeName==='BR')label.firstChild.remove();
+  }
 }
 
 
