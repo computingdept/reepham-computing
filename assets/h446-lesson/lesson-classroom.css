@@ -2665,3 +2665,80 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     flex:0 0 auto;
   }
 }
+
+
+/* STABLE CLASSROOM NAVIGATION GEOMETRY · 2026-11-06
+   Keep Home/Back, arrows, the NEXT ACTION text and eight phase shortcuts in
+   exactly the same x-position when phase names or next-step labels change.
+   Works with both authored and generated lessons. Phones remain unchanged. */
+@media (min-width:901px) and (min-height:500px){
+  body:not(.answer-page) .navwrap{
+    gap:8px;
+  }
+  /* Authored lessons use .lesson-header-links; generated lessons have
+     a direct .rhsc-site-nav. Reserve the same space for either DOM shape. */
+  body:not(.answer-page) .navwrap > :is(.lesson-header-links,.rhsc-site-nav,.course-back){
+    flex:0 0 98px;
+    box-sizing:border-box;
+    width:98px;
+    min-width:98px;
+    max-width:98px;
+  }
+  body:not(.answer-page) .navwrap > .lesson-header-links > .rhsc-site-nav{
+    width:100%;
+    max-width:100%;
+    flex:0 0 100%;
+    min-width:0;
+  }
+  /* The controls group must not grow or shrink with its caption. */
+  body:not(.answer-page) .navwrap > .nav-tools{
+    flex:0 0 265px;
+    box-sizing:border-box;
+    width:265px;
+    min-width:265px;
+    max-width:265px;
+    gap:5px;
+    justify-content:flex-start;
+  }
+  body:not(.answer-page) .navwrap > .nav-tools > .teacher-next-action{
+    flex:0 0 153px;
+    box-sizing:border-box;
+    width:153px;
+    min-width:153px;
+    max-width:153px;
+    padding:3px 5px;
+    line-height:1.18;
+    overflow:hidden;
+    overflow-wrap:break-word;
+  }
+  /* Stable phase columns, rather than flex space-between (which changes
+     every button's position when the active button becomes bolder). */
+  body:not(.answer-page) .navwrap > .phase-nav{
+    flex:1 1 0;
+    min-width:0;
+    display:grid;
+    grid-template-columns:
+      minmax(82px,.9fr)
+      minmax(105px,1.1fr)
+      minmax(118px,1.25fr)
+      minmax(59px,.6fr)
+      minmax(67px,.7fr)
+      minmax(67px,.7fr)
+      minmax(125px,1.4fr)
+      minmax(105px,1.1fr);
+    align-content:center;
+    align-items:center;
+    justify-content:initial;
+    gap:2px;
+    padding-left:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+  }
+  body:not(.answer-page) .navwrap > .phase-nav > button{
+    box-sizing:border-box;
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    justify-self:stretch;
+  }
+}
