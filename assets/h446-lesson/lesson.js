@@ -63,6 +63,8 @@ function prepareLessonIdBadge(){
   const meta=document.querySelector('.signal-meta');
   const label=meta?.querySelector('.lesson-label');
   if(!meta||!label||meta.querySelector('.lesson-id-row'))return;
+  const number=lessonIdFromUrl();
+  if(!number)return;
   const badge=createLessonIdBadge();
   if(!badge)return;
   const row=document.createElement('div');
