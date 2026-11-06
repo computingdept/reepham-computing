@@ -139,3 +139,13 @@
     max-height:clamp(168px,24vh,230px);
   }
 }
+
+
+/* Hide redundant generated headings only on classroom screens.
+   Keep their original text intact on phones and preserve review headings. */
+@media (min-width:901px) and (min-height:500px){
+  #you-do.j277-sm-ready:not([data-answer-mode="true"]) .j277-sm-question-toolbar,
+  #you-do.j277-sm-ready:not([data-answer-mode="true"]) .j277-sm-questions .j277-sm-kind-generic{
+    display:none;
+  }
+}
