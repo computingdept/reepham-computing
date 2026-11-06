@@ -1,0 +1,152 @@
+/* J277 Lesson 001 only — fixed classroom TV navigation layout pilot.
+   Prove this layout before incorporating it into the shared styles.
+   No navigation scripts, phase content, tools UI or phone styles altered. */
+@media (min-width:901px) and (min-height:500px) {
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap {
+    display:grid;
+    grid-template-columns:96px 265px minmax(0,1fr);
+    grid-template-rows:56px;
+    column-gap:8px;
+    align-items:center;
+    justify-content:stretch;
+    box-sizing:border-box;
+    width:100%;
+    height:70px;
+    padding:7px 116px 7px 10px;
+  }
+
+  /* Home and Back have their own fixed area, whether the central site-nav
+     script wraps the original link or leaves it as an ordinary link. */
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .lesson-header-links {
+    grid-column:1;
+    grid-row:1;
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:center;
+    box-sizing:border-box;
+    width:96px;
+    min-width:96px;
+    max-width:96px;
+    height:56px;
+    margin:0;
+    padding:0;
+    border:0;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .lesson-header-links > .rhsc-site-nav {
+    display:flex;
+    flex:0 0 auto;
+    width:96px;
+    max-width:96px;
+    min-width:0;
+    align-items:center;
+    margin:0;
+    padding:0;
+    border:0;
+  }
+
+  /* Arrow buttons and Next Action occupy one invariant 265px grid cell.
+     The caption can change without affecting any sibling's coordinates. */
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .nav-tools {
+    grid-column:2;
+    grid-row:1;
+    display:grid;
+    grid-template-columns:51px 51px 153px;
+    grid-template-rows:52px;
+    gap:5px;
+    place-items:stretch;
+    box-sizing:border-box;
+    width:265px;
+    height:52px;
+    min-width:265px;
+    max-width:265px;
+    margin:0;
+    padding:0;
+    border:0;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap .nav-tools > #previous {
+    grid-column:1;
+    grid-row:1;
+    width:51px;
+    min-width:51px;
+    max-width:51px;
+    order:unset;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap .nav-tools > #advance {
+    grid-column:2;
+    grid-row:1;
+    width:51px;
+    min-width:51px;
+    max-width:51px;
+    order:unset;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap .nav-tools > .teacher-next-action {
+    grid-column:3;
+    grid-row:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    box-sizing:border-box;
+    width:153px;
+    min-width:153px;
+    max-width:153px;
+    height:52px;
+    margin:0;
+    padding:3px 5px;
+    overflow:hidden;
+    overflow-wrap:break-word;
+    order:unset;
+  }
+
+  /* Eight fixed tracks. Active-state styling cannot push another tab
+     sideways, even when the caption on the left grows to two lines. */
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .phase-nav {
+    grid-column:3;
+    grid-row:1;
+    display:grid;
+    grid-template-columns:
+      minmax(82px,.9fr)
+      minmax(105px,1.1fr)
+      minmax(118px,1.25fr)
+      minmax(59px,.6fr)
+      minmax(67px,.7fr)
+      minmax(67px,.7fr)
+      minmax(125px,1.4fr)
+      minmax(105px,1.1fr);
+    grid-template-rows:52px;
+    align-items:center;
+    justify-content:stretch;
+    box-sizing:border-box;
+    width:100%;
+    min-width:0;
+    height:52px;
+    gap:2px;
+    margin:0;
+    padding:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .phase-nav > button {
+    box-sizing:border-box;
+    display:block;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    height:50px;
+    min-height:50px;
+    padding:6px 3px;
+    margin:0;
+    border:1px solid transparent;
+    border-bottom:4px solid transparent;
+    font-weight:700;
+    text-align:center;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:clip;
+  }
+  body.j277-nav-grid-pilot:not(.answer-page) .navwrap > .phase-nav > button.active {
+    border:1px solid transparent;
+    border-bottom:4px solid var(--green);
+    font-weight:700;
+  }
+}
