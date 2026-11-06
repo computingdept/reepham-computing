@@ -2620,3 +2620,45 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     margin-top:0;
   }
 }
+
+
+/* CLASSROOM DIRECT SITE-NAV WIDTH FIX · 2026-11-06
+   Generated J277 lessons place the central Home/Back pair directly within
+   .navwrap; authored lessons put it in .lesson-header-links instead.
+   The site-wide rule .navwrap > .rhsc-site-nav {width:100%} belongs to the
+   original vertical sidebar and must not consume a whole horizontal TV bar.
+   Do not alter the phone view or any navigation click listeners. */
+@media (min-width:901px) and (min-height:500px){
+  body:not(.answer-page) .navwrap > .rhsc-site-nav{
+    order:0;
+    display:inline-flex;
+    flex:0 0 auto;
+    align-items:center;
+    justify-content:flex-start;
+    width:auto;
+    max-width:max-content;
+    min-width:0;
+    height:52px;
+    margin:0;
+    padding:0 5px 0 0;
+    border-bottom:0;
+    border-right:1px solid var(--line);
+  }
+  body:not(.answer-page) .navwrap > .rhsc-site-nav .rhsc-site-nav-button{
+    flex:0 0 44px;
+    width:44px;
+    height:48px;
+    min-height:48px;
+  }
+  /* Generated lesson's phase group is the flexible item. Its buttons
+     must remain accessible rather than getting pushed outside the TV. */
+  body:not(.answer-page) .navwrap > .phase-nav{
+    order:2;
+    flex:1 1 auto;
+    min-width:0;
+  }
+  body:not(.answer-page) .navwrap > .nav-tools{
+    order:1;
+    flex:0 0 auto;
+  }
+}
