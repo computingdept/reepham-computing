@@ -95,7 +95,7 @@ Two's complement: 11111010</pre><p>These are different bit patterns representing
 <pre class="welcome-code">Console.Write(&quot;Enter 0–255: &quot;);
 int raw = int.Parse(Console.ReadLine()!);
 
-// TODO: convert the 8-bit pattern to a signed integer
+int signedValue = raw; // TODO: replace with the signed 8-bit value
 // Hint: values 128–255 represent negative numbers
 
 Console.WriteLine(&quot;Signed value: &quot; + signedValue);</pre><p><strong>Test:</strong> 13 → 13 · 243 → −13 · 250 → −6 · 128 → −128</p><p><strong>Stretch:</strong> check for an out-of-range input; divide the signed value by 16.0 to decode signed 4.4 fixed point.</p></div>
@@ -144,4 +144,18 @@ else
 </main>
 <div class="lesson-footer">OCR H446 · YEAR 12 · WELCOME <span>Use the phase controls or ← → keys</span></div>
 <script src="../../assets/h446-lesson/lesson.js?v=20261106-welcome1"></script>
+<script>
+// This standalone Welcome lesson resets its authored coding answer if the
+// teacher returns to You Do after reviewing the solution.
+(function(){
+  const page=document.getElementById('you-do');
+  const solution=page?.querySelector('.youdo-solution');
+  if(!page||!solution)return;
+  const hideIfIndependent=()=>{
+    if(page.dataset.answerMode!=='true')solution.hidden=true;
+  };
+  new MutationObserver(hideIfIndependent).observe(page,{attributes:true,attributeFilter:['data-answer-mode']});
+  hideIfIndependent();
+})();
+</script>
 </body></html>
