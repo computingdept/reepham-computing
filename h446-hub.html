@@ -478,6 +478,28 @@ const Navigation=window.LearningHubNavigation;
 function renderLessons(){
   Navigation.closeAll();
   const p=programmes[year],holder=document.getElementById('terms');holder.innerHTML='';let n=p.start,total=0;
+  // An unnumbered Year 12 bridge lesson comes before Lesson 001, without
+  // shifting any H446 curriculum numbering, print links or revision references.
+  if(year===12){
+    const welcome=document.createElement('section');
+    welcome.className='term';
+    welcome.innerHTML='<div class="term-head"><strong>Welcome</strong><span>Start here · GCSE to A Level</span></div>';
+    const grid=document.createElement('nav');
+    grid.className='lesson-grid';
+    grid.setAttribute('aria-label','Year 12 welcome lesson');
+    grid.append(Navigation.createTile({
+      number:'Welcome',
+      title:'A Level Computer Science · signed binary, fixed point & coding',
+      openHref:'lessons/h446/H446Welcome.html#do-now',
+      learnHref:null,
+      printHref:null,
+      color:curriculumColour('1.4.1'),
+      specPoint:'1.4.1',
+      specRaw:'1.4.1'
+    }));
+    welcome.append(grid);
+    holder.append(welcome);
+  }
   for(const term of p.terms){
     total+=term.count;
     const sec=document.createElement('section');sec.className='term';
