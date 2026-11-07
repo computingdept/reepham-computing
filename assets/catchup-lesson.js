@@ -705,7 +705,7 @@
 (function(){
   if(document.querySelector('script[data-rhsc-site-nav]'))return;
   const script=document.createElement('script');
-  script.src='/assets/site-nav.js?v=20261103-audit3';
+  script.src='/assets/site-nav.js?v=20261107-quickbar1';
   script.dataset.rhscSiteNav='1';
   document.head.appendChild(script);
 })();
