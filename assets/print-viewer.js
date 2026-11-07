@@ -13,6 +13,7 @@
   const fallback=byId('viewerFallback'), reading=byId('readingView');
   const mobileBox=byId('mobilePdfOptions'),mobileRead=byId('mobileReadingBtn'),mobileOriginal=byId('mobileOriginal');
   const tools=byId('viewerTools'), panel=byId('accessPanel');
+  const quickPlay=byId('viewerQuickPlay'),quickStop=byId('viewerQuickStop');
   const status=byId('accessStatus');
   const showPdf=byId('showPdf'), showReading=byId('showReading');
   const font=byId('readingFont'), spacing=byId('readingSpacing');
@@ -28,6 +29,22 @@
   let guideDocument=null,guideLoading=null,guidePage=1;
   let bookletZoom=1,bookletRenderToken=0;
   let ttsQueue=[],ttsIndex=0,ttsToken=0,ttsActive=false,ttsPaused=false,ttsCurrent=null;
+  // PDF view has a separate text source, but the same visible Play/Pause/Stop
+  // behaviour as the shared lesson toolbar.
+  function syncQuickControls(){
+    const label=!ttsActive?'Play':ttsPaused?'Resume':'Pause';
+    const symbol=ttsActive&&!ttsPaused
+      ?'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>'
+      :'<path d="M8 5.5 19 12 8 18.5Z"/>';
+    quickPlay.querySelector('svg').innerHTML=symbol;
+    quickPlay.querySelector('span').textContent=label;
+    quickPlay.setAttribute('aria-label',label+' reading aloud');
+    quickPlay.title=label+' reading aloud';
+    quickPlay.hidden=tools.hidden;
+    quickPlay.disabled=!speechAvailable;
+    quickStop.hidden=!ttsActive;
+    quickStop.disabled=!ttsActive;
+  }
   const storeKey='synergy-assist-reading-preferences-v1';
   const defaults={font:'system',spacing:'comfortable',colour:'white',size:100,focus:false,rate:'1'};
   let prefs={...defaults};
@@ -292,6 +309,7 @@
     reading.querySelectorAll('.tts-speaking').forEach(n=>n.classList.remove('tts-speaking'));
     pause.disabled=true;stop.disabled=true;pause.textContent='Pause';
     play.disabled=!speechAvailable;
+    syncQuickControls();
   }
   function currentSpeechNodes(){
     return Array.from(reading.querySelectorAll('.reader-highlight-target'))
@@ -330,6 +348,7 @@
   function enableGuideReader(){
     if(!pdfTextReader)return;
     tools.hidden=false;
+    syncQuickControls();
     const note=panel.querySelector('.view-switch + .access-note');
     if(note)note.textContent=guidePdf
       ?'Reading View shows the exact revision guide pages, including diagrams and worked examples. Navigate by page or zoom in. Listen uses selectable text from the same PDF; complicated layouts may be read out of order. Print opens the original PDF.'
@@ -610,6 +629,7 @@
   loadPrefs();
   if(sharedVoice)prefs.rate=String(sharedVoice.getRate());
   applyPrefs();
+  syncQuickControls();
   if(sharedVoice){
     sharedVoice.subscribe(()=>sharedVoice.populate(voiceSelect));
     voiceSelect.addEventListener('change',()=>{
@@ -662,21 +682,32 @@
   byId('fontDown').addEventListener('click',()=>{prefs.size=Math.max(90,prefs.size-10);savePrefs();applyPrefs();});
   vocab.addEventListener('change',()=>{const node=byId('readerVocabulary');if(node)node.hidden=!vocab.checked;});
   memory.addEventListener('change',()=>{const node=byId('readerMemory');if(node)node.hidden=!memory.checked;});
+  quickPlay.addEventListener('click',()=>{
+    if(ttsActive){pause.click();return;}
+    if(pdfTextReader&&!readerData){
+      loadGuideReader().then(ready=>{if(ready)play.click();});
+      return;
+    }
+    play.click();
+  });
+  quickStop.addEventListener('click',()=>stop.click());
   play.addEventListener('click',()=>{
     if(pdfTextReader&&!readerData){loadGuideReader();return;}
     if(mode!=='reading')setMode('reading');
     if(!speechAvailable){notice('Read aloud is not supported by this browser.');return;}
-    if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');return;}
+    if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';syncQuickControls();notice('Reading resumed.');return;}
     stopSpeech();
     ttsQueue=currentSpeechNodes();ttsIndex=0;
     if(!ttsQueue.length){notice('No readable lesson text is available.');return;}
     ttsActive=true;const token=ttsToken;pause.disabled=false;stop.disabled=false;
+    syncQuickControls();
     notice('Reading the lesson aloud.');speakNext(token);
   });
   pause.addEventListener('click',()=>{
     if(!ttsActive||!speechAvailable)return;
     if(ttsPaused){window.speechSynthesis.resume();ttsPaused=false;pause.textContent='Pause';notice('Reading resumed.');}
     else {window.speechSynthesis.pause();ttsPaused=true;pause.textContent='Resume';notice('Reading paused.');}
+    syncQuickControls();
   });
   stop.addEventListener('click',()=>{stopSpeech();notice('Reading stopped.');});
   window.addEventListener('pagehide',stopSpeech);
@@ -722,6 +753,7 @@
       if(memoryField)memoryField.hidden=memory.disabled;
       renderReader(data);
       tools.hidden=false;
+      syncQuickControls();
       if(preferReading)setMode('reading');
       else setMode('pdf');
     });
@@ -734,5 +766,6 @@
       showReading.disabled=true;
       if(mobileRead)mobileRead.hidden=true;
     }else tools.hidden=true;
+    syncQuickControls();
   });
 })();
