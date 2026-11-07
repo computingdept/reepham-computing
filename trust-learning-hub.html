@@ -74,6 +74,98 @@ button,a{font:inherit}a{color:inherit}.shell{width:min(100vw,1850px);margin:auto
 .audit-takeaway{padding:13px 18px;background:var(--pale);border-left:5px solid var(--green);color:var(--dark);font-size:clamp(14px,1.35vw,21px);line-height:1.38}
 @media(max-width:900px){.audit-steps{grid-template-columns:1fr;gap:8px}.audit-step{padding:13px 17px}.audit-step h3{margin:5px 0;font-size:20px}.audit-step p{font-size:14px}.audit-slide .inner{padding:26px}}
 @media(max-width:560px){.audit-slide h2{font-size:34px}.audit-slide p.lede{font-size:16px}.audit-takeaway{padding:10px 12px;font-size:14px}}
+
+/* One-screen presentation mode; all slides fit the browser viewport on laptop/projector.
+   Mobile and browser-zoomed layouts keep readable content rather than clipping text. */
+@media screen and (min-width:701px){
+html,body{height:100%;min-height:0;overflow:hidden}
+.shell{width:100%;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden}
+.top{height:clamp(50px,7vh,64px);min-height:0}
+.bottom{height:clamp(55px,8vh,65px);min-height:0}
+.stage{height:auto;flex:1;min-height:0;overflow:hidden;padding:clamp(9px,1.2vh,16px)}
+.slide,.slide.active{width:100%;height:100%;max-height:100%;min-height:0;aspect-ratio:auto;overflow:hidden;box-shadow:none}
+.slide .inner{height:100%;min-height:0;overflow:hidden;padding:clamp(17px,3vh,35px) clamp(20px,3.2vw,60px);gap:clamp(7px,1.2vh,14px)}
+.slide h1{font-size:clamp(42px,7vh,79px)}
+.slide h2{font-size:clamp(30px,5.6vh,61px)}
+.slide p.lede{font-size:clamp(15px,2.15vh,23px)}
+.slide .kicker{font-size:clamp(10px,1.4vh,14px)}
+.foot{margin-top:auto;padding-top:clamp(7px,1vh,13px)}
+.hero .greenrule{margin:clamp(10px,1.6vh,18px) 0}
+.hero .sub{font-size:clamp(20px,3.4vh,34px)}
+.visual{gap:clamp(8px,1vh,15px);margin-top:5px}
+.metricrow{gap:clamp(12px,1.8vw,20px)}
+.metric{padding:clamp(13px,2vh,25px)}
+.metric strong.big{font-size:clamp(46px,8.5vh,90px)}
+.metric span{font-size:clamp(15px,2.55vh,23px)}
+.metric em{font-size:clamp(11px,1.65vh,14px)}
+.note-band{padding:clamp(8px,1.5vh,14px) clamp(10px,1.4vw,21px);font-size:clamp(13px,2vh,18px)}
+.pipeline{margin-top:clamp(7px,1.6vh,18px);gap:8px;min-height:0;flex:1}
+.pipe{min-height:0;padding:clamp(12px,2vh,23px)}
+.pipe b{font-size:clamp(16px,2.35vh,25px)}
+.pipe p{font-size:clamp(12px,1.75vh,16px);line-height:1.35}
+.pipe .file{font-size:clamp(25px,4vh,45px);margin:3px 0}
+.outputs{gap:6px;margin-top:7px}
+.outputs span{padding:6px 8px;font-size:clamp(11px,1.55vh,14px)}
+.icon-grid{margin-top:5px;gap:12px;min-height:0}
+.use{min-height:0;padding:clamp(12px,2vh,22px)}
+.use h3{font-size:clamp(18px,2.65vh,27px);margin:clamp(5px,1vh,12px) 0 5px}
+.use p{font-size:clamp(12px,1.9vh,16px);line-height:1.35}
+.workflow{margin-top:clamp(8px,1.7vh,20px);gap:12px}
+.role{padding:clamp(12px,2vh,22px)}
+.role h3{font-size:clamp(19px,2.6vh,28px);margin:6px 0}
+.role p{font-size:clamp(12px,1.85vh,17px);line-height:1.38}
+.pilot{margin-top:clamp(7px,1.3vh,20px);gap:10px}
+.step{min-height:0;padding:clamp(10px,1.8vh,22px)}
+.step b{font-size:clamp(23px,4.5vh,36px)}
+.step strong{font-size:clamp(16px,2.5vh,20px);margin:5px 0}
+.step p{font-size:clamp(12px,1.8vh,14px);line-height:1.35}
+.split{margin-top:5px;gap:14px}
+.panel{padding:clamp(15px,2.2vh,32px);gap:8px}
+.panel h3{font-size:clamp(19px,3vh,31px)}
+.panel p{font-size:clamp(12px,1.9vh,18px)}
+.panel .bigword{font-size:clamp(34px,6vh,57px)}
+.linkbox{padding:clamp(9px,1.6vh,18px) 14px;font-size:clamp(15px,2.2vh,19px)}
+.ask{margin-top:clamp(10px,2vh,22px);padding:clamp(12px,2.5vh,26px) 25px;font-size:clamp(18px,3vh,29px)}
+.final .closing{font-size:clamp(21px,4vh,41px)}
+.cascade-slide .inner{padding:clamp(18px,2.6vh,30px) clamp(22px,3vw,49px);gap:clamp(6px,1vh,12px)}
+.cascade-slide h2{font-size:clamp(29px,5vh,55px)}
+.cascade-slide p.lede{font-size:clamp(14px,2vh,20px)}
+.cascade{margin-top:3px;gap:10px;min-height:0}
+.cascade-origin{min-height:0;padding:9px 14px;gap:6px}
+.cascade-origin b{font-size:clamp(17px,2.4vh,25px)}
+.cascade-origin span{font-size:clamp(12px,1.9vh,15px)}
+.cascade-group{padding:clamp(6px,1.1vh,11px) 12px;gap:8px}
+.cascade-group-heading b{font-size:clamp(14px,2vh,19px)}
+.cascade-group p{font-size:clamp(12px,1.8vh,16px)}
+.cascade-principle{font-size:clamp(12px,1.8vh,17px);padding:clamp(7px,1vh,11px) 12px}
+.audit-slide .inner{padding:clamp(18px,2.6vh,32px) clamp(25px,3vw,48px);gap:clamp(6px,1.05vh,12px)}
+.audit-slide h2{font-size:clamp(30px,5.2vh,56px)}
+.audit-slide p.lede{font-size:clamp(14px,2.1vh,21px)}
+.audit-steps{min-height:0;gap:clamp(8px,1vw,15px);margin-top:3px}
+.audit-step{padding:clamp(9px,1.65vh,17px)}
+.audit-step h3{font-size:clamp(18px,2.75vh,28px);margin:7px 0}
+.audit-step p{font-size:clamp(12px,1.8vh,16px)}
+.audit-takeaway{padding:clamp(8px,1.3vh,12px) 13px;font-size:clamp(13px,1.9vh,18px)}
+}
+@media screen and (min-width:701px) and (max-width:1000px){
+.pipeline{grid-template-columns:1fr auto 1.1fr auto 1.2fr}
+.arr{transform:none;height:auto;font-size:24px}
+.workflow{grid-template-columns:repeat(3,1fr)}
+.role{padding:11px}
+.cascade{grid-template-columns:.8fr 20px 1.7fr}
+.cascade-arrow{transform:none}
+.cascade-group{grid-template-columns:1fr;gap:2px}
+.audit-steps{grid-template-columns:repeat(3,1fr)}
+}
+/* Small screens prioritise readability; bottom navigation remains on screen. */
+@media screen and (max-width:700px){
+.shell{min-height:100dvh;padding-bottom:75px}
+.stage{align-items:stretch}
+.slide{height:auto;max-height:none;overflow:visible}
+.slide .inner{height:auto;overflow:visible}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:4}
+}
+
 </style>
 </head>
 <body>
@@ -116,7 +208,7 @@ button,a{font:inherit}a{color:inherit}.shell{width:min(100vw,1850px);margin:auto
 <script>
 const slides=[...document.querySelectorAll('.slide')];let index=0;const sources=[[{"name":"Synergy MAT — Our vision and values","url":"https://www.synergymat.org.uk/about-our-trust/our-vision-values/","desc":"Synergy identity: “Stronger Together”, with inclusion, collaboration and ambition."}],[{"name":"EEF — Implementation guidance","url":"https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/implementation","desc":"Useful framework for change management. The cascade shown here is a project problem statement, not a measured research finding."}],[{"name":"OCR — GCSE Computer Science specification","url":"https://www.ocr.org.uk/qualifications/gcse/computer-science-j277-from-2020/","desc":"The published curriculum requirements are the benchmark used to check coverage. A gap review is not itself evidence of improved attainment."},{"name":"Existing Computing Learning Hub","url":"https://rhsccs.org/","desc":"Teacher-reported experience from developing the Computing Hub. A repeatable trust-wide review process remains a proposal."}],[{"name":"DfE — Generative AI in education","url":"https://www.gov.uk/government/publications/generative-artificial-intelligence-in-education/generative-artificial-intelligence-ai-in-education","desc":"Professional oversight and accuracy remain essential. Automatic sync of curriculum documents is a proposed workflow, not a live capability."}],[{"name":"EEF — Secondary science ChatGPT trial (2024)","url":"https://educationendowmentfoundation.org.uk/news/teachers-using-chatGPT-alongside-a-guide-to-support-them-to-use-it-effectively-can-cut-lesson-planning-time-by-over-30-per-cent","desc":"Randomised study of 259 teachers in 68 schools. 31% lower preparation time for specified work."},{"name":"EEF — Aila primary planning trial (October 2026)","url":"https://educationendowmentfoundation.org.uk/news/ai-tool-reduced-primary-teachers-lesson-planning-time-by-a-quarter-but-views-on-the-tool-were-mixed/","desc":"Randomised study found 24% lower lesson planning time; uptake and views were mixed."}],[{"name":"Tes — Bett / YouGov 2026 teacher survey","url":"https://www.tes.com/magazine/news/general/teacher-use-ai-soars-little-impact-working-hours","desc":"Self-reported: 55% of AI users said they worked the same hours. Survey is not comparable to EEF experimental trials."}],[{"name":"DfE — Schools White Paper, February 2026","url":"https://www.gov.uk/government/publications/every-child-achieving-and-thriving","desc":"Policy direction: high standards, inclusion and adaptive teaching. Some SEND changes remain proposals, not implemented requirements."},{"name":"EEF — SEND in mainstream schools","url":"https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/send","desc":"Explicit instruction, scaffolding, flexible grouping and metacognitive teaching approaches."},{"name":"DfE — SEND training for schools (September 2026)","url":"https://www.gov.uk/government/publications/send-training-for-schools-supporting-every-child-to-achieve-and-thrive","desc":"Recent government materials supporting SEND-inclusive teaching and support."}],[{"name":"GCSE Learning Hub","url":"https://rhsccs.org/j277-hub.html?year=10#lessons","desc":"Current classroom lessons and navigation."},{"name":"J277 interactive Catch Up example","url":"https://rhsccs.org/lessons/j277/lesson-003/learn.html","desc":"Separate access route for absent learners."},{"name":"J277 Revision Practice","url":"https://rhsccs.org/revision/j277/section-1-1/index.html#1.1","desc":"Existing linked revision practice."}],[{"name":"DfE — Using AI in education","url":"https://www.gov.uk/government/publications/generative-artificial-intelligence-in-education/generative-artificial-intelligence-ai-in-education","desc":"Oversight and safeguarding obligations for AI-supported work."},{"name":"Synergy MAT values","url":"https://www.synergymat.org.uk/about-our-trust/our-vision-values/","desc":"Collaborative and inclusive, while protecting subject autonomy."}],[{"name":"EEF — Implementation guidance","url":"https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/implementation","desc":"Explore, prepare, deliver and sustain. The pilot is proposed; savings are not yet measured."}],[{"name":"Synergy MAT vision","url":"https://www.synergymat.org.uk/about-our-trust/our-vision-values/","desc":"Stronger Together: collaborative learning without imposing identical teacher practice."},{"name":"Current Learning Hub","url":"https://rhsccs.org/","desc":"Computing implementation only. No trust-wide service or automatic synchronisation exists yet."}]];
 function render(){slides.forEach((s,i)=>{s.classList.toggle('active',i===index);s.setAttribute('aria-hidden',i===index?'false':'true')});document.querySelector('#count').textContent=String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');document.querySelector('#bar').style.width=((index+1)/slides.length*100)+'%';document.querySelector('#prev').disabled=index===0;document.querySelector('#next').disabled=index===slides.length-1;document.querySelector('#next').textContent=index===slides.length-1?'Finished':'Next →';document.title=slides[index].dataset.label+' | Synergy MAT · One lesson. More ways to learn.';if(document.querySelector('#drawer').classList.contains('open')) openDrawer();}
-function go(n){if(n<0||n>=slides.length)return;index=n;render()}
+function go(n){if(n<0||n>=slides.length)return;index=n;render();if(window.matchMedia('(max-width:700px)').matches)window.scrollTo({top:0,behavior:'instant'})}
 function openDrawer(){document.querySelector('#drawerTitle').textContent='Explore the evidence';const content='<div class="evidence-tag">FURTHER READING</div><h3>Why this matters</h3><p>These sources support the policy direction, workload opportunity or professional safeguards. They do not constitute an evaluation of the proposed Synergy pilot.</p>';document.querySelector('#drawerContent').innerHTML=content+sources[index].map(x=>`<a href="${x.url}" target="_blank" rel="noopener">${x.name} ↗</a><p>${x.desc}</p>`).join('');document.querySelector('#drawer').classList.add('open');document.querySelector('#overlay').classList.add('show');document.querySelector('#close').focus();}
 function closeDrawer(){document.querySelector('#drawer').classList.remove('open');document.querySelector('#overlay').classList.remove('show')}
 document.querySelector('#prev').addEventListener('click',()=>go(index-1));document.querySelector('#next').addEventListener('click',()=>go(index+1));document.querySelector('#evidence').addEventListener('click',openDrawer);document.querySelector('#close').addEventListener('click',closeDrawer);document.querySelector('#overlay').addEventListener('click',closeDrawer);
