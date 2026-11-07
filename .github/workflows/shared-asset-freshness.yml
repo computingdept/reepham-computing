@@ -1,0 +1,66 @@
+name: J277 H446 shared UI asset freshness
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'lessons/j277/**'
+      - 'lessons/h446/**'
+      - 'revision/j277/**'
+      - 'revision/h446/**'
+      - 'revision/shared/**'
+      - 'j277-hub.html'
+      - 'h446-hub.html'
+      - 'scripts/audit_shared_asset_versions.py'
+      - 'tests/test_audit_shared_asset_versions.py'
+      - '.github/workflows/shared-asset-freshness.yml'
+
+# Report only. Do not publish version changes until reviewed and browser-tested.
+permissions:
+  contents: read
+concurrency:
+  group: shared-ui-asset-freshness
+  cancel-in-progress: true
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test read-only scanner
+        run: python3 -m unittest discover -s tests -p test_audit_shared_asset_versions.py -v
+      - name: Inventory shared asset versions for J277 and H446
+        run: python3 scripts/audit_shared_asset_versions.py --output qa-output/shared-asset-freshness.json
+      - name: Summarise internal report
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('qa-output/shared-asset-freshness.json').read_text())
+          totals = data['totals']
+          report = [
+              '### J277 / H446 shared UI asset freshness (read only)',
+              f"Scanned {data['files_scanned']} source pages/files.",
+              f"Checked {data['references_checked']} references; "
+              f"{totals.get('current', 0)} use current content fingerprints; "
+              f"{totals.get('legacy_version', 0)} use older/version-label parameters; "
+              f"{totals.get('no_version', 0)} have no version.",
+              f"{data['pages_needing_version_review']} files need URL-version review.",
+              'This does not prove a browser cache is fresh and it does not change pupil pages.',
+              'Download the JSON artifact for affected file paths and exact asset versions.'
+          ]
+          text = '\n\n'.join(report)
+          print(text)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write(text + '\n')
+          PY
+      - name: Attach non-public QA report
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-asset-freshness-report
+          path: qa-output/shared-asset-freshness.json
+          retention-days: 14
