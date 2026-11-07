@@ -20,8 +20,12 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 LESSONS = (
     "/lessons/j277/lesson-001/index.html",
+    "/lessons/j277/lesson-002/index.html",
     "/lessons/j277/lesson-003/index.html",
+    "/lessons/j277/lesson-005/index.html",
     "/lessons/j277/lesson-020/index.html",
+    "/lessons/h446/lesson-002/index.html",
+    "/lessons/h446/lesson-007/index.html",
     "/lessons/h446/lesson-038/index.html",
 )
 PHASES = ("do-now", "overview", "new-learning", "i-do", "we-do",
