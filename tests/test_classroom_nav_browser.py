@@ -66,7 +66,14 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         self.assertTrue(page.locator(".donow-question").count() >= 4,
                         f"{path}: missing Do Now content")
         self.assertIn("Do Now", page.locator("#phase-logo").inner_text())
-        self.assertEqual(page.locator(".phase-nav > button").count(), 8)
+        phase_ids = page.locator(".phase-nav > button").evaluate_all(
+            "(buttons) => buttons.map(button => button.dataset.page)"
+        )
+        self.assertEqual([name for name in phase_ids if name in PHASES], list(PHASES),
+                         f"{path}: standard teaching phases changed")
+        self.assertIn(len(phase_ids), (8, 9))
+        self.assertTrue(set(phase_ids).issubset(set(PHASES) | {"exam-practice"}),
+                        f"{path}: unexpected teaching phase: {phase_ids}")
         self.assertFalse(errors, f"{path}: browser runtime exceptions: {errors}")
         return errors
 
