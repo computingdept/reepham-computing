@@ -271,6 +271,33 @@
   launch.type='button';launch.title='Reading tools';launch.setAttribute('aria-label','Reading tools: listen, zoom and reading view');
   launch.setAttribute('aria-expanded','false');launch.setAttribute('aria-controls','synergyListenPanel');
   launch.innerHTML=icon()+'<span class="synergy-voice-launch-label" aria-hidden="true">Tools</span>';
+  // Play/Pause is always visible; Stop appears only while reading.
+  // These use the same speech queue and voice preferences as the Tools panel.
+  const toolbar=document.createElement('div');
+  toolbar.className='synergy-voice-toolbar synergy-voice-tool';
+  toolbar.setAttribute('role','group');
+  toolbar.setAttribute('aria-label','Read aloud and reading tools');
+  const quickPlay=document.createElement('button');
+  quickPlay.type='button';quickPlay.className='synergy-voice-quick-play';
+  const quickStop=document.createElement('button');
+  quickStop.type='button';quickStop.className='synergy-voice-quick-stop';
+  quickStop.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg><span class="synergy-voice-control-label">Stop</span>';
+  quickStop.setAttribute('aria-label','Stop reading');
+  quickStop.hidden=true;
+  toolbar.append(quickPlay,quickStop,launch);
+  function updateQuickControls(){
+   const label=!active?'Play':paused?'Resume':'Pause';
+   const symbol=active&&!paused
+    ?'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>'
+    :'<path d="M8 5.5 19 12 8 18.5Z"/>';
+   quickPlay.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'+symbol+'</svg><span class="synergy-voice-control-label">'+label+'</span>';
+   quickPlay.setAttribute('aria-label',label+' reading aloud');
+   quickPlay.setAttribute('title',label+' reading aloud');
+   quickPlay.disabled=!supported;
+   quickStop.hidden=!active;
+   quickStop.disabled=!supported||!active;
+  }
+  updateQuickControls();
   const panel=document.createElement('section');
   panel.id='synergyListenPanel';panel.className='synergy-voice-panel synergy-voice-tool';panel.hidden=true;
   panel.setAttribute('aria-label','Listen settings');
@@ -289,18 +316,17 @@
   speedSelect.value=String(prefs.rate);speedLabel.append(speedSelect);
   const actions=document.createElement('div');actions.className='synergy-voice-actions';
   function button(text){const b=document.createElement('button');b.type='button';b.textContent=text;return b;}
-  const start=button('Play page'),navRead=button('Read navigation'),pauseButton=button('Pause'),stopButton=button('Stop'),tryVoice=button('Preview voice');
-  pauseButton.disabled=true;stopButton.disabled=true;
-  if(!supported){start.disabled=true;navRead.disabled=true;tryVoice.disabled=true;voiceSelect.disabled=true;speedSelect.disabled=true;}
-  actions.append(start,navRead,pauseButton,stopButton);
+  const navRead=button('Read navigation'),tryVoice=button('Preview voice');
+  if(!supported){navRead.disabled=true;tryVoice.disabled=true;voiceSelect.disabled=true;speedSelect.disabled=true;}
+  actions.append(navRead);
   const privacy=document.createElement('p');privacy.className='synergy-voice-note';
   privacy.textContent='On-device voices are preferred. Online voices may send spoken text to their provider.';
   const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   status.className='synergy-voice-status';status.textContent=supported?'Reads the currently visible page. Answers stay hidden until revealed.':'Speech is unavailable on this browser. Visual reading tools still work.';
   const readerControls=makeReaderControls();
   panel.append(head,readerControls,voiceLabel,speedLabel,tryVoice,actions,privacy,status);
-  // The same central Reading Tools control sits in the header on
-  // both Catch Up and J277/H446 Practice. No second launcher is created.
+  // Keep the single shared toolbar in the header on Catch Up and Practice;
+  // elsewhere it sits at the bottom-right without touching lesson navigation.
   const catchupHeader=document.querySelector('.catchup-top-inner');
   const practiceHeader=document.querySelector('header.practice-nav');
   const toolsHeader=catchupHeader||practiceHeader;
@@ -311,30 +337,28 @@
     launch.classList.add('synergy-voice-practice-launch');
     panel.classList.add('synergy-voice-practice-panel');
     const mark=practiceHeader.querySelector(':scope > .synergy-corner-mark');
-    if(mark)practiceHeader.insertBefore(launch,mark);
-    else practiceHeader.append(launch);
-   }else catchupHeader.append(launch);
+    if(mark)practiceHeader.insertBefore(toolbar,mark);
+    else practiceHeader.append(toolbar);
+   }else catchupHeader.append(toolbar);
    document.body.append(panel);
   }else{
-   document.body.append(launch,panel);
+   document.body.append(toolbar,panel);
   }
   const notify=message=>{
    status.textContent=message;
-   pauseButton.disabled=!active;
-   stopButton.disabled=!active;
-   pauseButton.textContent=paused?'Resume':'Pause';
+   updateQuickControls();
   };
   const unsubscribe=subscribe(()=>populate(voiceSelect));
   voiceSelect.addEventListener('change',()=>{stop();selectVoice(voiceSelect.value);notify('Voice selected. Choose Preview or Play page.');});
   speedSelect.addEventListener('change',()=>{stop();setRate(speedSelect.value);notify('Speed changed.');});
-  start.addEventListener('click',()=>{
+  quickPlay.addEventListener('click',()=>{
+   if(active){togglePause();return;}
    const chosen=String(window.getSelection?.()?.toString()||'').trim();
    if(chosen&&chosen.length<1501)return speak([chosen],notify);
    return speak(readVisibleContent(),notify);
   });
+  quickStop.addEventListener('click',stop);
   navRead.addEventListener('click',()=>speak(navigationLabels(),notify));
-  pauseButton.addEventListener('click',()=>togglePause());
-  stopButton.addEventListener('click',stop);
   tryVoice.addEventListener('click',()=>preview(notify));
   function show(opened){panel.hidden=!opened;launch.setAttribute('aria-expanded',String(opened));if(opened)voiceSelect.focus();else launch.focus();}
   launch.addEventListener('click',()=>show(panel.hidden));
