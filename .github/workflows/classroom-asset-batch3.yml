@@ -1,0 +1,73 @@
+name: Propose reviewed classroom asset batch 3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/version_course_classroom_batch.py'
+      - 'tests/test_version_course_classroom_batch.py'
+      - '.github/workflows/classroom-asset-batch3.yml'
+
+# This job creates a separate review branch, never edits main or deploys lessons.
+permissions:
+  contents: write
+
+concurrency:
+  group: reviewed-classroom-asset-batch3
+  cancel-in-progress: false
+
+jobs:
+  propose-version-only-batch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run atomic change safety tests
+        run: python3 -m unittest discover -s tests -p test_version_course_classroom_batch.py -v
+
+      - name: Prepare next 40 lesson version references (not live)
+        run: |
+          python3 scripts/version_course_classroom_batch.py --course j277 --start 11 --end 30 --write
+          python3 scripts/version_course_classroom_batch.py --course h446 --start 11 --end 30 --write
+          python3 scripts/version_course_classroom_batch.py --course j277 --start 11 --end 30 --check
+          python3 scripts/version_course_classroom_batch.py --course h446 --start 11 --end 30 --check
+          git diff --check
+
+      - name: Verify all changed paths are in the reviewed lesson ranges
+        run: |
+          python3 - <<'PY'
+          import re
+          import subprocess
+          paths = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
+          allowed = re.compile(r'^lessons/(j277|h446)/lesson-(0(?:1[1-9]|2[0-9]|30))/index\.html$')
+          if not paths or len(paths) > 40 or any(not allowed.fullmatch(path) for path in paths):
+              raise SystemExit('Unsafe file scope: ' + repr(paths))
+          print(f'{len(paths)} lesson entries selected for version-only review')
+          PY
+
+      - name: Store human-review patch
+        run: |
+          mkdir -p qa-output
+          git diff -- lessons/j277 lessons/h446 > qa-output/classroom-asset-batch3.patch
+      - name: Attach internal diff
+        uses: actions/upload-artifact@v4
+        with:
+          name: classroom-asset-batch3-review
+          path: qa-output/classroom-asset-batch3.patch
+          retention-days: 14
+
+      - name: Create a version-only review branch (never merge automatically)
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="automation/classroom-assets-batch3-$GITHUB_RUN_NUMBER"
+          git switch -c "$BRANCH"
+          git add -u lessons/j277 lessons/h446
+          git commit -m "Review-only: refresh classroom asset versions in lessons 011-030"
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "### Review-only classroom asset branch" >> "$GITHUB_STEP_SUMMARY"
+          echo "Candidate branch: $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+          echo "Student-facing main remains unchanged. Create a draft PR and run browser checks before merging." >> "$GITHUB_STEP_SUMMARY"
