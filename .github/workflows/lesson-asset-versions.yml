@@ -63,28 +63,14 @@ jobs:
           path: classroom-asset-version-pilot.patch
           retention-days: 14
 
-      - name: Propose reviewed changes rather than publishing automatically
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/classroom-asset-version-pilot
-          delete-branch: true
-          add-paths: |
-            lessons/j277/h446-adapter.js
-            lessons/j277/autumn2-rebuilt.js
-            lessons/j277/lesson-001/index.html
-            lessons/j277/lesson-003/index.html
-            lessons/j277/lesson-020/index.html
-            lessons/h446/lesson-038/index.html
-          commit-message: "chore: refresh pilot classroom asset hashes"
-          title: "Review: refresh shared lesson asset versions (pilot)"
-          body: |
-            Internal change only. This refreshes content-based cache versions
-            for J277 Lessons 001, 003 and 020, and H446 Lesson 038.
-            Shared lesson generators also receive updated nested references.
-
-            Safety checks: Python tests, idempotence, JavaScript syntax and
-            whitespace checks. No lesson questions, marking, navigation
-            behaviour, publishing method or student-visible status UI changed.
-
-            **Review before merge.** Merging remains a teacher decision.
+      - name: Report reviewed patch without publishing it
+        shell: bash
+        run: |
+          if [ -s classroom-asset-version-pilot.patch ]; then
+            echo "### Classroom asset version proposal" >> "$GITHUB_STEP_SUMMARY"
+            echo "Review the attached **classroom-asset-version-pilot** patch before publishing." >> "$GITHUB_STEP_SUMMARY"
+            echo "The student-facing site has **not** been changed by this workflow." >> "$GITHUB_STEP_SUMMARY"
+            echo "Create a separate review PR using authorised GitHub access." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Classroom pilot asset references are already up to date." >> "$GITHUB_STEP_SUMMARY"
+          fi
