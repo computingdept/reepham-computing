@@ -136,6 +136,35 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         finally:
             browser.close()
 
+    def test_j277_020_mcq_grid_is_two_by_two(self):
+        browser = self.playwright.chromium.launch(headless=True)
+        try:
+            for width, height in ((1366, 768), (390, 844)):
+                with self.subTest(viewport=width):
+                    page = browser.new_page(viewport={"width": width, "height": height})
+                    try:
+                        self.open_lesson(page, "/lessons/j277/lesson-020/index.html")
+                        card = page.locator("#do-now .donow-question").nth(1)
+                        self.assertIn("Which shape shows flowchart input/output?",
+                                      card.locator("p").inner_text())
+                        options = card.locator("ol.j277-mcq > li")
+                        self.assertEqual(options.all_inner_texts(),
+                                         ["Diamond", "Rectangle", "Parallelogram", "Oval"])
+                        boxes = [options.nth(i).bounding_box() for i in range(4)]
+                        self.assertTrue(all(boxes))
+                        a, b, c, d = boxes
+                        self.assertAlmostEqual(a["y"], b["y"], delta=3)
+                        self.assertAlmostEqual(c["y"], d["y"], delta=3)
+                        self.assertAlmostEqual(a["x"], c["x"], delta=3)
+                        self.assertAlmostEqual(b["x"], d["x"], delta=3)
+                        self.assertGreater(b["x"], a["x"] + 10)
+                        self.assertGreater(c["y"], a["y"] + 10)
+                        self.assertLessEqual(b["x"] + b["width"], width + 1)
+                    finally:
+                        page.close()
+        finally:
+            browser.close()
+
     def test_phone_phase_content_unchanged(self):
         browser = self.playwright.webkit.launch(headless=True)
         try:
