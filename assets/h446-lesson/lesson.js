@@ -2147,7 +2147,7 @@ if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}\//i.test(location.pathname)){
 (function(){
   if(document.querySelector('script[data-rhsc-site-nav]'))return;
   const script=document.createElement('script');
-  script.src='/assets/site-nav.js?v=20261107-quickbar1';
+  script.src='/assets/site-nav.js?v=20261108-classroom-compact1';
   script.dataset.rhscSiteNav='1';
   document.head.appendChild(script);
 })();
