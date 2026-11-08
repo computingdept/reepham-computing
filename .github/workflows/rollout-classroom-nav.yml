@@ -1,0 +1,90 @@
+name: Review J277 H446 classroom navigation rollout
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/rollout_classroom_nav.py"
+      - "tests/test_rollout_classroom_nav.py"
+      - ".github/workflows/rollout-classroom-nav.yml"
+  workflow_dispatch:
+
+# This workflow NEVER changes main or Pages. On passing checks it pushes a
+# separate review branch, which must be merged deliberately.
+permissions:
+  contents: write
+
+concurrency:
+  group: classroom-nav-rollout-review
+  cancel-in-progress: false
+
+jobs:
+  prepare-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out published source without changing deployment
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Install Python and the browser engines
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium webkit
+
+      - name: Validate no teaching content changes
+        run: python -m unittest discover -s tests -p test_rollout_classroom_nav.py -v
+
+      - name: Refresh only standard J277 and H446 asset URLs
+        run: |
+          python scripts/rollout_classroom_nav.py --write
+          python scripts/rollout_classroom_nav.py --check
+          git diff --check
+
+      - name: Check shared template JavaScript syntax
+        run: |
+          node --check assets/h446-lesson/lesson.js
+          node --check lessons/j277/h446-adapter.js
+          node --check lessons/j277/autumn2-rebuilt.js
+
+      - name: Browser check of lesson startup and stationary navigation
+        run: |
+          python -m unittest discover -s tests -p test_classroom_nav_browser.py -v -k test_desktop_j277_001_fixed_coordinates
+          python -m unittest discover -s tests -p test_classroom_nav_browser.py -v -k test_desktop_voice_controls_do_not_cover_exit_ticket
+          python -m unittest discover -s tests -p test_classroom_nav_browser.py -v -k test_standard_lesson_templates_initialise
+
+      - name: Prevent changes outside lesson asset entry points
+        shell: bash
+        run: |
+          python - <<'PY'
+          import subprocess
+          paths=subprocess.check_output(["git","diff","--name-only"],text=True).splitlines()
+          allowed={"lessons/j277/h446-adapter.js","lessons/j277/autumn2-rebuilt.js"}
+          for path in paths:
+              if path not in allowed and not (
+                  path.startswith(("lessons/j277/lesson-","lessons/h446/lesson-"))
+                  and path.endswith("/index.html")
+              ):
+                  raise SystemExit("Unexpected file changed: "+path)
+          if not paths:
+              raise SystemExit("Expected a version refresh; no changed files found")
+          print("Checked",len(paths),"asset-reference-only changes")
+          PY
+
+      - name: Push review branch, never main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="rollout/classroom-nav-$GITHUB_RUN_ID"
+          git switch -c "$BRANCH"
+          git add lessons/j277 lessons/h446
+          git diff --cached --check
+          git commit -m "Review classroom navigation cache versions for J277 and H446"
+          git push origin "$BRANCH"
+          echo "Review branch: $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+          echo "Student-facing website remains unchanged until this branch is merged." >> "$GITHUB_STEP_SUMMARY"
