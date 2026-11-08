@@ -153,6 +153,24 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
         match:actual.every((text,i)=>text===labels[i])};
     });
   }
+  try{
+    await cdp.send('DOM.enable');
+    await cdp.send('CSS.enable');
+    const doc=await cdp.send('DOM.getDocument');
+    const selected=await cdp.send('DOM.querySelector',{nodeId:doc.root.nodeId,selector:'#mobile-lesson-signals'});
+    const styles=await cdp.send('CSS.getMatchedStylesForNode',{nodeId:selected.nodeId});
+    const suspects=(styles.matchedCSSRules||[]).filter(item=>
+      (item.rule?.style?.cssProperties||[]).some(prop=>prop.name==='display')
+    ).map(item=>({
+      origin:item.rule.origin,
+      stylesheet:item.rule.styleSheetId,
+      selector:item.rule.selectorList?.text,
+      properties:item.rule.style.cssProperties.filter(prop=>prop.name==='display')
+        .map(prop=>({value:prop.value,important:prop.important,disabled:prop.disabled})),
+      source:item.rule.style.cssProperties?.[0]?.range
+    }));
+    console.log('MOBILE_CSS_CASCADE',JSON.stringify({suspects,inline:styles.inlineStyle?.cssProperties}));
+  }catch(error){console.log('MOBILE_CSS_CASCADE_ERROR',String(error))}
   let signals=await signalSnapshot();
   assert(signals.visible&&signals.count===3&&signals.svgCount===3,
     "All three classroom expectation icons appear in mobile title",JSON.stringify(signals));
