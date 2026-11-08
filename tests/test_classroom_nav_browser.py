@@ -254,9 +254,10 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                         self.assertEqual(quick.get_attribute("aria-label"), "Play reading aloud")
                         self.assertFalse(stop.is_visible())
 
-                        # Navigating to the next teaching phase must stop speech.
+                        # Student navigation must stop speech, including on
+                        # phones where the desktop phase strip is hidden.
                         quick.click()
-                        page.locator('.phase-nav button[data-page="overview"]').click()
+                        page.locator("#advance").evaluate("(button) => button.click()")
                         self.assertEqual(quick.get_attribute("aria-label"), "Play reading aloud")
                         self.assertFalse(stop.is_visible())
                     finally:
