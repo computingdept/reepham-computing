@@ -120,6 +120,57 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                 finally:
                     browser.close()
 
+    def test_desktop_voice_controls_do_not_cover_exit_ticket(self):
+        """Desktop Play/Pause/Stop/Tools must not cover the last phase button.
+
+        The quick toolbar always occupies 96px, both idle (2 controls) and
+        while speaking (3 controls). Its visible text is hidden only on
+        classroom desktops; accessible button names must remain intact.
+        """
+        for engine in ("chromium", "webkit"):
+            browser = getattr(self.playwright, engine).launch(headless=True)
+            try:
+                for width in (1024, 1043, 1280):
+                    with self.subTest(engine=engine, width=width):
+                        page = browser.new_page(viewport={"width": width, "height": 768})
+                        try:
+                            self.open_lesson(page, LESSONS[0])
+                            toolbar = page.locator("body > .synergy-voice-toolbar")
+                            toolbar.wait_for(timeout=20000)
+                            exit_button = page.locator('.phase-nav button[data-page="exit"]')
+                            self.assertTrue(exit_button.is_visible())
+                            self.assertTrue(toolbar.locator(".synergy-voice-quick-play")
+                                            .get_attribute("aria-label"))
+                            self.assertTrue(toolbar.locator("#synergyListenLaunch")
+                                            .get_attribute("aria-label"))
+                            for stopped in (True, False):
+                                # Force visible Stop without invoking browser speech.
+                                toolbar.locator(".synergy-voice-quick-stop").evaluate(
+                                    "(button, isHidden) => {button.hidden = isHidden}",
+                                    stopped,
+                                )
+                                voice = toolbar.bounding_box()
+                                exit_rect = exit_button.bounding_box()
+                                phase_rect = page.locator(".navwrap > .phase-nav").bounding_box()
+                                self.assertIsNotNone(voice)
+                                self.assertIsNotNone(exit_rect)
+                                self.assertIsNotNone(phase_rect)
+                                self.assertLessEqual(voice["width"], 97)
+                                self.assertLessEqual(
+                                    exit_rect["x"] + exit_rect["width"],
+                                    phase_rect["x"] + phase_rect["width"] + 1,
+                                    "Exit Ticket must remain inside the phase strip",
+                                )
+                                self.assertLessEqual(
+                                    exit_rect["x"] + exit_rect["width"],
+                                    voice["x"] - 1,
+                                    "Play/Tools must never cover Exit Ticket",
+                                )
+                        finally:
+                            page.close()
+            finally:
+                browser.close()
+
     def test_standard_lesson_templates_initialise(self):
         browser = self.playwright.chromium.launch(headless=True)
         try:
