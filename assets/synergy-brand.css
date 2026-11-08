@@ -206,16 +206,12 @@ body.central-legacy-hub .top .hubhome.synergy-brand .synergy-subline {
 }
 
 
-/* Lesson header consolidation · 2026-11-01.
-   Keep the mobile teaching cue icons hidden here because they already appear
-   in the bottom lesson key. The shared site-nav.js/site-nav.css now owns the
-   single Synergy Assist mark at the far right of the lesson navigation.
-   Do not add another mark to #mobile-lesson-status or .signal-wrap. */
+/* Lesson header consolidation · 2026-11-08.
+   The shared classroom stylesheet owns the three small phone teaching cues,
+   with the matching full-text key below the lesson. Branding must not hide
+   these cues: the separate Synergy Assist logo remains at top-right.
+   Keep the original Home/course-back icon treatment unchanged. */
 @media (max-width: 700px) {
-  body .navwrap #mobile-lesson-status .mobile-lesson-signals {
-    display: none !important;
-  }
-  /* The left edge stays reserved for the existing Home/course-back action. */
   body .navwrap .course-back::before {
     display: none !important;
   }
