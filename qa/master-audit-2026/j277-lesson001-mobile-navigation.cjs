@@ -77,6 +77,17 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
           groupStyleAttr:group?.getAttribute('style'),
           groupHiddenAttribute:group?.hasAttribute('hidden'),
           groupHiddenProperty:group?.hidden,
+          groupConnected:group?.isConnected,
+          parentConnected:group?.parentElement?.isConnected,
+          groupForcedImportantDisplay:(()=>{
+            if(!group)return null;
+            const prior=group.getAttribute('style');
+            group.style.setProperty('display','flex','important');
+            const result=getComputedStyle(group).display;
+            if(prior===null)group.removeAttribute('style');
+            else group.setAttribute('style',prior);
+            return result;
+          })(),
           groupForcedDisplay:(()=>{
             if(!group)return null;
             const prior=group.getAttribute('style');
