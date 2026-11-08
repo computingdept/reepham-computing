@@ -2361,6 +2361,48 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     color:var(--green-dark);
     font-weight:700;
   }
+
+  /* Compact Safari/classroom widths: give the eight phase buttons space
+     BEFORE the accessibility toolbar's 104px reserve. This is part of the
+     same desktop navigation owner, not another stylesheet override.
+     The action width is constant at each breakpoint; no state can shift it. */
+  @media (max-width:1100px){
+    body:not(.answer-page) .navwrap > .nav-tools{
+      width:196px;
+      min-width:196px;
+      max-width:196px;
+      grid-template-columns:51px 51px 84px;
+    }
+    body:not(.answer-page) .navwrap > .nav-tools > .teacher-next-action{
+      flex:0 0 84px;
+      width:84px;
+      min-width:84px;
+      max-width:84px;
+      font-size:10px;
+      padding:3px 2px;
+    }
+    body:not(.answer-page) .navwrap > .phase-nav{
+      left:316px;
+      right:104px;
+    }
+  }
+  @media (max-width:985px){
+    body:not(.answer-page) .navwrap > .phase-nav{
+      grid-template-columns:
+        minmax(45px,.8fr)
+        minmax(64px,1fr)
+        minmax(83px,1.28fr)
+        minmax(32px,.5fr)
+        minmax(37px,.59fr)
+        minmax(37px,.59fr)
+        minmax(85px,1.32fr)
+        minmax(63px,1fr);
+    }
+    body:not(.answer-page) .navwrap > .phase-nav > button{
+      font-size:9px;
+      padding:5px 1px;
+    }
+  }
   body:not(.answer-page) .navwrap #page-count{
     position:absolute;
     width:1px;
