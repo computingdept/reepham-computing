@@ -287,7 +287,7 @@
     if(document.querySelector('script[data-synergy-voice]'))return;
     const css=document.createElement('link');
     css.rel='stylesheet';
-    css.href='/assets/synergy-voice.css?v=20261107-quickbar1';
+    css.href='/assets/synergy-voice.css?v=20261108-classroom-compact1';
     css.dataset.synergyVoice='1';
     document.head.append(css);
     const script=document.createElement('script');
