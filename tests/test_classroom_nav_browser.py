@@ -265,6 +265,56 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                 finally:
                     browser.close()
 
+    def test_accessibility_toolbar_across_pages(self):
+        """No missing or covered Play / Tools controls in main page families."""
+        samples = (
+            ("/", False),
+            ("/ks3-computing.html?year=7", False),
+            ("/j277-hub.html?year=10", False),
+            ("/h446-hub.html?year=12", False),
+            ("/lessons/j277/lesson-001/index.html", False),
+            ("/lessons/h446/lesson-038/index.html", False),
+            ("/lessons/j277/lesson-001/learn.html", False),
+            ("/revision/j277/section-1-1/index.html", False),
+            ("/print-viewer.html?file=%2Frevision%2Fj277%2Fguides%2F"
+             "J277_Paper_1_Revision_Guide_AP1_Aligned.pdf&reading=0", True),
+        )
+        for engine, width, height in (("chromium", 390, 844),
+                                      ("webkit", 1366, 768)):
+            browser = getattr(self.playwright, engine).launch(headless=True)
+            try:
+                for path, pdf in samples:
+                    with self.subTest(engine=engine, path=path):
+                        page = browser.new_page(viewport={"width": width, "height": height})
+                        try:
+                            page.goto(f"http://127.0.0.1:{self.port}{path}",
+                                      wait_until="domcontentloaded", timeout=45000)
+                            group = page.locator(".viewer-actions" if pdf else ".synergy-voice-toolbar")
+                            group.wait_for(state="visible", timeout=15000)
+                            play = group.locator("#viewerQuickPlay" if pdf else ".synergy-voice-quick-play")
+                            tools = group.locator("#viewerTools" if pdf else "#synergyListenLaunch")
+                            stop = group.locator("#viewerQuickStop" if pdf else ".synergy-voice-quick-stop")
+                            play.wait_for(state="visible", timeout=15000)
+                            tools.wait_for(state="visible", timeout=15000)
+                            self.assertTrue(stop.is_hidden())
+                            for label, button in (("Play", play), ("Tools", tools)):
+                                box = button.bounding_box()
+                                self.assertIsNotNone(box, f"{path}: {label} box missing")
+                                self.assertGreaterEqual(box["x"], -1, path)
+                                self.assertGreaterEqual(box["y"], -1, path)
+                                self.assertLessEqual(box["x"] + box["width"], width + 1, path)
+                                self.assertLessEqual(box["y"] + box["height"], height + 1, path)
+                                self.assertTrue(button.evaluate("""(el) => {
+                                  const r = el.getBoundingClientRect();
+                                  const top = document.elementFromPoint(
+                                    r.left + r.width / 2, r.top + r.height / 2);
+                                  return top === el || el.contains(top);
+                                }"""), f"{path}: {label} is covered")
+                        finally:
+                            page.close()
+            finally:
+                browser.close()
+
     def test_standard_lesson_templates_initialise(self):
         browser = self.playwright.chromium.launch(headless=True)
         try:
