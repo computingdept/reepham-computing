@@ -200,6 +200,43 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         finally:
             browser.close()
 
+    def test_j277_generated_mcq_grid_across_years(self):
+        """Versioned J277 lesson wrappers must render MCQs in a 2×2 grid."""
+        samples = (19, 31, 80, 140, 164)
+        browser = self.playwright.chromium.launch(headless=True)
+        try:
+            for lesson in samples:
+                for width, height in ((1366, 768), (390, 844)):
+                    with self.subTest(lesson=lesson, width=width):
+                        page = browser.new_page(viewport={"width": width, "height": height})
+                        try:
+                            page.goto(
+                                f"http://127.0.0.1:{self.port}/lessons/j277/lesson-{lesson:03d}/index.html#do-now",
+                                wait_until="networkidle", timeout=45000,
+                            )
+                            options = page.locator(
+                                "#do-now .donow-questions .donow-question:nth-child(2) ol.j277-mcq > li"
+                            )
+                            options.first.wait_for(timeout=20000)
+                            self.assertEqual(options.count(), 4)
+                            a, b, c, d = [options.nth(i).bounding_box() for i in range(4)]
+                            self.assertTrue(all((a, b, c, d)))
+                            self.assertAlmostEqual(a["y"], b["y"], delta=3)
+                            self.assertAlmostEqual(c["y"], d["y"], delta=3)
+                            self.assertAlmostEqual(a["x"], c["x"], delta=3)
+                            self.assertAlmostEqual(b["x"], d["x"], delta=3)
+                            self.assertGreater(b["x"], a["x"] + 10)
+                            self.assertGreater(c["y"], a["y"] + 10)
+                            self.assertLessEqual(b["x"] + b["width"], width + 1)
+                            self.assertEqual(
+                                page.locator("#do-now .donow-stage[hidden]").count(), 4,
+                                "Answer screens must stay hidden until revealed",
+                            )
+                        finally:
+                            page.close()
+        finally:
+            browser.close()
+
     def test_phone_phase_content_unchanged(self):
         browser = self.playwright.webkit.launch(headless=True)
         try:
