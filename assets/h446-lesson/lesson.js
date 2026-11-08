@@ -1545,7 +1545,6 @@ function prepareMobileSwipeNavigation(){
   const phone=window.matchMedia('(max-width: 700px)');
 
   const navwrap=document.querySelector('.navwrap');
-  const courseBack=navwrap?.querySelector('.course-back');
   if(navwrap&&!document.getElementById('mobile-lesson-status')){
     const status=document.createElement('div');
     status.id='mobile-lesson-status';
@@ -1568,8 +1567,10 @@ function prepareMobileSwipeNavigation(){
       mini.appendChild(item);
     }
     status.appendChild(mini);
-    if(courseBack)courseBack.insertAdjacentElement('afterend',status);
-    else navwrap.prepend(status);
+    /* Keep lesson status outside the site-nav/Home/Independent link flex
+       group. When nested there it can shrink to zero width on phones,
+       hiding all three expectation icons. The navwrap owns its grid cell. */
+    navwrap.appendChild(status);
   }
   // A legend after the actual lesson content; never fixed over questions.
   const main=document.getElementById('main')||document.querySelector('main');
