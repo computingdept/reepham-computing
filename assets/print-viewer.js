@@ -72,6 +72,7 @@
     return;
   }
   const guidePdf=/^\/revision\/(?:j277|h446)\/guides\/(?:units\/)?[^/]+\.pdf$/i.test(file.pathname);
+  if(guidePdf)document.body.classList.add('revision-guide-reader');
   // Paper-first reading for J277/H446 revision guides and KS3/J277/H446
   // booklets. The visual page, read-aloud text and Print use ONE source PDF.
   const paperFirstBooklet=
@@ -375,10 +376,21 @@
     const controls=el('nav','booklet-page-controls');
     controls.setAttribute('aria-label',guidePdf?'Revision guide page navigation':'Booklet page navigation');
     const prev=el('button','booklet-page-prev','← Previous');
-    const count=el('strong','booklet-page-count','Page '+n+' of '+guideDocument.numPages);
+    const mobileGuide=guidePdf&&window.matchMedia('(max-width:540px)').matches;
+    const count=mobileGuide
+      ?el('button','booklet-page-count booklet-page-count-trigger',n+' / '+guideDocument.numPages)
+      :el('strong','booklet-page-count','Page '+n+' of '+guideDocument.numPages);
+    if(mobileGuide){
+      count.type='button';
+      count.setAttribute('aria-label','Page '+n+' of '+guideDocument.numPages+'. Tap to jump to another page.');
+      count.setAttribute('aria-controls','bookletPageJump');
+      count.setAttribute('aria-expanded','false');
+    }
     count.setAttribute('aria-live','polite');
     const next=el('button','booklet-page-next','Next →');
     prev.type=next.type='button';
+    prev.setAttribute('aria-label','Previous PDF page');
+    next.setAttribute('aria-label','Next PDF page');
     prev.disabled=n===1;next.disabled=n===guideDocument.numPages;
     prev.addEventListener('click',()=>renderBookletPage(n-1));
     next.addEventListener('click',()=>renderBookletPage(n+1));
@@ -386,6 +398,7 @@
     // Keep random access to any original PDF page without scroll hunting.
     if(guidePdf){
       const jump=el('div','booklet-page-jump');
+      jump.id='bookletPageJump';
       const jumpLabel=el('label','', 'Go to');
       const jumpInput=el('input','');
       jumpInput.type='number';
@@ -408,7 +421,18 @@
       jumpButton.addEventListener('click',go);
       jumpInput.addEventListener('keydown',event=>{
         if(event.key==='Enter'){event.preventDefault();go();}
+        if(event.key==='Escape'&&mobileGuide){
+          event.preventDefault();jump.classList.remove('is-open');
+          count.setAttribute('aria-expanded','false');count.focus();
+        }
       });
+      if(mobileGuide){
+        count.addEventListener('click',()=>{
+          const opened=jump.classList.toggle('is-open');
+          count.setAttribute('aria-expanded',String(opened));
+          if(opened){jumpInput.focus();jumpInput.select();}
+        });
+      }
       jump.append(jumpLabel,jumpButton);
       controls.append(jump);
     }
@@ -424,6 +448,19 @@
     zoomIn.addEventListener('click',()=>{bookletZoom=Math.min(2.5,Math.round((bookletZoom+.25)*100)/100);renderBookletPage(n);});
     zoomRow.append(zoomOut,zoomLabel,zoomIn);
     controls.append(prev,count,next,zoomRow);
+    if(guidePdf&&typeof document.documentElement.requestFullscreen==='function'){
+      const fullscreen=el('button','booklet-fullscreen','⛶');
+      fullscreen.type='button';
+      fullscreen.setAttribute('aria-label','Toggle fullscreen reading');
+      fullscreen.title='Toggle fullscreen';
+      fullscreen.addEventListener('click',async()=>{
+        try{
+          if(document.fullscreenElement)await document.exitFullscreen();
+          else await document.documentElement.requestFullscreen();
+        }catch(_){notice('Fullscreen is unavailable in this browser.');}
+      });
+      controls.append(fullscreen);
+    }
     inner.append(controls);
     const holder=el('div','booklet-page-scroll');
     holder.setAttribute('role','region');
@@ -433,6 +470,22 @@
     canvas.setAttribute('role','img');
     canvas.setAttribute('aria-label',(guidePdf?'Original revision guide':'Original printed booklet')+', page '+n+' of '+guideDocument.numPages);
     holder.append(canvas);
+    if(guidePdf){
+      let swipeStart=null;
+      holder.addEventListener('touchstart',event=>{
+        if(event.touches.length===1)
+          swipeStart={x:event.touches[0].clientX,y:event.touches[0].clientY};
+      },{passive:true});
+      holder.addEventListener('touchend',event=>{
+        if(!swipeStart||bookletZoom>1||!event.changedTouches.length)return;
+        const dx=event.changedTouches[0].clientX-swipeStart.x;
+        const dy=event.changedTouches[0].clientY-swipeStart.y;
+        swipeStart=null;
+        if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.35)return;
+        if(dx<0&&n<guideDocument.numPages)renderBookletPage(n+1);
+        else if(dx>0&&n>1)renderBookletPage(n-1);
+      },{passive:true});
+    }
     inner.append(holder);
     const speech=el('div','booklet-page-speech');
     speech.setAttribute('aria-label','Text extracted from the current PDF page for assistive reading');
@@ -440,11 +493,12 @@
     reading.replaceChildren(inner);
     reading.tabIndex=-1;
     applyPrefs();
+    if(guidePdf&&mobileGuide)byId('preview').scrollTop=0;
     const viewportBase=page.getViewport({scale:1});
     const container=byId('preview');
     // Fit to the viewport at 100%. Zoom enlarges the SAME page, not its text
     // in a separate layout; the page can then be panned horizontally.
-    const fitWidth=Math.min(840,Math.max(260,(container?.clientWidth||window.innerWidth||950)-38));
+    const fitWidth=Math.min(840,Math.max(220,(holder.clientWidth||container?.clientWidth||window.innerWidth||950)-12));
     const displayWidth=Math.round(fitWidth*bookletZoom);
     const displayScale=displayWidth/viewportBase.width;
     // Cap raster pixels to avoid large, high-DPI revision guides exhausting
