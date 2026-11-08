@@ -94,6 +94,24 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
             }
             return found.slice(-20);
           })(),
+          matchingDisplayRules:(()=>{
+            const matches=[];
+            for(const sheet of document.styleSheets){
+              function scan(rules,conditions){
+                for(const rule of rules){
+                  if(rule.selectorText&&(/display|all:|visibility|content-visibility/.test(rule.style?.cssText||''))){
+                    let match=false;
+                    try{match=group?.matches(rule.selectorText)}catch(_){}
+                    if(match)matches.push({sheet:sheet.href?.split('/').pop()||'inline',conditions,
+                       selector:rule.selectorText,style:rule.style.cssText.slice(0,600)});
+                  }
+                  if(rule.cssRules)scan(rule.cssRules,[...conditions,rule.conditionText||'']);
+                }
+              }
+              try{scan(sheet.cssRules,[])}catch(_){}
+            }
+            return matches.slice(-50);
+          })(),
           groupDisplay:group?getComputedStyle(group).display:null,
           groupVisibility:group?getComputedStyle(group).visibility:null,
           groupFlex:group?getComputedStyle(group).flex:null,
