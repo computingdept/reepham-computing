@@ -130,7 +130,7 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         for engine in ("chromium", "webkit"):
             browser = getattr(self.playwright, engine).launch(headless=True)
             try:
-                for width in (1024, 1043, 1280):
+                for width in (901, 950, 985, 1024, 1042, 1043, 1100, 1280):
                     with self.subTest(engine=engine, width=width):
                         page = browser.new_page(viewport={"width": width, "height": 768})
                         try:
@@ -139,6 +139,15 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                             toolbar.wait_for(timeout=20000)
                             exit_button = page.locator('.phase-nav button[data-page="exit"]')
                             self.assertTrue(exit_button.is_visible())
+                            # A clipped button can still return is_visible=True.
+                            strip = page.locator(".navwrap > .phase-nav")
+                            size = strip.evaluate(
+                                "(el) => ({scroll: el.scrollWidth, client: el.clientWidth})"
+                            )
+                            self.assertLessEqual(
+                                size["scroll"], size["client"] + 1,
+                                "All eight phase buttons must fit without clipping",
+                            )
                             self.assertTrue(toolbar.locator(".synergy-voice-quick-play")
                                             .get_attribute("aria-label"))
                             self.assertTrue(toolbar.locator("#synergyListenLaunch")
@@ -165,6 +174,19 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                     exit_rect["x"] + exit_rect["width"],
                                     voice["x"] - 1,
                                     "Play/Tools must never cover Exit Ticket",
+                                )
+                                # The floating Play/Tools bar must not intercept
+                                # a real click at the centre of Exit Ticket.
+                                hit = exit_button.evaluate("""(el) => {
+                                    const r = el.getBoundingClientRect();
+                                    const target = document.elementFromPoint(
+                                        r.left + r.width / 2, r.top + r.height / 2
+                                    );
+                                    return target === el || el.contains(target);
+                                }""")
+                                self.assertTrue(
+                                    hit,
+                                    "Exit Ticket is covered by another element",
                                 )
                         finally:
                             page.close()
