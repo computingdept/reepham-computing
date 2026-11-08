@@ -165,6 +165,41 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         finally:
             browser.close()
 
+    def test_j277_mcq_standard_static_and_special_pages(self):
+        """The adopted grid retains A/B on row 1 and C/D on row 2."""
+        browser = self.playwright.chromium.launch(headless=True)
+        try:
+            pages = (
+                ("/lessons/j277/lesson-001/index.html",
+                 "#do-now .donow-question ol.j277-mcq > li"),
+                ("/lessons/j277/lesson-002/index.html",
+                 "#do-now .donow-question ol.j277-mcq > li"),
+                ("/lessons/j277/lesson-113/index.html",
+                 ".do-now-question ol.j277-mcq > li"),
+            )
+            for lesson, selector in pages:
+                for width, height in ((1366, 768), (390, 844)):
+                    with self.subTest(lesson=lesson, viewport=width):
+                        page = browser.new_page(viewport={"width": width, "height": height})
+                        try:
+                            page.goto(f"http://127.0.0.1:{self.port}{lesson}",
+                                      wait_until="networkidle", timeout=45000)
+                            options = page.locator(selector)
+                            self.assertEqual(options.count(), 4)
+                            a, b, c, d = [options.nth(i).bounding_box() for i in range(4)]
+                            self.assertTrue(all((a, b, c, d)))
+                            self.assertAlmostEqual(a["y"], b["y"], delta=3)
+                            self.assertAlmostEqual(c["y"], d["y"], delta=3)
+                            self.assertAlmostEqual(a["x"], c["x"], delta=3)
+                            self.assertAlmostEqual(b["x"], d["x"], delta=3)
+                            self.assertGreater(b["x"], a["x"] + 10)
+                            self.assertGreater(c["y"], a["y"] + 10)
+                            self.assertLessEqual(b["x"] + b["width"], width + 1)
+                        finally:
+                            page.close()
+        finally:
+            browser.close()
+
     def test_phone_phase_content_unchanged(self):
         browser = self.playwright.webkit.launch(headless=True)
         try:
