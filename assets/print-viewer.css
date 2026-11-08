@@ -335,3 +335,84 @@ body.paper-first-booklet .booklet-page-jump input:focus-visible{
 }
 @media(max-width:360px){.viewer-header{grid-template-columns:80px minmax(0,1fr) auto}}
 @media print{.viewer-quick-control{display:none!important}}
+
+
+/* H446/J277 revision PDFs: compact, stable bottom navigation on phones.
+   Lesson booklets and desktop layout deliberately remain unchanged. */
+body.paper-first-booklet .booklet-fullscreen{display:none}
+@media(max-width:540px){
+  body.paper-first-booklet.revision-guide-reader .booklet-paper-instruction{display:none}
+  body.paper-first-booklet.revision-guide-reader .reading-view{
+    padding:4px 4px calc(82px + env(safe-area-inset-bottom));
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-controls{
+    position:fixed;z-index:88;left:0;right:0;bottom:0;
+    display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;
+    width:100%;max-width:none;min-height:58px;box-sizing:border-box;
+    margin:0;padding:6px max(6px,env(safe-area-inset-left))
+      calc(6px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-right));
+    gap:3px;border:0;border-top:1px solid #c8d8cf;border-radius:0;
+    background:#fff;box-shadow:0 -2px 12px #163b2c20;
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-controls button{
+    min-height:42px;padding:5px 7px;border-radius:8px;
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-prev,
+  body.paper-first-booklet.revision-guide-reader .booklet-page-next{
+    flex:0 0 42px;width:42px;min-width:42px;font-size:0;
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-prev::before{
+    content:"‹";font-size:28px;line-height:1
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-next::before{
+    content:"›";font-size:28px;line-height:1
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-count-trigger{
+    min-width:63px;flex:0 1 auto;white-space:nowrap;
+    font-size:13px;font-weight:850;padding:5px 4px;
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-zoom{
+    flex:0 0 auto;gap:3px;margin:0;padding:0;border-left:0
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-zoom button{
+    min-width:34px;width:34px;font-size:21px;padding:3px 4px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-zoom-label{
+    min-width:41px;font-size:12px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-fullscreen{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:36px;width:36px;font-size:22px;padding:4px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-jump{
+    position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);
+    display:none;align-items:center;gap:8px;width:max-content;
+    max-width:calc(100vw - 20px);margin:0;padding:8px 10px;
+    background:#fff;border:1px solid #b4c8ba;border-radius:10px;
+    box-shadow:0 6px 20px #163b2c26
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-jump.is-open{display:flex}
+  body.paper-first-booklet.revision-guide-reader .booklet-page-jump input{
+    width:65px;min-height:42px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-scroll{
+    width:100%;max-width:100%;padding:2px 2px 10px;
+    overflow-x:auto;overscroll-behavior-x:contain
+  }
+}
+@media(max-width:370px){
+  body.paper-first-booklet.revision-guide-reader .booklet-page-prev,
+  body.paper-first-booklet.revision-guide-reader .booklet-page-next{
+    flex-basis:38px;width:38px;min-width:38px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-page-count-trigger{
+    min-width:54px;padding-inline:2px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-zoom button{
+    width:31px;min-width:31px
+  }
+  body.paper-first-booklet.revision-guide-reader .booklet-zoom-label{min-width:38px}
+}
+@media print{
+  body.paper-first-booklet.revision-guide-reader .booklet-page-controls{display:none!important}
+}
