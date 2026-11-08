@@ -155,6 +155,8 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
   }
   try{
     await cdp.send('DOM.enable');
+    const sheetHeaders=[];
+    cdp.on('CSS.styleSheetAdded',event=>sheetHeaders.push(event.header));
     await cdp.send('CSS.enable');
     const doc=await cdp.send('DOM.getDocument');
     const selected=await cdp.send('DOM.querySelector',{nodeId:doc.root.nodeId,selector:'#mobile-lesson-signals'});
@@ -169,7 +171,17 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
         .map(prop=>({value:prop.value,important:prop.important,disabled:prop.disabled})),
       source:item.rule.style.cssProperties?.[0]?.range
     }));
-    console.log('MOBILE_CSS_CASCADE',JSON.stringify({suspects,inline:styles.inlineStyle?.cssProperties}));
+    const highPriority=suspects.filter(x=>x.properties?.some(p=>p.important));
+    const source=[];
+    for(const item of highPriority){
+      const header=sheetHeaders.find(h=>h.styleSheetId===item.stylesheet);
+      const response=await cdp.send('CSS.getStyleSheetText',{styleSheetId:item.stylesheet});
+      const raw=response.text||'';
+      const at=raw.indexOf(item.selector);
+      source.push({header,at,context:raw.slice(Math.max(0,at-350),at+400),
+        sheetLength:raw.length});
+    }
+    console.log('MOBILE_CSS_CASCADE',JSON.stringify({suspects,source,inline:styles.inlineStyle?.cssProperties}));
   }catch(error){console.log('MOBILE_CSS_CASCADE_ERROR',String(error))}
   let signals=await signalSnapshot();
   assert(signals.visible&&signals.count===3&&signals.svgCount===3,
