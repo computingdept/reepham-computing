@@ -75,6 +75,17 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
           viewport:window.innerWidth,
           isPhoneQuery:matchMedia('(max-width:700px)').matches,
           groupStyleAttr:group?.getAttribute('style'),
+          groupHiddenAttribute:group?.hasAttribute('hidden'),
+          groupHiddenProperty:group?.hidden,
+          groupForcedDisplay:(()=>{
+            if(!group)return null;
+            const prior=group.getAttribute('style');
+            group.style.display='flex';
+            const result=getComputedStyle(group).display;
+            if(prior===null)group.removeAttribute('style');
+            else group.setAttribute('style',prior);
+            return result;
+          })(),
           signalRules:(()=>{
             const found=[];
             for(const sheet of document.styleSheets){
