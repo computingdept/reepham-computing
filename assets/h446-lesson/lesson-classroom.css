@@ -2362,6 +2362,39 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     font-weight:700;
   }
 
+  /* CLASSROOM TOOLBAR COLLISION GUARD · 2026-11-08
+     The voice module can arrive after the classroom CSS and an older cached
+     voice stylesheet may still give Play/Tools a ~190px floating width.
+     Classroom phases own all pixels before the 104px right-hand reserve.
+     Keep the voice group within that space, including its Stop state. */
+  body:not(.answer-page):has(> .navwrap) > .synergy-voice-toolbar{
+    box-sizing:border-box!important;
+    position:fixed!important;
+    right:5px!important;
+    bottom:10px!important;
+    width:96px!important;
+    min-width:96px!important;
+    max-width:96px!important;
+    height:50px!important;
+    padding:2px!important;
+    gap:2px!important;
+  }
+  body:not(.answer-page):has(> .navwrap) > .synergy-voice-toolbar > button{
+    box-sizing:border-box!important;
+    flex:1 1 0!important;
+    width:0!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0!important;
+    margin:0!important;
+  }
+  body:not(.answer-page):has(> .navwrap) > .synergy-voice-toolbar
+    :is(.synergy-voice-launch-label,.synergy-voice-control-label){
+    display:none!important;
+  }
+
   /* Compact Safari/classroom widths: give the eight phase buttons space
      BEFORE the accessibility toolbar's 104px reserve. This is part of the
      same desktop navigation owner, not another stylesheet override.
