@@ -193,6 +193,77 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
             finally:
                 browser.close()
 
+    def test_shared_read_aloud_play_pause_resume_stop(self):
+        """Functional quick-control check without playing audio in CI.
+
+        A browser speech stub lets us verify the *real* lesson toolbar state
+        transitions in Chromium and WebKit, on desktop and mobile, while
+        keeping every lesson answer and phase-navigation engine unchanged.
+        """
+        stub = r"""
+          (() => {
+            const mock = {
+              getVoices: () => [{voiceURI:'test-british',name:'Test British',lang:'en-GB',localService:true}],
+              addEventListener: () => {},
+              speak: (utterance) => {
+                window.__ttsStarted = (window.__ttsStarted || 0) + 1;
+                window.__ttsText = utterance.text;
+              },
+              pause: () => { window.__ttsPaused = true; },
+              resume: () => { window.__ttsPaused = false; },
+              cancel: () => { window.__ttsCancelled = true; }
+            };
+            Object.defineProperty(window, 'speechSynthesis', {
+              configurable: true, value: mock
+            });
+            Object.defineProperty(window, 'SpeechSynthesisUtterance', {
+              configurable: true, value: class { constructor(text) { this.text = text; } }
+            });
+          })();
+        """
+        cases = (
+            ("chromium", 1366, 768, "/lessons/j277/lesson-001/index.html"),
+            ("webkit", 390, 844, "/lessons/h446/lesson-038/index.html"),
+        )
+        for engine, width, height, path in cases:
+            with self.subTest(browser=engine, width=width, lesson=path):
+                browser = getattr(self.playwright, engine).launch(headless=True)
+                try:
+                    page = browser.new_page(viewport={"width": width, "height": height})
+                    try:
+                        page.add_init_script(stub)
+                        self.open_lesson(page, path)
+                        toolbar = page.locator(".synergy-voice-toolbar")
+                        toolbar.wait_for(timeout=15000)
+                        self.assertEqual(toolbar.count(), 1)
+                        quick = toolbar.locator(".synergy-voice-quick-play")
+                        stop = toolbar.locator(".synergy-voice-quick-stop")
+                        self.assertEqual(quick.get_attribute("aria-label"), "Play reading aloud")
+                        self.assertFalse(stop.is_visible())
+                        quick.click()
+                        self.assertEqual(quick.get_attribute("aria-label"), "Pause reading aloud")
+                        self.assertTrue(stop.is_visible())
+                        self.assertGreater(page.evaluate("window.__ttsStarted || 0"), 0)
+                        quick.click()
+                        self.assertEqual(quick.get_attribute("aria-label"), "Resume reading aloud")
+                        self.assertTrue(page.evaluate("window.__ttsPaused"))
+                        quick.click()
+                        self.assertEqual(quick.get_attribute("aria-label"), "Pause reading aloud")
+                        self.assertFalse(page.evaluate("window.__ttsPaused"))
+                        stop.click()
+                        self.assertEqual(quick.get_attribute("aria-label"), "Play reading aloud")
+                        self.assertFalse(stop.is_visible())
+
+                        # Navigating to the next teaching phase must stop speech.
+                        quick.click()
+                        page.locator('.phase-nav button[data-page="overview"]').click()
+                        self.assertEqual(quick.get_attribute("aria-label"), "Play reading aloud")
+                        self.assertFalse(stop.is_visible())
+                    finally:
+                        page.close()
+                finally:
+                    browser.close()
+
     def test_standard_lesson_templates_initialise(self):
         browser = self.playwright.chromium.launch(headless=True)
         try:
