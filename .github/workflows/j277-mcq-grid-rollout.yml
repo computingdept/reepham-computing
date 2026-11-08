@@ -1,0 +1,74 @@
+name: J277 approved Do Now MCQ layout rollout (review-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/version_course_classroom_batch.py'
+      - 'tests/test_version_course_classroom_batch.py'
+      - '.github/workflows/j277-mcq-grid-rollout.yml'
+
+# This job only creates a separate candidate branch; it never deploys lessons.
+permissions:
+  contents: write
+
+concurrency:
+  group: reviewed-j277-mcq-grid-rollout
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test all-or-nothing version-only update rules
+        run: python3 -m unittest discover -s tests -p test_version_course_classroom_batch.py -v
+      - name: Prepare current renderer URLs for standard J277 lessons
+        run: |
+          python3 scripts/version_course_classroom_batch.py --course j277 --start 3 --end 164 --skip 113 --write
+          python3 scripts/version_course_classroom_batch.py --course j277 --start 3 --end 164 --skip 113 --check
+          git diff --check
+      - name: Reject changes other than version query parameters
+        run: |
+          python3 - <<'PY'
+          import re
+          import subprocess
+          paths=subprocess.check_output(['git','diff','--name-only'],text=True).splitlines()
+          if not paths: raise SystemExit('No files changed')
+          for path in paths:
+              m=re.fullmatch(r'lessons/j277/lesson-(\d{3})/index\.html',path)
+              if not m or not 3<=int(m[1])<=164 or int(m[1])==113:
+                  raise SystemExit('Unexpected file change: '+path)
+              before=subprocess.check_output(['git','show','HEAD:'+path],text=True)
+              after=open(path,encoding='utf-8').read()
+              clean=lambda x:re.sub(r'\?v=[A-Za-z0-9_.-]+','?v=HASH',x)
+              if clean(before)!=clean(after):
+                  raise SystemExit('Non-version edit: '+path)
+          print('Validated',len(paths),'J277 lesson entry pages: version strings only')
+          PY
+      - name: Store patch for reviewer
+        run: |
+          mkdir -p qa-output
+          git diff -- lessons/j277 > qa-output/j277-approved-mcq-grid-rollout.patch
+      - name: Upload private review patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-mcq-grid-rollout-review
+          path: qa-output/j277-approved-mcq-grid-rollout.patch
+          retention-days: 14
+      - name: Create candidate branch without merging or publishing
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="automation/j277-mcq-grid-rollout-$GITHUB_RUN_NUMBER"
+          git switch -c "$BRANCH"
+          git add -u lessons/j277
+          git commit -m "Review-only: refresh J277 generator versions for approved MCQ grid"
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "### J277 MCQ 2×2 rollout prepared" >> "$GITHUB_STEP_SUMMARY"
+          echo "Review branch: $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+          echo "No lesson content or pupil-facing page was changed by this workflow." >> "$GITHUB_STEP_SUMMARY"
+          echo "Open a draft PR; browser-test before merging." >> "$GITHUB_STEP_SUMMARY"
