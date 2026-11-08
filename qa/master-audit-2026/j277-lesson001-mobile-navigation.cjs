@@ -73,6 +73,27 @@ const PAGE=ORIGIN+"/lessons/j277/lesson-001/index.html";
         visible:!!r&&r.width>0&&r.height>0,
         diag:{
           viewport:window.innerWidth,
+          isPhoneQuery:matchMedia('(max-width:700px)').matches,
+          groupStyleAttr:group?.getAttribute('style'),
+          signalRules:(()=>{
+            const found=[];
+            for(const sheet of document.styleSheets){
+              const scan=(rules,where)=>{
+                for(const rule of rules){
+                  if(rule.selectorText?.includes('mobile-lesson-signals')){
+                    let matches=false;
+                    try{matches=group?.matches(rule.selectorText)}catch(_){}
+                    found.push({sheet:sheet.href?.split('/').pop()||'inline',at:where,
+                      selector:rule.selectorText,display:rule.style?.display,
+                      matches,groupContains:group?.parentElement?.matches(rule.selectorText)});
+                  }
+                  if(rule.cssRules)scan(rule.cssRules,where+' '+(rule.conditionText||''));
+                }
+              };
+              try{scan(sheet.cssRules,'root')}catch(_){}
+            }
+            return found.slice(-20);
+          })(),
           groupDisplay:group?getComputedStyle(group).display:null,
           groupVisibility:group?getComputedStyle(group).visibility:null,
           groupFlex:group?getComputedStyle(group).flex:null,
