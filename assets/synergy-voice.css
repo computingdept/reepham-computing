@@ -280,3 +280,53 @@ header.practice-nav > .synergy-voice-toolbar{
  }
 }
 @media print{.synergy-voice-toolbar{display:none!important}}
+
+
+/* CLASSROOM LESSON COMPACT VOICE TOOLBAR · 2026-11-08
+   The desktop classroom phase bar reserves 104px for the voice controls.
+   Full Play / Stop / Tools labels occupy ~190px and cover Key Vocabulary and
+   Exit Ticket. Keep all actions, accessible names and tooltips, but use a
+   constant-size icon group only on lesson screens. If Stop appears during
+   speech, three icons share the SAME width; no phase is ever obscured.
+   Does not affect phones, Catch Up, revision, hubs, or PDF Reading View. */
+@media (min-width:901px) and (min-height:500px) {
+  body:has(> .navwrap) > .synergy-voice-toolbar {
+    box-sizing:border-box;
+    right:6px;
+    bottom:10px;
+    display:flex;
+    align-items:center;
+    width:96px;
+    min-width:96px;
+    max-width:96px;
+    height:50px;
+    padding:2px;
+    gap:2px;
+    border-radius:10px;
+  }
+  body:has(> .navwrap) > .synergy-voice-toolbar > button,
+  body:has(> .navwrap) > .synergy-voice-toolbar > .synergy-voice-launch {
+    position:static;
+    box-sizing:border-box;
+    flex:1 1 0;
+    width:0;
+    min-width:0;
+    max-width:none;
+    height:44px;
+    min-height:44px;
+    margin:0;
+    padding:0;
+    gap:0;
+    border-radius:7px;
+  }
+  body:has(> .navwrap) > .synergy-voice-toolbar :is(
+    .synergy-voice-control-label,.synergy-voice-launch-label
+  ) {
+    display:none;
+  }
+  body:has(> .navwrap) > .synergy-voice-toolbar > button svg {
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+  }
+}
