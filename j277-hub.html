@@ -193,7 +193,7 @@ body.course-hub .course-nav .j277-skills-nav:focus-visible{
 <link rel="stylesheet" href="assets/synergy-shell.css?v=20261101-brand1">
 <link rel="stylesheet" href="assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="assets/synergy-course-bar.css?v=20261101-unified1">
-<script src="assets/hub-navigation.js?v=20261101-paper-all10"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
+<script src="assets/hub-navigation.js?v=20261110-no-tab-scroll1"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
 </head><body class="course-hub course-compact course-inline-nav" data-year="10">
 <header class="topbar"><a class="brand synergy-brand" href="/" aria-label="Synergy Assist Learning Hub home"><span class="synergy-brand-icon" aria-hidden="true"></span><span class="brand-copy"><strong>SYNERGY ASSIST</strong><span>Computing Learning Hub</span></span></a><a class="home" href="/">Learning Hub</a></header>
 <main><div class="course-topline"><div class="course-intro"><div class="heading"><div><p class="eyebrow">OCR J277 · GCSE</p><h1>Computer Science</h1></div></div></div>
@@ -578,6 +578,6 @@ function renderLessons(){
   document.getElementById('lessonCount').textContent=total+' planned lesson positions';
 }
 window.addEventListener('offline-booklets-loaded',renderLessons);
-applyYearTheme();updateYearNavigation();showSpecLegend();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',revisionhub:'revisionhub'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();showSpecLegend();const requestedSection=(window.RHSCInitialHubSection||location.hash).slice(1);const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',revisionhub:'revisionhub'}[requestedSection]||requestedSection||'lessons');openTab(requestedTab);renderLessons();
 </script><script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
 </body></html>
