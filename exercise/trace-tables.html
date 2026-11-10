@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e1a2d">
+<title>OCR J277 | Exam Reference Language Trace Table Challenges</title>
+<style>
+:root{--navy:#003a31;--navy2:#0e493c;--blue:#006347;--lightblue:#e9f2ee;--sky:#cbe3d8;--ink:#18231f;--muted:#61706a;--line:#d5e0dc;--paper:#fff;--bg:#f4f7f6;--green:#16815b;--softgreen:#e9f8f1;--amber:#d58b19;--softamber:#fff7df;--red:#b94343;--softred:#fff0f0;--radius:14px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.5}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:3px solid #ffbd53;outline-offset:2px}a{color:inherit}
+.top{background:var(--navy);color:#fff}.top-inner{max-width:1600px;margin:auto;min-height:72px;padding:14px 23px;display:flex;align-items:center;gap:17px}.logo{height:42px;width:42px;background:#3377ee;display:grid;place-items:center;border-radius:11px;font-weight:900;font-size:24px;box-shadow:inset 0 -3px 0 #1c56be}.brand{line-height:1.25}.brand strong{display:block;font-size:17px;letter-spacing:.01em}.brand small{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#bbceec}.top-meta{margin-left:auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap}.top-meta span{border:1px solid #425473;color:#d2e4fc;font-weight:650;font-size:11px;border-radius:99px;padding:6px 12px}.top-meta a{color:#bcd8ff;font-weight:700;text-decoration:none}.wrap{max-width:1600px;margin:0 auto;padding:20px 23px 27px}
+.heading-row{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.kicker{margin:0 0 2px;color:#3464ad;text-transform:uppercase;font-weight:800;font-size:11px;letter-spacing:.13em}h1{margin:0;font-size:clamp(22px,2.4vw,32px);line-height:1.16;letter-spacing:-.035em}h2{margin:0;font-size:18px;letter-spacing:-.02em}h3{margin:0;font-size:14px}p{margin:0}.subtitle{margin-top:8px;color:var(--muted);font-size:13px}.progressbar{border-radius:99px;background:#e0e8f4;width:min(265px,38vw);height:9px;overflow:hidden}.progressbar>div{height:100%;background:linear-gradient(90deg,#23a77c,#65cbaa);width:0;transition:width .35s}.progress-text{font-weight:800;font-size:13px;white-space:nowrap}.progressbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.navzone{margin-top:19px;background:white;border:1px solid var(--line);border-radius:15px;padding:12px 15px;box-shadow:0 2px 5px #192c4707}.category-nav{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.cat-btn{border:none;background:#f1f4f9;border-radius:9px;padding:8px 12px;color:#54657f;font-weight:800;font-size:12px}.cat-btn[aria-pressed="true"]{background:var(--navy);color:#fff}.challenge-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px;max-height:102px;overflow-y:auto}.number-btn{min-width:40px;height:39px;padding:0 9px;border:1px solid #d6dfed;background:#fff;color:#405671;border-radius:9px;font-size:13px;font-weight:800;position:relative}.number-btn:hover{border-color:#699bee}.number-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 2px 8px #2261e83f}.number-btn.done:not(.active){background:#e2f6ec;color:#106743;border-color:#a6dcc2}.number-btn.done:after{content:'✓';font-size:9px;position:absolute;top:0;right:3px}.nav-description{font-size:11px;color:var(--muted);margin-top:7px}
+.workspace{display:grid;grid-template-columns:minmax(310px,.91fr) minmax(500px,1.32fr);gap:16px;margin-top:16px;align-items:stretch}.panel{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 3px 12px #1528440a;min-width:0;overflow:hidden}.panel-header{padding:16px 17px 14px;border-bottom:1px solid var(--line);background:#fff}.titleline{display:flex;align-items:center;justify-content:space-between;gap:10px}.eyebrow{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.11em;color:#657b9a}.difficulty{padding:4px 9px;background:#f0f4fa;border-radius:99px;color:#536681;font-size:10px;font-weight:800}.challenge-detail{margin-top:6px;font-size:12px;color:var(--muted);min-height:18px}.code-panel{display:flex;flex-direction:column;min-height:525px}.code-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 15px;background:#f8fafc;border-bottom:1px solid #e5ecf5}.code-toolbar small{font-weight:800;color:#5e738f;font-size:11px}.pill{background:#e5f0fe;color:#215eb5;font-size:10px;padding:4px 8px;font-weight:800;border-radius:99px}.codebox{background:#111d31;color:#dceafa;padding:12px 8px;overflow:auto;max-height:335px;flex-shrink:0}.code-line{display:flex;align-items:stretch;min-height:25px;font-family:Consolas,"Cascadia Code",monospace;font-size:12px;white-space:pre;line-height:25px;border-radius:5px;transition:background .1s}.code-line .ln{display:block;text-align:right;flex:0 0 35px;color:#788bac;user-select:none;padding-right:10px;border-right:1px solid #354661}.code-line .src{padding-left:13px;white-space:pre}.code-line.active-code{background:#654d23;color:#fff2cb}.code-line.active-code .ln{color:#ffd484}.code-line.active-code .src:before{content:'▶';color:#ffd77b;margin-left:-13px;padding-right:4px;font-size:9px}.code-line .kw{color:#92c5ff;font-weight:700}.code-line .str{color:#aee6ba}.code-line .num{color:#f7ca92}.code-line .comment{color:#97a6bb}.code-line.active-code .kw,.code-line.active-code .str,.code-line.active-code .num{color:inherit}
+.array-area{padding:13px 16px 14px;background:#fcfdff;border-top:1px solid var(--line);flex:1;overflow-y:auto}.array-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.array-top strong{font-size:12px}.array-top small{font-size:10px;color:var(--muted)}.array-list{display:flex;flex-wrap:wrap;gap:13px}.array-item{min-width:0}.array-name{font-family:Consolas,monospace;font-size:11px;font-weight:700;color:#536a8a;margin:0 0 7px}.array-strip{display:flex;gap:4px}.array-cell{min-width:46px;max-width:85px;min-height:44px;border:1px solid #cfdbec;background:#fff;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3px 6px;gap:1px}.array-cell .idx{font-size:10px;color:#8192a8}.array-cell .val{font-size:13px;font-weight:850;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap}.array-cell.highlight{border:2px solid #e5a529;background:#ffefc4}.matrix{border-collapse:separate;border-spacing:4px;margin:-3px 0}.matrix th{min-width:26px;color:#61728b;text-align:center;font-size:10px;font-weight:800}.matrix td{min-width:47px;height:39px;text-align:center;border:1px solid #cfdbe9;background:#fff;font-size:13px;font-weight:800;border-radius:7px;padding:5px}.matrix td.highlight{background:#fff0c4;border:2px solid #dea028}
+.trace-panel{display:flex;flex-direction:column;min-height:525px}.instructions{border-left:3px solid #448af1;background:#f0f6ff;margin:12px 15px 0;padding:9px 11px;border-radius:0 7px 7px 0;color:#3e5678;font-size:11px;line-height:1.55}.instructions strong{color:#17355d}.table-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 15px 9px}.table-title strong{font-size:12px}.table-title small{color:#7b8a9e;font-weight:700;font-size:10px}.table-shell{overflow:auto;max-height:420px;margin:0 15px;border:1px solid var(--line);border-radius:9px;position:relative}.trace-table{border-collapse:separate;border-spacing:0;width:100%;min-width:max-content}.trace-table th{position:sticky;top:0;z-index:2;background:#ecf1f8;border-right:1px solid #d4ddeb;border-bottom:1px solid #cfdbeb;color:#385573;padding:8px 6px;font-size:11px;line-height:1.2;white-space:nowrap}.trace-table th:last-child,.trace-table td:last-child{border-right:0}.trace-table td{border-right:1px solid #e2e9f3;border-bottom:1px solid #e2e9f3;text-align:center;padding:4px 5px;height:40px}.trace-table tr:last-child td{border-bottom:0}.trace-table tr.row-active td{background:#fff9e9}.trace-table tr.row-invalid td{background:#fff5f3}.trace-table input{width:77px;min-width:67px;text-align:center;padding:7px 4px;border:1px solid #dfe6f0;background:#fff;border-radius:5px;color:#203c61;font-size:12px}.trace-table .line-input{width:48px;min-width:48px;font-weight:800}.trace-table input:focus{background:#f5faff}.trace-table .array-input{width:170px}.trace-table .output-input{width:120px}.trace-table .action-input{width:117px}.trace-table .condition-input{width:72px}.trace-table input.good{border-color:#55ad89;background:#eafaf2}.trace-table input.bad{border-color:#d77e7e;background:#fff0ee}.trace-table .sol-cell{padding:7px 8px;white-space:nowrap;color:#213951;font-family:Consolas,monospace;font-size:12px}.trace-table .sol-cell.emphasis{background:#e7f5ec;color:#136947;font-weight:750}.trace-table .sol-cell.line-number{font-weight:900;color:#245db2}.trace-table tr.solution-latest td{background:#fff2cd!important}.trace-table .sol-cell.empty{color:#b5c0d0}.trace-table th.array-header{color:#735018;background:#fcf4dc}.trace-table th.condition-header{color:#116c69;background:#e9f6f3}.trace-table th.output-header{color:#0d6745;background:#e2f5e8}.trace-table th.action-header{color:#7650a4;background:#f0eafa}
+.controls{padding:13px 15px 7px;display:flex;flex-wrap:wrap;gap:7px}.btn{border:1px solid #d6e0ed;background:white;border-radius:9px;padding:8px 12px;font-weight:800;font-size:12px;color:#3c5575;min-height:34px}.btn:hover:not(:disabled){background:#f1f6fe;border-color:#7caaed}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.primary:hover:not(:disabled){background:#124dcb}.btn.dark{background:#213450;color:#fff;border-color:#213450}.btn.purple{background:#f1ebff;color:#5f43a8;border-color:#dfd0ff}.btn.low{border:0;background:transparent;text-decoration:underline;padding:6px 9px}.btn.icon{font-size:15px;min-width:38px}.control-line{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:4px 15px 0}.feedback{margin:8px 15px 14px;min-height:39px;padding:10px 12px;border-radius:8px;font-size:12px;background:#f5f7fb;color:#607089}.feedback.ok{background:#e6f8ef;color:#09683e;border:1px solid #b7e5cc}.feedback.warn{background:#fff8e5;color:#815d11;border:1px solid #f3e4a8}.feedback.error{background:#fff0f0;color:#8f2a2a;border:1px solid #f0c2c2}.feedback.info{background:#eaf2fe;color:#255185;border:1px solid #cfdef2}.stepcount{font-size:11px;font-weight:800;color:#586e8e;padding:0 5px}.help-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:12px 0 4px;color:#788ba2;font-size:11px;flex-wrap:wrap}.help-row a{color:#346bc0;font-weight:750}.muted{color:#73859d}#modeTag{color:#576b87;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.footer{font-size:11px;color:#77869c;margin-top:13px}
+@media(max-width:1150px){.workspace{grid-template-columns:1fr 1.15fr}.code-line{font-size:11px}.trace-table input{width:67px;min-width:60px}}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.code-panel,.trace-panel{min-height:unset}.codebox{max-height:320px}.array-area{min-height:110px}.table-shell{max-height:370px}.top-meta span:nth-child(2){display:none}}
+@media(max-width:550px){.top-inner{padding:12px}.wrap{padding:12px}.brand strong{font-size:14px}.top-meta span{display:none}.navzone{padding:10px}.heading-row{align-items:flex-start}.progressbar{width:130px}.category-nav{gap:5px}.cat-btn{padding:7px 9px;font-size:11px}.challenge-list{max-height:115px}.code-line{font-size:11px}.instructions{font-size:11px}.controls{padding:10px}.btn{padding:8px 9px;font-size:11px}.table-shell{margin:0 10px}.feedback{margin-left:10px;margin-right:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+@media print{@page{size:A4 landscape;margin:12mm}body{background:white;font-size:12px}.top{background:white!important;color:black;border-bottom:1px solid #bbb}.top-meta,.navzone,.controls,.feedback,.help-row,.footer,.subtitle,.progressbox,.code-toolbar{display:none!important}.wrap{padding:8px}.workspace{display:grid;grid-template-columns:41% 59%;gap:12px}.panel{box-shadow:none;border:1px solid #bbb}.codebox{background:#fff!important;color:#111!important;max-height:none!important;overflow:visible}.code-line{color:#111!important}.code-line .ln{color:#444!important}.array-area{overflow:visible}.table-shell{max-height:none;overflow:visible}.trace-table input{border:1px solid #aaa}.trace-table th{position:static}.instructions{background:#fff;border-color:#999}.panel-header{padding:8px 10px}}
+<style>.top{background:#fff;color:#003a31;border-bottom:1px solid #d5e0dc}.logo{background:#006347;box-shadow:none}.brand small{color:#61706a}.top-meta span{border-color:#c4d9ce;color:#1d5745}.top-meta a{color:#006347}.codebox{background:#102c27}.kicker{color:#006347}</style>
+</head>
+<body>
+<header class="top"><div class="top-inner"><div class="logo" aria-hidden="true">R</div><div class="brand"><strong>RHS COMPUTING</strong><small>OCR J277 · Paper 2 practice</small></div><div class="top-meta"><span>Exam Reference Language</span><span>25 original challenges</span><a href="https://rhsccs.org/j277-hub.html?year=11" target="_blank" rel="noopener">J277 Hub ↗</a><a href="index.html">All exercises ↗</a></div></div></header>
+<main class="wrap">
+ <div class="heading-row"><div><p class="kicker">Interactive exam practice</p><h1>Trace Table Challenges</h1><p class="subtitle">Follow each algorithm line by line. Track variables, 1D and 2D arrays, procedures and functions.</p></div><div class="progressbox" aria-label="Overall challenge completion"><span class="progress-text" id="progressText">0 / 25 completed</span><div class="progressbar"><div id="progressFill"></div></div></div></div>
+ <section class="navzone" aria-label="Select a challenge"><div id="categories" class="category-nav"></div><nav id="challengeButtons" class="challenge-list" aria-label="Challenge numbers"></nav><p class="nav-description">Choose a topic, then a numbered challenge. <strong>Green numbers</strong> have been completed. Progress saves in this browser.</p></section>
+ <section class="workspace">
+  <section class="panel code-panel" aria-label="Algorithm and array visualisation">
+   <div class="panel-header"><div class="titleline"><div><div class="eyebrow" id="challengeCategory">The basics</div><h2 id="challengeTitle">Loading challenge…</h2></div><span class="difficulty" id="challengeLevel">Starter</span></div><p class="challenge-detail" id="challengeDetail"></p></div>
+   <div class="code-toolbar"><small>ALGORITHM — OCR EXAM REFERENCE LANGUAGE</small><span class="pill">Line numbers shown</span></div><div class="codebox" id="codeBox" aria-label="Numbered program code"></div>
+   <div class="array-area"><div class="array-top"><strong>Array visualiser <span class="muted" id="arrayStage"></span></strong><small>Indices begin at 0</small></div><div class="array-list" id="arraysBox"></div></div>
+  </section>
+  <section class="panel trace-panel" aria-label="Editable trace table">
+   <div class="panel-header"><div class="titleline"><div><div class="eyebrow">Student challenge</div><h2>Complete the trace table</h2></div><span id="modeTag">Your attempt</span></div></div>
+   <div class="instructions" id="instructions"><strong>How to trace:</strong> Enter the executed line number. Record only values that change; blank variable cells mean “same as above”. Record every condition result, printed output and array change.</div>
+   <div class="table-title"><strong id="tableLabel">Trace table</strong><small id="tableHelp">Scroll the table if needed →</small></div>
+   <div class="table-shell" id="tableShell"><table class="trace-table" id="traceTable"></table></div>
+   <div class="controls" id="attemptControls"><button class="btn" id="addRow">+ Add row</button><button class="btn" id="removeRow">− Remove row</button><button class="btn primary" id="checkBtn">✓ Check answers</button><button class="btn" id="hintBtn">Hint</button><button class="btn low" id="resetBtn">Reset</button></div>
+   <div class="control-line" id="demoControls"><button class="btn dark" id="playBtn">▶ Animate solution</button><button class="btn" id="stepBtn">Next step →</button><button class="btn purple" id="revealBtn">Show solution</button><button class="btn" id="attemptBtn" hidden>← Back to my table</button><span class="stepcount" id="stepCount"></span></div>
+   <div role="status" aria-live="polite" class="feedback" id="feedback">Start with the first assignment. Line numbers refer to the algorithm on the left.</div>
+  </section>
+ </section>
+ <div class="help-row"><span>Teacher tools: <button type="button" class="btn low" id="printBtn">Print current challenge</button> · <button type="button" class="btn low" id="csvBtn">Export my trace table (CSV)</button></span><span>Keyboard friendly · Works offline · All challenges written for this resource</span></div>
+ <p class="footer">Independently created for OCR GCSE Computer Science J277. ERL notation follows the Cambridge OCR J277 specification (May 2026). This practice resource is not endorsed by OCR.</p>
+</main>
+<script>
+'use strict';
+const CATEGORIES=[['all','All 25'],['basic','The basics'],['one','1D arrays'],['two','2D arrays'],['proc','Procedures'],['func','Functions']];
+const NAMES={basic:'The basics',one:'1D arrays',two:'2D arrays',proc:'Procedures',func:'Functions'};
+const clone=x=>JSON.parse(JSON.stringify(x));
+function emptyGrid(rows,cols){return Array.from({length:rows},()=>Array(cols).fill(null));}
+function pretty(v){if(v===null||v===undefined)return '–';if(typeof v==='boolean')return v?'True':'False';if(Array.isArray(v))return '['+v.map(pretty).join(', ')+']';return String(v);}
+class TraceBuilder{
+ constructor(initial={}){this.state={};this.arrays=clone(initial);this.initial=clone(initial);this.rows=[];this.stack=[];}
+ push(line,cells={},high=null){this.rows.push({line:String(line),cells:clone(cells),state:clone(this.state),arrays:clone(this.arrays),highlight:high,stack:[...this.stack]});}
+ set(line,obj){Object.assign(this.state,obj);this.push(line,obj);}
+ test(line,yes){this.push(line,{condition:yes?'True':'False'});}
+ out(line,v){this.push(line,{output:pretty(v)});}
+ put(line,name,index,value){let indices=Array.isArray(index)?index:[index];if(indices.length===1)this.arrays[name][indices[0]]=value;else this.arrays[name][indices[0]][indices[1]]=value;const lbl=name+'['+indices.join(',')+'] = '+pretty(value);this.push(line,{array:lbl},{array:name,indices});}
+ call(line,name){this.stack.push(name);this.push(line,{action:'call '+name});}
+ end(line,name,result){this.push(line,{action:result===undefined?'return '+name:'return '+pretty(result)});this.stack.pop();}
+}
+const BANK=[];
+function add(category,title,detail,code,vars,arrays,build,difficulty='Practice'){
+ const t=new TraceBuilder(arrays);build(t);const id=BANK.length+1;
+ const lines=code.trim().split('\n');
+ if(!t.rows.length)throw Error('No steps '+title);
+ for(const r of t.rows){if(+r.line<1||+r.line>lines.length)throw Error('Bad code line '+id+' '+r.line);}
+ BANK.push({id,category,title,detail,code:lines,vars,initial:t.initial,rows:t.rows,difficulty,hasArray:t.rows.some(r=>r.cells.array!==undefined),hasCondition:t.rows.some(r=>r.cells.condition!==undefined),hasOutput:t.rows.some(r=>r.cells.output!==undefined),hasAction:t.rows.some(r=>r.cells.action!==undefined)});
+}
+// Foundation: trace only assignments, tests, loop-index changes and output.
+add('basic','Sequence and output','Predict the value printed after three assignments.',`x = 3
+y = 5
+total = x + y
+print(total)`,['x','y','total'],{},b=>{b.set(1,{x:3});b.set(2,{y:5});b.set(3,{total:8});b.out(4,8);},'Starter');
+add('basic','IF selection','Trace the True branch. Do not add rows for skipped lines.',`mark = 64
+if mark >= 50 then
+    print("Pass")
+else
+    print("Resit")
+endif`,['mark'],{},b=>{b.set(1,{mark:64});b.test(2,true);b.out(3,'Pass');},'Starter');
+add('basic','FOR loop','The FOR loop includes both its starting and ending values.',`total = 0
+for i = 1 to 3
+    total = total + i
+next i
+print(total)`,['i','total'],{},b=>{b.set(1,{total:0});let t=0;for(let i=1;i<=3;i++){b.set(2,{i});t+=i;b.set(3,{total:t});}b.out(5,t);},'Starter');
+add('basic','WHILE loop','Record the final False test, then the last output.',`n = 3
+while n > 0
+    print(n)
+    n = n - 1
+endwhile
+print("Go")`,['n'],{},b=>{let n=3;b.set(1,{n});while(n>0){b.test(2,true);b.out(3,n);b.set(4,{n:--n});}b.test(2,false);b.out(6,'Go');},'Practice');
+// 1D arrays; declaration is shown in array visualiser rather than requiring a row.
+add('one','Read an array element','Use the index, not the position you would count from 1.',`array scores = [4, 9, 2, 7]
+position = 1
+chosen = scores[position]
+print(chosen)`,['position','chosen'],{scores:[4,9,2,7]},b=>{b.set(2,{position:1});b.set(3,{chosen:9});b.out(4,9);},'Starter');
+add('one','Change an array element','Write the new element and its index in the Array change column.',`array scores = [12, 15, 10]
+scores[1] = scores[1] + 5
+print(scores[1])`,[],{scores:[12,15,10]},b=>{b.put(2,'scores',1,20);b.out(3,20);},'Starter');
+add('one','Sum a 1D array','Follow a running total through a count-controlled loop.',`array nums = [3, 5, 2]
+total = 0
+for i = 0 to 2
+    total = total + nums[i]
+next i
+print(total)`,['i','total'],{nums:[3,5,2]},b=>{b.set(2,{total:0});let t=0;for(let i=0;i<=2;i++){b.set(3,{i});t+=[3,5,2][i];b.set(4,{total:t});}b.out(6,t);},'Practice');
+add('one','Count passing marks','Only increase passes when the condition is True.',`array marks = [43, 61, 80, 38]
+passes = 0
+for i = 0 to 3
+    if marks[i] >= 50 then
+        passes = passes + 1
+    endif
+next i
+print(passes)`,['i','passes'],{marks:[43,61,80,38]},b=>{b.set(2,{passes:0});let p=0;[43,61,80,38].forEach((v,i)=>{b.set(3,{i});b.test(4,v>=50);if(v>=50)b.set(5,{passes:++p});});b.out(8,p);},'Practice');
+add('one','Find the highest value','Compare each element with the current highest value.',`array points = [12, 8, 19, 14]
+highest = points[0]
+for i = 1 to 3
+    if points[i] > highest then
+        highest = points[i]
+    endif
+next i
+print(highest)`,['i','highest'],{points:[12,8,19,14]},b=>{let h=12;b.set(2,{highest:h});[8,19,14].forEach((v,k)=>{let i=k+1;b.set(3,{i});b.test(4,v>h);if(v>h){h=v;b.set(5,{highest:h});}});b.out(8,h);},'Challenge');
+add('one','Swap two array values','The temporary variable stops an original value being lost.',`array a = [6, 2, 9]
+temp = a[0]
+a[0] = a[2]
+a[2] = temp
+print(a[0])
+print(a[2])`,['temp'],{a:[6,2,9]},b=>{b.set(2,{temp:6});b.put(3,'a',0,9);b.put(4,'a',2,6);b.out(5,9);b.out(6,6);},'Challenge');
+// 2D arrays; each array assignment is an explicit trace event.
+add('two','2D array coordinates','The first index is the row. The second index is the column.',`array grid[2,2]
+grid[0,0] = 7
+grid[0,1] = 4
+grid[1,0] = 2
+grid[1,1] = 9
+print(grid[1,0])`,[],{grid:emptyGrid(2,2)},b=>{b.put(2,'grid',[0,0],7);b.put(3,'grid',[0,1],4);b.put(4,'grid',[1,0],2);b.put(5,'grid',[1,1],9);b.out(6,2);},'Starter');
+add('two','Update a grid cell','Trace the existing cells before the calculated replacement.',`array grid[2,2]
+grid[0,0] = 3
+grid[0,1] = 6
+grid[1,0] = 1
+grid[1,1] = 5
+grid[1,0] = grid[0,1] + 2
+print(grid[1,0])`,[],{grid:emptyGrid(2,2)},b=>{b.put(2,'grid',[0,0],3);b.put(3,'grid',[0,1],6);b.put(4,'grid',[1,0],1);b.put(5,'grid',[1,1],5);b.put(6,'grid',[1,0],8);b.out(7,8);},'Practice');
+add('two','Total one row','The row stays fixed while the column index changes.',`array marks[2,3]
+marks[0,0] = 2
+marks[0,1] = 4
+marks[0,2] = 6
+marks[1,0] = 3
+marks[1,1] = 5
+marks[1,2] = 7
+total = 0
+for col = 0 to 2
+    total = total + marks[1,col]
+next col
+print(total)`,['col','total'],{marks:emptyGrid(2,3)},b=>{let a=[[2,4,6],[3,5,7]];let k=2;for(let r=0;r<2;r++)for(let c=0;c<3;c++)b.put(k++,'marks',[r,c],a[r][c]);let t=0;b.set(8,{total:t});for(let col=0;col<=2;col++){b.set(9,{col});t+=a[1][col];b.set(10,{total:t});}b.out(12,t);},'Practice');
+add('two','Nested loops: grid total','The inner loop visits each column before the outer loop changes row.',`array values[2,2]
+values[0,0] = 1
+values[0,1] = 3
+values[1,0] = 2
+values[1,1] = 4
+total = 0
+for row = 0 to 1
+    for col = 0 to 1
+        total = total + values[row,col]
+    next col
+next row
+print(total)`,['row','col','total'],{values:emptyGrid(2,2)},b=>{const a=[[1,3],[2,4]];b.put(2,'values',[0,0],1);b.put(3,'values',[0,1],3);b.put(4,'values',[1,0],2);b.put(5,'values',[1,1],4);let t=0;b.set(6,{total:0});for(let row=0;row<2;row++){b.set(7,{row});for(let col=0;col<2;col++){b.set(8,{col});t+=a[row][col];b.set(9,{total:t});}}b.out(12,t);},'Challenge');
+add('two','Diagonal total','Identify two elements at matching row and column indices.',`array board[2,2]
+board[0,0] = 8
+board[0,1] = 1
+board[1,0] = 6
+board[1,1] = 4
+diagonal = board[0,0] + board[1,1]
+print(diagonal)`,['diagonal'],{board:emptyGrid(2,2)},b=>{b.put(2,'board',[0,0],8);b.put(3,'board',[0,1],1);b.put(4,'board',[1,0],6);b.put(5,'board',[1,1],4);b.set(6,{diagonal:12});b.out(7,12);},'Practice');
+add('two','Count empty seats','Visit every grid cell, checking its text value.',`array seats[2,2]
+seats[0,0] = "X"
+seats[0,1] = "E"
+seats[1,0] = "E"
+seats[1,1] = "X"
+free = 0
+for row = 0 to 1
+    for col = 0 to 1
+        if seats[row,col] == "E" then
+            free = free + 1
+        endif
+    next col
+next row
+print(free)`,['row','col','free'],{seats:emptyGrid(2,2)},b=>{let a=[['X','E'],['E','X']];b.put(2,'seats',[0,0],'X');b.put(3,'seats',[0,1],'E');b.put(4,'seats',[1,0],'E');b.put(5,'seats',[1,1],'X');let free=0;b.set(6,{free:0});for(let row=0;row<2;row++){b.set(7,{row});for(let col=0;col<2;col++){b.set(8,{col});b.test(9,a[row][col]==='E');if(a[row][col]==='E')b.set(10,{free:++free});}}b.out(14,free);},'Challenge');
+// Procedures: a call enters the procedure, which then returns to the next main line.
+add('proc','Call a procedure','Follow execution into the procedure and back to the main program.',`procedure greet(name)
+    print("Hello " + name)
+endprocedure
+greet("Mia")
+print("Done")`,['name'],{},b=>{b.call(4,'greet');b.set(1,{name:'Mia'});b.out(2,'Hello Mia');b.end(3,'greet');b.out(5,'Done');},'Starter');
+add('proc','Call the same procedure twice','The parameter receives a different value on each call.',`procedure show(item)
+    print(item)
+endprocedure
+show("First")
+show("Second")`,['item'],{},b=>{b.call(4,'show');b.set(1,{item:'First'});b.out(2,'First');b.end(3,'show');b.call(5,'show');b.set(1,{item:'Second'});b.out(2,'Second');b.end(3,'show');},'Practice');
+add('proc','Local vs main variables','The procedure parameter is a separate local variable.',`procedure addBonus(value)
+    result = value + 5
+    print(result)
+endprocedure
+score = 10
+addBonus(score)
+print(score)`,['score','value','result'],{},b=>{b.set(5,{score:10});b.call(6,'addBonus');b.set(1,{value:10});b.set(2,{result:15});b.out(3,15);b.end(4,'addBonus');b.out(7,10);},'Practice');
+add('proc','Procedure with selection','Each call must evaluate its own IF condition.',`procedure advise(mark)
+    if mark >= 50 then
+        print("Pass")
+    else
+        print("Resit")
+    endif
+endprocedure
+advise(35)
+advise(78)`,['mark'],{},b=>{b.call(8,'advise');b.set(1,{mark:35});b.test(2,false);b.out(5,'Resit');b.end(7,'advise');b.call(9,'advise');b.set(1,{mark:78});b.test(2,true);b.out(3,'Pass');b.end(7,'advise');},'Challenge');
+// Functions return values which can then be assigned by the calling program.
+add('func','Function returns a value','The call and the resulting assignment appear at the same main-program line.',`function double(n)
+    return n * 2
+endfunction
+answer = double(7)
+print(answer)`,['n','answer'],{},b=>{b.call(4,'double');b.set(1,{n:7});b.end(2,'double',14);b.set(4,{answer:14});b.out(5,14);},'Starter');
+add('func','Function with local variables','Track each call separately, then add the returned results.',`function square(number)
+    result = number * number
+    return result
+endfunction
+a = square(3)
+b = square(5)
+print(a + b)`,['number','result','a','b'],{},b=>{b.call(5,'square');b.set(1,{number:3});b.set(2,{result:9});b.end(3,'square',9);b.set(5,{a:9});b.call(6,'square');b.set(1,{number:5});b.set(2,{result:25});b.end(3,'square',25);b.set(6,{b:25});b.out(7,34);},'Practice');
+add('func','Return different values','Choose which return is executed, based on the function parameter.',`function grade(mark)
+    if mark >= 50 then
+        return "Pass"
+    else
+        return "Resit"
+    endif
+endfunction
+result = grade(42)
+print(result)`,['mark','result'],{},b=>{b.call(8,'grade');b.set(1,{mark:42});b.test(2,false);b.end(5,'grade','Resit');b.set(8,{result:'Resit'});b.out(9,'Resit');},'Practice');
+add('func','Function reads a 1D array','A function loops through the array it receives and returns a count.',`function countHigh(values)
+    total = 0
+    for i = 0 to 2
+        if values[i] >= 50 then
+            total = total + 1
+        endif
+    next i
+    return total
+endfunction
+array scores = [40, 80, 70]
+passed = countHigh(scores)
+print(passed)`,['i','total','passed'],{scores:[40,80,70]},b=>{b.call(11,'countHigh');let count=0;b.set(2,{total:0});[40,80,70].forEach((v,i)=>{b.set(3,{i});b.test(4,v>=50);if(v>=50)b.set(5,{total:++count});});b.end(8,'countHigh',count);b.set(11,{passed:count});b.out(12,count);},'Challenge');
+add('func','2D array and function','Combine indexing, a return value and the main program.',`function cornerSum(grid)
+    return grid[0,0] + grid[1,1]
+endfunction
+array board[2,2]
+board[0,0] = 3
+board[0,1] = 7
+board[1,0] = 5
+board[1,1] = 9
+result = cornerSum(board)
+print(result)`,['result'],{board:emptyGrid(2,2)},b=>{b.put(5,'board',[0,0],3);b.put(6,'board',[0,1],7);b.put(7,'board',[1,0],5);b.put(8,'board',[1,1],9);b.call(9,'cornerSum');b.end(2,'cornerSum',12);b.set(9,{result:12});b.out(10,12);},'Challenge');
+if(BANK.length!==25)throw Error('Expected 25 challenges, found '+BANK.length);
+const STORAGE='rhs-ocr-erl-trace-v1';
+let allProgress={};try{allProgress=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{};}catch(e){}
+let selected=0,filter='all',solution=false,stepIndex=0,playTimer=null,marked=false;
+const $=id=>document.getElementById(id);
+const escapeHtml=v=>String(v).replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify(allProgress));}catch(e){/* private browsing may block storage */}}
+function prog(c){if(!allProgress[c.id])allProgress[c.id]={cells:[],completed:false};return allProgress[c.id];}
+function getColumns(c){const cols=[{key:'line',title:'Line',type:'line'}];for(const v of c.vars)cols.push({key:v,title:v,type:'var'});if(c.hasArray)cols.push({key:'array',title:'Array change',type:'array'});if(c.hasCondition)cols.push({key:'condition',title:'Condition',type:'condition'});if(c.hasAction)cols.push({key:'action',title:'Call / return',type:'action'});if(c.hasOutput)cols.push({key:'output',title:'Output',type:'output'});return cols;}
+function cellsFor(c){const p=prog(c);if(!Array.isArray(p.cells))p.cells=[];if(p.cells.length===0)p.cells=Array.from({length:Math.min(8,c.rows.length)},()=>({}));return p.cells;}
+function completedCount(){return BANK.reduce((n,c)=>n+(prog(c).completed?1:0),0)}
+function drawProgress(){const n=completedCount();$('progressText').textContent=n+' / '+BANK.length+' completed';$('progressFill').style.width=(100*n/BANK.length)+'%'}
+function drawNav(){const cat=$('categories');cat.innerHTML='';for(const [key,label] of CATEGORIES){const btn=document.createElement('button');btn.className='cat-btn';btn.type='button';btn.textContent=label;btn.setAttribute('aria-pressed',String(filter===key));btn.onclick=()=>{filter=key;drawNav();const c=BANK[selected];if(filter!=='all'&&c.category!==filter){const first=BANK.findIndex(x=>x.category===filter);selectChallenge(first)}};cat.appendChild(btn)}const list=$('challengeButtons');list.innerHTML='';BANK.forEach((c,i)=>{if(filter!=='all'&&c.category!==filter)return;const btn=document.createElement('button');btn.className='number-btn'+(i===selected?' active':'')+(prog(c).completed?' done':'');btn.textContent=c.id;btn.title='Challenge '+c.id+': '+c.title;btn.setAttribute('aria-label','Challenge '+c.id+': '+c.title+(prog(c).completed?', completed':''));btn.setAttribute('aria-current',i===selected?'true':'false');btn.onclick=()=>selectChallenge(i);list.appendChild(btn)});drawProgress();}
+function colorise(line){let out=escapeHtml(line);out=out.replace(/(&quot;.*?&quot;)/g,'<span class="str">$1</span>');out=out.replace(/\b(array|procedure|endprocedure|function|endfunction|return|if|then|else|endif|for|to|next|while|endwhile|print)\b/g,'<span class="kw">$1</span>');return out;}
+function drawCode(c){$('codeBox').innerHTML=c.code.map((s,i)=>`<div class="code-line" data-line="${i+1}"><span class="ln">${i+1}</span><span class="src">${colorise(s)}</span></div>`).join('');}
+function highlightLine(num){document.querySelectorAll('.code-line').forEach(el=>{el.classList.toggle('active-code',el.dataset.line===String(num));});}
+function drawArrays(c,row=null){const arrays=(row?row.arrays:c.initial);const hi=row?row.highlight:null;$('arrayStage').textContent=solution?(stepIndex===0?'— before execution':'— after step '+stepIndex):'— starting state';const b=$('arraysBox');b.innerHTML='';const keys=Object.keys(arrays);if(!keys.length){b.innerHTML='<p class="muted" style="font-size:11px">This algorithm does not use an array. Focus on the changing variables and output.</p>';return;}for(const name of keys){const arr=arrays[name],item=document.createElement('div');item.className='array-item';const nameEl=document.createElement('p');nameEl.className='array-name';nameEl.textContent=Array.isArray(arr[0])?name+'[row, column]':name+'[index]';item.appendChild(nameEl);if(Array.isArray(arr[0])){const table=document.createElement('table');table.className='matrix';let tr=document.createElement('tr');tr.appendChild(document.createElement('th'));for(let j=0;j<arr[0].length;j++){const th=document.createElement('th');th.textContent=j;tr.appendChild(th);}table.appendChild(tr);for(let i=0;i<arr.length;i++){const rowEl=document.createElement('tr'),th=document.createElement('th');th.textContent=i;rowEl.appendChild(th);for(let j=0;j<arr[i].length;j++){const td=document.createElement('td');td.textContent=pretty(arr[i][j]);td.title=name+'['+i+','+j+']';if(hi&&hi.array===name&&hi.indices[0]===i&&hi.indices[1]===j)td.className='highlight';rowEl.appendChild(td)}table.appendChild(rowEl);}item.appendChild(table);}else{const strip=document.createElement('div');strip.className='array-strip';arr.forEach((v,i)=>{const cell=document.createElement('div');cell.className='array-cell'+(hi&&hi.array===name&&hi.indices[0]===i?' highlight':'');cell.title=name+'['+i+']';cell.innerHTML='<span class="idx">'+i+'</span><span class="val">'+escapeHtml(pretty(v))+'</span>';strip.appendChild(cell)});item.appendChild(strip)}b.appendChild(item)}}
+function drawTable(c){const cols=getColumns(c);const table=$('traceTable');let html='<thead><tr>'+cols.map(col=>`<th class="${col.type==='var'?'':col.type+'-header'}" scope="col">${escapeHtml(col.title)}</th>`).join('')+'</tr></thead><tbody>';
+ if(solution){const rows=c.rows.slice(0,stepIndex);for(let i=0;i<rows.length;i++){const row=rows[i];html+='<tr class="'+(i===rows.length-1?'solution-latest':'')+'">';for(const col of cols){const v=col.key==='line'?row.line:row.cells[col.key];const empty=v===undefined||v===null;html+='<td class="sol-cell'+(empty?' empty':'')+(col.key==='line'?' line-number':'')+(col.key==='output'&&!empty?' emphasis':'')+'">'+(empty?'·':escapeHtml(v))+'</td>';}html+='</tr>';}if(!rows.length)html+='<tr><td colspan="'+cols.length+'" style="text-align:center;padding:35px;color:#7a8ca5">Press <b>Next step</b> or <b>Animate solution</b> to begin.</td></tr>';
+ }else{const rows=cellsFor(c);for(let i=0;i<rows.length;i++){html+='<tr data-row="'+i+'">';for(const col of cols){const value=rows[i][col.key]||'';const cls=col.type==='line'?'line-input':col.type==='array'?'array-input':col.type==='action'?'action-input':col.type==='output'?'output-input':col.type==='condition'?'condition-input':'';html+='<td><input type="text" autocomplete="off" spellcheck="false" class="'+cls+'" data-row="'+i+'" data-key="'+escapeHtml(col.key)+'" value="'+escapeHtml(value)+'" aria-label="Row '+(i+1)+', '+escapeHtml(col.title)+'"></td>';}html+='</tr>';}}
+ html+='</tbody>';table.innerHTML=html;
+ if(!solution){table.querySelectorAll('input').forEach(input=>input.addEventListener('input',event=>{const el=event.currentTarget,cells=cellsFor(c);cells[+el.dataset.row][el.dataset.key]=el.value;prog(c).completed=false;save();drawProgress();el.classList.remove('good','bad');marked=false;if(el.dataset.key==='line')highlightLine(el.value.trim());updateAttemptRow();}));}
+ $('attemptControls').hidden=solution;$('attemptBtn').hidden=!solution;$('modeTag').textContent=solution?'Solution walkthrough':'Your attempt';$('tableHelp').textContent=solution?'Highlighted row = latest step':'Scroll table horizontally if needed →';$('stepCount').textContent=solution?stepIndex+' / '+c.rows.length+' steps':'';
+ $('playBtn').textContent=playTimer?'Ⅱ Pause animation':'▶ Animate solution';
+}
+function updateAttemptRow(){if(solution)return;const rows=$('traceTable').querySelectorAll('tbody tr');rows.forEach(el=>el.classList.remove('row-active'));const filled=[...rows].filter(row=>row.querySelector('input[data-key="line"]')?.value.trim());if(filled.length)filled[filled.length-1].classList.add('row-active');}
+function setFeedback(kind,text){const el=$('feedback');el.className='feedback'+(kind?' '+kind:'');el.textContent=text;}
+function selectChallenge(idx){stopPlaying();selected=idx;solution=false;stepIndex=0;marked=false;const c=BANK[idx];$('challengeCategory').textContent=NAMES[c.category]+' · '+String(c.id).padStart(2,'0')+' / 25';$('challengeTitle').textContent=c.title;$('challengeDetail').textContent=c.detail;$('challengeLevel').textContent=c.difficulty;$('tableLabel').textContent='Trace table · Challenge '+c.id;const hints=['Enter a line number for each traced step.','Record new variable values when they change.','For array edits, write e.g. scores[1] = 20.','Write True/False for tested conditions.','Record calls and returns in the Call / return column.','Record the exact text/value sent to print().'];$('instructions').innerHTML='<strong>How to trace:</strong> '+hints.filter((x,i)=>i<2||(i===2&&c.hasArray)||(i===3&&c.hasCondition)||(i===4&&c.hasAction)||(i===5&&c.hasOutput)).join(' ')+' Blank variable cells mean “unchanged”.';drawCode(c);drawArrays(c);drawTable(c);drawNav();setFeedback('',prog(c).completed?'✓ You have completed this challenge. Choose the next one or practise again.':'Start with the first executed assignment, test, array change or subprogram call.');updateAttemptRow();}
+function startSolution(){solution=true;stepIndex=0;marked=false;drawTable(BANK[selected]);drawArrays(BANK[selected]);highlightLine(-1);setFeedback('info','A line is highlighted for every trace step. The 1D/2D array visualiser updates as the program executes. Your own table is saved.');}
+function showStep(n){if(!solution)startSolution();const c=BANK[selected];stepIndex=Math.max(0,Math.min(n,c.rows.length));drawTable(c);const last=stepIndex?c.rows[stepIndex-1]:null;drawArrays(c,last);highlightLine(last?last.line:-1);if(last){const description=last.cells.output!==undefined?'Printed: '+last.cells.output:last.cells.array!==undefined?'Array changed: '+last.cells.array:last.cells.condition!==undefined?'Condition was '+last.cells.condition:last.cells.action!==undefined?'Subprogram: '+last.cells.action:'Variable assignment on line '+last.line;setFeedback('info','Step '+stepIndex+' / '+c.rows.length+': '+description)}if(stepIndex===c.rows.length)stopPlaying();$('tableShell').scrollTop=$('tableShell').scrollHeight;}
+function stopPlaying(){if(playTimer){clearInterval(playTimer);playTimer=null;}$('playBtn').textContent='▶ Animate solution';}
+function play(){if(playTimer){stopPlaying();return}const c=BANK[selected];if(!solution||stepIndex>=c.rows.length)startSolution();showStep(stepIndex+1);if(stepIndex>=c.rows.length)return;playTimer=setInterval(()=>{if(stepIndex>=c.rows.length){stopPlaying();return}showStep(stepIndex+1);if(stepIndex>=c.rows.length)stopPlaying();},650);$('playBtn').textContent='Ⅱ Pause animation';}
+function backToAttempt(){stopPlaying();solution=false;stepIndex=0;const c=BANK[selected];drawTable(c);drawArrays(c);highlightLine(-1);updateAttemptRow();setFeedback('',prog(c).completed?'✓ This challenge is complete.':'Your unfinished table is exactly as you left it.');}
+function normal(v,type){let t=String(v??'').trim().replace(/\u201c|\u201d/g,'"').replace(/\u2018|\u2019/g,"'");if(type==='array'||type==='action')return t.toLowerCase().replace(/\s+/g,'').replace(/["']/g,'');if(type==='condition')return t.toLowerCase();if(t.startsWith('"')&&t.endsWith('"')||t.startsWith("'")&&t.endsWith("'"))t=t.slice(1,-1);return t;}
+function equal(a,b,type){if(type==='line'){return Number(a)===Number(b)&&String(a).trim()!=='';}return normal(a,type)===normal(b,type);}
+function check(){if(solution)backToAttempt();const c=BANK[selected],cols=getColumns(c),inputs=cellsFor(c);let perfect=inputs.length===c.rows.length;let correctRows=0,requiredHit=0,requiredTotal=0;
+ const rows=$('traceTable').querySelectorAll('tbody tr');rows.forEach((tr,ridx)=>{let all=true;const expected=c.rows[ridx];for(const col of cols){const inp=tr.querySelector('input[data-key="'+col.key+'"]'),val=inp?.value.trim()||'';let good=false;const wanted=col.key==='line'?expected?.line:expected?.cells[col.key];if(wanted!==undefined){requiredTotal++;good=equal(val,wanted,col.type);if(good)requiredHit++;}else if(val===''){good=true;}else if(col.type==='var'&&expected?.state[col.key]!==undefined){good=equal(val,expected.state[col.key],col.type);}inp.classList.toggle('good',good&&val!=='');inp.classList.toggle('bad',!good);if(!good)all=false;}if(all)correctRows++;tr.classList.toggle('row-invalid',!all);});
+ if(inputs.length<c.rows.length)perfect=false;if(correctRows!==c.rows.length)perfect=false;
+ if(perfect){prog(c).completed=true;save();drawProgress();drawNav();setFeedback('ok','Excellent — all '+c.rows.length+' trace rows are correct. Challenge '+c.id+' completed!');}
+ else{prog(c).completed=false;save();drawProgress();drawNav();let msg=correctRows+' / '+c.rows.length+' rows checked as correct';if(inputs.length<c.rows.length)msg+=' · add more rows to finish the trace';else if(inputs.length>c.rows.length)msg+=' · there are extra rows';msg+='. Red cells need another look. Blank variable cells are allowed when unchanged.';setFeedback('warn',msg);}
+ marked=true;}
+function hint(){if(solution)backToAttempt();const c=BANK[selected],cells=cellsFor(c);let at=cells.findIndex((row,i)=>i<c.rows.length&&!row.line?.trim());if(at<0){at=cells.findIndex((row,i)=>i<c.rows.length&&getColumns(c).some(col=>{const needed=col.key==='line'?c.rows[i].line:c.rows[i].cells[col.key];return needed!==undefined&&!equal(row[col.key]||'',needed,col.type)}));}if(at<0)at=Math.min(cells.length,c.rows.length-1);const step=c.rows[at];if(step){highlightLine(step.line);setFeedback('info','Hint: for trace row '+(at+1)+', look carefully at algorithm line '+step.line+'. Decide whether it changes a variable/array, tests a condition, calls a subprogram or produces output.');}}
+function addRow(){if(solution)backToAttempt();const c=BANK[selected],cells=cellsFor(c);if(cells.length>=80){setFeedback('warn','This is the maximum table size.');return}cells.push({});save();drawTable(c);const shell=$('tableShell');shell.scrollTop=shell.scrollHeight;const newRow=$('traceTable').querySelector('tbody tr:last-child input');newRow?.focus();}
+function removeRow(){if(solution)backToAttempt();const c=BANK[selected],cells=cellsFor(c);if(cells.length<=1)return;cells.pop();save();drawTable(c);}
+function reset(){if(solution)backToAttempt();if(!confirm('Clear your answers for this challenge?'))return;const c=BANK[selected];allProgress[c.id]={cells:Array.from({length:Math.min(8,c.rows.length)},()=>({})),completed:false};save();selectChallenge(selected);}
+function exportCsv(){const c=BANK[selected],cols=getColumns(c),cells=cellsFor(c);const csv=[cols.map(x=>x.title),...cells.map(row=>cols.map(col=>row[col.key]||''))].map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='OCR-J277-Trace-Challenge-'+String(c.id).padStart(2,'0')+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('addRow').onclick=addRow;$('removeRow').onclick=removeRow;$('checkBtn').onclick=check;$('hintBtn').onclick=hint;$('resetBtn').onclick=reset;$('playBtn').onclick=play;$('stepBtn').onclick=()=>{stopPlaying();showStep(stepIndex+1)};$('revealBtn').onclick=()=>{stopPlaying();showStep(BANK[selected].rows.length)};$('attemptBtn').onclick=backToAttempt;$('printBtn').onclick=()=>window.print();$('csvBtn').onclick=exportCsv;
+window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();check();}});
+selectChallenge(0);
+window.__traceApp={BANK,getColumns,selectChallenge,check,cellsFor,prog,showStep,backToAttempt};
+</script>
+</body>
+</html>
