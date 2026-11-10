@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
 <link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
-<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-whiteboard1">
+<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-merged-header1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
@@ -58,7 +58,7 @@
   </section>
   <section id="practice" class="hidden screen" aria-live="polite">
     <button class="back" type="button" id="back">← All exercises</button>
-    <div class="skill-top"><div><div class="kicker" id="skill-spec"></div><h1 id="skill-title"></h1><p id="skill-subtitle"></p></div><span class="tag">Practice</span></div>
+    <div class="skill-top"><div><div class="kicker" id="skill-spec"></div><h1 id="skill-title"></h1><span class="wb-question-count" id="wb-question-count"></span><p id="skill-subtitle"></p></div><span class="tag">Practice</span></div>
     <div class="level-menu" role="group" aria-label="Difficulty"><button class="level" data-level="easy">Easy</button><button class="level" data-level="medium">Medium</button><button class="level" data-level="hard">Hard</button></div>
     <div class="work">
       <div class="work-head"><div><b id="qpos">Question 1 of 10</b><div class="meter" style="width:175px"><div class="meter-fill" id="meter"></div></div></div><span id="mode-note">Guided practice</span></div>
@@ -204,10 +204,10 @@ function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON
 function persist(){let all=getStorage();for(const k in specs){let done=0;for(const lev of levelnames)done+=(all[`${k}-${lev}`]||[]).length;$(`progress-${k}`).textContent=`${done} / 30 solved`;}let total=Object.values(all).reduce((n,a)=>n+(Array.isArray(a)?a.length:0),0);$('done-counter').textContent=total;}
 function mark(){const all=getStorage(),key=skill+'-'+level;all[key]=Array.isArray(all[key])?all[key]:[];if(!all[key].includes(index)){all[key].push(index);saveStorage(all);persist();}}
 function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
-function openSkill(k){skill=k;level='easy';index=0;score=0;$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
-function home(){skill=null;$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
+function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
+function home(){skill=null;$('practice').classList.remove('is-conversion');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
 function chooseLevel(l){level=l;index=0;levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
-function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';$('check').classList.remove('hidden');$('next').classList.add('hidden');$('clear').classList.remove('hidden');$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
+function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('wb-question-count').textContent=`Question ${index+1} / 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';$('check').classList.remove('hidden');$('next').classList.add('hidden');$('clear').classList.remove('hidden');$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;switch(p.type){
