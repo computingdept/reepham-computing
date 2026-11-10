@@ -68,7 +68,17 @@ function renderList(){
 }
 function chooseLine(line){if(done)return;selected=line;$("lineDisplay").value="Line "+line;document.querySelectorAll(".code-line").forEach(el=>{const active=Number(el.dataset.line)===line;el.classList.toggle("selected",active);el.setAttribute("aria-pressed",active?"true":"false");});}
 function render(){
- const p=PUZZLES.find(p=>p.id===current);if(!p||!filtered.length)return;
+ const p=PUZZLES.find(p=>p.id===current);
+ if(!filtered.length){
+  $("codeTitle").textContent="No matching challenges";$("topicChip").textContent="Change the filters";
+  $("goal").textContent="Choose another topic or difficulty to see a challenge.";
+  $("code").replaceChildren();$("lineDisplay").value="No line selected";$("errorType").value="";
+  $("counter").textContent="0 questions";$("position").textContent="0 of 0";
+  $("check").disabled=true;$("hint").disabled=true;$("reveal").disabled=true;
+  $("previous").disabled=true;$("next").disabled=true;
+  hideSolution();showFeedback("No matches","Try changing the topic or difficulty filter.","info");return;
+ }
+ if(!p)return;$("hint").disabled=false;$("reveal").disabled=false;
  selected=null;attempts=0;done=false;revealed=false;
  $("challenge").value=String(p.id);$("codeTitle").textContent=p.title;$("topicChip").textContent=NAMES[p.cat];$("level").textContent=LEVELS[p.level];$("goal").innerHTML="<strong>Goal: </strong>"+esc(p.goal);$("errorType").value="";$("lineDisplay").value="No line selected";
  const box=$("code");box.replaceChildren();
