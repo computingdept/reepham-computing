@@ -1,0 +1,65 @@
+/* Paper 1 Skills — compact, mobile-first practice chrome.
+   Scoped to #practice. Does not modify shared lessons, J277 or H446. */
+#practice:not(.hidden) {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:10px 15px;
+  align-items:center;
+}
+#practice > .back {
+  grid-column:1;
+  margin:0;
+  padding:8px 4px;
+  min-height:42px;
+  white-space:nowrap;
+  justify-self:start;
+}
+#practice > .skill-top {
+  grid-column:2;
+  display:block;
+  min-width:0;
+  margin:0;
+}
+#practice > .skill-top .kicker,
+#practice > .skill-top .tag {display:none}
+#practice > .skill-top h1 {
+  font-size:clamp(21px,2.3vw,25px);
+  line-height:1.1;
+  margin:0;
+}
+#practice > .skill-top p {
+  margin:3px 0 0;
+  font-size:12px;
+  line-height:1.2;
+}
+#practice > .level-menu {
+  grid-column:3;
+  margin:0;
+  flex-wrap:nowrap;
+  align-self:center;
+}
+#practice > .work,
+#practice > .footnote {grid-column:1 / -1;min-width:0}
+#practice > .work {padding:16px 19px}
+#practice .work-head {padding-bottom:9px;margin-bottom:10px}
+#practice .prompt {margin:8px 0 5px}
+#practice .context {margin-bottom:10px}
+#practice .answer-area {margin:9px 0 14px}
+#practice .bottom-bar {margin-top:10px;padding-top:12px}
+#practice > .footnote {margin-top:4px}
+@media(max-width:700px) {
+  #practice:not(.hidden) {grid-template-columns:minmax(0,1fr) auto;gap:7px 9px}
+  #practice > .back {grid-column:1;grid-row:1;font-size:12px}
+  #practice > .level-menu {grid-column:2;grid-row:1;gap:1px;padding:3px}
+  #practice > .level-menu .level {padding:8px 9px;font-size:12px}
+  #practice > .skill-top {grid-column:1 / -1;grid-row:2}
+  #practice > .skill-top h1 {font-size:21px}
+  #practice > .work {grid-row:3;padding:13px 12px}
+  #practice .work-head {padding-bottom:7px;margin-bottom:7px}
+  #practice .prompt {margin:7px 0 4px}
+  #practice .context {margin-bottom:7px}
+  #practice .answer-area {margin:7px 0 12px}
+}
+@media(max-width:370px) {
+  #practice > .level-menu .level {padding:8px 7px}
+}
