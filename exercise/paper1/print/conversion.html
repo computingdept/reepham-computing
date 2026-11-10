@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#285348">
+<title>Conversion Grid worksheets | RHS Computing</title>
+<link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf0ee;color:#263b33;font:14px/1.4 Arial,Helvetica,sans-serif}
+button,select{font:inherit}.actions{background:#fff;border-bottom:1px solid #d5ddda;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.actions a{color:#285348;font-weight:750;text-decoration:none}.actions label{font-size:13px;font-weight:700;display:flex;gap:6px;align-items:center}
+.actions select{height:39px;border:1px solid #9bb8aa;border-radius:7px;background:#fff;padding:5px 9px}
+.actions button,.actions .key-link{min-height:39px;border:1px solid #285348;border-radius:7px;background:#285348;color:#fff;padding:8px 12px;font-weight:750;cursor:pointer}
+.actions .key-link{background:#fff;color:#285348;display:inline-flex;align-items:center}
+.actions button:focus-visible,.actions a:focus-visible,.actions select:focus-visible{outline:3px solid #c78d20;outline-offset:2px}
+.actions .label{font-size:16px;font-weight:800;color:#21473e;margin-right:auto}
+.hint{color:#65736b;font-size:12px;padding:9px 16px;text-align:center}
+.sheet{width:190mm;min-height:277mm;margin:12px auto;padding:0;background:#fff;color:#202422;box-shadow:0 2px 12px #0002;display:flex;flex-direction:column;break-after:page;page-break-after:always}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+.paper-head{height:29mm;border-bottom:1px solid #8f9993;display:flex;flex-direction:column;justify-content:center;gap:3mm;padding:0 3mm}
+.paper-head strong{font-size:13px;letter-spacing:.04em}.paper-head .exercise-name{font-size:17px;font-weight:800}
+.paper-head small{font-size:11px}.paper-content{padding:3mm;flex:1;display:flex;flex-direction:column}
+.question{border-bottom:1px solid #d1d5d2;flex:1;display:flex;flex-direction:column;justify-content:center;padding:2mm 0 3mm;gap:3mm;min-height:0}
+.question:last-child{border-bottom:0}
+.q-title{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;font-weight:750}
+.q-title .marks{font-size:11px;font-weight:600}
+.q-section{display:flex;align-items:center;gap:5mm}.q-label{font-size:11px;font-weight:750;width:36mm;flex:none;letter-spacing:.03em}
+.value-box{border:1px solid #424a46;border-radius:1mm;height:11mm;width:39mm;font-size:16px;font-weight:800;display:grid;place-items:center}
+.bits{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2mm;flex:1}
+.bit{min-width:0;display:flex;flex-direction:column;align-items:center;gap:1mm;font-size:10px}
+.bit b{font-size:10px;font-weight:700}.bit span{width:100%;height:10mm;border:1px solid #515952;display:grid;place-items:center;font:800 15px/1 Arial,Helvetica,sans-serif}
+.bit:nth-child(4){margin-right:2mm}.bit:nth-child(5){margin-left:2mm}
+.nibbles{display:flex;align-items:center;gap:10mm;flex:1}.nibble{font-size:11px;display:flex;align-items:center;gap:3mm}
+.small-box{width:22mm;height:9mm;border:1px solid #424a46;display:grid;place-items:center}
+.hexes{display:flex;gap:2mm}.hex-box{width:19mm;height:10mm;border:1px solid #424a46;display:grid;place-items:center;font-size:16px;font-weight:800}
+.paper-foot{height:9mm;border-top:1px solid #c5ccc8;display:flex;align-items:center;justify-content:space-between;color:#4b5750;font-size:10px;padding:0 3mm}
+.answer-table{width:100%;border-collapse:collapse;margin-top:10mm;font-size:12px}
+.answer-table th,.answer-table td{border-bottom:1px solid #ccd5cf;text-align:left;padding:11px 6px}
+.answer-table th{font-size:11px;background:#f0f4f1}.answer-table .mono{font-family:Consolas,'Courier New',monospace;letter-spacing:1px;font-size:13px}
+.answer-note{margin-top:12mm;font-size:12px;line-height:1.7}
+@page{size:A4;margin:10mm}
+@media screen and (max-width:790px){
+  .sheet{width:100%;min-height:0;padding:12px;box-shadow:none}
+  .paper-head{height:auto;min-height:65px}
+  .question{min-height:225px}
+  .q-label{width:94px;font-size:10px}
+  .q-section{gap:8px}
+  .bit span{height:38px}
+  .bits{gap:3px}
+  .nibbles{gap:8px;flex-wrap:wrap}
+  .small-box{width:56px}
+  .hex-box{width:50px}
+  .hint{padding:8px}
+  .paper-foot{min-height:25px;height:auto}
+}
+@media print{
+  html,body{background:#fff;margin:0;padding:0;color:#000}
+  .actions,.hint{display:none!important}
+  .sheet{width:190mm;height:277mm;min-height:277mm;margin:0;box-shadow:none;break-inside:avoid;overflow:hidden}
+  .paper-content{min-height:0}
+  .paper-head{height:29mm}
+  .paper-foot{height:9mm}
+}
+</style>
+<script src="/assets/j277-conversion-questions.js?v=20261110-shared1"></script>
+</head>
+<body>
+<header class="actions">
+ <a href="/exercise/paper1/" aria-label="Back to Paper 1 Skills">← Skills</a>
+ <div class="label">Conversion Grid · Print</div>
+ <label>Difficulty <select id="level"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+ <a id="switch" class="key-link" href="?level=easy&amp;answers=1">Answer sheet</a>
+ <button id="print" type="button">Print / Save PDF</button>
+</header>
+<div class="hint">These are the same ten questions as the interactive exercise. Printing uses A4 with blank boxes for written working.</div>
+<main id="pages"></main>
+<script>
+(function(){
+'use strict';
+const params=new URLSearchParams(location.search);
+const level=['easy','medium','hard'].includes(params.get('level'))?params.get('level'):'easy';
+const answers=params.get('answers')==='1';
+const questions=window.J277ConversionQuestions.all(level);
+const pages=document.getElementById('pages'),levelSelect=document.getElementById('level'),switcher=document.getElementById('switch');
+levelSelect.value=level;
+levelSelect.addEventListener('change',()=>{location.href='?level='+levelSelect.value+(answers?'&answers=1':'')});
+switcher.href='?level='+level+(answers?'':'&answers=1');
+switcher.textContent=answers?'Student worksheet':'Answer sheet';
+document.getElementById('print').addEventListener('click',()=>window.print());
+function node(tag,cl,txt){const e=document.createElement(tag);if(cl)e.className=cl;if(txt!==undefined)e.textContent=txt;return e}
+function makeSheet(index,total,isAnswers=false){
+ const sheet=node('section','sheet'),head=node('div','paper-head');
+ head.append(node('strong','', 'RHS COMPUTING · OCR J277 · PAPER 1'),node('div','exercise-name','Conversion Grid — '+level[0].toUpperCase()+level.slice(1)+(isAnswers?' · Answers':'')));
+ head.append(node('small','',isAnswers?'Teacher marking reference':'Name: ______________________________    Class: __________    Date: __________'));
+ sheet.append(head);
+ const body=node('div','paper-content');sheet.append(body);
+ const foot=node('div','paper-foot');foot.append(node('span','', 'Original OCR J277 practice · not OCR-endorsed'),node('span','', 'Page '+(index+1)+' / '+total));sheet.append(foot);
+ pages.append(sheet);
+ return body;
+}
+if(answers){
+ const body=makeSheet(0,1,true);
+ const table=node('table','answer-table');
+ const head=node('thead');const row=node('tr');
+ for(const s of ['Q','Given','Denary','8-bit binary','4-bit totals','Hex'])row.append(node('th','',s));
+ head.append(row);table.append(head);
+ const tbody=node('tbody');
+ questions.forEach(q=>{
+  const tr=node('tr');
+  const given=q.source==='denary'?q.denary+' denary':q.source==='binary'?q.binary+' binary':q.hex+' hex';
+  for(const [i,s] of [q.number,given,q.denary,q.binary.slice(0,4)+' '+q.binary.slice(4),q.high+' / '+q.low,q.hex].entries())
+   tr.append(node('td',i===3?'mono':'',String(s)));
+  tbody.append(tr);
+ });
+ table.append(tbody);body.append(table);
+ body.append(node('p','answer-note','Check the complete binary row, both four-bit totals and the two hexadecimal digits. Use the separate student worksheet for written practice.'));
+}else{
+ const plan=[[0,1,2],[3,4,5],[6,7],[8,9]];
+ plan.forEach((group,pageIndex)=>{
+  const body=makeSheet(pageIndex,4);
+  group.forEach(i=>{
+   const q=questions[i],item=node('section','question');
+   const heading=node('div','q-title');
+   heading.append(node('span','','Q'+q.number+'. Complete the conversion grid.'),node('span','marks','[4 marks]'));
+   item.append(heading);
+   const den=node('div','q-section');den.append(node('span','q-label','DENARY (base 10)'),node('div','value-box',q.source==='denary'?String(q.denary):''));item.append(den);
+   const binary=node('div','q-section');binary.append(node('span','q-label','BINARY (base 2)'));
+   const bits=node('div','bits');const weights=[128,64,32,16,8,4,2,1];
+   weights.forEach((w,j)=>{const b=node('div','bit');b.append(node('b','',String(w)),node('span','',q.source==='binary'?q.binary[j]:''));bits.append(b)});
+   binary.append(bits);item.append(binary);
+   const nibble=node('div','q-section');nibble.append(node('span','q-label','FOUR-BIT TOTALS'));
+   const both=node('div','nibbles');
+   for(const side of ['Left (8+4+2+1)','Right (8+4+2+1)']){
+    const span=node('div','nibble');span.append(node('span','',side),node('div','small-box'));both.append(span);
+   }
+   nibble.append(both);item.append(nibble);
+   const hex=node('div','q-section');hex.append(node('span','q-label','HEX (base 16)'));
+   const hexes=node('div','hexes');
+   for(const d of [0,1])hexes.append(node('div','hex-box',q.source==='hex'?q.hex[d]:''));
+   hex.append(hexes);item.append(hex);
+   body.append(item);
+  });
+ });
+}
+})();
+</script>
+</body>
+</html>
