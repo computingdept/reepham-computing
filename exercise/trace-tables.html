@@ -20,18 +20,24 @@
 @media(max-width:550px){.top-inner{padding:12px}.wrap{padding:12px}.brand strong{font-size:14px}.top-meta span{display:none}.navzone{padding:10px}.heading-row{align-items:flex-start}.progressbar{width:130px}.category-nav{gap:5px}.cat-btn{padding:7px 9px;font-size:11px}.challenge-list{max-height:115px}.code-line{font-size:11px}.instructions{font-size:11px}.controls{padding:10px}.btn{padding:8px 9px;font-size:11px}.table-shell{margin:0 10px}.feedback{margin-left:10px;margin-right:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 @media print{@page{size:A4 landscape;margin:12mm}body{background:white;font-size:12px}.top{background:white!important;color:black;border-bottom:1px solid #bbb}.top-meta,.navzone,.controls,.feedback,.help-row,.footer,.subtitle,.progressbox,.code-toolbar{display:none!important}.wrap{padding:8px}.workspace{display:grid;grid-template-columns:41% 59%;gap:12px}.panel{box-shadow:none;border:1px solid #bbb}.codebox{background:#fff!important;color:#111!important;max-height:none!important;overflow:visible}.code-line{color:#111!important}.code-line .ln{color:#444!important}.array-area{overflow:visible}.table-shell{max-height:none;overflow:visible}.trace-table input{border:1px solid #aaa}.trace-table th{position:static}.instructions{background:#fff;border-color:#999}.panel-header{padding:8px 10px}}
-<style>.top{background:#fff;color:#003a31;border-bottom:1px solid #d5e0dc}.logo{background:#006347;box-shadow:none}.brand small{color:#61706a}.top-meta span{border-color:#c4d9ce;color:#1d5745}.top-meta a{color:#006347}.codebox{background:#102c27}.kicker{color:#006347}</style>
+.top{background:#fff;color:#003a31;border-bottom:1px solid #d5e0dc}.logo{background:#006347;box-shadow:none}.brand small{color:#61706a}.top-meta span{border-color:#c4d9ce;color:#1d5745}.top-meta a{color:#006347}.codebox{background:#102c27}.kicker{color:#006347}
+.file-item{flex:1 1 190px;min-width:180px}.file-item strong{font-size:12px;color:#285746}
+.file-lines{border-collapse:collapse;margin-top:8px;width:100%;font:12px Consolas,monospace}
+.file-lines th{width:35px;text-align:right;color:#718478;background:#edf3f0;padding:6px 9px;border:1px solid #d8e6df}
+.file-lines td{min-width:115px;border:1px solid #d8e6df;padding:6px 12px;background:#fff}
+.file-lines .file-next td,.file-lines .file-next th{background:#fff4ca;border-color:#cfad56}
+</style>
 </head>
 <body>
-<header class="top"><div class="top-inner"><div class="logo" aria-hidden="true">R</div><div class="brand"><strong>RHS COMPUTING</strong><small>OCR J277 · Paper 2 practice</small></div><div class="top-meta"><span>Exam Reference Language</span><span>25 original challenges</span><a href="https://rhsccs.org/j277-hub.html?year=11" target="_blank" rel="noopener">J277 Hub ↗</a><a href="index.html">All exercises ↗</a></div></div></header>
+<header class="top"><div class="top-inner"><div class="logo" aria-hidden="true">R</div><div class="brand"><strong>RHS COMPUTING</strong><small>OCR J277 · Paper 2 practice</small></div><div class="top-meta"><span>Exam Reference Language</span><span>32 original challenges</span><a href="https://rhsccs.org/j277-hub.html?year=11" target="_blank" rel="noopener">J277 Hub ↗</a><a href="index.html">All exercises ↗</a></div></div></header>
 <main class="wrap">
- <div class="heading-row"><div><p class="kicker">Interactive exam practice</p><h1>Trace Table Challenges</h1><p class="subtitle">Follow each algorithm line by line. Track variables, 1D and 2D arrays, procedures and functions.</p></div><div class="progressbox" aria-label="Overall challenge completion"><span class="progress-text" id="progressText">0 / 25 completed</span><div class="progressbar"><div id="progressFill"></div></div></div></div>
+ <div class="heading-row"><div><p class="kicker">Interactive exam practice</p><h1>Trace Table Challenges</h1><p class="subtitle">Follow each algorithm line by line. Track variables, 1D and 2D arrays, procedures, functions and text file handling.</p></div><div class="progressbox" aria-label="Overall challenge completion"><span class="progress-text" id="progressText">0 / 32 completed</span><div class="progressbar"><div id="progressFill"></div></div></div></div>
  <section class="navzone" aria-label="Select a challenge"><div id="categories" class="category-nav"></div><nav id="challengeButtons" class="challenge-list" aria-label="Challenge numbers"></nav><p class="nav-description">Choose a topic, then a numbered challenge. <strong>Green numbers</strong> have been completed. Progress saves in this browser.</p></section>
  <section class="workspace">
   <section class="panel code-panel" aria-label="Algorithm and array visualisation">
    <div class="panel-header"><div class="titleline"><div><div class="eyebrow" id="challengeCategory">The basics</div><h2 id="challengeTitle">Loading challenge…</h2></div><span class="difficulty" id="challengeLevel">Starter</span></div><p class="challenge-detail" id="challengeDetail"></p></div>
    <div class="code-toolbar"><small>ALGORITHM — OCR EXAM REFERENCE LANGUAGE</small><span class="pill">Line numbers shown</span></div><div class="codebox" id="codeBox" aria-label="Numbered program code"></div>
-   <div class="array-area"><div class="array-top"><strong>Array visualiser <span class="muted" id="arrayStage"></span></strong><small>Indices begin at 0</small></div><div class="array-list" id="arraysBox"></div></div>
+   <div class="array-area"><div class="array-top"><strong><span id="visualiserLabel">Array visualiser</span> <span class="muted" id="arrayStage"></span></strong><small id="visualiserDescription">Indices begin at 0</small></div><div class="array-list" id="arraysBox"></div></div>
   </section>
   <section class="panel trace-panel" aria-label="Editable trace table">
    <div class="panel-header"><div class="titleline"><div><div class="eyebrow">Student challenge</div><h2>Complete the trace table</h2></div><span id="modeTag">Your attempt</span></div></div>
@@ -48,8 +54,8 @@
 </main>
 <script>
 'use strict';
-const CATEGORIES=[['all','All 25'],['basic','The basics'],['one','1D arrays'],['two','2D arrays'],['proc','Procedures'],['func','Functions']];
-const NAMES={basic:'The basics',one:'1D arrays',two:'2D arrays',proc:'Procedures',func:'Functions'};
+const CATEGORIES=[['all','All 32'],['basic','The basics'],['one','1D arrays'],['two','2D arrays'],['proc','Procedures'],['func','Functions'],['file','File handling']];
+const NAMES={basic:'The basics',one:'1D arrays',two:'2D arrays',proc:'Procedures',func:'Functions',file:'File handling'};
 const clone=x=>JSON.parse(JSON.stringify(x));
 function emptyGrid(rows,cols){return Array.from({length:rows},()=>Array(cols).fill(null));}
 function pretty(v){if(v===null||v===undefined)return '–';if(typeof v==='boolean')return v?'True':'False';if(Array.isArray(v))return '['+v.map(pretty).join(', ')+']';return String(v);}
@@ -259,7 +265,42 @@ board[1,0] = 5
 board[1,1] = 9
 result = cornerSum(board)
 print(result)`,['result'],{board:emptyGrid(2,2)},b=>{b.put(5,'board',[0,0],3);b.put(6,'board',[0,1],7);b.put(7,'board',[1,0],5);b.put(8,'board',[1,1],9);b.call(9,'cornerSum');b.end(2,'cornerSum',12);b.set(9,{result:12});b.out(10,12);},'Challenge');
-if(BANK.length!==25)throw Error('Expected 25 challenges, found '+BANK.length);
+
+/* Additional OCR J277 file-handling challenges: J277 uses open(), not openRead(). */
+function openTraceFile(b,line,name){b.state._activeFile=name;b.state._cursor=0;b.push(line,{action:'open '+name});}
+function readTraceFile(b,line,name,varName){const i=b.state._cursor||0, v=b.arrays[name][i];b.state[varName]=v;b.state._cursor=i+1;b.push(line,{[varName]:v,action:'read line '+(i+1)});}
+function writeTraceFile(b,line,value){const name=b.state._activeFile;b.arrays[name].push(String(value));b.push(line,{action:'write '+String(value)});}
+function closeTraceFile(b,line){const name=b.state._activeFile;b.state._activeFile='';b.push(line,{action:'close '+name});}
+
+add('file','Read the first line','readLine() reads the next line, starting at line 1 of the file.',
+['f = open("names.txt")','first = f.readLine()','print(first)','f.close()'].join('\n'),
+['first'],{'names.txt':['Ada','Sam','Lily']},b=>{openTraceFile(b,1,'names.txt');readTraceFile(b,2,'names.txt','first');b.out(3,'Ada');closeTraceFile(b,4);},'Starter');
+
+add('file','Read the next line','Two calls to readLine() advance the file pointer by two lines.',
+['f = open("colours.txt")','a = f.readLine()','b = f.readLine()','print(b)','f.close()'].join('\n'),
+['a','b'],{'colours.txt':['Red','Green','Blue']},b=>{openTraceFile(b,1,'colours.txt');readTraceFile(b,2,'colours.txt','a');readTraceFile(b,3,'colours.txt','b');b.out(4,'Green');closeTraceFile(b,5);},'Starter');
+
+add('file','Read to end of file','Check the condition before every read and include the final False result.',
+['f = open("days.txt")','count = 0','while NOT f.endOfFile()','    day = f.readLine()','    count = count + 1','endwhile','print(count)','f.close()'].join('\n'),
+['count','day'],{'days.txt':['Mon','Tue','Wed']},b=>{openTraceFile(b,1,'days.txt');b.set(2,{count:0});for(let i=0;i<3;i++){b.test(3,true);readTraceFile(b,4,'days.txt','day');b.set(5,{count:i+1});}b.test(3,false);b.out(7,3);closeTraceFile(b,8);},'Practice');
+
+add('file','Create and write a new file','newFile() creates an empty file; writeLine() adds lines at the end.',
+['newFile("results.txt")','f = open("results.txt")','f.writeLine("Pass")','f.writeLine("Next")','f.close()'].join('\n'),
+[],{'results.txt':[]},b=>{b.push(1,{action:'create results.txt'});openTraceFile(b,2,'results.txt');writeTraceFile(b,3,'Pass');writeTraceFile(b,4,'Next');closeTraceFile(b,5);},'Practice');
+
+add('file','Append to a file','writeLine() adds a new line after the existing file contents.',
+['f = open("log.txt")','f.writeLine("Friday")','print("Saved")','f.close()'].join('\n'),
+[],{'log.txt':['Monday','Wednesday']},b=>{openTraceFile(b,1,'log.txt');writeTraceFile(b,2,'Friday');b.out(3,'Saved');closeTraceFile(b,4);},'Practice');
+
+add('file','Procedure writes names','Trace both calls into a procedure that appends names to the same file.',
+['procedure saveName(name)','    f = open("register.txt")','    f.writeLine(name)','    f.close()','endprocedure','saveName("Amy")','saveName("Ben")'].join('\n'),
+['name'],{'register.txt':[]},b=>{for(const [line,name] of [[6,'Amy'],[7,'Ben']]){b.call(line,'saveName');b.set(1,{name});openTraceFile(b,2,'register.txt');writeTraceFile(b,3,name);closeTraceFile(b,4);b.end(5,'saveName');}},'Challenge');
+
+add('file','Function reads from a file','Follow a function that returns the first line of a file.',
+['function firstEntry()','    f = open("teams.txt")','    answer = f.readLine()','    f.close()','    return answer','endfunction','winner = firstEntry()','print(winner)'].join('\n'),
+['answer','winner'],{'teams.txt':['Hawks','Bears']},b=>{b.call(7,'firstEntry');openTraceFile(b,2,'teams.txt');readTraceFile(b,3,'teams.txt','answer');closeTraceFile(b,4);b.end(5,'firstEntry','Hawks');b.set(7,{winner:'Hawks'});b.out(8,'Hawks');},'Challenge');
+
+if(BANK.length!==32)throw Error('Expected 32 challenges, found '+BANK.length);
 const STORAGE='rhs-ocr-erl-trace-v1';
 let allProgress={};try{allProgress=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{};}catch(e){}
 let selected=0,filter='all',solution=false,stepIndex=0,playTimer=null,marked=false;
@@ -267,12 +308,12 @@ const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
 function save(){try{localStorage.setItem(STORAGE,JSON.stringify(allProgress));}catch(e){/* private browsing may block storage */}}
 function prog(c){if(!allProgress[c.id])allProgress[c.id]={cells:[],completed:false};return allProgress[c.id];}
-function getColumns(c){const cols=[{key:'line',title:'Line',type:'line'}];for(const v of c.vars)cols.push({key:v,title:v,type:'var'});if(c.hasArray)cols.push({key:'array',title:'Array change',type:'array'});if(c.hasCondition)cols.push({key:'condition',title:'Condition',type:'condition'});if(c.hasAction)cols.push({key:'action',title:'Call / return',type:'action'});if(c.hasOutput)cols.push({key:'output',title:'Output',type:'output'});return cols;}
+function getColumns(c){const cols=[{key:'line',title:'Line',type:'line'}];for(const v of c.vars)cols.push({key:v,title:v,type:'var'});if(c.hasArray)cols.push({key:'array',title:'Array change',type:'array'});if(c.hasCondition)cols.push({key:'condition',title:'Condition',type:'condition'});if(c.hasAction)cols.push({key:'action',title:c.category==='file'?'File operation':'Call / return',type:'action'});if(c.hasOutput)cols.push({key:'output',title:'Output',type:'output'});return cols;}
 function cellsFor(c){const p=prog(c);if(!Array.isArray(p.cells))p.cells=[];if(p.cells.length===0)p.cells=Array.from({length:Math.min(8,c.rows.length)},()=>({}));return p.cells;}
 function completedCount(){return BANK.reduce((n,c)=>n+(prog(c).completed?1:0),0)}
 function drawProgress(){const n=completedCount();$('progressText').textContent=n+' / '+BANK.length+' completed';$('progressFill').style.width=(100*n/BANK.length)+'%'}
 function drawNav(){const cat=$('categories');cat.innerHTML='';for(const [key,label] of CATEGORIES){const btn=document.createElement('button');btn.className='cat-btn';btn.type='button';btn.textContent=label;btn.setAttribute('aria-pressed',String(filter===key));btn.onclick=()=>{filter=key;drawNav();const c=BANK[selected];if(filter!=='all'&&c.category!==filter){const first=BANK.findIndex(x=>x.category===filter);selectChallenge(first)}};cat.appendChild(btn)}const list=$('challengeButtons');list.innerHTML='';BANK.forEach((c,i)=>{if(filter!=='all'&&c.category!==filter)return;const btn=document.createElement('button');btn.className='number-btn'+(i===selected?' active':'')+(prog(c).completed?' done':'');btn.textContent=c.id;btn.title='Challenge '+c.id+': '+c.title;btn.setAttribute('aria-label','Challenge '+c.id+': '+c.title+(prog(c).completed?', completed':''));btn.setAttribute('aria-current',i===selected?'true':'false');btn.onclick=()=>selectChallenge(i);list.appendChild(btn)});drawProgress();}
-function colorise(line){let out=escapeHtml(line);out=out.replace(/(&quot;.*?&quot;)/g,'<span class="str">$1</span>');out=out.replace(/\b(array|procedure|endprocedure|function|endfunction|return|if|then|else|endif|for|to|next|while|endwhile|print)\b/g,'<span class="kw">$1</span>');return out;}
+function colorise(line){let out=escapeHtml(line);out=out.replace(/(&quot;.*?&quot;)/g,'<span class="str">$1</span>');out=out.replace(/\b(array|procedure|endprocedure|function|endfunction|return|if|then|else|endif|for|to|next|while|endwhile|print|open|newFile|NOT)\b/g,'<span class="kw">$1</span>');return out;}
 function drawCode(c){$('codeBox').innerHTML=c.code.map((s,i)=>`<div class="code-line" data-line="${i+1}"><span class="ln">${i+1}</span><span class="src">${colorise(s)}</span></div>`).join('');}
 function highlightLine(num){document.querySelectorAll('.code-line').forEach(el=>{el.classList.toggle('active-code',el.dataset.line===String(num));});}
 function drawArrays(c,row=null){const arrays=(row?row.arrays:c.initial);const hi=row?row.highlight:null;$('arrayStage').textContent=solution?(stepIndex===0?'— before execution':'— after step '+stepIndex):'— starting state';const b=$('arraysBox');b.innerHTML='';const keys=Object.keys(arrays);if(!keys.length){b.innerHTML='<p class="muted" style="font-size:11px">This algorithm does not use an array. Focus on the changing variables and output.</p>';return;}for(const name of keys){const arr=arrays[name],item=document.createElement('div');item.className='array-item';const nameEl=document.createElement('p');nameEl.className='array-name';nameEl.textContent=Array.isArray(arr[0])?name+'[row, column]':name+'[index]';item.appendChild(nameEl);if(Array.isArray(arr[0])){const table=document.createElement('table');table.className='matrix';let tr=document.createElement('tr');tr.appendChild(document.createElement('th'));for(let j=0;j<arr[0].length;j++){const th=document.createElement('th');th.textContent=j;tr.appendChild(th);}table.appendChild(tr);for(let i=0;i<arr.length;i++){const rowEl=document.createElement('tr'),th=document.createElement('th');th.textContent=i;rowEl.appendChild(th);for(let j=0;j<arr[i].length;j++){const td=document.createElement('td');td.textContent=pretty(arr[i][j]);td.title=name+'['+i+','+j+']';if(hi&&hi.array===name&&hi.indices[0]===i&&hi.indices[1]===j)td.className='highlight';rowEl.appendChild(td)}table.appendChild(rowEl);}item.appendChild(table);}else{const strip=document.createElement('div');strip.className='array-strip';arr.forEach((v,i)=>{const cell=document.createElement('div');cell.className='array-cell'+(hi&&hi.array===name&&hi.indices[0]===i?' highlight':'');cell.title=name+'['+i+']';cell.innerHTML='<span class="idx">'+i+'</span><span class="val">'+escapeHtml(pretty(v))+'</span>';strip.appendChild(cell)});item.appendChild(strip)}b.appendChild(item)}}
@@ -286,7 +327,7 @@ function drawTable(c){const cols=getColumns(c);const table=$('traceTable');let h
 }
 function updateAttemptRow(){if(solution)return;const rows=$('traceTable').querySelectorAll('tbody tr');rows.forEach(el=>el.classList.remove('row-active'));const filled=[...rows].filter(row=>row.querySelector('input[data-key="line"]')?.value.trim());if(filled.length)filled[filled.length-1].classList.add('row-active');}
 function setFeedback(kind,text){const el=$('feedback');el.className='feedback'+(kind?' '+kind:'');el.textContent=text;}
-function selectChallenge(idx){stopPlaying();selected=idx;solution=false;stepIndex=0;marked=false;const c=BANK[idx];$('challengeCategory').textContent=NAMES[c.category]+' · '+String(c.id).padStart(2,'0')+' / 25';$('challengeTitle').textContent=c.title;$('challengeDetail').textContent=c.detail;$('challengeLevel').textContent=c.difficulty;$('tableLabel').textContent='Trace table · Challenge '+c.id;const hints=['Enter a line number for each traced step.','Record new variable values when they change.','For array edits, write e.g. scores[1] = 20.','Write True/False for tested conditions.','Record calls and returns in the Call / return column.','Record the exact text/value sent to print().'];$('instructions').innerHTML='<strong>How to trace:</strong> '+hints.filter((x,i)=>i<2||(i===2&&c.hasArray)||(i===3&&c.hasCondition)||(i===4&&c.hasAction)||(i===5&&c.hasOutput)).join(' ')+' Blank variable cells mean “unchanged”.';drawCode(c);drawArrays(c);drawTable(c);drawNav();setFeedback('',prog(c).completed?'✓ You have completed this challenge. Choose the next one or practise again.':'Start with the first executed assignment, test, array change or subprogram call.');updateAttemptRow();}
+function selectChallenge(idx){stopPlaying();selected=idx;solution=false;stepIndex=0;marked=false;const c=BANK[idx];$('challengeCategory').textContent=NAMES[c.category]+' · '+String(c.id).padStart(2,'0')+' / '+BANK.length;$('challengeTitle').textContent=c.title;$('challengeDetail').textContent=c.detail;$('challengeLevel').textContent=c.difficulty;$('tableLabel').textContent='Trace table · Challenge '+c.id;const hints=['Enter a line number for each traced step.','Record new variable values when they change.','For array edits, write e.g. scores[1] = 20.','Write True/False for tested conditions.',(c.category==='file'?'Record the file operation, including the line number read or value written.':'Record calls and returns in the Call / return column.'),'Record the exact text/value sent to print().'];$('instructions').innerHTML='<strong>How to trace:</strong> '+hints.filter((x,i)=>i<2||(i===2&&c.hasArray)||(i===3&&c.hasCondition)||(i===4&&c.hasAction)||(i===5&&c.hasOutput)).join(' ')+' Blank variable cells mean “unchanged”.';drawCode(c);drawArrays(c);drawTable(c);drawNav();setFeedback('',prog(c).completed?'✓ You have completed this challenge. Choose the next one or practise again.':'Start with the first executed assignment, test, array change or subprogram call.');updateAttemptRow();}
 function startSolution(){solution=true;stepIndex=0;marked=false;drawTable(BANK[selected]);drawArrays(BANK[selected]);highlightLine(-1);setFeedback('info','A line is highlighted for every trace step. The 1D/2D array visualiser updates as the program executes. Your own table is saved.');}
 function showStep(n){if(!solution)startSolution();const c=BANK[selected];stepIndex=Math.max(0,Math.min(n,c.rows.length));drawTable(c);const last=stepIndex?c.rows[stepIndex-1]:null;drawArrays(c,last);highlightLine(last?last.line:-1);if(last){const description=last.cells.output!==undefined?'Printed: '+last.cells.output:last.cells.array!==undefined?'Array changed: '+last.cells.array:last.cells.condition!==undefined?'Condition was '+last.cells.condition:last.cells.action!==undefined?'Subprogram: '+last.cells.action:'Variable assignment on line '+last.line;setFeedback('info','Step '+stepIndex+' / '+c.rows.length+': '+description)}if(stepIndex===c.rows.length)stopPlaying();$('tableShell').scrollTop=$('tableShell').scrollHeight;}
 function stopPlaying(){if(playTimer){clearInterval(playTimer);playTimer=null;}$('playBtn').textContent='▶ Animate solution';}
@@ -307,6 +348,33 @@ function reset(){if(solution)backToAttempt();if(!confirm('Clear your answers for
 function exportCsv(){const c=BANK[selected],cols=getColumns(c),cells=cellsFor(c);const csv=[cols.map(x=>x.title),...cells.map(row=>cols.map(col=>row[col.key]||''))].map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='OCR-J277-Trace-Challenge-'+String(c.id).padStart(2,'0')+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 $('addRow').onclick=addRow;$('removeRow').onclick=removeRow;$('checkBtn').onclick=check;$('hintBtn').onclick=hint;$('resetBtn').onclick=reset;$('playBtn').onclick=play;$('stepBtn').onclick=()=>{stopPlaying();showStep(stepIndex+1)};$('revealBtn').onclick=()=>{stopPlaying();showStep(BANK[selected].rows.length)};$('attemptBtn').onclick=backToAttempt;$('printBtn').onclick=()=>window.print();$('csvBtn').onclick=exportCsv;
 window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();check();}});
+
+/* The file section shows numbered text lines, not array indices. */
+const originalDrawArrays = drawArrays;
+drawArrays = function(c,row=null){
+ const label=document.getElementById('visualiserLabel');
+ const help=document.getElementById('visualiserDescription');
+ if(c.category!=='file'){label.textContent='Array visualiser';help.textContent='Indices begin at 0';return originalDrawArrays(c,row);}
+ label.textContent='Text file visualiser';help.textContent='File lines begin at 1';
+ document.getElementById('arrayStage').textContent=solution?(stepIndex===0?'— before execution':'— after step '+stepIndex):'— starting state';
+ const box=document.getElementById('arraysBox');box.replaceChildren();
+ const files=row?row.arrays:c.initial;
+ for(const [name,lines] of Object.entries(files)){
+  const item=document.createElement('div');item.className='file-item';
+  const nameEl=document.createElement('strong');nameEl.textContent=name;item.appendChild(nameEl);
+  const table=document.createElement('table');table.className='file-lines';
+  if(lines.length===0){
+   const tr=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=2;cell.textContent='(empty file)';tr.appendChild(cell);table.appendChild(tr);
+  }else lines.forEach((v,i)=>{
+   const tr=document.createElement('tr'),num=document.createElement('th'),txt=document.createElement('td');
+   num.textContent=String(i+1);txt.textContent=String(v);tr.append(num,txt);
+   if(row&&row.state._activeFile===name&&row.state._cursor===i)tr.className='file-next';
+   table.appendChild(tr);
+  });
+  item.appendChild(table);box.appendChild(item);
+ }
+};
+
 selectChallenge(0);
 window.__traceApp={BANK,getColumns,selectChallenge,check,cellsFor,prog,showStep,backToAttempt};
 </script>
