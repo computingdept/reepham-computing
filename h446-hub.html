@@ -230,7 +230,7 @@
 <link rel="stylesheet" href="assets/synergy-shell.css?v=20261101-brand1">
 <link rel="stylesheet" href="assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="assets/synergy-course-bar.css?v=20261101-unified1">
-<script src="assets/hub-navigation.js?v=20261101-paper-all10"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
+<script src="assets/hub-navigation.js?v=20261110-no-tab-scroll1"></script><script src="assets/offline-booklet-catalogue.js?v=20261028-draft1"></script>
 </head>
 <body class="course-hub course-compact course-inline-nav" data-year="12">
 <header class="topbar">
@@ -568,7 +568,7 @@ function renderLessons(){
 }
 
 window.addEventListener('offline-booklets-loaded',renderLessons);
-applyYearTheme();updateYearNavigation();const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',online:'revisionhub',guides:'booklet'}[location.hash.slice(1)]||location.hash.slice(1)||'lessons');openTab(requestedTab);renderLessons();
+applyYearTheme();updateYearNavigation();const requestedSection=(window.RHSCInitialHubSection||location.hash).slice(1);const requestedTab=({skills:'revisionhub',revision:'booklet',exam:'revisionhub',online:'revisionhub',guides:'booklet'}[requestedSection]||requestedSection||'lessons');openTab(requestedTab);renderLessons();
 </script>
 <script src="/revision/shared/revision-hub.js?v=20261026-direct-14-7"></script>
 </body>
