@@ -23,11 +23,11 @@
       throw new RangeError('Expected a conversion difficulty and question index 0-9');
     const r=randomFor(level,index);
     const diff=levels.indexOf(level);
-    const n=diff===0?easyValues[index]:1+Math.floor(r()*(diff===1?191:255));
+    const n=diff===0?easyValues[index]:1+Math.floor(r()*255);
     const bits=n.toString(2).padStart(8,'0');
     const hex=n.toString(16).toUpperCase().padStart(2,'0');
     const source=diff===0?'denary':
-      (diff===1?['denary','binary','hex']:['hex','binary','denary'])[index%3];
+      (diff===1?'hex':['hex','binary','denary'][index%3]);
     const shown=source==='denary'?n:source==='binary'?bits:hex;
     return Object.freeze({index,number:index+1,denary:n,binary:bits,hex,
       source,shown,high:Math.floor(n/16),low:n%16});

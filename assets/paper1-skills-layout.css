@@ -587,3 +587,32 @@ body.course-hub #practice.is-conversion > .footnote {
     padding:10px 8px;
   }
 }
+
+/* Conversion grid hard - paper-first challenge: no digital scaffolding until reveal.
+   Other skills and easy/medium remain interactive. */
+body.course-hub #practice.is-conversion .paper-challenge {
+  min-height:250px;
+  margin:0 auto;padding:35px 26px;
+  max-width:700px;border:1px solid #d5ddda;border-radius:14px;
+  background:linear-gradient(180deg,#fff,#f9fcfa);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:17px;text-align:center;color:#234434;
+}
+body.course-hub #practice.is-conversion .paper-challenge strong {
+  font-size:clamp(24px,3vw,34px);font-weight:850;line-height:1.25;
+}
+body.course-hub #practice.is-conversion .paper-challenge span {
+  color:#607168;font-size:13px;line-height:1.5;max-width:450px;
+}
+body.course-hub #practice.is-paper-challenge .wb-layout {display:none!important}
+body.course-hub #practice .paper-mark-actions {
+  display:inline-flex;gap:8px;align-items:center;
+}
+body.course-hub #practice .paper-mark-actions.hidden{display:none}
+@media(max-width:700px){
+ body.course-hub #practice.is-conversion .paper-challenge{
+   min-height:210px;padding:22px 15px;gap:13px
+ }
+ body.course-hub #practice .paper-mark-actions{width:100%}
+ body.course-hub #practice .paper-mark-actions .btn{flex:1}
+}

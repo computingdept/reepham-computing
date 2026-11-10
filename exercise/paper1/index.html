@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
 <link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
-<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-merged-header1">
+<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-paperchallenge1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
@@ -62,15 +62,15 @@
     <div class="level-menu" role="group" aria-label="Difficulty"><button class="level" data-level="easy">Easy</button><button class="level" data-level="medium">Medium</button><button class="level" data-level="hard">Hard</button></div>
     <div class="work">
       <div class="work-head"><div><b id="qpos">Question 1 of 10</b><div class="meter" style="width:175px"><div class="meter-fill" id="meter"></div></div></div><span id="mode-note">Guided practice</span></div>
-      <div id="question-content"><div class="prompt" id="prompt"></div><p class="context" id="context"></p><div class="answer-area" id="answer-area"></div></div>
+      <div id="question-content"><div class="prompt" id="prompt"></div><p class="context" id="context"></p><div id="paper-challenge" class="hidden paper-challenge" role="group" aria-label="Handwritten conversion challenge"><strong id="paper-challenge-question"></strong><span>Work in your exercise book. Show your binary, nibble and hexadecimal working before revealing the answer.</span></div><div class="answer-area" id="answer-area"></div></div>
       <div id="feedback" class="feedback hidden" role="status"></div>
       <div id="hint-area" class="hidden hintbox"></div>
-      <div class="bottom-bar"><button id="hint" class="toggle-help" type="button">Show a hint</button><div class="buttons"><button class="btn" id="clear" type="button">Clear</button><button class="btn" id="show-answer" type="button" hidden>Show answer</button><button class="btn primary" id="check" type="button">Check answer</button><button class="btn primary hidden" id="next" type="button">Next question →</button></div></div>
+      <div class="bottom-bar"><button id="hint" class="toggle-help" type="button">Show a hint</button><div class="buttons"><button class="btn" id="clear" type="button">Clear</button><button class="btn" id="show-answer" type="button" hidden>Show answer</button><button class="btn primary" id="check" type="button">Check answer</button><span id="paper-mark-actions" class="hidden paper-mark-actions"><button id="paper-correct" type="button" class="btn primary">Got it right</button><button id="paper-incorrect" type="button" class="btn">Not yet</button></span><button class="btn primary hidden" id="next" type="button">Next question →</button></div></div>
     </div>
-    <div class="footnote">Original practice questions aligned to OCR J277. Not OCR-endorsed. Progress is stored locally on this device only.</div>
+    
   </section>
 </main>
-<script src="/assets/j277-conversion-questions.js?v=20261110-shared1"></script>
+<script src="/assets/j277-conversion-questions.js?v=20261110-levels2"></script>
 <script>
 (()=>{'use strict';
 const specs={
@@ -207,7 +207,7 @@ function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
 function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
 function home(){skill=null;$('practice').classList.remove('is-conversion');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
 function chooseLevel(l){level=l;index=0;levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
-function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('wb-question-count').textContent=`Question ${index+1} / 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';$('check').classList.remove('hidden');$('next').classList.add('hidden');$('clear').classList.remove('hidden');$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
+function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('wb-question-count').textContent=`Question ${index+1} / 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;switch(p.type){
@@ -322,7 +322,7 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
 function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':'Enter an answer before checking.','neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg('Not quite. Check your working and try again.','bad');}}}
 function next(){if(index<9){index++;renderQuestion();scrollTop()}else results()}
-function results(){$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
+function results(){$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
 $('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('show-answer').addEventListener('click',()=>{
  if(skill!=='convert'||!question||locked)return;
@@ -342,10 +342,25 @@ $('back').addEventListener('click',home);document.querySelectorAll('.level').for
    if(live)live.textContent='Completed: '+binary(correct)+' = '+hex+' (hex)';
  }
  locked=true;
- showMsg('Answer for paper checking: '+question.why+'  (Viewing an answer does not count as completing a question.)','neutral');
+ const paperMode=skill==='convert'&&level==='hard';
+ $('practice').classList.remove('is-paper-challenge');
+ $('paper-challenge').classList.add('hidden');
+ showMsg(paperMode?'Compare your written working with the completed grid, then mark your answer.':question.why+' (Revealing an answer does not add to your score.)','neutral');
  $('check').classList.add('hidden');$('clear').classList.add('hidden');
- $('hint').classList.add('hidden');$('show-answer').hidden=true;$('next').classList.remove('hidden');
+ $('hint').classList.add('hidden');$('show-answer').hidden=true;
+ $('paper-mark-actions').classList.toggle('hidden',!paperMode);
+ $('next').classList.toggle('hidden',paperMode);
 });
+function recordPaperResult(correct){
+ if(skill!=='convert'||level!=='hard'||!locked)return;
+ if($('paper-mark-actions').classList.contains('hidden'))return;
+ if(correct){score++;mark()}
+ $('paper-mark-actions').classList.add('hidden');
+ $('next').classList.remove('hidden');
+ showMsg(correct?'Marked correct.': 'Not yet — review the completed grid and try another.','neutral');
+}
+$('paper-correct').addEventListener('click',()=>recordPaperResult(true));
+$('paper-incorrect').addEventListener('click',()=>recordPaperResult(false));
 $('check').addEventListener('click',submit);$('next').addEventListener('click',next);$('clear').addEventListener('click',reset);$('hint').addEventListener('click',()=>{const e=$('hint-area');const shown=!e.classList.contains('hidden');e.classList.toggle('hidden',shown);e.textContent=question.hint||'Think about what the question is asking you to calculate.';$('hint').textContent=shown?'Show a hint':'Hide hint';});
 persist();
 })();
