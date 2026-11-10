@@ -65,11 +65,12 @@
       <div id="question-content"><div class="prompt" id="prompt"></div><p class="context" id="context"></p><div class="answer-area" id="answer-area"></div></div>
       <div id="feedback" class="feedback hidden" role="status"></div>
       <div id="hint-area" class="hidden hintbox"></div>
-      <div class="bottom-bar"><button id="hint" class="toggle-help" type="button">Show a hint</button><div class="buttons"><button class="btn" id="clear" type="button">Clear</button><button class="btn primary" id="check" type="button">Check answer</button><button class="btn primary hidden" id="next" type="button">Next question →</button></div></div>
+      <div class="bottom-bar"><button id="hint" class="toggle-help" type="button">Show a hint</button><div class="buttons"><button class="btn" id="clear" type="button">Clear</button><button class="btn" id="show-answer" type="button" hidden>Show answer</button><button class="btn primary" id="check" type="button">Check answer</button><button class="btn primary hidden" id="next" type="button">Next question →</button></div></div>
     </div>
     <div class="footnote">Original practice questions aligned to OCR J277. Not OCR-endorsed. Progress is stored locally on this device only.</div>
   </section>
 </main>
+<script src="/assets/j277-conversion-questions.js?v=20261110-shared1"></script>
 <script>
 (()=>{'use strict';
 const specs={
@@ -99,15 +100,14 @@ function rint(r,a,b){return a+Math.floor(r()*(b-a+1))}function pick(r,a){return 
 function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(r,1,dif===0?96:dif===1?191:255);let n,a,b,z,h;
  switch(id){
  case 'convert': {
-   const easyValues=[173,10,15,26,45,63,128,171,214,255];
-   n=dif===0?easyValues[i]:v();
-   h=n.toString(16).toUpperCase().padStart(2,'0');
-   const source=dif===0?'denary':(dif===1?['denary','binary','hex'][i%3]:['hex','binary','denary'][i%3]);
-   const shown=source==='denary'?`${n} (denary)`:source==='binary'?`${binary(n)} (binary)`:`${h} (hexadecimal)`;
+   const q=window.J277ConversionQuestions.question(l,i);
+   n=q.denary;h=q.hex;
+   const source=q.source;
+   const shown=source==='denary'?`${n} (denary)`:source==='binary'?`${q.binary} (binary)`:`${h} (hexadecimal)`;
    return {prompt:`Complete the conversion grid for ${shown}.`,
      context:'Keep denary at the top, use the eight binary boxes, calculate both four-bit groups, then complete hexadecimal at the bottom. Fill in everything that is not already given.',
-     type:'grid',value:n,source,hint:'Binary has place values 128, 64, 32, 16, 8, 4, 2 and 1. Split the eight bits into groups of four; each nibble uses weights 8, 4, 2 and 1. Values 10 to 15 become A to F.',
-     why:`${n} in denary = ${binary(n)} in binary = ${h} in hexadecimal. The nibble totals are ${Math.floor(n/16)} and ${n%16}.`};
+     type:'grid',value:n,source,hint:'Binary place values: 128, 64, 32, 16, 8, 4, 2 and 1. Split the eight bits into four-bit groups, then use 8, 4, 2 and 1. Values 10 to 15 become A to F.',
+     why:`${n} in denary = ${q.binary} in binary = ${h} in hexadecimal. The nibble totals are ${q.high} and ${q.low}.`};
  }
  case 'add':
    a=rint(r,1,dif===0?63:220);b=rint(r,1,dif===0?63:220);if(dif===0&&a+b>255)b=20;z=a+b;return {prompt:'Add these two 8-bit binary numbers.',context:'Set the eight result bits and decide whether the total overflows 8 bits.',type:'add',a:a,b:b,value:z%256,overflow:z>255,hint:'Add from the right. 1 + 1 is binary 10, so write 0 and carry 1.',why:`${a} + ${b} = ${z}. Result: ${binary(z)}; overflow: ${z>255?'yes':'no'}.`};
@@ -180,7 +180,24 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  }
 }
 function fromBank(r,i,bank){let b=bank[i%bank.length];let opts=b.slice(2,6);opts=opts.map(v=>({v,k:r()})).sort((a,b)=>a.k-b.k).map(o=>o.v);return {prompt:b[0],context:'Select the most appropriate answer.',type:'choice',value:b[1],options:opts,hint: b[6],why:b[6]}}
-function tile(key){const s=specs[key];const el=document.createElement('button');el.className='tile rhsc-resource-card rhsc-resource-card--skill';el.type='button';el.innerHTML=`<span class="tile-title">${s.name}</span><span class="tile-sub">${s.sub}</span><span class="tile-foot" id="progress-${key}"></span>`;el.addEventListener('click',()=>openSkill(key));return el}
+function tile(key){
+ const s=specs[key],card=document.createElement('article');
+ card.className='tile rhsc-resource-card rhsc-resource-card--skill';
+ const primary=document.createElement('button');primary.type='button';
+ primary.className='tile-main';primary.setAttribute('aria-label','Practise '+s.name);
+ primary.innerHTML=`<span class="tile-title">${s.name}</span><span class="tile-sub">${s.sub}</span><span class="tile-ref">${s.ref}</span><span class="tile-foot" id="progress-${key}"></span>`;
+ primary.addEventListener('click',()=>openSkill(key));
+ const actions=document.createElement('div');actions.className='tile-actions';
+ const go=document.createElement('button');go.type='button';go.className='tile-action';
+ go.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span>';
+ go.addEventListener('click',()=>openSkill(key));actions.append(go);
+ if(key==='convert'){
+   const print=document.createElement('a');print.className='tile-action';print.href='print/conversion.html?level=easy';
+   print.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg><span>Print</span>';
+   actions.append(print);
+ }
+ card.append(primary,actions);return card;
+}
 Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':'other-tiles').append(tile(key)));
 function getStorage(){try{return JSON.parse(localStorage.getItem('rhs-j277-paper1-progress')||'{}')}catch{return {}}}
 function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
@@ -190,7 +207,7 @@ function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
 function openSkill(k){skill=k;level='easy';index=0;score=0;$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
 function home(){skill=null;$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
 function chooseLevel(l){level=l;index=0;levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
-function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('check').classList.remove('hidden');$('next').classList.add('hidden');$('clear').classList.remove('hidden');$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
+function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);$('qpos').textContent=`Question ${index+1} of 10`;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=100*index/10+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';$('check').classList.remove('hidden');$('next').classList.add('hidden');$('clear').classList.remove('hidden');$('next').textContent=index===9?'See results →':'Next question →';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;switch(p.type){
@@ -256,9 +273,16 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
 function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':'Enter an answer before checking.','neutral');return;}if(ok){score++;mark();locked=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg('Not quite. Check your working and try again.','bad');}}}
 function next(){if(index<9){index++;renderQuestion();scrollTop()}else results()}
-function results(){const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
+function results(){$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
-$('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('check').addEventListener('click',submit);$('next').addEventListener('click',next);$('clear').addEventListener('click',reset);$('hint').addEventListener('click',()=>{const e=$('hint-area');const shown=!e.classList.contains('hidden');e.classList.toggle('hidden',shown);e.textContent=question.hint||'Think about what the question is asking you to calculate.';$('hint').textContent=shown?'Show a hint':'Hide hint';});
+$('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('show-answer').addEventListener('click',()=>{
+ if(skill!=='convert'||!question||locked)return;
+ locked=true;
+ showMsg('Answer for paper checking: '+question.why+'  (Viewing an answer does not count as completing a question.)','neutral');
+ $('check').classList.add('hidden');$('clear').classList.add('hidden');
+ $('hint').classList.add('hidden');$('show-answer').hidden=true;$('next').classList.remove('hidden');
+});
+$('check').addEventListener('click',submit);$('next').addEventListener('click',next);$('clear').addEventListener('click',reset);$('hint').addEventListener('click',()=>{const e=$('hint-area');const shown=!e.classList.contains('hidden');e.classList.toggle('hidden',shown);e.textContent=question.hint||'Think about what the question is asking you to calculate.';$('hint').textContent=shown?'Show a hint':'Hide hint';});
 persist();
 })();
 </script>
