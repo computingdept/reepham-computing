@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
 <link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
-<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-conversion-pilot2">
+<link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-whiteboard1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
@@ -214,55 +214,104 @@ function paintInput(){const d=$('answer-area');d.replaceChildren();const p=quest
 case 'bits':case 'add':{const vals=Array(8).fill(0);answer={bits:vals,overflow:false};if(p.type==='add'){const lines=document.createElement('div');lines.className='binary-pair';lines.innerHTML=`&nbsp;&nbsp;${binary(p.a)}<br><span class="binary-plus">+ ${binary(p.b)}</span>`;d.append(lines)}d.append(makeBitRow('bits',vals));if(p.type==='add'){const lab=document.createElement('label');lab.className='tick-line';const ch=document.createElement('input');ch.type='checkbox';ch.addEventListener('change',()=>answer.overflow=ch.checked);lab.append(ch,document.createTextNode('Overflow beyond 8 bits'));d.append(lab);}else if(level==='easy'){const s=document.createElement('span');s.id='live-sum';s.className='bit-footer';s.textContent='Current value: 0';d.append(s);}break;}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
 case 'hex':{answer=['',''];const disp=document.createElement('div');disp.className='hex-display';let slots=[];for(let k=0;k<2;k++){const b=document.createElement('button');b.type='button';b.className='hex-digit'+(k===0?' cursor':'');b.textContent='–';b.setAttribute('aria-label',`Hexadecimal digit ${k+1}`);b.addEventListener('click',()=>{hexCursor=k;update()});disp.append(b);slots.push(b)}d.append(disp);const pad=document.createElement('div');pad.className='hex-pad';for(const c of '0123456789ABCDEF'){const btn=document.createElement('button');btn.type='button';btn.className='hex-key';btn.textContent=c;btn.addEventListener('click',()=>{if(locked)return;answer[hexCursor]=c;hexCursor=Math.min(1,hexCursor+1);update()});pad.append(btn)}d.append(pad);const clear=document.createElement('button');clear.className='toggle-help';clear.textContent='Erase last digit';clear.addEventListener('click',()=>{if(locked)return;answer[hexCursor]='';update()});d.append(clear);function update(){slots.forEach((b,k)=>{b.textContent=answer[k]||'–';b.classList.toggle('cursor',k===hexCursor)})}break;}
-case 'grid':{
-  const n=p.value, correctHex=n.toString(16).toUpperCase().padStart(2,'0');
+case 'grid': {
+  const n=p.value,correctHex=n.toString(16).toUpperCase().padStart(2,'0');
   answer={denary:p.source==='denary'?String(n):'',bits:p.source==='binary'?binary(n).split('').map(Number):Array(8).fill(0),nibs:['',''],hex:p.source==='hex'?correctHex.split(''):['','']};
-  const container=document.createElement('div');container.className='conversion-grid';
-  const top=document.createElement('div');top.className='conv-top';
-  const label=document.createElement('div');label.className='conv-label';label.innerHTML='<strong>DENARY</strong><span>Base 10 · 0–255</span>';
-  top.append(label);
-  if(p.source==='denary'){
-    const v=document.createElement('div');v.className='conv-given';v.textContent=n;v.setAttribute('aria-label',`Given denary number ${n}`);top.append(v);
-  }else{
-    const inp=document.createElement('input');inp.type='text';inp.inputMode='numeric';inp.maxLength=3;inp.autocomplete='off';inp.className='conv-denary-entry';inp.placeholder='?';inp.setAttribute('aria-label','Enter the denary number');inp.addEventListener('input',()=>{if(!locked)answer.denary=inp.value});top.append(inp);
+  const container=document.createElement('div');
+  container.className='conversion-grid wb-layout';
+  container.setAttribute('aria-label','Denary, binary and hexadecimal conversion whiteboard');
+
+  // Reference values live to the left of the board on desktop.
+  const reference=document.createElement('aside');reference.className='wb-reference';
+  reference.innerHTML='<h3>Hex reference</h3><p>Hex = denary</p><dl>'+['A','B','C','D','E','F'].map((letter,i)=>'<div><dt>'+letter+'</dt><dd>= '+(10+i)+'</dd></div>').join('')+'</dl>';
+  container.append(reference);
+  function region(name,label){
+    const el=document.createElement('section');
+    el.className='wb-stage wb-'+name;
+    el.setAttribute('role','group');el.setAttribute('aria-label',label);
+    const heading=document.createElement('span');heading.className='wb-inline-title';heading.textContent=label;
+    el.append(heading);
+    return el;
   }
-  container.append(top);
-  const binaryTitle=document.createElement('div');binaryTitle.className='conv-section-title';binaryTitle.innerHTML='<strong>BINARY</strong><span>Base 2 · tap each bit</span>';container.append(binaryTitle);
+  const den=region('denary','DENARY');
+  if(p.source==='denary'){
+    const v=document.createElement('div');v.className='conv-given';v.textContent=n;
+    v.setAttribute('aria-label','Given denary number '+n);den.append(v);
+  }else{
+    const inp=document.createElement('input');inp.type='text';inp.inputMode='numeric';inp.maxLength=3;
+    inp.autocomplete='off';inp.className='conv-denary-entry';inp.placeholder='?';
+    inp.setAttribute('aria-label','Enter denary number');
+    inp.addEventListener('input',()=>{if(!locked)answer.denary=inp.value});
+    den.append(inp);
+  }
+  container.append(den);
+
+  const bin=region('binary','BINARY');
   const bitRow=document.createElement('div');bitRow.className='conv-bit-row';
   [128,64,32,16,8,4,2,1].forEach((weight,j)=>{
-    const cell=document.createElement('div');cell.className='conv-bit-cell'+(j===3?' conv-divider':'');
+    const cell=document.createElement('div');cell.className='conv-bit-cell';
     const lbl=document.createElement('span');lbl.className='conv-weight';lbl.textContent=weight;
-    const btn=document.createElement('button');btn.type='button';btn.className='conv-bit'+(answer.bits[j]?' on':'')+(p.source==='binary'?' fixed':'');btn.textContent=answer.bits[j];
-    btn.setAttribute('aria-label',`${weight}s column, bit ${answer.bits[j]}`);
-    if(p.source==='binary'){btn.disabled=true;}else{btn.addEventListener('click',()=>{if(locked)return;answer.bits[j]=1-answer.bits[j];btn.textContent=answer.bits[j];btn.classList.toggle('on',!!answer.bits[j]);btn.setAttribute('aria-label',`${weight}s column, bit ${answer.bits[j]}`);updateLive();});}
+    const btn=document.createElement('button');btn.type='button';
+    btn.className='conv-bit'+(answer.bits[j]?' on':'')+(p.source==='binary'?' fixed':'');
+    btn.textContent=answer.bits[j];btn.setAttribute('aria-label',weight+'s column, bit '+answer.bits[j]);
+    if(p.source==='binary'){btn.disabled=true}
+    else btn.addEventListener('click',()=>{
+      if(locked)return;answer.bits[j]=1-answer.bits[j];btn.textContent=answer.bits[j];
+      btn.classList.toggle('on',!!answer.bits[j]);
+      btn.setAttribute('aria-label',weight+'s column, bit '+answer.bits[j]);updateLive();
+    });
     cell.append(lbl,btn);bitRow.append(cell);
   });
-  container.append(bitRow);
-  const nibTitle=document.createElement('div');nibTitle.className='conv-section-title';nibTitle.innerHTML='<strong>FOUR-BIT GROUPS</strong><span>Calculate each value (0–15)</span>';container.append(nibTitle);
+  bin.append(bitRow);
+  const live=document.createElement('div');live.className='conv-live';live.setAttribute('aria-live','polite');
+  bin.append(live);container.append(bin);
+
+  const nibs=region('four','FOUR-BIT GROUPS');
   const nibbles=document.createElement('div');nibbles.className='conv-nibbles';
   ['Left nibble','Right nibble'].forEach((name,k)=>{
     const card=document.createElement('div');card.className='conv-nibble';
     const nm=document.createElement('div');nm.className='conv-nibble-name';nm.textContent=name;card.append(nm);
-    const weights=document.createElement('div');weights.className='conv-nibble-weights';weights.textContent='8     4     2     1';card.append(weights);
-    const select=document.createElement('select');select.className='conv-select';select.setAttribute('aria-label',`${name}: select its denary value`);
+    const weights=document.createElement('div');weights.className='conv-nibble-weights';
+    for(const w of [8,4,2,1]){
+      const v=document.createElement('span');v.textContent=w;weights.append(v);
+    }
+    card.append(weights);
+    const select=document.createElement('select');select.className='conv-select';
+    select.setAttribute('aria-label',name+': select its denary value');
     const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Select';select.append(placeholder);
     for(let val=0;val<16;val++){const opt=document.createElement('option');opt.value=val;opt.textContent=val;select.append(opt)}
-    select.addEventListener('change',()=>{if(!locked)answer.nibs[k]=select.value});card.append(select);nibbles.append(card);
-  });container.append(nibbles);
-  const hexTitle=document.createElement('div');hexTitle.className='conv-section-title';hexTitle.innerHTML='<strong>HEXADECIMAL</strong><span>Base 16 · 0–9, A–F</span>';container.append(hexTitle);
+    select.addEventListener('change',()=>{if(!locked)answer.nibs[k]=select.value});
+    card.append(select);nibbles.append(card);
+  });
+  nibs.append(nibbles);container.append(nibs);
+
+  const hex=region('hex','HEXADECIMAL');
   const hexpair=document.createElement('div');hexpair.className='conv-hexpair';
   for(let k=0;k<2;k++){
     const wrapper=document.createElement('div');wrapper.className='conv-hex-item';
-    const select=document.createElement('select');select.className='conv-select conv-hex-select';select.setAttribute('aria-label',`Hexadecimal digit ${k+1}`);
+    const select=document.createElement('select');select.className='conv-select conv-hex-select';
+    select.setAttribute('aria-label','Hexadecimal digit '+(k+1));
     const ph=document.createElement('option');ph.value='';ph.textContent='?';select.append(ph);
-    for(const c of '0123456789ABCDEF'){const opt=document.createElement('option');opt.value=c;opt.textContent=c;select.append(opt)}
-    if(p.source==='hex'){select.value=correctHex[k];select.disabled=true;select.classList.add('fixed');}
-    else select.addEventListener('change',()=>{if(!locked)answer.hex[k]=select.value});
+    for(const char of '0123456789ABCDEF'){
+      const opt=document.createElement('option');opt.value=char;opt.textContent=char;select.append(opt);
+    }
+    if(p.source==='hex'){
+      select.value=correctHex[k];select.disabled=true;select.classList.add('fixed');
+    }else select.addEventListener('change',()=>{if(!locked)answer.hex[k]=select.value});
     wrapper.append(select);hexpair.append(wrapper);
   }
-  container.append(hexpair);
-  const live=document.createElement('div');live.className='conv-live';live.setAttribute('aria-live','polite');container.append(live);
-  function updateLive(){live.textContent=level==='easy'?'Your selected binary is worth '+bitsNumber(answer.bits)+' in denary.':'';}
+  hex.append(hexpair);container.append(hex);
+
+  // A single CSS grid keeps these four arrows aligned with the four stages.
+  for(const [cls,label] of [
+    ['denary','DENARY'],['binary','BINARY'],
+    ['four','FOUR-BIT GROUPS'],['hex','HEXADECIMAL']]){
+    const tag=document.createElement('div');tag.className='wb-arrow wb-arrow-'+cls;
+    tag.setAttribute('aria-hidden','true');tag.textContent=label;container.append(tag);
+  }
+  function updateLive(){
+    live.textContent=level==='easy'?'Binary value: '+bitsNumber(answer.bits):'';
+  }
   updateLive();d.append(container);break;
 }
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
@@ -277,6 +326,21 @@ function results(){$('show-answer').hidden=true;const d=$('question-content');d.
 function reset(){if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
 $('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('show-answer').addEventListener('click',()=>{
  if(skill!=='convert'||!question||locked)return;
+ // Reveal the method on the board for pupils marking handwritten work.
+ const correct=question.value,board=$('answer-area').querySelector('.wb-layout');
+ if(board){
+   const den=board.querySelector('.conv-denary-entry');
+   if(den)den.value=String(correct);
+   const bits=binary(correct).split('');
+   board.querySelectorAll('.conv-bit').forEach((b,i)=>{
+     b.textContent=bits[i];b.classList.toggle('on',bits[i]==='1');
+   });
+   board.querySelectorAll('.conv-nibble .conv-select').forEach((s,i)=>s.value=String(i===0?Math.floor(correct/16):correct%16));
+   const hex=correct.toString(16).toUpperCase().padStart(2,'0');
+   board.querySelectorAll('.conv-hex-select').forEach((s,i)=>s.value=hex[i]);
+   const live=board.querySelector('.conv-live');
+   if(live)live.textContent='Completed: '+binary(correct)+' = '+hex+' (hex)';
+ }
  locked=true;
  showMsg('Answer for paper checking: '+question.why+'  (Viewing an answer does not count as completing a question.)','neutral');
  $('check').classList.add('hidden');$('clear').classList.add('hidden');

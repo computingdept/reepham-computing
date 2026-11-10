@@ -280,42 +280,202 @@ body.course-hub .conv-bit.on{
   body.course-hub .theory .tile{min-height:116px;}
 }
 
-/* Conversion Grid desktop two-column worksheet pilot. */
-body.course-hub #practice.screen{max-width:1200px}
+
+/* J277 1.2.4 · Conversion Grid whiteboard — scoped to the grid exercise only.
+   Exact CSS grid areas align the board and right-hand arrows in every desktop row.
+   The red midline is always positioned between bit four and bit five. */
+body.course-hub #practice.screen{max-width:1420px}
 body.course-hub #practice .context:empty{display:none}
-body.course-hub #practice .answer-area:has(.conversion-grid){
-  max-width:none;width:100%;min-height:0;margin:8px 0 12px
+body.course-hub #practice:has(.wb-layout) .work{padding:11px 17px 13px}
+body.course-hub #practice:has(.wb-layout) .work-head{padding-bottom:6px;margin-bottom:6px}
+body.course-hub #practice:has(.wb-layout) .meter{margin:5px 0 1px;height:5px}
+body.course-hub #practice:has(.wb-layout) .prompt{
+  font-size:17px;line-height:1.2;margin:5px 0 4px;color:#283e34
 }
-body.course-hub #practice .conversion-grid{max-width:none;width:100%;background:#fff;border-color:#d5ddda}
-body.course-hub #practice .conv-bit.on,
-body.course-hub #practice .conv-bit.on.fixed{background:#285348;border-color:#285348;color:#fff}
-body.course-hub #practice .conv-bit:not(.on){border-color:#9ab8a8;color:#285348}
-body.course-hub #practice .conv-select,
-body.course-hub #practice .conv-denary-entry{border-color:#9ab8a8;color:#21473e}
-body.course-hub #practice .conv-nibble{background:#eef4f0}
-body.course-hub #practice .conv-hex-item{background:#eef4f0;border-color:#d5ddda}
-@media(min-width:1000px){
-  body.course-hub #practice .conversion-grid{
-    display:grid;
-    grid-template-columns:minmax(0,1.2fr) minmax(0,.95fr);
-    grid-template-areas:
-      "den nibt"
-      "bint nibbles"
-      "bits hext"
-      "live hex";
-    align-items:center;
-    column-gap:21px;row-gap:8px;padding:13px 16px
+body.course-hub #practice:has(.wb-layout) .answer-area{
+  max-width:none;width:100%;min-height:0;margin:5px 0 5px
+}
+body.course-hub #practice:has(.wb-layout) .bottom-bar{
+  margin-top:7px;padding-top:9px
+}
+body.course-hub #practice:has(.wb-layout) .footnote{margin:4px 0;font-size:10px}
+body.course-hub #practice:has(.wb-layout) .toggle-help{color:#285348}
+body.course-hub #practice:has(.wb-layout) .btn{color:#285348;border-color:#c5d7cd}
+body.course-hub #practice:has(.wb-layout) .btn.primary{color:#fff;background:#285348;border-color:#285348}
+body.course-hub #practice .wb-layout{
+  --wb-line:#dee6e1;--wb-green:#285348;--wb-red:#dd3737;
+  display:grid;
+  grid-template-columns:clamp(125px,13vw,165px) minmax(0,1fr) clamp(145px,15vw,190px);
+  grid-template-rows:84px 124px 118px 76px;
+  grid-template-areas:
+    "ref denary arrow-denary"
+    "ref binary arrow-binary"
+    "ref four arrow-four"
+    "ref hex arrow-hex";
+  gap:8px 14px;
+  align-items:stretch;
+  width:100%;max-width:none;
+  padding:11px 16px;border:1px solid var(--wb-line);
+  border-radius:16px;background:#fff;box-shadow:none;color:#173b2b
+}
+body.course-hub #practice .wb-stage{min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center}
+body.course-hub #practice .wb-inline-title{display:none}
+body.course-hub #practice .wb-denary{grid-area:denary;align-items:center}
+body.course-hub #practice .wb-binary{grid-area:binary}
+body.course-hub #practice .wb-four{grid-area:four}
+body.course-hub #practice .wb-hex{grid-area:hex}
+body.course-hub #practice .wb-reference{
+  grid-area:ref;align-self:center;min-width:0;
+  background:#fbfcfb;border:1px solid #dce6df;border-radius:13px;
+  box-shadow:0 3px 12px #143f2410;padding:10px 12px
+}
+body.course-hub #practice .wb-reference h3{font-size:14px;color:var(--wb-green);margin:0 0 2px;text-align:center}
+body.course-hub #practice .wb-reference p{font-size:11px;text-align:center;color:#60736a;margin:0 0 7px}
+body.course-hub #practice .wb-reference dl{margin:0;padding:0}
+body.course-hub #practice .wb-reference dl>div{
+  display:grid;grid-template-columns:1fr 1fr;
+  padding:5px 3px;border-bottom:1px solid #e4eae6;text-align:center;
+  font-weight:800;font-size:14px
+}
+body.course-hub #practice .wb-reference dl>div:last-child{border-bottom:0}
+body.course-hub #practice .wb-reference dt,
+body.course-hub #practice .wb-reference dd{margin:0}
+body.course-hub #practice .wb-arrow{
+  display:flex;align-items:center;justify-content:center;
+  justify-self:stretch;align-self:center;min-height:48px;
+  padding:5px 7px 5px 18px;
+  background:linear-gradient(125deg,#249245,#167036);
+  clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 50%);
+  border-radius:0 10px 10px 0;
+  color:#fff;font-weight:850;letter-spacing:.015em;
+  font-size:clamp(12px,1.12vw,16px);line-height:1.15;text-align:center;
+  filter:drop-shadow(0 2px 2px #143f2420)
+}
+body.course-hub #practice .wb-arrow-denary{grid-area:arrow-denary}
+body.course-hub #practice .wb-arrow-binary{grid-area:arrow-binary}
+body.course-hub #practice .wb-arrow-four{grid-area:arrow-four}
+body.course-hub #practice .wb-arrow-hex{grid-area:arrow-hex}
+body.course-hub #practice .wb-denary :is(.conv-given,.conv-denary-entry){
+  width:min(290px,100%);height:70px;min-width:0;
+  display:grid;place-items:center;margin:auto;
+  background:linear-gradient(180deg,#f6fbf7,#edf8ef);border:2px solid #238744;
+  border-radius:14px;color:#123b26;
+  font-size:clamp(32px,3.2vw,47px);font-weight:850;text-align:center
+}
+body.course-hub #practice .wb-denary .conv-denary-entry{padding:4px 8px}
+body.course-hub #practice .wb-layout .conv-bit-row{
+  position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:6px;width:100%;margin:auto
+}
+body.course-hub #practice .wb-layout .conv-bit-row::after,
+body.course-hub #practice .wb-layout .conv-hexpair::after{
+  content:"";position:absolute;left:50%;top:0;bottom:0;
+  width:4px;background:var(--wb-red);border-radius:4px;
+  transform:translateX(-50%);pointer-events:none;z-index:2
+}
+body.course-hub #practice .wb-layout .conv-bit-cell{min-width:0;gap:4px}
+body.course-hub #practice .wb-layout .conv-bit-cell.conv-divider{
+  border:0;padding:0;margin:0
+}
+body.course-hub #practice .wb-layout .conv-weight{
+  color:#285348;font-size:clamp(10px,1.05vw,14px);font-weight:850;
+  text-align:center;line-height:1.2
+}
+body.course-hub #practice .wb-layout .conv-bit{
+  height:58px;width:100%;border:2px solid #35864e;background:#fff;
+  border-radius:10px;color:#1d4c35;
+  font-size:clamp(18px,2vw,29px);font-weight:900;
+  font-variant-numeric:tabular-nums;padding:0;
+}
+body.course-hub #practice .wb-layout .conv-bit.on{
+  background:#edf8f0;color:#1d4c35;border-color:#35864e
+}
+body.course-hub #practice .wb-layout .conv-bit.fixed{background:#eef3ef;color:#1d4c35}
+body.course-hub #practice .wb-layout .conv-bit:focus-visible,
+body.course-hub #practice .wb-layout .conv-select:focus-visible{outline:3px solid #ba771f;outline-offset:2px}
+body.course-hub #practice .wb-layout .conv-live{min-height:14px;font-size:11px;text-align:center;color:#63756b;margin-top:5px}
+body.course-hub #practice .wb-layout .conv-nibbles{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;width:100%;min-width:0
+}
+body.course-hub #practice .wb-layout .conv-nibble{
+  min-width:0;display:flex;flex-direction:column;gap:2px;
+  padding:7px 12px 9px;background:#f0f8f1;
+  border:1px solid #c4e2cb;border-radius:11px;align-items:stretch
+}
+body.course-hub #practice .wb-layout .conv-nibble-name{
+  text-align:center;font-size:13px;line-height:1.2;color:#285348;font-weight:850
+}
+body.course-hub #practice .wb-layout .conv-nibble-weights{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
+  text-align:center;color:#285348;font-size:12px;
+  font-family:inherit;font-weight:800;letter-spacing:normal
+}
+body.course-hub #practice .wb-layout .conv-select{
+  width:100%;height:38px;min-width:0;padding:3px 9px;
+  border:1.5px solid #9cc7a9;border-radius:7px;color:#214b32;background:#fff;
+  font-size:15px;font-weight:750;cursor:pointer
+}
+body.course-hub #practice .wb-layout .conv-hexpair{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+  position:relative;width:100%
+}
+body.course-hub #practice .wb-layout .conv-hex-item{
+  padding:6px;background:#edf8ef;border:1px solid #a5d0b0;
+  min-width:0;min-height:62px;border-radius:11px
+}
+body.course-hub #practice .wb-layout .conv-hex-select{
+  width:min(110px,85%);height:48px;padding:2px 7px;
+  font-size:27px;text-align:center;text-align-last:center;
+  font-variant-numeric:tabular-nums
+}
+body.course-hub #practice .wb-layout .conv-select:disabled{
+  color:#1d4c35;opacity:1;background:#eef3ef
+}
+@media(min-width:901px) and (max-height:770px){
+  body.course-hub #practice .wb-layout{
+    grid-template-rows:70px 101px 100px 65px;
+    gap:5px 12px;padding:7px 12px
   }
-  body.course-hub #practice .conv-top{grid-area:den;padding-bottom:8px}
-  body.course-hub #practice .conversion-grid>.conv-section-title:nth-child(2){grid-area:bint}
-  body.course-hub #practice .conv-bit-row{grid-area:bits}
-  body.course-hub #practice .conversion-grid>.conv-section-title:nth-child(4){grid-area:nibt}
-  body.course-hub #practice .conv-nibbles{grid-area:nibbles}
-  body.course-hub #practice .conversion-grid>.conv-section-title:nth-child(6){grid-area:hext}
-  body.course-hub #practice .conv-hexpair{grid-area:hex}
-  body.course-hub #practice .conv-live{grid-area:live;text-align:left;min-height:15px}
-  body.course-hub #practice .conv-nibble{padding:7px 9px;gap:3px}
-  body.course-hub #practice .conv-select{height:43px}
-  body.course-hub #practice .conv-hex-select{height:47px}
-  body.course-hub #practice .conv-bit{height:53px}
+  body.course-hub #practice .wb-denary :is(.conv-given,.conv-denary-entry){height:58px;font-size:35px}
+  body.course-hub #practice .wb-layout .conv-bit{height:48px}
+  body.course-hub #practice .wb-layout .conv-nibble{padding:4px 9px 6px}
+  body.course-hub #practice .wb-layout .conv-hex-item{min-height:52px;padding:3px}
+  body.course-hub #practice .wb-layout .conv-hex-select{height:42px}
+}
+@media(max-width:900px){
+  body.course-hub #practice .wb-layout{
+    display:flex;flex-direction:column;gap:9px;padding:12px;
+    min-height:0
+  }
+  body.course-hub #practice .wb-layout .wb-arrow{display:none}
+  body.course-hub #practice .wb-layout .wb-inline-title{
+    display:block;align-self:flex-start;margin-bottom:5px;
+    font-size:11px;color:#285348;letter-spacing:.065em;font-weight:850
+  }
+  body.course-hub #practice .wb-layout .wb-denary{order:1}
+  body.course-hub #practice .wb-layout .wb-binary{order:2}
+  body.course-hub #practice .wb-layout .wb-four{order:3}
+  body.course-hub #practice .wb-layout .wb-hex{order:4}
+  body.course-hub #practice .wb-layout .wb-reference{order:5;align-self:stretch;padding:8px 10px}
+  body.course-hub #practice .wb-layout .wb-reference dl{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+  body.course-hub #practice .wb-layout .wb-reference dl>div{
+    display:block;text-align:center;border:0;padding:3px 1px;background:#f3f7f4;border-radius:5px;font-size:12px
+  }
+  body.course-hub #practice .wb-layout .wb-reference dl dd{font-size:11px}
+  body.course-hub #practice .wb-layout .conv-bit{height:50px}
+  body.course-hub #practice .wb-layout .conv-bit-row{gap:4px}
+  body.course-hub #practice .wb-layout .conv-hex-item{min-height:58px}
+  body.course-hub #practice .wb-layout .conv-nibble{padding:7px}
+}
+@media(max-width:450px){
+  body.course-hub #practice .wb-layout{padding:9px 7px}
+  body.course-hub #practice .wb-layout .conv-bit-row{gap:2px}
+  body.course-hub #practice .wb-layout .conv-weight{font-size:9px}
+  body.course-hub #practice .wb-layout .conv-bit{height:46px;font-size:19px;border-radius:6px}
+  body.course-hub #practice .wb-layout .conv-nibbles,
+  body.course-hub #practice .wb-layout .conv-hexpair{gap:7px}
+  body.course-hub #practice .wb-layout .conv-nibble{padding:5px}
+  body.course-hub #practice .wb-layout .conv-select{font-size:13px}
+  body.course-hub #practice:has(.wb-layout) .work{padding:10px}
 }
