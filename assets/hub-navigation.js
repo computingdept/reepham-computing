@@ -345,3 +345,40 @@
   script.dataset.rhscSiteNav='1';
   document.head.appendChild(script);
 })();
+
+/* RHSC course tab hash navigation — prevent initial native anchor jump. */
+(function(){
+  'use strict';
+  // Course-resource fragments (#revisionhub, #booklet) are TAB state, not
+  // an instruction to scroll down to a section of the page. This runs in
+  // the <head>, before the panel elements are parsed, on GCSE and A-level hubs.
+  if(!/^\/(?:j277-hub|h446-hub)\.html$/i.test(location.pathname))return;
+  const tabs=new Set(['lessons','booklet','revisionhub','skills','revision','exam','guides','online']);
+  const initial=location.hash.slice(1).toLowerCase();
+  if(tabs.has(initial)){
+    // The hub's existing tab engine reads the saved fragment when opening its
+    // initial panel. Temporarily remove the fragment so browser-native anchor
+    // scrolling cannot pull the shared navigation off-screen.
+    window.RHSCInitialHubSection=location.hash;
+    history.replaceState(history.state,'',location.pathname+location.search);
+    document.addEventListener('DOMContentLoaded',()=>{
+      // replaceState changes the address without scrolling. Preserve whatever
+      // year query remains and never override a tab selected in the meantime.
+      if(!location.hash){
+        history.replaceState(history.state,'',location.pathname+location.search+window.RHSCInitialHubSection);
+      }
+      if(window.scrollY)window.scrollTo(0,0);
+    },{once:true});
+    window.addEventListener('load',()=>{if(window.scrollY)window.scrollTo(0,0)},{once:true});
+    window.addEventListener('pageshow',event=>{
+      if(event.persisted&&window.scrollY)window.scrollTo(0,0);
+    });
+  }
+  // An in-page tab switch must start at the top if the student previously
+  // scrolled down. Do not modify the tab engine or touch lesson navigation.
+  document.addEventListener('click',event=>{
+    const el=event.target.closest?.('.course-nav .tab[data-tab]');
+    if(!el)return;
+    requestAnimationFrame(()=>{if(window.scrollY)window.scrollTo(0,0)});
+  },true);
+})();
