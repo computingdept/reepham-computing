@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-unified2">
+<link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-card1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -179,7 +180,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  }
 }
 function fromBank(r,i,bank){let b=bank[i%bank.length];let opts=b.slice(2,6);opts=opts.map(v=>({v,k:r()})).sort((a,b)=>a.k-b.k).map(o=>o.v);return {prompt:b[0],context:'Select the most appropriate answer.',type:'choice',value:b[1],options:opts,hint: b[6],why:b[6]}}
-function tile(key){const s=specs[key];const el=document.createElement('button');el.className='tile';el.type='button';el.innerHTML=`<span class="tile-icon" style="background:${s.tint};color:${s.ink}" aria-hidden="true">${s.glyph}</span><span class="tile-title">${s.name}</span><span class="tile-sub">${s.sub}</span><span class="tile-foot" id="progress-${key}"></span>`;el.addEventListener('click',()=>openSkill(key));return el}
+function tile(key){const s=specs[key];const el=document.createElement('button');el.className='tile rhsc-resource-card rhsc-resource-card--skill';el.type='button';el.innerHTML=`<span class="tile-title">${s.name}</span><span class="tile-sub">${s.sub}</span><span class="tile-foot" id="progress-${key}"></span>`;el.addEventListener('click',()=>openSkill(key));return el}
 Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':'other-tiles').append(tile(key)));
 function getStorage(){try{return JSON.parse(localStorage.getItem('rhs-j277-paper1-progress')||'{}')}catch{return {}}}
 function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
