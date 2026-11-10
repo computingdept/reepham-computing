@@ -63,3 +63,219 @@
 @media(max-width:370px) {
   #practice > .level-menu .level {padding:8px 7px}
 }
+
+
+/* GCSE shared hub shell — Paper 1 Skills only.
+   Reuses the same site-nav, Synergy brand and course-bar assets as J277.
+   All selectors below are scoped to the standalone exercise page. */
+body.course-hub.course-inline-nav.synergy-unified-hub{
+  --bg:#fff;
+  --ink:var(--synergy-ink,#30383a);
+  --blue:var(--synergy-green,#285348);
+  --line:var(--synergy-border,#d5ddda);
+  --muted:var(--synergy-muted,#626b68);
+  --blue2:var(--synergy-green-pale,#ecf2ef);
+  background:#fff;
+  color:var(--ink);
+}
+body.course-hub .topbar.synergy-corners {
+  border-bottom:1px solid var(--line);
+  box-shadow:none;
+}
+body.course-hub .topbar.synergy-corners .year-switch a.year-btn{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  color:#36443e;
+}
+body.course-hub .topbar.synergy-corners .year-switch a.year-btn:hover,
+body.course-hub .topbar.synergy-corners .year-switch a.year-btn:focus-visible{
+  border-color:#688f7c;
+  background:#eef4f0;
+}
+body.course-hub .topbar.synergy-corners .course-nav .tabs a.tab{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+body.course-hub .course-nav .j277-skills-nav{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  min-height:38px;
+  padding:8px 10px 6px;
+  margin-left:3px;
+  border-bottom:2px solid transparent;
+  color:#59635e;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.2;
+  text-decoration:none;
+  white-space:nowrap;
+}
+body.course-hub .course-nav .j277-skills-nav[aria-current="page"]{
+  color:#285348;
+  border-bottom-color:#285348;
+  font-weight:800;
+}
+body.course-hub .course-nav a:focus-visible{
+  outline:3px solid #bd7d08 !important;
+  outline-offset:2px;
+}
+body.course-hub .wrap{
+  max-width:1380px;
+  padding:12px 20px 28px;
+}
+body.course-hub .hero{
+  margin:0 0 12px;
+  gap:14px;
+}
+body.course-hub .kicker{
+  color:#285348;
+}
+body.course-hub .hero h1{
+  font-size:clamp(22px,2.2vw,28px);
+  letter-spacing:-.5px;
+  line-height:1.17;
+  margin:2px 0 4px;
+}
+body.course-hub .hero p{
+  font-size:12px;
+  line-height:1.35;
+  max-width:780px;
+}
+body.course-hub .hero-count{
+  padding:7px 10px;
+  border-radius:8px;
+  min-width:120px;
+  box-shadow:none;
+}
+body.course-hub .hero-count strong{
+  font-size:21px;
+  color:#285348;
+}
+body.course-hub h2{
+  margin:14px 0 4px;
+  font-size:17px;
+  letter-spacing:-.25px;
+}
+body.course-hub .section-caption{
+  font-size:12px;
+  margin:0 0 8px;
+}
+body.course-hub .tiles{
+  gap:10px;
+}
+body.course-hub .tile,
+body.course-hub .theory .tile {
+  min-height:128px;
+  padding:10px 8px 9px;
+  gap:4px;
+  border:1px solid #d5ddda;
+  border-radius:9px;
+  box-shadow:none;
+  transition:border-color .12s,background .12s;
+}
+body.course-hub .tile:hover{
+  transform:none;
+  box-shadow:none;
+  background:#f7faf8;
+  border-color:#8fb09f;
+}
+body.course-hub .tile-icon,
+body.course-hub .theory .tile-icon{
+  width:42px;
+  height:42px;
+  border-radius:9px;
+  font-size:20px;
+}
+body.course-hub .tile-icon.small{
+  font-size:19px;
+}
+body.course-hub .tile-title{
+  font-size:13px;
+}
+body.course-hub .tile-sub{
+  font-size:10.5px;
+  min-height:0;
+}
+body.course-hub .tile-foot{
+  color:#62756b;
+}
+body.course-hub .explanation{
+  background:#f7faf8;
+  border-color:#d5ddda;
+  border-radius:9px;
+  padding:9px 12px;
+  margin-top:12px;
+}
+body.course-hub .work{
+  border-color:#d5ddda;
+  border-radius:10px;
+  box-shadow:none;
+}
+body.course-hub .level-menu{
+  background:#ecf2ef;
+}
+body.course-hub .level.active{
+  color:#285348;
+}
+body.course-hub .btn.primary,
+body.course-hub .meter-fill,
+body.course-hub .bitbtn.on {
+  background:#285348;
+  border-color:#285348;
+}
+body.course-hub .conversion-grid{
+  background:#fff;
+  border-color:#d5ddda;
+}
+body.course-hub .conv-label strong,
+body.course-hub .conv-section-title strong {
+  color:#285348;
+}
+body.course-hub .conv-given,
+body.course-hub .conv-nibble,
+body.course-hub .conv-hex-item {
+  background:#ecf2ef;
+}
+body.course-hub .conv-bit.on{
+  background:#285348;
+  border-color:#285348;
+}
+@media(max-width:980px){
+  body.course-hub .course-nav .j277-skills-nav{
+    min-height:42px;
+    padding:7px 8px 5px;
+    margin-left:2px;
+  }
+}
+@media(max-width:700px){
+  body.course-hub .wrap{padding:10px 12px 24px;}
+  body.course-hub .hero{margin-bottom:10px;}
+  body.course-hub .hero h1{font-size:23px;}
+  body.course-hub .hero p{font-size:12px;}
+  body.course-hub .tiles{gap:7px;}
+  body.course-hub .tile,
+  body.course-hub .theory .tile{
+    min-height:121px;
+    padding:9px 5px 8px;
+    border-radius:9px;
+  }
+  body.course-hub .tile-icon,
+  body.course-hub .theory .tile-icon{
+    width:39px;
+    height:39px;
+    font-size:19px;
+  }
+  body.course-hub .tile-title{font-size:12px;}
+  body.course-hub .tile-sub{font-size:10px;}
+  body.course-hub .explanation{font-size:11px;}
+}
+@media(max-width:370px){
+  body.course-hub .tile,
+  body.course-hub .theory .tile{min-height:116px;}
+}
