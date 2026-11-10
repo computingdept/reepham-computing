@@ -616,3 +616,27 @@ body.course-hub #practice .paper-mark-actions.hidden{display:none}
  body.course-hub #practice .paper-mark-actions{width:100%}
  body.course-hub #practice .paper-mark-actions .btn{flex:1}
 }
+
+/* RHS Computing whiteboard labels: white faces, green trim, restrained left tip. */
+body.course-hub #practice .wb-layout .wb-arrow {
+  position:relative;isolation:isolate;
+  clip-path:none;filter:none;
+  color:#263a30;background:#fff;
+  border:1px solid #b6d0bf;border-left:3px solid #285348;
+  border-radius:11px;
+  box-shadow:0 2px 7px rgba(16,53,29,.07);
+  padding:6px 10px;
+  letter-spacing:0;
+  font-size:clamp(12px,1vw,15px);
+  font-weight:800;
+  line-height:1.2;
+  min-height:42px;
+}
+body.course-hub #practice .wb-layout .wb-arrow::before {
+  content:"";position:absolute;z-index:2;
+  width:0;height:0;left:-11px;top:50%;
+  border-top:10px solid transparent;
+  border-bottom:10px solid transparent;
+  border-right:11px solid #285348;
+  transform:translateY(-50%);
+}

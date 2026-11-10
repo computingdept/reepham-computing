@@ -33,6 +33,20 @@
       source,shown,high:Math.floor(n/16),low:n%16});
   }
   root.J277ConversionQuestions=Object.freeze({
-    question,all:level=>Array.from({length:10},(_,i)=>question(level,i))
+    question,all:level=>Array.from({length:10},(_,i)=>question(level,i)),
+    // Fresh random values for endless online practice; printable sets stay reproducible.
+    randomQuestion(level,previous=null,index=0,random=Math.random){
+      if(!levels.includes(level))throw new RangeError('Unknown difficulty');
+      let n=Math.floor(random()*256);
+      if(n===previous)n=(n+1)%256;
+      const binary=n.toString(2).padStart(8,'0');
+      const hex=n.toString(16).toUpperCase().padStart(2,'0');
+      // Cycle sources within each five-question Hard round.
+      const source=level==='easy'?'denary':level==='medium'?'hex':
+        ['hex','binary','denary'][(index+Math.floor(index/5))%3];
+      const shown=source==='denary'?n:source==='binary'?binary:hex;
+      return Object.freeze({index,number:index+1,denary:n,binary,hex,
+        source,shown,high:Math.floor(n/16),low:n%16});
+    }
   });
 })(window);
