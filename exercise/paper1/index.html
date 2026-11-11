@@ -121,7 +121,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-carry1">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-ascii1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -145,7 +145,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 </header>
 <main class="wrap">
   <section id="home">
-    <div class="hero"><div><div class="kicker">OCR J277 · Paper 1</div><h1>Skills practice</h1><p>Choose a skill · Conversion Grid offers continuous practice.</p></div><div class="hero-count"><strong id="done-counter">0</strong><span>questions solved on this device</span></div></div>
+    <div class="hero"><div><div class="kicker">OCR J277 · Paper 1</div><h1>Skills practice</h1><p>Choose a skill · Conversion Grid and ASCII Code Builder offer continuous practice.</p></div><div class="hero-count"><strong id="done-counter">0</strong><span>questions solved on this device</span></div></div>
     <h2>Data representation</h2><p class="section-caption">Conversion grid, file size and digital representation · specification 1.2.3–1.2.5</p>
     <div class="tiles" id="data-tiles"></div>
     <h2>Other Paper 1 skills</h2><p class="section-caption">Apply knowledge of computer systems, hardware, networks and security · specifications 1.1, 1.2, 1.3–1.6</p>
@@ -167,6 +167,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
   </section>
 </main>
 <script src="/assets/j277-conversion-questions.js?v=20261110-endless1"></script>
+<script src="/assets/j277-ascii-questions.js?v=20261111-ascii1"></script>
 <script>
 (()=>{'use strict';
 const specs={
@@ -176,11 +177,10 @@ const specs={
  count:{name:'Bits & values',sub:'2ⁿ and maximum values',glyph:'2ⁿ',cat:'data',ref:'1.2.4',tint:'#fff2e0',ink:'#a56212',kind:'count'},
  units:{name:'Data units',sub:'Match equivalent file sizes',glyph:'KB',cat:'data',ref:'1.2.3',tint:'#f1ebff',ink:'#7148b5',kind:'units'},
  text:{name:'Text file sizes',sub:'Characters × bits',glyph:'Aa',cat:'data',ref:'1.2.3',tint:'#e9f6fa',ink:'#17708e',kind:'text'},
+ ascii:{name:'ASCII Code Builder',sub:'Letters · Denary · Binary',glyph:'Aa',cat:'data',ref:'1.2.4',tint:'#e8f4eb',ink:'#285348',kind:'ascii'},
  image:{name:'Image file sizes',sub:'Pixels × colour depth',glyph:'▦',cat:'data',ref:'1.2.3',tint:'#e7f5f3',ink:'#11766c',kind:'image'},
  sound:{name:'Sound file sizes',sub:'Rate × duration × bit depth',glyph:'♫',cat:'data',ref:'1.2.3',tint:'#ffecf4',ink:'#ad3768',kind:'sound'},
  pixels:{name:'Pixel builder',sub:'Create 1, 2 and 3-bit images',glyph:'▩',cat:'data',ref:'1.2.4',tint:'#f1edff',ink:'#6c4caf',kind:'pixels'},
- sampling:{name:'Sound sampling',sub:'Work with sample rate',glyph:'∿',cat:'data',ref:'1.2.4',tint:'#e5f2fd',ink:'#176b9c',kind:'sampling'},
- compression:{name:'Compression',sub:'Choose lossy or lossless',glyph:'⇣',cat:'data',ref:'1.2.5',tint:'#fff1e5',ink:'#ac5a13',kind:'compression'},
  cpu:{name:'CPU & registers',sub:'Identify functions and the cycle',glyph:'▣',cat:'other',ref:'1.1.1',tint:'#e8f1ff',ink:'#235ca7',kind:'cpu'},
  storage:{name:'Storage choices',sub:'Pick a suitable storage medium',glyph:'▤',cat:'other',ref:'1.2.1–1.2.2',tint:'#e8f6ee',ink:'#207b52',kind:'storage'},
  networks:{name:'Networks',sub:'Topologies and protocols',glyph:'⌘',cat:'other',ref:'1.3',tint:'#eeeaff',ink:'#6551ae',kind:'networks'},
@@ -189,12 +189,17 @@ const specs={
  impacts:{name:'Digital impacts',sub:'Apply laws, ethics and impacts',glyph:'⚖',cat:'other',ref:'1.6',tint:'#fff0f2',ink:'#aa4561',kind:'impacts'}
 };
 const $=id=>document.getElementById(id); const levelnames=['easy','medium','hard'];
-let skill=null,level='easy',index=0,question=null,answer=null,locked=false,wrong=0,score=0,attempts=[],hexCursor=0,lastConversionValue=null;
+let skill=null,level='easy',index=0,question=null,answer=null,locked=false,wrong=0,score=0,attempts=[],hexCursor=0,lastConversionValue=null,lastAsciiWord=null;
 function randseed(x){return()=>{x|=0;x=x+0x6D2B79F5|0;let t=Math.imul(x^x>>>15,1|x);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
 function rngFor(id,l,n){let h=0;const s=id+'-'+l+'-'+n;for(const c of s)h=Math.imul(h,31)+c.charCodeAt(0)|0;return randseed(h)}
 function rint(r,a,b){return a+Math.floor(r()*(b-a+1))}function pick(r,a){return a[rint(r,0,a.length-1)]}function binary(n){return (n&255).toString(2).padStart(8,'0')}function format(n){return n.toLocaleString('en-GB')}
 function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(r,1,dif===0?96:dif===1?191:255);let n,a,b,z,h;
  switch(id){
+ case 'ascii': {
+   const q=window.J277AsciiQuestions.make(l,i,lastAsciiWord);
+   lastAsciiWord=q.word;
+   return q;
+ }
  case 'convert': {
    const q=window.J277ConversionQuestions.randomQuestion(l,lastConversionValue,i);lastConversionValue=q.denary;
    n=q.denary;h=q.hex;
@@ -392,6 +397,10 @@ function persist(){
    $('progress-'+k).textContent=(legacyCount+ongoingCount)+' correct';
    continue;
   }
+  if(k==='ascii'){
+   const done=Number.isSafeInteger(all['ascii-solved'])&&all['ascii-solved']>=0?all['ascii-solved']:0;
+   $('progress-'+k).textContent=done+' correct';total+=done;continue;
+  }
   let done=0;
   for(const lev of levelnames){const saved=all[k+'-'+lev];done+=Array.isArray(saved)?saved.length:0}
   $('progress-'+k).textContent=done+' / 30 solved';
@@ -401,6 +410,10 @@ function persist(){
 }
 function mark(){
  const all=getStorage();
+ if(skill==='ascii'){
+  const prev=Number.isSafeInteger(all['ascii-solved'])&&all['ascii-solved']>=0?all['ascii-solved']:0;
+  all['ascii-solved']=prev+1;saveStorage(all);persist();return;
+ }
  if(skill==='convert'){
   const prev=Number.isSafeInteger(all['convert-solved'])&&all['convert-solved']>=0?all['convert-solved']:0;
   all['convert-solved']=prev+1;saveStorage(all);persist();return;
@@ -411,7 +424,7 @@ function mark(){
 function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
 function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('practice').classList.toggle('is-standard',k!=='convert');$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
 function home(){skill=null;$('practice').classList.remove('is-conversion','is-standard');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
-function chooseLevel(l){level=l;index=0;lastConversionValue=null;if(skill==='units')matchDeck=buildMatches(l);levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
+function chooseLevel(l){level=l;index=0;lastConversionValue=null;lastAsciiWord=null;if(skill==='units')matchDeck=buildMatches(l);levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
 
 const matchSizes={easy:5,medium:4,hard:4},matchTotals={easy:10,medium:8,hard:12};
 const matchBank={
@@ -511,7 +524,7 @@ function matchFinish(){
  $('question-content').replaceChildren(box);$('next').classList.add('hidden');$('feedback').className='hidden';
 }
 
-function renderQuestion(){if(skill==='units'){matchRound();return;}locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=skill==='convert'?'Next question →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';paintInput();}
+function renderQuestion(){if(skill==='units'){matchRound();return;}locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):skill==='ascii'?`Question ${index+1}`:`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'||skill==='ascii'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=(skill==='convert'||skill==='ascii')?'Next question →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3&&id!=='shift'?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function shiftEightBits(bits,direction){
@@ -601,6 +614,51 @@ function makeTextCancellation(p,d){
  const unit=document.createElement('span');unit.textContent=p.targetUnit;
  resultLabel.append(prompt,resultInput,unit);board.append(resultLabel);
  redraw();d.append(board);
+}
+
+function makeAsciiCodeBuilder(p,d){
+ answer=p.rows.map(()=>({denary:'',binary:''}));
+ const board=document.createElement('div');board.className='ascii-board';
+ board.setAttribute('role','group');board.setAttribute('aria-label','ASCII character code practice');
+ const reference=document.createElement('div');reference.className='ascii-reference';
+ const refLabel=document.createElement('span');refLabel.textContent='GIVEN ASCII CHARACTER CODE';
+ const refValue=document.createElement('strong');refValue.textContent=p.referenceText;
+ reference.append(refLabel,refValue);board.append(reference);
+ if(level==='easy'){
+   const guide=document.createElement('p');guide.className='ascii-guide';
+   guide.textContent='Adjacent uppercase letters have consecutive codes. Work out denary first, then convert to eight bits.';
+   board.append(guide);
+ }
+ const table=document.createElement('table');table.className='ascii-table';
+ const thead=document.createElement('thead');
+ const header=document.createElement('tr');
+ for(const label of ['Letter','Denary','8-bit binary']){
+   const th=document.createElement('th');th.scope='col';th.textContent=label;header.append(th);
+ }
+ thead.append(header);table.append(thead);
+ const tbody=document.createElement('tbody');
+ p.rows.forEach((data,i)=>{
+   const row=document.createElement('tr');
+   const letter=document.createElement('th');letter.scope='row';letter.className='ascii-letter';letter.textContent=data.letter;row.append(letter);
+   for(const kind of ['denary','binary']){
+     const cell=document.createElement('td');
+     const field=document.createElement('input');field.type='text';field.inputMode='numeric';field.autocomplete='off';
+     field.spellcheck=false;field.className='ascii-field ascii-'+kind;
+     field.maxLength=kind==='binary'?8:3;
+     field.placeholder=kind==='binary'?'00000000':'?';
+     field.setAttribute('aria-label',data.letter+' '+(kind==='denary'?'denary ASCII code':'8-bit binary ASCII code')+', row '+(i+1));
+     field.addEventListener('input',()=>{
+       if(locked)return;
+       field.value=kind==='binary'?field.value.replace(/[^01]/g,''):field.value.replace(/[^0-9]/g,'');
+       answer[i][kind]=field.value;
+     });
+     cell.append(field);row.append(cell);
+   }
+   tbody.append(row);
+ });
+ table.append(tbody);board.append(table);
+ const note=document.createElement('div');note.className='ascii-note';note.textContent='Use all 8 binary digits, including leading zeroes.';
+ board.append(note);d.append(board);
 }
 
 function makeFileSteps(p,d){
@@ -840,6 +898,7 @@ case 'countblocks':{
   d.append(panel);
   break;
 }
+case 'ascii':{makeAsciiCodeBuilder(p,d);break;}
 case 'textcancel':{makeTextCancellation(p,d);break;}
 case 'textsteps':case 'imagesteps':{makeFileSteps(p,d);break;}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
@@ -1009,8 +1068,13 @@ case 'pixels': {
   break;
 }
 }}
-function isAnswered(){if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'textcancel': {const final=String(answer.final).trim();const factor=String(answer.factor).trim();return /^\d+(?:\.\d+)?$/.test(final)&&Number(final)===p.value&&(level!=='medium'||!p.cancel8||/^\d+$/.test(factor)&&Number(factor)===p.simplifiedFactor);}case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
+function isAnswered(){if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'ascii':
+  return p.rows.every((expected,i)=>/^\d{1,3}$/.test(answer[i].denary)&&
+    Number(answer[i].denary)===expected.denary&&
+    /^[01]{8}$/.test(answer[i].binary)&&
+    answer[i].binary===expected.binary);
+ case 'textcancel': {const final=String(answer.final).trim();const factor=String(answer.factor).trim();return /^\d+(?:\.\d+)?$/.test(final)&&Number(final)===p.value&&(level!=='medium'||!p.cancel8||/^\d+$/.test(factor)&&Number(factor)===p.simplifiedFactor);}case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
   if(answer.bits.length!==(p.countMode==='inverse'?8:p.bitCount))return false;
   if(answer.bits.some(bit=>bit!==0&&bit!==1))return false;
   const binaryNumber=answer.bits.reduce((total,bit)=>(total<<1)+bit,0);
@@ -1019,8 +1083,8 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
   return answer.bits.every(bit=>bit===1)&&Number(answer.max)===p.maxValue&&Number(answer.patterns)===Math.pow(2,p.bitCount);
 }case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
-function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
-function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
+function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
+function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'||skill==='ascii'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(skill==='units')return;if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
 $('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('show-answer').addEventListener('click',()=>{
@@ -1064,7 +1128,7 @@ $('check').addEventListener('click',submit);$('next').addEventListener('click',n
 persist();
 // Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
 const directSkill=new URLSearchParams(window.location.search).get('skill');
-if(['shift','count','text','image','units','pixels'].includes(directSkill))openSkill(directSkill);
+if(['shift','count','text','image','units','pixels','ascii'].includes(directSkill))openSkill(directSkill);
 })();
 </script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
