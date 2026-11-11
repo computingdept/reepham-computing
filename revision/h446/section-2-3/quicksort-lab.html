@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff">
+<title>Quicksort Skills Lab | OCR H446 | RHS Computing</title>
+<meta name="description" content="Practise OCR H446 quicksort: choose pivots, partition values, trace recursive calls and read pseudocode.">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#163c30;background:#f3f7f4;line-height:1.44}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.55}
+a{color:#075a43}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #dd991d;outline-offset:3px}
+[hidden]{display:none!important}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px max(18px,calc((100% - 1240px)/2));background:#fff;border-bottom:1px solid #d7e4db}
+.brand{font-weight:900;color:#17513c;white-space:nowrap}.back{font-weight:750;text-decoration:none}
+main{max-width:1240px;margin:auto;padding:20px 20px 42px}
+.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.eyebrow{margin:0 0 3px;color:#467160;font-size:.76rem;letter-spacing:.08em;font-weight:850;text-transform:uppercase}
+h1{font-size:clamp(1.7rem,3vw,2.6rem);margin:0 0 7px;letter-spacing:-.035em;line-height:1.12}
+.intro{margin:0;color:#3d6153;font-size:clamp(.96rem,1.1vw,1.08rem)}
+.pill{border:1px solid #a9cbb5;border-radius:999px;padding:8px 13px;font-weight:780;color:#1b5d43;white-space:nowrap;background:#ecf6ef}
+.meter{width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;accent-color:#136c4b;margin:14px 0 15px}
+.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,.8fr);gap:16px;align-items:start}
+.card{border:1px solid #cbdcd0;background:#fff;border-radius:16px;box-shadow:0 3px 12px rgba(16,57,40,.055);min-width:0}
+.work{padding:clamp(16px,2vw,26px)}
+.sidebar{padding:16px;display:grid;gap:11px}
+.level{color:#236f4e;font-size:.82rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+h2{font-size:clamp(1.4rem,2vw,1.95rem);line-height:1.2;margin:6px 0 9px}
+.task{font-size:clamp(1.05rem,1.35vw,1.26rem);margin:0 0 18px}
+.rule{background:#edf6f0;border-left:4px solid #2d8259;padding:10px 14px;border-radius:7px;margin-bottom:16px}
+.rule strong{color:#0b4d33}
+.number-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:15px 0}
+.num{min-width:62px;height:65px;border:2px solid #9eafa5;background:#fff;color:#183e30;border-radius:10px;font-size:1.8rem;font-weight:800;text-align:center}
+button.num:hover:not(:disabled){background:#e6f2ea;border-color:#12714a}
+.num.pivot{border-color:#ad7915;background:#ffedc9}.num.current{border-color:#005f45;box-shadow:0 0 0 3px #bfe8d0}
+.num.plain{display:grid;place-items:center;cursor:default}
+.choices{display:flex;gap:10px;flex-wrap:wrap}
+.primary,.secondary,.choice{border-radius:10px;min-height:49px;padding:10px 18px;font-weight:800;border:1px solid #246448}
+.primary{background:#075d41;color:#fff}.primary:hover{background:#07482f}
+.secondary{background:#fff;color:#154f3a}.secondary:hover,.choice:hover{background:#e9f5ec}
+.choice{background:#eaf5ef;color:#124932;min-width:150px;font-size:1.08rem}
+.feedback{margin-top:17px;padding:13px 15px;border-radius:10px;border:1px solid #bdd2c3;min-height:50px}
+.feedback.ok{background:#e5f4e9;color:#144e2f}.feedback.try{background:#fff3df;border-color:#e1b974;color:#78480c}
+.group-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.group{padding:12px;background:#f6faf7;border:1px solid #d3e1d7;border-radius:12px;min-height:90px}
+.group h3{font-size:.91rem;margin:0 0 8px;color:#315e4c}
+.tokens{display:flex;flex-wrap:wrap;gap:7px}.token{display:inline-flex;align-items:center;justify-content:center;min-width:41px;min-height:43px;background:white;border:1px solid #b7cfc0;border-radius:8px;font-size:1.2rem;font-weight:760}
+.status{font-size:.88rem;color:#456658;margin:5px 0 12px}.hint{margin:8px 0;color:#557064}
+.trace{list-style:none;padding:0;margin:0;display:grid;gap:6px;max-height:245px;overflow-y:auto}
+.trace li{background:#f4f8f5;border-left:3px solid #63977b;border-radius:5px;padding:8px 10px;font-size:.9rem;overflow-wrap:anywhere}
+.trace li small{display:block;color:#5b7566;font-weight:700}.empty{color:#607a6a;font-size:.92rem;margin:0}
+.sidebar h3{font-size:1rem;margin:0}
+.scoreline{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e3eae5;padding:7px 0;font-size:.9rem}
+.scoreline b{white-space:nowrap}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{background:#12362c;color:#f4fff8;padding:13px;border-radius:11px;white-space:pre-wrap;overflow-x:auto;font-size:clamp(.83rem,1.1vw,1rem);line-height:1.5}
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field-grid label{display:grid;gap:5px;font-weight:740}
+.field-grid label.wide{grid-column:1 / -1}
+input{width:100%;min-height:47px;border:1px solid #89a996;border-radius:8px;padding:9px 11px;min-width:0}
+.small{font-size:.88rem;color:#4a6759}
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+footer{margin:18px 0;color:#4b6b5c;font-size:.86rem;text-align:center}
+@media(max-width:800px){.layout{grid-template-columns:1fr}main{padding:15px}.sidebar{grid-row:2}.num{min-width:55px;height:57px;font-size:1.52rem}}
+@media(max-width:450px){.field-grid{grid-template-columns:1fr}.field-grid label.wide{grid-column:1}.group-grid{gap:7px}.group{padding:9px}.num{min-width:48px;height:53px}.work{padding:15px}.pill{white-space:normal}}
+</style>
+</head>
+<body>
+<header><a class="back" href="./index.html#2.3">← Algorithms Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
+<main>
+<div class="topline">
+ <div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort Skills Lab</h1>
+ <p class="intro">Choose pivots, partition values and trace recursion. These are practical skills, not a multiple-choice quiz.</p></div>
+ <span class="pill" id="mastery">Best: not attempted</span>
+</div>
+<progress class="meter" id="progress" value="0" max="5" aria-label="Challenges completed"></progress>
+<div class="layout">
+ <section class="card work" aria-labelledby="task-title">
+  <div class="level" id="level">Challenge 1 of 5</div><h2 id="task-title">Choose a pivot</h2>
+  <p class="task" id="task-text"></p>
+  <div class="rule"><strong>Method for this lab:</strong> Always select the <strong>first value</strong> of each sublist as pivot. Put values <strong>less than</strong> the pivot into Smaller and values <strong>greater than or equal to</strong> the pivot into Larger. Preserve their original relative order. Other valid quicksort methods exist.</div>
+  <div id="workspace"></div>
+  <div class="feedback" id="feedback" role="status" aria-live="polite">Select an answer to begin.</div>
+  <div class="actions"><button class="primary" id="next" type="button" hidden>Next challenge →</button>
+  <button class="secondary" id="restart" type="button">New practice set</button></div>
+ </section>
+ <aside class="card sidebar" aria-label="Progress and trace">
+  <h3>Progress</h3><div id="scoreboard"></div>
+  <h3>Working trace</h3><p class="empty" id="trace-empty">Your completed partitions will appear here.</p>
+  <ol class="trace" id="trace"></ol>
+  <p class="small">Five challenges · 80% target · best result saved in this browser, not sent to your teacher. A mistake still allows you to continue practising, but loses that challenge's first-try mark.</p>
+ </aside>
+</div>
+<footer>Independent practice · For an OCR question, follow the pivot and partition rule supplied in that question.</footer>
+</main>
+<script>
+(function(){
+"use strict";
+const NAMES=["Select the first pivot","Partition one list","Trace the recursive calls","Complete the full trace","Read and trace pseudocode"];
+const TASKS=[
+ ["Click the pivot that this method selects.","Move every remaining number into the correct group.","Choose each recursive pivot, partition its sublist, then give the final sorted order.","Complete every recursive partition, including any values equal to the pivot. Finish with the sorted list.","Read the supplied pseudocode. Enter the first pivot, both sublists and the returned sorted list."]
+];
+const SETS=[
+ [[6,2,9,4,7],[6,8,1,7,3],[6,8,1,7,3],[6,9,3,6,2,8,4],[7,2,9,4,6]],
+ [[5,9,2,7,1],[4,7,1,6,3],[7,2,6,1,4],[5,8,5,2,9,1,6],[6,3,9,2,7]],
+ [[8,2,5,1,9],[7,3,8,2,5],[5,7,2,6,1],[7,2,9,4,7,1,6],[8,2,9,3,6]]
+];
+const $=id=>document.getElementById(id), STORE="rhsc-h446-quicksort-skill-lab-v1";
+let saved={round:0,best:null,last:null};
+try{const old=JSON.parse(localStorage.getItem(STORE)||"null");if(old&&Number.isInteger(old.round)&&old.round>=0)saved={round:old.round,best:Number.isInteger(old.best)?old.best:null,last:Number.isInteger(old.last)?old.last:null};}catch(_){}
+let stage=0, scores=[null,null,null,null,null], errors=0, complete=false, work={}, trace=[];
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(saved));}catch(_){}}
+function showFeedback(message,type){const f=$("feedback");f.textContent=message;f.className="feedback"+(type?" "+type:"");}
+function addTrace(text,detail){trace.push({text,detail:detail||""});renderTrace();}
+function renderTrace(){
+ $("trace").replaceChildren();$("trace-empty").hidden=trace.length>0;
+ trace.forEach(entry=>{const li=document.createElement("li");li.textContent=entry.text;if(entry.detail){const sm=document.createElement("small");sm.textContent=entry.detail;li.append(sm);}$("trace").append(li);});
+}
+function setNodeText(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
+function div(cls){return setNodeText("div",undefined,cls);}
+function listLabel(values){return "["+values.join(", ")+"]";}
+function same(a,b){return Array.isArray(a)&&a.length===b.length&&a.every((x,i)=>x===b[i]);}
+function parseList(raw){
+ const trim=raw.replace(/[\[\],;]/g," ").trim();
+ if(!trim)return [];
+ if(!/^-?\d+(\s+-?\d+)*$/.test(trim))return null;
+ return trim.split(/\s+/).map(Number);
+}
+function seed(){return SETS[saved.round%SETS.length][stage].slice();}
+function updateProgress(){
+ $("progress").value=scores.filter(x=>x!==null).length;
+ $("scoreboard").replaceChildren();
+ scores.forEach((v,i)=>{const d=div("scoreline");d.append(setNodeText("span",(i+1)+". "+NAMES[i]),setNodeText("b",v===null?"—":v?"✓ 1 mark":"Practised"));$("scoreboard").append(d);});
+ $("mastery").textContent=saved.best===null?"Best: not attempted":"Best: "+saved.best+"/5"+(saved.best>=4?" · Mastered":"");
+}
+function finishChallenge(){
+ if(complete)return;
+ complete=true;scores[stage]=errors===0?1:0;
+ const good=errors===0;
+ showFeedback(good?"Correct throughout — 1 first-try mark earned.":"Well done for completing the method. No first-try mark this time; a new set lets you practise again.","ok");
+ $("next").hidden=false;$("next").textContent=stage===4?"View result →":"Next challenge →";
+ updateProgress();
+}
+function mistake(message){errors++;showFeedback(message,"try");}
+function row(values,select,onClick,active){
+ const wrap=div("number-row");
+ values.forEach((v,i)=>{const button=setNodeText(select?"button":"span",String(v),"num"+(i===active?" current":"")+(select?"":" plain"));if(select){button.type="button";button.setAttribute("aria-label","Choose "+v+" at position "+(i+1));button.addEventListener("click",()=>onClick(i));}wrap.append(button);});
+ return wrap;
+}
+function buildGroups(state){
+ const grid=div("group-grid");
+ [["Smaller (< "+state.pivot+")",state.left],["Larger (≥ "+state.pivot+")",state.right]].forEach(([title,values])=>{
+ const area=div("group");area.append(setNodeText("h3",title));const line=div("tokens");
+ values.forEach(v=>line.append(setNodeText("span",String(v),"token")));
+ if(!values.length)line.append(setNodeText("span","Empty","small"));area.append(line);grid.append(area);
+ });
+ return grid;
+}
+function pickStage(){
+ const a=seed();$("workspace").replaceChildren(row(a,true,i=>{
+ if(i!==0){mistake("For this activity, choose the first value of the current list. Try again.");return;}
+ addTrace("First pivot: "+a[0],"Input "+listLabel(a));
+ finishChallenge();
+ },-1));
+}
+function createPartition(values,path){
+ return {values:values.slice(),path:path||"Whole list",pivot:values[0],left:[],right:[],pos:1,phase:"pick"};
+}
+function newPartitionWork(recursive){
+ const values=seed();
+ work={recursive,queue:recursive?[{values,path:"Whole list"}]:[],current:recursive?null:createPartition(values,"Whole list"),original:values};
+ if(recursive)nextNode();else drawPartition();
+}
+function nextNode(){
+ while(work.queue.length){
+  const node=work.queue.shift();
+  if(node.values.length<=1){addTrace(node.path+": "+listLabel(node.values),"Base case — already sorted");continue;}
+  work.current=createPartition(node.values,node.path);drawPartition();return;
+ }
+ work.current=null;
+ showFinalInput();
+}
+function drawPartition(){
+ const node=work.current;if(!node)return;
+ const root=$("workspace");root.replaceChildren();
+ root.append(setNodeText("p",node.path+" · Current sublist: "+listLabel(node.values),"status"));
+ if(node.phase==="pick"){
+  root.append(setNodeText("p","Tap the pivot for this sublist.","hint"));
+  root.append(row(node.values,true,i=>{
+   if(i!==0){mistake("Select the first value in this sublist, then partition the remaining values.");return;}
+   node.phase="classify";showFeedback("Pivot "+node.pivot+" selected. Classify the other values.","ok");drawPartition();
+  },-1));return;
+ }
+ const next=node.values[node.pos];
+ const grid=buildGroups(node);
+ root.append(setNodeText("p","Pivot: "+node.pivot+" · Decide where the highlighted value belongs.","status"));
+ root.append(row(node.values,false,null,node.pos));
+ root.append(grid);
+ const controls=div("choices");
+ [["Smaller","left"],["Larger / equal","right"]].forEach(([label,side])=>{
+  const b=setNodeText("button",label,"choice");b.type="button";
+  b.addEventListener("click",()=>{
+   const expected=next<node.pivot?"left":"right";
+   if(side!==expected){mistake(next===node.pivot?"Equal values belong in Larger / equal under this rule. Try again.":"Compare "+next+" with the pivot "+node.pivot+"; try the other group.");return;}
+   node[side].push(next);node.pos++;
+   if(node.pos>=node.values.length){
+    addTrace(node.path+": pivot "+node.pivot,"Smaller "+listLabel(node.left)+" · Larger "+listLabel(node.right));
+    if(work.recursive){
+      work.queue.unshift({values:node.left.slice(),path:node.path+" → smaller"},{values:node.right.slice(),path:node.path+" → larger"});
+      showFeedback("Partition checked. Move to the next recursive sublist.","ok");nextNode();
+    }else{
+      root.replaceChildren(setNodeText("p","Partition completed for pivot "+node.pivot+".","status"),buildGroups(node));
+      finishChallenge();
+    }
+   }else{showFeedback("Correct placement. Keep comparing with "+node.pivot+".","ok");drawPartition();}
+  });controls.append(b);
+ });
+ root.append(controls);
+}
+function showFinalInput(){
+ const root=$("workspace");root.replaceChildren();
+ root.append(setNodeText("p","Every recursive sublist has reached its base case. Combine the sorted smaller list, pivot and sorted larger list.","task"));
+ const label=setNodeText("label","Final sorted list (comma-separated):","small");label.setAttribute("for","sorted-input");
+ const input=document.createElement("input");input.id="sorted-input";input.placeholder="e.g. 1, 2, 3";input.autocomplete="off";
+ const b=setNodeText("button","Check final order","primary");b.type="button";
+ b.addEventListener("click",()=>{
+  const entered=parseList(input.value),answer=work.original.slice().sort((a,b)=>a-b);
+  if(entered===null||!same(entered,answer)){mistake("Check that every original value appears in ascending order, including duplicates.");return;}
+  addTrace("Recombined sorted list",listLabel(answer));finishChallenge();
+ });root.append(label,input,b);
+}
+function codeTask(){
+ const root=$("workspace");root.replaceChildren();
+ const input=seed();work={original:input};
+ root.append(setNodeText("p","Input: "+listLabel(input),"status"));
+ const code=setNodeText("pre","function quickSort(values)\n  if length(values) <= 1 then return values\n  pivot = values[0]\n  smaller = values after pivot < pivot\n  larger = values after pivot >= pivot\n  return quickSort(smaller) + [pivot] + quickSort(larger)\nend function","code");
+ root.append(code);
+ const form=document.createElement("form");form.id="code-form";
+ const fields=div("field-grid");
+ [["pivot","First pivot","e.g. 4"],["smaller","Smaller sublist","e.g. 2, 3"],["larger","Larger sublist","e.g. 7, 8"],["result","Final returned list","e.g. 2, 3, 4, 7, 8"]].forEach(([id,title,placeholder])=>{
+  const label=setNodeText("label",title,id==="result"?"wide":"");const control=document.createElement("input");control.name=id;control.placeholder=placeholder;control.autocomplete="off";control.required=true;label.append(control);fields.append(label);
+ });
+ form.append(fields);const b=setNodeText("button","Check pseudocode trace","primary");b.type="submit";form.append(b);
+ form.addEventListener("submit",e=>{
+  e.preventDefault();
+  const fd=new FormData(form),pivot=input[0],smaller=input.slice(1).filter(x=>x<pivot),larger=input.slice(1).filter(x=>x>=pivot),sorted=input.slice().sort((a,b)=>a-b);
+  const entered=Number(String(fd.get("pivot")).trim());
+  if(!Number.isInteger(entered)||entered!==pivot){mistake("Check the line pivot = values[0]. This is the first value.");return;}
+  if(!same(parseList(String(fd.get("smaller"))),smaller)){mistake("Check Smaller: include values below the pivot in their original encounter order.");return;}
+  if(!same(parseList(String(fd.get("larger"))),larger)){mistake("Check Larger: include values equal to or above the pivot in their original encounter order.");return;}
+  if(!same(parseList(String(fd.get("result"))),sorted)){mistake("Check the recursive calls and the final ascending result.");return;}
+  addTrace("Pseudocode: pivot "+pivot,"Smaller "+listLabel(smaller)+" · Larger "+listLabel(larger));
+  addTrace("Returned result",listLabel(sorted));finishChallenge();
+ });
+ root.append(form);
+}
+function render(){
+ complete=false;errors=0;trace=[];renderTrace();$("next").hidden=true;
+ $("level").textContent="Challenge "+(stage+1)+" of 5";
+ $("task-title").textContent=NAMES[stage];$("task-text").textContent=TASKS[0][stage];
+ showFeedback("Work through the skill. Incorrect attempts are explained so you can retry.","");
+ $("workspace").replaceChildren();
+ if(stage===0)pickStage();
+ else if(stage===1)newPartitionWork(false);
+ else if(stage===2||stage===3)newPartitionWork(true);
+ else codeTask();
+ updateProgress();
+}
+function results(){
+ const total=scores.filter(Boolean).length;
+ saved.last=total;saved.best=Math.max(saved.best===null?0:saved.best,total);persist();updateProgress();
+ $("level").textContent="Practice complete";$("task-title").textContent=total>=4?"Mastery target reached":"Ready to improve";
+ $("task-text").textContent="First-try score: "+total+"/5 ("+(total*20)+"%). "+(total>=4?"You reached the 80% target.":"Practise another set to build fluency.");
+ $("workspace").replaceChildren(setNodeText("p","Use the trace to explain each pivot and recursive call on paper. When OCR supplies a different implementation, follow its stated convention.","rule"));
+ $("feedback").textContent="Your best score is saved in this browser. A new practice set uses different numbers.";
+ $("feedback").className="feedback ok";$("next").hidden=true;$("progress").value=5;
+}
+$("next").addEventListener("click",()=>{
+ if(!complete)return;
+ if(stage===4){results();return;}
+ stage++;render();
+});
+$("restart").addEventListener("click",()=>{
+ saved.round++;persist();stage=0;scores=[null,null,null,null,null];render();
+});
+render();
+})();
+</script>
+</body>
+</html>
