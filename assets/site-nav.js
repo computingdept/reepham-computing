@@ -8,12 +8,13 @@
     back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg>',
     home:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg>'
   };
-  const css='/assets/site-nav.css?v=20261101-icon-only1';
+  const css='/assets/site-nav.css?v=20261111-binary-clock1';
   if(!document.querySelector('link[data-rhsc-site-nav]')){
     const link=document.createElement('link');
     link.rel='stylesheet';link.href=css;link.dataset.rhscSiteNav='1';document.head.appendChild(link);
   }
   const route='/';
+  const clockRoute='/binary-clock.html';
   function button(existing,kind,href,label){
     const el=existing||document.createElement('a');
     el.href=href;el.classList.add('rhsc-site-nav-button','rhsc-site-nav-'+kind);
@@ -129,9 +130,25 @@
       return;
     }
   }
-  /* One central, visual-only website identity: Home on the left, the
-     original Synergy Assist artwork on the right. Existing back links,
-     teaching phases and question engines remain in place. */
+  /* One central classroom shortcut: clicking the SA artwork opens Binary Time
+     in a new tab. Keep Home and all teaching navigation unchanged. */
+  function brandClockLink(mount){
+    if(!mount||mount.querySelector(':scope > .synergy-clock-shortcut'))return;
+    const brand=mount.querySelector(':scope > .synergy-brand, :scope > .hubhome.synergy-brand');
+    const original=brand&&brand.querySelector('.synergy-brand-icon');
+    if(!brand||!original)return;
+    const link=document.createElement('a');
+    link.className='synergy-brand-icon synergy-clock-shortcut';
+    link.href=clockRoute;
+    link.target='_blank';
+    link.rel='noopener';
+    link.setAttribute('aria-label','Open Binary Clock in a new tab');
+    link.title='Binary Clock · open in a new tab';
+    original.remove();
+    brand.after(link);
+  }
+  /* One central site identity: Home on the left and original Synergy
+     artwork on the right. Lesson controls and course navigation stay put. */
   // The visible title belongs in the same compact bar as Home and the logo.
   // Existing page h1 headings remain in the DOM for accessibility.
   function addTopTitle(mount,label){
@@ -146,10 +163,13 @@
     const pathname=location.pathname;
     function logo(mount){
       if(!mount||mount.querySelector('.synergy-corner-mark'))return;
-      const mark=document.createElement('span');
+      const mark=document.createElement('a');
       mark.className='synergy-corner-mark';
-      mark.setAttribute('role','img');
-      mark.setAttribute('aria-label','Synergy Assist');
+      mark.href=clockRoute;
+      mark.target='_blank';
+      mark.rel='noopener';
+      mark.setAttribute('aria-label','Open Binary Clock in a new tab');
+      mark.title='Binary Clock · open in a new tab';
       mount.append(mark);
     }
     function firstHome(mount){
@@ -171,14 +191,17 @@
       const matched=pathname.match(/\/(ks3-computing|j277-hub|h446-hub)\.html$/);
       if(matched)addTopTitle(top,courseTitles[matched[1]]);
       top.classList.add('synergy-corners');
-      return; // the existing Synergy logo + wordmark is already in the masthead
+      brandClockLink(top);
+      return; // existing wordmark and Home stay linked to the hub
     }
     const homeTop=document.querySelector('body.learning-hub > header.top .top-inner');
     const chooser=document.querySelector('body.school-chooser > header.chooser-head .chooser-head-inner');
     const legacyTop=document.querySelector('body.central-legacy-hub > header.top .topin');
     if(homeTop||chooser||legacyTop){
-      firstHome(homeTop||chooser||legacyTop);
+      const masthead=homeTop||chooser||legacyTop;
+      firstHome(masthead);
       if(homeTop)addTopTitle(homeTop,'Learning Hub');
+      brandClockLink(masthead);
       return;
     }
     const lessonNav=document.querySelector('.navwrap');
@@ -235,6 +258,7 @@
     if(legacyRevision){
       firstHome(legacyRevision);
       legacyRevision.classList.add('synergy-corners');
+      brandClockLink(legacyRevision);
     }
   }
   /* Route existing student-facing PDF Print links into the one consistent
