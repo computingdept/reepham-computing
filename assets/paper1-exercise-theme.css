@@ -1,0 +1,343 @@
+/* RHS Computing — Paper 1 Skills, shared activity styling.
+   Keep J277 hub and lesson navigation untouched. Conversion Grid has its own
+   whiteboard; these rules cover the other Paper 1 exercise types centrally. */
+body.course-hub #practice.is-standard:not(.hidden) {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:7px 15px;
+  width:100%;
+  max-width:1220px;
+  margin-inline:auto;
+}
+body.course-hub #practice.is-standard > .back {
+  grid-column:1;grid-row:1;justify-self:start;
+  min-height:40px;margin:0;padding:7px 2px;
+  color:#285348;font-size:13px;font-weight:800;
+}
+body.course-hub #practice.is-standard > .skill-top {
+  grid-column:2;grid-row:1;min-width:0;margin:0;display:block;
+}
+body.course-hub #practice.is-standard .skill-top > div {
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+}
+body.course-hub #practice.is-standard .skill-top h1 {
+  font-size:clamp(20px,2vw,25px);
+  letter-spacing:-.4px;line-height:1.12;
+  color:#243d31;margin:0;
+}
+body.course-hub #practice.is-standard .wb-question-count {
+  display:inline-flex;align-items:center;
+  padding:3px 9px;border-radius:999px;
+  background:#edf4f0;color:#426655;
+  font-size:12px;font-weight:750;white-space:nowrap;
+}
+body.course-hub #practice.is-standard :is(#skill-spec,#skill-subtitle,.skill-top .tag) {display:none}
+body.course-hub #practice.is-standard > .level-menu {
+  grid-column:3;grid-row:1;
+  align-self:center;flex-wrap:nowrap;gap:3px;
+  margin:0;padding:3px;
+}
+body.course-hub #practice.is-standard > .level-menu .level {
+  min-height:36px;padding:7px 12px;
+}
+body.course-hub #practice.is-standard > .work {
+  grid-column:1 / -1;grid-row:2;
+  width:100%;min-width:0;
+  margin:0;padding:0;border:0;
+  border-radius:0;box-shadow:none;background:transparent;
+}
+body.course-hub #practice.is-standard .work-head {display:none}
+body.course-hub #practice.is-standard .prompt {
+  margin:3px 0 5px;
+  font-size:clamp(17px,1.8vw,22px);
+  line-height:1.25;font-weight:800;
+  letter-spacing:-.25px;color:#263e32;
+}
+body.course-hub #practice.is-standard .context {
+  margin:0 0 7px;
+  font-size:12px;line-height:1.35;
+  color:#61716a;
+}
+body.course-hub #practice.is-standard .context:empty {display:none}
+body.course-hub #practice.is-standard .answer-area {
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  max-width:none;
+  min-height:150px;
+  margin:7px 0 0;
+  padding:16px 18px;
+  border:1px solid #d6e0da;
+  border-radius:15px;
+  background:#fff;
+}
+body.course-hub #practice.is-standard .answer-area > * {
+  max-width:100%;
+}
+body.course-hub #practice.is-standard .bottom-bar {
+  margin-top:7px;
+  padding-top:8px;
+  gap:7px;
+  border-color:#e0e7e2;
+}
+body.course-hub #practice.is-standard .buttons {gap:7px}
+body.course-hub #practice.is-standard :is(.btn,.choice,.hex-key,.hex-digit,.bitbtn,.pixel-btn) {
+  transition:background-color .14s,border-color .14s;
+}
+body.course-hub #practice.is-standard .btn {
+  min-height:42px;
+  padding:8px 14px;
+  border:1px solid #bed1c5;
+  border-radius:10px;
+  background:#fff;
+  color:#285348;
+  font-size:13px;
+}
+body.course-hub #practice.is-standard .btn.primary {
+  background:#285348;
+  border-color:#285348;
+  color:#fff;
+}
+body.course-hub #practice.is-standard .toggle-help {
+  color:#285348;font-size:12px;
+}
+body.course-hub #practice.is-standard .hintbox {
+  margin:7px 0;padding:9px 12px;
+  background:#f4f9f5;border-color:#aacbb5;
+  color:#285348;
+}
+body.course-hub #practice.is-standard .feedback {
+  margin-top:7px;padding:9px 12px;
+  border-radius:9px;
+}
+body.course-hub #practice.is-standard .feedback.neutral {
+  color:#285348;background:#f2f7f3;border-color:#c9ded0;
+}
+body.course-hub #practice.is-standard > .footnote {
+  grid-column:1 / -1;grid-row:3;
+  margin:0;color:#63736a;font-size:10px;
+}
+/* 8-bit working: accessible, touch-sized, and aligned across the entire row. */
+body.course-hub #practice.is-standard .bits {
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  width:min(100%,760px);
+  gap:6px;
+}
+body.course-hub #practice.is-standard .bitlabel {
+  font-size:11px;
+  margin-bottom:3px;
+  color:#486657;
+}
+body.course-hub #practice.is-standard .bitbtn {
+  min-height:52px;
+  border:2px solid #9ebfad;
+  border-radius:8px;background:#fff;
+  color:#27513a;
+  font-size:24px;
+}
+body.course-hub #practice.is-standard .bitbtn.on {
+  background:#285348;border-color:#285348;color:#fff;
+}
+body.course-hub #practice.is-standard .split {
+  border-right:3px solid #d94a4a;
+  padding-right:6px;margin-right:0;
+}
+body.course-hub #practice.is-standard .bit-footer {
+  margin:0;color:#536b5c;font-size:12px;
+}
+/* Binary addition as an aligned written calculation, not an oversized form. */
+body.course-hub #practice.is-standard .binary-pair {
+  margin:0;
+  padding:9px 22px 8px;
+  width:fit-content;
+  border:1px solid #dce7df;
+  border-radius:11px;
+  background:#f7fbf8;
+  color:#244834;
+  font:850 clamp(17px,2vw,25px)/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;
+  letter-spacing:1.6px;
+  text-align:right;
+}
+body.course-hub #practice.is-standard .binary-plus {
+  border-color:#51806a;
+  padding-right:0;
+}
+body.course-hub #practice.is-standard .tick-line {
+  margin:0;
+  color:#40574a;
+  font-size:13px;
+}
+body.course-hub #practice.is-standard .tick-line input {
+  accent-color:#285348;
+  width:19px;height:19px;
+}
+/* Calculations and units. */
+body.course-hub #practice.is-standard .inputline {
+  justify-content:center;
+  gap:10px;
+  width:100%;
+}
+body.course-hub #practice.is-standard .numfield {
+  width:min(100%,330px);
+  min-height:58px;
+  height:58px;
+  background:#fff;
+  border:2px solid #9ebfad;
+  color:#244834;
+  border-radius:11px;
+  font-size:25px;
+  font-variant-numeric:tabular-nums;
+}
+body.course-hub #practice.is-standard .numfield:focus {
+  border-color:#285348;
+}
+body.course-hub #practice.is-standard .suffix {
+  color:#285348;
+}
+/* Multiple choice remains the existing 2 x 2 design. */
+body.course-hub #practice.is-standard .option-grid {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:min(100%,930px);
+  max-width:none;
+  gap:9px;
+}
+body.course-hub #practice.is-standard .choice {
+  min-height:57px;
+  padding:12px 14px;
+  border:1px solid #c9d9ce;
+  border-radius:10px;
+  background:#fff;color:#263d32;
+  text-align:left;font-size:14px;
+}
+body.course-hub #practice.is-standard .choice:hover {
+  background:#f5f9f6;border-color:#85af96;
+}
+body.course-hub #practice.is-standard .choice.selected {
+  padding:11px 13px;
+  border:2px solid #285348;
+  background:#edf5ef;color:#214832;
+}
+/* Hexadecimal keypad, two large digits and legible 4 x 4 keys on phones. */
+body.course-hub #practice.is-standard .hex-display {
+  gap:8px;
+  margin:0;
+}
+body.course-hub #practice.is-standard .hex-digit {
+  width:62px;height:62px;
+  background:#fff;border:2px solid #a5c7b0;
+  color:#285348;
+  font-size:26px;
+}
+body.course-hub #practice.is-standard .hex-digit.cursor {
+  border-color:#285348;
+  background:#edf5ef;
+}
+body.course-hub #practice.is-standard .hex-pad {
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  width:min(100%,600px);
+  max-width:none;
+  gap:5px;
+}
+body.course-hub #practice.is-standard .hex-key {
+  min-height:42px;
+  border:1px solid #bcd2c3;
+  border-radius:8px;background:#fff;
+  color:#285348;font-size:15px;
+}
+body.course-hub #practice.is-standard .hex-key:hover {
+  background:#edf5ef;
+}
+/* Pixel builder — preserve the existing readable 4x4 grid. */
+body.course-hub #practice.is-standard .pixel-note {
+  color:#526a5c;font-size:12px;
+  margin-bottom:6px;
+}
+body.course-hub #practice.is-standard .pixel-rows {
+  color:#285348;
+  line-height:1.55;
+}
+body.course-hub #practice.is-standard .pixel-grid {
+  gap:5px;
+}
+body.course-hub #practice.is-standard .pixel-btn {
+  border:2px solid #9dbfac;
+  border-radius:7px;background:#fff;
+}
+body.course-hub #practice.is-standard .pixel-btn.on {
+  background:#285348;border-color:#285348;
+}
+body.course-hub #practice.is-standard :is(button,input,select):focus-visible {
+  outline:3px solid #be8023;
+  outline-offset:2px;
+}
+@media(max-width:800px) {
+ body.course-hub #practice.is-standard:not(.hidden) {
+   grid-template-columns:minmax(0,1fr) auto;
+   gap:7px 8px;
+ }
+ body.course-hub #practice.is-standard > .back {
+   grid-column:1;grid-row:1;
+ }
+ body.course-hub #practice.is-standard > .level-menu {
+   grid-column:2;grid-row:1;
+ }
+ body.course-hub #practice.is-standard > .level-menu .level {
+   min-height:38px;padding:7px 9px;font-size:12px;
+ }
+ body.course-hub #practice.is-standard > .skill-top {
+   grid-column:1 / -1;grid-row:2;
+ }
+ body.course-hub #practice.is-standard > .work {
+   grid-column:1 / -1;grid-row:3;
+ }
+ body.course-hub #practice.is-standard > .footnote {
+   grid-column:1 / -1;grid-row:4;
+ }
+ body.course-hub #practice.is-standard .skill-top h1 {
+   font-size:21px;
+ }
+ body.course-hub #practice.is-standard .answer-area {
+   padding:12px 10px;
+   min-height:130px;
+ }
+}
+@media(max-width:550px) {
+ body.course-hub #practice.is-standard .prompt {
+   font-size:17px;
+ }
+ body.course-hub #practice.is-standard .answer-area {
+   padding:10px 8px;
+ }
+ body.course-hub #practice.is-standard .bits {gap:3px}
+ body.course-hub #practice.is-standard .bitbtn {
+   min-height:47px;font-size:19px;border-radius:6px;
+ }
+ body.course-hub #practice.is-standard .bitlabel {font-size:10px}
+ body.course-hub #practice.is-standard .split {padding-right:4px}
+ body.course-hub #practice.is-standard .option-grid {gap:7px}
+ body.course-hub #practice.is-standard .choice {
+   min-height:55px;padding:10px;font-size:13px;
+ }
+ body.course-hub #practice.is-standard .choice.selected {
+   padding:9px;
+ }
+ body.course-hub #practice.is-standard .hex-pad {
+   grid-template-columns:repeat(4,minmax(0,1fr));
+   gap:6px;
+   width:min(100%,320px);
+ }
+ body.course-hub #practice.is-standard .hex-key {min-height:46px}
+ body.course-hub #practice.is-standard .pixel-grid {
+   grid-template-columns:repeat(4,44px);
+ }
+ body.course-hub #practice.is-standard .pixel-btn {height:44px}
+}
+@media(prefers-reduced-motion:reduce) {
+ body.course-hub #practice.is-standard :is(.btn,.choice,.hex-key,.hex-digit,.bitbtn,.pixel-btn) {
+   transition:none;
+ }
+}
