@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-addition1">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-carry1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -238,7 +238,7 @@ function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
 case 'bits':case 'add':{
   const vals=Array(8).fill(0);
-  answer={bits:vals,overflow:p.type==='add'?null:false};
+  answer={bits:vals,overflow:p.type==='add'?null:false,carries:p.type==='add'?Array(8).fill(0):null};
   if(p.type==='add'){
     // All rows use exactly the same eight-column grid so digits cannot drift.
     const board=document.createElement('div');board.className='addition-board';
@@ -262,6 +262,36 @@ case 'bits':case 'add':{
     const rule=document.createElement('div');rule.className='addition-rule';rule.setAttribute('aria-hidden','true');calculation.append(rule);
     const result=document.createElement('div');result.className='addition-result';
     result.append(makeBitRow('bits',vals));calculation.append(result);
+    // Place a carry 1 beneath the column that will RECEIVE it next.
+    // For 00000001 + 00000001, the learner puts 1 under the 2s column.
+    const carry=document.createElement('div');carry.className='addition-carry';
+    const carryLabel=document.createElement('div');carryLabel.className='addition-carry-label';
+    carryLabel.textContent='CARRY ROW · Tap to place a 1 in the next column';
+    carry.append(carryLabel);
+    const carryRow=document.createElement('div');carryRow.className='addition-carry-row';
+    for(let j=0;j<8;j++){
+      if(j===7){
+        // No carry can enter the 1s column from the right.
+        const end=document.createElement('span');end.className='addition-carry-unavailable';
+        end.setAttribute('aria-label','1s column cannot receive a carry from the right');
+        end.textContent='–';carryRow.append(end);continue;
+      }
+      const btn=document.createElement('button');btn.type='button';
+      btn.className='addition-carry-bit';
+      const place=128>>j;
+      btn.setAttribute('aria-label','Carry into '+place+'s column: empty. Tap to place 1');
+      btn.setAttribute('aria-pressed','false');
+      btn.addEventListener('click',()=>{
+        if(locked)return;
+        answer.carries[j]=1-answer.carries[j];
+        const on=answer.carries[j]===1;
+        btn.textContent=on?'1':'';
+        btn.setAttribute('aria-pressed',String(on));
+        btn.setAttribute('aria-label','Carry into '+place+'s column: '+(on?'1':'empty')+'. Tap to '+(on?'clear':'place 1'));
+      });
+      carryRow.append(btn);
+    }
+    carry.append(carryRow);calculation.append(carry);
     board.append(calculation);
     const overflow=document.createElement('div');overflow.className='addition-overflow';
     const label=document.createElement('span');label.className='addition-overflow-label';label.textContent='Overflow beyond 8 bits?';
