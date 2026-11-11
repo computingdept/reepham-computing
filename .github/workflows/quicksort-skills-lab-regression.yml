@@ -1,0 +1,33 @@
+name: H446 Quicksort Skills Lab browser checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'revision/h446/section-2-3/quicksort-lab.html'
+      - 'revision/h446/section-2-3/index.html'
+      - 'lessons/h446/lesson-216/index.html'
+      - 'qa/master-audit-2026/quicksort-skills-lab-regression.cjs'
+      - '.github/workflows/quicksort-skills-lab-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  interactive-lab:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium test browser
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check syntax and launch local site
+        run: |
+          node --check qa/master-audit-2026/quicksort-skills-lab-regression.cjs
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/quicksort-lab.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/quicksort-skills-lab-regression.cjs
