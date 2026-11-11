@@ -54,7 +54,7 @@
 
 
 /* Mobile-first Data Units matching cards */
-.units-game{max-width:780px;margin:auto}.units-head{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#3d6952;font-size:13px;font-weight:800;margin-bottom:10px}
+.units-game{width:100%;max-width:780px;margin:0 auto;min-width:0}.units-head{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#3d6952;font-size:13px;font-weight:800;margin-bottom:10px}
 .units-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.units-column{display:grid;gap:8px;align-content:start}
 .units-label{font-size:12px;letter-spacing:.07em;text-align:center;font-weight:800;color:#507260}
 .units-card{width:100%;min-height:62px;padding:9px 5px;border-radius:11px;border:2px solid #a9caba;background:#fff;color:#1c4c34;font-weight:850;font-size:clamp(13px,1.8vw,18px);overflow-wrap:anywhere;touch-action:manipulation}
@@ -64,6 +64,10 @@
 .units-progress{height:7px;border-radius:10px;background:#e5f0ea;overflow:hidden;margin-bottom:12px}.units-progress span{display:block;height:100%;background:#16815b;transition:width .2s}
 @media(max-width:490px){.units-columns{gap:6px}.units-column{gap:6px}.units-card{min-height:56px;font-size:clamp(12px,3.5vw,15px)}}
 
+
+/* Stretch the matching grid inside the shared answer container. */
+body.course-hub #practice.is-standard .answer-area:has(.units-game){align-items:stretch;justify-content:flex-start;min-height:0}
+body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-width:780px}
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -362,45 +366,74 @@ function buildMatches(l){
  return shuffleMatches(deck);
 }
 function matchRound(){
- const total=matchTotals[level],per=matchSizes[level],round=Math.floor(index/per)+1,rounds=total/per,items=matchDeck.slice(index,index+per),token=++matchSession;
- locked=false;let selected=null;const done=new Set();
- $('qpos').textContent='Round '+round+' of '+rounds;$('wb-question-count').textContent='Round '+round+' of '+rounds;
+ const total=matchTotals[level],per=matchSizes[level],round=Math.floor(index/per)+1,rounds=total/per;
+ const items=matchDeck.slice(index,index+per),token=++matchSession;
+ locked=false;
+ $('qpos').textContent='Round '+round+' of '+rounds;
+ $('wb-question-count').textContent='Round '+round+' of '+rounds;
  $('mode-note').textContent=level+' · '+total+' pairs';
  $('meter').style.width=100*score/total+'%';
  $('prompt').textContent='Match the equivalent data sizes';
  $('context').textContent='1 byte = 8 bits · 1 KB = 1,000 bytes · 1 MB = 1,000 KB';
- $('hint').classList.add('hidden');$('check').classList.add('hidden');$('clear').classList.add('hidden');
- $('next').classList.add('hidden');$('show-answer').hidden=true;$('feedback').className='hidden';$('hint-area').classList.add('hidden');
- const panel=document.createElement('div');panel.className='units-game';
- const head=document.createElement('div');head.className='units-head';
- const count=document.createElement('span');count.textContent=score+' / '+total+' matched';
- const rlabel=document.createElement('span');rlabel.textContent='Round '+round+' / '+rounds;head.append(rlabel,count);
- const track=document.createElement('div');track.className='units-progress',bar=document.createElement('span');bar.style.width=100*score/total+'%';track.append(bar);
- const cols=document.createElement('div');cols.className='units-columns';
- const lc=document.createElement('div');lc.className='units-column',rc=document.createElement('div');rc.className='units-column';
- for(const [col,name] of [[lc,'VALUE'],[rc,'EQUIVALENT']]){const t=document.createElement('span');t.className='units-label';t.textContent=name;col.append(t);}
- const left=new Map(),right=new Map(),info=document.createElement('div');info.className='units-info';info.textContent='Tap a value, then its match.';
- for(const p of shuffleMatches(items)){
-  const b=document.createElement('button');b.type='button';b.className='units-card';b.textContent=p.left;b.setAttribute('aria-label',p.left);
-  b.addEventListener('click',()=>{if(done.has(p.id))return;selected=p.id;left.forEach((el,k)=>el.classList.toggle('active',k===selected));info.textContent='Choose the matching value.';});
-  lc.append(b);left.set(p.id,b);
+ $('hint').classList.add('hidden');$('check').classList.add('hidden');
+ $('clear').classList.add('hidden');$('next').classList.add('hidden');
+ $('show-answer').hidden=true;$('feedback').className='feedback hidden';
+ $('hint-area').classList.add('hidden');
+ const area=$('answer-area');
+ const label=(value)=>String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+ // Insert the cards before attaching handlers. A rendering problem should never
+ // leave the student facing a completely empty answer board.
+ if(items.length!==per){
+  area.textContent='Unable to load this round. Choose Easy, Medium or Hard again.';
+  return;
  }
- for(const p of shuffleMatches(items)){
-  const b=document.createElement('button');b.type='button';b.className='units-card';b.textContent=p.right;b.setAttribute('aria-label',p.right);
-  b.addEventListener('click',()=>{
-    if(done.has(p.id))return;
-    if(selected===null){info.textContent='Choose a card on the left first.';return;}
-    if(selected!==p.id){info.textContent='Not quite. Try another match.';return;}
-    done.add(p.id);left.get(p.id).classList.remove('active');
-    for(const btn of [b,left.get(p.id)]){btn.classList.add('matched');btn.disabled=true;}
-    selected=null;score++;count.textContent=score+' / '+total+' matched';bar.style.width=100*score/total+'%';$('meter').style.width=100*score/total+'%';
-    const storage=getStorage(),key='units-'+level;storage[key]=Array.from({length:Math.max(score,(storage[key]||[]).length)},(_,i)=>i);saveStorage(storage);persist();
-    info.textContent='Correct!';
-    if(done.size===items.length){locked=true;info.textContent='Round complete!';$('next').textContent=index+per>=total?'See results →':'Next round →';$('next').classList.remove('hidden');
-      setTimeout(()=>{if(skill==='units'&&matchSession===token)next();},1000);}
-  });rc.append(b);right.set(p.id,b);
- }
- cols.append(lc,rc);panel.append(head,track,cols,info);$('answer-area').replaceChildren(panel);
+ const card=(p,side)=>'<button type="button" class="units-card" data-pair="'+p.id+'" data-side="'+side+'">'+label(p[side])+'</button>';
+ area.innerHTML=
+ '<div class="units-game" role="group" aria-label="Match equivalent data sizes">'+
+ '<div class="units-head"><span>Round '+round+' / '+rounds+'</span><span class="units-count">'+score+' / '+total+' matched</span></div>'+
+ '<div class="units-progress"><span style="width:'+(100*score/total)+'%"></span></div>'+
+ '<div class="units-columns">'+
+ '<div class="units-column"><span class="units-label">VALUE</span>'+shuffleMatches(items).map(p=>card(p,'left')).join('')+'</div>'+
+ '<div class="units-column"><span class="units-label">EQUIVALENT</span>'+shuffleMatches(items).map(p=>card(p,'right')).join('')+'</div>'+
+ '</div><div class="units-info" role="status" aria-live="polite">Tap a value, then its match.</div></div>';
+ const board=area.querySelector('.units-game'),info=board.querySelector('.units-info');
+ const count=board.querySelector('.units-count'),bar=board.querySelector('.units-progress span');
+ const cards=[...board.querySelectorAll('.units-card')];
+ let selected=null;
+ const matched=new Set();
+ function showInfo(value){info.textContent=value;}
+ cards.forEach(button=>button.addEventListener('click',()=>{
+  if(locked||button.disabled)return;
+  const id=Number(button.dataset.pair),side=button.dataset.side;
+  if(side==='left'){
+   selected=id;
+   cards.forEach(b=>{if(b.dataset.side==='left')b.classList.toggle('active',Number(b.dataset.pair)===id)});
+   showInfo('Choose the matching value.');
+   return;
+  }
+  if(selected===null){showInfo('Choose a value on the left first.');return;}
+  if(selected!==id){showInfo('Not quite — try another match.');return;}
+  matched.add(id);
+  cards.filter(b=>Number(b.dataset.pair)===id).forEach(b=>{
+   b.classList.remove('active');b.classList.add('matched');b.disabled=true;
+   b.setAttribute('aria-label',b.textContent+' matched');
+  });
+  selected=null;score++;
+  count.textContent=score+' / '+total+' matched';
+  bar.style.width=100*score/total+'%';
+  $('meter').style.width=100*score/total+'%';
+  const saved=getStorage(),key='units-'+level;
+  const completed=Array.isArray(saved[key])?saved[key]:[];
+  const solvedId=index+items.findIndex(p=>p.id===id);
+  if(!completed.includes(solvedId)){completed.push(solvedId);saved[key]=completed;saveStorage(saved);persist();}
+  showInfo('Correct!');
+  if(matched.size===per){
+   locked=true;showInfo('Round complete!');
+   $('next').textContent=index+per>=total?'See results →':'Next round →';
+   $('next').classList.remove('hidden');
+   setTimeout(()=>{if(skill==='units'&&matchSession===token&&locked)next();},1050);
+  }
+ }));
 }
 function matchFinish(){
  ++matchSession;
