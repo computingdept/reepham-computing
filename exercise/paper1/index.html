@@ -121,7 +121,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-imagecompact1">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-soundpixels1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -310,8 +310,24 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
      why:explanation+' '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'
    };
  }
- case 'sound':
-   a=pick(r,dif===0?[100,500,1000]:dif===1?[1000,2000,4000]:[4000,8000,16000]);b=pick(r,[2,3,4,5]);z=pick(r,[8,16]);h=(i+dif)%3===2;return {prompt:`A ${b}-second sound file is sampled ${format(a)} times per second at ${z}-bit depth. Calculate its size in ${h?'bytes':'bits'}.`,context:'Mono audio; ignore metadata and compression.',type:'number',value:h?a*b*z/8:a*b*z,unit:h?'bytes':'bits',hint:`Sample rate × duration × bit depth.${h?' Divide by 8 for bytes.':''}`,why:`${format(a)} × ${b} × ${z} = ${format(a*b*z)} bits${h?` = ${format(a*b*z/8)} bytes`:''}.`};
+ case 'sound': {
+   const target=dif===0?['bits','bytes','KB'][i%3]:
+     dif===1?['KB','bytes','bits'][i%3]:['KB','bytes','bits'][i%3];
+   a=pick(r,dif===0?(target==='KB'?[1000,2000,4000]:[100,500,1000,2000]):
+     dif===1?[1000,2000,4000,8000]:[4000,8000,16000,44100]);
+   b=pick(r,dif===0?[2,3,4]:[2,3,4,5]);
+   z=pick(r,[8,16]);
+   const bits=a*b*z,bytes=bits/8,kb=bytes/1000;
+   const value=target==='bits'?bits:target==='bytes'?bytes:kb;
+   return {
+    type:'soundcalc',
+    rate:a,duration:b,depth:z,targetUnit:target,bits,bytes,kb,value,
+    prompt:'A '+b+'-second mono sound file is sampled '+format(a)+' times per second at '+z+'-bit depth. Calculate its size in '+target+'.',
+    context:'Uncompressed mono audio; ignore metadata. 1 byte = 8 bits; 1 KB = 1,000 bytes.',
+    hint:'Sound file size = sample rate × duration × bit depth. Divide by 8 for bytes, then by 1,000 for KB.',
+    why:format(a)+' × '+b+' × '+z+' = '+format(bits)+' bits = '+format(bytes)+' bytes = '+format(kb)+' KB.'
+   };
+ }
  case 'pixels': {
    const depth=dif+1,colours=2**depth;
    const pattern=Array.from({length:16},()=>Math.floor(r()*colours));
@@ -675,6 +691,64 @@ function makeAsciiCodeBuilder(p,d){
  board.append(note);d.append(board);
 }
 
+function makeSoundCalculation(p,d){
+ answer={final:'',cancel8:false,cancel1000:false};
+ const board=document.createElement('div');
+ board.className='sound-calc-board text-cancel-board';
+ board.setAttribute('role','group');board.setAttribute('aria-label','Sound file size calculation');
+ const caption=document.createElement('div');caption.className='text-cancel-caption';
+ caption.textContent='Sample rate × duration × bit depth'+
+   (p.targetUnit==='bits'?'':' ÷ 8'+(p.targetUnit==='KB'?' ÷ 1,000':''));
+ board.append(caption);
+ const fraction=document.createElement('div');fraction.className='text-cancel-fraction sound-calc-fraction';
+ fraction.setAttribute('role','group');fraction.setAttribute('aria-label','Sound file size formula');
+ const numerator=document.createElement('div');numerator.className='text-cancel-top';
+ const rule=document.createElement('div');rule.className='text-cancel-rule';
+ const denominator=document.createElement('div');denominator.className='text-cancel-bottom';
+ fraction.append(numerator,rule,denominator);board.append(fraction);
+ const tools=document.createElement('div');tools.className='text-cancel-tools sound-calc-tools';
+ const cancel8=document.createElement('button');cancel8.type='button';cancel8.className='text-cancel-btn';
+ cancel8.textContent='Cancel 8s';
+ cancel8.addEventListener('click',()=>{
+   if(locked||answer.cancel8)return;
+   answer.cancel8=true;cancel8.disabled=true;cancel8.textContent='✓ 8s cancelled';draw();
+ });
+ const cancel1000=document.createElement('button');cancel1000.type='button';cancel1000.className='text-cancel-btn';
+ cancel1000.textContent='Cancel 1,000';
+ cancel1000.addEventListener('click',()=>{
+   if(locked||answer.cancel1000||!answer.cancel8)return;
+   answer.cancel1000=true;cancel1000.disabled=true;cancel1000.textContent='✓ 1,000 cancelled';draw();
+ });
+ const can8=p.targetUnit!=='bits'&&p.depth%8===0;
+ const can1000=p.targetUnit==='KB'&&p.rate%1000===0;
+ if(level==='easy'&&can8){
+   tools.append(cancel8);
+   if(can1000){cancel1000.hidden=true;tools.append(cancel1000);}
+   board.append(tools);
+ }
+ const result=document.createElement('label');result.className='text-cancel-row text-cancel-result sound-calc-result';
+ const label=document.createElement('span');label.textContent='Answer =';
+ const entry=document.createElement('input');entry.type='text';entry.inputMode='decimal';entry.autocomplete='off';
+ entry.className='text-cancel-input';entry.placeholder='?';
+ entry.setAttribute('aria-label','Final sound file size in '+p.targetUnit);
+ entry.addEventListener('input',()=>{
+   if(locked)return;entry.value=entry.value.replace(/[^0-9.]/g,'');answer.final=entry.value;
+ });
+ const unit=document.createElement('span');unit.textContent=p.targetUnit;
+ result.append(label,entry,unit);board.append(result);
+ function draw(){
+   let rate=p.rate,bitDepth=p.depth;
+   let div8=p.targetUnit!=='bits',div1000=p.targetUnit==='KB';
+   if(answer.cancel8&&can8){bitDepth=p.depth/8;div8=false;}
+   if(answer.cancel1000&&can1000){rate=p.rate/1000;div1000=false;}
+   numerator.textContent=rate+' × '+p.duration+' × '+bitDepth;
+   denominator.textContent=(div8?'8':'')+(div8&&div1000?' × ':'')+(div1000?'1,000':'');
+   rule.hidden=!denominator.textContent;
+   if(can1000)cancel1000.hidden=!answer.cancel8;
+ }
+ draw();d.append(board);
+}
+
 function makeCompactImage(p,d){
  // Guided levels test interpreting the wording first. Hard assesses the final answer
  // directly so pupils can perform their working on paper and type the result.
@@ -1036,6 +1110,7 @@ case 'countblocks':{
   break;
 }
 case 'ascii':{makeAsciiCodeBuilder(p,d);break;}
+case 'soundcalc':{makeSoundCalculation(p,d);break;}
 case 'imagecompact':{makeCompactImage(p,d);break;}
 case 'textcancel':{makeTextCancellation(p,d);break;}
 case 'textsteps':case 'imagesteps':{makeFileSteps(p,d);break;}
@@ -1143,14 +1218,14 @@ case 'grid': {
 }
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels': {
-  answer=Array(16).fill(0);
+  answer={pixels:Array(16).fill(0),size:''};
   const palette=PIXEL_PALETTE.slice(0,p.colourCount);
   const container=document.createElement('div');container.className='pixel-builder-v2';
   const keyTitle=document.createElement('div');keyTitle.className='pixel-builder-title';
   keyTitle.textContent='COLOUR KEY · '+p.depth+' bit'+(p.depth===1?'':'s')+' per pixel';
   container.append(keyTitle);
   const key=document.createElement('div');key.className='pixel-builder-palette';
-  key.style.gridTemplateColumns='repeat('+Math.min(4,p.colourCount)+',minmax(0,1fr))';
+  key.style.gridTemplateColumns='repeat('+Math.min(8,p.colourCount)+',minmax(0,1fr))';
   let selected=1;
   const choices=[];
   function code(v){return v.toString(2).padStart(p.depth,'0');}
@@ -1191,23 +1266,34 @@ case 'pixels': {
    btn.addEventListener('click',()=>{
     if(locked)return;
     // Easy retains the simple toggle pupils know from the monochrome version.
-    answer[j]=p.depth===1&&selected===1&&answer[j]===1?0:selected;
-    btn.style.backgroundColor=palette[answer[j]].hex;
-    btn.setAttribute('aria-label','Row '+(Math.floor(j/4)+1)+', column '+(j%4+1)+': '+code(answer[j])+' '+palette[answer[j]].name);
+    answer.pixels[j]=p.depth===1&&selected===1&&answer.pixels[j]===1?0:selected;
+    btn.style.backgroundColor=palette[answer.pixels[j]].hex;
+    btn.setAttribute('aria-label','Row '+(Math.floor(j/4)+1)+', column '+(j%4+1)+': '+code(answer.pixels[j])+' '+palette[answer.pixels[j]].name);
    });
    grid.append(btn);
   }
   canvas.append(grid);workspace.append(rows,canvas);container.append(workspace);
-  const size=document.createElement('div');size.className='pixel-builder-size';
-  size.textContent='4 × 4 × '+p.depth+' = ? bits';
-  size.setAttribute('aria-label','Image file size: 4 by 4 pixels times '+p.depth+' bits per pixel');
+  const size=document.createElement('label');size.className='pixel-builder-size';
+  const label=document.createElement('span');label.textContent='4 × 4 × '+p.depth+' =';
+  const field=document.createElement('input');field.type='text';field.inputMode='numeric';
+  field.autocomplete='off';field.maxLength=3;field.placeholder='?';
+  field.className='pixel-builder-size-input';
+  field.setAttribute('aria-label','Total uncompressed image size in bits');
+  field.addEventListener('input',()=>{
+    if(locked)return;field.value=field.value.replace(/[^0-9]/g,'');answer.size=field.value;
+  });
+  const unit=document.createElement('span');unit.textContent='bits';
+  size.append(label,field,unit);
   container.append(size);
   d.append(container);
   break;
 }
 }}
-function isAnswered(){if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'imagecompact': {
+function isAnswered(){if(question.type==='pixels')return answer.size.trim()!=='';if(question.type==='soundcalc')return answer.final.trim()!=='';if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'soundcalc':{
+  const value=String(answer.final).trim();
+  return /^[0-9]+(?:[.][0-9]+)?$/.test(value)&&Math.abs(Number(value)-p.value)<1e-8;
+ }case 'imagecompact': {
    const final=answer.final.trim();
    if(!/^[0-9]+(?:[.][0-9]+)?$/.test(final))return false;
    if(Math.abs(Number(final)-p.value)>0.00000001)return false;
@@ -1228,9 +1314,16 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
   if(p.countMode==='inverse')
     return binaryNumber===p.maxValue&&Number(answer.max)===p.maxValue&&Number(answer.bitsNeeded)===p.value;
   return answer.bits.every(bit=>bit===1)&&Number(answer.max)===p.maxValue&&Number(answer.patterns)===Math.pow(2,p.bitCount);
-}case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
+}case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.pixels.every((v,i)=>v===p.value[i])&&/^[0-9]+$/.test(answer.size.trim())&&Number(answer.size)===16*p.depth;}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
-function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='imagecompact'?'Choose whether colour depth is given, calculate it if needed, and type your final answer.':question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='imagecompact'?'Check the colour-depth decision and your calculation. Then try again.':question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
+function submit(){if(locked)return;
+ if(question.type==='soundcalc'&&level==='easy'&&question.targetUnit!=='bits'&&!answer.cancel8){
+  showMsg('Use Cancel 8s to simplify the formula before checking.','neutral');return;
+ }
+ if(question.type==='soundcalc'&&level==='easy'&&question.targetUnit==='KB'&&question.rate%1000===0&&!answer.cancel1000){
+  showMsg('Cancel 1,000 from the rate and denominator before checking.','neutral');return;
+ }
+ if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='pixels'?'Recreate the image and enter its total size in bits.':question.type==='soundcalc'?'Enter the final sound file size.':question.type==='imagecompact'?'Choose whether colour depth is given, calculate it if needed, and type your final answer.':question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='pixels'?'Check the 4 × 4 pixel grid and total number of bits.':question.type==='soundcalc'?'Check the sample rate, duration, bit depth and unit conversion.':question.type==='imagecompact'?'Check the colour-depth decision and your calculation. Then try again.':question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
 function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'||skill==='ascii'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(skill==='units')return;if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
