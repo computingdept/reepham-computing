@@ -68,6 +68,25 @@
 /* Stretch the matching grid inside the shared answer container. */
 body.course-hub #practice.is-standard .answer-area:has(.units-game){align-items:stretch;justify-content:flex-start;min-height:0}
 body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-width:780px}
+
+/* Text file sizes — cancel matching factors before calculating. */
+.text-cancel-board{width:min(100%,620px);margin:0 auto;display:grid;justify-items:center;gap:10px;padding:5px 0}
+.text-cancel-caption{width:100%;background:#ecf4ee;color:#184d36;border-radius:9px;padding:10px 12px;font-weight:800;font-size:14px;text-align:center}
+.text-cancel-fraction{display:grid;justify-items:center;gap:4px;min-width:190px;padding:5px 15px 1px;color:#123f2d;font:850 clamp(21px,3vw,30px)/1.25 ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.text-cancel-rule{height:3px;background:#3f7b5a;width:100%;border-radius:3px}
+.text-cancel-rule[hidden],.text-cancel-bottom:empty{display:none}
+.text-cancel-bottom{min-height:31px}
+.text-cancel-times{color:#62816c}
+.text-cancel-fraction s{color:#9e6962;text-decoration-color:#b13738;text-decoration-thickness:3px}
+.text-cancel-guidance{min-height:17px;font-size:13px;color:#5c7264;text-align:center}
+.text-cancel-tools{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.text-cancel-btn{background:#fff;border:1px solid #a1c9b2;color:#19583c;border-radius:8px;min-height:43px;padding:9px 13px;font-size:13px;font-weight:800}
+.text-cancel-btn:hover:not(:disabled){background:#eaf5ec}
+.text-cancel-btn:disabled{opacity:1;color:#147047;background:#e5f6e9;cursor:default}
+.text-cancel-row{display:grid;grid-template-columns:minmax(115px,1fr) minmax(90px,135px) 67px;align-items:center;gap:10px;width:min(100%,470px);color:#1e5138;font-weight:800;font-size:14px}
+.text-cancel-input{width:100%;min-width:0;min-height:45px;border:2px solid #a5c9b3;border-radius:8px;text-align:center;color:#184d35;font-size:21px;font-weight:850;background:#fff}
+.text-cancel-result{margin-top:3px}
+@media(max-width:480px){.text-cancel-board{gap:8px}.text-cancel-row{grid-template-columns:minmax(87px,1fr) 100px 62px;gap:6px;font-size:13px}.text-cancel-input{font-size:19px;min-height:43px}.text-cancel-caption{font-size:12px}.text-cancel-fraction{font-size:24px}}
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -186,32 +205,41 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  case 'units':
    a=pick(r,dif===0?[2,3,4,5]:dif===1?[6,8,9,12]:[15,20,24,32]);b=pick(r,[['KB','bytes'],['MB','KB'],['GB','MB'],['TB','GB']]);return {prompt:`Convert ${a} ${b[0]} into ${b[1]}.`,context:'For this exercise use decimal units: 1 KB = 1,000 bytes.',type:'number',value:a*1000,unit:b[1],hint:'Move one unit down the scale by multiplying by 1,000.',why:`${a} × 1,000 = ${format(a*1000)} ${b[1]}.`};
  case 'text': {
-   // GCSE/J277: assume 8 bits for the ASCII examples.
-   // Unicode has many possible encodings: 16-bit questions explicitly state a
-   // fixed-width 16-bit representation, never imply Unicode always uses 16 bits.
-   const counts= dif===0?[500,1000,1250,2500,4000,6000]:
-     dif===1?[625,800,1200,1600,2400,3200]:[1200,1500,2500,3200,4000,6000];
-   a=pick(r,counts);
-   b=dif===0?8:pick(r,[8,16]);
-   const encoding=b===8?'8 bits per character (ASCII assumption)':'a specified fixed-width 16-bit Unicode representation';
+   // For OCR-style questions we state the bits per character explicitly.
+   // Unicode itself has no single fixed character width.
+   const counts=dif===0?[1000,2000,3000,4000,5000,6000,8000,10000,12000]:
+     dif===1?[625,800,1000,1250,1600,2500,3200,4000,6000,10000]:
+     [1200,1500,2500,3200,4000,6000];
+   a=pick(r,counts);b=dif===0?8:pick(r,[8,16]);
+   const encoding=b===8?'8-bit ASCII assumption':'specified fixed-width 16-bit Unicode representation';
    const bits=a*b,bytes=bits/8,kb=bytes/1000;
-   const context='Use 1 byte = 8 bits and 1 KB = 1,000 bytes. Ignore metadata and compression.';
+   const ctx='1 byte = 8 bits · 1 KB = 1,000 bytes. Ignore metadata and compression.';
    if(dif===2){
      const task=i%3;
-     if(task===1)return {prompt:'A file contains '+a+' characters stored at '+b+' bits each. How many bytes larger is it at 16 bits per character than at 8 bits per character?',
-       context, type:'number',value:a,unit:'bytes',hint:'Find the size for 16 bits and 8 bits per character, then subtract.',
+     if(task===1)return {prompt:'A file contains '+a+' characters. How many bytes larger is it at 16 bits per character than at 8 bits per character?',
+       context:ctx,type:'number',value:a,unit:'bytes',
+       hint:'Simplify: '+a+' × (16 − 8) ÷ 8. Cancel the 8s.',
        why:a+' × (16 − 8) ÷ 8 = '+a+' bytes.'};
      if(task===2)return {prompt:'A text file uses '+encoding+' and takes '+kb+' KB. How many characters does it contain?',
-       context, type:'number',value:a,unit:'characters',hint:'Convert KB to bytes, then bytes to bits. Divide by bits per character.',
+       context:ctx,type:'number',value:a,unit:'characters',
+       hint:'Rearrange the formula: KB × 1,000 × 8 ÷ bits per character.',
        why:kb+' × 1,000 × 8 ÷ '+b+' = '+a+' characters.'};
      return {prompt:'A text file contains '+a+' characters stored using '+encoding+'. Find its size in KB.',
-       context,type:'number',value:kb,unit:'KB',hint:'Characters × bits per character ÷ 8 ÷ 1,000.',
-       why:a+' × '+b+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+       context:ctx,type:'number',value:kb,unit:'KB',
+       hint:'Set up '+a+' × '+b+' ÷ (8 × 1,000), cancel common factors, then calculate.',
+       why:a+' × '+b+' ÷ (8 × 1,000) = '+kb+' KB.'};
    }
-   return {prompt:'A text file contains '+a+' characters stored using '+encoding+'. Calculate its size.',
-     context,type:'textsteps',characters:a,bitsPerCharacter:b,bits,bytes,kb, value:kb,
-     hint:'Multiply '+a+' characters by '+b+' bits each; divide by 8 for bytes, then by 1,000 for KB.',
-     why:a+' × '+b+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+   const targetUnit=dif===0?(i%2===0?'KB':'bytes'):['KB','bytes','bits'][i%3];
+   const value=targetUnit==='bits'?bits:targetUnit==='bytes'?bytes:kb;
+   const cancel8=targetUnit!=='bits';
+   const cancel1000=dif===0&&targetUnit==='KB'&&a%1000===0&&b===8;
+   return {prompt:'A text file contains '+a+' characters stored using '+encoding+'. Calculate its size in '+targetUnit+'.',
+     context:ctx,type:'textcancel',characters:a,bitsPerCharacter:b,targetUnit,
+     cancel8,cancel1000,bits,bytes,kb,value,
+     simplifiedFactor:cancel8?b/8:b,
+     hint:cancel8?'Write '+a+' × '+b+' ÷ '+(targetUnit==='KB'?'(8 × 1,000)':'8')+'. Cancel the 8s before working out the answer.':
+       'Multiply '+a+' by '+b+' to find the file size in bits.',
+     why:a+' × '+b+(targetUnit==='bits'?'':' ÷ 8'+(targetUnit==='KB'?' ÷ 1,000':''))+' = '+value+' '+targetUnit+'.'};
  }
  case 'image': {
    const widths=dif===0?[16,20,24,32]:dif===1?[40,48,60,80]:[100,120,200,240];
@@ -456,6 +484,87 @@ function shiftEightBits(bits,direction){
 
 /* Step-by-step calculation for Text File Sizes and Image File Sizes.
    Keep values as strings until checking so blank answers are not mistaken for 0. */
+
+/* Text-file cancellation working: a short fraction, not three huge calculations. */
+function makeTextCancellation(p,d){
+ answer={final:'',factor:'',cancel8:false,cancel1000:false};
+ const board=document.createElement('div');board.className='text-cancel-board';
+ const formula=document.createElement('div');formula.className='text-cancel-caption';
+ formula.textContent='Characters × bits per character'+(p.targetUnit==='bits'?'':' ÷ 8'+(p.targetUnit==='KB'?' ÷ 1,000':''));
+ board.append(formula);
+ const fraction=document.createElement('div');fraction.className='text-cancel-fraction';
+ fraction.setAttribute('role','group');
+ fraction.setAttribute('aria-label','Simplify the file-size fraction');
+ const top=document.createElement('div');top.className='text-cancel-top';
+ const rule=document.createElement('div');rule.className='text-cancel-rule';
+ const bottom=document.createElement('div');bottom.className='text-cancel-bottom';
+ fraction.append(top,rule,bottom);board.append(fraction);
+ const guidance=document.createElement('div');guidance.className='text-cancel-guidance';
+ guidance.setAttribute('aria-live','polite');board.append(guidance);
+ function redraw(){
+  const easy=level==='easy',cut8=easy&&answer.cancel8,cut1000=cut8&&answer.cancel1000;
+  let chars=String(p.characters);
+  if(cut1000)chars=String(p.characters/1000)+'<s>000</s>';
+  const bitfactor=cut8?'<s>'+p.bitsPerCharacter+'</s>':String(p.bitsPerCharacter);
+  top.innerHTML=chars+' <span class="text-cancel-times">×</span> '+bitfactor;
+  if(p.targetUnit==='bits'){
+   bottom.textContent='';rule.hidden=true;
+  }else{
+   rule.hidden=false;
+   const divisor=cut8?'<s>8</s>':'8';
+   const thousand=p.targetUnit==='KB'?' <span class="text-cancel-times">×</span> '+(cut1000?'1<s>000</s>':'1,000'):'';
+   bottom.innerHTML=divisor+thousand;
+  }
+  if(level==='easy'){
+   guidance.textContent=answer.cancel1000?'Now enter the final result.':answer.cancel8?
+     (p.cancel1000?'Cancel three zeros from the top and bottom.':'Now enter the answer.') :
+     (p.cancel8?'Tap to cancel the matching 8s.':'Multiply the two numbers.');
+  }else guidance.textContent=p.cancel8?'Simplify the 8s first; then calculate.':'Calculate the file size.';
+ }
+ const tools=document.createElement('div');tools.className='text-cancel-tools';
+ if(level==='easy'&&p.cancel8){
+  const button=document.createElement('button');button.type='button';button.className='text-cancel-btn';
+  button.textContent='Cancel 8s';
+  button.setAttribute('aria-label','Cancel eight from the numerator and denominator');
+  button.addEventListener('click',()=>{
+   if(locked||answer.cancel8)return;
+   answer.cancel8=true;button.disabled=true;button.textContent='✓ 8s cancelled';
+   redraw();
+   if(p.cancel1000)zeroButton.hidden=false;
+  });
+  tools.append(button);
+ }
+ let zeroButton=document.createElement('button');zeroButton.type='button';
+ if(level==='easy'&&p.cancel1000){
+  zeroButton.className='text-cancel-btn';zeroButton.hidden=true;zeroButton.textContent='Cancel three zeros';
+  zeroButton.addEventListener('click',()=>{
+   if(locked||!answer.cancel8||answer.cancel1000)return;
+   answer.cancel1000=true;zeroButton.disabled=true;zeroButton.textContent='✓ Zeros cancelled';redraw();
+  });
+  tools.append(zeroButton);
+ }
+ if(tools.children.length)board.append(tools);
+ if(level==='medium'&&p.cancel8){
+  const factorLabel=document.createElement('label');factorLabel.className='text-cancel-row';
+  const caption=document.createElement('span');caption.textContent=p.bitsPerCharacter+' ÷ 8 =';
+  const factorInput=document.createElement('input');factorInput.type='text';factorInput.inputMode='numeric';
+  factorInput.autocomplete='off';factorInput.className='text-cancel-input';
+  factorInput.placeholder='?';factorInput.setAttribute('aria-label','Multiplier after cancelling 8');
+  factorInput.addEventListener('input',()=>{factorInput.value=factorInput.value.replace(/[^0-9]/g,'');answer.factor=factorInput.value;});
+  const unit=document.createElement('span');unit.textContent='multiplier';
+  factorLabel.append(caption,factorInput,unit);board.append(factorLabel);
+ }
+ const resultLabel=document.createElement('label');resultLabel.className='text-cancel-row text-cancel-result';
+ const prompt=document.createElement('span');prompt.textContent='Answer =';
+ const resultInput=document.createElement('input');resultInput.type='text';resultInput.inputMode='decimal';
+ resultInput.autocomplete='off';resultInput.className='text-cancel-input';
+ resultInput.placeholder='?';resultInput.setAttribute('aria-label','Final answer in '+p.targetUnit);
+ resultInput.addEventListener('input',()=>{resultInput.value=resultInput.value.replace(/[^0-9.]/g,'');answer.final=resultInput.value;});
+ const unit=document.createElement('span');unit.textContent=p.targetUnit;
+ resultLabel.append(prompt,resultInput,unit);board.append(resultLabel);
+ redraw();d.append(board);
+}
+
 function makeFileSteps(p,d){
  const image=p.type==='imagesteps';
  answer=image?{depth:'',bits:'',bytes:'',kb:''}:{bits:'',bytes:'',kb:''};
@@ -682,6 +791,7 @@ case 'countblocks':{
   d.append(panel);
   break;
 }
+case 'textcancel':{makeTextCancellation(p,d);break;}
 case 'textsteps':case 'imagesteps':{makeFileSteps(p,d);break;}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
 case 'hex':{answer=['',''];const disp=document.createElement('div');disp.className='hex-display';let slots=[];for(let k=0;k<2;k++){const b=document.createElement('button');b.type='button';b.className='hex-digit'+(k===0?' cursor':'');b.textContent='–';b.setAttribute('aria-label',`Hexadecimal digit ${k+1}`);b.addEventListener('click',()=>{hexCursor=k;update()});disp.append(b);slots.push(b)}d.append(disp);const pad=document.createElement('div');pad.className='hex-pad';for(const c of '0123456789ABCDEF'){const btn=document.createElement('button');btn.type='button';btn.className='hex-key';btn.textContent=c;btn.addEventListener('click',()=>{if(locked)return;answer[hexCursor]=c;hexCursor=Math.min(1,hexCursor+1);update()});pad.append(btn)}d.append(pad);const clear=document.createElement('button');clear.className='toggle-help';clear.textContent='Erase last digit';clear.addEventListener('click',()=>{if(locked)return;answer[hexCursor]='';update()});d.append(clear);function update(){slots.forEach((b,k)=>{b.textContent=answer[k]||'–';b.classList.toggle('cursor',k===hexCursor)})}break;}
@@ -788,8 +898,8 @@ case 'grid': {
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels':{answer=Array(16).fill(0);const flex=document.createElement('div');flex.style.cssText='display:flex;gap:30px;flex-wrap:wrap;align-items:center';const pattern=document.createElement('div');const label=document.createElement('div');label.className='pixel-note';label.textContent='Binary rows (top to bottom)';pattern.append(label);const values=document.createElement('div');values.className='pixel-rows';for(let y=0;y<4;y++){const row=document.createElement('div');row.textContent=p.value.slice(y*4,y*4+4).join(' ');values.append(row)}pattern.append(values);const board=document.createElement('div');const note=document.createElement('div');note.className='pixel-note';note.textContent='Tap the squares to build the image';board.append(note);const px=document.createElement('div');px.className='pixel-grid';for(let j=0;j<16;j++){const b=document.createElement('button');b.type='button';b.className='pixel-btn';b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, light`);b.addEventListener('click',()=>{if(locked)return;answer[j]=1-answer[j];b.classList.toggle('on',!!answer[j]);b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, ${answer[j]?'dark':'light'}`)});px.append(b)}board.append(px);flex.append(pattern,board);d.append(flex);break;}
 }}
-function isAnswered(){if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
+function isAnswered(){if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'textcancel': {const final=String(answer.final).trim();const factor=String(answer.factor).trim();return /^\d+(?:\.\d+)?$/.test(final)&&Number(final)===p.value&&(level!=='medium'||!p.cancel8||/^\d+$/.test(factor)&&Number(factor)===p.simplifiedFactor);}case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
   if(answer.bits.length!==(p.countMode==='inverse'?8:p.bitCount))return false;
   if(answer.bits.some(bit=>bit!==0&&bit!==1))return false;
   const binaryNumber=answer.bits.reduce((total,bit)=>(total<<1)+bit,0);
@@ -798,7 +908,7 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
   return answer.bits.every(bit=>bit===1)&&Number(answer.max)===p.maxValue&&Number(answer.patterns)===Math.pow(2,p.bitCount);
 }case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
-function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':'Not quite. Check your working and try again.'),'bad');}}}
+function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
 function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(skill==='units')return;if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
