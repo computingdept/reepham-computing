@@ -91,7 +91,8 @@ async function scenario(browser,view){
   await page.reload({waitUntil:"load"});
   check((await page.locator("#mastery").innerText()).includes("5/5"),view.label+" best score survives reload");
   await page.locator("#restart").click();
-  check((await page.locator("#level").innerText()).includes("1 of 5"),view.label+" new set resets progress");
+  const resetText=await page.locator("#level").innerText();
+  check(resetText.includes("1 of 5"),view.label+" new set resets progress",JSON.stringify({level:resetText,round:await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v1")||"{}").round)}));
   check((await page.locator("#workspace button.num").count())===5,view.label+" second set has five values");
   check(errors.length===0,view.label+" no JS errors",errors);
   await assertLayout(page,view,"restart");
