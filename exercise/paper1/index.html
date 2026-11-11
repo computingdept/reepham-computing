@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-compact2">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-addition1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -111,7 +111,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
      why:`${n} in denary = ${q.binary} in binary = ${h} in hexadecimal. The nibble totals are ${q.high} and ${q.low}.`};
  }
  case 'add':
-   a=rint(r,1,dif===0?63:220);b=rint(r,1,dif===0?63:220);if(dif===0&&a+b>255)b=20;z=a+b;return {prompt:'Add these two 8-bit binary numbers.',context:'Set the eight result bits and decide whether the total overflows 8 bits.',type:'add',a:a,b:b,value:z%256,overflow:z>255,hint:'Add from the right. 1 + 1 is binary 10, so write 0 and carry 1.',why:`${a} + ${b} = ${z}. Result: ${binary(z)}; overflow: ${z>255?'yes':'no'}.`};
+   a=rint(r,1,dif===0?63:220);b=rint(r,1,dif===0?63:220);if(dif===0&&a+b>255)b=20;z=a+b;return {prompt:'Add these two 8-bit binary numbers.',context:'',type:'add',a:a,b:b,value:z%256,overflow:z>255,hint:'Add from the right. 1 + 1 is binary 10, so write 0 and carry 1.',why:`${a} + ${b} = ${z}. Result: ${binary(z)}; overflow: ${z>255?'yes':'no'}.`};
  case 'shift':
    a=rint(r,1,dif===0?63:255);b=rint(r,1,dif===0?2:dif===1?3:4);z=pick(r,['left','right']);n=z==='left'?(a<<b)&255:a>>b;return {prompt:`Shift ${binary(a)} ${b} place${b===1?'':'s'} to the ${z}.`,context:'Keep the result within eight bits. Bits shifted off the end are lost.',type:'bits',value:n,hint:`Move each bit ${b} column${b===1?'':'s'} ${z}. Fill empty positions with 0.`,why:`${binary(a)} shifted ${z} ${b} = ${binary(n)}.`};
  case 'count':
@@ -236,7 +236,60 @@ function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
-case 'bits':case 'add':{const vals=Array(8).fill(0);answer={bits:vals,overflow:false};if(p.type==='add'){const lines=document.createElement('div');lines.className='binary-pair';lines.innerHTML=`&nbsp;&nbsp;${binary(p.a)}<br><span class="binary-plus">+ ${binary(p.b)}</span>`;d.append(lines)}d.append(makeBitRow('bits',vals));if(p.type==='add'){const lab=document.createElement('label');lab.className='tick-line';const ch=document.createElement('input');ch.type='checkbox';ch.addEventListener('change',()=>answer.overflow=ch.checked);lab.append(ch,document.createTextNode('Overflow beyond 8 bits'));d.append(lab);}else if(level==='easy'){const s=document.createElement('span');s.id='live-sum';s.className='bit-footer';s.textContent='Current value: 0';d.append(s);}break;}
+case 'bits':case 'add':{
+  const vals=Array(8).fill(0);
+  answer={bits:vals,overflow:p.type==='add'?null:false};
+  if(p.type==='add'){
+    // All rows use exactly the same eight-column grid so digits cannot drift.
+    const board=document.createElement('div');board.className='addition-board';
+    board.setAttribute('role','group');board.setAttribute('aria-label','Eight-bit binary addition');
+    const calculation=document.createElement('div');calculation.className='addition-calculation';
+    const weights=document.createElement('div');weights.className='addition-weights';
+    [128,64,32,16,8,4,2,1].forEach(w=>{
+      const cell=document.createElement('span');cell.textContent=w;weights.append(cell);
+    });
+    calculation.append(weights);
+    for(const [num,second] of [[p.a,false],[p.b,true]]){
+      const bits=binary(num);
+      const row=document.createElement('div');row.className='addition-number-row'+(second?' addition-plus':'');
+      row.setAttribute('aria-label',(second?'Add ':'')+bits);
+      for(const digit of bits){
+        const cell=document.createElement('span');cell.textContent=digit;cell.setAttribute('aria-hidden','true');
+        row.append(cell);
+      }
+      calculation.append(row);
+    }
+    const rule=document.createElement('div');rule.className='addition-rule';rule.setAttribute('aria-hidden','true');calculation.append(rule);
+    const result=document.createElement('div');result.className='addition-result';
+    result.append(makeBitRow('bits',vals));calculation.append(result);
+    board.append(calculation);
+    const overflow=document.createElement('div');overflow.className='addition-overflow';
+    const label=document.createElement('span');label.className='addition-overflow-label';label.textContent='Overflow beyond 8 bits?';
+    overflow.append(label);
+    const choices=document.createElement('div');choices.className='addition-overflow-choices';
+    choices.setAttribute('role','group');choices.setAttribute('aria-label','Overflow beyond eight bits');
+    for(const [text,value] of [['No',false],['Yes',true]]){
+      const btn=document.createElement('button');btn.type='button';btn.className='addition-overflow-choice';
+      btn.textContent=text;btn.setAttribute('aria-pressed','false');
+      btn.addEventListener('click',()=>{
+        if(locked)return;
+        answer.overflow=value;
+        choices.querySelectorAll('button').forEach(b=>{
+          b.setAttribute('aria-pressed',String(b===btn));
+          b.classList.toggle('selected',b===btn);
+        });
+      });
+      choices.append(btn);
+    }
+    overflow.append(choices);board.append(overflow);d.append(board);
+  }else{
+    d.append(makeBitRow('bits',vals));
+    if(level==='easy'){
+      const s=document.createElement('span');s.id='live-sum';s.className='bit-footer';s.textContent='Current value: 0';d.append(s);
+    }
+  }
+  break;
+}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
 case 'hex':{answer=['',''];const disp=document.createElement('div');disp.className='hex-display';let slots=[];for(let k=0;k<2;k++){const b=document.createElement('button');b.type='button';b.className='hex-digit'+(k===0?' cursor':'');b.textContent='–';b.setAttribute('aria-label',`Hexadecimal digit ${k+1}`);b.addEventListener('click',()=>{hexCursor=k;update()});disp.append(b);slots.push(b)}d.append(disp);const pad=document.createElement('div');pad.className='hex-pad';for(const c of '0123456789ABCDEF'){const btn=document.createElement('button');btn.type='button';btn.className='hex-key';btn.textContent=c;btn.addEventListener('click',()=>{if(locked)return;answer[hexCursor]=c;hexCursor=Math.min(1,hexCursor+1);update()});pad.append(btn)}d.append(pad);const clear=document.createElement('button');clear.className='toggle-help';clear.textContent='Erase last digit';clear.addEventListener('click',()=>{if(locked)return;answer[hexCursor]='';update()});d.append(clear);function update(){slots.forEach((b,k)=>{b.textContent=answer[k]||'–';b.classList.toggle('cursor',k===hexCursor)})}break;}
 case 'grid': {
@@ -342,7 +395,7 @@ case 'grid': {
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels':{answer=Array(16).fill(0);const flex=document.createElement('div');flex.style.cssText='display:flex;gap:30px;flex-wrap:wrap;align-items:center';const pattern=document.createElement('div');const label=document.createElement('div');label.className='pixel-note';label.textContent='Binary rows (top to bottom)';pattern.append(label);const values=document.createElement('div');values.className='pixel-rows';for(let y=0;y<4;y++){const row=document.createElement('div');row.textContent=p.value.slice(y*4,y*4+4).join(' ');values.append(row)}pattern.append(values);const board=document.createElement('div');const note=document.createElement('div');note.className='pixel-note';note.textContent='Tap the squares to build the image';board.append(note);const px=document.createElement('div');px.className='pixel-grid';for(let j=0;j<16;j++){const b=document.createElement('button');b.type='button';b.className='pixel-btn';b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, light`);b.addEventListener('click',()=>{if(locked)return;answer[j]=1-answer[j];b.classList.toggle('on',!!answer[j]);b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, ${answer[j]?'dark':'light'}`)});px.append(b)}board.append(px);flex.append(pattern,board);d.append(flex);break;}
 }}
-function isAnswered(){if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function isAnswered(){if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
 function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
 function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':'Enter an answer before checking.','neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg('Not quite. Check your working and try again.','bad');}}}
