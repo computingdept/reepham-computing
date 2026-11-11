@@ -3,230 +3,318 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#285348">
-  <meta name="description" content="A large live binary clock for classroom whiteboards: read the hours, minutes and seconds using six binary place values.">
+  <meta name="theme-color" content="#f4f7f5">
+  <meta name="description" content="Synergy Assist classroom clock. Live binary and analogue time with a clear whiteboard display and an optional challenge mode.">
   <title>Binary Time | Synergy Assist</title>
   <link rel="stylesheet" href="/assets/synergy-logo.css?v=20261101-logo1">
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #0d2c24;
-      --panel: #1b4538;
-      --border: #4a7364;
-      --text: #f6fbf8;
-      --muted: #c1d6cb;
-      --hours: #badfd5;
-      --minutes: #78d8ac;
-      --seconds: #f7d48b;
-      --light-size: clamp(40px, 8.1vh, 78px);
+      color-scheme: light;
+      --canvas:#f4f7f5;
+      --paper:#ffffff;
+      --ink:#23463b;
+      --muted:#6b7e73;
+      --line:#dce5de;
+      --sage:#285348;
+      --mint:#a9d5c3;
+      --soft-sage:#588e77;
+      --gold:#e6c88b;
+      --lamp:clamp(41px,9vh,89px);
     }
-    * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
-    body { margin: 0; min-height: 100svh; background: radial-gradient(circle at 50% -20%, #33604f 0, var(--bg) 64%); color: var(--text); font: 16px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { font: inherit; cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-    :focus-visible { outline: 3px solid var(--seconds); outline-offset: 4px; }
-    .shell { min-height: 100svh; display: flex; flex-direction: column; }
-    .topbar { min-height: 62px; padding: 12px clamp(16px, 3vw, 38px); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 3px solid #285348; background: #ffffff; color: #30383a; }
-    .identity { display: flex; align-items: center; gap: 13px; font-size: .84rem; font-weight: 800; letter-spacing: .1em; color:#30383a; }
-    .mark { display: inline-block; flex:none; width: 39px; height: 39px; background: var(--synergy-logo-image) center / contain no-repeat; }
-    .back { padding: 8px 10px; border: 1px solid #d5ddda; border-radius: 9px; font-size: .9rem; font-weight: 700; color:#285348; white-space: nowrap; }
-    .back:hover { background:#ecf2ef; } .control:hover { background: #ffffff18; }
-    main { width: min(100%, 1100px); margin: auto; padding: clamp(12px, 2.3vh, 25px) clamp(14px, 3vw, 32px); display: flex; flex-direction: column; justify-content: center; }
-    .intro { text-align: center; }
-    h1 { margin: 0; line-height: 1.12; letter-spacing: -.045em; font-size: clamp(2rem, 4.8vw, 3.4rem); }
-    .instruction { margin: 8px auto 14px; max-width: 760px; color: var(--muted); font-size: clamp(.9rem, 1.5vw, 1.1rem); }
-    .board { background: #173d31ec; border: 1px solid var(--border); border-radius: 22px; padding: clamp(12px, 2.2vh, 22px) clamp(12px, 3vw, 28px); box-shadow: 0 18px 60px #00000029; }
-    .grid-head, .bit-row { display: grid; grid-template-columns: minmax(60px, .7fr) repeat(3, minmax(0, 1fr)); align-items: center; justify-items: center; column-gap: clamp(4px, 1.1vw, 14px); }
-    .grid-head { margin-bottom: 8px; font-weight: 850; letter-spacing: .075em; font-size: clamp(.73rem, 1.6vw, 1.18rem); }
-    .grid-head .weight-name { font-size: clamp(.62rem, 1vw, .82rem); color: var(--muted); text-align: center; letter-spacing: .03em; }
-    .grid-head .hour-label { color: var(--hours); }
-    .grid-head .minute-label { color: var(--minutes); }
-    .grid-head .second-label { color: var(--seconds); }
-    .grid-body { display: grid; gap: clamp(4px, .8vh, 9px); }
-    .weight { color: #e5f0f7; font: 800 clamp(1.2rem, 3.2vh, 2rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; }
-    .light { display: grid; place-items: center; width: var(--light-size); height: var(--light-size); border-radius: 50%; border: 3px solid #527967; background: #254b3c; color: #9ab6a7; font: 800 clamp(1rem, 3vh, 1.9rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; transition: background-color .14s ease, box-shadow .14s ease, border-color .14s ease; }
-    .light.on { border-color: transparent; color: #103127; }
-    .light.hours.on { background: var(--hours); box-shadow: 0 0 22px #badfd566; }
-    .light.minutes.on { background: var(--minutes); box-shadow: 0 0 22px #78d8ac66; }
-    .light.seconds.on { background: var(--seconds); box-shadow: 0 0 22px #f7d48b66; }
-    .time-line { display: flex; align-items: center; justify-content: center; min-height: clamp(54px, 10vh, 86px); margin-top: clamp(8px, 1.5vh, 16px); }
-    .decimal { margin: 0; font: 850 clamp(2.3rem, 7.4vw, 5.4rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .06em; font-variant-numeric: tabular-nums; text-align: center; }
-    .decimal.hidden-answer { visibility: hidden; }
-    .caption { margin: 3px auto 0; min-height: 20px; color: var(--muted); text-align: center; font-size: .83rem; }
-    .controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 9px; padding: 11px 14px 18px; }
-    .control { min-height: 43px; min-width: 132px; border: 1px solid #739988; color: var(--text); background: #265546; border-radius: 10px; padding: 9px 15px; font-weight: 750; }
-    .control.primary { background: #347b5f; border-color: #80bd9d; }
-    .control.primary:hover { background: #438f6e; }
-    .state { min-width: 98px; text-align: center; font-size: .85rem; color: #a9e7c5; font-weight: 800; }
-    .state.frozen { color: var(--seconds); }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-    @media (max-height: 750px) and (min-width: 660px) {
-      .topbar { min-height: 52px; padding-top: 7px; padding-bottom: 7px; }
-      h1 { font-size: clamp(1.6rem, 4vh, 2.3rem); }
-      .instruction { margin: 4px auto 8px; }
-      .board { padding-top: 10px; padding-bottom: 10px; }
-      .controls { padding-top: 7px; padding-bottom: 9px; }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;min-height:100svh;background:var(--canvas);font:16px/1.4 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+    button,a{font:inherit;-webkit-tap-highlight-color:transparent}
+    button{cursor:pointer}
+    :focus-visible{outline:3px solid #b18a44;outline-offset:3px}
+    .app{min-height:100svh;display:flex;flex-direction:column}
+    .sitebar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:51px;padding:8px clamp(13px,2.6vw,33px);border-bottom:1px solid #dce5de;background:#ffffffee}
+    .back{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:5px 8px;color:var(--sage);border-radius:7px;text-decoration:none;font-weight:700;font-size:.89rem}
+    .back:hover{background:#edf3ef}
+    .back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .mini-brand{display:inline-flex;align-items:center;gap:8px;font-size:.67rem;font-weight:800;letter-spacing:.17em;color:#75887a}
+    .mini-mark{display:block;width:26px;height:26px;background:var(--synergy-logo-image) center / contain no-repeat}
+    .stage{flex:1;width:min(100%,1480px);padding:clamp(13px,2vh,25px) clamp(13px,3.2vw,54px) 9px;margin:auto;display:flex;align-items:center;justify-content:center}
+    .clock-layout{width:100%;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.9fr);align-items:center;gap:clamp(16px,3.6vw,64px)}
+    .binary{min-width:0}
+    .binary-top{display:grid;grid-template-columns:minmax(64px,.57fr) repeat(3,minmax(0,1fr));gap:clamp(4px,.7vw,10px);align-items:end;text-align:center;padding-bottom:clamp(7px,1.5vh,13px)}
+    .binary-top span{font-size:clamp(.74rem,1.2vw,1.04rem);font-weight:850;letter-spacing:.06em}
+    .binary-top .weight-name{font-size:.65rem;color:#809187;letter-spacing:.06em}
+    .binary-top .hours{color:#3b7864}
+    .binary-top .minutes{color:#285348}
+    .binary-top .seconds{color:#a27b36}
+    .binary-rows{display:grid;gap:clamp(5px,.9vh,11px)}
+    .bit-row{display:grid;grid-template-columns:minmax(64px,.57fr) repeat(3,minmax(0,1fr));align-items:center;justify-items:center;gap:clamp(4px,.7vw,10px)}
+    .weight{font:800 clamp(1.32rem,2.9vh,2.1rem)/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:#446256;font-variant-numeric:tabular-nums}
+    .lamp{display:grid;place-items:center;width:var(--lamp);height:var(--lamp);border:2px solid #dce5df;border-radius:50%;background:#eff3f0;color:#a0aea5;font:750 clamp(1.03rem,2.8vh,2rem)/1 ui-monospace,SFMono-Regular,Consolas,monospace;transition:background .2s ease,border-color .2s ease;color:#95a89b;font-variant-numeric:tabular-nums}
+    .lamp.on{border-color:transparent;color:#173a2d}
+    .lamp.hours.on{background:var(--mint);box-shadow:0 2px 10px #a9d5c34a}
+    .lamp.minutes.on{background:var(--soft-sage);color:#fff;box-shadow:0 2px 10px #588e7740}
+    .lamp.seconds.on{background:var(--gold);box-shadow:0 2px 10px #e6c88b55}
+    .analogue-panel{display:flex;flex-direction:column;align-items:center;min-width:0}
+    .watch{position:relative;display:block;width:min(100%,min(40vw,485px),62vh);aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 16px 22px #244b3721);background:#fdfefb}
+    .watch svg{display:block;width:100%;height:100%;overflow:visible}
+    .dial-mark{fill:#fdfefa;stroke:#d6ded4;stroke-width:5}
+    .dial-inner{fill:none;stroke:#e7ede7;stroke-width:2}
+    .tick{stroke:#577364;stroke-width:2.2;stroke-linecap:round}
+    .tick.major{stroke:#285348;stroke-width:4}
+    .hour-text{font:650 28px/1 Georgia,serif;fill:#285348;text-anchor:middle}
+    .dial-brand{position:absolute;z-index:2;top:23%;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none;width:40%;text-align:center}
+    .dial-emblem{width:clamp(18px,2.15vw,29px);height:clamp(18px,2.15vw,29px);background:var(--synergy-logo-image) center / contain no-repeat;opacity:.8}
+    .dial-brand-name{font:700 clamp(9px,1vw,13px)/1.1 Georgia,"Times New Roman",serif;letter-spacing:.14em;white-space:nowrap;color:#315c48}
+    .dial-brand-sub{font:650 clamp(6px,.65vw,9px)/1.1 system-ui,sans-serif;letter-spacing:.2em;color:#87978a}
+    .watch-model{position:absolute;left:50%;top:71%;transform:translate(-50%,-50%);color:#87998d;white-space:nowrap;letter-spacing:.16em;font:750 clamp(7px,.66vw,10px)/1.4 system-ui,sans-serif}
+    .hour-hand{stroke:#24483a;stroke-width:11;stroke-linecap:round}
+    .minute-hand{stroke:#24483a;stroke-width:7;stroke-linecap:round}
+    .second-hand{stroke:#b18a45;stroke-width:2.5;stroke-linecap:round}
+    .hand-hub{fill:#315d4a;stroke:#fdfefa;stroke-width:3}
+    .readout{margin:clamp(10px,2vh,22px) 0 0;text-align:center;font:720 clamp(1.7rem,3.3vw,3.25rem)/1.1 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em;color:#2d5141;font-variant-numeric:tabular-nums}
+    .readout.hidden-answer{visibility:hidden}
+    .state-line{height:20px;margin:5px 0 0;font-size:.76rem;letter-spacing:.1em;font-weight:750;color:#718679;text-align:center}
+    .state-line.frozen{color:#9b743b}
+    .challenge .clock-layout{grid-template-columns:1fr}
+    .challenge .analogue-panel{display:none}
+    .challenge .binary{width:min(100%,810px);margin:auto}
+    .challenge .lamp{width:clamp(52px,10vh,102px);height:clamp(52px,10vh,102px)}
+    .settings{align-self:stretch;padding:1px clamp(13px,2.6vw,33px) 11px}
+    .settings details{max-width:900px;margin:auto;text-align:center}
+    .settings summary{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:5px 15px;border-radius:9px;font-size:.81rem;font-weight:700;color:#61796a;cursor:pointer;list-style:none}
+    .settings summary::-webkit-details-marker{display:none}
+    .settings summary::after{content:"⌄";margin-left:8px;font-size:1rem}
+    .settings details[open] summary::after{content:"⌃"}
+    .settings summary:hover{background:#e8f0e9}
+    .control-bar{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;padding:10px 4px 5px}
+    .control{min-height:42px;border:1px solid #cbdad0;border-radius:9px;padding:8px 14px;background:white;color:var(--sage);font-weight:750}
+    .control:hover{background:#eaf2ed}
+    .control[aria-pressed="true"]{border-color:#4a8469;background:#e2efe6}
+    .settings-tip{margin:4px 0 0;color:#84958a;font-size:.73rem}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-height:700px) and (min-width:780px){
+      :root{--lamp:clamp(39px,7.4vh,68px)}
+      .stage{padding-top:7px;padding-bottom:5px}
+      .watch{width:min(100%,48vh)}
+      .readout{margin-top:8px}
+      .sitebar{min-height:44px}
     }
-    @media (max-width: 560px) {
-      :root { --light-size: clamp(37px, 10.2vw, 60px); }
-      .identity { font-size: .71rem; letter-spacing: .055em; gap: 8px; }
-      .mark { width: 31px; height: 31px; }
-      .topbar { min-height: 54px; }
-      .back { font-size: .8rem; }
-      .board { border-radius: 14px; }
-      .grid-head, .bit-row { grid-template-columns: minmax(43px, .55fr) repeat(3, minmax(0, 1fr)); }
-      .grid-head { font-size: .72rem; letter-spacing: .01em; }
-      .grid-head .weight-name { font-size: .55rem; }
-      .weight { font-size: 1.1rem; }
-      .light { border-width: 2px; font-size: 1.2rem; }
-      .controls { gap: 7px; }
-      .control { flex: 1 1 140px; min-width: 0; font-size: .85rem; }
-      .state { width: 100%; order: -1; }
+    @media (max-width:779px){
+      :root{--lamp:clamp(38px,11vw,60px)}
+      .clock-layout{grid-template-columns:1fr;gap:25px;max-width:680px;margin:auto}
+      .stage{align-items:flex-start}
+      .analogue-panel{margin-bottom:8px}
+      .watch{width:min(66vw,350px)}
+      .binary-top,.bit-row{grid-template-columns:minmax(45px,.48fr) repeat(3,minmax(0,1fr));gap:4px}
+      .weight{font-size:clamp(1.1rem,4vw,1.55rem)}
+      .binary-top span{font-size:clamp(.7rem,2.6vw,.95rem)}
+      .binary-top .weight-name{font-size:.57rem}
+      .readout{font-size:2.1rem;margin-top:12px}
+      .mini-brand{font-size:.6rem}
+      .challenge .lamp{width:clamp(41px,12vw,65px);height:clamp(41px,12vw,65px)}
+      .dial-brand-name{font-size:clamp(8px,1.9vw,12px)}
+      .dial-brand-sub{font-size:clamp(6px,1.25vw,9px)}
+      .dial-emblem{width:clamp(18px,4vw,25px);height:clamp(18px,4vw,25px)}
     }
-    @media (prefers-reduced-motion: reduce) { .light { transition: none; } }
-    @media print { body { background: white; color: black; } .topbar, .controls { display:none; } .board { box-shadow:none; background:white; } .weight, .light { color:black; } }
+    @media (prefers-reduced-motion:reduce){.lamp{transition:none}}
+    @media print{.sitebar,.settings{display:none!important}.stage{padding:0}.watch{filter:none}}
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="topbar">
-      <a class="back" href="/" aria-label="Return to the Learning Hub">⌂ Learning Hub</a>
-      <div class="identity"><span>SYNERGY ASSIST</span><span class="mark" aria-hidden="true"></span></div>
+  <div class="app" id="app">
+    <header class="sitebar">
+      <a id="back" class="back" href="/" aria-label="Back to Learning Hub">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"/></svg>
+        <span id="back-text">Learning Hub</span>
+      </a>
+      <div class="mini-brand"><span>SYNERGY ASSIST</span><span class="mini-mark" aria-hidden="true"></span></div>
     </header>
-    <main>
-      <div class="intro">
-        <h1>Binary Time</h1>
-        <p class="instruction">Each lit circle is a <strong>1</strong>. Add the values of the lit circles in each column to read the time.</p>
+    <main class="stage">
+      <div class="clock-layout">
+        <section class="binary" aria-label="Binary clock">
+          <div class="binary-top" aria-hidden="true">
+            <span class="weight-name">VALUE</span>
+            <span class="hours">HOURS</span>
+            <span class="minutes">MINUTES</span>
+            <span class="seconds">SECONDS</span>
+          </div>
+          <div class="binary-rows" id="bit-grid" aria-hidden="true"></div>
+        </section>
+        <section class="analogue-panel" id="analogue" aria-label="Live analogue clock with Synergy Assist watch face">
+          <div class="watch">
+            <svg viewBox="0 0 400 400" role="img" aria-label="Analogue clock face with hour, minute and second hands">
+              <circle cx="200" cy="200" r="191" fill="#e9eeea" stroke="#c5d3c7" stroke-width="2"/>
+              <circle class="dial-mark" cx="200" cy="200" r="181"/>
+              <circle class="dial-inner" cx="200" cy="200" r="162"/>
+              <g id="ticks"></g>
+              <text class="hour-text" x="200" y="81">12</text>
+              <text class="hour-text" x="325" y="210">3</text>
+              <text class="hour-text" x="200" y="341">6</text>
+              <text class="hour-text" x="74" y="210">9</text>
+              <g id="hour-hand" transform="rotate(0 200 200)"><line class="hour-hand" x1="200" y1="220" x2="200" y2="127"/></g>
+              <g id="minute-hand" transform="rotate(0 200 200)"><line class="minute-hand" x1="200" y1="224" x2="200" y2="102"/></g>
+              <g id="second-hand" transform="rotate(0 200 200)"><line class="second-hand" x1="200" y1="237" x2="200" y2="91"/></g>
+              <circle class="hand-hub" cx="200" cy="200" r="8"/>
+            </svg>
+            <div class="dial-brand" aria-hidden="true">
+              <span class="dial-emblem"></span>
+              <span class="dial-brand-name">SYNERGY</span>
+              <span class="dial-brand-sub">ASSIST</span>
+            </div>
+            <span class="watch-model" aria-hidden="true">BINARY TIME · 24H</span>
+          </div>
+          <p class="readout" id="decimal-time">--:--:--</p>
+          <p class="state-line" id="clock-state" role="status">LIVE</p>
+        </section>
       </div>
-      <section class="board" aria-label="Synergy Assist live binary clock in hours, minutes and seconds">
-        <div class="grid-head" aria-hidden="true">
-          <span class="weight-name">BIT VALUE</span>
-          <span class="hour-label">HOURS</span>
-          <span class="minute-label">MINUTES</span>
-          <span class="second-label">SECONDS</span>
-        </div>
-        <div class="grid-body" id="bit-grid" aria-hidden="true"></div>
-        <div class="time-line">
-          <p id="decimal-time" class="decimal">--:--:--</p>
-        </div>
-        <p id="answer-caption" class="caption">24-hour time · based on your device's clock</p>
-        <p class="sr-only" id="accessible-time">Waiting for clock</p>
-      </section>
+      <p class="sr-only" id="accessible-time" aria-live="off">Clock loading</p>
     </main>
-    <footer class="controls" aria-label="Clock controls">
-      <button type="button" class="control primary" id="answer-toggle" aria-pressed="false">Hide time</button>
-      <button type="button" class="control" id="freeze-toggle" aria-pressed="false">Freeze</button>
-      <button type="button" class="control" id="fullscreen-toggle">⛶ Full screen</button>
-      <span id="clock-state" class="state" role="status">● LIVE</span>
+    <footer class="settings">
+      <details id="settings-panel">
+        <summary>Clock controls</summary>
+        <div class="control-bar">
+          <button type="button" class="control" id="answer-toggle" aria-pressed="false">Hide digital time</button>
+          <button type="button" class="control" id="challenge-toggle" aria-pressed="false">Challenge: binary only</button>
+          <button type="button" class="control" id="freeze-toggle" aria-pressed="false">Freeze</button>
+          <button type="button" class="control" id="fullscreen-toggle">Full screen</button>
+        </div>
+        <p class="settings-tip">H: hide time · C: challenge · Space: freeze · F: full screen</p>
+      </details>
     </footer>
   </div>
   <script>
-    (function () {
+    (function(){
       'use strict';
-      const weights = [32, 16, 8, 4, 2, 1];
-      const parts = ['hours', 'minutes', 'seconds'];
-      const grid = document.getElementById('bit-grid');
-      const decimal = document.getElementById('decimal-time');
-      const caption = document.getElementById('answer-caption');
-      const accessible = document.getElementById('accessible-time');
-      const answerToggle = document.getElementById('answer-toggle');
-      const freezeToggle = document.getElementById('freeze-toggle');
-      const fullscreenToggle = document.getElementById('fullscreen-toggle');
-      const clockState = document.getElementById('clock-state');
-      const lights = { hours: [], minutes: [], seconds: [] };
-      let frozen = false;
-      let frozenAt = null;
-      let hiddenAnswer = false;
-      let timeoutId = null;
+      const weights=[32,16,8,4,2,1];
+      const parts=['hours','minutes','seconds'];
+      const svgNS='http://www.w3.org/2000/svg';
+      const grid=document.getElementById('bit-grid');
+      const ticks=document.getElementById('ticks');
+      const clockState=document.getElementById('clock-state');
+      const decimal=document.getElementById('decimal-time');
+      const accessible=document.getElementById('accessible-time');
+      const app=document.getElementById('app');
+      const answerToggle=document.getElementById('answer-toggle');
+      const challengeToggle=document.getElementById('challenge-toggle');
+      const freezeToggle=document.getElementById('freeze-toggle');
+      const fullscreenToggle=document.getElementById('fullscreen-toggle');
+      const lights={hours:[],minutes:[],seconds:[]};
+      let frozenAt=null, hiddenAnswer=false, challenge=false, timerId=null;
 
-      weights.forEach(function (weight) {
-        const row = document.createElement('div');
-        row.className = 'bit-row';
-        const label = document.createElement('span');
-        label.className = 'weight';
-        label.textContent = weight;
-        row.appendChild(label);
-        parts.forEach(function (part) {
-          const led = document.createElement('div');
-          led.className = 'light ' + part;
-          led.textContent = '0';
-          row.appendChild(led);
-          lights[part].push({ element: led, weight: weight });
-        });
-        grid.appendChild(row);
-      });
-
-      function pad(number) { return String(number).padStart(2, '0'); }
-      function display(time) {
-        const values = { hours: time.getHours(), minutes: time.getMinutes(), seconds: time.getSeconds() };
-        parts.forEach(function (part) {
-          lights[part].forEach(function (item) {
-            const on = (values[part] & item.weight) !== 0;
-            item.element.classList.toggle('on', on);
-            item.element.textContent = on ? '1' : '0';
-          });
-        });
-        const value = pad(values.hours) + ':' + pad(values.minutes) + ':' + pad(values.seconds);
-        decimal.textContent = value;
-        accessible.textContent = hiddenAnswer ? 'Time answer hidden. Six bits each for hours, minutes and seconds.' : 'Time ' + value;
-      }
-
-      function tick() {
-        window.clearTimeout(timeoutId);
-        display(frozen ? frozenAt : new Date());
-        if (!frozen) {
-          timeoutId = window.setTimeout(tick, Math.max(50, 1000 - (Date.now() % 1000) + 12));
+      // Return link preserves the exact lesson section from which SA was opened.
+      const from=new URLSearchParams(location.search).get('from');
+      if(from && /^\/(?!\/)/.test(from)){
+        const url=new URL(from,location.origin);
+        if(url.origin===location.origin && url.pathname!=='/binary-clock.html'){
+          const back=document.getElementById('back');
+          back.href=url.pathname+url.search+url.hash;
+          const label=/^\/lessons\//.test(url.pathname)?'Back to lesson':/^\/revision\//.test(url.pathname)?'Back to practice':'Back to hub';
+          document.getElementById('back-text').textContent=label;
+          back.setAttribute('aria-label',label);
         }
       }
 
-      answerToggle.addEventListener('click', function () {
-        hiddenAnswer = !hiddenAnswer;
-        decimal.classList.toggle('hidden-answer', hiddenAnswer);
-        answerToggle.textContent = hiddenAnswer ? 'Show time' : 'Hide time';
-        answerToggle.setAttribute('aria-pressed', String(hiddenAnswer));
-        caption.textContent = hiddenAnswer ? 'Challenge: add the lit bit values to decode the time.' : "24-hour time · based on your device's clock";
-        tick();
-      });
+      for(const weight of weights){
+        const row=document.createElement('div');
+        row.className='bit-row';
+        const value=document.createElement('span');
+        value.className='weight';
+        value.textContent=weight;
+        row.append(value);
+        for(const part of parts){
+          const light=document.createElement('span');
+          light.className='lamp '+part;
+          light.textContent='0';
+          row.append(light);
+          lights[part].push({light,weight});
+        }
+        grid.append(row);
+      }
 
-      freezeToggle.addEventListener('click', function () {
-        frozen = !frozen;
-        frozenAt = frozen ? new Date() : null;
-        freezeToggle.textContent = frozen ? 'Resume live' : 'Freeze';
-        freezeToggle.setAttribute('aria-pressed', String(frozen));
-        clockState.textContent = frozen ? '❚❚ FROZEN' : '● LIVE';
-        clockState.classList.toggle('frozen', frozen);
-        tick();
-      });
+      // Sixty precisely spaced watch markers; hour markers are heavier.
+      for(let i=0;i<60;i++){
+        const major=i%5===0;
+        const angle=i*Math.PI/30;
+        const radiusOuter=160, radiusInner=major?144:153;
+        const line=document.createElementNS(svgNS,'line');
+        line.setAttribute('x1',String(200+radiusInner*Math.sin(angle)));
+        line.setAttribute('y1',String(200-radiusInner*Math.cos(angle)));
+        line.setAttribute('x2',String(200+radiusOuter*Math.sin(angle)));
+        line.setAttribute('y2',String(200-radiusOuter*Math.cos(angle)));
+        line.setAttribute('class',major?'tick major':'tick');
+        ticks.append(line);
+      }
 
-      async function toggleFullscreen() {
-        try {
-          if (document.fullscreenElement) {
-            await document.exitFullscreen();
-          } else if (document.documentElement.requestFullscreen) {
-            await document.documentElement.requestFullscreen();
+      function pad(number){return String(number).padStart(2,'0')}
+      function render(){
+        const time=frozenAt||new Date();
+        const hours=time.getHours(),minutes=time.getMinutes(),seconds=time.getSeconds();
+        const values={hours,minutes,seconds};
+        for(const part of parts){
+          for(const entry of lights[part]){
+            const lit=(values[part]&entry.weight)!==0;
+            entry.light.classList.toggle('on',lit);
+            entry.light.textContent=lit?'1':'0';
           }
-        } catch (error) {
-          fullscreenToggle.textContent = 'Use F11 for full screen';
+        }
+        document.getElementById('hour-hand').setAttribute('transform','rotate('+((hours%12+minutes/60)*30)+' 200 200)');
+        document.getElementById('minute-hand').setAttribute('transform','rotate('+((minutes+seconds/60)*6)+' 200 200)');
+        document.getElementById('second-hand').setAttribute('transform','rotate('+(seconds*6)+' 200 200)');
+        const value=pad(hours)+':'+pad(minutes)+':'+pad(seconds);
+        decimal.textContent=value;
+        accessible.textContent=challenge||hiddenAnswer?'Binary time is displayed; digital answer hidden.':'Time '+value;
+        clockState.textContent=frozenAt?'PAUSED':'LIVE';
+        clockState.classList.toggle('frozen',Boolean(frozenAt));
+      }
+      function tick(){
+        clearTimeout(timerId);
+        render();
+        if(!frozenAt)timerId=setTimeout(tick,Math.max(50,1000-Date.now()%1000+12));
+      }
+      function updateAnswer(){
+        decimal.classList.toggle('hidden-answer',hiddenAnswer);
+        answerToggle.setAttribute('aria-pressed',String(hiddenAnswer));
+        answerToggle.textContent=hiddenAnswer?'Show digital time':'Hide digital time';
+      }
+      answerToggle.addEventListener('click',function(){
+        hiddenAnswer=!hiddenAnswer;
+        updateAnswer();
+        render();
+      });
+      challengeToggle.addEventListener('click',function(){
+        challenge=!challenge;
+        app.classList.toggle('challenge',challenge);
+        challengeToggle.setAttribute('aria-pressed',String(challenge));
+        challengeToggle.textContent=challenge?'Show analogue clock':'Challenge: binary only';
+        render();
+      });
+      freezeToggle.addEventListener('click',function(){
+        frozenAt=frozenAt?null:new Date();
+        freezeToggle.setAttribute('aria-pressed',String(Boolean(frozenAt)));
+        freezeToggle.textContent=frozenAt?'Resume live':'Freeze';
+        tick();
+      });
+      async function toggleFullscreen(){
+        try {
+          if(document.fullscreenElement)await document.exitFullscreen();
+          else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();
+        }catch(error){
+          fullscreenToggle.textContent='Use F11 for full screen';
         }
       }
-      fullscreenToggle.addEventListener('click', toggleFullscreen);
-      document.addEventListener('fullscreenchange', function () {
-        fullscreenToggle.textContent = document.fullscreenElement ? '⤢ Exit full screen' : '⛶ Full screen';
+      fullscreenToggle.addEventListener('click',toggleFullscreen);
+      document.addEventListener('fullscreenchange',function(){
+        fullscreenToggle.textContent=document.fullscreenElement?'Exit full screen':'Full screen';
       });
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden && !frozen) tick();
+      document.addEventListener('visibilitychange',function(){
+        if(!document.hidden&&!frozenAt)tick();
       });
-      window.addEventListener('pageshow', function () { if (!frozen) tick(); });
-      document.addEventListener('keydown', function (event) {
-        if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) return;
-        if (event.target && ['BUTTON', 'A', 'INPUT'].includes(event.target.tagName)) return;
-        if (event.key.toLowerCase() === 'h') answerToggle.click();
-        if (event.key.toLowerCase() === 'f') toggleFullscreen();
-        if (event.code === 'Space') { event.preventDefault(); freezeToggle.click(); }
+      document.addEventListener('keydown',function(event){
+        if(event.altKey||event.metaKey||event.ctrlKey||event.repeat)return;
+        if(event.target && ['BUTTON','A','SUMMARY','INPUT'].includes(event.target.tagName))return;
+        const key=event.key.toLowerCase();
+        if(key==='h')answerToggle.click();
+        if(key==='c')challengeToggle.click();
+        if(key==='f')toggleFullscreen();
+        if(event.code==='Space'){event.preventDefault();freezeToggle.click()}
       });
-      if (!document.fullscreenEnabled) fullscreenToggle.title = 'If unavailable, press F11 for browser full screen';
       tick();
     }());
   </script>
