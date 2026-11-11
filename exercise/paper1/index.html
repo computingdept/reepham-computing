@@ -19,6 +19,12 @@
 .conv-hexpair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.conv-hex-item{display:flex;justify-content:center;align-items:center;padding:6px 0;background:#edf4ff;border:1px solid #d3e2f3;border-radius:11px}.conv-hex-select{max-width:120px;height:59px;font-size:26px;text-align:center;text-align-last:center}.conv-live{min-height:17px;font-size:12px;color:#496d92;text-align:center}.answer-area:has(.conversion-grid){max-width:680px;margin-top:7px}
 @media(max-width:700px){.conversion-grid{padding:12px;gap:11px}.conv-bit-row{gap:3px}.conv-bit{height:53px;font-size:20px;border-radius:7px}.conv-weight{font-size:10px}.conv-nibbles,.conv-hexpair{gap:8px}.conv-nibble{padding:9px}.conv-section-title span{font-size:10px}.conv-nibble-weights{font-size:11px;letter-spacing:0}.conv-hex-select{height:52px}}
 @media(max-width:370px){.conversion-grid{padding:9px}.conv-bit{height:47px;font-size:18px}.conv-weight{font-size:9px}.conv-nibble-weights{font-size:10px;letter-spacing:0}.conv-label span{font-size:10px}}
+/* Easy-only shift controls; no four-bit divider on shifting exercises. */
+.shift-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(100%,580px);margin:12px 0 7px}
+.shift-action{min-height:48px;padding:10px 13px;background:#fff;color:var(--ink);border:1px solid #a3c3b2;border-radius:10px;font-size:16px;font-weight:800;touch-action:manipulation}
+.shift-action:hover{background:#eaf4ee}
+.shift-progress{display:block;color:var(--muted);font-size:12px;font-weight:700;text-align:center;width:min(100%,580px)}
+@media(max-width:370px){.shift-action{min-height:45px;font-size:14px}}
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -113,7 +119,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  case 'add':
    a=rint(r,1,dif===0?63:220);b=rint(r,1,dif===0?63:220);if(dif===0&&a+b>255)b=20;z=a+b;return {prompt:'Add these two 8-bit binary numbers.',context:'',type:'add',a:a,b:b,value:z%256,overflow:z>255,hint:'Add from the right. 1 + 1 is binary 10, so write 0 and carry 1.',why:`${a} + ${b} = ${z}. Result: ${binary(z)}; overflow: ${z>255?'yes':'no'}.`};
  case 'shift':
-   a=rint(r,1,dif===0?63:255);b=rint(r,1,dif===0?2:dif===1?3:4);z=pick(r,['left','right']);n=z==='left'?(a<<b)&255:a>>b;return {prompt:`Shift ${binary(a)} ${b} place${b===1?'':'s'} to the ${z}.`,context:'Keep the result within eight bits. Bits shifted off the end are lost.',type:'bits',value:n,hint:`Move each bit ${b} column${b===1?'':'s'} ${z}. Fill empty positions with 0.`,why:`${binary(a)} shifted ${z} ${b} = ${binary(n)}.`};
+   a=rint(r,1,dif===0?63:255);b=rint(r,1,dif===0?2:dif===1?3:4);z=pick(r,['left','right']);n=z==='left'?(a<<b)&255:a>>b;return {prompt:`Shift ${binary(a)} ${b} place${b===1?'':'s'} to the ${z}.`,context:'Keep the result within eight bits. Bits shifted off the end are lost.',type:'bits',start:a,places:b,direction:z,value:n,hint:`Move each bit ${b} column${b===1?'':'s'} ${z}. Fill empty positions with 0.`,why:`${binary(a)} shifted ${z} ${b} = ${binary(n)}.`};
  case 'count':
    a=rint(r,dif===0?2:4,dif===0?6:dif===1?8:12);b=(i+dif)%2===0;return {prompt:b?`How many different bit patterns can ${a} bits represent?`:`What is the largest unsigned denary number using ${a} bits?`,context:b?'Calculate 2 to the power of the number of bits.':'Calculate 2 to the power of the number of bits, then subtract 1.',type:'number',value:Math.pow(2,a)-(b?0:1),unit:'',hint:b?`Use 2^${a}.`:`Use 2^${a} − 1.`,why:`2^${a}${b?'':' − 1'} = ${Math.pow(2,a)-(b?0:1)}.`};
  case 'units':
@@ -232,12 +238,17 @@ function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
 function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('practice').classList.toggle('is-standard',k!=='convert');$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
 function home(){skill=null;$('practice').classList.remove('is-conversion','is-standard');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
 function chooseLevel(l){level=l;index=0;lastConversionValue=null;levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
-function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=skill==='convert'?'Next question →':index===9?'See results →':'Next question →';paintInput();}
-function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
+function renderQuestion(){locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=skill==='convert'?'Next question →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';paintInput();}
+function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3&&id!=='shift'?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
+function shiftEightBits(bits,direction){
+ const value=bitsNumber(bits);
+ const shifted=direction==='left'?((value<<1)&255):value>>>1;
+ return binary(shifted).split('').map(Number);
+}
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
 case 'bits':case 'add':{
-  const vals=Array(8).fill(0);
+  const vals=skill==='shift'&&level==='easy'?binary(p.start).split('').map(Number):Array(8).fill(0);
   answer={bits:vals,overflow:p.type==='add'?null:false,carries:p.type==='add'?Array(8).fill(0):null};
   if(p.type==='add'){
     // All rows use exactly the same eight-column grid so digits cannot drift.
@@ -313,9 +324,38 @@ case 'bits':case 'add':{
     }
     overflow.append(choices);board.append(overflow);d.append(board);
   }else{
-    d.append(makeBitRow('bits',vals));
-    if(level==='easy'){
-      const s=document.createElement('span');s.id='live-sum';s.className='bit-footer';s.textContent='Current value: 0';d.append(s);
+    const row=makeBitRow(skill==='shift'?'shift':'bits',vals);
+    d.append(row);
+    if(skill==='shift'&&level==='easy'){
+      // Each tap performs one logical shift; the board begins at the given number.
+      // Updating vals in place preserves the array used by answer validation.
+      const controls=document.createElement('div');controls.className='shift-actions';
+      const progress=document.createElement('span');progress.className='shift-progress';
+      let moves=0;
+      const redraw=()=>{
+        row.querySelectorAll('.bitbtn').forEach((btn,j)=>{
+          btn.textContent=vals[j];
+          btn.classList.toggle('on',!!vals[j]);
+          btn.setAttribute('aria-label',`${128>>j}s column, bit ${vals[j]}; tap to change`);
+        });
+        progress.textContent=`${moves} shift${moves===1?'':'s'} made · Current value: ${bitsNumber(vals)}`;
+      };
+      for(const [direction,label] of [['left','← Left'],['right','Right →']]){
+        const btn=document.createElement('button');btn.type='button';btn.className='shift-action';btn.textContent=label;
+        btn.setAttribute('aria-label','Shift all eight bits one place to the '+direction);
+        btn.addEventListener('click',()=>{
+          if(locked)return;
+          const result=shiftEightBits(vals,direction);
+          result.forEach((bit,j)=>{vals[j]=bit});
+          moves++;redraw();
+        });
+        controls.append(btn);
+      }
+      d.append(controls);
+      d.append(progress);
+      redraw();
+    }else if(level==='easy'){
+      const s=document.createElement('span');s.id='live-sum';s.className='bit-footer';s.textContent='Current value: '+format(bitsNumber(vals));d.append(s);
     }
   }
   break;
