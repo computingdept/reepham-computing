@@ -132,7 +132,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-protocolpaths1">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-impact1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -177,7 +177,8 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
     <section class="skills-group skills-group-application" aria-labelledby="skills-apply-heading">
       <h2 id="skills-apply-heading">Applying Computer Science</h2>
       <p class="section-caption">Use computing knowledge to explain impacts, make decisions and solve problems.</p>
-      <p class="skills-preview">Next practical skills: Impact Answer Builder · Network Design · Cybersecurity Investigator</p>
+      <div class="tiles theory" id="application-tiles"></div>
+      <p class="skills-preview">Next practical activities: Network Design · Cybersecurity Investigator</p>
     </section>
   </section>
   <section id="practice" class="hidden screen" aria-live="polite">
@@ -198,6 +199,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <script src="/assets/j277-ascii-questions.js?v=20261111-ascii1"></script>
 <script src="/assets/j277-dns-journey.js?v=20261111-guided2"></script>
 <script src="/assets/j277-protocol-paths.js?v=20261111-paths1"></script>
+<script src="/assets/j277-impact-answer-builder.js?v=20261111-impact1"></script>
 <script>
 (()=>{'use strict';
 const specs={
@@ -213,6 +215,7 @@ const specs={
  pixels:{name:'Pixel builder',sub:'Create 1, 2 and 3-bit images',glyph:'▩',cat:'data',ref:'1.2.4',tint:'#f1edff',ink:'#6c4caf',kind:'pixels'},
  dns:{name:'DNS & Web Request Journey',sub:'Watch · Build · Fix',glyph:'⌘',cat:'network',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'dns'},
  protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'network',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
+ impact:{name:'Impact Answer Builder',sub:'Model · Improve · Evaluate',glyph:'✎',cat:'application',ref:'1.6',tint:'#e9f4ed',ink:'#285348',kind:'impact'},
 };
 const $=id=>document.getElementById(id); const levelnames=['easy','medium','hard'];
 let skill=null,level='easy',index=0,question=null,answer=null,locked=false,wrong=0,score=0,attempts=[],hexCursor=0,lastConversionValue=null,lastAsciiWord=null;
@@ -396,6 +399,8 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
   return window.J277DnsJourney.make(l,i);
  case 'protocol':
   return window.J277ProtocolPaths.make(l,i);
+ case 'impact':
+  return window.J277ImpactBuilder.make(l,i);
  case 'security':return fromBank(r,i,[
    ['Which protection helps block unauthorised network traffic?','Firewall','Firewall','Compression','Defragmentation','Sampling','A firewall filters network traffic using rules.'],
    ['A criminal repeatedly tries password combinations. What threat is this?','Brute-force attack','Brute-force attack','Phishing','DoS','Compression','Brute-force attacks systematically try passwords.'],
@@ -437,7 +442,7 @@ function tile(key){
  }
  card.append(primary,actions);return card;
 }
-Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':'network-tiles').append(tile(key)));
+Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':specs[key].cat==='network'?'network-tiles':'application-tiles').append(tile(key)));
 function getStorage(){try{return JSON.parse(localStorage.getItem('rhs-j277-paper1-progress')||'{}')}catch{return {}}}
 function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
 function persist(){
@@ -449,6 +454,10 @@ function persist(){
   if(k==='convert'){
    $('progress-'+k).textContent=(legacyCount+ongoingCount)+' correct';
    continue;
+  }
+  if(k==='impact'){
+   const done=Number.isSafeInteger(all['impact-completed'])&&all['impact-completed']>=0?all['impact-completed']:0;
+   $('progress-'+k).textContent=done+' completed';total+=done;continue;
   }
   if(k==='protocol'){
    const done=Number.isSafeInteger(all['protocol-solved'])&&all['protocol-solved']>=0?all['protocol-solved']:0;
@@ -471,6 +480,10 @@ function persist(){
 }
 function mark(){
  const all=getStorage();
+ if(skill==='impact'){
+  const prev=Number.isSafeInteger(all['impact-completed'])&&all['impact-completed']>=0?all['impact-completed']:0;
+  all['impact-completed']=prev+1;saveStorage(all);persist();return;
+ }
  if(skill==='protocol'){
   const prev=Number.isSafeInteger(all['protocol-solved'])&&all['protocol-solved']>=0?all['protocol-solved']:0;
   all['protocol-solved']=prev+1;saveStorage(all);persist();return;
@@ -593,7 +606,7 @@ function matchFinish(){
  $('question-content').replaceChildren(box);$('next').classList.add('hidden');$('feedback').className='hidden';
 }
 
-function renderQuestion(){if(skill==='units'){matchRound();return;}locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):(skill==='ascii'||skill==='dns'||skill==='protocol')?`Question ${index+1}`:`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol')?'Next challenge →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';paintInput();}
+function renderQuestion(){if(skill==='units'){matchRound();return;}locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):(skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact')?`Task ${index+1}`:`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact')?'Next scenario →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';$('check').textContent=skill==='impact'?(level==='easy'?'Check choices':'Finish review'):'Check answer';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3&&id!=='shift'?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
 function shiftEightBits(bits,direction){
@@ -1257,6 +1270,7 @@ case 'grid': {
 }
 case 'dnsjourney':{answer=window.J277DnsJourney.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'protocolpaths':{answer=window.J277ProtocolPaths.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
+case 'impactbuilder':{answer=window.J277ImpactBuilder.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels': {
   answer={pixels:Array(16).fill(0),size:''};
@@ -1330,8 +1344,8 @@ case 'pixels': {
   break;
 }
 }}
-function isAnswered(){if(question.type==='protocolpaths')return window.J277ProtocolPaths.isComplete(question,answer);if(question.type==='dnsjourney')return window.J277DnsJourney.isComplete(question,answer);if(question.type==='pixels')return answer.size.trim()!=='';if(question.type==='soundcalc')return answer.final.trim()!=='';if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'protocolpaths':return window.J277ProtocolPaths.isCorrect(p,answer);case 'dnsjourney':return window.J277DnsJourney.isCorrect(p,answer);case 'soundcalc':{
+function isAnswered(){if(question.type==='impactbuilder')return window.J277ImpactBuilder.isComplete(question,answer);if(question.type==='protocolpaths')return window.J277ProtocolPaths.isComplete(question,answer);if(question.type==='dnsjourney')return window.J277DnsJourney.isComplete(question,answer);if(question.type==='pixels')return answer.size.trim()!=='';if(question.type==='soundcalc')return answer.final.trim()!=='';if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'impactbuilder':return window.J277ImpactBuilder.isCorrect(p,answer);case 'protocolpaths':return window.J277ProtocolPaths.isCorrect(p,answer);case 'dnsjourney':return window.J277DnsJourney.isCorrect(p,answer);case 'soundcalc':{
   const value=String(answer.final).trim();
   return /^[0-9]+(?:[.][0-9]+)?$/.test(value)&&Math.abs(Number(value)-p.value)<1e-8;
  }case 'imagecompact': {
@@ -1358,6 +1372,19 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
 }case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.pixels.every((v,i)=>v===p.value[i])&&/^[0-9]+$/.test(answer.size.trim())&&Number(answer.size)===16*p.depth;}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
 function submit(){if(locked)return;
+ if(question.type==='impactbuilder'){
+  if(!window.J277ImpactBuilder.isComplete(question,answer)){
+   showMsg(window.J277ImpactBuilder.feedback(question,answer),'neutral');return;
+  }
+  if(!window.J277ImpactBuilder.isCorrect(question,answer)){
+   showMsg(window.J277ImpactBuilder.feedback(question,answer),'bad');return;
+  }
+  score++;mark();locked=true;$('show-answer').hidden=true;
+  showMsg(level==='easy'?'Well done. You chose the developed explanation for each stage.':
+    'Review completed. You compared your writing with a model and improved a sentence. This is not an OCR exam mark.','good');
+  $('check').classList.add('hidden');$('clear').classList.add('hidden');
+  $('next').classList.remove('hidden');$('hint').classList.add('hidden');return;
+ }
  if(question.type==='soundcalc'&&level==='easy'&&question.targetUnit!=='bits'&&!answer.cancel8){
   showMsg('Use Cancel 8s to simplify the formula before checking.','neutral');return;
  }
@@ -1365,7 +1392,7 @@ function submit(){if(locked)return;
   showMsg('Cancel 1,000 from the rate and denominator before checking.','neutral');return;
  }
  if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='protocolpaths'?window.J277ProtocolPaths.feedback(question,answer):question.type==='dnsjourney'?window.J277DnsJourney.feedback(question,answer):question.type==='pixels'?'Recreate the image and enter its total size in bits.':question.type==='soundcalc'?'Enter the final sound file size.':question.type==='imagecompact'?'Choose whether colour depth is given, calculate it if needed, and type your final answer.':question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'&&question.type!=='dnsjourney'&&question.type!=='protocolpaths'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'&&question.type!=='dnsjourney'&&question.type!=='protocolpaths'){locked=true;$('show-answer').hidden=true;showMsg(question.type==='dnsjourney'?'Not yet. '+question.why:'Answer recorded. Your score will appear after question 10.',question.type==='dnsjourney'?'bad':'neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='protocolpaths'?window.J277ProtocolPaths.feedback(question,answer):question.type==='dnsjourney'?window.J277DnsJourney.feedback(question,answer):question.type==='pixels'?'Check the 4 × 4 pixel grid and total number of bits.':question.type==='soundcalc'?'Check the sample rate, duration, bit depth and unit conversion.':question.type==='imagecompact'?'Check the colour-depth decision and your calculation. Then try again.':question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
-function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
+function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(skill==='units')return;if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
 $('back').addEventListener('click',home);document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>{score=0;chooseLevel(b.dataset.level)}));$('show-answer').addEventListener('click',()=>{
@@ -1409,7 +1436,7 @@ $('check').addEventListener('click',submit);$('next').addEventListener('click',n
 persist();
 // Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
 const directSkill=new URLSearchParams(window.location.search).get('skill');
-if(['shift','count','text','image','units','pixels','ascii','dns','protocol'].includes(directSkill))openSkill(directSkill);
+if(['shift','count','text','image','units','pixels','ascii','dns','protocol','impact'].includes(directSkill))openSkill(directSkill);
 })();
 </script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
