@@ -953,6 +953,7 @@ case 'pixels': {
   keyTitle.textContent='COLOUR KEY · '+p.depth+' bit'+(p.depth===1?'':'s')+' per pixel';
   container.append(keyTitle);
   const key=document.createElement('div');key.className='pixel-builder-palette';
+  key.style.gridTemplateColumns='repeat('+Math.min(4,p.colourCount)+',minmax(0,1fr))';
   let selected=1;
   const choices=[];
   function code(v){return v.toString(2).padStart(p.depth,'0');}
