@@ -25,8 +25,8 @@ async function assertLayout(page,view,label){
 async function drivePartition(page,view,id){
  let original=null,clicks=0;
  while(!(await nextVisible(page))&&clicks++<100){
-  const note=page.locator("#workspace p.status").first();
-  const noteText=await note.count()?await note.textContent():"";
+  const notes=page.locator("#workspace p.status");
+  const noteText=(await notes.allTextContents()).join(" ");
   if(original===null){original=numberList(noteText);}
   const pivotButtons=page.locator("#workspace button.num");
   if(await pivotButtons.count()){
