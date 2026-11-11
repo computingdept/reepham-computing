@@ -14,6 +14,7 @@ Tracking starts after activation; existing historic visits cannot be backfilled.
 The loader activates only for `rhsccs.org` or `www.rhsccs.org`, and avoids
 inserting a duplicate beacon. No custom events or student identifiers are added.
 
-Note: The shared navigation script covers the homepage, J277/H446 hubs,
-KS3 Computing hub and regular J277/H446 lessons. Audit independent standalone
-pages separately before claiming complete site-wide coverage.
+The shared navigation script is loaded by the homepage, J277/H446 hubs,
+KS3 Computing hub, regular J277/H446 lessons, and revision practice pages.
+The binary classroom clock and PDF print viewer also load the central module.
+Other independent standalone pages may need separate coverage checks.
