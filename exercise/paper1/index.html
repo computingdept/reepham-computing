@@ -114,6 +114,17 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 }
 @media(max-width:340px){.pixel-builder-row{font-size:10px}.pixel-builder-swatch{min-height:51px}.pixel-builder-code{font-size:13px}}
 
+/* Skills landing page navigation: real tasks only; no non-working buttons. */
+#home .skills-group {margin-top:18px}
+#home .skills-group h2 {margin:0 0 3px;font-size:18px;letter-spacing:-.35px;color:#274a36}
+#home .skills-group .section-caption {margin:0 0 10px;line-height:1.4}
+#home .skills-group-application {padding-top:12px;border-top:1px solid #dce7de}
+#home .skills-preview {margin:3px 0 0;color:#53725e;font-size:12px;line-height:1.4}
+@media(max-width:640px){
+ #home .skills-group {margin-top:15px}
+ #home .skills-group h2 {font-size:17px}
+ #home .skills-group .section-caption {font-size:12px}
+}
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -145,12 +156,29 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 </header>
 <main class="wrap">
   <section id="home">
-    <div class="hero"><div><div class="kicker">OCR J277 · Paper 1</div><h1>Skills practice</h1><p>Choose a skill · Conversion Grid and ASCII Code Builder offer continuous practice.</p></div><div class="hero-count"><strong id="done-counter">0</strong><span>questions solved on this device</span></div></div>
-    <h2>Data representation</h2><p class="section-caption">Conversion grid, file size and digital representation · specification 1.2.3–1.2.5</p>
-    <div class="tiles" id="data-tiles"></div>
-    <h2>Other Paper 1 skills</h2><p class="section-caption">Apply knowledge of computer systems, hardware, networks and security · specifications 1.1, 1.2, 1.3–1.6</p>
-    <div class="tiles theory" id="other-tiles"></div>
-    <div class="explanation"><strong>Made for phones:</strong> use the denary-to-hex conversion grid, tap bit boxes and build pixel images. No draggable wires, tiny controls or compulsory horizontal scrolling. Use the same exercises on a classroom screen or a phone.</div>
+    <div class="hero">
+      <div>
+        <div class="kicker">OCR J277 · Paper 1</div>
+        <h1>Skills practice</h1>
+        <p>Choose an activity to practise a computing process, build a model or solve a problem.</p>
+      </div>
+      <div class="hero-count"><strong id="done-counter">0</strong><span>skills solved on this device</span></div>
+    </div>
+    <section class="skills-group" aria-labelledby="skills-data-heading">
+      <h2 id="skills-data-heading">Data Representation</h2>
+      <p class="section-caption">Conversions · binary operations · file sizes · digital images</p>
+      <div class="tiles" id="data-tiles"></div>
+    </section>
+    <section class="skills-group" aria-labelledby="skills-network-heading">
+      <h2 id="skills-network-heading">Networks</h2>
+      <p class="section-caption">Build a web request journey and choose the right communication protocols.</p>
+      <div class="tiles theory" id="network-tiles"></div>
+    </section>
+    <section class="skills-group skills-group-application" aria-labelledby="skills-apply-heading">
+      <h2 id="skills-apply-heading">Applying Computer Science</h2>
+      <p class="section-caption">Use computing knowledge to explain impacts, make decisions and solve problems.</p>
+      <p class="skills-preview">Next practical skills: Impact Answer Builder · Network Design · Cybersecurity Investigator</p>
+    </section>
   </section>
   <section id="practice" class="hidden screen" aria-live="polite">
     <button class="back" type="button" id="back">← All exercises</button>
@@ -183,13 +211,8 @@ const specs={
  image:{name:'Image file sizes',sub:'Pixels × colour depth',glyph:'▦',cat:'data',ref:'1.2.3',tint:'#e7f5f3',ink:'#11766c',kind:'image'},
  sound:{name:'Sound file sizes',sub:'Rate × duration × bit depth',glyph:'♫',cat:'data',ref:'1.2.3',tint:'#ffecf4',ink:'#ad3768',kind:'sound'},
  pixels:{name:'Pixel builder',sub:'Create 1, 2 and 3-bit images',glyph:'▩',cat:'data',ref:'1.2.4',tint:'#f1edff',ink:'#6c4caf',kind:'pixels'},
- cpu:{name:'CPU & registers',sub:'Identify functions and the cycle',glyph:'▣',cat:'other',ref:'1.1.1',tint:'#e8f1ff',ink:'#235ca7',kind:'cpu'},
- storage:{name:'Storage choices',sub:'Pick a suitable storage medium',glyph:'▤',cat:'other',ref:'1.2.1–1.2.2',tint:'#e8f6ee',ink:'#207b52',kind:'storage'},
- dns:{name:'DNS & Web Request Journey',sub:'Watch · Build · Fix',glyph:'⌘',cat:'other',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'dns'},
- protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'other',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
- security:{name:'Network security',sub:'Threats and protection',glyph:'◇',cat:'other',ref:'1.4',tint:'#fff0e8',ink:'#ac5a2b',kind:'security'},
- software:{name:'Systems software',sub:'OS and utility functions',glyph:'⚙',cat:'other',ref:'1.5',tint:'#e7f3f6',ink:'#236e88',kind:'software'},
- impacts:{name:'Digital impacts',sub:'Apply laws, ethics and impacts',glyph:'⚖',cat:'other',ref:'1.6',tint:'#fff0f2',ink:'#aa4561',kind:'impacts'}
+ dns:{name:'DNS & Web Request Journey',sub:'Watch · Build · Fix',glyph:'⌘',cat:'network',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'dns'},
+ protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'network',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
 };
 const $=id=>document.getElementById(id); const levelnames=['easy','medium','hard'];
 let skill=null,level='easy',index=0,question=null,answer=null,locked=false,wrong=0,score=0,attempts=[],hexCursor=0,lastConversionValue=null,lastAsciiWord=null;
@@ -414,7 +437,7 @@ function tile(key){
  }
  card.append(primary,actions);return card;
 }
-Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':'other-tiles').append(tile(key)));
+Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':'network-tiles').append(tile(key)));
 function getStorage(){try{return JSON.parse(localStorage.getItem('rhs-j277-paper1-progress')||'{}')}catch{return {}}}
 function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
 function persist(){
