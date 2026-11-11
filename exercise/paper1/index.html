@@ -87,6 +87,33 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 .text-cancel-input{width:100%;min-width:0;min-height:45px;border:2px solid #a5c9b3;border-radius:8px;text-align:center;color:#184d35;font-size:21px;font-weight:850;background:#fff}
 .text-cancel-result{margin-top:3px}
 @media(max-width:480px){.text-cancel-board{gap:8px}.text-cancel-row{grid-template-columns:minmax(87px,1fr) 100px 62px;gap:6px;font-size:13px}.text-cancel-input{font-size:19px;min-height:43px}.text-cancel-caption{font-size:12px}.text-cancel-fraction{font-size:24px}}
+
+/* 1/2/3-bit Pixel Builder — fixed 4×4 canvas, mobile-first, isolated from old .pixel-btn styles. */
+.pixel-builder-v2{width:min(100%,740px);margin:0 auto;display:grid;justify-items:center;gap:12px;padding:4px 0}
+.pixel-builder-title,.pixel-builder-label{font-size:12px;font-weight:900;color:#315c48;letter-spacing:.06em}
+.pixel-builder-palette{width:min(100%,620px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pixel-builder-swatch{min-width:0;min-height:64px;display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;padding:7px 6px;border:2px solid #c5d8cc;border-radius:9px;background:#fff;color:#1a4633;font-weight:850;touch-action:manipulation}
+.pixel-builder-swatch.chosen{border-color:#006347;box-shadow:0 0 0 2px #badcc7 inset;background:#edf7ef}
+.pixel-builder-colour{display:block;width:100%;height:28px;border:1px solid #adbdb3;border-radius:5px}
+.pixel-builder-code{font-family:Consolas,ui-monospace,monospace;font-size:15px;letter-spacing:.02em}
+.pixel-builder-workspace{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px;align-items:center}
+.pixel-builder-reference,.pixel-builder-canvas{min-width:0;display:grid;justify-items:center;gap:8px}
+.pixel-builder-row{width:100%;display:flex;align-items:center;justify-content:center;min-height:38px;text-align:center;white-space:nowrap;font:850 clamp(12px,2vw,18px)/1.2 Consolas,ui-monospace,monospace;letter-spacing:.045em;color:#1c563e;font-variant-numeric:tabular-nums}
+.pixel-builder-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:min(100%,268px)}
+.pixel-builder-cell{display:block;aspect-ratio:1;min-height:0;border:2px solid #a8c8b6;border-radius:7px;touch-action:manipulation}
+.pixel-builder-cell:hover:not(:disabled){border-color:#006347}
+.pixel-builder-cell:focus-visible,.pixel-builder-swatch:focus-visible{outline:3px solid #c99220;outline-offset:2px}
+.pixel-builder-size{font-size:13px;color:#526b5b;font-weight:800}
+@media(max-width:500px){
+.pixel-builder-v2{gap:9px}.pixel-builder-palette{gap:5px}
+.pixel-builder-swatch{min-height:57px;padding:5px 4px}.pixel-builder-colour{height:23px}
+.pixel-builder-workspace{gap:6px}
+.pixel-builder-row{min-height:31px;font-size:clamp(11px,3vw,15px);letter-spacing:0}
+.pixel-builder-grid{gap:4px}.pixel-builder-cell{border-radius:5px}
+.pixel-builder-label,.pixel-builder-title{font-size:11px}
+}
+@media(max-width:340px){.pixel-builder-row{font-size:10px}.pixel-builder-swatch{min-height:51px}.pixel-builder-code{font-size:13px}}
+
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -151,7 +178,7 @@ const specs={
  text:{name:'Text file sizes',sub:'Characters × bits',glyph:'Aa',cat:'data',ref:'1.2.3',tint:'#e9f6fa',ink:'#17708e',kind:'text'},
  image:{name:'Image file sizes',sub:'Pixels × colour depth',glyph:'▦',cat:'data',ref:'1.2.3',tint:'#e7f5f3',ink:'#11766c',kind:'image'},
  sound:{name:'Sound file sizes',sub:'Rate × duration × bit depth',glyph:'♫',cat:'data',ref:'1.2.3',tint:'#ffecf4',ink:'#ad3768',kind:'sound'},
- pixels:{name:'Pixel builder',sub:'Represent 1-bit images',glyph:'▩',cat:'data',ref:'1.2.4',tint:'#f1edff',ink:'#6c4caf',kind:'pixels'},
+ pixels:{name:'Pixel builder',sub:'Create 1, 2 and 3-bit images',glyph:'▩',cat:'data',ref:'1.2.4',tint:'#f1edff',ink:'#6c4caf',kind:'pixels'},
  sampling:{name:'Sound sampling',sub:'Work with sample rate',glyph:'∿',cat:'data',ref:'1.2.4',tint:'#e5f2fd',ink:'#176b9c',kind:'sampling'},
  compression:{name:'Compression',sub:'Choose lossy or lossless',glyph:'⇣',cat:'data',ref:'1.2.5',tint:'#fff1e5',ink:'#ac5a13',kind:'compression'},
  cpu:{name:'CPU & registers',sub:'Identify functions and the cycle',glyph:'▣',cat:'other',ref:'1.1.1',tint:'#e8f1ff',ink:'#235ca7',kind:'cpu'},
@@ -266,8 +293,19 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  }
  case 'sound':
    a=pick(r,dif===0?[100,500,1000]:dif===1?[1000,2000,4000]:[4000,8000,16000]);b=pick(r,[2,3,4,5]);z=pick(r,[8,16]);h=(i+dif)%3===2;return {prompt:`A ${b}-second sound file is sampled ${format(a)} times per second at ${z}-bit depth. Calculate its size in ${h?'bytes':'bits'}.`,context:'Mono audio; ignore metadata and compression.',type:'number',value:h?a*b*z/8:a*b*z,unit:h?'bytes':'bits',hint:`Sample rate × duration × bit depth.${h?' Divide by 8 for bytes.':''}`,why:`${format(a)} × ${b} × ${z} = ${format(a*b*z)} bits${h?` = ${format(a*b*z/8)} bytes`:''}.`};
- case 'pixels':
-   let pattern=Array.from({length:16},()=>r()<.4?1:0);return {prompt:'Recreate this 4 × 4 black-and-white image.',context:'Each row shows a binary sequence. A 1 is a dark pixel; a 0 is a light pixel.',type:'pixels',value:pattern,hint:'Read the four rows from left to right and tap squares with a 1.',why:'Each pixel can be stored as a single bit: 1 for dark, 0 for light.'};
+ case 'pixels': {
+   const depth=dif+1,colours=2**depth;
+   const pattern=Array.from({length:16},()=>Math.floor(r()*colours));
+   // Guarantee more than one colour and ensure colour depth is meaningful.
+   pattern[0]=(i+1)%colours;pattern[1]=0;
+   if(depth===2)pattern[2]=3;
+   if(depth===3){pattern[2]=7;pattern[3]=4;pattern[4]=5;}
+   return {prompt:'Recreate this 4 × 4 '+depth+'-bit image.',
+     context:depth+' bit'+(depth===1?'':'s')+' per pixel · '+colours+' possible colours.',
+     type:'pixels',depth,colourCount:colours,value:pattern,
+     hint:'Choose a colour from the key. Read each binary row from left to right, then tap the matching squares.',
+     why:'Each pixel uses '+depth+' bit'+(depth===1?'':'s')+'. A 4 × 4 image needs 16 × '+depth+' = '+(16*depth)+' bits (uncompressed).'};
+ }
  case 'sampling':
    a=pick(r,dif===0?[100,200,500]:dif===1?[1000,2000,4000]:[8000,16000,32000]);b=pick(r,[2,3,4,5]);if((i+dif)%3===2){z=pick(r,[2,4,8,16]);return {prompt:`How many distinct levels can ${z}-bit sound samples represent?`,context:'Each bit can be 0 or 1.',type:'number',value:Math.pow(2,z),unit:'levels',hint:`Use 2^${z}.`,why:`2^${z} = ${format(Math.pow(2,z))} levels.`};}return {prompt:`A sound is sampled ${format(a)} times a second for ${b} seconds. How many samples are recorded?`,context:'Sample rate is the number of samples in one second.',type:'number',value:a*b,unit:'samples',hint:'Multiply the sampling rate by the duration.',why:`${format(a)} × ${b} = ${format(a*b)} samples.`};
  case 'compression':
@@ -618,6 +656,17 @@ function makeFileSteps(p,d){
  d.append(board);
 }
 
+const PIXEL_PALETTE=[
+ {hex:'#FFFFFF',name:'White'},
+ {hex:'#222222',name:'Black'},
+ {hex:'#246FD1',name:'Blue'},
+ {hex:'#17965D',name:'Green'},
+ {hex:'#E99536',name:'Orange'},
+ {hex:'#8D5FD0',name:'Purple'},
+ {hex:'#E24D59',name:'Red'},
+ {hex:'#46BFCB',name:'Cyan'}
+];
+
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
 case 'bits':case 'add':{
   const vals=skill==='shift'&&level==='easy'?binary(p.start).split('').map(Number):Array(8).fill(0);
@@ -896,7 +945,68 @@ case 'grid': {
   updateLive();d.append(container);break;
 }
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
-case 'pixels':{answer=Array(16).fill(0);const flex=document.createElement('div');flex.style.cssText='display:flex;gap:30px;flex-wrap:wrap;align-items:center';const pattern=document.createElement('div');const label=document.createElement('div');label.className='pixel-note';label.textContent='Binary rows (top to bottom)';pattern.append(label);const values=document.createElement('div');values.className='pixel-rows';for(let y=0;y<4;y++){const row=document.createElement('div');row.textContent=p.value.slice(y*4,y*4+4).join(' ');values.append(row)}pattern.append(values);const board=document.createElement('div');const note=document.createElement('div');note.className='pixel-note';note.textContent='Tap the squares to build the image';board.append(note);const px=document.createElement('div');px.className='pixel-grid';for(let j=0;j<16;j++){const b=document.createElement('button');b.type='button';b.className='pixel-btn';b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, light`);b.addEventListener('click',()=>{if(locked)return;answer[j]=1-answer[j];b.classList.toggle('on',!!answer[j]);b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, ${answer[j]?'dark':'light'}`)});px.append(b)}board.append(px);flex.append(pattern,board);d.append(flex);break;}
+case 'pixels': {
+  answer=Array(16).fill(0);
+  const palette=PIXEL_PALETTE.slice(0,p.colourCount);
+  const container=document.createElement('div');container.className='pixel-builder-v2';
+  const keyTitle=document.createElement('div');keyTitle.className='pixel-builder-title';
+  keyTitle.textContent='COLOUR KEY · '+p.depth+' bit'+(p.depth===1?'':'s')+' per pixel';
+  container.append(keyTitle);
+  const key=document.createElement('div');key.className='pixel-builder-palette';
+  let selected=1;
+  const choices=[];
+  function code(v){return v.toString(2).padStart(p.depth,'0');}
+  palette.forEach((colour,i)=>{
+   const choice=document.createElement('button');choice.type='button';
+   choice.className='pixel-builder-swatch'+(i===selected?' chosen':'');
+   choice.setAttribute('aria-label',code(i)+' '+colour.name+' · select colour');
+   choice.setAttribute('aria-pressed',String(i===selected));
+   const sample=document.createElement('span');sample.className='pixel-builder-colour';
+   sample.style.backgroundColor=colour.hex;
+   const digit=document.createElement('span');digit.className='pixel-builder-code';digit.textContent=code(i);
+   choice.append(sample,digit);
+   choice.addEventListener('click',()=>{
+    if(locked)return;
+    selected=i;
+    choices.forEach((button,j)=>{button.classList.toggle('chosen',j===selected);button.setAttribute('aria-pressed',String(j===selected));});
+   });
+   choices.push(choice);key.append(choice);
+  });
+  container.append(key);
+  const workspace=document.createElement('div');workspace.className='pixel-builder-workspace';
+  const rows=document.createElement('div');rows.className='pixel-builder-reference';
+  const rowTitle=document.createElement('div');rowTitle.className='pixel-builder-label';rowTitle.textContent='BINARY ROWS';
+  rows.append(rowTitle);
+  for(let y=0;y<4;y++){
+   const row=document.createElement('div');row.className='pixel-builder-row';
+   row.textContent=p.value.slice(y*4,y*4+4).map(code).join(' ');
+   rows.append(row);
+  }
+  const canvas=document.createElement('div');canvas.className='pixel-builder-canvas';
+  const canvasLabel=document.createElement('div');canvasLabel.className='pixel-builder-label';
+  canvasLabel.textContent='YOUR IMAGE';canvas.append(canvasLabel);
+  const grid=document.createElement('div');grid.className='pixel-builder-grid';
+  for(let j=0;j<16;j++){
+   const btn=document.createElement('button');btn.type='button';btn.className='pixel-builder-cell';
+   btn.style.backgroundColor=palette[0].hex;
+   btn.setAttribute('aria-label','Row '+(Math.floor(j/4)+1)+', column '+(j%4+1)+': '+code(0));
+   btn.addEventListener('click',()=>{
+    if(locked)return;
+    // Easy retains the simple toggle pupils know from the monochrome version.
+    answer[j]=p.depth===1&&selected===1&&answer[j]===1?0:selected;
+    btn.style.backgroundColor=palette[answer[j]].hex;
+    btn.setAttribute('aria-label','Row '+(Math.floor(j/4)+1)+', column '+(j%4+1)+': '+code(answer[j])+' '+palette[answer[j]].name);
+   });
+   grid.append(btn);
+  }
+  canvas.append(grid);workspace.append(rows,canvas);container.append(workspace);
+  const size=document.createElement('div');size.className='pixel-builder-size';
+  size.textContent='4 × 4 × '+p.depth+' = ? bits';
+  size.setAttribute('aria-label','Image file size: 4 by 4 pixels times '+p.depth+' bits per pixel');
+  container.append(size);
+  d.append(container);
+  break;
+}
 }}
 function isAnswered(){if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
 function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'textcancel': {const final=String(answer.final).trim();const factor=String(answer.factor).trim();return /^\d+(?:\.\d+)?$/.test(final)&&Number(final)===p.value&&(level!=='medium'||!p.cancel8||/^\d+$/.test(factor)&&Number(factor)===p.simplifiedFactor);}case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
@@ -953,7 +1063,7 @@ $('check').addEventListener('click',submit);$('next').addEventListener('click',n
 persist();
 // Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
 const directSkill=new URLSearchParams(window.location.search).get('skill');
-if(['shift','count','text','image','units'].includes(directSkill))openSkill(directSkill);
+if(['shift','count','text','image','units','pixels'].includes(directSkill))openSkill(directSkill);
 })();
 </script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
