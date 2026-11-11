@@ -3,40 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#091827">
+  <meta name="theme-color" content="#285348">
   <meta name="description" content="A large live binary clock for classroom whiteboards: read the hours, minutes and seconds using six binary place values.">
-  <title>Binary Clock | RHS Computing</title>
+  <title>Binary Time | Synergy Assist</title>
+  <link rel="stylesheet" href="/assets/synergy-logo.css?v=20261101-logo1">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #091827;
-      --panel: #102438;
-      --border: #2c4156;
-      --text: #f1f6fa;
-      --muted: #adbfce;
-      --hours: #66b9ff;
-      --minutes: #65e5b0;
-      --seconds: #ffd384;
+      --bg: #0d2c24;
+      --panel: #1b4538;
+      --border: #4a7364;
+      --text: #f6fbf8;
+      --muted: #c1d6cb;
+      --hours: #badfd5;
+      --minutes: #78d8ac;
+      --seconds: #f7d48b;
       --light-size: clamp(40px, 8.1vh, 78px);
     }
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
-    body { margin: 0; min-height: 100svh; background: radial-gradient(circle at 50% -20%, #1b3550 0, var(--bg) 58%); color: var(--text); font: 16px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+    body { margin: 0; min-height: 100svh; background: radial-gradient(circle at 50% -20%, #33604f 0, var(--bg) 64%); color: var(--text); font: 16px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { font: inherit; cursor: pointer; }
     a { color: inherit; text-decoration: none; }
     :focus-visible { outline: 3px solid var(--seconds); outline-offset: 4px; }
     .shell { min-height: 100svh; display: flex; flex-direction: column; }
-    .topbar { min-height: 62px; padding: 12px clamp(16px, 3vw, 38px); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #ffffff16; }
-    .identity { display: flex; align-items: center; gap: 13px; font-size: .84rem; font-weight: 800; letter-spacing: .13em; }
-    .mark { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: #006347; color: white; font-weight: 900; letter-spacing: -.06em; font-size: 17px; }
-    .back { padding: 8px 10px; border: 1px solid #ffffff30; border-radius: 9px; font-size: .9rem; font-weight: 700; white-space: nowrap; }
-    .back:hover, .control:hover { background: #ffffff18; }
+    .topbar { min-height: 62px; padding: 12px clamp(16px, 3vw, 38px); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 3px solid #285348; background: #ffffff; color: #30383a; }
+    .identity { display: flex; align-items: center; gap: 13px; font-size: .84rem; font-weight: 800; letter-spacing: .1em; color:#30383a; }
+    .mark { display: inline-block; flex:none; width: 39px; height: 39px; background: var(--synergy-logo-image) center / contain no-repeat; }
+    .back { padding: 8px 10px; border: 1px solid #d5ddda; border-radius: 9px; font-size: .9rem; font-weight: 700; color:#285348; white-space: nowrap; }
+    .back:hover { background:#ecf2ef; } .control:hover { background: #ffffff18; }
     main { width: min(100%, 1100px); margin: auto; padding: clamp(12px, 2.3vh, 25px) clamp(14px, 3vw, 32px); display: flex; flex-direction: column; justify-content: center; }
     .intro { text-align: center; }
     h1 { margin: 0; line-height: 1.12; letter-spacing: -.045em; font-size: clamp(2rem, 4.8vw, 3.4rem); }
     .instruction { margin: 8px auto 14px; max-width: 760px; color: var(--muted); font-size: clamp(.9rem, 1.5vw, 1.1rem); }
-    .board { background: #0d2032de; border: 1px solid var(--border); border-radius: 22px; padding: clamp(12px, 2.2vh, 22px) clamp(12px, 3vw, 28px); box-shadow: 0 18px 60px #00000029; }
+    .board { background: #173d31ec; border: 1px solid var(--border); border-radius: 22px; padding: clamp(12px, 2.2vh, 22px) clamp(12px, 3vw, 28px); box-shadow: 0 18px 60px #00000029; }
     .grid-head, .bit-row { display: grid; grid-template-columns: minmax(60px, .7fr) repeat(3, minmax(0, 1fr)); align-items: center; justify-items: center; column-gap: clamp(4px, 1.1vw, 14px); }
     .grid-head { margin-bottom: 8px; font-weight: 850; letter-spacing: .075em; font-size: clamp(.73rem, 1.6vw, 1.18rem); }
     .grid-head .weight-name { font-size: clamp(.62rem, 1vw, .82rem); color: var(--muted); text-align: center; letter-spacing: .03em; }
@@ -45,20 +46,20 @@
     .grid-head .second-label { color: var(--seconds); }
     .grid-body { display: grid; gap: clamp(4px, .8vh, 9px); }
     .weight { color: #e5f0f7; font: 800 clamp(1.2rem, 3.2vh, 2rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; }
-    .light { display: grid; place-items: center; width: var(--light-size); height: var(--light-size); border-radius: 50%; border: 3px solid #3b5268; background: #182d40; color: #859eb1; font: 800 clamp(1rem, 3vh, 1.9rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; transition: background-color .14s ease, box-shadow .14s ease, border-color .14s ease; }
-    .light.on { border-color: transparent; color: #061726; }
-    .light.hours.on { background: var(--hours); box-shadow: 0 0 22px #66b9ff55; }
-    .light.minutes.on { background: var(--minutes); box-shadow: 0 0 22px #65e5b055; }
-    .light.seconds.on { background: var(--seconds); box-shadow: 0 0 22px #ffd38450; }
+    .light { display: grid; place-items: center; width: var(--light-size); height: var(--light-size); border-radius: 50%; border: 3px solid #527967; background: #254b3c; color: #9ab6a7; font: 800 clamp(1rem, 3vh, 1.9rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; font-variant-numeric: tabular-nums; transition: background-color .14s ease, box-shadow .14s ease, border-color .14s ease; }
+    .light.on { border-color: transparent; color: #103127; }
+    .light.hours.on { background: var(--hours); box-shadow: 0 0 22px #badfd566; }
+    .light.minutes.on { background: var(--minutes); box-shadow: 0 0 22px #78d8ac66; }
+    .light.seconds.on { background: var(--seconds); box-shadow: 0 0 22px #f7d48b66; }
     .time-line { display: flex; align-items: center; justify-content: center; min-height: clamp(54px, 10vh, 86px); margin-top: clamp(8px, 1.5vh, 16px); }
     .decimal { margin: 0; font: 850 clamp(2.3rem, 7.4vw, 5.4rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .06em; font-variant-numeric: tabular-nums; text-align: center; }
     .decimal.hidden-answer { visibility: hidden; }
     .caption { margin: 3px auto 0; min-height: 20px; color: var(--muted); text-align: center; font-size: .83rem; }
     .controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 9px; padding: 11px 14px 18px; }
-    .control { min-height: 43px; min-width: 132px; border: 1px solid #587086; color: var(--text); background: #193148; border-radius: 10px; padding: 9px 15px; font-weight: 750; }
-    .control.primary { background: #006347; border-color: #368a6f; }
-    .control.primary:hover { background: #087757; }
-    .state { min-width: 98px; text-align: center; font-size: .85rem; color: var(--minutes); font-weight: 800; }
+    .control { min-height: 43px; min-width: 132px; border: 1px solid #739988; color: var(--text); background: #265546; border-radius: 10px; padding: 9px 15px; font-weight: 750; }
+    .control.primary { background: #347b5f; border-color: #80bd9d; }
+    .control.primary:hover { background: #438f6e; }
+    .state { min-width: 98px; text-align: center; font-size: .85rem; color: #a9e7c5; font-weight: 800; }
     .state.frozen { color: var(--seconds); }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @media (max-height: 750px) and (min-width: 660px) {
@@ -91,15 +92,15 @@
 <body>
   <div class="shell">
     <header class="topbar">
-      <div class="identity"><span class="mark" aria-hidden="true">01</span> RHS COMPUTING <span aria-hidden="true">/</span> CLASSROOM TOOLS</div>
-      <a class="back" href="/" aria-label="Return to the Learning Hub">← Learning Hub</a>
+      <a class="back" href="/" aria-label="Return to the Learning Hub">⌂ Learning Hub</a>
+      <div class="identity"><span>SYNERGY ASSIST</span><span class="mark" aria-hidden="true"></span></div>
     </header>
     <main>
       <div class="intro">
-        <h1>Binary Clock</h1>
+        <h1>Binary Time</h1>
         <p class="instruction">Each lit circle is a <strong>1</strong>. Add the values of the lit circles in each column to read the time.</p>
       </div>
-      <section class="board" aria-label="Live binary time in hours, minutes and seconds">
+      <section class="board" aria-label="Synergy Assist live binary clock in hours, minutes and seconds">
         <div class="grid-head" aria-hidden="true">
           <span class="weight-name">BIT VALUE</span>
           <span class="hour-label">HOURS</span>
