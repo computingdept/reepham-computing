@@ -80,7 +80,7 @@ body.synergy-corners-enabled .navwrap > .synergy-corner-mark{
   top:14px;
   width:34px;
   height:34px;
-  pointer-events:none;
+  pointer-events:auto;
   background:var(--synergy-logo-image) center / contain no-repeat;
 }
 body.synergy-corners-enabled .signal-wrap .lesson-label{
@@ -91,7 +91,7 @@ body .synergy-corner-mark{
   width:34px;
   height:34px;
   flex:0 0 34px;
-  pointer-events:none;
+  pointer-events:auto;
   background:var(--synergy-logo-image) center / contain no-repeat;
 }
 .practice-nav.synergy-corners .synergy-corner-mark{
@@ -305,3 +305,42 @@ body.central-legacy-hub .top .topin.synergy-corners .synergy-brand-icon {
   height:34px !important;
   flex:0 0 34px;
 }
+
+
+/* Classroom Binary Clock shortcut: only the SA artwork links to the clock.
+   Keep the adjacent Synergy wordmark linked to its existing Home route. */
+.synergy-corners > a.synergy-clock-shortcut{
+  order:3;
+  display:block;
+  flex:0 0 40px;
+  width:40px;
+  height:40px;
+  min-width:40px;
+  border-radius:8px;
+  background:var(--synergy-logo-image) center / contain no-repeat;
+}
+a.synergy-clock-shortcut,
+a.synergy-corner-mark{
+  cursor:pointer;
+  text-decoration:none;
+}
+a.synergy-clock-shortcut:hover,
+a.synergy-corner-mark:hover{
+  outline:2px solid #8ab39a;
+  outline-offset:2px;
+  background-color:#eef6f0;
+}
+a.synergy-clock-shortcut:focus-visible,
+a.synergy-corner-mark:focus-visible{
+  outline:3px solid #bd7d08;
+  outline-offset:3px;
+}
+@media(max-width:700px){
+  .synergy-corners > a.synergy-clock-shortcut{
+    flex-basis:34px;
+    width:34px;
+    height:34px;
+    min-width:34px;
+  }
+}
+@media print{ a.synergy-clock-shortcut{display:none!important;} }
