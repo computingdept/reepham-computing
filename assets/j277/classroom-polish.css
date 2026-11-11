@@ -337,13 +337,29 @@ body{
     margin:0;
   }
   body:not(.answer-page) #do-now .donow-questions .j277-mcq{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-self:stretch;
+    width:100%;
+    min-width:0;
+    padding:0;
     gap:clamp(5px,.8vh,8px) clamp(7px,.8vw,11px);
     margin:7px 0 0;
+    list-style-type:upper-alpha;
+    list-style-position:inside;
     line-height:1.2;
   }
   body:not(.answer-page) #do-now .donow-questions .j277-mcq > li{
+    min-width:0;
     padding:clamp(5px,.7vh,7px) clamp(7px,.8vw,10px);
     margin:0;
+    border:1px solid #d9e5de;
+    border-radius:9px;
+    background:#f8faf9;
+    overflow-wrap:anywhere;
     line-height:1.19;
+  }
+  body:not(.answer-page) #do-now .donow-questions .j277-mcq > li::marker{
+    font-weight:800;
   }
 }

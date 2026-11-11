@@ -301,7 +301,25 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 
     const vocabStages=vocab.map((v,i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${vocab.length}</span><h2>What is the term?</h2><p class="vocab-question">${esc(v.definition)}</p><span class="vocab-stage-count">${i+1} of ${vocab.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${esc(v.term)}</div></div></article>`).join("");
 
-    const doQuestions=doNow.map((q,i)=>`<article class="donow-question"><strong>${i+1} · ${i===3?'CHALLENGE':'RETRIEVAL'}</strong><p>${q}</p></article>`).join("");
+    // Older J277 sources place A)–D) choices inside one paragraph with <br>.
+    // Convert only genuine four-choice MCQs to semantic lists so the central
+    // Do Now 2×2 layout applies. All other questions remain unchanged.
+    function doNowQuestionMarkup(markup){
+      const segments=String(markup).split(/<br\s*\/?>/gi).map(x=>x.trim());
+      if(segments.length===5){
+        const choices=segments.slice(1).map((x,i)=>{
+          const found=x.match(/^([A-D])[\).]\s*(.+?)\s*$/i);
+          return found&&found[1].toUpperCase()==="ABCD"[i]?found[2]:null;
+        });
+        if(segments[0]&&choices.every(Boolean)){
+          return '<p>'+segments[0]+'</p><ol class="j277-mcq" type="A">'+
+            choices.map(x=>'<li>'+x+'</li>').join("")+'</ol>';
+        }
+      }
+      return '<p>'+markup+'</p>';
+    }
+
+    const doQuestions=doNow.map((q,i)=>`<article class="donow-question"><strong>${i+1} · ${i===3?'CHALLENGE':'RETRIEVAL'}</strong>${doNowQuestionMarkup(q)}</article>`).join("");
     const doReviews=doNow.map((q,i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4</span><h2>${esc(title)}</h2><p class="review-question">${q}</p></article><article class="donow-review-answer"><span class="review-label">ANSWER</span><p class="review-answer"><strong>${esc(doAns[i]||"")}</strong></p></article></div></div>`).join("");
 
     document.open();
@@ -310,7 +328,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=cf45749fa0cf">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261111-donow-compact1"><link rel="stylesheet" href="../../../assets/j277/independent-nav.css?v=20261027-unified-nav1"></head><body>
+<link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261111-donow-mcq2"><link rel="stylesheet" href="../../../assets/j277/independent-nav.css?v=20261027-unified-nav1"></head><body>
 <a class="skip" href="#main">Skip to lesson</a>
 <div class="navwrap"><div class="lesson-header-links"><a class="course-back" href="../../../j277-hub.html?year=10">← Year 10 lessons</a>${n==='003'?'<a class="lesson-resource-link" href="independent.html?version=bw">Independent lesson · Print</a>':''}</div><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
 <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${n}<br>${esc(title)}</span></div></div>
