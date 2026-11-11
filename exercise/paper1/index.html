@@ -511,6 +511,8 @@ $('paper-correct').addEventListener('click',()=>recordPaperResult(true));
 $('paper-incorrect').addEventListener('click',()=>recordPaperResult(false));
 $('check').addEventListener('click',submit);$('next').addEventListener('click',next);$('clear').addEventListener('click',reset);$('hint').addEventListener('click',()=>{const e=$('hint-area');const shown=!e.classList.contains('hidden');e.classList.toggle('hidden',shown);e.textContent=question.hint||'Think about what the question is asking you to calculate.';$('hint').textContent=shown?'Show a hint':'Hide hint';});
 persist();
+// Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
+if(new URLSearchParams(window.location.search).get('skill')==='shift')openSkill('shift');
 })();
 </script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
