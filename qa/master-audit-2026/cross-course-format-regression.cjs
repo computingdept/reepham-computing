@@ -152,6 +152,73 @@ async function auditPage(browser,course,id,view){
  }catch(e){result(false,course,id,view.name,"Page test completed",String(e).slice(0,500));}
  finally{await context.close();}
 }
+/* Focused H446 model-answer typography regression.
+   Uses real lesson pages, real shared CSS/JS, and the normal Next button.
+   J277 gets a temporary inert probe to prove H446-only rules cannot leak. */
+async function auditH446AnswerTypography(browser,view){
+  const samples=[["h446","215"],["h446","216"],["h446","217"],["j277","001"]];
+  const desktop=view.width>=901&&view.height>=500;
+  for(const [course,id] of samples){
+    const context=await browser.newContext({viewport:{width:view.width,height:view.height},isMobile:view.name==="mobile",hasTouch:view.name==="mobile"});
+    const page=await context.newPage();
+    try{
+      await page.goto(ORIGIN+"/lessons/"+course+"/lesson-"+id+"/index.html#you-do",{waitUntil:"domcontentloaded",timeout:25000});
+      await page.waitForFunction(()=>document.querySelector("#you-do.page.active"),null,{timeout:20000});
+      if(course==="j277"){
+        const probe=await page.evaluate(()=>{
+          const root=document.getElementById("you-do");
+          const sample=document.createElement("div");
+          sample.className="youdo-solution";
+          sample.innerHTML="<strong>MODEL ANSWER</strong><p>J277 unchanged-size control</p>";
+          const prior=root.dataset.answerMode;
+          root.dataset.answerMode="true";
+          root.append(sample);
+          const size=parseFloat(getComputedStyle(sample.querySelector("p")).fontSize);
+          sample.remove();
+          if(prior===undefined)delete root.dataset.answerMode;else root.dataset.answerMode=prior;
+          return size;
+        });
+        result(probe>=15&&probe<=20.5,course,id,view.name,"J277 model-answer typography unchanged",String(probe)+"px");
+        continue;
+      }
+      let isAnswer=false;
+      for(let step=0;step<14;step++){
+        isAnswer=await page.evaluate(()=>document.querySelector("#you-do")?.dataset.answerMode==="true");
+        if(isAnswer)break;
+        await page.locator("#advance").evaluate(el=>el.click());
+      }
+      result(isAnswer,course,id,view.name,"H446 reaches model answer");
+      if(!isAnswer)continue;
+      if(id==="216")await page.locator("#advance").evaluate(el=>el.click()); // longer Q2 response
+      const stats=await page.evaluate(()=>{
+        const answers=[...document.querySelectorAll("#you-do .youdo-question .youdo-solution:not([hidden])")];
+        const answer=answers.find(x=>!x.closest("[hidden]")&&x.getBoundingClientRect().width>0);
+        if(!answer)return null;
+        const p=answer.querySelector("p"),heading=answer.querySelector("strong");
+        return {textSize:parseFloat(getComputedStyle(p).fontSize),
+          headingSize:parseFloat(getComputedStyle(heading).fontSize),
+          length:p?.textContent?.trim().length||0,
+          overflowY:getComputedStyle(answer).overflowY,
+          paneHeight:Math.round(answer.getBoundingClientRect().height),
+          docWidth:document.documentElement.scrollWidth,
+          viewportWidth:document.documentElement.clientWidth};
+      });
+      result(!!stats,course,id,view.name,"H446 model-answer panel visible");
+      if(!stats)continue;
+      result(desktop?stats.textSize>=23.5&&stats.textSize<=28.5:stats.textSize<=20.5,
+        course,id,view.name,desktop?"H446 classroom answer text 24–28px":"H446 phone answer text unchanged",JSON.stringify(stats));
+      result(desktop?stats.headingSize>=19.5&&stats.headingSize<=24.5:stats.headingSize<=20.5,
+        course,id,view.name,desktop?"H446 classroom model heading 20–24px":"H446 phone model heading unchanged",JSON.stringify(stats));
+      if(desktop)result(["auto","scroll"].includes(stats.overflowY),course,id,view.name,
+        "H446 model answer remains scrollable",JSON.stringify(stats));
+      result(stats.docWidth<=stats.viewportWidth+5,course,id,view.name,
+        "H446 model answer has no horizontal page overflow",JSON.stringify(stats));
+    }catch(error){
+      result(false,course,id,view.name,"H446/J277 answer-typography browser check completed",String(error).slice(0,500));
+    }finally{await context.close();}
+  }
+}
+
 (async()=>{
  const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
  try{
@@ -161,6 +228,8 @@ async function auditPage(browser,course,id,view){
    const work=targets.filter((_,idx)=>idx%SHARD_COUNT===SHARD_INDEX);
    for(const view of VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))))
      for(const {course,id} of work) await auditPage(browser,course,id,view);
+   if(!FILTER)for(const view of VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))))
+     await auditH446AnswerTypography(browser,view);
  }finally{await browser.close();}
  const summary={testedSamples:Object.entries(COURSES).flatMap(([course,a])=>a.filter(id=>!FILTER||FILTER.includes(course+":"+id)||FILTER.includes(id))).filter((_,idx)=>idx%SHARD_COUNT===SHARD_INDEX).length,
   viewports:VIEWPORTS.filter(v=>!SIZES||SIZES.some(x=>v.name.includes(x))).map(x=>x.name),
