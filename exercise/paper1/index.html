@@ -37,6 +37,21 @@
 .count-note{font-size:12px;color:var(--muted);margin:-4px 0 3px}
 @media(max-width:550px){.count-work{gap:8px}.count-bits{gap:4px}.count-bits .bitbtn{height:51px;min-height:51px;font-size:21px}.count-number-row{font-size:13px}.count-number{width:98px;min-height:43px;font-size:21px}}
 @media(max-width:370px){.count-bits .bitbtn{min-height:47px;height:47px;font-size:19px}.count-bits .bitlabel{font-size:10px}.count-number{width:87px}}
+
+/* File-size working, compact on a phone; no extra navigation or large explanatory panel. */
+.file-step-board{width:min(100%,630px);margin:0 auto;display:grid;gap:8px;padding:6px 0}
+.file-formula{padding:9px 11px;border-radius:9px;background:#edf5ef;color:#164d37;font-weight:800;font-size:14px}
+.file-step{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:4px 0}
+.file-step-label{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;color:#204a37;font-size:14px;font-weight:800}
+.file-step-label small{font-weight:500;color:#607469;font-size:12px}
+.file-step-entry{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.file-step-input{width:130px;max-width:100%;min-height:45px;text-align:center;font-size:19px;font-weight:800;border:2px solid #aacbb8;background:white;border-radius:9px;color:#18392e}
+.file-step-unit{width:49px;font-size:12px;font-weight:750;color:#486b54}
+.image-depth-chart{display:grid;gap:5px;padding:8px 10px;border:1px solid #c7dfd2;border-radius:10px;background:#f8fcf9}
+.image-depth-chart svg{width:100%;height:auto;max-height:115px}
+.image-depth-chart span{font-size:12px;color:#416752}
+@media(max-width:430px){.file-step{gap:5px}.file-step-label{font-size:12px}.file-step-label small{font-size:11px}.file-step-input{width:100px;min-height:42px;font-size:17px}.file-step-unit{width:37px}.file-formula{font-size:13px}.image-depth-chart svg{max-height:102px}}
+
 </style>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -154,10 +169,57 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  }
  case 'units':
    a=pick(r,dif===0?[2,3,4,5]:dif===1?[6,8,9,12]:[15,20,24,32]);b=pick(r,[['KB','bytes'],['MB','KB'],['GB','MB'],['TB','GB']]);return {prompt:`Convert ${a} ${b[0]} into ${b[1]}.`,context:'For this exercise use decimal units: 1 KB = 1,000 bytes.',type:'number',value:a*1000,unit:b[1],hint:'Move one unit down the scale by multiplying by 1,000.',why:`${a} × 1,000 = ${format(a*1000)} ${b[1]}.`};
- case 'text':
-   a=pick(r,dif===0?[8,10,12,20]:dif===1?[24,40,80,120]:[125,200,250,400]);b=pick(r,[8,16]);z=a*b;h=(i+dif)%3===1;return {prompt:`A text file contains ${a} characters at ${b} bits per character. Find its size in ${h?'bytes':'bits'}.`,context:'Ignore metadata or compression.',type:'number',value:h?z/8:z,unit:h?'bytes':'bits',hint:`File size in bits = characters × bits per character.${h?' Divide by 8 to get bytes.':''}`,why:`${a} × ${b} = ${format(z)} bits${h?` = ${format(z/8)} bytes`:''}.`};
- case 'image':
-   a=pick(r,dif===0?[10,20,30]:dif===1?[40,60,80]:[100,120,200]);b=pick(r,[10,20,40]);z=pick(r,[1,2,4,8,16]);h=(i+dif)%3===2 && (a*b*z)%8===0;return {prompt:`An image is ${a} × ${b} pixels with ${z}-bit colour depth. Calculate its size in ${h?'bytes':'bits'}.`,context:'Ignore metadata and compression.',type:'number',value:h?a*b*z/8:a*b*z,unit:h?'bytes':'bits',hint:`Multiply width × height × colour depth.${h?' Divide by 8 to convert bits to bytes.':''}`,why:`${a} × ${b} × ${z} = ${format(a*b*z)} bits${h?` = ${format(a*b*z/8)} bytes`:''}.`};
+ case 'text': {
+   // GCSE/J277: assume 8 bits for the ASCII examples.
+   // Unicode has many possible encodings: 16-bit questions explicitly state a
+   // fixed-width 16-bit representation, never imply Unicode always uses 16 bits.
+   const counts= dif===0?[500,1000,1250,2500,4000,6000]:
+     dif===1?[625,800,1200,1600,2400,3200]:[1200,1500,2500,3200,4000,6000];
+   a=pick(r,counts);
+   b=dif===0?8:pick(r,[8,16]);
+   const encoding=b===8?'8 bits per character (ASCII assumption)':'a specified fixed-width 16-bit Unicode representation';
+   const bits=a*b,bytes=bits/8,kb=bytes/1000;
+   const context='Use 1 byte = 8 bits and 1 KB = 1,000 bytes. Ignore metadata and compression.';
+   if(dif===2){
+     const task=i%3;
+     if(task===1)return {prompt:'A file contains '+a+' characters stored at '+b+' bits each. How many bytes larger is it at 16 bits per character than at 8 bits per character?',
+       context, type:'number',value:a,unit:'bytes',hint:'Find the size for 16 bits and 8 bits per character, then subtract.',
+       why:a+' × (16 − 8) ÷ 8 = '+a+' bytes.'};
+     if(task===2)return {prompt:'A text file uses '+encoding+' and takes '+kb+' KB. How many characters does it contain?',
+       context, type:'number',value:a,unit:'characters',hint:'Convert KB to bytes, then bytes to bits. Divide by bits per character.',
+       why:kb+' × 1,000 × 8 ÷ '+b+' = '+a+' characters.'};
+     return {prompt:'A text file contains '+a+' characters stored using '+encoding+'. Find its size in KB.',
+       context,type:'number',value:kb,unit:'KB',hint:'Characters × bits per character ÷ 8 ÷ 1,000.',
+       why:a+' × '+b+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+   }
+   return {prompt:'A text file contains '+a+' characters stored using '+encoding+'. Calculate its size.',
+     context,type:'textsteps',characters:a,bitsPerCharacter:b,bits,bytes,kb, value:kb,
+     hint:'Multiply '+a+' characters by '+b+' bits each; divide by 8 for bytes, then by 1,000 for KB.',
+     why:a+' × '+b+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+ }
+ case 'image': {
+   const widths=dif===0?[16,20,24,32]:dif===1?[40,48,60,80]:[100,120,200,240];
+   const heights=dif===0?[8,10,16,20]:dif===1?[20,40,60]:[40,80,100];
+   a=pick(r,widths);b=pick(r,heights);
+   // Include tricky boundaries such as 17 colours, where 4 bits are insufficient.
+   const colourOptions=dif===0?[2,4,8,16,17,32]:
+     dif===1?[7,15,17,31,33,65,129]:[16,17,32,33,64,65,129,256];
+   const colours=(i===0)?17:pick(r,colourOptions);
+   const depth=Math.max(1,Math.ceil(Math.log2(colours)));
+   const bits=a*b*depth,bytes=bits/8,kb=bytes/1000;
+   const ctx='Uncompressed image. Ignore metadata. 1 byte = 8 bits; 1 KB = 1,000 bytes.';
+   if(dif===2){
+     const target=i%3===0?'KB':i%3===1?'bytes':'bits';
+     const value=target==='KB'?kb:target==='bytes'?bytes:bits;
+     return {prompt:'An image is '+a+' × '+b+' pixels and contains '+colours+' colours. Calculate its file size in '+target+'.',
+       context:ctx,type:'number',value,unit:target,hint:'Find the smallest n where 2^n covers '+colours+' colours. Then width × height × n.',
+       why:colours+' colours require '+depth+' bits per pixel. '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+   }
+   return {prompt:'An image is '+a+' × '+b+' pixels and has '+colours+' colours. Find its uncompressed file size.',
+     context:ctx,type:'imagesteps',width:a,height:b,colours,depth,bits,bytes,kb,value:kb,
+     hint:'Try powers of 2 to fit '+colours+' colours. Colour depth is '+depth+' bits. Size = width × height × depth.',
+     why:'2^'+(depth-1)+' = '+(2**(depth-1))+' (not enough); 2^'+depth+' = '+(2**depth)+' (enough). '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+ }
  case 'sound':
    a=pick(r,dif===0?[100,500,1000]:dif===1?[1000,2000,4000]:[4000,8000,16000]);b=pick(r,[2,3,4,5]);z=pick(r,[8,16]);h=(i+dif)%3===2;return {prompt:`A ${b}-second sound file is sampled ${format(a)} times per second at ${z}-bit depth. Calculate its size in ${h?'bytes':'bits'}.`,context:'Mono audio; ignore metadata and compression.',type:'number',value:h?a*b*z/8:a*b*z,unit:h?'bytes':'bits',hint:`Sample rate × duration × bit depth.${h?' Divide by 8 for bytes.':''}`,why:`${format(a)} × ${b} × ${z} = ${format(a*b*z)} bits${h?` = ${format(a*b*z/8)} bytes`:''}.`};
  case 'pixels':
@@ -276,6 +338,62 @@ function shiftEightBits(bits,direction){
  const shifted=direction==='left'?((value<<1)&255):value>>>1;
  return binary(shifted).split('').map(Number);
 }
+
+/* Step-by-step calculation for Text File Sizes and Image File Sizes.
+   Keep values as strings until checking so blank answers are not mistaken for 0. */
+function makeFileSteps(p,d){
+ const image=p.type==='imagesteps';
+ answer=image?{depth:'',bits:'',bytes:'',kb:''}:{bits:'',bytes:'',kb:''};
+ const board=document.createElement('div');board.className='file-step-board';
+ const formula=document.createElement('div');formula.className='file-formula';
+ formula.textContent=image?
+  'File size = width × height × colour depth':
+  'File size = characters × bits per character';
+ board.append(formula);
+ if(image){
+  const visual=document.createElement('div');visual.className='image-depth-chart';
+  const depth=p.depth,previous=2**(depth-1),current=2**depth;
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 360 110');
+  svg.setAttribute('role','img');
+  svg.setAttribute('aria-label',p.colours+' colours need '+depth+' bits. '+(depth-1)+' bits can show '+previous+' colours; '+depth+' bits can show '+current+'.');
+  const lineX=110+Math.min(1,p.colours/current)*230;
+  const oldBar=230*previous/current;
+  // All interpolated values are generated numeric quantities, never user HTML.
+  svg.innerHTML=
+  '<text x="0" y="18" font-size="13" font-weight="700" fill="#526a5d">'+(depth-1)+' bits</text>'+
+  '<rect x="110" y="6" width="'+oldBar+'" height="18" rx="4" fill="#a8b6af"/>'+
+  '<text x="110" y="42" font-size="11" fill="#536f5e">'+previous+' colours · not enough</text>'+
+  '<text x="0" y="72" font-size="13" font-weight="800" fill="#006347">'+depth+' bits</text>'+
+  '<rect x="110" y="59" width="230" height="18" rx="4" fill="#16815b"/>'+
+  '<text x="110" y="97" font-size="11" font-weight="700" fill="#006347">'+current+' colours · enough</text>'+
+  '<line x1="'+lineX+'" y1="0" x2="'+lineX+'" y2="83" stroke="#ba7148" stroke-width="2" stroke-dasharray="4 3"/>';
+  const explanation=document.createElement('span');
+  explanation.textContent=p.colours+' colours → '+depth+' bits per pixel';
+  visual.append(svg,explanation);board.append(visual);
+ }
+ function row(label,help,key,unit){
+  const section=document.createElement('label');section.className='file-step';
+  const labelbox=document.createElement('span');labelbox.className='file-step-label';
+  const main=document.createElement('span');main.textContent=label;
+  const secondary=document.createElement('small');secondary.textContent=help;
+  labelbox.append(main,secondary);
+  const inputs=document.createElement('span');inputs.className='file-step-entry';
+  const input=document.createElement('input');input.type='text';input.inputMode='decimal';
+  input.autocomplete='off';input.className='file-step-input';input.placeholder='?';
+  input.setAttribute('aria-label',label);
+  const suffix=document.createElement('span');suffix.className='file-step-unit';suffix.textContent=unit;
+  input.addEventListener('input',()=>{input.value=input.value.replace(/[^0-9.]/g,'');answer[key]=input.value;});
+  inputs.append(input,suffix);section.append(labelbox,inputs);board.append(section);
+ }
+ if(image)row('1. Colour depth','Smallest number of bits for '+p.colours+' colours','depth','bits');
+ row(image?'2. Calculate size':'1. Calculate size',
+   image?p.width+' × '+p.height+' × colour depth':p.characters+' × '+p.bitsPerCharacter,'bits','bits');
+ row(image?'3. Convert to bytes':'2. Convert to bytes','Divide bits by 8','bytes','bytes');
+ row(image?'4. Convert to KB':'3. Convert to KB','Divide bytes by 1,000','kb','KB');
+ d.append(board);
+}
+
 function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
 case 'bits':case 'add':{
   const vals=skill==='shift'&&level==='easy'?binary(p.start).split('').map(Number):Array(8).fill(0);
@@ -449,6 +567,7 @@ case 'countblocks':{
   d.append(panel);
   break;
 }
+case 'textsteps':case 'imagesteps':{makeFileSteps(p,d);break;}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
 case 'hex':{answer=['',''];const disp=document.createElement('div');disp.className='hex-display';let slots=[];for(let k=0;k<2;k++){const b=document.createElement('button');b.type='button';b.className='hex-digit'+(k===0?' cursor':'');b.textContent='–';b.setAttribute('aria-label',`Hexadecimal digit ${k+1}`);b.addEventListener('click',()=>{hexCursor=k;update()});disp.append(b);slots.push(b)}d.append(disp);const pad=document.createElement('div');pad.className='hex-pad';for(const c of '0123456789ABCDEF'){const btn=document.createElement('button');btn.type='button';btn.className='hex-key';btn.textContent=c;btn.addEventListener('click',()=>{if(locked)return;answer[hexCursor]=c;hexCursor=Math.min(1,hexCursor+1);update()});pad.append(btn)}d.append(pad);const clear=document.createElement('button');clear.className='toggle-help';clear.textContent='Erase last digit';clear.addEventListener('click',()=>{if(locked)return;answer[hexCursor]='';update()});d.append(clear);function update(){slots.forEach((b,k)=>{b.textContent=answer[k]||'–';b.classList.toggle('cursor',k===hexCursor)})}break;}
 case 'grid': {
@@ -554,8 +673,8 @@ case 'grid': {
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels':{answer=Array(16).fill(0);const flex=document.createElement('div');flex.style.cssText='display:flex;gap:30px;flex-wrap:wrap;align-items:center';const pattern=document.createElement('div');const label=document.createElement('div');label.className='pixel-note';label.textContent='Binary rows (top to bottom)';pattern.append(label);const values=document.createElement('div');values.className='pixel-rows';for(let y=0;y<4;y++){const row=document.createElement('div');row.textContent=p.value.slice(y*4,y*4+4).join(' ');values.append(row)}pattern.append(values);const board=document.createElement('div');const note=document.createElement('div');note.className='pixel-note';note.textContent='Tap the squares to build the image';board.append(note);const px=document.createElement('div');px.className='pixel-grid';for(let j=0;j<16;j++){const b=document.createElement('button');b.type='button';b.className='pixel-btn';b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, light`);b.addEventListener('click',()=>{if(locked)return;answer[j]=1-answer[j];b.classList.toggle('on',!!answer[j]);b.setAttribute('aria-label',`Pixel row ${Math.floor(j/4)+1} column ${j%4+1}, ${answer[j]?'dark':'light'}`)});px.append(b)}board.append(px);flex.append(pattern,board);d.append(flex);break;}
 }}
-function isAnswered(){if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'countblocks': {
+function isAnswered(){if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'textsteps':return Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'imagesteps':return Number(answer.depth)===p.depth&&Number(answer.bits)===p.bits&&Number(answer.bytes)===p.bytes&&Number(answer.kb)===p.kb;case 'countblocks': {
   if(answer.bits.length!==(p.countMode==='inverse'?8:p.bitCount))return false;
   if(answer.bits.some(bit=>bit!==0&&bit!==1))return false;
   const binaryNumber=answer.bits.reduce((total,bit)=>(total<<1)+bit,0);
@@ -564,7 +683,7 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
   return answer.bits.every(bit=>bit===1)&&Number(answer.max)===p.maxValue&&Number(answer.patterns)===Math.pow(2,p.bitCount);
 }case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
-function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':'Enter an answer before checking.','neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':'Not quite. Check your working and try again.','bad');}}}
+function submit(){if(locked)return;const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':'Not quite. Check your working and try again.'),'bad');}}}
 function next(){if(skill==='convert'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}
@@ -609,7 +728,7 @@ $('check').addEventListener('click',submit);$('next').addEventListener('click',n
 persist();
 // Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
 const directSkill=new URLSearchParams(window.location.search).get('skill');
-if(directSkill==='shift'||directSkill==='count')openSkill(directSkill);
+if(['shift','count','text','image'].includes(directSkill))openSkill(directSkill);
 })();
 </script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
