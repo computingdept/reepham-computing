@@ -15,6 +15,10 @@
   }
   const route='/';
   const clockRoute='/binary-clock.html';
+  function clockHref(){
+    // Return precisely to the lesson/section that launched the clock.
+    return clockRoute+'?from='+encodeURIComponent(location.pathname+location.search+location.hash);
+  }
   function button(existing,kind,href,label){
     const el=existing||document.createElement('a');
     el.href=href;el.classList.add('rhsc-site-nav-button','rhsc-site-nav-'+kind);
@@ -139,7 +143,7 @@
     if(!brand||!original)return;
     const link=document.createElement('a');
     link.className='synergy-brand-icon synergy-clock-shortcut';
-    link.href=clockRoute;
+    link.href=clockHref();
     link.target='_blank';
     link.rel='noopener';
     link.setAttribute('aria-label','Open Binary Clock in a new tab');
@@ -165,7 +169,7 @@
       if(!mount||mount.querySelector('.synergy-corner-mark'))return;
       const mark=document.createElement('a');
       mark.className='synergy-corner-mark';
-      mark.href=clockRoute;
+      mark.href=clockHref();
       mark.target='_blank';
       mark.rel='noopener';
       mark.setAttribute('aria-label','Open Binary Clock in a new tab');
