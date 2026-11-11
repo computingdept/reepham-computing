@@ -327,3 +327,15 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});
   else ready();
 })();
+
+/* Non-visual Web Analytics loader, dormant until a Cloudflare site token is supplied.
+   Shared navigation is loaded on the homepage, hubs and regular lesson pages. */
+(function () {
+  'use strict';
+  if (document.querySelector('script[data-rhsc-analytics-loader]')) return;
+  const script = document.createElement('script');
+  script.src = '/assets/site-analytics.js';
+  script.async = true;
+  script.dataset.rhscAnalyticsLoader = '1';
+  document.head.appendChild(script);
+})();
