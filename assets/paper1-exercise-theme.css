@@ -941,169 +941,228 @@ body.course-hub #practice .pixel-builder-size-input:focus-visible{
  body.course-hub #practice .pixel-builder-row{font-size:11px}
 }
 
-/* DNS Journey — compact interactive network simulation */
-body.course-hub #practice.is-standard .answer-area:has(.dns-board){
- min-height:0;padding:11px 13px;
+
+/* DNS & Web Request Journey — visual GCSE teaching, construction and fault repair. */
+body.course-hub #practice.is-standard .answer-area:has(.dns-learning-board){
+ min-height:0;padding:11px 12px;
 }
-body.course-hub #practice .dns-board{
- width:min(100%,940px);
- margin:0 auto;
+body.course-hub #practice .dns-learning-board{
  display:flex;flex-direction:column;gap:8px;
- color:#244735;
+ width:min(100%,900px);margin:0 auto;
+ color:#274535;
 }
-body.course-hub #practice .dns-scenario{
- display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
- padding:8px 12px;gap:6px 14px;
- background:#f1f7f3;border:1px solid #d9e7dd;border-radius:10px;
+body.course-hub #practice .dns-website{
+ display:flex;align-items:center;justify-content:center;gap:10px;
+ flex-wrap:wrap;min-width:0;
+ padding:8px 12px;background:#f0f7f2;
+ border:1px solid #d9e7dc;border-radius:10px;
 }
-body.course-hub #practice .dns-scenario strong{
- color:#214a35;font-size:15px;
- font-weight:850;overflow-wrap:anywhere;
+body.course-hub #practice .dns-website-label{
+ font-size:10px;font-weight:800;color:#647f69;letter-spacing:.055em;
 }
-body.course-hub #practice .dns-scenario span{
- color:#577162;font-size:12px;font-weight:650;
+body.course-hub #practice .dns-website strong{
+ font-size:clamp(16px,1.8vw,21px);font-weight:850;
+ color:#21513a;overflow-wrap:anywhere;
 }
-body.course-hub #practice .dns-instruction{
- margin:0;text-align:center;color:#526a5a;
- font-size:12px;line-height:1.3;
+body.course-hub #practice .dns-visual-wrap{
+ width:100%;padding:1px 0;
 }
-body.course-hub #practice .dns-heading{
- color:#406452;font-size:11px;letter-spacing:.065em;
- font-weight:850;line-height:1.25;
- margin:2px 0 -3px;
+body.course-hub #practice .dns-visual{
+ display:flex;flex-direction:column;gap:3px;
+ width:100%;max-width:620px;margin:0 auto;
 }
-body.course-hub #practice .dns-slots,
-body.course-hub #practice .dns-bank{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:6px;
- width:100%;
+body.course-hub #practice .dns-visual-line{
+ display:flex;align-items:stretch;justify-content:center;
+ gap:9px;min-width:0;
 }
-body.course-hub #practice .dns-slot,
-body.course-hub #practice .dns-option{
- display:flex;align-items:center;
- box-sizing:border-box;
- width:100%;min-height:46px;
- padding:8px 11px;gap:10px;
- border-radius:9px;
- text-align:left;white-space:normal;
- font:750 13px/1.25 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
- cursor:pointer;
+body.course-hub #practice .dns-visual-node{
+ display:flex;flex-direction:row;align-items:center;justify-content:center;
+ gap:7px;min-width:0;min-height:46px;
+ flex:0 1 135px;
+ border:1.5px solid #d1dfd5;border-radius:10px;
+ padding:5px 8px;background:#fff;color:#3e5b49;
 }
-body.course-hub #practice .dns-slot{
- background:#f7faf8;border:1px dashed #b5cdbb;
- color:#718275;
+body.course-hub #practice .dns-visual-node strong{
+ font-size:12px;line-height:1.2;
+ text-align:center;font-weight:800;
 }
-body.course-hub #practice .dns-slot.filled{
- background:#edf6ef;border:1px solid #8faf9c;
- color:#1f5035;
+body.course-hub #practice .dns-visual-node.active{
+ border-color:#4b9b69;background:#edf7ef;color:#165a36;
 }
-body.course-hub #practice .dns-slot-number{
+body.course-hub #practice .dns-visual-node.failed{
+ border:2px solid #ae6536;background:#fff5eb;color:#884b22;
+}
+body.course-hub #practice .dns-visual-icon{
+ width:23px;height:23px;flex:0 0 23px;
+}
+body.course-hub #practice .dns-visual-arrow{
  display:grid;place-items:center;
- flex:0 0 24px;width:24px;height:24px;
- background:#e4eee7;color:#24533a;
- border-radius:7px;font-size:12px;
+ flex:0 0 25px;min-width:0;
+ color:#4a8460;font-size:24px;font-weight:750;
 }
-body.course-hub #practice .dns-slot-text{
- display:block;min-width:0;overflow-wrap:anywhere;
+body.course-hub #practice .dns-visual-divider{
+ text-align:center;font-size:10px;line-height:1.2;
+ color:#607568;font-weight:750;
 }
-body.course-hub #practice .dns-option{
- background:#fff;
- color:#254934;border:1px solid #b8cfbd;
- justify-content:flex-start;
+body.course-hub #practice .dns-model{
+ display:flex;flex-direction:column;align-items:center;
+ text-align:center;gap:7px;
+ border-top:1px solid #e2eae5;padding:9px 0 2px;
 }
-body.course-hub #practice .dns-option:hover:not(:disabled){
- background:#f0f8f2;border-color:#285348;
+body.course-hub #practice .dns-model-label,
+body.course-hub #practice .dns-section-title{
+ font-size:11px;font-weight:850;letter-spacing:.055em;color:#406452;
 }
-body.course-hub #practice .dns-slot.filled:hover:not(:disabled){
- background:#dfefe3;border-color:#285348;
+body.course-hub #practice .dns-model-explain{
+ margin:0;max-width:660px;
+ font-size:clamp(14px,1.4vw,16px);
+ line-height:1.42;color:#2d4c38;
 }
-body.course-hub #practice .dns-slot:disabled,
-body.course-hub #practice .dns-option:disabled{
- opacity:.65;cursor:default;
+body.course-hub #practice .dns-main-button{
+ box-sizing:border-box;min-height:43px;
+ border:1px solid #285348;background:#285348;color:#fff;
+ padding:9px 21px;border-radius:9px;
+ font-size:14px;font-weight:850;cursor:pointer;
 }
-body.course-hub #practice .dns-test-run:focus-visible,
-body.course-hub #practice .dns-option:focus-visible,
-body.course-hub #practice .dns-slot:focus-visible{
- outline:3px solid #bfa05a;outline-offset:2px;
+body.course-hub #practice .dns-build{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);
+ gap:7px 12px;align-items:start;
 }
-body.course-hub #practice .dns-tests{
- display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
- gap:7px;
+body.course-hub #practice .dns-model[hidden],
+body.course-hub #practice .dns-build[hidden]{display:none!important}
+body.course-hub #practice .dns-build-instructions{
+ grid-column:1 / -1;
+ margin:0 0 2px;text-align:center;
+ color:#466453;font-size:12px;line-height:1.3;
 }
-body.course-hub #practice .dns-test{
- display:flex;flex-direction:column;gap:7px;
- border:1px solid #d8e6dc;border-radius:10px;
- padding:10px 11px;background:#f8fbf8;
+body.course-hub #practice .dns-learning-slots{
+ grid-column:1;grid-row:2 / span 2;
+ display:flex;flex-direction:column;gap:5px;
  min-width:0;
 }
-body.course-hub #practice .dns-test strong{
- color:#274b37;font-size:12px;font-weight:850;
+body.course-hub #practice .dns-build > .dns-section-title{
+ grid-column:2;grid-row:2;
 }
-body.course-hub #practice .dns-test-run{
- min-height:42px;
- border-radius:8px;border:1px solid #285348;
- background:#285348;color:white;
- padding:7px 12px;font-weight:800;font-size:12px;
+body.course-hub #practice .dns-learning-options{
+ grid-column:2;grid-row:3;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:5px;min-width:0;
 }
-body.course-hub #practice .dns-test-run:disabled{
- background:#e8f3eb;border-color:#bed2c4;color:#335b41;
- cursor:default;
-}
-body.course-hub #practice .dns-test-outcome{
- display:block;min-height:30px;
- font-size:12px;line-height:1.3;color:#62776a;
+body.course-hub #practice .dns-learning-slot,
+body.course-hub #practice .dns-learning-choice{
+ box-sizing:border-box;
+ display:flex;align-items:center;gap:9px;
+ width:100%;min-width:0;min-height:42px;
+ padding:6px 9px;border:1px solid #b9d1c0;
+ border-radius:8px;background:#fff;
+ color:#284c37;
+ text-align:left;white-space:normal;
+ font:750 12px/1.25 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
  overflow-wrap:anywhere;
+ cursor:pointer;
 }
-body.course-hub #practice .dns-test-outcome.tested{
- color:#244d36;font-weight:750;
+body.course-hub #practice .dns-learning-slot{
+ background:#f8fbf9;border-style:dashed;color:#63806c;
 }
-body.course-hub #practice .dns-diagnostic-choices{
+body.course-hub #practice .dns-learning-slot.chosen{
+ border-style:solid;background:#eaf5ed;color:#20543a;
+}
+body.course-hub #practice .dns-learning-slot b{
+ flex:0 0 22px;
+ display:grid;place-items:center;
+ width:22px;height:22px;border-radius:6px;
+ background:#dcece1;color:#285348;
+ font-size:12px;
+}
+body.course-hub #practice .dns-learning-choice:hover:not(:disabled){
+ background:#ecf7f0;border-color:#285348;
+}
+body.course-hub #practice .dns-learning-choice:disabled,
+body.course-hub #practice .dns-learning-slot:disabled{
+ cursor:default;opacity:.7;
+}
+body.course-hub #practice .dns-problem{
+ display:flex;flex-wrap:wrap;
+ justify-content:center;align-items:center;
+ gap:6px 13px;
+ border:1px solid #ead3bb;border-radius:9px;
+ padding:8px 11px;background:#fffbf6;
+ font-size:13px;line-height:1.35;
+}
+body.course-hub #practice .dns-problem strong{color:#784621}
+body.course-hub #practice .dns-problem span{color:#5f675c}
+body.course-hub #practice .dns-reason-options{
  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
- gap:7px;
+ gap:6px;
 }
-body.course-hub #practice .dns-diagnostic-option{
- min-height:45px;
- justify-content:center;text-align:center;
+body.course-hub #practice .dns-reason-btn{
+ box-sizing:border-box;width:100%;min-height:59px;
+ padding:9px 12px;cursor:pointer;
+ border:1px solid #b9d1bf;border-radius:9px;background:#fff;
+ color:#2b4e3a;
+ text-align:left;
+ font:750 12px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
 }
-body.course-hub #practice .dns-diagnostic-option[aria-pressed="true"]{
- color:#fff;background:#285348;border-color:#285348;
+body.course-hub #practice .dns-reason-btn[aria-pressed="true"]{
+ background:#285348;border-color:#285348;color:#fff;
 }
-body.course-hub #practice .dns-note{
- margin:0;
- color:#657a6b;
- text-align:center;
- font-size:10px;
+body.course-hub #practice .dns-reason-btn:hover:not([aria-pressed="true"]){
+ background:#f0f8f2;
 }
-@media(max-width:690px){
- body.course-hub #practice .dns-tests{grid-template-columns:1fr;gap:6px}
- body.course-hub #practice .dns-test{
-  display:grid;grid-template-columns:minmax(100px,1fr) auto;
-  align-items:center;gap:4px 10px;
-  padding:8px 9px;
+body.course-hub #practice .dns-main-button:focus-visible,
+body.course-hub #practice .dns-learning-choice:focus-visible,
+body.course-hub #practice .dns-learning-slot:focus-visible,
+body.course-hub #practice .dns-reason-btn:focus-visible{
+ outline:3px solid #bd9d55;outline-offset:2px;
+}
+body.course-hub #practice .dns-learning-note{
+ margin:1px 0 0;text-align:center;
+ color:#5a7563;font-size:11px;font-weight:650;
+}
+@media(max-width:700px){
+ body.course-hub #practice .dns-build{
+  grid-template-columns:1fr;
+  gap:7px;
  }
- body.course-hub #practice .dns-test-outcome{grid-column:1 / -1;min-height:0}
- body.course-hub #practice .dns-diagnostic-choices{grid-template-columns:1fr}
+ body.course-hub #practice .dns-build-instructions,
+ body.course-hub #practice .dns-learning-slots,
+ body.course-hub #practice .dns-build > .dns-section-title,
+ body.course-hub #practice .dns-learning-options{
+  grid-column:1;grid-row:auto;
+ }
+ body.course-hub #practice .dns-learning-options{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ body.course-hub #practice .dns-reason-options{
+  grid-template-columns:1fr;
+ }
+ body.course-hub #practice .dns-reason-btn{
+  min-height:44px;
+ }
 }
-@media(max-width:520px){
- body.course-hub #practice.is-standard .answer-area:has(.dns-board){
+@media(max-width:440px){
+ body.course-hub #practice.is-standard .answer-area:has(.dns-learning-board){
   padding:8px 8px;
  }
- body.course-hub #practice .dns-board{gap:7px}
- body.course-hub #practice .dns-scenario{
-  padding:8px 9px;gap:3px 10px;
+ body.course-hub #practice .dns-learning-board{gap:7px}
+ body.course-hub #practice .dns-visual-line{gap:4px}
+ body.course-hub #practice .dns-visual-node{
+  flex:0 1 105px;min-height:44px;
+  padding:5px;gap:4px;
  }
- body.course-hub #practice .dns-scenario strong{font-size:13px}
- body.course-hub #practice .dns-scenario span{font-size:11px}
- body.course-hub #practice .dns-slots,
- body.course-hub #practice .dns-bank{
-  grid-template-columns:1fr;gap:5px;
+ body.course-hub #practice .dns-visual-node strong{font-size:10px}
+ body.course-hub #practice .dns-visual-arrow{
+  flex-basis:15px;font-size:19px;
  }
- body.course-hub #practice .dns-slot,
- body.course-hub #practice .dns-option{
-  min-height:44px;padding:7px 9px;font-size:12px;
+ body.course-hub #practice .dns-visual-icon{
+  width:18px;height:18px;flex-basis:18px;
  }
- body.course-hub #practice .dns-diagnostic-choices .dns-option{
-  text-align:left;justify-content:flex-start;
+ body.course-hub #practice .dns-learning-options{
+  grid-template-columns:1fr;
+ }
+ body.course-hub #practice .dns-learning-choice,
+ body.course-hub #practice .dns-learning-slot{
+  font-size:12px;min-height:43px;
  }
 }
