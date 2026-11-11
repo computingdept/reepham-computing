@@ -121,7 +121,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <link rel="stylesheet" href="/assets/paper1-skills-layout.css?v=20261110-applearrows1">
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
-<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-ascii1">
+<link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-imagecompact1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -274,27 +274,41 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
      why:a+' × '+b+(targetUnit==='bits'?'':' ÷ 8'+(targetUnit==='KB'?' ÷ 1,000':''))+' = '+value+' '+targetUnit+'.'};
  }
  case 'image': {
-   const widths=dif===0?[16,20,24,32]:dif===1?[40,48,60,80]:[100,120,200,240];
-   const heights=dif===0?[8,10,16,20]:dif===1?[20,40,60]:[40,80,100];
-   a=pick(r,widths);b=pick(r,heights);
-   // Include tricky boundaries such as 17 colours, where 4 bits are insufficient.
-   const colourOptions=dif===0?[2,4,8,16,17,32]:
-     dif===1?[7,15,17,31,33,65,129]:[16,17,32,33,64,65,129,256];
-   const colours=(i===0)?17:pick(r,colourOptions);
-   const depth=Math.max(1,Math.ceil(Math.log2(colours)));
+   // Questions alternate between explicitly supplied bit depth, number of colours,
+   // and (on harder levels) both. A supplied depth must be used as specified.
+   const widths=dif===0?[32,40,80,100,200]:dif===1?[40,60,80,100,160,200]:[100,120,200,240,640];
+   const heights=dif===0?[16,40,80,100]:dif===1?[16,40,80,100,120]:[40,80,100,120,240];
+   a=i===0&&dif===0?32:pick(r,widths);
+   b=i===0&&dif===0?16:pick(r,heights);
+   const mode=dif===0?(i%2===0?'colours':'given'):
+     dif===1?(['given','colours','both'][i%3]):(['colours','both','given'][i%3]);
+   const palette=dif===0?[2,4,8,16,17,32,33]:
+     dif===1?[7,15,16,17,31,32,33,65,129]:[16,17,32,33,64,65,129,256,257];
+   const colours=(i===0&&dif===0)?17:pick(r,palette);
+   const minDepth=Math.max(1,Math.ceil(Math.log2(colours)));
+   const givenDepth=pick(r,[1,2,3,4,5,8,9]);
+   const depth=mode==='colours'?minDepth:
+     mode==='both'?Math.max(minDepth,givenDepth):givenDepth;
+   const target=dif===0?(i%2===0?'KB':'bytes'):
+     dif===1?(['KB','bytes','bits'][i%3]):(['KB','bytes','bits'][i%3]);
    const bits=a*b*depth,bytes=bits/8,kb=bytes/1000;
-   const ctx='Uncompressed image. Ignore metadata. 1 byte = 8 bits; 1 KB = 1,000 bytes.';
-   if(dif===2){
-     const target=i%3===0?'KB':i%3===1?'bytes':'bits';
-     const value=target==='KB'?kb:target==='bytes'?bytes:bits;
-     return {prompt:'An image is '+a+' × '+b+' pixels and contains '+colours+' colours. Calculate its file size in '+target+'.',
-       context:ctx,type:'number',value,unit:target,hint:'Find the smallest n where 2^n covers '+colours+' colours. Then width × height × n.',
-       why:colours+' colours require '+depth+' bits per pixel. '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
-   }
-   return {prompt:'An image is '+a+' × '+b+' pixels and has '+colours+' colours. Find its uncompressed file size.',
-     context:ctx,type:'imagesteps',width:a,height:b,colours,depth,bits,bytes,kb,value:kb,
-     hint:'Try powers of 2 to fit '+colours+' colours. Colour depth is '+depth+' bits. Size = width × height × depth.',
-     why:'2^'+(depth-1)+' = '+(2**(depth-1))+' (not enough); 2^'+depth+' = '+(2**depth)+' (enough). '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'};
+   const value=target==='bits'?bits:target==='bytes'?bytes:kb;
+   const description=mode==='colours'?'can display '+colours+' colours':
+     mode==='both'?'can display '+colours+' colours and uses '+depth+' bits per pixel':
+     'uses a colour depth of '+depth+' bits per pixel';
+   const explanation=mode==='colours'?
+     colours+' colours need '+depth+' bits per pixel (2^'+(depth-1)+' = '+(2**(depth-1))+' is too few; 2^'+depth+' = '+(2**depth)+' is sufficient).':
+     'Use the specified colour depth of '+depth+' bits per pixel.';
+   return {
+     type:'imagecompact',
+     prompt:'An uncompressed image is '+a+' × '+b+' pixels and '+description+'. Calculate its size in '+target+'.',
+     context:'Ignore metadata. 1 byte = 8 bits; 1 KB = 1,000 bytes.',
+     width:a,height:b,colours:mode==='given'?null:colours,
+     mode,depth,depthGiven:mode!=='colours',
+     bits,bytes,kb,targetUnit:target,value,
+     hint:'Read the question carefully. If bits per pixel are given, use them. If only colours are given, find the smallest number of bits whose power of two covers them.',
+     why:explanation+' '+a+' × '+b+' × '+depth+' = '+bits+' bits = '+bytes+' bytes = '+kb+' KB.'
+   };
  }
  case 'sound':
    a=pick(r,dif===0?[100,500,1000]:dif===1?[1000,2000,4000]:[4000,8000,16000]);b=pick(r,[2,3,4,5]);z=pick(r,[8,16]);h=(i+dif)%3===2;return {prompt:`A ${b}-second sound file is sampled ${format(a)} times per second at ${z}-bit depth. Calculate its size in ${h?'bytes':'bits'}.`,context:'Mono audio; ignore metadata and compression.',type:'number',value:h?a*b*z/8:a*b*z,unit:h?'bytes':'bits',hint:`Sample rate × duration × bit depth.${h?' Divide by 8 for bytes.':''}`,why:`${format(a)} × ${b} × ${z} = ${format(a*b*z)} bits${h?` = ${format(a*b*z/8)} bytes`:''}.`};
@@ -661,6 +675,129 @@ function makeAsciiCodeBuilder(p,d){
  board.append(note);d.append(board);
 }
 
+function makeCompactImage(p,d){
+ // Guided levels test interpreting the wording first. Hard assesses the final answer
+ // directly so pupils can perform their working on paper and type the result.
+ const hard=level==='hard';
+ answer={kind:hard?'independent':'',depth:p.depthGiven?String(p.depth):'',final:'',cancel8:false,cancel1000:false};
+ const board=document.createElement('div');
+ board.className='image-compact-board text-cancel-board';
+ board.setAttribute('role','group');board.setAttribute('aria-label','Image file size practice');
+
+ let depthInput=null;
+ if(!hard){
+   const step=document.createElement('div');step.className='image-compact-decision';
+   const caption=document.createElement('strong');caption.textContent='Is colour depth given?';
+   const choices=document.createElement('div');choices.className='image-compact-choices';
+   const response=document.createElement('span');response.className='image-compact-response';
+   response.setAttribute('role','status');
+   for(const [text,kind] of [['Yes · bits per pixel','given'],['No · number of colours','colours']]){
+     const button=document.createElement('button');button.type='button';
+     button.className='image-compact-choice';button.textContent=text;
+     button.setAttribute('aria-pressed','false');
+     button.addEventListener('click',()=>{
+       if(locked)return;
+       const expected=p.depthGiven?'given':'colours';
+       if(kind!==expected){
+         response.textContent='Check the wording: are bits per pixel specified?';
+         return;
+       }
+       answer.kind=kind;
+       choices.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+       response.textContent=kind==='given'?'Use the stated bit depth.':'Find the minimum bits per pixel.';
+       depthSection.hidden=kind==='given';
+       redraw();
+     });
+     choices.append(button);
+   }
+   step.append(caption,choices,response);
+   board.append(step);
+ }
+ const depthSection=document.createElement('label');
+ depthSection.className='image-compact-depth';
+ const depthLabel=document.createElement('span');depthLabel.textContent='Colour depth =';
+ depthInput=document.createElement('input');depthInput.type='text';depthInput.inputMode='numeric';
+ depthInput.maxLength=2;depthInput.autocomplete='off';depthInput.placeholder='?';
+ depthInput.className='image-compact-depth-input';depthInput.setAttribute('aria-label','Colour depth in bits per pixel');
+ depthInput.addEventListener('input',()=>{
+   if(locked)return;
+   depthInput.value=depthInput.value.replace(/[^0-9]/g,'');
+   answer.depth=depthInput.value;redraw();
+ });
+ const depthUnit=document.createElement('span');depthUnit.textContent='bits per pixel';
+ depthSection.append(depthLabel,depthInput,depthUnit);
+ if(hard||p.depthGiven)depthSection.hidden=true;
+ else depthSection.hidden=true; // Show only after choosing "number of colours".
+ board.append(depthSection);
+ if(!hard&&!p.depthGiven){
+   const details=document.createElement('details');details.className='image-compact-details';
+   const summary=document.createElement('summary');summary.textContent='How to find colour depth';
+   const content=document.createElement('span');
+   content.textContent='Find the smallest n such that 2^n is at least the number of colours. For example, 2 bits cover 4 colours and 3 bits cover 8.';
+   details.append(summary,content);board.append(details);
+ }
+ const formula=document.createElement('div');formula.className='text-cancel-caption image-compact-caption';
+ formula.textContent='Width × height × bits per pixel'+(p.targetUnit==='bits'?'':' ÷ 8'+(p.targetUnit==='KB'?' ÷ 1,000':''));
+ board.append(formula);
+ const fraction=document.createElement('div');fraction.className='text-cancel-fraction image-compact-fraction';
+ fraction.setAttribute('role','group');fraction.setAttribute('aria-label','Calculate the file size');
+ const numerator=document.createElement('div');numerator.className='text-cancel-top';
+ const rule=document.createElement('div');rule.className='text-cancel-rule';
+ const denominator=document.createElement('div');denominator.className='text-cancel-bottom';
+ fraction.append(numerator,rule,denominator);board.append(fraction);
+ const toolrow=document.createElement('div');toolrow.className='image-compact-tools';
+ const btn8=document.createElement('button');btn8.type='button';btn8.className='text-cancel-btn';
+ btn8.textContent='Cancel 8s';
+ btn8.addEventListener('click',()=>{
+   if(locked||answer.cancel8||!readyDepth())return;
+   answer.cancel8=true;btn8.disabled=true;btn8.textContent='✓ 8s cancelled';redraw();
+ });
+ const btn1000=document.createElement('button');btn1000.type='button';btn1000.className='text-cancel-btn';
+ btn1000.textContent='Cancel 1,000';
+ btn1000.addEventListener('click',()=>{
+   if(locked||answer.cancel1000||!answer.cancel8||!readyDepth())return;
+   answer.cancel1000=true;btn1000.disabled=true;btn1000.textContent='✓ 1,000 cancelled';redraw();
+ });
+ if(level==='easy'&&p.targetUnit!=='bits'&&p.height%8===0){
+   toolrow.append(btn8);
+   if(p.targetUnit==='KB'&&(p.width*(p.height/8))%1000===0){
+     btn1000.hidden=true;toolrow.append(btn1000);
+   }
+   board.append(toolrow);
+ }
+ const result=document.createElement('label');result.className='text-cancel-row text-cancel-result image-compact-result';
+ const resultTitle=document.createElement('span');resultTitle.textContent='Answer =';
+ const entry=document.createElement('input');entry.type='text';entry.inputMode='decimal';
+ entry.autocomplete='off';entry.className='text-cancel-input';entry.placeholder='?';
+ entry.setAttribute('aria-label','Final image size in '+p.targetUnit);
+ entry.addEventListener('input',()=>{
+   if(locked)return;entry.value=entry.value.replace(/[^0-9.]/g,'');
+   answer.final=entry.value;
+ });
+ const unit=document.createElement('span');unit.textContent=p.targetUnit;
+ result.append(resultTitle,entry,unit);board.append(result);
+ function readyDepth(){
+   return answer.kind!==''&&/^[0-9]+$/.test(answer.depth)&&Number(answer.depth)>0;
+ }
+ function redraw(){
+   const entered=hard&&!p.depthGiven?'?':p.depthGiven?String(p.depth):answer.depth||'?';
+   let width=String(p.width),height=String(p.height),num=entered;
+   let denom=p.targetUnit==='bits'?'':p.targetUnit==='KB'?'8 × 1,000':'8';
+   if(answer.cancel8){
+     height=String(p.height/8);
+     denom=p.targetUnit==='KB'?'1,000':'';
+   }
+   if(answer.cancel1000){
+     width=String(p.width*(p.height/8)/1000);
+     height='1';denom='';
+   }
+   numerator.textContent=width+' × '+height+' × '+num;
+   denominator.textContent=denom;rule.hidden=!denom;
+   btn1000.hidden=btn1000.isConnected&&!answer.cancel8;
+ }
+ redraw();d.append(board);
+}
+
 function makeFileSteps(p,d){
  const image=p.type==='imagesteps';
  answer=image?{depth:'',bits:'',bytes:'',kb:''}:{bits:'',bytes:'',kb:''};
@@ -899,6 +1036,7 @@ case 'countblocks':{
   break;
 }
 case 'ascii':{makeAsciiCodeBuilder(p,d);break;}
+case 'imagecompact':{makeCompactImage(p,d);break;}
 case 'textcancel':{makeTextCancellation(p,d);break;}
 case 'textsteps':case 'imagesteps':{makeFileSteps(p,d);break;}
 case 'number':{const line=document.createElement('div');line.className='inputline';const inp=document.createElement('input');inp.className='numfield';inp.type='text';inp.inputMode='numeric';inp.autocomplete='off';inp.placeholder='Your answer';inp.setAttribute('aria-label','Your numerical answer');inp.addEventListener('input',()=>answer=inp.value);line.append(inp);if(p.unit){let unit=document.createElement('span');unit.className='suffix';unit.textContent=p.unit;line.append(unit)}d.append(line);break;}
@@ -1068,8 +1206,17 @@ case 'pixels': {
   break;
 }
 }}
-function isAnswered(){if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'ascii':
+function isAnswered(){if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'imagecompact': {
+   const final=answer.final.trim();
+   if(!/^[0-9]+(?:[.][0-9]+)?$/.test(final))return false;
+   if(Math.abs(Number(final)-p.value)>0.00000001)return false;
+   if(level==='hard')return true;
+   if(answer.kind!==(p.depthGiven?'given':'colours'))return false;
+   if(!p.depthGiven&&(!/^[0-9]+$/.test(answer.depth.trim())||Number(answer.depth)!==p.depth))return false;
+   return true;
+  }
+ case 'ascii':
   return p.rows.every((expected,i)=>/^\d{1,3}$/.test(answer[i].denary)&&
     Number(answer[i].denary)===expected.denary&&
     /^[01]{8}$/.test(answer[i].binary)&&
@@ -1083,7 +1230,7 @@ function validate(){const p=question;if(!isAnswered())return null;switch(p.type)
   return answer.bits.every(bit=>bit===1)&&Number(answer.max)===p.maxValue&&Number(answer.patterns)===Math.pow(2,p.bitCount);
 }case 'number':{const norm=String(answer).replace(/[ ,]/g,'');return norm!==''&&/^\d+(?:\.\d+)?$/.test(norm)&&Number(norm)===p.value;}case 'grid':return Number(answer.denary)===p.value&&bitsNumber(answer.bits)===p.value&&Number(answer.nibs[0])===Math.floor(p.value/16)&&Number(answer.nibs[1])===p.value%16&&answer.hex.join('')===p.value.toString(16).toUpperCase().padStart(2,'0');case 'bits':return bitsNumber(answer.bits)===p.value;case 'add':return bitsNumber(answer.bits)===p.value&&answer.overflow===p.overflow;case 'hex':return answer.join('')===p.value;case 'choice':return answer===p.value;case 'pixels':return answer.every((v,i)=>v===p.value[i]);}}
 function showMsg(msg,type){const box=$('feedback');box.className='feedback '+type;box.textContent=msg;}
-function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
+function submit(){if(locked)return;if(question.type==='textcancel'&&level==='easy'&&question.cancel8&&!answer.cancel8){showMsg('Cancel the matching 8s before checking.','neutral');return;}if(question.type==='textcancel'&&level==='easy'&&question.cancel1000&&!answer.cancel1000){showMsg('Cancel the three zeros before checking.','neutral');return;}const ok=validate();if(ok===null){showMsg(question.type==='imagecompact'?'Choose whether colour depth is given, calculate it if needed, and type your final answer.':question.type==='grid'?'Complete the denary box, both nibble totals and both hex digits before checking.':question.type==='ascii'?'Fill in the denary value and all eight binary digits for each letter.':question.type==='countblocks'?'Complete the binary boxes and the number blanks before checking.':(question.type==='textsteps'||question.type==='imagesteps'?'Complete each calculation box before checking.':question.type==='textcancel'?'Fill in the answer'+(level==='medium'&&question.cancel8?' and the simplified multiplier':'')+'.':'Enter an answer before checking.'),'neutral');return;}if(ok){score++;mark();locked=true;$('show-answer').hidden=true;showMsg(level==='hard'?'Answer recorded.':'Correct! '+question.why,'good');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{wrong++;if(level==='hard'){locked=true;$('show-answer').hidden=true;showMsg('Answer recorded. Your score will appear after question 10.','neutral');$('check').classList.add('hidden');$('clear').classList.add('hidden');$('next').classList.remove('hidden');$('hint').classList.add('hidden');}else{if(question.type==='grid'){const misses=[];if(Number(answer.denary)!==question.value)misses.push('denary');if(bitsNumber(answer.bits)!==question.value)misses.push('binary bits');if(Number(answer.nibs[0])!==Math.floor(question.value/16)||Number(answer.nibs[1])!==question.value%16)misses.push('four-bit group values');if(answer.hex.join('')!==question.value.toString(16).toUpperCase().padStart(2,'0'))misses.push('hexadecimal digits');showMsg('Check your '+misses.join(', ')+'. Then try again.','bad')}else showMsg(question.type==='imagecompact'?'Check the colour-depth decision and your calculation. Then try again.':question.type==='ascii'?'Check the letter codes and all eight binary digits, including leading zeroes.':question.type==='countblocks'?'Check the binary boxes and both number blanks. Then try again.':(question.type==='textsteps'||question.type==='imagesteps'?'Check each calculation, including the unit conversions. Then try again.':question.type==='textcancel'?'Check your simplified fraction and answer, then try again.':'Not quite. Check your working and try again.'),'bad');}}}
 function next(){if(skill==='units'){if(!locked)return;index+=matchSizes[level];if(index>=matchTotals[level])matchFinish();else matchRound();return;}if(skill==='convert'||skill==='ascii'){index++;renderQuestion();scrollTop();return}if(index<9){index++;renderQuestion();scrollTop()}else results()}
 function results(){$('wb-question-count').textContent='Completed';$('practice').classList.remove('is-paper-challenge');$('paper-challenge').classList.add('hidden');$('paper-mark-actions').classList.add('hidden');$('show-answer').hidden=true;const d=$('question-content');d.replaceChildren();const f=document.createElement('div');f.className='finish';f.innerHTML=`<span class="kicker">Practice completed</span><h2>${specs[skill].name} · ${level[0].toUpperCase()+level.slice(1)}</h2><strong>${score} / 10</strong><p>${level==='hard'?skill==='convert'?'Correct answers you marked from your written work.':'Score from first submissions.': 'Questions answered correctly. Incorrect attempts can be improved by retrying the question.'} Choose another difficulty or return to the skills hub.</p>`;const a=document.createElement('button');a.className='btn primary';a.textContent='Choose another exercise';a.addEventListener('click',home);f.append(a);d.append(f);$('qpos').textContent='Completed';$('meter').style.width='100%';$('mode-note').textContent='Review';$('feedback').className='hidden';$('hint-area').classList.add('hidden');$('hint').classList.add('hidden');$('clear').classList.add('hidden');$('check').classList.add('hidden');$('next').classList.add('hidden');}
 function reset(){if(skill==='units')return;if(!question||locked)return;paintInput();$('feedback').classList.add('hidden');}

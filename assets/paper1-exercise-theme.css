@@ -660,3 +660,112 @@ body.course-hub #practice .ascii-note{
  }
  body.course-hub #practice .ascii-binary{letter-spacing:0}
 }
+
+/* Image File Sizes — compact, decision-first calculation; no pre-revealed depth. */
+body.course-hub #practice.is-standard .answer-area:has(.image-compact-board){
+ min-height:0;
+ padding:10px 14px;
+}
+body.course-hub #practice .image-compact-board{
+ width:min(100%,700px);
+ margin:0 auto;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:8px;
+ padding:0;
+ color:#254835;
+}
+body.course-hub #practice .image-compact-decision{
+ width:100%;
+ display:flex;align-items:center;justify-content:center;
+ flex-wrap:wrap;gap:7px 10px;
+}
+body.course-hub #practice .image-compact-decision strong{
+ color:#294d37;font-size:13px;font-weight:800;
+}
+body.course-hub #practice .image-compact-choices{
+ display:inline-flex;flex-wrap:wrap;justify-content:center;
+ gap:4px;padding:3px;border:1px solid #d7e5dc;
+ background:#f2f8f4;border-radius:10px;
+}
+body.course-hub #practice .image-compact-choice{
+ min-height:39px;padding:7px 12px;
+ border:1px solid transparent;border-radius:8px;
+ background:transparent;color:#285348;font-size:12px;font-weight:800;
+}
+body.course-hub #practice .image-compact-choice[aria-pressed="true"]{
+ background:#285348;color:white;border-color:#285348;
+}
+body.course-hub #practice .image-compact-choice:focus-visible,
+body.course-hub #practice .image-compact-depth-input:focus-visible{
+ outline:3px solid #bda15d;outline-offset:2px;
+}
+body.course-hub #practice .image-compact-response{
+ flex:0 0 100%;
+ text-align:center;color:#547262;
+ font-size:11px;line-height:1.25;
+}
+body.course-hub #practice .image-compact-response:empty{display:none}
+body.course-hub #practice .image-compact-depth{
+ display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;
+ color:#385944;font-size:13px;font-weight:750;
+}
+body.course-hub #practice .image-compact-depth[hidden]{display:none}
+body.course-hub #practice .image-compact-depth-input{
+ width:68px;height:38px;text-align:center;
+ border:1.5px solid #9ebfa9;border-radius:8px;
+ background:white;color:#285348;
+ font-size:19px;font-weight:800;
+}
+body.course-hub #practice .image-compact-details{
+ align-self:center;max-width:630px;
+ font-size:11px;line-height:1.35;
+ color:#536e5d;
+}
+body.course-hub #practice .image-compact-details summary{
+ cursor:pointer;font-weight:750;
+}
+body.course-hub #practice .image-compact-details span{
+ display:block;margin:4px 0 0;
+}
+body.course-hub #practice .image-compact-caption{
+ padding:7px 10px;
+ font-size:13px;
+}
+body.course-hub #practice .image-compact-fraction{
+ padding:1px 9px 0;min-width:180px;
+ font-size:clamp(21px,2.8vw,27px);
+ gap:2px;
+}
+body.course-hub #practice .image-compact-fraction .text-cancel-bottom{
+ min-height:25px;
+}
+body.course-hub #practice .image-compact-tools{
+ display:flex;justify-content:center;gap:7px;flex-wrap:wrap;
+}
+body.course-hub #practice .image-compact-tools:empty{display:none}
+body.course-hub #practice .image-compact-tools .text-cancel-btn{
+ min-height:37px;padding:6px 12px;font-size:12px;
+}
+body.course-hub #practice .image-compact-result{
+ margin-top:2px;
+ grid-template-columns:minmax(75px,1fr) minmax(90px,140px) 52px;
+ max-width:380px;
+}
+body.course-hub #practice .image-compact-result .text-cancel-input{
+ min-height:44px;font-size:20px;
+}
+@media(max-width:540px){
+ body.course-hub #practice.is-standard .answer-area:has(.image-compact-board){
+  padding:9px 8px;
+ }
+ body.course-hub #practice .image-compact-board{gap:7px}
+ body.course-hub #practice .image-compact-decision{gap:5px}
+ body.course-hub #practice .image-compact-choices{gap:3px}
+ body.course-hub #practice .image-compact-choice{min-height:41px;padding:6px 8px;font-size:11px}
+ body.course-hub #practice .image-compact-result{
+  grid-template-columns:75px minmax(90px,135px) 52px;
+  width:100%;
+ }
+}
