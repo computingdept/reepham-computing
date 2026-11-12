@@ -124,6 +124,44 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 #practice.triple-mode #triple-history summary{cursor:pointer;font-weight:800}
 #practice.triple-mode #triple-history .log{margin-top:8px}
 @media(max-width:540px){#practice .triple-calculation{padding-left:16px}#practice .triple-grid{gap:3px}#practice .triple-operand span{height:39px;font-size:clamp(17px,4.6vw,22px)}#practice .triple-result-cell{height:45px;font-size:21px}#practice .triple-carry-cell{height:33px;font-size:18px}#practice .triple-third:before{left:-15px;font-size:18px}}
+
+/* H446 subtraction: aligned place-value borrow workspace; local to this mode. */
+#practice.borrow-mode .panels{display:block;max-width:1080px;margin:auto}
+#practice.borrow-mode .panel[aria-label="Current question"]{width:100%}
+#practice .borrow-board{width:min(100%,950px);padding:4px 0}
+#practice .borrow-calc{padding-left:20px}
+#practice .borrow-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;width:100%;align-items:center}
+#practice .borrow-grid>*{min-width:0}
+#practice .borrow-label{font-size:14px;color:#355c43;font-weight:850;margin:11px 0 4px}
+#practice .borrow-weights span{font-size:12px;color:#536e5a;font-weight:800;text-align:center}
+#practice .borrow-stock-row{margin:4px 0 8px}
+#practice .borrow-stock{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;height:74px;width:100%;background:#f6faf7;color:#224332;border:2px solid #c4d9cb;border-radius:8px;padding:3px 0}
+#practice .borrow-stock small{height:16px;font:750 12px/1 Consolas,monospace;color:#a2694b}
+#practice .borrow-stock small s{text-decoration-thickness:2px}
+#practice .borrow-stock strong{font:900 clamp(20px,2.2vw,29px)/1 Consolas,monospace}
+#practice .borrow-stock.guided{background:#fff4e1;border-color:#c18d37;box-shadow:0 0 0 2px #f6e5c2}
+#practice .borrow-stock.exchanged{background:#eaf5ed}
+#practice .borrow-stock:disabled,#practice .borrow-result:disabled{cursor:default}
+#practice .borrow-stock:not(:disabled):hover{border-color:#ac863d}
+#practice .borrow-exchange{display:flex;gap:7px;align-items:center;flex-wrap:wrap;border-left:3px solid #be9140;background:#faf7ed;border-radius:5px;padding:8px 12px;margin:8px 0;font-size:14px}
+#practice .borrow-exchange s{color:#a36144;font-weight:850}
+#practice .borrow-exchange strong{color:#2e6446}
+#practice .borrow-number{margin:5px 0}
+#practice .borrow-number span{height:44px;display:grid;place-items:center;border:1px solid #dae6de;border-radius:8px;background:#f7faf8;color:#234331;font:900 clamp(18px,2.3vw,28px)/1 Consolas,monospace}
+#practice .borrow-bottom{position:relative}
+#practice .borrow-bottom:before{content:'−';position:absolute;left:-19px;top:50%;transform:translateY(-50%);font:900 23px/1 Consolas,monospace}
+#practice .borrow-line{border-top:2px solid #567a60;margin:11px 0 8px}
+#practice .borrow-result{height:52px;width:100%;display:grid;place-items:center;border:2px solid #99bca6;border-radius:8px;background:white;color:#234c38;font:900 clamp(19px,2.3vw,29px)/1 Consolas,monospace}
+#practice .borrow-result.active{border-color:#bd8d39;background:#fff7e8;box-shadow:0 0 0 2px #f5e4c0}
+#practice .borrow-result.checked{border-color:#bad7c4;background:#eaf5ed}
+#practice .borrow-golden{border-left:4px solid #285348;border-radius:5px;background:#f0f7f2;padding:8px 12px;font-size:14px;line-height:1.45;margin:8px 0}
+#practice .borrow-progress{font-weight:750;font-size:14px;color:#32573f;margin:12px 0}
+#practice .borrow-undo{margin:4px 0;padding:7px 12px;border:1px solid #a7c5af;border-radius:7px;background:white;color:#285348;font-size:13px;font-weight:800}
+#practice.borrow-mode #borrow-support{max-width:950px;margin:12px 0}
+#practice.borrow-mode #borrow-support .help{display:inline-block;margin-right:14px}
+#practice.borrow-mode #borrow-history summary{cursor:pointer;font-size:14px;font-weight:800}
+@media(max-width:540px){#practice .borrow-calc{padding-left:16px}#practice .borrow-grid{gap:3px}#practice .borrow-stock{height:64px}#practice .borrow-stock small{font-size:10px;height:14px}#practice .borrow-number span{height:40px;font-size:19px}#practice .borrow-result{height:46px;font-size:21px}#practice .borrow-bottom:before{left:-15px;font-size:19px}}
+
 </style>
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 </head>
@@ -168,6 +206,7 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 <div class="actions"><button class="btn primary" id="check">Check step →</button><button class="btn" id="clear">Clear step</button><button class="btn primary" id="next" hidden>Next question →</button></div>
 <div class="feedback" id="feedback" role="status" hidden></div><div class="done" id="done" hidden></div>
 <div id="triple-support" hidden><div id="triple-help-controls"></div><details id="triple-history"><summary>Completed column working</summary></details></div>
+<div id="borrow-support" hidden><div id="borrow-help-controls"></div><details id="borrow-history"><summary>Completed column working</summary></details></div>
 </section>
 <aside class="panel" id="working-panel"><h2>Your working</h2><p class="sidelead">Completed steps remain visible, as in a worked exam answer.</p>
 <ol id="log" class="log"></ol><button class="help" id="hint">Show a hint</button>
@@ -193,6 +232,7 @@ var pools={
 var skill='',level='easy',count=0,step=0,carry=0,out='',q={},widget=null,errors=0,lastConversion=null;
 var progressKey='rhs-h446-binary-skills-progress';
 var tripleResult=[],tripleCarry=[],tripleOverflow='';
+var borrowAvailable=[],borrowBefore=[],borrowResult=[],borrowExchange=null,borrowUndo=[];
 function recordCorrect(){
  try{
   var all=JSON.parse(localStorage.getItem(progressKey)||'{}')||{};
@@ -275,13 +315,16 @@ function configureShiftGuidance(){
  $('practice').classList.toggle('shift-mode',isShift);
  $('working-panel').hidden=isShift;
  $('shift-guidance').hidden=!isShift;
- var isTriple=skill==='triple';
+ var isTriple=skill==='triple',isBorrow=skill==='borrow';
  $('practice').classList.toggle('triple-mode',isTriple);
- $('working-panel').hidden=isShift||isTriple;
+ $('practice').classList.toggle('borrow-mode',isBorrow);
+ $('working-panel').hidden=isShift||isTriple||isBorrow;
  $('triple-support').hidden=!isTriple;
- var target=isShift?$('shift-help-controls'):isTriple?$('triple-help-controls'):$('working-panel');
+ $('borrow-support').hidden=!isBorrow;
+ var target=isShift?$('shift-help-controls'):isTriple?$('triple-help-controls'):isBorrow?$('borrow-help-controls'):$('working-panel');
  ['hint','hint-text','reveal','reveal-text'].forEach(function(id){target.append($(id));});
  if(isTriple)$('triple-history').append($('log'));
+ else if(isBorrow)$('borrow-history').append($('log'));
  else $('working-panel').insertBefore($('log'),$('hint').parentElement===$('working-panel')?$('hint'):null);
  if(isShift){
   var rule=shiftGoldenRule();
@@ -380,6 +423,105 @@ function renderTripleBoard(){
  board.append(progress);
  $('task').append(board);
 }
+
+function borrowColumn(){return 7-step;}
+function borrowWeight(i){return 1<<(7-i);}
+function borrowDonor(){
+ if(step>=8)return -1;
+ var c=borrowColumn();
+ if(borrowAvailable[c]>=bit(q.b,step))return -1;
+ for(var i=c-1;i>=0;i--)if(borrowAvailable[i]>0)return i;
+ return -2;
+}
+function borrowExchangeFrom(i){
+ var donor=borrowDonor();
+ if(donor<0){report('There are already enough units in this column. Enter its result bit.',true);return;}
+ if(i!==donor){report(borrowAvailable[i]===0?'That column has no unit to exchange.':'Choose the closest available unit to the left of this column.',true);return;}
+ borrowUndo.push({quantities:borrowAvailable.slice(),previous:borrowBefore.slice(),exchange:borrowExchange});
+ borrowBefore[i]=borrowAvailable[i];borrowBefore[i+1]=borrowAvailable[i+1];
+ borrowAvailable[i]--;borrowAvailable[i+1]+=2;
+ borrowExchange=i;render();
+}
+function borrowUndoLast(){
+ if(!borrowUndo.length)return;
+ var save=borrowUndo.pop();borrowAvailable=save.quantities;borrowBefore=save.previous;borrowExchange=save.exchange;render();
+}
+function borrowSetResult(i,value){
+ if(step>=8||i!==borrowColumn()||borrowDonor()!==-1)return;
+ borrowResult[i]=value;render();
+}
+function makeBorrowBoard(){
+ var board=document.createElement('div');board.className='borrow-board';board.setAttribute('role','group');
+ board.setAttribute('aria-label','Borrow quantities above two aligned binary numbers, then click result bits.');
+ if(level==='easy'){
+  var gold=document.createElement('p');gold.className='borrow-golden';
+  gold.textContent='Golden Rule: one unit in a column can become two units in the column immediately to its right. Tap the column to exchange.';
+  board.append(gold);
+ }
+ var calc=document.createElement('div');calc.className='borrow-calc';
+ function heading(label){var p=document.createElement('p');p.className='borrow-label';p.textContent=label;calc.append(p);}
+ function grid(name){var g=document.createElement('div');g.className='borrow-grid '+name;calc.append(g);return g;}
+ var weights=[128,64,32,16,8,4,2,1],donor=borrowDonor(),current=borrowColumn();
+ heading('Borrowing working · click a quantity to exchange');
+ var weightRow=grid('borrow-weights');
+ weights.forEach(function(w){var x=document.createElement('span');x.textContent=w;weightRow.append(x);});
+ var stock=grid('borrow-stock-row');
+ weights.forEach(function(w,i){
+  var old=borrowBefore[i],qty=borrowAvailable[i],b=document.createElement('button');
+  b.type='button';b.className='borrow-stock'+(old===null?'':' exchanged')+(level==='easy'&&donor===i?' guided':'');
+  b.disabled=step>=8||i>=current||donor<0;
+  var label=w+'s column: '+qty+' unit'+(qty===1?'':'s')+'.';
+  b.setAttribute('aria-label',label+(b.disabled?'':' Click to exchange one for two in the next column.'));
+  b.title=label;
+  var earlier=document.createElement('small');if(old!==null){var crossed=document.createElement('s');crossed.textContent=old;earlier.append(crossed);}
+  var now=document.createElement('strong');now.textContent=qty;b.append(earlier,now);
+  b.addEventListener('click',function(){borrowExchangeFrom(i);});stock.append(b);
+ });
+ if(borrowExchange!==null){
+  var line=document.createElement('div');line.className='borrow-exchange';
+  var pre=document.createElement('span');pre.textContent='Exchange:';line.append(pre);
+  var old=document.createElement('s');old.textContent=borrowWeight(borrowExchange);line.append(old);
+  var arrow=document.createElement('span');arrow.textContent='→';line.append(arrow);
+  var next=document.createElement('strong');next.textContent=borrowWeight(borrowExchange+1)+' + '+borrowWeight(borrowExchange+1);line.append(next);
+  var explanation=document.createElement('span');explanation.textContent='Same denary value.';line.append(explanation);calc.append(line);
+ }
+ heading('Original binary numbers');
+ [q.a,q.b].forEach(function(n,k){
+  var row=grid('borrow-number'+(k===1?' borrow-bottom':''));
+  row.setAttribute('aria-label',(k===1?'Subtract ':'Original ')+bits(n,8).split('').join(' '));
+  bits(n,8).split('').forEach(function(d){var cell=document.createElement('span');cell.textContent=d;row.append(cell);});
+ });
+ var rule=document.createElement('div');rule.className='borrow-line';calc.append(rule);
+ heading('Your answer · click the bits');
+ var answer=grid('borrow-answer-row');
+ for(var j=0;j<8;j++){
+  var finished=step>=8||j>current,enabled=!finished&&j===current&&donor===-1;
+  var b=document.createElement('button');b.type='button';
+  b.className='borrow-result'+(finished?' checked':'')+(enabled?' active':'');
+  b.disabled=!enabled;b.textContent=borrowResult[j]||'–';
+  b.setAttribute('aria-label',weights[j]+'s result bit '+(borrowResult[j]||'blank')+(enabled?'. Tap to select 1 or 0.':'.'));
+  (function(index,btn){
+   btn.addEventListener('click',function(){borrowSetResult(index,borrowResult[index]===''?'1':borrowResult[index]==='1'?'0':'');});
+   btn.addEventListener('keydown',function(e){
+    if(e.key==='0'||e.key==='1'){e.preventDefault();borrowSetResult(index,e.key);}
+    if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();borrowSetResult(index,'');}
+   });
+  })(j,b);answer.append(b);
+ }
+ board.append(calc);
+ var progress=document.createElement('p');progress.className='borrow-progress';
+ if(step>=8)progress.textContent='All eight columns checked.';
+ else if(donor>=0)progress.textContent='Column '+(step+1)+' of 8 ('+borrowWeight(current)+'s): borrow from the left until enough units reach this column.';
+ else if(donor===-2)progress.textContent='Check the borrowing values.';
+ else progress.textContent='Column '+(step+1)+' of 8 ('+borrowWeight(current)+'s): '+borrowAvailable[current]+' − '+bit(q.b,step)+' = ? Tap the result bit.';
+ board.append(progress);
+ if(borrowUndo.length){
+  var undo=document.createElement('button');undo.type='button';undo.className='borrow-undo';
+  undo.textContent='↶ Undo last exchange';undo.addEventListener('click',borrowUndoLast);board.append(undo);
+ }
+ $('task').append(board);
+}
+
 function shiftColumnLabels(){
  return Array.from({length:8},function(_,i){return i===0&&q.mode==='arithmetic'?'Sign':String(7-i);});
 }
@@ -422,6 +564,12 @@ function newQuestion(){
  }else if(skill==='triple'||skill==='borrow'){
   var values=choice(pools[skill][level]);q={a:values[0],b:values[1],c:values[2]||0};
  }else{q={n:choice(pools[skill][level])};}
+ if(skill==='borrow'){
+  borrowAvailable=bits(q.a,8).split('').map(Number);
+  borrowBefore=Array(8).fill(null);
+  borrowResult=Array(8).fill('');
+  borrowExchange=null;borrowUndo=[];
+ }
  render();
 }
 function render(){
@@ -445,11 +593,9 @@ function render(){
   instructions=step>=8?'Completed. Review your checked result.':'Work from right to left. Click the result bit and the carry into the next column, then check that column.';
   renderTripleBoard();
  }else if(skill==='borrow'){
-  prompt='Calculate '+bits(q.a,8)+' − '+bits(q.b,8)+'.';
-  instructions='Column '+(step+1)+' from the right. Borrow 1 from the next column if needed; it is worth 2 in the current column.';
-  readout('  '+bits(q.a,8)+'\n− '+bits(q.b,8),true);
-  readout('Top bit '+bit(q.a,step)+'; bottom bit '+bit(q.b,step)+'; incoming borrow owed '+carry+'.');
-  selects([['Borrow from next column?','borrow',[['','Choose'],['0','No'],['1','Yes']]],['Write result bit','digit',[['','Choose'],['0','0'],['1','1']]]]);
+  prompt=level==='easy'?'Calculate '+q.a+' − '+q.b+'.':'Subtract the binary numbers below.';
+  instructions='Borrow above the numbers, then enter the result bit for each column, working from right to left.';
+  makeBorrowBoard();
  }else if(skill==='twos'){
   prompt='Represent −'+q.n+' in 8-bit two’s complement.';
   instructions=step===0?'Step 1 of 3: represent positive '+q.n+' in eight bits.':step===1?'Step 2 of 3: invert EVERY bit (0 ↔ 1).':'Step 3 of 3: add binary 1 to the inverted pattern.';
@@ -497,13 +643,21 @@ function check(){
    finish('Correct: '+bits(q.a,8)+' + '+bits(q.b,8)+' + '+bits(q.c,8)+' = '+carry.toString(2).padStart(2,'0')+out+'₂ = '+(q.a+q.b+q.c)+'₁₀.');
   }else render();
  }else if(skill==='borrow'){
-  var br=$('borrow').value,d=$('digit').value;if(br===''||d===''){report('Choose the borrow and the result bit.',true);return;}
-  var top=bit(q.a,step)-carry,bottom=bit(q.b,step),need=top<bottom?1:0,result=top+2*need-bottom;
-  if(Number(br)!==need||Number(d)!==result){report('Remember: the incoming borrow reduces the top bit by 1. Borrow 1 from the next column if needed, adding 2 here.',true);return;}
-  out=String(result)+out;log('Column '+(step+1)+' from right: '+bit(q.a,step)+' − '+carry+' − '+bottom+(need?' + 2':'')+' = '+result+'; borrow left '+need+'.');
-  carry=need;step++;
-  if(step===8){finish('Correct: '+bits(q.a,8)+' − '+bits(q.b,8)+' = '+out+'₂ = '+(q.a-q.b)+'₁₀.');}
-  else render();
+  var donor=borrowDonor(),idx=borrowColumn();
+  if(donor>=0){report('Borrow into this column before entering the result bit.',true);return;}
+  if(donor===-2){report('Check your borrowing quantities.',true);return;}
+  if(borrowResult[idx]===''){report('Click the result bit to choose 0 or 1.',true);return;}
+  var digit=borrowAvailable[idx]-bit(q.b,step);
+  if((digit!==0&&digit!==1)||Number(borrowResult[idx])!==digit){
+   report('Check the available units and subtract the bottom bit in this column.',true);return;
+  }
+  out=String(digit)+out;
+  log('Column '+(step+1)+' ('+borrowWeight(idx)+'s): '+borrowAvailable[idx]+' − '+bit(q.b,step)+' = '+digit+'.');
+  borrowUndo=[];borrowExchange=null;step++;
+  if(step===8){
+   render();
+   finish('Correct: '+bits(q.a,8)+' − '+bits(q.b,8)+' = '+out+'₂ = '+(q.a-q.b)+'₁₀.');
+  }else render();
  }else if(skill==='twos'){
   var v=entered();if(v===null){report('Complete all eight bits.',true);return;}
   var expected=step===0?bits(q.n,8):step===1?bits(~q.n,8):bits(-q.n,8);
@@ -522,6 +676,16 @@ function check(){
  }
 }
 function clearStep(){
+ if(skill==='borrow'){
+  if(step>=8)return;
+  if(borrowUndo.length){
+   var snap=borrowUndo[0];
+   borrowAvailable=snap.quantities.slice();
+   borrowBefore=snap.previous.slice();
+   borrowExchange=snap.exchange;borrowUndo=[];
+  }
+  borrowResult[borrowColumn()]='';render();return;
+ }
  if(skill==='triple'){
   if(step>=8)return;
   var j=tripleCurrentColumn();
@@ -543,7 +707,12 @@ function reveal(){
  if(skill==='convert')s=q.denary+' = '+q.binary+' = '+q.hex+' (hex).';
  if(skill==='shift')s='Expected: '+q.answer+'.';
  if(skill==='triple'){var v=bit(q.a,step)+bit(q.b,step)+bit(q.c,step)+carry;s='Column total '+v+': write '+(v%2)+', carry '+Math.floor(v/2)+'.';}
- if(skill==='borrow'){var a=bit(q.a,step)-carry,d=bit(q.b,step),borrow=a<d?1:0;s='Borrow '+borrow+'; write '+(a+2*borrow-d)+'.';}
+ if(skill==='borrow'){
+  var donor=borrowDonor();
+  if(donor>=0)s='Exchange one '+borrowWeight(donor)+' for two '+borrowWeight(donor+1)+'s, then work towards the '+borrowWeight(borrowColumn())+'s column.';
+  else if(donor===-1)s=borrowAvailable[borrowColumn()]+' − '+bit(q.b,step)+' = '+(borrowAvailable[borrowColumn()]-bit(q.b,step))+'.';
+  else s='Check the available quantities.';
+ }
  if(skill==='twos')s='Step '+(step+1)+': '+(step===0?bits(q.n,8):step===1?bits(~q.n,8):bits(-q.n,8))+'.';
  if(skill==='fixed')s=step===0?'Scaled signed integer: '+Math.round(q.n*16)+'.':'Binary: '+bits(Math.round(q.n*16),8)+'.';
  $('reveal-text').textContent=s;$('reveal-text').hidden=false;
