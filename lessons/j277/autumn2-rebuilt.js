@@ -1590,7 +1590,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const labels=["LAST LESSON","EARLIER LEARNING · MCQ","EARLIER LEARNING","HIGH CHALLENGE"];
   const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong>${j277Question(lesson,i)}</article>`);
   const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><div class="review-question">${j277Question(lesson,i)}</div></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(lesson.doNowItems?.[i]?.answer||answer)}</p>${lesson.doNowItems?.[i]?.correct_option?'<p>'+escape(lesson.doNowItems[i].explanation)+'</p>':""}</article></div></div>`);
-  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><style>#do-now .j277-mcq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,.85vw,14px) clamp(10px,1.1vw,18px);width:100%;padding:0;margin:.45em 0 0;list-style-type:upper-alpha;list-style-position:inside;font-size:clamp(17px,1.2vw,22px);line-height:1.3}#do-now .j277-mcq li{min-width:0;padding:8px 12px;margin:0;border:1px solid #d9e5de;border-radius:9px;background:#f8faf9;overflow-wrap:anywhere}#do-now .j277-mcq li::marker{font-weight:800}#do-now .donow-question p{font-size:clamp(19px,1.35vw,25px);line-height:1.27}</style><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
+  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2>${lesson.teachingVisuals?.[title]||""}<p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
@@ -2044,7 +2044,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=cf45749fa0cf">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261111-donow-mcq2">${lessonStyles}</head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261112-donow-unified1">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
