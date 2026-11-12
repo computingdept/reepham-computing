@@ -5,6 +5,10 @@
 <meta name="theme-color" content="#003a31">
 <title>Binary Number Skills · OCR H446 · Synergy Assist</title>
 <meta name="description" content="OCR H446 clickable binary skills: conversion, shifts, three-number addition, borrowing, two's complement and signed fixed point.">
+<link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
+<link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
+<link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
+<link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#153b2d;background:#f3f8f4}*{box-sizing:border-box}
 body{margin:0}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit}
@@ -52,14 +56,43 @@ h1{font-size:clamp(26px,3vw,36px);letter-spacing:-.04em;line-height:1.14;margin:
 footer{font-size:12px;color:#5c7565;margin-top:18px}
 @media(max-width:850px){.panels{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.cards{grid-template-columns:1fr;gap:9px}.card{min-height:170px;padding:17px}main{padding:13px 11px 32px}.panel{padding:13px}.bits{gap:3px}.bit{height:46px;font-size:clamp(18px,5vw,23px)}.bit-label{font-size:10px}.level{padding:9px}}
+
+/* Same header and compact exercise shell as J277; original skill maths unchanged. */
+body.course-hub.synergy-unified-hub{background:#fff;color:#30383a}
+body.course-hub > header.topbar.synergy-corners{border-bottom:1px solid #d5ddda;background:#fff;color:#30383a;box-shadow:none}
+body.course-hub header.topbar .synergy-corner-title{color:#30383a}
+body.course-hub .course-nav .skill-nav{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 10px 6px;margin-left:3px;border-bottom:2px solid #285348;color:#285348;font-size:12px;line-height:1.2;text-decoration:none;font-weight:800}
+body.course-hub .course-nav .tabs a.tab{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+body.course-hub main{max-width:1380px;padding:12px 20px 30px}
+#practice .bar{margin:0 0 13px;padding:8px 12px;border-radius:9px;border-color:#d5ddda}
+#practice .panel{box-shadow:none;border-radius:10px;border-color:#d5ddda}
+#practice .panel h2{font-size:20px}
+#practice .panels{grid-template-columns:minmax(0,1.22fr) minmax(260px,.78fr)}
+#practice .bit{border-radius:8px}
+#practice .bit.on{background:#e9f5ed}
+#practice .btn.primary{background:#285348;border-color:#285348}
+#practice .level[aria-pressed=true]{background:#285348}
+#practice .prompt{color:#283d34}
+@media(max-width:980px){body.course-hub .course-nav .skill-nav{min-height:42px;padding:7px 8px 5px}}
+@media(max-width:850px){#practice .panels{grid-template-columns:1fr}}
+@media(max-width:540px){body.course-hub main{padding:10px 12px 24px}#practice .bar{gap:5px}#practice .btn{padding:8px 10px;font-size:12px}#practice .levels{gap:1px}#practice .level{font-size:12px;padding:8px 9px}}
 </style>
 </head>
-<body>
-<header><a class="brand" href="/">SYNERGY ASSIST</a><nav aria-label="H446"><a href="/h446-hub.html#lessons">Lessons</a><a href="/h446-hub.html#revisionhub">Practice</a><a href="/exercise/h446/tools.html" aria-current="page">Tools</a></nav></header>
+<body class="course-hub course-inline-nav synergy-unified-hub">
+<header class="topbar synergy-corners" aria-label="A Level Computing navigation">
+<a class="rhsc-site-nav-button rhsc-site-nav-home" href="/" aria-label="Learning Hub home" title="Learning Hub home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></a>
+<span class="synergy-corner-title">A Level Computer Science</span>
+<div class="synergy-course-controls">
+<div class="year-switch" role="group" aria-label="A Level year group"><a class="year-btn" href="/h446-hub.html?year=12#lessons"><span class="year-word">Year </span>12</a><a class="year-btn" href="/h446-hub.html?year=13#lessons"><span class="year-word">Year </span>13</a></div>
+<nav class="course-nav" aria-label="A Level Computing resources"><div class="tabs">
+<a class="tab" href="/h446-hub.html#lessons">Lessons</a><a class="tab" href="/h446-hub.html#booklet">Guides</a><a class="tab" href="/h446-hub.html#revisionhub">Practice</a></div>
+<a class="skill-nav" href="/exercise/h446/tools.html" aria-current="page">Skills</a></nav>
+</div><a class="brand synergy-brand" href="/" aria-label="Synergy Assist home"><span class="synergy-brand-icon" aria-hidden="true"></span></a>
+</header>
 <main>
-<p class="kicker">OCR H446 · 1.4.1 · DATA REPRESENTATION</p>
+<div id="landing-head"><p class="kicker">OCR H446 · 1.4.1 · DATA REPRESENTATION</p>
 <h1>Binary number skills</h1>
-<p class="intro">Practise one small step at a time. Click binary digits, show every carry or borrow, and check your method before moving on.</p>
+<p class="intro">Practise one small step at a time. Click binary digits, show every carry or borrow, and check your method before moving on.</p></div>
 <div id="menu" class="cards">
 <article class="card"><span class="spec">1.4.1(b, e, f) · GCSE FOUNDATION</span><h2>Denary, binary &amp; hex</h2><p>Reuse the J277 conversion question generator. Complete the missing representations with clickable binary boxes.</p><button class="btn primary" data-skill="convert">Practise conversion</button></article>
 <article class="card"><span class="spec">1.4.1(i) · SHIFTING</span><h2>Logical &amp; arithmetic shifts</h2><p>Compare zero-fill and sign-preserving shifts. See how negative binary numbers behave.</p><button class="btn primary" data-skill="shift">Practise shifts</button></article>
@@ -106,6 +139,16 @@ var pools={
  shift:{easy:[17,41,85,24],medium:[-13,-37,-75,-51],hard:[-111,-77,101,113]}
 };
 var skill='',level='easy',count=0,step=0,carry=0,out='',q={},widget=null,errors=0,lastConversion=null;
+var progressKey='rhs-h446-binary-skills-progress';
+function recordCorrect(){
+ try{
+  var all=JSON.parse(localStorage.getItem(progressKey)||'{}')||{};
+  var item=all[skill]||{};
+  item[level]=(Number(item[level])||0)+1;
+  all[skill]=item;
+  localStorage.setItem(progressKey,JSON.stringify(all));
+ }catch(e){}
+}
 function bits(x,n){return (x&((1<<n)-1)).toString(2).padStart(n,'0');}
 function bit(x,i){return(x>>i)&1;}
 function choice(arr){return arr[(count-1)%arr.length];}
@@ -219,7 +262,7 @@ function render(){
  $('prompt').textContent=prompt;$('instructions').textContent=instructions;
 }
 function success(message){log(message);resetFeedback();report('Correct. '+message,false);}
-function finish(message){$('check').hidden=true;$('clear').hidden=true;$('next').hidden=false;$('done').textContent=message;$('done').hidden=false;resetFeedback();}
+function finish(message){recordCorrect();$('check').hidden=true;$('clear').hidden=true;$('next').hidden=false;$('done').textContent=message;$('done').hidden=false;resetFeedback();}
 function check(){
  if(skill==='convert'){
   var binary=q.source==='binary'?q.binary:entered();
@@ -287,12 +330,16 @@ function reveal(){
  if(skill==='fixed')s=step===0?'Scaled signed integer: '+Math.round(q.n*16)+'.':'Binary: '+bits(Math.round(q.n*16),8)+'.';
  $('reveal-text').textContent=s;$('reveal-text').hidden=false;
 }
-function openSkill(id){skill=id;level='easy';count=0;lastConversion=null;refresh();$('menu').hidden=true;$('practice').hidden=false;newQuestion();}
+function openSkill(id){skill=id;level='easy';count=0;lastConversion=null;refresh();$('menu').hidden=true;$('landing-head').hidden=true;$('practice').hidden=false;newQuestion();}
 function refresh(){document.querySelectorAll('[data-level]').forEach(function(el){el.setAttribute('aria-pressed',String(el.dataset.level===level));});}
 document.querySelectorAll('[data-skill]').forEach(function(el){el.addEventListener('click',function(){openSkill(el.dataset.skill);});});
 document.querySelectorAll('[data-level]').forEach(function(el){el.addEventListener('click',function(){if(el.dataset.level!==level){level=el.dataset.level;count=0;refresh();newQuestion();}});});
 $('new').addEventListener('click',newQuestion);$('next').addEventListener('click',newQuestion);$('check').addEventListener('click',check);$('clear').addEventListener('click',clearStep);
 $('hint').addEventListener('click',hint);$('reveal').addEventListener('click',reveal);
-$('back').addEventListener('click',function(){$('menu').hidden=false;$('practice').hidden=true;skill='';});
+$('back').addEventListener('click',function(){window.location.href='/exercise/h446/tools.html';});
+var directSkill=new URLSearchParams(window.location.search).get('skill');
+if(Object.prototype.hasOwnProperty.call(names,directSkill))openSkill(directSkill);
+else if(!directSkill)window.location.replace('/exercise/h446/tools.html');
+else window.location.replace('/exercise/h446/tools.html');
 })();
-</script></body></html>
+</script><script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script></body></html>
