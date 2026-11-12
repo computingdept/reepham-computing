@@ -438,7 +438,7 @@ h1{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0;letter-spacing:-.04e
   }
   document.querySelectorAll(".level").forEach(function(b){b.addEventListener("click",function(){if(level!==b.dataset.level){level=b.dataset.level;questionStart();}});});
   document.querySelectorAll(".paint").forEach(function(b){b.addEventListener("click",function(){paint=b.dataset.paint;update();});});
-  $("new").addEventListener("click",questionStart);$("next").addEventListener("click",questionStart);
+  $("new").addEventListener("click",function(){questionStart();});$("next").addEventListener("click",function(){questionStart();});
   $("check-map").addEventListener("click",checkMap);
   $("clear-map").addEventListener("click",function(){values.fill(null);clearMessage("map-feedback");renderMap();});
   $("add-group").addEventListener("click",addGroup);
