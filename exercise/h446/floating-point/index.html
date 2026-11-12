@@ -227,7 +227,12 @@ function refresh(){
 function pickQuestion(){
  var options=bank[level],ix=Math.floor(Math.random()*options.length);
  if(ix===last[level]&&options.length>1)ix=(ix+1)%options.length;
- last[level]=ix;build(options[ix]);
+ last[level]=ix;
+ var chosen=options[ix].slice();
+ var exponentOffset=[-3,-2,-1,0,1][Math.floor(Math.random()*5)];
+ chosen[1]+=exponentOffset;chosen[3]+=exponentOffset;
+ if(chosen[4]==='+'&&Math.random()<0.5){var firstM=chosen[0],firstE=chosen[1];chosen[0]=chosen[2];chosen[1]=chosen[3];chosen[2]=firstM;chosen[3]=firstE;}
+ build(chosen);
  shiftCount=0;shiftExponent=ex.low==='A'?ex.ea:ex.eb;
  currentSmall=ex.low==='A'?ex.a:ex.b;
  negateDone=ex.op==='+';normalIndex=0;discarded=[];stage=1;stepErrors=0;
