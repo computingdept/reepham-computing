@@ -1,0 +1,51 @@
+/* OCR J277 network skills: scoped, responsive, bottom-toolbar-safe. */
+body.course-hub #practice.is-network{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
+body.course-hub #practice.is-network .answer-area{max-width:930px;min-height:0;width:100%;margin:7px auto 9px;display:block;}
+body.course-hub #practice.is-network .work{max-width:100%;min-width:0;}
+body.course-hub #practice.is-network .context{margin-bottom:4px;}
+body.course-hub #practice.is-network .prompt{font-size:clamp(17px,2vw,21px);margin:6px 0;}
+.net-board{display:grid;gap:9px;width:100%;max-width:930px;color:#174333;}
+.net-heading{font-size:11px;font-weight:900;letter-spacing:.075em;color:#266a4d;}
+.net-gap{margin-top:11px;}
+.net-section{display:grid;gap:9px;min-width:0;}
+.net-info{font-size:12px;color:#4b6b5d;line-height:1.42;margin:0;}
+.net-subtitle{font-size:13px;color:#567267;margin:0;}
+.net-scenario{font-size:15px;font-weight:750;line-height:1.38;margin:2px 0 4px;color:#194632;}
+.net-address-sample{font:800 clamp(16px,2.3vw,25px)/1.4 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;background:#f0f7f2;border:1px solid #c6dfd0;border-radius:11px;padding:14px 16px;text-align:center;letter-spacing:.02em;}
+.net-address-input{font:750 17px/1.4 ui-monospace,Consolas,monospace;width:100%;max-width:720px;min-height:51px;border-radius:10px;border:2px solid #95b9a8;background:#fff;color:#164631;padding:11px 13px;}
+.net-address-input:focus-visible,.net-choice:focus-visible,.net-edge:focus-visible{outline:3px solid #e9aa3f;outline-offset:2px;}
+.net-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:880px;}
+.net-choice,.net-edge{min-height:46px;border-radius:10px;border:2px solid #c5d9ce;padding:9px 11px;background:#fff;color:#20503a;font-size:13px;font-weight:800;cursor:pointer;text-align:center;overflow-wrap:anywhere;}
+.net-choice:hover,.net-edge:hover{background:#eff9f2;border-color:#8abd9f;}
+.net-choice.selected,.net-edge.selected{border-color:#13764c;background:#e3f3e9;color:#11583a;box-shadow:inset 0 0 0 1px #13764c;}
+.net-address-options .net-choice{font-family:ui-monospace,Consolas,monospace;font-size:clamp(12px,1.4vw,15px);}
+.net-reasons,.net-outcomes{grid-template-columns:repeat(3,minmax(0,1fr));}
+.net-reasons .net-choice,.net-outcomes .net-choice{font-weight:700;line-height:1.38;text-align:left;min-height:69px;}
+.net-hardware-map{border:1px solid #d6e7dc;border-radius:12px;padding:5px 9px;background:#f8fcf9;max-width:900px;}
+.net-hardware-map svg{display:block;width:100%;height:auto;max-height:146px;}
+.net-rule{padding:10px 13px;border-radius:10px;background:#eaf6ee;border:1px solid #c2ddcc;color:#194f35;font-weight:800;font-size:13px;}
+.net-traffic{padding:9px 13px;border-radius:10px;background:#fff8eb;border:1px solid #f1d9a8;color:#6c4a16;font-weight:800;font-size:13px;}
+.net-topology-name{font-size:13px;color:#235640;font-weight:850;}
+.net-graphic{border:1px solid #d7e6dc;border-radius:11px;padding:3px;background:#fbfefa;}
+.net-topology-svg{display:block;width:100%;height:auto;max-height:220px;}
+.net-edges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;}
+.net-edge{min-height:39px;padding:7px 9px;font-size:12px;}
+@media(max-width:850px){
+ .net-choices{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .net-reasons,.net-outcomes{grid-template-columns:1fr;}
+ .net-hardware-map svg{max-height:135px;}
+}
+@media(max-width:600px){
+ body.course-hub #practice.is-network{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
+ body.course-hub #practice.is-network .answer-area{padding:0;margin:4px 0 8px;}
+ .net-board{gap:7px;}
+ .net-choice{min-height:45px;padding:8px;font-size:12px;}
+ .net-address-options{grid-template-columns:1fr;}
+ .net-address-sample{font-size:15px;padding:11px 8px;}
+ .net-address-input{font-size:15px;}
+ .net-hardware-map svg{max-height:110px;}
+ .net-topology-svg{max-height:180px;}
+ .net-edges{gap:5px;}
+ .net-edge{font-size:11px;padding:6px 4px;}
+}
+@media(prefers-reduced-motion:reduce){.net-choice,.net-edge{transition:none;}}
