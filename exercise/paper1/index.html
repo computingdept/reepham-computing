@@ -134,6 +134,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
 <link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-impact1">
 <link rel="stylesheet" href="/assets/j277-network-skills.css?v=20261112-network1">
+<link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -247,7 +248,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
  case 'add':
    a=rint(r,1,dif===0?63:220);b=rint(r,1,dif===0?63:220);if(dif===0&&a+b>255)b=20;z=a+b;return {prompt:'Add these two 8-bit binary numbers.',context:'',type:'add',a:a,b:b,value:z%256,overflow:z>255,hint:'Add from the right. 1 + 1 is binary 10, so write 0 and carry 1.',why:`${a} + ${b} = ${z}. Result: ${binary(z)}; overflow: ${z>255?'yes':'no'}.`};
  case 'shift':
-   a=rint(r,1,dif===0?63:255);b=rint(r,1,dif===0?2:dif===1?3:4);z=pick(r,['left','right']);n=z==='left'?(a<<b)&255:a>>b;return {prompt:`Shift ${binary(a)} ${b} place${b===1?'':'s'} to the ${z}.`,context:'Keep the result within eight bits. Bits shifted off the end are lost.',type:'bits',start:a,places:b,direction:z,value:n,hint:`Move each bit ${b} column${b===1?'':'s'} ${z}. Fill empty positions with 0.`,why:`${binary(a)} shifted ${z} ${b} = ${binary(n)}.`};
+   a=rint(r,1,dif===0?63:255);b=rint(r,1,dif===0?2:dif===1?3:4);z=pick(r,['left','right']);n=z==='left'?(a<<b)&255:a>>b;return {prompt:`Shift ${z.toUpperCase()} by ${b} place${b===1?'':'s'}.`,context:'Keep the result within eight bits. Bits shifted off the end are lost.',type:'bits',start:a,places:b,direction:z,value:n,hint:`Move each bit ${b} column${b===1?'':'s'} ${z}. Fill empty positions with 0.`,why:`${binary(a).slice(0,4)} ${binary(a).slice(4)} shifted ${z} ${b} = ${binary(n).slice(0,4)} ${binary(n).slice(4)}.`};
  case 'count': {
    // Easy questions model both directions using the same binary blocks as other skills.
    a=rint(r,dif===0?2:4,dif===0?6:dif===1?8:12);
@@ -616,6 +617,32 @@ function matchFinish(){
 function renderQuestion(){if(skill==='units'){matchRound();return;}locked=false;wrong=0;hexCursor=0;answer=null;question=qs(skill,level,index);const counter=skill==='convert'?(level==='hard'?`Set ${Math.floor(index/5)+1} · ${index%5+1}/5`:`Question ${index+1}`):(skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact')?`Task ${index+1}`:`Question ${index+1} of 10`;$('qpos').textContent=counter;$('wb-question-count').textContent=counter;$('mode-note').textContent=level==='easy'?'Guided practice':level==='medium'?'Independent practice':'Exam challenge';$('meter').style.width=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact'?0:100*index/10)+'%';$('prompt').textContent=question.prompt;$('context').textContent=question.context||'';$('feedback').className='feedback hidden';$('feedback').textContent='';$('hint-area').classList.add('hidden');$('hint-area').textContent='';$('hint').textContent='Show a hint';$('hint').classList.toggle('hidden',level==='hard');$('show-answer').hidden=skill!=='convert';const isPaper=skill==='convert'&&level==='hard';$('practice').classList.toggle('is-paper-challenge',isPaper);$('paper-challenge').classList.toggle('hidden',!isPaper);$('paper-challenge-question').textContent=isPaper?question.prompt:'';$('paper-mark-actions').classList.add('hidden');$('check').classList.toggle('hidden',isPaper);$('next').classList.add('hidden');$('clear').classList.toggle('hidden',isPaper);$('next').textContent=(skill==='convert'||skill==='ascii'||skill==='dns'||skill==='protocol'||skill==='impact')?'Next scenario →':index===9?'See results →':'Next question →';$('clear').textContent=skill==='shift'?'Reset':'Clear';$('check').textContent=skill==='impact'?(level==='easy'?'Check choices':'Finish review'):'Check answer';paintInput();}
 function makeBitRow(id,values){const d=document.createElement('div');d.className='bits';const labels=[128,64,32,16,8,4,2,1];labels.forEach((place,j)=>{const c=document.createElement('div');c.className='bitcell'+(j===3&&id!=='shift'?' split':'');const lb=document.createElement('span');lb.className='bitlabel';lb.textContent=place;const b=document.createElement('button');b.type='button';b.className='bitbtn'+(values[j]?' on':'');b.textContent=values[j];b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);b.addEventListener('click',()=>{if(locked)return;values[j]=1-values[j];b.textContent=values[j];b.classList.toggle('on',!!values[j]);b.setAttribute('aria-label',`${place}s column, bit ${values[j]}; tap to change`);const sum=$('live-sum');if(sum&&level==='easy')sum.textContent='Current value: '+format(bitsNumber(values));});c.append(lb,b);d.append(c)});return d}
 function bitsNumber(arr){return arr.reduce((s,v,j)=>s+(v?Math.pow(2,7-j):0),0)}
+
+/* Shared presentation with H446: fixed original above 8-column working result.
+   The GCSE one-place shift buttons and existing answer checking remain unchanged. */
+function renderShiftSource(p,container){
+ const values=binary(p.start),labels=[128,64,32,16,8,4,2,1];
+ const sourceHead=document.createElement('p');
+ sourceHead.className='shift-row-heading';sourceHead.textContent='Original (read only)';
+ container.append(sourceHead);
+ const grid=document.createElement('div');grid.className='bits shift-source';
+ grid.setAttribute('role','img');
+ grid.setAttribute('aria-label','Original eight bits: '+values.split('').join(' '));
+ values.split('').forEach((digit,i)=>{
+  const cell=document.createElement('div');cell.className='bitcell';
+  const place=document.createElement('span');place.className='bitlabel';place.textContent=labels[i];
+  const number=document.createElement('span');
+  const lost=p.direction==='right'?i>=8-p.places:i<p.places;
+  number.className='shift-static-bit'+(lost?' discarded':'');
+  number.textContent=digit;cell.append(place,number);grid.append(cell);
+ });
+ container.append(grid);
+ const tip=document.createElement('p');tip.className='shift-tip';
+ tip.textContent='Highlighted end bits leave the eight-bit result.';
+ container.append(tip);
+ const resultHead=document.createElement('p');resultHead.className='shift-row-heading';
+ resultHead.textContent='Your result (click each bit)';container.append(resultHead);
+}
 function shiftEightBits(bits,direction){
  const value=bitsNumber(bits);
  const shifted=direction==='left'?((value<<1)&255):value>>>1;
@@ -1073,6 +1100,7 @@ case 'bits':case 'add':{
     }
     overflow.append(choices);board.append(overflow);d.append(board);
   }else{
+    if(skill==='shift')renderShiftSource(p,d);
     const row=makeBitRow(skill==='shift'?'shift':'bits',vals);
     d.append(row);
     if(skill==='shift'&&level==='easy'){
