@@ -402,6 +402,7 @@ h1{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0;letter-spacing:-.04e
     return out;
   }
   function checkAnswer(){
+    if($("check-answer").disabled)return;
     var ast;
     try{ast=parseExpression($("answer").value);}catch(e){message("answer-feedback",e.message,"error");return;}
     attempts++;
