@@ -77,6 +77,18 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 @media(max-width:850px){#practice .panels{grid-template-columns:1fr}}
 @media(max-width:540px){body.course-hub main{padding:10px 12px 24px}#practice .bar{gap:5px}#practice .btn{padding:8px 10px;font-size:12px}#practice .levels{gap:1px}#practice .level{font-size:12px;padding:8px 9px}}
 
+
+/* H446 shifting: compact, contextual student guidance and full-width workspace. */
+#practice.shift-mode .panels{display:block;max-width:1080px;margin-inline:auto}
+#practice.shift-mode .panel[aria-label="Current question"]{width:100%}
+#practice.shift-mode .bits{max-width:940px}
+#practice.shift-mode .shift-guidance{margin:10px 0 14px}
+#practice .golden-rule{padding:10px 14px;border:1px solid #c9decf;border-left:4px solid #285348;border-radius:8px;background:#f5faf6;font-size:15px;line-height:1.45;max-width:940px}
+#practice .golden-rule strong{display:block;font-size:14px;color:#285348;margin-bottom:2px}
+#practice .golden-rule p{margin:0}
+#practice.shift-mode #shift-help-controls .help{display:inline-block;margin:3px 0;padding:8px 0}
+#practice.shift-mode #shift-help-controls .feedback{max-width:940px}
+@media(max-width:540px){#practice .golden-rule{padding:8px 11px;font-size:14px}}
 </style>
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 </head>
@@ -113,18 +125,20 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 <div class="panels">
 <section class="panel" aria-label="Current question"><p class="kicker" id="ref"></p><h2 id="title"></h2>
 <p class="prompt" id="prompt"></p><p class="note" id="instructions"></p>
+<div id="shift-guidance" class="shift-guidance" hidden>
+<div id="golden-rule" class="golden-rule" hidden><strong id="golden-rule-title"></strong><p id="golden-rule-body"></p></div>
+<div id="shift-help-controls"></div>
+</div>
 <div id="task"></div>
 <div class="actions"><button class="btn primary" id="check">Check step →</button><button class="btn" id="clear">Clear step</button><button class="btn primary" id="next" hidden>Next question →</button></div>
 <div class="feedback" id="feedback" role="status" hidden></div><div class="done" id="done" hidden></div>
 </section>
-<aside class="panel"><h2>Your working</h2><p class="sidelead">Completed steps remain visible, as in a worked exam answer.</p>
+<aside class="panel" id="working-panel"><h2>Your working</h2><p class="sidelead">Completed steps remain visible, as in a worked exam answer.</p>
 <ol id="log" class="log"></ol><button class="help" id="hint">Show a hint</button>
 <div class="feedback" id="hint-text" hidden></div>
 <button class="help" id="reveal" hidden>Show this step's answer</button>
 <div class="feedback" id="reveal-text" hidden></div>
-<p class="mini">Fixed-point Q4.4 supports floating-point preparation; it is not a separately named OCR H446 specification requirement.</p>
 </aside></div></section>
-<footer>H446 1.4.1 · J277 question generator reused for conversions · All answer checking runs in your browser.</footer>
 </main>
 <script src="/assets/j277-conversion-questions.js?v=20261110-endless1"></script>
 <script>
@@ -154,7 +168,16 @@ function recordCorrect(){
 function bits(x,n){return (x&((1<<n)-1)).toString(2).padStart(n,'0');}
 function bit(x,i){return(x>>i)&1;}
 function choice(arr){return arr[(count-1)%arr.length];}
-function report(t,bad){var f=$('feedback');f.textContent=t;f.hidden=false;f.className='feedback'+(bad?' bad':'');if(bad){errors++;if(errors>=2)$('reveal').hidden=false;}}
+function report(t,bad){
+ var f=$('feedback');f.textContent=t;f.hidden=false;f.className='feedback'+(bad?' bad':'');
+ if(bad){
+  errors++;
+  if(errors>=2){
+   $('reveal').hidden=false;
+   if(skill==='shift'&&level==='hard')$('hint').hidden=false;
+  }
+ }
+}
 function resetFeedback(){errors=0;$('feedback').hidden=true;$('reveal').hidden=true;$('reveal-text').hidden=true;$('hint-text').hidden=true;$('hint').textContent='Show a hint';}
 function log(t){var li=document.createElement('li');li.textContent=t;$('log').append(li);}
 function paragraph(text,cls){var p=document.createElement('p');p.textContent=text;p.className=cls||'note';$('task').append(p);return p;}
@@ -204,6 +227,32 @@ function editor(n,labels){
  paragraph('Tap blank → 1 → 0, or press 0 or 1. Use arrow keys to move between bits.','mini');
 }
 
+
+function shiftGoldenRule(){
+ if(q.mode==='logical')return {title:'Golden Rule — Logical Shift',body:'Empty positions are always filled with 0.'};
+ if(q.direction==='right')return {title:'Golden Rule — Arithmetic Right Shift',body:'Copy the original sign bit into empty positions on the left to preserve the sign.'};
+ return {title:'Golden Rule — Arithmetic Left Shift',body:'Fill empty positions on the right with 0. Check for signed overflow: the value may no longer fit in 8 bits.'};
+}
+function configureShiftGuidance(){
+ var isShift=skill==='shift';
+ $('practice').classList.toggle('shift-mode',isShift);
+ $('working-panel').hidden=isShift;
+ $('shift-guidance').hidden=!isShift;
+ var target=isShift?$('shift-help-controls'):$('working-panel');
+ ['hint','hint-text','reveal','reveal-text'].forEach(function(id){target.append($(id));});
+ if(isShift){
+  var rule=shiftGoldenRule();
+  $('golden-rule-title').textContent=rule.title;
+  $('golden-rule-body').textContent=rule.body;
+  $('golden-rule').hidden=level!=='easy';
+  $('hint').hidden=level!=='medium';
+  $('hint').textContent='Show Golden Rule';
+ }else{
+  $('golden-rule').hidden=true;
+  $('hint').hidden=false;
+  $('hint').textContent='Show a hint';
+ }
+}
 function shiftColumnLabels(){
  return Array.from({length:8},function(_,i){return i===0&&q.mode==='arithmetic'?'Sign':String(7-i);});
 }
@@ -257,7 +306,7 @@ function render(){
   if(q.source!=='binary')editor(8,['128','64','32','16','8','4','2','1']);
  }else if(skill==='shift'){
   prompt='Shift '+q.direction.toUpperCase()+' by '+q.places+' place'+(q.places>1?'s':'')+'.';
-  instructions=q.mode.toUpperCase()+' '+q.direction+' shift: '+(q.mode==='arithmetic'&&q.direction==='right'?'copy the sign bit into vacant places.':'insert zeroes into vacant places.')+' Discard bits leaving the 8-bit width.';
+  instructions=q.mode.toUpperCase()+' '+q.direction+' shift. Work within 8 bits; bits leaving the edge are discarded.';
   shiftSourceGrid();editor(8,shiftColumnLabels());
  }else if(skill==='triple'){
   var c=step;prompt='Add three 8-bit numbers, showing every carry.';
@@ -283,6 +332,7 @@ function render(){
   else{readout('Signed integer to represent: '+Math.round(q.n*16));editor(8,['Sign −8','4','2','1','½','¼','⅛','1/16']);paragraph('Insert the binary point after the fourth digit when interpreting your answer.','mini');}
  }
  $('prompt').textContent=prompt;$('instructions').textContent=instructions;
+ configureShiftGuidance();
 }
 function success(message){log(message);resetFeedback();report('Correct. '+message,false);}
 function finish(message){recordCorrect();$('check').hidden=true;$('clear').hidden=true;$('next').hidden=false;$('done').textContent=message;$('done').hidden=false;resetFeedback();}
@@ -298,7 +348,7 @@ function check(){
   success(q.denary+' = '+q.binary+' = '+q.hex+' (hex).');finish('All three representations are correct.');
  }else if(skill==='shift'){
   var value=entered();if(value===null){report('Complete all eight result bits.',true);return;}
-  if(value!==q.answer){report(q.mode==='arithmetic'&&q.direction==='right'?'Arithmetic right shifts copy the original sign bit.':'Recheck the direction. Insert zeroes and discard shifted-off bits.',true);return;}
+  if(value!==q.answer){report(level==='hard'?'Not quite. Check which bits enter or leave the eight-bit result.':q.mode==='arithmetic'&&q.direction==='right'?'Check the original sign bit and the positions it fills.':'Recheck the direction, filled positions and discarded bits.',true);return;}
   success(q.mode+' '+q.direction+' shift: '+bits(q.n,8)+' → '+value+'.');finish('Correct. The new 8-bit pattern is '+value+'.');
  }else if(skill==='triple'){
   var d=$('digit').value,c=$('carry').value;if(d===''||c===''){report('Choose a result bit and an outgoing carry.',true);return;}
@@ -340,8 +390,8 @@ function clearStep(){
  $('feedback').hidden=true;
 }
 function hint(){
- var h={convert:'Each four-bit nibble represents one hexadecimal digit. Use weights 8, 4, 2, 1.',shift:'Logical: fill vacancies with zero. Arithmetic RIGHT: preserve the sign bit. Both discard bits beyond the width.',triple:'Example: 1+1+1+1 = 4 (binary 100), so write 0 and carry 2.',borrow:'Borrow 1 from the next column: it counts as 2 in this column. If the next column contains 0, the debt continues to its left.',twos:'Represent the magnitude, invert all eight bits, then add 1.',fixed:'Q4.4 uses four integer bits including the sign, plus four fractional bits. Multiply by 16 before encoding.'};
- $('hint-text').textContent=h[skill];$('hint-text').hidden=!$('hint-text').hidden;$('hint').textContent=$('hint-text').hidden?'Show a hint':'Hide hint';
+ var h={convert:'Each four-bit nibble represents one hexadecimal digit. Use weights 8, 4, 2, 1.',shift:shiftGoldenRule().title+' — '+shiftGoldenRule().body,triple:'Example: 1+1+1+1 = 4 (binary 100), so write 0 and carry 2.',borrow:'Borrow 1 from the next column: it counts as 2 in this column. If the next column contains 0, the debt continues to its left.',twos:'Represent the magnitude, invert all eight bits, then add 1.',fixed:'Q4.4 uses four integer bits including the sign, plus four fractional bits. Multiply by 16 before encoding.'};
+ $('hint-text').textContent=h[skill];$('hint-text').hidden=!$('hint-text').hidden;$('hint').textContent=$('hint-text').hidden?(skill==='shift'?'Show Golden Rule':'Show a hint'):(skill==='shift'?'Hide Golden Rule':'Hide hint');
 }
 function reveal(){
  var s='';
