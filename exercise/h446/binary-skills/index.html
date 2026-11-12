@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#003a31">
+<title>Binary Number Skills · OCR H446 · Synergy Assist</title>
+<meta name="description" content="OCR H446 clickable binary skills: conversion, shifts, three-number addition, borrowing, two's complement and signed fixed point.">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#153b2d;background:#f3f8f4}*{box-sizing:border-box}
+body{margin:0}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #c28d36;outline-offset:2px}
+[hidden]{display:none!important}
+header{min-height:57px;padding:10px max(15px,calc((100vw - 1130px)/2));background:#003a31;color:white;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.brand{text-decoration:none;font-size:14px;font-weight:900;letter-spacing:.08em}nav{display:flex;gap:3px}nav a{padding:9px 11px;border-radius:7px;text-decoration:none;font-size:13px;font-weight:800}nav a:hover,nav a[aria-current]{background:#1c634d}
+main{max-width:1130px;margin:auto;padding:21px 17px 45px}
+.kicker{font-size:12px;letter-spacing:.08em;color:#517d62;font-weight:900;margin:0 0 5px}
+h1{font-size:clamp(26px,3vw,36px);letter-spacing:-.04em;line-height:1.14;margin:0 0 8px}
+.intro{font-size:15px;color:#536e5c;max-width:820px;line-height:1.55;margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.card{border:1px solid #d5e4d9;border-top:4px solid #006347;border-radius:12px;background:white;padding:20px;min-height:208px;display:flex;flex-direction:column;align-items:start;gap:10px}
+.card h2{font-size:20px;line-height:1.22;margin:0}.card p{font-size:14px;line-height:1.5;color:#526e5b;margin:0;flex:1}
+.spec{font-size:11px;font-weight:900;color:#457258;letter-spacing:.03em}
+.btn{min-height:43px;border:1px solid #8db7a1;background:white;color:#1b5038;border-radius:8px;padding:10px 14px;font-size:14px;font-weight:850}
+.btn.primary{background:#006347;color:white;border-color:#006347}.btn:hover:not(:disabled){filter:brightness(.95)}
+.bar{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:white;border:1px solid #d5e3d9;border-radius:11px;padding:10px 12px;margin:12px 0}
+.levels{display:flex;gap:3px;padding:3px;border-radius:8px;background:#edf3ee}
+.level{border:0;border-radius:6px;background:none;padding:10px 12px;font-size:13px;font-weight:850;color:#4a6b56}
+.level[aria-pressed=true]{background:#006347;color:white}
+.panels{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(275px,.75fr);gap:12px;align-items:start}
+.panel{border:1px solid #d4e4d9;border-radius:12px;background:white;padding:18px;min-width:0}
+.panel h2{font-size:21px;margin:0 0 9px}.prompt{font-size:clamp(18px,2.2vw,24px);font-weight:850;line-height:1.36;margin:8px 0}
+.note{font-size:15px;color:#496c56;line-height:1.55;margin:9px 0}
+.readout{border:1px solid #d1e4d6;background:#f0f8f2;border-radius:9px;padding:12px;font-size:16px;line-height:1.55;white-space:pre-wrap;margin:11px 0}
+.binary{font:850 clamp(20px,3vw,29px)/1.4 Consolas,ui-monospace,monospace;letter-spacing:.07em}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:13px 0}
+.field{min-width:130px;flex:1;display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:850;color:#2e6346}
+.field input,.field select{width:100%;height:48px;min-width:0;border:2px solid #abc9b6;background:white;border-radius:8px;padding:8px 10px;font-size:18px;color:#123b28;font-weight:800}
+.bits{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:5px;margin:13px 0;max-width:760px}
+.bit-wrap{text-align:center;min-width:0}.bit-label{display:block;font-size:11px;font-weight:850;min-height:18px;color:#536f5b}
+.bit{height:55px;width:100%;min-width:0;padding:0;background:white;color:#143e2b;border:2px solid #b5cdbc;border-radius:8px;font:900 clamp(20px,2.5vw,28px)/1 Consolas,monospace}
+.bit.on{background:#e6f4e9;border-color:#438e66}.bit.sign{background:#fff5e8;border-color:#c69b5f}
+.bit.sign.on{background:#ffebd1}.bit:hover{border-color:#006347}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0 0}
+.feedback{border:1px solid #a7cbb2;background:#ebf7ef;border-radius:9px;padding:11px 13px;font-size:14px;line-height:1.5;margin:12px 0}
+.feedback.bad{border-color:#dda69e;background:#fff0ed;color:#87412e}
+.log{margin:11px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.log li{background:#f4f8f5;border-left:3px solid #75a88b;padding:9px 11px;font-size:14px;line-height:1.5;border-radius:4px}
+.help{border:0;background:none;color:#135d3e;font-weight:850;font-size:14px;text-decoration:underline;padding:9px 0;display:block}
+.done{background:#eaf7ed;border:1px solid #a5cbb0;border-radius:10px;font-size:17px;font-weight:850;padding:15px;margin-top:13px;line-height:1.5}
+.mini{font-size:13px;color:#5b7865}.sidelead{font-size:14px;color:#536e5e;line-height:1.5}
+footer{font-size:12px;color:#5c7565;margin-top:18px}
+@media(max-width:850px){.panels{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.cards{grid-template-columns:1fr;gap:9px}.card{min-height:170px;padding:17px}main{padding:13px 11px 32px}.panel{padding:13px}.bits{gap:3px}.bit{height:46px;font-size:clamp(18px,5vw,23px)}.bit-label{font-size:10px}.level{padding:9px}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">SYNERGY ASSIST</a><nav aria-label="H446"><a href="/h446-hub.html#lessons">Lessons</a><a href="/h446-hub.html#revisionhub">Practice</a><a href="/exercise/h446/tools.html" aria-current="page">Tools</a></nav></header>
+<main>
+<p class="kicker">OCR H446 · 1.4.1 · DATA REPRESENTATION</p>
+<h1>Binary number skills</h1>
+<p class="intro">Practise one small step at a time. Click binary digits, show every carry or borrow, and check your method before moving on.</p>
+<div id="menu" class="cards">
+<article class="card"><span class="spec">1.4.1(b, e, f) · GCSE FOUNDATION</span><h2>Denary, binary &amp; hex</h2><p>Reuse the J277 conversion question generator. Complete the missing representations with clickable binary boxes.</p><button class="btn primary" data-skill="convert">Practise conversion</button></article>
+<article class="card"><span class="spec">1.4.1(i) · SHIFTING</span><h2>Logical &amp; arithmetic shifts</h2><p>Compare zero-fill and sign-preserving shifts. See how negative binary numbers behave.</p><button class="btn primary" data-skill="shift">Practise shifts</button></article>
+<article class="card"><span class="spec">1.4.1(d) · ADDITION</span><h2>Add three binary numbers</h2><p>Add column by column. Enter the written bit and the outgoing carry — including a carry of 2.</p><button class="btn primary" data-skill="triple">Practise addition</button></article>
+<article class="card"><span class="spec">1.4.1(d) · SUBTRACTION</span><h2>Borrow across zeros</h2><p>Subtract column by column, borrowing 1 as binary 10 when necessary. Practise chains of borrows.</p><button class="btn primary" data-skill="borrow">Practise subtraction</button></article>
+<article class="card"><span class="spec">1.4.1(c) · NEGATIVE NUMBERS</span><h2>Two's complement</h2><p>Write the magnitude, flip all bits, and add 1. See why the negative number is represented correctly.</p><button class="btn primary" data-skill="twos">Practise negatives</button></article>
+<article class="card"><span class="spec">SUPPORTS 1.4.1(c, g) · FIXED POINT</span><h2>Fixed-point representation</h2><p>Represent positive and negative fractions in signed Q4.4 with four integer and four fractional positions.</p><button class="btn primary" data-skill="fixed">Practise fixed point</button></article>
+</div>
+<section id="practice" hidden>
+<div class="bar"><button class="btn" id="back">← All skills</button>
+<div class="levels" role="group" aria-label="Difficulty">
+<button class="level" data-level="easy" aria-pressed="true">Easy</button>
+<button class="level" data-level="medium" aria-pressed="false">Medium</button>
+<button class="level" data-level="hard" aria-pressed="false">Hard</button>
+</div><button class="btn" id="new">New question ↻</button></div>
+<div class="panels">
+<section class="panel" aria-label="Current question"><p class="kicker" id="ref"></p><h2 id="title"></h2>
+<p class="prompt" id="prompt"></p><p class="note" id="instructions"></p>
+<div id="task"></div>
+<div class="actions"><button class="btn primary" id="check">Check step →</button><button class="btn" id="clear">Clear step</button><button class="btn primary" id="next" hidden>Next question →</button></div>
+<div class="feedback" id="feedback" role="status" hidden></div><div class="done" id="done" hidden></div>
+</section>
+<aside class="panel"><h2>Your working</h2><p class="sidelead">Completed steps remain visible, as in a worked exam answer.</p>
+<ol id="log" class="log"></ol><button class="help" id="hint">Show a hint</button>
+<div class="feedback" id="hint-text" hidden></div>
+<button class="help" id="reveal" hidden>Show this step's answer</button>
+<div class="feedback" id="reveal-text" hidden></div>
+<p class="mini">Fixed-point Q4.4 supports floating-point preparation; it is not a separately named OCR H446 specification requirement.</p>
+</aside></div></section>
+<footer>H446 1.4.1 · J277 question generator reused for conversions · All answer checking runs in your browser.</footer>
+</main>
+<script src="/assets/j277-conversion-questions.js?v=20261110-endless1"></script>
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var names={convert:'Denary, binary & hexadecimal',shift:'Logical & arithmetic shifts',triple:'Add three binary numbers',borrow:'Borrow across zeros',twos:"Two's complement",fixed:'Fixed-point representation'};
+var refs={convert:'1.4.1(b, e, f)',shift:'1.4.1(i)',triple:'1.4.1(d)',borrow:'1.4.1(d)',twos:'1.4.1(c)',fixed:'Supports 1.4.1(c, g)'};
+var pools={
+ triple:{easy:[[7,3,1],[19,5,6],[27,11,2]],medium:[[15,15,15],[47,23,19],[95,43,27]],hard:[[255,255,255],[191,127,143],[254,253,251]]},
+ borrow:{easy:[[16,1],[20,5],[32,3]],medium:[[64,17],[80,37],[128,31]],hard:[[128,65],[192,127],[240,127]]},
+ twos:{easy:[3,5,9,13],medium:[29,47,63,76],hard:[87,101,113,127]},
+ fixed:{easy:[1.5,2.25,3.75,0.625],medium:[-1.25,-2.5,-4.75,-0.375],hard:[-7.9375,-3.6875,6.8125,7.9375]},
+ shift:{easy:[17,41,85,24],medium:[-13,-37,-75,-51],hard:[-111,-77,101,113]}
+};
+var skill='',level='easy',count=0,step=0,carry=0,out='',q={},widget=null,errors=0,lastConversion=null;
+function bits(x,n){return (x&((1<<n)-1)).toString(2).padStart(n,'0');}
+function bit(x,i){return(x>>i)&1;}
+function choice(arr){return arr[(count-1)%arr.length];}
+function report(t,bad){var f=$('feedback');f.textContent=t;f.hidden=false;f.className='feedback'+(bad?' bad':'');if(bad){errors++;if(errors>=2)$('reveal').hidden=false;}}
+function resetFeedback(){errors=0;$('feedback').hidden=true;$('reveal').hidden=true;$('reveal-text').hidden=true;$('hint-text').hidden=true;$('hint').textContent='Show a hint';}
+function log(t){var li=document.createElement('li');li.textContent=t;$('log').append(li);}
+function paragraph(text,cls){var p=document.createElement('p');p.textContent=text;p.className=cls||'note';$('task').append(p);return p;}
+function readout(text,binary){return paragraph(text,'readout'+(binary?' binary':''));}
+function fields(items){
+ var row=document.createElement('div');row.className='row';
+ items.forEach(function(item){
+  var wrap=document.createElement('div');wrap.className='field';
+  var label=document.createElement('label');label.htmlFor=item[1];label.textContent=item[0];
+  var el=document.createElement('input');el.type='text';el.id=item[1];el.autocomplete='off';el.spellcheck=false;el.inputMode=item[2]==='hex'?'text':'numeric';
+  wrap.append(label,el);row.append(wrap);
+ });
+ $('task').append(row);
+}
+function selects(items){
+ var row=document.createElement('div');row.className='row';
+ items.forEach(function(item){
+  var wrap=document.createElement('div');wrap.className='field';
+  var label=document.createElement('label');label.htmlFor=item[1];label.textContent=item[0];
+  var el=document.createElement('select');el.id=item[1];
+  item[2].forEach(function(pair){var opt=document.createElement('option');opt.value=pair[0];opt.textContent=pair[1];el.append(opt);});
+  wrap.append(label,el);row.append(wrap);
+ });
+ $('task').append(row);
+}
+function editor(n,labels){
+ var grid=document.createElement('div');grid.className='bits';grid.style.setProperty('--n',n);grid.setAttribute('role','group');grid.setAttribute('aria-label',n+' binary digits');
+ var buttons=[];
+ for(var i=0;i<n;i++){
+  var wrap=document.createElement('div');wrap.className='bit-wrap';
+  var label=document.createElement('span');label.className='bit-label';label.textContent=labels[i];
+  var key=document.createElement('button');key.type='button';key.className='bit'+(labels[i].indexOf('Sign')>=0?' sign':'');
+  (function(index,k){
+   k.addEventListener('click',function(){set(index,k.dataset.value===''?'1':k.dataset.value==='1'?'0':'1');});
+   k.addEventListener('keydown',function(e){
+    if(e.key==='0'||e.key==='1'){e.preventDefault();set(index,e.key);}
+    if(e.key==='Backspace'||e.key==='Delete'){e.preventDefault();set(index,'');}
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();buttons[Math.max(0,Math.min(n-1,index+(e.key==='ArrowRight'?1:-1)))].focus();}
+   });
+  })(i,key);
+  wrap.append(label,key);grid.append(wrap);buttons.push(key);
+ }
+ $('task').append(grid);
+ function set(index,value){var k=buttons[index];k.dataset.value=value;k.textContent=value||'–';k.classList.toggle('on',value!=='');k.setAttribute('aria-label',labels[index]+', '+(value||'blank')+', bit '+(index+1));k.setAttribute('aria-pressed',String(value==='1'));}
+ buttons.forEach(function(k,i){set(i,'');});
+ widget={buttons:buttons,set:set};
+ paragraph('Tap blank → 1 → 0, or press 0 or 1. Use arrow keys to move between bits.','mini');
+}
+function entered(){if(!widget)return null;var v=widget.buttons.map(function(k){return k.dataset.value;});return v.every(function(x){return x==='0'||x==='1';})?v.join(''):null;}
+function empty(){widget=null;$('task').replaceChildren();$('done').hidden=true;$('next').hidden=true;$('check').hidden=false;$('clear').hidden=false;resetFeedback();}
+function newQuestion(){
+ count++;step=0;carry=0;out='';$('log').replaceChildren();
+ if(skill==='convert'){
+  if(!window.J277ConversionQuestions){alert('Shared J277 conversion data could not be loaded.');return;}
+  q=window.J277ConversionQuestions.randomQuestion(level,lastConversion,count);
+  lastConversion=q.denary;
+ }else if(skill==='shift'){
+  var n=choice(pools.shift[level]);
+  var places=level==='easy'?1+(count%2):1+(count%3);
+  var direction=level==='easy'?'right':level==='medium'?'right':count%2?'left':'right';
+  var mode=level==='easy'?'logical':level==='medium'?'arithmetic':count%3===0?'logical':'arithmetic';
+  q={n:n,places:places,direction:direction,mode:mode,answer:mode==='arithmetic'&&direction==='right'?bits(n>>places,8):direction==='right'?bits((n&255)>>>places,8):bits((n&255)<<places,8)};
+ }else if(skill==='triple'||skill==='borrow'){
+  var values=choice(pools[skill][level]);q={a:values[0],b:values[1],c:values[2]||0};
+ }else{q={n:choice(pools[skill][level])};}
+ render();
+}
+function render(){
+ empty();$('title').textContent=names[skill];$('ref').textContent='H446 '+refs[skill]+' · '+level.toUpperCase();
+ var prompt='',instructions='';
+ if(skill==='convert'){
+  var given=q.source==='denary'?q.denary+' (denary)':q.source==='hex'?q.hex+' (hexadecimal)':q.binary+' (binary)';
+  prompt='Convert '+given+'.';instructions='Complete both missing representations. Questions come directly from the shared J277 conversion generator.';
+  if(q.source!=='denary'||q.source!=='hex'){
+   var rows=[];if(q.source!=='denary')rows.push(['Denary value','denary','number']);
+   if(q.source!=='hex')rows.push(['Hexadecimal (2 digits)','hex','hex']);
+   if(rows.length)fields(rows);
+  }
+  if(q.source!=='binary')editor(8,['128','64','32','16','8','4','2','1']);
+ }else if(skill==='shift'){
+  prompt='Shift '+bits(q.n,8)+' '+q.places+' place'+(q.places>1?'s':'')+' to the '+q.direction+'.';
+  instructions=q.mode.toUpperCase()+' '+q.direction+' shift: '+(q.mode==='arithmetic'&&q.direction==='right'?'copy the sign bit into vacant places.':'insert zeroes into vacant places.')+' Discard bits leaving the 8-bit width.';
+  readout('Original: '+bits(q.n,8),true);editor(8,['Sign','6','5','4','3','2','1','0']);
+ }else if(skill==='triple'){
+  var c=step;prompt='Add three 8-bit numbers, showing every carry.';
+  instructions='Column '+(c+1)+' from the right. Choose the result bit and carry to the next column. A carry can be 0, 1 or 2.';
+  readout('  '+bits(q.a,8)+'\n  '+bits(q.b,8)+'\n+ '+bits(q.c,8),true);
+  readout('Column bits: '+bit(q.a,c)+' + '+bit(q.b,c)+' + '+bit(q.c,c)+' + incoming carry '+carry+'.');
+  selects([['Write result bit','digit',[['','Choose'],['0','0'],['1','1']]],['Carry to the next column','carry',[['','Choose'],['0','0'],['1','1'],['2','2']]]]);
+ }else if(skill==='borrow'){
+  prompt='Calculate '+bits(q.a,8)+' − '+bits(q.b,8)+'.';
+  instructions='Column '+(step+1)+' from the right. Borrow 1 from the next column if needed; it is worth 2 in the current column.';
+  readout('  '+bits(q.a,8)+'\n− '+bits(q.b,8),true);
+  readout('Top bit '+bit(q.a,step)+'; bottom bit '+bit(q.b,step)+'; incoming borrow owed '+carry+'.');
+  selects([['Borrow from next column?','borrow',[['','Choose'],['0','No'],['1','Yes']]],['Write result bit','digit',[['','Choose'],['0','0'],['1','1']]]]);
+ }else if(skill==='twos'){
+  prompt='Represent −'+q.n+' in 8-bit two’s complement.';
+  instructions=step===0?'Step 1 of 3: represent positive '+q.n+' in eight bits.':step===1?'Step 2 of 3: invert EVERY bit (0 ↔ 1).':'Step 3 of 3: add binary 1 to the inverted pattern.';
+  readout(step===0?'+ '+q.n:step===1?bits(q.n,8):bits(~q.n,8),true);
+  editor(8,['Sign','64','32','16','8','4','2','1']);
+ }else if(skill==='fixed'){
+  prompt='Represent '+q.n+' using signed 8-bit Q4.4.';
+  instructions='The point lies between bit 4 and 5. Weights: −8, 4, 2, 1 | ½, ¼, ⅛, ¹⁄₁₆.';
+  if(step===0){fields([['Multiply by 16: signed integer','scaled','number']]);paragraph('Step 1: multiply by 16 to remove the fractional part.','mini');}
+  else{readout('Signed integer to represent: '+Math.round(q.n*16));editor(8,['Sign −8','4','2','1','½','¼','⅛','1/16']);paragraph('Insert the binary point after the fourth digit when interpreting your answer.','mini');}
+ }
+ $('prompt').textContent=prompt;$('instructions').textContent=instructions;
+}
+function success(message){log(message);resetFeedback();report('Correct. '+message,false);}
+function finish(message){$('check').hidden=true;$('clear').hidden=true;$('next').hidden=false;$('done').textContent=message;$('done').hidden=false;resetFeedback();}
+function check(){
+ if(skill==='convert'){
+  var binary=q.source==='binary'?q.binary:entered();
+  var decimal=q.source==='denary'?String(q.denary):$('denary').value.trim();
+  var hex=q.source==='hex'?q.hex:$('hex').value.trim().toUpperCase();
+  if(binary===null||!decimal||!hex){report('Fill both missing representations.',true);return;}
+  if(binary!==q.binary){report('Check the binary place values: 128, 64, 32, 16, 8, 4, 2, 1.',true);return;}
+  if(!/^\d+$/.test(decimal)||Number(decimal)!==q.denary){report('Check the total of the selected binary place values.',true);return;}
+  if(hex!==q.hex){report('Group binary into two nibbles of four bits: use 8, 4, 2, 1.',true);return;}
+  success(q.denary+' = '+q.binary+' = '+q.hex+' (hex).');finish('All three representations are correct.');
+ }else if(skill==='shift'){
+  var value=entered();if(value===null){report('Complete all eight result bits.',true);return;}
+  if(value!==q.answer){report(q.mode==='arithmetic'&&q.direction==='right'?'Arithmetic right shifts copy the original sign bit.':'Recheck the direction. Insert zeroes and discard shifted-off bits.',true);return;}
+  success(q.mode+' '+q.direction+' shift: '+bits(q.n,8)+' → '+value+'.');finish('Correct. The new 8-bit pattern is '+value+'.');
+ }else if(skill==='triple'){
+  var d=$('digit').value,c=$('carry').value;if(d===''||c===''){report('Choose a result bit and an outgoing carry.',true);return;}
+  var sum=bit(q.a,step)+bit(q.b,step)+bit(q.c,step)+carry,expectedBit=sum%2,expectedCarry=Math.floor(sum/2);
+  if(Number(d)!==expectedBit||Number(c)!==expectedCarry){report('Add all three bits and incoming carry. If the total is 4, write 0 and carry 2.',true);return;}
+  out=String(expectedBit)+out;log('Column '+(step+1)+' from right: total '+sum+' → digit '+expectedBit+', carry '+expectedCarry+'.');
+  carry=expectedCarry;step++;
+  if(step===8){finish('Correct: '+bits(q.a,8)+' + '+bits(q.b,8)+' + '+bits(q.c,8)+' = '+carry.toString(2).padStart(2,'0')+out+'₂ = '+(q.a+q.b+q.c)+'₁₀.');}
+  else render();
+ }else if(skill==='borrow'){
+  var br=$('borrow').value,d=$('digit').value;if(br===''||d===''){report('Choose the borrow and the result bit.',true);return;}
+  var top=bit(q.a,step)-carry,bottom=bit(q.b,step),need=top<bottom?1:0,result=top+2*need-bottom;
+  if(Number(br)!==need||Number(d)!==result){report('Remember: the incoming borrow reduces the top bit by 1. Borrow 1 from the next column if needed, adding 2 here.',true);return;}
+  out=String(result)+out;log('Column '+(step+1)+' from right: '+bit(q.a,step)+' − '+carry+' − '+bottom+(need?' + 2':'')+' = '+result+'; borrow left '+need+'.');
+  carry=need;step++;
+  if(step===8){finish('Correct: '+bits(q.a,8)+' − '+bits(q.b,8)+' = '+out+'₂ = '+(q.a-q.b)+'₁₀.');}
+  else render();
+ }else if(skill==='twos'){
+  var v=entered();if(v===null){report('Complete all eight bits.',true);return;}
+  var expected=step===0?bits(q.n,8):step===1?bits(~q.n,8):bits(-q.n,8);
+  if(v!==expected){report(step===0?'Write the positive magnitude as 8 bits.':step===1?'Flip every 0 to 1 and every 1 to 0.':'Add 1 to the flipped pattern, carrying across columns.',true);return;}
+  log(step===0?'Positive magnitude: '+v:step===1?'Inverted bits: '+v:'Add one: '+v+' represents −'+q.n+'.');
+  step++;if(step===3)finish('Correct: −'+q.n+' = '+bits(-q.n,8)+' in 8-bit two’s complement.');else render();
+ }else if(skill==='fixed'){
+  if(step===0){
+   var scaled=$('scaled').value.trim();if(!/^-?\d+$/.test(scaled)||Number(scaled)!==Math.round(q.n*16)){report('Multiply by 16 to get the signed integer to encode.',true);return;}
+   log(q.n+' × 16 = '+scaled+'.');step=1;render();return;
+  }
+  var actual=entered(),expected=bits(Math.round(q.n*16),8);
+  if(actual===null){report('Complete all eight bits.',true);return;}
+  if(actual!==expected){report('Represent the scaled signed integer in two’s complement, then put the point after four bits.',true);return;}
+  log(actual.slice(0,4)+'.'+actual.slice(4)+' is Q4.4 for '+q.n+'.');finish('Correct: '+actual.slice(0,4)+'.'+actual.slice(4)+'₂ = '+q.n+'₁₀.');
+ }
+}
+function clearStep(){
+ if(widget){widget.buttons.forEach(function(button,i){widget.set(i,'');});}
+ $('task').querySelectorAll('input').forEach(function(el){el.value='';});
+ $('task').querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
+ $('feedback').hidden=true;
+}
+function hint(){
+ var h={convert:'Each four-bit nibble represents one hexadecimal digit. Use weights 8, 4, 2, 1.',shift:'Logical: fill vacancies with zero. Arithmetic RIGHT: preserve the sign bit. Both discard bits beyond the width.',triple:'Example: 1+1+1+1 = 4 (binary 100), so write 0 and carry 2.',borrow:'Borrow 1 from the next column: it counts as 2 in this column. If the next column contains 0, the debt continues to its left.',twos:'Represent the magnitude, invert all eight bits, then add 1.',fixed:'Q4.4 uses four integer bits including the sign, plus four fractional bits. Multiply by 16 before encoding.'};
+ $('hint-text').textContent=h[skill];$('hint-text').hidden=!$('hint-text').hidden;$('hint').textContent=$('hint-text').hidden?'Show a hint':'Hide hint';
+}
+function reveal(){
+ var s='';
+ if(skill==='convert')s=q.denary+' = '+q.binary+' = '+q.hex+' (hex).';
+ if(skill==='shift')s='Expected: '+q.answer+'.';
+ if(skill==='triple'){var v=bit(q.a,step)+bit(q.b,step)+bit(q.c,step)+carry;s='Column total '+v+': write '+(v%2)+', carry '+Math.floor(v/2)+'.';}
+ if(skill==='borrow'){var a=bit(q.a,step)-carry,d=bit(q.b,step),borrow=a<d?1:0;s='Borrow '+borrow+'; write '+(a+2*borrow-d)+'.';}
+ if(skill==='twos')s='Step '+(step+1)+': '+(step===0?bits(q.n,8):step===1?bits(~q.n,8):bits(-q.n,8))+'.';
+ if(skill==='fixed')s=step===0?'Scaled signed integer: '+Math.round(q.n*16)+'.':'Binary: '+bits(Math.round(q.n*16),8)+'.';
+ $('reveal-text').textContent=s;$('reveal-text').hidden=false;
+}
+function openSkill(id){skill=id;level='easy';count=0;lastConversion=null;refresh();$('menu').hidden=true;$('practice').hidden=false;newQuestion();}
+function refresh(){document.querySelectorAll('[data-level]').forEach(function(el){el.setAttribute('aria-pressed',String(el.dataset.level===level));});}
+document.querySelectorAll('[data-skill]').forEach(function(el){el.addEventListener('click',function(){openSkill(el.dataset.skill);});});
+document.querySelectorAll('[data-level]').forEach(function(el){el.addEventListener('click',function(){if(el.dataset.level!==level){level=el.dataset.level;count=0;refresh();newQuestion();}});});
+$('new').addEventListener('click',newQuestion);$('next').addEventListener('click',newQuestion);$('check').addEventListener('click',check);$('clear').addEventListener('click',clearStep);
+$('hint').addEventListener('click',hint);$('reveal').addEventListener('click',reveal);
+$('back').addEventListener('click',function(){$('menu').hidden=false;$('practice').hidden=true;skill='';});
+})();
+</script></body></html>
