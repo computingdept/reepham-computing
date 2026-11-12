@@ -215,3 +215,28 @@ body.course-hub.synergy-unified-hub .synergy-course-controls :is(.tab,.year-btn)
     height:44px !important;min-height:44px !important;
   }
 }
+
+/* clock-grid-placement-fix: the Binary Clock shortcut is created as a sibling
+   of the original Synergy brand link. In the unified four-column header it
+   must inherit the artwork's top-right grid position, not auto-flow into
+   the second row over the exercise controls. No logo duplication. */
+body.course-hub.course-inline-nav.synergy-unified-hub > .topbar.synergy-corners:has(> a.synergy-clock-shortcut) > .brand.synergy-brand {
+  display:none !important;
+}
+body.course-hub.course-inline-nav.synergy-unified-hub > .topbar.synergy-corners > a.synergy-clock-shortcut {
+  grid-column:4;
+  grid-row:1;
+  justify-self:end;
+  align-self:center;
+  width:34px;
+  min-width:34px;
+  height:34px;
+  margin:0;
+  z-index:3;
+}
+@media(max-width:980px){
+  body.course-hub.course-inline-nav.synergy-unified-hub > .topbar.synergy-corners > a.synergy-clock-shortcut {
+    grid-column:3;
+    grid-row:1;
+  }
+}
