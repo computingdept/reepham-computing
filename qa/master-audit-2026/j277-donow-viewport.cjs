@@ -87,7 +87,7 @@ let screenshots = 0;
             };
           });
           const structural = data.count !== 4 || !data.active || errors.length > 0 ||
-            (view.desktop && data.mcqOptions === 4 && data.mcqTwoByTwo !== true);
+            (data.mcqOptions === 4 && data.mcqTwoByTwo !== true);
           const fits = data.sectionOverflowPx <= 3 &&
             data.horizontalOverflowPx <= 3 &&
             data.internalOverflow.length === 0 &&
