@@ -16,7 +16,7 @@ const validSets=[
  {family:'IPv4',options:['10.0.0.256','10.0.0.1','10.0.0.-1'],right:1},
  {family:'MAC',options:['11:22:33:44:55:66:77','11:22:33:44:55:6Z','11:22:33:44:55:66'],right:2},
  {family:'IPv6',options:['fd00:1:2:3:4:5:6:7','fd00:1:2:3:4:5:6:GG','fd00:1:2:3:4:5:6:7:8'],right:0},
- {family:'IPv4',options:['172.16.0.15','172.16.0.015','172.16.0.999'],right:0},
+ {family:'IPv4',options:['172.16.0.15','172.16.0.15.9','172.16.0.999'],right:0},
  {family:'MAC',options:['DE-AD-BE-EF-00-01','DE-AD-BE-EF-00','DE-AD-BE-EF-00-GG'],right:0},
  {family:'IPv6',options:['2001:db8:0:0:0:0:0:1','2001:db8:0:0:0:0:0:1:2','2001:db8:0:0:0:0:0:XYZ'],right:0},
  {family:'IPv4',options:['203.0.113.5','203.0.113.500','203.0.113.5.2'],right:0}
@@ -88,7 +88,7 @@ const breaks=[
  ['Star','switch','The central switch stops working.','All devices lose their connections through that switch.'],
  ['Star','link','The cable between one PC and the switch breaks.','Only the connected PC loses its link; the other PCs remain connected.'],
  ['Full mesh','link','One cable between two PCs breaks.','The PCs can still communicate through other connected devices.'],
- ['Star','link','A printer’s cable to the central switch breaks.','That printer loses its network link; other devices can still communicate.'],
+ ['Star','link','A computer’s cable to the central switch breaks.','That computer loses its network link; other devices can still communicate.'],
  ['Full mesh','link','A single direct connection between two devices breaks.','Other routes still exist between the devices.'],
  ['Star','switch','The only central switch loses power.','The whole star loses connectivity via its central point.'],
  ['Full mesh','link','One of the many device-to-device links is damaged.','Remaining links provide an alternative path.'],
@@ -201,7 +201,8 @@ function render(p,target,isLocked,setReady){
    choiceGroup(section,devices,()=>state.selected,v=>state.selected=v,isLocked);
    if(p.mode==='explain'){
     section.append(el('div','net-heading net-gap','WHY IS THIS DEVICE CORRECT?'));
-    const opts=hardwareWhy[p.expected].slice();
+    const original=hardwareWhy[p.expected],turn=p.index%original.length;
+    const opts=original.slice(turn).concat(original.slice(0,turn));
     choiceGroup(section,opts,()=>state.reason,v=>state.reason=v,isLocked,'net-reasons');
    }
    note.textContent='Choose the specific device for the job, not simply something found on the internet.';
