@@ -1,34 +1,89 @@
 <!doctype html>
 <html lang="en-GB">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#003a31">
-<meta name="description" content="OCR H446 interactive computing skills: Karnaugh maps and floating-point arithmetic.">
-<title>A Level Computer Science Tools · Synergy Assist</title>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="OCR H446 A Level Computer Science interactive skills: binary representation, arithmetic, floating point and Karnaugh maps.">
+<title>H446 Skills practice · Synergy Assist</title>
+<link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
+<link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
+<link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
+<link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
+<link rel="stylesheet" href="/assets/synergy-resource-cards.css?v=20261110-actions1">
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f4f8f5;color:#123a2a}*{box-sizing:border-box}
-body{margin:0}a{color:inherit}a:focus-visible{outline:3px solid #c08b30;outline-offset:3px}
-header{background:#003a31;color:#fff;min-height:55px;padding:9px max(18px,calc((100vw - 1140px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-weight:900;letter-spacing:.08em;text-decoration:none;font-size:14px}nav{display:flex;gap:4px}nav a{padding:9px 10px;text-decoration:none;font-weight:800;font-size:13px;border-radius:7px}nav a:hover,nav a[aria-current]{background:#1a684c}
-main{max-width:1140px;padding:23px 18px 40px;margin:auto}
-.eyebrow{font-size:12px;color:#4c8062;font-weight:900;letter-spacing:.12em;margin:0 0 6px}
-h1{font-size:clamp(26px,3vw,36px);letter-spacing:-.05em;margin:0 0 8px}p{line-height:1.48;color:#5a7160}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:19px}
-.card{display:flex;flex-direction:column;align-items:start;gap:13px;padding:24px;background:#fff;border:1px solid #d5e3d9;border-top:5px solid #006347;border-radius:13px;min-height:228px;box-shadow:0 5px 20px #1038270a}
-.card:nth-child(2){border-top-color:#bd8a37}.card h2{font-size:22px;margin:0}.card .spec{font-size:12px;font-weight:900;color:#3f7056}.card p{margin:0;font-size:14px;flex:1}
-.action{background:#006347;border-radius:8px;color:#fff;display:inline-flex;text-decoration:none;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;font-weight:850;font-size:14px}
-.action:hover{background:#004c39}
-@media(max-width:690px){.cards{grid-template-columns:1fr;gap:11px}.card{min-height:190px;padding:19px}main{padding:16px 12px 35px}}
+:root{--green:#285348;--ink:#30383a;--line:#d5ddda;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}
+body.course-hub{margin:0;background:#fff;color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,a{font:inherit}a{color:inherit}
+:focus-visible{outline:3px solid #bd7d08;outline-offset:2px}
+body.course-hub .topbar.synergy-corners{border-bottom:1px solid var(--line);box-shadow:none}
+body.course-hub .topbar.synergy-corners .synergy-corner-title{color:var(--ink)}
+body.course-hub .course-nav .skill-nav{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:38px;padding:8px 10px 6px;margin-left:3px;border-bottom:2px solid #285348;color:#285348;font-size:12px;font-weight:800;line-height:1.2;text-decoration:none;white-space:nowrap}
+body.course-hub .course-nav .tabs a.tab{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+body.course-hub main.wrap{max-width:1380px;margin:0 auto;padding:12px 20px 32px}
+.hero{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:13px}
+.kicker{color:#285348;font-size:12px;font-weight:850;letter-spacing:.08em}
+h1{font-size:clamp(23px,2.3vw,29px);letter-spacing:-.55px;margin:3px 0 6px;line-height:1.15}
+.hero p{margin:0;font-size:13px;color:#586961;line-height:1.4}
+.hero-count{border:1px solid var(--line);border-radius:8px;min-width:124px;padding:8px 10px;text-align:center;flex:none}
+.hero-count strong{display:block;color:#285348;font-size:22px;line-height:1.2}
+.hero-count span{display:block;color:#65746a;font-size:11px}
+.skill-group{margin:16px 0 22px}
+.skill-group h2{font-size:19px;letter-spacing:-.3px;margin:0 0 4px}
+.section-caption{font-size:13px;color:#596b61;margin:0 0 12px}
+body.course-hub .tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}
+body.course-hub .tiles>.rhsc-resource-card--skill .tile-main{text-decoration:none}
+body.course-hub .tiles>.rhsc-resource-card--skill .tile-main:hover{background:#f7faf8}
+body.course-hub .tiles>.rhsc-resource-card--skill .tile-action svg{flex:none}
+body.course-hub .tiles>.rhsc-resource-card--skill .tile-action{min-height:55px}
+body.course-hub .tiles>.rhsc-resource-card--skill .tile-foot{font-weight:750}
+body.course-hub .tiles>.rhsc-resource-card--skill{min-height:175px}
+@media(max-width:1090px){body.course-hub .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:740px){body.course-hub main.wrap{padding:12px 12px 26px}body.course-hub .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hero{align-items:flex-start}.hero p{font-size:12px}.hero-count{min-width:90px}.hero-count span{font-size:10px}.skill-group h2{font-size:18px}}
+@media(max-width:540px){body.course-hub .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}body.course-hub .topbar.synergy-corners .synergy-corner-title{font-size:15px}.hero{gap:7px}.hero-count strong{font-size:19px}}
+@media(max-width:980px){body.course-hub .course-nav .skill-nav{min-height:42px;padding:7px 8px 5px}}
 </style>
 </head>
-<body>
-<header><a class="brand" href="/">SYNERGY ASSIST</a><nav aria-label="A Level Computing"><a href="/h446-hub.html#lessons">Lessons</a><a href="/h446-hub.html#booklet">Guides</a><a href="/h446-hub.html#revisionhub">Practice</a><a href="/exercise/h446/tools.html" aria-current="page">Tools</a></nav></header>
-<main>
-<p class="eyebrow">OCR H446 · YEARS 12 &amp; 13</p>
-<h1>Skills tools</h1>
-<p>Practise methods by doing the working yourself, checking each step, and trying a new question.</p>
-<div class="cards">
-<article class="card"><span class="spec">1.4.3(b) · BOOLEAN ALGEBRA</span><h2>Karnaugh maps</h2><p>Populate a 3- or 4-variable map, select valid groups, and write the simplified Boolean expression. Easy, Medium and Hard.</p><a class="action" href="/exercise/h446/">Open Karnaugh maps →</a></article>
-<article class="card"><span class="spec">1.4.1(b–i) · DATA REPRESENTATION</span><h2>Binary number skills</h2><p>Six interactive activities: conversion, logical and arithmetic shifts, adding three binary numbers, subtraction with borrowing, two’s complement and signed Q4.4 fixed point.</p><a class="action" href="/exercise/h446/binary-skills/">Open binary skills →</a></article>
-<article class="card"><span class="spec">1.4.1(h) · FLOATING-POINT ARITHMETIC</span><h2>Add, subtract &amp; normalise</h2><p>Decode exponents, align unequal powers, add or subtract two’s-complement mantissas, and normalise the result one shift at a time. 6- or 8-bit mantissas.</p><a class="action" href="/exercise/h446/floating-point/">Open floating-point practice →</a></article>
-</div>
+<body class="course-hub course-inline-nav synergy-unified-hub">
+<header class="topbar synergy-corners" aria-label="A Level Computer Science navigation">
+<a class="rhsc-site-nav-button rhsc-site-nav-home" href="/" aria-label="Learning Hub home" title="Learning Hub home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></a>
+<span class="synergy-corner-title">A Level Computer Science</span>
+<div class="synergy-course-controls">
+<div class="year-switch" role="group" aria-label="A Level year group"><a class="year-btn" href="/h446-hub.html?year=12#lessons"><span class="year-word">Year </span>12</a><a class="year-btn" href="/h446-hub.html?year=13#lessons"><span class="year-word">Year </span>13</a></div>
+<nav class="course-nav" aria-label="A Level Computer Science resources"><div class="tabs">
+<a class="tab" href="/h446-hub.html#lessons">Lessons</a>
+<a class="tab" href="/h446-hub.html#booklet">Guides</a>
+<a class="tab" href="/h446-hub.html#revisionhub">Practice</a></div>
+<a class="skill-nav" href="/exercise/h446/tools.html" aria-current="page">Skills</a></nav></div>
+<a class="brand synergy-brand" href="/" aria-label="Synergy Assist home"><span class="synergy-brand-icon" aria-hidden="true"></span></a>
+</header>
+<main class="wrap">
+<section class="hero"><div><div class="kicker">OCR H446 · A LEVEL</div><h1>Skills practice</h1><p>Choose an activity to practise a computing process, build a model or solve a problem.</p></div><div class="hero-count"><strong id="done-counter">0</strong><span>skills solved on this device</span></div></section>
+<section class="skill-group" aria-labelledby="data-title"><h2 id="data-title">Data Representation</h2><p class="section-caption">Conversions · shifts · arithmetic · signed numbers · floating point</p><div class="tiles"><article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=convert" aria-label="Practise Conversion grid"><span class="tile-title">Conversion grid</span><span class="tile-sub">Denary · Binary · Hex</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-convert">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=convert"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=shift" aria-label="Practise Bit shifting"><span class="tile-title">Bit shifting</span><span class="tile-sub">Logical · Arithmetic</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-shift">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=shift"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=triple" aria-label="Practise Three-number addition"><span class="tile-title">Three-number addition</span><span class="tile-sub">Columns · Carries of 2</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-triple">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=triple"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=borrow" aria-label="Practise Binary subtraction"><span class="tile-title">Binary subtraction</span><span class="tile-sub">Borrow across zeros</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-borrow">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=borrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=twos" aria-label="Practise Two’s complement"><span class="tile-title">Two’s complement</span><span class="tile-sub">Flip bits · Add 1</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-twos">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=twos"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=fixed" aria-label="Practise Fixed-point numbers"><span class="tile-title">Fixed-point numbers</span><span class="tile-sub">Signed fractions · Q4.4</span><span class="tile-ref">1.4.1 support</span><span class="tile-foot" id="progress-fixed">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=fixed"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
+<article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/floating-point/" aria-label="Practise Floating-point arithmetic"><span class="tile-title">Floating-point arithmetic</span><span class="tile-sub">Align · Add · Normalise</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-floating">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/floating-point/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article></div></section>
+<section class="skill-group" aria-labelledby="logic-title"><h2 id="logic-title">Boolean Algebra</h2><p class="section-caption">Simplification using Karnaugh maps</p><div class="tiles"><article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/" aria-label="Practise Karnaugh maps"><span class="tile-title">Karnaugh maps</span><span class="tile-sub">Populate · Group · Simplify</span><span class="tile-ref">1.4.3</span><span class="tile-foot" id="progress-kmap">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article></div></section>
 </main>
+<script>
+(function(){
+  'use strict';
+  var storage={};try{storage=JSON.parse(localStorage.getItem('rhs-h446-binary-skills-progress')||'{}')||{};}catch(e){}
+  var total=0,skills=['convert','shift','triple','borrow','twos','fixed'];
+  skills.forEach(function(key){
+    var n=0,record=storage[key];
+    if(record&&typeof record==='object')n=['easy','medium','hard'].reduce(function(sum,l){return sum+(Number(record[l])||0);},0);
+    var el=document.getElementById('progress-'+key);if(el)el.textContent=n+' correct';total+=n;
+  });
+  [{key:'floating',store:'h446-floating-skills-solved'},{key:'kmap',store:'h446-kmap-solved'}].forEach(function(item){
+    var n=0;try{n=Number(localStorage.getItem(item.store))||0;}catch(e){}
+    var el=document.getElementById('progress-'+item.key);if(el)el.textContent=n+' correct';total+=n;
+  });
+  document.getElementById('done-counter').textContent=total;
+})();
+</script>
+<script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body></html>
