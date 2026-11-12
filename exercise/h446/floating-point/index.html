@@ -51,6 +51,27 @@ h1{margin:0;font-size:clamp(24px,3vw,34px);line-height:1.14;letter-spacing:-.04e
 footer{font-size:12px;color:#597462;margin-top:13px}
 @media(max-width:850px){.grid{grid-template-columns:1fr}.operands{justify-content:center}.panel{padding:14px}}
 @media(max-width:460px){.wrap{padding:12px}.sitebar{padding:10px}.sitebar nav a{padding:7px 8px}.step{font-size:11px;padding:7px 8px}.question{padding:11px}.bitgroup .bits{font-size:21px}.operand{min-width:0;padding:9px;gap:7px}.operator{font-size:20px}.field{min-width:94px}.field input{font-size:17px}.choice{min-width:48px;padding:8px 9px}}
+
+/* H446 floating-point only: large clickable binary entry, no shared CSS changes */
+.bitgroup .bits{display:flex;gap:2px;align-items:center;justify-content:center;letter-spacing:0}
+.display-bit{display:inline-grid;place-items:center;min-width:.62em}
+.display-bit.sign{background:#fff1df;color:#895019;border:1px solid #e0b67f;border-radius:4px}
+.display-point{font-weight:950;color:#9d6124;align-self:end}
+.bitgroup .caption{font-size:13px}
+.lead{font-size:16px;line-height:1.5}.small,.mini-note,.log li,.explainer{font-size:14px}
+.field>label{font-size:14px}.readout{font-size:16px}
+.binary-source{display:none!important}
+.bit-editor{display:grid;grid-template-columns:repeat(var(--bit-count),minmax(0,1fr));gap:4px;width:100%}
+.bit-unit{text-align:center;min-width:0}.bit-weight{display:block;font-size:11px;min-height:18px;font-weight:800;color:#55735e}
+.bit-key{display:grid;place-items:center;width:100%;height:49px;min-width:0;padding:0;border:2px solid #a9c8b2;border-radius:7px;background:#fff;color:#173f30;font:900 clamp(19px,2vw,27px)/1 Consolas,monospace}
+.bit-key.has-value{background:#e6f5e9;border-color:#559d72}.bit-key.sign{background:#fff5e8;border-color:#bc915a}
+.bit-key.sign.has-value{background:#fff0db}.bit-key:hover{border-color:#006347}
+.bit-key:focus-visible{outline:3px solid #c08b30;outline-offset:1px}
+.bit-guide{font-size:13px;color:#426b53;margin:8px 0}
+.shift-current{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:7px}
+.shift-current .bits{display:flex;align-items:center;gap:1px;font:900 26px Consolas,monospace}
+.shift-current .discarded{background:#ffe9da;color:#9d3924;border:1px solid #c89580;border-radius:4px}
+@media(max-width:460px){.bit-editor{gap:3px}.bit-weight{font-size:10px}.bit-key{height:44px;font-size:clamp(17px,5vw,23px)}.lead{font-size:15px}.field{min-width:0}}
 </style>
 </head>
 <body>
@@ -103,7 +124,7 @@ footer{font-size:12px;color:#597462;margin-top:13px}
         <div class="readout" id="shift-note"></div>
         <div class="formrow"><div class="field"><label for="shift-m">Mantissa after ONE right shift</label><input id="shift-m" inputmode="numeric" placeholder="Binary bits" autocomplete="off" spellcheck="false"></div>
           <div class="field"><label for="shift-e">New exponent (4-bit)</label><input id="shift-e" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" spellcheck="false"></div></div>
-        <button class="btn primary" id="check2" type="button">Check this shift →</button>
+        <p class="bit-guide">Tap each digit: blank → 1 → 0. Or press 0 or 1 on a keyboard. Amber marks the sign bit.</p><button class="btn primary" id="check2" type="button">Check this shift →</button>
         <p class="small">Arithmetic right shift: repeat the sign bit on the left. The exponent increases by one.</p>
       </div>
       <div id="step3" hidden>
@@ -199,6 +220,78 @@ function build(example){
  if(!sumValue||plan.some(function(p){return p.e<-8||p.e>7;}))throw Error('Invalid example in exercise bank');
 }
 function setText(id,value){$(id).textContent=value;}
+
+var binaryIds=['shift-m','shift-e','flipped','twos','sum','norm-m','norm-e'];
+var binaryWidgets={};
+function binarySize(id){return id==='shift-e'||id==='norm-e'?4:id==='sum'?width+1:width;}
+function binaryLabel(id,i,n){
+ if(id==='shift-e'||id==='norm-e')return i===0?'Sign':String(1<<(n-i-1));
+ if(id==='sum')return i===0?'Extra':i===1?'Sign':'b'+(n-i-1);
+ return i===0?'Sign':'b'+(n-i-1);
+}
+function paintBinary(id){
+ var widget=binaryWidgets[id],values=widget.buttons.map(function(b){return b.dataset.value;});
+ widget.input.value=values.every(function(v){return v==='0'||v==='1';})?values.join(''):'';
+ widget.buttons.forEach(function(b,i){
+  var v=values[i];b.textContent=v||'–';b.classList.toggle('has-value',v!=='');
+  b.setAttribute('aria-pressed',String(v==='1'));
+  b.setAttribute('aria-label',binaryLabel(id,i,values.length)+', digit '+(i+1)+', '+(v||'blank')+'. Press 0 or 1, or click to toggle.');
+ });
+}
+function setBinaryBit(id,i,v){binaryWidgets[id].buttons[i].dataset.value=v;paintBinary(id);}
+function clearBinary(id){
+ if(!binaryWidgets[id])return;
+ binaryWidgets[id].buttons.forEach(function(b){b.dataset.value='';});
+ paintBinary(id);
+}
+function buildBinary(id){
+ var input=$(id),label=input.parentElement.querySelector('label'),n=binarySize(id),widget=binaryWidgets[id];
+ var grid=widget?widget.grid:document.createElement('div');
+ if(!widget){
+  label.id='label-'+id;label.removeAttribute('for');
+  input.classList.add('binary-source');input.tabIndex=-1;input.setAttribute('aria-hidden','true');
+  grid.className='bit-editor';grid.setAttribute('role','group');
+  grid.setAttribute('aria-labelledby',label.id);
+  input.insertAdjacentElement('afterend',grid);
+ }
+ grid.style.setProperty('--bit-count',n);grid.replaceChildren();
+ var buttons=[];
+ for(var i=0;i<n;i++){
+  var cell=document.createElement('div');cell.className='bit-unit';
+  var head=document.createElement('span');head.className='bit-weight';head.textContent=binaryLabel(id,i,n);
+  var b=document.createElement('button');b.type='button';b.dataset.value='';
+  b.className='bit-key'+(i===0?' sign':'');
+  (function(index,button){
+   button.addEventListener('click',function(){
+    setBinaryBit(id,index,button.dataset.value===''?'1':button.dataset.value==='1'?'0':'1');
+   });
+   button.addEventListener('keydown',function(event){
+    if(event.key==='0'||event.key==='1'){event.preventDefault();setBinaryBit(id,index,event.key);}
+    else if(event.key==='Backspace'||event.key==='Delete'){event.preventDefault();setBinaryBit(id,index,'');}
+    else if(event.key==='ArrowRight'||event.key==='ArrowLeft'){
+     event.preventDefault();buttons[Math.max(0,Math.min(n-1,index+(event.key==='ArrowRight'?1:-1)))].focus();
+    }
+   });
+  })(i,b);
+  cell.append(head,b);grid.append(cell);buttons.push(b);
+ }
+ binaryWidgets[id]={grid:grid,input:input,buttons:buttons};paintBinary(id);
+}
+function rebuildBinary(){binaryIds.forEach(buildBinary);}
+function displayBits(element,string,mantissa,discarded){
+ element.replaceChildren();
+ Array.from(String(string)).forEach(function(d,i,all){
+  var bit=document.createElement('span');bit.className='display-bit'+(i===0?' sign':'')+(discarded&&i===all.length-1?' discarded':'');
+  bit.textContent=d;element.append(bit);
+  if(mantissa&&i===0){var dot=document.createElement('span');dot.className='display-point';dot.textContent='.';element.append(dot);}
+ });
+}
+function drawQuestion(){
+ displayBits($('a-m'),bits(ex.a,width),true,false);
+ displayBits($('a-e'),bits(ex.ea,4),false,false);
+ displayBits($('b-m'),bits(ex.b,width),true,false);
+ displayBits($('b-e'),bits(ex.eb,4),false,false);
+}
 function appendLog(text){var li=document.createElement('li');li.textContent=text;$('working-log').append(li);}
 function feedback(text,type){
  var el=$('feedback');el.textContent=text;el.className='status'+(type?' '+type:'');el.hidden=false;
@@ -237,9 +330,10 @@ function pickQuestion(){
  currentSmall=ex.low==='A'?ex.a:ex.b;
  negateDone=ex.op==='+';normalIndex=0;discarded=[];stage=1;stepErrors=0;
  ['eA','eB','common','shift-m','shift-e','flipped','twos','sum','norm-m','norm-e'].forEach(function(id){$(id).value='';});
+  rebuildBinary();
  $('finished').hidden=true;$('working-log').replaceChildren();resetFeedback();$('reveal').hidden=true;
  setText('question-label','Calculate A '+ex.op+' B. Show every step ('+width+'-bit mantissas, 4-bit exponents).');
- setText('a-m',bits(ex.a,width));setText('a-e',bits(ex.ea,4));setText('b-m',bits(ex.b,width));setText('b-e',bits(ex.eb,4));
+ drawQuestion();
  setText('op',ex.op==='+'?'+':'−');refresh();stepChanged();
 }
 function checkDecode(){
@@ -252,7 +346,14 @@ function checkDecode(){
 }
 function showShift(){
  var total=ex.common-(ex.low==='A'?ex.ea:ex.eb);
- setText('shift-note',ex.low+' has the smaller exponent. Shift '+(shiftCount+1)+' of '+total+'. Current: '+bits(currentSmall,width)+'  '+bits(shiftExponent,4)+' (exponent '+shiftExponent+').');
+ var note=$('shift-note');note.replaceChildren();
+  var header=document.createElement('strong');header.textContent=ex.low+' has the smaller exponent · Shift '+(shiftCount+1)+' of '+total;note.append(header);
+  var row=document.createElement('div');row.className='shift-current';
+  var label=document.createElement('span');label.textContent='Current mantissa:';
+  var value=document.createElement('span');value.className='bits';displayBits(value,bits(currentSmall,width),true,true);
+  var exponent=document.createElement('span');exponent.textContent='Exponent '+bits(shiftExponent,4)+' ('+shiftExponent+')';
+  row.append(label,value,exponent);note.append(row);
+  var note2=document.createElement('div');note2.className='small';note2.textContent='Repeat the amber sign bit at the left; discard the highlighted rightmost bit.';note.append(note2);
 }
 function checkShift(){
  var targetMantissa=currentSmall>>1,targetExponent=shiftExponent+1;
@@ -263,7 +364,7 @@ function checkShift(){
  var lost=bits(currentSmall,width).slice(-1);discarded.push(lost);
  appendLog('Align '+ex.low+': '+bits(currentSmall,width)+' → '+m+'; exponent '+bits(shiftExponent,4)+' → '+e+'; discarded bit '+lost+'.');
  currentSmall=targetMantissa;shiftExponent=targetExponent;shiftCount++;
- $('shift-m').value='';$('shift-e').value='';
+ clearBinary('shift-m');clearBinary('shift-e');
  correct('Correct arithmetic shift. The lost rightmost bit was '+lost+'.');
  if(shiftExponent===ex.common){stage=3;stepChanged();}else{showShift();}
 }
@@ -301,7 +402,7 @@ function showNormalise(){
  var valueBits=bits(start.m,normalIndex===0?(Math.abs(sumValue)>=(1<<(width-1))&&sumValue!==-(1<<(width-1))?width+1:width):width);
  setText('normal-note','Current mantissa: '+valueBits+' (signed '+start.m+'), exponent '+bits(start.e,4)+' ('+start.e+'). '+(normalIndex<plan.length?'Check the leading bits, then choose the next action.':''));
  document.querySelectorAll('input[name=action]').forEach(function(el){el.checked=false;});
- $('norm-m').value='';$('norm-e').value='';
+ clearBinary('norm-m');clearBinary('norm-e');
 }
 function selectedAction(){
  var picked=Array.from(document.querySelectorAll('input[name=action]')).find(function(r){return r.checked;});
@@ -361,7 +462,7 @@ $('new').addEventListener('click',pickQuestion);$('next').addEventListener('clic
 $('check1').addEventListener('click',checkDecode);$('check2').addEventListener('click',checkShift);
 $('check-negate').addEventListener('click',checkNegate);$('check3').addEventListener('click',checkCalculate);$('check4').addEventListener('click',checkNormalise);
 $('hint-button').addEventListener('click',showHint);$('reveal-button').addEventListener('click',showCorrectStep);
-refresh();pickQuestion();
+refresh();rebuildBinary();pickQuestion();
 })();
 </script>
 </body>
