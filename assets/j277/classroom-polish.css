@@ -302,11 +302,36 @@ body{
 }
 
 
-/* J277 DO NOW TOP-ALIGNED CLASSROOM · 2026-11-11
-   Correct the shared H446/J277 stretched-row override for GCSE only.
-   Keep the large classroom question/MCQ text sizes. Change neither
-   answer-review stages nor any other lesson phase.
-   Four real MCQ choices remain visible; do not hide or remove distractors. */
+/* J277 DO NOW ONLY — single GCSE layout, 12 November 2026.
+   The H446 classroom engine remains shared; these narrower selectors override
+   its stretched-height rows without changing H446, other phases, answers
+   or navigation. Keep four MCQ choices and readable, fixed-size text.
+   Short-projector exceptions are editorial work, NOT a font-shrinking trigger. */
+#do-now .j277-mcq{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:100%;
+  min-width:0;
+  margin:6px 0 0;
+  padding:0;
+  gap:6px 9px;
+  list-style-type:upper-alpha;
+  list-style-position:inside;
+  font-size:clamp(17px,1.2vw,22px);
+  line-height:1.2;
+}
+#do-now .j277-mcq > li{
+  min-width:0;
+  margin:0;
+  padding:6px 9px;
+  border:1px solid #d9e5de;
+  border-radius:9px;
+  background:#f8faf9;
+  overflow-wrap:anywhere;
+  line-height:1.2;
+}
+#do-now .j277-mcq > li::marker{font-weight:800}
+
 @media (min-width:901px) and (min-height:500px){
   body:not(.answer-page) #do-now .donow-stage:first-child{
     height:auto;
@@ -320,13 +345,16 @@ body{
     grid-auto-rows:auto;
     align-content:start;
     align-items:stretch;
-    gap:clamp(8px,1.15vh,12px) clamp(10px,1vw,16px);
-    padding-bottom:3px;
+    gap:clamp(8px,1vh,12px) clamp(10px,1vw,15px);
+    padding-bottom:2px;
   }
   body:not(.answer-page) #do-now .donow-questions > .donow-question{
-    height:100%;
+    min-width:0;
     min-height:0;
-    padding:clamp(9px,1.25vh,13px) clamp(12px,1.15vw,17px);
+    height:100%;
+    padding:clamp(9px,1.2vh,13px) clamp(11px,1vw,16px);
+    justify-content:flex-start;
+    align-items:stretch;
   }
   body:not(.answer-page) #do-now .donow-questions > .donow-question > strong{
     margin:0 0 5px;
@@ -335,31 +363,19 @@ body{
   }
   body:not(.answer-page) #do-now .donow-questions > .donow-question > p{
     margin:0;
+    line-height:1.22;
   }
   body:not(.answer-page) #do-now .donow-questions .j277-mcq{
-    display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    align-self:stretch;
-    width:100%;
-    min-width:0;
-    padding:0;
-    gap:clamp(5px,.8vh,8px) clamp(7px,.8vw,11px);
-    margin:7px 0 0;
-    list-style-type:upper-alpha;
-    list-style-position:inside;
-    line-height:1.2;
+    margin:6px 0 0;
+    gap:5px 8px;
+    line-height:1.18;
   }
   body:not(.answer-page) #do-now .donow-questions .j277-mcq > li{
-    min-width:0;
-    padding:clamp(5px,.7vh,7px) clamp(7px,.8vw,10px);
-    margin:0;
-    border:1px solid #d9e5de;
-    border-radius:9px;
-    background:#f8faf9;
-    overflow-wrap:anywhere;
-    line-height:1.19;
+    padding:5px 8px;
+    line-height:1.18;
   }
-  body:not(.answer-page) #do-now .donow-questions .j277-mcq > li::marker{
-    font-weight:800;
-  }
+}
+@media(max-width:700px){
+  #do-now .j277-mcq{grid-template-columns:1fr}
 }
