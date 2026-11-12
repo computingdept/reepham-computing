@@ -1,0 +1,65 @@
+name: J277 Do Now projector-fit audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/j277/classroom-polish.css'
+      - 'lessons/j277/h446-adapter.js'
+      - 'lessons/j277/autumn2-rebuilt.js'
+      - 'lessons/j277/lesson-001/index.html'
+      - 'lessons/j277/lesson-002/index.html'
+      - 'qa/master-audit-2026/j277-donow-viewport.cjs'
+      - '.github/workflows/j277-donow-projector-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/j277/classroom-polish.css'
+      - 'lessons/j277/h446-adapter.js'
+      - 'lessons/j277/autumn2-rebuilt.js'
+      - 'qa/master-audit-2026/j277-donow-viewport.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax check (only J277 Do Now dependencies)
+        run: |
+          node --check qa/master-audit-2026/j277-donow-viewport.cjs
+          node --check lessons/j277/h446-adapter.js
+          node --check lessons/j277/autumn2-rebuilt.js
+      - name: Audit all standard J277 Do Nows at projected and phone heights
+        env:
+          QA_DONOW_SHARDS: '4'
+          QA_DONOW_SHARD: '${{ matrix.shard }}'
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/j277-donow-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/j277-donow-viewport.cjs
+      - name: Upload individual lesson fit findings and representative screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: j277-donow-projector-shard-${{ matrix.shard }}
+          path: |
+            qa-output/j277-donow-shard-${{ matrix.shard }}.json
+            qa-output/j277-donow-screens/
+          if-no-files-found: warn
