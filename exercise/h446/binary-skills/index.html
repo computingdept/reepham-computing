@@ -76,6 +76,15 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 @media(max-width:980px){body.course-hub .course-nav .skill-nav{min-height:42px;padding:7px 8px 5px}}
 @media(max-width:850px){#practice .panels{grid-template-columns:1fr}}
 @media(max-width:540px){body.course-hub main{padding:10px 12px 24px}#practice .bar{gap:5px}#practice .btn{padding:8px 10px;font-size:12px}#practice .levels{gap:1px}#practice .level{font-size:12px;padding:8px 9px}}
+
+/* H446 shifting: fixed source and interactive answer use matching 8-bit columns. */
+.shift-row-heading{margin:12px 0 2px;font-size:15px;font-weight:850;color:#2b523b}
+.shift-source{margin:4px 0 12px}.shift-source .bit-label{color:#54725e}
+.shift-static-bit{height:55px;display:grid;place-items:center;background:#f0f6f2;color:#173c2d;border:2px solid #c3d5c9;border-radius:8px;font:900 clamp(20px,2.5vw,28px)/1 Consolas,monospace}
+.shift-static-bit.sign{border-color:#c69b5f;background:#fff3e2}
+.shift-static-bit.discarded{border-color:#d6a28c;background:#fff0e9;color:#97503b}
+.shift-tip{font-size:13px;color:#586f60;margin:0 0 10px}
+@media(max-width:540px){.shift-static-bit{height:46px;font-size:clamp(18px,5vw,23px)}}
 </style>
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub">
@@ -201,6 +210,27 @@ function editor(n,labels){
  widget={buttons:buttons,set:set};
  paragraph('Tap blank → 1 → 0, or press 0 or 1. Use arrow keys to move between bits.','mini');
 }
+
+function shiftColumnLabels(){
+ return Array.from({length:8},function(_,i){return i===0&&q.mode==='arithmetic'?'Sign':String(7-i);});
+}
+function shiftSourceGrid(){
+ var values=bits(q.n,8),labels=shiftColumnLabels();
+ var title=document.createElement('p');title.className='shift-row-heading';title.textContent='Original (read only)';$('task').append(title);
+ var grid=document.createElement('div');grid.className='bits shift-source';grid.style.setProperty('--n','8');
+ grid.setAttribute('role','img');grid.setAttribute('aria-label','Original eight bits: '+values.split('').join(' '));
+ values.split('').forEach(function(value,i){
+  var wrap=document.createElement('div');wrap.className='bit-wrap';
+  var head=document.createElement('span');head.className='bit-label';head.textContent=labels[i];
+  var discarded=q.direction==='right'?i>=8-q.places:i<q.places;
+  var number=document.createElement('span');
+  number.className='shift-static-bit'+(i===0&&q.mode==='arithmetic'?' sign':'')+(discarded?' discarded':'');
+  number.textContent=value;wrap.append(head,number);grid.append(wrap);
+ });
+ $('task').append(grid);
+ paragraph('Highlighted end digits will be discarded by the shift.','shift-tip');
+ var answer=document.createElement('p');answer.className='shift-row-heading';answer.textContent='Your result (click each digit)';$('task').append(answer);
+}
 function entered(){if(!widget)return null;var v=widget.buttons.map(function(k){return k.dataset.value;});return v.every(function(x){return x==='0'||x==='1';})?v.join(''):null;}
 function empty(){widget=null;$('task').replaceChildren();$('done').hidden=true;$('next').hidden=true;$('check').hidden=false;$('clear').hidden=false;resetFeedback();}
 function newQuestion(){
@@ -233,9 +263,9 @@ function render(){
   }
   if(q.source!=='binary')editor(8,['128','64','32','16','8','4','2','1']);
  }else if(skill==='shift'){
-  prompt='Shift '+bits(q.n,8)+' '+q.places+' place'+(q.places>1?'s':'')+' to the '+q.direction+'.';
+  prompt='Shift '+q.direction.toUpperCase()+' by '+q.places+' place'+(q.places>1?'s':'')+'.';
   instructions=q.mode.toUpperCase()+' '+q.direction+' shift: '+(q.mode==='arithmetic'&&q.direction==='right'?'copy the sign bit into vacant places.':'insert zeroes into vacant places.')+' Discard bits leaving the 8-bit width.';
-  readout('Original: '+bits(q.n,8),true);editor(8,['Sign','6','5','4','3','2','1','0']);
+  shiftSourceGrid();editor(8,shiftColumnLabels());
  }else if(skill==='triple'){
   var c=step;prompt='Add three 8-bit numbers, showing every carry.';
   instructions='Column '+(c+1)+' from the right. Choose the result bit and carry to the next column. A carry can be 0, 1 or 2.';
