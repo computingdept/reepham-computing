@@ -1577,7 +1577,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   if(!entry||entry.questions.length!==4)throw Error("Incomplete Do Now bank");
   data.doNowItems=entry.questions;
   data.r=entry.questions.map(q=>[q.question+(q.options.length?"\n"+q.options.map((o,i)=>"ABCD"[i]+") "+o).join("\n"):""),q.explanation]);
-  data.refs=entry.questions.map(q=>q.source_lesson);
+  data.refs=entry.questions.map(q=>[...new Set((q.source_lesson||'').split(',').map(ref=>ref.trim()).filter(Boolean))].join(', '));
   data.c=[...data.c,...(entry.teachingAdditions||[])];
   data.teachingVisuals=entry.teachingVisuals||{};
  }
