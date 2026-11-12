@@ -234,7 +234,7 @@
 
  let j277RetrievalPromise;
  async function applyJ277Retrieval(data,number){
-  j277RetrievalPromise ||= fetch("../donow-bank-20261020.json?v=20261020-simpleq2").then(r=>{if(!r.ok)throw Error("Do Now bank unavailable");return r.json()});
+  j277RetrievalPromise ||= fetch("../donow-bank-20261020.json?v=20261112-q4copy1").then(r=>{if(!r.ok)throw Error("Do Now bank unavailable");return r.json()});
   const bank=await j277RetrievalPromise, entry=bank.lessons[String(number).padStart(3,"0")];
   if(!entry||entry.questions.length!==4)throw Error("Incomplete Do Now bank");
   data.doNowItems=entry.questions;
@@ -252,7 +252,7 @@
   const labels=["LAST LESSON","EARLIER LEARNING · MCQ","EARLIER LEARNING","HIGH CHALLENGE"];
   const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong>${j277Question(lesson,i)}</article>`);
   const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><div class="review-question">${j277Question(lesson,i)}</div></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(lesson.doNowItems?.[i]?.answer||answer)}</p>${lesson.doNowItems?.[i]?.correct_option?'<p>'+escape(lesson.doNowItems[i].explanation)+'</p>':""}</article></div></div>`);
-  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><style>#do-now .j277-mcq{padding-left:1.5em;margin:.45em 0 0;font-size:clamp(17px,1.15vw,22px);line-height:1.25}#do-now .j277-mcq li{padding-left:.15em;margin:.18em 0}#do-now .donow-question p{font-size:clamp(19px,1.35vw,25px);line-height:1.27}</style><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
+  return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2>${lesson.teachingVisuals?.[title]||""}<p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
@@ -307,7 +307,7 @@
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261111-donow-mcq2">${lessonStyles}</head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261112-donow-unified1">${lessonStyles}</head>`;
  function renderLesson(number,lesson){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
