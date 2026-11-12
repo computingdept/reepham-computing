@@ -57,6 +57,13 @@ let screenshots = 0;
             const cards = [...grid.querySelectorAll(":scope > .donow-question")];
             const q2 = cards[1]?.querySelector(".j277-mcq");
             const choices = q2 ? [...q2.children] : [];
+            const sourceLabels = [...sec.querySelectorAll(
+              ".donow-questions .donow-question strong, .donow-review .review-number"
+            )].map(x => x.textContent.trim());
+            const duplicateSourceLabels = sourceLabels.filter(label => {
+              const refs = label.match(/\bL\d{3}\b/g) || [];
+              return refs.length !== new Set(refs).size;
+            });
             const bounds = sec.getBoundingClientRect();
             const r = el => el.getBoundingClientRect();
             const internalOverflow = cards.map((c, i) => ({
@@ -73,6 +80,7 @@ let screenshots = 0;
               count: cards.length,
               mcqOptions: choices.length,
               mcqTwoByTwo: columns,
+              duplicateSourceLabels,
               sectionOverflowPx: Math.max(0, sec.scrollHeight - sec.clientHeight),
               horizontalOverflowPx: Math.max(0,
                 document.documentElement.scrollWidth - document.documentElement.clientWidth),
@@ -87,6 +95,7 @@ let screenshots = 0;
             };
           });
           const structural = data.count !== 4 || !data.active || errors.length > 0 ||
+            data.duplicateSourceLabels.length > 0 ||
             (data.mcqOptions === 4 && data.mcqTwoByTwo !== true);
           const fits = data.sectionOverflowPx <= 3 &&
             data.horizontalOverflowPx <= 3 &&
