@@ -5,6 +5,10 @@
 <meta name="theme-color" content="#003a31">
 <meta name="description" content="OCR H446 floating point addition and subtraction interactive skills: decode exponents, align mantissas, calculate and normalise.">
 <title>Floating-point arithmetic skills · OCR H446 · Synergy Assist</title>
+<link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
+<link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
+<link rel="stylesheet" href="/assets/synergy-brand.css?v=20261101-logo1">
+<link rel="stylesheet" href="/assets/synergy-course-bar.css?v=20261101-unified1">
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f4f8f5;color:#173f30;font-synthesis:none}
 *{box-sizing:border-box}body{margin:0}input,button{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
@@ -72,12 +76,27 @@ footer{font-size:12px;color:#597462;margin-top:13px}
 .shift-current .bits{display:flex;align-items:center;gap:1px;font:900 26px Consolas,monospace}
 .shift-current .discarded{background:#ffe9da;color:#9d3924;border:1px solid #c89580;border-radius:4px}
 @media(max-width:460px){.bit-editor{gap:3px}.bit-weight{font-size:10px}.bit-key{height:44px;font-size:clamp(17px,5vw,23px)}.lead{font-size:15px}.field{min-width:0}}
+
+/* Header from shared Synergy course assets; no lesson or maths changes. */
+body.course-hub.synergy-unified-hub{background:#fff;color:#30383a}
+body.course-hub > header.topbar.synergy-corners{background:#fff;color:#30383a;border-bottom:1px solid #d5ddda;box-shadow:none}
+body.course-hub header.topbar .synergy-corner-title{color:#30383a}
+body.course-hub .course-nav .skill-nav{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 10px 6px;margin-left:3px;border-bottom:2px solid #285348;color:#285348;font-size:12px;line-height:1.2;text-decoration:none;font-weight:800}
+body.course-hub .course-nav .tabs a.tab{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+body.course-hub .wrap{padding-top:12px}
+@media(max-width:980px){body.course-hub .course-nav .skill-nav{min-height:42px;padding:7px 8px 5px}}
 </style>
 </head>
-<body>
-<header class="sitebar">
-  <a class="sitebrand" href="/">SYNERGY ASSIST</a>
-  <nav aria-label="A Level Computer Science"><a href="/h446-hub.html#lessons">Lessons</a><a href="/h446-hub.html#revisionhub">Practice</a><a href="/exercise/h446/tools.html" aria-current="page">Tools</a></nav>
+<body class="course-hub course-inline-nav synergy-unified-hub">
+<header class="topbar synergy-corners" aria-label="A Level Computer Science navigation">
+<a class="rhsc-site-nav-button rhsc-site-nav-home" href="/" aria-label="Learning Hub home" title="Learning Hub home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></a>
+<span class="synergy-corner-title">A Level Computer Science</span>
+<div class="synergy-course-controls">
+<div class="year-switch" role="group" aria-label="A Level year group"><a class="year-btn" href="/h446-hub.html?year=12#lessons"><span class="year-word">Year </span>12</a><a class="year-btn" href="/h446-hub.html?year=13#lessons"><span class="year-word">Year </span>13</a></div>
+<nav class="course-nav" aria-label="A Level Computing resources"><div class="tabs">
+<a class="tab" href="/h446-hub.html#lessons">Lessons</a><a class="tab" href="/h446-hub.html#booklet">Guides</a><a class="tab" href="/h446-hub.html#revisionhub">Practice</a></div>
+<a class="skill-nav" href="/exercise/h446/tools.html" aria-current="page">Skills</a></nav>
+</div><a class="brand synergy-brand" href="/" aria-label="Synergy Assist home"><span class="synergy-brand-icon" aria-hidden="true"></span></a>
 </header>
 <main class="wrap">
   <div class="topline"><div><p class="kicker">OCR H446 · 1.4.1(h) · FLOATING-POINT ARITHMETIC</p>
@@ -465,5 +484,6 @@ $('hint-button').addEventListener('click',showHint);$('reveal-button').addEventL
 refresh();rebuildBinary();pickQuestion();
 })();
 </script>
+<script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body>
 </html>
