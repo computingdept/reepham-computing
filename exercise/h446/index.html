@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#003a31">
+<meta name="description" content="OCR H446 1.4.3(b) Karnaugh map skills: populate, group and simplify Boolean expressions.">
+<title>Karnaugh Map Skills · OCR H446 · Synergy Assist</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#153b2f;background:#f4f8f5;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;min-width:300px}
+button,input{font:inherit}
+a{color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.46}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98720;outline-offset:3px}
+[hidden]{display:none!important}
+.sitebar{min-height:57px;padding:8px max(20px,calc((100vw - 1170px)/2));background:#003a31;color:#fff;display:flex;align-items:center;gap:20px;justify-content:space-between}
+.sitebrand{text-decoration:none;font-size:15px;font-weight:900;letter-spacing:.08em;white-space:nowrap}
+.course{color:#baddcb;font-size:12px;letter-spacing:.07em;font-weight:800}
+.site-nav{display:flex;align-items:center;flex-wrap:wrap;gap:2px}
+.site-nav a{padding:9px 10px;border-radius:7px;text-decoration:none;font-size:13px;font-weight:750}
+.site-nav a:hover,.site-nav a[aria-current]{background:#18634c;color:#fff}
+.wrap{max-width:1170px;margin:0 auto;padding:15px 20px 42px}
+.pagehead{display:flex;gap:12px;align-items:end;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}
+.eyebrow{margin:0 0 4px;font-size:12px;color:#537569;font-weight:900;letter-spacing:.1em}
+h1{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0;letter-spacing:-.04em}
+.pagehead p.note{margin:7px 0 0;color:#536e61;font-size:14px}
+.count{font-size:12px;font-weight:800;color:#3a6654}
+.topcontrols{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:11px 13px;background:#fff;border:1px solid #d7e4da;border-radius:12px;margin-bottom:13px}
+.topcontrols strong{font-size:13px;margin-right:2px}
+.levels{display:flex;gap:4px;padding:3px;background:#eaf1ec;border-radius:9px}
+.level{border:0;background:transparent;color:#355e4b;padding:9px 15px;border-radius:7px;font-size:13px;font-weight:850;min-width:80px}
+.level[aria-pressed=true]{background:#005b42;color:#fff;box-shadow:0 2px 6px #002e251c}
+.spacer{flex:1}
+.btn{border:1px solid #91b5a2;background:#fff;color:#164b36;padding:10px 14px;border-radius:8px;font-weight:850;min-height:43px}
+.btn:hover:not(:disabled){background:#eaf4ed}
+.btn.primary{background:#006347;border-color:#006347;color:#fff}
+.btn.primary:hover:not(:disabled){background:#004c38}
+.btn.light{background:#edf5ef}
+.steps{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;border-radius:30px;border:1px solid #cfdfd5;background:#eff5f1;color:#6b7f73;padding:7px 12px;font-size:12px;font-weight:850}
+.step b{display:grid;place-items:center;width:20px;height:20px;background:#d6e5da;border-radius:50%;font-size:11px}
+.step.current{border-color:#619f80;background:#e0f2e7;color:#075337}
+.step.done{color:#236349;background:#f9fbf9}
+.step.done b{background:#006347;color:#fff}
+.question{background:#fff;border-radius:12px;padding:16px 18px;border:1px solid #d6e4da;margin-bottom:12px}
+.question .kicker{margin:0 0 7px;font-size:11px;letter-spacing:.1em;color:#506e5a;font-weight:900}
+.question h2{margin:0;font-size:clamp(16px,1.7vw,20px);font-weight:800;line-height:1.4}
+.formula{display:inline-block;overflow-wrap:anywhere;font-size:clamp(17px,1.8vw,21px);letter-spacing:.01em;color:#123f2e}
+.question .explain{color:#536d61;font-size:12px;margin:9px 0 0}
+.workspace{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(310px,.85fr);gap:13px;align-items:start}
+.panel{background:#fff;border:1px solid #d6e4da;border-radius:12px;padding:17px;min-width:0}
+.panel h2{font-size:17px;margin:0 0 6px}
+.muted{color:#526f60}
+.instructions{margin:0 0 12px;font-size:13px;line-height:1.45;color:#50685d}
+.map{display:grid;grid-template-columns:74px repeat(4,minmax(0,1fr));gap:5px;max-width:560px;margin:0 auto 12px}
+.corner,.axis{display:flex;justify-content:center;align-items:center;color:#34614c;font-weight:850;font-size:14px}
+.corner{flex-direction:column;align-items:start;line-height:1.25;font-size:12px;padding-left:5px}
+.corner small{font-size:10px;color:#648372}
+.axis{background:#edf4ef;border-radius:6px;min-height:38px;font-variant-numeric:tabular-nums}
+.kcell{position:relative;background:#fff;min-height:65px;border:2px solid #aac8b6;border-radius:9px;font-size:25px;font-weight:850;color:#174f3a;touch-action:manipulation}
+.kcell:hover:not(:disabled){border-color:#007d58;background:#f5fbf7}
+.kcell.empty{color:#a1b3a8}
+.kcell.chosen{border-color:#b57626;background:#fff4dc;box-shadow:inset 0 0 0 2px #d0a359}
+.kcell.wrong{border-color:#bd4343;background:#fff4f2}
+.kcell.solved{background:#e8f5eb}
+.badges{position:absolute;right:3px;bottom:2px;font-size:9px;color:#3f6653;letter-spacing:.01em;white-space:nowrap}
+.maptools{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;margin:8px 0}
+.maptools .label{color:#536b5e;font-size:12px;font-weight:800}
+.paint{border:1px solid #a8bfae;background:#fff;color:#184531;border-radius:8px;font-weight:900;min-width:48px;min-height:42px}
+.paint[aria-pressed=true]{background:#006347;color:#fff;border-color:#006347}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.feedback{padding:11px 13px;border-radius:8px;background:#eef5f0;border:1px solid #b9d8c4;color:#204c35;font-size:13px;line-height:1.45;margin-top:10px}
+.feedback.error{background:#fff1ed;color:#713a26;border-color:#e1ac99}
+.feedback.good{background:#e2f4e8;border-color:#97c6a8;color:#185438}
+.groups{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.group{font-size:12px;font-weight:800;border:1px solid #b6d5c2;background:#edf7f0;color:#25523c;border-radius:30px;padding:5px 9px}
+.toolhint{border:0;background:transparent;color:#145b3e;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:6px 1px;font-size:12px}
+.hint{margin-top:8px;font-size:12px;background:#f6f8ed;color:#4b5531;border-left:3px solid #9eab58;padding:9px 12px;line-height:1.5}
+.answer{margin-top:10px}
+.answer label{font-size:13px;font-weight:850;display:block;margin:0 0 7px}
+.answer input{display:block;width:100%;min-height:54px;padding:9px 11px;border:2px solid #9dbbab;border-radius:9px;font-size:20px;font-weight:700;letter-spacing:.01em;background:#fff;color:#123f2e}
+.symbols{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.symbols button{border:1px solid #bdcfc3;border-radius:7px;min-width:39px;min-height:37px;background:#f7faf7;font-weight:850;font-size:17px;color:#174a33}
+.solution{background:#eef7f0;border:1px solid #a9cfba;border-radius:10px;padding:11px 13px;margin-top:13px;font-size:13px;line-height:1.5}
+.solution strong{display:block;margin-bottom:7px}
+.solution p{margin:4px 0}
+.bottomhint{color:#5a7265;font-size:12px;margin:10px 2px 0}
+@media(max-width:820px){.workspace{grid-template-columns:1fr}.sitebar{flex-wrap:wrap;gap:5px}.course{display:none}.site-nav{width:100%;justify-content:space-between}.site-nav a{padding:8px 6px}.wrap{padding:13px 12px 34px}.map{max-width:530px}}
+@media(max-width:420px){.panel{padding:12px}.question{padding:13px}.map{grid-template-columns:48px repeat(4,minmax(0,1fr));gap:4px}.corner{font-size:10px;padding:0}.axis{min-height:30px;font-size:12px}.kcell{min-height:52px;font-size:22px}.badges{font-size:8px}.level{min-width:69px;padding:9px 10px}.steps{gap:5px}.step{font-size:10px;padding:7px 8px;gap:5px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="sitebar">
+  <a class="sitebrand" href="/">SYNERGY ASSIST</a>
+  <span class="course">OCR H446 · A LEVEL COMPUTER SCIENCE</span>
+  <nav class="site-nav" aria-label="A Level Computing resources">
+    <a href="/h446-hub.html#lessons">Lessons</a>
+    <a href="/h446-hub.html#booklet">Guides</a>
+    <a href="/h446-hub.html#revisionhub">Practice</a>
+    <a href="/exercise/h446/" aria-current="page">Tools</a>
+  </nav>
+</header>
+<main class="wrap">
+  <div class="pagehead">
+    <div><p class="eyebrow">H446 · 1.4.3(b) · BOOLEAN ALGEBRA</p><h1>Karnaugh map skills</h1><p class="note">Fill the map. Group the 1s. Write the simplest Boolean expression.</p></div>
+    <span class="count" id="solved">0 solved on this device</span>
+  </div>
+  <div class="topcontrols">
+    <strong>Difficulty</strong>
+    <div class="levels" role="group" aria-label="Difficulty">
+      <button class="level" type="button" data-level="easy" aria-pressed="true">Easy</button>
+      <button class="level" type="button" data-level="medium" aria-pressed="false">Medium</button>
+      <button class="level" type="button" data-level="hard" aria-pressed="false">Hard</button>
+    </div>
+    <span class="spacer"></span>
+    <button class="btn" type="button" id="new">New question ↻</button>
+  </div>
+  <div class="steps" aria-label="Task stages">
+    <span class="step current" data-step="1"><b>1</b> Populate</span>
+    <span class="step" data-step="2"><b>2</b> Group</span>
+    <span class="step" data-step="3"><b>3</b> Simplify</span>
+  </div>
+  <section class="question" aria-labelledby="question-title">
+    <p class="kicker" id="question-meta">EASY · THREE VARIABLES</p>
+    <h2 id="question-title">Use a Karnaugh map to simplify <span class="formula" id="expression"></span></h2>
+    <p class="explain">OCR notation: ¬ NOT · ∧ AND · ∨ OR. Gray-code headings follow 00, 01, 11, 10.</p>
+  </section>
+  <div class="workspace">
+    <section class="panel" aria-labelledby="map-title">
+      <h2 id="map-title">Karnaugh map</h2>
+      <p class="instructions" id="map-instruction">Select 0 or 1, then tap every cell to enter the output for its inputs.</p>
+      <div class="map" id="map" aria-label="Interactive Karnaugh map"></div>
+      <div class="maptools" id="fill-tools" role="group" aria-label="Value to enter">
+        <span class="label">Enter</span>
+        <button class="paint" type="button" data-paint="0" aria-pressed="false">0</button>
+        <button class="paint" type="button" data-paint="1" aria-pressed="true">1</button>
+        <button class="paint" type="button" data-paint="erase" aria-pressed="false">Erase</button>
+      </div>
+      <div class="actions" id="fill-actions">
+        <button class="btn primary" id="check-map" type="button">Check map</button>
+        <button class="btn light" id="clear-map" type="button">Clear map</button>
+      </div>
+      <div class="actions" id="group-actions" hidden>
+        <button class="btn primary" id="add-group" type="button">Add selected group</button>
+        <button class="btn" id="undo-group" type="button">Undo group</button>
+        <button class="btn light" id="check-groups" type="button">Check groups →</button>
+      </div>
+      <div class="groups" id="groups" aria-live="polite"></div>
+      <div class="feedback" id="map-feedback" role="status" hidden></div>
+    </section>
+    <section class="panel" aria-labelledby="working-title">
+      <h2 id="working-title">Show your working</h2>
+      <p class="instructions" id="working-message">Step 1: for each combination of inputs, decide whether the original expression is 0 or 1.</p>
+      <button class="toolhint" type="button" id="hint-toggle" aria-expanded="false">Show a hint</button>
+      <div class="hint" id="hint" hidden></div>
+      <div class="answer" id="answer-panel" hidden>
+        <label for="answer">Simplified expression: F =</label>
+        <input id="answer" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. ¬A ∧ B ∨ C" aria-describedby="symbol-instructions">
+        <p class="instructions" id="symbol-instructions" style="margin:7px 0 4px">Use ∧, ∨ and ¬. AND can also be written as adjoining letters; + means OR.</p>
+        <div class="symbols" id="symbols" aria-label="Boolean expression symbols"></div>
+        <div class="actions"><button class="btn primary" type="button" id="check-answer">Check simplification</button><button class="btn light" type="button" id="clear-answer">Clear</button></div>
+      </div>
+      <div class="feedback" id="answer-feedback" role="status" hidden></div>
+      <div class="solution" id="solution" hidden></div>
+      <div class="actions" id="finish-actions" hidden><button class="btn" id="show-solution" type="button">Show worked answer</button><button class="btn primary" id="next" type="button">Next question →</button></div>
+    </section>
+  </div>
+  <p class="bottomhint">The map is marked before groups are enabled. Alternative correct minimal groupings and simplified expressions are accepted. This tool works entirely in your browser.</p>
+</main>
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var gray=[0,1,3,2],letters="ABCD",level="easy",stage=1,paint="1",question=null,values=[],truth=[],groups=[],selected=new Set(),candidates=[],best=null,attempts=0,solvedCount=0,lastIndex={easy:-1,medium:-1,hard:-1};
+  var bank={
+    easy:[
+      "!A&B&!C|!A&B&C|A&B&!C|A&B&C",
+      "!A&!B|!A&B",
+      "A&!C|A&C",
+      "!A&B|A&B|A&C",
+      "!A&B|A&B|!A&C",
+      "A&B&!C|A&B&C"
+    ],
+    medium:[
+      "!A&B&C|!A&B&!C|A&B&D",
+      "A&!B&C|A&B&C|!A&B&C",
+      "A&B|!B&D|!A&B&D",
+      "!A&!D|!A&D|B&C",
+      "!B&!D|B&!D|A&C",
+      "A&!C|A&C&D|!A&C&D"
+    ],
+    hard:[
+      "!A&!B&!C|!A&B&!C|A&B&C|A&!B&C|B&D",
+      "!A&!B&D|!A&B&D|A&!C&!D|A&C&!D|B&C",
+      "A&!B&!C|A&!B&C|!A&C&!D|!A&C&D|B&!D",
+      "!A&!B&!D|!A&B&!D|A&!C&D|A&C&D|B&C",
+      "!B&!D|A&C|!A&B&D"
+    ]
+  };
+  try{solvedCount=Number(localStorage.getItem("h446-kmap-solved"))||0;}catch(e){}
+  function announceSolved(){$("solved").textContent=solvedCount+" solved on this device";}
+  function variableCount(){return level==="easy"?3:4;}
+  function rows(){return variableCount()===3?2:4;}
+  function inputOf(pos){
+    var r=Math.floor(pos/4),c=pos%4;
+    var bits=variableCount()===3?[r,gray[c]>>1,gray[c]&1]:[gray[r]>>1,gray[r]&1,gray[c]>>1,gray[c]&1];
+    return bits.reduce(function(v,b){return (v<<1)|b;},0);
+  }
+  function termOf(positions){
+    var terms=[],n=variableCount();
+    for(var bit=0;bit<n;bit++){
+      var shift=n-1-bit;
+      var first=(inputOf(positions[0])>>shift)&1;
+      if(positions.every(function(p){return ((inputOf(p)>>shift)&1)===first;}))terms.push((first?"":"¬")+letters[bit]);
+    }
+    return terms.join(" ∧ ")||"1";
+  }
+  function tokenise(raw){
+    var s=raw.toUpperCase().replace(/^\s*F\s*=/,"").replace(/\bNOT\b/g,"!").replace(/\bAND\b/g,"&").replace(/\bOR\b/g,"|");
+    s=s.replace(/[¬!~]/g,"!").replace(/[∧&·.*]/g,"&").replace(/[∨|+]/g,"|").replace(/\s/g,"");
+    if(!s||/[^A-D01!&|()']/.test(s))throw Error("Use letters A–D and the Boolean symbols ¬, ∧ and ∨.");
+    return s.split("");
+  }
+  function parseExpression(raw){
+    var t=tokenise(raw),i=0,n=variableCount();
+    function atom(){
+      if(t[i]==="!"){i++;return {op:"not",a:atom()};}
+      var v=t[i++];
+      if(v==="("){var inside=or();if(t[i++]!==")")throw Error("Check the brackets.");while(t[i]==="'"){i++;inside={op:"not",a:inside};}return inside;}
+      if(v==="0"||v==="1")return {op:"const",v:v==="1"};
+      if(v&&letters.slice(0,n).includes(v)){var node={op:"var",v:v};while(t[i]==="'"){i++;node={op:"not",a:node};}return node;}
+      throw Error("An input letter or bracket is missing.");
+    }
+    function and(){
+      var left=atom();
+      while(i<t.length&&(t[i]==="&"||t[i]==="!"||t[i]==="("||letters.includes(t[i])||t[i]==="0"||t[i]==="1")){
+        if(t[i]==="&")i++;
+        left={op:"and",a:left,b:atom()};
+      }
+      return left;
+    }
+    function or(){var left=and();while(t[i]==="|"){i++;left={op:"or",a:left,b:and()};}return left;}
+    var out=or();if(i!==t.length)throw Error("Check the Boolean symbols and brackets.");return out;
+  }
+  function valueOf(node,input){
+    switch(node.op){
+      case "var":return !!((input>>(variableCount()-1-letters.indexOf(node.v)))&1);
+      case "const":return node.v;
+      case "not":return !valueOf(node.a,input);
+      case "and":return valueOf(node.a,input)&&valueOf(node.b,input);
+      case "or":return valueOf(node.a,input)||valueOf(node.b,input);
+    }
+    return false;
+  }
+  function fillTruth(expr){
+    var ast=parseExpression(expr),a=[];
+    for(var p=0;p<rows()*4;p++)a.push(valueOf(ast,inputOf(p))?1:0);
+    return a;
+  }
+  function groupKey(a){return a.slice().sort(function(x,y){return x-y;}).join(",");}
+  function enumerateGroups(){
+    var found=new Map(),nr=rows();
+    [1,2,4].forEach(function(height){
+      if(height>nr)return;
+      [1,2,4].forEach(function(width){
+        for(var r=0;r<nr;r++)for(var c=0;c<4;c++){
+          var cells=[];
+          for(var dr=0;dr<height;dr++)for(var dc=0;dc<width;dc++)cells.push(((r+dr)%nr)*4+(c+dc)%4);
+          if(cells.every(function(p){return truth[p]===1;})){
+            cells.sort(function(a,b){return a-b;});
+            var key=groupKey(cells);
+            if(!found.has(key)){
+              var mask=cells.reduce(function(acc,p){return acc|(1<<p);},0);
+              var term=termOf(cells),literalCount=term==="1"?0:term.split(" ∧ ").length;
+              found.set(key,{cells:cells,mask:mask,literals:literalCount,term:term});
+            }
+          }
+        }
+      });
+    });
+    return Array.from(found.values());
+  }
+  function optimalCover(){
+    var full=truth.reduce(function(mask,v,p){return v?mask|(1<<p):mask;},0);
+    var memo=new Map();
+    function solve(rem){
+      if(!rem)return {count:0,literals:0,groups:[]};
+      if(memo.has(rem))return memo.get(rem);
+      var first=0;while(!(rem&(1<<first)))first++;
+      var selectedBest=null;
+      candidates.forEach(function(g){
+        if(!(g.mask&(1<<first)))return;
+        var tail=solve(rem&~g.mask);
+        var candidate={count:tail.count+1,literals:tail.literals+g.literals,groups:[g].concat(tail.groups)};
+        if(!selectedBest||candidate.count<selectedBest.count||(candidate.count===selectedBest.count&&candidate.literals<selectedBest.literals))selectedBest=candidate;
+      });
+      memo.set(rem,selectedBest);return selectedBest;
+    }
+    return solve(full);
+  }
+  function message(id,text,type){
+    var e=$(id);e.textContent=text;e.className="feedback"+(type?" "+type:"");e.hidden=false;
+  }
+  function clearMessage(id){$(id).hidden=true;$(id).textContent="";}
+  function questionStart(){
+    stage=1;paint="1";selected=new Set();groups=[];attempts=0;
+    var choices=bank[level],index=Math.floor(Math.random()*choices.length);
+    if(choices.length>1&&index===lastIndex[level])index=(index+1)%choices.length;
+    lastIndex[level]=index;question=choices[index];
+    truth=fillTruth(question);values=Array(truth.length).fill(null);
+    candidates=enumerateGroups();best=optimalCover();
+    $("expression").textContent="F = "+question.replace(/!/g,"¬").replace(/&/g," ∧ ").replace(/\|/g," ∨ ");
+    $("question-meta").textContent=level.toUpperCase()+" · "+(variableCount()===3?"THREE":"FOUR")+" VARIABLES";
+    $("answer").value="";$("solution").hidden=true;$("solution").replaceChildren();
+    $("finish-actions").hidden=true;$("hint").hidden=true;$("hint-toggle").setAttribute("aria-expanded","false");$("hint-toggle").textContent="Show a hint";
+    clearMessage("map-feedback");clearMessage("answer-feedback");update();
+  }
+  function update(){
+    document.querySelectorAll(".level").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.level===level));});
+    document.querySelectorAll(".paint").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.paint===paint));});
+    document.querySelectorAll(".step").forEach(function(e){
+      var n=Number(e.dataset.step);e.className="step"+(n===stage?" current":n<stage?" done":"");
+    });
+    $("fill-tools").hidden=stage!==1;$("fill-actions").hidden=stage!==1;
+    $("group-actions").hidden=stage!==2;
+    $("answer-panel").hidden=stage!==3;
+    $("map-instruction").textContent=stage===1?"Select 0 or 1, then tap every cell to enter the output for its inputs.":stage===2?"Tap neighbouring 1s to select a rectangle, then Add selected group. Edges wrap around; groups may overlap.":"Your groups are complete. Now write the simplified sum-of-products expression.";
+    $("working-message").textContent=stage===1?"Step 1: work out every output using the Boolean expression.":stage===2?"Step 2: use the fewest, largest groups of 1, 2, 4, 8 or 16 cells. Cover every 1.":"Step 3: for each group, keep only letters whose values stay the same. AND within groups, OR between groups.";
+    $("groups").replaceChildren();
+    groups.forEach(function(g,i){var chip=document.createElement("span");chip.className="group";chip.textContent="Group "+(i+1)+" · "+g.cells.length+" cells";$("groups").append(chip);});
+    renderMap();
+  }
+  function renderMap(){
+    var map=$("map");map.replaceChildren();
+    var corner=document.createElement("div");corner.className="corner";
+    var main=document.createElement("span");main.textContent=variableCount()===3?"A ↓":"AB ↓";
+    var small=document.createElement("small");small.textContent=variableCount()===3?"BC →":"CD →";
+    corner.append(main,small);map.append(corner);
+    for(var c=0;c<4;c++){var h=document.createElement("div");h.className="axis";h.textContent=String(gray[c]).padStart(2,"0");map.append(h);}
+    for(var r=0;r<rows();r++){
+      var v=document.createElement("div");v.className="axis";v.textContent=variableCount()===3?String(r):String(gray[r]).padStart(2,"0");map.append(v);
+      for(var col=0;col<4;col++){
+        var pos=r*4+col,cell=document.createElement("button");cell.type="button";cell.className="kcell";
+        var text=values[pos]===null?"–":String(values[pos]);cell.textContent=text;
+        if(values[pos]===null)cell.classList.add("empty");
+        if(selected.has(pos))cell.classList.add("chosen");
+        if(stage===3&&truth[pos]===1)cell.classList.add("solved");
+        var tags=groups.map(function(g,i){return g.cells.includes(pos)?i+1:null;}).filter(function(x){return x!==null;});
+        if(tags.length){var dot=document.createElement("span");dot.className="badges";dot.textContent="G"+tags.join(",");cell.append(dot);}
+        var input=String(inputOf(pos)).padStart(variableCount(),"0");
+        cell.setAttribute("aria-label","Inputs "+input+", "+(values[pos]===null?"blank":"output "+values[pos])+(stage===2?", "+(selected.has(pos)?"selected":"not selected"):""));
+        cell.disabled=stage===3||(stage===2&&values[pos]!==1);
+        cell.addEventListener("click",(function(position){return function(){cellClick(position);};})(pos));
+        map.append(cell);
+      }
+    }
+  }
+  function cellClick(pos){
+    if(stage===1){values[pos]=paint==="erase"?null:Number(paint);clearMessage("map-feedback");}
+    else if(stage===2){if(selected.has(pos))selected.delete(pos);else selected.add(pos);}
+    renderMap();
+  }
+  function checkMap(){
+    if(values.some(function(x){return x===null;})){message("map-feedback","Complete every cell with 0 or 1 before checking.","error");return;}
+    var bad=values.reduce(function(n,v,i){return n+(v===truth[i]?0:1);},0);
+    if(bad){message("map-feedback",bad+" cell"+(bad===1?" needs":"s need")+" another look. Check each output against the original expression.","error");return;}
+    stage=2;message("map-feedback","Correct map. Now select and add the largest valid groups of 1s.","good");update();
+  }
+  function addGroup(){
+    var key=groupKey(Array.from(selected)),g=candidates.find(function(c){return groupKey(c.cells)===key;});
+    if(!selected.size){message("map-feedback","Select a group of 1s first.","error");return;}
+    if(!g){message("map-feedback","That selection is not a valid rectangle of 1, 2, 4, 8 or 16 cells. Edges may wrap around.","error");return;}
+    if(groups.some(function(x){return groupKey(x.cells)===key;})){message("map-feedback","You have already added that group.","error");return;}
+    groups.push(g);selected.clear();message("map-feedback","Added a valid group of "+g.cells.length+". Keep going until every 1 is covered.","good");update();
+  }
+  function checkGroups(){
+    var covered=groups.reduce(function(mask,g){return mask|g.mask;},0);
+    var target=truth.reduce(function(mask,v,p){return v?mask|(1<<p):mask;},0);
+    var missing=target&~covered;
+    if(missing){message("map-feedback","Some 1s are not covered yet. Add a group for every 1.","error");return;}
+    var literals=groups.reduce(function(n,g){return n+g.literals;},0);
+    if(groups.length!==best.count||literals!==best.literals){
+      message("map-feedback","All 1s are covered, but you can simplify further. Aim for "+best.count+" group"+(best.count===1?"":"s")+" with "+best.literals+" literal"+(best.literals===1?"":"s")+" altogether. Overlap is allowed.","error");return;
+    }
+    stage=3;selected.clear();message("map-feedback","Excellent. Your groups are minimal. Write one AND term per group and join the terms with OR.","good");update();$("answer").focus();
+  }
+  function collectTerms(node){
+    var branches=[];
+    function orPart(n){if(n.op==="or"){orPart(n.a);orPart(n.b);}else branches.push(n);}
+    function andPart(n,vars){if(n.op==="and")return andPart(n.a,vars)&&andPart(n.b,vars);
+      if(n.op==="var"){vars.push(n.v);return true;}
+      if(n.op==="not"&&n.a.op==="var"){vars.push("¬"+n.a.v);return true;}
+      return false;
+    }
+    orPart(node);
+    var out=[];
+    for(var b of branches){var vars=[];if(!andPart(b,vars))return null;out.push(vars);}
+    return out;
+  }
+  function checkAnswer(){
+    var ast;
+    try{ast=parseExpression($("answer").value);}catch(e){message("answer-feedback",e.message,"error");return;}
+    attempts++;
+    for(var input=0;input<(1<<variableCount());input++){
+      var pos=truth.findIndex(function(v,p){return inputOf(p)===input;});
+      if(Number(valueOf(ast,input))!==truth[pos]){
+        message("answer-feedback","Not equivalent yet. Check the input combination "+String(input.toString(2)).padStart(variableCount(),"0")+" against your groups.","error");
+        $("finish-actions").hidden=attempts<2;return;
+      }
+    }
+    var terms=collectTerms(ast);
+    if(!terms){message("answer-feedback","This is equivalent, but write it as OR-connected AND groups (sum of products), as you would from a K-map.","error");$("finish-actions").hidden=attempts<2;return;}
+    var literals=terms.reduce(function(n,a){return n+a.length;},0);
+    if(terms.length!==best.count||literals!==best.literals){
+      message("answer-feedback","Equivalent, but not fully simplified. Look for "+best.count+" group term"+(best.count===1?"":"s")+" using "+best.literals+" literals altogether.","error");
+      $("finish-actions").hidden=attempts<2;return;
+    }
+    message("answer-feedback","Correct! Your expression is equivalent to the original and is minimal for this K-map.","good");
+    solvedCount++;try{localStorage.setItem("h446-kmap-solved",String(solvedCount));}catch(e){}
+    announceSolved();$("check-answer").disabled=true;$("finish-actions").hidden=false;
+    $("show-solution").textContent="Show worked answer";
+  }
+  function showSolution(){
+    var box=$("solution");box.replaceChildren();
+    var title=document.createElement("strong");title.textContent="One minimal worked solution";box.append(title);
+    best.groups.forEach(function(g,i){var p=document.createElement("p");p.textContent="Group "+(i+1)+": "+g.cells.length+" cells → "+g.term+" (changing inputs disappear).";box.append(p);});
+    var final=document.createElement("p");final.style.fontWeight="850";final.textContent="F = "+best.groups.map(function(g){return g.term;}).join(" ∨ ");box.append(final);box.hidden=false;
+    $("show-solution").textContent="Worked answer shown";
+  }
+  function hintText(){
+    if(stage===1)return "Read the row and column headings together. On a 4-variable map, AB labels the rows and CD labels the columns. Substitute each combination into F, then enter 0 or 1.";
+    if(stage===2)return "A group must be rectangular, contain only 1s, and have a power-of-two number of cells. The first and last row/column are neighbours. Groups can share a 1.";
+    return "Look at one group: any variable that changes from 0 to 1 disappears. A constant 0 gives ¬letter; a constant 1 gives the letter. Join literals with ∧ and groups with ∨.";
+  }
+  document.querySelectorAll(".level").forEach(function(b){b.addEventListener("click",function(){if(level!==b.dataset.level){level=b.dataset.level;questionStart();}});});
+  document.querySelectorAll(".paint").forEach(function(b){b.addEventListener("click",function(){paint=b.dataset.paint;update();});});
+  $("new").addEventListener("click",questionStart);$("next").addEventListener("click",questionStart);
+  $("check-map").addEventListener("click",checkMap);
+  $("clear-map").addEventListener("click",function(){values.fill(null);clearMessage("map-feedback");renderMap();});
+  $("add-group").addEventListener("click",addGroup);
+  $("undo-group").addEventListener("click",function(){groups.pop();selected.clear();clearMessage("map-feedback");update();});
+  $("check-groups").addEventListener("click",checkGroups);
+  $("check-answer").addEventListener("click",checkAnswer);
+  $("clear-answer").addEventListener("click",function(){$("answer").value="";clearMessage("answer-feedback");$("answer").focus();});
+  $("show-solution").addEventListener("click",showSolution);
+  $("hint-toggle").addEventListener("click",function(){
+    var h=$("hint");h.hidden=!h.hidden;h.textContent=hintText();
+    $("hint-toggle").setAttribute("aria-expanded",String(!h.hidden));
+    $("hint-toggle").textContent=h.hidden?"Show a hint":"Hide hint";
+  });
+  var chars=["¬","∧","∨","(",")","A","B","C","D"];
+  chars.forEach(function(char){
+    var b=document.createElement("button");b.type="button";b.textContent=char;b.setAttribute("aria-label","Insert "+char);
+    if(char==="D"&&level==="easy")b.hidden=true;
+    b.addEventListener("click",function(){
+      var input=$("answer"),start=input.selectionStart===null?input.value.length:input.selectionStart,end=input.selectionEnd===null?input.value.length:input.selectionEnd;
+      input.value=input.value.slice(0,start)+char+input.value.slice(end);input.focus();input.setSelectionRange(start+1,start+1);
+    });
+    $("symbols").append(b);
+  });
+  function syncSymbols(){Array.from($("symbols").children).forEach(function(b){if(b.textContent==="D")b.hidden=level==="easy";});}
+  var originalStart=questionStart;
+  questionStart=function(){originalStart();syncSymbols();$("check-answer").disabled=false;};
+  $("answer").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();checkAnswer();}});
+  announceSolved();questionStart();
+})();
+</script>
+</body>
+</html>
