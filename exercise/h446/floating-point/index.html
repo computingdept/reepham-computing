@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#003a31">
+<meta name="description" content="OCR H446 floating point addition and subtraction interactive skills: decode exponents, align mantissas, calculate and normalise.">
+<title>Floating-point arithmetic skills · OCR H446 · Synergy Assist</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f4f8f5;color:#173f30;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}input,button{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
+a{color:inherit}button:focus-visible,input:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #c08b30;outline-offset:2px}
+[hidden]{display:none!important}
+.sitebar{background:#003a31;color:#fff;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:9px max(16px,calc((100vw - 1160px)/2));flex-wrap:wrap}
+.sitebrand{font-weight:900;letter-spacing:.08em;text-decoration:none;font-size:14px}.sitebar nav{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.sitebar nav a{text-decoration:none;padding:9px 11px;font-size:13px;border-radius:7px;font-weight:800}.sitebar nav a:hover,.sitebar nav a[aria-current]{background:#1c634d}
+.wrap{max-width:1160px;margin:0 auto;padding:16px 18px 36px}
+.topline{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}.kicker{font-size:11px;font-weight:900;color:#53806a;letter-spacing:.11em;margin:0 0 5px}
+h1{margin:0;font-size:clamp(24px,3vw,34px);line-height:1.14;letter-spacing:-.04em}.subtitle{color:#61786a;font-size:13px;margin:7px 0 0}
+.small{font-size:12px;color:#60786b}.solved{font-size:12px;color:#3c6954;font-weight:800}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#fff;border:1px solid #d6e5db;border-radius:12px;padding:11px 13px;margin:11px 0}.bar strong{font-size:13px}
+.choices{display:flex;gap:3px;background:#edf3ed;border-radius:9px;padding:3px}.choice{border:0;background:transparent;color:#3a624e;border-radius:7px;font-size:13px;padding:10px 12px;font-weight:850;min-width:58px}
+.choice[aria-pressed=true]{background:#006347;color:white;box-shadow:0 2px 5px #102f251c}.fill{flex:1}
+.btn{border:1px solid #9cbdaa;border-radius:8px;background:#fff;color:#21513b;padding:10px 14px;min-height:43px;font-size:14px;font-weight:850}
+.btn:hover:not(:disabled){background:#ecf5ee}.btn.primary{background:#006347;color:#fff;border-color:#006347}.btn.primary:hover:not(:disabled){background:#004e38}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:13px 0}.step{display:flex;align-items:center;gap:7px;border:1px solid #d4e0d7;border-radius:25px;background:#eff5f0;color:#748376;padding:7px 11px;font-size:12px;font-weight:800}
+.step span{display:inline-grid;place-items:center;border-radius:50%;width:21px;height:21px;background:#d9e6dd;font-size:11px}
+.step.current{background:#e5f4e9;color:#065736;border-color:#6bab83}.step.past{color:#286349}.step.past span{background:#006347;color:#fff}
+.question{background:white;border:1px solid #d7e6dc;border-radius:12px;padding:16px;margin:0 0 12px}.question h2{font-size:17px;margin:0 0 12px}
+.operands{display:flex;align-items:center;justify-content:space-around;gap:10px;flex-wrap:wrap}
+.operand{display:flex;gap:14px;align-items:center;padding:10px 14px;border-radius:9px;background:#f4f9f5;min-width:240px;justify-content:center}
+.operand .letter{font-weight:950;font-size:22px;color:#286047}.operator{font-weight:900;font-size:24px}
+.bitgroup{display:flex;flex-direction:column;align-items:center;gap:2px}.bitgroup .bits{font:850 clamp(21px,2.3vw,30px)/1.2 "Consolas",monospace;white-space:nowrap;letter-spacing:1.1px;font-variant-numeric:tabular-nums}
+.bitgroup .caption{font-size:11px;font-weight:800;color:#61806b}.mini-note{text-align:center;font-size:12px;color:#5b7263;margin:10px 0 0}
+.grid{display:grid;grid-template-columns:minmax(0,1.17fr) minmax(295px,.83fr);gap:12px;align-items:start}
+.panel{border:1px solid #d5e3d8;border-radius:12px;background:#fff;padding:17px;min-width:0}.panel h2{font-size:19px;margin:0 0 6px}.panel h3{font-size:15px;margin:14px 0 8px}
+.lead{font-size:14px;line-height:1.46;color:#42634e;margin:6px 0 13px}.formrow{display:flex;gap:11px;flex-wrap:wrap;align-items:end;margin:9px 0}
+.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:115px}.field>label{font-size:12px;font-weight:850;color:#3d604c}
+.field input{width:100%;min-height:48px;padding:8px 10px;border:2px solid #a7c2b0;border-radius:8px;background:#fff;color:#173f30;font:800 20px Consolas,monospace}
+.field input.dec{font:800 21px system-ui,Arial,sans-serif}.field input:focus{border-color:#16704b}.readout{border:1px solid #d5e3d8;background:#f2f8f4;padding:10px 12px;border-radius:9px;margin:10px 0;color:#214e36;line-height:1.5;font-size:13px}
+.readout b{font:900 20px Consolas,monospace;letter-spacing:.4px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}.row .btn{flex:0 0 auto}.status{font-size:13px;border-radius:8px;padding:11px 12px;line-height:1.5;background:#ecf5ec;color:#2a5c3d;border:1px solid #b3d2bc;margin:10px 0}
+.status.error{background:#fff1ec;color:#7c3829;border-color:#e1b2a5}.status.good{background:#e2f4e8;color:#175b37;border-color:#a0caaa}
+.log{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}.log li{border-left:3px solid #73a68c;background:#f5f9f6;padding:9px 11px;border-radius:4px;font-size:12px;line-height:1.5}
+.log code,.code{font-family:Consolas,monospace;font-weight:850;font-size:1.05em}
+.explainer{border-left:3px solid #9ab47a;background:#f6f9f0;padding:10px 12px;font-size:12px;line-height:1.55;margin:10px 0}
+.help{border:0;background:none;color:#145a3d;padding:6px 2px;text-decoration:underline;text-underline-offset:3px;font-size:12px;font-weight:900}
+.dim{color:#567366}.radios{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0}
+.radios label{display:flex;align-items:center;gap:7px;border:1px solid #c0d4c4;background:#f6faf6;border-radius:8px;min-width:92px;padding:10px 12px;font-size:13px;font-weight:850;cursor:pointer}
+.radios input{accent-color:#006347;width:17px;height:17px}.radios label:has(input:checked){background:#e3f4e9;border-color:#4f9770}
+.finished{background:#edf8ef;border:1px solid #a6c9ac;border-radius:11px;padding:15px;margin-top:10px}.finished h3{margin:0 0 9px;font-size:19px}.finished strong{font:900 25px Consolas,monospace}
+.finished p{font-size:13px;line-height:1.5}.num{font-variant-numeric:tabular-nums}
+footer{font-size:12px;color:#597462;margin-top:13px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.operands{justify-content:center}.panel{padding:14px}}
+@media(max-width:460px){.wrap{padding:12px}.sitebar{padding:10px}.sitebar nav a{padding:7px 8px}.step{font-size:11px;padding:7px 8px}.question{padding:11px}.bitgroup .bits{font-size:21px}.operand{min-width:0;padding:9px;gap:7px}.operator{font-size:20px}.field{min-width:94px}.field input{font-size:17px}.choice{min-width:48px;padding:8px 9px}}
+</style>
+</head>
+<body>
+<header class="sitebar">
+  <a class="sitebrand" href="/">SYNERGY ASSIST</a>
+  <nav aria-label="A Level Computer Science"><a href="/h446-hub.html#lessons">Lessons</a><a href="/h446-hub.html#revisionhub">Practice</a><a href="/exercise/h446/tools.html" aria-current="page">Tools</a></nav>
+</header>
+<main class="wrap">
+  <div class="topline"><div><p class="kicker">OCR H446 · 1.4.1(h) · FLOATING-POINT ARITHMETIC</p>
+    <h1>Add, subtract &amp; normalise</h1><p class="subtitle">Work through each step. No guessing the final answer.</p></div><span class="solved" id="solved">0 solved on this device</span></div>
+  <div class="bar" aria-label="Practice settings">
+    <strong>Level</strong><div class="choices" role="group" aria-label="Difficulty">
+      <button type="button" class="choice" data-level="easy" aria-pressed="true">Easy</button>
+      <button type="button" class="choice" data-level="medium" aria-pressed="false">Medium</button>
+      <button type="button" class="choice" data-level="hard" aria-pressed="false">Hard</button>
+    </div>
+    <strong>Mantissa</strong><div class="choices" role="group" aria-label="Mantissa width">
+      <button type="button" class="choice" data-width="6" aria-pressed="false">6-bit</button>
+      <button type="button" class="choice" data-width="8" aria-pressed="true">8-bit</button>
+    </div>
+    <span class="fill"></span><button id="new" class="btn" type="button">New question ↻</button>
+  </div>
+  <div class="steps" aria-label="Worked solution stages">
+    <span class="step current" data-step="1"><span>1</span> Decode</span>
+    <span class="step" data-step="2"><span>2</span> Align</span>
+    <span class="step" data-step="3"><span>3</span> Calculate</span>
+    <span class="step" data-step="4"><span>4</span> Normalise</span>
+  </div>
+  <section class="question" aria-label="Current floating-point question">
+    <h2 id="question-label">Calculate A + B using 8-bit signed mantissas and 4-bit signed exponents.</h2>
+    <div class="operands">
+      <div class="operand"><span class="letter">A</span><div class="bitgroup"><span class="bits" id="a-m">01000000</span><span class="caption">Mantissa</span></div><div class="bitgroup"><span class="bits" id="a-e">0011</span><span class="caption">Exponent</span></div></div>
+      <span class="operator" id="op">+</span>
+      <div class="operand"><span class="letter">B</span><div class="bitgroup"><span class="bits" id="b-m">01000000</span><span class="caption">Mantissa</span></div><div class="bitgroup"><span class="bits" id="b-e">0010</span><span class="caption">Exponent</span></div></div>
+    </div>
+    <p class="mini-note">Signed two's-complement mantissas with the binary point after the sign bit · Signed 4-bit exponents</p>
+  </section>
+  <div class="grid">
+    <section class="panel" aria-labelledby="stage-title">
+      <h2 id="stage-title">1 · Decode the exponents</h2>
+      <p class="lead" id="stage-lead">Convert both 4-bit exponents to signed denary, then enter the common exponent.</p>
+      <div id="step1">
+        <div class="formrow">
+          <div class="field"><label for="eA">Exponent A (denary)</label><input class="dec" id="eA" inputmode="numeric" placeholder="e.g. 3" autocomplete="off"></div>
+          <div class="field"><label for="eB">Exponent B (denary)</label><input class="dec" id="eB" inputmode="numeric" autocomplete="off"></div>
+          <div class="field"><label for="common">Larger exponent</label><input class="dec" id="common" inputmode="numeric" autocomplete="off"></div>
+        </div><button class="btn primary" id="check1" type="button">Check exponents →</button>
+      </div>
+      <div id="step2" hidden>
+        <div class="readout" id="shift-note"></div>
+        <div class="formrow"><div class="field"><label for="shift-m">Mantissa after ONE right shift</label><input id="shift-m" inputmode="numeric" placeholder="Binary bits" autocomplete="off" spellcheck="false"></div>
+          <div class="field"><label for="shift-e">New exponent (4-bit)</label><input id="shift-e" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off" spellcheck="false"></div></div>
+        <button class="btn primary" id="check2" type="button">Check this shift →</button>
+        <p class="small">Arithmetic right shift: repeat the sign bit on the left. The exponent increases by one.</p>
+      </div>
+      <div id="step3" hidden>
+        <div class="readout" id="arithmetic-note"></div>
+        <div id="negate-block" hidden>
+          <h3>Subtract by adding the two's complement of B</h3>
+          <p class="lead">First flip every bit in the aligned B mantissa. Then add 1.</p>
+          <div class="formrow"><div class="field"><label for="flipped">Inverted bits of B</label><input id="flipped" inputmode="numeric" autocomplete="off"></div>
+          <div class="field"><label for="twos">After adding 1</label><input id="twos" inputmode="numeric" autocomplete="off"></div></div>
+          <button type="button" class="btn" id="check-negate">Check two's complement →</button>
+        </div>
+        <div id="sum-block">
+          <h3 id="sum-heading">Add the sign-extended mantissas</h3>
+          <div class="readout" id="sum-layout"></div>
+          <div class="field"><label for="sum">Binary working result (one extra sign bit)</label><input id="sum" inputmode="numeric" autocomplete="off" spellcheck="false"></div>
+          <div class="row"><button class="btn primary" type="button" id="check3">Check calculation →</button></div>
+        </div>
+      </div>
+      <div id="step4" hidden>
+        <div class="readout" id="normal-note"></div>
+        <p class="lead" style="margin-bottom:3px">What should happen next?</p>
+        <div class="radios" role="radiogroup" aria-label="Normalisation action">
+          <label><input type="radio" name="action" value="left"> Shift left</label>
+          <label><input type="radio" name="action" value="right"> Shift right</label>
+          <label><input type="radio" name="action" value="none"> No shift</label>
+        </div>
+        <div class="formrow"><div class="field"><label for="norm-m">Mantissa after this step</label><input id="norm-m" inputmode="numeric" autocomplete="off"></div>
+          <div class="field"><label for="norm-e">Exponent after this step (4-bit)</label><input id="norm-e" inputmode="numeric" maxlength="4" autocomplete="off"></div></div>
+        <button type="button" class="btn primary" id="check4">Check normalisation →</button>
+        <p class="small">Normalised: positive begins <b>01</b>; negative begins <b>10</b>. A left shift decreases the exponent; a right shift increases it.</p>
+      </div>
+      <div id="feedback" class="status" role="status" hidden></div>
+      <div id="finished" class="finished" hidden>
+        <h3>Correct — fully normalised</h3><strong id="final-bits"></strong><p id="final-meaning"></p>
+        <button type="button" class="btn primary" id="next">Next question →</button>
+      </div>
+    </section>
+    <aside class="panel" aria-labelledby="working-title">
+      <h2 id="working-title">Your working</h2>
+      <p class="lead">Each correct stage is kept here, like a worked exam answer.</p>
+      <ol id="working-log" class="log"></ol>
+      <button type="button" id="hint-button" class="help" aria-expanded="false">Show a hint</button>
+      <div id="hint" class="explainer" hidden></div>
+      <button type="button" id="reveal-button" class="help" hidden>Show the correct step</button>
+      <div id="reveal" class="explainer" hidden></div>
+      <div class="explainer">Remember: the exponent is <b>not added</b> to the other exponent. First match the exponents, then work on the mantissas.</div>
+    </aside>
+  </div>
+  <footer>OCR H446 · 1.4.1(g–h) · Worked practice uses arithmetic right shifts. Bits lost off the right reduce precision; they cannot be recovered by normalising.</footer>
+</main>
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var bank={
+ easy:[
+ [64,3,64,2,'+'],[80,3,64,2,'+'],[64,2,80,3,'+'],[80,2,64,3,'+'],[72,3,64,2,'+'],[64,3,-64,2,'+']
+ ],
+ medium:[
+ [96,3,64,2,'-'],[80,3,96,2,'-'],[64,3,96,2,'-'],[-96,3,64,2,'+'],[-80,3,-96,2,'-'],[96,3,96,2,'+']
+ ],
+ hard:[
+ [72,3,-128,2,'+'],[96,3,-96,2,'-'],[-96,3,96,2,'-'],[64,4,96,2,'-'],[80,2,127,1,'-'],[-80,3,-127,1,'+'],[-72,3,-128,2,'-']
+ ]
+};
+var level='easy',width=8,stage=1,ex=null,shiftCount=0,currentSmall=0,shiftExponent=0,alignedA=0,alignedB=0,negateDone=false,normalIndex=0,plan=[],sumValue=0,stepErrors=0,completed=0,discarded=[],last={easy:-1,medium:-1,hard:-1};
+try{completed=Number(localStorage.getItem('h446-floating-skills-solved'))||0;}catch(err){}
+function bits(x,w){return ((x&((1<<w)-1))>>>0).toString(2).padStart(w,'0');}
+function validBits(s,n){s=String(s||'').replace(/\s/g,'');return new RegExp('^[01]{'+n+'}$').test(s)?s:null;}
+function norm(m){return m>=0?m>=(1<<(width-2)):m<-(1<<(width-2));}
+function signedDecimals(m,e){return m*Math.pow(2,e-width+1);}
+function planSteps(){
+ var m=sumValue,e=ex.common,out=[];
+ if(m < -(1<<(width-1))||m >= (1<<(width-1))){
+  m=Math.floor(m/2);e++;
+  out.push({action:'right',m:m,e:e,why:'The working result overflowed the mantissa.'});
+ }
+ var limit=0;
+ while(m!==0&&!norm(m)&&limit<width+4){
+  m*=2;e--;limit++;
+  out.push({action:'left',m:m,e:e,why:'The leading two bits are the same.'});
+ }
+ if(!out.length)out.push({action:'none',m:m,e:e,why:'The first two bits already differ.'});
+ return out;
+}
+function build(example){
+ var scale=8-width;
+ var a=example[0]>>scale,b=example[2]>>scale,ea=example[1],eb=example[3],op=example[4],common=Math.max(ea,eb);
+ ex={a:a,b:b,ea:ea,eb:eb,op:op,common:common,low:ea<eb?'A':'B',high:ea>eb?'A':'B'};
+ alignedA=a>>(common-ea);alignedB=b>>(common-eb);
+ sumValue=alignedA+(op==='+'?alignedB:-alignedB);
+ plan=planSteps();
+ if(!sumValue||plan.some(function(p){return p.e<-8||p.e>7;}))throw Error('Invalid example in exercise bank');
+}
+function setText(id,value){$(id).textContent=value;}
+function appendLog(text){var li=document.createElement('li');li.textContent=text;$('working-log').append(li);}
+function feedback(text,type){
+ var el=$('feedback');el.textContent=text;el.className='status'+(type?' '+type:'');el.hidden=false;
+}
+function resetFeedback(){var el=$('feedback');el.hidden=true;el.textContent='';}
+function wrong(msg){
+ stepErrors++;feedback(msg,'error');
+ $('reveal-button').hidden=stepErrors<2;
+}
+function correct(msg){stepErrors=0;$('reveal-button').hidden=true;$('reveal').hidden=true;feedback(msg,'good');}
+function stepChanged(){
+ document.querySelectorAll('.step').forEach(function(n){var num=Number(n.dataset.step);n.className='step'+(num<stage?' past':num===stage?' current':'');});
+ ['step1','step2','step3','step4'].forEach(function(id,i){$(id).hidden=stage!==i+1;});
+ var heads=['1 · Decode the exponents','2 · Align the mantissas','3 · Calculate the signed mantissas','4 · Normalise the result'];
+ var notes=['Convert both 4-bit exponents to signed denary, then choose the larger exponent.','Shift the mantissa with the smaller exponent right ONE place. Repeat until the exponents match.','Add the aligned mantissas, or use two’s complement to subtract. Keep the extra working sign bit.','Check for overflow or repeated leading sign bits. Enter each shift and its corrected exponent.'];
+ setText('stage-title',heads[stage-1]);setText('stage-lead',notes[stage-1]);
+ $('hint').hidden=true;$('hint-button').textContent='Show a hint';$('hint-button').setAttribute('aria-expanded','false');
+ $('reveal').hidden=true;$('reveal-button').hidden=true;
+ if(stage===2)showShift();if(stage===3)showArithmetic();if(stage===4)showNormalise();
+}
+function refresh(){
+ document.querySelectorAll('[data-level]').forEach(function(el){el.setAttribute('aria-pressed',String(el.dataset.level===level));});
+ document.querySelectorAll('[data-width]').forEach(function(el){el.setAttribute('aria-pressed',String(Number(el.dataset.width)===width));});
+ setText('solved',completed+' solved on this device');
+}
+function pickQuestion(){
+ var options=bank[level],ix=Math.floor(Math.random()*options.length);
+ if(ix===last[level]&&options.length>1)ix=(ix+1)%options.length;
+ last[level]=ix;build(options[ix]);
+ shiftCount=0;shiftExponent=ex.low==='A'?ex.ea:ex.eb;
+ currentSmall=ex.low==='A'?ex.a:ex.b;
+ negateDone=ex.op==='+';normalIndex=0;discarded=[];stage=1;stepErrors=0;
+ ['eA','eB','common','shift-m','shift-e','flipped','twos','sum','norm-m','norm-e'].forEach(function(id){$(id).value='';});
+ $('finished').hidden=true;$('working-log').replaceChildren();resetFeedback();$('reveal').hidden=true;
+ setText('question-label','Calculate A '+ex.op+' B. Show every step ('+width+'-bit mantissas, 4-bit exponents).');
+ setText('a-m',bits(ex.a,width));setText('a-e',bits(ex.ea,4));setText('b-m',bits(ex.b,width));setText('b-e',bits(ex.eb,4));
+ setText('op',ex.op==='+'?'+':'−');refresh();stepChanged();
+}
+function checkDecode(){
+ var av=$('eA').value.trim(),bv=$('eB').value.trim(),cv=$('common').value.trim();
+ if(!/^-?\d+$/.test(av)||!/^-?\d+$/.test(bv)||!/^-?\d+$/.test(cv)){wrong('Enter three signed denary integers first.');return;}
+ if(Number(av)!==ex.ea||Number(bv)!==ex.eb){wrong('One or both exponents have been decoded incorrectly. The 4-bit exponent is signed two’s complement.');return;}
+ if(Number(cv)!==ex.common){wrong('Use the LARGER exponent as the common exponent; do not add the exponents.');return;}
+ appendLog('Exponents: A = '+ex.ea+', B = '+ex.eb+'; common exponent = '+ex.common+' ('+bits(ex.common,4)+').');
+ correct('Correct. Shift the mantissa with the smaller exponent.');stage=2;stepChanged();
+}
+function showShift(){
+ var total=ex.common-(ex.low==='A'?ex.ea:ex.eb);
+ setText('shift-note',ex.low+' has the smaller exponent. Shift '+(shiftCount+1)+' of '+total+'. Current: '+bits(currentSmall,width)+'  '+bits(shiftExponent,4)+' (exponent '+shiftExponent+').');
+}
+function checkShift(){
+ var targetMantissa=currentSmall>>1,targetExponent=shiftExponent+1;
+ var m=validBits($('shift-m').value,width),e=validBits($('shift-e').value,4);
+ if(m===null||e===null){wrong('Enter exactly '+width+' mantissa bits and 4 exponent bits.');return;}
+ if(m!==bits(targetMantissa,width)){wrong('Recheck the arithmetic right shift. Copy the original sign bit to the left; the rightmost bit is discarded.');return;}
+ if(e!==bits(targetExponent,4)){wrong('The exponent must increase by one when you shift the mantissa right.');return;}
+ var lost=bits(currentSmall,width).slice(-1);discarded.push(lost);
+ appendLog('Align '+ex.low+': '+bits(currentSmall,width)+' → '+m+'; exponent '+bits(shiftExponent,4)+' → '+e+'; discarded bit '+lost+'.');
+ currentSmall=targetMantissa;shiftExponent=targetExponent;shiftCount++;
+ $('shift-m').value='';$('shift-e').value='';
+ correct('Correct arithmetic shift. The lost rightmost bit was '+lost+'.');
+ if(shiftExponent===ex.common){stage=3;stepChanged();}else{showShift();}
+}
+function showArithmetic(){
+ var extendedA=bits(alignedA,width+1),extendedB=bits(alignedB,width+1);
+ setText('arithmetic-note','Aligned mantissas: A = '+bits(alignedA,width)+' and B = '+bits(alignedB,width)+'. Both use exponent '+bits(ex.common,4)+'.');
+ $('negate-block').hidden=ex.op!== '-';$('sum-block').hidden=ex.op==='-'&&!negateDone;
+ if(ex.op==='-')setText('sum-heading','Add A to the two’s complement of B');else setText('sum-heading','Add the two aligned signed mantissas');
+ setText('sum-layout',ex.op==='-'?
+ 'Sign extend (extra working bit): '+extendedA+' + '+bits(-alignedB,width+1)+' = ?':
+ 'Sign extend (extra working bit): '+extendedA+' + '+extendedB+' = ?');
+}
+function checkNegate(){
+ var f=validBits($('flipped').value,width),t=validBits($('twos').value,width);
+ if(f===null||t===null){wrong('Enter two '+width+'-bit binary values.');return;}
+ var correctFlip=bits(~alignedB,width),correctTwos=bits(-alignedB,width);
+ if(f!==correctFlip){wrong('First invert every bit of the aligned B mantissa (0 ↔ 1).');return;}
+ if(t!==correctTwos){wrong('Now add binary 1 to the inverted B mantissa.');return;}
+ negateDone=true;appendLog('Subtract B: flip '+bits(alignedB,width)+' → '+f+'; add 1 → '+t+'.');
+ correct('Correct two’s complement. Now add A and negative B.');showArithmetic();
+}
+function checkCalculate(){
+ if(!negateDone){wrong('Complete the two’s-complement working first.');return;}
+ var result=validBits($('sum').value,width+1);
+ if(result===null){wrong('Enter '+(width+1)+' binary bits. This extra sign bit prevents signed overflow being hidden.');return;}
+ if(result!==bits(sumValue,width+1)){wrong('Check your column addition, including carries. Sign extend both operands to '+(width+1)+' bits first.');return;}
+ var overflow=sumValue<-(1<<(width-1))||sumValue>=(1<<(width-1));
+ appendLog((ex.op==='-'?'Subtract':'Add')+': '+bits(alignedA,width+1)+' + '+bits(ex.op==='-'?-alignedB:alignedB,width+1)+' = '+result+' (exponent '+bits(ex.common,4)+').');
+ appendLog(overflow?'The '+width+'-bit mantissa has signed overflow. Keep the extra working bit.':'The signed sum fits in '+width+' bits; now check normalisation.');
+ correct('Correct arithmetic. '+(overflow?'Overflow detected — normalise the extended result.':'Check the first two mantissa bits.'));
+ stage=4;stepChanged();
+}
+function showNormalise(){
+ var start=normalIndex===0?{m:sumValue,e:ex.common}:plan[normalIndex-1];
+ var valueBits=bits(start.m,normalIndex===0?(Math.abs(sumValue)>=(1<<(width-1))&&sumValue!==-(1<<(width-1))?width+1:width):width);
+ setText('normal-note','Current mantissa: '+valueBits+' (signed '+start.m+'), exponent '+bits(start.e,4)+' ('+start.e+'). '+(normalIndex<plan.length?'Check the leading bits, then choose the next action.':''));
+ document.querySelectorAll('input[name=action]').forEach(function(el){el.checked=false;});
+ $('norm-m').value='';$('norm-e').value='';
+}
+function selectedAction(){
+ var picked=Array.from(document.querySelectorAll('input[name=action]')).find(function(r){return r.checked;});
+ return picked?picked.value:null;
+}
+function checkNormalise(){
+ var expected=plan[normalIndex],selected=selectedAction();
+ if(!selected){wrong('Choose left, right, or no shift.');return;}
+ if(selected!==expected.action){
+  wrong(expected.action==='left'?'The leading two bits repeat. Shift LEFT to use more mantissa bits.':expected.action==='right'?'The result overflowed. Shift RIGHT, keeping the sign, and increase the exponent.':'The first two bits already differ, so do not shift.');
+  return;
+ }
+ var m=validBits($('norm-m').value,width),e=validBits($('norm-e').value,4);
+ if(m===null||e===null){wrong('Enter '+width+' mantissa bits and 4 exponent bits.');return;}
+ if(m!==bits(expected.m,width)){wrong('Recheck the mantissa bits after this '+selected+' shift.');return;}
+ if(e!==bits(expected.e,4)){wrong(selected==='left'?'A left shift needs exponent −1.':selected==='right'?'A right shift needs exponent +1.':'Keep the exponent unchanged if you did not shift.');return;}
+ appendLog('Normalise: '+selected+' → '+m+' '+e+' ('+expected.why+')');
+ normalIndex++;correct('Correct normalisation step.');
+ if(normalIndex<plan.length)showNormalise();
+ else finish();
+}
+function finish(){
+ stage=5;document.querySelectorAll('.step').forEach(function(el){el.className='step past';});
+ ['step1','step2','step3','step4'].forEach(function(id){$(id).hidden=true;});
+ setText('stage-title','Completed · Worked solution');
+ setText('stage-lead','The final mantissa is normalised and the exponent is in range.');
+ var final=plan[plan.length-1],m=bits(final.m,width),e=bits(final.e,4);
+ $('finished').hidden=false;setText('final-bits',m+'  '+e);
+ var lost=discarded.some(function(b){return b==='1';});
+ var exact=(signedDecimals(ex.a,ex.ea)+(ex.op==='+'?signedDecimals(ex.b,ex.eb):-signedDecimals(ex.b,ex.eb)));
+ var approximate=signedDecimals(final.m,final.e);
+ setText('final-meaning','Value represented: '+approximate+'. Original calculation: '+exact+'. '+(lost?'A 1 bit was discarded while aligning, so precision was lost.':'No 1 bits were discarded during alignment.'));
+ appendLog('Final: '+m+' '+e+' = '+approximate+(lost?' (alignment may have reduced precision)':'')+'.');
+ completed++;try{localStorage.setItem('h446-floating-skills-solved',String(completed));}catch(err){}
+ refresh();resetFeedback();$('hint-button').hidden=true;$('reveal-button').hidden=true;
+}
+function showHint(){
+ var content='';
+ if(stage===1)content='A 4-bit exponent in two’s complement can represent −8 to +7. If the first bit is 1, subtract 16 from its unsigned value. Pick the larger exponent.';
+ if(stage===2)content='Copy the sign bit onto the left (0 for positive or 1 for negative). Everything else moves right. Add 1 to the exponent, even if a bit is lost.';
+ if(stage===3)content=ex.op==='-'&&!negateDone?'To subtract B, invert all the aligned B bits, then add one.':'Work column by column from right to left. Give each signed operand one extra copy of its sign bit before adding.';
+ if(stage===4)content='Positive normalised mantissas begin 01; negative ones begin 10. Repeated leading bits 00 or 11 mean shift LEFT and decrease exponent. Overflow means shift RIGHT and increase it.';
+ var e=$('hint');e.textContent=content;e.hidden=!e.hidden;
+ $('hint-button').textContent=e.hidden?'Show a hint':'Hide hint';$('hint-button').setAttribute('aria-expanded',String(!e.hidden));
+}
+function showCorrectStep(){
+ var answer='';
+ if(stage===1)answer='Exponent A = '+ex.ea+', exponent B = '+ex.eb+', common exponent = '+ex.common+'.';
+ if(stage===2)answer='Next arithmetic shift: mantissa '+bits(currentSmall>>1,width)+', exponent '+bits(shiftExponent+1,4)+'.';
+ if(stage===3)answer=ex.op==='-'&&!negateDone?'Flip B: '+bits(~alignedB,width)+'; add 1: '+bits(-alignedB,width)+'.':'Signed working sum: '+bits(sumValue,width+1)+'.';
+ if(stage===4){var x=plan[normalIndex];answer='Choose '+x.action+'; mantissa '+bits(x.m,width)+', exponent '+bits(x.e,4)+'.';}
+ $('reveal').textContent=answer;$('reveal').hidden=false;
+}
+document.querySelectorAll('[data-level]').forEach(function(b){b.addEventListener('click',function(){if(level!==b.dataset.level){level=b.dataset.level;pickQuestion();}});});
+document.querySelectorAll('[data-width]').forEach(function(b){b.addEventListener('click',function(){if(width!==Number(b.dataset.width)){width=Number(b.dataset.width);pickQuestion();}});});
+$('new').addEventListener('click',pickQuestion);$('next').addEventListener('click',pickQuestion);
+$('check1').addEventListener('click',checkDecode);$('check2').addEventListener('click',checkShift);
+$('check-negate').addEventListener('click',checkNegate);$('check3').addEventListener('click',checkCalculate);$('check4').addEventListener('click',checkNormalise);
+$('hint-button').addEventListener('click',showHint);$('reveal-button').addEventListener('click',showCorrectStep);
+refresh();pickQuestion();
+})();
+</script>
+</body>
+</html>
