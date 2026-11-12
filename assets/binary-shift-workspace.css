@@ -1,0 +1,38 @@
+/* Unified J277/H446 binary shift presentation.
+   Both courses use fixed eight-column originals above interactive result bits.
+   Only .shift-* elements are styled; no changes to lesson slides or other exercises. */
+body.course-hub .shift-row-heading{
+  margin:10px 0 4px;
+  font-size:15px;
+  font-weight:850;
+  line-height:1.3;
+  color:#2b523b;
+}
+body.course-hub .shift-source{margin:4px 0 11px}
+body.course-hub .shift-source .bitlabel,
+body.course-hub .shift-source .bit-label{color:#54725e}
+body.course-hub .shift-static-bit{
+  display:grid;
+  place-items:center;
+  width:100%;
+  min-width:0;
+  height:55px;
+  border:2px solid #bdcfc3;
+  border-radius:8px;
+  background:#f0f6f2;
+  color:#173c2d;
+  font:900 clamp(20px,2.5vw,28px)/1 Consolas,ui-monospace,monospace;
+  font-variant-numeric:tabular-nums;
+}
+body.course-hub .shift-static-bit.sign{border-color:#c69b5f;background:#fff3e2}
+body.course-hub .shift-static-bit.discarded{border-color:#d6a28c;background:#fff0e9;color:#97503b}
+body.course-hub .shift-tip{font-size:13px;color:#586f60;margin:0 0 10px;line-height:1.4}
+@media(max-width:540px){
+  body.course-hub .shift-static-bit{
+    height:47px;
+    font-size:clamp(18px,5vw,23px);
+    border-radius:6px;
+  }
+  body.course-hub .shift-row-heading{font-size:14px;margin-top:8px}
+  body.course-hub .shift-tip{font-size:12px}
+}
