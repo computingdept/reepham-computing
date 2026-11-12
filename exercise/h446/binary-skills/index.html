@@ -89,6 +89,41 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 #practice.shift-mode #shift-help-controls .help{display:inline-block;margin:3px 0;padding:8px 0}
 #practice.shift-mode #shift-help-controls .feedback{max-width:940px}
 @media(max-width:540px){#practice .golden-rule{padding:8px 11px;font-size:14px}}
+
+/* H446 three-number addition: J277-style aligned 8-column interactive board.
+   Local to this skill; supports outgoing carries 0, 1 or 2. */
+#practice.triple-mode .panels{display:block;max-width:1080px;margin-inline:auto}
+#practice.triple-mode .panel[aria-label="Current question"]{width:100%}
+#practice .triple-board{width:min(100%,910px);padding:2px 0 5px}
+#practice .triple-explain{margin:8px 0 12px;padding:9px 13px;border-left:3px solid #285348;border-radius:5px;background:#f1f7f3;color:#334e3d;font-size:14px;line-height:1.45}
+#practice .triple-caption{font-size:13px;font-weight:800;color:#385d46;margin:7px 0 4px}
+#practice .triple-grid{width:100%;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;align-items:center}
+#practice .triple-grid>span,#practice .triple-grid>button{min-width:0}
+#practice .triple-weights span{text-align:center;color:#557060;font-size:12px;font-weight:800}
+#practice .triple-operand{margin:5px 0}
+#practice .triple-operand span{display:grid;place-items:center;height:43px;border:1px solid #d8e5dd;border-radius:7px;background:#f6faf7;color:#263f33;font:900 clamp(19px,2.25vw,28px)/1 Consolas,ui-monospace,monospace}
+#practice .triple-third{position:relative}
+#practice .triple-third:before{content:'+';position:absolute;left:-19px;top:50%;transform:translateY(-50%);font:900 23px/1 Consolas,monospace;color:#285348}
+#practice .triple-calculation{padding-left:21px}
+#practice .triple-rule{border-top:2px solid #5b7b68;margin:12px 0 9px}
+#practice .triple-carry-row{margin:4px 0 9px}
+#practice .triple-carry-cell,#practice .triple-result-cell{display:grid;place-items:center;width:100%;border-radius:7px;font:900 clamp(18px,2.15vw,27px)/1 Consolas,ui-monospace,monospace}
+#practice .triple-carry-cell{height:33px;border:1px dashed #a9c7b4;background:#f6faf7;color:#2d5b42}
+#practice .triple-carry-cell.editable{border:2px solid #8eb69b;background:#fff}
+#practice .triple-result-cell{height:51px;border:2px solid #98bba5;background:#fff;color:#254e39}
+#practice .triple-carry-cell.active,#practice .triple-result-cell.active{border-color:#c09038;box-shadow:0 0 0 2px #f5e6c6;background:#fff8e8}
+#practice .triple-carry-cell.checked,#practice .triple-result-cell.checked{background:#e8f3ec;border-color:#c1d9c9;color:#285348}
+#practice .triple-carry-cell:disabled,#practice .triple-result-cell:disabled{cursor:default}
+#practice .triple-carry-cell:focus-visible,#practice .triple-result-cell:focus-visible{outline:3px solid #c08b30;outline-offset:2px}
+#practice .triple-overflow{margin:9px 0;display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:13px;font-weight:800;color:#3b5d48}
+#practice .triple-overflow .triple-carry-cell{max-width:75px}
+#practice .triple-progress{font-size:15px;font-weight:750;color:#2c533e;margin:10px 0}
+#practice.triple-mode #triple-support{margin-top:14px;max-width:930px}
+#practice.triple-mode #triple-support .help{display:inline-block;margin-right:12px}
+#practice.triple-mode #triple-history{margin-top:8px;font-size:14px;color:#3b6048}
+#practice.triple-mode #triple-history summary{cursor:pointer;font-weight:800}
+#practice.triple-mode #triple-history .log{margin-top:8px}
+@media(max-width:540px){#practice .triple-calculation{padding-left:16px}#practice .triple-grid{gap:3px}#practice .triple-operand span{height:39px;font-size:clamp(17px,4.6vw,22px)}#practice .triple-result-cell{height:45px;font-size:21px}#practice .triple-carry-cell{height:33px;font-size:18px}#practice .triple-third:before{left:-15px;font-size:18px}}
 </style>
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 </head>
@@ -132,6 +167,7 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 <div id="task"></div>
 <div class="actions"><button class="btn primary" id="check">Check step →</button><button class="btn" id="clear">Clear step</button><button class="btn primary" id="next" hidden>Next question →</button></div>
 <div class="feedback" id="feedback" role="status" hidden></div><div class="done" id="done" hidden></div>
+<div id="triple-support" hidden><div id="triple-help-controls"></div><details id="triple-history"><summary>Completed column working</summary></details></div>
 </section>
 <aside class="panel" id="working-panel"><h2>Your working</h2><p class="sidelead">Completed steps remain visible, as in a worked exam answer.</p>
 <ol id="log" class="log"></ol><button class="help" id="hint">Show a hint</button>
@@ -156,6 +192,7 @@ var pools={
 };
 var skill='',level='easy',count=0,step=0,carry=0,out='',q={},widget=null,errors=0,lastConversion=null;
 var progressKey='rhs-h446-binary-skills-progress';
+var tripleResult=[],tripleCarry=[],tripleOverflow='';
 function recordCorrect(){
  try{
   var all=JSON.parse(localStorage.getItem(progressKey)||'{}')||{};
@@ -238,8 +275,14 @@ function configureShiftGuidance(){
  $('practice').classList.toggle('shift-mode',isShift);
  $('working-panel').hidden=isShift;
  $('shift-guidance').hidden=!isShift;
- var target=isShift?$('shift-help-controls'):$('working-panel');
+ var isTriple=skill==='triple';
+ $('practice').classList.toggle('triple-mode',isTriple);
+ $('working-panel').hidden=isShift||isTriple;
+ $('triple-support').hidden=!isTriple;
+ var target=isShift?$('shift-help-controls'):isTriple?$('triple-help-controls'):$('working-panel');
  ['hint','hint-text','reveal','reveal-text'].forEach(function(id){target.append($(id));});
+ if(isTriple)$('triple-history').append($('log'));
+ else $('working-panel').insertBefore($('log'),$('hint').parentElement===$('working-panel')?$('hint'):null);
  if(isShift){
   var rule=shiftGoldenRule();
   $('golden-rule-title').textContent=rule.title;
@@ -252,6 +295,91 @@ function configureShiftGuidance(){
   $('hint').hidden=false;
   $('hint').textContent='Show a hint';
  }
+}
+
+function tripleCurrentColumn(){return 7-step;}
+function tripleResultValue(index){return tripleResult[index];}
+function tripleCarryValue(index){return index<0?tripleOverflow:tripleCarry[index];}
+function tripleSetValue(kind,index,value){
+ if(kind==='result')tripleResult[index]=value;
+ else if(index<0)tripleOverflow=value;
+ else tripleCarry[index]=value;
+}
+function tripleInput(kind,index,allowed,editable,active,checked,caption){
+ var btn=document.createElement('button');btn.type='button';
+ var value=kind==='result'?tripleResultValue(index):tripleCarryValue(index);
+ btn.className=(kind==='result'?'triple-result-cell':'triple-carry-cell')+(editable?' editable':'')+(active?' active':'')+(checked?' checked':'');
+ btn.disabled=!editable;
+ btn.dataset.value=value;
+ function paint(){
+  var v=btn.dataset.value;
+  btn.textContent=v===''?'–':v;
+  btn.setAttribute('aria-label',caption+': '+(v===''?'blank':v)+(editable?'. Click or enter a digit.':'. Checked.'));
+  btn.setAttribute('aria-pressed',String(v!==''));
+ }
+ btn.addEventListener('click',function(){
+  var choices=[''].concat(allowed);
+  var next=choices[(choices.indexOf(btn.dataset.value)+1)%choices.length];
+  btn.dataset.value=next;tripleSetValue(kind,index,next);paint();
+ });
+ btn.addEventListener('keydown',function(e){
+  if(allowed.indexOf(e.key)!==-1){e.preventDefault();btn.dataset.value=e.key;tripleSetValue(kind,index,e.key);paint();}
+  if(e.key==='Backspace'||e.key==='Delete'){e.preventDefault();btn.dataset.value='';tripleSetValue(kind,index,'');paint();}
+ });
+ paint();return btn;
+}
+function renderTripleBoard(){
+ var current=tripleCurrentColumn(),completed=step>=8,weights=[128,64,32,16,8,4,2,1];
+ var board=document.createElement('div');board.className='triple-board';board.setAttribute('role','group');
+ board.setAttribute('aria-label','Three-number binary addition: three aligned numbers, carries and clickable result bits');
+ if(level==='easy'){
+  var golden=document.createElement('p');golden.className='triple-explain';
+  golden.textContent='Golden Rule: Add the three bits and any incoming carry. Write the final 0 or 1. Carry 0, 1 or 2 into the next column. A carry of 2 means TWO groups carried, not the binary digit 2.';
+  board.append(golden);
+ }
+ var calc=document.createElement('div');calc.className='triple-calculation';
+ var heading=document.createElement('p');heading.className='triple-caption';heading.textContent='Place values';calc.append(heading);
+ var placeRow=document.createElement('div');placeRow.className='triple-grid triple-weights';
+ weights.forEach(function(w){var span=document.createElement('span');span.textContent=w;placeRow.append(span);});calc.append(placeRow);
+ var carryHead=document.createElement('p');carryHead.className='triple-caption';carryHead.textContent='Carry INTO each column · click 0, 1 or 2';calc.append(carryHead);
+ var row=document.createElement('div');row.className='triple-grid triple-carry-row';
+ for(var j=0;j<8;j++){
+  if(j===7){var none=document.createElement('span');none.className='triple-carry-cell';none.textContent='–';none.setAttribute('aria-label','No carry enters the rightmost column');row.append(none);continue;}
+  var checked=completed||j>=current;
+  var active=!completed&&j===current-1;
+  var editable=!checked&&(level==='easy'?active:true);
+  row.append(tripleInput('carry',j,['0','1','2'],editable,active,checked,'Carry into '+weights[j]+'s column'));
+ }
+ calc.append(row);
+ [[q.a,'Number 1'],[q.b,'Number 2'],[q.c,'Number 3']].forEach(function(pair,i){
+  var row=document.createElement('div');row.className='triple-grid triple-operand'+(i===2?' triple-third':'');
+  var nbits=bits(pair[0],8);
+  row.setAttribute('aria-label',pair[1]+': '+nbits.split('').join(' '));
+  nbits.split('').forEach(function(b){var cell=document.createElement('span');cell.textContent=b;row.append(cell);});
+  calc.append(row);
+ });
+ var rule=document.createElement('div');rule.className='triple-rule';calc.append(rule);
+ var resultHead=document.createElement('p');resultHead.className='triple-caption';resultHead.textContent='Result bits · click to enter 0 or 1';calc.append(resultHead);
+ var result=document.createElement('div');result.className='triple-grid';
+ for(var k=0;k<8;k++){
+  var done=completed||k>current,active=!completed&&k===current,editable=!done&&(level==='easy'?active:true);
+  result.append(tripleInput('result',k,['0','1'],editable,active,done,'Result bit at '+weights[k]+'s column'));
+ }
+ calc.append(result);
+ var overflow=document.createElement('div');overflow.className='triple-overflow';
+ var overflowHead=document.createElement('span');overflowHead.textContent='Final carry beyond 8 bits (0, 1 or 2):';overflow.append(overflowHead);
+ var overflowEditable=!completed&&(level==='easy'?current===0:true);
+ overflow.append(tripleInput('carry',-1,['0','1','2'],overflowEditable,!completed&&current===0,completed,'Carry beyond the 128s column'));
+ calc.append(overflow);board.append(calc);
+ var progress=document.createElement('p');progress.className='triple-progress';
+ if(completed){progress.textContent='All eight columns checked.';}
+ else{
+  var input=step===0?0:carry;
+  progress.textContent='Column '+(step+1)+' of 8 — '+weights[current]+'s. '+bit(q.a,step)+' + '+bit(q.b,step)+' + '+bit(q.c,step)+' + incoming carry '+input+'.';
+ }
+ board.append(progress);
+ paragraph(' ', 'triple-ghost').remove(); // Workspace content remains within #task.
+ $('task').append(board);
 }
 function shiftColumnLabels(){
  return Array.from({length:8},function(_,i){return i===0&&q.mode==='arithmetic'?'Sign':String(7-i);});
@@ -277,6 +405,11 @@ function entered(){if(!widget)return null;var v=widget.buttons.map(function(k){r
 function empty(){widget=null;$('task').replaceChildren();$('done').hidden=true;$('next').hidden=true;$('check').hidden=false;$('clear').hidden=false;resetFeedback();}
 function newQuestion(){
  count++;step=0;carry=0;out='';$('log').replaceChildren();
+ if(skill==='triple'){
+  tripleResult=Array(8).fill('');
+  tripleCarry=Array(7).fill('');
+  tripleOverflow='';
+ }
  if(skill==='convert'){
   if(!window.J277ConversionQuestions){alert('Shared J277 conversion data could not be loaded.');return;}
   q=window.J277ConversionQuestions.randomQuestion(level,lastConversion,count);
@@ -309,11 +442,9 @@ function render(){
   instructions=q.mode.toUpperCase()+' '+q.direction+' shift. Work within 8 bits; bits leaving the edge are discarded.';
   shiftSourceGrid();editor(8,shiftColumnLabels());
  }else if(skill==='triple'){
-  var c=step;prompt='Add three 8-bit numbers, showing every carry.';
-  instructions='Column '+(c+1)+' from the right. Choose the result bit and carry to the next column. A carry can be 0, 1 or 2.';
-  readout('  '+bits(q.a,8)+'\n  '+bits(q.b,8)+'\n+ '+bits(q.c,8),true);
-  readout('Column bits: '+bit(q.a,c)+' + '+bit(q.b,c)+' + '+bit(q.c,c)+' + incoming carry '+carry+'.');
-  selects([['Write result bit','digit',[['','Choose'],['0','0'],['1','1']]],['Carry to the next column','carry',[['','Choose'],['0','0'],['1','1'],['2','2']]]]);
+  prompt='Add three 8-bit numbers.';
+  instructions=step>=8?'Completed. Review your checked result.':'Work from right to left. Click the result bit and the carry into the next column, then check that column.';
+  renderTripleBoard();
  }else if(skill==='borrow'){
   prompt='Calculate '+bits(q.a,8)+' − '+bits(q.b,8)+'.';
   instructions='Column '+(step+1)+' from the right. Borrow 1 from the next column if needed; it is worth 2 in the current column.';
@@ -351,13 +482,21 @@ function check(){
   if(value!==q.answer){report(level==='hard'?'Not quite. Check which bits enter or leave the eight-bit result.':q.mode==='arithmetic'&&q.direction==='right'?'Check the original sign bit and the positions it fills.':'Recheck the direction, filled positions and discarded bits.',true);return;}
   success(q.mode+' '+q.direction+' shift: '+bits(q.n,8)+' → '+value+'.');finish('Correct. The new 8-bit pattern is '+value+'.');
  }else if(skill==='triple'){
-  var d=$('digit').value,c=$('carry').value;if(d===''||c===''){report('Choose a result bit and an outgoing carry.',true);return;}
-  var sum=bit(q.a,step)+bit(q.b,step)+bit(q.c,step)+carry,expectedBit=sum%2,expectedCarry=Math.floor(sum/2);
-  if(Number(d)!==expectedBit||Number(c)!==expectedCarry){report('Add all three bits and incoming carry. If the total is 4, write 0 and carry 2.',true);return;}
-  out=String(expectedBit)+out;log('Column '+(step+1)+' from right: total '+sum+' → digit '+expectedBit+', carry '+expectedCarry+'.');
+  var j=tripleCurrentColumn(),dest=j-1;
+  var d=tripleResult[j],c=tripleCarryValue(dest);
+  if(d===''||c===''){report('Click the highlighted result bit and outgoing carry, then check this column.',true);return;}
+  var sum=bit(q.a,step)+bit(q.b,step)+bit(q.c,step)+carry;
+  var expectedBit=sum%2,expectedCarry=Math.floor(sum/2);
+  if(Number(d)!==expectedBit||Number(c)!==expectedCarry){
+   report('Check this column: add the three bits and incoming carry. The carry may be 0, 1 or 2.',true);return;
+  }
+  out=String(expectedBit)+out;
+  log('Column '+(step+1)+': total '+sum+' → write '+expectedBit+'; carry '+expectedCarry+' to the left.');
   carry=expectedCarry;step++;
-  if(step===8){finish('Correct: '+bits(q.a,8)+' + '+bits(q.b,8)+' + '+bits(q.c,8)+' = '+carry.toString(2).padStart(2,'0')+out+'₂ = '+(q.a+q.b+q.c)+'₁₀.');}
-  else render();
+  if(step===8){
+   render();
+   finish('Correct: '+bits(q.a,8)+' + '+bits(q.b,8)+' + '+bits(q.c,8)+' = '+carry.toString(2).padStart(2,'0')+out+'₂ = '+(q.a+q.b+q.c)+'₁₀.');
+  }else render();
  }else if(skill==='borrow'){
   var br=$('borrow').value,d=$('digit').value;if(br===''||d===''){report('Choose the borrow and the result bit.',true);return;}
   var top=bit(q.a,step)-carry,bottom=bit(q.b,step),need=top<bottom?1:0,result=top+2*need-bottom;
@@ -384,6 +523,13 @@ function check(){
  }
 }
 function clearStep(){
+ if(skill==='triple'){
+  if(step>=8)return;
+  var j=tripleCurrentColumn();
+  tripleResult[j]='';
+  tripleSetValue('carry',j-1,'');
+  render();return;
+ }
  if(widget){widget.buttons.forEach(function(button,i){widget.set(i,'');});}
  $('task').querySelectorAll('input').forEach(function(el){el.value='';});
  $('task').querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
