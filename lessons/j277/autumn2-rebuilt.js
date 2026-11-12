@@ -1586,10 +1586,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   if(!item)return '<p>'+escape(lesson.r[i][0])+'</p>';
   return '<p>'+escape(item.question)+'</p>'+(item.options.length?'<ol class="j277-mcq" type="A">'+item.options.map(o=>'<li>'+escape(o)+'</li>').join("")+'</ol>':"");
  }
+ function doNowReference(lesson,i){
+  const source=lesson.refs?.[i];
+  if(!source)return "";
+  const unique=[...new Set(String(source).split(",").map(s=>s.trim()).filter(Boolean))];
+  return unique.length?" · "+escape(unique.join(", ")):"";
+ }
  function doNow(lesson){
   const labels=["LAST LESSON","EARLIER LEARNING · MCQ","EARLIER LEARNING","HIGH CHALLENGE"];
-  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</strong>${j277Question(lesson,i)}</article>`);
-  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${labels[i]}${lesson.refs?" · "+escape(lesson.refs[i]):""}</span><h2>Recall earlier learning</h2><div class="review-question">${j277Question(lesson,i)}</div></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(lesson.doNowItems?.[i]?.answer||answer)}</p>${lesson.doNowItems?.[i]?.correct_option?'<p>'+escape(lesson.doNowItems[i].explanation)+'</p>':""}</article></div></div>`);
+  const qs=arr(lesson.r,([q],i)=>`<article class="donow-question"><strong>${i+1} · ${labels[i]}${doNowReference(lesson,i)}</strong>${j277Question(lesson,i)}</article>`);
+  const answers=arr(lesson.r,([q,answer],i)=>`<div class="donow-stage" hidden><div class="donow-review"><article class="donow-review-question"><span class="review-number">QUESTION ${i+1} OF 4 · ${labels[i]}${doNowReference(lesson,i)}</span><h2>Recall earlier learning</h2><div class="review-question">${j277Question(lesson,i)}</div></article><article class="donow-review-answer"><span class="review-label">ANSWER · EXPLAIN</span><p class="review-answer">${escape(lesson.doNowItems?.[i]?.answer||answer)}</p>${lesson.doNowItems?.[i]?.correct_option?'<p>'+escape(lesson.doNowItems[i].explanation)+'</p>':""}</article></div></div>`);
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
