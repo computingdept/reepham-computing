@@ -11,10 +11,10 @@ const makePair = () => [
   {course:'test', lessons:{'002':{questions:[{originalQuestion:'How many patterns in two bits?', originalAnswer:'Four.'}]}}}
 ];
 
-test('all central Q1 pilot drafts validate against original source', () => {
+test('all central Q1 drafts validate against original source', () => {
   const result = validateFiles();
   assert.deepEqual(result.map(item => item.course), ['h446','j277','ks3']);
-  assert.deepEqual(result.map(item => item.draftQ1), [25,25,3]);
+  assert.deepEqual(result.map(item => item.draftQ1), [300,25,3]);
 });
 test('Q1 answers must be Booleans', () => {
   const [bank, source] = makePair(); bank.lessons['002'].correct = 'True';
