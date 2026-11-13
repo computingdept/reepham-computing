@@ -67,6 +67,10 @@ The pattern is **illustrative, not mandatory**: other subjects and tasks may nee
 - **Subject/course-specific content:** curriculum order, exam terminology, code tasks, source material, diagrams, lesson objectives and assessments.
 - Make the generic interface **opt-in and reversible during pilots**. Don't silently switch every lesson to new styling or require teachers to check every page by hand.
 - Prefer a central design system with lightweight subject-specific rules, not many duplicated HTML/CSS/JS implementations.
+- The [central Do Now standard](do-now-central-standard.md) defines a reusable,
+  teacher-reviewed four-question retrieval **default** for Computing pilots and
+  future subjects. Keep course content in separate banks; allow a documented
+  subject-specific exception without forking shared presentation code.
 
 ## 7. Workflow for converting a source PowerPoint
 
